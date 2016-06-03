@@ -70,7 +70,7 @@ abstract class AbstractRequest implements RequestInterface
      *
      * @return string
      */
-    public function getProtocol()
+    public function getScheme()
     {
         return $this->protocol;
     }
@@ -80,7 +80,7 @@ abstract class AbstractRequest implements RequestInterface
      *
      * @return string
      */
-    public function getHostname()
+    public function getHost()
     {
         return $this->hostname;
     }
@@ -90,7 +90,7 @@ abstract class AbstractRequest implements RequestInterface
      *
      * @return string
      */
-    public function getDomain()
+    public function getHttpHost()
     {
         return $this->protocol . $this->hostname;
     }
@@ -98,7 +98,7 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * @return bool
      */
-    public function isAjax()
+    public function isXmlHttpRequest()
     {
         if ($this->isAjax === null) {
             $this->isAjax = !empty($this->server->get('HTTP_X_REQUESTED_WITH')) && strtolower($this->server->get('HTTP_X_REQUESTED_WITH', '')) == 'xmlhttprequest';

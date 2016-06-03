@@ -64,7 +64,7 @@ class MoveToBottom extends AbstractMoveElementFilter
     protected function addElementFromMinifier()
     {
         $minifyJs = '';
-        if (!$this->request->isAjax()) {
+        if (!$this->request->isXmlHttpRequest()) {
             $minifyJs = '<script type="text/javascript" src="' . $this->minifier->getURI() . '"></script>' . "\n";
         }
         return $minifyJs;

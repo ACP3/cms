@@ -22,7 +22,7 @@ class LoadModule extends AbstractFunction
     /**
      * LoadModule constructor.
      *
-     * @param \ACP3\Core\ACL                         $acl
+     * @param \ACP3\Core\ACL $acl
      * @param \ACP3\Core\Application\ControllerResolver $frontController
      */
     public function __construct(ACL $acl, ControllerResolver $frontController)
@@ -49,9 +49,10 @@ class LoadModule extends AbstractFunction
         $path = $pathArray[0] . '/' . $pathArray[1] . '/' . $pathArray[2] . '/' . $pathArray[3];
         if ($this->acl->hasPermission($path) === true) {
             $serviceId = strtolower($pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2] . '.' . $pathArray[3]);
-
-            $this->frontController->dispatch($serviceId, isset($params['args']) ? $params['args'] : []);
+            return $this->frontController->dispatch($serviceId, isset($params['args']) ? $params['args'] : []);
         }
+
+        return '';
     }
 
     /**

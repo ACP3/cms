@@ -143,8 +143,10 @@ abstract class WidgetAction implements ActionInterface
     public function display($actionResult)
     {
         if ($this->getNoOutput() === false && $this->getTemplate() !== '') {
-            $this->view->displayTemplate($this->getTemplate());
+            return $this->view->fetchTemplate($this->getTemplate());
         }
+
+        return '';
     }
 
     /**

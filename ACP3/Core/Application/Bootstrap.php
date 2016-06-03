@@ -12,6 +12,8 @@ use Patchwork\Utf8;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Bootstraps the application
@@ -27,13 +29,12 @@ class Bootstrap extends AbstractBootstrap
     /**
      * @inheritdoc
      */
-    public function run()
+    public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
     {
-        if ($this->startupChecks()) {
-            $this->setErrorHandler();
-            $this->initializeClasses();
-            $this->outputPage();
-        }
+        $this->setErrorHandler();
+        $this->initializeClasses();
+
+        return $this->outputPage();
     }
 
     /**
@@ -60,18 +61,25 @@ class Bootstrap extends AbstractBootstrap
             $request->getArea() !== AreaEnum::AREA_ADMIN &&
             strpos($request->getQuery(), 'users/index/login/') !== 0
         ) {
-            header('HTTP/1.0 503 Service Unavailable');
-
-            $view = $this->container->get('core.view');
-            $view->assign('PAGE_TITLE', 'ACP3');
-            $view->assign('ROOT_DIR', $this->appPath->getWebRoot());
-            $view->assign('CONTENT', $this->systemSettings['maintenance_message']);
-            $view->displayTemplate('system/maintenance.tpl');
-
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * @return Response
+     */
+    private function displayMaintenanceMode()
+    {
+        header('HTTP/1.0 503 Service Unavailable');
+
+        $view = $this->container->get('core.view');
+        $view->assign('PAGE_TITLE', 'ACP3');
+        $view->assign('ROOT_DIR', $this->appPath->getWebRoot());
+        $view->assign('CONTENT', $this->systemSettings['maintenance_message']);
+
+        return new Response($view->fetchTemplate('system/maintenance.tpl'));
     }
 
     /**
@@ -103,7 +111,7 @@ class Bootstrap extends AbstractBootstrap
         $this->appPath
             ->setDesignPathWeb($this->appPath->getWebRoot() . $path)
             ->setDesignPathInternal(ACP3_ROOT_DIR . $path)
-            ->setDesignPathAbsolute($this->container->get('core.http.request')->getDomain() . $this->appPath->getDesignPathWeb());
+            ->setDesignPathAbsolute($this->container->get('core.http.request')->getHttpHost() . $this->appPath->getDesignPathWeb());
     }
 
     /**
@@ -120,26 +128,28 @@ class Bootstrap extends AbstractBootstrap
         $request = $this->container->get('core.http.request');
 
         if ($this->maintenanceModeIsEnabled($request)) {
-            return;
+            return $this->displayMaintenanceMode();
         }
 
         /** @var \ACP3\Core\Http\RedirectResponse $redirect */
         $redirect = $this->container->get('core.http.redirect_response');
 
         try {
-            $this->container->get('core.application.controller_resolver')->dispatch();
+            $response = $this->container->get('core.application.controller_resolver')->dispatch();
         } catch (\ACP3\Core\Controller\Exception\ResultNotExistsException $e) {
-            $redirect->temporary('errors/index/not_found')->send();
+            $response = $redirect->temporary('errors/index/not_found');
         } catch (\ACP3\Core\Authentication\Exception\UnauthorizedAccessException $e) {
-            $redirectUri = base64_encode($request->getOriginalQuery());
-            $redirect->temporary('users/index/login/redirect_' . $redirectUri)->send();
+            $redirectUri = base64_encode($request->getPathInfo());
+            $response = $redirect->temporary('users/index/login/redirect_' . $redirectUri);
         } catch (\ACP3\Core\ACL\Exception\AccessForbiddenException $e) {
-            $redirect->temporary('errors/index/access_forbidden');
+            $response = $redirect->temporary('errors/index/access_forbidden');
         } catch (\ACP3\Core\Controller\Exception\ControllerActionNotFoundException $e) {
-            $this->handleException($e, $redirect, 'errors/index/not_found');
+            $response = $this->handleException($e, $redirect, 'errors/index/not_found');
         } catch (\Exception $e) {
-            $this->handleException($e, $redirect, 'errors/index/server_error');
+            $response = $this->handleException($e, $redirect, 'errors/index/server_error');
         }
+
+        return $response;
     }
 
     /**
@@ -154,6 +164,7 @@ class Bootstrap extends AbstractBootstrap
      * Renders an exception
      *
      * @param \Exception $exception
+     * @return Response
      */
     private function renderApplicationException(\Exception $exception)
     {
@@ -161,21 +172,23 @@ class Bootstrap extends AbstractBootstrap
         $view->assign('ROOT_DIR', $this->appPath->getWebRoot());
         $view->assign('PAGE_TITLE', 'ACP3');
         $view->assign('EXCEPTION', $exception);
-        $view->displayTemplate('system/exception.tpl');
+
+        return new Response($view->fetchTemplate('system/exception.tpl'));
     }
 
     /**
-     * @param \Exception                       $exception
+     * @param \Exception $exception
      * @param \ACP3\Core\Http\RedirectResponse $redirect
-     * @param string                           $path
+     * @param string $path
+     * @return Response
      */
     protected function handleException(\Exception $exception, RedirectResponse $redirect, $path)
     {
         if ($this->appMode === ApplicationMode::DEVELOPMENT) {
-            $this->renderApplicationException($exception);
-        } else {
-            $redirect->temporary($path)->send();
+            return $this->renderApplicationException($exception);
         }
+
+        return $redirect->temporary($path);
     }
 
     /**

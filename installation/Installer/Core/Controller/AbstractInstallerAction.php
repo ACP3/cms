@@ -81,7 +81,7 @@ abstract class AbstractInstallerAction implements ActionInterface
         $this->view->assign('INSTALLER_ROOT_DIR', $this->appPath->getInstallerWebRoot());
         $this->view->assign('DESIGN_PATH', $this->appPath->getDesignPathWeb());
         $this->view->assign('UA_IS_MOBILE', $this->request->getUserAgent()->isMobileBrowser());
-        $this->view->assign('IS_AJAX', $this->request->isAjax());
+        $this->view->assign('IS_AJAX', $this->request->isXmlHttpRequest());
 
         $languageInfo = simplexml_load_file(
             $this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $this->translator->getLocale() . '.xml'
@@ -165,7 +165,7 @@ abstract class AbstractInstallerAction implements ActionInterface
             $this->request->getModule(),
             $this->request->getController() . '_' . $this->request->getAction())
         );
-        $this->view->assign('LAYOUT', $this->request->isAjax() ? 'ajax.tpl' : $this->getLayout());
+        $this->view->assign('LAYOUT', $this->request->isXmlHttpRequest() ? 'ajax.tpl' : $this->getLayout());
     }
 
     /**

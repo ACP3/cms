@@ -134,8 +134,8 @@ class Router implements RouterInterface
     {
         $prefix = '';
         if ($isAbsolute === true || $forceSecure === true) {
-            $prefix .= ($forceSecure === true) ? 'https://' : $this->request->getProtocol();
-            $prefix .= $this->request->getHostname();
+            $prefix .= ($forceSecure === true) ? 'https://' : $this->request->getScheme();
+            $prefix .= $this->request->getHost();
         }
 
         $prefix .= $this->useModRewrite($path) ? $this->appPath->getWebRoot() : $this->appPath->getPhpSelf() . '/';

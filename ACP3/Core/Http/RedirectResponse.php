@@ -47,7 +47,7 @@ class RedirectResponse
      */
     public function toNewPage($url)
     {
-        if ($this->request->isAjax() === true) {
+        if ($this->request->isXmlHttpRequest() === true) {
             return $this->createAjaxRedirectResponse($url);
         }
 
@@ -78,7 +78,7 @@ class RedirectResponse
     {
         $path = $this->router->route($path, true);
 
-        if ($this->request->isAjax() === true) {
+        if ($this->request->isXmlHttpRequest() === true) {
             return $this->createAjaxRedirectResponse($path);
         }
 

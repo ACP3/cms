@@ -82,14 +82,14 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
             'PHP_SELF' => $this->appPath->getPhpSelf(),
             'REQUEST_URI' => $this->request->getServer()->get('REQUEST_URI'),
             'ROOT_DIR' => $this->appPath->getWebRoot(),
-            'HOST_NAME' => $this->request->getDomain(),
-            'ROOT_DIR_ABSOLUTE' => $this->request->getDomain() . $this->appPath->getWebRoot(),
+            'HOST_NAME' => $this->request->getHttpHost(),
+            'ROOT_DIR_ABSOLUTE' => $this->request->getHttpHost() . $this->appPath->getWebRoot(),
             'DESIGN_PATH' => $this->appPath->getDesignPathWeb(),
             'DESIGN_PATH_ABSOLUTE' => $this->appPath->getDesignPathAbsolute(),
             'UA_IS_MOBILE' => $this->request->getUserAgent()->isMobileBrowser(),
             'IN_ADM' => $this->request->getArea() === AreaEnum::AREA_ADMIN,
             'IS_HOMEPAGE' => $this->request->isHomepage(),
-            'IS_AJAX' => $this->request->isAjax(),
+            'IS_AJAX' => $this->request->isXmlHttpRequest(),
             'LANG_DIRECTION' => $this->translator->getDirection(),
             'LANG' => $this->translator->getShortIsoCode(),
         ]);
@@ -108,7 +108,7 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
     protected function addCustomTemplateVarsBeforeOutput()
     {
         $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());
-        $this->view->assign('LAYOUT', $this->request->isAjax() ? 'system/ajax.tpl' : $this->getLayout());
+        $this->view->assign('LAYOUT', $this->request->isXmlHttpRequest() ? 'system/ajax.tpl' : $this->getLayout());
 
         $this->eventDispatcher->dispatch(
             'core.controller.custom_template_variable',

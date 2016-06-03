@@ -149,7 +149,7 @@ class Subscribe
 
         $subject = $this->translator->t('newsletter', 'subscribe_mail_subject', ['%title%' => $seoSettings['title']]);
         $body = $this->translator->t('newsletter', 'subscribe_mail_body',
-                ['{host}' => $this->request->getHostname()]) . "\n\n";
+                ['{host}' => $this->request->getHost()]) . "\n\n";
 
         $from = [
             'email' => $settings['mail'],

@@ -29,13 +29,13 @@ abstract class AbstractBootstrap implements BootstrapInterface
     public function __construct($appMode)
     {
         $this->appMode = $appMode;
-        $this->setAppPath($appMode);
+        $this->initializeApplicationPath($this->appMode);
     }
 
     /**
      * @param string $appMode
      */
-    protected function setAppPath($appMode)
+    protected function initializeApplicationPath($appMode)
     {
         $this->appPath = new ApplicationPath($appMode);
     }
@@ -66,11 +66,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
     protected function databaseConfigExists()
     {
         $path = $this->appPath->getAppDir() . 'config.yml';
-        if (is_file($path) === false || filesize($path) === 0) {
-            echo 'The ACP3 is not correctly installed. Please navigate to the <a href="' . $this->appPath->getWebRoot() . 'installation/">installation wizard</a> and follow its instructions.';
-            return false;
-        }
 
-        return true;
+        return is_file($path) === true && filesize($path) !== 0;
     }
 }

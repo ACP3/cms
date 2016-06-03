@@ -29,6 +29,7 @@
     "symfony/config": "^3.1",
     "symfony/dependency-injection": "^3.1",
     "symfony/http-foundation": "^3.1",
+    "symfony/http-kernel": "^3.1",
     "symfony/yaml": "^3.1",
     "symfony/event-dispatcher": "^3.1",
     "mibe/feedwriter": "^1.0",

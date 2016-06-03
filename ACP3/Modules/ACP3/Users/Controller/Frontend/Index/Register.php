@@ -129,7 +129,7 @@ class Register extends Core\Controller\FrontendAction
                     'register_mail_subject',
                     [
                         '{title}' => $seoSettings['title'],
-                        '{host}' => $this->request->getHostname(),
+                        '{host}' => $this->request->getHost(),
                     ]);
                 $body = $this->translator->t(
                     'users',
@@ -139,7 +139,7 @@ class Register extends Core\Controller\FrontendAction
                         '{mail}' => $formData['mail'],
                         '{password}' => $formData['pwd'],
                         '{title}' => $seoSettings['title'],
-                        '{host}' => $this->request->getHostname()
+                        '{host}' => $this->request->getHost()
                     ]
                 );
                 $mailIsSent = $this->sendEmail->execute('', $formData['mail'], $settings['mail'], $subject, $body);

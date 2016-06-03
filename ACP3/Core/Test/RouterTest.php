@@ -51,7 +51,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $this->requestMock = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getProtocol', 'getHostname'])
+            ->setMethods(['getScheme', 'getHost'])
             ->getMock();
         $this->appPathMock = $this->getMockBuilder(ApplicationPath::class)
             ->disableOriginalConstructor()
@@ -78,10 +78,10 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     protected function setUpRequestMockExpectations()
     {
         $this->requestMock->expects($this->any())
-            ->method('getProtocol')
+            ->method('getScheme')
             ->willReturn('http://');
         $this->requestMock->expects($this->any())
-            ->method('getHostname')
+            ->method('getHost')
             ->willReturn('example.com');
     }
 

@@ -31,15 +31,14 @@ trait DisplayActionTrait
      * Outputs the requested module controller action
      *
      * @param mixed $actionResult
+     * @return Response
      */
     public function display($actionResult)
     {
         if ($actionResult instanceof Response) {
-            $actionResult->send();
-            return;
+            return $actionResult;
         } elseif (is_string($actionResult)) {
-            echo $actionResult;
-            return;
+            return $this->getResponse()->setContent($actionResult);
         } elseif (is_array($actionResult)) {
             $this->getView()->assign($actionResult);
         }
@@ -59,7 +58,7 @@ trait DisplayActionTrait
             $this->getResponse()->setContent($this->getView()->fetchTemplate($this->getTemplate()));
         }
 
-        $this->getResponse()->send();
+        return $this->getResponse();
     }
 
     /**

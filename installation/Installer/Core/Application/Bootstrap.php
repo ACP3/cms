@@ -5,6 +5,7 @@ namespace ACP3\Installer\Core\Application;
 use ACP3\Core;
 use ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Installer\Core\Environment\ApplicationPath;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class Bootstrap
@@ -20,15 +21,11 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     /**
      * @inheritdoc
      */
-    public function run()
+    public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
     {
-        if ($this->startupChecks() === false) {
-            return;
-        }
-
         $this->setErrorHandler();
         $this->initializeClasses();
-        $this->outputPage();
+        return $this->outputPage();
     }
 
     /**
@@ -49,7 +46,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     /**
      * @param string $appMode
      */
-    protected function setAppPath($appMode)
+    protected function initializeApplicationPath($appMode)
     {
         $this->appPath = new ApplicationPath($appMode);
     }
@@ -78,12 +75,14 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         $redirect = $this->container->get('core.http.redirect_response');
 
         try {
-            $this->container->get('core.application.controller_resolver')->dispatch();
+            $response = $this->container->get('core.application.controller_resolver')->dispatch();
         } catch (Core\Controller\Exception\ControllerActionNotFoundException $e) {
-            $redirect->temporary('errors/index/not_found')->send();
+            $response = $redirect->temporary('errors/index/not_found');
         } catch (\Exception $e) {
             $this->container->get('core.logger')->critical('installer', $e->getMessage());
-            $redirect->temporary('errors/index/server_error')->send();
+            $response = $redirect->temporary('errors/index/server_error');
         }
+
+        return $response;
     }
 }

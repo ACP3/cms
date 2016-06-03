@@ -66,7 +66,7 @@ class RedirectResponseTest extends \PHPUnit_Framework_TestCase
     private function setUpRequestMockExpectations($isAjax)
     {
         $this->requestMock->expects($this->once())
-            ->method('isAjax')
+            ->method('isXmlHttpRequest')
             ->willReturn($isAjax);
     }
 

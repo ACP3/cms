@@ -136,7 +136,7 @@ class Index extends AbstractAction
     private function renderErrorBoxOnFailedFormValidation(\Exception $exception)
     {
         $errors = $this->get('core.helpers.alerts')->errorBox($exception->getMessage());
-        if ($this->request->isAjax()) {
+        if ($this->request->isXmlHttpRequest()) {
             return new JsonResponse(['success' => false, 'content' => $errors]);
         }
 

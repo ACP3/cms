@@ -12,21 +12,21 @@ interface RequestInterface
      *
      * @return string
      */
-    public function getProtocol();
+    public function getScheme();
 
     /**
      * Returns the hostname of the current request
      *
      * @return string
      */
-    public function getHostname();
+    public function getHost();
 
     /**
      * Returns the protocol with the hostname
      *
      * @return string
      */
-    public function getDomain();
+    public function getHttpHost();
 
     /**
      * @return string
@@ -38,7 +38,7 @@ interface RequestInterface
      *
      * @return string
      */
-    public function getOriginalQuery();
+    public function getPathInfo();
 
     /**
      * @return string
@@ -110,7 +110,7 @@ interface RequestInterface
     /**
      * @return bool
      */
-    public function isAjax();
+    public function isXmlHttpRequest();
 
     /**
      * Returns the parameter bag of the $_COOKIE superglobal

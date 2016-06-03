@@ -148,7 +148,7 @@ class ForgotPwd extends Core\Controller\FrontendAction
      */
     protected function sendPasswordChangeEmail(array $user, $newPassword)
     {
-        $host = $this->request->getHostname();
+        $host = $this->request->getHost();
         $seoSettings = $this->config->getSettings('seo');
 
         $subject = $this->translator->t(

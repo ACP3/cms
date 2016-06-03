@@ -71,7 +71,7 @@ class Request extends AbstractRequest
     /**
      * @inheritdoc
      */
-    public function getOriginalQuery()
+    public function getPathInfo()
     {
         return $this->originalQuery;
     }

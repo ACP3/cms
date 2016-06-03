@@ -86,6 +86,6 @@ class OnControllerResolverBeforeDispatchListener
     private function uriAliasExists()
     {
         return $this->aliases->uriAliasExists($this->request->getQuery()) === true
-        && $this->request->getOriginalQuery() !== $this->aliases->getUriAlias($this->request->getQuery()) . '/';
+        && $this->request->getPathInfo() !== $this->aliases->getUriAlias($this->request->getQuery()) . '/';
     }
 }

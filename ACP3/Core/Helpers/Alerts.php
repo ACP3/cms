@@ -96,7 +96,7 @@ class Alerts
      */
     public function errorBox($errors)
     {
-        $this->view->assign('CONTENT_ONLY', $this->request->isAjax() === true);
+        $this->view->assign('CONTENT_ONLY', $this->request->isXmlHttpRequest() === true);
         return $this->view->fetchTemplate($this->errorBoxContent($errors));
     }
 

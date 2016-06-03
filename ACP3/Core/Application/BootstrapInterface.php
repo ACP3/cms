@@ -1,21 +1,19 @@
 <?php
 namespace ACP3\Core\Application;
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+
 /**
  * Interface BootstrapInterface
  * @package ACP3\Core\Application
  */
-interface BootstrapInterface
+interface BootstrapInterface extends HttpKernelInterface
 {
     /**
      * Contains the current ACP3 version string
      */
     const VERSION = '4.0-dev';
-
-    /**
-     * Executes the application bootstrapping process and outputs the requested page
-     */
-    public function run();
 
     /**
      * Performs some startup checks
@@ -29,6 +27,7 @@ interface BootstrapInterface
 
     /**
      * Handle the request and output the page
+     * @return Response
      */
     public function outputPage();
 

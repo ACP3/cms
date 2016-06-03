@@ -9,10 +9,10 @@ namespace ACP3\Core\Application;
 use ACP3\Core\Application\Event\FrontControllerDispatchEvent;
 use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
-use ACP3\Core\Exceptions;
 use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ControllerResolver
@@ -51,6 +51,7 @@ class ControllerResolver
     /**
      * @param string $serviceId
      * @param array  $arguments
+     * @return Response|string
      *
      * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
@@ -70,17 +71,19 @@ class ControllerResolver
             /** @var \ACP3\Core\Controller\ActionInterface $controller */
             $controller = $this->container->get($serviceId);
             $controller->preDispatch();
-            $controller->display($this->executeControllerAction($controller, $arguments));
+            $response = $controller->display($this->executeControllerAction($controller, $arguments));
 
             $this->eventDispatcher->dispatch(
                 'core.application.controller_resolver.after_dispatch',
                 new FrontControllerDispatchEvent($serviceId)
             );
 
-            return;
+            return $response;
         }
 
-        throw new \ACP3\Core\Controller\Exception\ControllerActionNotFoundException('Service-Id ' . $serviceId . ' was not found!');
+        throw new \ACP3\Core\Controller\Exception\ControllerActionNotFoundException(
+            'Service-Id ' . $serviceId . ' was not found!'
+        );
     }
 
     /**
