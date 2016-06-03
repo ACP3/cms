@@ -1,26 +1,20 @@
-parameters:
-  polls.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\DataGridRepository'
-  polls.model.answerrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\AnswerRepository'
-  polls.model.pollrepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\PollRepository'
-  polls.model.voterepository.fqdn: 'ACP3\Modules\ACP3\Polls\Model\VoteRepository'
-
 services:
   polls.model.data_grid_repository:
-    class: '%polls.model.data_grid_repository.fqdn%'
+    class: ACP3\Modules\ACP3\Polls\Model\DataGridRepository
     arguments:
       - '@core.db'
 
   polls.model.answerrepository:
-    class: '%polls.model.answerrepository.fqdn%'
+    class: ACP3\Modules\ACP3\Polls\Model\AnswerRepository
     arguments:
       - '@core.db'
 
   polls.model.pollrepository:
-    class: '%polls.model.pollrepository.fqdn%'
+    class: ACP3\Modules\ACP3\Polls\Model\PollRepository
     arguments:
       - '@core.db'
 
   polls.model.voterepository:
-    class: '%polls.model.voterepository.fqdn%'
+    class: ACP3\Modules\ACP3\Polls\Model\VoteRepository
     arguments:
       - '@core.db'

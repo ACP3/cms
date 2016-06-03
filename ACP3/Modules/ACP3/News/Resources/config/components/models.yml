@@ -1,14 +1,10 @@
-parameters:
-  news.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\News\Model\DataGridRepository'
-  news.model.newsrepository.fqdn: 'ACP3\Modules\ACP3\News\Model\NewsRepository'
-
 services:
   news.model.data_grid_repository:
-    class: '%news.model.data_grid_repository.fqdn%'
+    class: ACP3\Modules\ACP3\News\Model\DataGridRepository
     arguments:
       - '@core.db'
 
   news.model.newsrepository:
-    class: '%news.model.newsrepository.fqdn%'
+    class: ACP3\Modules\ACP3\News\Model\NewsRepository
     arguments:
       - '@core.db'

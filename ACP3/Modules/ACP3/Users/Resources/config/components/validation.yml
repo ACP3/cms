@@ -1,54 +1,43 @@
-parameters:
-  users.validation.account_forgot_password_form_validation.fqdn: 'ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation'
-  users.validation.account_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation'
-  users.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Users\Validation\AdminSettingsFormValidation'
-  users.validator.account.fqdn: 'ACP3\Modules\ACP3\Users\Validation\AccountFormValidation'
-  users.validator.admin.fqdn: 'ACP3\Modules\ACP3\Users\Validation\AdminFormValidation'
-  users.validator.register.fqdn: 'ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation'
-  users.validation.validation_rules.account_not_exists_by_email_validation_rule.fqdn: 'ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByEmailValidationRule'
-  users.validation.validation_rules.account_not_exists_by_name_validation_rule.fqdn: 'ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameValidationRule'
-  users.validation.validation_rules.icq_number_validation_rule.fqdn: 'ACP3\Modules\ACP3\Users\Validation\ValidationRules\IcqNumberValidationRule'
-
 services:
   users.validator.account:
-    class: '%users.validator.account.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Validation\AccountFormValidation
     parent: core.validator.abstract
 
   users.validation.account_forgot_password_form_validation:
-    class: '%users.validation.account_forgot_password_form_validation.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation
     parent: core.validator.abstract
 
   users.validation.account_settings_form_validation:
-    class: '%users.validation.account_settings_form_validation.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation
     parent: core.validator.abstract
 
   users.validation.admin_settings_form_validation:
-    class: '%users.validation.admin_settings_form_validation.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Validation\AdminSettingsFormValidation
     parent: core.validator.abstract
 
   users.validator.admin:
-    class: '%users.validator.admin.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Validation\AdminFormValidation
     parent: core.validator.abstract
 
   users.validator.register:
-    class: '%users.validator.register.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation
     parent: core.validator.abstract
 
   users.validation.validation_rules.account_not_exists_by_email_validation_rule:
-    class: '%users.validation.validation_rules.account_not_exists_by_email_validation_rule.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByEmailValidationRule
     arguments:
       - '@users.model.userrepository'
     tags:
       - { name: core.validation.validation_rule }
 
   users.validation.validation_rules.account_not_exists_by_name_validation_rule:
-    class: '%users.validation.validation_rules.account_not_exists_by_name_validation_rule.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameValidationRule
     arguments:
       - '@users.model.userrepository'
     tags:
       - { name: core.validation.validation_rule }
 
   users.validation.validation_rules.icq_number_validation_rule:
-    class: '%users.validation.validation_rules.icq_number_validation_rule.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Validation\ValidationRules\IcqNumberValidationRule
     tags:
       - { name: core.validation.validation_rule }

@@ -5,18 +5,14 @@ imports:
   - { resource: components/models.yml }
   - { resource: components/validation.yml }
 
-parameters:
-  gallery.helpers.fqdn: 'ACP3\Modules\ACP3\Gallery\Helpers'
-  gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer.fqdn: 'ACP3\Modules\ACP3\Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer'
-
 services:
   gallery.helpers:
-    class: '%gallery.helpers.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Helpers
     arguments:
       - '@core.environment.application_path'
 
   gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer:
-    class: '%gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer
     arguments:
       - '@core.lang'
       - '@core.router'

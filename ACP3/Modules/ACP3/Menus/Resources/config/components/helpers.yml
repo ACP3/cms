@@ -1,24 +1,19 @@
-parameters:
-  menus.helpers.menuitemslist.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList'
-  menus.helpers.managemenuitem.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem'
-  menus.helpers.menuitemformfields.fqdn: 'ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields'
-
 services:
   menus.helpers.menuitemslist:
-    class: '%menus.helpers.menuitemslist.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList
     arguments:
       - '@core.helpers.forms'
       - '@menus.cache'
 
   menus.helpers.managemenuitem:
-    class: '%menus.helpers.managemenuitem.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem
     arguments:
       - '@core.helpers.secure'
       - '@core.nested_set'
       - '@menus.model.menuitemrepository'
 
   menus.helpers.menuitemformfields:
-    class: '%menus.helpers.menuitemformfields.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields
     arguments:
       - '@core.helpers.forms'
       - '@menus.helpers.menuitemslist'

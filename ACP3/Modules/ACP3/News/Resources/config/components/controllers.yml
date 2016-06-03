@@ -1,17 +1,6 @@
-parameters:
-  news.controller.admin.index.create.fqdn: 'ACP3\Modules\ACP3\News\Controller\Admin\Index\Create'
-  news.controller.admin.index.delete.fqdn: 'ACP3\Modules\ACP3\News\Controller\Admin\Index\Delete'
-  news.controller.admin.index.edit.fqdn: 'ACP3\Modules\ACP3\News\Controller\Admin\Index\Edit'
-  news.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\News\Controller\Admin\Index\Index'
-  news.controller.admin.index.settings.fqdn: 'ACP3\Modules\ACP3\News\Controller\Admin\Index\Settings'
-  news.controller.frontend.index.details.fqdn: 'ACP3\Modules\ACP3\News\Controller\Frontend\Index\Details'
-  news.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\News\Controller\Frontend\Index\Index'
-  news.controller.widget.index.index.fqdn: 'ACP3\Modules\ACP3\News\Controller\Widget\Index\Index'
-  news.controller.widget.index.latest.fqdn: 'ACP3\Modules\ACP3\News\Controller\Widget\Index\Latest'
-
 services:
   news.controller.admin.index.create:
-    class: '%news.controller.admin.index.create.fqdn%'
+    class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Create
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -26,7 +15,7 @@ services:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   news.controller.admin.index.delete:
-    class: '%news.controller.admin.index.delete.fqdn%'
+    class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
       - '@news.model.newsrepository'
@@ -36,7 +25,7 @@ services:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   news.controller.admin.index.edit:
-    class: '%news.controller.admin.index.edit.fqdn%'
+    class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -52,13 +41,13 @@ services:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   news.controller.admin.index.index:
-    class: '%news.controller.admin.index.index.fqdn%'
+    class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Index
     arguments:
       - '@core.context.admin'
       - '@news.model.data_grid_repository'
 
   news.controller.admin.index.settings:
-    class: '%news.controller.admin.index.settings.fqdn%'
+    class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -68,7 +57,7 @@ services:
       - ['setCommentsHelpers', ['@?comments.helpers']]
 
   news.controller.frontend.index.details:
-    class: '%news.controller.frontend.index.details.fqdn%'
+    class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Details
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -76,7 +65,7 @@ services:
       - '@news.cache'
 
   news.controller.frontend.index.index:
-    class: '%news.controller.frontend.index.index.fqdn%'
+    class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -89,14 +78,14 @@ services:
       - ['setMetaStatements', ['@?seo.helper.meta_statements']]
 
   news.controller.widget.index.index:
-    class: '%news.controller.widget.index.index.fqdn%'
+    class: ACP3\Modules\ACP3\News\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
       - '@core.date'
       - '@news.model.newsrepository'
 
   news.controller.widget.index.latest:
-    class: '%news.controller.widget.index.latest.fqdn%'
+    class: ACP3\Modules\ACP3\News\Controller\Widget\Index\Latest
     arguments:
       - '@core.context.widget'
       - '@core.date'

@@ -1,12 +1,9 @@
 imports:
   - { resource: componenets/installer.yml }
 
-parameters:
-  core.wysiwyg.tinymce.fqdn: 'ACP3\Modules\ACP3\WYSIWYGTinyMCE\WYSIWYG\TinyMCE'
-
 services:
   core.wysiwyg.tinymce:
-    class: '%core.wysiwyg.tinymce.fqdn%'
+    class: ACP3\Modules\ACP3\WYSIWYGTinyMCE\WYSIWYG\TinyMCE
     arguments:
       - '@core.assets.minifier.css'
       - '@core.lang'

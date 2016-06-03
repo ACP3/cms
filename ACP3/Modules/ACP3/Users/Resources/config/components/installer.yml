@@ -1,11 +1,7 @@
-parameters:
-  users.installer.schema.fqdn: 'ACP3\Modules\ACP3\Users\Installer\Schema'
-  users.installer.migration.fqdn: 'ACP3\Modules\ACP3\Users\Installer\Migration'
-
 services:
   users.installer.schema:
-    class: '%users.installer.schema.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Installer\Schema
 
   users.installer.migration:
-    class: '%users.installer.migration.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Installer\Migration
     parent: core.modules.installer.abstractMigration

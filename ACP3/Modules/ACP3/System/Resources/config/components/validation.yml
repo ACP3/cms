@@ -1,14 +1,10 @@
-parameters:
-  system.validator.settings.fqdn: 'ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation'
-  system.validation.validation_rules.is_wysiwyg_editor_validation_rule.fqdn: 'ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidationRule'
-
 services:
   system.validator.settings:
-    class: '%system.validator.settings.fqdn%'
+    class: ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation
     parent: core.validator.abstract
 
   system.validation.validation_rules.is_wysiwyg_editor_validation_rule:
-    class: '%system.validation.validation_rules.is_wysiwyg_editor_validation_rule.fqdn%'
+    class: ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidationRule
     arguments:
       - '@service_container'
     tags:

@@ -1,24 +1,6 @@
-parameters:
-  users.controller.admin.index.create.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Admin\Index\Create'
-  users.controller.admin.index.delete.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Admin\Index\Delete'
-  users.controller.admin.index.edit.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Admin\Index\Edit'
-  users.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Admin\Index\Index'
-  users.controller.admin.index.settings.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Admin\Index\Settings'
-  users.controller.frontend.account.edit.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Edit'
-  users.controller.frontend.account.index.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Index'
-  users.controller.frontend.account.settings.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Settings'
-  users.controller.frontend.index.forgot_pwd.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ForgotPwd'
-  users.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Index'
-  users.controller.frontend.index.login.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Login'
-  users.controller.frontend.index.logout.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Logout'
-  users.controller.frontend.index.register.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Register'
-  users.controller.frontend.index.view_profile.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ViewProfile'
-  users.controller.widget.index.login.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Widget\Index\Login'
-  users.controller.widget.index.user_menu.fqdn: 'ACP3\Modules\ACP3\Users\Controller\Widget\Index\UserMenu'
-
 services:
   users.controller.admin.index.create:
-    class: '%users.controller.admin.index.create.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Create
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -30,13 +12,13 @@ services:
       - '@permissions.helpers'
 
   users.controller.admin.index.delete:
-    class: '%users.controller.admin.index.delete.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
       - '@users.model.userrepository'
 
   users.controller.admin.index.edit:
-    class: '%users.controller.admin.index.edit.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
@@ -47,13 +29,13 @@ services:
       - '@permissions.helpers'
 
   users.controller.admin.index.index:
-    class: '%users.controller.admin.index.index.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Index
     arguments:
       - '@core.context.admin'
       - '@users.model.data_grid_repository'
 
   users.controller.admin.index.settings:
-    class: '%users.controller.admin.index.settings.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
@@ -61,7 +43,7 @@ services:
       - '@users.validation.admin_settings_form_validation'
 
   users.controller.frontend.account.edit:
-    class: '%users.controller.frontend.account.edit.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Edit
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
@@ -71,13 +53,13 @@ services:
       - '@users.validator.account'
 
   users.controller.frontend.account.index:
-    class: '%users.controller.frontend.account.index.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Index
     arguments:
       - '@core.context.frontend'
       - '@users.model.userrepository'
 
   users.controller.frontend.account.settings:
-    class: '%users.controller.frontend.account.settings.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Settings
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
@@ -87,7 +69,7 @@ services:
       - '@users.validation.account_settings_form_validation'
 
   users.controller.frontend.index.forgot_pwd:
-    class: '%users.controller.frontend.index.forgot_pwd.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ForgotPwd
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
@@ -97,22 +79,22 @@ services:
       - '@core.helpers.sendEmail'
 
   users.controller.frontend.index.index:
-    class: '%users.controller.frontend.index.index.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
       - '@core.pagination'
       - '@users.model.userrepository'
 
   users.controller.frontend.index.login:
-    class: '%users.controller.frontend.index.login.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Login
     parent: core.controller.frontend
 
   users.controller.frontend.index.logout:
-    class: '%users.controller.frontend.index.logout.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Logout
     parent: core.controller.frontend
 
   users.controller.frontend.index.register:
-    class: '%users.controller.frontend.index.register.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Register
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -124,15 +106,15 @@ services:
       - '@core.helpers.sendEmail'
 
   users.controller.frontend.index.view_profile:
-    class: '%users.controller.frontend.index.view_profile.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ViewProfile
     arguments:
       - '@core.context.frontend'
       - '@users.model.userrepository'
 
   users.controller.widget.index.login:
-    class: '%users.controller.widget.index.login.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\Login
     parent: core.controller.widget
 
   users.controller.widget.index.user_menu:
-    class: '%users.controller.widget.index.user_menu.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\UserMenu
     parent: core.controller.widget

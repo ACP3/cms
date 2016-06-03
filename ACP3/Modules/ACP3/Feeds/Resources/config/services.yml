@@ -3,12 +3,9 @@ imports:
   - { resource: components/installer.yml }
   - { resource: components/validation.yml }
 
-parameters:
-  feeds.helper.feedgenerator.fqdn: 'ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator'
-
 services:
   feeds.helper.feedgenerator:
-    class: '%feeds.helper.feedgenerator.fqdn%'
+    class: ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator
     arguments:
       - '@core.config'
       - '@core.router'

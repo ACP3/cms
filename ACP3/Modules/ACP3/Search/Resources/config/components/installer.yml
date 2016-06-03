@@ -1,11 +1,7 @@
-parameters:
-  search.installer.schema.fqdn: 'ACP3\Modules\ACP3\Search\Installer\Schema'
-  search.installer.migration.fqdn: 'ACP3\Modules\ACP3\Search\Installer\Migration'
-
 services:
   search.installer.schema:
-    class: '%search.installer.schema.fqdn%'
+    class: ACP3\Modules\ACP3\Search\Installer\Schema
 
   search.installer.migration:
-    class: '%search.installer.migration.fqdn%'
+    class: ACP3\Modules\ACP3\Search\Installer\Migration
     parent: core.modules.installer.abstractMigration

@@ -1,11 +1,6 @@
-parameters:
-  seo.helper.meta_form_fields.fqdn: ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
-  seo.helper.meta_statements.fqdn: ACP3\Modules\ACP3\Seo\Helper\MetaStatements
-  seo.helper.uri_alias_manager.fqdn: ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
-
 services:
   seo.helper.meta_form_fields:
-    class: '%seo.helper.meta_form_fields.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
     arguments:
       - '@seo.helper.meta_statements'
       - '@core.lang'
@@ -14,14 +9,14 @@ services:
       - '@core.helpers.forms'
 
   seo.helper.meta_statements:
-    class: '%seo.helper.meta_statements.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Helper\MetaStatements
     arguments:
       - '@core.http.request'
       - '@seo.cache'
       - '@core.config'
 
   seo.helper.uri_alias_manager:
-    class: '%seo.helper.uri_alias_manager.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
     arguments:
       - '@core.helpers.secure'
       - '@seo.cache'

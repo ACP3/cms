@@ -6,12 +6,9 @@ imports:
   - { resource: components/models.yml }
   - { resource: components/validation.yml }
 
-parameters:
-  articles.helpers.fqdn: 'ACP3\Modules\ACP3\Articles\Helpers'
-
 services:
   articles.helpers:
-    class: '%articles.helpers.fqdn%'
+    class: ACP3\Modules\ACP3\Articles\Helpers
     arguments:
       - '@core.helpers.forms'
       - '@articles.model.articlerepository'

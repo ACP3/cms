@@ -1,11 +1,7 @@
-parameters:
-  errors.installer.schema.fqdn: 'ACP3\Modules\ACP3\Errors\Installer\Schema'
-  errors.installer.migration.fqdn: 'ACP3\Modules\ACP3\Errors\Installer\Migration'
-
 services:
   errors.installer.schema:
-    class: '%errors.installer.schema.fqdn%'
+    class: ACP3\Modules\ACP3\Errors\Installer\Schema
 
   errors.installer.migration:
-    class: '%errors.installer.migration.fqdn%'
+    class: ACP3\Modules\ACP3\Errors\Installer\Migration
     parent: core.modules.installer.abstractMigration

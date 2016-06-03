@@ -1,19 +1,14 @@
-parameters:
-  seo.validator.fqdn: 'ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation'
-  seo.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation'
-  seo.validation.validation_rules.uri_alias_validation_rule.fqdn: 'ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule'
-
 services:
   seo.validator:
-    class: '%seo.validator.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
     parent: core.validator.abstract
 
   seo.validation.admin_settings_form_validation:
-    class: '%seo.validation.admin_settings_form_validation.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation
     parent: core.validator.abstract
 
   seo.validation.validation_rules.uri_alias_validation_rule:
-    class: '%seo.validation.validation_rules.uri_alias_validation_rule.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule
     arguments:
       - '@core.environment.application_path'
       - '@core.validation.validation_rules.internal_uri_validation_rule'

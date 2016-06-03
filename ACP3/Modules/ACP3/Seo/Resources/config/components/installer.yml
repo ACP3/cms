@@ -1,10 +1,6 @@
-parameters:
-  seo.installer.schema.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Schema'
-  seo.installer.migration.fqdn: 'ACP3\Modules\ACP3\Seo\Installer\Migration'
-
 services:
   seo.installer.schema:
-    class: '%seo.installer.schema.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Installer\Schema
 
   seo.installer.migration:
-    class: '%seo.installer.migration.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Installer\Migration

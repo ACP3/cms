@@ -1,15 +1,10 @@
-parameters:
-  menus.installer.schema.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\Schema'
-  menus.installer.migration.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\Migration'
-  menus.installer.sampleData.fqdn: 'ACP3\Modules\ACP3\Menus\Installer\SampleData'
-
 services:
   menus.installer.schema:
-    class: '%menus.installer.schema.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Installer\Schema
 
   menus.installer.migration:
-    class: '%menus.installer.migration.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Installer\Migration
 
   menus.installer.sampleData:
-    class: '%menus.installer.sampledata.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Installer\SampleData
     parent: core.modules.installer.abstractSampleData

@@ -1,7 +1,4 @@
-parameters:
-  acp.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\Acp\Controller\Admin\Index\Index'
-
 services:
   acp.controller.admin.index.index:
-    class: '%acp.controller.admin.index.index.fqdn%'
+    class: ACP3\Modules\ACP3\Acp\Controller\Admin\Index\Index
     parent: core.controller.admin

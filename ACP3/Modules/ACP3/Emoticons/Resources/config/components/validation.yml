@@ -1,12 +1,8 @@
-parameters:
-  emoticons.validator.fqdn: 'ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation'
-  emoticons.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Emoticons\Validation\AdminSettingsFormValidation'
-
 services:
   emoticons.validator:
-    class: '%emoticons.validator.fqdn%'
+    class: ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation
     parent: core.validator.abstract
 
   emoticons.validation.admin_settings_form_validation:
-    class: '%emoticons.validation.admin_settings_form_validation.fqdn%'
+    class: ACP3\Modules\ACP3\Emoticons\Validation\AdminSettingsFormValidation
     parent: core.validator.abstract

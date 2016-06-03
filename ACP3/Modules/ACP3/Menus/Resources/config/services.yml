@@ -7,12 +7,9 @@ imports:
   - { resource: components/overrides.yml }
   - { resource: components/validation.yml }
 
-parameters:
-  smarty.plugin.navbar.fqdn: 'ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions\Navbar'
-
 services:
   smarty.plugin.navbar:
-    class: '%smarty.plugin.navbar.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions\Navbar
     arguments:
       - '@core.http.request'
       - '@core.router'

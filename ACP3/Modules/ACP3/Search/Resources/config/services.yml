@@ -3,12 +3,9 @@ imports:
   - { resource: components/installer.yml }
   - { resource: components/validation.yml }
 
-parameters:
-  search.helpers.fqdn: 'ACP3\Modules\ACP3\Search\Helpers'
-
 services:
   search.helpers:
-    class: '%search.helpers.fqdn%'
+    class: ACP3\Modules\ACP3\Search\Helpers
     arguments:
       - '@core.acl'
       - '@core.modules'

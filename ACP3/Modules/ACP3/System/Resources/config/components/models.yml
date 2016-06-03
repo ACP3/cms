@@ -1,14 +1,10 @@
-parameters:
-  system.model.modulerepository.fqdn: 'ACP3\Modules\ACP3\System\Model\ModuleRepository'
-  system.model.settingsrepository.fqdn: 'ACP3\Modules\ACP3\System\Model\SettingsRepository'
-
 services:
   system.model.modulerepository:
-    class: '%system.model.modulerepository.fqdn%'
+    class: ACP3\Modules\ACP3\System\Model\ModuleRepository
     arguments:
       - '@core.db'
 
   system.model.settingsrepository:
-    class: '%system.model.settingsrepository.fqdn%'
+    class: ACP3\Modules\ACP3\System\Model\SettingsRepository
     arguments:
       - '@core.db'

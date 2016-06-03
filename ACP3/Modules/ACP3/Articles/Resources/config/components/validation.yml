@@ -1,17 +1,13 @@
-parameters:
-  articles.validator.fqdn: 'ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation'
-  articles.validation.validation_rules.article_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule'
-
 services:
   articles.validator:
-    class: '%articles.validator.fqdn%'
+    class: ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
     arguments:
       - '@core.lang'
       - '@core.validator'
       - '@core.acl'
 
   articles.validation.validation_rules.article_exists_validation_rule:
-    class: '%articles.validation.validation_rules.article_exists_validation_rule.fqdn%'
+    class: ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule
     arguments:
        - '@articles.model.articlerepository'
     tags:

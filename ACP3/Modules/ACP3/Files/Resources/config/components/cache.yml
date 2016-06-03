@@ -1,9 +1,6 @@
-parameters:
-  files.cache.fqdn: 'ACP3\Modules\ACP3\Files\Cache'
-
 services:
   files.cache:
-    class: '%files.cache.fqdn%'
+    class: ACP3\Modules\ACP3\Files\Cache
     arguments:
       - '@files.cache.core'
       - '@files.model.filesrepository'

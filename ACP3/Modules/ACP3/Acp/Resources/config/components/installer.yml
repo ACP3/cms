@@ -1,10 +1,6 @@
-parameters:
-  acp.installer.schema.fqdn: 'ACP3\Modules\ACP3\Acp\Installer\Schema'
-  acp.installer.migration.fqdn: 'ACP3\Modules\ACP3\Acp\Installer\Migration'
-
 services:
   acp.installer.schema:
-    class: '%acp.installer.schema.fqdn%'
+    class: ACP3\Modules\ACP3\Acp\Installer\Schema
 
   acp.installer.migration:
-    class: '%acp.installer.migration.fqdn%'
+    class: ACP3\Modules\ACP3\Acp\Installer\Migration

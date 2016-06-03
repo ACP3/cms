@@ -1,11 +1,7 @@
-parameters:
-  contact.installer.schema.fqdn: 'ACP3\Modules\ACP3\Contact\Installer\Schema'
-  contact.installer.migration.fqdn: 'ACP3\Modules\ACP3\Contact\Installer\Migration'
-
 services:
   contact.installer.schema:
-    class: '%contact.installer.schema.fqdn%'
+    class: ACP3\Modules\ACP3\Contact\Installer\Schema
 
   contact.installer.migration:
-    class: '%contact.installer.migration.fqdn%'
+    class: ACP3\Modules\ACP3\Contact\Installer\Migration
     parent: core.modules.installer.abstractMigration

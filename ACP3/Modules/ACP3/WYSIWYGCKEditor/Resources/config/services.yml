@@ -1,12 +1,9 @@
 imports:
   - { resource: components/installer.yml }
 
-parameters:
-  core.wysiwyg.ckeditor.fqdn: 'ACP3\Modules\ACP3\WYSIWYGCKEditor\WYSIWYG\CKEditor'
-
 services:
   core.wysiwyg.ckeditor:
-    class: '%core.wysiwyg.ckeditor.fqdn%'
+    class: ACP3\Modules\ACP3\WYSIWYGCKEditor\WYSIWYG\CKEditor
     arguments:
       - '@core.modules'
       - '@core.lang'

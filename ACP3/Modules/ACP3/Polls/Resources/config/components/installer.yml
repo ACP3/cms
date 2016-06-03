@@ -1,11 +1,7 @@
-parameters:
-  polls.installer.schema.fqdn: 'ACP3\Modules\ACP3\Polls\Installer\Schema'
-  polls.installer.migration.fqdn: 'ACP3\Modules\ACP3\Polls\Installer\Migration'
-
 services:
   polls.installer.schema:
-    class: '%polls.installer.schema.fqdn%'
+    class: ACP3\Modules\ACP3\Polls\Installer\Schema
 
   polls.installer.migration:
-    class: '%polls.installer.migration.fqdn%'
+    class: ACP3\Modules\ACP3\Polls\Installer\Migration
     parent: core.modules.installer.abstractMigration

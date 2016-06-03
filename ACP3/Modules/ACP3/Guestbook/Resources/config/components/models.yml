@@ -1,14 +1,10 @@
-parameters:
-  guestbook.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Guestbook\Model\DataGridRepository'
-  guestbook.model.guestbookrepository.fqdn: 'ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository'
-
 services:
   guestbook.model.data_grid_repository:
-    class: '%guestbook.model.data_grid_repository.fqdn%'
+    class: ACP3\Modules\ACP3\Guestbook\Model\DataGridRepository
     arguments:
       - '@core.db'
 
   guestbook.model.guestbookrepository:
-    class: '%guestbook.model.guestbookrepository.fqdn%'
+    class: ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository
     arguments:
       - '@core.db'

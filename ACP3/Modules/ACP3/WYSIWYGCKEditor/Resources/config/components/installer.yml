@@ -1,10 +1,6 @@
-parameters:
-  wysiwygckeditor.installer.schema.fqdn: 'ACP3\Modules\ACP3\WYSIWYGCKEditor\Installer\Schema'
-  wysiwygckeditor.installer.migration.fqdn: 'ACP3\Modules\ACP3\WYSIWYGCKEditor\Installer\Migration'
-
 services:
   wysiwygckeditor.installer.schema:
-    class: '%wysiwygckeditor.installer.schema.fqdn%'
+    class: ACP3\Modules\ACP3\WYSIWYGCKEditor\Installer\Schema
 
   wysiwygckeditor.installer.migration:
-    class: '%wysiwygckeditor.installer.migration.fqdn%'
+    class: ACP3\Modules\ACP3\WYSIWYGCKEditor\Installer\Migration

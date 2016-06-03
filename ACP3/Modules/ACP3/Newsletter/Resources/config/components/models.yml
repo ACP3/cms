@@ -1,32 +1,25 @@
-parameters:
-  newsletter.model.newsletterrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository'
-  newsletter.model.newsletter_data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\NewsletterDataGridRepository'
-  newsletter.model.accountrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountRepository'
-  newsletter.model.account_data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountDataGridRepository'
-  newsletter.model.accounthistoryrepository.fqdn: 'ACP3\Modules\ACP3\Newsletter\Model\AccountHistoryRepository'
-
 services:
   newsletter.model.newsletterrepository:
-    class: '%newsletter.model.newsletterrepository.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
     arguments:
       - '@core.db'
 
   newsletter.model.newsletter_data_grid_repository:
-    class: '%newsletter.model.newsletter_data_grid_repository.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Model\NewsletterDataGridRepository
     arguments:
       - '@core.db'
 
   newsletter.model.accountrepository:
-    class: '%newsletter.model.accountrepository.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Model\AccountRepository
     arguments:
       - '@core.db'
 
   newsletter.model.account_data_grid_repository:
-    class: '%newsletter.model.account_data_grid_repository.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Model\AccountDataGridRepository
     arguments:
       - '@core.db'
 
   newsletter.model.accounthistoryrepository:
-    class: '%newsletter.model.accounthistoryrepository.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Model\AccountHistoryRepository
     arguments:
       - '@core.db'

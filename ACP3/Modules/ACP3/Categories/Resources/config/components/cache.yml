@@ -1,9 +1,6 @@
-parameters:
-  categories.cache.fqdn: 'ACP3\Modules\ACP3\Categories\Cache'
-
 services:
   categories.cache:
-    class: '%categories.cache.fqdn%'
+    class: ACP3\Modules\ACP3\Categories\Cache
     arguments:
       - '@categories.cache.core'
       - '@categories.model'

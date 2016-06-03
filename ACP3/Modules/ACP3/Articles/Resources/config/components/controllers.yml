@@ -1,16 +1,6 @@
-parameters:
-  articles.controller.admin.index.create.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Create'
-  articles.controller.admin.index.delete.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Delete'
-  articles.controller.admin.index.edit.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit'
-  articles.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Index'
-  articles.controller.frontend.index.details.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Details'
-  articles.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Index'
-  articles.controller.widget.index.index.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Index'
-  articles.controller.widget.index.single.fqdn: 'ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Single'
-
 services:
   articles.controller.admin.index.create:
-    class: '%articles.controller.admin.index.create.fqdn%'
+    class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Create
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -26,7 +16,7 @@ services:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   articles.controller.admin.index.delete:
-    class: '%articles.controller.admin.index.delete.fqdn%'
+    class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
       - '@articles.model.articlerepository'
@@ -37,7 +27,7 @@ services:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   articles.controller.admin.index.edit:
-    class: '%articles.controller.admin.index.edit.fqdn%'
+    class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -55,13 +45,13 @@ services:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   articles.controller.admin.index.index:
-    class: '%articles.controller.admin.index.index.fqdn%'
+    class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Index
     arguments:
       - '@core.context.admin'
       - '@articles.model.data_grid_repository'
 
   articles.controller.frontend.index.details:
-    class: '%articles.controller.frontend.index.details.fqdn%'
+    class: ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Details
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -70,7 +60,7 @@ services:
       - '@articles.cache'
 
   articles.controller.frontend.index.index:
-    class: '%articles.controller.frontend.index.index.fqdn%'
+    class: ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -78,7 +68,7 @@ services:
       - '@articles.model.articlerepository'
 
   articles.controller.widget.index.index:
-    class: '%articles.controller.widget.index.index.fqdn%'
+    class: ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
       - '@core.date'
@@ -86,7 +76,7 @@ services:
       - '@articles.cache'
 
   articles.controller.widget.index.single:
-    class: '%articles.controller.widget.index.single.fqdn%'
+    class: ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Single
     arguments:
       - '@core.context.widget'
       - '@core.date'

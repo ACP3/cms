@@ -4,12 +4,9 @@ imports:
   - { resource: components/installer.yml }
   - { resource: components/validation.yml }
 
-parameters:
-  captcha.helpers.fqdn: 'ACP3\Modules\ACP3\Captcha\Helpers'
-
 services:
   captcha.helpers:
-    class: '%captcha.helpers.fqdn%'
+    class: ACP3\Modules\ACP3\Captcha\Helpers
     arguments:
       - '@core.user'
       - '@core.http.request'

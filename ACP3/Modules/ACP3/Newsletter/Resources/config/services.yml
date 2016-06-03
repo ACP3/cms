@@ -5,22 +5,16 @@ imports:
   - { resource: components/models.yml }
   - { resource: components/validation.yml }
 
-parameters:
-  newsletter.helper.accountstatus.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus'
-  newsletter.helper.data_grid.column_renderer.account_status_column_renderer.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer\AccountStatusColumnRenderer'
-  newsletter.helper.sendnewsletter.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter'
-  newsletter.helper.subscribe.fqdn: 'ACP3\Modules\ACP3\Newsletter\Helper\Subscribe'
-
 services:
   newsletter.helper.accountstatus:
-    class: '%newsletter.helper.accountstatus.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
     arguments:
       - '@core.date'
       - '@newsletter.model.accountrepository'
       - '@newsletter.model.accounthistoryrepository'
 
   newsletter.helper.sendnewsletter:
-    class: '%newsletter.helper.sendnewsletter.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter
     arguments:
       - '@core.mailer'
       - '@core.router'
@@ -28,7 +22,7 @@ services:
       - '@newsletter.model.newsletterrepository'
 
   newsletter.helper.subscribe:
-    class: '%newsletter.helper.subscribe.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Helper\Subscribe
     arguments:
       - '@core.date'
       - '@core.lang'
@@ -42,7 +36,7 @@ services:
       - '@newsletter.model.accountrepository'
 
   newsletter.helper.data_grid.column_renderer.account_status_column_renderer:
-    class: '%newsletter.helper.data_grid.column_renderer.account_status_column_renderer.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer\AccountStatusColumnRenderer
     arguments:
       - '@core.lang'
       - '@core.router'

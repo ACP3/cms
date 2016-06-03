@@ -1,9 +1,6 @@
-parameters:
-  captcha.validation.validation_rules.captcha_validation_rule.fqdn: 'ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaValidationRule'
-
 services:
   captcha.validation.validation_rules.captcha_validation_rule:
-    class: '%captcha.validation.validation_rules.captcha_validation_rule.fqdn%'
+    class: ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaValidationRule
     arguments:
       - '@core.acl'
       - '@core.http.request'

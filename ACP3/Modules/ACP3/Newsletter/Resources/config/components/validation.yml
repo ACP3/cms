@@ -1,42 +1,33 @@
-parameters:
-  newsletter.validator.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation'
-  newsletter.validation.activate_account_form_validation.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation'
-  newsletter.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation'
-  newsletter.validation.subscribe_form_validation.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation'
-  newsletter.validation.unsubscribe_form_validation.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation'
-  newsletter.validation.validation_rules.account_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidationRule'
-  newsletter.validation.validation_rules.account_exists_by_hash_validation_rule.fqdn: 'ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsByHashValidationRule'
-
 services:
   newsletter.validator:
-    class: '%newsletter.validator.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
     parent: core.validator.abstract
 
   newsletter.validation.activate_account_form_validation:
-    class: '%newsletter.validation.activate_account_form_validation.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation
     parent: core.validator.abstract
 
   newsletter.validation.admin_settings_form_validation:
-    class: '%newsletter.validation.admin_settings_form_validation.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation
     parent: core.validator.abstract
 
   newsletter.validation.subscribe_form_validation:
-    class: '%newsletter.validation.subscribe_form_validation.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation
     parent: core.validator.abstract
 
   newsletter.validation.unsubscribe_form_validation:
-    class: '%newsletter.validation.unsubscribe_form_validation.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation
     parent: core.validator.abstract
 
   newsletter.validation.validation_rules.account_exists_validation_rule:
-    class: '%newsletter.validation.validation_rules.account_exists_validation_rule.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidationRule
     arguments:
       - '@newsletter.model.accountrepository'
     tags:
       - { name: core.validation.validation_rule }
 
   newsletter.validation.validation_rules.account_exists_by_hash_validation_rule:
-    class: '%newsletter.validation.validation_rules.account_exists_by_hash_validation_rule.fqdn%'
+    class: ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsByHashValidationRule
     arguments:
       - '@newsletter.model.accountrepository'
     tags:

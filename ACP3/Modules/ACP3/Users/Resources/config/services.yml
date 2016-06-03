@@ -4,13 +4,9 @@ imports:
   - { resource: components/models.yml }
   - { resource: components/validation.yml }
 
-parameters:
-  users.helpers.data_grid_column_renderer.user_roles_column_renderer.fqdn: 'ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer'
-  users.helpers.forms.fqdn: 'ACP3\Modules\ACP3\Users\Helpers\Forms'
-
 services:
   users.helpers.forms:
-    class: '%users.helpers.forms.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Helpers\Forms
     arguments:
       - '@core.lang'
       - '@core.http.request'
@@ -18,7 +14,7 @@ services:
       - '@core.helpers.forms'
 
   users.helpers.data_grid.column_renderer.user_roles_column_renderer:
-    class: '%users.helpers.data_grid_column_renderer.user_roles_column_renderer.fqdn%'
+    class: ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer
     arguments:
       - '@core.acl'
     tags:

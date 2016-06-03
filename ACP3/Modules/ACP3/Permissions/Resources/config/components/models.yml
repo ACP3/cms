@@ -1,32 +1,25 @@
-parameters:
-  permissions.model.rolerepository.fqdn: 'ACP3\Modules\ACP3\Permissions\Model\RoleRepository'
-  permissions.model.resourcerepository.fqdn: 'ACP3\Modules\ACP3\Permissions\Model\ResourceRepository'
-  permissions.model.privilegerepository.fqdn: 'ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository'
-  permissions.model.rulerepository.fqdn: 'ACP3\Modules\ACP3\Permissions\Model\RuleRepository'
-  permissions.model.userrolerepository.fqdn: 'ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository'
-
 services:
   permissions.model.rolerepository:
-    class: '%permissions.model.rolerepository.fqdn%'
+    class: ACP3\Modules\ACP3\Permissions\Model\RoleRepository
     arguments:
       - '@core.db'
 
   permissions.model.rulerepository:
-    class: '%permissions.model.rulerepository.fqdn%'
+    class: ACP3\Modules\ACP3\Permissions\Model\RuleRepository
     arguments:
       - '@core.db'
 
   permissions.model.resourcerepository:
-    class: '%permissions.model.resourcerepository.fqdn%'
+    class: ACP3\Modules\ACP3\Permissions\Model\ResourceRepository
     arguments:
       - '@core.db'
 
   permissions.model.privilegerepository:
-    class: '%permissions.model.privilegerepository.fqdn%'
+    class: ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository
     arguments:
       - '@core.db'
 
   permissions.model.userrolerepository:
-    class: '%permissions.model.userrolerepository.fqdn%'
+    class: ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository
     arguments:
       - '@core.db'

@@ -1,9 +1,6 @@
-parameters:
-  articles.cache.fqdn: 'ACP3\Modules\ACP3\Articles\Cache'
-
 services:
   articles.cache:
-    class: '%articles.cache.fqdn%'
+    class: ACP3\Modules\ACP3\Articles\Cache
     arguments:
       - '@articles.cache.core'
       - '@articles.model.articlerepository'

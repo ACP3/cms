@@ -1,15 +1,10 @@
-parameters:
-  emoticons.installer.sampledata.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\SampleData'
-  emoticons.installer.schema.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Schema'
-  emoticons.installer.migration.fqdn: 'ACP3\Modules\ACP3\Emoticons\Installer\Migration'
-
 services:
   emoticons.installer.schema:
-    class: '%emoticons.installer.schema.fqdn%'
+    class: ACP3\Modules\ACP3\Emoticons\Installer\Schema
 
   emoticons.installer.migration:
-    class: '%emoticons.installer.migration.fqdn%'
+    class: ACP3\Modules\ACP3\Emoticons\Installer\Migration
 
   emoticons.installer.sampleData:
-    class: '%emoticons.installer.sampledata.fqdn%'
+    class: ACP3\Modules\ACP3\Emoticons\Installer\SampleData
     parent: core.modules.installer.abstractSampleData

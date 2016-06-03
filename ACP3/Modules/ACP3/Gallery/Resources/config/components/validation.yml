@@ -1,19 +1,14 @@
-parameters:
-  gallery.validator.gallery.fqdn: 'ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation'
-  gallery.validator.picture.fqdn: 'ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation'
-  gallery.validator.settings.fqdn: 'ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation'
-
 services:
   gallery.validator.gallery:
-    class: '%gallery.validator.gallery.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation
     parent: core.validator.abstract
 
   gallery.validator.picture:
-    class: '%gallery.validator.picture.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation
     parent: core.validator.abstract
 
   gallery.validator.settings:
-    class: '%gallery.validator.settings.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation
     arguments:
       - '@core.lang'
       - '@core.validator'

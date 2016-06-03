@@ -1,11 +1,7 @@
-parameters:
-  guestbook.installer.schema.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer\Schema'
-  guestbook.installer.migration.fqdn: 'ACP3\Modules\ACP3\Guestbook\Installer\Migration'
-
 services:
   guestbook.installer.schema:
-    class: '%guestbook.installer.schema.fqdn%'
+    class: ACP3\Modules\ACP3\Guestbook\Installer\Schema
 
   guestbook.installer.migration:
-    class: '%guestbook.installer.migration.fqdn%'
+    class: ACP3\Modules\ACP3\Guestbook\Installer\Migration
     parent: core.modules.installer.abstractMigration

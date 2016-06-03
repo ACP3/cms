@@ -3,18 +3,14 @@ imports:
   - { resource: components/installer.yml }
   - { resource: components/validation.yml }
 
-parameters:
-  comments.helpers.fqdn: 'ACP3\Modules\ACP3\Comments\Helpers'
-  comments.model.commentrepository.fqdn: 'ACP3\Modules\ACP3\Comments\Model\CommentRepository'
-
 services:
   comments.helpers:
-    class: '%comments.helpers.fqdn%'
+    class: ACP3\Modules\ACP3\Comments\Helpers
     arguments:
       - '@core.modules'
       - '@comments.model.commentrepository'
 
   comments.model.commentrepository:
-    class: '%comments.model.commentrepository.fqdn%'
+    class: ACP3\Modules\ACP3\Comments\Model\CommentRepository
     arguments:
       - '@core.db'

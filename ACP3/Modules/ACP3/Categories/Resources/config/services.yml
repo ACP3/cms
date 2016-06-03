@@ -5,12 +5,9 @@ imports:
   - { resource: components/models.yml }
   - { resource: components/validation.yml }
 
-parameters:
-  categories.helpers.fqdn: 'ACP3\Modules\ACP3\Categories\Helpers'
-
 services:
   categories.helpers:
-    class: '%categories.helpers.fqdn%'
+    class: ACP3\Modules\ACP3\Categories\Helpers
     arguments:
       - '@core.acl'
       - '@core.lang'

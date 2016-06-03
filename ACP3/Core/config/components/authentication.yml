@@ -11,7 +11,7 @@ services:
     class: ACP3\Core\Authentication\AuthenticationInterface
     factory: ['@core.authentication.factory', get]
     arguments:
-      - %core.authentication.method%
+      - '%core.authentication.method%'
 
   core.authentication.native:
     class: ACP3\Core\Authentication\Native

@@ -1,10 +1,6 @@
-parameters:
-  wysiwygtinymce.installer.schema.fqdn: 'ACP3\Modules\ACP3\WYSIWYGTinyMCE\Installer\Schema'
-  wysiwygtinymce.installer.migration.fqdn: 'ACP3\Modules\ACP3\WYSIWYGTinyMCE\Installer\Migration'
-
 services:
   wysiwygtinymce.installer.schema:
-    class: '%wysiwygtinymce.installer.schema.fqdn%'
+    class: ACP3\Modules\ACP3\WYSIWYGTinyMCE\Installer\Schema
 
   wysiwygtinymce.installer.migration:
-    class: '%wysiwygtinymce.installer.migration.fqdn%'
+    class: ACP3\Modules\ACP3\WYSIWYGTinyMCE\Installer\Migration

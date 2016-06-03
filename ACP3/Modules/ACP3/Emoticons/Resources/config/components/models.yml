@@ -1,14 +1,10 @@
-parameters:
-  emoticons.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Emoticons\Model\DataGridRepository'
-  emoticons.model.emoticonrepository.fqdn: 'ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository'
-
 services:
   emoticons.model.data_grid_repository:
-    class: '%emoticons.model.data_grid_repository.fqdn%'
+    class: ACP3\Modules\ACP3\Emoticons\Model\DataGridRepository
     arguments:
       - '@core.db'
 
   emoticons.model.emoticonrepository:
-    class: '%emoticons.model.emoticonrepository.fqdn%'
+    class: ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository
     arguments:
       - '@core.db'

@@ -1,30 +1,21 @@
-parameters:
-  menus.validator.menu.fqdn: 'ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation'
-  menus.validator.menuitem.fqdn: 'ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation'
-  menus.validation.validation_rules.allowed_menu_validation_rule.fqdn: 'ACP3\Modules\ACP3\Menus\Validation\ValidationRules\AllowedMenuValidationRule'
-  menus.validation.validation_rules.link_mode_validation_rule.fqdn: 'ACP3\Modules\ACP3\Menus\Validation\ValidationRules\LinkModeValidationRule'
-  menus.validation.validation_rules.menu_exists_validation_rule.fqdn: 'ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuExistsValidationRule'
-  menus.validation.validation_rules.menu_name_validation_rule.fqdn: 'ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuNameValidationRule'
-  menus.validation.validation_rules.parent_id_validation_rule.fqdn: 'ACP3\Modules\ACP3\Menus\Validation\ValidationRules\ParentIdValidationRule'
-
 services:
   menus.validator.menu:
-    class: '%menus.validator.menu.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation
     parent: core.validator.abstract
 
   menus.validator.menuitem:
-    class: '%menus.validator.menuitem.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation
     parent: core.validator.abstract
 
   menus.validation.validation_rules.allowed_menu_validation_rule:
-    class: '%menus.validation.validation_rules.allowed_menu_validation_rule.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\AllowedMenuValidationRule
     arguments:
       - '@menus.model.menuitemrepository'
     tags:
       - { name: core.validation.validation_rule }
 
   menus.validation.validation_rules.link_mode_validation_rule:
-    class: '%menus.validation.validation_rules.link_mode_validation_rule.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\LinkModeValidationRule
     arguments:
       - '@core.modules'
       - '@core.validation.validation_rules.internal_uri_validation_rule'
@@ -34,19 +25,19 @@ services:
       - { name: core.validation.validation_rule }
 
   menus.validation.validation_rules.menu_exists_validation_rule:
-    class: '%menus.validation.validation_rules.menu_exists_validation_rule.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuExistsValidationRule
     arguments:
       - '@menus.model.menurepository'
     tags:
       - { name: core.validation.validation_rule }
 
   menus.validation.validation_rules.menu_name_validation_rule:
-    class: '%menus.validation.validation_rules.menu_name_validation_rule.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuNameValidationRule
     tags:
       - { name: core.validation.validation_rule }
 
   menus.validation.validation_rules.parent_id_validation_rule:
-    class: '%menus.validation.validation_rules.parent_id_validation_rule.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\ParentIdValidationRule
     arguments:
       - '@menus.model.menuitemrepository'
     tags:

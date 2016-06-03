@@ -1,9 +1,6 @@
-parameters:
-  gallery.cache.fqdn: 'ACP3\Modules\ACP3\Gallery\Cache'
-
 services:
   gallery.cache:
-    class: '%gallery.cache.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Cache
     arguments:
       - '@gallery.cache.core'
       - '@core.environment.application_path'

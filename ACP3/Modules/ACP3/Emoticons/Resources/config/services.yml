@@ -6,12 +6,9 @@ imports:
   - { resource: components/models.yml }
   - { resource: components/validation.yml }
 
-parameters:
-  emoticons.helpers.fqdn: 'ACP3\Modules\ACP3\Emoticons\Helpers'
-
 services:
   emoticons.helpers:
-    class: '%emoticons.helpers.fqdn%'
+    class: ACP3\Modules\ACP3\Emoticons\Helpers
     arguments:
       - '@core.view'
       - '@emoticons.cache'

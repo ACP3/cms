@@ -1,13 +1,6 @@
-parameters:
-  seo.controller.admin.index.create.fqdn: 'ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Create'
-  seo.controller.admin.index.delete.fqdn: 'ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Delete'
-  seo.controller.admin.index.edit.fqdn: 'ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Edit'
-  seo.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Index'
-  seo.controller.admin.index.settings.fqdn: 'ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Settings'
-
 services:
   seo.controller.admin.index.create:
-    class: '%seo.controller.admin.index.create.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Create
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
@@ -17,14 +10,14 @@ services:
       - '@seo.validator'
 
   seo.controller.admin.index.delete:
-    class: '%seo.controller.admin.index.delete.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
       - '@seo.cache'
       - '@seo.model.seorepository'
 
   seo.controller.admin.index.edit:
-    class: '%seo.controller.admin.index.edit.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
@@ -34,14 +27,14 @@ services:
       - '@seo.validator'
 
   seo.controller.admin.index.index:
-    class: '%seo.controller.admin.index.index.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Index
     arguments:
       - '@core.context.admin'
       - '@seo.model.data_grid_repository'
       - '@seo.helper.meta_statements'
 
   seo.controller.admin.index.settings:
-    class: '%seo.controller.admin.index.settings.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'

@@ -1,22 +1,6 @@
-parameters:
-  gallery.controller.admin.index.create.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Create'
-  gallery.controller.admin.index.delete.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Delete'
-  gallery.controller.admin.index.edit.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Edit'
-  gallery.controller.admin.index.index.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Index'
-  gallery.controller.admin.index.settings.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Settings'
-  gallery.controller.admin.pictures.create.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Create'
-  gallery.controller.admin.pictures.delete.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Delete'
-  gallery.controller.admin.pictures.edit.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Edit'
-  gallery.controller.admin.pictures.order.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Order'
-  gallery.controller.frontend.index.details.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Details'
-  gallery.controller.frontend.index.image.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Image'
-  gallery.controller.frontend.index.index.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Index'
-  gallery.controller.frontend.index.pics.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Pics'
-  gallery.controller.widget.index.index.fqdn: 'ACP3\Modules\ACP3\Gallery\Controller\Widget\Index\Index'
-
 services:
   gallery.controller.admin.index.create:
-    class: '%gallery.controller.admin.index.create.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Create
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -27,7 +11,7 @@ services:
       - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
 
   gallery.controller.admin.index.delete:
-    class: '%gallery.controller.admin.index.delete.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
       - '@gallery.cache'
@@ -38,7 +22,7 @@ services:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   gallery.controller.admin.index.edit:
-    class: '%gallery.controller.admin.index.edit.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.admin'
       - '@core.date'
@@ -52,13 +36,13 @@ services:
       - ['setMetaStatements', ['@?seo.helper.meta_statements']]
 
   gallery.controller.admin.index.index:
-    class: '%gallery.controller.admin.index.index.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Index
     arguments:
       - '@core.context.admin'
       - '@gallery.model.gallery_data_grid_repository'
 
   gallery.controller.admin.index.settings:
-    class: '%gallery.controller.admin.index.settings.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -66,7 +50,7 @@ services:
       - '@gallery.validator.settings'
 
   gallery.controller.admin.pictures.create:
-    class: '%gallery.controller.admin.pictures.create.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Create
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -82,7 +66,7 @@ services:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   gallery.controller.admin.pictures.delete:
-    class: '%gallery.controller.admin.pictures.delete.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Delete
     arguments:
       - '@core.context.admin'
       - '@gallery.helpers'
@@ -92,7 +76,7 @@ services:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   gallery.controller.admin.pictures.edit:
-    class: '%gallery.controller.admin.pictures.edit.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Edit
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
@@ -103,7 +87,7 @@ services:
       - '@gallery.validator.picture'
 
   gallery.controller.admin.pictures.order:
-    class: '%gallery.controller.admin.pictures.order.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Order
     arguments:
       - '@core.context.admin'
       - '@core.helpers.sort'
@@ -111,7 +95,7 @@ services:
       - '@gallery.cache'
 
   gallery.controller.frontend.index.details:
-    class: '%gallery.controller.frontend.index.details.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Details
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -120,13 +104,13 @@ services:
       - ['setMetaStatements', ['@?seo.helper.meta_statements']]
 
   gallery.controller.frontend.index.image:
-    class: '%gallery.controller.frontend.index.image.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Image
     arguments:
       - '@core.context.frontend'
       - '@gallery.model.picturerepository'
 
   gallery.controller.frontend.index.index:
-    class: '%gallery.controller.frontend.index.index.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -134,7 +118,7 @@ services:
       - '@gallery.model.galleryrepository'
 
   gallery.controller.frontend.index.pics:
-    class: '%gallery.controller.frontend.index.pics.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Pics
     arguments:
       - '@core.context.frontend'
       - '@core.date'
@@ -142,7 +126,7 @@ services:
       - '@gallery.cache'
 
   gallery.controller.widget.index.index:
-    class: '%gallery.controller.widget.index.index.fqdn%'
+    class: ACP3\Modules\ACP3\Gallery\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
       - '@core.date'

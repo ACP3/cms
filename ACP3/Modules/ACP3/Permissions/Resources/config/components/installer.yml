@@ -1,10 +1,6 @@
-parameters:
-  permissions.installer.schema.fqdn: 'ACP3\Modules\ACP3\Permissions\Installer\Schema'
-  permissions.installer.migration.fqdn: 'ACP3\Modules\ACP3\Permissions\Installer\Migration'
-
 services:
   permissions.installer.schema:
-    class: '%permissions.installer.schema.fqdn%'
+    class: ACP3\Modules\ACP3\Permissions\Installer\Schema
 
   permissions.installer.migration:
-    class: '%permissions.installer.migration.fqdn%'
+    class: ACP3\Modules\ACP3\Permissions\Installer\Migration

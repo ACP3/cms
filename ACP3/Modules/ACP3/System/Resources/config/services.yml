@@ -4,17 +4,13 @@ imports:
   - { resource: components/models.yml }
   - { resource: components/validation.yml }
 
-parameters:
-  system.helpers.installer.fqdn: 'ACP3\Modules\ACP3\System\Helper\Installer'
-  system.helpers.export.fqdn: 'ACP3\Modules\ACP3\System\Helper\Export'
-
 services:
   system.helpers.installer:
-    class: '%system.helpers.installer.fqdn%'
+    class: ACP3\Modules\ACP3\System\Helper\Installer
     arguments:
       - '@core.environment.application_path'
       - '@core.modules'
       - '@core.modules.vendors'
       - '@core.modules.schemaInstaller'
       - '@core.xml'
-      - %core.environment%
+      - '%core.environment%'

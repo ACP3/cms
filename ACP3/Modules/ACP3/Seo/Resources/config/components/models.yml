@@ -1,14 +1,10 @@
-parameters:
-  seo.model.data_grid_repository.fqdn: 'ACP3\Modules\ACP3\Seo\Model\DataGridRepository'
-  seo.model.seorepository.fqdn: 'ACP3\Modules\ACP3\Seo\Model\SeoRepository'
-
 services:
   seo.model.data_grid_repository:
-    class: '%seo.model.data_grid_repository.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Model\DataGridRepository
     arguments:
       - '@core.db'
 
   seo.model.seorepository:
-    class: '%seo.model.seorepository.fqdn%'
+    class: ACP3\Modules\ACP3\Seo\Model\SeoRepository
     arguments:
       - '@core.db'

@@ -1,9 +1,6 @@
-parameters:
-  core.breadcrumb.fqdn: 'ACP3\Modules\ACP3\Menus\Core\Breadcrumb\Steps'
-
 services:
   core.breadcrumb:
-    class: '%core.breadcrumb.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Core\Breadcrumb\Steps
     arguments:
       - '@service_container'
       - '@core.lang'

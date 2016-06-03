@@ -1,12 +1,8 @@
-parameters:
-  contact.validator.fqdn: 'ACP3\Modules\ACP3\Contact\Validation\FormValidation'
-  contact.validation.admin_settings_form_validation.fqdn: 'ACP3\Modules\ACP3\Contact\Validation\AdminSettingsFormValidation'
-
 services:
   contact.validator:
-    class: '%contact.validator.fqdn%'
+    class: ACP3\Modules\ACP3\Contact\Validation\FormValidation
     parent: core.validator.abstract
 
   contact.validation.admin_settings_form_validation:
-    class: '%contact.validation.admin_settings_form_validation.fqdn%'
+    class: ACP3\Modules\ACP3\Contact\Validation\AdminSettingsFormValidation
     parent: core.validator.abstract

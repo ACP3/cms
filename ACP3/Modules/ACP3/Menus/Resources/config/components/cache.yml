@@ -1,9 +1,6 @@
-parameters:
-  menus.cache.fqdn: 'ACP3\Modules\ACP3\Menus\Cache'
-
 services:
   menus.cache:
-    class: '%menus.cache.fqdn%'
+    class: ACP3\Modules\ACP3\Menus\Cache
     arguments:
       - '@menus.cache.core'
       - '@core.lang'

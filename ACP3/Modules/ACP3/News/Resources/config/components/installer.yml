@@ -1,16 +1,11 @@
-parameters:
-  news.installer.schema.fqdn: 'ACP3\Modules\ACP3\News\Installer\Schema'
-  news.installer.migration.fqdn: 'ACP3\Modules\ACP3\News\Installer\Migration'
-  news.installer.sampleData.fqdn: 'ACP3\Modules\ACP3\News\Installer\SampleData'
-
 services:
   news.installer.schema:
-    class: '%news.installer.schema.fqdn%'
+    class: ACP3\Modules\ACP3\News\Installer\Schema
 
   news.installer.migration:
-    class: '%news.installer.migration.fqdn%'
+    class: ACP3\Modules\ACP3\News\Installer\Migration
     parent: core.modules.installer.abstractMigration
 
   news.installer.sampleData:
-    class: '%news.installer.sampledata.fqdn%'
+    class: ACP3\Modules\ACP3\News\Installer\SampleData
     parent: core.modules.installer.abstractSampleData

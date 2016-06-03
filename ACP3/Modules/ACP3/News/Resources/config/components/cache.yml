@@ -1,9 +1,6 @@
-parameters:
-  news.cache.fqdn: 'ACP3\Modules\ACP3\News\Cache'
-
 services:
   news.cache:
-    class: '%news.cache.fqdn%'
+    class: ACP3\Modules\ACP3\News\Cache
     arguments:
       - '@news.cache.core'
       - '@news.model.newsrepository'
