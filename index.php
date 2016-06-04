@@ -23,6 +23,15 @@ if (!$kernel->startupChecks()) {
     exit;
 }
 
-$kernel
-    ->handle($request)
-    ->send();
+$cacheStore = new \Symfony\Component\HttpKernel\HttpCache\Store(
+    $kernel->getAppPath()->getCacheDir() . 'http/'
+);
+
+$httpCache = new \Symfony\Component\HttpKernel\HttpCache\HttpCache(
+    $kernel,
+    $cacheStore,
+    new \Symfony\Component\HttpKernel\HttpCache\Esi(),
+    ['debug' => $appMode === \ACP3\Core\Environment\ApplicationMode::DEVELOPMENT]
+);
+
+$httpCache->handle($request)->send();

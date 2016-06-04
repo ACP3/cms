@@ -91,7 +91,7 @@ class Bootstrap extends AbstractBootstrap
         Utf8\Bootup::filterRequestUri(); // Redirects to an UTF-8 encoded URL if it's not already the case
         Utf8\Bootup::filterRequestInputs(); // Normalizes HTTP inputs to UTF-8 NFC
 
-        $file = $this->appPath->getCacheDir() . 'sql/container.php';
+        $file = $this->appPath->getCacheDir() . 'container.php';
 
         $this->dumpContainer($symfonySymfonyRequest, $file);
 

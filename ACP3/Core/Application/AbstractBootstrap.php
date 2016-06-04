@@ -59,6 +59,14 @@ abstract class AbstractBootstrap implements BootstrapInterface
     }
 
     /**
+     * @return ApplicationPath
+     */
+    public function getAppPath()
+    {
+        return $this->appPath;
+    }
+
+    /**
      * Checks, whether the database configuration file exists
      *
      * @return bool
