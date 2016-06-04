@@ -78,7 +78,7 @@ class Edit extends Core\Controller\AdminAction
     {
         $resource = $this->resourceRepository->getResourceById($id);
         if (!empty($resource)) {
-            if ($this->request->getPost()->isEmpty() === false) {
+            if ($this->request->getPost()->count() !== 0) {
                 return $this->executePost($this->request->getPost()->all(), $id);
             }
 

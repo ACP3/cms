@@ -68,7 +68,7 @@ class Edit extends AbstractAction
      */
     public function execute()
     {
-        if ($this->request->getPost()->isEmpty() === false) {
+        if ($this->request->getPost()->count() !== 0) {
             return $this->executePost($this->request->getPost()->all());
         }
 

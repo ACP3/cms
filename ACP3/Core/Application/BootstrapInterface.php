@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core\Application;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -22,8 +23,10 @@ interface BootstrapInterface extends HttpKernelInterface
 
     /**
      * Initializes the dependency injection container
+     * @param Request $symfonyRequest
+     * @return void
      */
-    public function initializeClasses();
+    public function initializeClasses(Request $symfonyRequest);
 
     /**
      * Handle the request and output the page

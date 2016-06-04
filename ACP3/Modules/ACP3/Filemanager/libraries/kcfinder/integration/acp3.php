@@ -2,6 +2,8 @@
 namespace kcfinder\cms;
 
 use ACP3\Core\Application\Bootstrap;
+use ACP3\Core\Environment\ApplicationMode;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ACP3
@@ -27,9 +29,10 @@ class acp3
 
             require_once ACP3_ROOT_DIR . 'vendor/autoload.php';
 
-            $application = new Bootstrap();
+            $application = new Bootstrap(ApplicationMode::PRODUCTION);
             if ($application->startupChecks()) {
-                $application->initializeClasses();
+                $symfonyRequest = Request::createFromGlobals();
+                $application->initializeClasses($symfonyRequest);
 
                 chdir(ACP3_ROOT_DIR);
 

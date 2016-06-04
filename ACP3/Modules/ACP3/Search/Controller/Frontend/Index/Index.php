@@ -54,7 +54,7 @@ class Index extends Core\Controller\FrontendAction
      */
     public function execute($q = '')
     {
-        if ($this->request->getPost()->isEmpty() === false) {
+        if ($this->request->getPost()->count() !== 0) {
             return $this->executePost($this->request->getPost()->all());
         } elseif (!empty($q)) {
             return $this->executePost(['search_term' => (string)$q]);

@@ -9,11 +9,15 @@ services:
     class: ACP3\Core\Http\Request
     factory: ['@core.http.request_factory', create]
 
+  core.http.symfony_request:
+    synthetic: true
+
   core.http.request_factory:
     class: ACP3\Core\Http\RequestFactory
     arguments:
       - '@core.config'
       - '@core.environment.application_path'
+      - '@core.http.symfony_request'
 
   core.http.response:
     class: Symfony\Component\HttpFoundation\Response

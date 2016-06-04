@@ -5,7 +5,6 @@ namespace ACP3\Core\Test\Helpers;
 use ACP3\Core\Helpers\PageBreaks;
 use ACP3\Core\Helpers\TableOfContents;
 use ACP3\Core\Http\Request;
-use ACP3\Core\Http\Request\ParameterBag;
 use ACP3\Core\RouterInterface;
 
 class PageBreaksTest extends \PHPUnit_Framework_TestCase
@@ -123,7 +122,7 @@ class PageBreaksTest extends \PHPUnit_Framework_TestCase
         $this->requestMock
             ->expects($this->any())
             ->method('getParameters')
-            ->willReturn(new ParameterBag(['page' => $currentPage]));
+            ->willReturn(new \Symfony\Component\HttpFoundation\ParameterBag(['page' => $currentPage]));
 
         $this->routerMock
             ->expects($this->any())

@@ -24,7 +24,7 @@ class Login extends Core\Controller\FrontendAction
     {
         if ($this->user->isAuthenticated() === true) {
             return $this->redirect()->toNewPage($this->appPath->getWebRoot());
-        } elseif ($this->request->getPost()->isEmpty() === false) {
+        } elseif ($this->request->getPost()->count() !== 0) {
             return $this->executePost();
         }
     }

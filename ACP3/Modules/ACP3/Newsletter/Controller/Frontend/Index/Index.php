@@ -62,7 +62,7 @@ class Index extends Core\Controller\FrontendAction
      */
     public function execute()
     {
-        if ($this->request->getPost()->isEmpty() === false) {
+        if ($this->request->getPost()->count() !== 0) {
             return $this->executePost($this->request->getPost()->all());
         }
 

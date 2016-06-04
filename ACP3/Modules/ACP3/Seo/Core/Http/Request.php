@@ -24,14 +24,16 @@ class Request extends \ACP3\Core\Http\Request
     /**
      * Request constructor.
      *
-     * @param \ACP3\Core\Environment\ApplicationPath     $appPath
+     * @param \Symfony\Component\HttpFoundation\Request $symfonyRequest
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
      */
     public function __construct(
+        \Symfony\Component\HttpFoundation\Request $symfonyRequest,
         ApplicationPath $appPath,
         SeoRepository $seoRepository
     ) {
-        parent::__construct($appPath);
+        parent::__construct($symfonyRequest, $appPath);
 
         $this->seoRepository = $seoRepository;
     }

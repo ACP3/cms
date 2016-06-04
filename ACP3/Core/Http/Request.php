@@ -3,7 +3,6 @@ namespace ACP3\Core\Http;
 
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Http\Request\ParameterBag;
 use ACP3\Core\Modules;
 
 /**
@@ -36,7 +35,7 @@ class Request extends AbstractRequest
      */
     protected $action = '';
     /**
-     * @var \ACP3\Core\Http\Request\ParameterBag
+     * @var \Symfony\Component\HttpFoundation\ParameterBag
      */
     protected $parameters;
     /**
@@ -53,9 +52,9 @@ class Request extends AbstractRequest
      *
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
-    public function __construct(ApplicationPath $appPath)
+    public function __construct(\Symfony\Component\HttpFoundation\Request $symfonyRequest, ApplicationPath $appPath)
     {
-        parent::__construct();
+        parent::__construct($symfonyRequest);
 
         $this->appPath = $appPath;
     }
@@ -225,7 +224,7 @@ class Request extends AbstractRequest
      */
     protected function setRequestParameters(array $query)
     {
-        $this->parameters = new ParameterBag([]);
+        $this->parameters = new \Symfony\Component\HttpFoundation\ParameterBag([]);
 
         if (isset($query[3])) {
             $cQuery = count($query);

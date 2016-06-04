@@ -94,7 +94,7 @@ class Edit extends Core\Controller\AdminAction
 
             $this->title->setPageTitlePostfix($comment['name']);
 
-            if ($this->request->getPost()->isEmpty() === false) {
+            if ($this->request->getPost()->count() !== 0) {
                 return $this->executePost(
                     $this->request->getPost()->all(),
                     $comment,

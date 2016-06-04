@@ -96,7 +96,7 @@ interface RequestInterface
     /**
      * Gibt die URI-Parameter aus
      *
-     * @return \ACP3\Core\Http\Request\ParameterBag
+     * @return \Symfony\Component\HttpFoundation\ParameterBag
      */
     public function getParameters();
 
@@ -122,14 +122,14 @@ interface RequestInterface
     /**
      * Returns the parameter bag of the uploaded files ($_FILES superglobal)
      *
-     * @return \ACP3\Core\Http\Request\FilesParameterBag
+     * @return \Symfony\Component\HttpFoundation\FileBag
      */
     public function getFiles();
 
     /**
      * Returns the parameter bag of the $_POST superglobal
      *
-     * @return \ACP3\Core\Http\Request\ParameterBag
+     * @return \Symfony\Component\HttpFoundation\ParameterBag
      */
     public function getPost();
 

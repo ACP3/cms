@@ -137,7 +137,7 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
     {
         $requestMock->expects($this->any())
             ->method('getPost')
-            ->willReturn(new Request\ParameterBag(
+            ->willReturn(new \Symfony\Component\HttpFoundation\ParameterBag(
                     [SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN]
                 )
             );

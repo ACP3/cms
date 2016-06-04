@@ -67,7 +67,7 @@ class Edit extends Core\Controller\AdminAction
         $emoticon = $this->emoticonRepository->getOneById($id);
 
         if (empty($emoticon) === false) {
-            if ($this->request->getPost()->isEmpty() === false) {
+            if ($this->request->getPost()->count() !== 0) {
                 return $this->executePost($this->request->getPost()->all(), $emoticon, $id);
             }
 

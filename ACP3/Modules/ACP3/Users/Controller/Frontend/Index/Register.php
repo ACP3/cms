@@ -93,7 +93,7 @@ class Register extends Core\Controller\FrontendAction
                 $this->translator->t('users', 'user_registration_disabled'))
             );
         } else {
-            if ($this->request->getPost()->isEmpty() === false) {
+            if ($this->request->getPost()->count() !== 0) {
                 return $this->executePost($this->request->getPost()->all(), $settings);
             }
 

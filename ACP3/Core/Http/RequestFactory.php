@@ -8,6 +8,7 @@ namespace ACP3\Core\Http;
 
 use ACP3\Core\Config;
 use ACP3\Core\Environment\ApplicationPath;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 /**
  * Class RequestFactory
@@ -23,17 +24,22 @@ class RequestFactory
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
+    /**
+     * @var Request
+     */
+    protected $symfonyRequest;
 
     /**
      * RequestFactory constructor.
-     *
-     * @param \ACP3\Core\Config                      $config
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param Config $config
+     * @param ApplicationPath $appPath
+     * @param SymfonyRequest $symfonyRequest
      */
-    public function __construct(Config $config, ApplicationPath $appPath)
+    public function __construct(Config $config, ApplicationPath $appPath, SymfonyRequest $symfonyRequest)
     {
         $this->config = $config;
         $this->appPath = $appPath;
+        $this->symfonyRequest = $symfonyRequest;
     }
 
     /**
@@ -53,6 +59,6 @@ class RequestFactory
      */
     protected function getRequest()
     {
-        return new Request($this->appPath);
+        return new Request($this->symfonyRequest, $this->appPath);
     }
 }

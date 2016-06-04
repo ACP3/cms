@@ -143,6 +143,6 @@ class Installer
      */
     public function updateServiceContainer($allModules = false)
     {
-        return Core\DependencyInjection\ServiceContainerBuilder::create($this->environment, $this->appPath, $allModules);
+        return Core\DependencyInjection\ServiceContainerBuilder::create($this->appPath, $this->environment, $allModules);
     }
 }

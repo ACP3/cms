@@ -29,6 +29,7 @@ services:
     arguments:
       - '@core.config'
       - '@core.environment.application_path'
+      - '@core.http.symfony_request'
       - '@seo.model.seorepository'
 
   core.router:

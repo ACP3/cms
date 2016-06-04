@@ -11,10 +11,14 @@ services:
     arguments:
       - '%default_request%'
 
+  core.http.symfony_request:
+    synthetic: true
+
   core.request_factory:
     class: ACP3\Installer\Core\Http\RequestFactory
     arguments:
       - '@core.environment.application_path'
+      - '@core.http.symfony_request'
 
   core.http.response:
     class: Symfony\Component\HttpFoundation\Response

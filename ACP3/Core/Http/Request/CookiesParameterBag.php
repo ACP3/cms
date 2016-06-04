@@ -1,6 +1,8 @@
 <?php
 namespace ACP3\Core\Http\Request;
 
+use Symfony\Component\HttpFoundation\ParameterBag;
+
 /**
  * Class CookieParameterBag
  * @package ACP3\Core\Http\Request

@@ -32,7 +32,7 @@ class Bootstrap extends AbstractBootstrap
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
     {
         $this->setErrorHandler();
-        $this->initializeClasses();
+        $this->initializeClasses($request);
 
         return $this->outputPage();
     }
@@ -85,7 +85,7 @@ class Bootstrap extends AbstractBootstrap
     /**
      * @inheritdoc
      */
-    public function initializeClasses()
+    public function initializeClasses(Request $symfonySymfonyRequest)
     {
         Utf8\Bootup::initAll(); // Enables the portability layer and configures PHP for UTF-8
         Utf8\Bootup::filterRequestUri(); // Redirects to an UTF-8 encoded URL if it's not already the case
@@ -93,12 +93,13 @@ class Bootstrap extends AbstractBootstrap
 
         $file = $this->appPath->getCacheDir() . 'sql/container.php';
 
-        $this->dumpContainer($file);
+        $this->dumpContainer($symfonySymfonyRequest, $file);
 
         require_once $file;
 
         $this->container = new \ACP3ServiceContainer();
         $this->container->set('core.environment.application_path', $this->appPath);
+        $this->container->set('core.http.symfony_request', $symfonySymfonyRequest);
     }
 
     /**
@@ -192,14 +193,15 @@ class Bootstrap extends AbstractBootstrap
     }
 
     /**
+     * @param Request $symfonyRequest
      * @param string $file
      */
-    protected function dumpContainer($file)
+    protected function dumpContainer(Request $symfonyRequest, $file)
     {
         $containerConfigCache = new ConfigCache($file, ($this->appMode === ApplicationMode::DEVELOPMENT));
 
         if (!$containerConfigCache->isFresh()) {
-            $containerBuilder = ServiceContainerBuilder::create($this->appMode, $this->appPath);
+            $containerBuilder = ServiceContainerBuilder::create($this->appPath, $symfonyRequest, $this->appMode);
 
             $dumper = new PhpDumper($containerBuilder);
             $containerConfigCache->write(

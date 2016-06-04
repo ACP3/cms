@@ -16,6 +16,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 /**
  * Class ServiceContainerBuilder
@@ -28,6 +29,10 @@ class ServiceContainerBuilder extends ContainerBuilder
      */
     private $applicationPath;
     /**
+     * @var SymfonyRequest
+     */
+    private $symfonyRequest;
+    /**
      * @var string
      */
     private $applicationMode;
@@ -39,14 +44,20 @@ class ServiceContainerBuilder extends ContainerBuilder
     /**
      * ServiceContainerBuilder constructor.
      * @param ApplicationPath $applicationPath
+     * @param SymfonyRequest $symfonyRequest
      * @param string $applicationMode
      * @param bool $allModules
      */
-    public function __construct(ApplicationPath $applicationPath, $applicationMode, $allModules = false)
-    {
+    public function __construct(
+        ApplicationPath $applicationPath,
+        SymfonyRequest $symfonyRequest,
+        $applicationMode,
+        $allModules = false
+    ) {
         parent::__construct();
 
         $this->applicationPath = $applicationPath;
+        $this->symfonyRequest = $symfonyRequest;
         $this->applicationMode = $applicationMode;
         $this->allModules = $allModules;
 
@@ -55,6 +66,7 @@ class ServiceContainerBuilder extends ContainerBuilder
 
     private function setUpContainer()
     {
+        $this->set('core.http.symfony_request', $this->symfonyRequest);
         $this->set('core.environment.application_path', $this->applicationPath);
         $this->setParameter('core.environment', $this->applicationMode);
 
@@ -90,14 +102,18 @@ class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
-     * @param string                                 $applicationMode
      * @param \ACP3\Core\Environment\ApplicationPath $applicationPath
-     * @param bool                                   $allModules
-     *
-     * @return \Symfony\Component\DependencyInjection\ContainerBuilder
+     * @param SymfonyRequest $symfonyRequest
+     * @param string $applicationMode
+     * @param bool $allModules
+     * @return ContainerBuilder
      */
-    public static function create($applicationMode, ApplicationPath $applicationPath, $allModules = false)
-    {
-        return new static($applicationPath, $applicationMode, $allModules);
+    public static function create(
+        ApplicationPath $applicationPath,
+        SymfonyRequest $symfonyRequest,
+        $applicationMode,
+        $allModules = false
+    ) {
+        return new static($applicationPath, $symfonyRequest, $applicationMode, $allModules);
     }
 }

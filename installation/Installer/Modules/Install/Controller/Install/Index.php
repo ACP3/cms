@@ -81,7 +81,7 @@ class Index extends AbstractAction
 
     public function execute()
     {
-        if ($this->request->getPost()->isEmpty() === false && !$this->request->getPost()->get('languages')) {
+        if ($this->request->getPost()->count() === 0 && !$this->request->getPost()->get('languages')) {
             return $this->executePost($this->request->getPost()->all());
         }
 
@@ -169,9 +169,7 @@ class Index extends AbstractAction
     private function updateContainer()
     {
         $this->container = Core\DependencyInjection\ServiceContainerBuilder::create(
-            $this->container->getParameter('core.environment'),
-            $this->appPath,
-            true
+            $this->appPath, $this->container->getParameter('core.environment'), true
         );
     }
 

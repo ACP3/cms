@@ -77,7 +77,7 @@ class Create extends AbstractFormAction
     {
         $settings = $this->config->getSettings('files');
 
-        if ($this->request->getPost()->isEmpty() === false) {
+        if ($this->request->getPost()->count() !== 0) {
             return $this->executePost($this->request->getPost()->all(), $settings);
         }
 

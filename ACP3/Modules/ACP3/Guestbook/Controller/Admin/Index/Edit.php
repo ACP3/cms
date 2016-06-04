@@ -87,7 +87,7 @@ class Edit extends Core\Controller\AdminAction
 
             $this->title->setPageTitlePostfix($guestbook['name']);
 
-            if ($this->request->getPost()->isEmpty() === false) {
+            if ($this->request->getPost()->count() !== 0) {
                 return $this->executePost($this->request->getPost()->all(), $settings, $id);
             }
 

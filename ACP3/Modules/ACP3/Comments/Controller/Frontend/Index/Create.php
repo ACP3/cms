@@ -63,7 +63,7 @@ class Create extends AbstractFrontendAction
      */
     public function execute($module, $entryId)
     {
-        if ($this->request->getPost()->isEmpty() === false) {
+        if ($this->request->getPost()->count() !== 0) {
             return $this->executePost($this->request->getPost()->all(), $module, $entryId);
         }
 

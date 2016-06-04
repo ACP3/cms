@@ -21,10 +21,11 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     /**
      * @inheritdoc
      */
-    public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
+    public function handle(Request $symfonyRequest, $type = self::MASTER_REQUEST, $catch = true)
     {
         $this->setErrorHandler();
-        $this->initializeClasses();
+        $this->initializeClasses($symfonyRequest);
+
         return $this->outputPage();
     }
 
@@ -54,9 +55,9 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     /**
      * @inheritdoc
      */
-    public function initializeClasses()
+    public function initializeClasses(Request $symfonyRequest)
     {
-        $this->container = ServiceContainerBuilder::create($this->appMode, $this->appPath);
+        $this->container = ServiceContainerBuilder::create($this->appPath, $symfonyRequest, $this->appMode);
     }
 
     private function applyThemePaths()

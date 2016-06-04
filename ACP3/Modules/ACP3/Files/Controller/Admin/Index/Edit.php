@@ -94,7 +94,7 @@ class Edit extends AbstractFormAction
 
             $this->title->setPageTitlePostfix($file['title']);
 
-            if ($this->request->getPost()->isEmpty() === false) {
+            if ($this->request->getPost()->count() !== 0) {
                 return $this->executePost($this->request->getPost()->all(), $settings, $file, $id);
             }
 

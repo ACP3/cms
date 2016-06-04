@@ -69,7 +69,7 @@ class Edit extends Core\Controller\AdminAction
         if (empty($menu) === false) {
             $this->title->setPageTitlePostfix($menu['title']);
 
-            if ($this->request->getPost()->isEmpty() === false) {
+            if ($this->request->getPost()->count() !== 0) {
                 return $this->executePost($this->request->getPost()->all(), $id);
             }
 

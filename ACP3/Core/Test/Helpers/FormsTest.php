@@ -79,7 +79,7 @@ class FormsTest extends \PHPUnit_Framework_TestCase
 
         $this->requestMock->expects($this->atLeastOnce())
             ->method('getPost')
-            ->willReturn(new Request\ParameterBag($postValues));
+            ->willReturn(new \Symfony\Component\HttpFoundation\ParameterBag($postValues));
     }
 
     /**
