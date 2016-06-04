@@ -27,11 +27,14 @@ $cacheStore = new \Symfony\Component\HttpKernel\HttpCache\Store(
     $kernel->getAppPath()->getCacheDir() . 'http/'
 );
 
-$httpCache = new \Symfony\Component\HttpKernel\HttpCache\HttpCache(
-    $kernel,
-    $cacheStore,
-    new \Symfony\Component\HttpKernel\HttpCache\Esi(),
-    ['debug' => $appMode === \ACP3\Core\Environment\ApplicationMode::DEVELOPMENT]
-);
+// Enable the HTTP cache only if we are in production mode
+if ($appMode === \ACP3\Core\Environment\ApplicationMode::PRODUCTION) {
+    $kernel = new \Symfony\Component\HttpKernel\HttpCache\HttpCache(
+        $kernel,
+        $cacheStore,
+        new \Symfony\Component\HttpKernel\HttpCache\Esi(),
+        ['debug' => $appMode === \ACP3\Core\Environment\ApplicationMode::DEVELOPMENT]
+    );
+}
 
-$httpCache->handle($request)->send();
+$kernel->handle($request)->send();

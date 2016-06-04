@@ -9,6 +9,8 @@ namespace ACP3\Core\Session;
 use ACP3\Core\Database\Connection;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @package ACP3\Core
@@ -28,23 +30,30 @@ class SessionHandler extends AbstractSessionHandler
      */
     protected $request;
     /**
+     * @var Response
+     */
+    protected $response;
+    /**
      * @var bool
      */
     protected $gcCalled = false;
 
     /**
-     * @param \ACP3\Core\Database\Connection         $db
+     * @param \ACP3\Core\Database\Connection $db
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Http\RequestInterface       $request
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param Response $response
      */
     public function __construct(
         Connection $db,
         ApplicationPath $appPath,
-        RequestInterface $request
+        RequestInterface $request,
+        Response $response
     ) {
         $this->db = $db;
         $this->appPath = $appPath;
         $this->request = $request;
+        $this->response = $response;
 
         $this->configureSession();
     }
@@ -140,7 +149,14 @@ class SessionHandler extends AbstractSessionHandler
         $this->resetSessionData();
 
         if ($this->request->getCookies()->has(self::SESSION_NAME)) {
-            setcookie(self::SESSION_NAME, '', time() - 3600, $this->appPath->getWebRoot());
+            $cookie = new Cookie(
+                self::SESSION_NAME,
+                '',
+                (new \DateTime())->modify('-3600 seconds'),
+                $this->appPath->getWebRoot()
+            );
+            $this->response->headers->setCookie($cookie);
+            //setcookie(self::SESSION_NAME, '', time() - 3600, $this->appPath->getWebRoot());
         }
 
         // Delete the session from the database

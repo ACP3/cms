@@ -104,11 +104,13 @@ services:
       - '@core.db'
       - '@core.environment.application_path'
       - '@core.http.request'
+      - '@core.http.response'
 
   core.user:
     class: ACP3\Core\User
     arguments:
       - '@core.http.request'
+      - '@core.http.response'
       - '@core.environment.application_path'
       - '@core.authentication'
       - '@core.session'

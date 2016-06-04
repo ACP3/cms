@@ -115,7 +115,7 @@ interface RequestInterface
     /**
      * Returns the parameter bag of the $_COOKIE superglobal
      *
-     * @return \ACP3\Core\Http\Request\CookiesParameterBag
+     * @return \Symfony\Component\HttpFoundation\ParameterBag
      */
     public function getCookies();
 

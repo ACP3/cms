@@ -81,11 +81,11 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * Returns the parameter bag of the $_COOKIE superglobal
      *
-     * @return \ACP3\Core\Http\Request\CookiesParameterBag
+     * @return \Symfony\Component\HttpFoundation\ParameterBag
      */
     public function getCookies()
     {
-        return $this->cookies;
+        return $this->symfonyRequest->cookies;
     }
 
     /**
@@ -140,7 +140,6 @@ abstract class AbstractRequest implements RequestInterface
 
     protected function fillParameterBags()
     {
-        $this->cookies = new CookiesParameterBag($this->symfonyRequest->cookies->all());
         $this->userAgent = new UserAgent($this->symfonyRequest->server);
     }
 }

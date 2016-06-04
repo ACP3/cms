@@ -8,6 +8,8 @@ use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Modules\ACP3\Users;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class User
@@ -71,20 +73,26 @@ class User
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
+    /**
+     * @var Response
+     */
+    protected $response;
 
     /**
      * User constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface                  $request
-     * @param \ACP3\Core\Environment\ApplicationPath            $appPath
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param Response $response
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Core\Authentication\AuthenticationInterface $authentication
-     * @param \ACP3\Core\Session\SessionHandlerInterface        $sessionHandler
-     * @param \ACP3\Core\Helpers\Secure                         $secureHelper
-     * @param \ACP3\Core\Config                                 $config
-     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository     $userRepository
+     * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
+     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Core\Config $config
+     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
      */
     public function __construct(
         RequestInterface $request,
+        Response $response,
         ApplicationPath $appPath,
         AuthenticationInterface $authentication,
         SessionHandlerInterface $sessionHandler,
@@ -93,6 +101,7 @@ class User
         Users\Model\UserRepository $userRepository
     ) {
         $this->request = $request;
+        $this->response = $response;
         $this->appPath = $appPath;
         $this->authentication = $authentication;
         $this->sessionHandler = $sessionHandler;
@@ -143,13 +152,15 @@ class User
      */
     public function setRememberMeCookie($userId, $token, $expiry)
     {
-        $this->request->getCookies()->set(
+        $cookie = new Cookie(
             self::AUTH_NAME,
             $userId . '|' . $token,
-            time() + $expiry,
+            (new \DateTime())->modify('+' . $expiry . ' seconds'),
             $this->appPath->getWebRoot(),
             $this->getCookieDomain()
         );
+
+        $this->response->headers->setCookie($cookie);
     }
 
     /**
