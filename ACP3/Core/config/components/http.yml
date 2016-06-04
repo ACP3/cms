@@ -16,7 +16,6 @@ services:
     class: ACP3\Core\Http\RequestFactory
     arguments:
       - '@core.config'
-      - '@core.environment.application_path'
       - '@core.http.symfony_request'
 
   core.http.response:

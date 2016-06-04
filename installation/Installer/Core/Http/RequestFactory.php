@@ -6,7 +6,6 @@
 
 namespace ACP3\Installer\Core\Http;
 
-use ACP3\Core\Environment\ApplicationPath;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 /**
@@ -16,10 +15,6 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 class RequestFactory
 {
     /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
-    /**
      * @var SymfonyRequest
      */
     protected $symfonyRequest;
@@ -27,12 +22,10 @@ class RequestFactory
     /**
      * RequestFactory constructor.
      *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param SymfonyRequest $symfonyRequest
      */
-    public function __construct(ApplicationPath $appPath, SymfonyRequest $symfonyRequest)
+    public function __construct(SymfonyRequest $symfonyRequest)
     {
-        $this->appPath = $appPath;
         $this->symfonyRequest = $symfonyRequest;
     }
 
@@ -43,7 +36,7 @@ class RequestFactory
      */
     public function create($homepage)
     {
-        $request = new Request($this->symfonyRequest, $this->appPath);
+        $request = new Request($this->symfonyRequest);
         $request->setHomepage($homepage);
         $request->processQuery();
 

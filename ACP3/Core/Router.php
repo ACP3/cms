@@ -2,7 +2,6 @@
 
 namespace ACP3\Core;
 
-use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Modules\ACP3\System;
@@ -134,7 +133,7 @@ class Router implements RouterInterface
     {
         $prefix = '';
         if ($isAbsolute === true || $forceSecure === true) {
-            $prefix .= ($forceSecure === true) ? 'https://' : $this->request->getScheme();
+            $prefix .= ($forceSecure === true) ? 'https://' : $this->request->getScheme() . '://';
             $prefix .= $this->request->getHost();
         }
 
@@ -152,8 +151,7 @@ class Router implements RouterInterface
      */
     protected function useModRewrite($path)
     {
-        return $this->environment === ApplicationMode::PRODUCTION &&
-        (bool)$this->config->getSettings('system')['mod_rewrite'] === true &&
+        return (bool)$this->config->getSettings('system')['mod_rewrite'] === true &&
         $this->isAdminUri($path) === false;
     }
 }

@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Seo\Core\Http;
 
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Seo\Model\SeoRepository;
 
 /**
@@ -25,15 +24,13 @@ class Request extends \ACP3\Core\Http\Request
      * Request constructor.
      *
      * @param \Symfony\Component\HttpFoundation\Request $symfonyRequest
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
      */
     public function __construct(
         \Symfony\Component\HttpFoundation\Request $symfonyRequest,
-        ApplicationPath $appPath,
         SeoRepository $seoRepository
     ) {
-        parent::__construct($symfonyRequest, $appPath);
+        parent::__construct($symfonyRequest);
 
         $this->seoRepository = $seoRepository;
     }

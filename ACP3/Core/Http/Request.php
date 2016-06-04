@@ -2,7 +2,6 @@
 namespace ACP3\Core\Http;
 
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
 
 /**
@@ -12,11 +11,6 @@ use ACP3\Core\Modules;
 class Request extends AbstractRequest
 {
     const ADMIN_PANEL_PATTERN = '=^acp/=';
-
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
 
     /**
      * @var string
@@ -45,18 +39,16 @@ class Request extends AbstractRequest
     /**
      * @var string
      */
-    protected $originalQuery = '';
+    protected $pathInfo = '';
 
     /**
      * Request constructor.
      *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \Symfony\Component\HttpFoundation\Request $symfonyRequest
      */
-    public function __construct(\Symfony\Component\HttpFoundation\Request $symfonyRequest, ApplicationPath $appPath)
+    public function __construct(\Symfony\Component\HttpFoundation\Request $symfonyRequest)
     {
         parent::__construct($symfonyRequest);
-
-        $this->appPath = $appPath;
     }
 
     /**
@@ -72,7 +64,7 @@ class Request extends AbstractRequest
      */
     public function getPathInfo()
     {
-        return $this->originalQuery;
+        return $this->pathInfo;
     }
 
     /**
@@ -147,9 +139,9 @@ class Request extends AbstractRequest
      */
     public function processQuery()
     {
-        $this->setOriginalQuery();
+        $this->setPathInfo();
 
-        $this->query = $this->originalQuery;
+        $this->query = $this->pathInfo;
 
         // It's an request for the admin panel page
         if (preg_match(self::ADMIN_PANEL_PATTERN, $this->query)) {
@@ -212,11 +204,10 @@ class Request extends AbstractRequest
         return preg_replace('/\/page_(\d+)\//', '/', $this->query);
     }
 
-    protected function setOriginalQuery()
+    protected function setPathInfo()
     {
-        $this->originalQuery = substr(str_replace($this->appPath->getPhpSelf(), '',
-            htmlentities($this->getServer()->get('PHP_SELF', ''), ENT_QUOTES)), 1);
-        $this->originalQuery .= !preg_match('/\/$/', $this->originalQuery) ? '/' : '';
+        $this->pathInfo = substr($this->symfonyRequest->getPathInfo(), 1);
+        $this->pathInfo .= !preg_match('/\/$/', $this->pathInfo) ? '/' : '';
     }
 
     /**

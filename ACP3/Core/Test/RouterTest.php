@@ -79,7 +79,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $this->requestMock->expects($this->any())
             ->method('getScheme')
-            ->willReturn('http://');
+            ->willReturn('http');
         $this->requestMock->expects($this->any())
             ->method('getHost')
             ->willReturn('example.com');

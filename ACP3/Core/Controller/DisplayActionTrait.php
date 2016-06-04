@@ -38,7 +38,7 @@ trait DisplayActionTrait
         if ($actionResult instanceof Response) {
             return $actionResult;
         } elseif (is_string($actionResult)) {
-            return $this->getResponse()->setContent($actionResult);
+            $this->setContent($actionResult);
         } elseif (is_array($actionResult)) {
             $this->getView()->assign($actionResult);
         }

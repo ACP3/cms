@@ -48,7 +48,7 @@ class Router extends Core\Router
         $prefix = '';
         // Append the current hostname to the URL
         if ($absolute === true) {
-            $prefix .= ($forceSecure === true) ? 'https://' : $this->request->getScheme();
+            $prefix .= ($forceSecure === true) ? 'https://' : $this->request->getScheme() . '://';
             $prefix .= $this->request->getHost();
         }
 
