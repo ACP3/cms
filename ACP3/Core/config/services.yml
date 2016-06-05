@@ -1,6 +1,7 @@
 imports:
   - { resource: cache.yml }
   - { resource: ../../config.yml }
+  - { resource: components/application.yml }
   - { resource: components/assets.yml }
   - { resource: components/authentication.yml }
   - { resource: components/controller.yml }
@@ -30,13 +31,6 @@ services:
       - '@permissions.model.userrolerepository'
       - '@permissions.model.privilegerepository'
       - '@permissions.cache'
-
-  core.application.controller_resolver:
-    class: ACP3\Core\Application\ControllerResolver
-    arguments:
-      - '@core.eventDispatcher'
-      - '@core.http.request'
-      - '@service_container'
 
   core.cache.system:
     class: ACP3\Core\Cache

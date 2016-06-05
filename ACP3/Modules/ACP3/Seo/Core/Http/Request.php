@@ -37,7 +37,7 @@ class Request extends \ACP3\Core\Http\Request
 
     protected function parseURI()
     {
-        if ($this->area === AreaEnum::AREA_FRONTEND) {
+        if ($this->getArea() === AreaEnum::AREA_FRONTEND) {
             $this->checkForUriAlias();
         }
 

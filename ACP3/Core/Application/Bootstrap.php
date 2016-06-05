@@ -12,7 +12,7 @@ use Patchwork\Utf8;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -29,7 +29,7 @@ class Bootstrap extends AbstractBootstrap
     /**
      * @inheritdoc
      */
-    public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
+    public function handle(SymfonyRequest $request, $type = self::MASTER_REQUEST, $catch = true)
     {
         $this->setErrorHandler();
         $this->initializeClasses($request);
@@ -57,14 +57,9 @@ class Bootstrap extends AbstractBootstrap
      */
     private function maintenanceModeIsEnabled(RequestInterface $request)
     {
-        if ((bool)$this->systemSettings['maintenance_mode'] === true &&
-            $request->getArea() !== AreaEnum::AREA_ADMIN &&
-            strpos($request->getQuery(), 'users/index/login/') !== 0
-        ) {
-            return true;
-        }
-
-        return false;
+        return (bool)$this->systemSettings['maintenance_mode'] === true &&
+        $request->getArea() !== AreaEnum::AREA_ADMIN &&
+        strpos($request->getQuery(), 'users/index/login/') !== 0;
     }
 
     /**
@@ -85,7 +80,7 @@ class Bootstrap extends AbstractBootstrap
     /**
      * @inheritdoc
      */
-    public function initializeClasses(Request $symfonySymfonyRequest)
+    public function initializeClasses(SymfonyRequest $symfonySymfonyRequest)
     {
         Utf8\Bootup::initAll(); // Enables the portability layer and configures PHP for UTF-8
         Utf8\Bootup::filterRequestUri(); // Redirects to an UTF-8 encoded URL if it's not already the case
@@ -136,7 +131,7 @@ class Bootstrap extends AbstractBootstrap
         $redirect = $this->container->get('core.http.redirect_response');
 
         try {
-            $response = $this->container->get('core.application.controller_resolver')->dispatch();
+            $response = $this->container->get('core.application.controller_action_dispatcher')->dispatch();
         } catch (\ACP3\Core\Controller\Exception\ResultNotExistsException $e) {
             $response = $redirect->temporary('errors/index/not_found');
         } catch (\ACP3\Core\Authentication\Exception\UnauthorizedAccessException $e) {
@@ -193,10 +188,10 @@ class Bootstrap extends AbstractBootstrap
     }
 
     /**
-     * @param Request $symfonyRequest
-     * @param string $file
+     * @param SymfonyRequest $symfonyRequest
+     * @param $file
      */
-    protected function dumpContainer(Request $symfonyRequest, $file)
+    protected function dumpContainer(SymfonyRequest $symfonyRequest, $file)
     {
         $containerConfigCache = new ConfigCache($file, ($this->appMode === ApplicationMode::DEVELOPMENT));
 

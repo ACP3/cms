@@ -5,7 +5,7 @@ namespace ACP3\Installer\Core\Application;
 use ACP3\Core;
 use ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Installer\Core\Environment\ApplicationPath;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 /**
  * Class Bootstrap
@@ -21,7 +21,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     /**
      * @inheritdoc
      */
-    public function handle(Request $symfonyRequest, $type = self::MASTER_REQUEST, $catch = true)
+    public function handle(SymfonyRequest $symfonyRequest, $type = self::MASTER_REQUEST, $catch = true)
     {
         $this->setErrorHandler();
         $this->initializeClasses($symfonyRequest);
@@ -55,7 +55,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     /**
      * @inheritdoc
      */
-    public function initializeClasses(Request $symfonyRequest)
+    public function initializeClasses(SymfonyRequest $symfonyRequest)
     {
         $this->container = ServiceContainerBuilder::create($this->appPath, $symfonyRequest, $this->appMode);
     }
@@ -76,7 +76,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         $redirect = $this->container->get('core.http.redirect_response');
 
         try {
-            $response = $this->container->get('core.application.controller_resolver')->dispatch();
+            $response = $this->container->get('core.application.controller_action_dispatcher')->dispatch();
         } catch (Core\Controller\Exception\ControllerActionNotFoundException $e) {
             $response = $redirect->temporary('errors/index/not_found');
         } catch (\Exception $e) {

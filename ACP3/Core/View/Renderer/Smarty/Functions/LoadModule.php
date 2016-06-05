@@ -2,7 +2,8 @@
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Application\ControllerResolver;
+use ACP3\Core\Application\ControllerActionDispatcher;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class LoadModule
@@ -15,20 +16,20 @@ class LoadModule extends AbstractFunction
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\Application\ControllerResolver
+     * @var \ACP3\Core\Application\ControllerActionDispatcher
      */
-    protected $frontController;
+    protected $controllerActionDispatcher;
 
     /**
      * LoadModule constructor.
      *
      * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Core\Application\ControllerResolver $frontController
+     * @param \ACP3\Core\Application\ControllerActionDispatcher $controllerActionDispatcher
      */
-    public function __construct(ACL $acl, ControllerResolver $frontController)
+    public function __construct(ACL $acl, ControllerActionDispatcher $controllerActionDispatcher)
     {
         $this->acl = $acl;
-        $this->frontController = $frontController;
+        $this->controllerActionDispatcher = $controllerActionDispatcher;
     }
 
     /**
@@ -44,15 +45,22 @@ class LoadModule extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
+        $response = '';
         $pathArray = $this->convertPathToArray($params['module']);
-
         $path = $pathArray[0] . '/' . $pathArray[1] . '/' . $pathArray[2] . '/' . $pathArray[3];
         if ($this->acl->hasPermission($path) === true) {
             $serviceId = strtolower($pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2] . '.' . $pathArray[3]);
-            return $this->frontController->dispatch($serviceId, isset($params['args']) ? $params['args'] : []);
+            $response =  $this->controllerActionDispatcher->dispatch(
+                $serviceId,
+                isset($params['args']) ? $params['args'] : []
+            );
+
+            if ($response instanceof Response) {
+                $response = $response->getContent();
+            }
         }
 
-        return '';
+        return $response;
     }
 
     /**

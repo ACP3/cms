@@ -1,9 +1,8 @@
 <?php
 namespace ACP3\Core\Http;
 
-use ACP3\Core\Http\Request\CookiesParameterBag;
 use ACP3\Core\Http\Request\UserAgent;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 /**
  * Class AbstractRequest
@@ -21,23 +20,27 @@ abstract class AbstractRequest implements RequestInterface
      */
     protected $homepage = '';
     /**
-     * @var \ACP3\Core\Http\Request\CookiesParameterBag
-     */
-    protected $cookies;
-    /**
      * @var \ACP3\Core\Http\Request\UserAgent
      */
     protected $userAgent;
 
     /**
      * AbstractRequest constructor.
-     * @param Request $symfonyRequest
+     * @param SymfonyRequest $symfonyRequest
      */
-    public function __construct(Request $symfonyRequest)
+    public function __construct(SymfonyRequest $symfonyRequest)
     {
         $this->symfonyRequest = $symfonyRequest;
 
         $this->fillParameterBags();
+    }
+
+    /**
+     * @return SymfonyRequest
+     */
+    public function getSymfonyRequest()
+    {
+        return $this->symfonyRequest;
     }
 
     /**

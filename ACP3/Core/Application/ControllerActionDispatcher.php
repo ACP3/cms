@@ -6,19 +6,19 @@
 
 namespace ACP3\Core\Application;
 
-use ACP3\Core\Application\Event\FrontControllerDispatchEvent;
+use ACP3\Core\Application\Event\ControllerActionDispatcherDispatchEvent;
 use ACP3\Core\Controller\ActionInterface;
-use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 
 /**
- * Class ControllerResolver
+ * Class ControllerActionDispatcher
  * @package ACP3\Core\Application
  */
-class ControllerResolver
+class ControllerActionDispatcher
 {
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
@@ -32,25 +32,32 @@ class ControllerResolver
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected $container;
+    /**
+     * @var ArgumentResolverInterface
+     */
+    protected $argumentResolver;
 
     /**
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param ArgumentResolverInterface $argumentResolver
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         RequestInterface $request,
-        ContainerInterface $container
+        ContainerInterface $container,
+        ArgumentResolverInterface $argumentResolver
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->request = $request;
         $this->container = $container;
+        $this->argumentResolver = $argumentResolver;
     }
 
     /**
      * @param string $serviceId
-     * @param array  $arguments
+     * @param array $arguments
      * @return Response|string
      *
      * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
@@ -64,8 +71,8 @@ class ControllerResolver
 
         if ($this->container->has($serviceId)) {
             $this->eventDispatcher->dispatch(
-                'core.application.controller_resolver.before_dispatch',
-                new FrontControllerDispatchEvent($serviceId)
+                'core.application.controller_action_dispatcher.before_dispatch',
+                new ControllerActionDispatcherDispatchEvent($serviceId)
             );
 
             /** @var \ACP3\Core\Controller\ActionInterface $controller */
@@ -74,8 +81,8 @@ class ControllerResolver
             $response = $controller->display($this->executeControllerAction($controller, $arguments));
 
             $this->eventDispatcher->dispatch(
-                'core.application.controller_resolver.after_dispatch',
-                new FrontControllerDispatchEvent($serviceId)
+                'core.application.controller_action_dispatcher.after_dispatch',
+                new ControllerActionDispatcherDispatchEvent($serviceId)
             );
 
             return $response;
@@ -88,45 +95,20 @@ class ControllerResolver
 
     /**
      * @param \ACP3\Core\Controller\ActionInterface $controller
-     * @param array                                 $arguments
+     * @param array $arguments
      *
      * @return mixed
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     private function executeControllerAction(ActionInterface $controller, array $arguments)
     {
-        $reflection = new \ReflectionMethod($controller, 'execute');
-        $parameterCount = $reflection->getNumberOfParameters();
+        $callable = [$controller, 'execute'];
 
-        if ($parameterCount > 0 && empty($arguments)) {
-            $arguments = $this->fetchControllerActionArguments($reflection);
-
-            if ($reflection->getNumberOfRequiredParameters() > count($arguments)) {
-                throw new ResultNotExistsException();
-            }
+        if (empty($arguments)) {
+            $arguments = $this->argumentResolver->getArguments($this->request->getSymfonyRequest(), $callable);
         }
 
-        return call_user_func_array([$controller, 'execute'], $arguments);
-    }
-
-    /**
-     * @param \ReflectionMethod $reflection
-     *
-     * @return array
-     */
-    private function fetchControllerActionArguments(\ReflectionMethod $reflection)
-    {
-        $arguments = [];
-        foreach ($reflection->getParameters() as $parameter) {
-            if ($this->request->getPost()->has($parameter->getName())) {
-                $arguments[$parameter->getPosition()] = $this->request->getPost()->get($parameter->getName());
-            } elseif ($this->request->getParameters()->has($parameter->getName())) {
-                $arguments[$parameter->getPosition()] = $this->request->getParameters()->get($parameter->getName());
-            } elseif ($parameter->isOptional()) {
-                $arguments[$parameter->getPosition()] = $parameter->getDefaultValue();
-            }
-        }
-        return $arguments;
+        return call_user_func_array($callable, $arguments);
     }
 
     /**
@@ -134,6 +116,10 @@ class ControllerResolver
      */
     protected function buildControllerServiceId()
     {
-        return $this->request->getModule() . '.controller.' . $this->request->getArea() . '.' . $this->request->getController() . '.' . $this->request->getAction();
+        return $this->request->getModule()
+        . '.controller.'
+        . $this->request->getArea()
+        . '.' . $this->request->getController()
+        . '.' . $this->request->getAction();
     }
 }

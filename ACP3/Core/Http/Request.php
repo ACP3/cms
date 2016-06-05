@@ -15,26 +15,6 @@ class Request extends AbstractRequest
     /**
      * @var string
      */
-    protected $area = '';
-    /**
-     * @var string
-     */
-    protected $module = '';
-    /**
-     * @var string
-     */
-    protected $controller = '';
-    /**
-     * @var string
-     */
-    protected $action = '';
-    /**
-     * @var \Symfony\Component\HttpFoundation\ParameterBag
-     */
-    protected $parameters;
-    /**
-     * @var string
-     */
     protected $query = '';
     /**
      * @var string
@@ -72,7 +52,7 @@ class Request extends AbstractRequest
      */
     public function getArea()
     {
-        return $this->area;
+        return $this->symfonyRequest->attributes->get('_area');
     }
 
     /**
@@ -80,7 +60,7 @@ class Request extends AbstractRequest
      */
     public function getModule()
     {
-        return $this->module;
+        return $this->symfonyRequest->attributes->get('_module');
     }
 
     /**
@@ -88,7 +68,7 @@ class Request extends AbstractRequest
      */
     public function getController()
     {
-        return $this->controller;
+        return $this->symfonyRequest->attributes->get('_controller');
     }
 
     /**
@@ -96,7 +76,7 @@ class Request extends AbstractRequest
      */
     public function getAction()
     {
-        return $this->action;
+        return $this->symfonyRequest->attributes->get('_controllerAction');
     }
 
     /**
@@ -104,7 +84,7 @@ class Request extends AbstractRequest
      */
     public function getFullPath()
     {
-        return $this->getModuleAndController() . $this->action . '/';
+        return $this->getModuleAndController() . $this->getAction() . '/';
     }
 
     /**
@@ -112,7 +92,7 @@ class Request extends AbstractRequest
      */
     public function getFullPathWithoutArea()
     {
-        return $this->getModuleAndControllerWithoutArea() . $this->action . '/';
+        return $this->getModuleAndControllerWithoutArea() . $this->getAction() . '/';
     }
 
     /**
@@ -120,7 +100,7 @@ class Request extends AbstractRequest
      */
     public function getModuleAndController()
     {
-        $path = ($this->area === AreaEnum::AREA_ADMIN) ? 'acp/' : '';
+        $path = ($this->getArea() === AreaEnum::AREA_ADMIN) ? 'acp/' : '';
         $path .= $this->getModuleAndControllerWithoutArea();
 
         return $path;
@@ -131,7 +111,7 @@ class Request extends AbstractRequest
      */
     public function getModuleAndControllerWithoutArea()
     {
-        return $this->module . '/' . $this->controller . '/';
+        return $this->getModule() . '/' . $this->getController() . '/';
     }
 
     /**
@@ -145,11 +125,11 @@ class Request extends AbstractRequest
 
         // It's an request for the admin panel page
         if (preg_match(self::ADMIN_PANEL_PATTERN, $this->query)) {
-            $this->area = AreaEnum::AREA_ADMIN;
+            $this->symfonyRequest->attributes->set('_area', AreaEnum::AREA_ADMIN);
             // strip "acp/"
             $this->query = substr($this->query, 4);
         } else {
-            $this->area = AreaEnum::AREA_FRONTEND;
+            $this->symfonyRequest->attributes->set('_area', AreaEnum::AREA_FRONTEND);
 
             // Set the user defined homepage of the website
             if ($this->query === '/' && $this->homepage !== '') {
@@ -168,13 +148,22 @@ class Request extends AbstractRequest
         $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
 
         if (isset($query[0])) {
-            $this->module = $query[0];
+            $this->symfonyRequest->attributes->set('_module', $query[0]);
         } else {
-            $this->module = ($this->area === AreaEnum::AREA_ADMIN) ? 'acp' : 'news';
+            $this->symfonyRequest->attributes->set(
+                '_module',
+                ($this->getArea() === AreaEnum::AREA_ADMIN) ? 'acp' : 'news'
+            );
         }
 
-        $this->controller = isset($query[1]) ? $query[1] : 'index';
-        $this->action = isset($query[2]) ? $query[2] : 'index';
+        $this->symfonyRequest->attributes->set(
+            '_controller',
+            isset($query[1]) ? $query[1] : 'index'
+        );
+        $this->symfonyRequest->attributes->set(
+            '_controllerAction',
+            isset($query[2]) ? $query[2] : 'index'
+        );
 
         $this->completeQuery($query);
         $this->setRequestParameters($query);
@@ -193,7 +182,7 @@ class Request extends AbstractRequest
      */
     public function getParameters()
     {
-        return $this->parameters;
+        return $this->symfonyRequest->attributes;
     }
 
     /**
@@ -215,25 +204,29 @@ class Request extends AbstractRequest
      */
     protected function setRequestParameters(array $query)
     {
-        $this->parameters = new \Symfony\Component\HttpFoundation\ParameterBag([]);
-
         if (isset($query[3])) {
             $cQuery = count($query);
 
             for ($i = 3; $i < $cQuery; ++$i) {
                 if (preg_match('/^(page_(\d+))$/', $query[$i])) { // Current page
-                    $this->parameters->add(['page' => (int)substr($query[$i], 5)]);
+                    $this->symfonyRequest->attributes->add(['page' => (int)substr($query[$i], 5)]);
                 } elseif (preg_match('/^(id_(\d+))$/', $query[$i])) { // result ID
-                    $this->parameters->add(['id' => (int)substr($query[$i], 3)]);
+                    $this->symfonyRequest->attributes->add(['id' => (int)substr($query[$i], 3)]);
                 } elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
                     $param = explode('_', $query[$i], 2);
-                    $this->parameters->add([$param[0] => $param[1]]);
+                    $this->symfonyRequest->attributes->add([$param[0] => $param[1]]);
                 }
             }
         }
 
-        $this->parameters->set('cat', (int)$this->getPost()->get('cat', $this->parameters->get('cat')));
-        $this->parameters->set('action', $this->getPost()->get('action', $this->parameters->get('action')));
+        $this->symfonyRequest->attributes->set(
+            'cat',
+            (int)$this->getPost()->get('cat', $this->symfonyRequest->attributes->get('cat'))
+        );
+        $this->symfonyRequest->attributes->set(
+            'action',
+            $this->getPost()->get('action', $this->symfonyRequest->attributes->get('action'))
+        );
     }
 
     /**
@@ -242,13 +235,13 @@ class Request extends AbstractRequest
     protected function completeQuery(array $query)
     {
         if (!isset($query[0])) {
-            $this->query = $this->module . '/';
+            $this->query = $this->getModule() . '/';
         }
         if (!isset($query[1])) {
-            $this->query .= $this->controller . '/';
+            $this->query .= $this->getController() . '/';
         }
         if (!isset($query[2])) {
-            $this->query .= $this->action . '/';
+            $this->query .= $this->getAction() . '/';
         }
     }
 }

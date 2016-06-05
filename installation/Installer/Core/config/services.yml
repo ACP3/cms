@@ -2,9 +2,12 @@ parameters:
   default_request: 'install'
 
 imports:
+  - { resource: components/application.yml }
   - { resource: components/controller.yml }
+  - { resource: components/date.yml }
   - { resource: components/helpers.yml }
   - { resource: components/http.yml }
+  - { resource: components/language.yml }
   - { resource: components/validation.yml }
   - { resource: ../View/Renderer/Smarty/config/services.yml }
   - { resource: ../../Modules/Errors/Resources/config/services.yml }
@@ -12,43 +15,6 @@ imports:
   - { resource: ../../../../ACP3/Core/View/Renderer/Smarty/Blocks/config/services.yml }
 
 services:
-  core.application.controller_resolver:
-    class: ACP3\Core\Application\ControllerResolver
-    arguments:
-      - '@core.eventDispatcher'
-      - '@core.http.request'
-      - '@service_container'
-
-  core.application.event.listener.on_controller_resolver_before_dispatch_listener:
-    class: ACP3\Installer\Core\Application\Event\Listener\OnControllerResolverBeforeDispatchListener
-    arguments:
-      - '@core.http.request'
-      - '@core.http.redirect_response'
-    tags:
-      - { name: core.eventListener, event: core.application.controller_resolver.before_dispatch, method: onLanguageChange }
-
-  core.date:
-    class: ACP3\Installer\Core\Date
-    arguments:
-      - '@core.date.date_translator'
-
-  core.date.date_translator:
-    class: ACP3\Core\Date\DateTranslator
-    arguments:
-      - '@core.lang'
-
-  core.lang:
-    class: ACP3\Installer\Core\I18n\Translator
-    arguments:
-      - '@core.environment.application_path'
-      - '@core.lang.dictionary_cache'
-      - 'en_US'
-
-  core.lang.dictionary_cache:
-    class: ACP3\Installer\Core\I18n\DictionaryCache
-    arguments:
-      - '@core.environment.application_path'
-
   core.logger:
     class: ACP3\Core\Logger
     arguments:
@@ -66,7 +32,7 @@ services:
     class: ACP3\Core\View\Renderer\Smarty
     arguments:
       - '@core.environment.application_path'
-      - %core.environment%
+      - '%core.environment%'
 
   core.eventDispatcher:
     class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher

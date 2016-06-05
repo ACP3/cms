@@ -10,10 +10,10 @@ namespace ACP3\Core\Application\Event;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * Class FrontControllerDispatchEvent
+ * Class ControllerActionDispatcherDispatchEvent
  * @package ACP3\Core\Application\Event
  */
-class FrontControllerDispatchEvent extends Event
+class ControllerActionDispatcherDispatchEvent extends Event
 {
     /**
      * @var string
