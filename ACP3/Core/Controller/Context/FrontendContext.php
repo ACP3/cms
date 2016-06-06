@@ -7,7 +7,6 @@
 namespace ACP3\Core\Controller\Context;
 
 use ACP3\Core;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class FrontendContext
@@ -31,10 +30,6 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
      * @var \ACP3\Core\Modules\Helper\Action
      */
     private $actionHelper;
-    /**
-     * @var \Symfony\Component\HttpFoundation\Response
-     */
-    private $response;
 
     /**
      * @param \ACP3\Core\Controller\Context\WidgetContext $context
@@ -42,15 +37,13 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
      * @param \ACP3\Core\Breadcrumb\Steps                 $breadcrumb
      * @param \ACP3\Core\Breadcrumb\Title                 $title
      * @param \ACP3\Core\Modules\Helper\Action            $actionHelper
-     * @param \Symfony\Component\HttpFoundation\Response  $response
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Assets $assets,
         Core\Breadcrumb\Steps $breadcrumb,
         Core\Breadcrumb\Title $title,
-        Core\Modules\Helper\Action $actionHelper,
-        Response $response
+        Core\Modules\Helper\Action $actionHelper
     ) {
         parent::__construct(
             $context->getContainer(),
@@ -64,14 +57,14 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
             $context->getValidator(),
             $context->getView(),
             $context->getConfig(),
-            $context->getAppPath()
+            $context->getAppPath(),
+            $context->getResponse()
         );
 
         $this->assets = $assets;
         $this->breadcrumb = $breadcrumb;
         $this->title = $title;
         $this->actionHelper = $actionHelper;
-        $this->response = $response;
     }
 
     /**
@@ -104,13 +97,5 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
     public function getActionHelper()
     {
         return $this->actionHelper;
-    }
-
-    /**
-     * @return Response
-     */
-    public function getResponse()
-    {
-        return $this->response;
     }
 }

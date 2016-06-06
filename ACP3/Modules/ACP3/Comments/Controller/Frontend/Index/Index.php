@@ -26,15 +26,15 @@ class Index extends AbstractFrontendAction
     protected $commentRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
-     * @param \ACP3\Core\Pagination                               $pagination
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Pagination $pagination
      * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Pagination $pagination,
-        Comments\Model\CommentRepository $commentRepository)
-    {
+        Comments\Model\CommentRepository $commentRepository
+    ) {
         parent::__construct($context);
 
         $this->pagination = $pagination;
@@ -43,17 +43,24 @@ class Index extends AbstractFrontendAction
 
     /**
      * @param string $module
-     * @param int    $entryId
+     * @param int $entryId
      *
-     * @return string
+     * @return array
      */
     public function execute($module, $entryId)
     {
-        $comments = $this->commentRepository->getAllByModule($this->modules->getModuleId($module), $entryId, POS, $this->user->getEntriesPerPage());
+        $comments = $this->commentRepository->getAllByModule(
+            $this->modules->getModuleId($module),
+            $entryId,
+            POS,
+            $this->user->getEntriesPerPage()
+        );
         $cComments = count($comments);
 
         if ($cComments > 0) {
-            $this->pagination->setTotalResults($this->commentRepository->countAllByModule($this->modules->getModuleId($module), $entryId));
+            $this->pagination->setTotalResults(
+                $this->commentRepository->countAllByModule($this->modules->getModuleId($module), $entryId)
+            );
 
             for ($i = 0; $i < $cComments; ++$i) {
                 if (empty($comments[$i]['name'])) {
@@ -64,11 +71,13 @@ class Index extends AbstractFrontendAction
                 }
             }
 
-            $this->view->assign('comments', $comments);
-            $this->view->assign('dateformat', $this->commentsSettings['dateformat']);
-            $this->view->assign('pagination', $this->pagination->render());
+            return [
+                'comments' => $comments,
+                'dateformat' => $this->commentsSettings['dateformat'],
+                'pagination' => $this->pagination->render()
+            ];
         }
 
-        return $this->view->fetchTemplate('Comments/Frontend/index.index.tpl');
+        return [];
     }
 }

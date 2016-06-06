@@ -65,7 +65,7 @@
             {load_module module="widget/newsletter"}
             {load_module module="widget/files"}
             {load_module module="widget/articles"}
-            {load_module module="widget/articles/index/single" args=[1]}
+            {load_module module="widget/articles/index/single" args=['id' => 1]}
             {load_module module="widget/gallery"}
             {load_module module="widget/polls"}
         </div>

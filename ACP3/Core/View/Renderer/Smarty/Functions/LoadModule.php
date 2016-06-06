@@ -2,8 +2,8 @@
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Application\ControllerActionDispatcher;
-use Symfony\Component\HttpFoundation\Response;
+use ACP3\Core\Environment\ApplicationMode;
+use ACP3\Core\Router;
 
 /**
  * Class LoadModule
@@ -16,20 +16,29 @@ class LoadModule extends AbstractFunction
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\Application\ControllerActionDispatcher
+     * @var Router
      */
-    protected $controllerActionDispatcher;
+    protected $router;
+    /**
+     * @var string
+     */
+    protected $applicationMode;
 
     /**
      * LoadModule constructor.
      *
      * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Core\Application\ControllerActionDispatcher $controllerActionDispatcher
+     * @param Router $router
+     * @param string $applicationMode
      */
-    public function __construct(ACL $acl, ControllerActionDispatcher $controllerActionDispatcher)
+    public function __construct(
+        ACL $acl,
+        Router $router,
+        $applicationMode)
     {
         $this->acl = $acl;
-        $this->controllerActionDispatcher = $controllerActionDispatcher;
+        $this->router = $router;
+        $this->applicationMode = $applicationMode;
     }
 
     /**
@@ -45,19 +54,13 @@ class LoadModule extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        $response = '';
         $pathArray = $this->convertPathToArray($params['module']);
         $path = $pathArray[0] . '/' . $pathArray[1] . '/' . $pathArray[2] . '/' . $pathArray[3];
-        if ($this->acl->hasPermission($path) === true) {
-            $serviceId = strtolower($pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2] . '.' . $pathArray[3]);
-            $response =  $this->controllerActionDispatcher->dispatch(
-                $serviceId,
-                isset($params['args']) ? $params['args'] : []
-            );
+        $arguments = isset($params['args']) ? $params['args'] : [];
 
-            if ($response instanceof Response) {
-                $response = $response->getContent();
-            }
+        $response = '';
+        if ($this->acl->hasPermission($path) === true) {
+            $response = $this->esiInclude($path, $arguments);
         }
 
         return $response;
@@ -79,5 +82,27 @@ class LoadModule extends AbstractFunction
             $pathArray[3] = 'index';
         }
         return $pathArray;
+    }
+
+    /**
+     * @param string $path
+     * @param array $arguments
+     * @return string
+     */
+    protected function esiInclude($path, array $arguments)
+    {
+        $routeArguments = '';
+        foreach ($arguments as $key => $value) {
+            $routeArguments.= '/' . $key . '_' . $value;
+        }
+
+        $debug = '';
+        if ($this->applicationMode === ApplicationMode::PRODUCTION) {
+            $debug = ' onerror="continue"';
+        }
+
+        $esiTag = '<esi:include src="' . $this->router->route($path . $routeArguments, true) . '"' . $debug . ' />';
+
+        return $esiTag;
     }
 }

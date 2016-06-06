@@ -6,6 +6,8 @@
 
 namespace ACP3\Core\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Interface ActionInterface
  * @package ACP3\Core\Controller
@@ -27,7 +29,8 @@ interface ActionInterface
     public function get($serviceId);
 
     /**
-     * @param mixed $actionResult
+     * @param Response|string|array $actionResult
+     * @return Response
      */
     public function display($actionResult);
 }

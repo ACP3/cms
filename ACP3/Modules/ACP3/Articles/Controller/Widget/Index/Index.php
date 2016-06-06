@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Articles;
  */
 class Index extends Core\Controller\WidgetAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var Core\Date
      */
@@ -49,11 +51,16 @@ class Index extends Core\Controller\WidgetAction
 
     /**
      * @param string $template
+     * @return array
      */
     public function execute($template = '')
     {
-        $this->view->assign('sidebar_articles', $this->articleRepository->getAll($this->date->getCurrentDateTime(), 5));
+        $this->setCacheResponseCacheable();
 
         $this->setTemplate($template !== '' ? $template : 'Articles/Widget/index.index.tpl');
+
+        return [
+            'sidebar_articles' => $this->articleRepository->getAll($this->date->getCurrentDateTime(), 5)
+        ];
     }
 }

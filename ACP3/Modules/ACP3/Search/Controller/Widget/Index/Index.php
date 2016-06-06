@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Search;
  */
 class Index extends Core\Controller\WidgetAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var \ACP3\Modules\ACP3\Search\Helpers
      */
@@ -33,10 +35,15 @@ class Index extends Core\Controller\WidgetAction
         $this->searchHelpers = $searchHelpers;
     }
 
+    /**
+     * @return array
+     */
     public function execute()
     {
-        $this->view->assign('search_mods', $this->searchHelpers->getModules());
+        $this->setCacheResponseCacheable(3600);
 
-        $this->setTemplate('Search/Widget/index.index.tpl');
+        return [
+            'search_mods' => $this->searchHelpers->getModules()
+        ];
     }
 }

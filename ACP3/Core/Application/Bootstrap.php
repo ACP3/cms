@@ -132,6 +132,10 @@ class Bootstrap extends AbstractBootstrap
 
         try {
             $response = $this->container->get('core.application.controller_action_dispatcher')->dispatch();
+
+            if ($request->getArea() !== AreaEnum::AREA_WIDGET) {
+                $response->headers->set('Surrogate-Control', 'content="ESI/1.0"');
+            }
         } catch (\ACP3\Core\Controller\Exception\ResultNotExistsException $e) {
             $response = $redirect->temporary('errors/index/not_found');
         } catch (\ACP3\Core\Authentication\Exception\UnauthorizedAccessException $e) {

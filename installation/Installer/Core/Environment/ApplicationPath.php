@@ -32,11 +32,11 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
     /**
      * ApplicationPath constructor.
      *
-     * @param string $environment
+     * @param string $applicationMode
      */
-    public function __construct($environment)
+    public function __construct($applicationMode)
     {
-        parent::__construct($environment);
+        parent::__construct($applicationMode);
 
         $this->installerWebRoot = $this->webRoot;
         $this->webRoot = substr($this->webRoot !== '/' ? $this->webRoot . '/' : '/', 0, -14);

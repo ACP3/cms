@@ -8,6 +8,7 @@ namespace ACP3\Core\Application;
 
 use ACP3\Core\Application\Event\ControllerActionDispatcherDispatchEvent;
 use ACP3\Core\Controller\ActionInterface;
+use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -67,6 +68,11 @@ class ControllerActionDispatcher
     {
         if (empty($serviceId)) {
             $serviceId = $this->buildControllerServiceId();
+        }
+
+        if ($this->request->getArea() === AreaEnum::AREA_WIDGET &&
+            $this->request->getServer()->get('SERVER_ADDR') !== $this->request->getSymfonyRequest()->getClientIp()) {
+            throw new \RuntimeException('Loading widgets from outside is not allowed!');
         }
 
         if ($this->container->has($serviceId)) {

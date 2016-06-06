@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\News;
  */
 class Index extends Core\Controller\WidgetAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var Core\Date
      */
@@ -43,9 +45,13 @@ class Index extends Core\Controller\WidgetAction
     /**
      * @param int    $categoryId
      * @param string $template
+     *
+     * @return array
      */
     public function execute($categoryId = 0, $template = '')
     {
+        $this->setCacheResponseCacheable();
+
         $settings = $this->config->getSettings('news');
 
         if (!empty($categoryId)) {
@@ -53,9 +59,11 @@ class Index extends Core\Controller\WidgetAction
         } else {
             $news = $this->newsRepository->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         }
-        $this->view->assign('sidebar_news', $news);
-        $this->view->assign('dateformat', $settings['dateformat']);
-
         $this->setTemplate($template !== '' ? $template : 'News/Widget/index.index.tpl');
+
+        return [
+            'sidebar_news' => $news,
+            'dateformat' => $settings['dateformat']
+        ];
     }
 }

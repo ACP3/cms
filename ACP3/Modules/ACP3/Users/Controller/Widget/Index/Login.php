@@ -16,21 +16,22 @@ class Login extends Core\Controller\WidgetAction
 {
     /**
      * Displays the login mask, if the user is not already logged in
+     *
+     * @return array|void
      */
     public function execute()
     {
         if ($this->user->isAuthenticated() === false) {
             $prefix = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN ? 'acp/' : '';
             $currentPage = base64_encode($prefix . $this->request->getQuery());
-
             $settings = $this->config->getSettings('users');
 
-            $this->view->assign('enable_registration', $settings['enable_registration']);
-            $this->view->assign('redirect_uri', $this->request->getPost()->get('redirect_uri', $currentPage));
-
-            $this->setTemplate('Users/Widget/index.login.tpl');
-        } else {
-            $this->setNoOutput(true);
+            return [
+                'enable_registration' => $settings['enable_registration'],
+                'redirect_uri' => $this->request->getPost()->get('redirect_uri', $currentPage)
+            ];
         }
+
+        $this->setNoOutput(true);
     }
 }

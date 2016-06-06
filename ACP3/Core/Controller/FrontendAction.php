@@ -14,8 +14,6 @@ use ACP3\Core;
  */
 abstract class FrontendAction extends Core\Controller\WidgetAction
 {
-    use Core\Controller\DisplayActionTrait;
-
     /**
      * @var \ACP3\Core\Assets
      */
@@ -32,10 +30,6 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
      * @var Core\Helpers\RedirectMessages
      */
     protected $redirectMessages;
-    /**
-     * @var \Symfony\Component\HttpFoundation\Response
-     */
-    protected $response;
     /**
      * @var \ACP3\Core\Modules\Helper\Action
      */
@@ -56,7 +50,6 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
         $this->breadcrumb = $context->getBreadcrumb();
         $this->title = $context->getTitle();
         $this->actionHelper = $context->getActionHelper();
-        $this->response = $context->getResponse();
     }
 
     /**
@@ -97,14 +90,6 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
         return parent::preDispatch();
     }
 
-    /**
-     * @inheritdoc
-     */
-    protected function applyTemplateAutomatically()
-    {
-        return $this->request->getModule() . '/' . ucfirst($this->request->getArea()) . '/' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl';
-    }
-
     protected function addCustomTemplateVarsBeforeOutput()
     {
         $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());
@@ -133,22 +118,6 @@ abstract class FrontendAction extends Core\Controller\WidgetAction
         $this->layout = $layout;
 
         return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function getResponse()
-    {
-        return $this->response;
-    }
-
-    /**
-     * @return \ACP3\Core\View
-     */
-    protected function getView()
-    {
-        return $this->view;
     }
 
     /**

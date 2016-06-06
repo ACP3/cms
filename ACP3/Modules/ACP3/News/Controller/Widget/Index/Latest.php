@@ -42,6 +42,8 @@ class Latest extends Core\Controller\WidgetAction
 
     /**
      * @param int $categoryId
+     *
+     * @return array
      */
     public function execute($categoryId = 0)
     {
@@ -53,9 +55,9 @@ class Latest extends Core\Controller\WidgetAction
             $news = $this->newsRepository->getLatest($this->date->getCurrentDateTime());
         }
 
-        $this->view->assign('sidebar_news_latest', $news);
-        $this->view->assign('dateformat', $settings['dateformat']);
-
-        $this->setTemplate('News/Widget/index.latest.tpl');
+        return [
+            'sidebar_news_latest' => $news,
+            'dateformat' => $settings['dateformat']
+        ];
     }
 }

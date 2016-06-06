@@ -37,6 +37,8 @@ class UserMenu extends Core\Controller\WidgetAction
 
     /**
      * Displays the user menu, if the user is logged in
+     *
+     * @return array|void
      */
     public function execute()
     {
@@ -49,12 +51,12 @@ class UserMenu extends Core\Controller\WidgetAction
                 'system' => $this->addSystemActions()
             ];
 
-            $this->view->assign('user_sidebar', $userSidebar);
-
-            $this->setTemplate('Users/Widget/index.user_menu.tpl');
-        } else {
-            $this->setNoOutput(true);
+            return [
+                'user_sidebar' => $userSidebar
+            ];
         }
+
+        $this->setNoOutput(true);
     }
 
     /**

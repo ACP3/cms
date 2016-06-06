@@ -51,9 +51,9 @@ class ApplicationPath
     /**
      * ApplicationPath constructor.
      *
-     * @param string $environment
+     * @param string $applicationMode
      */
-    public function __construct($environment)
+    public function __construct($applicationMode)
     {
         $this->phpSelf = htmlentities($_SERVER['SCRIPT_NAME']);
         $this->webRoot = substr($this->phpSelf, 0, strrpos($this->phpSelf, '/') + 1);
@@ -61,7 +61,7 @@ class ApplicationPath
         $this->classesDir = $this->appDir . 'Core/';
         $this->modulesDir = $this->appDir . 'Modules/';
         $this->uploadsDir = ACP3_ROOT_DIR . 'uploads/';
-        $this->cacheDir = ACP3_ROOT_DIR . 'cache/' . $environment . '/';
+        $this->cacheDir = ACP3_ROOT_DIR . 'cache/' . $applicationMode . '/';
     }
 
     /**

@@ -35,11 +35,15 @@ class Index extends Core\Controller\WidgetAction
 
     /**
      * @param string $template
+     *
+     * @return array
      */
     public function execute($template = '')
     {
-        $this->view->assign('form_token', $this->formTokenHelper->renderFormToken('newsletter/index/index'));
-
         $this->setTemplate($template !== '' ? $template : 'Newsletter/Widget/index.index.tpl');
+
+        return [
+            'form_token' => $this->formTokenHelper->renderFormToken('newsletter/index/index')
+        ];
     }
 }

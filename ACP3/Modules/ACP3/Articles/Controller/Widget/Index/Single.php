@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Articles;
  */
 class Single extends Core\Controller\WidgetAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var Core\Date
      */
@@ -49,13 +51,16 @@ class Single extends Core\Controller\WidgetAction
 
     /**
      * @param int $id
+     * @return array
      */
     public function execute($id)
     {
         if ($this->articleRepository->resultExists((int)$id, $this->date->getCurrentDateTime()) === true) {
-            $this->view->assign('sidebar_article', $this->articlesCache->getCache($id));
+            $this->setCacheResponseCacheable();
 
-            $this->setTemplate('Articles/Widget/index.single.tpl');
+            return [
+                'sidebar_article' => $this->articlesCache->getCache($id)
+            ];
         }
     }
 }

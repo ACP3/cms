@@ -30,7 +30,7 @@ trait DisplayActionTrait
     /**
      * Outputs the requested module controller action
      *
-     * @param mixed $actionResult
+     * @param Response|string|array $actionResult
      * @return Response
      */
     public function display($actionResult)
@@ -47,7 +47,7 @@ trait DisplayActionTrait
         $this->getResponse()->headers->set('Content-type', $this->getContentType());
         $this->getResponse()->setCharset($this->getCharset());
 
-        if (!$this->getContent()) {
+        if (!$this->getContent() && $this->getNoOutput() === false) {
             // Set the template automatically
             if ($this->getTemplate() === '') {
                 $this->setTemplate($this->applyTemplateAutomatically());
@@ -80,6 +80,11 @@ trait DisplayActionTrait
      * @return \ACP3\Core\View
      */
     abstract protected function getView();
+
+    /**
+     * @return boolean
+     */
+    abstract protected function getNoOutput();
     
     /**
      * Gibt den Content-Type der anzuzeigenden Seiten zurück

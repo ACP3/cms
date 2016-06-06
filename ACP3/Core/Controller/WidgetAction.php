@@ -7,6 +7,7 @@
 namespace ACP3\Core\Controller;
 
 use ACP3\Core;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class WidgetAction
@@ -14,6 +15,8 @@ use ACP3\Core;
  */
 abstract class WidgetAction implements ActionInterface
 {
+    use Core\Controller\DisplayActionTrait;
+
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
@@ -62,6 +65,10 @@ abstract class WidgetAction implements ActionInterface
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
+    /**
+     * @var Response
+     */
+    protected $response;
 
     /**
      * Nichts ausgeben
@@ -93,6 +100,7 @@ abstract class WidgetAction implements ActionInterface
         $this->modules = $context->getModules();
         $this->config = $context->getConfig();
         $this->appPath = $context->getAppPath();
+        $this->response = $context->getResponse();
     }
 
     /**
@@ -140,13 +148,37 @@ abstract class WidgetAction implements ActionInterface
     /**
      * @inheritdoc
      */
-    public function display($actionResult)
+    protected function applyTemplateAutomatically()
     {
-        if ($this->getNoOutput() === false && $this->getTemplate() !== '') {
-            return $this->view->fetchTemplate($this->getTemplate());
-        }
+        return $this->request->getModule() . '/' . ucfirst($this->request->getArea()) . '/' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl';
+    }
 
-        return '';
+    protected function addCustomTemplateVarsBeforeOutput()
+    {
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+     * @return Core\User
+     */
+    protected function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @return \ACP3\Core\View
+     */
+    protected function getView()
+    {
+        return $this->view;
     }
 
     /**
@@ -172,5 +204,13 @@ abstract class WidgetAction implements ActionInterface
         $this->noOutput = (bool)$value;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getApplicationMode()
+    {
+        return $this->container->getParameter('core.environment');
     }
 }

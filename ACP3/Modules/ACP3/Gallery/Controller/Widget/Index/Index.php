@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Gallery;
  */
 class Index extends Core\Controller\WidgetAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var \ACP3\Core\Date
      */
@@ -42,12 +44,17 @@ class Index extends Core\Controller\WidgetAction
         $this->galleryModel = $galleryModel;
     }
 
+    /**
+     * @return array
+     */
     public function execute()
     {
+        $this->setCacheResponseCacheable();
+
         $settings = $this->config->getSettings('gallery');
 
-        $this->view->assign('sidebar_galleries', $this->galleryModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']));
-
-        $this->setTemplate('Gallery/Widget/index.index.tpl');
+        return [
+            'sidebar_galleries' => $this->galleryModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar'])
+        ];
     }
 }

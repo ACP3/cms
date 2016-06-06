@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Files;
  */
 class Index extends Core\Controller\WidgetAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var \ACP3\Core\Date
      */
@@ -41,11 +43,15 @@ class Index extends Core\Controller\WidgetAction
     }
 
     /**
-     * @param int    $categoryId
+     * @param int $categoryId
      * @param string $template
+     *
+     * @return array
      */
     public function execute($categoryId = 0, $template = '')
     {
+        $this->setCacheResponseCacheable();
+
         $settings = $this->config->getSettings('files');
 
         if (!empty($categoryId)) {
@@ -54,8 +60,10 @@ class Index extends Core\Controller\WidgetAction
             $categories = $this->filesRepository->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         }
 
-        $this->view->assign('sidebar_files', $categories);
-
         $this->setTemplate($template !== '' ? $template : 'Files/Widget/index.index.tpl');
+
+        return [
+            'sidebar_files' => $categories
+        ];
     }
 }

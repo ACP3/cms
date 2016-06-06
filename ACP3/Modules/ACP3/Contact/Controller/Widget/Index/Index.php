@@ -15,10 +15,13 @@ use ACP3\Modules\ACP3\Contact;
  */
 class Index extends Core\Controller\WidgetAction
 {
+    /**
+     * @return array
+     */
     public function execute()
     {
-        $this->view->assign('sidebar_contact', $this->config->getSettings('contact'));
-
-        $this->setTemplate('Contact/Widget/index.index.tpl');
+        return [
+            'sidebar_contact' => $this->config->getSettings('contact')
+        ];
     }
 }

@@ -118,6 +118,14 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
+     * @return bool
+     */
+    protected function getNoOutput()
+    {
+        return false;
+    }
+
+    /**
      * @inheritdoc
      */
     public function get($serviceId)

@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\News;
  */
 class Details extends AbstractAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var Core\Date
      */
@@ -58,6 +60,8 @@ class Details extends AbstractAction
     public function execute($id)
     {
         if ($this->newsRepository->resultExists($id, $this->date->getCurrentDateTime()) == 1) {
+            $this->setCacheResponseCacheable(60);
+
             $news = $this->newsCache->getCache($id);
 
             $this->breadcrumb->append($this->translator->t('news', 'news'), 'news');

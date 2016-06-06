@@ -59,7 +59,7 @@ class Create extends AbstractFrontendAction
      * @param string $module
      * @param int    $entryId
      *
-     * @return string
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function execute($module, $entryId)
     {
@@ -87,11 +87,10 @@ class Create extends AbstractFrontendAction
             $defaults['message'] = '';
         }
 
-        $this->view->assign('form', array_merge($defaults, $this->request->getPost()->all()));
-
-        $this->view->assign('form_token', $this->formTokenHelper->renderFormToken());
-
-        return $this->view->fetchTemplate('Comments/Frontend/index.create.tpl');
+        return [
+            'form' => array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
+        ];
     }
 
     /**

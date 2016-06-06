@@ -11,6 +11,7 @@ use ACP3\Core\Modules;
 class Request extends AbstractRequest
 {
     const ADMIN_PANEL_PATTERN = '=^acp/=';
+    const WIDGET_PATTERN = '=^widget/=';
 
     /**
      * @var string
@@ -128,7 +129,16 @@ class Request extends AbstractRequest
             $this->symfonyRequest->attributes->set('_area', AreaEnum::AREA_ADMIN);
             // strip "acp/"
             $this->query = substr($this->query, 4);
+        } elseif (preg_match(self::WIDGET_PATTERN, $this->query)) {
+            $this->symfonyRequest->attributes->set('_area', AreaEnum::AREA_WIDGET);
+
+            // strip "widget/"
+            $this->query = substr($this->query, 7);
         } else {
+            if (strpos($this->query, 'frontend/') === 0) {
+                $this->query = substr($this->query, 9);
+            }
+
             $this->symfonyRequest->attributes->set('_area', AreaEnum::AREA_FRONTEND);
 
             // Set the user defined homepage of the website
@@ -212,7 +222,7 @@ class Request extends AbstractRequest
                     $this->symfonyRequest->attributes->add(['page' => (int)substr($query[$i], 5)]);
                 } elseif (preg_match('/^(id_(\d+))$/', $query[$i])) { // result ID
                     $this->symfonyRequest->attributes->add(['id' => (int)substr($query[$i], 3)]);
-                } elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
+                } elseif (preg_match('/^(([a-zA-Z0-9-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
                     $param = explode('_', $query[$i], 2);
                     $this->symfonyRequest->attributes->add([$param[0] => $param[1]]);
                 }
