@@ -40,7 +40,7 @@ trait CacheResponseTrait
 
         if ($this->getUser()->isAuthenticated() || $this->getApplicationMode() === ApplicationMode::DEVELOPMENT) {
             $response->setPrivate();
-            $lifetime = 0;
+            $lifetime = null;
         }
 
         $response

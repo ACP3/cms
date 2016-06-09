@@ -26,4 +26,6 @@
         </div>
     </div>
 </form>
-{include_js module="system" file="ajax-form"}
+{javascripts}
+    {include_js module="system" file="ajax-form"}
+{/javascripts}
