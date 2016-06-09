@@ -100,8 +100,6 @@ class Create extends AbstractFormAction
 
             $this->insertUriAlias($formData, $lastId);
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $lastId;
         });
     }

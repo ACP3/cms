@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Polls;
  */
 class Result extends Core\Controller\FrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var Core\Date
      */
@@ -57,6 +59,8 @@ class Result extends Core\Controller\FrontendAction
      */
     public function execute($id)
     {
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
         if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
             $question = $this->pollRepository->getOneByIdWithTotalVotes($id);
             $answers = $this->answerRepository->getAnswersWithVotesByPollId($id);

@@ -110,8 +110,6 @@ class ForgotPwd extends Core\Controller\FrontendAction
                     $bool = $this->userRepository->update($updateValues, $user['id']);
                 }
 
-                $this->formTokenHelper->unsetFormToken();
-
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
                     $this->translator->t(
                         'users',

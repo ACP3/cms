@@ -86,8 +86,6 @@ class Settings extends Core\Controller\AdminAction
                 'emoticons' => $formData['emoticons'],
             ];
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $this->config->setSettings($data, 'comments');
         });
     }

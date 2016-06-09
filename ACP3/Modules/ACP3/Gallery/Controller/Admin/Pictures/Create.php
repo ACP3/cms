@@ -181,8 +181,6 @@ class Create extends AbstractFormAction
 
                 $this->galleryCache->saveCache($id);
 
-                $this->formTokenHelper->unsetFormToken();
-
                 return $lastId && $bool2;
             },
             'acp/gallery/index/edit/id_' . $id

@@ -130,8 +130,6 @@ class Edit extends AbstractFormAction
 
             $bool2 = $this->saveAnswers($formData['answers'], $id);
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool !== false && $bool2 !== false;
         });
     }

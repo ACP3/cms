@@ -17,6 +17,8 @@ use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
  */
 class Index extends AbstractAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var Core\Date
      */
@@ -91,6 +93,8 @@ class Index extends AbstractAction
      */
     public function execute($cat = 0)
     {
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
         $this->addBreadcrumbStep($cat);
 
         $time = $this->date->getCurrentDateTime();

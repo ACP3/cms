@@ -60,7 +60,7 @@ class Details extends AbstractAction
     public function execute($id)
     {
         if ($this->newsRepository->resultExists($id, $this->date->getCurrentDateTime()) == 1) {
-            $this->setCacheResponseCacheable(60);
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
 
             $news = $this->newsCache->getCache($id);
 

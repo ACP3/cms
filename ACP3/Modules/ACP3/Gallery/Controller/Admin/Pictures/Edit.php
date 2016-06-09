@@ -144,8 +144,6 @@ class Edit extends AbstractFormAction
 
                 $this->galleryCache->saveCache($picture['gallery_id']);
 
-                $this->formTokenHelper->unsetFormToken();
-
                 return $bool;
             },
             'acp/gallery/index/edit/id_' . $picture['gallery_id']

@@ -203,10 +203,10 @@ class Create extends AbstractAction
                     $this->newsletterSubscribeHelper->subscribeToNewsletter($formData['mail']);
                 }
 
-                $this->formTokenHelper->unsetFormToken();
-
-                return $this->redirectMessages()->setMessage($lastId,
-                    $this->translator->t('system', $lastId !== false ? 'create_success' : 'create_error'));
+                return $this->redirectMessages()->setMessage(
+                    $lastId,
+                    $this->translator->t('system', $lastId !== false ? 'create_success' : 'create_error')
+                );
             }
         );
     }

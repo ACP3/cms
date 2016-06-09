@@ -119,8 +119,6 @@ class Create extends AbstractFormAction
                 $settings['mail']
             );
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $this->redirectMessages()->setMessage($result, $text);
         });
     }

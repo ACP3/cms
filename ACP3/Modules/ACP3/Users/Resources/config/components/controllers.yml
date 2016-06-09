@@ -111,6 +111,10 @@ services:
       - '@core.context.frontend'
       - '@users.model.userrepository'
 
+  users.controller.widget.index.hash:
+    class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\Hash
+    parent: core.controller.widget
+
   users.controller.widget.index.login:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\Login
     parent: core.controller.widget

@@ -116,8 +116,6 @@ class Edit extends Core\Controller\AdminAction
 
             $this->seoCache->saveCache();
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

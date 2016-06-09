@@ -82,8 +82,6 @@ class Create extends Core\Controller\AdminAction
 
             $lastId = $this->menuRepository->insert($insertValues);
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $lastId;
         });
     }

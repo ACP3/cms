@@ -38,12 +38,13 @@ trait CacheResponseTrait
     {
         $response = $this->getResponse();
 
-        if ($this->getUser()->isAuthenticated() || $this->getApplicationMode() === ApplicationMode::DEVELOPMENT) {
+        if ($this->getApplicationMode() === ApplicationMode::DEVELOPMENT) {
             $response->setPrivate();
             $lifetime = null;
         }
 
         $response
+            ->setVary('X-User-Context-Hash')
             ->setPublic()
             ->setMaxAge($lifetime)
             ->setSharedMaxAge($lifetime);

@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Articles;
  */
 class Details extends Core\Controller\FrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var \ACP3\Core\Date
      */
@@ -65,6 +67,8 @@ class Details extends Core\Controller\FrontendAction
     public function execute($id)
     {
         if ($this->articleRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
             $article = $this->articlesCache->getCache($id);
             
             $this->breadcrumb->replaceAncestor($article['title'], '', true);

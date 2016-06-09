@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
  */
 class Details extends Core\Controller\FrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var \ACP3\Core\Date
      */
@@ -66,6 +68,8 @@ class Details extends Core\Controller\FrontendAction
     public function execute($id, $action = '')
     {
         if ($this->filesRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
             $file = $this->filesCache->getCache($id);
 
             if ($action === 'download') {

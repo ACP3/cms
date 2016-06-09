@@ -130,8 +130,6 @@ class Edit extends AbstractFormAction
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

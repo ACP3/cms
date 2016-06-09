@@ -86,8 +86,6 @@ class Index extends Core\Controller\AdminAction
                 'feed_type' => $formData['feed_type']
             ];
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $this->config->setSettings($data, 'feeds');
         });
     }

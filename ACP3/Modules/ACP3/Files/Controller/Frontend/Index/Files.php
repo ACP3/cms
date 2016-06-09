@@ -16,6 +16,8 @@ use ACP3\Modules\ACP3\Files as FilesModule;
  */
 class Files extends Core\Controller\FrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+    
     /**
      * @var \ACP3\Core\Date
      */
@@ -59,6 +61,8 @@ class Files extends Core\Controller\FrontendAction
     public function execute($cat)
     {
         if ($this->categoryRepository->resultExists($cat) === true) {
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
             $category = $this->categoryRepository->getOneById($cat);
 
             $this->breadcrumb

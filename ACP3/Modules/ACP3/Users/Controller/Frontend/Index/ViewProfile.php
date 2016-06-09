@@ -17,6 +17,8 @@ use ACP3\Modules\ACP3\Users;
  */
 class ViewProfile extends Core\Controller\FrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
      */
@@ -46,6 +48,8 @@ class ViewProfile extends Core\Controller\FrontendAction
     public function execute($id)
     {
         if ($this->userRepository->resultExists($id) === true) {
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
             $user = $this->user->getUserInfo($id);
             $user['gender'] = str_replace([1, 2, 3],
                 ['', $this->translator->t('users', 'female'), $this->translator->t('users', 'male')], $user['gender']);

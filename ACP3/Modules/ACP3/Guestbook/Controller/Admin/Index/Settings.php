@@ -105,8 +105,6 @@ class Settings extends Core\Controller\AdminAction
                 'newsletter_integration' => $formData['newsletter_integration'],
             ];
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $this->config->setSettings($data, 'guestbook');
         });
     }

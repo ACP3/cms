@@ -15,11 +15,15 @@ use ACP3\Modules\ACP3\Contact;
  */
 class Index extends Core\Controller\WidgetAction
 {
+    use Core\Cache\CacheResponseTrait;
+    
     /**
      * @return array
      */
     public function execute()
     {
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
         return [
             'sidebar_contact' => $this->config->getSettings('contact')
         ];

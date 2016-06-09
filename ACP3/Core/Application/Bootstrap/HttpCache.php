@@ -7,19 +7,45 @@
 namespace ACP3\Core\Application\Bootstrap;
 
 
+use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\View\Renderer\Smarty\Filters\MoveToBottom;
+use FOS\HttpCache\SymfonyCache\EventDispatchingHttpCache;
+use FOS\HttpCache\SymfonyCache\PurgeSubscriber;
+use FOS\HttpCache\SymfonyCache\RefreshSubscriber;
+use FOS\HttpCache\SymfonyCache\UserContextSubscriber;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpCache\StoreInterface;
+use Symfony\Component\HttpKernel\HttpCache\SurrogateInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * Class HttpCache
  * @package ACP3\Core\Application\Bootstrap
  */
-class HttpCache extends \Symfony\Component\HttpKernel\HttpCache\HttpCache
+class HttpCache extends EventDispatchingHttpCache
 {
     const JAVASCRIPTS_REGEX_PATTERN = MoveToBottom::ELEMENT_CATCHER_REGEX_PATTERN;
     const PLACEHOLDER = '</body>';
+
+    /**
+     * @inheritdoc
+     */
+    public function __construct(
+        HttpKernelInterface $kernel,
+        StoreInterface $store,
+        SurrogateInterface $surrogate = null,
+        array $options = array())
+    {
+        parent::__construct($kernel, $store, $surrogate, $options);
+
+        $this->addSubscriber(new UserContextSubscriber([
+            'user_hash_uri' => '/widget/users/index/hash/',
+            'session_name_prefix' => SessionHandlerInterface::SESSION_NAME
+        ]));
+        $this->addSubscriber(new PurgeSubscriber());
+        $this->addSubscriber(new RefreshSubscriber());
+    }
 
     /**
      * {@inheritdoc}

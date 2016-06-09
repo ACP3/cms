@@ -16,11 +16,15 @@ use ACP3\Modules\ACP3\Contact;
  */
 class Imprint extends Core\Controller\FrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @return array
      */
     public function execute()
     {
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
         return [
             'imprint' => $this->config->getSettings('contact'),
             'powered_by' => $this->translator->t(

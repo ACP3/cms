@@ -94,8 +94,6 @@ class Settings extends Core\Controller\AdminAction
 
             $bool = $this->config->setSettings($data, 'seo');
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

@@ -98,8 +98,6 @@ class Settings extends Core\Controller\AdminAction
                 $data['comments'] = (int)$formData['comments'];
             }
 
-            $this->formTokenHelper->unsetFormToken();
-
             $bool = $this->config->setSettings($data, 'gallery');
 
             if ($formData['thumbwidth'] !== $settings['thumbwidth']

@@ -101,8 +101,6 @@ class Create extends AbstractFormAction
 
             $this->permissionsCache->saveRolesCache();
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $roleId;
         });
     }

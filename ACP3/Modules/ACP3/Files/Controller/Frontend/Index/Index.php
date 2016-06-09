@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Categories;
  */
 class Index extends Core\Controller\FrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+    
     /**
      * @var \ACP3\Modules\ACP3\Categories\Cache
      */
@@ -40,6 +42,8 @@ class Index extends Core\Controller\FrontendAction
      */
     public function execute()
     {
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
         return [
             'categories' => $this->categoriesCache->getCache('files')
         ];

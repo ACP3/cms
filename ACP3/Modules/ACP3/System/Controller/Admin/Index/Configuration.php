@@ -155,8 +155,6 @@ class Configuration extends Core\Controller\AdminAction
 
                 $bool = $this->config->setSettings($data, 'system');
 
-                $this->formTokenHelper->unsetFormToken();
-
                 return $this->redirectMessages()->setMessage(
                     $bool,
                     $this->translator->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'),

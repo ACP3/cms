@@ -96,8 +96,6 @@ class Settings extends Core\Controller\AdminAction
                 'mail' => $formData['mail']
             ];
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $this->config->setSettings($data, 'users');
         });
     }

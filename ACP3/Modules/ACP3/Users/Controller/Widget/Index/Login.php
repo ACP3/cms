@@ -14,6 +14,8 @@ use ACP3\Core;
  */
 class Login extends Core\Controller\WidgetAction
 {
+    use Core\Cache\CacheResponseTrait;
+    
     /**
      * Displays the login mask, if the user is not already logged in
      *
@@ -21,6 +23,7 @@ class Login extends Core\Controller\WidgetAction
      */
     public function execute()
     {
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
         if ($this->user->isAuthenticated() === false) {
             $prefix = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN ? 'acp/' : '';
             $currentPage = base64_encode($prefix . $this->request->getQuery());

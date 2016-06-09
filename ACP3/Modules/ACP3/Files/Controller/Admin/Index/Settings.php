@@ -112,8 +112,6 @@ class Settings extends Core\Controller\AdminAction
                 $data['comments'] = $formData['comments'];
             }
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $this->config->setSettings($data, 'files');
         });
     }

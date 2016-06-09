@@ -171,8 +171,6 @@ class Edit extends AbstractFormAction
 
             $this->updateCurrentlyLoggedInUserCookie($id);
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

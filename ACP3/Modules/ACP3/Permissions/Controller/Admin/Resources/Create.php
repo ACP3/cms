@@ -126,8 +126,6 @@ class Create extends Core\Controller\AdminAction
 
             $this->permissionsCache->saveResourcesCache();
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

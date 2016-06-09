@@ -17,6 +17,8 @@ use ACP3\Modules\ACP3\Newsletter;
  */
 class Index extends AbstractAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var \ACP3\Core\Pagination
      */
@@ -49,6 +51,8 @@ class Index extends AbstractAction
      */
     public function execute()
     {
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
         $guestbook = $this->guestbookRepository->getAll($this->guestbookSettings['notify'], POS, $this->user->getEntriesPerPage());
         $cGuestbook = count($guestbook);
 

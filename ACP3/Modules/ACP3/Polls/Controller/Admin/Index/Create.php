@@ -120,8 +120,6 @@ class Create extends AbstractFormAction
                 $bool2 = $this->saveAnswers($formData['answers'], $pollId);
             }
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $pollId !== false && $bool2 !== false;
         });
     }

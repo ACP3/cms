@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Articles;
  */
 class Index extends Core\Controller\FrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+    
     /**
      * @var \ACP3\Core\Date
      */
@@ -51,6 +53,8 @@ class Index extends Core\Controller\FrontendAction
 
     public function execute()
     {
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
         $time = $this->date->getCurrentDateTime();
         $articles = $this->articleRepository->getAll($time, POS, $this->user->getEntriesPerPage());
         $this->pagination->setTotalResults($this->articleRepository->countAll($time));

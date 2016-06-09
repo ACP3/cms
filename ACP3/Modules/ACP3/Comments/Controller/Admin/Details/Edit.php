@@ -141,8 +141,6 @@ class Edit extends Core\Controller\AdminAction
 
                 $bool = $this->commentRepository->update($updateValues, $id);
 
-                $this->formTokenHelper->unsetFormToken();
-
                 return $bool;
             },
             'acp/comments/details/index/id_' . $moduleId

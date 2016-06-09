@@ -147,8 +147,6 @@ class Create extends AbstractFormAction
 
             $this->createOrUpdateMenuItem($formData, $articleId);
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $articleId;
         });
     }

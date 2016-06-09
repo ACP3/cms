@@ -127,8 +127,6 @@ class Settings extends AbstractAction
 
                 $bool = $this->userRepository->update($updateValues, $this->user->getUserId());
 
-                $this->formTokenHelper->unsetFormToken();
-
                 return $this->redirectMessages()->setMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'settings_success' : 'settings_error')

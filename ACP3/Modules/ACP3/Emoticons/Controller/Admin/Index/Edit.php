@@ -113,8 +113,6 @@ class Edit extends Core\Controller\AdminAction
 
             $this->emoticonsCache->saveCache();
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

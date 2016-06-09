@@ -117,8 +117,6 @@ class Create extends Core\Controller\AdminAction
 
             $this->categoriesCache->saveCache(strtolower($formData['module']));
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

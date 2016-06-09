@@ -102,10 +102,10 @@ class Index extends Core\Controller\FrontendAction
                     $formData['last_name']
                 );
 
-                $this->formTokenHelper->unsetFormToken();
-
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox($this->translator->t('newsletter',
-                    $bool !== false ? 'subscribe_success' : 'subscribe_error'), $this->appPath->getWebRoot()));
+                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
+                    $this->translator->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'),
+                    $this->appPath->getWebRoot())
+                );
             }
         );
     }

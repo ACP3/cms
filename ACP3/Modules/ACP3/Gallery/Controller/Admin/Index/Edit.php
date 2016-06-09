@@ -199,8 +199,6 @@ class Edit extends AbstractFormAction
 
             $this->generatePictureAliases($galleryId);
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

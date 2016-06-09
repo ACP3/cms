@@ -40,7 +40,7 @@ class Index extends Core\Controller\WidgetAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable(3600);
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
 
         return [
             'search_mods' => $this->searchHelpers->getModules()

@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Polls;
  */
 class Index extends Core\Controller\FrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+    
     /**
      * @var Core\Date
      */
@@ -51,6 +53,8 @@ class Index extends Core\Controller\FrontendAction
 
     public function execute()
     {
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
         $polls = $this->pollRepository->getAll($this->date->getCurrentDateTime());
         $cPolls = count($polls);
 

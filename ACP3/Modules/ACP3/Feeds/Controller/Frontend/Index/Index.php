@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Feeds;
  */
 class Index extends Core\Controller\FrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var \ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator
      */
@@ -42,6 +44,8 @@ class Index extends Core\Controller\FrontendAction
     public function execute($feed)
     {
         if ($this->acl->hasPermission('frontend/' . $feed) === true) {
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
             $module = $this->request->getParameters()->get('feed', '');
             $this->feedGenerator
                 ->setTitle($this->config->getSettings('seo')['title'])

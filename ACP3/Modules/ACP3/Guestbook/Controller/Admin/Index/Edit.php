@@ -130,8 +130,6 @@ class Edit extends Core\Controller\AdminAction
 
             $bool = $this->guestbookRepository->update($updateValues, $id);
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

@@ -195,8 +195,6 @@ class Edit extends AbstractFormAction
             $this->insertUriAlias($formData, $articleId);
             $this->createOrUpdateMenuItem($formData, $articleId);
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

@@ -97,8 +97,6 @@ class Create extends Core\Controller\AdminAction
                 (int)$formData['seo_robots']
             );
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

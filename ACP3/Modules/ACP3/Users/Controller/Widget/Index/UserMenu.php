@@ -14,6 +14,8 @@ use ACP3\Core;
  */
 class UserMenu extends Core\Controller\WidgetAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var array
      */
@@ -42,6 +44,8 @@ class UserMenu extends Core\Controller\WidgetAction
      */
     public function execute()
     {
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
         if ($this->user->isAuthenticated() === true) {
             $prefix = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN ? 'acp/' : '';
 

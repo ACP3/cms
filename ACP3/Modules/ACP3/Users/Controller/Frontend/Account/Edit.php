@@ -140,8 +140,6 @@ class Edit extends AbstractAction
                     Core\User::REMEMBER_ME_COOKIE_LIFETIME
                 );
 
-                $this->formTokenHelper->unsetFormToken();
-
                 return $this->redirectMessages()->setMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'edit_success' : 'edit_error')

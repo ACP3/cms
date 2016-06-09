@@ -156,10 +156,11 @@ class Create extends AbstractFormAction
 
                 $this->menusCache->saveMenusCache();
 
-                $this->formTokenHelper->unsetFormToken();
-
-                return $this->redirectMessages()->setMessage($bool,
-                    $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
+                return $this->redirectMessages()->setMessage(
+                    $bool,
+                    $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),
+                    'acp/menus'
+                );
             },
             'acp/menus'
         );

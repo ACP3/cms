@@ -114,8 +114,6 @@ class Edit extends Core\Controller\AdminAction
 
             $this->categoriesCache->saveCache($this->categoryRepository->getModuleNameFromCategoryId($id));
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

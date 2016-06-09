@@ -104,8 +104,6 @@ class Edit extends Core\Controller\AdminAction
 
             $this->menusCache->saveMenusCache();
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

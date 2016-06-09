@@ -139,8 +139,6 @@ class Edit extends AbstractFormAction
 
             $this->newsCache->saveCache($newsId);
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

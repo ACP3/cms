@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Newsletter;
  */
 class Details extends Core\Controller\FrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
      */
@@ -46,6 +48,8 @@ class Details extends Core\Controller\FrontendAction
         $newsletter = $this->newsletterRepository->getOneById($id, 1);
 
         if (!empty($newsletter)) {
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
             $this->breadcrumb
                 ->append($this->translator->t('newsletter', 'index'), 'newsletter')
                 ->append($this->translator->t('newsletter', 'frontend_archive_index'), 'newsletter/archive')

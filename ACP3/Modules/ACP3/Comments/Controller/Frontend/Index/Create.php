@@ -123,11 +123,11 @@ class Create extends AbstractFrontendAction
 
                 $bool = $this->commentRepository->insert($insertValues);
 
-                $this->formTokenHelper->unsetFormToken();
-
-                return $this->redirectMessages()->setMessage($bool,
+                return $this->redirectMessages()->setMessage(
+                    $bool,
                     $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),
-                    $this->request->getQuery());
+                    $this->request->getQuery()
+                );
             }
         );
     }

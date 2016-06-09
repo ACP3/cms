@@ -130,8 +130,6 @@ class Edit extends Core\Controller\AdminAction
 
             $this->permissionsCache->saveResourcesCache();
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

@@ -90,8 +90,6 @@ class Settings extends Core\Controller\AdminAction
                 'html' => (int)$formData['html']
             ];
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $this->config->setSettings($data, 'newsletter');
         });
     }

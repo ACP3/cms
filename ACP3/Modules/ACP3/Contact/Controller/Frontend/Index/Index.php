@@ -133,11 +133,8 @@ class Index extends Core\Controller\FrontendAction
                     $this->sendEmailHelper->execute($formData['name'], $formData['mail'], $settings['mail'], $subjectCopy, $bodyCopy);
                 }
 
-                $this->formTokenHelper->unsetFormToken();
-
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
-                    $bool === true ? $this->translator->t('contact',
-                        'send_mail_success') : $this->translator->t('contact', 'send_mail_error'),
+                    $this->translator->t('contact', $bool === true ? 'send_mail_success' : 'send_mail_error'),
                     $this->router->route('contact')
                 ));
             }

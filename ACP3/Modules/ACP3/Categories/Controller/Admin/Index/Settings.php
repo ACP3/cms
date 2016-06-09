@@ -75,8 +75,6 @@ class Settings extends Core\Controller\AdminAction
                 'filesize' => (int)$formData['filesize'],
             ];
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $this->config->setSettings($data, 'categories');
         });
     }

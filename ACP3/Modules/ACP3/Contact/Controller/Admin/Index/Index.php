@@ -79,8 +79,6 @@ class Index extends Core\Controller\AdminAction
                 'vat_id' => $this->get('core.helpers.secure')->strEncode($formData['vat_id'], true),
             ];
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $this->config->setSettings($data, 'contact');
         });
     }

@@ -162,8 +162,6 @@ class Create extends AbstractFormAction
 
             $this->permissionsHelpers->updateUserRoles($formData['roles'], $lastId);
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $lastId;
         });
     }

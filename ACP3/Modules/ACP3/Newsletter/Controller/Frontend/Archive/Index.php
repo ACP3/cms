@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Newsletter;
  */
 class Index extends Core\Controller\FrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+    
     /**
      * @var Core\Pagination
      */
@@ -45,6 +47,8 @@ class Index extends Core\Controller\FrontendAction
      */
     public function execute()
     {
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
         $this->pagination->setTotalResults($this->newsletterRepository->countAll(1));
 
         return [

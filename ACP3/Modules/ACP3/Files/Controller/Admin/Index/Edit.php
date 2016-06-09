@@ -170,8 +170,6 @@ class Edit extends AbstractFormAction
 
             $this->filesCache->saveCache($fileId);
 
-            $this->formTokenHelper->unsetFormToken();
-
             return $bool;
         });
     }

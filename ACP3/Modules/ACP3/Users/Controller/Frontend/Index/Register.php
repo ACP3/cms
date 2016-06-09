@@ -162,8 +162,6 @@ class Register extends Core\Controller\FrontendAction
                 $lastId = $this->userRepository->insert($insertValues);
                 $bool2 = $this->permissionsHelpers->updateUserRoles([2], $lastId);
 
-                $this->formTokenHelper->unsetFormToken();
-
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
                     $this->translator->t('users',
                         $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'),
