@@ -17,14 +17,6 @@ trait DisplayActionTrait
     /**
      * @var string
      */
-    private $contentType = 'text/html';
-    /**
-     * @var string
-     */
-    private $charset = "UTF-8";
-    /**
-     * @var string
-     */
     private $template = '';
 
     /**
@@ -42,10 +34,6 @@ trait DisplayActionTrait
         } elseif (is_array($actionResult)) {
             $this->getView()->assign($actionResult);
         }
-
-        // Output content through the controller
-        $this->getResponse()->headers->set('Content-type', $this->getContentType());
-        $this->getResponse()->setCharset($this->getCharset());
 
         if (!$this->getContent() && $this->getNoOutput() === false) {
             // Set the template automatically
@@ -93,7 +81,7 @@ trait DisplayActionTrait
      */
     public function getContentType()
     {
-        return $this->contentType;
+        return $this->getResponse()->headers->get('Content-type');
     }
 
     /**
@@ -105,7 +93,7 @@ trait DisplayActionTrait
      */
     public function setContentType($data)
     {
-        $this->contentType = $data;
+        $this->getResponse()->headers->set('Content-type', $data);
 
         return $this;
     }
@@ -115,7 +103,7 @@ trait DisplayActionTrait
      */
     public function getCharset()
     {
-        return $this->charset;
+        return $this->getResponse()->getCharset();
     }
 
     /**
@@ -125,7 +113,7 @@ trait DisplayActionTrait
      */
     public function setCharset($charset)
     {
-        $this->charset = $charset;
+        $this->getResponse()->setCharset($charset);
 
         return $this;
     }
