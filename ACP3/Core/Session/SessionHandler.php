@@ -146,6 +146,7 @@ class SessionHandler extends AbstractSessionHandler
      */
     public function destroy($sessionId)
     {
+        session_regenerate_id();
         $this->resetSessionData();
 
         if ($this->request->getCookies()->has(self::SESSION_NAME)) {
@@ -156,7 +157,6 @@ class SessionHandler extends AbstractSessionHandler
                 $this->appPath->getWebRoot()
             );
             $this->response->headers->setCookie($cookie);
-            //setcookie(self::SESSION_NAME, '', time() - 3600, $this->appPath->getWebRoot());
         }
 
         // Delete the session from the database
