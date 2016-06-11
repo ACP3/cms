@@ -25,6 +25,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  */
 class HttpCache extends EventDispatchingHttpCache
 {
+    const USER_CONTEXT_GUEST = 'ACP3_USER_CONTEXT_GUEST';
     const JAVASCRIPTS_REGEX_PATTERN = MoveToBottom::ELEMENT_CATCHER_REGEX_PATTERN;
     const PLACEHOLDER = '</body>';
 
@@ -40,6 +41,7 @@ class HttpCache extends EventDispatchingHttpCache
         parent::__construct($kernel, $store, $surrogate, $options);
 
         $this->addSubscriber(new UserContextSubscriber([
+            'anonymous_hash' => md5(static::USER_CONTEXT_GUEST),
             'user_hash_uri' => '/widget/users/index/hash/',
             'session_name_prefix' => SessionHandlerInterface::SESSION_NAME
         ]));
