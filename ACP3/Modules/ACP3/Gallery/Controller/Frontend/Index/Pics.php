@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Gallery;
  */
 class Pics extends AbstractAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var \ACP3\Core\Date
      */
@@ -58,6 +60,8 @@ class Pics extends AbstractAction
     public function execute($id)
     {
         if ($this->galleryRepository->galleryExists($id, $this->date->getCurrentDateTime()) === true) {
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
             $this->breadcrumb
                 ->append($this->translator->t('gallery', 'gallery'), 'gallery')
                 ->append($this->galleryRepository->getGalleryTitle($id));

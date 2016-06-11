@@ -16,6 +16,8 @@ use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
  */
 class Details extends Core\Controller\FrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var \ACP3\Core\Date
      */
@@ -75,6 +77,8 @@ class Details extends Core\Controller\FrontendAction
     public function execute($id)
     {
         if ($this->pictureRepository->pictureExists($id, $this->date->getCurrentDateTime()) === true) {
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
             $picture = $this->pictureRepository->getPictureById($id);
 
             $this->breadcrumb

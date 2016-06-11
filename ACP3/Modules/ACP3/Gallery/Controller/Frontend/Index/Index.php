@@ -15,6 +15,8 @@ use ACP3\Modules\ACP3\Gallery;
  */
 class Index extends AbstractAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var \ACP3\Core\Date
      */
@@ -54,6 +56,8 @@ class Index extends AbstractAction
      */
     public function execute()
     {
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
         $time = $this->date->getCurrentDateTime();
 
         $this->pagination->setTotalResults($this->galleryRepository->countAll($time));
