@@ -39,7 +39,6 @@ class Index extends Core\Controller\WidgetAction
      */
     public function execute($template = '')
     {
-        var_dump($this->request->getSymfonyRequest()->server->all());
         $this->setTemplate($template !== '' ? $template : 'Newsletter/Widget/index.index.tpl');
 
         return [
