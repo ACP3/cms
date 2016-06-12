@@ -31,7 +31,7 @@ $cacheStore = new \Symfony\Component\HttpKernel\HttpCache\Store(
     $kernel->getAppPath()->getCacheDir() . 'http/'
 );
 
-$appCache = new \ACP3\Core\Application\Bootstrap\HttpCache(
+$appCache = new \ACP3\Core\Application\BootstrapCache(
     $kernel,
     $cacheStore,
     new \Symfony\Component\HttpKernel\HttpCache\Esi(),

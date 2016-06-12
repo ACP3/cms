@@ -4,7 +4,7 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Core\Application\Bootstrap;
+namespace ACP3\Core\Application;
 
 
 use ACP3\Core\Session\SessionHandlerInterface;
@@ -20,10 +20,10 @@ use Symfony\Component\HttpKernel\HttpCache\SurrogateInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
- * Class HttpCache
- * @package ACP3\Core\Application\Bootstrap
+ * Class BootstrapCache
+ * @package ACP3\Core\Application
  */
-class HttpCache extends EventDispatchingHttpCache
+class BootstrapCache extends EventDispatchingHttpCache
 {
     const JAVASCRIPTS_REGEX_PATTERN = MoveToBottom::ELEMENT_CATCHER_REGEX_PATTERN;
     const PLACEHOLDER = '</body>';

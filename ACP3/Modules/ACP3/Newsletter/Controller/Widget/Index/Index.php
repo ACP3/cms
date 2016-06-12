@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Widget\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Captcha;
 
 /**
  * Class Index
@@ -40,10 +39,11 @@ class Index extends Core\Controller\WidgetAction
      */
     public function execute($template = '')
     {
+        var_dump($this->request->getSymfonyRequest()->server->all());
         $this->setTemplate($template !== '' ? $template : 'Newsletter/Widget/index.index.tpl');
 
         return [
-            'form_token' => $this->formTokenHelper->renderFormToken('newsletter/index/index')
+            'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 }
