@@ -92,6 +92,8 @@ class Delete extends Core\Controller\AdminAction
                     }
                 }
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 return $bool;
             },
             'acp/gallery/pictures/delete/id_' . $id,

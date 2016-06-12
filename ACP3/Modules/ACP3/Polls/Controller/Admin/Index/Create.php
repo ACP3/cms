@@ -120,6 +120,8 @@ class Create extends AbstractFormAction
                 $bool2 = $this->saveAnswers($formData['answers'], $pollId);
             }
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $pollId !== false && $bool2 !== false;
         });
     }

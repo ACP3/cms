@@ -155,6 +155,6 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
         $sessionMock->expects($this->any())
             ->method('get')
             ->with(SessionHandlerInterface::XSRF_TOKEN_NAME)
-            ->willReturn([self::XSRF_QUERY_STRING => self::XSRF_FORM_TOKEN]);
+            ->willReturn(self::XSRF_FORM_TOKEN);
     }
 }

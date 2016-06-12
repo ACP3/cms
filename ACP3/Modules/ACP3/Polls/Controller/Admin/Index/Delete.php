@@ -52,6 +52,8 @@ class Delete extends Core\Controller\AdminAction
                     $bool = $this->pollRepository->delete($item);
                 }
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 return $bool !== false;
             }
         );

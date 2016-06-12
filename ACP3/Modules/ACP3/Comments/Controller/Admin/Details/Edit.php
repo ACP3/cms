@@ -141,6 +141,8 @@ class Edit extends Core\Controller\AdminAction
 
                 $bool = $this->commentRepository->update($updateValues, $id);
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 return $bool;
             },
             'acp/comments/details/index/id_' . $moduleId

@@ -162,6 +162,8 @@ class Create extends AbstractFormAction
 
             $this->permissionsHelpers->updateUserRoles($formData['roles'], $lastId);
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $lastId;
         });
     }

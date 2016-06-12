@@ -130,6 +130,8 @@ class Edit extends Core\Controller\AdminAction
 
             $this->permissionsCache->saveResourcesCache();
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $bool;
         });
     }

@@ -100,6 +100,8 @@ class Settings extends Core\Controller\AdminAction
                 $data['comments'] = $formData['comments'];
             }
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $this->config->setSettings($data, 'news');
         });
     }

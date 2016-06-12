@@ -113,6 +113,8 @@ class Edit extends Core\Controller\AdminAction
 
             $this->emoticonsCache->saveCache();
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $bool;
         });
     }

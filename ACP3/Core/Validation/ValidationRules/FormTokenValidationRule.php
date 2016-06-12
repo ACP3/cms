@@ -51,9 +51,8 @@ class FormTokenValidationRule extends AbstractValidationRule
     public function isValid($data, $field = '', array $extra = [])
     {
         $tokenName = SessionHandlerInterface::XSRF_TOKEN_NAME;
-        $urlQueryString = $this->request->getQuery();
-        $sessionToken = $this->sessionHandler->get($tokenName);
+        $sessionToken = $this->sessionHandler->get($tokenName, '');
 
-        return (isset($sessionToken[$urlQueryString]) && $this->request->getPost()->get($tokenName, '') === $sessionToken[$urlQueryString]);
+        return $this->request->getPost()->get($tokenName, '') === $sessionToken;
     }
 }

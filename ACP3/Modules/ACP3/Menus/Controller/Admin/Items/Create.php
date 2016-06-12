@@ -156,6 +156,8 @@ class Create extends AbstractFormAction
 
                 $this->menusCache->saveMenusCache();
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 return $this->redirectMessages()->setMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),

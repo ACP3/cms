@@ -74,6 +74,8 @@ class Delete extends Core\Controller\AdminAction
                     $text = $this->translator->t('system', $result ? 'delete_success' : 'delete_error');
                 }
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 return $this->redirectMessages()->setMessage($result, $text);
             }
         );

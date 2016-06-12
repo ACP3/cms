@@ -13,8 +13,7 @@ use ACP3\Modules\ACP3\Gallery;
  * Class Order
  * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
  */
-class
-Order extends Core\Controller\AdminAction
+class Order extends Core\Controller\AdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\Sort
@@ -69,6 +68,8 @@ Order extends Core\Controller\AdminAction
             $galleryId = $this->pictureRepository->getGalleryIdFromPictureId($id);
 
             $this->galleryCache->saveCache($galleryId);
+
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $this->redirect()->temporary('acp/gallery/index/edit/id_' . $galleryId);
         }

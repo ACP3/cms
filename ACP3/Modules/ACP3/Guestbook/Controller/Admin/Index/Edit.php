@@ -130,6 +130,8 @@ class Edit extends Core\Controller\AdminAction
 
             $bool = $this->guestbookRepository->update($updateValues, $id);
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $bool;
         });
     }

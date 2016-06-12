@@ -52,6 +52,8 @@ class Delete extends Core\Controller\AdminAction
                     $bool = $this->commentRepository->delete($item, 'module_id');
                 }
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 return $bool;
             }
         );

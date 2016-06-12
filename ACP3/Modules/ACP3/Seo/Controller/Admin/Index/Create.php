@@ -97,6 +97,8 @@ class Create extends Core\Controller\AdminAction
                 (int)$formData['seo_robots']
             );
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $bool;
         });
     }

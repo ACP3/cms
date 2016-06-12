@@ -69,6 +69,8 @@ class Order extends Core\Controller\AdminAction
 
             $this->menusCache->saveMenusCache();
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $this->redirect()->temporary('acp/menus');
         }
 

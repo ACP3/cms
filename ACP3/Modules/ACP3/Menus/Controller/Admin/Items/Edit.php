@@ -109,7 +109,7 @@ class Edit extends AbstractFormAction
 
             if ($this->articlesHelpers) {
                 $matches = [];
-                if ($this->request->getPost()->isEmpty() && $menuItem['mode'] == 4) {
+                if (count($this->request->getPost()->all()) == 0 && $menuItem['mode'] == 4) {
                     preg_match_all(Menus\Helpers\MenuItemsList::ARTICLES_URL_KEY_REGEX, $menuItem['uri'], $matches);
                 }
 
@@ -180,6 +180,8 @@ class Edit extends AbstractFormAction
                 }
 
                 $this->menusCache->saveMenusCache();
+
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
                 return $this->redirectMessages()->setMessage(
                     $bool,

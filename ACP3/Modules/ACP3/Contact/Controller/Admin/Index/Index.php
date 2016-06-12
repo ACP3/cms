@@ -27,7 +27,7 @@ class Index extends Core\Controller\AdminAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Modules\Controller\AdminContext                        $context
+     * @param \ACP3\Core\Controller\Context\AdminContext                        $context
      * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
      * @param \ACP3\Modules\ACP3\Contact\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
@@ -78,6 +78,8 @@ class Index extends Core\Controller\AdminAction
                 'telephone' => $this->get('core.helpers.secure')->strEncode($formData['telephone']),
                 'vat_id' => $this->get('core.helpers.secure')->strEncode($formData['vat_id'], true),
             ];
+
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $this->config->setSettings($data, 'contact');
         });

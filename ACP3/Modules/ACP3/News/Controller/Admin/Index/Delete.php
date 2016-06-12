@@ -86,6 +86,8 @@ class Delete extends Core\Controller\AdminAction
                     }
                 }
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 return $bool;
             }
         );

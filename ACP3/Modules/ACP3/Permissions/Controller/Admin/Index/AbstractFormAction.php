@@ -100,7 +100,7 @@ abstract class AbstractFormAction extends AdminAction
      */
     protected function privilegeIsChecked($moduleId, $privilegeId, $value = 0, $defaultValue = null)
     {
-        if ($this->request->getPost()->isEmpty() && $defaultValue === $value ||
+        if (count($this->request->getPost()->all()) == 0 && $defaultValue === $value ||
             $this->request->getPost()->count() !== 0 && (int)$this->request->getPost()->get('privileges')[$moduleId][$privilegeId] === $value
         ) {
             return ' checked="checked"';

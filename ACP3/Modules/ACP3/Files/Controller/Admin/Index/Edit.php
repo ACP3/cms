@@ -170,6 +170,8 @@ class Edit extends AbstractFormAction
 
             $this->filesCache->saveCache($fileId);
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $bool;
         });
     }

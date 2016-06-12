@@ -105,6 +105,8 @@ class Settings extends Core\Controller\AdminAction
                 'newsletter_integration' => $formData['newsletter_integration'],
             ];
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $this->config->setSettings($data, 'guestbook');
         });
     }

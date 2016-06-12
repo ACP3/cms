@@ -117,6 +117,8 @@ class Create extends Core\Controller\AdminAction
 
             $this->categoriesCache->saveCache(strtolower($formData['module']));
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $bool;
         });
     }

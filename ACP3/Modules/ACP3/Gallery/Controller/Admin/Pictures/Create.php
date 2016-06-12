@@ -181,6 +181,8 @@ class Create extends AbstractFormAction
 
                 $this->galleryCache->saveCache($id);
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 return $lastId && $bool2;
             },
             'acp/gallery/index/edit/id_' . $id

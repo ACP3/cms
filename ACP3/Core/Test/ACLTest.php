@@ -191,15 +191,6 @@ class ACLTest extends \PHPUnit_Framework_TestCase
             ->willReturn($returnValueIsActive);
     }
 
-    public function testHasPermissionAlwaysCanAccessUserLoginPage()
-    {
-        $resource = 'frontend/users/index/login/';
-
-        $this->setUpModulesMockExpectations($resource, 'users', true, true);
-
-        $this->assertTrue($this->acl->hasPermission($resource));
-    }
-
     public function testHasPermission()
     {
         $resource = 'frontend/foo/index/index/';

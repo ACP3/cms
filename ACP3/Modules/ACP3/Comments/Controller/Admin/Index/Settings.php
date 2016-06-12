@@ -86,6 +86,8 @@ class Settings extends Core\Controller\AdminAction
                 'emoticons' => $formData['emoticons'],
             ];
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $this->config->setSettings($data, 'comments');
         });
     }

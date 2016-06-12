@@ -96,6 +96,8 @@ class Settings extends Core\Controller\AdminAction
                 'mail' => $formData['mail']
             ];
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $this->config->setSettings($data, 'users');
         });
     }

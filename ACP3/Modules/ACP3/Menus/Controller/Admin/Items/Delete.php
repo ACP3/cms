@@ -89,6 +89,8 @@ class Delete extends Core\Controller\AdminAction
 
                 $this->menusCache->saveMenusCache();
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 return $bool;
             },
             null,

@@ -155,6 +155,8 @@ class Configuration extends Core\Controller\AdminAction
 
                 $bool = $this->config->setSettings($data, 'system');
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 return $this->redirectMessages()->setMessage(
                     $bool,
                     $this->translator->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'),

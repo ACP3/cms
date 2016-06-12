@@ -199,6 +199,8 @@ class Edit extends AbstractFormAction
 
             $this->generatePictureAliases($galleryId);
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $bool;
         });
     }

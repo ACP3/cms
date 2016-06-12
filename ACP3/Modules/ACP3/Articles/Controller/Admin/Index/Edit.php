@@ -195,6 +195,8 @@ class Edit extends AbstractFormAction
             $this->insertUriAlias($formData, $articleId);
             $this->createOrUpdateMenuItem($formData, $articleId);
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $bool;
         });
     }

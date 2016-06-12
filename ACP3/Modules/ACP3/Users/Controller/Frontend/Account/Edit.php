@@ -140,6 +140,8 @@ class Edit extends AbstractAction
                     Core\User::REMEMBER_ME_COOKIE_LIFETIME
                 );
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 return $this->redirectMessages()->setMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'edit_success' : 'edit_error')

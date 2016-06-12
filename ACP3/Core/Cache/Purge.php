@@ -66,7 +66,7 @@ class Purge
 
             if (is_dir($path)) {
                 static::doPurge($path, $cacheId);
-                if (empty($cacheId)) {
+                if (empty($cacheId) && count(scandir($path)) == 2) {
                     rmdir($path);
                 }
             } elseif (empty($cacheId) || strpos($file, $cacheId) !== false) {

@@ -147,6 +147,8 @@ class Create extends AbstractFormAction
 
             $this->createOrUpdateMenuItem($formData, $articleId);
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $articleId;
         });
     }

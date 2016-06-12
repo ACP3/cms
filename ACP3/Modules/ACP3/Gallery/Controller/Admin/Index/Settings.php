@@ -110,6 +110,8 @@ class Settings extends Core\Controller\AdminAction
                 $this->get('gallery.cache.core')->getDriver()->deleteAll();
             }
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $bool;
         });
     }

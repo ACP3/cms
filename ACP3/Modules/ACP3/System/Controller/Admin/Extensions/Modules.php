@@ -168,6 +168,7 @@ class Modules extends Core\Controller\AdminAction
     protected function purgeCaches()
     {
         Core\Cache\Purge::doPurge([
+            $this->appPath->getCacheDir() . 'http',
             $this->appPath->getCacheDir() . 'tpl_compiled',
             $this->appPath->getCacheDir() . 'tpl_cached',
             $this->appPath->getCacheDir() . 'sql/container.php'

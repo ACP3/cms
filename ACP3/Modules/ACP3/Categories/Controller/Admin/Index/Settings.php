@@ -75,6 +75,8 @@ class Settings extends Core\Controller\AdminAction
                 'filesize' => (int)$formData['filesize'],
             ];
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $this->config->setSettings($data, 'categories');
         });
     }

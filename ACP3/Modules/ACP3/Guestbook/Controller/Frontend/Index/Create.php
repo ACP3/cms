@@ -203,6 +203,8 @@ class Create extends AbstractAction
                     $this->newsletterSubscribeHelper->subscribeToNewsletter($formData['mail']);
                 }
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 return $this->redirectMessages()->setMessage(
                     $lastId,
                     $this->translator->t('system', $lastId !== false ? 'create_success' : 'create_error')

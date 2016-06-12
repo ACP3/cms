@@ -116,6 +116,8 @@ class Edit extends Core\Controller\AdminAction
 
             $this->seoCache->saveCache();
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $bool;
         });
     }

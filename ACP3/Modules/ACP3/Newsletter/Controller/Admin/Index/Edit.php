@@ -80,7 +80,7 @@ class Edit extends AbstractFormAction
             $settings = $this->config->getSettings('newsletter');
 
             if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $settings, $id);
+                return $this->executePost($this->request->getPost()->all(), $newsletter, $settings, $id);
             }
 
             $actions = [
@@ -102,14 +102,15 @@ class Edit extends AbstractFormAction
 
     /**
      * @param array $formData
+     * @param array $newsletter
      * @param array $settings
      * @param int   $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings, $id)
+    protected function executePost(array $formData, array $newsletter, array $settings, $id)
     {
-        return $this->actionHelper->handlePostAction(function () use ($formData, $settings, $id) {
+        return $this->actionHelper->handlePostAction(function () use ($formData, $newsletter, $settings, $id) {
             $this->adminFormValidation->validate($formData);
 
             // Newsletter archivieren
@@ -127,6 +128,10 @@ class Edit extends AbstractFormAction
                 $bool,
                 $settings['mail']
             );
+
+            if ($newsletter['status'] == 1) {
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+            }
 
             return $this->redirectMessages()->setMessage($result, $text);
         });

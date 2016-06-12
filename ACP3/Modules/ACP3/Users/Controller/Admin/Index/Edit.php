@@ -171,6 +171,8 @@ class Edit extends AbstractFormAction
 
             $this->updateCurrentlyLoggedInUserCookie($id);
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $bool;
         });
     }

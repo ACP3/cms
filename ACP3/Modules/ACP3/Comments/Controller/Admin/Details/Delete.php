@@ -56,6 +56,8 @@ class Delete extends Core\Controller\AdminAction
                     $bool = $this->commentRepository->delete($item);
                 }
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 // If there are no comments for the given module, redirect to the general comments admin panel page
                 if ($this->commentRepository->countAll($id) == 0) {
                     return $this->redirectMessages()->setMessage(

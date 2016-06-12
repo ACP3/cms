@@ -94,6 +94,8 @@ class Settings extends Core\Controller\AdminAction
 
             $bool = $this->config->setSettings($data, 'seo');
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $bool;
         });
     }

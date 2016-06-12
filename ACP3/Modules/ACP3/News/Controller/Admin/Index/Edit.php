@@ -139,6 +139,8 @@ class Edit extends AbstractFormAction
 
             $this->newsCache->saveCache($newsId);
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $bool;
         });
     }

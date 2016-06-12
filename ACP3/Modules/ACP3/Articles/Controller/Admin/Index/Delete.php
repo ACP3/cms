@@ -75,6 +75,8 @@ class Delete extends AbstractFormAction
                     $this->menusCache->saveMenusCache();
                 }
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 return $bool;
             }
         );

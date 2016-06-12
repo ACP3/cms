@@ -101,6 +101,8 @@ class Create extends AbstractFormAction
 
             $this->permissionsCache->saveRolesCache();
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $roleId;
         });
     }

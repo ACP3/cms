@@ -78,6 +78,8 @@ class Delete extends Core\Controller\AdminAction
 
                 $this->categoriesCache->getCacheDriver()->deleteAll();
 
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
                 if ($isInUse === true) {
                     $text = $this->translator->t('categories', 'category_is_in_use');
                     $bool = false;

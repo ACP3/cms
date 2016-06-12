@@ -100,6 +100,8 @@ class Create extends AbstractFormAction
 
             $this->insertUriAlias($formData, $lastId);
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $lastId;
         });
     }

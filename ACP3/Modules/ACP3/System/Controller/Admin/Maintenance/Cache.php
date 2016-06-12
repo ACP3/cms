@@ -30,14 +30,17 @@ class Cache extends Core\Controller\AdminAction
     }
 
     /**
-     * @param $action
+     * @param string $action
      *
      * @return array
      */
     protected function executePurge($action)
     {
         $cacheTypes = [
-            'general' => $this->appPath->getCacheDir() . 'sql',
+            'general' => [
+                $this->appPath->getCacheDir() . 'http',
+                $this->appPath->getCacheDir() . 'sql',
+            ],
             'images' => $this->appPath->getCacheDir() . 'images',
             'minify' => $this->appPath->getUploadsDir() . 'assets',
             'templates' => [

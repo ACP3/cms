@@ -16,6 +16,8 @@ use ACP3\Modules\ACP3\Emoticons;
  */
 class Index extends AbstractFrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+    
     /**
      * @var \ACP3\Core\Pagination
      */
@@ -49,6 +51,8 @@ class Index extends AbstractFrontendAction
      */
     public function execute($module, $entryId)
     {
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+
         $comments = $this->commentRepository->getAllByModule(
             $this->modules->getModuleId($module),
             $entryId,

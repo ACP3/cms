@@ -130,6 +130,8 @@ class Edit extends AbstractFormAction
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
 
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
             return $bool;
         });
     }

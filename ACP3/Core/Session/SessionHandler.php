@@ -75,7 +75,7 @@ class SessionHandler extends AbstractSessionHandler
      */
     public function secureSession()
     {
-        session_regenerate_id(true);
+        session_regenerate_id();
         $this->resetSessionData();
     }
 
@@ -146,8 +146,7 @@ class SessionHandler extends AbstractSessionHandler
      */
     public function destroy($sessionId)
     {
-        session_regenerate_id();
-        $this->resetSessionData();
+        $this->secureSession();
 
         if ($this->request->getCookies()->has(self::SESSION_NAME)) {
             $cookie = new Cookie(

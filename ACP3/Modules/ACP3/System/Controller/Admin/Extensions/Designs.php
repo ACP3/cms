@@ -69,7 +69,8 @@ class Designs extends Core\Controller\AdminAction
             // Template Cache leeren
             Core\Cache\Purge::doPurge([
                 $this->appPath->getCacheDir() . 'tpl_compiled',
-                $this->appPath->getCacheDir() . 'tpl_cached'
+                $this->appPath->getCacheDir() . 'tpl_cached',
+                $this->appPath->getCacheDir() . 'http'
             ]);
         }
 
