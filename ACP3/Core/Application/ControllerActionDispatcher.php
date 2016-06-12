@@ -71,7 +71,7 @@ class ControllerActionDispatcher
         }
 
         if ($this->request->getArea() === AreaEnum::AREA_WIDGET &&
-            $this->request->getServer()->get('SERVER_ADDR') !== $this->request->getSymfonyRequest()->getClientIp()) {
+            $this->request->getServer()->get('REMOTE_ADDR') !== '127.0.0.1') {
             throw new \RuntimeException('Loading widgets from outside is not allowed!');
         }
 
