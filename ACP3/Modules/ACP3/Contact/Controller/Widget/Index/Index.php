@@ -22,7 +22,7 @@ class Index extends Core\Controller\WidgetAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         return [
             'sidebar_contact' => $this->config->getSettings('contact')

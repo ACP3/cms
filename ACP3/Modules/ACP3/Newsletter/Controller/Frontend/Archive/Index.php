@@ -47,7 +47,7 @@ class Index extends Core\Controller\FrontendAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         $this->pagination->setTotalResults($this->newsletterRepository->countAll(1));
 

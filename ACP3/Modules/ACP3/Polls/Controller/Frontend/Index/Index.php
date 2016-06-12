@@ -53,7 +53,7 @@ class Index extends Core\Controller\FrontendAction
 
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         $polls = $this->pollRepository->getAll($this->date->getCurrentDateTime());
         $cPolls = count($polls);

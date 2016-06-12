@@ -49,7 +49,7 @@ class Index extends Core\Controller\FrontendAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         $users = $this->userRepository->getAll(POS, $this->user->getEntriesPerPage());
         $allUsers = $this->userRepository->countAll();

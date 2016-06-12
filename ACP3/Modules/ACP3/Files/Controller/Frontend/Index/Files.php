@@ -61,7 +61,7 @@ class Files extends Core\Controller\FrontendAction
     public function execute($cat)
     {
         if ($this->categoryRepository->resultExists($cat) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
             $category = $this->categoryRepository->getOneById($cat);
 

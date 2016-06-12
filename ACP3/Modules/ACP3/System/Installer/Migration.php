@@ -127,6 +127,9 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             58 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'mod_rewrite', '0');",
+            ],
+            59 => [
+                "UPDATE `{pre}settings` SET `name` = 'cache_lifetime' WHERE `module_id` = {moduleId} AND `name` = 'cache_minify';"
             ]
         ];
     }

@@ -51,7 +51,7 @@ class Index extends AbstractAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         $guestbook = $this->guestbookRepository->getAll($this->guestbookSettings['notify'], POS, $this->user->getEntriesPerPage());
         $cGuestbook = count($guestbook);

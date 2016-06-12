@@ -51,7 +51,7 @@ class Index extends AbstractFrontendAction
      */
     public function execute($module, $entryId)
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         $comments = $this->commentRepository->getAllByModule(
             $this->modules->getModuleId($module),

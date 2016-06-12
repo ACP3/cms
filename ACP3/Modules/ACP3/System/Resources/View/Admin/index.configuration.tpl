@@ -156,12 +156,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="cache-minify" class="col-sm-2 control-label required">{lang t="system|minify_cache_lifetime"}</label>
+                        <label for="cache-lifetime" class="col-sm-2 control-label required">{lang t="system|cache_lifetime"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="cache_minify" id="cache-minify" value="{$form.cache_minify}" maxlength="20" required>
+                            <input class="form-control" type="text" name="cache_lifetime" id="cache-lifetime" value="{$form.cache_lifetime}" maxlength="20" required>
 
-                            <p class="help-block">{lang t="system|minify_cache_lifetime_description"}</p>
+                            <p class="help-block">{lang t="system|cache_lifetime_description"}</p>
                         </div>
                     </div>
                 </div>

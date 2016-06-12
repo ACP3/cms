@@ -155,8 +155,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
-                    'field' => 'cache_minify',
-                    'message' => $this->translator->t('system', 'type_in_minify_cache_lifetime')
+                    'field' => 'cache_lifetime',
+                    'message' => $this->translator->t('system', 'type_in_cache_lifetime')
                 ]);
     }
 

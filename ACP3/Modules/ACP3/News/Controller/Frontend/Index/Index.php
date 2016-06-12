@@ -93,7 +93,7 @@ class Index extends AbstractAction
      */
     public function execute($cat = 0)
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         $this->addBreadcrumbStep($cat);
 

@@ -48,7 +48,7 @@ class Details extends Core\Controller\FrontendAction
         $newsletter = $this->newsletterRepository->getOneById($id, 1);
 
         if (!empty($newsletter)) {
-            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
             $this->breadcrumb
                 ->append($this->translator->t('newsletter', 'index'), 'newsletter')

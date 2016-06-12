@@ -59,7 +59,7 @@ class Result extends Core\Controller\FrontendAction
      */
     public function execute($id)
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
             $question = $this->pollRepository->getOneByIdWithTotalVotes($id);

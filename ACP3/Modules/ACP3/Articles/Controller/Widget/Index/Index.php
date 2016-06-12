@@ -55,7 +55,7 @@ class Index extends Core\Controller\WidgetAction
      */
     public function execute($template = '')
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         $this->setTemplate($template !== '' ? $template : 'Articles/Widget/index.index.tpl');
 

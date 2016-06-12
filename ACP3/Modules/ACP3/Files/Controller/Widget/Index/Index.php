@@ -50,7 +50,7 @@ class Index extends Core\Controller\WidgetAction
      */
     public function execute($categoryId = 0, $template = '')
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         $settings = $this->config->getSettings('files');
 

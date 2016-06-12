@@ -44,7 +44,7 @@ class UserMenu extends Core\Controller\WidgetAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         if ($this->user->isAuthenticated() === true) {
             $prefix = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN ? 'acp/' : '';

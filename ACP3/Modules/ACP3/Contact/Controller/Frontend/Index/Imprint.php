@@ -23,7 +23,7 @@ class Imprint extends Core\Controller\FrontendAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         return [
             'imprint' => $this->config->getSettings('contact'),

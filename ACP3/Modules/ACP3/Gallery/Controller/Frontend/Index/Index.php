@@ -56,7 +56,7 @@ class Index extends AbstractAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         $time = $this->date->getCurrentDateTime();
 

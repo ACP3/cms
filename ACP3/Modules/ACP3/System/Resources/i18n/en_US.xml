@@ -164,8 +164,8 @@
         <item key="message">Message</item>
         <item key="message_to_short">The message should be a least 3 characters long.</item>
         <item key="min">Minute</item>
-        <item key="minify_cache_lifetime">Cache lifetime of CSS and JavaScript files</item>
-        <item key="minify_cache_lifetime_description">Statements in seconds.</item>
+        <item key="cache_lifetime">Page-Cache lifetime</item>
+        <item key="cache_lifetime_description">Statements in seconds.</item>
         <item key="mod_activate_error">While enabling the module an error has occured.</item>
         <item key="mod_activate_success">The module has been successfully enabled and may now be used.</item>
         <item key="mod_deactivate_error">While disabling the module an error has occured.</item>
@@ -281,7 +281,7 @@
         <item key="type_in_mailer_smtp_host">Please type in the hostname of the SMTP server.</item>
         <item key="type_in_mailer_smtp_port">Please type in the portnumber of the SMTP server.</item>
         <item key="type_in_mailer_smtp_username">Please type in the username of the SMTP server.</item>
-        <item key="type_in_minify_cache_lifetime">Please type in the cache lifetime of CSS and JavaScript files.</item>
+        <item key="type_in_cache_lifetime">Please type in the page-cache lifetime.</item>
         <item key="type_in_short_date_format">Please type in the short date format.</item>
         <item key="uninstall">Uninstall</item>
         <item key="uninstall_following_modules_first">To uninstall the module you have to uninstall the following

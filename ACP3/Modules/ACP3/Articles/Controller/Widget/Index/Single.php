@@ -56,7 +56,7 @@ class Single extends Core\Controller\WidgetAction
     public function execute($id)
     {
         if ($this->articleRepository->resultExists((int)$id, $this->date->getCurrentDateTime()) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
             return [
                 'sidebar_article' => $this->articlesCache->getCache($id)

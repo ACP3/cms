@@ -48,7 +48,7 @@ class ViewProfile extends Core\Controller\FrontendAction
     public function execute($id)
     {
         if ($this->userRepository->resultExists($id) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
             $user = $this->user->getUserInfo($id);
             $user['gender'] = str_replace([1, 2, 3],

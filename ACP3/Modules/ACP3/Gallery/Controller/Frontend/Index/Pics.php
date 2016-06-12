@@ -60,7 +60,7 @@ class Pics extends AbstractAction
     public function execute($id)
     {
         if ($this->galleryRepository->galleryExists($id, $this->date->getCurrentDateTime()) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
             $this->breadcrumb
                 ->append($this->translator->t('gallery', 'gallery'), 'gallery')

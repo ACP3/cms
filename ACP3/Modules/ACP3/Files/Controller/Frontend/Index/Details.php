@@ -68,7 +68,7 @@ class Details extends Core\Controller\FrontendAction
     public function execute($id, $action = '')
     {
         if ($this->filesRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_minify']);
+            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
             $file = $this->filesCache->getCache($id);
 

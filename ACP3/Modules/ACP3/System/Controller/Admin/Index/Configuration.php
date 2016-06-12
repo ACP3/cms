@@ -132,7 +132,7 @@ class Configuration extends Core\Controller\AdminAction
                 // Update the system config
                 $data = [
                     'cache_images' => (int)$formData['cache_images'],
-                    'cache_minify' => (int)$formData['cache_minify'],
+                    'cache_lifetime' => (int)$formData['cache_lifetime'],
                     'date_format_long' => $this->get('core.helpers.secure')->strEncode($formData['date_format_long']),
                     'date_format_short' => $this->get('core.helpers.secure')->strEncode($formData['date_format_short']),
                     'date_time_zone' => $formData['date_time_zone'],
