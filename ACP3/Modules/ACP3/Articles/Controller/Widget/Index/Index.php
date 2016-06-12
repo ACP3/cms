@@ -57,7 +57,7 @@ class Index extends Core\Controller\WidgetAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
-        $this->setTemplate($template !== '' ? $template : 'Articles/Widget/index.index.tpl');
+        $this->setTemplate($template);
 
         return [
             'sidebar_articles' => $this->articleRepository->getAll($this->date->getCurrentDateTime(), 5)

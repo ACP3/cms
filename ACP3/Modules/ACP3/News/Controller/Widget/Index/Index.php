@@ -54,16 +54,28 @@ class Index extends Core\Controller\WidgetAction
 
         $settings = $this->config->getSettings('news');
 
+        $this->setTemplate($template);
+
+        return [
+            'sidebar_news' => $this->fetchNews($categoryId, $settings),
+            'dateformat' => $settings['dateformat']
+        ];
+    }
+
+    /**
+     * @param int $categoryId
+     * @param array $settings
+     * @return array
+     */
+    private function fetchNews($categoryId, array $settings)
+    {
         if (!empty($categoryId)) {
-            $news = $this->newsRepository->getAllByCategoryId((int)$categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);
+            $news = $this->newsRepository->getAllByCategoryId((int)$categoryId, $this->date->getCurrentDateTime(),
+                $settings['sidebar']);
         } else {
             $news = $this->newsRepository->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         }
-        $this->setTemplate($template !== '' ? $template : 'News/Widget/index.index.tpl');
 
-        return [
-            'sidebar_news' => $news,
-            'dateformat' => $settings['dateformat']
-        ];
+        return $news;
     }
 }

@@ -27,15 +27,15 @@ class Index extends Core\Controller\WidgetAction
     protected $filesRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext    $context
-     * @param \ACP3\Core\Date                                $date
+     * @param \ACP3\Core\Controller\Context\WidgetContext $context
+     * @param \ACP3\Core\Date $date
      * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
-        Files\Model\FilesRepository $filesRepository)
-    {
+        Files\Model\FilesRepository $filesRepository
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
@@ -54,16 +54,30 @@ class Index extends Core\Controller\WidgetAction
 
         $settings = $this->config->getSettings('files');
 
-        if (!empty($categoryId)) {
-            $categories = $this->filesRepository->getAllByCategoryId((int)$categoryId, $this->date->getCurrentDateTime(), $settings['sidebar']);
-        } else {
-            $categories = $this->filesRepository->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
-        }
-
-        $this->setTemplate($template !== '' ? $template : 'Files/Widget/index.index.tpl');
+        $this->setTemplate($template);
 
         return [
-            'sidebar_files' => $categories
+            'sidebar_files' => $this->fetchFiles($categoryId, $settings)
         ];
+    }
+
+    /**
+     * @param int $categoryId
+     * @param array $settings
+     * @return array
+     */
+    private function fetchFiles($categoryId, array $settings)
+    {
+        if (!empty($categoryId)) {
+            $files = $this->filesRepository->getAllByCategoryId(
+                (int)$categoryId,
+                $this->date->getCurrentDateTime(), 
+                $settings['sidebar']
+            );
+        } else {
+            $files = $this->filesRepository->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
+        }
+
+        return $files;
     }
 }

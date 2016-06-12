@@ -39,7 +39,7 @@ class Index extends Core\Controller\WidgetAction
      */
     public function execute($template = '')
     {
-        $this->setTemplate($template !== '' ? $template : 'Newsletter/Widget/index.index.tpl');
+        $this->setTemplate($template);
 
         return [
             'form_token' => $this->formTokenHelper->renderFormToken()
