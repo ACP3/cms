@@ -130,6 +130,12 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             59 => [
                 "UPDATE `{pre}settings` SET `name` = 'cache_lifetime' WHERE `module_id` = {moduleId} AND `name` = 'cache_minify';"
+            ],
+            60 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'security_secret', '" . uniqid(mt_rand(), true) . "');",
+            ],
+            61 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'cache_vary_user', 0);",
             ]
         ];
     }

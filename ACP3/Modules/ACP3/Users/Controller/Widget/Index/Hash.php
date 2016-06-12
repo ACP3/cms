@@ -7,9 +7,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
 
-use ACP3\Core\Application\Bootstrap\HttpCache;
 use ACP3\Core\Controller\WidgetAction;
-use ACP3\Core\Session\SessionHandlerInterface;
 
 /**
  * Class Hash
@@ -23,7 +21,6 @@ class Hash extends WidgetAction
     public function execute()
     {
         $this->response->setPublic();
-        $this->response->setVary('cookie');
         $this->response->setMaxAge(60);
         $this->response->headers->add([
             'Content-type' => 'application/vnd.fos.user-context-hash',
@@ -38,16 +35,17 @@ class Hash extends WidgetAction
      */
     private function generateUserContextHash()
     {
-        if ($this->user->isAuthenticated()) {
-            $userRoles = implode('-', $this->acl->getUserRoleIds($this->user->getUserId()));
+        $settings = $this->config->getSettings('system');
+        $hash = $settings['security_secret'];
 
-            return md5(
-                $this->user->getUserId()
-                . '-' . $userRoles
-                . '-' . $this->request->getCookies()->get(SessionHandlerInterface::SESSION_NAME, '')
-            );
+        if ($this->user->isAuthenticated()) {
+            $hash .= implode('-', $this->acl->getUserRoleIds($this->user->getUserId()));
+
+            if (intval($settings['cache_vary_user']) === 1) {
+                $hash .= '-' . $this->user->getUserId();
+            }
         }
 
-        return md5(HttpCache::USER_CONTEXT_GUEST);
+        return hash('sha512', $hash);
     }
 }

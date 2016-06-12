@@ -46,7 +46,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 59;
+        return 61;
     }
 
     /**
@@ -97,6 +97,7 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             'cache_images' => true,
             'cache_lifetime' => 3600,
+            'cache_vary_user' => 0,
             'date_format_long' => '',
             'date_format_short' => '',
             'date_time_zone' => '',
@@ -115,6 +116,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'maintenance_mode' => false,
             'maintenance_message' => '',
             'mod_rewrite' => false,
+            'security_secret' => uniqid(mt_rand(), true),
             'wysiwyg' => 'core.wysiwyg.ckeditor'
         ];
     }
