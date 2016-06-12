@@ -20,6 +20,7 @@ class Hash extends WidgetAction
      */
     public function execute()
     {
+        $this->response->setVary('Cookie');
         $this->response->setPublic();
         $this->response->setMaxAge(60);
         $this->response->headers->add([
