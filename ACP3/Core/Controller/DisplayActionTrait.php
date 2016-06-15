@@ -19,7 +19,7 @@ trait DisplayActionTrait
      */
     private $template = '';
     /**
-     * @var string
+     * @var string|false
      */
     private $content = '';
 
@@ -122,7 +122,7 @@ trait DisplayActionTrait
     /**
      * Gibt den auszugebenden Seiteninhalt zurück
      *
-     * @return string
+     * @return string|false
      */
     public function getContent()
     {
@@ -132,7 +132,7 @@ trait DisplayActionTrait
     /**
      * Weist dem Template den auszugebenden Inhalt zu
      *
-     * @param string $data
+     * @param string|false $data
      *
      * @return $this
      */
