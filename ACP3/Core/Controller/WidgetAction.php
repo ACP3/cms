@@ -71,17 +71,6 @@ abstract class WidgetAction implements ActionInterface
     protected $response;
 
     /**
-     * Nichts ausgeben
-     */
-    private $noOutput = false;
-    /**
-     * Das zu verwendende Template
-     *
-     * @var string
-     */
-    private $template = '';
-
-    /**
      * WidgetController constructor.
      *
      * @param \ACP3\Core\Controller\Context\WidgetContext $context
@@ -108,32 +97,6 @@ abstract class WidgetAction implements ActionInterface
      */
     public function preDispatch()
     {
-        $this->setNoOutput(false);
-
-        return $this;
-    }
-
-    /**
-     * Gibt das aktuell zugewiesene Template zurück
-     *
-     * @return string
-     */
-    public function getTemplate()
-    {
-        return $this->template;
-    }
-
-    /**
-     * Setzt das Template der Seite
-     *
-     * @param string $file
-     *
-     * @return $this
-     */
-    public function setTemplate($file)
-    {
-        $this->template = $file;
-
         return $this;
     }
 
@@ -179,31 +142,6 @@ abstract class WidgetAction implements ActionInterface
     protected function getView()
     {
         return $this->view;
-    }
-
-    /**
-     * Gibt zurück, ob die Seitenausgabe mit Hilfe der Bootstraping-Klasse
-     * erfolgen soll oder die Datei dies selber handelt
-     *
-     * @return string
-     */
-    public function getNoOutput()
-    {
-        return $this->noOutput;
-    }
-
-    /**
-     * Setter Methode für die $this->noOutput Variable
-     *
-     * @param boolean $value
-     *
-     * @return $this
-     */
-    public function setNoOutput($value)
-    {
-        $this->noOutput = (bool)$value;
-
-        return $this;
     }
 
     /**

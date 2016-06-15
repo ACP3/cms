@@ -60,7 +60,7 @@ class UserMenu extends Core\Controller\WidgetAction
             ];
         }
 
-        $this->setNoOutput(true);
+        $this->setContent(false);
     }
 
     /**

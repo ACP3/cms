@@ -18,6 +18,10 @@ trait DisplayActionTrait
      * @var string
      */
     private $template = '';
+    /**
+     * @var string
+     */
+    private $content = '';
 
     /**
      * Outputs the requested module controller action
@@ -35,7 +39,7 @@ trait DisplayActionTrait
             $this->getView()->assign($actionResult);
         }
 
-        if (!$this->getContent() && $this->getNoOutput() === false) {
+        if (empty($this->getContent()) && $this->getContent() !== false) {
             // Set the template automatically
             if ($this->getTemplate() === '') {
                 $this->setTemplate($this->applyTemplateAutomatically());
@@ -44,6 +48,8 @@ trait DisplayActionTrait
             $this->addCustomTemplateVarsBeforeOutput();
 
             $this->getResponse()->setContent($this->getView()->fetchTemplate($this->getTemplate()));
+        } else {
+            $this->getResponse()->setContent('');
         }
 
         return $this->getResponse();
@@ -68,11 +74,6 @@ trait DisplayActionTrait
      * @return \ACP3\Core\View
      */
     abstract protected function getView();
-
-    /**
-     * @return boolean
-     */
-    abstract protected function getNoOutput();
     
     /**
      * Gibt den Content-Type der anzuzeigenden Seiten zurück
@@ -125,7 +126,7 @@ trait DisplayActionTrait
      */
     public function getContent()
     {
-        return $this->getResponse()->getContent();
+        return $this->content;
     }
 
     /**
@@ -137,7 +138,7 @@ trait DisplayActionTrait
      */
     public function setContent($data)
     {
-        $this->getResponse()->setContent($data);
+        $this->content = $data;
 
         return $this;
     }

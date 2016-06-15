@@ -123,7 +123,7 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidFormData()
     {
-        $this->setExpectedException(ValidationFailedException::class);
+        $this->expectException(ValidationFailedException::class);
 
         foreach ($this->invalidFormDataProvider() as $formData) {
             $this->formValidation->validate($formData);
