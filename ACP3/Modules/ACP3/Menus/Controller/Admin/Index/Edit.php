@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Menus;
  * Class Edit
  * @package ACP3\Modules\ACP3\Menus\Controller\Admin\Index
  */
-class Edit extends Core\Controller\AdminAction
+class Edit extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken

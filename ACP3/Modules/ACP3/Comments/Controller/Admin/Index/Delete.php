@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Comments;
  * Class Delete
  * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Index
  */
-class Delete extends Core\Controller\AdminAction
+class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository

@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Contact;
  * Class Index
  * @package ACP3\Modules\ACP3\Contact\Controller\Frontend\Index
  */
-class Index extends Core\Controller\FrontendAction
+class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken

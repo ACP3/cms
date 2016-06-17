@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Permissions;
  * Class Edit
  * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources
  */
-class Edit extends Core\Controller\AdminAction
+class Edit extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken

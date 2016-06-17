@@ -12,7 +12,7 @@ use ACP3\Core;
  * Class UserMenu
  * @package ACP3\Modules\ACP3\Users\Controller\Widget\Index
  */
-class UserMenu extends Core\Controller\WidgetAction
+class UserMenu extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 

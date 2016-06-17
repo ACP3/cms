@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Polls;
  * Class Vote
  * @package ACP3\Modules\ACP3\Polls\Controller\Frontend\Index
  */
-class Vote extends Core\Controller\FrontendAction
+class Vote extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var Core\Date

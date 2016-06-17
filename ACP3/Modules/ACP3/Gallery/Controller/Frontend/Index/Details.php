@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
  * Class Details
  * @package ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index
  */
-class Details extends Core\Controller\FrontendAction
+class Details extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 

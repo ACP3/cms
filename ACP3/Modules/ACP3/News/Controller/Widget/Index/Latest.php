@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\News;
  * Class Latest
  * @package ACP3\Modules\ACP3\News\Controller\Widget\Index
  */
-class Latest extends Core\Controller\WidgetAction
+class Latest extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var Core\Date

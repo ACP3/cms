@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Menus;
  * Class Order
  * @package ACP3\Modules\ACP3\Menus\Controller\Admin\Items
  */
-class Order extends Core\Controller\AdminAction
+class Order extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\NestedSet

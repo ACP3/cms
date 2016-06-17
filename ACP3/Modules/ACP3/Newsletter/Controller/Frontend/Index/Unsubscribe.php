@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Unsubscribe
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index
  */
-class Unsubscribe extends Core\Controller\FrontendAction
+class Unsubscribe extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken

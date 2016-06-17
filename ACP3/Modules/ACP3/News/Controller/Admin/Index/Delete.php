@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
  * Class Delete
  * @package ACP3\Modules\ACP3\News\Controller\Admin\Index
  */
-class Delete extends Core\Controller\AdminAction
+class Delete extends Core\Controller\AbstractAdminAction
 {
     use CommentsHelperTrait;
 

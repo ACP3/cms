@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Users;
  * Class ForgotPwd
  * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
  */
-class ForgotPwd extends Core\Controller\FrontendAction
+class ForgotPwd extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken

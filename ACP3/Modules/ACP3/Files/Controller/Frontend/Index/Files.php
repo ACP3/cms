@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Files as FilesModule;
  * Class Files
  * @package ACP3\Modules\ACP3\Files\Controller\Frontend\Index
  */
-class Files extends Core\Controller\FrontendAction
+class Files extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
     

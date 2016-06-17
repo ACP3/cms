@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\System;
  * Class Designs
  * @package ACP3\Modules\ACP3\System\Controller\Admin\Extensions
  */
-class Designs extends Core\Controller\AdminAction
+class Designs extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\XML

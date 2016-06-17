@@ -6,13 +6,13 @@
 
 namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
 
-use ACP3\Core\Controller\FrontendAction;
+use ACP3\Core\Controller\AbstractFrontendAction;
 
 /**
  * Class AbstractAction
  * @package ACP3\Modules\ACP3\News\Controller\Frontend\Index
  */
-class AbstractAction extends FrontendAction
+class AbstractAction extends AbstractFrontendAction
 {
     /**
      * @var array

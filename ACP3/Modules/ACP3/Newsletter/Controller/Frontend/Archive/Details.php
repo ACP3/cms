@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Details
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive
  */
-class Details extends Core\Controller\FrontendAction
+class Details extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 

@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
  * Class Delete
  * @package ACP3\Modules\ACP3\Files\Controller\Admin\Index
  */
-class Delete extends Core\Controller\AdminAction
+class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository

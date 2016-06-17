@@ -12,7 +12,7 @@ use ACP3\Core;
  * Class Index
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Widget\Index
  */
-class Index extends Core\Controller\WidgetAction
+class Index extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var Core\Helpers\FormToken

@@ -9,10 +9,10 @@ namespace ACP3\Core\Controller;
 use ACP3\Core;
 
 /**
- * Class AdminAction
+ * Class AbstractAdminAction
  * @package ACP3\Core\Controller
  */
-abstract class AdminAction extends Core\Controller\FrontendAction
+abstract class AbstractAdminAction extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Session\SessionHandlerInterface

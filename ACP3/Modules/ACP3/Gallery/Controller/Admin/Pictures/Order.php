@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Gallery;
  * Class Order
  * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
  */
-class Order extends Core\Controller\AdminAction
+class Order extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\Sort

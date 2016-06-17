@@ -7,13 +7,13 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
 
 use ACP3\Core\Authentication\Exception\UnauthorizedAccessException;
-use ACP3\Core\Controller\FrontendAction;
+use ACP3\Core\Controller\AbstractFrontendAction;
 
 /**
  * Class AbstractAction
  * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Account
  */
-abstract class AbstractAction extends FrontendAction
+abstract class AbstractAction extends AbstractFrontendAction
 {
     public function preDispatch()
     {

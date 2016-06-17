@@ -12,7 +12,7 @@ use ACP3\Core;
  * Class Login
  * @package ACP3\Modules\ACP3\Users\Controller\Widget\Index
  */
-class Login extends Core\Controller\WidgetAction
+class Login extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
     

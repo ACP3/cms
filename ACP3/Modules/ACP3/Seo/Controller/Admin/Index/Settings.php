@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Seo;
  * Class Index
  * @package ACP3\Modules\ACP3\Seo\Controller\Admin\Index
  */
-class Settings extends Core\Controller\AdminAction
+class Settings extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken

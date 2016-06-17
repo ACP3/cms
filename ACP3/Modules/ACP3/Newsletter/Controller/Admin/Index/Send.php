@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Send
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index
  */
-class Send extends Core\Controller\AdminAction
+class Send extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository

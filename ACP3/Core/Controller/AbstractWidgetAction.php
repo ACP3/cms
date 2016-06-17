@@ -10,10 +10,10 @@ use ACP3\Core;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class WidgetAction
+ * Class AbstractWidgetAction
  * @package ACP3\Core\Controller
  */
-abstract class WidgetAction implements ActionInterface
+abstract class AbstractWidgetAction implements ActionInterface
 {
     use Core\Controller\DisplayActionTrait;
 

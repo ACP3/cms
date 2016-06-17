@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class AccessForbidden
  * @package ACP3\Modules\ACP3\Errors\Controller\Frontend\Index
  */
-class AccessForbidden extends Core\Controller\FrontendAction
+class AccessForbidden extends Core\Controller\AbstractFrontendAction
 {
     public function execute()
     {

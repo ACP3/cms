@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\System;
  * Class Edit
  * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Details
  */
-class Edit extends Core\Controller\AdminAction
+class Edit extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository

@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Class Modules
  * @package ACP3\Modules\ACP3\System\Controller\Admin\Extensions
  */
-class Modules extends Core\Controller\AdminAction
+class Modules extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\Modules\ModuleInfoCache

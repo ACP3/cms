@@ -9,10 +9,10 @@ namespace ACP3\Core\Controller;
 use ACP3\Core;
 
 /**
- * Class FrontendAction
+ * Class AbstractFrontendAction
  * @package ACP3\Core\Controller
  */
-abstract class FrontendAction extends Core\Controller\WidgetAction
+abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Core\Assets

@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
-use ACP3\Core\Controller\AdminAction;
+use ACP3\Core\Controller\AbstractAdminAction;
 use ACP3\Core\Controller\Context\AdminContext;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Modules\ACP3\Articles;
@@ -19,7 +19,7 @@ use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
  * Class AbstractFormAction
  * @package ACP3\Modules\ACP3\Menus\Controller\Admin\Items
  */
-abstract class AbstractFormAction extends AdminAction
+abstract class AbstractFormAction extends AbstractAdminAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Articles\Helpers

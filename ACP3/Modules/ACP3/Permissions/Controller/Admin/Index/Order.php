@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Permissions;
  * Class Order
  * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Index
  */
-class Order extends Core\Controller\AdminAction
+class Order extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\NestedSet

@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Polls;
  * Class Result
  * @package ACP3\Modules\ACP3\Polls\Controller\Frontend\Index
  */
-class Result extends Core\Controller\FrontendAction
+class Result extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 

@@ -12,7 +12,7 @@ use ACP3\Core;
  * Class Image
  * @package ACP3\Modules\ACP3\Captcha\Controller\Index
  */
-class Image extends Core\Controller\FrontendAction
+class Image extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Session\SessionHandlerInterface

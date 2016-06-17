@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\System;
  * Class Configuration
  * @package ACP3\Modules\ACP3\System\Controller\Admin\Index
  */
-class Configuration extends Core\Controller\AdminAction
+class Configuration extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\Forms

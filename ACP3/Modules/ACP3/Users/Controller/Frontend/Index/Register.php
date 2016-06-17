@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Users;
  * Class Register
  * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
  */
-class Register extends Core\Controller\FrontendAction
+class Register extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Date

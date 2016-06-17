@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Permissions;
  * Class Index
  * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Index
  */
-class Index extends Core\Controller\AdminAction
+class Index extends Core\Controller\AbstractAdminAction
 {
     /**
      * @return array

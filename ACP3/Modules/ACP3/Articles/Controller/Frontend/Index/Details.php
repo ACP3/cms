@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Articles;
  * Class Details
  * @package ACP3\Modules\ACP3\Articles\Controller\Frontend\Index
  */
-class Details extends Core\Controller\FrontendAction
+class Details extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 

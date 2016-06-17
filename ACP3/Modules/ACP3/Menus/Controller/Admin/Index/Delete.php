@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Menus;
  * Class Delete
  * @package ACP3\Modules\ACP3\Menus\Controller\Admin\Index
  */
-class Delete extends Core\Controller\AdminAction
+class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\NestedSet

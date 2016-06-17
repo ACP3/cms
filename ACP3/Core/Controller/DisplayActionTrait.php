@@ -49,7 +49,7 @@ trait DisplayActionTrait
 
             $this->getResponse()->setContent($this->getView()->fetchTemplate($this->getTemplate()));
         } else {
-            $this->getResponse()->setContent('');
+            $this->getResponse()->setContent($this->getContent() === false ? '' : $this->getContent());
         }
 
         return $this->getResponse();

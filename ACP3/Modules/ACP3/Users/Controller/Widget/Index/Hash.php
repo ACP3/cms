@@ -7,13 +7,13 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
 
-use ACP3\Core\Controller\WidgetAction;
+use ACP3\Core\Controller\AbstractWidgetAction;
 
 /**
  * Class Hash
  * @package ACP3\Modules\ACP3\Users\Controller\Widget\Index
  */
-class Hash extends WidgetAction
+class Hash extends AbstractWidgetAction
 {
     /**
      * @return \Symfony\Component\HttpFoundation\Response

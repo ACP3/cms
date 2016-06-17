@@ -7,7 +7,7 @@
 namespace ACP3\Core\Modules\Helper;
 
 use ACP3\Core;
-use ACP3\Core\Controller\FrontendAction;
+use ACP3\Core\Controller\AbstractFrontendAction;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -103,7 +103,7 @@ class Action
     }
 
     /**
-     * @param \ACP3\Core\Controller\FrontendAction $context
+     * @param \ACP3\Core\Controller\AbstractFrontendAction $context
      * @param string $action
      * @param callable $callback
      * @param string|null $moduleConfirmUrl
@@ -113,7 +113,7 @@ class Action
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function handleDeleteAction(
-        FrontendAction $context,
+        AbstractFrontendAction $context,
         $action,
         callable $callback,
         $moduleConfirmUrl = null,
@@ -135,7 +135,7 @@ class Action
     }
 
     /**
-     * @param \ACP3\Core\Controller\FrontendAction $context
+     * @param \ACP3\Core\Controller\AbstractFrontendAction $context
      * @param string $action
      * @param callable $callback
      * @param string|null $moduleConfirmUrl
@@ -145,7 +145,7 @@ class Action
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function handleCustomDeleteAction(
-        FrontendAction $context,
+        AbstractFrontendAction $context,
         $action,
         callable $callback,
         $moduleConfirmUrl = null,

@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Index
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index
  */
-class Index extends Core\Controller\AdminAction
+class Index extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterDataGridRepository

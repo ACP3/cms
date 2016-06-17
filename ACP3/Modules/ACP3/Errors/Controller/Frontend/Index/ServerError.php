@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class Index
  * @package ACP3\Modules\ACP3\Errors\Controller\Frontend\Index
  */
-class ServerError extends Core\Controller\FrontendAction
+class ServerError extends Core\Controller\AbstractFrontendAction
 {
     public function execute()
     {

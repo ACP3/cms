@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Categories;
  * Class Edit
  * @package ACP3\Modules\ACP3\Categories\Controller\Admin\Index
  */
-class Edit extends Core\Controller\AdminAction
+class Edit extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository

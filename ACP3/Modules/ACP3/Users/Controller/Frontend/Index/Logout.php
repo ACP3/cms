@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Users;
  * Class Logout
  * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
  */
-class Logout extends Core\Controller\FrontendAction
+class Logout extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @param string $last

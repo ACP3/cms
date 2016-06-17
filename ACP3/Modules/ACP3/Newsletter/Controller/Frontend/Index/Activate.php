@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Activate
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index
  */
-class Activate extends Core\Controller\FrontendAction
+class Activate extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus

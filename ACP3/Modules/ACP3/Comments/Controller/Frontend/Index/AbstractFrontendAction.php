@@ -6,14 +6,14 @@
 
 namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 
-use ACP3\Core\Controller\FrontendAction;
+use ACP3\Core\Controller\AbstractFrontendAction as CoreAbstractFrontendAction;
 use ACP3\Modules\ACP3\Emoticons;
 
 /**
  * Class AbstractAction
  * @package ACP3\Modules\ACP3\Comments\Controller\Frontend\Index
  */
-abstract class AbstractFrontendAction extends FrontendAction
+abstract class AbstractFrontendAction extends CoreAbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Helpers

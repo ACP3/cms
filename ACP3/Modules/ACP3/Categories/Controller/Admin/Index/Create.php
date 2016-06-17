@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Categories;
  * Class Create
  * @package ACP3\Modules\ACP3\Categories\Controller\Admin\Index
  */
-class Create extends Core\Controller\AdminAction
+class Create extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
