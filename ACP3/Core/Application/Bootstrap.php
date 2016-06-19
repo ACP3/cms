@@ -179,25 +179,25 @@ class Bootstrap extends AbstractBootstrap
     /**
      * @param \Exception $exception
      * @param \ACP3\Core\Http\RedirectResponse $redirect
-     * @param string $path
+     * @param string $route
      * @return Response
      */
-    protected function handleException(\Exception $exception, RedirectResponse $redirect, $path)
+    protected function handleException(\Exception $exception, RedirectResponse $redirect, $route)
     {
         if ($this->appMode === ApplicationMode::DEVELOPMENT) {
             return $this->renderApplicationException($exception);
         }
 
-        return $redirect->temporary($path);
+        return $redirect->temporary($route);
     }
 
     /**
      * @param SymfonyRequest $symfonyRequest
-     * @param $file
+     * @param string $filePath
      */
-    protected function dumpContainer(SymfonyRequest $symfonyRequest, $file)
+    protected function dumpContainer(SymfonyRequest $symfonyRequest, $filePath)
     {
-        $containerConfigCache = new ConfigCache($file, ($this->appMode === ApplicationMode::DEVELOPMENT));
+        $containerConfigCache = new ConfigCache($filePath, ($this->appMode === ApplicationMode::DEVELOPMENT));
 
         if (!$containerConfigCache->isFresh()) {
             $containerBuilder = ServiceContainerBuilder::create($this->appPath, $symfonyRequest, $this->appMode);
