@@ -23,7 +23,7 @@ class Edit extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\RoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
      */
     protected $roleRepository;
     /**
@@ -35,23 +35,23 @@ class Edit extends AbstractFormAction
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                   $context
-     * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository     $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository          $ruleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository     $privilegeRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository          $ruleRepository
      * @param \ACP3\Core\NestedSet                                         $nestedSet
      * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository          $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository          $roleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache                         $permissionsCache
      * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Permissions\Model\PrivilegeRepository $privilegeRepository,
-        Permissions\Model\RuleRepository $ruleRepository,
+        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
+        Permissions\Model\Repository\RuleRepository $ruleRepository,
         Core\NestedSet $nestedSet,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Permissions\Model\RoleRepository $roleRepository,
+        Permissions\Model\Repository\RoleRepository $roleRepository,
         Permissions\Cache $permissionsCache,
         Permissions\Validation\RoleFormValidation $roleFormValidation
     ) {
@@ -121,7 +121,7 @@ class Edit extends AbstractFormAction
                 $id === 1 ? '' : (int)$formData['parent_id'],
                 0,
                 $updateValues,
-                Permissions\Model\RoleRepository::TABLE_NAME
+                Permissions\Model\Repository\RoleRepository::TABLE_NAME
             );
 
             // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten

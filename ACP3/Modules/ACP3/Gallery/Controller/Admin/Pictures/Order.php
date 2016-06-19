@@ -24,7 +24,7 @@ class Order extends Core\Controller\AbstractAdminAction
      */
     protected $galleryCache;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     protected $pictureRepository;
 
@@ -33,13 +33,13 @@ class Order extends Core\Controller\AbstractAdminAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext         $context
      * @param \ACP3\Core\Helpers\Sort                            $sortHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Sort $sortHelper,
-        Gallery\Model\PictureRepository $pictureRepository,
+        Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache
     ) {
         parent::__construct($context);
@@ -60,9 +60,9 @@ class Order extends Core\Controller\AbstractAdminAction
     {
         if (($action === 'up' || $action === 'down') && $this->pictureRepository->pictureExists($id) === true) {
             if ($action === 'up') {
-                $this->sortHelper->up(Gallery\Model\PictureRepository::TABLE_NAME, 'id', 'pic', $id, 'gallery_id');
+                $this->sortHelper->up(Gallery\Model\Repository\PictureRepository::TABLE_NAME, 'id', 'pic', $id, 'gallery_id');
             } else {
-                $this->sortHelper->down(Gallery\Model\PictureRepository::TABLE_NAME, 'id', 'pic', $id, 'gallery_id');
+                $this->sortHelper->down(Gallery\Model\Repository\PictureRepository::TABLE_NAME, 'id', 'pic', $id, 'gallery_id');
             }
 
             $galleryId = $this->pictureRepository->getGalleryIdFromPictureId($id);

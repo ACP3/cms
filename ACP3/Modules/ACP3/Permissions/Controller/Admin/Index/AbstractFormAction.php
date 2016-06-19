@@ -21,11 +21,11 @@ abstract class AbstractFormAction extends AbstractAdminAction
      */
     protected $formsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
      */
     protected $privilegeRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\RuleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository
      */
     protected $ruleRepository;
     /**
@@ -38,15 +38,15 @@ abstract class AbstractFormAction extends AbstractAdminAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext               $context
      * @param \ACP3\Core\Helpers\Forms                                 $formsHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository      $ruleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository      $ruleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache                     $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelper,
-        Permissions\Model\PrivilegeRepository $privilegeRepository,
-        Permissions\Model\RuleRepository $ruleRepository,
+        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
+        Permissions\Model\Repository\RuleRepository $ruleRepository,
         Permissions\Cache $permissionsCache
     ) {
         parent::__construct($context);

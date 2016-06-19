@@ -18,7 +18,7 @@ class Helpers
     const CAPTCHA_DEFAULT_INPUT_ID = 'captcha';
 
     /**
-     * @var \ACP3\Core\User
+     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
      */
     protected $user;
     /**
@@ -45,7 +45,7 @@ class Helpers
     /**
      * Helpers constructor.
      *
-     * @param \ACP3\Core\User                            $user
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                            $user
      * @param \ACP3\Core\Http\RequestInterface           $request
      * @param \ACP3\Core\RouterInterface                 $router
      * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
@@ -53,7 +53,7 @@ class Helpers
      * @param \ACP3\Core\Helpers\Secure                  $secureHelper
      */
     public function __construct(
-        Core\User $user,
+        \ACP3\Modules\ACP3\Users\Model\UserModel $user,
         Core\Http\RequestInterface $request,
         Core\RouterInterface $router,
         Core\Session\SessionHandlerInterface $sessionHandler,

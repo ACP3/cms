@@ -2,8 +2,8 @@
 namespace ACP3\Modules\ACP3\Menus;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Menus\Model\MenuItemRepository;
-use ACP3\Modules\ACP3\Menus\Model\MenuRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
 
 /**
  * Class Cache
@@ -19,11 +19,11 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     protected $translator;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
      */
     protected $menuRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
      */
     protected $menuItemRepository;
 
@@ -31,7 +31,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * @param Core\Cache                                        $cache
      * @param \ACP3\Core\I18n\Translator                        $translator
      * @param MenuRepository                                    $menuRepository
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      */
     public function __construct(
         Core\Cache $cache,

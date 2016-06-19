@@ -22,7 +22,7 @@ class Details extends AbstractAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\News\Model\NewsRepository
+     * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
      */
     protected $newsRepository;
     /**
@@ -35,13 +35,13 @@ class Details extends AbstractAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Date                               $date
-     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository  $newsRepository
+     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository  $newsRepository
      * @param \ACP3\Modules\ACP3\News\Cache                 $newsCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
-        News\Model\NewsRepository $newsRepository,
+        News\Model\Repository\NewsRepository $newsRepository,
         News\Cache $newsCache)
     {
         parent::__construct($context);

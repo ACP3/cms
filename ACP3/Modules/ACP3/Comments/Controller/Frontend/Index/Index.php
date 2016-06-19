@@ -23,19 +23,19 @@ class Index extends AbstractFrontendAction
      */
     protected $pagination;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository
+     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
      */
     protected $commentRepository;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Pagination $pagination
-     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
+     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Pagination $pagination,
-        Comments\Model\CommentRepository $commentRepository
+        Comments\Model\Repository\CommentRepository $commentRepository
     ) {
         parent::__construct($context);
 

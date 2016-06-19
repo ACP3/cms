@@ -3,6 +3,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Date\DateTranslator;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
  * Class Date
@@ -39,12 +40,12 @@ class Date
     /**
      * Date constructor.
      *
-     * @param \ACP3\Core\User                $user
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                $user
      * @param \ACP3\Core\Date\DateTranslator $dateTranslator
      * @param \ACP3\Core\Config              $config
      */
     public function __construct(
-        User $user,
+        UserModel $user,
         DateTranslator $dateTranslator,
         Config $config
     ) {

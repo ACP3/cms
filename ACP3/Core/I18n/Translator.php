@@ -4,7 +4,7 @@ namespace ACP3\Core\I18n;
 use ACP3\Core\Config;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\I18n\DictionaryCache as LanguageCache;
-use ACP3\Core\User;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
  * Class Translator
@@ -13,7 +13,7 @@ use ACP3\Core\User;
 class Translator
 {
     /**
-     * @var \ACP3\Core\User
+     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
      */
     protected $user;
     /**
@@ -48,13 +48,13 @@ class Translator
     protected $buffer = [];
 
     /**
-     * @param \ACP3\Core\User                        $user
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                        $user
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Core\I18n\DictionaryCache        $dictionaryCache
      * @param \ACP3\Core\Config                      $config
      */
     public function __construct(
-        User $user,
+        UserModel $user,
         ApplicationPath $appPath,
         LanguageCache $dictionaryCache,
         Config $config

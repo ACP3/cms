@@ -27,7 +27,7 @@ class Edit extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository
+     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
      */
     protected $filesRepository;
     /**
@@ -54,7 +54,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Date                                         $date
      * @param \ACP3\Core\Helpers\Forms                                $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository          $filesRepository
+     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository          $filesRepository
      * @param \ACP3\Modules\ACP3\Files\Cache                          $filesCache
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Categories\Helpers                   $categoriesHelpers
@@ -64,7 +64,7 @@ class Edit extends AbstractFormAction
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Files\Model\FilesRepository $filesRepository,
+        Files\Model\Repository\FilesRepository $filesRepository,
         Files\Cache $filesCache,
         Files\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers

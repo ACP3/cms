@@ -31,8 +31,8 @@ class Create extends AbstractFormAction
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                   $context
-     * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository     $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository          $ruleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository     $privilegeRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository          $ruleRepository
      * @param \ACP3\Core\NestedSet                                         $nestedSet
      * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
@@ -41,8 +41,8 @@ class Create extends AbstractFormAction
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Permissions\Model\PrivilegeRepository $privilegeRepository,
-        Permissions\Model\RuleRepository $ruleRepository,
+        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
+        Permissions\Model\Repository\RuleRepository $ruleRepository,
         Core\NestedSet $nestedSet,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
@@ -93,7 +93,7 @@ class Create extends AbstractFormAction
             $roleId = $this->nestedSet->insertNode(
                 (int)$formData['parent_id'],
                 $insertValues,
-                Permissions\Model\RoleRepository::TABLE_NAME,
+                Permissions\Model\Repository\RoleRepository::TABLE_NAME,
                 true
             );
 

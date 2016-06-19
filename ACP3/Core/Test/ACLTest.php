@@ -9,11 +9,11 @@ namespace ACP3\Core\Test;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Modules;
-use ACP3\Core\User;
 use ACP3\Modules\ACP3\Permissions\Cache;
-use ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository;
-use ACP3\Modules\ACP3\Permissions\Model\RoleRepository;
-use ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
  * Class ACLTest
@@ -66,7 +66,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
 
     private function initializeMockObjects()
     {
-        $this->userMock = $this->getMockBuilder(User::class)
+        $this->userMock = $this->getMockBuilder(UserModel::class)
             ->disableOriginalConstructor()
             ->setMethods(['isSuperUser', 'getUserId'])
             ->getMock();

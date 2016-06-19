@@ -1,15 +1,15 @@
 services:
   gallery.model.galleryrepository:
-    class: ACP3\Modules\ACP3\Gallery\Model\GalleryRepository
+    class: ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
     arguments:
       - '@core.db'
 
   gallery.model.gallery_data_grid_repository:
-    class: ACP3\Modules\ACP3\Gallery\Model\GalleryDataGridRepository
+    class: ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryDataGridRepository
     arguments:
       - '@core.db'
 
   gallery.model.picturerepository:
-    class: ACP3\Modules\ACP3\Gallery\Model\PictureRepository
+    class: ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
     arguments:
       - '@core.db'

@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Guestbook;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository
+     * @var \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository
      */
     protected $guestbookRepository;
 
@@ -25,11 +25,11 @@ class Delete extends Core\Controller\AbstractAdminAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext             $context
-     * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository $guestbookRepository
+     * @param \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Guestbook\Model\GuestbookRepository $guestbookRepository
+        Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
     ) {
         parent::__construct($context);
 

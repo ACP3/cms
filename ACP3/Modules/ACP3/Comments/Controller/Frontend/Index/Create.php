@@ -25,7 +25,7 @@ class Create extends AbstractFrontendAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository
+     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
      */
     protected $commentRepository;
     /**
@@ -36,14 +36,14 @@ class Create extends AbstractFrontendAction
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext         $context
      * @param \ACP3\Core\Date                                       $date
-     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository   $commentRepository
+     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository   $commentRepository
      * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $formValidation
      * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
-        Comments\Model\CommentRepository $commentRepository,
+        Comments\Model\Repository\CommentRepository $commentRepository,
         Comments\Validation\FormValidation $formValidation,
         Core\Helpers\FormToken $formTokenHelper)
     {

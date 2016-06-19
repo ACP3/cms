@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Newsletter\Model\AccountRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
 
 /**
  * Class Subscribe
@@ -39,7 +39,7 @@ class Subscribe
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
      */
     protected $accountRepository;
     /**
@@ -63,7 +63,7 @@ class Subscribe
      * @param \ACP3\Core\Helpers\Secure                             $secureHelper
      * @param \ACP3\Core\Config                                     $config
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus    $accountStatusHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository $accountRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository $accountRepository
      */
     public function __construct(
         Core\Date $date,

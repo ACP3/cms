@@ -28,7 +28,7 @@ class Edit extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\News\Model\NewsRepository
+     * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
      */
     protected $newsRepository;
     /**
@@ -47,7 +47,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Date                                        $date
      * @param \ACP3\Core\Helpers\Forms                               $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository           $newsRepository
+     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository           $newsRepository
      * @param \ACP3\Modules\ACP3\News\Cache                          $newsCache
      * @param \ACP3\Modules\ACP3\News\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Categories\Helpers                  $categoriesHelpers
@@ -57,7 +57,7 @@ class Edit extends AbstractFormAction
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        News\Model\NewsRepository $newsRepository,
+        News\Model\Repository\NewsRepository $newsRepository,
         News\Cache $newsCache,
         News\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers

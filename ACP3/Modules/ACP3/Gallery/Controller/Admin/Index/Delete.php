@@ -25,11 +25,11 @@ class Delete extends Core\Controller\AbstractAdminAction
      */
     protected $galleryHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
      */
     protected $galleryRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     protected $pictureRepository;
     /**
@@ -43,15 +43,15 @@ class Delete extends Core\Controller\AbstractAdminAction
      * @param \ACP3\Core\Controller\Context\AdminContext         $context
      * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
      * @param \ACP3\Modules\ACP3\Gallery\Helpers                 $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository $galleryRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Gallery\Cache $galleryCache,
         Gallery\Helpers $galleryHelpers,
-        Gallery\Model\GalleryRepository $galleryRepository,
-        Gallery\Model\PictureRepository $pictureRepository)
+        Gallery\Model\Repository\GalleryRepository $galleryRepository,
+        Gallery\Model\Repository\PictureRepository $pictureRepository)
     {
         parent::__construct($context);
 

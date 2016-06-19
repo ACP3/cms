@@ -30,7 +30,7 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\User
+     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
      */
     protected $user;
     /**
@@ -129,7 +129,7 @@ abstract class AbstractWidgetAction implements ActionInterface
     }
 
     /**
-     * @return Core\User
+     * @return \ACP3\Modules\ACP3\Users\Model\UserModel
      */
     protected function getUser()
     {

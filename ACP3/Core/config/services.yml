@@ -25,7 +25,7 @@ services:
   core.acl:
     class: ACP3\Core\ACL
     arguments:
-      - '@core.user'
+      - '@users.model.user_model'
       - '@core.modules'
       - '@permissions.model.rolerepository'
       - '@permissions.model.userrolerepository'
@@ -78,7 +78,7 @@ services:
   core.pagination:
     class: ACP3\Core\Pagination
     arguments:
-      - '@core.user'
+      - '@users.model.user_model'
       - '@core.breadcrumb.title'
       - '@core.lang'
       - '@core.http.request'
@@ -99,18 +99,6 @@ services:
       - '@core.environment.application_path'
       - '@core.http.request'
       - '@core.http.response'
-
-  core.user:
-    class: ACP3\Core\User
-    arguments:
-      - '@core.http.request'
-      - '@core.http.response'
-      - '@core.environment.application_path'
-      - '@core.authentication'
-      - '@core.session'
-      - '@core.helpers.secure'
-      - '@core.config'
-      - '@users.model.userrepository'
 
   core.xml:
     class: ACP3\Core\XML

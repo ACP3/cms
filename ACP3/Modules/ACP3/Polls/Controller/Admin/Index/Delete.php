@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Polls;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\PollRepository
+     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
      */
     protected $pollRepository;
 
@@ -24,11 +24,11 @@ class Delete extends Core\Controller\AbstractAdminAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext    $context
-     * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository $pollRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Polls\Model\PollRepository $pollRepository
+        Polls\Model\Repository\PollRepository $pollRepository
     ) {
         parent::__construct($context);
 

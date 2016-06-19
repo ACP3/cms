@@ -27,7 +27,7 @@ class Create extends AbstractFormAction
      */
     protected $galleryHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
      */
     protected $galleryRepository;
     /**
@@ -39,7 +39,7 @@ class Create extends AbstractFormAction
      */
     protected $pictureFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     protected $pictureRepository;
     /**
@@ -62,8 +62,8 @@ class Create extends AbstractFormAction
      * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Helpers                          $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository          $galleryRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository          $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository          $galleryRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository          $pictureRepository
      * @param \ACP3\Modules\ACP3\Gallery\Cache                            $galleryCache
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
@@ -72,8 +72,8 @@ class Create extends AbstractFormAction
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Helpers $galleryHelpers,
-        Gallery\Model\GalleryRepository $galleryRepository,
-        Gallery\Model\PictureRepository $pictureRepository,
+        Gallery\Model\Repository\GalleryRepository $galleryRepository,
+        Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache,
         Gallery\Validation\PictureFormValidation $pictureFormValidation
     ) {

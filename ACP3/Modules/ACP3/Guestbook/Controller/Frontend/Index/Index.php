@@ -24,7 +24,7 @@ class Index extends AbstractAction
      */
     protected $pagination;
     /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository
+     * @var \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository
      */
     protected $guestbookRepository;
 
@@ -33,12 +33,12 @@ class Index extends AbstractAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext          $context
      * @param \ACP3\Core\Pagination                                  $pagination
-     * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository $guestbookRepository
+     * @param \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Pagination $pagination,
-        Guestbook\Model\GuestbookRepository $guestbookRepository
+        Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
     ) {
         parent::__construct($context);
 

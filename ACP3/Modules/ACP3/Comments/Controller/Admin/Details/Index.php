@@ -18,11 +18,11 @@ use ACP3\Modules\ACP3\System;
 class Index extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository
+     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
      */
     protected $commentRepository;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
+     * @var \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
      */
     protected $systemModuleRepository;
 
@@ -30,13 +30,13 @@ class Index extends Core\Controller\AbstractAdminAction
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext          $context
-     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository    $systemModuleRepository
+     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
+     * @param \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository    $systemModuleRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Comments\Model\CommentRepository $commentRepository,
-        System\Model\ModuleRepository $systemModuleRepository)
+        Comments\Model\Repository\CommentRepository $commentRepository,
+        System\Model\Repository\ModuleRepository $systemModuleRepository)
     {
         parent::__construct($context);
 

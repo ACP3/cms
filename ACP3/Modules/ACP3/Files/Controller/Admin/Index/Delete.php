@@ -19,7 +19,7 @@ use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository
+     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
      */
     protected $filesRepository;
     /**
@@ -39,12 +39,12 @@ class Delete extends Core\Controller\AbstractAdminAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext     $context
-     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
+     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
      * @param \ACP3\Modules\ACP3\Files\Cache                 $filesCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Files\Model\FilesRepository $filesRepository,
+        Files\Model\Repository\FilesRepository $filesRepository,
         Files\Cache $filesCache)
     {
         parent::__construct($context);

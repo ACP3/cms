@@ -23,7 +23,7 @@ class Details extends Core\Controller\AbstractFrontendAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     protected $pictureRepository;
     /**
@@ -40,12 +40,12 @@ class Details extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Date $date
-     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
-        Gallery\Model\PictureRepository $pictureRepository
+        Gallery\Model\Repository\PictureRepository $pictureRepository
     ) {
         parent::__construct($context);
 

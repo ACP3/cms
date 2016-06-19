@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Categories;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Categories\Model\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 
 /**
  * Class Helpers
@@ -61,7 +61,7 @@ class Helpers
      * @param \ACP3\Core\Helpers\Forms                               $formsHelper
      * @param \ACP3\Core\Helpers\Secure                              $secureHelper
      * @param \ACP3\Modules\ACP3\Categories\Cache                    $categoriesCache
-     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\ACL $acl,

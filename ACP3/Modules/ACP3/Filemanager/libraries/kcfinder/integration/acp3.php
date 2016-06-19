@@ -36,10 +36,10 @@ class acp3
 
                 chdir(ACP3_ROOT_DIR);
 
-                $application->getContainer()->get('core.user')->authenticate();
+                $application->getContainer()->get('users.model.user_model')->authenticate();
 
                 // if user has access permission...
-                if ($application->getContainer()->get('core.user')->isAuthenticated()) {
+                if ($application->getContainer()->get('users.model.user_model')->isAuthenticated()) {
                     if (!isset($_SESSION['KCFINDER'])) {
                         $_SESSION['KCFINDER'] = [];
                         $_SESSION['KCFINDER']['disabled'] = false;

@@ -32,7 +32,7 @@ class Edit extends AbstractFormAction
      */
     protected $pictureFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     protected $pictureRepository;
 
@@ -43,7 +43,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Helpers                          $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository          $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository          $pictureRepository
      * @param \ACP3\Modules\ACP3\Gallery\Cache                            $galleryCache
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
@@ -52,7 +52,7 @@ class Edit extends AbstractFormAction
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Helpers $galleryHelpers,
-        Gallery\Model\PictureRepository $pictureRepository,
+        Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache,
         Gallery\Validation\PictureFormValidation $pictureFormValidation
     ) {

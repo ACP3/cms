@@ -22,7 +22,7 @@ class Modules extends Core\Controller\AbstractAdminAction
      */
     protected $moduleInfoCache;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
+     * @var \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
      */
     protected $systemModuleRepository;
     /**
@@ -39,14 +39,14 @@ class Modules extends Core\Controller\AbstractAdminAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext       $context
      * @param \ACP3\Core\Modules\ModuleInfoCache               $moduleInfoCache
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository $systemModuleRepository
+     * @param \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository $systemModuleRepository
      * @param \ACP3\Modules\ACP3\System\Helper\Installer       $installerHelper
      * @param \ACP3\Modules\ACP3\Permissions\Cache             $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Modules\ModuleInfoCache $moduleInfoCache,
-        System\Model\ModuleRepository $systemModuleRepository,
+        System\Model\Repository\ModuleRepository $systemModuleRepository,
         System\Helper\Installer $installerHelper,
         Permissions\Cache $permissionsCache
     ) {

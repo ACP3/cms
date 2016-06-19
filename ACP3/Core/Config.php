@@ -10,11 +10,11 @@ use ACP3\Modules\ACP3\System;
 class Config
 {
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
+     * @var \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
      */
     protected $systemModuleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\SettingsRepository
+     * @var \ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository
      */
     protected $systemSettingsRepository;
     /**
@@ -28,13 +28,13 @@ class Config
 
     /**
      * @param \ACP3\Core\Cache                                   $coreCache
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository   $systemModuleRepository
-     * @param \ACP3\Modules\ACP3\System\Model\SettingsRepository $systemSettingsRepository
+     * @param \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository   $systemModuleRepository
+     * @param \ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository $systemSettingsRepository
      */
     public function __construct(
         Cache $coreCache,
-        System\Model\ModuleRepository $systemModuleRepository,
-        System\Model\SettingsRepository $systemSettingsRepository
+        System\Model\Repository\ModuleRepository $systemModuleRepository,
+        System\Model\Repository\SettingsRepository $systemSettingsRepository
     ) {
         $this->coreCache = $coreCache;
         $this->systemModuleRepository = $systemModuleRepository;

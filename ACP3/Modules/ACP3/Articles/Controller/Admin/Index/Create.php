@@ -22,7 +22,7 @@ class Create extends AbstractFormAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\ArticleRepository
+     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
     protected $articleRepository;
     /**
@@ -50,7 +50,7 @@ class Create extends AbstractFormAction
      * @param \ACP3\Core\Controller\Context\AdminContext                 $context
      * @param \ACP3\Core\Date                                            $date
      * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
-     * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository        $articleRepository
+     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository        $articleRepository
      * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
      */
@@ -58,7 +58,7 @@ class Create extends AbstractFormAction
         Core\Controller\Context\AdminContext $context,
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
-        Articles\Model\ArticleRepository $articleRepository,
+        Articles\Model\Repository\ArticleRepository $articleRepository,
         Articles\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper
     ) {

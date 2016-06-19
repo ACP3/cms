@@ -24,7 +24,7 @@ class Edit extends AbstractFormAction
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
     protected $userRepository;
     /**
@@ -43,7 +43,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                               $secureHelper
      * @param \ACP3\Core\Helpers\Forms                                $formsHelpers
-     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository           $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository           $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Permissions\Helpers                  $permissionsHelpers
      */
@@ -52,7 +52,7 @@ class Edit extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Forms $formsHelpers,
-        Users\Model\UserRepository $userRepository,
+        Users\Model\Repository\UserRepository $userRepository,
         Users\Validation\AdminFormValidation $adminFormValidation,
         Permissions\Helpers $permissionsHelpers)
     {
@@ -161,7 +161,7 @@ class Edit extends AbstractFormAction
             $this->permissionsHelpers->updateUserRoles($formData['roles'], $id);
 
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
-                $salt = $this->secureHelper->salt(Core\User::SALT_LENGTH);
+                $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
                 $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd'], 'sha512');
                 $updateValues['pwd'] = $newPassword;
                 $updateValues['pwd_salt'] = $salt;
@@ -179,12 +179,12 @@ class Edit extends AbstractFormAction
 
     protected function updateCurrentlyLoggedInUserCookie($userId)
     {
-        if ($userId == $this->user->getUserId() && $this->request->getCookies()->has(Core\User::AUTH_NAME)) {
+        if ($userId == $this->user->getUserId() && $this->request->getCookies()->has(Users\Model\UserModel::AUTH_NAME)) {
             $user = $this->userRepository->getOneById($userId);
             $this->user->setRememberMeCookie(
                 $userId,
                 $user['remember_me_token'],
-                Core\User::REMEMBER_ME_COOKIE_LIFETIME
+                Users\Model\UserModel::REMEMBER_ME_COOKIE_LIFETIME
             );
         }
     }

@@ -23,7 +23,7 @@ class Create extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
      */
     protected $newsletterRepository;
     /**
@@ -42,7 +42,7 @@ class Create extends AbstractFormAction
      * @param \ACP3\Core\Date                                              $date
      * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository     $newsletterRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository     $newsletterRepository
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter          $newsletterHelpers
      */
@@ -51,7 +51,7 @@ class Create extends AbstractFormAction
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Newsletter\Model\NewsletterRepository $newsletterRepository,
+        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
         Newsletter\Helper\SendNewsletter $newsletterHelpers)
     {

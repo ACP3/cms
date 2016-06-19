@@ -22,19 +22,19 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     protected $pagination;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
      */
     protected $newsletterRepository;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext            $context
      * @param Core\Pagination                                          $pagination
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository $newsletterRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Pagination $pagination,
-        Newsletter\Model\NewsletterRepository $newsletterRepository)
+        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository)
     {
         parent::__construct($context);
 

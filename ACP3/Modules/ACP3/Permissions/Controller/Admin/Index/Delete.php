@@ -60,7 +60,7 @@ class Delete extends Core\Controller\AbstractAdminAction
                     if (in_array($item, [1, 2, 4]) === true) {
                         $levelNotDeletable = true;
                     } else {
-                        $bool = $this->nestedSet->deleteNode($item, Permissions\Model\RoleRepository::TABLE_NAME);
+                        $bool = $this->nestedSet->deleteNode($item, Permissions\Model\Repository\RoleRepository::TABLE_NAME);
                     }
                 }
 

@@ -18,7 +18,7 @@ class Details extends Core\Controller\AbstractFrontendAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
      */
     protected $newsletterRepository;
 
@@ -26,11 +26,11 @@ class Details extends Core\Controller\AbstractFrontendAction
      * Details constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext            $context
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository $newsletterRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Newsletter\Model\NewsletterRepository $newsletterRepository)
+        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository)
     {
         parent::__construct($context);
 

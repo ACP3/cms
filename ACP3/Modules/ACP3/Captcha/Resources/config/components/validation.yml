@@ -6,6 +6,6 @@ services:
       - '@core.http.request'
       - '@core.router'
       - '@core.session'
-      - '@core.user'
+      - '@users.model.user_model'
     tags:
       - { name: core.validation.validation_rule }

@@ -26,7 +26,7 @@ class Index extends AbstractAction
      */
     protected $pagination;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
      */
     protected $galleryRepository;
 
@@ -36,13 +36,13 @@ class Index extends AbstractAction
      * @param \ACP3\Core\Controller\Context\FrontendContext      $context
      * @param \ACP3\Core\Date                                    $date
      * @param \ACP3\Core\Pagination                              $pagination
-     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository $galleryRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Core\Pagination $pagination,
-        Gallery\Model\GalleryRepository $galleryRepository)
+        Gallery\Model\Repository\GalleryRepository $galleryRepository)
     {
         parent::__construct($context);
 

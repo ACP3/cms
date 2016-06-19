@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Categories;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
      */
     protected $categoryRepository;
     /**
@@ -28,12 +28,12 @@ class Delete extends Core\Controller\AbstractAdminAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext             $context
-     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      * @param \ACP3\Modules\ACP3\Categories\Cache                    $categoriesCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Categories\Model\CategoryRepository $categoryRepository,
+        Categories\Model\Repository\CategoryRepository $categoryRepository,
         Categories\Cache $categoriesCache)
     {
         parent::__construct($context);

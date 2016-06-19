@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Users;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
     protected $userRepository;
 
@@ -25,11 +25,11 @@ class Delete extends Core\Controller\AbstractAdminAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext    $context
-     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Users\Model\UserRepository $userRepository)
+        Users\Model\Repository\UserRepository $userRepository)
     {
         parent::__construct($context);
 

@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Permissions\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Permissions\Model\RoleRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
 
 /**
  * Class RoleNotExistsValidationRule
@@ -11,14 +11,14 @@ use ACP3\Modules\ACP3\Permissions\Model\RoleRepository;
 class RoleNotExistsValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\RoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
      */
     protected $roleRepository;
 
     /**
      * RoleExistsValidationRule constructor.
      *
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
      */
     public function __construct(RoleRepository $roleRepository)
     {

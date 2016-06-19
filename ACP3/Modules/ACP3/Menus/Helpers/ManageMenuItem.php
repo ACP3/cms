@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Menus\Model\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 
 /**
  * Class ManageMenuItem
@@ -19,14 +19,14 @@ class ManageMenuItem
      */
     protected $nestedSet;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
      */
     protected $menuItemRepository;
 
     /**
      * @param \ACP3\Core\Helpers\Secure                         $secureHelper
      * @param \ACP3\Core\NestedSet                              $nestedSet
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      */
     public function __construct(
         Core\Helpers\Secure $secureHelper,

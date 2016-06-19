@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Menus\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Menus\Model\MenuRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
 
 /**
  * Class MenuExistsValidationRule
@@ -11,14 +11,14 @@ use ACP3\Modules\ACP3\Menus\Model\MenuRepository;
 class MenuExistsValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
      */
     protected $menuRepository;
 
     /**
      * MenuExistsValidationRule constructor.
      *
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository $menuRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository $menuRepository
      */
     public function __construct(MenuRepository $menuRepository)
     {

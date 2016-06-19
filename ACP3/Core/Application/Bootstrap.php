@@ -118,7 +118,7 @@ class Bootstrap extends AbstractBootstrap
         // Load system settings
         $this->systemSettings = $this->container->get('core.config')->getSettings('system');
         $this->setThemePaths();
-        $this->container->get('core.user')->authenticate();
+        $this->container->get('users.model.user_model')->authenticate();
 
         /** @var \ACP3\Core\Http\Request $request */
         $request = $this->container->get('core.http.request');

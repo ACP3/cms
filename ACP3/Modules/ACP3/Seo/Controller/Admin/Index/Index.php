@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Seo;
 class Index extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\DataGridRepository
+     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\DataGridRepository
      */
     protected $dataGridRepository;
     /**
@@ -28,12 +28,12 @@ class Index extends Core\Controller\AbstractAdminAction
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext      $context
-     * @param \ACP3\Modules\ACP3\Seo\Model\DataGridRepository $dataGridRepository
+     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\DataGridRepository $dataGridRepository
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements    $metaStatements
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Seo\Model\DataGridRepository $dataGridRepository,
+        Seo\Model\Repository\DataGridRepository $dataGridRepository,
         Seo\Helper\MetaStatements $metaStatements
     ) {
         parent::__construct($context);

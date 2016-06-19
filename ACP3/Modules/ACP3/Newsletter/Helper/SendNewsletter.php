@@ -3,7 +3,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository;
 
 /**
  * Class SendNewsletter
@@ -20,7 +20,7 @@ class SendNewsletter
      */
     protected $router;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
      */
     protected $newsletterRepository;
     /**
@@ -34,7 +34,7 @@ class SendNewsletter
      * @param \ACP3\Core\Mailer                                        $mailer
      * @param \ACP3\Core\RouterInterface                               $router
      * @param \ACP3\Core\Config                                        $config
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository $newsletterRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
      */
     public function __construct(
         Core\Mailer $mailer,

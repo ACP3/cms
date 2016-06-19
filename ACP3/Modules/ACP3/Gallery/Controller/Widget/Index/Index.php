@@ -22,7 +22,7 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
      */
     protected $galleryModel;
 
@@ -31,12 +31,12 @@ class Index extends Core\Controller\AbstractWidgetAction
      *
      * @param \ACP3\Core\Controller\Context\WidgetContext        $context
      * @param \ACP3\Core\Date                                    $date
-     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository $galleryModel
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryModel
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
-        Gallery\Model\GalleryRepository $galleryModel)
+        Gallery\Model\Repository\GalleryRepository $galleryModel)
     {
         parent::__construct($context);
 

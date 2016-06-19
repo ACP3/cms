@@ -20,7 +20,7 @@ class Delete extends Core\Controller\AbstractAdminAction
      */
     protected $seoCache;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
+     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
      */
     protected $seoRepository;
 
@@ -29,12 +29,12 @@ class Delete extends Core\Controller\AbstractAdminAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Modules\ACP3\Seo\Cache               $seoCache
-     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
+     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Seo\Cache $seoCache,
-        Seo\Model\SeoRepository $seoRepository
+        Seo\Model\Repository\SeoRepository $seoRepository
     ) {
         parent::__construct($context);
 

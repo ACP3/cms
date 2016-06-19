@@ -2,6 +2,7 @@
 namespace ACP3\Core;
 
 use ACP3\Modules\ACP3\Permissions;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
  * Class ACL
@@ -10,7 +11,7 @@ use ACP3\Modules\ACP3\Permissions;
 class ACL
 {
     /**
-     * @var \ACP3\Core\User
+     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
      */
     protected $user;
     /**
@@ -22,15 +23,15 @@ class ACL
      */
     protected $permissionsCache;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\RoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
      */
     protected $roleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository
      */
     protected $userRoleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
      */
     protected $privilegeRepository;
     /**
@@ -53,19 +54,19 @@ class ACL
     protected $resources = [];
 
     /**
-     * @param \ACP3\Core\User                                          $user
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                                          $user
      * @param \ACP3\Core\Modules                                       $modules
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository      $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository  $userRoleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository $privilegeRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository      $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository  $userRoleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache                     $permissionsCache
      */
     public function __construct(
-        User $user,
+        UserModel $user,
         Modules $modules,
-        Permissions\Model\RoleRepository $roleRepository,
-        Permissions\Model\UserRoleRepository $userRoleRepository,
-        Permissions\Model\PrivilegeRepository $privilegeRepository,
+        Permissions\Model\Repository\RoleRepository $roleRepository,
+        Permissions\Model\Repository\UserRoleRepository $userRoleRepository,
+        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Permissions\Cache $permissionsCache
     ) {
         $this->user = $user;

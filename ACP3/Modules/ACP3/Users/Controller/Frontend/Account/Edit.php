@@ -28,7 +28,7 @@ class Edit extends AbstractAction
      */
     protected $userFormsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
     protected $userRepository;
     /**
@@ -43,7 +43,7 @@ class Edit extends AbstractAction
      * @param \ACP3\Core\Helpers\FormToken                              $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                                 $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Helpers\Forms                    $userFormsHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository             $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository             $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation $accountFormValidation
      */
     public function __construct(
@@ -51,7 +51,7 @@ class Edit extends AbstractAction
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Helpers\Forms $userFormsHelper,
-        Users\Model\UserRepository $userRepository,
+        Users\Model\Repository\UserRepository $userRepository,
         Users\Validation\AccountFormValidation $accountFormValidation
     ) {
         parent::__construct($context);
@@ -125,7 +125,7 @@ class Edit extends AbstractAction
 
                 // Neues Passwort
                 if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
-                    $salt = $this->secureHelper->salt(Core\User::SALT_LENGTH);
+                    $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
                     $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd'], 'sha512');
                     $updateValues['pwd'] = $newPassword;
                     $updateValues['pwd_salt'] = $salt;
@@ -137,7 +137,7 @@ class Edit extends AbstractAction
                 $this->user->setRememberMeCookie(
                     $this->user->getUserId(),
                     $user['remember_me_token'],
-                    Core\User::REMEMBER_ME_COOKIE_LIFETIME
+                    Users\Model\UserModel::REMEMBER_ME_COOKIE_LIFETIME
                 );
 
                 Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');

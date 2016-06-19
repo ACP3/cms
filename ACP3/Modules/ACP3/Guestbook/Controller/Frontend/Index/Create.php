@@ -26,7 +26,7 @@ class Create extends AbstractAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository
+     * @var \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository
      */
     protected $guestbookRepository;
     /**
@@ -53,7 +53,7 @@ class Create extends AbstractAction
      * @param \ACP3\Core\Date                                        $date
      * @param \ACP3\Core\Helpers\Forms                               $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository $guestbookRepository
+     * @param \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $formValidation
      */
     public function __construct(
@@ -61,7 +61,7 @@ class Create extends AbstractAction
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Guestbook\Model\GuestbookRepository $guestbookRepository,
+        Guestbook\Model\Repository\GuestbookRepository $guestbookRepository,
         Guestbook\Validation\FormValidation $formValidation
     ) {
         parent::__construct($context);

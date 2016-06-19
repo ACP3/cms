@@ -29,7 +29,7 @@ class Create extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
     protected $userRepository;
     /**
@@ -49,7 +49,7 @@ class Create extends AbstractFormAction
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                               $secureHelper
      * @param \ACP3\Core\Helpers\Forms                                $formsHelpers
-     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository           $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository           $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Permissions\Helpers                  $permissionsHelpers
      */
@@ -59,7 +59,7 @@ class Create extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Forms $formsHelpers,
-        Users\Model\UserRepository $userRepository,
+        Users\Model\Repository\UserRepository $userRepository,
         Users\Validation\AdminFormValidation $adminFormValidation,
         Permissions\Helpers $permissionsHelpers)
     {
@@ -125,7 +125,7 @@ class Create extends AbstractFormAction
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->adminFormValidation->validate($formData);
 
-            $salt = $this->secureHelper->salt(Core\User::SALT_LENGTH);
+            $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
 
             $insertValues = [
                 'id' => '',

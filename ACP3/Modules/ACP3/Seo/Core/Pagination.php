@@ -10,9 +10,9 @@ use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\RouterInterface;
-use ACP3\Core\User;
 use ACP3\Modules\ACP3\Seo\Core\Breadcrumb\Title;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
  * Class Pagination
@@ -28,7 +28,7 @@ class Pagination extends \ACP3\Core\Pagination
     /**
      * Pagination constructor.
      *
-     * @param \ACP3\Core\User                              $user
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                              $user
      * @param \ACP3\Modules\ACP3\Seo\Core\Breadcrumb\Title $title
      * @param \ACP3\Core\I18n\Translator                   $translator
      * @param \ACP3\Core\Http\RequestInterface             $request
@@ -36,7 +36,7 @@ class Pagination extends \ACP3\Core\Pagination
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
      */
     public function __construct(
-        User $user,
+        UserModel $user,
         Title $title,
         Translator $translator,
         RequestInterface $request,

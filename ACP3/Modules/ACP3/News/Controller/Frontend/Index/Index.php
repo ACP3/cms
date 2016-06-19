@@ -32,7 +32,7 @@ class Index extends AbstractAction
      */
     protected $pagination;
     /**
-     * @var \ACP3\Modules\ACP3\News\Model\NewsRepository
+     * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
      */
     protected $newsRepository;
     /**
@@ -40,7 +40,7 @@ class Index extends AbstractAction
      */
     protected $categoriesHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
      */
     protected $categoryRepository;
     /**
@@ -55,18 +55,18 @@ class Index extends AbstractAction
      * @param \ACP3\Core\Date                                        $date
      * @param \ACP3\Core\Helpers\StringFormatter                     $stringFormatter
      * @param \ACP3\Core\Pagination                                  $pagination
-     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository           $newsRepository
+     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository           $newsRepository
      * @param \ACP3\Modules\ACP3\Categories\Helpers                  $categoriesHelpers
-     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Core\Helpers\StringFormatter $stringFormatter,
         Core\Pagination $pagination,
-        News\Model\NewsRepository $newsRepository,
+        News\Model\Repository\NewsRepository $newsRepository,
         Categories\Helpers $categoriesHelpers,
-        Categories\Model\CategoryRepository $categoryRepository
+        Categories\Model\Repository\CategoryRepository $categoryRepository
     ) {
         parent::__construct($context);
 

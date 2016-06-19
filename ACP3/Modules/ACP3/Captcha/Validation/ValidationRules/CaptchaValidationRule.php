@@ -8,11 +8,10 @@ namespace ACP3\Modules\ACP3\Captcha\Validation\ValidationRules;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Router;
 use ACP3\Core\RouterInterface;
 use ACP3\Core\Session\SessionHandlerInterface;
-use ACP3\Core\User;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
  * Class CaptchaValidationRule
@@ -37,7 +36,7 @@ class CaptchaValidationRule extends AbstractValidationRule
      */
     protected $sessionHandler;
     /**
-     * @var \ACP3\Core\User
+     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
      */
     protected $user;
 
@@ -48,14 +47,14 @@ class CaptchaValidationRule extends AbstractValidationRule
      * @param \ACP3\Core\Http\RequestInterface           $request
      * @param \ACP3\Core\RouterInterface                 $router
      * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
-     * @param \ACP3\Core\User                            $user
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                            $user
      */
     public function __construct(
         ACL $acl,
         RequestInterface $request,
         RouterInterface $router,
         SessionHandlerInterface $sessionHandler,
-        User $user
+        UserModel $user
     ) {
         $this->acl = $acl;
         $this->request = $request;

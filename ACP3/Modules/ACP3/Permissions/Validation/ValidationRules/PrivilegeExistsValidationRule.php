@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Permissions\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository;
 
 /**
  * Class PrivilegeExistsValidationRule
@@ -11,14 +11,14 @@ use ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository;
 class PrivilegeExistsValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
      */
     protected $privilegeRepository;
 
     /**
      * PrivilegeExistsValidationRule constructor.
      *
-     * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository $privilegeRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
      */
     public function __construct(PrivilegeRepository $privilegeRepository)
     {

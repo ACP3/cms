@@ -2,9 +2,9 @@
 namespace ACP3\Modules\ACP3\Permissions;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Permissions\Model\ResourceRepository;
-use ACP3\Modules\ACP3\Permissions\Model\RoleRepository;
-use ACP3\Modules\ACP3\Permissions\Model\RuleRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository;
 
 /**
  * Class Cache
@@ -17,23 +17,23 @@ class Cache extends Core\Modules\AbstractCacheStorage
     const CACHE_ID_RULES = 'acl_rules_';
 
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\RoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
      */
     protected $roleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
      */
     protected $resourceRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\RuleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository
      */
     protected $ruleRepository;
 
     /**
      * @param \ACP3\Core\Cache                                        $cache
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository     $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository $resourceRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository     $ruleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository     $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository     $ruleRepository
      */
     public function __construct(
         Core\Cache $cache,

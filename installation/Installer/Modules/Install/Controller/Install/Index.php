@@ -8,13 +8,13 @@ namespace ACP3\Installer\Modules\Install\Controller\Install;
 
 use ACP3\Core\Filesystem;
 use ACP3\Core\Helpers\Secure;
-use ACP3\Core\User;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Installer\Core;
 use ACP3\Installer\Core\Date;
 use ACP3\Installer\Modules\Install\Controller\AbstractAction;
 use ACP3\Installer\Modules\Install\Helpers\Install as InstallerHelpers;
 use ACP3\Installer\Modules\Install\Validation\FormValidation;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -269,7 +269,7 @@ class Index extends AbstractAction
         /** @var \ACP3\Core\Database\Connection db */
         $this->db = $this->get('core.db');
 
-        $salt = $this->secureHelper->salt(User::SALT_LENGTH);
+        $salt = $this->secureHelper->salt(UserModel::SALT_LENGTH);
         $currentDate = gmdate('Y-m-d H:i:s');
 
         $queries = [

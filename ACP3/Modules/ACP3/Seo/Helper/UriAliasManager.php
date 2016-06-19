@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Seo\Helper;
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Modules\ACP3\Seo\Cache as SeoCache;
-use ACP3\Modules\ACP3\Seo\Model\SeoRepository;
+use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 
 /**
  * Class UriAliasManager
@@ -25,7 +25,7 @@ class UriAliasManager
      */
     protected $seoCache;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
+     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
      */
     protected $seoRepository;
 
@@ -34,7 +34,7 @@ class UriAliasManager
      *
      * @param \ACP3\Core\Helpers\Secure                  $secureHelper
      * @param \ACP3\Modules\ACP3\Seo\Cache               $seoCache
-     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
+     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
         Secure $secureHelper,

@@ -24,7 +24,7 @@ class UriAliasValidationRule extends AbstractValidationRule
      */
     protected $uriSafeValidationRule;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
+     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
      */
     protected $seoRepository;
 
@@ -34,13 +34,13 @@ class UriAliasValidationRule extends AbstractValidationRule
      * @param \ACP3\Core\Environment\ApplicationPath                          $appPath
      * @param \ACP3\Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule
      * @param \ACP3\Core\Validation\ValidationRules\UriSafeValidationRule     $uriSafeValidationRule
-     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository                      $seoRepository
+     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository                      $seoRepository
      */
     public function __construct(
         Core\Environment\ApplicationPath $appPath,
         Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule,
         Core\Validation\ValidationRules\UriSafeValidationRule $uriSafeValidationRule,
-        Seo\Model\SeoRepository $seoRepository
+        Seo\Model\Repository\SeoRepository $seoRepository
     ) {
         $this->appPath = $appPath;
         $this->internalUriValidationRule = $internalUriValidationRule;

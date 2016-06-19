@@ -5,7 +5,7 @@ use ACP3\Core\ACL;
 use ACP3\Core\Date;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\RouterInterface;
-use ACP3\Modules\ACP3\Files\Model\FilesRepository;
+use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 use ACP3\Modules\ACP3\Search\Event\DisplaySearchResults;
 
 /**
@@ -31,7 +31,7 @@ class OnDisplaySearchResultsListener
      */
     private $router;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository
+     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
      */
     private $filesRepository;
 
@@ -42,7 +42,7 @@ class OnDisplaySearchResultsListener
      * @param \ACP3\Core\Date                                $date
      * @param \ACP3\Core\I18n\Translator                     $translator
      * @param \ACP3\Core\RouterInterface                     $router
-     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
+     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
      */
     public function __construct(
         ACL $acl,

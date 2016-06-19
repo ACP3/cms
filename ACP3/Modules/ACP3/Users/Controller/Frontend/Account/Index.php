@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Users;
 class Index extends AbstractAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
     protected $userRepository;
 
@@ -23,11 +23,11 @@ class Index extends AbstractAction
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Users\Model\UserRepository $userRepository
+        Users\Model\Repository\UserRepository $userRepository
     ) {
         parent::__construct($context);
 

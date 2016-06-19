@@ -22,11 +22,11 @@ class Result extends Core\Controller\AbstractFrontendAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\PollRepository
+     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
      */
     protected $pollRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\AnswerRepository
+     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository
      */
     protected $answerRepository;
 
@@ -35,14 +35,14 @@ class Result extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext   $context
      * @param \ACP3\Core\Date                                 $date
-     * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository   $pollRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\AnswerRepository $answerRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository   $pollRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
-        Polls\Model\PollRepository $pollRepository,
-        Polls\Model\AnswerRepository $answerRepository)
+        Polls\Model\Repository\PollRepository $pollRepository,
+        Polls\Model\Repository\AnswerRepository $answerRepository)
     {
         parent::__construct($context);
 

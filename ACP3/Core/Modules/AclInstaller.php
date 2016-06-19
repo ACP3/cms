@@ -31,19 +31,19 @@ class AclInstaller implements InstallerInterface
      */
     protected $schemaHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\RoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
      */
     protected $roleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
      */
     protected $privilegeRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
      */
     protected $resourceRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\RuleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository
      */
     protected $ruleRepository;
 
@@ -51,19 +51,19 @@ class AclInstaller implements InstallerInterface
      * @param \Symfony\Component\DependencyInjection\Container         $container
      * @param \ACP3\Core\Cache                                         $aclCache
      * @param \ACP3\Core\Modules\SchemaHelper                          $schemaHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository      $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RuleRepository      $ruleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository  $resourceRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\PrivilegeRepository $privilegeRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository      $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository      $ruleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository  $resourceRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
      */
     public function __construct(
         Container $container,
         Cache $aclCache,
         SchemaHelper $schemaHelper,
-        Permissions\Model\RoleRepository $roleRepository,
-        Permissions\Model\RuleRepository $ruleRepository,
-        Permissions\Model\ResourceRepository $resourceRepository,
-        Permissions\Model\PrivilegeRepository $privilegeRepository
+        Permissions\Model\Repository\RoleRepository $roleRepository,
+        Permissions\Model\Repository\RuleRepository $ruleRepository,
+        Permissions\Model\Repository\ResourceRepository $resourceRepository,
+        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
     ) {
         $this->container = $container;
         $this->aclCache = $aclCache;

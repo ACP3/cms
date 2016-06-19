@@ -2,8 +2,8 @@
 namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core\Date;
-use ACP3\Modules\ACP3\Newsletter\Model\AccountHistoryRepository;
-use ACP3\Modules\ACP3\Newsletter\Model\AccountRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
 
 /**
  * Class AccountStatus
@@ -20,18 +20,18 @@ class AccountStatus
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
      */
     protected $accountRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\AccountHistoryRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository
      */
     protected $accountHistoryRepository;
 
     /**
      * @param \ACP3\Core\Date                                              $date
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository        $accountRepository
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountHistoryRepository $accountHistoryRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository        $accountRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository $accountHistoryRepository
      */
     public function __construct(
         Date $date,

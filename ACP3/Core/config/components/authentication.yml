@@ -12,10 +12,3 @@ services:
     factory: ['@core.authentication.factory', get]
     arguments:
       - '%core.authentication.method%'
-
-  core.authentication.native:
-    class: ACP3\Core\Authentication\Native
-    arguments:
-      - '@core.http.request'
-      - '@core.session'
-      - '@users.model.userrepository'

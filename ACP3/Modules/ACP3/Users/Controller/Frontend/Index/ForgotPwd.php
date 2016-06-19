@@ -26,7 +26,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
     protected $userRepository;
     /**
@@ -44,7 +44,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation
      * @param \ACP3\Core\Helpers\SendEmail $sendEmail
      */
@@ -52,7 +52,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
-        Users\Model\UserRepository $userRepository,
+        Users\Model\Repository\UserRepository $userRepository,
         Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation,
         Core\Helpers\SendEmail $sendEmail
     ) {
@@ -95,13 +95,13 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
             function () use ($formData) {
                 $this->accountForgotPasswordFormValidation->validate($formData);
 
-                $newPassword = $this->secureHelper->salt(Core\User::SALT_LENGTH);
+                $newPassword = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
                 $user = $this->fetchUserByFormFieldValue($formData['nick_mail']);
                 $mailIsSent = $this->sendPasswordChangeEmail($user, $newPassword);
 
                 // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
                 if ($mailIsSent === true) {
-                    $salt = $this->secureHelper->salt(Core\User::SALT_LENGTH);
+                    $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
                     $updateValues = [
                         'pwd' => $this->secureHelper->generateSaltedPassword($salt, $newPassword, 'sha512'),
                         'pwd_salt' => $salt,

@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Articles;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Articles\Model\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
 
 /**
  * Class Cache
@@ -18,7 +18,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     const CACHE_ID = 'list_id_';
 
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\ArticleRepository
+     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
     protected $articleRepository;
 

@@ -7,7 +7,7 @@ use ACP3\Core\Date;
 use ACP3\Core\Date\DateTranslator;
 use ACP3\Core\Helpers\Formatter\DateRange;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\User;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 class DateRangeTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,7 +28,7 @@ class DateRangeTest extends \PHPUnit_Framework_TestCase
      */
     private $langMock;
     /**
-     * @var User|\PHPUnit_Framework_MockObject_MockObject
+     * @var UserModel|\PHPUnit_Framework_MockObject_MockObject
      */
     private $userMock;
 
@@ -43,7 +43,7 @@ class DateRangeTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['t'])
             ->getMock();
-        $this->userMock = $this->getMockBuilder(User::class)
+        $this->userMock = $this->getMockBuilder(UserModel::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->configMock = $this->getMockBuilder(Config::class)

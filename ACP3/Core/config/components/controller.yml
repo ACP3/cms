@@ -5,7 +5,7 @@ services:
       - '@service_container'
       - '@core.eventDispatcher'
       - '@core.acl'
-      - '@core.user'
+      - '@users.model.user_model'
       - '@core.lang'
       - '@core.modules'
       - '@core.http.request'

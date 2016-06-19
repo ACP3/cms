@@ -26,7 +26,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     protected $pagination;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\ArticleRepository
+     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
     protected $articleRepository;
 
@@ -36,13 +36,13 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext       $context
      * @param \ACP3\Core\Date                                     $date
      * @param \ACP3\Core\Pagination                               $pagination
-     * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository $articleRepository
+     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Core\Pagination $pagination,
-        Articles\Model\ArticleRepository $articleRepository
+        Articles\Model\Repository\ArticleRepository $articleRepository
     ) {
         parent::__construct($context);
 

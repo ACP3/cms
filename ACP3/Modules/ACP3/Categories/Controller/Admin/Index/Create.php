@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Categories;
 class Create extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
      */
     protected $categoryRepository;
     /**
@@ -39,7 +39,7 @@ class Create extends Core\Controller\AbstractAdminAction
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext                   $context
      * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
-     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository       $categoryRepository
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository       $categoryRepository
      * @param \ACP3\Modules\ACP3\Categories\Cache                          $categoriesCache
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
@@ -47,7 +47,7 @@ class Create extends Core\Controller\AbstractAdminAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelper,
-        Categories\Model\CategoryRepository $categoryRepository,
+        Categories\Model\Repository\CategoryRepository $categoryRepository,
         Categories\Cache $categoriesCache,
         Categories\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper)

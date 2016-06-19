@@ -1,10 +1,10 @@
 services:
   articles.model.data_grid_repository:
-    class: ACP3\Modules\ACP3\Articles\Model\DataGridRepository
+    class: ACP3\Modules\ACP3\Articles\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
 
   articles.model.articlerepository:
-    class: ACP3\Modules\ACP3\Articles\Model\ArticleRepository
+    class: ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
     arguments:
       - '@core.db'

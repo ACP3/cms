@@ -22,7 +22,7 @@ class Edit extends AbstractFormAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\ArticleRepository
+     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
     protected $articleRepository;
     /**
@@ -34,7 +34,7 @@ class Edit extends AbstractFormAction
      */
     protected $adminFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
      */
     protected $menuItemRepository;
     /**
@@ -58,7 +58,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Controller\Context\AdminContext                 $context
      * @param \ACP3\Core\Date                                            $date
      * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
-     * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository        $articleRepository
+     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository        $articleRepository
      * @param \ACP3\Modules\ACP3\Articles\Cache                          $articlesCache
      * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
@@ -67,7 +67,7 @@ class Edit extends AbstractFormAction
         Core\Controller\Context\AdminContext $context,
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
-        Articles\Model\ArticleRepository $articleRepository,
+        Articles\Model\Repository\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache,
         Articles\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper
@@ -103,11 +103,11 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      *
      * @return $this
      */
-    public function setMenuItemRepository(Menus\Model\MenuItemRepository $menuItemRepository)
+    public function setMenuItemRepository(Menus\Model\Repository\MenuItemRepository $menuItemRepository)
     {
         $this->menuItemRepository = $menuItemRepository;
 

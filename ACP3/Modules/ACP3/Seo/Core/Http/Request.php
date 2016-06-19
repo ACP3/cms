@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Seo\Core\Http;
 
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Modules\ACP3\Seo\Model\SeoRepository;
+use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 
 /**
  * Class Request
@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Seo\Model\SeoRepository;
 class Request extends \ACP3\Core\Http\Request
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
+     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
      */
     protected $seoRepository;
 
@@ -24,7 +24,7 @@ class Request extends \ACP3\Core\Http\Request
      * Request constructor.
      *
      * @param \Symfony\Component\HttpFoundation\Request $symfonyRequest
-     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
+     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
         \Symfony\Component\HttpFoundation\Request $symfonyRequest,

@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\News;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\News\Model\NewsRepository;
+use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 
 /**
  * Class Cache
@@ -18,7 +18,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * @param \ACP3\Core\Cache                             $cache
-     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository $newsRepository
+     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
      */
     public function __construct(
         Core\Cache $cache,

@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Gallery;
 class Index extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\GalleryDataGridRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryDataGridRepository
      */
     protected $dataGridRepository;
 
@@ -24,11 +24,11 @@ class Index extends Core\Controller\AbstractAdminAction
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                 $context
-     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryDataGridRepository $dataGridRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryDataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Gallery\Model\GalleryDataGridRepository $dataGridRepository
+        Gallery\Model\Repository\GalleryDataGridRepository $dataGridRepository
     ) {
         parent::__construct($context);
 

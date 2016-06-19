@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Seo;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Seo\Model\SeoRepository;
+use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 
 /**
  * Class Cache
@@ -11,13 +11,13 @@ use ACP3\Modules\ACP3\Seo\Model\SeoRepository;
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
+     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
      */
     protected $seoRepository;
 
     /**
      * @param \ACP3\Core\Cache                           $cache
-     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
+     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
         Core\Cache $cache,

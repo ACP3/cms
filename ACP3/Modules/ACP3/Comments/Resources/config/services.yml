@@ -1,6 +1,7 @@
 imports:
   - { resource: components/controllers.yml }
   - { resource: components/installer.yml }
+  - { resource: components/models.yml }
   - { resource: components/validation.yml }
 
 services:
@@ -9,8 +10,3 @@ services:
     arguments:
       - '@core.modules'
       - '@comments.model.commentrepository'
-
-  comments.model.commentrepository:
-    class: ACP3\Modules\ACP3\Comments\Model\CommentRepository
-    arguments:
-      - '@core.db'

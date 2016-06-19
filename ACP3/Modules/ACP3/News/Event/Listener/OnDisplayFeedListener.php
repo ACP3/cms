@@ -3,10 +3,9 @@ namespace ACP3\Modules\ACP3\News\Event\Listener;
 
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\StringFormatter;
-use ACP3\Core\Router;
 use ACP3\Core\RouterInterface;
 use ACP3\Modules\ACP3\Feeds\Event\DisplayFeed;
-use ACP3\Modules\ACP3\News\Model\NewsRepository;
+use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 
 /**
  * Class OnDisplayFeedListener
@@ -27,7 +26,7 @@ class OnDisplayFeedListener
      */
     protected $formatter;
     /**
-     * @var \ACP3\Modules\ACP3\News\Model\NewsRepository
+     * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
      */
     protected $newsRepository;
 
@@ -37,7 +36,7 @@ class OnDisplayFeedListener
      * @param \ACP3\Core\Date                              $date
      * @param \ACP3\Core\RouterInterface                   $router
      * @param \ACP3\Core\Helpers\StringFormatter           $formatter
-     * @param \ACP3\Modules\ACP3\News\Model\NewsRepository $newsRepository
+     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
      */
     public function __construct(
         Date $date,

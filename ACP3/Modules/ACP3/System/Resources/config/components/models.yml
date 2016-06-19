@@ -1,10 +1,10 @@
 services:
   system.model.modulerepository:
-    class: ACP3\Modules\ACP3\System\Model\ModuleRepository
+    class: ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
     arguments:
       - '@core.db'
 
   system.model.settingsrepository:
-    class: ACP3\Modules\ACP3\System\Model\SettingsRepository
+    class: ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository
     arguments:
       - '@core.db'

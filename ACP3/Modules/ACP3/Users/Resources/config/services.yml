@@ -5,6 +5,13 @@ imports:
   - { resource: components/validation.yml }
 
 services:
+  core.authentication.native:
+    class: ACP3\Modules\ACP3\Users\Core\Authentication\Native
+    arguments:
+      - '@core.http.request'
+      - '@core.session'
+      - '@users.model.userrepository'
+
   users.helpers.forms:
     class: ACP3\Modules\ACP3\Users\Helpers\Forms
     arguments:

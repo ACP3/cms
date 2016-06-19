@@ -20,7 +20,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
      */
     protected $menuRepository;
     /**
@@ -37,14 +37,14 @@ class Edit extends Core\Controller\AbstractAdminAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext             $context
      * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository          $menuRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository          $menuRepository
      * @param \ACP3\Modules\ACP3\Menus\Cache                         $menusCache
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation $menuFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Menus\Model\MenuRepository $menuRepository,
+        Menus\Model\Repository\MenuRepository $menuRepository,
         Menus\Cache $menusCache,
         Menus\Validation\MenuFormValidation $menuFormValidation
     ) {

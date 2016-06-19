@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Categories;
 class Edit extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
      */
     protected $categoryRepository;
     /**
@@ -34,14 +34,14 @@ class Edit extends Core\Controller\AbstractAdminAction
 
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext                   $context
-     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository       $categoryRepository
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository       $categoryRepository
      * @param \ACP3\Modules\ACP3\Categories\Cache                          $categoriesCache
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Categories\Model\CategoryRepository $categoryRepository,
+        Categories\Model\Repository\CategoryRepository $categoryRepository,
         Categories\Cache $categoriesCache,
         Categories\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper)

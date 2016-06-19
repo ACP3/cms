@@ -19,7 +19,7 @@ class Settings extends AbstractAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
     protected $userRepository;
     /**
@@ -42,7 +42,7 @@ class Settings extends AbstractAction
      * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                                         $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Helpers\Forms                            $userFormsHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository                     $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository                     $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
      */
     public function __construct(
@@ -50,7 +50,7 @@ class Settings extends AbstractAction
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Helpers\Forms $userFormsHelper,
-        Users\Model\UserRepository $userRepository,
+        Users\Model\Repository\UserRepository $userRepository,
         Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
     ) {
         parent::__construct($context);

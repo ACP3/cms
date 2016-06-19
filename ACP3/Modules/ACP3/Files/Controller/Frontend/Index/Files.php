@@ -23,11 +23,11 @@ class Files extends Core\Controller\AbstractFrontendAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository
+     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
      */
     protected $filesRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
      */
     protected $categoryRepository;
 
@@ -36,14 +36,14 @@ class Files extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext          $context
      * @param \ACP3\Core\Date                                        $date
-     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository         $filesRepository
-     * @param \ACP3\Modules\ACP3\Categories\Model\CategoryRepository $categoryRepository
+     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository         $filesRepository
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
-        FilesModule\Model\FilesRepository $filesRepository,
-        Categories\Model\CategoryRepository $categoryRepository)
+        FilesModule\Model\Repository\FilesRepository $filesRepository,
+        Categories\Model\Repository\CategoryRepository $categoryRepository)
     {
         parent::__construct($context);
 

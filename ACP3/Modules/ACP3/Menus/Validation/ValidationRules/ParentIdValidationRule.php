@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Menus\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Menus\Model\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 
 /**
  * Class ParentIdValidationRule
@@ -11,14 +11,14 @@ use ACP3\Modules\ACP3\Menus\Model\MenuItemRepository;
 class ParentIdValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
      */
     protected $menuItemRepository;
 
     /**
      * ParentIdValidationRule constructor.
      *
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      */
     public function __construct(MenuItemRepository $menuItemRepository)
     {

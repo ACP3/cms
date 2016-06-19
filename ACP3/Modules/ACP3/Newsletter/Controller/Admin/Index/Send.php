@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Newsletter;
 class Send extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
      */
     protected $newsletterRepository;
     /**
@@ -24,7 +24,7 @@ class Send extends Core\Controller\AbstractAdminAction
      */
     protected $newsletterHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
      */
     protected $accountRepository;
 
@@ -32,14 +32,14 @@ class Send extends Core\Controller\AbstractAdminAction
      * Send constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext               $context
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\NewsletterRepository $newsletterRepository
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository    $accountRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository    $accountRepository
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter      $newsletterHelpers
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Newsletter\Model\NewsletterRepository $newsletterRepository,
-        Newsletter\Model\AccountRepository $accountRepository,
+        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
+        Newsletter\Model\Repository\AccountRepository $accountRepository,
         Newsletter\Helper\SendNewsletter $newsletterHelpers)
     {
         parent::__construct($context);

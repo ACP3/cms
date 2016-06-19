@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Menus;
 class Delete extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\ArticleRepository
+     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
     protected $articleRepository;
     /**
@@ -27,12 +27,12 @@ class Delete extends AbstractFormAction
 
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext          $context
-     * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository $articleRepository
+     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
      * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Articles\Model\ArticleRepository $articleRepository,
+        Articles\Model\Repository\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache)
     {
         parent::__construct($context);

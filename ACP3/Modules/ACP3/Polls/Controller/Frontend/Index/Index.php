@@ -22,11 +22,11 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\PollRepository
+     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
      */
     protected $pollRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\VoteRepository
+     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository
      */
     protected $voteRepository;
 
@@ -35,14 +35,14 @@ class Index extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Date                               $date
-     * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository $pollRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\VoteRepository $voteRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository $voteRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
-        Polls\Model\PollRepository $pollRepository,
-        Polls\Model\VoteRepository $voteRepository)
+        Polls\Model\Repository\PollRepository $pollRepository,
+        Polls\Model\Repository\VoteRepository $voteRepository)
     {
         parent::__construct($context);
 

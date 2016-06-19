@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Permissions;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
      */
     protected $resourceRepository;
     /**
@@ -28,12 +28,12 @@ class Delete extends Core\Controller\AbstractAdminAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext              $context
-     * @param \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository $resourceRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache                    $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Permissions\Model\ResourceRepository $resourceRepository,
+        Permissions\Model\Repository\ResourceRepository $resourceRepository,
         Permissions\Cache $permissionsCache
     ) {
         parent::__construct($context);

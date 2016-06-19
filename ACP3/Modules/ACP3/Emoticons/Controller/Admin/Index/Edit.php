@@ -20,7 +20,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository
+     * @var \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository
      */
     protected $emoticonRepository;
     /**
@@ -37,14 +37,14 @@ class Edit extends Core\Controller\AbstractAdminAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                  $context
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository       $emoticonRepository
+     * @param \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository       $emoticonRepository
      * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Emoticons\Cache                          $emoticonsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Emoticons\Model\EmoticonRepository $emoticonRepository,
+        Emoticons\Model\Repository\EmoticonRepository $emoticonRepository,
         Emoticons\Validation\AdminFormValidation $adminFormValidation,
         Emoticons\Cache $emoticonsCache)
     {

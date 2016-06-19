@@ -20,7 +20,7 @@ class Order extends Core\Controller\AbstractAdminAction
      */
     protected $nestedSet;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\RoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
      */
     protected $roleRepository;
     /**
@@ -33,13 +33,13 @@ class Order extends Core\Controller\AbstractAdminAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext          $context
      * @param \ACP3\Core\NestedSet                                $nestedSet
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache                $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\NestedSet $nestedSet,
-        Permissions\Model\RoleRepository $roleRepository,
+        Permissions\Model\Repository\RoleRepository $roleRepository,
         Permissions\Cache $permissionsCache
     ) {
         parent::__construct($context);
@@ -62,7 +62,7 @@ class Order extends Core\Controller\AbstractAdminAction
             $this->nestedSet->sort(
                 $id,
                 $action,
-                Permissions\Model\RoleRepository::TABLE_NAME
+                Permissions\Model\Repository\RoleRepository::TABLE_NAME
             );
 
             $this->permissionsCache->getCacheDriver()->deleteAll();

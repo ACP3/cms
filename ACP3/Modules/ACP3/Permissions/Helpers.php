@@ -1,8 +1,8 @@
 <?php
 namespace ACP3\Modules\ACP3\Permissions;
 
-use ACP3\Modules\ACP3\Permissions\Model\RoleRepository;
-use ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository;
 
 /**
  * Class Helpers
@@ -11,17 +11,17 @@ use ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository;
 class Helpers
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\RoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
      */
     protected $roleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository
      */
     protected $userRoleRepository;
 
     /**
-     * @param \ACP3\Modules\ACP3\Permissions\Model\RoleRepository     $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\UserRoleRepository $userRoleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository     $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository $userRoleRepository
      */
     public function __construct(
         RoleRepository $roleRepository,

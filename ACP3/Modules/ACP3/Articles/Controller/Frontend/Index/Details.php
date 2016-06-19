@@ -26,7 +26,7 @@ class Details extends Core\Controller\AbstractFrontendAction
      */
     protected $pageBreaksHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\ArticleRepository
+     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
     protected $articleRepository;
     /**
@@ -40,14 +40,14 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext       $context
      * @param \ACP3\Core\Date                                     $date
      * @param \ACP3\Core\Helpers\PageBreaks                       $pageBreaksHelper
-     * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository $articleRepository
+     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
      * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Core\Helpers\PageBreaks $pageBreaksHelper,
-        Articles\Model\ArticleRepository $articleRepository,
+        Articles\Model\Repository\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache)
     {
         parent::__construct($context);

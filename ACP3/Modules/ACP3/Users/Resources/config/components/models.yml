@@ -1,10 +1,22 @@
 services:
+  users.model.user_model:
+    class: ACP3\Modules\ACP3\Users\Model\UserModel
+    arguments:
+      - '@core.http.request'
+      - '@core.http.response'
+      - '@core.environment.application_path'
+      - '@core.authentication'
+      - '@core.session'
+      - '@core.helpers.secure'
+      - '@core.config'
+      - '@users.model.userrepository'
+
   users.model.data_grid_repository:
-    class: ACP3\Modules\ACP3\Users\Model\DataGridRepository
+    class: ACP3\Modules\ACP3\Users\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
 
   users.model.userrepository:
-    class: ACP3\Modules\ACP3\Users\Model\UserRepository
+    class: ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
     arguments:
       - '@core.db'

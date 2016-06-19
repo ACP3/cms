@@ -21,7 +21,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository
+     * @var \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository
      */
     protected $guestbookRepository;
     /**
@@ -43,14 +43,14 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @param \ACP3\Core\Controller\Context\AdminContext                  $context
      * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookRepository      $guestbookRepository
+     * @param \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository      $guestbookRepository
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Guestbook\Model\GuestbookRepository $guestbookRepository,
+        Guestbook\Model\Repository\GuestbookRepository $guestbookRepository,
         Guestbook\Validation\AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);

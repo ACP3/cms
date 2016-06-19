@@ -23,7 +23,7 @@ class Edit extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\PollRepository
+     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
      */
     protected $pollRepository;
     /**
@@ -36,9 +36,9 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Date                                         $date
      * @param \ACP3\Core\Helpers\Forms                                $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Polls\Model\PollRepository           $pollRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\AnswerRepository         $answerRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\VoteRepository           $voteRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository           $pollRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository         $answerRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository           $voteRepository
      * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation $pollsValidator
      */
     public function __construct(
@@ -46,9 +46,9 @@ class Edit extends AbstractFormAction
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Polls\Model\PollRepository $pollRepository,
-        Polls\Model\AnswerRepository $answerRepository,
-        Polls\Model\VoteRepository $voteRepository,
+        Polls\Model\Repository\PollRepository $pollRepository,
+        Polls\Model\Repository\AnswerRepository $answerRepository,
+        Polls\Model\Repository\VoteRepository $voteRepository,
         Polls\Validation\AdminFormValidation $pollsValidator
     ) {
         parent::__construct($context, $formsHelper, $answerRepository, $voteRepository);

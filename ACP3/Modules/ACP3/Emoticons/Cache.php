@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Emoticons;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository;
+use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository;
 
 /**
  * Class Cache
@@ -21,14 +21,14 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     protected $appPath;
     /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository
+     * @var \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository
      */
     protected $emoticonRepository;
 
     /**
      * @param \ACP3\Core\Cache                                      $cache
      * @param \ACP3\Core\Environment\ApplicationPath                $appPath
-     * @param \ACP3\Modules\ACP3\Emoticons\Model\EmoticonRepository $emoticonRepository
+     * @param \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository $emoticonRepository
      */
     public function __construct(
         Core\Cache $cache,

@@ -22,7 +22,7 @@ class Pics extends AbstractAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
      */
     protected $galleryRepository;
     /**
@@ -35,13 +35,13 @@ class Pics extends AbstractAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext      $context
      * @param \ACP3\Core\Date                                    $date
-     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository $galleryRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
      * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
-        Gallery\Model\GalleryRepository $galleryRepository,
+        Gallery\Model\Repository\GalleryRepository $galleryRepository,
         Gallery\Cache $galleryCache)
     {
         parent::__construct($context);

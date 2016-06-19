@@ -18,7 +18,7 @@ use ACP3\Modules\ACP3\Files;
 class Index extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\DataGridRepository
+     * @var \ACP3\Modules\ACP3\Files\Model\Repository\DataGridRepository
      */
     protected $dataGridRepository;
 
@@ -26,11 +26,11 @@ class Index extends Core\Controller\AbstractAdminAction
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext        $context
-     * @param \ACP3\Modules\ACP3\Files\Model\DataGridRepository $dataGridRepository
+     * @param \ACP3\Modules\ACP3\Files\Model\Repository\DataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Files\Model\DataGridRepository $dataGridRepository)
+        Files\Model\Repository\DataGridRepository $dataGridRepository)
     {
         parent::__construct($context);
 

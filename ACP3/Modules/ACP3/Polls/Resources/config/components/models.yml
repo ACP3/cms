@@ -1,20 +1,20 @@
 services:
   polls.model.data_grid_repository:
-    class: ACP3\Modules\ACP3\Polls\Model\DataGridRepository
+    class: ACP3\Modules\ACP3\Polls\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
 
   polls.model.answerrepository:
-    class: ACP3\Modules\ACP3\Polls\Model\AnswerRepository
+    class: ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository
     arguments:
       - '@core.db'
 
   polls.model.pollrepository:
-    class: ACP3\Modules\ACP3\Polls\Model\PollRepository
+    class: ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
     arguments:
       - '@core.db'
 
   polls.model.voterepository:
-    class: ACP3\Modules\ACP3\Polls\Model\VoteRepository
+    class: ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository
     arguments:
       - '@core.db'

@@ -18,23 +18,23 @@ class SchemaHelper
      */
     protected $db;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
+     * @var \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
      */
     protected $systemModuleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\SettingsRepository
+     * @var \ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository
      */
     protected $systemSettingsRepository;
 
     /**
      * @param \ACP3\Core\Database\Connection                     $db
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository   $systemModuleRepository
-     * @param \ACP3\Modules\ACP3\System\Model\SettingsRepository $systemSettingsRepository
+     * @param \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository   $systemModuleRepository
+     * @param \ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository $systemSettingsRepository
      */
     public function __construct(
         Core\Database\Connection $db,
-        System\Model\ModuleRepository $systemModuleRepository,
-        System\Model\SettingsRepository $systemSettingsRepository
+        System\Model\Repository\ModuleRepository $systemModuleRepository,
+        System\Model\Repository\SettingsRepository $systemSettingsRepository
     ) {
         $this->db = $db;
         $this->systemModuleRepository = $systemModuleRepository;
@@ -58,7 +58,7 @@ class SchemaHelper
     }
 
     /**
-     * @return \ACP3\Modules\ACP3\System\Model\ModuleRepository
+     * @return \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
      */
     public function getSystemModuleRepository()
     {
@@ -124,6 +124,6 @@ class SchemaHelper
      */
     public function moduleIsInstalled($moduleName)
     {
-        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->db->getPrefixedTableName(System\Model\ModuleRepository::TABLE_NAME)} WHERE `name` = ?", [$moduleName]) == 1;
+        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->db->getPrefixedTableName(System\Model\Repository\ModuleRepository::TABLE_NAME)} WHERE `name` = ?", [$moduleName]) == 1;
     }
 }

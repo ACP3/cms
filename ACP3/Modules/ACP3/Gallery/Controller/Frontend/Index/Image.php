@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Gallery;
 class Image extends AbstractAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     protected $pictureRepository;
 
@@ -24,11 +24,11 @@ class Image extends AbstractAction
      * Image constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext      $context
-     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Gallery\Model\PictureRepository $pictureRepository)
+        Gallery\Model\Repository\PictureRepository $pictureRepository)
     {
         parent::__construct($context);
 

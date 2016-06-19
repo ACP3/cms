@@ -26,20 +26,20 @@ class Single extends Core\Controller\AbstractWidgetAction
      */
     protected $articlesCache;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\ArticleRepository
+     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
     protected $articleRepository;
 
     /**
      * @param \ACP3\Core\Controller\Context\WidgetContext         $context
      * @param \ACP3\Core\Date                                     $date
-     * @param \ACP3\Modules\ACP3\Articles\Model\ArticleRepository $articleRepository
+     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
      * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
-        Articles\Model\ArticleRepository $articleRepository,
+        Articles\Model\Repository\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache)
     {
         parent::__construct($context);

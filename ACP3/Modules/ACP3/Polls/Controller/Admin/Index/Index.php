@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Polls;
 class Index extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\DataGridRepository
+     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\DataGridRepository
      */
     protected $dataGridRepository;
 
@@ -24,11 +24,11 @@ class Index extends Core\Controller\AbstractAdminAction
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext        $context
-     * @param \ACP3\Modules\ACP3\Polls\Model\DataGridRepository $dataGridRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\DataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Polls\Model\DataGridRepository $dataGridRepository
+        Polls\Model\Repository\DataGridRepository $dataGridRepository
     ) {
         parent::__construct($context);
 

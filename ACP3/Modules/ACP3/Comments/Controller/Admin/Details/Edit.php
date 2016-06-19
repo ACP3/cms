@@ -18,7 +18,7 @@ use ACP3\Modules\ACP3\System;
 class Edit extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository
+     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
      */
     protected $commentRepository;
     /**
@@ -26,7 +26,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected $adminFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
+     * @var \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
      */
     protected $systemModuleRepository;
     /**
@@ -42,16 +42,16 @@ class Edit extends Core\Controller\AbstractAdminAction
      * Details constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                 $context
-     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository        $commentRepository
+     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository        $commentRepository
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository           $systemModuleRepository
+     * @param \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository           $systemModuleRepository
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Comments\Model\CommentRepository $commentRepository,
+        Comments\Model\Repository\CommentRepository $commentRepository,
         Comments\Validation\AdminFormValidation $adminFormValidation,
-        System\Model\ModuleRepository $systemModuleRepository,
+        System\Model\Repository\ModuleRepository $systemModuleRepository,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);

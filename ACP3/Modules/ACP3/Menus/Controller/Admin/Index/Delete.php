@@ -20,7 +20,7 @@ class Delete extends Core\Controller\AbstractAdminAction
      */
     protected $nestedSet;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
      */
     protected $menuRepository;
     /**
@@ -28,7 +28,7 @@ class Delete extends Core\Controller\AbstractAdminAction
      */
     protected $menusCache;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
      */
     protected $menuItemRepository;
 
@@ -37,15 +37,15 @@ class Delete extends Core\Controller\AbstractAdminAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext        $context
      * @param \ACP3\Core\NestedSet                              $nestedSet
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository     $menuRepository
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository     $menuRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      * @param \ACP3\Modules\ACP3\Menus\Cache                    $menusCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\NestedSet $nestedSet,
-        Menus\Model\MenuRepository $menuRepository,
-        Menus\Model\MenuItemRepository $menuItemRepository,
+        Menus\Model\Repository\MenuRepository $menuRepository,
+        Menus\Model\Repository\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache
     ) {
         parent::__construct($context);
@@ -76,7 +76,7 @@ class Delete extends Core\Controller\AbstractAdminAction
                         foreach ($items as $row) {
                             $this->nestedSet->deleteNode(
                                 $row['id'],
-                                Menus\Model\MenuItemRepository::TABLE_NAME,
+                                Menus\Model\Repository\MenuItemRepository::TABLE_NAME,
                                 true
                             );
                         }

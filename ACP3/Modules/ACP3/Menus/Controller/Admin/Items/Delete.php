@@ -22,7 +22,7 @@ class Delete extends Core\Controller\AbstractAdminAction
      */
     protected $nestedSet;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
      */
     protected $menuItemRepository;
     /**
@@ -39,13 +39,13 @@ class Delete extends Core\Controller\AbstractAdminAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext        $context
      * @param \ACP3\Core\NestedSet                              $nestedSet
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      * @param \ACP3\Modules\ACP3\Menus\Cache                    $menusCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\NestedSet $nestedSet,
-        Menus\Model\MenuItemRepository $menuItemRepository,
+        Menus\Model\Repository\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache
     ) {
         parent::__construct($context);
@@ -80,7 +80,7 @@ class Delete extends Core\Controller\AbstractAdminAction
                 foreach ($items as $item) {
                     // URI-Alias löschen
                     $itemUri = $this->menuItemRepository->getMenuItemUriById($item);
-                    $bool = $this->nestedSet->deleteNode($item, Menus\Model\MenuItemRepository::TABLE_NAME, true);
+                    $bool = $this->nestedSet->deleteNode($item, Menus\Model\Repository\MenuItemRepository::TABLE_NAME, true);
 
                     if ($this->uriAliasManager) {
                         $this->uriAliasManager->deleteUriAlias($itemUri);

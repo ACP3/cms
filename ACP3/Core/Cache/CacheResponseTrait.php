@@ -7,7 +7,7 @@
 namespace ACP3\Core\Cache;
 
 use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Core\User;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 trait CacheResponseTrait
 {
     /**
-     * @return User
+     * @return UserModel
      */
     abstract protected function getUser();
 

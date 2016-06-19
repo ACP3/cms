@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Permissions;
 class Index extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
      */
     protected $resourceRepository;
 
@@ -24,11 +24,11 @@ class Index extends Core\Controller\AbstractAdminAction
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext              $context
-     * @param \ACP3\Modules\ACP3\Permissions\Model\ResourceRepository $resourceRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Permissions\Model\ResourceRepository $resourceRepository
+        Permissions\Model\Repository\ResourceRepository $resourceRepository
     ) {
         parent::__construct($context);
 

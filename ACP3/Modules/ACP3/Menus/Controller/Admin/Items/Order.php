@@ -21,7 +21,7 @@ class Order extends Core\Controller\AbstractAdminAction
      */
     protected $nestedSet;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
      */
     protected $menuItemRepository;
     /**
@@ -34,13 +34,13 @@ class Order extends Core\Controller\AbstractAdminAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext        $context
      * @param \ACP3\Core\NestedSet                              $nestedSet
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      * @param \ACP3\Modules\ACP3\Menus\Cache                    $menusCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\NestedSet $nestedSet,
-        Menus\Model\MenuItemRepository $menuItemRepository,
+        Menus\Model\Repository\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache
     ) {
         parent::__construct($context);
@@ -63,7 +63,7 @@ class Order extends Core\Controller\AbstractAdminAction
             $this->nestedSet->sort(
                 $id,
                 $action,
-                Menus\Model\MenuItemRepository::TABLE_NAME,
+                Menus\Model\Repository\MenuItemRepository::TABLE_NAME,
                 true
             );
 

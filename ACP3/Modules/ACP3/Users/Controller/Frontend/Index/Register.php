@@ -30,7 +30,7 @@ class Register extends Core\Controller\AbstractFrontendAction
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
     protected $userRepository;
     /**
@@ -53,7 +53,7 @@ class Register extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Date                                                $date
      * @param \ACP3\Core\Helpers\FormToken                                   $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                                      $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\UserRepository                  $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository                  $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation $registrationFormValidation
      * @param \ACP3\Modules\ACP3\Permissions\Helpers                         $permissionsHelpers
      * @param \ACP3\Core\Helpers\SendEmail                                   $sendEmail
@@ -63,7 +63,7 @@ class Register extends Core\Controller\AbstractFrontendAction
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
-        Users\Model\UserRepository $userRepository,
+        Users\Model\Repository\UserRepository $userRepository,
         Users\Validation\RegistrationFormValidation $registrationFormValidation,
         Permissions\Helpers $permissionsHelpers,
         Core\Helpers\SendEmail $sendEmail
@@ -144,7 +144,7 @@ class Register extends Core\Controller\AbstractFrontendAction
                 );
                 $mailIsSent = $this->sendEmail->execute('', $formData['mail'], $settings['mail'], $subject, $body);
 
-                $salt = $this->secureHelper->salt(Core\User::SALT_LENGTH);
+                $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
                 $insertValues = [
                     'id' => '',
                     'nickname' => $this->get('core.helpers.secure')->strEncode($formData['nickname']),

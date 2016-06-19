@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Newsletter;
 class Index extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\AccountDataGridRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountDataGridRepository
      */
     protected $dataGridRepository;
 
@@ -24,11 +24,11 @@ class Index extends Core\Controller\AbstractAdminAction
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                    $context
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountDataGridRepository $dataGridRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountDataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Newsletter\Model\AccountDataGridRepository $dataGridRepository)
+        Newsletter\Model\Repository\AccountDataGridRepository $dataGridRepository)
     {
         parent::__construct($context);
 

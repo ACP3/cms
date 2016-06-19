@@ -37,7 +37,7 @@ class Edit extends AbstractFormAction
      */
     protected $menuItemFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
      */
     protected $menuItemRepository;
     /**
@@ -53,7 +53,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\NestedSet                                       $nestedSet
      * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuItemRepository          $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository          $menuItemRepository
      * @param \ACP3\Modules\ACP3\Menus\Cache                             $menusCache
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields        $menuItemFormFieldsHelper
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
@@ -64,7 +64,7 @@ class Edit extends AbstractFormAction
         Core\NestedSet $nestedSet,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Menus\Model\MenuItemRepository $menuItemRepository,
+        Menus\Model\Repository\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache,
         Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper,
         Menus\Validation\MenuItemFormValidation $menuItemFormValidation
@@ -171,7 +171,7 @@ class Edit extends AbstractFormAction
                     (int)$formData['parent_id'],
                     (int)$formData['block_id'],
                     $updateValues,
-                    Menus\Model\MenuItemRepository::TABLE_NAME,
+                    Menus\Model\Repository\MenuItemRepository::TABLE_NAME,
                     true
                 );
 

@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Newsletter\Model\AccountRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
 
 /**
  * Class AccountExistsValidationRule
@@ -11,14 +11,14 @@ use ACP3\Modules\ACP3\Newsletter\Model\AccountRepository;
 class AccountExistsValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
      */
     protected $accountRepository;
 
     /**
      * AccountExistsValidationRule constructor.
      *
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\AccountRepository $accountRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository $accountRepository
      */
     public function __construct(AccountRepository $accountRepository)
     {

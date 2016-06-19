@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Files;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Files\Model\FilesRepository;
+use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
 /**
  * Class Cache
@@ -13,13 +13,13 @@ class Cache extends Core\Modules\AbstractCacheStorage
     const CACHE_ID = 'details_id_';
 
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository
+     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
      */
     protected $filesRepository;
 
     /**
      * @param \ACP3\Core\Cache                               $cache
-     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
+     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
      */
     public function __construct(
         Core\Cache $cache,

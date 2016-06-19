@@ -22,19 +22,19 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository
+     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
      */
     protected $filesRepository;
 
     /**
      * @param \ACP3\Core\Controller\Context\WidgetContext $context
      * @param \ACP3\Core\Date $date
-     * @param \ACP3\Modules\ACP3\Files\Model\FilesRepository $filesRepository
+     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
-        Files\Model\FilesRepository $filesRepository
+        Files\Model\Repository\FilesRepository $filesRepository
     ) {
         parent::__construct($context);
 

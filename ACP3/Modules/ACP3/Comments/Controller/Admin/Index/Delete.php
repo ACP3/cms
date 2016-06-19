@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Comments;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository
+     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
      */
     protected $commentRepository;
 
@@ -24,11 +24,11 @@ class Delete extends Core\Controller\AbstractAdminAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext          $context
-     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
+     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Comments\Model\CommentRepository $commentRepository)
+        Comments\Model\Repository\CommentRepository $commentRepository)
     {
         parent::__construct($context);
 

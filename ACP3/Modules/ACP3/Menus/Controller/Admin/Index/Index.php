@@ -20,7 +20,7 @@ class Index extends Core\Controller\AbstractAdminAction
      */
     protected $menusHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
      */
     protected $menuRepository;
 
@@ -29,12 +29,12 @@ class Index extends Core\Controller\AbstractAdminAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext     $context
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList $menusHelpers
-     * @param \ACP3\Modules\ACP3\Menus\Model\MenuRepository  $menuRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository  $menuRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Menus\Helpers\MenuItemsList $menusHelpers,
-        Menus\Model\MenuRepository $menuRepository
+        Menus\Model\Repository\MenuRepository $menuRepository
     ) {
         parent::__construct($context);
 

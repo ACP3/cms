@@ -8,7 +8,7 @@ services:
   captcha.helpers:
     class: ACP3\Modules\ACP3\Captcha\Helpers
     arguments:
-      - '@core.user'
+      - '@users.model.user_model'
       - '@core.http.request'
       - '@core.router'
       - '@core.session'

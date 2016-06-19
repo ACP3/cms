@@ -22,7 +22,7 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\FilesRepository
+     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
      */
     protected $filesRepository;
     /**

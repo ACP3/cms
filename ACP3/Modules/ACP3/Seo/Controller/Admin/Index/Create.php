@@ -24,7 +24,7 @@ class Create extends Core\Controller\AbstractAdminAction
      */
     protected $metaFormFieldsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
+     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
      */
     protected $seoRepository;
     /**
@@ -43,7 +43,7 @@ class Create extends Core\Controller\AbstractAdminAction
      * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields          $metaFormFieldsHelper
      * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager         $uriAliasManager
-     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository            $seoRepository
+     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository            $seoRepository
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
@@ -51,7 +51,7 @@ class Create extends Core\Controller\AbstractAdminAction
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Helper\MetaFormFields $metaFormFieldsHelper,
         Seo\Helper\UriAliasManager $uriAliasManager,
-        Seo\Model\SeoRepository $seoRepository,
+        Seo\Model\Repository\SeoRepository $seoRepository,
         Seo\Validation\AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);

@@ -11,7 +11,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\XML;
-use ACP3\Modules\ACP3\System\Model\ModuleRepository;
+use ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository;
 
 /**
  * Class ModuleInfoCache
@@ -40,7 +40,7 @@ class ModuleInfoCache
      */
     protected $xml;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\ModuleRepository
+     * @var \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
      */
     protected $systemModuleRepository;
 
@@ -50,7 +50,7 @@ class ModuleInfoCache
      * @param \ACP3\Core\I18n\Translator                       $translator
      * @param \ACP3\Core\Modules\Vendor                        $vendors
      * @param \ACP3\Core\XML                                   $xml
-     * @param \ACP3\Modules\ACP3\System\Model\ModuleRepository $systemModuleRepository
+     * @param \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository $systemModuleRepository
      */
     public function __construct(
         Cache $cache,

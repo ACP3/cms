@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Seo\Core\Http;
 
 use ACP3\Core\Config;
-use ACP3\Modules\ACP3\Seo\Model\SeoRepository;
+use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 /**
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 class RequestFactory extends \ACP3\Core\Http\RequestFactory
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\SeoRepository
+     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
      */
     protected $seoRepository;
 
@@ -26,7 +26,7 @@ class RequestFactory extends \ACP3\Core\Http\RequestFactory
      *
      * @param \ACP3\Core\Config $config
      * @param SymfonyRequest $symfonyRequest
-     * @param \ACP3\Modules\ACP3\Seo\Model\SeoRepository $seoRepository
+     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(Config $config, SymfonyRequest $symfonyRequest, SeoRepository $seoRepository)
     {

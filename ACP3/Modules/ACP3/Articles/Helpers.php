@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Articles;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Articles\Model\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
 
 /**
  * Class Helpers

@@ -26,7 +26,7 @@ class Edit extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
      */
     protected $galleryRepository;
     /**
@@ -34,7 +34,7 @@ class Edit extends AbstractFormAction
      */
     protected $galleryFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     protected $pictureRepository;
     /**
@@ -52,16 +52,16 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Controller\Context\AdminContext                  $context
      * @param \ACP3\Core\Date                                             $date
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Model\GalleryRepository          $galleryRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Model\PictureRepository          $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository          $galleryRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository          $pictureRepository
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
-        Gallery\Model\GalleryRepository $galleryRepository,
-        Gallery\Model\PictureRepository $pictureRepository,
+        Gallery\Model\Repository\GalleryRepository $galleryRepository,
+        Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation
     ) {
         parent::__construct($context);

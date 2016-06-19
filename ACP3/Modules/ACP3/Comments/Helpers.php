@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Comments;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Comments\Model\CommentRepository;
+use ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository;
 
 /**
  * Class Helpers
@@ -15,13 +15,13 @@ class Helpers
      */
     protected $modules;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\CommentRepository
+     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
      */
     protected $commentRepository;
 
     /**
      * @param \ACP3\Core\Modules                                  $modules
-     * @param \ACP3\Modules\ACP3\Comments\Model\CommentRepository $commentRepository
+     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
      */
     public function __construct(
         Core\Modules $modules,
