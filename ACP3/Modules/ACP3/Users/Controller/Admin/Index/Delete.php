@@ -17,6 +17,10 @@ use ACP3\Modules\ACP3\Users;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
+     * @var Users\Model\AuthenticationModel
+     */
+    protected $authenticationModel;
+    /**
      * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
     protected $userRepository;
@@ -24,15 +28,18 @@ class Delete extends Core\Controller\AbstractAdminAction
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext    $context
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param Users\Model\AuthenticationModel $authenticationModel
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Users\Model\AuthenticationModel $authenticationModel,
         Users\Model\Repository\UserRepository $userRepository)
     {
         parent::__construct($context);
 
+        $this->authenticationModel = $authenticationModel;
         $this->userRepository = $userRepository;
     }
 
@@ -55,7 +62,7 @@ class Delete extends Core\Controller\AbstractAdminAction
                     } else {
                         // Falls sich der User selbst gelöscht hat, diesen auch gleich abmelden
                         if ($item == $this->user->getUserId()) {
-                            $this->user->logout();
+                            $this->authenticationModel->logout();
                             $selfDelete = true;
                         }
                         $bool = $this->userRepository->delete($item);

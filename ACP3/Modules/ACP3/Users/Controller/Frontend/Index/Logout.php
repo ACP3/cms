@@ -18,13 +18,32 @@ use ACP3\Modules\ACP3\Users;
 class Logout extends Core\Controller\AbstractFrontendAction
 {
     /**
+     * @var Users\Model\AuthenticationModel
+     */
+    protected $authenticationModel;
+
+    /**
+     * Login constructor.
+     * @param Core\Controller\Context\FrontendContext $context
+     * @param Users\Model\AuthenticationModel $authenticationModel
+     */
+    public function __construct(
+        Core\Controller\Context\FrontendContext $context,
+        Users\Model\AuthenticationModel $authenticationModel)
+    {
+        parent::__construct($context);
+
+        $this->authenticationModel = $authenticationModel;
+    }
+
+    /**
      * @param string $last
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function execute($last = '')
     {
-        $this->user->logout();
+        $this->authenticationModel->logout();
 
         if (!empty($last)) {
             $lastPage = base64_decode($last);

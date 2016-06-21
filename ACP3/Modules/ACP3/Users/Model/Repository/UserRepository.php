@@ -23,7 +23,7 @@ class UserRepository extends Core\Model\AbstractRepository
      */
     public function resultExists($userId)
     {
-        $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id';
+        $query = "SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id";
         return ((int)$this->db->fetchColumn($query, ['id' => $userId]) > 0);
     }
 
@@ -31,7 +31,7 @@ class UserRepository extends Core\Model\AbstractRepository
      * Überprüft, ob der übergebene Username bereits existiert
      *
      * @param string $nickname
-     * @param int    $userId
+     * @param int $userId
      *
      * @return boolean
      */
@@ -50,7 +50,7 @@ class UserRepository extends Core\Model\AbstractRepository
      * Überprüft, ob die übergebene E-Mail-Adresse bereits existiert
      *
      * @param string $mail
-     * @param int    $userId
+     * @param int $userId
      *
      * @return boolean
      */

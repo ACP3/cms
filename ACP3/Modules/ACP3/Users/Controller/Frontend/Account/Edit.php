@@ -134,11 +134,11 @@ class Edit extends AbstractAction
                 $bool = $this->userRepository->update($updateValues, $this->user->getUserId());
 
                 $user = $this->userRepository->getOneById($this->user->getUserId());
-                $this->user->setRememberMeCookie(
+                $cookie = $this->user->setRememberMeCookie(
                     $this->user->getUserId(),
-                    $user['remember_me_token'],
-                    Users\Model\UserModel::REMEMBER_ME_COOKIE_LIFETIME
+                    $user['remember_me_token']
                 );
+                $this->response->headers->setCookie($cookie);
 
                 Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 

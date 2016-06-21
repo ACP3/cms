@@ -10,6 +10,7 @@ services:
     arguments:
       - '@core.http.request'
       - '@core.session'
+      - '@users.model.authentication_model'
       - '@users.model.userrepository'
 
   users.helpers.forms:

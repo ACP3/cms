@@ -15,6 +15,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
+      - '@users.model.authentication_model'
       - '@users.model.userrepository'
 
   users.controller.admin.index.edit:
@@ -87,11 +88,15 @@ services:
 
   users.controller.frontend.index.login:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Login
-    parent: core.controller.frontend
+    arguments:
+      - '@core.context.frontend'
+      - '@users.model.authentication_model'
 
   users.controller.frontend.index.logout:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Logout
-    parent: core.controller.frontend
+    arguments:
+      - '@core.context.frontend'
+      - '@users.model.authentication_model'
 
   users.controller.frontend.index.register:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Register

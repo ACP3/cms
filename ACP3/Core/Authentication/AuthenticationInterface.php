@@ -8,7 +8,7 @@ namespace ACP3\Core\Authentication;
 interface AuthenticationInterface
 {
     /**
-     * @return array|int
+     * @return void
      */
     public function authenticate();
 }
