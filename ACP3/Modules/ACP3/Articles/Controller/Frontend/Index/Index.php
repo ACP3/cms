@@ -56,7 +56,11 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         $time = $this->date->getCurrentDateTime();
-        $articles = $this->articleRepository->getAll($time, POS, $this->user->getEntriesPerPage());
+        $articles = $this->articleRepository->getAll(
+            $time, 
+            $this->pagination->getResultsStartOffset(), 
+            $this->user->getEntriesPerPage()
+        );
         $this->pagination->setTotalResults($this->articleRepository->countAll($time));
 
         return [

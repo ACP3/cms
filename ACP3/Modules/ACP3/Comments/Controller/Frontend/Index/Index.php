@@ -56,7 +56,7 @@ class Index extends AbstractFrontendAction
         $comments = $this->commentRepository->getAllByModule(
             $this->modules->getModuleId($module),
             $entryId,
-            POS,
+            $this->pagination->getResultsStartOffset(),
             $this->user->getEntriesPerPage()
         );
         $cComments = count($comments);

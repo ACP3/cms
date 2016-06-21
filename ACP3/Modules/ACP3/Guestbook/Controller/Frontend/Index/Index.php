@@ -53,7 +53,11 @@ class Index extends AbstractAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
-        $guestbook = $this->guestbookRepository->getAll($this->guestbookSettings['notify'], POS, $this->user->getEntriesPerPage());
+        $guestbook = $this->guestbookRepository->getAll(
+            $this->guestbookSettings['notify'],
+            $this->pagination->getResultsStartOffset(),
+            $this->user->getEntriesPerPage()
+        );
         $cGuestbook = count($guestbook);
 
         if ($cGuestbook > 0) {

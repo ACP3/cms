@@ -52,7 +52,11 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->pagination->setTotalResults($this->newsletterRepository->countAll(1));
 
         return [
-            'newsletters' => $this->newsletterRepository->getAll(1, POS, $this->user->getEntriesPerPage()),
+            'newsletters' => $this->newsletterRepository->getAll(
+                Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,
+                $this->pagination->getResultsStartOffset(),
+                $this->user->getEntriesPerPage()
+            ),
             'pagination' => $this->pagination->render()
         ];
     }

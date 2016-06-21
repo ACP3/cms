@@ -73,11 +73,11 @@ class Pagination
     /**
      * Pagination constructor.
      *
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                  $user
-     * @param \ACP3\Core\Breadcrumb\Title      $title
-     * @param \ACP3\Core\I18n\Translator       $translator
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\RouterInterface       $router
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel  $user
+     * @param \ACP3\Core\Breadcrumb\Title               $title
+     * @param \ACP3\Core\I18n\Translator                $translator
+     * @param \ACP3\Core\Http\RequestInterface          $request
+     * @param \ACP3\Core\RouterInterface                $router
      */
     public function __construct(
         UserModel $user,
@@ -141,6 +141,14 @@ class Pagination
     public function setShowPreviousNext($showPreviousNext)
     {
         $this->showPreviousNext = (int)$showPreviousNext;
+    }
+
+    /**
+     * @return int
+     */
+    public function getResultsStartOffset()
+    {
+        return (int)$this->request->getParameters()->get('page') >= 1 ? (int)($this->request->getParameters()->get('page') - 1) * $this->resultsPerPage : 0;
     }
 
     /**

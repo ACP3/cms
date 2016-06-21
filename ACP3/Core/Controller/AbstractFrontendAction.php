@@ -66,11 +66,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
             throw new Core\ACL\Exception\AccessForbiddenException();
         }
 
-        // Get the current resultset position
-        if (!defined('POS')) {
-            define('POS', (int)$this->request->getParameters()->get('page') >= 1 ? (int)($this->request->getParameters()->get('page') - 1) * $this->user->getEntriesPerPage() : 0);
-        }
-
         $this->view->assign([
             'PHP_SELF' => $this->appPath->getPhpSelf(),
             'REQUEST_URI' => $this->request->getServer()->get('REQUEST_URI'),

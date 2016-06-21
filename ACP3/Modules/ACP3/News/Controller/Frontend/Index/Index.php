@@ -135,9 +135,18 @@ class Index extends AbstractAction
     private function fetchNews($categoryId, $time)
     {
         if (!empty($categoryId)) {
-            $news = $this->newsRepository->getAllByCategoryId($categoryId, $time, POS, $this->user->getEntriesPerPage());
+            $news = $this->newsRepository->getAllByCategoryId(
+                $categoryId, 
+                $time,
+                $this->pagination->getResultsStartOffset(), 
+                $this->user->getEntriesPerPage()
+            );
         } else {
-            $news = $this->newsRepository->getAll($time, POS, $this->user->getEntriesPerPage());
+            $news = $this->newsRepository->getAll(
+                $time,
+                $this->pagination->getResultsStartOffset(), 
+                $this->user->getEntriesPerPage()
+            );
         }
 
         return $news;

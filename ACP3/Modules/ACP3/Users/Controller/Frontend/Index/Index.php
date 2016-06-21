@@ -51,7 +51,10 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
-        $users = $this->userRepository->getAll(POS, $this->user->getEntriesPerPage());
+        $users = $this->userRepository->getAll(
+            $this->pagination->getResultsStartOffset(), 
+            $this->user->getEntriesPerPage()
+        );
         $allUsers = $this->userRepository->countAll();
 
         $this->pagination->setTotalResults($allUsers);

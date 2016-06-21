@@ -63,7 +63,11 @@ class Index extends AbstractAction
         $this->pagination->setTotalResults($this->galleryRepository->countAll($time));
 
         return [
-            'galleries' => $this->galleryRepository->getAll($time, POS, $this->user->getEntriesPerPage()),
+            'galleries' => $this->galleryRepository->getAll(
+                $time,
+                $this->pagination->getResultsStartOffset(), 
+                $this->user->getEntriesPerPage()
+            ),
             'dateformat' => $this->settings['dateformat'],
             'pagination' => $this->pagination->render()
         ];
