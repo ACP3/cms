@@ -39,7 +39,7 @@ class Subscribe
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
      */
     protected $accountRepository;
     /**

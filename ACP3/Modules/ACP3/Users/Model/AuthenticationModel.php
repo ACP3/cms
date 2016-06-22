@@ -254,7 +254,7 @@ class AuthenticationModel
      * @param int $userId
      * @param string $password
      *
-     * @return bool|int
+     * @return array
      */
     private function migratePasswordHashToSha512($userId, $password)
     {

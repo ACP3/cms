@@ -35,6 +35,10 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Permissions\Helpers
      */
     protected $permissionsHelpers;
+    /**
+     * @var \ACP3\Modules\ACP3\Users\Model\AuthenticationModel
+     */
+    protected $authenticationModel;
 
     /**
      * Edit constructor.
@@ -43,6 +47,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param \ACP3\Core\Helpers\Forms $formsHelpers
+     * @param \ACP3\Modules\ACP3\Users\Model\AuthenticationModel $authenticationModel
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Permissions\Helpers $permissionsHelpers
@@ -52,6 +57,7 @@ class Edit extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Forms $formsHelpers,
+        Users\Model\AuthenticationModel $authenticationModel,
         Users\Model\Repository\UserRepository $userRepository,
         Users\Validation\AdminFormValidation $adminFormValidation,
         Permissions\Helpers $permissionsHelpers
@@ -60,6 +66,7 @@ class Edit extends AbstractFormAction
 
         $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
+        $this->authenticationModel = $authenticationModel;
         $this->userRepository = $userRepository;
         $this->adminFormValidation = $adminFormValidation;
         $this->permissionsHelpers = $permissionsHelpers;
@@ -177,11 +184,14 @@ class Edit extends AbstractFormAction
         });
     }
 
+    /**
+     * @param int $userId
+     */
     protected function updateCurrentlyLoggedInUserCookie($userId)
     {
         if ($userId == $this->user->getUserId() && $this->request->getCookies()->has(Users\Model\AuthenticationModel::AUTH_NAME)) {
             $user = $this->userRepository->getOneById($userId);
-            $cookie = $this->user->setRememberMeCookie(
+            $cookie = $this->authenticationModel->setRememberMeCookie(
                 $userId,
                 $user['remember_me_token']
             );

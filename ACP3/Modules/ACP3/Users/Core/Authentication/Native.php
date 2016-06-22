@@ -76,7 +76,7 @@ class Native implements AuthenticationInterface
     /**
      * @param int $userId
      * @param string $token
-     * @return array|null
+     * @return array|int
      * @throws AuthenticationException
      */
     protected function verifyCredentials($userId, $token)

@@ -35,15 +35,20 @@ class Edit extends AbstractAction
      * @var \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation
      */
     protected $accountFormValidation;
+    /**
+     * @var \ACP3\Modules\ACP3\Users\Model\AuthenticationModel
+     */
+    protected $authenticationModel;
 
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext             $context
-     * @param \ACP3\Core\Helpers\FormToken                              $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                                 $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms                    $userFormsHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository             $userRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms $userFormsHelper
+     * @param \ACP3\Modules\ACP3\Users\Model\AuthenticationModel $authenticationModel
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation $accountFormValidation
      */
     public function __construct(
@@ -51,6 +56,7 @@ class Edit extends AbstractAction
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Helpers\Forms $userFormsHelper,
+        Users\Model\AuthenticationModel $authenticationModel,
         Users\Model\Repository\UserRepository $userRepository,
         Users\Validation\AccountFormValidation $accountFormValidation
     ) {
@@ -59,6 +65,7 @@ class Edit extends AbstractAction
         $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
         $this->userFormsHelper = $userFormsHelper;
+        $this->authenticationModel = $authenticationModel;
         $this->userRepository = $userRepository;
         $this->accountFormValidation = $accountFormValidation;
     }
@@ -134,7 +141,7 @@ class Edit extends AbstractAction
                 $bool = $this->userRepository->update($updateValues, $this->user->getUserId());
 
                 $user = $this->userRepository->getOneById($this->user->getUserId());
-                $cookie = $this->user->setRememberMeCookie(
+                $cookie = $this->authenticationModel->setRememberMeCookie(
                     $this->user->getUserId(),
                     $user['remember_me_token']
                 );

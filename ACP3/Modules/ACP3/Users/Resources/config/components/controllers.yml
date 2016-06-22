@@ -25,6 +25,7 @@ services:
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
       - '@core.helpers.forms'
+      - '@users.model.authentication_model'
       - '@users.model.userrepository'
       - '@users.validator.admin'
       - '@permissions.helpers'
@@ -50,6 +51,7 @@ services:
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
       - '@users.helpers.forms'
+      - '@users.model.authentication_model'
       - '@users.model.userrepository'
       - '@users.validator.account'
 
