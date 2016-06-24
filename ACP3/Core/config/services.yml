@@ -60,7 +60,7 @@ services:
       - '@core.http.response'
       - '@core.environment.application_path'
       - '%core.environment%'
-    scope: prototype
+    shared: false
 
   core.logger:
     class: ACP3\Core\Logger
