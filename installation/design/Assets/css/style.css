@@ -56,16 +56,18 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.control-label.required {
-  position: relative;
-}
 .control-label.required:after {
   content: ' *';
+}
+.form-horizontal .control-label.required {
+  position: relative;
+}
+.form-horizontal .control-label.required:after {
   position: absolute;
   right: 5px;
 }
 @media (min-width: 768px) {
-  .control-label.required:after {
+  .form-horizontal .control-label.required:after {
     top: 7px;
   }
 }

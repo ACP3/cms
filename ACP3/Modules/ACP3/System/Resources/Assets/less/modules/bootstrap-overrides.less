@@ -9,15 +9,24 @@
   text-overflow: ellipsis;
 
   &.required {
-    position: relative;
-
     &:after {
       content: ' *';
-      position: absolute;
-      right: 5px;
+    }
+  }
+}
 
-      @media (min-width: 768px) {
-        top: 7px;
+.form-horizontal {
+  .control-label {
+    &.required {
+      position: relative;
+
+      &:after {
+        position: absolute;
+        right: 5px;
+
+        @media (min-width: 768px) {
+          top: 7px;
+        }
       }
     }
   }

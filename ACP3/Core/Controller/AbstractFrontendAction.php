@@ -71,7 +71,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
             'REQUEST_URI' => $this->request->getServer()->get('REQUEST_URI'),
             'ROOT_DIR' => $this->appPath->getWebRoot(),
             'HOST_NAME' => $this->request->getHttpHost(),
-            'ROOT_DIR_ABSOLUTE' => $this->request->getHttpHost() . $this->appPath->getWebRoot(),
+            'ROOT_DIR_ABSOLUTE' => $this->request->getScheme() . '://' . $this->request->getHttpHost() . $this->appPath->getWebRoot(),
             'DESIGN_PATH' => $this->appPath->getDesignPathWeb(),
             'DESIGN_PATH_ABSOLUTE' => $this->appPath->getDesignPathAbsolute(),
             'UA_IS_MOBILE' => $this->request->getUserAgent()->isMobileBrowser(),
