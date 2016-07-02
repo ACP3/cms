@@ -33,7 +33,7 @@
         <item key="drafts">Drafts</item>
         <item key="enable_registration">Enable registration of new users</item>
         <item key="forgot_pwd">Forgot password?</item>
-        <item key="forgot_pwd_error">While sending the E-mail with your new password an error has occured.</item>
+        <item key="forgot_pwd_error">While sending the E-mail with your new password an error has occurred.</item>
         <item key="forgot_pwd_description">Please enter your user name or E-mail address of your user account.</item>
         <item key="forgot_pwd_mail_subject">Password change on {title} ({host})</item>
         <item key="forgot_pwd_mail_message">Hello {name},
@@ -78,7 +78,7 @@
         <item key="realname">Real name</item>
         <item key="remember_me">Stay logged in</item>
         <item key="register">Register</item>
-        <item key="register_error">While creating the user account an error has occured.</item>
+        <item key="register_error">While creating the user account an error has occurred.</item>
         <item key="register_mail_subject">Your registration at {title} ({host})</item>
         <item key="register_mail_message">Hello {name},
 

@@ -23,7 +23,7 @@
         <item key="mod_description">This module is responsible for the contact form and the imprint.</item>
         <item key="powered_by">This website is powered by %ACP3%.</item>
         <item key="send_copy_to_sender">Send a copy of the message to me.</item>
-        <item key="send_mail_error">While sending the E-mail an error has occured.</item>
+        <item key="send_mail_error">While sending the E-mail an error has occurred.</item>
         <item key="send_mail_success">The E-mail has been successfully sent.</item>
         <item key="sender_body">You have left the following message on the site "%title%":
 

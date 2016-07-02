@@ -11,7 +11,7 @@
         <item key="action">Action</item>
         <item key="activate">Activate newsletter account</item>
         <item key="activate_account">Activate newsletter account</item>
-        <item key="activate_error">While activating the newsletter account an error has occured.</item>
+        <item key="activate_error">While activating the newsletter account an error has occurred.</item>
         <item key="activate_success">The newsletter account has been successfully activated and may now be used.</item>
         <item key="admin_accounts_activate">Activate newsletter account</item>
         <item key="admin_accounts_delete">Delete newsletter accounts</item>
@@ -23,7 +23,7 @@
         <item key="admin_index_settings">Settings</item>
         <item key="already_sent">Already sent</item>
         <item key="select_newsletter">To display a newsletter please select one from the above dropdown list.</item>
-        <item key="create_save_error">While sending respectively saving the newsletter an error has occured.</item>
+        <item key="create_save_error">While sending respectively saving the newsletter an error has occurred.</item>
         <item key="create_success">The newsletter has been successfully sent.</item>
         <item key="first_name">First name</item>
         <item key="frontend_archive_index">Archive</item>
@@ -51,7 +51,7 @@
         <item key="subject">Subject</item>
         <item key="subject_to_short">The subject should be at least 3 characters long.</item>
         <item key="subscribe">Subscribe</item>
-        <item key="subscribe_error">While creating your newsletter account an error has occured.</item>
+        <item key="subscribe_error">While creating your newsletter account an error has occurred.</item>
         <item key="subscribe_mail_body">You have successfully subscribed to the newsletter on the website {host}. To complete the registration process, please click on the link below. If you've received this e-mail mistakenly, please ignore or delete this e-mail.</item>
         <item key="subscribe_mail_subject">Welcome to the newsletter of %title%!</item>
         <item key="subscribe_newsletter">Subscribe the newsletter</item>
@@ -62,7 +62,7 @@
         <item key="text">Text</item>
         <item key="text_to_short">The text should be at least 3 characters long.</item>
         <item key="unsubscribe">Unsubscribe</item>
-        <item key="unsubscribe_error">While deleting the newsletter account an error has occured.</item>
+        <item key="unsubscribe_error">While deleting the newsletter account an error has occurred.</item>
         <item key="unsubscribe_success">The newsletter account has been successfully deleted.</item>
         <item key="use_web_view">Having problems displaying this newsletter? Click to open it in your Browser.</item>
     </keys>

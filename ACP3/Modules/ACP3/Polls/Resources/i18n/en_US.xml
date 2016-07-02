@@ -24,7 +24,7 @@
         <item key="one_vote">1 vote</item>
         <item key="per_cent">Per cent</item>
         <item key="poll">Poll</item>
-        <item key="poll_error">While saving your vote an error has occured.</item>
+        <item key="poll_error">While saving your vote an error has occurred.</item>
         <item key="poll_success">Your vote has been successfully counted.</item>
         <item key="polls">Polls</item>
         <item key="polls_archive">Polls archive</item>

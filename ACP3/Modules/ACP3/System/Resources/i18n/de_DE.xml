@@ -6,7 +6,6 @@
     </info>
     <keys>
         <item key="access_to_following_modules">Sie haben Zugriff auf folgende %d Module.</item>
-        <item key="acp">Administration Control Panel</item>
         <item key="acp3_not_up_to_date">Es ist eine neue Version des ACP3 verfügbar. Sie kann %link_start%hier%link_end%
             heruntergeladen werden.
         </item>

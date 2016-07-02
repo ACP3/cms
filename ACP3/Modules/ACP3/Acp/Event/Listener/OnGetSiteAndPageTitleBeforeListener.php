@@ -62,10 +62,10 @@ class OnGetSiteAndPageTitleBeforeListener
                 $title->setPageTitlePostfix(
                     $title->getPageTitlePostfix()
                     . $title->getPageTitleSeparator()
-                    . $this->translator->t('system', 'acp')
+                    . $this->translator->t('acp', 'acp')
                 );
             } else {
-                $title->setPageTitlePostfix($this->translator->t('system', 'acp'));
+                $title->setPageTitlePostfix($this->translator->t('acp', 'acp'));
             }
         }
     }

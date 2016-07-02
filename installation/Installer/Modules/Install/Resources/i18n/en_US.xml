@@ -29,7 +29,7 @@
             <![CDATA[Despite careful contentwise control we do not take over adhesion for contents of external hyperlinks. Exclusively the operators are responsible for the contents of the linked pages.]]></item>
         <item key="email">E-mail address</item>
         <item key="error_messages">Output of error messages:</item>
-        <item key="failure">The following errors have occured:</item>
+        <item key="failure">The following errors have occurred:</item>
         <item key="forward">Forward</item>
         <item key="form_change_warning">ATTENTION: By changing the language you will lose all form changes!</item>
         <item key="found">Found</item>

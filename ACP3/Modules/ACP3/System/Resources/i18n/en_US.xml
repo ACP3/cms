@@ -6,7 +6,6 @@
     </info>
     <keys>
         <item key="access_to_following_modules">You have access to the following %d modules.</item>
-        <item key="acp">Administration Control Panel</item>
         <item key="acp3_not_up_to_date">A newer version of ACP3 is available. Click %link_start%here%link_end% to
             download the latest version.
         </item>
@@ -44,13 +43,13 @@
         <item key="cancel">Cancel</item>
         <item key="close_window">Close window</item>
         <item key="configuration">Configuration</item>
-        <item key="config_edit_error">While editing the ACP3 configuration an error has occured.</item>
+        <item key="config_edit_error">While editing the ACP3 configuration an error has occurred.</item>
         <item key="config_edit_success">The ACP3 configuration has been successfully edited.</item>
         <item key="confirm_delete">Do you really want to delete the marked entries?</item>
         <item key="confirm_delete_multiple">Do you really want to delete the {items} selected entries?</item>
         <item key="confirm_delete_single">Do you really want to delete the selected entry?</item>
         <item key="could_not_complete_request">Because of an error the request could not complete.</item>
-        <item key="create_error">While creating the entry an error has occured.</item>
+        <item key="create_error">While creating the entry an error has occurred.</item>
         <item key="create_success">The entry has been successfully created.</item>
         <item key="critical_error_occurred_see_log">A critical error has occurred. For further details please see the log files.</item>
         <item key="current_version">Current version</item>
@@ -88,16 +87,16 @@
         <item key="day_full_wednesday">Wednesday</item>
         <item key="delete">Delete</item>
         <item key="delete_caches_description">On this page you can refresh the automatically generated caches of the ACP3.</item>
-        <item key="delete_error">While deleting the marked entries an error has occured.</item>
+        <item key="delete_error">While deleting the marked entries an error has occurred.</item>
         <item key="delete_marked">Delete marked entries</item>
         <item key="delete_success">The marked entries have been successfully deleted.</item>
         <item key="description">Description</item>
-        <item key="designs_edit_error">While switching the design an error has occured.</item>
+        <item key="designs_edit_error">While switching the design an error has occurred.</item>
         <item key="designs_edit_success">The design has been successfully selected and may now be used.</item>
         <item key="disable">Disable</item>
         <item key="disable_module">Disable module</item>
         <item key="edit">Edit</item>
-        <item key="edit_error">While editing the entry an error has occured.</item>
+        <item key="edit_error">While editing the entry an error has occurred.</item>
         <item key="edit_order">Edit order</item>
         <item key="edit_success">The entry has been successfully edited.</item>
         <item key="editor">Editor</item>
@@ -138,7 +137,7 @@
         <item key="installed_modules">Installed modules</item>
         <item key="installed_version">Installed version</item>
         <item key="language">Language</item>
-        <item key="languages_edit_error">While switching the language an error has occured.</item>
+        <item key="languages_edit_error">While switching the language an error has occurred.</item>
         <item key="languages_edit_success">The language has been successfully selected and may now be used.</item>
         <item key="last_page">Last page</item>
         <item key="loading_please_wait">Loading - please wait...</item>
@@ -166,17 +165,17 @@
         <item key="min">Minute</item>
         <item key="cache_lifetime">Page-Cache lifetime</item>
         <item key="cache_lifetime_description">Statements in seconds.</item>
-        <item key="mod_activate_error">While enabling the module an error has occured.</item>
+        <item key="mod_activate_error">While enabling the module an error has occurred.</item>
         <item key="mod_activate_success">The module has been successfully enabled and may now be used.</item>
-        <item key="mod_deactivate_error">While disabling the module an error has occured.</item>
+        <item key="mod_deactivate_error">While disabling the module an error has occurred.</item>
         <item key="mod_deactivate_forbidden">It is impossible to enable resp. disable this module.</item>
         <item key="mod_deactivate_success">The module has been successfully disabled.</item>
         <item key="mod_description">This module is responsible for the basic functions of the ACP3.</item>
-        <item key="mod_installation_error">While installing the module an error has occured.</item>
+        <item key="mod_installation_error">While installing the module an error has occurred.</item>
         <item key="mod_installation_success">The module has been successfully installed.</item>
         <item key="mod_rewrite">Use mod_rewrite</item>
         <item key="mod_rewrite_description">Only enable this if you are using the Apache web server.</item>
-        <item key="mod_uninstallation_error">While uninstalling the module an error has occured.</item>
+        <item key="mod_uninstallation_error">While uninstalling the module an error has occurred.</item>
         <item key="mod_uninstallation_success">The module has been successfully uninstalled.</item>
         <item key="module">Module</item>
         <item key="module_already_installed">The module is already installed!</item>
@@ -225,7 +224,7 @@
         <item key="no_entries_short">No entries available.</item>
         <item key="no_modules_available_for_installation">Currently there are no new modules available for installation!</item>
         <item key="order">Order</item>
-        <item key="order_error">While editing the order an error has occured.</item>
+        <item key="order_error">While editing the order an error has occurred.</item>
         <item key="order_success">The order has been successfully edited.</item>
         <item key="options">Options</item>
         <item key="output">Output</item>
@@ -259,7 +258,7 @@
         <item key="select_sidebar_entries">Please select how many entries should be to displayed in the Module-Sidebar.</item>
         <item key="select_time_zone">Please select the time zone.</item>
         <item key="settings">Settings</item>
-        <item key="settings_error">While editing the settings an error has occured.</item>
+        <item key="settings_error">While editing the settings an error has occurred.</item>
         <item key="settings_success">The settings have been successfully edited.</item>
         <item key="sidebar_entries_to_display">Sidebar entries to display</item>
         <item key="start_date">Release date</item>
@@ -289,7 +288,7 @@
         </item>
         <item key="uninstall_module">Uninstall module</item>
         <item key="unmark_all">Unmark all</item>
-        <item key="upload_error">While moving the file %s an error has occured.</item>
+        <item key="upload_error">While moving the file %s an error has occurred.</item>
         <item key="version">Version</item>
         <item key="website">Website</item>
         <item key="window_blank">New window (_blank)</item>
