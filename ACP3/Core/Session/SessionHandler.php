@@ -71,7 +71,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * Secures the current session to prevent from session fixations
+     * @inheritdoc
      */
     public function secureSession()
     {

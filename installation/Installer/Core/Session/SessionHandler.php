@@ -29,7 +29,7 @@ class SessionHandler extends AbstractSessionHandler
     /**
      * @inheritdoc
      */
-    public function secureSession($force = false)
+    public function secureSession()
     {
     }
 
