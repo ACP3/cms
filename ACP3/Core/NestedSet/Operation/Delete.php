@@ -1,11 +1,16 @@
 <?php
-namespace ACP3\Core\NestedSet;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\NestedSet\Operation;
 
 /**
  * Class Delete
- * @package ACP3\Core\NestedSet
+ * @package ACP3\Core\NestedSet\Operation
  */
-class Delete extends AbstractNestedSetOperation
+class Delete extends AbstractOperation
 {
     /**
      * @param int $id

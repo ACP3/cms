@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Permissions;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Core\NestedSet
+     * @var \ACP3\Core\NestedSet\NestedSet
      */
     protected $nestedSet;
     /**
@@ -28,12 +28,12 @@ class Delete extends Core\Controller\AbstractAdminAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param \ACP3\Core\NestedSet                       $nestedSet
+     * @param \ACP3\Core\NestedSet\NestedSet                       $nestedSet
      * @param \ACP3\Modules\ACP3\Permissions\Cache       $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\NestedSet $nestedSet,
+        Core\NestedSet\NestedSet $nestedSet,
         Permissions\Cache $permissionsCache
     ) {
         parent::__construct($context);

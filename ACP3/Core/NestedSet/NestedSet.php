@@ -1,39 +1,44 @@
 <?php
-namespace ACP3\Core;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-use ACP3\Core\NestedSet\Delete;
-use ACP3\Core\NestedSet\Edit;
-use ACP3\Core\NestedSet\Insert;
-use ACP3\Core\NestedSet\Sort;
+namespace ACP3\Core\NestedSet;
+
+use ACP3\Core\NestedSet\Operation\Delete;
+use ACP3\Core\NestedSet\Operation\Edit;
+use ACP3\Core\NestedSet\Operation\Insert;
+use ACP3\Core\NestedSet\Operation\Sort;
 
 /**
  * Class NestedSet
- * @package ACP3\Core
+ * @package ACP3\Core\NestedSet
  */
 class NestedSet
 {
     /**
-     * @var \ACP3\Core\NestedSet\Insert
+     * @var \ACP3\Core\NestedSet\Operation\Insert
      */
     protected $insert;
     /**
-     * @var \ACP3\Core\NestedSet\Edit
+     * @var \ACP3\Core\NestedSet\Operation\Edit
      */
     protected $edit;
     /**
-     * @var \ACP3\Core\NestedSet\Delete
+     * @var \ACP3\Core\NestedSet\Operation\Delete
      */
     protected $delete;
     /**
-     * @var \ACP3\Core\NestedSet\Sort
+     * @var \ACP3\Core\NestedSet\Operation\Sort
      */
     protected $sort;
 
     /**
-     * @param \ACP3\Core\NestedSet\Insert $insert
-     * @param \ACP3\Core\NestedSet\Edit   $edit
-     * @param \ACP3\Core\NestedSet\Delete $delete
-     * @param \ACP3\Core\NestedSet\Sort   $sort
+     * @param \ACP3\Core\NestedSet\Operation\Insert $insert
+     * @param \ACP3\Core\NestedSet\Operation\Edit   $edit
+     * @param \ACP3\Core\NestedSet\Operation\Delete $delete
+     * @param \ACP3\Core\NestedSet\Operation\Sort   $sort
      */
     public function __construct(
         Insert $insert,
@@ -51,7 +56,6 @@ class NestedSet
      * Löscht einen Knoten und verschiebt seine Kinder eine Ebene nach oben
      *
      * @param integer $id
-     *  Die ID des zu löschenden Datensatzes
      * @param string  $tableName
      * @param bool    $enableBlocks
      *
@@ -69,7 +73,6 @@ class NestedSet
      * Erstellt einen neuen Knoten
      *
      * @param integer $parentId
-     *    ID der übergeordneten Seite
      * @param array   $insertValues
      * @param string  $tableName
      * @param bool    $enableBlocks
@@ -88,11 +91,8 @@ class NestedSet
      * Methode zum Bearbeiten eines Knotens
      *
      * @param integer $id
-     *    ID des zu bearbeitenden Knotens
      * @param integer $parentId
-     *    ID des neuen Elternelements
      * @param integer $blockId
-     *    ID des neuen Blocks
      * @param array   $updateValues
      * @param string  $tableName
      * @param bool    $enableBlocks
@@ -123,7 +123,6 @@ class NestedSet
      *
      * @param integer $id
      * @param string  $mode
-     *
      * @param string  $tableName
      * @param bool    $enableBlocks
      *

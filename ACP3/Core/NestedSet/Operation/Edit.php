@@ -1,21 +1,23 @@
 <?php
-namespace ACP3\Core\NestedSet;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\NestedSet\Operation;
 
 /**
  * Class Edit
- * @package ACP3\Core\NestedSet
+ * @package ACP3\Core\NestedSet\Operation
  */
-class Edit extends AbstractNestedSetOperation
+class Edit extends AbstractOperation
 {
     /**
      * Methode zum Bearbeiten eines Knotens
      *
      * @param integer $id
-     *    ID des zu bearbeitenden Knotens
      * @param integer $parentId
-     *    ID des neuen Elternelements
      * @param integer $blockId
-     *    ID des neuen Blocks
      * @param array   $updateValues
      *
      * @return boolean

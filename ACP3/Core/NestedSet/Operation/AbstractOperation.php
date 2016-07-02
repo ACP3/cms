@@ -1,20 +1,26 @@
 <?php
-namespace ACP3\Core\NestedSet;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\NestedSet\Operation;
 
 use ACP3\Core\Database\Connection;
+use ACP3\Core\NestedSet\Model\Repository\NestedSetRepository;
 
 /**
  * Class AbstractNestedSetOperation
- * @package ACP3\Core\NestedSet
+ * @package ACP3\Core\NestedSet\Operation
  */
-abstract class AbstractNestedSetOperation
+abstract class AbstractOperation
 {
     /**
      * @var \ACP3\Core\Database\Connection
      */
     protected $db;
     /**
-     * @var \ACP3\Core\NestedSet\NestedSetRepository
+     * @var \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository
      */
     protected $nestedSetRepository;
 
@@ -29,7 +35,7 @@ abstract class AbstractNestedSetOperation
 
     /**
      * @param \ACP3\Core\Database\Connection           $db
-     * @param \ACP3\Core\NestedSet\NestedSetRepository $nestedSetRepository
+     * @param \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository $nestedSetRepository
      */
     public function __construct(
         Connection $db,

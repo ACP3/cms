@@ -18,7 +18,7 @@ use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Core\NestedSet
+     * @var \ACP3\Core\NestedSet\NestedSet
      */
     protected $nestedSet;
     /**
@@ -38,13 +38,13 @@ class Delete extends Core\Controller\AbstractAdminAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext        $context
-     * @param \ACP3\Core\NestedSet                              $nestedSet
+     * @param \ACP3\Core\NestedSet\NestedSet                              $nestedSet
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      * @param \ACP3\Modules\ACP3\Menus\Cache                    $menusCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\NestedSet $nestedSet,
+        Core\NestedSet\NestedSet $nestedSet,
         Menus\Model\Repository\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache
     ) {

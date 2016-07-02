@@ -1,9 +1,14 @@
 <?php
-namespace ACP3\Core\NestedSet;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\NestedSet\Model\Repository;
 
 /**
  * Class NestedSetRepository
- * @package ACP3\Core\NestedSet
+ * @package ACP3\Core\NestedSet\Model\Repository
  */
 class NestedSetRepository extends \ACP3\Core\Model\AbstractRepository
 {

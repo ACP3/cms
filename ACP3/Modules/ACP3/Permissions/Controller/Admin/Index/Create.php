@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Permissions;
 class Create extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\NestedSet
+     * @var \ACP3\Core\NestedSet\NestedSet
      */
     protected $nestedSet;
     /**
@@ -33,7 +33,7 @@ class Create extends AbstractFormAction
      * @param \ACP3\Core\Controller\Context\AdminContext                   $context
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository     $privilegeRepository
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository          $ruleRepository
-     * @param \ACP3\Core\NestedSet                                         $nestedSet
+     * @param \ACP3\Core\NestedSet\NestedSet                                         $nestedSet
      * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Cache                         $permissionsCache
@@ -43,7 +43,7 @@ class Create extends AbstractFormAction
         Core\Controller\Context\AdminContext $context,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Permissions\Model\Repository\RuleRepository $ruleRepository,
-        Core\NestedSet $nestedSet,
+        Core\NestedSet\NestedSet $nestedSet,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Cache $permissionsCache,
