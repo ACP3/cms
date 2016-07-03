@@ -23,7 +23,7 @@ class AvailableDatabases extends AbstractInstallerAction
     public function execute()
     {
         $availableDatabases = [];
-        if (!$this->request->getPost()->isEmpty()) {
+        if ($this->request->getPost()->count() > 0) {
             $hostName = $this->request->getPost()->get('db_host', '');
             $userName = $this->request->getPost()->get('db_user', '');
             $password = $this->request->getPost()->get('db_password', '');
