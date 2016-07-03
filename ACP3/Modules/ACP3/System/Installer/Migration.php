@@ -172,7 +172,7 @@ class Migration extends Modules\Installer\AbstractMigration
                     $result = $this->schemaHelper->executeSqlQueries([
                         "DELETE FROM `{pre}settings` WHERE `module_id` = {$seoModuleId};",
                         "UPDATE `{pre}settings` SET `module_id` = {$seoModuleId}, `name` = SUBSTRING(`name`, 5) WHERE `module_id` = '{moduleId}' AND `name` LIKE 'seo_%';",
-                    ]);
+                    ], 'system');
                 }
             }
 
