@@ -12,10 +12,10 @@ use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
- * Class PollsModel
+ * Class VoteModel
  * @package ACP3\Modules\ACP3\Polls\Model
  */
-class PollsModel
+class VoteModel
 {
     /**
      * @var VoteRepository

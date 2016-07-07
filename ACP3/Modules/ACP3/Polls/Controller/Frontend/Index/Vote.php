@@ -28,7 +28,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
      */
     protected $answerRepository;
     /**
-     * @var Polls\Model\PollsModel
+     * @var Polls\Model\VoteModel
      */
     protected $pollsModel;
     /**
@@ -40,7 +40,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\Date $date
      * @param Polls\Validation\VoteValidation $voteValidation
-     * @param Polls\Model\PollsModel $pollsModel
+     * @param Polls\Model\VoteModel $pollsModel
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
      */
@@ -48,7 +48,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Polls\Validation\VoteValidation $voteValidation,
-        Polls\Model\PollsModel $pollsModel,
+        Polls\Model\VoteModel $pollsModel,
         Polls\Model\Repository\PollRepository $pollRepository,
         Polls\Model\Repository\AnswerRepository $answerRepository
     ) {

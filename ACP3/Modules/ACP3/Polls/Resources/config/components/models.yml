@@ -19,8 +19,8 @@ services:
     arguments:
       - '@core.db'
 
-  polls.model.polls_model:
-    class: ACP3\Modules\ACP3\Polls\Model\PollsModel
+  polls.model.vote_model:
+    class: ACP3\Modules\ACP3\Polls\Model\VoteModel
     arguments:
       - '@core.validator'
       - '@users.model.user_model'

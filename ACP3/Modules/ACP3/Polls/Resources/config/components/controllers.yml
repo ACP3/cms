@@ -57,7 +57,7 @@ services:
       - '@core.context.frontend'
       - '@core.date'
       - '@polls.validator.vote_validation'
-      - '@polls.model.polls_model'
+      - '@polls.model.vote_model'
       - '@polls.model.pollrepository'
       - '@polls.model.answerrepository'
 
