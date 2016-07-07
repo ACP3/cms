@@ -241,14 +241,7 @@
                 </div>
                 <div id="tab-6" class="tab-pane fade">
                     {block PASSWORD_FIELDS}
-                        <div class="form-group">
-                            <label for="pwd" class="col-sm-2 control-label required">{lang t="users|pwd"}</label>
-                            <div class="col-sm-10"><input class="form-control" type="password" name="pwd" id="pwd" required></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="pwd-repeat" class="col-sm-2 control-label required">{lang t="users|pwd_repeat"}</label>
-                            <div class="col-sm-10"><input class="form-control" type="password" name="pwd_repeat" id="pwd-repeat" required></div>
-                        </div>
+                        {include file="asset:Users/Partials/password_fields.tpl"}
                     {/block}
                 </div>
             </div>
