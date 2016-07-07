@@ -16,8 +16,8 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@core.helpers.sendEmail'
       - '@contact.validator'
+      - '@contact.model.contact_form_model'
 
   contact.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Contact\Controller\Widget\Index\Index
