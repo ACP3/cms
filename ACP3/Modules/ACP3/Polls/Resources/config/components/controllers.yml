@@ -56,9 +56,10 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.date'
+      - '@polls.validator.vote_validation'
+      - '@polls.model.polls_model'
       - '@polls.model.pollrepository'
       - '@polls.model.answerrepository'
-      - '@polls.model.voterepository'
 
   polls.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Widget\Index\Index

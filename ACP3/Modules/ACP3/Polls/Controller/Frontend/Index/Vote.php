@@ -28,45 +28,50 @@ class Vote extends Core\Controller\AbstractFrontendAction
      */
     protected $answerRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository
+     * @var Polls\Model\PollsModel
      */
-    protected $voteRepository;
+    protected $pollsModel;
+    /**
+     * @var Polls\Validation\VoteValidation
+     */
+    protected $voteValidation;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext   $context
-     * @param Core\Date                                       $date
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository   $pollRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\Date $date
+     * @param Polls\Validation\VoteValidation $voteValidation
+     * @param Polls\Model\PollsModel $pollsModel
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository   $voteRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
+        Polls\Validation\VoteValidation $voteValidation,
+        Polls\Model\PollsModel $pollsModel,
         Polls\Model\Repository\PollRepository $pollRepository,
-        Polls\Model\Repository\AnswerRepository $answerRepository,
-        Polls\Model\Repository\VoteRepository $voteRepository)
-    {
+        Polls\Model\Repository\AnswerRepository $answerRepository
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
+        $this->voteValidation = $voteValidation;
+        $this->pollsModel = $pollsModel;
         $this->pollRepository = $pollRepository;
         $this->answerRepository = $answerRepository;
-        $this->voteRepository = $voteRepository;
     }
 
     /**
-     * @param int       $id
-     *
-     * @param int|array $answer
+     * @param int $id
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id, $answer)
+    public function execute($id)
     {
+        $answer = $this->request->getPost()->get('answer');
         $time = $this->date->getCurrentDateTime();
         if ($this->pollRepository->pollExists($id, $time, is_array($answer)) === true) {
-            // Wenn abgestimmt wurde
             if (!empty($answer) || is_array($answer) === true) {
                 return $this->executePost($this->request->getPost()->all(), $time, $id);
             }
@@ -84,50 +89,29 @@ class Vote extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array  $formData
+     * @param array $formData
      * @param string $time
-     * @param int    $id
+     * @param int $pollId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $time, $id)
+    protected function executePost(array $formData, $time, $pollId)
     {
-        $ip = $this->request->getServer()->get('REMOTE_ADDR', '');
-        $answers = $formData['answer'];
+        return $this->actionHelper->handlePostAction(
+            function () use ($formData, $time, $pollId) {
+                $ipAddress = $this->request->getServer()->get('REMOTE_ADDR', '');
 
-        if ($this->user->isAuthenticated() === true) {
-            $query = $this->voteRepository->getVotesByUserId($id, $this->user->getUserId(), $ip); // Check, whether the logged user has already voted
-        } else {
-            $query = $this->voteRepository->getVotesByIpAddress($id, $ip); // For guest users check against the ip address
-        }
+                $this->voteValidation
+                    ->setPollId($pollId)
+                    ->setIpAddress($ipAddress)
+                    ->validate($formData);
 
-        $bool = false;
-        if ($query == 0) {
-            $userId = $this->user->isAuthenticated() ? $this->user->getUserId() : null;
+                $result = $this->pollsModel->vote($formData, $pollId, $ipAddress, $time);
 
-            // Multiple Answers
-            if (is_array($answers) === false) {
-                $answers = [$answers];
-            }
-
-            foreach ($answers as $answer) {
-                if ($this->validator->is(Core\Validation\ValidationRules\IntegerValidationRule::class, $answer) === true) {
-                    $insertValues = [
-                        'poll_id' => $id,
-                        'answer_id' => $answer,
-                        'user_id' => $userId,
-                        'ip' => $ip,
-                        'time' => $time,
-                    ];
-                    $bool = $this->voteRepository->insert($insertValues);
-                }
-            }
-            $text = $bool !== false ? $this->translator->t('polls', 'poll_success') : $this->translator->t('polls',
-                'poll_error');
-        } else {
-            $text = $this->translator->t('polls', 'already_voted');
-        }
-
-        return $this->redirectMessages()->setMessage($bool, $text, 'polls/index/result/id_' . $id);
+                $text = $this->translator->t('polls', $result !== false ? 'poll_success' : 'poll_error');
+                return $this->redirectMessages()->setMessage($result, $text, 'polls/index/result/id_' . $pollId);
+            },
+            'polls/index/vote/id_' . $pollId
+        );
     }
 }

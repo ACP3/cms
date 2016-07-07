@@ -3,6 +3,10 @@ services:
     class: ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation
     parent: core.validator.abstract
 
+  polls.validator.vote_validation:
+    class: ACP3\Modules\ACP3\Polls\Validation\VoteValidation
+    parent: core.validator.abstract
+
   polls.validation.validation_rules.at_least_two_answers_validation_rule:
     class: ACP3\Modules\ACP3\Polls\Validation\ValidationRules\AtLeastTwoAnswersValidationRule
     arguments:
@@ -14,5 +18,13 @@ services:
     class: ACP3\Modules\ACP3\Polls\Validation\ValidationRules\DeleteAllAnswersValidationRule
     arguments:
       - '@core.validation.validation_rules.not_empty_validation_rule'
+    tags:
+      - { name: core.validation.validation_rule }
+
+  polls.validation.validation_rules.already_voted_validation_rule:
+    class: ACP3\Modules\ACP3\Polls\Validation\ValidationRules\AlreadyVotedValidationRule
+    arguments:
+      - '@users.model.user_model'
+      - '@polls.model.voterepository'
     tags:
       - { name: core.validation.validation_rule }

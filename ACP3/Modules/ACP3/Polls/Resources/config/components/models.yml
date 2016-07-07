@@ -18,3 +18,10 @@ services:
     class: ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository
     arguments:
       - '@core.db'
+
+  polls.model.polls_model:
+    class: ACP3\Modules\ACP3\Polls\Model\PollsModel
+    arguments:
+      - '@core.validator'
+      - '@users.model.user_model'
+      - '@polls.model.voterepository'
