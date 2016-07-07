@@ -21,10 +21,6 @@ abstract class AbstractFormAction extends AbstractAdminAction
      */
     protected $answerRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository
-     */
-    protected $voteRepository;
-    /**
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
@@ -35,19 +31,16 @@ abstract class AbstractFormAction extends AbstractAdminAction
      * @param \ACP3\Core\Controller\Context\AdminContext      $context
      * @param \ACP3\Core\Helpers\Forms                        $formsHelper
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository   $voteRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelper,
-        Polls\Model\Repository\AnswerRepository $answerRepository,
-        Polls\Model\Repository\VoteRepository $voteRepository
+        Polls\Model\Repository\AnswerRepository $answerRepository
     ) {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
         $this->answerRepository = $answerRepository;
-        $this->voteRepository = $voteRepository;
     }
 
     /**
@@ -75,38 +68,6 @@ abstract class AbstractFormAction extends AbstractAdminAction
         }
 
         return $answers;
-    }
-
-    /**
-     * @param array $answers
-     * @param int   $id
-     *
-     * @return bool|int
-     */
-    protected function saveAnswers(array $answers, $id)
-    {
-        $bool = false;
-        foreach ($answers as $row) {
-            // Neue Antwort hinzufügen
-            if (empty($row['id'])) {
-                // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
-                if (!empty($row['text']) && !isset($row['delete'])) {
-                    $bool = $this->answerRepository->insert(
-                        ['text' => $this->get('core.helpers.secure')->strEncode($row['text']), 'poll_id' => $id]
-                    );
-                }
-            } elseif (isset($row['delete'])) { // Antwort mitsamt Stimmen löschen
-                $this->answerRepository->delete((int)$row['id']);
-                $this->voteRepository->delete((int)$row['id'], 'answer_id');
-            } elseif (!empty($row['text'])) { // Antwort aktualisieren
-                $bool = $this->answerRepository->update(
-                    ['text' => $this->get('core.helpers.secure')->strEncode($row['text'])],
-                    (int)$row['id']
-                );
-            }
-        }
-
-        return $bool;
     }
 
     /**

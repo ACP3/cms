@@ -19,6 +19,15 @@ services:
     arguments:
       - '@core.db'
 
+  polls.model.polls_model:
+    class: ACP3\Modules\ACP3\Polls\Model\PollsModel
+    arguments:
+      - '@core.date'
+      - '@core.helpers.secure'
+      - '@polls.model.pollrepository'
+      - '@polls.model.answerrepository'
+      - '@polls.model.voterepository'
+
   polls.model.vote_model:
     class: ACP3\Modules\ACP3\Polls\Model\VoteModel
     arguments:
