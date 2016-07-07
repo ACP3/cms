@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Polls\Model;
 
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\Secure;
+use ACP3\Core\Model\AbstractModel;
 use ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository;
 use ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository;
 use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
@@ -17,7 +18,7 @@ use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
  * Class PollsModel
  * @package ACP3\Modules\ACP3\Polls\Model
  */
-class PollsModel
+class PollsModel extends AbstractModel
 {
     /**
      * @var Date
@@ -78,11 +79,7 @@ class PollsModel
             'user_id' => $userId,
         ];
 
-        if (intval($pollId)) {
-            return $this->pollRepository->update($values, $pollId);
-        }
-
-        return $this->pollRepository->insert($values);
+        return $this->save($this->pollRepository, $values, $pollId);
     }
 
     /**
