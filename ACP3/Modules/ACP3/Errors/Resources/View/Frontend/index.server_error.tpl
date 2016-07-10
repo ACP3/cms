@@ -1,4 +1,4 @@
-{extends file="asset:Errors/Frontend/layout.tpl"}
+{extends file="asset:$LAYOUT"}
 
 {block CONTENT}
     <div class="alert alert-warning text-center">
