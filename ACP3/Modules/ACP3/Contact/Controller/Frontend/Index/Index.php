@@ -81,6 +81,8 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
+                $this->formValidation->validate($formData);
+
                 $bool = $this->contactFormModel->sendContactFormEmail($formData);
 
                 if (isset($formData['copy'])) {
