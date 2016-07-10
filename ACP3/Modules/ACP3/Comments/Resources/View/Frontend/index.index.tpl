@@ -3,7 +3,7 @@
 </header>
 {redirect_message}
 {if isset($comments)}
-    {include file="asset:System/pagination.tpl" pagination=$pagination}
+    {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
     {foreach $comments as $row}
         <article class="dataset-box" style="width:65%">
             <header class="navbar navbar-default">

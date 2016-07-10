@@ -19,7 +19,7 @@
     </div>
     </div>
     {if !empty($news)}
-        {include file="asset:System/pagination.tpl" pagination=$pagination}
+        {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
         {foreach $news as $row}
             <article class="dataset-box">
                 <header class="navbar navbar-default">
@@ -39,7 +39,7 @@
                 {/if}
             </article>
         {/foreach}
-        {include file="asset:System/pagination.tpl" pagination=$pagination}
+        {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
     {else}
         {include file="asset:System/Partials/no_results.tpl"}
     {/if}

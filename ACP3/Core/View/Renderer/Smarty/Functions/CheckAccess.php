@@ -40,7 +40,7 @@ class CheckAccess extends AbstractFunction
         if (is_array($return)) {
             $smarty->smarty->assign('access_check', $return);
 
-            return $smarty->smarty->fetch('asset:system/access_check.tpl');
+            return $smarty->smarty->fetch('asset:System/Partials/access_check.tpl');
         }
 
         return $return;

@@ -123,7 +123,7 @@
             {include_js module="system" file="ajax-form"}
         {/javascripts}
         {if $can_delete === true}
-            {include file="asset:system/mark.tpl"}
+            {include file="asset:System/Partials/mark.tpl"}
         {/if}
     {/if}
 {/block}

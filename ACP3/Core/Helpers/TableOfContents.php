@@ -88,7 +88,7 @@ class TableOfContents
                 ++$i;
             }
             $this->view->assign('toc', $toc);
-            return $this->view->fetchTemplate('system/toc.tpl');
+            return $this->view->fetchTemplate('System/Partials/toc.tpl');
         }
         return '';
     }

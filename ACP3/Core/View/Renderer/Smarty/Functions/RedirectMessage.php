@@ -37,6 +37,6 @@ class RedirectMessage extends AbstractFunction
     {
         $smarty->smarty->assign('redirect', $this->redirectMessages->getMessage());
 
-        return $smarty->smarty->fetch('asset:system/redirect_message.tpl');
+        return $smarty->smarty->fetch('asset:System/Partials/redirect_message.tpl');
     }
 }

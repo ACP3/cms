@@ -78,7 +78,7 @@
                 </table>
             </div>
             {if $can_delete_resource === true}
-                {include file="asset:system/mark.tpl"}
+                {include file="asset:System/Partials/mark.tpl"}
             {/if}
             {javascripts}
                 {include_js module="permissions" file="admin/resources.index"}

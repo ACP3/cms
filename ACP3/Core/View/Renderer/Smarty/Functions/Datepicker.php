@@ -40,7 +40,7 @@ class Datepicker extends AbstractFunction
             $params['inputFieldOnly']
         ));
 
-        return $smarty->smarty->fetch('asset:System/datepicker.tpl');
+        return $smarty->smarty->fetch('asset:System/Partials/datepicker.tpl');
     }
 
     private function mergeParameters(array $params)

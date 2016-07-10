@@ -18,7 +18,7 @@
     {/if}
     {redirect_message}
     {if !empty($guestbook)}
-        {include file="asset:System/pagination.tpl" pagination=$pagination}
+        {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
         {foreach $guestbook as $row}
             <article id="gb-entry-{$row.id}" class="dataset-box clearfix" style="width: 65%">
                 <header class="navbar navbar-default">
@@ -49,6 +49,7 @@
                 </div>
             </article>
         {/foreach}
+        {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
     {else}
         {include file="asset:System/Partials/no_results.tpl"}
     {/if}

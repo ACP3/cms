@@ -64,7 +64,7 @@
                 </tbody>
             </table>
             {if $can_delete === true}
-                {include file="asset:system/mark.tpl"}
+                {include file="asset:System/Partials/mark.tpl"}
             {/if}
         {else}
             {include file="asset:System/Partials/no_results.tpl"}

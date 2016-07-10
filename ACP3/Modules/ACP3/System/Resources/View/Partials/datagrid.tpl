@@ -10,9 +10,9 @@
         </tbody>
     </table>
     {if $dataTable.can_delete === true}
-        {include file="asset:system/mark.tpl"}
+        {include file="asset:System/Partials/mark.tpl"}
     {/if}
-    {include file="asset:system/datatable.tpl" dt=$dataTable.config}
+    {include file="asset:System/Partials/datatable.tpl" dt=$dataTable.config}
 {else}
     {include file="asset:System/Partials/no_results.tpl"}
 {/if}

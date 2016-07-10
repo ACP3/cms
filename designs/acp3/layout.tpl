@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{$LANG}" dir="{$LANG_DIRECTION}">
 <head>
-    {include file="asset:system/head.tpl" inline}
+    {include file="asset:System/Partials/head.tpl" inline}
 </head>
 
 <body>
@@ -54,7 +54,7 @@
         <main role="main" id="content" class="col-sm-9 col-md-8">
             <div id="breadcrumb">
                 {block BREADCRUMB}
-                    {include file="asset:system/breadcrumb.tpl" breadcrumb=$BREADCRUMB}
+                    {include file="asset:System/Partials/breadcrumb.tpl" breadcrumb=$BREADCRUMB}
                 {/block}
             </div>
             <h2>{page_title}</h2>

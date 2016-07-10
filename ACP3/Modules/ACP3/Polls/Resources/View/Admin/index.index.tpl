@@ -21,6 +21,6 @@
             </div>
         </nav>
         {redirect_message}
-        {include file="asset:system/datagrid.tpl" dataTable=$grid}
+        {include file="asset:System/Partials/datagrid.tpl" dataTable=$grid}
     </form>
 {/block}

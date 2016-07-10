@@ -60,6 +60,6 @@ class WYSIWYG extends AbstractFunction
         $wysiwyg->setParameters($params);
         $smarty->smarty->assign($wysiwyg->getData());
 
-        return $smarty->smarty->fetch('asset:System/wysiwyg.tpl');
+        return $smarty->smarty->fetch('asset:System/Partials/wysiwyg.tpl');
     }
 }

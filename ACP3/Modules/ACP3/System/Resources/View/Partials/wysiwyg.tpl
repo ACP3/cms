@@ -1,7 +1,7 @@
 {event name="core.wysiwyg.`$wysiwyg.friendly_name|lower`.before" id=$wysiwyg.id}
 <textarea name="{$wysiwyg.name}" id="{$wysiwyg.id}" cols="60" rows="6" class="form-control">{$wysiwyg.value}</textarea>
 {javascripts}
-    {include file="asset:System/Wysiwyg/config.tpl" js=$wysiwyg.js}
+    {include file="asset:System/Partials/wysiwyg_config.tpl" js=$wysiwyg.js}
 {/javascripts}
 {if $wysiwyg.advanced === true}
     <div id="page-break-form" class="modal fade" role="dialog">
