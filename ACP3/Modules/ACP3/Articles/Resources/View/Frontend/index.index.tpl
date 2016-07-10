@@ -14,8 +14,6 @@
             </div>
         {/foreach}
     {else}
-        <div class="alert alert-warning text-center">
-            <strong>{lang t="system|no_entries"}</strong>
-        </div>
+        {include file="asset:System/Partials/no_results.tpl"}
     {/if}
 {/block}

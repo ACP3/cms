@@ -67,9 +67,7 @@
                 {include file="asset:system/mark.tpl"}
             {/if}
         {else}
-            <div class="alert alert-warning text-center">
-                <strong>{lang t="system|no_entries"}</strong>
-            </div>
+            {include file="asset:System/Partials/no_results.tpl"}
         {/if}
     </form>
 {/block}
