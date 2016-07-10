@@ -154,7 +154,6 @@ class Create extends AbstractFormAction
                 'time_zone' => $formData['date_time_zone'],
                 'language' => $formData['language'],
                 'entries' => (int)$formData['entries'],
-                'draft' => '',
                 'registration_date' => $this->date->getCurrentDateTime(),
             ];
 

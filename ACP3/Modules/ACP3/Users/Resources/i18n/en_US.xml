@@ -30,7 +30,6 @@
         <item key="display_country">Display country in public profile</item>
         <item key="display_mail">Display E-mail address in public profile</item>
         <item key="display_profile_field_info">If you don't want to display a certain profile field, just untick the respective field.</item>
-        <item key="drafts">Drafts</item>
         <item key="enable_registration">Enable registration of new users</item>
         <item key="forgot_pwd">Forgot password?</item>
         <item key="forgot_pwd_error">While sending the E-mail with your new password an error has occurred.</item>

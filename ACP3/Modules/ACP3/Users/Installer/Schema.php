@@ -31,7 +31,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 44;
+        return 45;
     }
 
     /**
@@ -69,7 +69,6 @@ class Schema implements Modules\Installer\SchemaInterface
                 `time_zone` VARCHAR(100) NOT NULL,
                 `language` VARCHAR(10) NOT NULL,
                 `entries` TINYINT(2) UNSIGNED NOT NULL,
-                `draft` TEXT NOT NULL,
                 `registration_date` DATETIME NOT NULL,
                 PRIMARY KEY (`id`)
             ) {ENGINE} {CHARSET};"

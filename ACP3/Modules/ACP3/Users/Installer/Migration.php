@@ -92,6 +92,9 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             44 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'widget', 'index', 'hash', '', 1);",
+            ],
+            45 => [
+                "ALTER TABLE `{pre}users` DROP COLUMN `draft`;"
             ]
         ];
     }

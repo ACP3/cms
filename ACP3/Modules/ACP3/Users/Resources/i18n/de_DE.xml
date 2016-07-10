@@ -30,7 +30,6 @@
         <item key="display_country">Land im öffentlichen Profil anzeigen</item>
         <item key="display_mail">E-Mail Adresse im öffentlichen Profil anzeigen</item>
         <item key="display_profile_field_info">Ein Profilfeld kann versteckt werden, indem der Haken links neben dem jeweiligen Feld entfernt wird.</item>
-        <item key="drafts">Entwürfe</item>
         <item key="enable_registration">Registrierung neuer Benutzer erlauben</item>
         <item key="forgot_pwd">Passwort vergessen?</item>
         <item key="forgot_pwd_error">Beim Versenden der E-Mail-Adresse mit Ihrem neuen Passwort ist ein Fehler aufgetreten.</item>

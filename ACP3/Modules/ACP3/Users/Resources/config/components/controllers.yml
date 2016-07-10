@@ -57,9 +57,7 @@ services:
 
   users.controller.frontend.account.index:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@users.model.userrepository'
+    parent: core.controller.frontend
 
   users.controller.frontend.account.settings:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Settings
