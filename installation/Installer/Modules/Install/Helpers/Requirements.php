@@ -16,7 +16,7 @@ use ACP3\Installer\Core\I18n\Translator;
  */
 class Requirements
 {
-    const REQUIRED_PHP_VERSION = '5.5.0';
+    const REQUIRED_PHP_VERSION = '5.6.0';
     const COLOR_ERROR = 'f00';
     const COLOR_SUCCESS = '090';
     const CLASS_ERROR = 'danger';
@@ -67,14 +67,6 @@ class Requirements
         $requirements[2]['found'] = $this->translator->t('install',
             $requirements[2]['color'] == self::COLOR_SUCCESS ? 'on' : 'off');
         $requirements[2]['required'] = $this->translator->t('install', 'on');
-        $requirements[3]['name'] = $this->translator->t('install', 'register_globals');
-        $requirements[3]['color'] = ((bool)ini_get('register_globals')) ? self::COLOR_ERROR : self::COLOR_SUCCESS;
-        $requirements[3]['found'] = $this->translator->t('install', ((bool)ini_get('register_globals')) ? 'on' : 'off');
-        $requirements[3]['required'] = $this->translator->t('install', 'off');
-        $requirements[4]['name'] = $this->translator->t('install', 'safe_mode');
-        $requirements[4]['color'] = ((bool)ini_get('safe_mode')) ? self::COLOR_ERROR : self::COLOR_SUCCESS;
-        $requirements[4]['found'] = $this->translator->t('install', ((bool)ini_get('safe_mode')) ? 'on' : 'off');
-        $requirements[4]['required'] = $this->translator->t('install', 'off');
 
         $stopInstall = false;
         foreach ($requirements as $requirement) {
@@ -122,11 +114,6 @@ class Requirements
                 'setting' => $this->translator->t('install', 'maximum_uploadsize'),
                 'class' => ini_get('post_max_size') > 0 ? self::CLASS_SUCCESS : self::CLASS_WARNING,
                 'value' => ini_get('post_max_size'),
-            ],
-            [
-                'setting' => $this->translator->t('install', 'magic_quotes'),
-                'class' => (bool)ini_get('magic_quotes_gpc') ? self::CLASS_WARNING : self::CLASS_SUCCESS,
-                'value' => $this->translator->t('install', (bool)ini_get('magic_quotes_gpc') ? 'on' : 'off'),
             ]
         ];
     }
@@ -163,7 +150,7 @@ class Requirements
      */
     private function fetchRequiredFilesAndDirectories()
     {
-        $defaults = ['ACP3/config.yml', 'cache/'];
+        $defaults = ['ACP3/config.yml', 'cache/', 'uploads/', 'uploads/assets/'];
 
         foreach (Filesystem::scandir($this->appPath->getModulesDir()) as $row) {
             $path = 'uploads/' . $row . '/';

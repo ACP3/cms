@@ -52,7 +52,6 @@
             <![CDATA[<strong>Achtung:</strong> Bitte löschen Sie nun den &quot;installation&quot;-Ordner, da dies ein potentielles Sicherheitsrisiko darstellen könnte, falls dieser Ordner in einer Produktiv-Umgebung noch existieren sollte.]]></item>
         <item key="loading_please_wait">Lädt - bitte warten...</item>
         <item key="log_into_admin_panel">Zum Administrationsbereich</item>
-        <item key="magic_quotes">Magic Quotes:</item>
         <item key="maximum_uploadsize">Maximale Uploadgröße:</item>
         <item key="navigation">Navigation</item>
         <item key="news_headline">Installation erfolgreich beendet!</item>
@@ -88,9 +87,7 @@
         <item key="please_select">Bitte auswählen</item>
         <item key="pwd">Passwort</item>
         <item key="pwd_repeat">Passwort wiederholen</item>
-        <item key="register_globals">register_globals</item>
         <item key="required">Benötigt</item>
-        <item key="safe_mode">Abgesicherter Modus</item>
         <item key="sincerely">Mit freundlichen Grüßen,</item>
         <item key="site_title">Titel der Website</item>
         <item key="select_language">Sprache auswählen</item>

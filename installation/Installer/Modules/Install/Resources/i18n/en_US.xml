@@ -50,7 +50,6 @@
             <![CDATA[<strong>Attention:</strong> Please delete the "installation"-folder, because it could be a potential security risk if this folder should exist in a production environment.]]></item>
         <item key="loading_please_wait">Loading - please wait...</item>
         <item key="log_into_admin_panel">Log into the administration panel</item>
-        <item key="magic_quotes">Magic Quotes:</item>
         <item key="maximum_uploadsize">Maximum uploadsize:</item>
         <item key="navigation">Navigation</item>
         <item key="news_headline">Installation successfully finished!</item>
@@ -86,9 +85,7 @@
         <item key="please_select">Please select</item>
         <item key="pwd">Password</item>
         <item key="pwd_repeat">Repeat password</item>
-        <item key="register_globals">register_globals</item>
         <item key="required">Required</item>
-        <item key="safe_mode">Safe mode</item>
         <item key="sincerely">Sincerely,</item>
         <item key="site_title">Website title</item>
         <item key="select_language">Select language</item>
