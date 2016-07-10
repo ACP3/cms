@@ -143,7 +143,7 @@ class Create extends AbstractFormAction
                     'target' => $formData['display'] == 0 ? 1 : $formData['target'],
                 ];
 
-                $bool = $this->nestedSet->insertNode(
+                $result = $this->nestedSet->insertNode(
                     (int)$formData['parent_id'],
                     $insertValues,
                     Menus\Model\Repository\MenuItemRepository::TABLE_NAME,
@@ -159,8 +159,8 @@ class Create extends AbstractFormAction
                 Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
                 return $this->redirectMessages()->setMessage(
-                    $bool,
-                    $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),
+                    $result,
+                    $this->translator->t('system', $result !== false ? 'create_success' : 'create_error'),
                     'acp/menus'
                 );
             },

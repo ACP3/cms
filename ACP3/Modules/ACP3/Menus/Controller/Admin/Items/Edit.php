@@ -166,7 +166,7 @@ class Edit extends AbstractFormAction
                     'target' => $formData['display'] == 0 ? 1 : $formData['target'],
                 ];
 
-                $bool = $this->nestedSet->editNode(
+                $result = $this->nestedSet->editNode(
                     $id,
                     (int)$formData['parent_id'],
                     (int)$formData['block_id'],
@@ -184,8 +184,8 @@ class Edit extends AbstractFormAction
                 Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
                 return $this->redirectMessages()->setMessage(
-                    $bool,
-                    $this->translator->t('system', $bool !== false ? 'edit_success' : 'edit_error'),
+                    $result,
+                    $this->translator->t('system', $result !== false ? 'edit_success' : 'edit_error'),
                     'acp/menus'
                 );
             },

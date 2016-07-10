@@ -94,20 +94,18 @@
                                 <td>{$row.id}</td>
                                 {if $can_delete_item === true || $can_edit_item === true}
                                     <td>
-                                        <div class="btn-group btn-group-xs">
-                                            {if $can_edit_item === true}
-                                                <a href="{uri args="acp/menus/items/edit/id_`$row.id`"}" class="btn btn-default btn-xs" title="{lang t="menus|admin_items_edit"}">
-                                                    <i class="glyphicon glyphicon-edit"></i>
-                                                    {lang t="system|edit"}
-                                                </a>
-                                            {/if}
-                                            {if $can_delete_item === true}
-                                                <a href="{uri args="acp/menus/items/delete/entries_`$row.id`"}" class="btn btn-danger btn-xs" title="{lang t="menus|admin_items_delete"}">
-                                                    <i class="glyphicon glyphicon-remove"></i>
-                                                    {lang t="system|delete"}
-                                                </a>
-                                            {/if}
-                                        </div>
+                                        {if $can_edit_item === true}
+                                            <a href="{uri args="acp/menus/items/edit/id_`$row.id`"}" class="btn btn-default btn-xs btn-block" title="{lang t="menus|admin_items_edit"}">
+                                                <i class="glyphicon glyphicon-edit"></i>
+                                                {lang t="system|edit"}
+                                            </a>
+                                        {/if}
+                                        {if $can_delete_item === true}
+                                            <a href="{uri args="acp/menus/items/delete/entries_`$row.id`"}" class="btn btn-danger btn-xs btn-block" title="{lang t="menus|admin_items_delete"}">
+                                                <i class="glyphicon glyphicon-remove"></i>
+                                                {lang t="system|delete"}
+                                            </a>
+                                        {/if}
                                     </td>
                                 {/if}
                             </tr>

@@ -24,35 +24,35 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected $menuRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Cache
-     */
-    protected $menusCache;
-    /**
      * @var \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation
      */
     protected $menuFormValidation;
+    /**
+     * @var Menus\Model\MenusModel
+     */
+    protected $menusModel;
 
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext             $context
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository          $menuRepository
-     * @param \ACP3\Modules\ACP3\Menus\Cache                         $menusCache
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository $menuRepository
+     * @param Menus\Model\MenusModel $menusModel
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation $menuFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\Repository\MenuRepository $menuRepository,
-        Menus\Cache $menusCache,
+        Menus\Model\MenusModel $menusModel,
         Menus\Validation\MenuFormValidation $menuFormValidation
     ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->menuRepository = $menuRepository;
-        $this->menusCache = $menusCache;
+        $this->menusModel = $menusModel;
         $this->menuFormValidation = $menuFormValidation;
     }
 
@@ -84,25 +84,18 @@ class Edit extends Core\Controller\AbstractAdminAction
 
     /**
      * @param array $formData
-     * @param int   $id
+     * @param int   $menuId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $id)
+    protected function executePost(array $formData, $menuId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $menuId) {
             $this->menuFormValidation
-                ->setMenuId($id)
+                ->setMenuId($menuId)
                 ->validate($formData);
 
-            $updateValues = [
-                'index_name' => $formData['index_name'],
-                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
-            ];
-
-            $bool = $this->menuRepository->update($updateValues, $id);
-
-            $this->menusCache->saveMenusCache();
+            $bool = $this->menusModel->saveMenu($formData, $menuId);
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 

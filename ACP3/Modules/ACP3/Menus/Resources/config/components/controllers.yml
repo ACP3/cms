@@ -4,7 +4,7 @@ services:
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
-      - '@menus.model.menurepository'
+      - '@menus.model.menus_model'
       - '@menus.validator.menu'
 
   menus.controller.admin.index.delete:
@@ -22,7 +22,7 @@ services:
       - '@core.context.admin'
       - '@core.helpers.formToken'
       - '@menus.model.menurepository'
-      - '@menus.cache'
+      - '@menus.model.menus_model'
       - '@menus.validator.menu'
 
   menus.controller.admin.index.index:
