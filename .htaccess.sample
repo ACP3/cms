@@ -1,4 +1,4 @@
-<FilesMatch "\.(tpl(\.php)?|yml)$">
+<FilesMatch "(\.tpl(\.php)?|\.yml|\.log|composer\.(json|lock))$">
     <IfModule mod_authz_core.c>
         Require all denied
     </IfModule>
