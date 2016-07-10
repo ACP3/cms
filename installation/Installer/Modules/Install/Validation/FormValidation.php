@@ -4,6 +4,7 @@ namespace ACP3\Installer\Modules\Install\Validation;
 use ACP3\Core;
 use ACP3\Installer\Modules\Install\Validation\ValidationRules\ConfigFileValidationRule;
 use ACP3\Installer\Modules\Install\Validation\ValidationRules\DatabaseConnectionValidationRule;
+use ACP3\Installer\Modules\Install\Validation\ValidationRules\DesignExistsValidationRule;
 
 /**
  * Class FormValidation
@@ -109,7 +110,15 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $this->configFilePath,
                     'message' => $this->translator->t('install', 'wrong_chmod_for_config_file')
-                ]);
+                ])
+            ->addConstraint(
+                DesignExistsValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'design',
+                    'message' => $this->translator->t('install', 'select_valid_design')
+                ]
+            );
 
         $this->validator->validate();
     }

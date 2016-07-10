@@ -1,0 +1,9 @@
+services:
+  install.model.install_model:
+    class: ACP3\Installer\Modules\Install\Model\InstallModel
+    arguments:
+      - '@service_container'
+      - '@core.environment.application_path'
+      - '@core.helpers.secure'
+      - '@core.lang'
+      - '@install.helpers.install'

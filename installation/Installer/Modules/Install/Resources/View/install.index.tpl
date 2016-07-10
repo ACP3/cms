@@ -110,6 +110,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="design" class="col-sm-2 control-label required">{lang t="install|design"}</label>
+                        <div class="col-sm-10">
+                            <select name="design" id="design" class="form-control">
+                                {foreach $designs as $row}
+                                    <option value="{$row.dir}"{$row.selected}>{$row.name}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="date-format-long" class="col-sm-2 control-label required">{lang t="install|date_format_long"}</label>
 
                         <div class="col-sm-10">

@@ -38,3 +38,6 @@ services:
     class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
     arguments:
       - '@service_container'
+
+  core.xml:
+    class: ACP3\Core\XML

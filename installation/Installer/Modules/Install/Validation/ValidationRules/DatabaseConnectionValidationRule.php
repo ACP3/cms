@@ -42,7 +42,6 @@ class DatabaseConnectionValidationRule extends AbstractValidationRule
                 return true;
             } catch (\Exception $e) {
                 $this->setMessage(sprintf($this->getMessage(), $e->getMessage()));
-                return false;
             }
         }
 

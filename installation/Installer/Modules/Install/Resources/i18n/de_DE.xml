@@ -28,6 +28,7 @@
         <item key="disclaimer">Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte
             externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.
         </item>
+        <item key="design">Design</item>
         <item key="email">E-Mail-Adresse</item>
         <item key="error_messages">Ausgabe von Fehlermeldungen:</item>
         <item key="failure">Es sind folgende Fehler aufgetreten:</item>
@@ -92,6 +93,7 @@
         <item key="site_title">Titel der Website</item>
         <item key="select_language">Sprache auswählen</item>
         <item key="select_time_zone">Bitte wählen Sie die Zeitzone aus.</item>
+        <item key="select_valid_design">Bitte wählen Sie ein gültiges Design aus.</item>
         <item key="step_1_legend">Im Detail wird Sie die Installationsroutine durch folgende Schritte führen:</item>
         <item key="step_1_list_item_1">Einsicht in die Lizenz.</item>
         <item key="step_1_list_item_2">Überprüfung der Serverkonfiguration, ob alle Anforderungen, die das ACP3 4.0

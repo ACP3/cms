@@ -22,7 +22,8 @@ services:
     arguments:
       - '@core.context.install'
       - '@core.date'
-      - '@core.helpers.secure'
+      - '@core.xml'
       - '@core.helpers.date'
-      - '@install.helpers.install'
+      - '@core.helpers.forms'
+      - '@install.model.install_model'
       - '@install.validator'

@@ -27,6 +27,7 @@
         <item key="decline">Decline</item>
         <item key="disclaimer">
             <![CDATA[Despite careful contentwise control we do not take over adhesion for contents of external hyperlinks. Exclusively the operators are responsible for the contents of the linked pages.]]></item>
+        <item key="design">Design</item>
         <item key="email">E-mail address</item>
         <item key="error_messages">Output of error messages:</item>
         <item key="failure">The following errors have occurred:</item>
@@ -90,6 +91,7 @@
         <item key="site_title">Website title</item>
         <item key="select_language">Select language</item>
         <item key="select_time_zone">Please select the time zone.</item>
+        <item key="select_valid_design">Please select a valid design.</item>
         <item key="step_1_legend">In detail, the installer will guide you through the following steps:</item>
         <item key="step_1_list_item_1">Access to the licence agreement.</item>
         <item key="step_1_list_item_2">Verifying the server configuration, if all requirements imposed by the ACP3 4.0
