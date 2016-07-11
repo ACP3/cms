@@ -171,7 +171,8 @@ class Modules extends Core\Controller\AbstractAdminAction
             $this->appPath->getCacheDir() . 'http',
             $this->appPath->getCacheDir() . 'tpl_compiled',
             $this->appPath->getCacheDir() . 'tpl_cached',
-            $this->appPath->getCacheDir() . 'sql/container.php'
+            $this->appPath->getCacheDir() . 'container.php',
+            $this->appPath->getCacheDir() . 'container.php.meta',
         ]);
     }
 
