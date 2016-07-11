@@ -99,7 +99,7 @@ class Modules extends Core\Controller\AbstractAdminAction
             }
 
             $serviceId = strtolower($moduleDirectory . '.installer.schema');
-            $container = $this->installerHelper->updateServiceContainer(true);
+            $container = $this->installerHelper->updateServiceContainer($this->request, true);
             $this->moduleInstallerExists($container, $serviceId);
 
             /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
@@ -238,7 +238,7 @@ class Modules extends Core\Controller\AbstractAdminAction
             }
 
             $serviceId = strtolower($moduleDirectory . '.installer.schema');
-            $container = $this->installerHelper->updateServiceContainer(true);
+            $container = $this->installerHelper->updateServiceContainer($this->request, true);
             $this->moduleInstallerExists($container, $serviceId);
 
             /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
@@ -282,7 +282,7 @@ class Modules extends Core\Controller\AbstractAdminAction
             }
 
             $serviceId = strtolower($moduleDirectory . '.installer.schema');
-            $container = $this->installerHelper->updateServiceContainer();
+            $container = $this->installerHelper->updateServiceContainer($this->request);
             $this->moduleInstallerExists($container, $serviceId);
 
             /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
