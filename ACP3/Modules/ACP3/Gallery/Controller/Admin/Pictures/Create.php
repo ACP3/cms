@@ -149,15 +149,15 @@ class Create extends AbstractFormAction
     /**
      * @param array $formData
      * @param array $settings
-     * @param int   $id
+     * @param int   $galleryId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings, $id)
+    protected function executePost(array $formData, array $settings, $galleryId)
     {
         return $this->actionHelper->handleCreatePostAction(
-            function () use ($formData, $settings, $id) {
-                $file = $this->request->getFiles()->get('file');
+            function () use ($formData, $settings, $galleryId) {
+                $file = $this->request->getFiles()->get('file', []);
 
                 $this->pictureFormValidation
                     ->setFileRequired(true)
@@ -165,12 +165,12 @@ class Create extends AbstractFormAction
 
                 $upload = new Core\Helpers\Upload($this->appPath, 'gallery');
                 $result = $upload->moveFile($file['tmp_name'], $file['name']);
-                $picNum = $this->pictureRepository->getLastPictureByGalleryId($id);
+                $picNum = $this->pictureRepository->getLastPictureByGalleryId($galleryId);
 
                 $insertValues = [
                     'id' => '',
                     'pic' => !is_null($picNum) ? $picNum + 1 : 1,
-                    'gallery_id' => $id,
+                    'gallery_id' => $galleryId,
                     'file' => $result['name'],
                     'description' => $this->get('core.helpers.secure')->strEncode($formData['description'], true),
                     'comments' => $settings['comments'] == 1 ? (isset($formData['comments']) && $formData['comments'] == 1 ? 1 : 0) : $settings['comments'],
@@ -179,13 +179,13 @@ class Create extends AbstractFormAction
                 $lastId = $this->pictureRepository->insert($insertValues);
                 $bool2 = $this->generatePictureAlias($lastId);
 
-                $this->galleryCache->saveCache($id);
+                $this->galleryCache->saveCache($galleryId);
 
                 Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
                 return $lastId && $bool2;
             },
-            'acp/gallery/index/edit/id_' . $id
+            'acp/gallery/index/edit/id_' . $galleryId
         );
     }
 

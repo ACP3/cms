@@ -99,7 +99,7 @@ class Edit extends AbstractFormAction
 
             return [
                 'form' => array_merge($picture, $this->request->getPost()->all()),
-                'gallery_id' => $id,
+                'gallery_id' => $picture['gallery_id'],
                 'form_token' => $this->formTokenHelper->renderFormToken()
             ];
         }
@@ -111,15 +111,15 @@ class Edit extends AbstractFormAction
      * @param array $formData
      * @param array $settings
      * @param array $picture
-     * @param int   $id
+     * @param int   $pictureId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings, array $picture, $id)
+    protected function executePost(array $formData, array $settings, array $picture, $pictureId)
     {
         return $this->actionHelper->handleEditPostAction(
-            function () use ($formData, $settings, $picture, $id) {
-                $file = $this->request->getFiles()->get('file');
+            function () use ($formData, $settings, $picture, $pictureId) {
+                $file = $this->request->getFiles()->get('file', []);
 
                 $this->pictureFormValidation
                     ->setFileRequired(false)
@@ -133,14 +133,14 @@ class Edit extends AbstractFormAction
                 if (!empty($file)) {
                     $upload = new Core\Helpers\Upload($this->appPath, 'gallery');
                     $result = $upload->moveFile($file['tmp_name'], $file['name']);
-                    $oldFile = $this->pictureRepository->getFileById($id);
+                    $oldFile = $this->pictureRepository->getFileById($pictureId);
 
                     $this->galleryHelpers->removePicture($oldFile);
 
                     $updateValues = array_merge($updateValues, ['file' => $result['name']]);
                 }
 
-                $bool = $this->pictureRepository->update($updateValues, $id);
+                $bool = $this->pictureRepository->update($updateValues, $pictureId);
 
                 $this->galleryCache->saveCache($picture['gallery_id']);
 
