@@ -101,9 +101,10 @@
             }
         },
         processAjaxRequest: function () {
-            var that = this,
+            var self = this,
                 $form = $(this.element),
                 hasCustomData = !$.isEmptyObject(this.settings.customFormData),
+                processData = true,
                 data = this.settings.customFormData || {};
 
             if ($form.attr('method')) {
@@ -123,23 +124,25 @@
                         }
                     }
                 }
+
+                processData = false;
             }
 
             $.ajax({
                 url: $form.attr('action') || $form.attr('href'),
                 type: $form.attr('method') ? $form.attr('method').toUpperCase() : 'GET',
                 data: data,
-                processData: hasCustomData,
-                contentType: (hasCustomData) ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,
+                processData: processData,
+                contentType: processData ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,
                 beforeSend: function () {
-                    that.showLoadingLayer();
+                    self.showLoadingLayer();
                 },
                 success: function (responseData) {
                     try {
                         if (responseData.redirect_url) {
                             window.location.href = responseData.redirect_url;
                         } else {
-                            var $content = $(that.settings.targetElement),
+                            var $content = $(self.settings.targetElement),
                                 offsetTop = $content.offset().top;
 
                             // Scroll to the beginning of the content area, if the current viewport is near the bottom
@@ -153,7 +156,7 @@
                             }
 
                             if (responseData.success === false) {
-                                that.handleFormErrorMessages($form, responseData.content);
+                                self.handleFormErrorMessages($form, responseData.content);
                             } else {
                                 $content.html(responseData);
 
@@ -165,7 +168,7 @@
                     } catch (err) {
                         console.log(err.message);
                     } finally {
-                        that.hideLoadingLayer();
+                        self.hideLoadingLayer();
                     }
                 }
             });

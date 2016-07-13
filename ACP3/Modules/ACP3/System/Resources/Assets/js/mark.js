@@ -77,13 +77,8 @@ jQuery.fn.deleteMarkedResults = function (options) {
 
         if ($entries.length > 0) {
             var data = {
-                action: 'confirmed',
-                entries: []
+                action: 'confirmed'
             };
-
-            $entries.each(function () {
-                data.entries.push($(this).val());
-            });
 
             var confirmationText = $entries.length == 1 ? settings.language.confirmationTextSingle : (settings.language.confirmationTextMultiple.replace('{items}', $entries.length));
 
@@ -91,7 +86,7 @@ jQuery.fn.deleteMarkedResults = function (options) {
                 if (result) {
                     var $form = $this.closest('form');
 
-                    $form.formSubmit(data);
+                    $form.formSubmit({ customFormData: data });
                     $form.triggerHandler('submit');
                 }
             });
