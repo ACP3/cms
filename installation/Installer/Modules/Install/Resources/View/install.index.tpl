@@ -150,6 +150,16 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <div class="checkbox">
+                                <label for="sample-data">
+                                    <input type="checkbox" name="sample_data" id="sample-data" value="1">
+                                    {lang t="install|install_sample_data"}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

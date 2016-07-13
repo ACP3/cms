@@ -43,6 +43,7 @@
         <item key="index_licence">Lizenz</item>
         <item key="index_requirements">Voraussetzungen</item>
         <item key="install_index">Konfiguration</item>
+        <item key="install_sample_data">Beispieldaten installieren</item>
         <item key="installation">Installation</item>
         <item key="installation_error">
             <![CDATA[Während der Installation ist ein Fehler aufgetreten, wodurch die Installation nicht fortgesetzt werden kann. Bitte überprüfen Sie nochmals alle Eingaben, insbesondere ob alle Angaben in der Konfigurationsdatei stimmen.<br />Bitte klicken Sie auf &quot;Zurück&quot;, um wieder zum Anfang der Installation zu gelangen.]]></item>

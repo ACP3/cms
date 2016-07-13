@@ -167,28 +167,20 @@ class InstallModel
     }
 
     /**
-     * @param array $formData
-     *
      * @throws \Exception
      */
-    public function installSampleData(array $formData)
+    public function installSampleData()
     {
-        $bool = $this->createSuperUser($formData);
-
-        // Install module sample data
-        $bool2 = $this->installModuleSampleData();
-
-        if ($bool === false || $bool2 === false) {
+        if ($this->installModuleSampleData() === false) {
             throw new \Exception("Error while installing module sample data.");
         }
     }
 
     /**
      * @param array $formData
-     *
-     * @return bool
+     * @throws \Exception
      */
-    private function createSuperUser(array $formData)
+    public function createSuperUser(array $formData)
     {
         /** @var \ACP3\Core\Database\Connection db */
         $this->db = $this->container->get('core.db');
@@ -204,7 +196,9 @@ class InstallModel
             "INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (1, 4);"
         ];
 
-        return $this->container->get('core.modules.schemaHelper')->executeSqlQueries($queries);
+        if ($this->container->get('core.modules.schemaHelper')->executeSqlQueries($queries) === false) {
+            throw new \Exception("Error while creating the super user.");
+        }
     }
 
     /**

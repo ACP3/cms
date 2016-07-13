@@ -122,7 +122,12 @@ class Index extends AbstractAction
             $this->installModel->updateContainer($this->request);
             $this->installModel->installModules();
             $this->installModel->installAclResources();
-            $this->installModel->installSampleData($formData);
+            $this->installModel->createSuperUser($formData);
+
+            if (isset($formData['sample_data']) && $formData['sample_data'] == 1) {
+                $this->installModel->installSampleData();
+            }
+
             $this->installModel->configureModules($formData);
 
             $this->setTemplate('install/install.result.tpl');

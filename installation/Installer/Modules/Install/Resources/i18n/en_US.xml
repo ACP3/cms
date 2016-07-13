@@ -41,6 +41,7 @@
         <item key="index_licence">Licence</item>
         <item key="index_requirements">Requirements</item>
         <item key="install_index">Configuration</item>
+        <item key="install_sample_data">Install sample data</item>
         <item key="installation">Installation</item>
         <item key="installation_error">
             <![CDATA[During the installation an error has occurred, whereby the installation can't be continued. Please re-check all the entries, especially if all the information in the configuration file is correct.<br />Please click on the &quot;Back&quot;-button, to go back to the start of the installation process.]]></item>
