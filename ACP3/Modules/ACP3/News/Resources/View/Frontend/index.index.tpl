@@ -37,6 +37,7 @@
                         <span>({$row.comments_count})</span>
                     </footer>
                 {/if}
+                {event name="news.event.news_index_after" id=$row.id title=$row.title}
             </article>
         {/foreach}
         {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}

@@ -70,13 +70,16 @@ class Details extends Core\Controller\AbstractFrontendAction
             $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
             $article = $this->articlesCache->getCache($id);
-            
+
             $this->breadcrumb->replaceAncestor($article['title'], '', true);
 
             return [
-                'page' => $this->pageBreaksHelper->splitTextIntoPages(
-                    $this->view->fetchStringAsTemplate($article['text']),
-                    $this->request->getUriWithoutPages()
+                'page' => array_merge(
+                    $article,
+                    $this->pageBreaksHelper->splitTextIntoPages(
+                        $this->view->fetchStringAsTemplate($article['text']),
+                        $this->request->getUriWithoutPages()
+                    )
                 )
             ];
         }

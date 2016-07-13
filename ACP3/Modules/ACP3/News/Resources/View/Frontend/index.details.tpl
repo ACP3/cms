@@ -20,6 +20,7 @@
                     </div>
                 </footer>
             {/if}
+            {event name="news.event.news_details_after" id=$news.id title=$news.title}
         </section>
         {if $comments_allowed === true}
             <section id="comments">

@@ -3,6 +3,7 @@
 {block CONTENT}
     {$page.toc}
     {$page.text|rewrite_uri}
+    {event name="articles.event.article_details_after" id=$page.id title=$page.title}
     {if !empty($page.next) || !empty($page.previous)}
         <ul class="pager" style="clear:both">
             {if !empty($page.previous)}
