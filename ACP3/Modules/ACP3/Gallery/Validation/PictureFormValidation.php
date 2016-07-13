@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Gallery\Validation;
 
 use ACP3\Core;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class PictureFormValidation
@@ -13,6 +14,10 @@ class PictureFormValidation extends Core\Validation\AbstractFormValidation
      * @var bool
      */
     protected $fileRequired = false;
+    /**
+     * @var UploadedFile|null
+     */
+    protected $file;
 
     /**
      * @param boolean $fileRequired
@@ -26,6 +31,16 @@ class PictureFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
+     * @param UploadedFile|null $file
+     * @return $this
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+        return $this;
+    }
+
+    /**
      * @inheritdoc
      */
     public function validate(array $formData)
@@ -35,7 +50,7 @@ class PictureFormValidation extends Core\Validation\AbstractFormValidation
             ->addConstraint(
                 Core\Validation\ValidationRules\PictureValidationRule::class,
                 [
-                    'data' => $formData,
+                    'data' => $this->file,
                     'field' => 'file',
                     'message' => $this->translator->t('gallery', 'invalid_image_selected'),
                     'extra' => [

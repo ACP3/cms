@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class Edit
@@ -119,11 +120,13 @@ class Edit extends AbstractFormAction
     {
         return $this->actionHelper->handleEditPostAction(
             function () use ($formData, $settings, $picture, $pictureId) {
-                $file = $this->request->getFiles()->get('file', []);
+                /** @var UploadedFile $file */
+                $file = $this->request->getFiles()->get('file');
 
                 $this->pictureFormValidation
                     ->setFileRequired(false)
-                    ->validate($file);
+                    ->setFile($file)
+                    ->validate([]);
 
                 $updateValues = [
                     'description' => $this->get('core.helpers.secure')->strEncode($formData['description'], true),
@@ -132,7 +135,7 @@ class Edit extends AbstractFormAction
 
                 if (!empty($file)) {
                     $upload = new Core\Helpers\Upload($this->appPath, 'gallery');
-                    $result = $upload->moveFile($file['tmp_name'], $file['name']);
+                    $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                     $oldFile = $this->pictureRepository->getFileById($pictureId);
 
                     $this->galleryHelpers->removePicture($oldFile);

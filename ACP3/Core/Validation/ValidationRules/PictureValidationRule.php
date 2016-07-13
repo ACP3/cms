@@ -1,6 +1,8 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * Class IsPictureValidationRule
  * @package ACP3\Core\Validation\ValidationRules
@@ -36,7 +38,7 @@ class PictureValidationRule extends AbstractValidationRule
 
         if ($this->fileUploadValidationRule->isValid($data)) {
             return $this->isPicture(
-                $data['tmp_name'],
+                $data instanceof UploadedFile ? $data->getPathname() : $data['tmp_name'],
                 $params['width'],
                 $params['height'],
                 $params['filesize']

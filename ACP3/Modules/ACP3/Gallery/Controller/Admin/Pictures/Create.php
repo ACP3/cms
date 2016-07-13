@@ -11,6 +11,7 @@ use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class Create
@@ -157,14 +158,16 @@ class Create extends AbstractFormAction
     {
         return $this->actionHelper->handleCreatePostAction(
             function () use ($formData, $settings, $galleryId) {
-                $file = $this->request->getFiles()->get('file', []);
+                /** @var UploadedFile $file */
+                $file = $this->request->getFiles()->get('file');
 
                 $this->pictureFormValidation
                     ->setFileRequired(true)
-                    ->validate($file);
+                    ->setFile($file)
+                    ->validate([]);
 
                 $upload = new Core\Helpers\Upload($this->appPath, 'gallery');
-                $result = $upload->moveFile($file['tmp_name'], $file['name']);
+                $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $picNum = $this->pictureRepository->getLastPictureByGalleryId($galleryId);
 
                 $insertValues = [

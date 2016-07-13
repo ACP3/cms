@@ -109,7 +109,7 @@ class Create extends Core\Controller\AbstractAdminAction
             ];
             if (!empty($file)) {
                 $upload = new Core\Helpers\Upload($this->appPath, 'categories');
-                $result = $upload->moveFile($file['tmp_name'], $file['name']);
+                $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $insertValues['picture'] = $result['name'];
             }
 

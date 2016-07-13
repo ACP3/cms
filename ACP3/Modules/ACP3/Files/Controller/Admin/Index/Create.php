@@ -7,7 +7,6 @@ namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Files;
 
 /**
@@ -130,7 +129,7 @@ class Create extends AbstractFormAction
 
             if (is_array($file) === true) {
                 $upload = new Core\Helpers\Upload($this->appPath, 'files');
-                $result = $upload->moveFile($file['tmp_name'], $file['name']);
+                $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $newFile = $result['name'];
                 $filesize = $result['size'];
             } else {

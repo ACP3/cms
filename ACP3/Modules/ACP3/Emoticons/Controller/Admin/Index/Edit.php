@@ -105,7 +105,7 @@ class Edit extends Core\Controller\AbstractAdminAction
             if (empty($file) === false) {
                 $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
                 $upload->removeUploadedFile($emoticon['img']);
-                $result = $upload->moveFile($file['tmp_name'], $file['name']);
+                $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $updateValues['img'] = $result['name'];
             }
 

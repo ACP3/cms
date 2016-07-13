@@ -88,7 +88,7 @@ class Create extends Core\Controller\AbstractAdminAction
                 ->validate($formData);
 
             $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
-            $result = $upload->moveFile($file['tmp_name'], $file['name']);
+            $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
 
             $insertValues = [
                 'id' => '',

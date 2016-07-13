@@ -8,9 +8,9 @@ namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\Files\Helpers;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class Edit
@@ -136,7 +136,7 @@ class Edit extends AbstractFormAction
     protected function executePost(array $formData, array $settings, array $dl, $fileId)
     {
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $dl, $fileId) {
-            $file = [];
+            $file = null;
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
             } elseif ($this->request->getFiles()->has('file_internal')) {
@@ -177,7 +177,7 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param string|array $file
+     * @param string|UploadedFile $file
      * @param array        $formData
      * @param string       $currentFileName
      *
@@ -187,8 +187,8 @@ class Edit extends AbstractFormAction
     {
         $upload = new Core\Helpers\Upload($this->appPath, 'files');
 
-        if (is_array($file) === true) {
-            $result = $upload->moveFile($file['tmp_name'], $file['name']);
+        if ($file instanceof UploadedFile) {
+            $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
             $newFile = $result['name'];
             $fileSize = $result['size'];
         } else {
