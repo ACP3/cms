@@ -44,7 +44,7 @@ class DuplicateCategoryValidationRule extends AbstractValidationRule
             'category_id' => ''
         ], $extra);
 
-        return $this->categoriesHelper->categoryIsDuplicate(
+        return !$this->categoriesHelper->categoryIsDuplicate(
             $data,
             $params['module_id'],
             $params['category_id']

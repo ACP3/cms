@@ -158,7 +158,7 @@ class ModuleInfoCache
                         'name' => $this->getModuleName($moduleInfo, $moduleName),
                         'categories' => isset($moduleInfo['categories']),
                         'protected' => isset($moduleInfo['protected']),
-                        'dependencies' => array_values($this->xml->parseXmlFile($path, 'info/dependencies')),
+                        'dependencies' => $this->getModuleDependencies($path),
                     ];
                 }
             }
@@ -195,5 +195,20 @@ class ModuleInfoCache
         }
 
         return $moduleInfo['name'];
+    }
+
+    /**
+     * @param string $path
+     * @return array
+     */
+    protected function getModuleDependencies($path)
+    {
+        $dependencies = $this->xml->parseXmlFile($path, '/module/info/dependencies');
+
+        if (isset($dependencies['module'])) {
+            return is_array($dependencies['module']) ? $dependencies['module'] : [$dependencies['module']];
+        }
+
+        return [];
     }
 }

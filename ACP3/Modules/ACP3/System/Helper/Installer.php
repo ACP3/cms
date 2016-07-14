@@ -128,7 +128,8 @@ class Installer
                 $path = $this->appPath->getModulesDir() . $vendor . '/' . ucfirst($moduleName) . '/Resources/config/module.xml';
 
                 if (is_file($path) === true) {
-                    return array_values($this->xml->parseXmlFile($path, '/module/info/dependencies'));
+                    $dependencies = $this->xml->parseXmlFile($path, '/module/info/dependencies');
+                    return is_array($dependencies['module']) ? $dependencies['module'] : [$dependencies['module']];
                 }
             }
         }
