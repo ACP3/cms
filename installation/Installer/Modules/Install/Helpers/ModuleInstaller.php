@@ -34,6 +34,10 @@ class ModuleInstaller
      * @var Install
      */
     protected $installHelper;
+    /**
+     * @var array
+     */
+    protected $results = [];
 
     /**
      * ModuleInstaller constructor.
@@ -57,15 +61,22 @@ class ModuleInstaller
     /**
      * @param ContainerInterface $container
      * @param array $modules
+     * @return array
      * @throws \Exception
      */
     public function installModules(ContainerInterface $container, array $modules = [])
     {
         foreach ($this->vendor->getVendors() as $vendor) {
             $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
-            $modules = count($modules) > 0 ? $modules : Filesystem::scandir($vendorPath);
+            $vendorModules = count($modules) > 0 ? $modules : Filesystem::scandir($vendorPath);
 
-            foreach ($modules as $module) {
+            foreach ($vendorModules as $module) {
+                $module = strtolower($module);
+
+                if (isset($this->results[$module])) {
+                    continue;
+                }
+
                 $modulePath = $vendorPath . ucfirst($module) . '/';
                 $moduleConfigPath = $modulePath . 'Resources/config/module.xml';
 
@@ -79,9 +90,13 @@ class ModuleInstaller
                     if ($this->installHelper->installModule($module, $container) === false) {
                         throw new \Exception("Error while installing module {$module}.");
                     }
+
+                    $this->results[$module] = true;
                 }
             }
         }
+
+        return $this->results;
     }
 
     /**

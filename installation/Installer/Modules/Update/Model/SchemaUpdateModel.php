@@ -76,9 +76,15 @@ class SchemaUpdateModel
     {
         foreach ($this->vendor->getVendors() as $vendor) {
             $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
-            $modules = count($modules) > 0 ? $modules : Filesystem::scandir($vendorPath);
+            $vendorModules = count($modules) > 0 ? $modules : Filesystem::scandir($vendorPath);
 
-            foreach ($modules as $module) {
+            foreach ($vendorModules as $module) {
+                $module = strtolower($module);
+
+                if (isset($this->results[$module])) {
+                    continue;
+                }
+
                 $modulePath = $vendorPath . ucfirst($module) . '/';
                 $moduleConfigPath = $modulePath . 'Resources/config/module.xml';
 
@@ -89,7 +95,7 @@ class SchemaUpdateModel
                         $this->updateModules($container, $dependencies);
                     }
 
-                    $this->results[strtolower($module)] = $this->updateModule($container, $module);
+                    $this->results[$module] = $this->updateModule($container, $module);
                 }
             }
         }
