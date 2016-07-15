@@ -21,10 +21,26 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     public function install(SchemaInterface $schema)
     {
+        if (!$this->moduleNeedsInstallation($schema)) {
+            return true;
+        }
+
         return
             $this->executeSqlQueries($schema->createTables(), $schema->getModuleName()) &&
             $this->addToModulesTable($schema->getModuleName(), $schema->getSchemaVersion()) &&
             $this->installSettings($schema->getModuleName(), $schema->settings());
+    }
+
+    /**
+     * @param SchemaInterface $schema
+     * @return bool
+     */
+    protected function moduleNeedsInstallation(SchemaInterface $schema)
+    {
+        $tableName = $this->db->getPrefixedTableName(System\Model\Repository\ModuleRepository::TABLE_NAME);
+        $modulesTableExists = $this->db->fetchColumn("SHOW TABLES LIKE '{$tableName}'");
+
+        return !$modulesTableExists || !$this->systemModuleRepository->moduleExists($schema->getModuleName());
     }
 
     /**
@@ -37,7 +53,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     protected function addToModulesTable($moduleName, $schemaVersion)
     {
-        // Modul in die Modules-SQL-Tabelle eintragen
         $insertValues = [
             'id' => '',
             'name' => $moduleName,
@@ -74,7 +89,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
                 }
                 $this->db->getConnection()->commit();
             } catch (\Exception $e) {
-                $this->db->getConnection()->rollback();
+                $this->db->getConnection()->rollBack();
 
                 $this->container->get('core.logger')->warning('installer', $e);
                 return false;

@@ -7,5 +7,8 @@
         <tables>users</tables>
         <version core="true"/>
         <protected/>
+        <dependencies>
+            <module>system</module>
+        </dependencies>
     </info>
 </module>

@@ -17,6 +17,7 @@
                 <li class="active"><a href="#tabs-1" data-toggle="tab">{lang t="install|db_connection_settings"}</a></li>
                 <li><a href="#tabs-2" data-toggle="tab">{lang t="install|admin_account"}</a></li>
                 <li><a href="#tabs-3" data-toggle="tab">{lang t="install|general"}</a></li>
+                <li><a href="#tabs-4" data-toggle="tab">{lang t="install|advanced"}</a></li>
             </ul>
             <div class="tab-content">
                 <div id="tabs-1" class="tab-pane fade in active">
@@ -150,6 +151,8 @@
                             </select>
                         </div>
                     </div>
+                </div>
+                <div id="tabs-4" class="tab-pane fade">
                     <div class="form-group">
                         <div class="col-sm-10 col-sm-offset-2">
                             <div class="checkbox">

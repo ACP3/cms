@@ -6,6 +6,8 @@
         <author>Tino Goratsch</author>
         <version core="true"/>
         <dependencies>
+            <module>permissions</module>
+            <module>system</module>
             <module>categories</module>
         </dependencies>
     </info>

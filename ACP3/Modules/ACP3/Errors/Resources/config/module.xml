@@ -6,5 +6,9 @@
         <author>Tino Goratsch</author>
         <version core="true"/>
         <protected/>
+        <dependencies>
+            <module>permissions</module>
+            <module>system</module>
+        </dependencies>
     </info>
 </module>

@@ -1,14 +1,5 @@
 imports:
   - { resource: components/controllers.yml }
+  - { resource: components/helpers.yml }
   - { resource: components/models.yml }
   - { resource: components/validation.yml }
-
-services:
-  install.helpers.install:
-    class: ACP3\Installer\Modules\Install\Helpers\Install
-
-  install.helpers.requirements:
-    class: ACP3\Installer\Modules\Install\Helpers\Requirements
-    arguments:
-      - '@core.environment.application_path'
-      - '@core.lang'

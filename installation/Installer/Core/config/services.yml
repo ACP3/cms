@@ -41,3 +41,8 @@ services:
 
   core.xml:
     class: ACP3\Core\XML
+
+  core.modules.vendors:
+    class: ACP3\Core\Modules\Vendor
+    arguments:
+      - '@core.environment.application_path'

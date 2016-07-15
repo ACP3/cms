@@ -10,10 +10,12 @@ namespace ACP3\Installer\Modules\Install\Model;
 use ACP3\Core\Filesystem;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\Modules\Vendor;
 use ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 use ACP3\Installer\Core\I18n\Translator;
 use ACP3\Installer\Modules\Install\Helpers\Install;
+use ACP3\Installer\Modules\Install\Helpers\ModuleInstaller;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -39,27 +41,41 @@ class InstallModel
      * @var \ACP3\Core\Database\Connection
      */
     protected $db;
+    /**
+     * @var ModuleInstaller
+     */
+    protected $moduleInstaller;
+    /**
+     * @var Vendor
+     */
+    protected $vendor;
 
     /**
      * InstallModel constructor.
      * @param ContainerInterface $container
      * @param ApplicationPath $appPath
+     * @param Vendor $vendor
      * @param Secure $secure
      * @param Translator $translator
      * @param Install $installHelper
+     * @param ModuleInstaller $moduleInstaller
      */
     public function __construct(
         ContainerInterface $container,
         ApplicationPath $appPath,
+        Vendor $vendor,
         Secure $secure,
         Translator $translator,
-        Install $installHelper)
+        Install $installHelper,
+        ModuleInstaller $moduleInstaller)
     {
         $this->container = $container;
         $this->appPath = $appPath;
+        $this->vendor = $vendor;
         $this->secure = $secure;
         $this->translator = $translator;
         $this->installHelper = $installHelper;
+        $this->moduleInstaller = $moduleInstaller;
     }
 
     /**
@@ -101,19 +117,7 @@ class InstallModel
      */
     public function installModules()
     {
-        $modules = array_merge(['system', 'users'], Filesystem::scandir($this->appPath->getModulesDir() . 'ACP3/'));
-        $alreadyInstalled = [];
-
-        foreach ($modules as $module) {
-            $module = strtolower($module);
-            if (!in_array($module, $alreadyInstalled)) {
-                if ($this->installHelper->installModule($module, $this->container) === false) {
-                    throw new \Exception("Error while installing module {$module}.");
-                }
-
-                $alreadyInstalled[] = $module;
-            }
-        }
+        $this->moduleInstaller->installModules($this->container);
     }
 
     /**
@@ -121,9 +125,11 @@ class InstallModel
      */
     public function installAclResources()
     {
-        foreach (Filesystem::scandir($this->appPath->getModulesDir() . 'ACP3/') as $module) {
-            if ($this->installHelper->installResources($module, $this->container) === false) {
-                throw new \Exception("Error while installing ACL resources for the module {$module}.");
+        foreach ($this->vendor->getVendors() as $vendor) {
+            foreach (Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/') as $module) {
+                if ($this->installHelper->installResources($module, $this->container) === false) {
+                    throw new \Exception("Error while installing ACL resources for the module {$module}.");
+                }
             }
         }
     }
@@ -167,16 +173,6 @@ class InstallModel
     }
 
     /**
-     * @throws \Exception
-     */
-    public function installSampleData()
-    {
-        if ($this->installModuleSampleData() === false) {
-            throw new \Exception("Error while installing module sample data.");
-        }
-    }
-
-    /**
      * @param array $formData
      * @throws \Exception
      */
@@ -202,23 +198,23 @@ class InstallModel
     }
 
     /**
-     * @return bool
+     * @throws \Exception
      */
-    private function installModuleSampleData()
+    public function installSampleData()
     {
-        foreach (Filesystem::scandir($this->appPath->getModulesDir() . 'ACP3/') as $module) {
-            $module = strtolower($module);
-            $sampleDataInstallResult = $this->installHelper->installSampleData(
-                $module,
-                $this->container,
-                $this->container->get('core.modules.schemaHelper')
-            );
+        foreach ($this->vendor->getVendors() as $vendor) {
+            foreach (Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/') as $module) {
+                $module = strtolower($module);
+                $sampleDataInstallResult = $this->installHelper->installSampleData(
+                    $module,
+                    $this->container,
+                    $this->container->get('core.modules.schemaHelper')
+                );
 
-            if ($sampleDataInstallResult === false) {
-                return false;
+                if ($sampleDataInstallResult === false) {
+                    throw new \Exception("Error while installing module sample data.");
+                }
             }
         }
-
-        return true;
     }
 }
