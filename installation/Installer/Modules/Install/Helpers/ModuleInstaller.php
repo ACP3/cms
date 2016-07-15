@@ -8,6 +8,7 @@ namespace ACP3\Installer\Modules\Install\Helpers;
 
 
 use ACP3\Core\Filesystem;
+use ACP3\Core\Modules\ModuleDependenciesTrait;
 use ACP3\Core\Modules\Vendor;
 use ACP3\Core\XML;
 use ACP3\Installer\Core\Environment\ApplicationPath;
@@ -15,6 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ModuleInstaller
 {
+    use ModuleDependenciesTrait;
+
     /**
      * @var ApplicationPath
      */
@@ -58,9 +61,7 @@ class ModuleInstaller
      */
     public function installModules(ContainerInterface $container, array $modules = [])
     {
-        $vendors = $this->vendor->getVendors();
-
-        foreach ($vendors as $vendor) {
+        foreach ($this->vendor->getVendors() as $vendor) {
             $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
             $modules = count($modules) > 0 ? $modules : Filesystem::scandir($vendorPath);
 
@@ -84,17 +85,10 @@ class ModuleInstaller
     }
 
     /**
-     * @param string $path
-     * @return array
+     * @return XML
      */
-    private function getModuleDependencies($path)
+    protected function getXml()
     {
-        $dependencies = $this->xml->parseXmlFile($path, '/module/info/dependencies');
-
-        if (isset($dependencies['module'])) {
-            return is_array($dependencies['module']) ? $dependencies['module'] : [$dependencies['module']];
-        }
-
-        return [];
+        return $this->xml;
     }
 }

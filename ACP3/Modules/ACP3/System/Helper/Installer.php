@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\System\Helper;
 
 use ACP3\Core;
+use ACP3\Core\XML;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -15,6 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class Installer
 {
+    use Core\Modules\ModuleDependenciesTrait;
+
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
@@ -128,8 +131,7 @@ class Installer
                 $path = $this->appPath->getModulesDir() . $vendor . '/' . ucfirst($moduleName) . '/Resources/config/module.xml';
 
                 if (is_file($path) === true) {
-                    $dependencies = $this->xml->parseXmlFile($path, '/module/info/dependencies');
-                    return is_array($dependencies['module']) ? $dependencies['module'] : [$dependencies['module']];
+                    return $this->getModuleDependencies($path);
                 }
             }
         }
@@ -150,5 +152,13 @@ class Installer
             $this->environment,
             $allModules
         );
+    }
+
+    /**
+     * @return XML
+     */
+    protected function getXml()
+    {
+        return $this->xml;
     }
 }

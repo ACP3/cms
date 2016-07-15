@@ -19,6 +19,8 @@ use ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository;
  */
 class ModuleInfoCache
 {
+    use ModuleDependenciesTrait;
+
     /**
      * @var \ACP3\Core\Cache
      */
@@ -198,17 +200,10 @@ class ModuleInfoCache
     }
 
     /**
-     * @param string $path
-     * @return array
+     * @return XML
      */
-    protected function getModuleDependencies($path)
+    protected function getXml()
     {
-        $dependencies = $this->xml->parseXmlFile($path, '/module/info/dependencies');
-
-        if (isset($dependencies['module'])) {
-            return is_array($dependencies['module']) ? $dependencies['module'] : [$dependencies['module']];
-        }
-
-        return [];
+        return $this->xml;
     }
 }
