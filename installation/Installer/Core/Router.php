@@ -27,11 +27,7 @@ class Router extends Core\Router
     }
 
     /**
-     * @param      $path
-     * @param bool $absolute
-     * @param bool $forceSecure
-     *
-     * @return string
+     * @inheritdoc
      */
     public function route($path, $absolute = false, $forceSecure = false)
     {

@@ -52,13 +52,7 @@ class Router implements RouterInterface
     }
 
     /**
-     * Generates the internal ACP3 hyperlinks
-     *
-     * @param string $path
-     * @param bool   $isAbsolute
-     * @param bool   $forceSecure
-     *
-     * @return string
+     * @inheritdoc
      */
     public function route($path, $isAbsolute = false, $forceSecure = false)
     {
