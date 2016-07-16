@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\Guestbook;
 
 /**
@@ -45,18 +44,16 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $this,
-            $action,
-            function ($items) {
-                $bool = false;
-                foreach ($items as $item) {
-                    $bool = $this->guestbookRepository->delete($item);
-                }
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-                return $bool;
+            $action, function ($items) {
+            $bool = false;
+            foreach ($items as $item) {
+                $bool = $this->guestbookRepository->delete($item);
             }
+
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+            return $bool;
+        }
         );
     }
 }

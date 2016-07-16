@@ -51,27 +51,25 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $this,
-            $action,
-            function ($items) {
-                $bool = false;
+            $action, function ($items) {
+            $bool = false;
 
-                $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
-                foreach ($items as $item) {
-                    if (!empty($item) && $this->emoticonRepository->resultExists($item) === true) {
-                        // Datei ebenfalls löschen
-                        $file = $this->emoticonRepository->getOneImageById($item);
-                        $upload->removeUploadedFile($file);
-                        $bool = $this->emoticonRepository->delete($item);
-                    }
+            $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
+            foreach ($items as $item) {
+                if (!empty($item) && $this->emoticonRepository->resultExists($item) === true) {
+                    // Datei ebenfalls löschen
+                    $file = $this->emoticonRepository->getOneImageById($item);
+                    $upload->removeUploadedFile($file);
+                    $bool = $this->emoticonRepository->delete($item);
                 }
-
-                $this->emoticonsCache->saveCache();
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-                return $bool;
             }
+
+            $this->emoticonsCache->saveCache();
+
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+            return $bool;
+        }
         );
     }
 }

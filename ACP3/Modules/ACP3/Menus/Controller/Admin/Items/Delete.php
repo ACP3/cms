@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
@@ -72,29 +71,26 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $this,
-            $action,
-            function ($items) {
-                $bool = false;
+            $action, function ($items) {
+            $bool = false;
 
-                foreach ($items as $item) {
-                    // URI-Alias löschen
-                    $itemUri = $this->menuItemRepository->getMenuItemUriById($item);
-                    $bool = $this->nestedSet->deleteNode($item, Menus\Model\Repository\MenuItemRepository::TABLE_NAME, true);
+            foreach ($items as $item) {
+                // URI-Alias löschen
+                $itemUri = $this->menuItemRepository->getMenuItemUriById($item);
+                $bool = $this->nestedSet->deleteNode($item, Menus\Model\Repository\MenuItemRepository::TABLE_NAME,
+                    true);
 
-                    if ($this->uriAliasManager) {
-                        $this->uriAliasManager->deleteUriAlias($itemUri);
-                    }
+                if ($this->uriAliasManager) {
+                    $this->uriAliasManager->deleteUriAlias($itemUri);
                 }
+            }
 
-                $this->menusCache->saveMenusCache();
+            $this->menusCache->saveMenusCache();
 
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-                return $bool;
-            },
-            null,
-            'acp/menus'
+            return $bool;
+        }, null, 'acp/menus'
         );
     }
 }

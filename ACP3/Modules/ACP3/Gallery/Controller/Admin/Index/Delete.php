@@ -77,36 +77,34 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $this,
-            $action,
-            function ($items) {
-                $bool = false;
+            $action, function ($items) {
+            $bool = false;
 
-                foreach ($items as $item) {
-                    if (!empty($item) && $this->galleryRepository->galleryExists($item) === true) {
-                        $pictures = $this->pictureRepository->getPicturesByGalleryId($item);
-                        foreach ($pictures as $row) {
-                            $this->galleryHelpers->removePicture($row['file']);
-                        }
-
-                        $this->galleryCache->getCacheDriver()->delete(Gallery\Cache::CACHE_ID . $item);
-
-                        if ($this->uriAliasManager) {
-                            $this->uriAliasManager->deleteUriAlias(
-                                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item)
-                            );
-                        }
-
-                        $this->deletePictureAliases($item);
-
-                        $bool = $this->galleryRepository->delete($item);
+            foreach ($items as $item) {
+                if (!empty($item) && $this->galleryRepository->galleryExists($item) === true) {
+                    $pictures = $this->pictureRepository->getPicturesByGalleryId($item);
+                    foreach ($pictures as $row) {
+                        $this->galleryHelpers->removePicture($row['file']);
                     }
+
+                    $this->galleryCache->getCacheDriver()->delete(Gallery\Cache::CACHE_ID . $item);
+
+                    if ($this->uriAliasManager) {
+                        $this->uriAliasManager->deleteUriAlias(
+                            sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item)
+                        );
+                    }
+
+                    $this->deletePictureAliases($item);
+
+                    $bool = $this->galleryRepository->delete($item);
                 }
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-                return $bool !== false;
             }
+
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+            return $bool !== false;
+        }
         );
     }
 

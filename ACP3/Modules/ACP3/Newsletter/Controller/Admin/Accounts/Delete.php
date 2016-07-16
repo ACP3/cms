@@ -44,19 +44,17 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $this,
-            $action,
-            function ($items) {
-                $bool = false;
-                foreach ($items as $item) {
-                    $bool = $this->accountStatusHelper->changeAccountStatus(
-                        Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_DISABLED,
-                        $item
-                    );
-                }
-
-                return $bool;
+            $action, function ($items) {
+            $bool = false;
+            foreach ($items as $item) {
+                $bool = $this->accountStatusHelper->changeAccountStatus(
+                    Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_DISABLED,
+                    $item
+                );
             }
+
+            return $bool;
+        }
         );
     }
 }

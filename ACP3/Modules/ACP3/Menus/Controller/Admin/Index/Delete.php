@@ -64,35 +64,33 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $this,
-            $action,
-            function ($items) {
-                $bool = false;
+            $action, function ($items) {
+            $bool = false;
 
-                foreach ($items as $item) {
-                    if (!empty($item) && $this->menuRepository->menuExists($item) === true) {
-                        // Delete the assigned menu items and update the nested set tree
-                        $items = $this->menuItemRepository->getAllItemsByBlockId($item);
-                        foreach ($items as $row) {
-                            $this->nestedSet->deleteNode(
-                                $row['id'],
-                                Menus\Model\Repository\MenuItemRepository::TABLE_NAME,
-                                true
-                            );
-                        }
-
-                        $block = $this->menuRepository->getMenuNameById($item);
-                        $bool = $this->menuRepository->delete($item);
-                        $this->menusCache->getCacheDriver()->delete(Menus\Cache::CACHE_ID_VISIBLE . $block);
+            foreach ($items as $item) {
+                if (!empty($item) && $this->menuRepository->menuExists($item) === true) {
+                    // Delete the assigned menu items and update the nested set tree
+                    $items = $this->menuItemRepository->getAllItemsByBlockId($item);
+                    foreach ($items as $row) {
+                        $this->nestedSet->deleteNode(
+                            $row['id'],
+                            Menus\Model\Repository\MenuItemRepository::TABLE_NAME,
+                            true
+                        );
                     }
+
+                    $block = $this->menuRepository->getMenuNameById($item);
+                    $bool = $this->menuRepository->delete($item);
+                    $this->menusCache->getCacheDriver()->delete(Menus\Cache::CACHE_ID_VISIBLE . $block);
                 }
-
-                $this->menusCache->saveMenusCache();
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-                return $bool;
             }
+
+            $this->menusCache->saveMenusCache();
+
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+            return $bool;
+        }
         );
     }
 }

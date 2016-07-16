@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
-use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\System;
 
 /**
@@ -47,34 +46,30 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($id, $action = '')
     {
         return $this->actionHelper->handleCustomDeleteAction(
-            $this,
-            $action,
-            function ($items) use ($id) {
-                $bool = false;
+            $action, function ($items) use ($id) {
+            $bool = false;
 
-                foreach ($items as $item) {
-                    $bool = $this->commentRepository->delete($item);
-                }
+            foreach ($items as $item) {
+                $bool = $this->commentRepository->delete($item);
+            }
 
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-                // If there are no comments for the given module, redirect to the general comments admin panel page
-                if ($this->commentRepository->countAll($id) == 0) {
-                    return $this->redirectMessages()->setMessage(
-                        $bool,
-                        $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error'),
-                        'acp/comments'
-                    );
-                }
-
+            // If there are no comments for the given module, redirect to the general comments admin panel page
+            if ($this->commentRepository->countAll($id) == 0) {
                 return $this->redirectMessages()->setMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error'),
-                    'acp/comments/details/index/id_' . $id
+                    'acp/comments'
                 );
-            },
-            'acp/comments/details/delete/id_' . $id,
-            'acp/comments/details/index/id_' . $id
+            }
+
+            return $this->redirectMessages()->setMessage(
+                $bool,
+                $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error'),
+                'acp/comments/details/index/id_' . $id
+            );
+        }, 'acp/comments/details/delete/id_' . $id, 'acp/comments/details/index/id_' . $id
         );
     }
 }

@@ -72,32 +72,29 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($id, $action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $this,
-            $action,
-            function ($items) {
-                $bool = false;
-                foreach ($items as $item) {
-                    if (!empty($item) && $this->pictureRepository->pictureExists($item) === true) {
-                        $picture = $this->pictureRepository->getPictureById($item);
-                        $this->pictureRepository->updatePicturesNumbers($picture['pic'], $picture['gallery_id']);
-                        $this->galleryHelpers->removePicture($picture['file']);
+            $action, function ($items) {
+            $bool = false;
+            foreach ($items as $item) {
+                if (!empty($item) && $this->pictureRepository->pictureExists($item) === true) {
+                    $picture = $this->pictureRepository->getPictureById($item);
+                    $this->pictureRepository->updatePicturesNumbers($picture['pic'], $picture['gallery_id']);
+                    $this->galleryHelpers->removePicture($picture['file']);
 
-                        $bool = $this->pictureRepository->delete($item);
-                        
-                        if ($this->uriAliasManager) {
-                            $this->uriAliasManager->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item));
-                        }
+                    $bool = $this->pictureRepository->delete($item);
 
-                        $this->galleryCache->saveCache($picture['gallery_id']);
+                    if ($this->uriAliasManager) {
+                        $this->uriAliasManager->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE,
+                            $item));
                     }
+
+                    $this->galleryCache->saveCache($picture['gallery_id']);
                 }
+            }
 
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-                return $bool;
-            },
-            'acp/gallery/pictures/delete/id_' . $id,
-            'acp/gallery/index/edit/id_' . $id
+            return $bool;
+        }, 'acp/gallery/pictures/delete/id_' . $id, 'acp/gallery/index/edit/id_' . $id
         );
     }
 }

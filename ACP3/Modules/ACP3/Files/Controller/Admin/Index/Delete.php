@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
@@ -82,32 +81,30 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $this,
-            $action,
-            function ($items) {
-                $bool = false;
+            $action, function ($items) {
+            $bool = false;
 
-                $upload = new Core\Helpers\Upload($this->appPath, 'files');
-                foreach ($items as $item) {
-                    if (!empty($item)) {
-                        $upload->removeUploadedFile($this->filesRepository->getFileById($item)); // Datei ebenfalls löschen
-                        $bool = $this->filesRepository->delete($item);
-                        if ($this->commentsHelpers) {
-                            $this->commentsHelpers->deleteCommentsByModuleAndResult('files', $item);
-                        }
+            $upload = new Core\Helpers\Upload($this->appPath, 'files');
+            foreach ($items as $item) {
+                if (!empty($item)) {
+                    $upload->removeUploadedFile($this->filesRepository->getFileById($item)); // Datei ebenfalls löschen
+                    $bool = $this->filesRepository->delete($item);
+                    if ($this->commentsHelpers) {
+                        $this->commentsHelpers->deleteCommentsByModuleAndResult('files', $item);
+                    }
 
-                        $this->filesCache->getCacheDriver()->delete(Files\Cache::CACHE_ID);
+                    $this->filesCache->getCacheDriver()->delete(Files\Cache::CACHE_ID);
 
-                        if ($this->uriAliasManager) {
-                            $this->uriAliasManager->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
-                        }
+                    if ($this->uriAliasManager) {
+                        $this->uriAliasManager->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
                     }
                 }
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-                return $bool;
             }
+
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+            return $bool;
+        }
         );
     }
 }

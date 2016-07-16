@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
-use ACP3\Modules\ACP3\Menus;
 
 /**
  * Class Delete
@@ -50,35 +49,33 @@ class Delete extends AbstractFormAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $this,
-            $action,
-            function ($items) {
-                $bool = false;
+            $action, function ($items) {
+            $bool = false;
 
-                foreach ($items as $item) {
-                    $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
+            foreach ($items as $item) {
+                $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
 
-                    $bool = $this->articleRepository->delete($item);
+                $bool = $this->articleRepository->delete($item);
 
-                    if ($this->manageMenuItemHelper) {
-                        $this->manageMenuItemHelper->manageMenuItem($uri, false);
-                    }
-
-                    $this->articlesCache->getCacheDriver()->delete(Articles\Cache::CACHE_ID . $item);
-
-                    if ($this->uriAliasManager) {
-                        $this->uriAliasManager->deleteUriAlias($uri);
-                    }
+                if ($this->manageMenuItemHelper) {
+                    $this->manageMenuItemHelper->manageMenuItem($uri, false);
                 }
 
-                if ($this->menusCache) {
-                    $this->menusCache->saveMenusCache();
+                $this->articlesCache->getCacheDriver()->delete(Articles\Cache::CACHE_ID . $item);
+
+                if ($this->uriAliasManager) {
+                    $this->uriAliasManager->deleteUriAlias($uri);
                 }
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-                return $bool;
             }
+
+            if ($this->menusCache) {
+                $this->menusCache->saveMenusCache();
+            }
+
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+            return $bool;
+        }
         );
     }
 }

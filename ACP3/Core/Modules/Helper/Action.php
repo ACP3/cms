@@ -7,8 +7,8 @@
 namespace ACP3\Core\Modules\Helper;
 
 use ACP3\Core;
-use ACP3\Core\Controller\AbstractFrontendAction;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Class Action
@@ -103,24 +103,19 @@ class Action
     }
 
     /**
-     * @param \ACP3\Core\Controller\AbstractFrontendAction $context
      * @param string $action
      * @param callable $callback
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
-     *
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|void
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @return array|string|JsonResponse|RedirectResponse|void
      */
     public function handleDeleteAction(
-        AbstractFrontendAction $context,
         $action,
         callable $callback,
         $moduleConfirmUrl = null,
         $moduleIndexUrl = null
     ) {
         return $this->handleCustomDeleteAction(
-            $context,
             $action,
             function ($items) use ($callback, $moduleIndexUrl) {
                 $result = $callback($items);
@@ -135,33 +130,32 @@ class Action
     }
 
     /**
-     * @param \ACP3\Core\Controller\AbstractFrontendAction $context
      * @param string $action
      * @param callable $callback
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
-     *
-     * @return void|string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @return array|string|JsonResponse|RedirectResponse|void
+     * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function handleCustomDeleteAction(
-        AbstractFrontendAction $context,
         $action,
         callable $callback,
         $moduleConfirmUrl = null,
         $moduleIndexUrl = null
     ) {
-        list($moduleConfirmUrl, $moduleIndexUrl) = $this->generateDefaultConfirmationBoxUris($moduleConfirmUrl,
-            $moduleIndexUrl);
+        list($moduleConfirmUrl, $moduleIndexUrl) = $this->generateDefaultConfirmationBoxUris(
+            $moduleConfirmUrl,
+            $moduleIndexUrl
+        );
         $result = $this->deleteItem($action, $moduleConfirmUrl, $moduleIndexUrl);
 
-        if (is_string($result)) {
-            $context->setTemplate($result);
+        if ($result instanceof RedirectResponse) {
+            return $result;
         } elseif ($action === 'confirmed' && is_array($result)) {
             return $callback($result);
-        } else {
-            throw new Core\Controller\Exception\ResultNotExistsException();
         }
+
+        throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
@@ -251,14 +245,18 @@ class Action
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
      *
-     * @return string|array
+     * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     private function deleteItem($action, $moduleConfirmUrl = null, $moduleIndexUrl = null)
     {
         $entries = $this->prepareRequestData();
 
         if (empty($entries)) {
-            return $this->alerts->errorBoxContent($this->translator->t('system', 'no_entries_selected'));
+            return $this->redirectMessages->setMessage(
+                false,
+                $this->translator->t('system', 'no_entries_selected'),
+                $moduleIndexUrl
+            );
         } elseif (empty($entries) === false && $action !== 'confirmed') {
             if (is_array($entries) === false) {
                 $entries = [$entries];

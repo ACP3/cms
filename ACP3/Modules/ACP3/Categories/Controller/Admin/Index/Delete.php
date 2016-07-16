@@ -51,44 +51,42 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleCustomDeleteAction(
-            $this,
-            $action,
-            function ($items) {
-                $bool = false;
-                $isInUse = false;
+            $action, function ($items) {
+            $bool = false;
+            $isInUse = false;
 
-                foreach ($items as $item) {
-                    if (!empty($item) && $this->categoryRepository->resultExists($item) === true) {
-                        $category = $this->categoryRepository->getCategoryDeleteInfosById($item);
+            foreach ($items as $item) {
+                if (!empty($item) && $this->categoryRepository->resultExists($item) === true) {
+                    $category = $this->categoryRepository->getCategoryDeleteInfosById($item);
 
-                        $serviceId = strtolower($category['module'] . '.' . $category['module'] . 'repository');
-                        if ($this->container->has($serviceId) &&
-                            $this->get($serviceId)->countAll('', $item) > 0
-                        ) {
-                            $isInUse = true;
-                            continue;
-                        }
-
-                        // Kategoriebild ebenfalls löschen
-                        $upload = new Core\Helpers\Upload($this->appPath, 'categories');
-                        $upload->removeUploadedFile($category['picture']);
-                        $bool = $this->categoryRepository->delete($item);
+                    $serviceId = strtolower($category['module'] . '.' . $category['module'] . 'repository');
+                    if ($this->container->has($serviceId) &&
+                        $this->get($serviceId)->countAll('', $item) > 0
+                    ) {
+                        $isInUse = true;
+                        continue;
                     }
+
+                    // Kategoriebild ebenfalls löschen
+                    $upload = new Core\Helpers\Upload($this->appPath, 'categories');
+                    $upload->removeUploadedFile($category['picture']);
+                    $bool = $this->categoryRepository->delete($item);
                 }
-
-                $this->categoriesCache->getCacheDriver()->deleteAll();
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-                if ($isInUse === true) {
-                    $text = $this->translator->t('categories', 'category_is_in_use');
-                    $bool = false;
-                } else {
-                    $text = $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error');
-                }
-
-                return $this->redirectMessages()->setMessage($bool, $text);
             }
+
+            $this->categoriesCache->getCacheDriver()->deleteAll();
+
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+            if ($isInUse === true) {
+                $text = $this->translator->t('categories', 'category_is_in_use');
+                $bool = false;
+            } else {
+                $text = $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error');
+            }
+
+            return $this->redirectMessages()->setMessage($bool, $text);
+        }
         );
     }
 }

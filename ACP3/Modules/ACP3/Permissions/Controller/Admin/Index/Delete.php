@@ -51,33 +51,32 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleCustomDeleteAction(
-            $this,
-            $action,
-            function ($items) {
-                $bool = $levelNotDeletable = false;
+            $action, function ($items) {
+            $bool = $levelNotDeletable = false;
 
-                foreach ($items as $item) {
-                    if (in_array($item, [1, 2, 4]) === true) {
-                        $levelNotDeletable = true;
-                    } else {
-                        $bool = $this->nestedSet->deleteNode($item, Permissions\Model\Repository\RoleRepository::TABLE_NAME);
-                    }
-                }
-
-                $this->permissionsCache->getCacheDriver()->deleteAll();
-
-                if ($levelNotDeletable === true) {
-                    $result = !$levelNotDeletable;
-                    $text = $this->translator->t('permissions', 'role_not_deletable');
+            foreach ($items as $item) {
+                if (in_array($item, [1, 2, 4]) === true) {
+                    $levelNotDeletable = true;
                 } else {
-                    $result = $bool !== false;
-                    $text = $this->translator->t('system', $result ? 'delete_success' : 'delete_error');
+                    $bool = $this->nestedSet->deleteNode($item,
+                        Permissions\Model\Repository\RoleRepository::TABLE_NAME);
                 }
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-                return $this->redirectMessages()->setMessage($result, $text);
             }
+
+            $this->permissionsCache->getCacheDriver()->deleteAll();
+
+            if ($levelNotDeletable === true) {
+                $result = !$levelNotDeletable;
+                $text = $this->translator->t('permissions', 'role_not_deletable');
+            } else {
+                $result = $bool !== false;
+                $text = $this->translator->t('system', $result ? 'delete_success' : 'delete_error');
+            }
+
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+            return $this->redirectMessages()->setMessage($result, $text);
+        }
         );
     }
 }

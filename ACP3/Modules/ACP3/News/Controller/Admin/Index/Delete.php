@@ -7,8 +7,6 @@
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
@@ -68,28 +66,26 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $this,
-            $action,
-            function ($items) {
-                $bool = false;
+            $action, function ($items) {
+            $bool = false;
 
-                foreach ($items as $item) {
-                    $bool = $this->newsRepository->delete($item);
-                    if ($this->commentsHelpers) {
-                        $this->commentsHelpers->deleteCommentsByModuleAndResult('news', $item);
-                    }
-
-                    $this->newsCache->getCacheDriver()->delete(News\Cache::CACHE_ID . $item);
-
-                    if ($this->uriAliasManager) {
-                        $this->uriAliasManager->deleteUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $item));
-                    }
+            foreach ($items as $item) {
+                $bool = $this->newsRepository->delete($item);
+                if ($this->commentsHelpers) {
+                    $this->commentsHelpers->deleteCommentsByModuleAndResult('news', $item);
                 }
 
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+                $this->newsCache->getCacheDriver()->delete(News\Cache::CACHE_ID . $item);
 
-                return $bool;
+                if ($this->uriAliasManager) {
+                    $this->uriAliasManager->deleteUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $item));
+                }
             }
+
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+            return $bool;
+        }
         );
     }
 }

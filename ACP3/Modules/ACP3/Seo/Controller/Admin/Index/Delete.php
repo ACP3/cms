@@ -51,21 +51,19 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $this,
-            $action,
-            function ($items) {
-                $bool = false;
+            $action, function ($items) {
+            $bool = false;
 
-                foreach ($items as $item) {
-                    $bool = $this->seoRepository->delete($item);
-                }
-
-                $this->seoCache->saveCache();
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-                return $bool;
+            foreach ($items as $item) {
+                $bool = $this->seoRepository->delete($item);
             }
+
+            $this->seoCache->saveCache();
+
+            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+            return $bool;
+        }
         );
     }
 }
