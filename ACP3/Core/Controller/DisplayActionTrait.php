@@ -32,6 +32,9 @@ trait DisplayActionTrait
     public function display($actionResult)
     {
         if ($actionResult instanceof Response) {
+            foreach ($this->getResponse()->headers->getCookies() as $cookie) {
+                $actionResult->headers->setCookie($cookie);
+            }
             return $actionResult;
         } elseif (is_string($actionResult)) {
             $this->setContent($actionResult);
@@ -74,7 +77,7 @@ trait DisplayActionTrait
      * @return \ACP3\Core\View
      */
     abstract protected function getView();
-    
+
     /**
      * Gibt den Content-Type der anzuzeigenden Seiten zurück
      *
