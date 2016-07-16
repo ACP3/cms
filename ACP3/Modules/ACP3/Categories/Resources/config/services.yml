@@ -13,7 +13,6 @@ services:
       - '@core.lang'
       - '@core.modules'
       - '@core.http.request'
-      - '@core.view'
       - '@core.helpers.forms'
       - '@core.helpers.secure'
       - '@categories.cache'

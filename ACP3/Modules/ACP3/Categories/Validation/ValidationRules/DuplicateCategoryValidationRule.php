@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Categories\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Categories\Helpers;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 
 /**
  * Class DuplicateCategoryValidationRule
@@ -16,18 +16,18 @@ use ACP3\Modules\ACP3\Categories\Helpers;
 class DuplicateCategoryValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Helpers
+     * @var CategoryRepository
      */
-    protected $categoriesHelper;
+    protected $categoryRepository;
 
     /**
-     * DuplicateCategoryValidationRule constructor.
+     * CategoryExistsValidationRule constructor.
      *
-     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelper
+     * @param CategoryRepository $categoryRepository
      */
-    public function __construct(Helpers $categoriesHelper)
+    public function __construct(CategoryRepository $categoryRepository)
     {
-        $this->categoriesHelper = $categoriesHelper;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -44,7 +44,7 @@ class DuplicateCategoryValidationRule extends AbstractValidationRule
             'category_id' => ''
         ], $extra);
 
-        return !$this->categoriesHelper->categoryIsDuplicate(
+        return !$this->categoryRepository->resultIsDuplicate(
             $data,
             $params['module_id'],
             $params['category_id']

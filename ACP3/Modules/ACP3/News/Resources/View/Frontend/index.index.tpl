@@ -11,7 +11,7 @@
             {/if}
             <form action="{uri args="news"}" method="post" class="navbar-form navbar-right">
                 <div class="form-group">
-                    {$categories}
+                    {include file="asset:Categories/Partials/create_list.tpl" categories=$categories}
                 </div>
                 <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
             </form>

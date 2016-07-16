@@ -32,10 +32,6 @@ class Helpers
      */
     protected $request;
     /**
-     * @var Core\View
-     */
-    protected $view;
-    /**
      * @var Cache
      */
     protected $categoriesCache;
@@ -53,14 +49,13 @@ class Helpers
     protected $secureHelper;
 
     /**
-     * @param \ACP3\Core\ACL                                         $acl
-     * @param \ACP3\Core\I18n\Translator                             $translator
-     * @param \ACP3\Core\Modules                                     $modules
-     * @param \ACP3\Core\Http\RequestInterface                       $request
-     * @param \ACP3\Core\View                                        $view
-     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
-     * @param \ACP3\Core\Helpers\Secure                              $secureHelper
-     * @param \ACP3\Modules\ACP3\Categories\Cache                    $categoriesCache
+     * @param \ACP3\Core\ACL $acl
+     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
@@ -68,7 +63,6 @@ class Helpers
         Core\I18n\Translator $translator,
         Core\Modules $modules,
         Core\Http\RequestInterface $request,
-        Core\View $view,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\Secure $secureHelper,
         Cache $categoriesCache,
@@ -78,23 +72,10 @@ class Helpers
         $this->translator = $translator;
         $this->modules = $modules;
         $this->request = $request;
-        $this->view = $view;
         $this->formsHelper = $formsHelper;
         $this->secureHelper = $secureHelper;
         $this->categoriesCache = $categoriesCache;
         $this->categoryRepository = $categoryRepository;
-    }
-
-    /**
-     * Überprüft, ob eine Kategorie existiert
-     *
-     * @param integer $categoryId
-     *
-     * @return boolean
-     */
-    public function categoryExists($categoryId)
-    {
-        return $this->categoryRepository->resultExists($categoryId);
     }
 
     /**
@@ -108,7 +89,7 @@ class Helpers
     public function categoriesCreate($title, $module)
     {
         $moduleInfo = $this->modules->getModuleInfo($module);
-        if ($this->categoryIsDuplicate($title, $moduleInfo['id']) === false) {
+        if ($this->categoryRepository->resultIsDuplicate($title, $moduleInfo['id'], '') === false) {
             $insertValues = [
                 'id' => '',
                 'title' => $this->secureHelper->strEncode($title),
@@ -121,38 +102,29 @@ class Helpers
             $this->categoriesCache->saveCache($module);
 
             return $result;
-        } else {
-            return $this->categoryRepository->getOneByTitleAndModule($title, $module)['id'];
         }
-    }
 
-    /**
-     * Überprüft, ob bereits eine Kategorie mit dem selben Namen existiert
-     *
-     * @param string     $title
-     * @param int        $moduleId
-     * @param int|string $categoryId
-     *
-     * @return boolean
-     */
-    public function categoryIsDuplicate($title, $moduleId, $categoryId = '')
-    {
-        return $this->categoryRepository->resultIsDuplicate($title, $moduleId, $categoryId);
+        return $this->categoryRepository->getOneByTitleAndModule($title, $module)['id'];
     }
 
     /**
      * Listet alle Kategorien eines Moduls auf
      *
-     * @param string  $module
-     * @param string  $categoryId
+     * @param string $module
+     * @param string $categoryId
      * @param boolean $categoryCreate
-     * @param string  $formFieldName
-     * @param string  $customText
+     * @param string $formFieldName
+     * @param string $customText
      *
-     * @return string
+     * @return array
      */
-    public function categoriesList($module, $categoryId = '', $categoryCreate = false, $formFieldName = 'cat', $customText = '')
-    {
+    public function categoriesList(
+        $module,
+        $categoryId = '',
+        $categoryCreate = false,
+        $formFieldName = 'cat',
+        $customText = ''
+    ) {
         $categories = [];
         $data = $this->categoriesCache->getCache($module);
         $cData = count($data);
@@ -171,7 +143,7 @@ class Helpers
             $categories['create']['name'] = $formFieldName . '_create';
             $categories['create']['value'] = $this->request->getPost()->get('create', ['name' => ''])['name'];
         }
-        $this->view->assign('categories', $categories);
-        return $this->view->fetchTemplate('categories/create_list.tpl');
+
+        return $categories;
     }
 }

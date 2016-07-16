@@ -13,13 +13,13 @@ services:
   categories.validation.validation_rules.category_exists_validation_rule:
     class: ACP3\Modules\ACP3\Categories\Validation\ValidationRules\CategoryExistsValidationRule
     arguments:
-      - '@categories.helpers'
+      - '@categories.model'
     tags:
       - { name: core.validation.validation_rule }
 
   categories.validation.validation_rules.duplicate_category_validation_rule:
     class: ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule
     arguments:
-      - '@categories.helpers'
+      - '@categories.model'
     tags:
       - { name: core.validation.validation_rule }

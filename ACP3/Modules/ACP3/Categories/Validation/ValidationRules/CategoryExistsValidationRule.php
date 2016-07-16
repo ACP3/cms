@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Categories\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Categories\Helpers;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 
 /**
  * Class CategoryExistsValidationRule
@@ -16,18 +16,18 @@ use ACP3\Modules\ACP3\Categories\Helpers;
 class CategoryExistsValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Helpers
+     * @var CategoryRepository
      */
-    protected $categoriesHelper;
+    protected $categoryRepository;
 
     /**
      * CategoryExistsValidationRule constructor.
      *
-     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelper
+     * @param CategoryRepository $categoryRepository
      */
-    public function __construct(Helpers $categoriesHelper)
+    public function __construct(CategoryRepository $categoryRepository)
     {
-        $this->categoriesHelper = $categoriesHelper;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -39,7 +39,7 @@ class CategoryExistsValidationRule extends AbstractValidationRule
             $categoryId = reset($field);
             $createCategory = next($field);
 
-            return !empty($data[$createCategory]) || $this->categoriesHelper->categoryExists($data[$categoryId]);
+            return !empty($data[$createCategory]) || $this->categoryRepository->resultExists($data[$categoryId]);
         }
 
         return false;

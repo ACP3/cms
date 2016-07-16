@@ -65,7 +65,9 @@
                     <div class="form-group">
                         <label for="cat" class="col-sm-2 control-label required">{lang t="categories|category"}</label>
 
-                        <div class="col-sm-10">{$categories}</div>
+                        <div class="col-sm-10">
+                            {include file="asset:Categories/Partials/create_list.tpl" categories=$categories}
+                        </div>
                     </div>
                     {if isset($options)}
                         <div class="form-group">
