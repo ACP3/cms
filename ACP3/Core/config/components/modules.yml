@@ -25,7 +25,6 @@ services:
       - '@core.lang'
       - '@core.http.request'
       - '@core.router'
-      - '@core.view'
       - '@core.helpers.alerts'
       - '@core.helpers.redirect'
 

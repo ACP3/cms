@@ -29,10 +29,6 @@ class Action
      */
     protected $router;
     /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
-    /**
      * @var \ACP3\Core\Helpers\Alerts
      */
     protected $alerts;
@@ -47,7 +43,6 @@ class Action
      * @param \ACP3\Core\I18n\Translator $translator
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\RouterInterface $router
-     * @param \ACP3\Core\View $view
      * @param \ACP3\Core\Helpers\Alerts $alerts
      * @param \ACP3\Core\Helpers\RedirectMessages $redirectMessages
      */
@@ -55,14 +50,12 @@ class Action
         Core\I18n\Translator $translator,
         Core\Http\RequestInterface $request,
         Core\RouterInterface $router,
-        Core\View $view,
         Core\Helpers\Alerts $alerts,
         Core\Helpers\RedirectMessages $redirectMessages
     ) {
         $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
-        $this->view = $view;
         $this->alerts = $alerts;
         $this->redirectMessages = $redirectMessages;
     }
