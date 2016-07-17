@@ -133,7 +133,7 @@ class Helpers
         $categories['name'] = $formFieldName;
         if ($cData > 0) {
             for ($i = 0; $i < $cData; ++$i) {
-                $data[$i]['selected'] = $this->formsHelper->selectEntry('cat', $data[$i]['id'], $categoryId);
+                $data[$i]['selected'] = $this->formsHelper->selectEntry($formFieldName, $data[$i]['id'], $categoryId);
             }
             $categories['categories'] = $data;
         } else {
