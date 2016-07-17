@@ -126,6 +126,12 @@
   width: 7%;
   visibility: hidden;
 }
+.datagrid .datagrid-column__actions .btn-group {
+  display: flex;
+}
+.datagrid .datagrid-column__actions .btn-group > .btn {
+  float: none;
+}
 .datagrid tr:hover td.datagrid-column__actions,
 .datagrid tr.info td.datagrid-column__actions {
   visibility: visible;
