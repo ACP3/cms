@@ -126,19 +126,20 @@ class Helpers
         $customText = ''
     ) {
         $categories = [];
-        $data = $this->categoriesCache->getCache($module);
-        $cData = count($data);
 
         $categories['custom_text'] = !empty($customText) ? $customText : $this->translator->t('system', 'pls_select');
         $categories['name'] = $formFieldName;
-        if ($cData > 0) {
-            for ($i = 0; $i < $cData; ++$i) {
-                $data[$i]['selected'] = $this->formsHelper->selectEntry($formFieldName, $data[$i]['id'], $categoryId);
-            }
-            $categories['categories'] = $data;
-        } else {
-            $categories['categories'] = [];
+
+        $categories['categories'] = $this->categoriesCache->getCache($module);
+        $cData = count($categories['categories']);
+        for ($i = 0; $i < $cData; ++$i) {
+            $categories['categories'][$i]['selected'] = $this->formsHelper->selectEntry(
+                $formFieldName,
+                $categories['categories'][$i]['id'],
+                $categoryId
+            );
         }
+
         if ($categoryCreate === true && $this->acl->hasPermission('admin/categories/index/create') === true) {
             $categories['create']['name'] = $formFieldName . '_create';
             $categories['create']['value'] = $this->request->getPost()->get('create', ['name' => ''])['name'];
