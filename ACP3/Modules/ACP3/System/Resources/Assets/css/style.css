@@ -123,7 +123,12 @@
   width: 22%;
 }
 .datagrid .datagrid-column__actions {
-  width: 15%;
+  width: 7%;
+  visibility: hidden;
+}
+.datagrid tr:hover td.datagrid-column__actions,
+.datagrid tr.info td.datagrid-column__actions {
+  visibility: visible;
 }
 .tab-content > .tab-pane {
   padding-top: 15px;

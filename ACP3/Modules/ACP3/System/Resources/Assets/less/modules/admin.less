@@ -43,6 +43,14 @@
   }
 
   .datagrid-column__actions {
-    width: 15%;
+    width: 7%;
+    visibility: hidden;
+  }
+
+  tr:hover,
+  tr.info {
+    td.datagrid-column__actions {
+      visibility: visible;
+    }
   }
 }

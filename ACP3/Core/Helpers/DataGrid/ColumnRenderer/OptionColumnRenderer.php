@@ -4,7 +4,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Router;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
@@ -91,13 +90,15 @@ class OptionColumnRenderer extends AbstractColumnRenderer
      */
     protected function collectOptions()
     {
-        $value = '';
+        $value = '<div class="btn-group pull-right">';
 
         foreach ($this->optionRenderer->getOptions() as $option) {
             $value .= $option;
         }
 
         $this->optionRenderer->clearOptions();
+
+        $value .= '</div>';
 
         return $value;
     }

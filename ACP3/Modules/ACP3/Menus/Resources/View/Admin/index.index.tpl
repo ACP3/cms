@@ -28,8 +28,9 @@
                     <thead>
                     <tr>
                         {if $can_delete_item === true}
-                            <th class="datagrid-column__mass-action">
-                                <input type="checkbox" id="mark-all" value="1" {mark name="entries"}></th>
+                            <th class="datagrid-column datagrid-column__mass-action">
+                                <input type="checkbox" id="mark-all" value="1" {mark name="entries"}>
+                            </th>
                         {/if}
                         <th style="width:30%">{lang t="menus|title"}</th>
                         <th>{lang t="menus|page_type"}</th>
@@ -38,7 +39,7 @@
                         {/if}
                         <th style="width:5%">{lang t="system|id"}</th>
                         {if $can_delete_item === true || $can_edit_item === true}
-                            <th class="datagrid-column__actions">{lang t="system|action"}</th>
+                            <th class="datagrid-column datagrid-column__actions">{lang t="system|action"}</th>
                         {/if}
                     </tr>
                     </thead>
@@ -52,13 +53,11 @@
                                         {if $can_edit}
                                             <a href="{uri args="acp/menus/index/edit/id_`$values.menu_id`"}" class="btn btn-default btn-sm" title="{lang t="menus|admin_index_edit"}">
                                                 <i class="glyphicon glyphicon-edit"></i>
-                                                {lang t="system|edit"}
                                             </a>
                                         {/if}
                                         {if $can_delete}
                                             <a href="{uri args="acp/menus/index/delete/entries_`$values.menu_id`"}" class="btn btn-danger btn-sm" title="{lang t="menus|admin_index_delete"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
                                                 <i class="glyphicon glyphicon-remove"></i>
-                                                {lang t="system|delete"}
                                             </a>
                                         {/if}
                                     </div>
@@ -68,7 +67,9 @@
                         {foreach $values.items as $row}
                             <tr>
                                 {if $can_delete_item === true}
-                                    <td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
+                                    <td class="datagrid-column datagrid-column__mass-action">
+                                        <input type="checkbox" name="entries[]" value="{$row.id}">
+                                    </td>
                                 {/if}
                                 <td>{$row.spaces}{$row.title}</td>
                                 <td>{$row.mode_formatted}</td>
@@ -93,19 +94,19 @@
                                 {/if}
                                 <td>{$row.id}</td>
                                 {if $can_delete_item === true || $can_edit_item === true}
-                                    <td>
-                                        {if $can_edit_item === true}
-                                            <a href="{uri args="acp/menus/items/edit/id_`$row.id`"}" class="btn btn-default btn-xs btn-block" title="{lang t="menus|admin_items_edit"}">
-                                                <i class="glyphicon glyphicon-edit"></i>
-                                                {lang t="system|edit"}
-                                            </a>
-                                        {/if}
-                                        {if $can_delete_item === true}
-                                            <a href="{uri args="acp/menus/items/delete/entries_`$row.id`"}" class="btn btn-danger btn-xs btn-block" title="{lang t="menus|admin_items_delete"}">
-                                                <i class="glyphicon glyphicon-remove"></i>
-                                                {lang t="system|delete"}
-                                            </a>
-                                        {/if}
+                                    <td class="datagrid-column datagrid-column__actions">
+                                        <div class="btn-group pull-right">
+                                            {if $can_edit_item === true}
+                                                <a href="{uri args="acp/menus/items/edit/id_`$row.id`"}" class="btn btn-default btn-xs" title="{lang t="menus|admin_items_edit"}">
+                                                    <i class="glyphicon glyphicon-edit"></i>
+                                                </a>
+                                            {/if}
+                                            {if $can_delete_item === true}
+                                                <a href="{uri args="acp/menus/items/delete/entries_`$row.id`"}" class="btn btn-danger btn-xs" title="{lang t="menus|admin_items_delete"}">
+                                                    <i class="glyphicon glyphicon-remove"></i>
+                                                </a>
+                                            {/if}
+                                        </div>
                                     </td>
                                 {/if}
                             </tr>
