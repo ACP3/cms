@@ -10,6 +10,8 @@ use ACP3\Core\Modules;
  */
 class Schema implements Modules\Installer\SchemaInterface
 {
+    const MODULE_NAME = 'newsletter';
+
     /**
      * @return array
      */
@@ -29,7 +31,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getModuleName()
     {
-        return 'newsletter';
+        return static::MODULE_NAME;
     }
 
     /**

@@ -31,19 +31,26 @@ abstract class AbstractFormAction extends AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
      */
     protected $uriAliasManager;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * AbstractFormAction constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param \ACP3\Modules\ACP3\Categories\Helpers      $categoriesHelpers
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context);
 
+        $this->formsHelper = $formsHelper;
         $this->categoriesHelpers = $categoriesHelpers;
     }
 
@@ -70,8 +77,9 @@ abstract class AbstractFormAction extends AbstractAdminAction
      */
     protected function fetchCategoryId(array $formData)
     {
-        return !empty($formData['cat_create']) ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'],
-            'files') : $formData['cat'];
+        return !empty($formData['cat_create'])
+            ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], Files\Installer\Schema::MODULE_NAME)
+            : $formData['cat'];
     }
 
     /**
@@ -114,5 +122,17 @@ abstract class AbstractFormAction extends AbstractAdminAction
                 (int)$formData['seo_robots']
             );
         }
+    }
+
+    protected function getOptions(array $settings, array $file)
+    {
+        $options = [];
+        if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
+            $options[0]['name'] = 'comments';
+            $options[0]['checked'] = $this->formsHelper->selectEntry('comments', '1', $file['comments'], 'checked');
+            $options[0]['lang'] = $this->translator->t('system', 'allow_comments');
+        }
+
+        return $options;
     }
 }

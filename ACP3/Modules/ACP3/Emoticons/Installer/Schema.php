@@ -10,6 +10,8 @@ use ACP3\Core\Modules;
  */
 class Schema implements Modules\Installer\SchemaInterface
 {
+    const MODULE_NAME = 'emoticons';
+
     /**
      * @return array
      */
@@ -59,7 +61,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getModuleName()
     {
-        return 'emoticons';
+        return static::MODULE_NAME;
     }
 
     /**

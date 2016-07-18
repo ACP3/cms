@@ -108,7 +108,7 @@ class Index extends AbstractAction
                 $news[$i]['text'] = $this->view->fetchStringAsTemplate($news[$i]['text']);
                 if ($this->commentsActive === true && $news[$i]['comments'] == 1) {
                     $news[$i]['comments_count'] = $this->get('comments.helpers')->commentsCount(
-                        'news',
+                        News\Installer\Schema::MODULE_NAME,
                         $news[$i]['id']
                     );
                 }
@@ -136,15 +136,15 @@ class Index extends AbstractAction
     {
         if (!empty($categoryId)) {
             $news = $this->newsRepository->getAllByCategoryId(
-                $categoryId, 
+                $categoryId,
                 $time,
-                $this->pagination->getResultsStartOffset(), 
+                $this->pagination->getResultsStartOffset(),
                 $this->user->getEntriesPerPage()
             );
         } else {
             $news = $this->newsRepository->getAll(
                 $time,
-                $this->pagination->getResultsStartOffset(), 
+                $this->pagination->getResultsStartOffset(),
                 $this->user->getEntriesPerPage()
             );
         }

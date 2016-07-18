@@ -42,22 +42,18 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Comments\Helpers
      */
     protected $commentsHelpers;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
 
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext              $context
-     * @param \ACP3\Core\Date                                         $date
-     * @param \ACP3\Core\Helpers\Forms                                $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository          $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache                          $filesCache
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
+     * @param \ACP3\Modules\ACP3\Files\Cache $filesCache
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Categories\Helpers                   $categoriesHelpers
+     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
@@ -69,10 +65,9 @@ class Edit extends AbstractFormAction
         Files\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
     ) {
-        parent::__construct($context, $categoriesHelpers);
+        parent::__construct($context, $formsHelper, $categoriesHelpers);
 
         $this->date = $date;
-        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->filesRepository = $filesRepository;
         $this->filesCache = $filesCache;
@@ -100,18 +95,15 @@ class Edit extends AbstractFormAction
 
             $file['filesize'] = substr($file['size'], 0, strpos($file['size'], ' '));
 
-            if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-                $options = [];
-                $options[0]['name'] = 'comments';
-                $options[0]['checked'] = $this->formsHelper->selectEntry('comments', '1', $file['comments'], 'checked');
-                $options[0]['lang'] = $this->translator->t('system', 'allow_comments');
-                $this->view->assign('options', $options);
-            }
-
             return [
+                'options' => $this->getOptions($settings, $file),
                 'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(),
                     trim(strrchr($file['size'], ' '))),
-                'categories' => $this->categoriesHelpers->categoriesList('files', $file['category_id'], true),
+                'categories' => $this->categoriesHelpers->categoriesList(
+                    Files\Installer\Schema::MODULE_NAME,
+                    $file['category_id'],
+                    true
+                ),
                 'checked_external' => $this->request->getPost()->has('external') ? ' checked="checked"' : '',
                 'current_file' => $file['file'],
                 'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
@@ -129,7 +121,7 @@ class Edit extends AbstractFormAction
      * @param array $formData
      * @param array $settings
      * @param array $dl
-     * @param int   $fileId
+     * @param int $fileId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -178,8 +170,8 @@ class Edit extends AbstractFormAction
 
     /**
      * @param string|UploadedFile $file
-     * @param array        $formData
-     * @param string       $currentFileName
+     * @param array $formData
+     * @param string $currentFileName
      *
      * @return array
      */

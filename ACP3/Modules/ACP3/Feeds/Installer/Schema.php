@@ -10,6 +10,8 @@ use ACP3\Core\Modules;
  */
 class Schema implements Modules\Installer\SchemaInterface
 {
+    const MODULE_NAME = 'feeds';
+
     /**
      * @return array
      */
@@ -56,7 +58,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getModuleName()
     {
-        return 'feeds';
+        return static::MODULE_NAME;
     }
 
     /**

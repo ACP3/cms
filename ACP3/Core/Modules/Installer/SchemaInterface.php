@@ -7,6 +7,8 @@ namespace ACP3\Core\Modules\Installer;
  */
 interface SchemaInterface
 {
+    const MODULE_NAME = '';
+
     /**
      * Liefert ein Array mit den zu erstellenden Datenbanktabellen des Moduls zurück
      *

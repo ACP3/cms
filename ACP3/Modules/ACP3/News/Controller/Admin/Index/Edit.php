@@ -91,7 +91,11 @@ class Edit extends AbstractFormAction
             }
 
             return [
-                'categories' => $this->categoriesHelpers->categoriesList('news', $news['category_id'], true),
+                'categories' => $this->categoriesHelpers->categoriesList(
+                    News\Installer\Schema::MODULE_NAME,
+                    $news['category_id'],
+                    true
+                ),
                 'options' => $this->fetchNewsOptions($settings, $news['readmore'], $news['comments']),
                 'target' => $this->formsHelper->linkTargetChoicesGenerator('target', $news['target']),
                 'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper

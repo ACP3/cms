@@ -85,7 +85,11 @@ class Create extends AbstractFormAction
         ];
 
         return [
-            'categories' => $this->categoriesHelpers->categoriesList('news', '', true),
+            'categories' => $this->categoriesHelpers->categoriesList(
+                News\Installer\Schema::MODULE_NAME,
+                '',
+                true
+            ),
             'options' => $this->fetchNewsOptions($settings, 0, 0),
             'target' => $this->formsHelper->linkTargetChoicesGenerator('target'),
             'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper ? $this->metaFormFieldsHelper->formFields() : [],

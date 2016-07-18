@@ -10,13 +10,14 @@ use ACP3\Core\Modules;
  */
 class Schema implements Modules\Installer\SchemaInterface
 {
+    const MODULE_NAME = 'contact';
 
     /**
      * @return string
      */
     public function getModuleName()
     {
-        return 'contact';
+        return static::MODULE_NAME;
     }
 
     /**

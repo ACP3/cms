@@ -67,7 +67,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getModuleName()
     {
-        return 'comments';
+        return static::MODULE_NAME;
     }
 
     /**

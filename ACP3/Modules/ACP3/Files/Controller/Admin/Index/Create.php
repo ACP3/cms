@@ -35,10 +35,6 @@ class Create extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Comments\Helpers
      */
     protected $commentsHelpers;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
 
     /**
      * Create constructor.
@@ -60,10 +56,9 @@ class Create extends AbstractFormAction
         Files\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers)
     {
-        parent::__construct($context, $categoriesHelpers);
+        parent::__construct($context, $formsHelper, $categoriesHelpers);
 
         $this->date = $date;
-        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->filesRepository = $filesRepository;
         $this->adminFormValidation = $adminFormValidation;
@@ -80,14 +75,6 @@ class Create extends AbstractFormAction
             return $this->executePost($this->request->getPost()->all(), $settings);
         }
 
-        if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-            $options = [];
-            $options[0]['name'] = 'comments';
-            $options[0]['checked'] = $this->formsHelper->selectEntry('comments', '1', '0', 'checked');
-            $options[0]['lang'] = $this->translator->t('system', 'allow_comments');
-            $this->view->assign('options', $options);
-        }
-
         $defaults = [
             'title' => '',
             'file_internal' => '',
@@ -99,8 +86,9 @@ class Create extends AbstractFormAction
         ];
 
         return [
+            'options' => $this->getOptions($settings, ['comments' => '0']),
             'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(), ''),
-            'categories' => $this->categoriesHelpers->categoriesList('files', '', true),
+            'categories' => $this->categoriesHelpers->categoriesList(Files\Installer\Schema::MODULE_NAME, '', true),
             'checked_external' => $this->request->getPost()->has('external') ? ' checked="checked"' : '',
             'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper ? $this->metaFormFieldsHelper->formFields() : [],
             'form' => array_merge($defaults, $this->request->getPost()->all()),

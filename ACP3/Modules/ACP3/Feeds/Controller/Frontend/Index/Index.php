@@ -46,10 +46,9 @@ class Index extends Core\Controller\AbstractFrontendAction
         if ($this->acl->hasPermission('frontend/' . $feed) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
-            $module = $this->request->getParameters()->get('feed', '');
             $this->feedGenerator
                 ->setTitle($this->config->getSettings('seo')['title'])
-                ->setDescription($this->translator->t($module, $module));
+                ->setDescription($this->translator->t($feed, $feed));
 
             $this->eventDispatcher->dispatch(
                 'feeds.events.displayFeed.' . strtolower($feed),

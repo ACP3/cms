@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
+use ACP3\Modules\ACP3\Files\Installer\Schema;
 
 /**
  * Class Index
@@ -16,7 +17,7 @@ use ACP3\Modules\ACP3\Categories;
 class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
-    
+
     /**
      * @var \ACP3\Modules\ACP3\Categories\Cache
      */
@@ -45,7 +46,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         return [
-            'categories' => $this->categoriesCache->getCache('files')
+            'categories' => $this->categoriesCache->getCache(Schema::MODULE_NAME)
         ];
     }
 }

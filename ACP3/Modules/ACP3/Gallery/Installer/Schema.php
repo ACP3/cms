@@ -12,6 +12,8 @@ use ACP3\Modules\ACP3\System;
  */
 class Schema implements Modules\Installer\SchemaInterface
 {
+    const MODULE_NAME = 'gallery';
+
     /**
      * @return array
      */
@@ -25,7 +27,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getModuleName()
     {
-        return 'gallery';
+        return static::MODULE_NAME;
     }
 
     /**

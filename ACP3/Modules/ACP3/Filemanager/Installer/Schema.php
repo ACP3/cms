@@ -10,6 +10,8 @@ use ACP3\Core\Modules;
  */
 class Schema implements Modules\Installer\SchemaInterface
 {
+    const MODULE_NAME = 'filemanager';
+
     /**
      * @return array
      */
@@ -23,7 +25,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getModuleName()
     {
-        return 'filemanager';
+        return static::MODULE_NAME;
     }
 
     /**
