@@ -1,9 +1,9 @@
 <title>{site_and_page_title}</title>
-{include file="asset:System/Partials/meta.tpl" meta=$META inline}
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="alternate" type="application/rss+xml" href="{uri args="feeds/index/index/feed_news"}" title="{site_title} - {lang t="news|news"}">
-<link rel="alternate" type="application/rss+xml" href="{uri args="feeds/index/index/feed_files"}" title="{site_title} - {lang t="files|files"}">
+{event name="core.layout.meta"}
 <!-- STYLESHEETS -->
+{event name="core.layout.head"}
 <!--[if lt IE 9]>
 {include_js module="system" file="libs/html5shiv"}
 <![endif]-->

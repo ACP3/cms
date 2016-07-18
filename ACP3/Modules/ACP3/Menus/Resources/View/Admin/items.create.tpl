@@ -31,7 +31,7 @@
                             <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
                         </div>
                     </div>
-                    {include file="asset:menus/create_menu_item.tpl"}
+                    {include file="asset:Menus/Partials/create_menu_item.tpl"}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div id="module-container" class="form-group">
@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div id="tab-3" class="tab-pane fade">
-                    {include file="asset:seo/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
+                    {include file="asset:Seo/Partials/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
                 </div>
             </div>
         </div>

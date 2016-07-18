@@ -9,9 +9,10 @@ services:
     tags:
       - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch, method: onBeforeDispatch }
 
-  seo.events.on_custom_template_variable_listener:
-    class: ACP3\Modules\ACP3\Seo\Event\Listener\OnControllerCustomTemplateVariableListener
+  seo.events.on_layout_meta_listener:
+    class: ACP3\Modules\ACP3\Seo\Event\Listener\OnLayoutMetaListener
     arguments:
+      - '@core.view'
       - '@seo.helper.meta_statements'
     tags:
-      - { name: core.eventListener, event: core.controller.custom_template_variable, method: onCustomTemplateVariable }
+      - { name: core.eventListener, event: core.layout.meta, method: renderSeoMetaTags }

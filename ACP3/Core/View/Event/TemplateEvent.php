@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\Event;
 class TemplateEvent extends Event
 {
     /**
-     * @var
+     * @var array
      */
     private $parameters;
 
