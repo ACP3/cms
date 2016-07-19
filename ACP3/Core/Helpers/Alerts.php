@@ -67,7 +67,7 @@ class Alerts
      * @param string $forward
      * @param string $backward
      *
-     * @return string
+     * @return array
      */
     public function confirmBoxPost($text, array $data, $forward, $backward = '')
     {
@@ -81,11 +81,11 @@ class Alerts
                 $confirm['backward'] = $backward;
             }
 
-            $this->view->assign('confirm', $confirm);
-
-            return 'system/alerts/confirm_box_post.tpl';
+            return [
+                'confirm' => $confirm
+            ];
         }
-        return '';
+        return [];
     }
 
     /**
@@ -150,7 +150,7 @@ class Alerts
         if (is_array($errors) === false) {
             $errors = (array)$errors;
         }
-        
+
         return $errors;
     }
 }

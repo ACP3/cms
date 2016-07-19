@@ -52,23 +52,23 @@
                                 <td>{$row.privilege_name}</td>
                                 <td>{$row.resource_id}</td>
                                 {if $can_edit_resource === true || $can_delete_resource === true}
-                                    <td>
-                                        {if $can_edit_resource === true}
-                                            <a href="{uri args="acp/permissions/resources/edit/id_`$row.resource_id`"}"
-                                               class="btn btn-default btn-block btn-xs"
-                                               title="{lang t="permissions|admin_resources_edit"}">
-                                                <i class="glyphicon glyphicon-edit"></i>
-                                                {lang t="system|edit"}
-                                            </a>
-                                        {/if}
-                                        {if $can_delete_resource === true}
-                                            <a href="{uri args="acp/permissions/resources/delete/entries_`$row.resource_id`"}"
-                                               class="btn btn-danger btn-block btn-xs"
-                                               title="{lang t="permissions|admin_resources_delete"}">
-                                                <i class="glyphicon glyphicon-remove"></i>
-                                                {lang t="system|delete"}
-                                            </a>
-                                        {/if}
+                                    <td class="datagrid-column__actions">
+                                        <div class="btn-group pull-right">
+                                            {if $can_edit_resource === true}
+                                                <a href="{uri args="acp/permissions/resources/edit/id_`$row.resource_id`"}"
+                                                   class="btn btn-default btn-xs"
+                                                   title="{lang t="permissions|admin_resources_edit"}">
+                                                    <i class="glyphicon glyphicon-edit"></i>
+                                                </a>
+                                            {/if}
+                                            {if $can_delete_resource === true}
+                                                <a href="{uri args="acp/permissions/resources/delete/entries_`$row.resource_id`"}"
+                                                   class="btn btn-danger btn-xs"
+                                                   title="{lang t="permissions|admin_resources_delete"}">
+                                                    <i class="glyphicon glyphicon-remove"></i>
+                                                </a>
+                                            {/if}
+                                        </div>
                                     </td>
                                 {/if}
                             </tr>

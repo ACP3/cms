@@ -127,7 +127,7 @@ class Action
      * @param callable $callback
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
-     * @return array|string|JsonResponse|RedirectResponse|void
+     * @return array|JsonResponse|RedirectResponse|void
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function handleCustomDeleteAction(
@@ -144,8 +144,12 @@ class Action
 
         if ($result instanceof RedirectResponse) {
             return $result;
-        } elseif ($action === 'confirmed' && is_array($result)) {
-            return $callback($result);
+        } elseif (is_array($result)) {
+            if ($action === 'confirmed') {
+                return $callback($result);
+            }
+
+            return $result;
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
@@ -250,11 +254,7 @@ class Action
                 $this->translator->t('system', 'no_entries_selected'),
                 $moduleIndexUrl
             );
-        } elseif (empty($entries) === false && $action !== 'confirmed') {
-            if (is_array($entries) === false) {
-                $entries = [$entries];
-            }
-
+        } elseif ($action !== 'confirmed') {
             $data = [
                 'action' => 'confirmed',
                 'entries' => $entries
@@ -268,19 +268,19 @@ class Action
             );
         }
 
-        return is_array($entries) ? $entries : explode('|', $entries);
+        return $entries;
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     private function prepareRequestData()
     {
-        $entries = null;
+        $entries = [];
         if (is_array($this->request->getPost()->get('entries')) === true) {
             $entries = $this->request->getPost()->get('entries');
         } elseif ((bool)preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
-            $entries = $this->request->getParameters()->get('entries');
+            $entries = explode('|', $this->request->getParameters()->get('entries'));
         }
 
         return $entries;
