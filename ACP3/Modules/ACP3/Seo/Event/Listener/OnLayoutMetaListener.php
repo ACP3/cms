@@ -7,35 +7,42 @@
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 
 
-use ACP3\Core\Controller\Event\CustomTemplateVariableEvent;
+use ACP3\Core\View;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
 /**
- * Class OnControllerCustomTemplateVariableListener
+ * Class OnLayoutMetaListener
  * @package ACP3\Modules\ACP3\Seo\Event\Listener
  */
-class OnControllerCustomTemplateVariableListener
+class OnLayoutMetaListener
 {
     /**
      * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
      */
     protected $metaStatements;
+    /**
+     * @var View
+     */
+    protected $view;
 
     /**
      * OnCustomTemplateVariable constructor.
      *
+     * @param View $view
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
      */
-    public function __construct(MetaStatements $metaStatements)
+    public function __construct(
+        View $view,
+        MetaStatements $metaStatements)
     {
+        $this->view = $view;
         $this->metaStatements = $metaStatements;
     }
 
-    /**
-     * @param \ACP3\Core\Controller\Event\CustomTemplateVariableEvent $event
-     */
-    public function onCustomTemplateVariable(CustomTemplateVariableEvent $event)
+    public function renderSeoMetaTags()
     {
-        $event->getView()->assign('META', $this->metaStatements->getMetaTags());
+        $this->view->assign('META', $this->metaStatements->getMetaTags());
+
+        echo $this->view->fetchTemplate('Seo/Partials/meta.tpl');
     }
 }

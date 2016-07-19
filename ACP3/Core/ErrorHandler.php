@@ -69,7 +69,7 @@ class ErrorHandler
     /**
      * @param \Exception $e
      */
-    public function handleException(\Exception $e)
+    public function handleException( $e)
     {
         $this->logger->error('exception', $e);
 

@@ -1,0 +1,7 @@
+services:
+  feeds.events.on_layout_head_listener:
+    class: ACP3\Modules\ACP3\Feeds\Event\Listener\OnLayoutHeadListener
+    arguments:
+      - '@core.view'
+    tags:
+      - { name: core.eventListener, event: core.layout.head, method: renderFeedLinkTags }

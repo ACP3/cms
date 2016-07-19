@@ -87,7 +87,7 @@
                     {/if}
                 </div>
                 <div id="tab-3" class="tab-pane fade">
-                    {include file="asset:seo/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
+                    {include file="asset:Seo/Partials/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
                 </div>
             </div>
         </div>

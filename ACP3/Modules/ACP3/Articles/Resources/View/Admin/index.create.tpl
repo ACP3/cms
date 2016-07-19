@@ -43,11 +43,11 @@
                                 {/foreach}
                             </div>
                         </div>
-                        {include file="asset:menus/create_menu_item.tpl"}
+                        {include file="asset:Menus/Partials/create_menu_item.tpl"}
                     {/if}
                 </div>
                 <div id="tab-3" class="tab-pane fade">
-                    {include file="asset:seo/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
+                    {include file="asset:Seo/Partials/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
                 </div>
             </div>
         </div>

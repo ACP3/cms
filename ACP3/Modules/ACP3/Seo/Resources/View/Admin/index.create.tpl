@@ -12,7 +12,7 @@
                 <input class="form-control" type="text" name="uri" id="uri" value="{$form.uri}" maxlength="120" required>
             </div>
         </div>
-        {include file="asset:seo/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
+        {include file="asset:Seo/Partials/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
