@@ -122,18 +122,21 @@
 .datagrid .datagrid-column__date-range {
   width: 22%;
 }
+.datagrid th.datagrid-column__actions {
+  visibility: hidden;
+}
 .datagrid .datagrid-column__actions {
   width: 7%;
-  visibility: hidden;
 }
 .datagrid .datagrid-column__actions .btn-group {
   display: flex;
+  visibility: hidden;
 }
 .datagrid .datagrid-column__actions .btn-group > .btn {
   float: none;
 }
-.datagrid tr:hover td.datagrid-column__actions,
-.datagrid tr.info td.datagrid-column__actions {
+.datagrid tr:hover td.datagrid-column__actions .btn-group,
+.datagrid tr.info td.datagrid-column__actions .btn-group {
   visibility: visible;
 }
 .tab-content > .tab-pane {

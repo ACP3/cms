@@ -1,0 +1,35 @@
+.datagrid {
+  .datagrid-column__mass-action {
+    width: 5%;
+  }
+
+  .datagrid-column__date-range {
+    width: 22%;
+  }
+
+  th.datagrid-column__actions {
+    visibility: hidden;
+  }
+
+  .datagrid-column__actions {
+    width: 7%;
+
+    .btn-group {
+      display: flex;
+      visibility: hidden;
+
+      > .btn {
+        float: none;
+      }
+    }
+  }
+
+  tr:hover,
+  tr.info {
+    td.datagrid-column__actions {
+      .btn-group {
+        visibility: visible;
+      }
+    }
+  }
+}
