@@ -28,7 +28,7 @@
 
                         <div class="col-sm-10">{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</div>
                     </div>
-                    {if isset($options)}
+                    {if !empty($options)}
                         <div class="form-group">
                             <label for="{$options.0.id}" class="col-sm-2 control-label">{lang t="system|options"}</label>
 

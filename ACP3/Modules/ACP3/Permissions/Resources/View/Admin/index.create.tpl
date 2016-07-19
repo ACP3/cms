@@ -19,7 +19,7 @@
                             <input class="form-control" type="text" name="name" id="name" value="{$form.name}" maxlength="120" required>
                         </div>
                     </div>
-                    {if isset($parent)}
+                    {if !empty($parent)}
                         <div class="form-group">
                             <label for="parent-id" class="col-sm-2 control-label required">{lang t="permissions|superior_role"}</label>
                             <div class="col-sm-10">

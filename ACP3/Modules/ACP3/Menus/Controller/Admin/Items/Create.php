@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
 
 /**
@@ -16,10 +15,6 @@ use ACP3\Modules\ACP3\Menus;
  */
 class Create extends AbstractFormAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
-     */
-    protected $aliases;
     /**
      * @var \ACP3\Core\NestedSet\NestedSet
      */
@@ -57,7 +52,6 @@ class Create extends AbstractFormAction
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                 $context
-     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases                 $aliases
      * @param \ACP3\Core\NestedSet\NestedSet                                       $nestedSet
      * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
@@ -69,7 +63,6 @@ class Create extends AbstractFormAction
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases,
         Core\NestedSet\NestedSet $nestedSet,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
@@ -81,7 +74,6 @@ class Create extends AbstractFormAction
     ) {
         parent::__construct($context, $formsHelper);
 
-        $this->aliases = $aliases;
         $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
         $this->menuRepository = $menuRepository;
@@ -115,7 +107,6 @@ class Create extends AbstractFormAction
             'mode' => $this->fetchMenuItemTypes(),
             'modules' => $this->fetchModules(),
             'target' => $this->formsHelper->linkTargetChoicesGenerator('target'),
-            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper ? $this->metaFormFieldsHelper->formFields() : [],
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
@@ -150,10 +141,6 @@ class Create extends AbstractFormAction
                     true
                 );
 
-                if ($this->metaStatementsHelper) {
-                    $this->updateSeoInformation($formData);
-                }
-
                 $this->menusCache->saveMenusCache();
 
                 Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
@@ -166,34 +153,5 @@ class Create extends AbstractFormAction
             },
             'acp/menus'
         );
-    }
-
-    /**
-     * @param array $formData
-     */
-    protected function updateSeoInformation(array $formData)
-    {
-        if ($formData['mode'] != 3) {
-            $path = $formData['mode'] == 1 ? $formData['module'] : $formData['uri'];
-            if ($this->aliases->uriAliasExists($formData['uri'])) {
-                $alias = !empty($formData['alias']) ? $formData['alias'] : $this->aliases->getUriAlias($formData['uri']);
-                $keywords = $this->metaStatementsHelper->getKeywords($formData['uri']);
-                $description = $this->metaStatementsHelper->getDescription($formData['uri']);
-            } else {
-                $alias = $formData['alias'];
-                $keywords = $formData['seo_keywords'];
-                $description = $formData['seo_description'];
-            }
-
-            $this->insertUriAlias(
-                [
-                    'alias' => $formData['mode'] == 1 ? '' : $alias,
-                    'seo_keywords' => $keywords,
-                    'seo_description' => $description,
-                    'seo_robots' => (int)$formData['seo_robots']
-                ],
-                $path
-            );
-        }
     }
 }

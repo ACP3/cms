@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\News;
 
 /**
@@ -39,13 +38,13 @@ class Create extends AbstractFormAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext             $context
-     * @param \ACP3\Core\Date                                        $date
-     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository           $newsRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
      * @param \ACP3\Modules\ACP3\News\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Categories\Helpers                  $categoriesHelpers
+     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
@@ -54,8 +53,8 @@ class Create extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         News\Model\Repository\NewsRepository $newsRepository,
         News\Validation\AdminFormValidation $adminFormValidation,
-        Categories\Helpers $categoriesHelpers)
-    {
+        Categories\Helpers $categoriesHelpers
+    ) {
         parent::__construct($context, $formsHelper, $categoriesHelpers);
 
         $this->date = $date;
@@ -90,9 +89,11 @@ class Create extends AbstractFormAction
                 '',
                 true
             ),
-            'options' => $this->fetchNewsOptions($settings, 0, 0),
+            'options' => $this->fetchOptions($settings, 0, 0),
             'target' => $this->formsHelper->linkTargetChoicesGenerator('target'),
-            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper ? $this->metaFormFieldsHelper->formFields() : [],
+            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
+                ? $this->metaFormFieldsHelper->formFields()
+                : [],
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

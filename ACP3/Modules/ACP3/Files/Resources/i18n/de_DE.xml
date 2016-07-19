@@ -29,6 +29,7 @@
         <item key="title">Titel</item>
         <item key="type_in_external_resource">Bitte geben Sie den Pfad zur Datei und die Dateigröße ein.</item>
         <item key="type_in_title">Der Titel sollte mindestens 3 Zeichen lang sein.</item>
+        <item key="unit">Einheit</item>
         <item key="unknown_filesize">Dateigröße unbekannt</item>
     </keys>
 </language>

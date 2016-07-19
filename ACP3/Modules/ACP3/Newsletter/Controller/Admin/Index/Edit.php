@@ -113,7 +113,6 @@ class Edit extends AbstractFormAction
         return $this->actionHelper->handlePostAction(function () use ($formData, $newsletter, $settings, $id) {
             $this->adminFormValidation->validate($formData);
 
-            // Newsletter archivieren
             $updateValues = [
                 'date' => $this->date->toSQL($formData['date']),
                 'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),

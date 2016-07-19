@@ -106,36 +106,4 @@ class Create extends AbstractFormAction
             return $roleId;
         });
     }
-
-    /**
-     * @param int $roleId
-     * @param int $moduleId
-     * @param int $privilegeId
-     * @param int $defaultValue
-     *
-     * @return array
-     */
-    protected function generatePrivilegeCheckboxes($roleId, $moduleId, $privilegeId, $defaultValue)
-    {
-        $permissions = [
-            0 => 'deny_access',
-            1 => 'allow_access',
-            2 => 'inherit_access'
-        ];
-
-        $select = [];
-        foreach ($permissions as $value => $phrase) {
-            if ($roleId === 1 && $value === 2) {
-                continue;
-            }
-
-            $select[$value] = [
-                'value' => $value,
-                'selected' => $this->privilegeIsChecked($moduleId, $privilegeId, $value, $defaultValue),
-                'lang' => $this->translator->t('permissions', $phrase)
-            ];
-        }
-
-        return $select;
-    }
 }

@@ -38,10 +38,6 @@ class Create extends AbstractFormAction
      */
     protected $menuItemFormFieldsHelper;
     /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
      */
     protected $metaFormFieldsHelper;
@@ -62,10 +58,9 @@ class Create extends AbstractFormAction
         Articles\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $formsHelper);
 
         $this->date = $date;
-        $this->formsHelper = $formsHelper;
         $this->articleRepository = $articleRepository;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
@@ -100,13 +95,7 @@ class Create extends AbstractFormAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        if ($this->acl->hasPermission('admin/menus/items/create') === true) {
-            $options = [
-                1 => $this->translator->t('articles', 'create_menu_item')
-            ];
-            $this->view->assign('options', $this->formsHelper->checkboxGenerator('create', $options, 0));
-            $this->view->assign($this->menuItemFormFieldsHelper->createMenuItemFormFields());
-        }
+
 
         $defaults = [
             'title' => '',
@@ -116,6 +105,7 @@ class Create extends AbstractFormAction
         ];
 
         return [
+            'options' => $this->fetchOptions(),
             'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper ? $this->metaFormFieldsHelper->formFields() : [],
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
@@ -151,5 +141,20 @@ class Create extends AbstractFormAction
 
             return $articleId;
         });
+    }
+
+    /**
+     * @return array
+     */
+    protected function fetchOptions()
+    {
+        $options = [];
+        if ($this->acl->hasPermission('admin/menus/items/create') === true) {
+            $options = $this->fetchCreateMenuItemOption(0);
+
+            $this->view->assign($this->menuItemFormFieldsHelper->createMenuItemFormFields());
+        }
+
+        return $options;
     }
 }

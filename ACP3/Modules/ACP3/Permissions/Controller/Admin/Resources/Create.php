@@ -13,16 +13,12 @@ use ACP3\Modules\ACP3\Permissions;
  * Class Create
  * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources
  */
-class Create extends Core\Controller\AbstractAdminAction
+class Create extends AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
-     */
-    protected $privilegeRepository;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
      */
@@ -35,10 +31,6 @@ class Create extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
      */
     protected $resourceFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext                       $context
@@ -58,11 +50,9 @@ class Create extends Core\Controller\AbstractAdminAction
         Permissions\Cache $permissionsCache,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $formsHelper, $privilegeRepository);
 
-        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
-        $this->privilegeRepository = $privilegeRepository;
         $this->resourceRepository = $resourceRepository;
         $this->permissionsCache = $permissionsCache;
         $this->resourceFormValidation = $resourceFormValidation;
@@ -82,18 +72,9 @@ class Create extends Core\Controller\AbstractAdminAction
             $modules[$row['name']]['selected'] = $this->formsHelper->selectEntry('modules', $row['name']);
         }
 
-        $privileges = $this->privilegeRepository->getAllPrivileges();
-        $cPrivileges = count($privileges);
-        for ($i = 0; $i < $cPrivileges; ++$i) {
-            $privileges[$i]['selected'] = $this->formsHelper->selectEntry(
-                'privileges',
-                $privileges[$i]['id']
-            );
-        }
-
         return [
             'modules' => $modules,
-            'privileges' => $privileges,
+            'privileges' => $this->fetchPrivileges(0),
             'form' => array_merge(
                 ['resource' => '', 'area' => '', 'controller' => ''],
                 $this->request->getPost()->all()

@@ -13,16 +13,12 @@ use ACP3\Modules\ACP3\Permissions;
  * Class Edit
  * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources
  */
-class Edit extends Core\Controller\AbstractAdminAction
+class Edit extends AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
-     */
-    protected $privilegeRepository;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
      */
@@ -35,10 +31,6 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
      */
     protected $resourceFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext                       $context
@@ -58,11 +50,9 @@ class Edit extends Core\Controller\AbstractAdminAction
         Permissions\Cache $permissionsCache,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $formsHelper, $privilegeRepository);
 
-        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
-        $this->privilegeRepository = $privilegeRepository;
         $this->resourceRepository = $resourceRepository;
         $this->permissionsCache = $permissionsCache;
         $this->resourceFormValidation = $resourceFormValidation;
@@ -71,7 +61,7 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -82,16 +72,6 @@ class Edit extends Core\Controller\AbstractAdminAction
                 return $this->executePost($this->request->getPost()->all(), $id);
             }
 
-            $privileges = $this->privilegeRepository->getAllPrivileges();
-            $cPrivileges = count($privileges);
-            for ($i = 0; $i < $cPrivileges; ++$i) {
-                $privileges[$i]['selected'] = $this->formsHelper->selectEntry(
-                    'privileges',
-                    $privileges[$i]['id'],
-                    $resource['privilege_id']
-                );
-            }
-
             $defaults = [
                 'resource' => $resource['page'],
                 'area' => $resource['area'],
@@ -100,7 +80,7 @@ class Edit extends Core\Controller\AbstractAdminAction
             ];
 
             return [
-                'privileges' => $privileges,
+                'privileges' => $this->fetchPrivileges($resource['privilege_id']),
                 'form' => array_merge($defaults, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()
             ];

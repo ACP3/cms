@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
 
 /**
@@ -16,10 +15,6 @@ use ACP3\Modules\ACP3\Menus;
  */
 class Edit extends AbstractFormAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
-     */
-    protected $aliases;
     /**
      * @var \ACP3\Core\NestedSet\NestedSet
      */
@@ -49,7 +44,6 @@ class Edit extends AbstractFormAction
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext                 $context
-     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases                 $aliases
      * @param \ACP3\Core\NestedSet\NestedSet                                       $nestedSet
      * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
@@ -60,7 +54,6 @@ class Edit extends AbstractFormAction
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases,
         Core\NestedSet\NestedSet $nestedSet,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
@@ -71,7 +64,6 @@ class Edit extends AbstractFormAction
     ) {
         parent::__construct($context, $formsHelper);
 
-        $this->aliases = $aliases;
         $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
         $this->menuItemRepository = $menuItemRepository;
@@ -92,16 +84,6 @@ class Edit extends AbstractFormAction
 
         if (empty($menuItem) === false) {
             $this->title->setPageTitlePostfix($menuItem['title']);
-
-            $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4
-                ? $this->aliases->getUriAlias($menuItem['uri'], true)
-                : '';
-            $menuItem['seo_keywords'] = $this->metaStatementsHelper
-                ? $this->metaStatementsHelper->getKeywords($menuItem['uri'])
-                : '';
-            $menuItem['seo_description'] = $this->metaStatementsHelper
-                ? $this->metaStatementsHelper->getDescription($menuItem['uri'])
-                : '';
 
             if ($this->request->getPost()->count() !== 0) {
                 return $this->executePost($this->request->getPost()->all(), $menuItem, $id);
@@ -132,9 +114,6 @@ class Edit extends AbstractFormAction
                 'mode' => $this->fetchMenuItemTypes($menuItem['mode']),
                 'modules' => $this->fetchModules($menuItem),
                 'target' => $this->formsHelper->linkTargetChoicesGenerator('target', $menuItem['target']),
-                'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
-                    ? $this->metaFormFieldsHelper->formFields($menuItem['uri'])
-                    : [],
                 'form' => array_merge($menuItem, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()
             ];
@@ -175,10 +154,6 @@ class Edit extends AbstractFormAction
                     true
                 );
 
-                if ($this->metaStatementsHelper) {
-                    $this->updateSeoInformation($formData, $menuItem);
-                }
-
                 $this->menusCache->saveMenusCache();
 
                 Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
@@ -191,29 +166,5 @@ class Edit extends AbstractFormAction
             },
             'acp/menus'
         );
-    }
-
-    /**
-     * @param array $formData
-     * @param array $menuItem
-     */
-    protected function updateSeoInformation(array $formData, array $menuItem)
-    {
-        if ($formData['mode'] != 3) {
-            $alias = $formData['alias'] === $menuItem['alias'] ? $menuItem['alias'] : $formData['alias'];
-            $keywords = $formData['seo_keywords'] === $menuItem['seo_keywords'] ? $menuItem['seo_keywords'] : $formData['seo_keywords'];
-            $description = $formData['seo_description'] === $menuItem['seo_description'] ? $menuItem['seo_description'] : $formData['seo_description'];
-            $path = $formData['mode'] == 1 ? $formData['module'] : $formData['uri'];
-
-            $this->insertUriAlias(
-                [
-                    'alias' => $formData['mode'] == 1 ? '' : $alias,
-                    'seo_keywords' => $keywords,
-                    'seo_description' => $description,
-                    'seo_robots' => (int)$formData['seo_robots']
-                ],
-                $path
-            );
-        }
     }
 }

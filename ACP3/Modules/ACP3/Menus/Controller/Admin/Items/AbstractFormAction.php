@@ -11,9 +11,6 @@ use ACP3\Core\Controller\Context\AdminContext;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
-use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
-use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
-use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class AbstractFormAction
@@ -29,18 +26,6 @@ abstract class AbstractFormAction extends AbstractAdminAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
-     */
-    protected $metaFormFieldsHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
-     */
-    protected $metaStatementsHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
-     */
-    protected $uriAliasManager;
 
     /**
      * AbstractFormAction constructor.
@@ -65,30 +50,6 @@ abstract class AbstractFormAction extends AbstractAdminAction
         $this->articlesHelpers = $articlesHelpers;
 
         return $this;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatementsHelper
-     */
-    public function setMetaStatementsHelper(MetaStatements $metaStatementsHelper)
-    {
-        $this->metaStatementsHelper = $metaStatementsHelper;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
-     */
-    public function setMetaFormFieldsHelper(MetaFormFields $metaFormFieldsHelper)
-    {
-        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
-     */
-    public function setUriAliasManager(UriAliasManager $uriAliasManager)
-    {
-        $this->uriAliasManager = $uriAliasManager;
     }
 
     /**
@@ -149,22 +110,5 @@ abstract class AbstractFormAction extends AbstractAdminAction
             );
         }
         return $modules;
-    }
-
-    /**
-     * @param array  $formData
-     * @param string $path
-     */
-    protected function insertUriAlias(array $formData, $path)
-    {
-        if ($this->uriAliasManager) {
-            $this->uriAliasManager->insertUriAlias(
-                $path,
-                $formData['alias'],
-                $formData['seo_keywords'],
-                $formData['seo_description'],
-                (int)$formData['seo_robots']
-            );
-        }
     }
 }

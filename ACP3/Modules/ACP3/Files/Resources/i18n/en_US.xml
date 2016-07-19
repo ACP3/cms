@@ -29,6 +29,7 @@
         <item key="title">Title</item>
         <item key="type_in_external_resource">Please type in the external resource for the file.</item>
         <item key="type_in_title">The title should be at least 3 characters long.</item>
+        <item key="unit">Unit</item>
         <item key="unknown_filesize">Unknown filesize</item>
     </keys>
 </language>

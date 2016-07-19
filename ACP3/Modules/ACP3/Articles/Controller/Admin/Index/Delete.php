@@ -25,16 +25,18 @@ class Delete extends AbstractFormAction
     protected $articlesCache;
 
     /**
-     * @param \ACP3\Core\Controller\Context\AdminContext          $context
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param Core\Helpers\Forms $formsHelper
      * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
+     * @param \ACP3\Modules\ACP3\Articles\Cache $articlesCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper,
         Articles\Model\Repository\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache)
     {
-        parent::__construct($context);
+        parent::__construct($context, $formsHelper);
 
         $this->articleRepository = $articleRepository;
         $this->articlesCache = $articlesCache;

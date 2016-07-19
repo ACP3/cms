@@ -81,18 +81,9 @@ class Edit extends AbstractFormAction
                 return $this->executePost($this->request->getPost()->all(), $id);
             }
 
-            $options = [
-                $this->fetchMultipleChoiceOption($poll['multiple']),
-                [
-                    'name' => 'reset',
-                    'checked' => $this->formsHelper->selectEntry('reset', '1', '0', 'checked'),
-                    'lang' => $this->translator->t('polls', 'reset_votes')
-                ]
-            ];
-
             return [
                 'answers' => $this->getAnswers($id),
-                'options' => $options,
+                'options' => $this->fetchOptions($poll['multiple']),
                 'form' => array_merge($poll, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()
             ];
@@ -139,5 +130,20 @@ class Edit extends AbstractFormAction
         }
 
         return $answers;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function fetchOptions($useMultipleChoice)
+    {
+        $options = parent::fetchOptions($useMultipleChoice);
+        $options[] = [
+            'name' => 'reset',
+            'checked' => $this->formsHelper->selectEntry('reset', '1', '0', 'checked'),
+            'lang' => $this->translator->t('polls', 'reset_votes')
+        ];
+
+        return $options;
     }
 }

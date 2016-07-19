@@ -71,6 +71,18 @@ abstract class AbstractFormAction extends AbstractAdminAction
     }
 
     /**
+     * @param int $useMultipleChoice
+     * @return array
+     */
+    protected function fetchOptions($useMultipleChoice)
+    {
+        $options = [];
+        $options[] = $this->fetchMultipleChoiceOption($useMultipleChoice);
+
+        return $options;
+    }
+
+    /**
      * @param string $currentValue
      *
      * @return array

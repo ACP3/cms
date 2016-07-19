@@ -19,6 +19,10 @@ use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 abstract class AbstractFormAction extends AbstractAdminAction
 {
     /**
+     * @var Core\Helpers\Forms
+     */
+    protected $formsHelper;
+    /**
      * @var \ACP3\Modules\ACP3\Menus\Cache
      */
     protected $menusCache;
@@ -30,6 +34,15 @@ abstract class AbstractFormAction extends AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
      */
     protected $uriAliasManager;
+
+    public function __construct(
+        Core\Controller\Context\AdminContext $context,
+        Core\Helpers\Forms $formsHelper
+    ) {
+        parent::__construct($context);
+
+        $this->formsHelper = $formsHelper;
+    }
 
     /**
      * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
@@ -65,7 +78,7 @@ abstract class AbstractFormAction extends AbstractAdminAction
 
     /**
      * @param array $formData
-     * @param int   $id
+     * @param int $id
      */
     protected function createOrUpdateMenuItem(array $formData, $id)
     {
@@ -94,7 +107,7 @@ abstract class AbstractFormAction extends AbstractAdminAction
 
     /**
      * @param array $formData
-     * @param int   $articleId
+     * @param int $articleId
      */
     protected function insertUriAlias(array $formData, $articleId)
     {
@@ -107,5 +120,18 @@ abstract class AbstractFormAction extends AbstractAdminAction
                 (int)$formData['seo_robots']
             );
         }
+    }
+
+    /**
+     * @param int $currentValue
+     * @return array
+     */
+    protected function fetchCreateMenuItemOption($currentValue = 0)
+    {
+        $createMenuItem = [
+            1 => $this->translator->t('articles', 'create_menu_item')
+        ];
+
+        return $this->formsHelper->checkboxGenerator('create', $createMenuItem, $currentValue);
     }
 }

@@ -46,22 +46,18 @@ class Edit extends AbstractFormAction
      */
     protected $menuItemFormFieldsHelper;
     /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
      */
     protected $metaFormFieldsHelper;
 
     /**
-     * @param \ACP3\Core\Controller\Context\AdminContext                 $context
-     * @param \ACP3\Core\Date                                            $date
-     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
-     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository        $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache                          $articlesCache
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
+     * @param \ACP3\Modules\ACP3\Articles\Cache $articlesCache
      * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
@@ -72,10 +68,9 @@ class Edit extends AbstractFormAction
         Articles\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $formsHelper);
 
         $this->date = $date;
-        $this->formsHelper = $formsHelper;
         $this->articleRepository = $articleRepository;
         $this->articlesCache = $articlesCache;
         $this->adminFormValidation = $adminFormValidation;
@@ -131,31 +126,8 @@ class Edit extends AbstractFormAction
                 return $this->executePost($this->request->getPost()->all(), $id);
             }
 
-            if ($this->acl->hasPermission('admin/menus/items/create') === true) {
-                $menuItem = $this->menuItemRepository->getOneMenuItemByUri(
-                    sprintf(Articles\Helpers::URL_KEY_PATTERN, $id)
-                );
-
-                $options = [
-                    1 => $this->translator->t('articles', 'create_menu_item')
-                ];
-                $this->view->assign(
-                    'options',
-                    $this->formsHelper->checkboxGenerator('create', $options, !empty($menuItem) ? 1 : 0)
-                );
-
-                $this->view->assign(
-                    $this->menuItemFormFieldsHelper->createMenuItemFormFields(
-                        $menuItem['block_id'],
-                        $menuItem['parent_id'],
-                        $menuItem['left_id'],
-                        $menuItem['right_id'],
-                        $menuItem['display']
-                    )
-                );
-            }
-
             return [
+                'options' => $this->fetchOptions($id),
                 'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
                     ? $this->metaFormFieldsHelper->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id))
                     : [],
@@ -169,7 +141,7 @@ class Edit extends AbstractFormAction
 
     /**
      * @param array $formData
-     * @param int   $articleId
+     * @param int $articleId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -189,7 +161,7 @@ class Edit extends AbstractFormAction
             ];
 
             $bool = $this->articleRepository->update($updateValues, $articleId);
-            
+
             $this->articlesCache->saveCache($articleId);
 
             $this->insertUriAlias($formData, $articleId);
@@ -199,5 +171,33 @@ class Edit extends AbstractFormAction
 
             return $bool;
         });
+    }
+
+    /**
+     * @param int $menuItemId
+     * @return array
+     */
+    protected function fetchOptions($menuItemId)
+    {
+        $options = [];
+        if ($this->acl->hasPermission('admin/menus/items/create') === true) {
+            $menuItem = $this->menuItemRepository->getOneMenuItemByUri(
+                sprintf(Articles\Helpers::URL_KEY_PATTERN, $menuItemId)
+            );
+
+            $options = $this->fetchCreateMenuItemOption(!empty($menuItem) ? 1 : 0);
+
+            $this->view->assign(
+                $this->menuItemFormFieldsHelper->createMenuItemFormFields(
+                    $menuItem['block_id'],
+                    $menuItem['parent_id'],
+                    $menuItem['left_id'],
+                    $menuItem['right_id'],
+                    $menuItem['display']
+                )
+            );
+        }
+
+        return $options;
     }
 }

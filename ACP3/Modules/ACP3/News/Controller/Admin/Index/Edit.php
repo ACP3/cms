@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\News;
 
 /**
@@ -96,7 +95,7 @@ class Edit extends AbstractFormAction
                     $news['category_id'],
                     true
                 ),
-                'options' => $this->fetchNewsOptions($settings, $news['readmore'], $news['comments']),
+                'options' => $this->fetchOptions($settings, $news['readmore'], $news['comments']),
                 'target' => $this->formsHelper->linkTargetChoicesGenerator('target', $news['target']),
                 'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
                     ? $this->metaFormFieldsHelper->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $id))

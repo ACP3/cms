@@ -77,8 +77,8 @@ abstract class AbstractFormAction extends AbstractAdminAction
      */
     protected function fetchCategoryIdForSave(array $formData)
     {
-        return !empty($formData['cat_create']) 
-            ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], News\Installer\Schema::MODULE_NAME) 
+        return !empty($formData['cat_create'])
+            ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], News\Installer\Schema::MODULE_NAME)
             : $formData['cat'];
     }
 
@@ -111,7 +111,7 @@ abstract class AbstractFormAction extends AbstractAdminAction
      *
      * @return array
      */
-    protected function fetchNewsOptions(array $settings, $readMoreValue, $commentsValue)
+    protected function fetchOptions(array $settings, $readMoreValue, $commentsValue)
     {
         $options = [];
         if ($settings['readmore'] == 1) {

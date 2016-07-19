@@ -36,7 +36,6 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Create
     arguments:
       - '@core.context.admin'
-      - '@seo.core.router.aliases'
       - '@core.nested_set'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
@@ -47,9 +46,6 @@ services:
       - '@menus.validator.menuitem'
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
-      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
-      - ['setMetaStatementsHelper', ['@?seo.helper.meta_statements']]
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   menus.controller.admin.items.delete:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Delete
@@ -65,7 +61,6 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Edit
     arguments:
       - '@core.context.admin'
-      - '@seo.core.router.aliases'
       - '@core.nested_set'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
@@ -75,9 +70,6 @@ services:
       - '@menus.validator.menuitem'
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
-      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
-      - ['setMetaStatementsHelper', ['@?seo.helper.meta_statements']]
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   menus.controller.admin.items.order:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Order

@@ -48,6 +48,7 @@
                                     <input class="form-control" type="text" name="filesize" id="filesize" value="{$form.filesize}" maxlength="15">
                                 </div>
                                 <div class="col-sm-4">
+                                    <label for="unit" class="sr-only">{lang t="files|unit"}</label>
                                     <select class="form-control" name="unit" id="unit">
                                         {foreach $units as $row}
                                             <option value="{$row.value}"{$row.selected}>{$row.value}</option>
@@ -69,7 +70,7 @@
                             {include file="asset:Categories/Partials/create_list.tpl" categories=$categories}
                         </div>
                     </div>
-                    {if isset($options)}
+                    {if !empty($options)}
                         <div class="form-group">
                             <label for="{$options.0.name}" class="col-sm-2 control-label">{lang t="system|options"}</label>
 

@@ -70,18 +70,9 @@ class Create extends Core\Controller\AbstractAdminAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        $modules = $this->modules->getActiveModules();
-        foreach ($modules as $name => $info) {
-            if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
-                $modules[$name]['selected'] = $this->formsHelper->selectEntry('module', $info['id']);
-            } else {
-                unset($modules[$name]);
-            }
-        }
-
         return [
             'form' => array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()),
-            'mod_list' => $modules,
+            'mod_list' => $this->fetchModules(),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
@@ -121,5 +112,21 @@ class Create extends Core\Controller\AbstractAdminAction
 
             return $bool;
         });
+    }
+
+    /**
+     * @return array
+     */
+    protected function fetchModules()
+    {
+        $modules = $this->modules->getActiveModules();
+        foreach ($modules as $name => $info) {
+            if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
+                $modules[$name]['selected'] = $this->formsHelper->selectEntry('module', $info['id']);
+            } else {
+                unset($modules[$name]);
+            }
+        }
+        return $modules;
     }
 }
