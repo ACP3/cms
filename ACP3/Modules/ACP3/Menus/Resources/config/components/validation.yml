@@ -24,8 +24,8 @@ services:
     tags:
       - { name: core.validation.validation_rule }
 
-  menus.validation.validation_rules.menu_exists_validation_rule:
-    class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuExistsValidationRule
+  menus.validation.validation_rules.menu_already_exists_validation_rule:
+    class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuAlreadyExistsValidationRule
     arguments:
       - '@menus.model.menurepository'
     tags:

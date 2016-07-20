@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Menus\Validation;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuExistsValidationRule;
+use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuAlreadyExistsValidationRule;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuNameValidationRule;
 
 /**
@@ -43,7 +43,7 @@ class MenuFormValidation extends Core\Validation\AbstractFormValidation
                     'message' => $this->translator->t('menus', 'type_in_index_name')
                 ])
             ->addConstraint(
-                MenuExistsValidationRule::class,
+                MenuAlreadyExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'index_name',

@@ -95,11 +95,7 @@ class Edit extends Core\Controller\AbstractAdminAction
                 ->setMenuId($menuId)
                 ->validate($formData);
 
-            $bool = $this->menusModel->saveMenu($formData, $menuId);
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $bool;
+            return $this->menusModel->saveMenu($formData, $menuId);
         });
     }
 }

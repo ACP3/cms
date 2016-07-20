@@ -5,10 +5,10 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
 
 /**
- * Class MenuExistsValidationRule
+ * Class MenuAlreadyExistsValidationRule
  * @package ACP3\Modules\ACP3\Menus\Validation\ValidationRules
  */
-class MenuExistsValidationRule extends AbstractValidationRule
+class MenuAlreadyExistsValidationRule extends AbstractValidationRule
 {
     /**
      * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
@@ -34,6 +34,7 @@ class MenuExistsValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->menuRepository->menuExistsByName($data, isset($extra['menu_id']) ? $extra['menu_id'] : 0) === false;
+        $menuId = isset($extra['menu_id']) ? $extra['menu_id'] : 0;
+        return $this->menuRepository->menuExistsByName($data, $menuId) === false;
     }
 }
