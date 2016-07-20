@@ -35,7 +35,7 @@ abstract class AbstractModel
      * @param AbstractRepository $repository
      * @param array $data
      * @param null|int $entryId
-     * @return mixed
+     * @return int|bool
      */
     protected function save(AbstractRepository $repository, array $data, $entryId = null)
     {
@@ -45,6 +45,10 @@ abstract class AbstractModel
             $result = $repository->update($data, $entryId);
         } else {
             $result = $repository->insert($data);
+
+            if ($result !== false) {
+                $entryId = $result;
+            }
         }
 
         $this->dispatchAfterSaveEvent($data, $entryId);

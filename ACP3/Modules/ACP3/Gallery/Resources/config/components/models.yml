@@ -13,3 +13,11 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
     arguments:
       - '@core.db'
+
+  gallery.model:
+    class: ACP3\Modules\ACP3\Gallery\Model\GalleryModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.date'
+      - '@core.helpers.secure'
+      - '@gallery.model.galleryrepository'

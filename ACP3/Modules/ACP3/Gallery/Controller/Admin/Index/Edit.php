@@ -18,10 +18,6 @@ use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 class Edit extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
@@ -45,31 +41,35 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
      */
     protected $metaStatements;
+    /**
+     * @var Gallery\Model\GalleryModel
+     */
+    protected $galleryModel;
 
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                  $context
-     * @param \ACP3\Core\Date                                             $date
-     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository          $galleryRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository          $pictureRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
+     * @param Gallery\Model\GalleryModel $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Model\Repository\GalleryRepository $galleryRepository,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
+        Gallery\Model\GalleryModel $galleryModel,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation
     ) {
         parent::__construct($context);
 
-        $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
         $this->galleryRepository = $galleryRepository;
         $this->pictureRepository = $pictureRepository;
+        $this->galleryModel = $galleryModel;
         $this->galleryFormValidation = $galleryFormValidation;
     }
 
@@ -186,20 +186,11 @@ class Edit extends AbstractFormAction
                 ->setUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId))
                 ->validate($formData);
 
-            $updateValues = [
-                'start' => $this->date->toSQL($formData['start']),
-                'end' => $this->date->toSQL($formData['end']),
-                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
-                'user_id' => $this->user->getUserId(),
-            ];
-
-            $bool = $this->galleryRepository->update($updateValues, $galleryId);
+            $bool = $this->galleryModel->saveGallery($formData, $this->user->getUserId(), $galleryId);
 
             $this->insertUriAlias($formData, $galleryId);
 
             $this->generatePictureAliases($galleryId);
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $bool;
         });

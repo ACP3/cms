@@ -3,9 +3,8 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Create
     arguments:
       - '@core.context.admin'
-      - '@core.date'
       - '@core.helpers.formToken'
-      - '@gallery.model.galleryrepository'
+      - '@gallery.model'
       - '@gallery.validator.gallery'
     calls:
       - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
@@ -25,10 +24,10 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.admin'
-      - '@core.date'
       - '@core.helpers.formToken'
       - '@gallery.model.galleryrepository'
       - '@gallery.model.picturerepository'
+      - '@gallery.model'
       - '@gallery.validator.gallery'
     calls:
       - ['setAliases', ['@?seo.core.router.aliases']]

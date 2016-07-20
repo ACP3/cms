@@ -16,43 +16,36 @@ use ACP3\Modules\ACP3\Gallery;
 class Create extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
-     */
-    protected $galleryRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation
      */
     protected $galleryFormValidation;
+    /**
+     * @var Gallery\Model\GalleryModel
+     */
+    protected $galleryModel;
 
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                  $context
-     * @param \ACP3\Core\Date                                             $date
-     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository          $galleryRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Gallery\Model\GalleryModel $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
-        Gallery\Model\Repository\GalleryRepository $galleryRepository,
+        Gallery\Model\GalleryModel $galleryModel,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation
     ) {
         parent::__construct($context);
 
-        $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
-        $this->galleryRepository = $galleryRepository;
+        $this->galleryModel = $galleryModel;
         $this->galleryFormValidation = $galleryFormValidation;
     }
 
@@ -88,19 +81,9 @@ class Create extends AbstractFormAction
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->galleryFormValidation->validate($formData);
 
-            $insertValues = [
-                'id' => '',
-                'start' => $this->date->toSQL($formData['start']),
-                'end' => $this->date->toSQL($formData['end']),
-                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
-                'user_id' => $this->user->getUserId(),
-            ];
-
-            $lastId = $this->galleryRepository->insert($insertValues);
+            $lastId = $this->galleryModel->saveGallery($formData, $this->user->getUserId());
 
             $this->insertUriAlias($formData, $lastId);
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $lastId;
         });
