@@ -100,7 +100,7 @@ class Action
      * @param callable $callback
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
-     * @return array|string|JsonResponse|RedirectResponse|void
+     * @return array|JsonResponse|RedirectResponse
      */
     public function handleDeleteAction(
         $action,
@@ -113,9 +113,7 @@ class Action
             function ($items) use ($callback, $moduleIndexUrl) {
                 $result = $callback($items);
 
-                if (is_string($result) === false) {
-                    return $this->prepareRedirectMessageAfterPost($result, 'delete', $moduleIndexUrl);
-                }
+                return $this->prepareRedirectMessageAfterPost($result, 'delete', $moduleIndexUrl);
             },
             $moduleConfirmUrl,
             $moduleIndexUrl
@@ -127,7 +125,7 @@ class Action
      * @param callable $callback
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
-     * @return array|JsonResponse|RedirectResponse|void
+     * @return array|JsonResponse|RedirectResponse
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function handleCustomDeleteAction(

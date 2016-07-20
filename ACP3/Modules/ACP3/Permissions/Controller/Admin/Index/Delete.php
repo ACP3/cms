@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
 
 /**
  * Class Delete
@@ -45,7 +46,7 @@ class Delete extends Core\Controller\AbstractAdminAction
     /**
      * @param string $action
      *
-     * @return mixed
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($action = '')
@@ -58,8 +59,7 @@ class Delete extends Core\Controller\AbstractAdminAction
                 if (in_array($item, [1, 2, 4]) === true) {
                     $levelNotDeletable = true;
                 } else {
-                    $bool = $this->nestedSet->deleteNode($item,
-                        Permissions\Model\Repository\RoleRepository::TABLE_NAME);
+                    $bool = $this->nestedSet->deleteNode($item, RoleRepository::TABLE_NAME);
                 }
             }
 

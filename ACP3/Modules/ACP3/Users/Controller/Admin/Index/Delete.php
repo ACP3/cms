@@ -34,8 +34,8 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Users\Model\AuthenticationModel $authenticationModel,
-        Users\Model\Repository\UserRepository $userRepository)
-    {
+        Users\Model\Repository\UserRepository $userRepository
+    ) {
         parent::__construct($context);
 
         $this->authenticationModel = $authenticationModel;
@@ -45,7 +45,7 @@ class Delete extends Core\Controller\AbstractAdminAction
     /**
      * @param string $action
      *
-     * @return mixed
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($action = '')
@@ -54,16 +54,18 @@ class Delete extends Core\Controller\AbstractAdminAction
             $action, function ($items) {
             $bool = $isAdminUser = $selfDelete = false;
             foreach ($items as $item) {
-                if ($item == 1) {
+                $user = $this->user->getUserInfo($item);
+                if ($user['super_user'] == 1) {
                     $isAdminUser = true;
-                } else {
-                    // Falls sich der User selbst gelöscht hat, diesen auch gleich abmelden
-                    if ($item == $this->user->getUserId()) {
-                        $this->authenticationModel->logout();
-                        $selfDelete = true;
-                    }
-                    $bool = $this->userRepository->delete($item);
+                    continue;
                 }
+
+                if ($item == $this->user->getUserId()) {
+                    $this->authenticationModel->logout();
+                    $selfDelete = true;
+                }
+
+                $bool = $this->userRepository->delete($item);
             }
             if ($isAdminUser === true) {
                 $bool = false;

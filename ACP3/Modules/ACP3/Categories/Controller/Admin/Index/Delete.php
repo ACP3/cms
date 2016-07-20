@@ -27,15 +27,15 @@ class Delete extends Core\Controller\AbstractAdminAction
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext             $context
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
-     * @param \ACP3\Modules\ACP3\Categories\Cache                    $categoriesCache
+     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Categories\Model\Repository\CategoryRepository $categoryRepository,
-        Categories\Cache $categoriesCache)
-    {
+        Categories\Cache $categoriesCache
+    ) {
         parent::__construct($context);
 
         $this->categoryRepository = $categoryRepository;
@@ -45,48 +45,49 @@ class Delete extends Core\Controller\AbstractAdminAction
     /**
      * @param string $action
      *
-     * @return mixed
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($action = '')
     {
         return $this->actionHelper->handleCustomDeleteAction(
-            $action, function ($items) {
-            $bool = false;
-            $isInUse = false;
-
-            foreach ($items as $item) {
-                if (!empty($item) && $this->categoryRepository->resultExists($item) === true) {
-                    $category = $this->categoryRepository->getCategoryDeleteInfosById($item);
-
-                    $serviceId = strtolower($category['module'] . '.' . $category['module'] . 'repository');
-                    if ($this->container->has($serviceId) &&
-                        $this->get($serviceId)->countAll('', $item) > 0
-                    ) {
-                        $isInUse = true;
-                        continue;
-                    }
-
-                    // Kategoriebild ebenfalls löschen
-                    $upload = new Core\Helpers\Upload($this->appPath, 'categories');
-                    $upload->removeUploadedFile($category['picture']);
-                    $bool = $this->categoryRepository->delete($item);
-                }
-            }
-
-            $this->categoriesCache->getCacheDriver()->deleteAll();
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            if ($isInUse === true) {
-                $text = $this->translator->t('categories', 'category_is_in_use');
+            $action,
+            function ($items) {
                 $bool = false;
-            } else {
-                $text = $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error');
-            }
+                $isInUse = false;
 
-            return $this->redirectMessages()->setMessage($bool, $text);
-        }
+                foreach ($items as $item) {
+                    if (!empty($item) && $this->categoryRepository->resultExists($item) === true) {
+                        $category = $this->categoryRepository->getCategoryDeleteInfosById($item);
+
+                        $serviceId = strtolower($category['module'] . '.' . $category['module'] . 'repository');
+                        if ($this->container->has($serviceId) &&
+                            $this->get($serviceId)->countAll('', $item) > 0
+                        ) {
+                            $isInUse = true;
+                            continue;
+                        }
+
+                        // Kategoriebild ebenfalls löschen
+                        $upload = new Core\Helpers\Upload($this->appPath, 'categories');
+                        $upload->removeUploadedFile($category['picture']);
+                        $bool = $this->categoryRepository->delete($item);
+                    }
+                }
+
+                $this->categoriesCache->getCacheDriver()->deleteAll();
+
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+                if ($isInUse === true) {
+                    $text = $this->translator->t('categories', 'category_is_in_use');
+                    $bool = false;
+                } else {
+                    $text = $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error');
+                }
+
+                return $this->redirectMessages()->setMessage($bool, $text);
+            }
         );
     }
 }
