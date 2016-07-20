@@ -111,8 +111,6 @@ class Edit extends AbstractFormAction
 
             $bool2 = $this->pollsModel->saveAnswers($formData['answers'], $pollId);
 
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
             return $bool !== false && $bool2 !== false;
         });
     }

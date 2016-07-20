@@ -10,10 +10,14 @@ namespace ACP3\Modules\ACP3\Menus\Model;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Modules\ACP3\Menus\Cache;
+use ACP3\Modules\ACP3\Menus\Installer\Schema;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class MenusModel extends AbstractModel
 {
+    const EVENT_PREFIX = Schema::MODULE_NAME;
+
     /**
      * @var Secure
      */
@@ -29,15 +33,19 @@ class MenusModel extends AbstractModel
 
     /**
      * MenusModel constructor.
+     * @param EventDispatcherInterface $eventDispatcher
      * @param Secure $secure
      * @param MenuRepository $menuRepository
      * @param Cache $menusCache
      */
     public function __construct(
+        EventDispatcherInterface $eventDispatcher,
         Secure $secure,
         MenuRepository $menuRepository,
         Cache $menusCache)
     {
+        parent::__construct($eventDispatcher);
+
         $this->secure = $secure;
         $this->menuRepository = $menuRepository;
         $this->menusCache = $menusCache;

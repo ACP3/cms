@@ -10,9 +10,11 @@ namespace ACP3\Modules\ACP3\Polls\Model;
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Modules\ACP3\Polls\Installer\Schema;
 use ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository;
 use ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository;
 use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class PollsModel
@@ -20,6 +22,8 @@ use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
  */
 class PollsModel extends AbstractModel
 {
+    const EVENT_PREFIX = Schema::MODULE_NAME;
+
     /**
      * @var Date
      */
@@ -43,6 +47,7 @@ class PollsModel extends AbstractModel
 
     /**
      * PollsModel constructor.
+     * @param EventDispatcherInterface $eventDispatcher
      * @param Date $date
      * @param Secure $secure
      * @param PollRepository $pollRepository
@@ -50,12 +55,15 @@ class PollsModel extends AbstractModel
      * @param VoteRepository $voteRepository
      */
     public function __construct(
+        EventDispatcherInterface $eventDispatcher,
         Date $date,
         Secure $secure,
         PollRepository $pollRepository,
         AnswerRepository $answerRepository,
         VoteRepository $voteRepository)
     {
+        parent::__construct($eventDispatcher);
+
         $this->date = $date;
         $this->secure = $secure;
         $this->pollRepository = $pollRepository;
@@ -92,22 +100,21 @@ class PollsModel extends AbstractModel
     {
         $bool = false;
         foreach ($answers as $row) {
-            // Neue Antwort hinzufügen
             if (empty($row['id'])) {
-                // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
                 if (!empty($row['text']) && !isset($row['delete'])) {
-                    $bool = $this->answerRepository->insert(
-                        ['text' => $this->secure->strEncode($row['text']), 'poll_id' => $pollId]
-                    );
+                    $data = [
+                        'text' => $this->secure->strEncode($row['text']),
+                        'poll_id' => $pollId
+                    ];
+                    $bool = $this->save($this->answerRepository, $data);
                 }
-            } elseif (isset($row['delete'])) { // Antwort mitsamt Stimmen löschen
+            } elseif (isset($row['delete'])) {
                 $this->answerRepository->delete((int)$row['id']);
-                $this->voteRepository->delete((int)$row['id'], 'answer_id');
-            } elseif (!empty($row['text'])) { // Antwort aktualisieren
-                $bool = $this->answerRepository->update(
-                    ['text' => $this->secure->strEncode($row['text'])],
-                    (int)$row['id']
-                );
+            } elseif (!empty($row['text'])) {
+                $data = [
+                    'text' => $this->secure->strEncode($row['text']),
+                ];
+                $bool = $this->save($this->answerRepository, $data, (int)$row['id']);
             }
         }
 

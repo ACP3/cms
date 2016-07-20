@@ -22,6 +22,7 @@ services:
   polls.model.polls_model:
     class: ACP3\Modules\ACP3\Polls\Model\PollsModel
     arguments:
+      - '@core.eventDispatcher'
       - '@core.date'
       - '@core.helpers.secure'
       - '@polls.model.pollrepository'
