@@ -66,7 +66,6 @@ class NewsletterModel extends AbstractModel
     public function saveNewsletter(array $formData, $userId, $newsletterId = null)
     {
         $data = [
-            'id' => '',
             'date' => $this->date->toSQL($formData['date']),
             'title' => $this->secure->strEncode($formData['title']),
             'text' => $this->secure->strEncode($formData['text'], true),
