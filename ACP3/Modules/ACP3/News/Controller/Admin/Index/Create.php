@@ -19,47 +19,40 @@ class Create extends AbstractFormAction
     use CommentsHelperTrait;
 
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
-     */
-    protected $newsRepository;
-    /**
      * @var \ACP3\Modules\ACP3\News\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
+    /**
+     * @var News\Model\NewsModel
+     */
+    protected $newsModel;
 
     /**
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param \ACP3\Core\Date $date
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
+     * @param News\Model\NewsModel $newsModel
      * @param \ACP3\Modules\ACP3\News\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        News\Model\Repository\NewsRepository $newsRepository,
+        News\Model\NewsModel $newsModel,
         News\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context, $formsHelper, $categoriesHelpers);
 
-        $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
-        $this->newsRepository = $newsRepository;
+        $this->newsModel = $newsModel;
         $this->adminFormValidation = $adminFormValidation;
     }
 
@@ -68,10 +61,8 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings('news');
-
         if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all(), $settings);
+            return $this->executePost($this->request->getPost()->all());
         }
 
         $defaults = [
@@ -89,7 +80,7 @@ class Create extends AbstractFormAction
                 '',
                 true
             ),
-            'options' => $this->fetchOptions($settings, 0, 0),
+            'options' => $this->fetchOptions(0, 0),
             'target' => $this->formsHelper->linkTargetChoicesGenerator('target'),
             'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
                 ? $this->metaFormFieldsHelper->formFields()
@@ -101,35 +92,17 @@ class Create extends AbstractFormAction
 
     /**
      * @param array $formData
-     * @param array $settings
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings)
+    protected function executePost(array $formData)
     {
-        return $this->actionHelper->handleCreatePostAction(function () use ($formData, $settings) {
+        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->adminFormValidation->validate($formData);
 
-            $insertValues = [
-                'id' => '',
-                'start' => $this->date->toSQL($formData['start']),
-                'end' => $this->date->toSQL($formData['end']),
-                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
-                'text' => $this->get('core.helpers.secure')->strEncode($formData['text'], true),
-                'readmore' => $this->useReadMore($formData, $settings),
-                'comments' => $this->useComments($formData, $settings),
-                'category_id' => $this->fetchCategoryIdForSave($formData),
-                'uri' => $this->get('core.helpers.secure')->strEncode($formData['uri'], true),
-                'target' => (int)$formData['target'],
-                'link_title' => $this->get('core.helpers.secure')->strEncode($formData['link_title']),
-                'user_id' => $this->user->getUserId(),
-            ];
-
-            $newsId = $this->newsRepository->insert($insertValues);
+            $formData['cat'] = $this->fetchCategoryIdForSave($formData);
+            $newsId = $this->newsModel->saveNews($formData, $this->user->getUserId());
 
             $this->insertUriAlias($formData, $newsId);
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $newsId;
         });

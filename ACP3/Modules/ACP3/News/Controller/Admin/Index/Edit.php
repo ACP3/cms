@@ -19,10 +19,6 @@ class Edit extends AbstractFormAction
     use CommentsHelperTrait;
 
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
@@ -38,34 +34,38 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\News\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
+    /**
+     * @var News\Model\NewsModel
+     */
+    protected $newsModel;
 
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext             $context
-     * @param \ACP3\Core\Date                                        $date
-     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository           $newsRepository
-     * @param \ACP3\Modules\ACP3\News\Cache                          $newsCache
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
+     * @param News\Model\NewsModel $newsModel
+     * @param \ACP3\Modules\ACP3\News\Cache $newsCache
      * @param \ACP3\Modules\ACP3\News\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Categories\Helpers                  $categoriesHelpers
+     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         News\Model\Repository\NewsRepository $newsRepository,
+        News\Model\NewsModel $newsModel,
         News\Cache $newsCache,
         News\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context, $formsHelper, $categoriesHelpers);
 
-        $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
         $this->newsRepository = $newsRepository;
+        $this->newsModel = $newsModel;
         $this->newsCache = $newsCache;
         $this->adminFormValidation = $adminFormValidation;
     }
@@ -83,10 +83,8 @@ class Edit extends AbstractFormAction
         if (empty($news) === false) {
             $this->title->setPageTitlePostfix($news['title']);
 
-            $settings = $this->config->getSettings('news');
-
             if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $settings, $id);
+                return $this->executePost($this->request->getPost()->all(), $id);
             }
 
             return [
@@ -95,7 +93,7 @@ class Edit extends AbstractFormAction
                     $news['category_id'],
                     true
                 ),
-                'options' => $this->fetchOptions($settings, $news['readmore'], $news['comments']),
+                'options' => $this->fetchOptions($news['readmore'], $news['comments']),
                 'target' => $this->formsHelper->linkTargetChoicesGenerator('target', $news['target']),
                 'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
                     ? $this->metaFormFieldsHelper->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $id))
@@ -110,39 +108,22 @@ class Edit extends AbstractFormAction
 
     /**
      * @param array $formData
-     * @param array $settings
-     * @param int   $newsId
-     *
+     * @param int $newsId
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings, $newsId)
+    protected function executePost(array $formData, $newsId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $newsId) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $newsId) {
             $this->adminFormValidation
                 ->setUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $newsId))
                 ->validate($formData);
 
-            $updateValues = [
-                'start' => $this->date->toSQL($formData['start']),
-                'end' => $this->date->toSQL($formData['end']),
-                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
-                'text' => $this->get('core.helpers.secure')->strEncode($formData['text'], true),
-                'readmore' => $this->useReadMore($formData, $settings),
-                'comments' => $this->useComments($formData, $settings),
-                'category_id' => $this->fetchCategoryIdForSave($formData),
-                'uri' => $this->get('core.helpers.secure')->strEncode($formData['uri'], true),
-                'target' => (int)$formData['target'],
-                'link_title' => $this->get('core.helpers.secure')->strEncode($formData['link_title']),
-                'user_id' => $this->user->getUserId(),
-            ];
-
-            $bool = $this->newsRepository->update($updateValues, $newsId);
+            $formData['cat'] = $this->fetchCategoryIdForSave($formData);
+            $bool = $this->newsModel->saveNews($formData, $this->user->getUserId(), $newsId);
 
             $this->insertUriAlias($formData, $newsId);
 
             $this->newsCache->saveCache($newsId);
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $bool;
         });

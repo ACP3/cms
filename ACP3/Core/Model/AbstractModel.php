@@ -39,7 +39,7 @@ abstract class AbstractModel
      */
     protected function save(AbstractRepository $repository, array $data, $entryId = null)
     {
-        $this->dispatchBeforeSaveEvent($data, $entryId);
+        $this->dispatchBeforeSaveEvent($repository, $data, $entryId);
 
         if (intval($entryId)) {
             $result = $repository->update($data, $entryId);
@@ -51,19 +51,24 @@ abstract class AbstractModel
             }
         }
 
-        $this->dispatchAfterSaveEvent($data, $entryId);
+        $this->dispatchAfterSaveEvent($repository, $data, $entryId);
 
         return $result;
     }
 
     /**
+     * @param AbstractRepository $repository
      * @param array $data
      * @param int|null $entryId
      */
-    private function dispatchBeforeSaveEvent(array $data, $entryId)
+    private function dispatchBeforeSaveEvent(AbstractRepository $repository, array $data, $entryId)
     {
         $this->dispatchEvent('core.model.before_save', $data, $entryId);
-        $this->dispatchEvent(static::EVENT_PREFIX . '.model.before_save', $data, $entryId);
+        $this->dispatchEvent(
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_save',
+            $data,
+            $entryId
+        );
     }
 
     private function dispatchEvent($eventName, array $data, $entryId)
@@ -75,12 +80,17 @@ abstract class AbstractModel
     }
 
     /**
+     * @param AbstractRepository $repository
      * @param array $data
      * @param int|null $entryId
      */
-    private function dispatchAfterSaveEvent(array $data, $entryId)
+    private function dispatchAfterSaveEvent(AbstractRepository $repository, array $data, $entryId)
     {
         $this->dispatchEvent('core.model.after_save', $data, $entryId);
-        $this->dispatchEvent(static::EVENT_PREFIX . '.model.after_save', $data, $entryId);
+        $this->dispatchEvent(
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_save',
+            $data,
+            $entryId
+        );
     }
 }

@@ -8,3 +8,12 @@ services:
     class: ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
     arguments:
       - '@core.db'
+
+  news.model:
+    class: ACP3\Modules\ACP3\News\Model\NewsModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.config'
+      - '@core.date'
+      - '@core.helpers.secure'
+      - '@news.model.newsrepository'

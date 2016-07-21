@@ -83,36 +83,13 @@ abstract class AbstractFormAction extends AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     * @param array $settings
-     *
-     * @return int
-     */
-    protected function useReadMore(array $formData, array $settings)
-    {
-        return $settings['readmore'] == 1 && isset($formData['readmore']) ? 1 : 0;
-    }
-
-    /**
-     * @param array $formData
-     * @param array $settings
-     *
-     * @return int
-     */
-    protected function useComments(array $formData, array $settings)
-    {
-        return $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0;
-    }
-
-    /**
-     * @param array $settings
-     * @param int   $readMoreValue
-     * @param int   $commentsValue
-     *
+     * @param int $readMoreValue
+     * @param int $commentsValue
      * @return array
      */
-    protected function fetchOptions(array $settings, $readMoreValue, $commentsValue)
+    protected function fetchOptions($readMoreValue, $commentsValue)
     {
+        $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
         $options = [];
         if ($settings['readmore'] == 1) {
             $options[] = [

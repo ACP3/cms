@@ -3,10 +3,9 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Create
     arguments:
       - '@core.context.admin'
-      - '@core.date'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@news.model.newsrepository'
+      - '@news.model'
       - '@news.validator'
       - '@categories.helpers'
     calls:
@@ -28,10 +27,10 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.admin'
-      - '@core.date'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@news.model.newsrepository'
+      - '@news.model'
       - '@news.cache'
       - '@news.validator'
       - '@categories.helpers'
