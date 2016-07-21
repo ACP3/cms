@@ -15,17 +15,9 @@ use ACP3\Modules\ACP3\Newsletter;
 class Create extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
-     */
-    protected $newsletterRepository;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
      */
@@ -34,33 +26,34 @@ class Create extends AbstractFormAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var Newsletter\Model\NewsletterModel
+     */
+    protected $newsletterModel;
 
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                   $context
-     * @param \ACP3\Core\Date                                              $date
-     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository     $newsletterRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Newsletter\Model\NewsletterModel $newsletterModel
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter          $newsletterHelpers
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter $newsletterHelpers
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
+        Newsletter\Model\NewsletterModel $newsletterModel,
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
         Newsletter\Helper\SendNewsletter $newsletterHelpers)
     {
         parent::__construct($context, $newsletterHelpers);
 
-        $this->date = $date;
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
-        $this->newsletterRepository = $newsletterRepository;
+        $this->newsletterModel = $newsletterModel;
         $this->adminFormValidation = $adminFormValidation;
     }
 
@@ -69,7 +62,7 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings('newsletter');
+        $settings = $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME);
 
         if ($this->request->getPost()->count() !== 0) {
             return $this->executePost($this->request->getPost()->all(), $settings);
@@ -100,22 +93,12 @@ class Create extends AbstractFormAction
         return $this->actionHelper->handlePostAction(function () use ($formData, $settings) {
             $this->adminFormValidation->validate($formData);
 
-            // Newsletter archivieren
-            $insertValues = [
-                'id' => '',
-                'date' => $this->date->toSQL($formData['date']),
-                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
-                'text' => $this->get('core.helpers.secure')->strEncode($formData['text'], true),
-                'html' => $settings['html'],
-                'status' => 0,
-                'user_id' => $this->user->getUserId(),
-            ];
-            $lastId = $this->newsletterRepository->insert($insertValues);
+            $newsletterId = $this->newsletterModel->saveNewsletter($formData, $this->user->getUserId());
 
             list($text, $result) = $this->sendTestNewsletter(
                 $formData['test'] == 1,
-                $lastId,
-                $lastId,
+                $newsletterId,
+                $newsletterId,
                 $settings['mail']
             );
 

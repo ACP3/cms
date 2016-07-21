@@ -15,10 +15,6 @@ use ACP3\Modules\ACP3\Newsletter;
 class Edit extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
@@ -34,33 +30,37 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var Newsletter\Model\NewsletterModel
+     */
+    protected $newsletterModel;
 
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                   $context
-     * @param \ACP3\Core\Date                                              $date
-     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository     $newsletterRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
+     * @param Newsletter\Model\NewsletterModel $newsletterModel
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter          $newsletterHelpers
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter $newsletterHelpers
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
+        Newsletter\Model\NewsletterModel $newsletterModel,
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
         Newsletter\Helper\SendNewsletter $newsletterHelpers)
     {
         parent::__construct($context, $newsletterHelpers);
 
-        $this->date = $date;
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->newsletterRepository = $newsletterRepository;
+        $this->newsletterModel = $newsletterModel;
         $this->adminFormValidation = $adminFormValidation;
     }
 
@@ -77,7 +77,7 @@ class Edit extends AbstractFormAction
         if (empty($newsletter) === false) {
             $this->title->setPageTitlePostfix($newsletter['title']);
 
-            $settings = $this->config->getSettings('newsletter');
+            $settings = $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME);
 
             if ($this->request->getPost()->count() !== 0) {
                 return $this->executePost($this->request->getPost()->all(), $newsletter, $settings, $id);
@@ -104,33 +104,23 @@ class Edit extends AbstractFormAction
      * @param array $formData
      * @param array $newsletter
      * @param array $settings
-     * @param int   $id
+     * @param int   $newsletterId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $newsletter, array $settings, $id)
+    protected function executePost(array $formData, array $newsletter, array $settings, $newsletterId)
     {
-        return $this->actionHelper->handlePostAction(function () use ($formData, $newsletter, $settings, $id) {
+        return $this->actionHelper->handlePostAction(function () use ($formData, $newsletter, $settings, $newsletterId) {
             $this->adminFormValidation->validate($formData);
 
-            $updateValues = [
-                'date' => $this->date->toSQL($formData['date']),
-                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
-                'text' => $this->get('core.helpers.secure')->strEncode($formData['text'], true),
-                'user_id' => $this->user->getUserId(),
-            ];
-            $bool = $this->newsletterRepository->update($updateValues, $id);
+            $bool = $this->newsletterModel->saveNewsletter($formData, $this->user->getUserId(), $newsletterId);
 
             list($text, $result) = $this->sendTestNewsletter(
                 $formData['test'] == 1,
-                $id,
+                $newsletterId,
                 $bool,
                 $settings['mail']
             );
-
-            if ($newsletter['status'] == 1) {
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-            }
 
             return $this->redirectMessages()->setMessage($result, $text);
         });

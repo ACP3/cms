@@ -93,13 +93,13 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * @param array  $formData
      * @param string $path
-     * @param int    $id
+     * @param int    $seoId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $path, $id)
+    protected function executePost(array $formData, $path, $seoId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $path, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $path, $seoId) {
             $this->adminFormValidation
                 ->setUriAlias($path)
                 ->validate($formData);
@@ -112,7 +112,7 @@ class Edit extends Core\Controller\AbstractAdminAction
                 'robots' => (int)$formData['seo_robots']
             ];
 
-            $bool = $this->seoRepository->update($updateValues, $id);
+            $bool = $this->seoRepository->update($updateValues, $seoId);
 
             $this->seoCache->saveCache();
 

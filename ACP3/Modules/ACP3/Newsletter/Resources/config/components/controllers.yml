@@ -21,10 +21,9 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Create
     arguments:
       - '@core.context.admin'
-      - '@core.date'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@newsletter.model.newsletterrepository'
+      - '@newsletter.model'
       - '@newsletter.validator'
       - '@newsletter.helper.sendnewsletter'
 
@@ -38,10 +37,10 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.admin'
-      - '@core.date'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@newsletter.model.newsletterrepository'
+      - '@newsletter.model'
       - '@newsletter.validator'
       - '@newsletter.helper.sendnewsletter'
 

@@ -23,3 +23,12 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository
     arguments:
       - '@core.db'
+
+  newsletter.model:
+    class: ACP3\Modules\ACP3\Newsletter\Model\NewsletterModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.config'
+      - '@core.date'
+      - '@core.helpers.secure'
+      - '@newsletter.model.newsletterrepository'

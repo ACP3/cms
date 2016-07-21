@@ -3,6 +3,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository;
 
 /**
@@ -52,17 +53,17 @@ class SendNewsletter
      * Versendet einen Newsletter
      *
      * @param int  $newsletterId
-     * @param null $recipients
+     * @param string|array $recipients
      * @param bool $bcc
      *
      * @return bool
      */
     public function sendNewsletter($newsletterId, $recipients, $bcc = false)
     {
-        $settings = $this->config->getSettings('newsletter');
+        $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
         $newsletter = $this->newsletterRepository->getOneById($newsletterId);
-        $from = [
+        $sender = [
             'email' => $settings['mail'],
             'name' => $this->config->getSettings('seo')['title']
         ];
@@ -70,7 +71,7 @@ class SendNewsletter
         $this->mailer
             ->reset()
             ->setBcc($bcc)
-            ->setFrom($from)
+            ->setFrom($sender)
             ->setSubject($newsletter['title'])
             ->setUrlWeb($this->router->route('newsletter/archive/details/id_' . $newsletterId, true))
             ->setMailSignature($settings['mailsig']);

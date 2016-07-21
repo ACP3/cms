@@ -175,13 +175,13 @@ class Mailer
     }
 
     /**
-     * @param array|string $to
+     * @param array|string $recipients
      *
      * @return $this
      */
-    public function setRecipients($to)
+    public function setRecipients($recipients)
     {
-        $this->recipients = $to;
+        $this->recipients = $recipients;
 
         return $this;
     }
