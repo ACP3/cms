@@ -6,9 +6,7 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Captcha;
 use ACP3\Modules\ACP3\Comments;
-use ACP3\Modules\ACP3\Emoticons;
 
 /**
  * Class Index
@@ -17,7 +15,7 @@ use ACP3\Modules\ACP3\Emoticons;
 class Index extends AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
-    
+
     /**
      * @var \ACP3\Core\Pagination
      */

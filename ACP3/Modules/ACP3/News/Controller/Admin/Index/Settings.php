@@ -7,8 +7,6 @@
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\News;
 
 /**
@@ -62,7 +60,7 @@ class Settings extends Core\Controller\AbstractAdminAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        $settings = $this->config->getSettings('news');
+        $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
 
         if ($this->modules->isActive('comments') === true) {
             $this->view->assign('allow_comments', $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments']));
@@ -102,7 +100,7 @@ class Settings extends Core\Controller\AbstractAdminAction
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $this->config->setSettings($data, 'news');
+            return $this->config->setSettings($data, News\Installer\Schema::MODULE_NAME);
         });
     }
 }

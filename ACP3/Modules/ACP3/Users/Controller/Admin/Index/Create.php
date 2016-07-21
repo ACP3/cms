@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
 /**
@@ -82,7 +83,7 @@ class Create extends AbstractFormAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        $systemSettings = $this->config->getSettings('system');
+        $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
 
         $this->view->assign(
             $this->get('users.helpers.forms')->fetchUserSettingsFormFields(

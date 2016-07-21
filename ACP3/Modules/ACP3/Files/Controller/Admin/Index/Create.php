@@ -69,7 +69,7 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings('files');
+        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
 
         if ($this->request->getPost()->count() !== 0) {
             return $this->executePost($this->request->getPost()->all(), $settings);

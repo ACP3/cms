@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Modules\ACP3\News\Installer\Schema;
 
 /**
  * Class AbstractAction
@@ -27,7 +28,7 @@ class AbstractAction extends AbstractFrontendAction
     {
         parent::preDispatch();
 
-        $this->newsSettings = $this->config->getSettings('news');
+        $this->newsSettings = $this->config->getSettings(Schema::MODULE_NAME);
         $this->commentsActive = ($this->newsSettings['comments'] == 1 && $this->acl->hasPermission('frontend/comments') === true);
     }
 }

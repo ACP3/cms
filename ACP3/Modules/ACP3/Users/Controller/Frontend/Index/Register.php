@@ -7,8 +7,8 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Captcha;
 use ACP3\Modules\ACP3\Permissions;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
 /**
@@ -84,7 +84,7 @@ class Register extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings('users');
+        $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
 
         if ($this->user->isAuthenticated() === true) {
             return $this->redirect()->toNewPage($this->appPath->getWebRoot());
@@ -121,8 +121,8 @@ class Register extends Core\Controller\AbstractFrontendAction
             function () use ($formData, $settings) {
                 $this->registrationFormValidation->validate($formData);
 
-                $systemSettings = $this->config->getSettings('system');
-                $seoSettings = $this->config->getSettings('seo');
+                $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
+                $seoSettings = $this->config->getSettings(\ACP3\Modules\ACP3\Seo\Installer\Schema::MODULE_NAME);
 
                 $subject = $this->translator->t(
                     'users',

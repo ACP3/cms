@@ -66,7 +66,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         return [
             'form' => array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
             'copy_checked' => $this->formsHelper->selectEntry('copy', 1, 0, 'checked'),
-            'contact' => $this->config->getSettings('contact'),
+            'contact' => $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }

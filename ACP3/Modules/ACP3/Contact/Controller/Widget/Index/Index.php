@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Contact;
 class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
-    
+
     /**
      * @return array
      */
@@ -25,7 +25,7 @@ class Index extends Core\Controller\AbstractWidgetAction
         $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         return [
-            'sidebar_contact' => $this->config->getSettings('contact')
+            'sidebar_contact' => $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME)
         ];
     }
 }

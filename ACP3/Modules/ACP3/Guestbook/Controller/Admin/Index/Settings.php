@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\Guestbook;
 
 /**
@@ -59,7 +58,7 @@ class Settings extends Core\Controller\AbstractAdminAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        $settings = $this->config->getSettings('guestbook');
+        $settings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
 
         $notificationTypes = [
             0 => $this->translator->t('guestbook', 'no_notification'),
@@ -107,7 +106,7 @@ class Settings extends Core\Controller\AbstractAdminAction
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $this->config->setSettings($data, 'guestbook');
+            return $this->config->setSettings($data, Guestbook\Installer\Schema::MODULE_NAME);
         });
     }
 }

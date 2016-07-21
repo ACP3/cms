@@ -7,6 +7,7 @@
 namespace ACP3\Core\Http;
 
 use ACP3\Core\Config;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 /**
@@ -41,7 +42,7 @@ class RequestFactory
     public function create()
     {
         $request = $this->getRequest();
-        $request->setHomepage($this->config->getSettings('system')['homepage']);
+        $request->setHomepage($this->config->getSettings(Schema::MODULE_NAME)['homepage']);
         $request->processQuery();
 
         return $request;

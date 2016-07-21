@@ -47,7 +47,7 @@ class Latest extends Core\Controller\AbstractWidgetAction
      */
     public function execute($categoryId = 0)
     {
-        $settings = $this->config->getSettings('news');
+        $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
 
         if (!empty($categoryId)) {
             $news = $this->newsRepository->getLatestByCategoryId((int)$categoryId, $this->date->getCurrentDateTime());

@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
  * Class Details
  * @package ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index
  */
-class Details extends Core\Controller\AbstractFrontendAction
+class Details extends AbstractAction
 {
     use Core\Cache\CacheResponseTrait;
 
@@ -59,13 +59,6 @@ class Details extends Core\Controller\AbstractFrontendAction
     public function setMetaStatements(MetaStatements $metaStatements)
     {
         $this->metaStatements = $metaStatements;
-    }
-
-    public function preDispatch()
-    {
-        parent::preDispatch();
-
-        $this->settings = $this->config->getSettings('gallery');
     }
 
     /**

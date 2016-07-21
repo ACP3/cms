@@ -51,7 +51,7 @@ class Settings extends Core\Controller\AbstractAdminAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        $settings = $this->config->getSettings('categories');
+        $settings = $this->config->getSettings(Categories\Installer\Schema::MODULE_NAME);
 
         return [
             'form' => array_merge($settings, $this->request->getPost()->all()),
@@ -77,7 +77,7 @@ class Settings extends Core\Controller\AbstractAdminAction
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $this->config->setSettings($data, 'categories');
+            return $this->config->setSettings($data, Categories\Installer\Schema::MODULE_NAME);
         });
     }
 }

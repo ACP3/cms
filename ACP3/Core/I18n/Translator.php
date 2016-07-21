@@ -4,6 +4,7 @@ namespace ACP3\Core\I18n;
 use ACP3\Core\Config;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\I18n\DictionaryCache as LanguageCache;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
@@ -85,7 +86,9 @@ class Translator
     {
         if ($this->locale === '') {
             $locale = $this->user->getLanguage();
-            $this->locale = $this->languagePackExists($locale) === true ? $locale : $this->config->getSettings('system')['lang'];
+            $this->locale = $this->languagePackExists($locale) === true
+                ? $locale
+                : $this->config->getSettings(Schema::MODULE_NAME)['lang'];
         }
 
         return $this->locale;

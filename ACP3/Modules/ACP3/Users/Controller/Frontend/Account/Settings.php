@@ -67,7 +67,7 @@ class Settings extends AbstractAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings('users');
+        $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
 
         if ($this->request->getPost()->count() !== 0) {
             return $this->executePost($this->request->getPost()->all(), $settings);

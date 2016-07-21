@@ -52,7 +52,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
-        $settings = $this->config->getSettings('news');
+        $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
 
         $this->setTemplate($template);
 

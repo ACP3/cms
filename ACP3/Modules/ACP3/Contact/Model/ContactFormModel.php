@@ -11,6 +11,7 @@ use ACP3\Core\Config;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Helpers\SendEmail;
 use ACP3\Core\I18n\Translator;
+use ACP3\Modules\ACP3\Contact\Installer\Schema;
 
 /**
  * Class ContactFormModel
@@ -89,7 +90,7 @@ class ContactFormModel
      */
     protected function getSeoSettings()
     {
-        return $this->config->getSettings('seo');
+        return $this->config->getSettings(\ACP3\Modules\ACP3\Seo\Installer\Schema::MODULE_NAME);
     }
 
     /**
@@ -97,7 +98,7 @@ class ContactFormModel
      */
     protected function getContactSettings()
     {
-        return $this->config->getSettings('contact');
+        return $this->config->getSettings(Schema::MODULE_NAME);
     }
 
     /**

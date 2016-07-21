@@ -54,7 +54,7 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings('gallery');
+        $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
 
         if ($this->request->getPost()->count() !== 0) {
             return $this->executePost($this->request->getPost()->all(), $settings);
@@ -98,7 +98,7 @@ class Settings extends Core\Controller\AbstractAdminAction
                 $data['comments'] = (int)$formData['comments'];
             }
 
-            $bool = $this->config->setSettings($data, 'gallery');
+            $bool = $this->config->setSettings($data, Gallery\Installer\Schema::MODULE_NAME);
 
             if ($formData['thumbwidth'] !== $settings['thumbwidth']
                 || $formData['thumbheight'] !== $settings['thumbheight']

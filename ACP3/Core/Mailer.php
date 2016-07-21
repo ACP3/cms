@@ -3,6 +3,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Helpers\StringFormatter;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use InlineStyle\InlineStyle;
 
 /**
@@ -456,7 +457,7 @@ class Mailer
         if ($this->phpMailer === null) {
             $this->phpMailer = new \PHPMailer(true);
 
-            $settings = $this->config->getSettings('system');
+            $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
             if (strtolower($settings['mailer_type']) === 'smtp') {
                 $this->phpMailer->set('Mailer', 'smtp');

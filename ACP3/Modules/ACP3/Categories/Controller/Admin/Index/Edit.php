@@ -94,7 +94,7 @@ class Edit extends Core\Controller\AbstractAdminAction
 
             $this->adminFormValidation
                 ->setFile($file)
-                ->setSettings($this->config->getSettings('categories'))
+                ->setSettings($this->config->getSettings(Categories\Installer\Schema::MODULE_NAME))
                 ->setCategoryId($id)
                 ->validate($formData);
 

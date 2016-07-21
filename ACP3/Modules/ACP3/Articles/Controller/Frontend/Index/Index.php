@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Index
@@ -16,7 +17,7 @@ use ACP3\Modules\ACP3\Articles;
 class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
-    
+
     /**
      * @var \ACP3\Core\Date
      */
@@ -53,12 +54,12 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
+        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
         $time = $this->date->getCurrentDateTime();
         $articles = $this->articleRepository->getAll(
-            $time, 
-            $this->pagination->getResultsStartOffset(), 
+            $time,
+            $this->pagination->getResultsStartOffset(),
             $this->user->getEntriesPerPage()
         );
         $this->pagination->setTotalResults($this->articleRepository->countAll($time));

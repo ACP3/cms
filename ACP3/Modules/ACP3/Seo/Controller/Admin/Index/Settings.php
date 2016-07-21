@@ -58,7 +58,7 @@ class Settings extends Core\Controller\AbstractAdminAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        $seoSettings = $this->config->getSettings('seo');
+        $seoSettings = $this->config->getSettings(Seo\Installer\Schema::MODULE_NAME);
 
         // Robots
         $robots = [
@@ -92,7 +92,7 @@ class Settings extends Core\Controller\AbstractAdminAction
                 'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
             ];
 
-            $bool = $this->config->setSettings($data, 'seo');
+            $bool = $this->config->setSettings($data, Seo\Installer\Schema::MODULE_NAME);
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 

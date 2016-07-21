@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction as CoreAbstractFrontendAction;
+use ACP3\Modules\ACP3\Comments\Installer\Schema;
 use ACP3\Modules\ACP3\Emoticons;
 
 /**
@@ -32,7 +33,7 @@ abstract class AbstractFrontendAction extends CoreAbstractFrontendAction
     {
         parent::preDispatch();
 
-        $this->commentsSettings = $this->config->getSettings('comments');
+        $this->commentsSettings = $this->config->getSettings(Schema::MODULE_NAME);
         $this->emoticonsActive = ($this->commentsSettings['emoticons'] == 1);
     }
 

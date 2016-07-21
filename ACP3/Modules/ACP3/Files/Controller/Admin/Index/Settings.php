@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Files;
 
@@ -80,7 +79,7 @@ class Settings extends Core\Controller\AbstractAdminAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        $settings = $this->config->getSettings('files');
+        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
 
         if ($this->commentsHelpers) {
             $this->view->assign('comments', $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments']));
@@ -114,7 +113,7 @@ class Settings extends Core\Controller\AbstractAdminAction
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $this->config->setSettings($data, 'files');
+            return $this->config->setSettings($data, Files\Installer\Schema::MODULE_NAME);
         });
     }
 }

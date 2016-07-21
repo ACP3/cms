@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Users\Model;
 
 use ACP3\Core\Config;
 use ACP3\Core\Helpers\Country;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
 /**
@@ -150,8 +151,8 @@ class UserModel
      */
     public function setLanguage($language)
     {
-        $userSettings = $this->config->getSettings('users');
-        $systemSettings = $this->config->getSettings('system');
+        $userSettings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
+        $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
 
         $this->language = $systemSettings['lang'];
         if ($userSettings['language_override'] == 1 && !empty($language)) {
@@ -176,8 +177,8 @@ class UserModel
      */
     public function setEntriesPerPage($entries)
     {
-        $userSettings = $this->config->getSettings('users');
-        $systemSettings = $this->config->getSettings('system');
+        $userSettings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
+        $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
 
         $this->entriesPerPage = (int)$systemSettings['entries'];
         if ($userSettings['entries_override'] == 1 && $entries > 0) {

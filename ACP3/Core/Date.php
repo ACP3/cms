@@ -3,6 +3,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Date\DateTranslator;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
@@ -65,7 +66,7 @@ class Date
             $this->dateFormatShort = $userInfo['date_format_short'];
             $timeZone = $userInfo['time_zone'];
         } else {
-            $settings = $this->config->getSettings('system');
+            $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
             $this->dateFormatLong = $settings['date_format_long'];
             $this->dateFormatShort = $settings['date_format_short'];

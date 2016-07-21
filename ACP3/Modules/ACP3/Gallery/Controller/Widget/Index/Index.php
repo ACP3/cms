@@ -51,7 +51,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
-        $settings = $this->config->getSettings('gallery');
+        $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
 
         return [
             'sidebar_galleries' => $this->galleryModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar'])

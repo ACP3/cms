@@ -145,7 +145,7 @@ class Router implements RouterInterface
      */
     protected function useModRewrite($path)
     {
-        return (bool)$this->config->getSettings('system')['mod_rewrite'] === true &&
+        return (bool)$this->config->getSettings(System\Installer\Schema::MODULE_NAME)['mod_rewrite'] === true &&
         $this->isAdminUri($path) === false;
     }
 }

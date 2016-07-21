@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Emoticons;
+use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
 
 /**
  * Class AbstractAction
@@ -28,7 +29,7 @@ abstract class AbstractAction extends AbstractFrontendAction
     {
         parent::preDispatch();
 
-        $this->guestbookSettings = $this->config->getSettings('guestbook');
+        $this->guestbookSettings = $this->config->getSettings(Schema::MODULE_NAME);
     }
 
     /**

@@ -52,7 +52,10 @@ class Settings extends Core\Controller\AbstractAdminAction
         }
 
         return [
-            'form' => array_merge($this->config->getSettings('emoticons'), $this->request->getPost()->all()),
+            'form' => array_merge(
+                $this->config->getSettings(Emoticons\Installer\Schema::MODULE_NAME),
+                $this->request->getPost()->all()
+            ),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
@@ -73,7 +76,7 @@ class Settings extends Core\Controller\AbstractAdminAction
                 'filesize' => (int)$formData['filesize'],
             ];
 
-            return $this->config->setSettings($data, 'emoticons');
+            return $this->config->setSettings($data, Emoticons\Installer\Schema::MODULE_NAME);
         });
     }
 }

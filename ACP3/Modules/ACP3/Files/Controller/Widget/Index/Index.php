@@ -52,7 +52,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
-        $settings = $this->config->getSettings('files');
+        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
 
         $this->setTemplate($template);
 
@@ -71,7 +71,7 @@ class Index extends Core\Controller\AbstractWidgetAction
         if (!empty($categoryId)) {
             $files = $this->filesRepository->getAllByCategoryId(
                 (int)$categoryId,
-                $this->date->getCurrentDateTime(), 
+                $this->date->getCurrentDateTime(),
                 $settings['sidebar']
             );
         } else {

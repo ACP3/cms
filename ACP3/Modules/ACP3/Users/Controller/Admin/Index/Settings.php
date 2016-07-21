@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
 
 /**
@@ -59,7 +58,7 @@ class Settings extends Core\Controller\AbstractAdminAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        $settings = $this->config->getSettings('users');
+        $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
 
         return [
             'languages' => $this->formsHelpers->yesNoCheckboxGenerator(
@@ -98,7 +97,7 @@ class Settings extends Core\Controller\AbstractAdminAction
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $this->config->setSettings($data, 'users');
+            return $this->config->setSettings($data, Users\Installer\Schema::MODULE_NAME);
         });
     }
 }

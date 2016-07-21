@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Feeds\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Feeds;
+use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
 /**
  * Class Index
@@ -47,7 +48,7 @@ class Index extends Core\Controller\AbstractFrontendAction
             $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
             $this->feedGenerator
-                ->setTitle($this->config->getSettings('seo')['title'])
+                ->setTitle($this->config->getSettings(Schema::MODULE_NAME)['title'])
                 ->setDescription($this->translator->t($feed, $feed));
 
             $this->eventDispatcher->dispatch(

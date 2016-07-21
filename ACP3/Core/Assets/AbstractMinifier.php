@@ -6,6 +6,7 @@ use ACP3\Core\Cache;
 use ACP3\Core\Config;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class AbstractMinifier
@@ -105,7 +106,7 @@ abstract class AbstractMinifier implements MinifierInterface
      */
     protected function generateFilenameHash($group, $layout)
     {
-        $filename = $this->config->getSettings('system')['design'];
+        $filename = $this->config->getSettings(Schema::MODULE_NAME)['design'];
         $filename .= '_' . $layout;
         $filename .= '_' . $this->assets->getEnabledLibrariesAsString();
         $filename .= '_' . $group;

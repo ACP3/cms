@@ -58,7 +58,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        $systemSettings = $this->config->getSettings('system');
+        $systemSettings = $this->config->getSettings(System\Installer\Schema::MODULE_NAME);
 
         // WYSIWYG editors
         $services = $this->get('core.wysiwyg.wysiwyg_factory')->getWysiwygEditors();
@@ -153,7 +153,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
                     'wysiwyg' => $formData['wysiwyg']
                 ];
 
-                $bool = $this->config->setSettings($data, 'system');
+                $bool = $this->config->setSettings($data, System\Installer\Schema::MODULE_NAME);
 
                 Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 

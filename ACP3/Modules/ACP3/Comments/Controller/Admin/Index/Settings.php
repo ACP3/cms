@@ -58,7 +58,7 @@ class Settings extends Core\Controller\AbstractAdminAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        $settings = $this->config->getSettings('comments');
+        $settings = $this->config->getSettings(Comments\Installer\Schema::MODULE_NAME);
 
         // Emoticons erlauben
         if ($this->modules->isActive('emoticons') === true) {
@@ -88,7 +88,7 @@ class Settings extends Core\Controller\AbstractAdminAction
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $this->config->setSettings($data, 'comments');
+            return $this->config->setSettings($data, Comments\Installer\Schema::MODULE_NAME);
         });
     }
 }

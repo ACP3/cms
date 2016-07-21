@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Gallery;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 
 /**
@@ -75,7 +76,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
         $pictures = $this->pictureRepository->getPicturesByGalleryId($id);
         $cPictures = count($pictures);
 
-        $settings = $this->config->getSettings('gallery');
+        $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
         for ($i = 0; $i < $cPictures; ++$i) {
             $pictures[$i]['width'] = $settings['thumbwidth'];

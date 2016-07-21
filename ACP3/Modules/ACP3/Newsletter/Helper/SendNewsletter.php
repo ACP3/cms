@@ -65,7 +65,7 @@ class SendNewsletter
         $newsletter = $this->newsletterRepository->getOneById($newsletterId);
         $sender = [
             'email' => $settings['mail'],
-            'name' => $this->config->getSettings('seo')['title']
+            'name' => $this->config->getSettings(\ACP3\Modules\ACP3\Seo\Installer\Schema::MODULE_NAME)['title']
         ];
 
         $this->mailer

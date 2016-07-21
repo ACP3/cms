@@ -85,7 +85,7 @@ class Edit extends AbstractFormAction
         $file = $this->filesRepository->getOneById($id);
 
         if (empty($file) === false) {
-            $settings = $this->config->getSettings('files');
+            $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
 
             $this->title->setPageTitlePostfix($file['title']);
 

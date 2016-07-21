@@ -83,7 +83,7 @@ class Edit extends Core\Controller\AbstractAdminAction
     {
         $guestbook = $this->guestbookRepository->getOneById($id);
         if (empty($guestbook) === false) {
-            $settings = $this->config->getSettings('guestbook');
+            $settings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
 
             $this->title->setPageTitlePostfix($guestbook['name']);
 

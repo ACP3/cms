@@ -10,6 +10,8 @@ use ACP3\Core\Modules;
  */
 class Schema implements Modules\Installer\SchemaInterface
 {
+    const MODULE_NAME = 'comments';
+
     /**
      * @return array
      */

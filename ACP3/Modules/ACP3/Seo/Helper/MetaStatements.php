@@ -11,6 +11,7 @@ use ACP3\Core\Config;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Modules\ACP3\Seo\Cache as SeoCache;
+use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
 /**
  * Class MetaStatements
@@ -101,7 +102,7 @@ class MetaStatements
             $description = $this->getDescription($this->request->getModule());
         }
         if (empty($description)) {
-            $description = $this->config->getSettings('seo')['meta_description'];
+            $description = $this->getSeoSettings()['meta_description'];
         }
 
         $postfix = '';
@@ -110,6 +111,14 @@ class MetaStatements
         }
 
         return $description . $postfix;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSeoSettings()
+    {
+        return $this->config->getSettings(Schema::MODULE_NAME);
     }
 
     /**
@@ -139,7 +148,7 @@ class MetaStatements
             $keywords = $this->getKeywords($this->request->getModule());
         }
 
-        return strtolower(!empty($keywords) ? $keywords : $this->config->getSettings('seo')['meta_keywords']);
+        return strtolower(!empty($keywords) ? $keywords : $this->getSeoSettings()['meta_keywords']);
     }
 
     /**
@@ -208,13 +217,13 @@ class MetaStatements
         ];
 
         if ($path === '') {
-            return strtr($this->config->getSettings('seo')['robots'], $replace);
+            return strtr($this->getSeoSettings()['robots'], $replace);
         }
 
         $robot = $this->getSeoInformation($path, 'robots', 0);
 
         if ($robot == 0) {
-            $robot = $this->config->getSettings('seo')['robots'];
+            $robot = $this->getSeoSettings()['robots'];
         }
 
         return strtr($robot, $replace);

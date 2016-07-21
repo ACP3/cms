@@ -83,7 +83,7 @@ class Create extends Core\Controller\AbstractAdminAction
 
             $this->adminFormValidation
                 ->setFile($file)
-                ->setSettings($this->config->getSettings('emoticons'))
+                ->setSettings($this->config->getSettings(Emoticons\Installer\Schema::MODULE_NAME))
                 ->setFileRequired(true)
                 ->validate($formData);
 

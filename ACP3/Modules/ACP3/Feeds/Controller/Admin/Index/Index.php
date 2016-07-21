@@ -56,7 +56,7 @@ class Index extends Core\Controller\AbstractAdminAction
             return $this->indexPost($this->request->getPost()->all());
         }
 
-        $settings = $this->config->getSettings('feeds');
+        $settings = $this->config->getSettings(Feeds\Installer\Schema::MODULE_NAME);
 
         $feedTypes = [
             'RSS 1.0' => 'RSS 1.0',
@@ -86,7 +86,7 @@ class Index extends Core\Controller\AbstractAdminAction
                 'feed_type' => $formData['feed_type']
             ];
 
-            return $this->config->setSettings($data, 'feeds');
+            return $this->config->setSettings($data, Feeds\Installer\Schema::MODULE_NAME);
         });
     }
 }

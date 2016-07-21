@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Contact\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Captcha;
 use ACP3\Modules\ACP3\Contact;
 
 /**
@@ -26,7 +25,7 @@ class Imprint extends Core\Controller\AbstractFrontendAction
         $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
 
         return [
-            'imprint' => $this->config->getSettings('contact'),
+            'imprint' => $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME),
             'powered_by' => $this->translator->t(
                 'contact',
                 'powered_by',

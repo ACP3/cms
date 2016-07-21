@@ -4,6 +4,7 @@ namespace ACP3\Modules\ACP3\Feeds\Helper;
 
 use ACP3\Core\Config;
 use ACP3\Core\RouterInterface;
+use ACP3\Modules\ACP3\Feeds\Installer\Schema;
 use FeedWriter\ATOM;
 
 /**
@@ -80,7 +81,7 @@ class FeedGenerator
             return;
         }
 
-        $this->settings = $this->config->getSettings('feeds');
+        $this->settings = $this->config->getSettings(Schema::MODULE_NAME);
 
         switch ($this->settings['feed_type']) {
             case 'ATOM':

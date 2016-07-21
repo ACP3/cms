@@ -6,8 +6,6 @@
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Captcha;
-use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\Guestbook;
 use ACP3\Modules\ACP3\Newsletter;
 

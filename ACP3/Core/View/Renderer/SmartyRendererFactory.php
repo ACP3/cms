@@ -8,6 +8,7 @@ namespace ACP3\Core\View\Renderer;
 
 use ACP3\Core\Config;
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class SmartyRendererFactory
@@ -48,7 +49,7 @@ class SmartyRendererFactory
     public function create()
     {
         $renderer = new Smarty($this->appPath, $this->environment);
-        $renderer->configure(['compile_id' => $this->config->getSettings('system')['design']]);
+        $renderer->configure(['compile_id' => $this->config->getSettings(Schema::MODULE_NAME)['design']]);
         return $renderer;
     }
 }

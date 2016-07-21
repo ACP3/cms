@@ -127,7 +127,7 @@ class Create extends AbstractFormAction
                 ->append($gallery, 'acp/gallery/index/edit/id_' . $id)
                 ->append($this->translator->t('gallery', 'admin_pictures_create'));
 
-            $settings = $this->config->getSettings('gallery');
+            $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
 
             if ($this->request->getPost()->count() !== 0) {
                 return $this->executePost($this->request->getPost()->all(), $settings, $id);

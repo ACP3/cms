@@ -7,6 +7,7 @@
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class WYSIWYG
@@ -54,7 +55,7 @@ class WYSIWYG extends AbstractFunction
     {
         $params['id'] = !empty($params['id']) ? $params['id'] : $params['name'];
 
-        $serviceId = $this->config->getSettings('system')['wysiwyg'];
+        $serviceId = $this->config->getSettings(Schema::MODULE_NAME)['wysiwyg'];
         $wysiwyg = $this->wysiwygFactory->create($serviceId);
 
         $wysiwyg->setParameters($params);

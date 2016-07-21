@@ -88,7 +88,7 @@ class Edit extends AbstractFormAction
                     . $this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']])
                 );
 
-            $settings = $this->config->getSettings('gallery');
+            $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
 
             if ($this->request->getPost()->count() !== 0) {
                 return $this->executePost($this->request->getPost()->all(), $settings, $picture, $id);

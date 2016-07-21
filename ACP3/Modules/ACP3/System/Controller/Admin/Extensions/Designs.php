@@ -7,8 +7,8 @@
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Designs
@@ -64,7 +64,7 @@ class Designs extends Core\Controller\AbstractAdminAction
         if ((bool)preg_match('=/=', $design) === false &&
             is_file(ACP3_ROOT_DIR . 'designs/' . $design . '/info.xml') === true
         ) {
-            $bool = $this->config->setSettings(['design' => $design], 'system');
+            $bool = $this->config->setSettings(['design' => $design], Schema::MODULE_NAME);
 
             // Template Cache leeren
             Core\Cache\Purge::doPurge([
@@ -93,7 +93,7 @@ class Designs extends Core\Controller\AbstractAdminAction
                 $designs[] = array_merge(
                     $designInfo,
                     [
-                        'selected' => $this->config->getSettings('system')['design'] === $directory ? 1 : 0,
+                        'selected' => $this->config->getSettings(Schema::MODULE_NAME)['design'] === $directory ? 1 : 0,
                         'dir' => $directory
                     ]
                 );

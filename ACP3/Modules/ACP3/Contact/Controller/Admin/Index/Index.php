@@ -51,7 +51,7 @@ class Index extends Core\Controller\AbstractAdminAction
             return $this->indexPost($this->request->getPost()->all());
         }
 
-        $settings = $this->config->getSettings('contact');
+        $settings = $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME);
 
         return [
             'form' => array_merge($settings, $this->request->getPost()->all()),
@@ -81,7 +81,7 @@ class Index extends Core\Controller\AbstractAdminAction
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $this->config->setSettings($data, 'contact');
+            return $this->config->setSettings($data, Contact\Installer\Schema::MODULE_NAME);
         });
     }
 }

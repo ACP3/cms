@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
@@ -81,7 +80,7 @@ class Details extends Core\Controller\AbstractFrontendAction
                 ->append($file['category_title'], 'files/index/files/cat_' . $file['category_id'])
                 ->append($file['title']);
 
-            $settings = $this->config->getSettings('files');
+            $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
             $file['text'] = $this->view->fetchStringAsTemplate($file['text']);
 
             return [
@@ -96,9 +95,8 @@ class Details extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param array $file
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws Core\Controller\Exception\ResultNotExistsException
      */
     protected function downloadFile(array $file)
     {

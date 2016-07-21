@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 
 /**
  * Class AbstractAction
@@ -23,6 +24,6 @@ abstract class AbstractAction extends AbstractFrontendAction
     {
         parent::preDispatch();
 
-        $this->settings = $this->config->getSettings('gallery');
+        $this->settings = $this->config->getSettings(Schema::MODULE_NAME);
     }
 }

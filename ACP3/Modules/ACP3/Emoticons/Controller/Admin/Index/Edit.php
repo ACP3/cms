@@ -94,7 +94,7 @@ class Edit extends Core\Controller\AbstractAdminAction
 
             $this->adminFormValidation
                 ->setFile($file)
-                ->setSettings($this->config->getSettings('emoticons'))
+                ->setSettings($this->config->getSettings(Emoticons\Installer\Schema::MODULE_NAME))
                 ->validate($formData);
 
             $updateValues = [

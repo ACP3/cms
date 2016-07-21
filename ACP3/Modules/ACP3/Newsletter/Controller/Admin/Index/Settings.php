@@ -65,7 +65,7 @@ class Settings extends Core\Controller\AbstractAdminAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        $settings = $this->config->getSettings('newsletter');
+        $settings = $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME);
 
         return [
             'html' => $this->formsHelper->yesNoCheckboxGenerator('html', $settings['html']),
@@ -90,7 +90,7 @@ class Settings extends Core\Controller\AbstractAdminAction
                 'html' => (int)$formData['html']
             ];
 
-            return $this->config->setSettings($data, 'newsletter');
+            return $this->config->setSettings($data, Newsletter\Installer\Schema::MODULE_NAME);
         });
     }
 }

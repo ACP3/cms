@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Files as FilesModule;
 class Files extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
-    
+
     /**
      * @var \ACP3\Core\Date
      */
@@ -69,7 +69,7 @@ class Files extends Core\Controller\AbstractFrontendAction
                 ->append($this->translator->t('files', 'files'), 'files')
                 ->append($category['title']);
 
-            $settings = $this->config->getSettings('files');
+            $settings = $this->config->getSettings(FilesModule\Installer\Schema::MODULE_NAME);
 
             return [
                 'dateformat' => $settings['dateformat'],

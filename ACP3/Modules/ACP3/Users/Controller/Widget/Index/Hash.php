@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
 
 use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Hash
@@ -36,7 +37,7 @@ class Hash extends AbstractWidgetAction
      */
     private function generateUserContextHash()
     {
-        $settings = $this->config->getSettings('system');
+        $settings = $this->config->getSettings(Schema::MODULE_NAME);
         $hash = $settings['security_secret'];
 
         if ($this->user->isAuthenticated()) {

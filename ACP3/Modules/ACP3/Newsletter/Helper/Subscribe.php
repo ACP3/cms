@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
 
 /**
@@ -144,8 +145,8 @@ class Subscribe
     {
         $url = $this->router->route('newsletter/index/activate/hash_' . $hash, true);
 
-        $seoSettings = $this->config->getSettings('seo');
-        $settings = $this->config->getSettings('newsletter');
+        $seoSettings = $this->config->getSettings(\ACP3\Modules\ACP3\Seo\Installer\Schema::MODULE_NAME);
+        $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
         $subject = $this->translator->t('newsletter', 'subscribe_mail_subject', ['%title%' => $seoSettings['title']]);
         $body = $this->translator->t('newsletter', 'subscribe_mail_body',

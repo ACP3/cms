@@ -7,7 +7,7 @@ use ACP3\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Http\RedirectResponse;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Modules;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use Patchwork\Utf8;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -120,7 +120,7 @@ class Bootstrap extends AbstractBootstrap
     public function outputPage()
     {
         // Load system settings
-        $this->systemSettings = $this->container->get('core.config')->getSettings('system');
+        $this->systemSettings = $this->container->get('core.config')->getSettings(Schema::MODULE_NAME);
         $this->setThemePaths();
         $this->container->get('core.authentication')->authenticate();
 

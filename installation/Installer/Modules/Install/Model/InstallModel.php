@@ -16,6 +16,7 @@ use ACP3\Installer\Core\Environment\ApplicationPath;
 use ACP3\Installer\Core\I18n\Translator;
 use ACP3\Installer\Modules\Install\Helpers\Install;
 use ACP3\Installer\Modules\Install\Helpers\ModuleInstaller;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -142,7 +143,7 @@ class InstallModel
     public function configureModules(array $formData)
     {
         $settings = [
-            'system' => [
+            Schema::MODULE_NAME => [
                 'date_format_long' => $this->secure->strEncode($formData['date_format_long']),
                 'date_format_short' => $this->secure->strEncode($formData['date_format_short']),
                 'date_time_zone' => $formData['date_time_zone'],
@@ -150,18 +151,18 @@ class InstallModel
                 'lang' => $this->translator->getLocale(),
                 'design' => $formData['design']
             ],
-            'seo' => [
+            \ACP3\Modules\ACP3\Seo\Installer\Schema::MODULE_NAME => [
                 'title' => !empty($formData['title']) ? $formData['title'] : 'ACP3'
             ],
-            'users' => [
+            \ACP3\Modules\ACP3\Users\Installer\Schema::MODULE_NAME => [
                 'mail' => $formData['mail']
             ],
-            'newsletter' => [
+            \ACP3\Modules\ACP3\Newsletter\Installer\Schema::MODULE_NAME => [
                 'mail' => $formData['mail'],
                 'mailsig' => $this->translator->t('install', 'sincerely') . "\n\n" . $this->translator->t('install',
                         'newsletter_mailsig')
             ],
-            'contact' => [
+            \ACP3\Modules\ACP3\Contact\Installer\Schema::MODULE_NAME => [
                 'mail' => $formData['mail'],
                 'disclaimer' => $this->translator->t('install', 'disclaimer')
             ]
