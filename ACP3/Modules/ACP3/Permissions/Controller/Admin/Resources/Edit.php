@@ -91,13 +91,13 @@ class Edit extends AbstractFormAction
 
     /**
      * @param array $formData
-     * @param int   $id
+     * @param int   $resourceId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $id)
+    protected function executePost(array $formData, $resourceId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $resourceId) {
             $this->resourceFormValidation->validate($formData);
 
             $updateValues = [
@@ -106,7 +106,7 @@ class Edit extends AbstractFormAction
                 'page' => $formData['resource'],
                 'privilege_id' => $formData['privileges'],
             ];
-            $bool = $this->resourceRepository->update($updateValues, $id);
+            $bool = $this->resourceRepository->update($updateValues, $resourceId);
 
             $this->permissionsCache->saveResourcesCache();
 
