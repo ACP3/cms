@@ -18,10 +18,6 @@ use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
 class Edit extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
     protected $articleRepository;
@@ -49,11 +45,15 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
      */
     protected $metaFormFieldsHelper;
+    /**
+     * @var Articles\Model\ArticlesModel
+     */
+    protected $articlesModel;
 
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param \ACP3\Core\Date $date
      * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param Articles\Model\ArticlesModel $articlesModel
      * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
      * @param \ACP3\Modules\ACP3\Articles\Cache $articlesCache
      * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
@@ -61,8 +61,8 @@ class Edit extends AbstractFormAction
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\Date $date,
         Core\Helpers\Forms $formsHelper,
+        Articles\Model\ArticlesModel $articlesModel,
         Articles\Model\Repository\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache,
         Articles\Validation\AdminFormValidation $adminFormValidation,
@@ -70,11 +70,11 @@ class Edit extends AbstractFormAction
     ) {
         parent::__construct($context, $formsHelper);
 
-        $this->date = $date;
         $this->articleRepository = $articleRepository;
         $this->articlesCache = $articlesCache;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
+        $this->articlesModel = $articlesModel;
     }
 
     /**
@@ -152,22 +152,12 @@ class Edit extends AbstractFormAction
                 ->setUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $articleId))
                 ->validate($formData);
 
-            $updateValues = [
-                'start' => $this->date->toSQL($formData['start']),
-                'end' => $this->date->toSQL($formData['end']),
-                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
-                'text' => $this->get('core.helpers.secure')->strEncode($formData['text'], true),
-                'user_id' => $this->user->getUserId(),
-            ];
-
-            $bool = $this->articleRepository->update($updateValues, $articleId);
+            $bool = $this->articlesModel->saveArticle($formData, $this->user->getUserId(), $articleId);
 
             $this->articlesCache->saveCache($articleId);
 
             $this->insertUriAlias($formData, $articleId);
             $this->createOrUpdateMenuItem($formData, $articleId);
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $bool;
         });
