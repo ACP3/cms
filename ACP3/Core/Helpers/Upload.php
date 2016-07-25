@@ -107,7 +107,6 @@ class Upload
      * Löscht eine Datei im uploads Ordner
      *
      * @param string $file
-     *    Der Name der Datei
      *
      * @return boolean
      */

@@ -8,3 +8,10 @@ services:
     class: ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository
     arguments:
       - '@core.db'
+
+  emoticons.model:
+    class: ACP3\Modules\ACP3\Emoticons\Model\EmoticonsModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.helpers.secure'
+      - '@emoticons.model.emoticonrepository'

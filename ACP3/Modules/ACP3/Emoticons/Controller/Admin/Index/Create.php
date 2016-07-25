@@ -20,10 +20,6 @@ class Create extends Core\Controller\AbstractAdminAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository
-     */
-    protected $emoticonRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -31,29 +27,33 @@ class Create extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Emoticons\Cache
      */
     protected $emoticonsCache;
+    /**
+     * @var Emoticons\Model\EmoticonsModel
+     */
+    protected $emoticonsModel;
 
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                  $context
-     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository       $emoticonRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Emoticons\Model\EmoticonsModel $emoticonsModel
      * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Emoticons\Cache                          $emoticonsCache
+     * @param \ACP3\Modules\ACP3\Emoticons\Cache $emoticonsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Emoticons\Model\Repository\EmoticonRepository $emoticonRepository,
+        Emoticons\Model\EmoticonsModel $emoticonsModel,
         Emoticons\Validation\AdminFormValidation $adminFormValidation,
         Emoticons\Cache $emoticonsCache)
     {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->emoticonRepository = $emoticonRepository;
         $this->adminFormValidation = $adminFormValidation;
         $this->emoticonsCache = $emoticonsCache;
+        $this->emoticonsModel = $emoticonsModel;
     }
 
     /**
@@ -89,19 +89,11 @@ class Create extends Core\Controller\AbstractAdminAction
 
             $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
             $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
+            $formData['img'] = $result['name'];
 
-            $insertValues = [
-                'id' => '',
-                'code' => $this->get('core.helpers.secure')->strEncode($formData['code']),
-                'description' => $this->get('core.helpers.secure')->strEncode($formData['description']),
-                'img' => $result['name'],
-            ];
-
-            $bool = $this->emoticonRepository->insert($insertValues);
+            $bool = $this->emoticonsModel->saveEmoticon($formData);
 
             $this->emoticonsCache->saveCache();
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $bool;
         });

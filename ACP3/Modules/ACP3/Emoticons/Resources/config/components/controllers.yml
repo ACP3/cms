@@ -4,7 +4,7 @@ services:
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
-      - '@emoticons.model.emoticonrepository'
+      - '@emoticons.model'
       - '@emoticons.validator'
       - '@emoticons.cache'
 
@@ -20,6 +20,7 @@ services:
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
+      - '@emoticons.model'
       - '@emoticons.model.emoticonrepository'
       - '@emoticons.validator'
       - '@emoticons.cache'
