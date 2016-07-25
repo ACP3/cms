@@ -52,4 +52,32 @@ class AbstractFormAction extends AbstractAdminAction
 
         return $privileges;
     }
+
+    /**
+     * @param string $currentModule
+     * @return array
+     */
+    protected function fetchActiveModules($currentModule = '')
+    {
+        $modules = $this->modules->getActiveModules();
+        foreach ($modules as $row) {
+            $modules[$row['name']]['selected'] = $this->formsHelper->selectEntry(
+                'modules',
+                $row['dir'],
+                ucfirst(trim($currentModule))
+            );
+        }
+        return $modules;
+    }
+
+    /**
+     * @param string $moduleName
+     * @return int
+     */
+    protected function fetchModuleId($moduleName)
+    {
+        $moduleInfo = $this->modules->getModuleInfo($moduleName);
+
+        return isset($moduleInfo['id']) ? $moduleInfo['id'] : 0;
+    }
 }

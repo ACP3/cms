@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers;
 
-use ACP3\Core\Http\Request;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 

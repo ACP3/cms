@@ -31,14 +31,19 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
      */
     protected $resourceFormValidation;
+    /**
+     * @var Permissions\Model\ResourcesModel
+     */
+    protected $resourcesModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\AdminContext                       $context
-     * @param \ACP3\Core\Helpers\Forms                                         $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository         $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository          $resourceRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                             $permissionsCache
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
+     * @param Permissions\Model\ResourcesModel $resourcesModel
+     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation $resourceFormValidation
      */
     public function __construct(
@@ -47,6 +52,7 @@ class Edit extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Permissions\Model\Repository\ResourceRepository $resourceRepository,
+        Permissions\Model\ResourcesModel $resourcesModel,
         Permissions\Cache $permissionsCache,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
@@ -56,6 +62,7 @@ class Edit extends AbstractFormAction
         $this->resourceRepository = $resourceRepository;
         $this->permissionsCache = $permissionsCache;
         $this->resourceFormValidation = $resourceFormValidation;
+        $this->resourcesModel = $resourcesModel;
     }
 
     /**
@@ -75,11 +82,11 @@ class Edit extends AbstractFormAction
             $defaults = [
                 'resource' => $resource['page'],
                 'area' => $resource['area'],
-                'controller' => $resource['controller'],
-                'modules' => $resource['module_name']
+                'controller' => $resource['controller']
             ];
 
             return [
+                'modules' => $this->fetchActiveModules($resource['module_name']),
                 'privileges' => $this->fetchPrivileges($resource['privilege_id']),
                 'form' => array_merge($defaults, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()
@@ -100,17 +107,10 @@ class Edit extends AbstractFormAction
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $resourceId) {
             $this->resourceFormValidation->validate($formData);
 
-            $updateValues = [
-                'controller' => $formData['controller'],
-                'area' => $formData['area'],
-                'page' => $formData['resource'],
-                'privilege_id' => $formData['privileges'],
-            ];
-            $bool = $this->resourceRepository->update($updateValues, $resourceId);
+            $formData['module_id'] = $this->fetchModuleId($formData['modules']);
+            $bool = $this->resourcesModel->saveResource($formData, $resourceId);
 
             $this->permissionsCache->saveResourcesCache();
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $bool;
         });

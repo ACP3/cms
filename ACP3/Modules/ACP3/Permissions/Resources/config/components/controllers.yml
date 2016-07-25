@@ -50,7 +50,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@permissions.model.privilegerepository'
-      - '@permissions.model.resourcerepository'
+      - '@permissions.model.resources_model'
       - '@permissions.cache'
       - '@permissions.validator.resource'
 
@@ -69,6 +69,7 @@ services:
       - '@core.helpers.formToken'
       - '@permissions.model.privilegerepository'
       - '@permissions.model.resourcerepository'
+      - '@permissions.model.resources_model'
       - '@permissions.cache'
       - '@permissions.validator.resource'
 

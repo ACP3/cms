@@ -23,3 +23,9 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository
     arguments:
       - '@core.db'
+
+  permissions.model.resources_model:
+    class: ACP3\Modules\ACP3\Permissions\Model\ResourcesModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@permissions.model.resourcerepository'

@@ -20,10 +20,6 @@ class Create extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
-     */
-    protected $resourceRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
     protected $permissionsCache;
@@ -31,14 +27,18 @@ class Create extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
      */
     protected $resourceFormValidation;
+    /**
+     * @var Permissions\Model\ResourcesModel
+     */
+    protected $resourcesModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\AdminContext                       $context
-     * @param \ACP3\Core\Helpers\Forms                                         $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository         $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository          $resourceRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                             $permissionsCache
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
+     * @param Permissions\Model\ResourcesModel $resourcesModel
+     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation $resourceFormValidation
      */
     public function __construct(
@@ -46,16 +46,16 @@ class Create extends AbstractFormAction
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
-        Permissions\Model\Repository\ResourceRepository $resourceRepository,
+        Permissions\Model\ResourcesModel $resourcesModel,
         Permissions\Cache $permissionsCache,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
         parent::__construct($context, $formsHelper, $privilegeRepository);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->resourceRepository = $resourceRepository;
         $this->permissionsCache = $permissionsCache;
         $this->resourceFormValidation = $resourceFormValidation;
+        $this->resourcesModel = $resourcesModel;
     }
 
     /**
@@ -67,13 +67,8 @@ class Create extends AbstractFormAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        $modules = $this->modules->getActiveModules();
-        foreach ($modules as $row) {
-            $modules[$row['name']]['selected'] = $this->formsHelper->selectEntry('modules', $row['name']);
-        }
-
         return [
-            'modules' => $modules,
+            'modules' => $this->fetchActiveModules(),
             'privileges' => $this->fetchPrivileges(0),
             'form' => array_merge(
                 ['resource' => '', 'area' => '', 'controller' => ''],
@@ -93,21 +88,10 @@ class Create extends AbstractFormAction
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->resourceFormValidation->validate($formData);
 
-            $moduleInfo = $this->modules->getModuleInfo($formData['modules']);
-            $insertValues = [
-                'id' => '',
-                'module_id' => $moduleInfo['id'],
-                'area' => $formData['area'],
-                'controller' => $formData['controller'],
-                'page' => $formData['resource'],
-                'params' => '',
-                'privilege_id' => $formData['privileges'],
-            ];
-            $bool = $this->resourceRepository->insert($insertValues);
+            $formData['module_id'] = $this->fetchModuleId($formData['modules']);
+            $bool = $this->resourcesModel->saveResource($formData);
 
             $this->permissionsCache->saveResourcesCache();
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $bool;
         });
