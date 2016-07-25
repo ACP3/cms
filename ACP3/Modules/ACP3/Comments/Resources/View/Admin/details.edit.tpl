@@ -18,7 +18,9 @@
             <label for="message" class="col-sm-2 control-label required">{lang t="system|message"}</label>
 
             <div class="col-sm-10">
-                {if isset($emoticons)}{$emoticons}{/if}
+                {if $can_use_emoticons}
+                    {event name="emoticons.render_emoticons_list"}
+                {/if}
                 <textarea class="form-control" name="message" id="message" cols="50" rows="5" required>{$form.message}</textarea>
             </div>
         </div>

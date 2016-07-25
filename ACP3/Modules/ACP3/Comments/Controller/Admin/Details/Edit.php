@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
-use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\System;
 
 /**
@@ -33,10 +32,6 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Helpers
-     */
-    protected $emoticonsHelpers;
 
     /**
      * Details constructor.
@@ -60,18 +55,6 @@ class Edit extends Core\Controller\AbstractAdminAction
         $this->adminFormValidation = $adminFormValidation;
         $this->systemModuleRepository = $systemModuleRepository;
         $this->formTokenHelper = $formTokenHelper;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Emoticons\Helpers $emoticonsHelpers
-     *
-     * @return $this
-     */
-    public function setEmoticonsHelpers(Emoticons\Helpers $emoticonsHelpers)
-    {
-        $this->emoticonsHelpers = $emoticonsHelpers;
-
-        return $this;
     }
 
     /**
@@ -103,15 +86,11 @@ class Edit extends Core\Controller\AbstractAdminAction
                 );
             }
 
-            if ($this->emoticonsHelpers) {
-                // Emoticons im Formular anzeigen
-                $this->view->assign('emoticons', $this->emoticonsHelpers->emoticonsList());
-            }
-
             return [
                 'form' => array_merge($comment, $this->request->getPost()->all()),
                 'module_id' => (int)$comment['module_id'],
-                'form_token' => $this->formTokenHelper->renderFormToken()
+                'form_token' => $this->formTokenHelper->renderFormToken(),
+                'can_use_emoticons' => true
             ];
         }
 

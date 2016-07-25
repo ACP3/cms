@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\Guestbook;
 
 /**
@@ -28,10 +27,6 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Helpers
-     */
-    protected $emoticonsHelpers;
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
@@ -62,18 +57,6 @@ class Edit extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Emoticons\Helpers $emoticonsHelpers
-     *
-     * @return $this
-     */
-    public function setEmoticonsHelpers(Emoticons\Helpers $emoticonsHelpers)
-    {
-        $this->emoticonsHelpers = $emoticonsHelpers;
-
-        return $this;
-    }
-
-    /**
      * @param int $id
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -91,18 +74,14 @@ class Edit extends Core\Controller\AbstractAdminAction
                 return $this->executePost($this->request->getPost()->all(), $settings, $id);
             }
 
-            if ($settings['emoticons'] == 1 && $this->emoticonsHelpers) {
-                // Emoticons im Formular anzeigen
-                $this->view->assign('emoticons', $this->emoticonsHelpers->emoticonsList());
-            }
-
             if ($settings['notify'] == 2) {
                 $this->view->assign('activate', $this->formsHelper->yesNoCheckboxGenerator('active', $guestbook['active']));
             }
 
             return [
                 'form' => array_merge($guestbook, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken()
+                'form_token' => $this->formTokenHelper->renderFormToken(),
+                'can_use_emoticons' => $settings['emoticons'] == 1
             ];
         }
 

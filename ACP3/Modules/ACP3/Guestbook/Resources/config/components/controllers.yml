@@ -13,8 +13,6 @@ services:
       - '@core.helpers.formToken'
       - '@guestbook.model.guestbookrepository'
       - '@guestbook.validation.admin_form_validation'
-    calls:
-      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   guestbook.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Index

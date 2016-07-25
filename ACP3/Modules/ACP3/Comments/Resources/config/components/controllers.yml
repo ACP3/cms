@@ -13,8 +13,6 @@ services:
       - '@comments.validation.admin_form_validation'
       - '@system.model.modulerepository'
       - '@core.helpers.formToken'
-    calls:
-      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   comments.controller.admin.details.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Index
