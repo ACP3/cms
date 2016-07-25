@@ -65,29 +65,10 @@ class Create extends AbstractFrontendAction
             return $this->executePost($this->request->getPost()->all(), $module, $entryId);
         }
 
-        // Add emoticons if they are active
-        if ($this->emoticonsActive === true && $this->emoticonsHelpers) {
-            $this->view->assign('emoticons', $this->emoticonsHelpers->emoticonsList());
-        }
-
-        $defaults = [
-            'name' => '',
-            'name_disabled' => '',
-            'message' => ''
-        ];
-
-        // If the user is already logged in, prepopulate the form
-        if ($this->user->isAuthenticated() === true) {
-            $user = $this->user->getUserInfo();
-            $disabled = ' readonly="readonly"';
-            $defaults['name'] = $user['nickname'];
-            $defaults['name_disabled'] = $disabled;
-            $defaults['message'] = '';
-        }
-
         return [
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
+            'can_use_emoticons' => $this->emoticonsActive === true
         ];
     }
 
@@ -130,5 +111,27 @@ class Create extends AbstractFrontendAction
                 );
             }
         );
+    }
+
+    /**
+     * @return array
+     */
+    private function fetchFormDefaults()
+    {
+        $defaults = [
+            'name' => '',
+            'name_disabled' => '',
+            'message' => ''
+        ];
+
+        // If the user is already logged in, prepopulate the form
+        if ($this->user->isAuthenticated() === true) {
+            $user = $this->user->getUserInfo();
+            $disabled = ' readonly="readonly"';
+            $defaults['name'] = $user['nickname'];
+            $defaults['name_disabled'] = $disabled;
+            $defaults['message'] = '';
+        }
+        return $defaults;
     }
 }

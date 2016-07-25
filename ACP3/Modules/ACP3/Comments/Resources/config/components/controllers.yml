@@ -51,8 +51,6 @@ services:
       - '@comments.model.commentrepository'
       - '@comments.validator'
       - '@core.helpers.formToken'
-    calls:
-      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 
   comments.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Index

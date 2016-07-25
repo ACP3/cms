@@ -48,10 +48,10 @@ class Create extends AbstractAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
-     * @param \ACP3\Core\Date                                        $date
-     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $formValidation
      */
@@ -100,14 +100,12 @@ class Create extends AbstractAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        // Emoticons einbinden
-        if ($this->guestbookSettings['emoticons'] == 1 && $this->emoticonsHelpers) {
-            $this->view->assign('emoticons', $this->emoticonsHelpers->emoticonsList());
-        }
-
         // In Newsletter integrieren
         if ($this->newsletterActive === true && $this->newsletterSubscribeHelper) {
-            $this->view->assign('subscribe_newsletter', $this->formsHelper->selectEntry('subscribe_newsletter', '1', '1', 'checked'));
+            $this->view->assign(
+                'subscribe_newsletter',
+                $this->formsHelper->selectEntry('subscribe_newsletter', '1', '1', 'checked')
+            );
             $this->view->assign(
                 'LANG_subscribe_to_newsletter',
                 $this->translator->t(
@@ -118,31 +116,10 @@ class Create extends AbstractAction
             );
         }
 
-        $defaults = [
-            'name' => '',
-            'name_disabled' => '',
-            'mail' => '',
-            'mail_disabled' => '',
-            'website' => '',
-            'website_disabled' => '',
-            'message' => '',
-        ];
-
-        // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
-        if ($this->user->isAuthenticated() === true) {
-            $users = $this->user->getUserInfo();
-            $disabled = ' readonly="readonly"';
-            $defaults['name'] = $users['nickname'];
-            $defaults['name_disabled'] = $disabled;
-            $defaults['mail'] = $users['mail'];
-            $defaults['mail_disabled'] = $disabled;
-            $defaults['website'] = $users['website'];
-            $defaults['website_disabled'] = !empty($users['website']) ? $disabled : '';
-        }
-
         return [
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
+            'can_use_emoticons' => $this->guestbookSettings['emoticons'] == 1
         ];
     }
 
@@ -174,23 +151,8 @@ class Create extends AbstractAction
 
                 $lastId = $this->guestbookRepository->insert($insertValues);
 
-                // Send the notification E-mail if configured
                 if ($this->guestbookSettings['notify'] == 1 || $this->guestbookSettings['notify'] == 2) {
-                    $fullPath = $this->router->route('guestbook', true) . '#gb-entry-' . $lastId;
-                    $body = sprintf(
-                        $this->guestbookSettings['notify'] == 1 ? $this->translator->t('guestbook',
-                            'notification_email_body_1') : $this->translator->t('guestbook',
-                            'notification_email_body_2'),
-                        $this->router->route('', true),
-                        $fullPath
-                    );
-                    $this->get('core.helpers.sendEmail')->execute(
-                        '',
-                        $this->guestbookSettings['notify_email'],
-                        $this->guestbookSettings['notify_email'],
-                        $this->translator->t('guestbook', 'notification_email_subject'),
-                        $body
-                    );
+                    $this->sendNotificationEmail($lastId);
                 }
 
                 // Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
@@ -210,5 +172,56 @@ class Create extends AbstractAction
                 );
             }
         );
+    }
+
+    /**
+     * @param int $entryId
+     */
+    protected function sendNotificationEmail($entryId)
+    {
+        $fullPath = $this->router->route('guestbook', true) . '#gb-entry-' . $entryId;
+        $body = sprintf(
+            $this->guestbookSettings['notify'] == 1
+                ? $this->translator->t('guestbook', 'notification_email_body_1')
+                : $this->translator->t('guestbook', 'notification_email_body_2'),
+            $this->router->route('', true),
+            $fullPath
+        );
+        $this->get('core.helpers.sendEmail')->execute(
+            '',
+            $this->guestbookSettings['notify_email'],
+            $this->guestbookSettings['notify_email'],
+            $this->translator->t('guestbook', 'notification_email_subject'),
+            $body
+        );
+    }
+
+    /**
+     * @return array
+     */
+    private function fetchFormDefaults()
+    {
+        $defaults = [
+            'name' => '',
+            'name_disabled' => '',
+            'mail' => '',
+            'mail_disabled' => '',
+            'website' => '',
+            'website_disabled' => '',
+            'message' => '',
+        ];
+
+        // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
+        if ($this->user->isAuthenticated() === true) {
+            $users = $this->user->getUserInfo();
+            $disabled = ' readonly="readonly"';
+            $defaults['name'] = $users['nickname'];
+            $defaults['name_disabled'] = $disabled;
+            $defaults['mail'] = $users['mail'];
+            $defaults['mail_disabled'] = $disabled;
+            $defaults['website'] = $users['website'];
+            $defaults['website_disabled'] = !empty($users['website']) ? $disabled : '';
+        }
+        return $defaults;
     }
 }

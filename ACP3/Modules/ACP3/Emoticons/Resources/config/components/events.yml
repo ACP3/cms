@@ -6,3 +6,10 @@ services:
       - '@emoticons.helpers'
     tags:
       - { name: core.eventListener, event: core.wysiwyg.textarea.before, method: onWysiwygTextareaBefore }
+
+  emoticons.event_on_render_emoticons_list_listener:
+    class: ACP3\Modules\ACP3\Emoticons\Event\Listener\RenderEmoticonsListListener
+    arguments:
+      - '@emoticons.helpers'
+    tags:
+      - { name: core.eventListener, event: emoticons.render_emoticons_list, method: renderEmoticonsList }
