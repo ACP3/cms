@@ -5,6 +5,7 @@
         <direction>ltr</direction>
     </info>
     <keys>
+        <item key="activate_entry">Approve entry</item>
         <item key="admin_index_delete">Delete guestbook entries</item>
         <item key="admin_index_edit">Edit guestbook entry</item>
         <item key="admin_index_settings">Settings</item>

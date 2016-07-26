@@ -5,6 +5,7 @@
         <direction>ltr</direction>
     </info>
     <keys>
+        <item key="activate_entry">Eintrag freischalten</item>
         <item key="admin_index_delete">Gästebucheinträge löschen</item>
         <item key="admin_index_edit">Gästebucheintrag bearbeiten</item>
         <item key="admin_index_settings">Einstellungen</item>

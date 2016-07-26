@@ -74,14 +74,13 @@ class Edit extends Core\Controller\AbstractAdminAction
                 return $this->executePost($this->request->getPost()->all(), $settings, $id);
             }
 
-            if ($settings['notify'] == 2) {
-                $this->view->assign('activate', $this->formsHelper->yesNoCheckboxGenerator('active', $guestbook['active']));
-            }
-
             return [
                 'form' => array_merge($guestbook, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
-                'can_use_emoticons' => $settings['emoticons'] == 1
+                'can_use_emoticons' => $settings['emoticons'] == 1,
+                'activate' => $settings['notify'] == 2
+                    ? $this->formsHelper->yesNoCheckboxGenerator('active', $guestbook['active'])
+                    : []
             ];
         }
 
@@ -91,13 +90,13 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * @param array $formData
      * @param array $settings
-     * @param int   $id
+     * @param int   $guestbookId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings, $id)
+    protected function executePost(array $formData, array $settings, $guestbookId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $guestbookId) {
             $this->adminFormValidation
                 ->setSettings($settings)
                 ->validate($formData);
@@ -107,7 +106,7 @@ class Edit extends Core\Controller\AbstractAdminAction
                 'active' => $settings['notify'] == 2 ? $formData['active'] : 1,
             ];
 
-            $bool = $this->guestbookRepository->update($updateValues, $id);
+            $bool = $this->guestbookRepository->update($updateValues, $guestbookId);
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 

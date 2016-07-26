@@ -15,19 +15,19 @@
                 <textarea class="form-control" name="message" id="message" cols="50" rows="5" required>{$form.message}</textarea>
             </div>
         </div>
-        {if isset($activate)}
+        {if !empty($activate)}
             <div class="form-group">
                 <label for="active-1" class="col-sm-2 control-label required">{lang t="guestbook|activate_entry"}</label>
 
                 <div class="col-sm-10">
-                    {foreach $activate as $row}
-                        <div class="checkbox">
-                            <label for="active-{$row.value}">
+                    <div class="btn-group" data-toggle="buttons">
+                        {foreach $activate as $row}
+                            <label for="active-{$row.value}" class="btn btn-default{if !empty($row.checked)} active{/if}">
                                 <input type="radio" name="active" id="active-{$row.value}" value="{$row.value}"{$row.checked}>
                                 {$row.lang}
                             </label>
-                        </div>
-                    {/foreach}
+                        {/foreach}
+                    </div>
                 </div>
             </div>
         {/if}
