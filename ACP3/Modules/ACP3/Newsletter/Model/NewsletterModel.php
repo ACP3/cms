@@ -17,6 +17,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class NewsletterModel extends AbstractModel
 {
+    const EVENT_PREFIX = Schema::MODULE_NAME;
+
     /**
      * @var Date
      */

@@ -62,7 +62,7 @@ services:
       - '@core.helpers.stringFormatter'
       - '@files.model.filesrepository'
       - '@files.cache'
-      - '@categories.model'
+      - '@categories.model.categories_repository'
 
   files.controller.frontend.index.files:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Files
@@ -70,7 +70,7 @@ services:
       - '@core.context.frontend'
       - '@core.date'
       - '@files.model.filesrepository'
-      - '@categories.model'
+      - '@categories.model.categories_repository'
 
   files.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Index

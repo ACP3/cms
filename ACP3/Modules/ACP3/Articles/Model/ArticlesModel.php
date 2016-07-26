@@ -10,11 +10,14 @@ namespace ACP3\Modules\ACP3\Articles\Model;
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Modules\ACP3\Articles\Installer\Schema;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ArticlesModel extends AbstractModel
 {
+    const EVENT_PREFIX = Schema::MODULE_NAME;
+
     /**
      * @var ArticleRepository
      */

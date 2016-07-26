@@ -4,16 +4,16 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Emoticons\Model;
+namespace ACP3\Modules\ACP3\Categories\Model;
 
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
-use ACP3\Modules\ACP3\Emoticons\Installer\Schema;
-use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository;
+use ACP3\Modules\ACP3\Categories\Installer\Schema;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class EmoticonsModel extends AbstractModel
+class CategoriesModel extends AbstractModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
@@ -22,25 +22,25 @@ class EmoticonsModel extends AbstractModel
      */
     protected $secure;
     /**
-     * @var EmoticonRepository
+     * @var CategoryRepository
      */
-    protected $emoticonRepository;
+    protected $categoryRepository;
 
     /**
-     * EmoticonsModel constructor.
+     * CategoriesModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
      * @param Secure $secure
-     * @param EmoticonRepository $emoticonRepository
+     * @param CategoryRepository $categoryRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         Secure $secure,
-        EmoticonRepository $emoticonRepository
+        CategoryRepository $categoryRepository
     ) {
         parent::__construct($eventDispatcher);
 
         $this->secure = $secure;
-        $this->emoticonRepository = $emoticonRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -48,14 +48,20 @@ class EmoticonsModel extends AbstractModel
      * @param int|null $entryId
      * @return bool|int
      */
-    public function saveEmoticon(array $formData, $entryId = null)
+    public function saveCategory(array $formData, $entryId = null)
     {
         $data = [
-            'code' => $this->secure->strEncode($formData['code']),
+            'title' => $this->secure->strEncode($formData['title']),
             'description' => $this->secure->strEncode($formData['description']),
-            'img' => $formData['img'],
         ];
 
-        return $this->save($this->emoticonRepository, $data, $entryId);
+        if (isset($formData['module'])) {
+            $data['module_id'] = (int)$formData['module'];
+        }
+        if (isset($formData['picture'])) {
+            $data['picture'] = $formData['picture'];
+        }
+
+        return $this->save($this->categoryRepository, $data, $entryId);
     }
 }

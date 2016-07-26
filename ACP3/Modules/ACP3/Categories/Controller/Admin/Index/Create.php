@@ -16,10 +16,6 @@ use ACP3\Modules\ACP3\Categories;
 class Create extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
-     */
-    protected $categoryRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Categories\Cache
      */
     protected $categoriesCache;
@@ -35,19 +31,23 @@ class Create extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var Categories\Model\CategoriesModel
+     */
+    protected $categoriesModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\AdminContext                   $context
-     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository       $categoryRepository
-     * @param \ACP3\Modules\ACP3\Categories\Cache                          $categoriesCache
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param Categories\Model\CategoriesModel $categoriesModel
+     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelper,
-        Categories\Model\Repository\CategoryRepository $categoryRepository,
+        Categories\Model\CategoriesModel $categoriesModel,
         Categories\Cache $categoriesCache,
         Categories\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper)
@@ -55,10 +55,10 @@ class Create extends Core\Controller\AbstractAdminAction
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
-        $this->categoryRepository = $categoryRepository;
         $this->categoriesCache = $categoriesCache;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
+        $this->categoriesModel = $categoriesModel;
     }
 
     /**
@@ -92,23 +92,15 @@ class Create extends Core\Controller\AbstractAdminAction
                 ->setSettings($this->config->getSettings(Categories\Installer\Schema::MODULE_NAME))
                 ->validate($formData);
 
-            $insertValues = [
-                'id' => '',
-                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
-                'description' => $this->get('core.helpers.secure')->strEncode($formData['description']),
-                'module_id' => (int)$formData['module'],
-            ];
             if (!empty($file)) {
                 $upload = new Core\Helpers\Upload($this->appPath, 'categories');
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
-                $insertValues['picture'] = $result['name'];
+                $formData['picture'] = $result['name'];
             }
 
-            $bool = $this->categoryRepository->insert($insertValues);
+            $bool = $this->categoriesModel->saveCategory($formData);
 
             $this->categoriesCache->saveCache(strtolower($formData['module']));
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $bool;
         });

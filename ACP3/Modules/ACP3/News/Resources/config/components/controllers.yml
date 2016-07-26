@@ -72,7 +72,7 @@ services:
       - '@core.pagination'
       - '@news.model.newsrepository'
       - '@categories.helpers'
-      - '@categories.model'
+      - '@categories.model.categories_repository'
     calls:
       - ['setMetaStatements', ['@?seo.helper.meta_statements']]
 

@@ -31,16 +31,22 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @var Core\Helpers\FormToken
      */
     protected $formTokenHelper;
+    /**
+     * @var Categories\Model\CategoriesModel
+     */
+    protected $categoriesModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\AdminContext                   $context
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository       $categoryRepository
-     * @param \ACP3\Modules\ACP3\Categories\Cache                          $categoriesCache
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param Categories\Model\CategoriesModel $categoriesModel
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
+     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Categories\Model\CategoriesModel $categoriesModel,
         Categories\Model\Repository\CategoryRepository $categoryRepository,
         Categories\Cache $categoriesCache,
         Categories\Validation\AdminFormValidation $adminFormValidation,
@@ -52,6 +58,7 @@ class Edit extends Core\Controller\AbstractAdminAction
         $this->categoriesCache = $categoriesCache;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
+        $this->categoriesModel = $categoriesModel;
     }
 
     /**
@@ -83,38 +90,31 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * @param array $formData
      * @param array $category
-     * @param int   $id
+     * @param int   $categoryId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $category, $id)
+    protected function executePost(array $formData, array $category, $categoryId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $category, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $category, $categoryId) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->adminFormValidation
                 ->setFile($file)
                 ->setSettings($this->config->getSettings(Categories\Installer\Schema::MODULE_NAME))
-                ->setCategoryId($id)
+                ->setCategoryId($categoryId)
                 ->validate($formData);
-
-            $updateValues = [
-                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
-                'description' => $this->get('core.helpers.secure')->strEncode($formData['description']),
-            ];
 
             if (empty($file) === false) {
                 $upload = new Core\Helpers\Upload($this->appPath, 'categories');
                 $upload->removeUploadedFile($category['picture']);
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
-                $updateValues['picture'] = $result['name'];
+                $formData['picture'] = $result['name'];
             }
 
-            $bool = $this->categoryRepository->update($updateValues, $id);
+            $bool = $this->categoriesModel->saveCategory($formData, $categoryId);
 
-            $this->categoriesCache->saveCache($this->categoryRepository->getModuleNameFromCategoryId($id));
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+            $this->categoriesCache->saveCache($this->categoryRepository->getModuleNameFromCategoryId($categoryId));
 
             return $bool;
         });

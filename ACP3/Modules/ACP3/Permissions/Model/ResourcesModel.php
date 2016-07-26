@@ -8,11 +8,14 @@ namespace ACP3\Modules\ACP3\Permissions\Model;
 
 
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Modules\ACP3\Permissions\Installer\Schema;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ResourcesModel extends AbstractModel
 {
+    const EVENT_PREFIX = Schema::MODULE_NAME;
+
     /**
      * @var ResourceRepository
      */
