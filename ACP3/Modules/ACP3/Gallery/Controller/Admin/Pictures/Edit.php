@@ -36,16 +36,21 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     protected $pictureRepository;
+    /**
+     * @var Gallery\Model\PictureModel
+     */
+    protected $pictureModel;
 
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                  $context
-     * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers                          $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository          $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache                            $galleryCache
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
+     * @param Gallery\Model\PictureModel $pictureModel
+     * @param \ACP3\Modules\ACP3\Gallery\Cache $galleryCache
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
     public function __construct(
@@ -54,6 +59,7 @@ class Edit extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
+        Gallery\Model\PictureModel $pictureModel,
         Gallery\Cache $galleryCache,
         Gallery\Validation\PictureFormValidation $pictureFormValidation
     ) {
@@ -64,6 +70,7 @@ class Edit extends AbstractFormAction
         $this->pictureRepository = $pictureRepository;
         $this->galleryCache = $galleryCache;
         $this->pictureFormValidation = $pictureFormValidation;
+        $this->pictureModel = $pictureModel;
     }
 
     /**
@@ -128,11 +135,6 @@ class Edit extends AbstractFormAction
                     ->setFile($file)
                     ->validate([]);
 
-                $updateValues = [
-                    'description' => $this->get('core.helpers.secure')->strEncode($formData['description'], true),
-                    'comments' => $settings['comments'] == 1 ? (isset($formData['comments']) && $formData['comments'] == 1 ? 1 : 0) : $settings['comments'],
-                ];
-
                 if (!empty($file)) {
                     $upload = new Core\Helpers\Upload($this->appPath, 'gallery');
                     $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
@@ -140,14 +142,12 @@ class Edit extends AbstractFormAction
 
                     $this->galleryHelpers->removePicture($oldFile);
 
-                    $updateValues = array_merge($updateValues, ['file' => $result['name']]);
+                    $formData['file'] = $result['name'];
                 }
 
-                $bool = $this->pictureRepository->update($updateValues, $pictureId);
+                $bool = $this->pictureModel->savePicture($formData, $picture['gallery_id'], $pictureId);
 
                 $this->galleryCache->saveCache($picture['gallery_id']);
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
                 return $bool;
             },

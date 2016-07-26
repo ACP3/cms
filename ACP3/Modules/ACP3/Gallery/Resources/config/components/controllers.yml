@@ -54,9 +54,9 @@ services:
       - '@core.context.admin'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@gallery.helpers'
       - '@gallery.model.galleryrepository'
       - '@gallery.model.picturerepository'
+      - '@gallery.model.picture_model'
       - '@gallery.cache'
       - '@gallery.validator.picture'
     calls:
@@ -82,6 +82,7 @@ services:
       - '@core.helpers.formToken'
       - '@gallery.helpers'
       - '@gallery.model.picturerepository'
+      - '@gallery.model.picture_model'
       - '@gallery.cache'
       - '@gallery.validator.picture'
 

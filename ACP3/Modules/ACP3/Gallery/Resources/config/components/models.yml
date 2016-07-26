@@ -21,3 +21,11 @@ services:
       - '@core.date'
       - '@core.helpers.secure'
       - '@gallery.model.galleryrepository'
+
+  gallery.model.picture_model:
+    class: ACP3\Modules\ACP3\Gallery\Model\PictureModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.config'
+      - '@core.helpers.secure'
+      - '@gallery.model.picturerepository'
