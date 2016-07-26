@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 
 use ACP3\Core;
+use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System;
 
@@ -99,26 +100,27 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * @param array $formData
      * @param array $comment
-     * @param int   $id
+     * @param int   $commentId
      * @param int   $moduleId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $comment, $id, $moduleId)
+    protected function executePost(array $formData, array $comment, $commentId, $moduleId)
     {
         return $this->actionHelper->handleEditPostAction(
-            function () use ($formData, $comment, $id) {
+            function () use ($formData, $comment, $commentId) {
                 $this->adminFormValidation->validate($formData);
 
-                $updateValues = [];
-                $updateValues['message'] = $this->get('core.helpers.secure')->strEncode($formData['message']);
-                if ((empty($comment['user_id']) || $this->validator->is(Core\Validation\ValidationRules\IntegerValidationRule::class, $comment['user_id']) === false) &&
+                $updateValues = [
+                    'message' => $this->get('core.helpers.secure')->strEncode($formData['message'])
+                ];
+                if ((empty($comment['user_id']) || $this->validator->is(IntegerValidationRule::class, $comment['user_id']) === false) &&
                     !empty($formData['name'])
                 ) {
                     $updateValues['name'] = $this->get('core.helpers.secure')->strEncode($formData['name']);
                 }
 
-                $bool = $this->commentRepository->update($updateValues, $id);
+                $bool = $this->commentRepository->update($updateValues, $commentId);
 
                 Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
