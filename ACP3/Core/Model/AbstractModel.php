@@ -61,7 +61,7 @@ abstract class AbstractModel
      * @param array $data
      * @param int|null $entryId
      */
-    private function dispatchBeforeSaveEvent(AbstractRepository $repository, array $data, $entryId)
+    protected function dispatchBeforeSaveEvent(AbstractRepository $repository, array $data, $entryId)
     {
         $this->dispatchEvent('core.model.before_save', $data, $entryId);
         $this->dispatchEvent(
@@ -71,6 +71,11 @@ abstract class AbstractModel
         );
     }
 
+    /**
+     * @param string $eventName
+     * @param array $data
+     * @param int|null $entryId
+     */
     private function dispatchEvent($eventName, array $data, $entryId)
     {
         $this->eventDispatcher->dispatch(
@@ -84,7 +89,7 @@ abstract class AbstractModel
      * @param array $data
      * @param int|null $entryId
      */
-    private function dispatchAfterSaveEvent(AbstractRepository $repository, array $data, $entryId)
+    protected function dispatchAfterSaveEvent(AbstractRepository $repository, array $data, $entryId)
     {
         $this->dispatchEvent('core.model.after_save', $data, $entryId);
         $this->dispatchEvent(

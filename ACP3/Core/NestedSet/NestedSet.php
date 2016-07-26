@@ -55,18 +55,18 @@ class NestedSet
     /**
      * Löscht einen Knoten und verschiebt seine Kinder eine Ebene nach oben
      *
-     * @param integer $id
+     * @param integer $resultId
      * @param string  $tableName
      * @param bool    $enableBlocks
      *
      * @return bool
      */
-    public function deleteNode($id, $tableName, $enableBlocks = false)
+    public function deleteNode($resultId, $tableName, $enableBlocks = false)
     {
         return $this->delete
             ->setTableName($tableName)
             ->setEnableBlocks($enableBlocks)
-            ->execute($id);
+            ->execute($resultId);
     }
 
     /**
@@ -77,7 +77,7 @@ class NestedSet
      * @param string  $tableName
      * @param bool    $enableBlocks
      *
-     * @return bool
+     * @return int|bool
      */
     public function insertNode($parentId, array $insertValues, $tableName, $enableBlocks = false)
     {
@@ -90,7 +90,7 @@ class NestedSet
     /**
      * Methode zum Bearbeiten eines Knotens
      *
-     * @param integer $id
+     * @param integer $resultId
      * @param integer $parentId
      * @param integer $blockId
      * @param array   $updateValues
@@ -100,7 +100,7 @@ class NestedSet
      * @return bool
      */
     public function editNode(
-        $id,
+        $resultId,
         $parentId,
         $blockId,
         array $updateValues,
@@ -111,7 +111,7 @@ class NestedSet
             ->setTableName($tableName)
             ->setEnableBlocks($enableBlocks)
             ->execute(
-                $id,
+                $resultId,
                 $parentId,
                 $blockId,
                 $updateValues
@@ -121,18 +121,18 @@ class NestedSet
     /**
      * Methode zum Umsortieren von Knoten
      *
-     * @param integer $id
+     * @param integer $resultId
      * @param string  $mode
      * @param string  $tableName
      * @param bool    $enableBlocks
      *
      * @return bool
      */
-    public function sort($id, $mode, $tableName, $enableBlocks = false)
+    public function sort($resultId, $mode, $tableName, $enableBlocks = false)
     {
         return $this->sort
             ->setTableName($tableName)
             ->setEnableBlocks($enableBlocks)
-            ->execute($id, $mode);
+            ->execute($resultId, $mode);
     }
 }

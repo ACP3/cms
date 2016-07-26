@@ -15,10 +15,6 @@ use ACP3\Modules\ACP3\Permissions;
 class Create extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\NestedSet\NestedSet
-     */
-    protected $nestedSet;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
@@ -26,24 +22,28 @@ class Create extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation
      */
     protected $roleFormValidation;
+    /**
+     * @var Permissions\Model\RoleModel
+     */
+    protected $roleModel;
 
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                   $context
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository     $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository          $ruleRepository
-     * @param \ACP3\Core\NestedSet\NestedSet                                         $nestedSet
-     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                         $permissionsCache
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param Permissions\Model\RoleModel $roleModel
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository $ruleRepository
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Permissions\Model\RoleModel $roleModel,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Permissions\Model\Repository\RuleRepository $ruleRepository,
-        Core\NestedSet\NestedSet $nestedSet,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Cache $permissionsCache,
@@ -51,9 +51,9 @@ class Create extends AbstractFormAction
     ) {
         parent::__construct($context, $formsHelper, $privilegeRepository, $ruleRepository, $permissionsCache);
 
-        $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
         $this->roleFormValidation = $roleFormValidation;
+        $this->roleModel = $roleModel;
     }
 
     /**
@@ -84,24 +84,11 @@ class Create extends AbstractFormAction
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->roleFormValidation->validate($formData);
 
-            $insertValues = [
-                'id' => '',
-                'name' => $this->get('core.helpers.secure')->strEncode($formData['name']),
-                'parent_id' => $formData['parent_id'],
-            ];
-
-            $roleId = $this->nestedSet->insertNode(
-                (int)$formData['parent_id'],
-                $insertValues,
-                Permissions\Model\Repository\RoleRepository::TABLE_NAME,
-                true
-            );
+            $roleId = $this->roleModel->saveRole($formData);
 
             $this->saveRules($formData['privileges'], $roleId);
 
             $this->permissionsCache->saveRolesCache();
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $roleId;
         });

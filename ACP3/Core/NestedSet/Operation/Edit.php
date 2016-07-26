@@ -15,21 +15,21 @@ class Edit extends AbstractOperation
     /**
      * Methode zum Bearbeiten eines Knotens
      *
-     * @param integer $id
+     * @param integer $resultId
      * @param integer $parentId
      * @param integer $blockId
      * @param array   $updateValues
      *
      * @return boolean
      */
-    public function execute($id, $parentId, $blockId, array $updateValues)
+    public function execute($resultId, $parentId, $blockId, array $updateValues)
     {
-        $callback = function () use ($id, $parentId, $blockId, $updateValues) {
-            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($this->tableName, $id);
+        $callback = function () use ($resultId, $parentId, $blockId, $updateValues) {
+            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($this->tableName, $resultId);
 
             // Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
             if ($this->nodeIsRootItemAndNoChangeNeed($parentId, $blockId, $nodes[0])) {
-                $bool = $this->db->getConnection()->update($this->tableName, $updateValues, ['id' => $id]);
+                $bool = $this->db->getConnection()->update($this->tableName, $updateValues, ['id' => $resultId]);
             } else {
                 $currentParent = $this->nestedSetRepository->fetchParentNode(
                     $this->tableName,
@@ -39,20 +39,20 @@ class Edit extends AbstractOperation
 
                 // Überprüfung, falls Seite kein Root-Element ist und auch keine Veränderung vorgenommen werden soll...
                 if (!empty($currentParent) && $currentParent == $parentId) {
-                    $bool = $this->db->getConnection()->update($this->tableName, $updateValues, ['id' => $id]);
+                    $bool = $this->db->getConnection()->update($this->tableName, $updateValues, ['id' => $resultId]);
                 } else { // ...ansonsten den Baum bearbeiten...
                     // Neues Elternelement
                     $newParent = $this->nestedSetRepository->fetchNodeById($this->tableName, $parentId);
 
                     if (empty($newParent)) {
-                        list($rootId, $diff) = $this->nodeBecomesRootNode($id, $blockId, $nodes);
+                        list($rootId, $diff) = $this->nodeBecomesRootNode($resultId, $blockId, $nodes);
                     } else {
                         list($diff, $rootId) = $this->moveNodeToNewParent($newParent, $nodes);
                     }
 
                     $bool = $this->adjustNodeSiblings($blockId, $nodes, $diff, $rootId);
 
-                    $this->db->getConnection()->update($this->tableName, $updateValues, ['id' => $id]);
+                    $this->db->getConnection()->update($this->tableName, $updateValues, ['id' => $resultId]);
                 }
             }
             return $bool;

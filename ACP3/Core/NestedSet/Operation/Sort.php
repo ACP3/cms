@@ -13,15 +13,15 @@ namespace ACP3\Core\NestedSet\Operation;
 class Sort extends AbstractOperation
 {
     /**
-     * @param int    $id
+     * @param int    $resultId
      * @param string $mode
      *
      * @return bool
      */
-    public function execute($id, $mode)
+    public function execute($resultId, $mode)
     {
-        if ($this->nestedSetRepository->nodeExists($this->tableName, $id) === true) {
-            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($this->tableName, $id);
+        if ($this->nestedSetRepository->nodeExists($this->tableName, $resultId) === true) {
+            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($this->tableName, $resultId);
 
             if ($mode === 'up' &&
                 $this->nestedSetRepository->nextNodeExists(

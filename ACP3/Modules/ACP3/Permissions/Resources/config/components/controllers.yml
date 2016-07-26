@@ -3,9 +3,9 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Create
     arguments:
       - '@core.context.admin'
+      - '@permissions.model:role_model'
       - '@permissions.model.privilegerepository'
       - '@permissions.model.rulerepository'
-      - '@core.nested_set'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@permissions.cache'
@@ -22,9 +22,9 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.admin'
+      - '@permissions.model:role_model'
       - '@permissions.model.privilegerepository'
       - '@permissions.model.rulerepository'
-      - '@core.nested_set'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@permissions.model.rolerepository'

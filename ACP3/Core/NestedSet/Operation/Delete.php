@@ -13,17 +13,17 @@ namespace ACP3\Core\NestedSet\Operation;
 class Delete extends AbstractOperation
 {
     /**
-     * @param int $id
+     * @param int $resultId
      *
      * @return bool
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function execute($id)
+    public function execute($resultId)
     {
-        $callback = function () use ($id) {
-            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($this->tableName, (int)$id);
+        $callback = function () use ($resultId) {
+            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($this->tableName, (int)$resultId);
             if (!empty($nodes)) {
-                $this->db->getConnection()->delete($this->tableName, ['id' => (int)$id]);
+                $this->db->getConnection()->delete($this->tableName, ['id' => (int)$resultId]);
 
                 $this->moveSiblingsOneLevelUp($nodes);
                 $this->adjustParentNodesAfterSeparation(2, $nodes[0]['left_id'], $nodes[0]['right_id']);

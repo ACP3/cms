@@ -15,10 +15,6 @@ use ACP3\Modules\ACP3\Permissions;
 class Edit extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\NestedSet\NestedSet
-     */
-    protected $nestedSet;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
@@ -30,25 +26,29 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation
      */
     protected $roleFormValidation;
+    /**
+     * @var Permissions\Model\RoleModel
+     */
+    protected $roleModel;
 
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                   $context
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository     $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository          $ruleRepository
-     * @param \ACP3\Core\NestedSet\NestedSet                                         $nestedSet
-     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository          $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                         $permissionsCache
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param Permissions\Model\RoleModel $roleModel
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository $ruleRepository
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
+        Permissions\Model\RoleModel $roleModel,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Permissions\Model\Repository\RuleRepository $ruleRepository,
-        Core\NestedSet\NestedSet $nestedSet,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model\Repository\RoleRepository $roleRepository,
@@ -57,10 +57,10 @@ class Edit extends AbstractFormAction
     ) {
         parent::__construct($context, $formsHelper, $privilegeRepository, $ruleRepository, $permissionsCache);
 
-        $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
         $this->roleRepository = $roleRepository;
         $this->roleFormValidation = $roleFormValidation;
+        $this->roleModel = $roleModel;
     }
 
     /**
@@ -81,7 +81,9 @@ class Edit extends AbstractFormAction
             }
 
             return [
-                'parent' => $id != 1 ? $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id']) : [],
+                'parent' => $id != 1
+                    ? $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id'])
+                    : [],
                 'modules' => $this->fetchModulePermissions($id),
                 'form' => array_merge($role, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()
@@ -93,38 +95,26 @@ class Edit extends AbstractFormAction
 
     /**
      * @param array $formData
-     * @param int   $id
+     * @param int   $roleId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    protected function executePost(array $formData, $id)
+    protected function executePost(array $formData, $roleId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $roleId) {
             $this->roleFormValidation
-                ->setRoleId($id)
+                ->setRoleId($roleId)
                 ->validate($formData);
 
-            $updateValues = [
-                'name' => $this->get('core.helpers.secure')->strEncode($formData['name']),
-                'parent_id' => $id === 1 ? 0 : $formData['parent_id'],
-            ];
-
-            $bool = $this->nestedSet->editNode(
-                $id,
-                $id === 1 ? '' : (int)$formData['parent_id'],
-                0,
-                $updateValues,
-                Permissions\Model\Repository\RoleRepository::TABLE_NAME
-            );
+            $formData['parent_id'] = $roleId === 1 ? 0 : $formData['parent_id'];
+            $bool = $this->roleModel->saveRole($formData, $roleId);
 
             // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten
-            $this->ruleRepository->delete($id, 'role_id');
-            $this->saveRules($formData['privileges'], $id);
+            $this->ruleRepository->delete($roleId, 'role_id');
+            $this->saveRules($formData['privileges'], $roleId);
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $bool;
         });
