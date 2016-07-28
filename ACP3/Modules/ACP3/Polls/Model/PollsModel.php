@@ -33,10 +33,6 @@ class PollsModel extends AbstractModel
      */
     protected $secure;
     /**
-     * @var PollRepository
-     */
-    protected $pollRepository;
-    /**
      * @var AnswerRepository
      */
     protected $answerRepository;
@@ -62,11 +58,10 @@ class PollsModel extends AbstractModel
         AnswerRepository $answerRepository,
         VoteRepository $voteRepository)
     {
-        parent::__construct($eventDispatcher);
+        parent::__construct($eventDispatcher, $pollRepository);
 
         $this->date = $date;
         $this->secure = $secure;
-        $this->pollRepository = $pollRepository;
         $this->answerRepository = $answerRepository;
         $this->voteRepository = $voteRepository;
     }
@@ -87,7 +82,7 @@ class PollsModel extends AbstractModel
             'user_id' => $userId,
         ];
 
-        return $this->save($this->pollRepository, $values, $pollId);
+        return $this->save($values, $pollId);
     }
 
     /**
@@ -106,7 +101,7 @@ class PollsModel extends AbstractModel
                         'text' => $this->secure->strEncode($row['text']),
                         'poll_id' => $pollId
                     ];
-                    $bool = $this->save($this->answerRepository, $data);
+                    $bool = $this->answerRepository->insert($data);
                 }
             } elseif (isset($row['delete'])) {
                 $this->answerRepository->delete((int)$row['id']);
@@ -114,7 +109,7 @@ class PollsModel extends AbstractModel
                 $data = [
                     'text' => $this->secure->strEncode($row['text']),
                 ];
-                $bool = $this->save($this->answerRepository, $data, (int)$row['id']);
+                $bool = $this->answerRepository->update($data, (int)$row['id']);
             }
         }
 

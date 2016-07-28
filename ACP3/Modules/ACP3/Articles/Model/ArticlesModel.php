@@ -19,10 +19,6 @@ class ArticlesModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @var ArticleRepository
-     */
-    protected $articlesRepository;
-    /**
      * @var Date
      */
     protected $date;
@@ -31,17 +27,23 @@ class ArticlesModel extends AbstractModel
      */
     protected $secure;
 
+    /**
+     * ArticlesModel constructor.
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param Date $date
+     * @param Secure $secure
+     * @param ArticleRepository $articleRepository
+     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         Date $date,
         Secure $secure,
         ArticleRepository $articleRepository
     ) {
-        parent::__construct($eventDispatcher);
+        parent::__construct($eventDispatcher, $articleRepository);
 
         $this->date = $date;
         $this->secure = $secure;
-        $this->articlesRepository = $articleRepository;
     }
 
     /**
@@ -60,6 +62,6 @@ class ArticlesModel extends AbstractModel
             'user_id' => $userId,
         ];
 
-        return $this->save($this->articlesRepository, $data, $entryId);
+        return $this->save($data, $entryId);
     }
 }

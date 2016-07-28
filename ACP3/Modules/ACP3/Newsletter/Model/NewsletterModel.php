@@ -28,10 +28,6 @@ class NewsletterModel extends AbstractModel
      */
     protected $secure;
     /**
-     * @var NewsletterRepository
-     */
-    protected $newsletterRepository;
-    /**
      * @var Config
      */
     protected $config;
@@ -51,12 +47,11 @@ class NewsletterModel extends AbstractModel
         Secure $secure,
         NewsletterRepository $newsletterRepository
     ) {
-        parent::__construct($eventDispatcher);
+        parent::__construct($eventDispatcher, $newsletterRepository);
 
         $this->config = $config;
         $this->date = $date;
         $this->secure = $secure;
-        $this->newsletterRepository = $newsletterRepository;
     }
 
     /**
@@ -80,6 +75,6 @@ class NewsletterModel extends AbstractModel
             $data['status'] = 0;
         }
 
-        return $this->save($this->newsletterRepository, $data, $newsletterId);
+        return $this->save($data, $newsletterId);
     }
 }

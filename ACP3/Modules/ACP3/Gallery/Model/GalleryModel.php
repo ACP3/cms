@@ -26,10 +26,6 @@ class GalleryModel extends AbstractModel
      * @var Secure
      */
     protected $secure;
-    /**
-     * @var GalleryRepository
-     */
-    protected $galleryRepository;
 
     /**
      * GalleryModel constructor.
@@ -44,11 +40,10 @@ class GalleryModel extends AbstractModel
         Secure $secure,
         GalleryRepository $galleryRepository)
     {
-        parent::__construct($eventDispatcher);
+        parent::__construct($eventDispatcher, $galleryRepository);
 
         $this->date = $date;
         $this->secure = $secure;
-        $this->galleryRepository = $galleryRepository;
     }
 
     /**
@@ -66,6 +61,6 @@ class GalleryModel extends AbstractModel
             'user_id' => $userId,
         ];
 
-        return $this->save($this->galleryRepository, $data, $galleryId);
+        return $this->save($data, $galleryId);
     }
 }

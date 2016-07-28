@@ -21,37 +21,44 @@ abstract class AbstractModel
      * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
+    /**
+     * @var AbstractRepository
+     */
+    protected $repository;
 
     /**
      * AbstractModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param AbstractRepository $repository
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        AbstractRepository $repository)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->repository = $repository;
     }
 
     /**
-     * @param AbstractRepository $repository
      * @param array $data
      * @param null|int $entryId
-     * @return int|bool
+     * @return bool|int
      */
-    protected function save(AbstractRepository $repository, array $data, $entryId = null)
+    protected function save(array $data, $entryId = null)
     {
-        $this->dispatchBeforeSaveEvent($repository, $data, $entryId);
+        $this->dispatchBeforeSaveEvent($this->repository, $data, $entryId);
 
         if (intval($entryId)) {
-            $result = $repository->update($data, $entryId);
+            $result = $this->repository->update($data, $entryId);
         } else {
-            $result = $repository->insert($data);
+            $result = $this->repository->insert($data);
 
             if ($result !== false) {
                 $entryId = $result;
             }
         }
 
-        $this->dispatchAfterSaveEvent($repository, $data, $entryId);
+        $this->dispatchAfterSaveEvent($this->repository, $data, $entryId);
 
         return $result;
     }

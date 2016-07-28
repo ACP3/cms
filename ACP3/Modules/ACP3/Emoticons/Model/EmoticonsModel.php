@@ -21,10 +21,6 @@ class EmoticonsModel extends AbstractModel
      * @var Secure
      */
     protected $secure;
-    /**
-     * @var EmoticonRepository
-     */
-    protected $emoticonRepository;
 
     /**
      * EmoticonsModel constructor.
@@ -37,10 +33,9 @@ class EmoticonsModel extends AbstractModel
         Secure $secure,
         EmoticonRepository $emoticonRepository
     ) {
-        parent::__construct($eventDispatcher);
+        parent::__construct($eventDispatcher, $emoticonRepository);
 
         $this->secure = $secure;
-        $this->emoticonRepository = $emoticonRepository;
     }
 
     /**
@@ -56,6 +51,6 @@ class EmoticonsModel extends AbstractModel
             'img' => $formData['img'],
         ];
 
-        return $this->save($this->emoticonRepository, $data, $entryId);
+        return $this->save($data, $entryId);
     }
 }

@@ -23,10 +23,6 @@ class MenusModel extends AbstractModel
      */
     protected $secure;
     /**
-     * @var MenuRepository
-     */
-    protected $menuRepository;
-    /**
      * @var Cache
      */
     protected $menusCache;
@@ -44,10 +40,9 @@ class MenusModel extends AbstractModel
         MenuRepository $menuRepository,
         Cache $menusCache)
     {
-        parent::__construct($eventDispatcher);
+        parent::__construct($eventDispatcher, $menuRepository);
 
         $this->secure = $secure;
-        $this->menuRepository = $menuRepository;
         $this->menusCache = $menusCache;
     }
 
@@ -63,7 +58,7 @@ class MenusModel extends AbstractModel
             'title' => $this->secure->strEncode($formData['title']),
         ];
 
-        $result = $this->save($this->menuRepository, $values, $menuId);
+        $result = $this->save($values, $menuId);
 
         $this->menusCache->saveMenusCache();
 

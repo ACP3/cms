@@ -26,10 +26,6 @@ class RoleModel extends AbstractModel
      * @var NestedSet
      */
     protected $nestedSet;
-    /**
-     * @var RoleRepository
-     */
-    protected $roleRepository;
 
     /**
      * RoleModel constructor.
@@ -44,11 +40,10 @@ class RoleModel extends AbstractModel
         NestedSet $nestedSet,
         RoleRepository $roleRepository
     ) {
-        parent::__construct($eventDispatcher);
+        parent::__construct($eventDispatcher, $roleRepository);
 
         $this->secure = $secure;
         $this->nestedSet = $nestedSet;
-        $this->roleRepository = $roleRepository;
     }
 
     /**
@@ -73,7 +68,7 @@ class RoleModel extends AbstractModel
      */
     private function saveNestedSetNode(array $data, $entryId)
     {
-        $this->dispatchBeforeSaveEvent($this->roleRepository, $data, $entryId);
+        $this->dispatchBeforeSaveEvent($this->repository, $data, $entryId);
 
         if ($entryId === null) {
             $result = $this->nestedSet->insertNode(
@@ -96,7 +91,7 @@ class RoleModel extends AbstractModel
             );
         }
 
-        $this->dispatchAfterSaveEvent($this->roleRepository, $data, $entryId);
+        $this->dispatchAfterSaveEvent($this->repository, $data, $entryId);
 
         return $result;
     }

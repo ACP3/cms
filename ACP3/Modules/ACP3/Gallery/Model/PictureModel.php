@@ -25,7 +25,7 @@ class PictureModel extends AbstractModel
     /**
      * @var PictureRepository
      */
-    protected $pictureRepository;
+    protected $repository;
     /**
      * @var Config
      */
@@ -44,10 +44,9 @@ class PictureModel extends AbstractModel
         Secure $secure,
         PictureRepository $pictureRepository
     ) {
-        parent::__construct($eventDispatcher);
+        parent::__construct($eventDispatcher, $pictureRepository);
 
         $this->secure = $secure;
-        $this->pictureRepository = $pictureRepository;
         $this->config = $config;
     }
 
@@ -73,10 +72,10 @@ class PictureModel extends AbstractModel
             $data['file'] = $formData['file'];
         }
         if ($entryId === null) {
-            $picNum = $this->pictureRepository->getLastPictureByGalleryId($entryId);
+            $picNum = $this->repository->getLastPictureByGalleryId($entryId);
             $data['pic'] = !is_null($picNum) ? $picNum + 1 : 1;
         }
 
-        return $this->save($this->pictureRepository, $data, $entryId);
+        return $this->save($data, $entryId);
     }
 }

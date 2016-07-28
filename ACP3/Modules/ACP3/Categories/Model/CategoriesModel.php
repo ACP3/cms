@@ -21,10 +21,6 @@ class CategoriesModel extends AbstractModel
      * @var Secure
      */
     protected $secure;
-    /**
-     * @var CategoryRepository
-     */
-    protected $categoryRepository;
 
     /**
      * CategoriesModel constructor.
@@ -37,10 +33,9 @@ class CategoriesModel extends AbstractModel
         Secure $secure,
         CategoryRepository $categoryRepository
     ) {
-        parent::__construct($eventDispatcher);
+        parent::__construct($eventDispatcher, $categoryRepository);
 
         $this->secure = $secure;
-        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -62,6 +57,6 @@ class CategoriesModel extends AbstractModel
             $data['picture'] = $formData['picture'];
         }
 
-        return $this->save($this->categoryRepository, $data, $entryId);
+        return $this->save($data, $entryId);
     }
 }

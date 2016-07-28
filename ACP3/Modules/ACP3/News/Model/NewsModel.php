@@ -28,10 +28,6 @@ class NewsModel extends AbstractModel
      */
     protected $secure;
     /**
-     * @var NewsRepository
-     */
-    protected $newsRepository;
-    /**
      * @var Config
      */
     protected $config;
@@ -51,12 +47,11 @@ class NewsModel extends AbstractModel
         Secure $secure,
         NewsRepository $newsRepository
     ) {
-        parent::__construct($eventDispatcher);
+        parent::__construct($eventDispatcher, $newsRepository);
 
         $this->config = $config;
         $this->date = $date;
         $this->secure = $secure;
-        $this->newsRepository = $newsRepository;
     }
 
     /**
@@ -83,7 +78,7 @@ class NewsModel extends AbstractModel
             'user_id' => (int)$userId,
         ];
 
-        return $this->save($this->newsRepository, $data, $newsId);
+        return $this->save($data, $newsId);
     }
 
     /**

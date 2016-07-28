@@ -17,11 +17,6 @@ class ResourcesModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @var ResourceRepository
-     */
-    protected $resourceRepository;
-
-    /**
      * ResourcesModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
      * @param ResourceRepository $resourceRepository
@@ -30,9 +25,7 @@ class ResourcesModel extends AbstractModel
         EventDispatcherInterface $eventDispatcher,
         ResourceRepository $resourceRepository
     ) {
-        parent::__construct($eventDispatcher);
-
-        $this->resourceRepository = $resourceRepository;
+        parent::__construct($eventDispatcher, $resourceRepository);
     }
 
     /**
@@ -50,6 +43,6 @@ class ResourcesModel extends AbstractModel
             'privilege_id' => $formData['privileges'],
         ];
 
-        return $this->save($this->resourceRepository, $data, $entryId);
+        return $this->save($data, $entryId);
     }
 }
