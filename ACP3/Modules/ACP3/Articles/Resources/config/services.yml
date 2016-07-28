@@ -1,0 +1,14 @@
+imports:
+  - { resource: components/cache.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/events.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
+
+services:
+  articles.helpers:
+    class: ACP3\Modules\ACP3\Articles\Helpers
+    arguments:
+      - '@core.helpers.forms'
+      - '@articles.model.articlerepository'

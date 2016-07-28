@@ -1,0 +1,5 @@
+services:
+  comments.model.commentrepository:
+    class: ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
+    arguments:
+      - '@core.db'

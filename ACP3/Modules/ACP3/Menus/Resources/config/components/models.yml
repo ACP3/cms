@@ -1,0 +1,18 @@
+services:
+  menus.model.menurepository:
+    class: ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
+    arguments:
+      - '@core.db'
+
+  menus.model.menuitemrepository:
+    class: ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
+    arguments:
+      - '@core.db'
+
+  menus.model.menus_model:
+    class: ACP3\Modules\ACP3\Menus\Model\MenusModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.helpers.secure'
+      - '@menus.model.menurepository'
+      - '@menus.cache'

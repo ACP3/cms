@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -7,14 +7,14 @@
     {redirect_message}
     <form action="{uri args="search"}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="search-term" class="col-sm-2 control-label">{lang t="search|search_term"}</label>
+            <label for="search-term" class="col-sm-2 control-label required">{lang t="search|search_term"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="text" name="search_term" id="search-term" value="{$form.search_term}" required>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">{lang t="search|search_after_modules"}</label>
+            <label class="col-sm-2 control-label required">{lang t="search|search_after_modules"}</label>
 
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="{$search_areas.0.id}" class="col-sm-2 control-label">{lang t="search|search_after_areas"}</label>
+            <label for="{$search_areas.0.id}" class="col-sm-2 control-label required">{lang t="search|search_after_areas"}</label>
 
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="{$sort_hits.0.id}" class="col-sm-2 control-label">{lang t="search|sort_hits"}</label>
+            <label for="{$sort_hits.0.id}" class="col-sm-2 control-label required">{lang t="search|sort_hits"}</label>
 
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
@@ -62,6 +62,6 @@
         </div>
     </form>
     {javascripts}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

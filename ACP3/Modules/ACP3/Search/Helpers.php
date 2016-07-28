@@ -3,6 +3,8 @@
 namespace ACP3\Modules\ACP3\Search;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Search\Event\AvailableModulesEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Class Helpers
@@ -23,26 +25,26 @@ class Helpers
      */
     protected $formsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Search\Extensions
+     * @var \Symfony\Component\EventDispatcher\EventDispatcher
      */
-    protected $searchExtensions;
+    protected $eventDispatcher;
 
     /**
-     * @param \ACP3\Core\ACL                  $acl
-     * @param \ACP3\Core\Modules              $modules
-     * @param \ACP3\Core\Helpers\Forms        $formsHelper
-     * @param \ACP3\Modules\ACP3\Search\Extensions $searchExtensions
+     * @param \ACP3\Core\ACL                                     $acl
+     * @param \ACP3\Core\Modules                                 $modules
+     * @param \ACP3\Core\Helpers\Forms                           $formsHelper
+     * @param \Symfony\Component\EventDispatcher\EventDispatcher $eventDispatcher
      */
     public function __construct(
         Core\ACL $acl,
         Core\Modules $modules,
         Core\Helpers\Forms $formsHelper,
-        Extensions $searchExtensions
+        EventDispatcher $eventDispatcher
     ) {
         $this->acl = $acl;
         $this->modules = $modules;
         $this->formsHelper = $formsHelper;
-        $this->searchExtensions = $searchExtensions;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -52,11 +54,11 @@ class Helpers
      */
     public function getModules()
     {
-        $modules = get_class_methods($this->searchExtensions);
+        $availableModules = new AvailableModulesEvent();
+        $this->eventDispatcher->dispatch('search.events.availableModules', $availableModules);
         $searchModules = [];
 
-        foreach ($modules as $module) {
-            $module = substr($module, 0, strpos($module, 'Search'));
+        foreach ($availableModules->getAvailableModules() as $module) {
             if ($this->acl->hasPermission('frontend/' . $module) === true) {
                 $info = $this->modules->getModuleInfo($module);
                 $name = $info['name'];

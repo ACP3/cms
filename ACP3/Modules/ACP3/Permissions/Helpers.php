@@ -1,6 +1,9 @@
 <?php
 namespace ACP3\Modules\ACP3\Permissions;
 
+use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository;
+
 /**
  * Class Helpers
  * @package ACP3\Modules\ACP3\Permissions
@@ -8,16 +11,24 @@ namespace ACP3\Modules\ACP3\Permissions;
 class Helpers
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
      */
-    protected $permissionsModel;
+    protected $roleRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository
+     */
+    protected $userRoleRepository;
 
     /**
-     * @param \ACP3\Modules\ACP3\Permissions\Model $permissionsModel
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository     $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository $userRoleRepository
      */
-    public function __construct(Model $permissionsModel)
-    {
-        $this->permissionsModel = $permissionsModel;
+    public function __construct(
+        RoleRepository $roleRepository,
+        UserRoleRepository $userRoleRepository
+    ) {
+        $this->roleRepository = $roleRepository;
+        $this->userRoleRepository = $userRoleRepository;
     }
 
     /**
@@ -28,11 +39,11 @@ class Helpers
      */
     public function updateUserRoles(array $roles, $userId)
     {
-        $bool = $this->permissionsModel->delete($userId, 'user_id', Model::TABLE_NAME_USER_ROLES);
+        $bool = $this->userRoleRepository->delete($userId, 'user_id');
 
         $bool2 = false;
         foreach ($roles as $role) {
-            $bool2 = $this->permissionsModel->insert(['user_id' => $userId, 'role_id' => $role], Model::TABLE_NAME_USER_ROLES);
+            $bool2 = $this->userRoleRepository->insert(['user_id' => $userId, 'role_id' => $role]);
         }
 
         return $bool !== false && $bool2 !== false;

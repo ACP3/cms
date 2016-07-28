@@ -1,0 +1,14 @@
+services:
+  search.controller.frontend.index.index:
+    class: ACP3\Modules\ACP3\Search\Controller\Frontend\Index\Index
+    arguments:
+      - '@core.context.frontend'
+      - '@core.helpers.forms'
+      - '@search.helpers'
+      - '@search.validator'
+
+  search.controller.widget.index.index:
+    class: ACP3\Modules\ACP3\Search\Controller\Widget\Index\Index
+    arguments:
+      - '@core.context.widget'
+      - '@search.helpers'

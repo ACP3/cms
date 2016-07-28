@@ -1,0 +1,29 @@
+services:
+  core.http.redirect_response:
+    class: ACP3\Core\Http\RedirectResponse
+    arguments:
+      - '@core.http.request'
+      - '@core.router'
+
+  core.http.request:
+    class: ACP3\Installer\Core\Http\Request
+    factory: ['@core.request_factory', create]
+    arguments:
+      - '%default_request%'
+
+  core.http.symfony_request:
+    synthetic: true
+
+  core.request_factory:
+    class: ACP3\Installer\Core\Http\RequestFactory
+    arguments:
+      - '@core.http.symfony_request'
+
+  core.http.response:
+    class: Symfony\Component\HttpFoundation\Response
+
+  core.router:
+    class: ACP3\Installer\Core\Router
+    arguments:
+      - '@core.http.request'
+      - '@core.environment.application_path'

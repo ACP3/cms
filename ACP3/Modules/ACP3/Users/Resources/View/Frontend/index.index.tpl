@@ -1,11 +1,11 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     <p>
-        {$LANG_users_found}
+        {lang t="users|users_found" args=['%count%' => $all_users]}
     </p>
-    {if isset($users)}
-        {$pagination}
+    {if !empty($users)}
+        {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
         <table class="table table-striped">
             <thead>
             <tr>
@@ -25,7 +25,7 @@
                     <td>{if $row.mail_display == 1}{mailto address=$row.mail encode="javascript"}{else}-{/if}</td>
                     <td>
                         {if !empty($row.website)}
-                            <a href="{$row.website}" rel="nofollow" target="_blank" title="{lang t="users|visit_website"}">{$row.website}</a>
+                            <a href="{$row.website|prefix_uri}" rel="nofollow" target="_blank" title="{lang t="users|visit_website"}">{$row.website}</a>
                         {else}
                             -
                         {/if}
@@ -35,8 +35,6 @@
             </tbody>
         </table>
     {else}
-        <div class="alert alert-warning text-center">
-            <strong>{lang t="system|no_entries"}</strong>
-        </div>
+        {include file="asset:System/Partials/no_results.tpl"}
     {/if}
 {/block}

@@ -5,11 +5,13 @@
  * @author Tino Goratsch
  */
 
-define('IN_ACP3', true);
-define('IN_INSTALL', true);
-
 define('ACP3_ROOT_DIR', realpath(__DIR__ . '/../') . '/');
-require ACP3_ROOT_DIR . 'installation/Installer/Application.php';
 
-$application = new \ACP3\Installer\Application();
-$application->run();
+require '../vendor/autoload.php';
+
+$request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+$kernel = new \ACP3\Installer\Core\Application\Bootstrap(\ACP3\Core\Environment\ApplicationMode::INSTALLER);
+
+$kernel
+    ->handle($request)
+    ->send();

@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -6,10 +6,10 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="date-format" class="col-sm-2 control-label">{lang t="system|date_format"}</label>
+            <label for="date-format" class="col-sm-2 control-label required">{lang t="system|date_format"}</label>
 
             <div class="col-sm-10">
-                <select class="form-control" name="dateformat" id="date-format">
+                <select class="form-control" name="dateformat" id="date-format" required>
                     <option value="">{lang t="system|pls_select"}</option>
                     {foreach $dateformat as $row}
                         <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
@@ -18,10 +18,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="sidebar-entries" class="col-sm-2 control-label">{lang t="system|sidebar_entries_to_display"}</label>
+            <label for="sidebar-entries" class="col-sm-2 control-label required">{lang t="system|sidebar_entries_to_display"}</label>
 
             <div class="col-sm-10">
-                <select class="form-control" name="sidebar" id="sidebar-entries">
+                <select class="form-control" name="sidebar" id="sidebar-entries" required>
                     <option>{lang t="system|pls_select"}</option>
                     {foreach $sidebar_entries as $row}
                         <option value="{$row.value}"{$row.selected}>{$row.value}</option>
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="{$readmore.0.id}" class="col-sm-2 control-label">{lang t="news|activate_readmore"}</label>
+            <label for="{$readmore.0.id}" class="col-sm-2 control-label required">{lang t="news|activate_readmore"}</label>
 
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
@@ -44,14 +44,14 @@
             </div>
         </div>
         <div id="readmore-container" class="form-group">
-            <label for="readmore-chars" class="col-sm-2 control-label">{lang t="news|readmore_chars"}</label>
+            <label for="readmore-chars" class="col-sm-2 control-label required">{lang t="news|readmore_chars"}</label>
 
             <div class="col-sm-10">
-                <input class="form-control" type="number" name="readmore_chars" id="readmore-chars" value="{$readmore_chars}">
+                <input class="form-control" type="number" name="readmore_chars" id="readmore-chars" value="{$readmore_chars}" required>
             </div>
         </div>
         <div class="form-group">
-            <label for="{$category_in_breadcrumb.0.id}" class="col-sm-2 control-label">{lang t="news|display_category_in_breadcrumb"}</label>
+            <label for="{$category_in_breadcrumb.0.id}" class="col-sm-2 control-label required">{lang t="news|display_category_in_breadcrumb"}</label>
 
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
@@ -66,7 +66,7 @@
         </div>
         {if isset($allow_comments)}
             <div class="form-group">
-                <label for="{$allow_comments.0.id}" class="col-sm-2 control-label">{lang t="system|allow_comments"}</label>
+                <label for="{$allow_comments.0.id}" class="col-sm-2 control-label required">{lang t="system|allow_comments"}</label>
 
                 <div class="col-sm-10">
                     <div class="btn-group" data-toggle="buttons">
@@ -90,6 +90,6 @@
     </form>
     {javascripts}
         {include_js module="news" file="admin/index.settings"}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

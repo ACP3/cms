@@ -1,4 +1,0 @@
-services:
-  update.controller.install.index:
-    class: ACP3\Installer\Modules\Update\Controller\Index
-    arguments: ['@core.context.install', '@core.modules']

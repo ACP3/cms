@@ -10,77 +10,75 @@ use ACP3\Core;
 class RedirectMessages
 {
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\Http\RequestInterface
      */
     private $request;
     /**
-     * @var \ACP3\Core\Redirect
+     * @var \ACP3\Core\Http\RedirectResponse
      */
     private $redirect;
     /**
-     * @var \ACP3\Core\View
+     * @var \ACP3\Core\Session\SessionHandlerInterface
      */
-    private $view;
+    private $sessionHandler;
 
     /**
-     * @param \ACP3\Core\Redirect $redirect
-     * @param \ACP3\Core\Request  $request
-     * @param \ACP3\Core\View     $view
+     * RedirectMessages constructor.
+     *
+     * @param \ACP3\Core\Http\RedirectResponse           $redirect
+     * @param \ACP3\Core\Http\RequestInterface           $request
+     * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
      */
     public function __construct(
-        Core\Redirect $redirect,
-        Core\Request $request,
-        Core\View $view
+        Core\Http\RedirectResponse $redirect,
+        Core\Http\RequestInterface $request,
+        Core\Session\SessionHandlerInterface $sessionHandler
     ) {
         $this->redirect = $redirect;
         $this->request = $request;
-        $this->view = $view;
+        $this->sessionHandler = $sessionHandler;
     }
 
     /**
      * Gets the generated redirect message from setMessage()
      *
-     * @return string
+     * @return array|null
      * @throws \Exception
      */
     public function getMessage()
     {
-        if (isset($_SESSION['redirect_message']) && is_array($_SESSION['redirect_message'])) {
-            $this->view->assign('redirect', $_SESSION['redirect_message']);
-
-            unset($_SESSION['redirect_message']);
-
-            return $this->view->fetchTemplate('system/redirect_message.tpl');
+        $param = $this->sessionHandler->get('redirect_message');
+        if (isset($param) && is_array($param)) {
+            $this->sessionHandler->remove('redirect_message');
         }
 
-        return '';
+        return $param;
     }
 
     /**
      * Sets a redirect messages and redirects to the given internal path
      *
-     * @param $success
-     * @param $text
+     * @param int|bool    $success
+     * @param string      $text
      * @param string|null $path
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function setMessage($success, $text, $path = null)
     {
-        if (empty($text) === false) {
-            $_SESSION['redirect_message'] = [
+        $this->sessionHandler->set(
+            'redirect_message',
+            [
                 'success' => is_int($success) ? true : (bool)$success,
                 'text' => $text
-            ];
+            ]
+        );
 
-            // If no path has been given, guess it automatically
-            if ($path === null) {
-                if ($this->request->area === 'admin') {
-                    $path.= 'acp/';
-                }
-
-                $path.= $this->request->mod . '/' . $this->request->controller;
-            }
-
-            $this->redirect->temporary($path);
+        // If no path has been given, guess it automatically
+        if ($path === null) {
+            $path = $this->request->getModuleAndController();
         }
+
+        return $this->redirect->temporary($path);
     }
 }

@@ -2,6 +2,7 @@
 namespace ACP3\Installer\Core\View\Renderer\Smarty\Resources;
 
 use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
+use ACP3\Installer\Core\Environment\ApplicationPath;
 
 /**
  * Class Asset
@@ -10,15 +11,36 @@ use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
 class Asset extends AbstractResource
 {
     /**
-     * @var string
+     * @var \ACP3\Installer\Core\Environment\ApplicationPath
      */
-    protected $resourceName = 'asset';
+    protected $appPath;
 
     /**
-     * @param $template
      * @return string
      */
-    protected function _resolveTemplatePath($template)
+    public function getExtensionName()
+    {
+        return 'asset';
+    }
+
+    /**
+     * Asset constructor.
+     *
+     * @param \ACP3\Installer\Core\Environment\ApplicationPath $appPath
+     */
+    public function __construct(ApplicationPath $appPath)
+    {
+        $this->appPath = $appPath;
+
+        $this->recompiled = true;
+    }
+
+    /**
+     * @param string $template
+     *
+     * @return string
+     */
+    protected function resolveTemplatePath($template)
     {
         // If an template with directory is given, uppercase the first letter
         if (strpos($template, '/') !== false) {
@@ -33,22 +55,22 @@ class Asset extends AbstractResource
                 $path = $fragments[0] . '/Resources/View/' . $fragments[1];
             }
 
-            return INSTALLER_MODULES_DIR . $path;
+            return $this->appPath->getInstallerModulesDir() . $path;
         }
 
-        return DESIGN_PATH_INTERNAL . $template;
+        return $this->appPath->getDesignPathInternal() . $template;
     }
 
     /**
      * fetch template and its modification time from data source
      *
-     * @param string $name template name
-     * @param string &$source template source
-     * @param integer &$mtime template modification timestamp (epoch)
+     * @param string  $name    template name
+     * @param string  &$source template source
+     * @param integer &$mtime  template modification timestamp (epoch)
      */
     protected function fetch($name, &$source, &$mtime)
     {
-        $asset = $this->_resolveTemplatePath($name);
+        $asset = $this->resolveTemplatePath($name);
 
         if ($asset !== '') {
             $source = file_get_contents($asset);
@@ -63,11 +85,12 @@ class Asset extends AbstractResource
      * Fetch a template's modification time from data source
      *
      * @param string $name template name
+     *
      * @return integer timestamp (epoch) the template was modified
      */
     protected function fetchTimestamp($name)
     {
-        $asset = $this->_resolveTemplatePath($name);
+        $asset = $this->resolveTemplatePath($name);
 
         return filemtime($asset);
     }

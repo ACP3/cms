@@ -1,0 +1,10 @@
+services:
+  seo.model.data_grid_repository:
+    class: ACP3\Modules\ACP3\Seo\Model\Repository\DataGridRepository
+    arguments:
+      - '@core.db'
+
+  seo.model.seorepository:
+    class: ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
+    arguments:
+      - '@core.db'

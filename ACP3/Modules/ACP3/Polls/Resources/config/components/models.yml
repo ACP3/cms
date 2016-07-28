@@ -1,0 +1,37 @@
+services:
+  polls.model.data_grid_repository:
+    class: ACP3\Modules\ACP3\Polls\Model\Repository\DataGridRepository
+    arguments:
+      - '@core.db'
+
+  polls.model.answerrepository:
+    class: ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository
+    arguments:
+      - '@core.db'
+
+  polls.model.pollrepository:
+    class: ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
+    arguments:
+      - '@core.db'
+
+  polls.model.voterepository:
+    class: ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository
+    arguments:
+      - '@core.db'
+
+  polls.model.polls_model:
+    class: ACP3\Modules\ACP3\Polls\Model\PollsModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.date'
+      - '@core.helpers.secure'
+      - '@polls.model.pollrepository'
+      - '@polls.model.answerrepository'
+      - '@polls.model.voterepository'
+
+  polls.model.vote_model:
+    class: ACP3\Modules\ACP3\Polls\Model\VoteModel
+    arguments:
+      - '@core.validator'
+      - '@users.model.user_model'
+      - '@polls.model.voterepository'

@@ -1,0 +1,50 @@
+services:
+  core.context.widget:
+    class: ACP3\Core\Controller\Context\WidgetContext
+    arguments:
+      - '@service_container'
+      - '@core.eventDispatcher'
+      - '@core.acl'
+      - '@users.model.user_model'
+      - '@core.lang'
+      - '@core.modules'
+      - '@core.http.request'
+      - '@core.router'
+      - '@core.validator'
+      - '@core.view'
+      - '@core.config'
+      - '@core.environment.application_path'
+      - '@core.http.response'
+    public: false
+
+  core.context.admin:
+    class: ACP3\Core\Controller\Context\AdminContext
+    arguments:
+      - '@core.context.frontend'
+      - '@core.session'
+    public: false
+
+  core.context.frontend:
+    class: ACP3\Core\Controller\Context\FrontendContext
+    arguments:
+      - '@core.context.widget'
+      - '@core.assets'
+      - '@core.breadcrumb'
+      - '@core.breadcrumb.title'
+      - '@core.modules.helper.action'
+    public: false
+
+  core.controller.widget:
+    abstract: true
+    arguments:
+      - '@core.context.widget'
+
+  core.controller.frontend:
+    abstract: true
+    arguments:
+      - '@core.context.frontend'
+
+  core.controller.admin:
+    abstract: true
+    arguments:
+      - '@core.context.admin'

@@ -1,0 +1,77 @@
+services:
+  core.helpers.data_grid:
+    class: ACP3\Core\Helpers\DataGrid
+    arguments:
+      - '@core.acl'
+      - '@core.lang'
+    shared: false
+
+  core.helpers.data_grid.column_renderer.date_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer
+    arguments:
+      - '@core.date'
+      - '@core.helpers.formatter.dateRange'
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.header_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\HeaderColumnRenderer
+    arguments:
+      - '@core.helpers.formatter.mark_entries'
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.integer_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.mass_action_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\MassActionColumnRenderer
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.nl2p_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer
+    arguments:
+      - '@core.helpers.stringFormatter'
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.option_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer
+    arguments:
+      - '@core.lang'
+      - '@core.helpers.data_grid.column_renderer.option_column_renderer.option_renderer'
+      - '@core.eventDispatcher'
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.option_column_renderer.option_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
+    arguments:
+      - '@core.router'
+
+  core.helpers.data_grid.column_renderer.picture_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer
+    arguments:
+      - '@core.router'
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.replace_value_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.text_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.translate_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer
+    arguments:
+      - '@core.lang'
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }

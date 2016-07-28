@@ -1,0 +1,15 @@
+services:
+  gallery.validator.gallery:
+    class: ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation
+    parent: core.validator.abstract
+
+  gallery.validator.picture:
+    class: ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation
+    parent: core.validator.abstract
+
+  gallery.validator.settings:
+    class: ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation
+    arguments:
+      - '@core.lang'
+      - '@core.validator'
+      - '@core.modules'

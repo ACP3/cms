@@ -1,0 +1,12 @@
+/.idea
+/ACP3/config.yml
+/cache/*
+/uploads/assets/*
+/uploads/categories/*
+/uploads/files/*
+/uploads/gallery/*
+/vendor
+/build
+/.htaccess
+
+!.gitignore

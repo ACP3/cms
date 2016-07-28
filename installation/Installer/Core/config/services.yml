@@ -1,0 +1,48 @@
+parameters:
+  default_request: 'install'
+
+imports:
+  - { resource: components/application.yml }
+  - { resource: components/controller.yml }
+  - { resource: components/date.yml }
+  - { resource: components/helpers.yml }
+  - { resource: components/http.yml }
+  - { resource: components/language.yml }
+  - { resource: components/validation.yml }
+  - { resource: ../View/Renderer/Smarty/config/services.yml }
+  - { resource: ../../Modules/Errors/Resources/config/services.yml }
+  - { resource: ../../Modules/Install/Resources/config/services.yml }
+  - { resource: ../../../../ACP3/Core/View/Renderer/Smarty/Blocks/config/services.yml }
+
+services:
+  core.logger:
+    class: ACP3\Core\Logger
+    arguments:
+      - '@core.environment.application_path'
+
+  core.session:
+    class: ACP3\Installer\Core\Session\SessionHandler
+
+  core.view:
+    class: ACP3\Core\View
+    arguments:
+      - '@core.view.renderer.smarty'
+
+  core.view.renderer.smarty:
+    class: ACP3\Core\View\Renderer\Smarty
+    arguments:
+      - '@core.environment.application_path'
+      - '%core.environment%'
+
+  core.eventDispatcher:
+    class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
+    arguments:
+      - '@service_container'
+
+  core.xml:
+    class: ACP3\Core\XML
+
+  core.modules.vendors:
+    class: ACP3\Core\Modules\Vendor
+    arguments:
+      - '@core.environment.application_path'

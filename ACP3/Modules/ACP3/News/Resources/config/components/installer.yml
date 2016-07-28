@@ -1,0 +1,11 @@
+services:
+  news.installer.schema:
+    class: ACP3\Modules\ACP3\News\Installer\Schema
+
+  news.installer.migration:
+    class: ACP3\Modules\ACP3\News\Installer\Migration
+    parent: core.modules.installer.abstractMigration
+
+  news.installer.sampleData:
+    class: ACP3\Modules\ACP3\News\Installer\SampleData
+    parent: core.modules.installer.abstractSampleData

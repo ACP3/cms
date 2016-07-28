@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Modules\ACP3\Captcha;
 
 use ACP3\Core;
@@ -9,44 +14,56 @@ use ACP3\Core;
  */
 class Helpers
 {
+    const CAPTCHA_DEFAULT_LENGTH = 5;
+    const CAPTCHA_DEFAULT_INPUT_ID = 'captcha';
+
     /**
-     * @var \ACP3\Core\Auth
+     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
      */
-    protected $auth;
+    protected $user;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
+    /**
+     * @var \ACP3\Core\Session\SessionHandlerInterface
+     */
+    protected $sessionHandler;
     /**
      * @var \ACP3\Core\View
      */
     protected $view;
 
     /**
-     * @param \ACP3\Core\Auth           $auth
-     * @param \ACP3\Core\Request        $request
-     * @param \ACP3\Core\Router         $router
-     * @param \ACP3\Core\View           $view
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * Helpers constructor.
+     *
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                            $user
+     * @param \ACP3\Core\Http\RequestInterface           $request
+     * @param \ACP3\Core\RouterInterface                 $router
+     * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
+     * @param \ACP3\Core\View                            $view
+     * @param \ACP3\Core\Helpers\Secure                  $secureHelper
      */
     public function __construct(
-        Core\Auth $auth,
-        Core\Request $request,
-        Core\Router $router,
+        \ACP3\Modules\ACP3\Users\Model\UserModel $user,
+        Core\Http\RequestInterface $request,
+        Core\RouterInterface $router,
+        Core\Session\SessionHandlerInterface $sessionHandler,
         Core\View $view,
         Core\Helpers\Secure $secureHelper
     ) {
-        $this->auth = $auth;
+        $this->user = $user;
         $this->request = $request;
         $this->router = $router;
+        $this->sessionHandler = $sessionHandler;
         $this->view = $view;
         $this->secureHelper = $secureHelper;
     }
@@ -55,28 +72,31 @@ class Helpers
      * Erzeugt das Captchafeld für das Template
      *
      * @param integer $captchaLength
-     *  Anzahl der Zeichen, welche das Captcha haben soll
-     * @param string  $id
+     * @param string  $formFieldId
      * @param bool    $inputOnly
      * @param string  $path
      *
      * @return string
      */
-    public function captcha($captchaLength = 5, $id = 'captcha', $inputOnly = false, $path = '')
-    {
+    public function captcha(
+        $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
+        $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
+        $inputOnly = false,
+        $path = ''
+    ) {
         // Wenn man als User angemeldet ist, Captcha nicht anzeigen
-        if ($this->auth->isUser() === false) {
-            $path = sha1($this->router->route(empty($path) === true ? $this->request->query : $path));
+        if ($this->user->isAuthenticated() === false) {
+            $path = sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
 
-            $_SESSION['captcha_' . $path] = $this->secureHelper->salt($captchaLength);
+            $this->sessionHandler->set('captcha_' . $path, $this->secureHelper->salt($captchaLength));
 
-            $captcha = [];
-            $captcha['width'] = $captchaLength * 25;
-            $captcha['id'] = $id;
-            $captcha['height'] = 30;
-            $captcha['input_only'] = $inputOnly;
-            $captcha['path'] = $path;
-            $this->view->assign('captcha', $captcha);
+            $this->view->assign('captcha', [
+                'width' => $captchaLength * 25,
+                'id' => $formFieldId,
+                'height' => 30,
+                'input_only' => $inputOnly,
+                'path' => $path
+            ]);
             return $this->view->fetchTemplate('captcha/captcha.tpl');
         }
         return '';

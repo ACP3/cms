@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -6,14 +6,14 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="title" class="col-sm-2 control-label">{lang t="newsletter|subject"}</label>
+            <label for="title" class="col-sm-2 control-label required">{lang t="newsletter|subject"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="text" name="title" id="title" value="{$form.title}" required></div>
         </div>
-        {include file="asset:system/datepicker.tpl" datepicker=$date}
+        {datepicker name="date" value=$form.date}
         <div class="form-group">
-            <label for="text" class="col-sm-2 control-label">{lang t="newsletter|text"}</label>
+            <label for="text" class="col-sm-2 control-label required">{lang t="newsletter|text"}</label>
 
             <div class="col-sm-10">
                 {if $settings.html == 1}
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div id="test-newsletter" class="form-group">
-            <label for="test-1" class="col-sm-2 control-label">{lang t="newsletter|test_newsletter"}</label>
+            <label for="test-1" class="col-sm-2 control-label required">{lang t="newsletter|test_newsletter"}</label>
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
                     {foreach $test as $row}
@@ -47,6 +47,6 @@
     </form>
     {javascripts}
         {include_js module="newsletter" file="admin/acp"}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

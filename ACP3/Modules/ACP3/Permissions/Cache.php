@@ -2,6 +2,9 @@
 namespace ACP3\Modules\ACP3\Permissions;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository;
 
 /**
  * Class Cache
@@ -14,30 +17,44 @@ class Cache extends Core\Modules\AbstractCacheStorage
     const CACHE_ID_RULES = 'acl_rules_';
 
     /**
-     * @var Model
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
      */
-    protected $permissionsModel;
+    protected $roleRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
+     */
+    protected $resourceRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository
+     */
+    protected $ruleRepository;
 
     /**
-     * @param Core\Cache $cache
-     * @param Model $permissionsModel
+     * @param \ACP3\Core\Cache                                        $cache
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository     $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository     $ruleRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Model $permissionsModel
+        RoleRepository $roleRepository,
+        ResourceRepository $resourceRepository,
+        RuleRepository $ruleRepository
     ) {
         parent::__construct($cache);
 
-        $this->permissionsModel = $permissionsModel;
+        $this->roleRepository = $roleRepository;
+        $this->resourceRepository = $resourceRepository;
+        $this->ruleRepository = $ruleRepository;
     }
 
     /**
-     * @return bool|mixed|string
+     * @return array
      */
     public function getResourcesCache()
     {
         if ($this->cache->contains(static::CACHE_ID_RESOURCES) === false) {
-            $this->setResourcesCache();
+            $this->saveResourcesCache();
         }
 
         return $this->cache->fetch(static::CACHE_ID_RESOURCES);
@@ -48,13 +65,13 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function setResourcesCache()
+    public function saveResourcesCache()
     {
-        $resources = $this->permissionsModel->getAllResources();
-        $c_resources = count($resources);
+        $resources = $this->resourceRepository->getAllResources();
+        $cResources = count($resources);
         $data = [];
 
-        for ($i = 0; $i < $c_resources; ++$i) {
+        for ($i = 0; $i < $cResources; ++$i) {
             $area = $resources[$i]['area'];
             if (isset($data[$area]) === false) {
                 $data[$area] = [];
@@ -76,7 +93,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function getRolesCache()
     {
         if ($this->cache->contains(static::CACHE_ID_ROLES) === false) {
-            $this->setRolesCache();
+            $this->saveRolesCache();
         }
 
         return $this->cache->fetch(static::CACHE_ID_ROLES);
@@ -87,12 +104,12 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function setRolesCache()
+    public function saveRolesCache()
     {
-        $roles = $this->permissionsModel->getAllRoles();
-        $c_roles = count($roles);
+        $roles = $this->roleRepository->getAllRoles();
+        $cRoles = count($roles);
 
-        for ($i = 0; $i < $c_roles; ++$i) {
+        for ($i = 0; $i < $cRoles; ++$i) {
             // Bestimmen, ob die Seite die Erste und/oder Letzte eines Knotens ist
             $first = $last = true;
             if ($i > 0) {
@@ -104,7 +121,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
                 }
             }
 
-            for ($j = $i + 1; $j < $c_roles; ++$j) {
+            for ($j = $i + 1; $j < $cRoles; ++$j) {
                 if ($roles[$i]['parent_id'] === $roles[$j]['parent_id']) {
                     $last = false;
                     break;
@@ -127,7 +144,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     {
         $filename = static::CACHE_ID_RULES . implode(',', $roles);
         if ($this->cache->contains($filename) === false) {
-            $this->setRulesCache($roles);
+            $this->saveRulesCache($roles);
         }
 
         return $this->cache->fetch($filename);
@@ -137,23 +154,19 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * Setzt den Cache für die einzelnen Berechtigungen einer Rolle
      *
      * @param array $roles
-     *    Array mit den IDs der zu cachenden Rollen
      *
      * @return boolean
      */
-    public function setRulesCache(array $roles)
+    public function saveRulesCache(array $roles)
     {
-        // Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
-        $rules = $this->permissionsModel->getAllRulesByRoleIds($roles);
-        $c_rules = count($rules);
         $privileges = [];
-        for ($i = 0; $i < $c_rules; ++$i) {
-            $key = strtolower($rules[$i]['key']);
-            $privileges[$rules[$i]['module_name']][$key] = [
-                'id' => $rules[$i]['privilege_id'],
-                'description' => $rules[$i]['description'],
-                'permission' => $rules[$i]['permission'],
-                'access' => ($rules[$i]['permission'] == 1 || ($rules[$i]['permission'] == 2 && $this->_getPermissionValue($key, $rules[$i]['role_id']) == 1)),
+        foreach ($this->ruleRepository->getAllRulesByRoleIds($roles) as $rule) {
+            $privilegeKey = strtolower($rule['key']);
+            $privileges[$rule['module_name']][$privilegeKey] = [
+                'id' => $rule['privilege_id'],
+                'description' => $rule['description'],
+                'permission' => $rule['permission'],
+                'access' => $this->hasAccess($rule, $privilegeKey),
             ];
         }
 
@@ -161,18 +174,29 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
+     * @param array  $rule
+     * @param string $privilegeKey
+     *
+     * @return bool
+     */
+    protected function hasAccess(array $rule, $privilegeKey)
+    {
+        return $rule['permission'] == Core\ACL\PermissionEnum::PERMIT_ACCESS
+        || ($rule['permission'] == Core\ACL\PermissionEnum::INHERIT_ACCESS
+            && $this->getPermissionValue($privilegeKey, $rule['role_id']) == Core\ACL\PermissionEnum::PERMIT_ACCESS);
+    }
+
+    /**
      * Ermittelt die Berechtigung einer Privilegie von einer übergeordneten Rolle
      *
-     * @param string  $key
-     *    Schlüssel der Privilegie
+     * @param string  $privilegeKey
      * @param integer $roleId
-     *    ID der Rolle, dessen übergeordnete Rolle sucht werden soll
      *
      * @return integer
      */
-    protected function _getPermissionValue($key, $roleId)
+    protected function getPermissionValue($privilegeKey, $roleId)
     {
-        $value = $this->permissionsModel->getPermissionByKeyAndRoleId($key, $roleId);
-        return isset($value['permission']) ? $value['permission'] : 0;
+        $value = $this->roleRepository->getPermissionByKeyAndRoleId($privilegeKey, $roleId);
+        return isset($value['permission']) ? $value['permission'] : Core\ACL\PermissionEnum::DENY_ACCESS;
     }
 }

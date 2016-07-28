@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Comments;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository;
 
 /**
  * Class Helpers
@@ -14,20 +15,20 @@ class Helpers
      */
     protected $modules;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model
+     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
      */
-    protected $commentsModel;
+    protected $commentRepository;
 
     /**
-     * @param \ACP3\Core\Modules           $modules
-     * @param \ACP3\Modules\ACP3\Comments\Model $commentsModel
+     * @param \ACP3\Core\Modules                                  $modules
+     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
      */
     public function __construct(
         Core\Modules $modules,
-        Model $commentsModel)
+        CommentRepository $commentRepository)
     {
         $this->modules = $modules;
-        $this->commentsModel = $commentsModel;
+        $this->commentRepository = $commentRepository;
     }
 
     /**
@@ -40,17 +41,17 @@ class Helpers
      */
     public function commentsCount($moduleName, $resultId)
     {
-        return $this->commentsModel->countAllByModule($this->modules->getModuleId($moduleName), $resultId);
+        return $this->commentRepository->countAllByModule($this->modules->getModuleId($moduleName), $resultId);
     }
 
     /**
-     * @param $moduleId
-     * @param $resultId
+     * @param int $moduleId
+     * @param int $resultId
      *
      * @return int
      */
     public function deleteCommentsByModuleAndResult($moduleId, $resultId)
     {
-        return $this->commentsModel->delete(['module_id' => $moduleId, 'entry_id' => $resultId]);
+        return $this->commentRepository->delete(['module_id' => $moduleId, 'entry_id' => $resultId]);
     }
 }

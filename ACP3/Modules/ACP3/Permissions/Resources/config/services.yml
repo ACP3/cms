@@ -1,0 +1,20 @@
+imports:
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
+
+services:
+  permissions.cache:
+    class: ACP3\Modules\ACP3\Permissions\Cache
+    arguments:
+      - '@core.cache.system'
+      - '@permissions.model.rolerepository'
+      - '@permissions.model.resourcerepository'
+      - '@permissions.model.rulerepository'
+
+  permissions.helpers:
+    class: ACP3\Modules\ACP3\Permissions\Helpers
+    arguments:
+      - '@permissions.model.rolerepository'
+      - '@permissions.model.userrolerepository'

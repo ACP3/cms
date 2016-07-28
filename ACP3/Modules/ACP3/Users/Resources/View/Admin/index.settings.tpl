@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -6,13 +6,13 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="mail" class="col-sm-2 control-label">{lang t="system|email_address"}</label>
+            <label for="mail" class="col-sm-2 control-label required">{lang t="system|email_address"}</label>
 
             <div class="col-sm-10">
-                <input class="form-control" type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120"></div>
+                <input class="form-control" type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120" required></div>
         </div>
         <div class="form-group">
-            <label for="{$languages.0.id}" class="col-sm-2 control-label">{lang t="users|allow_language_override"}</label>
+            <label for="{$languages.0.id}" class="col-sm-2 control-label required">{lang t="users|allow_language_override"}</label>
 
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="{$entries.0.id}" class="col-sm-2 control-label">{lang t="users|allow_entries_override"}</label>
+            <label for="{$entries.0.id}" class="col-sm-2 control-label required">{lang t="users|allow_entries_override"}</label>
 
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="{$registration.0.id}" class="col-sm-2 control-label">{lang t="users|enable_registration"}</label>
+            <label for="{$registration.0.id}" class="col-sm-2 control-label required">{lang t="users|enable_registration"}</label>
 
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
@@ -62,6 +62,6 @@
         </div>
     </form>
     {javascripts}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

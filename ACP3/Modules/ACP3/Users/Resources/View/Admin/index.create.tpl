@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -17,10 +17,10 @@
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
                     <div class="form-group">
-                        <label for="nickname" class="col-sm-2 control-label">{lang t="users|nickname"}</label>
+                        <label for="nickname" class="col-sm-2 control-label required">{lang t="users|nickname"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="nickname" id="nickname" value="{$form.nickname}" maxlength="30">
+                            <input class="form-control" type="text" name="nickname" id="nickname" value="{$form.nickname}" maxlength="30" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -31,10 +31,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="gender" class="col-sm-2 control-label">{lang t="users|gender"}</label>
+                        <label for="gender" class="col-sm-2 control-label required">{lang t="users|gender"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="gender" id="gender">
+                            <select class="form-control" name="gender" id="gender" required>
                                 {foreach $gender as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                                 {/foreach}
@@ -45,14 +45,14 @@
                         <label for="date-birthday-input" class="col-sm-2 control-label">{lang t="users|birthday"}</label>
 
                         <div class="col-sm-10">
-                            {include file="asset:system/datepicker.tpl" datepicker=$birthday_datepicker}
+                            {datepicker name="birthday" value=$birthday inputFieldOnly=true withTime=false}
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="roles" class="col-sm-2 control-label">{lang t="permissions|roles"}</label>
+                        <label for="roles" class="col-sm-2 control-label required">{lang t="permissions|roles"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="roles[]" id="roles" multiple="multiple" style="height:100px">
+                            <select class="form-control" name="roles[]" id="roles" multiple="multiple" required style="height:100px">
                                 {foreach $roles as $row}
                                     <option value="{$row.id}"{$row.selected}>{$row.name}</option>
                                 {/foreach}
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="super-user-1" class="col-sm-2 control-label">{lang t="users|super_user"}</label>
+                        <label for="super-user-1" class="col-sm-2 control-label required">{lang t="users|super_user"}</label>
 
                         <div class="col-sm-10">
                             <div class="btn-group" data-toggle="buttons">
@@ -127,7 +127,7 @@
                 </div>
                 <div id="tab-4" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="language" class="col-sm-2 control-label">{lang t="users|language"}</label>
+                        <label for="language" class="col-sm-2 control-label required">{lang t="users|language"}</label>
 
                         <div class="col-sm-10">
                             <select class="form-control" name="language" id="language">
@@ -139,7 +139,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="entries" class="col-sm-2 control-label">{lang t="system|records_per_page"}</label>
+                        <label for="entries" class="col-sm-2 control-label required">{lang t="system|records_per_page"}</label>
 
                         <div class="col-sm-10">
                             <select class="form-control" name="entries" id="entries">
@@ -150,7 +150,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="date-format-long" class="col-sm-2 control-label">{lang t="system|date_format_long"}</label>
+                        <label for="date-format-long" class="col-sm-2 control-label required">{lang t="system|date_format_long"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="date_format_long" id="date-format-long" value="{$form.date_format_long}" maxlength="20">
@@ -159,14 +159,14 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="date-format-short" class="col-sm-2 control-label">{lang t="system|date_format_short"}</label>
+                        <label for="date-format-short" class="col-sm-2 control-label required">{lang t="system|date_format_short"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="date_format_short" id="date-format-short" value="{$form.date_format_short}" maxlength="20">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="date-time-zone" class="col-sm-2 control-label">{lang t="system|time_zone"}</label>
+                        <label for="date-time-zone" class="col-sm-2 control-label required">{lang t="system|time_zone"}</label>
 
                         <div class="col-sm-10">
                             <select class="form-control" name="date_time_zone" id="date-time-zone">
@@ -183,7 +183,7 @@
                 </div>
                 <div id="tab-5" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="{$mail_display.0.id}" class="col-sm-2 control-label">{lang t="users|display_mail"}</label>
+                        <label for="{$mail_display.0.id}" class="col-sm-2 control-label required">{lang t="users|display_mail"}</label>
 
                         <div class="col-sm-10">
                             <div class="btn-group" data-toggle="buttons">
@@ -197,7 +197,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="{$address_display.0.id}" class="col-sm-2 control-label">{lang t="users|display_address"}</label>
+                        <label for="{$address_display.0.id}" class="col-sm-2 control-label required">{lang t="users|display_address"}</label>
 
                         <div class="col-sm-10">
                             <div class="btn-group" data-toggle="buttons">
@@ -211,7 +211,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="{$country_display.0.id}" class="col-sm-2 control-label">{lang t="users|display_country"}</label>
+                        <label for="{$country_display.0.id}" class="col-sm-2 control-label required">{lang t="users|display_country"}</label>
 
                         <div class="col-sm-10">
                             <div class="btn-group" data-toggle="buttons">
@@ -225,7 +225,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="{$birthday_display.0.id}" class="col-sm-2 control-label">{lang t="users|birthday"}</label>
+                        <label for="{$birthday_display.0.id}" class="col-sm-2 control-label required">{lang t="users|birthday"}</label>
 
                         <div class="col-sm-10">
                             {foreach $birthday_display as $row}
@@ -240,16 +240,9 @@
                     </div>
                 </div>
                 <div id="tab-6" class="tab-pane fade">
-                    <div class="form-group">
-                        <label for="pwd" class="col-sm-2 control-label">{lang t="users|pwd"}</label>
-
-                        <div class="col-sm-10"><input class="form-control" type="password" name="pwd" id="pwd"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="pwd-repeat" class="col-sm-2 control-label">{lang t="users|pwd_repeat"}</label>
-
-                        <div class="col-sm-10"><input class="form-control" type="password" name="pwd_repeat" id="pwd-repeat"></div>
-                    </div>
+                    {block PASSWORD_FIELDS}
+                        {include file="asset:Users/Partials/password_fields.tpl"}
+                    {/block}
                 </div>
             </div>
         </div>
@@ -262,6 +255,6 @@
         </div>
     </form>
     {javascripts}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

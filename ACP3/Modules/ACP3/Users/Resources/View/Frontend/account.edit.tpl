@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -15,10 +15,10 @@
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
                     <div class="form-group">
-                        <label for="nickname" class="col-sm-2 control-label">{lang t="users|nickname"}</label>
+                        <label for="nickname" class="col-sm-2 control-label required">{lang t="users|nickname"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="nickname" id="nickname" value="{$form.nickname}" maxlength="30">
+                            <input class="form-control" type="text" name="nickname" id="nickname" value="{$form.nickname}" maxlength="30" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -29,10 +29,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="gender" class="col-sm-2 control-label">{lang t="users|gender"}</label>
+                        <label for="gender" class="col-sm-2 control-label required">{lang t="users|gender"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="gender" id="gender">
+                            <select class="form-control" name="gender" id="gender" required>
                                 {foreach $gender as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                                 {/foreach}
@@ -43,7 +43,7 @@
                         <label for="date-birthday-input" class="col-sm-2 control-label">{lang t="users|birthday"}</label>
 
                         <div class="col-sm-10">
-                            {include file="asset:system/datepicker.tpl" datepicker=$birthday_datepicker}
+                            {datepicker name="birthday" value=$birthday inputFieldOnly=true}
                         </div>
                     </div>
                 </div>
@@ -101,18 +101,7 @@
                     </div>
                 </div>
                 <div id="tab-4" class="tab-pane fade">
-                    <div class="form-group">
-                        <label for="new-pwd" class="col-sm-2 control-label">{lang t="users|new_pwd"}</label>
-
-                        <div class="col-sm-10"><input class="form-control" type="password" name="new_pwd" id="new-pwd">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="new-pwd-repeat" class="col-sm-2 control-label">{lang t="users|new_pwd_repeat"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="password" name="new_pwd_repeat" id="new-pwd-repeat"></div>
-                    </div>
+                    {include file="asset:Users/Partials/password_fields.tpl" field_name='new_pwd' translator_phrase="new_pwd"}
                 </div>
             </div>
         </div>
@@ -125,6 +114,6 @@
         </div>
     </form>
     {javascripts}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

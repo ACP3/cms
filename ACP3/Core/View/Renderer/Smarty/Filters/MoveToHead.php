@@ -1,49 +1,59 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
-use ACP3\Core\Assets;
+use ACP3\Core\Assets\MinifierInterface;
 
 /**
  * Class MoveToHead
  * @package ACP3\Core\View\Renderer\Smarty\Filters
  */
-class MoveToHead extends AbstractFilter
+class MoveToHead extends AbstractMoveElementFilter
 {
-    /**
-     * @var string
-     */
-    protected $filterType = 'output';
+    const ELEMENT_CATCHER_REGEX_PATTERN = "!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is";
+    const PLACEHOLDER = '<!-- STYLESHEETS -->';
 
     /**
-     * @var \ACP3\Core\Assets
+     * @var \ACP3\Core\Assets\MinifierInterface
      */
-    protected $assets;
+    protected $minifier;
 
     /**
-     * @param \ACP3\Core\Assets $assets
+     * @param \ACP3\Core\Assets\MinifierInterface $minifier
      */
-    public function __construct(Assets $assets)
+    public function __construct(MinifierInterface $minifier)
     {
-        $this->assets = $assets;
+        $this->minifier = $minifier;
     }
 
     /**
-     * @param $tpl_output
-     * @param \Smarty_Internal_Template $smarty
-     * @return string
+     * @inheritdoc
      */
-    public function process($tpl_output, \Smarty_Internal_Template $smarty)
+    public function getExtensionName()
     {
-        if (strpos($tpl_output, '<!-- STYLESHEETS -->') !== false) {
-            $matches = [];
-            preg_match_all('!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is', $tpl_output, $matches);
+        return 'output';
+    }
 
-            // Remove placeholder comments
-            $tpl_output = preg_replace("!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is", '', $tpl_output);
-            $minifyCss = '<link rel="stylesheet" type="text/css" href="' . $this->assets->buildMinifyLink('css') . '">' . "\n";
-            return str_replace('<!-- STYLESHEETS -->', $minifyCss . implode("\n", array_unique($matches[1])) . "\n", $tpl_output);
+    /**
+     * @inheritdoc
+     */
+    public function process($tplOutput, \Smarty_Internal_Template $smarty)
+    {
+        if (strpos($tplOutput, static::PLACEHOLDER) !== false) {
+            $tplOutput = str_replace(
+                static::PLACEHOLDER,
+                $this->addElementFromMinifier() . $this->addElementsFromTemplates($tplOutput),
+                $this->getCleanedUpTemplateOutput($tplOutput)
+            );
         }
 
-        return $tpl_output;
+        return $tplOutput;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addElementFromMinifier()
+    {
+        return '<link rel="stylesheet" type="text/css" href="' . $this->minifier->getURI() . '">' . "\n";
     }
 }

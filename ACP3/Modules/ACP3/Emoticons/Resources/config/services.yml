@@ -1,0 +1,14 @@
+imports:
+  - { resource: components/cache.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/events.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
+
+services:
+  emoticons.helpers:
+    class: ACP3\Modules\ACP3\Emoticons\Helpers
+    arguments:
+      - '@core.view'
+      - '@emoticons.cache'

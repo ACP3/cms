@@ -12,15 +12,14 @@ class PageTitle extends SiteTitle
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        return $this->breadcrumb->getPageTitle();
+        return $this->title->getPageTitle();
     }
 
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'page_title';
     }
-
 }

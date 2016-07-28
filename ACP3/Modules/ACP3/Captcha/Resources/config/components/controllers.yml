@@ -1,0 +1,6 @@
+services:
+  captcha.controller.frontend.index.image:
+    class: ACP3\Modules\ACP3\Captcha\Controller\Index\Image
+    arguments:
+      - '@core.context.frontend'
+      - '@core.session'

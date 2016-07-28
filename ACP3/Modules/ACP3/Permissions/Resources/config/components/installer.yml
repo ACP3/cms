@@ -1,0 +1,6 @@
+services:
+  permissions.installer.schema:
+    class: ACP3\Modules\ACP3\Permissions\Installer\Schema
+
+  permissions.installer.migration:
+    class: ACP3\Modules\ACP3\Permissions\Installer\Migration

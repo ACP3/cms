@@ -1,0 +1,44 @@
+imports:
+  - { resource: components/controllers.yml }
+  - { resource: components/events.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
+
+services:
+  newsletter.helper.accountstatus:
+    class: ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
+    arguments:
+      - '@core.date'
+      - '@newsletter.model.accountrepository'
+      - '@newsletter.model.accounthistoryrepository'
+
+  newsletter.helper.sendnewsletter:
+    class: ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter
+    arguments:
+      - '@core.mailer'
+      - '@core.router'
+      - '@core.config'
+      - '@newsletter.model.newsletterrepository'
+
+  newsletter.helper.subscribe:
+    class: ACP3\Modules\ACP3\Newsletter\Helper\Subscribe
+    arguments:
+      - '@core.date'
+      - '@core.lang'
+      - '@core.mailer'
+      - '@core.http.request'
+      - '@core.router'
+      - '@core.helpers.stringFormatter'
+      - '@core.helpers.secure'
+      - '@core.config'
+      - '@newsletter.helper.accountstatus'
+      - '@newsletter.model.accountrepository'
+
+  newsletter.helper.data_grid.column_renderer.account_status_column_renderer:
+    class: ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer\AccountStatusColumnRenderer
+    arguments:
+      - '@core.lang'
+      - '@core.router'
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }

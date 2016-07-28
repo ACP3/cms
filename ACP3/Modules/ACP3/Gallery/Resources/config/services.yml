@@ -1,0 +1,20 @@
+imports:
+  - { resource: components/cache.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
+
+services:
+  gallery.helpers:
+    class: ACP3\Modules\ACP3\Gallery\Helpers
+    arguments:
+      - '@core.environment.application_path'
+
+  gallery.helpers.data_grid.column_renderer.picture_sort_column_renderer:
+    class: ACP3\Modules\ACP3\Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer
+    arguments:
+      - '@core.lang'
+      - '@core.router'
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }

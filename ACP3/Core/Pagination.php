@@ -1,7 +1,11 @@
 <?php
 namespace ACP3\Core;
 
-use ACP3\Core\Validator\Rules\Misc;
+use ACP3\Core\Breadcrumb\Title;
+use ACP3\Core\Controller\AreaEnum;
+use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\I18n\Translator;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
  * Class Pagination
@@ -10,37 +14,25 @@ use ACP3\Core\Validator\Rules\Misc;
 class Pagination
 {
     /**
-     * @var \ACP3\Core\Auth
+     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
      */
-    protected $auth;
+    protected $user;
     /**
-     * @var \ACP3\Core\Breadcrumb
+     * @var \ACP3\Core\Breadcrumb\Title
      */
-    protected $breadcrumb;
+    protected $title;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
-     * @var \ACP3\Core\SEO
-     */
-    protected $seo;
-    /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
-    /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
-    /**
-     * @var \ACP3\Core\Validator\Rules\Misc
-     */
-    protected $miscValidator;
     /**
      * @var int
      */
@@ -68,50 +60,43 @@ class Pagination
     /**
      * @var int
      */
-    private $totalPages = 1;
+    protected $totalPages = 1;
     /**
      * @var int
      */
-    private $currentPage = 1;
+    protected $currentPage = 1;
     /**
      * @var array
      */
     private $pagination = [];
 
     /**
-     * @param \ACP3\Core\Auth                 $auth
-     * @param \ACP3\Core\Breadcrumb           $breadcrumb
-     * @param \ACP3\Core\Lang                 $lang
-     * @param \ACP3\Core\SEO                  $seo
-     * @param \ACP3\Core\Request              $request
-     * @param \ACP3\Core\Router               $router
-     * @param \ACP3\Core\View                 $view
-     * @param \ACP3\Core\Validator\Rules\Misc $miscValidator
+     * Pagination constructor.
+     *
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel  $user
+     * @param \ACP3\Core\Breadcrumb\Title               $title
+     * @param \ACP3\Core\I18n\Translator                $translator
+     * @param \ACP3\Core\Http\RequestInterface          $request
+     * @param \ACP3\Core\RouterInterface                $router
      */
     public function __construct(
-        Auth $auth,
-        Breadcrumb $breadcrumb,
-        Lang $lang,
-        SEO $seo,
-        Request $request,
-        Router $router,
-        View $view,
-        Misc $miscValidator)
-    {
-        $this->auth = $auth;
-        $this->breadcrumb = $breadcrumb;
-        $this->lang = $lang;
-        $this->seo = $seo;
+        UserModel $user,
+        Title $title,
+        Translator $translator,
+        RequestInterface $request,
+        RouterInterface $router
+    ) {
+        $this->user = $user;
+        $this->title = $title;
+        $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
-        $this->view = $view;
-        $this->miscValidator = $miscValidator;
 
-        $this->resultsPerPage = $auth->entries;
+        $this->resultsPerPage = $user->getEntriesPerPage();
     }
 
     /**
-     * @param $results
+     * @param int $results
      */
     public function setResultsPerPage($results)
     {
@@ -119,7 +104,7 @@ class Pagination
     }
 
     /**
-     * @param $results
+     * @param int $results
      */
     public function setTotalResults($results)
     {
@@ -127,7 +112,7 @@ class Pagination
     }
 
     /**
-     * @param $fragment
+     * @param string $fragment
      */
     public function setUrlFragment($fragment)
     {
@@ -159,71 +144,50 @@ class Pagination
     }
 
     /**
-     * @param string $tplVariable
-     *
-     * @return string
+     * @return int
      */
-    public function display($tplVariable = 'pagination')
+    public function getResultsStartOffset()
     {
-        $output = '';
+        return (int)$this->request->getParameters()->get('page') >= 1 ? (int)($this->request->getParameters()->get('page') - 1) * $this->resultsPerPage : 0;
+    }
+
+    /**
+     * @return array
+     */
+    public function render()
+    {
         if ($this->totalResults > $this->resultsPerPage) {
-            $link = $this->router->route(($this->request->area === 'admin' ? 'acp/' : '') . $this->request->getUriWithoutPages());
-            $this->currentPage = $this->miscValidator->isNumber($this->request->page) ? (int)$this->request->page : 1;
+            $link = $this->router->route(($this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $this->request->getUriWithoutPages());
+            $this->currentPage = (int)$this->request->getParameters()->get('page', 1);
             $this->totalPages = (int)ceil($this->totalResults / $this->resultsPerPage);
 
-            $this->setMetaStatements($link);
+            $this->setMetaStatements();
             $range = $this->calculateRange();
 
-            // Erste Seite
             $this->showFirstPageLink($link, $range);
-
-            // Vorherige Seite
             $this->showPreviousPageLink($link);
 
             for ($i = (int)$range['start']; $i <= $range['end']; ++$i) {
                 $this->pagination[] = $this->buildPageNumber(
-                    $this->currentPage === $i,
                     $i,
-                    $link . ($i > 1 ? 'page_' . $i . '/' : '') . $this->urlFragment
+                    $link . ($i > 1 ? 'page_' . $i . '/' : '') . $this->urlFragment,
+                    '',
+                    $this->currentPage === $i
                 );
             }
 
-            // Nächste Seite
             $this->showNextPageLink($link);
-
-            // Letzte Seite
             $this->showLastPageLink($link, $range);
-
-            $this->view->assign('pagination', $this->pagination);
-
-            $output = $this->view->fetchTemplate('system/pagination.tpl');
         }
-        $this->view->assign($tplVariable, $output);
+
+        return $this->pagination;
     }
 
-    /**
-     * @param $link
-     */
-    private function setMetaStatements($link)
+    protected function setMetaStatements()
     {
         if ($this->currentPage > 1) {
-            $postfix = sprintf($this->lang->t('system', 'page_x'), $this->currentPage);
-            $this->breadcrumb->setTitlePostfix($postfix);
-        }
-
-        // Vorherige und nächste Seite für Suchmaschinen und Prefetching propagieren
-        if ($this->request->area !== 'admin') {
-            if ($this->currentPage - 1 > 0) {
-                // Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
-                $this->seo->setDescriptionPostfix(sprintf($this->lang->t('system', 'page_x'), $this->currentPage));
-                $this->seo->setPreviousPage($link . 'page_' . ($this->currentPage - 1) . '/');
-            }
-            if ($this->currentPage + 1 <= $this->totalPages) {
-                $this->seo->setNextPage($link . 'page_' . ($this->currentPage + 1) . '/');
-            }
-            if (isset($this->request->page) && $this->request->page === 1) {
-                $this->seo->setCanonicalUri($link);
-            }
+            $postfix = $this->translator->t('system', 'page_x', ['%page%' => $this->currentPage]);
+            $this->title->setPageTitlePostfix($postfix);
         }
     }
 
@@ -258,81 +222,77 @@ class Pagination
     }
 
     /**
-     * @param $link
-     * @param $range
+     * @param string $link
+     * @param array  $range
      */
-    private function showFirstPageLink($link, $range)
+    private function showFirstPageLink($link, array $range)
     {
         if ($this->totalPages > $this->showFirstLast && $range['start'] > 1) {
             $this->pagination[] = $this->buildPageNumber(
-                false,
                 '&laquo;',
                 $link . $this->urlFragment,
-                $this->lang->t('system', 'first_page')
+                $this->translator->t('system', 'first_page')
             );
         }
     }
 
     /**
-     * @param        $selected
-     * @param        $pageNumber
-     * @param        $uri
+     * @param int    $pageNumber
+     * @param string $uri
      * @param string $title
+     * @param bool   $selected
      *
      * @return array
      */
-    private function buildPageNumber($selected, $pageNumber, $uri, $title = '')
+    private function buildPageNumber($pageNumber, $uri, $title = '', $selected = false)
     {
         return [
-            'selected' => (bool)$selected,
             'page' => $pageNumber,
             'uri' => $uri,
-            'title' => $title
+            'title' => $title,
+            'selected' => (bool)$selected
         ];
     }
 
     /**
-     * @param $link
+     * @param string $link
      */
     private function showPreviousPageLink($link)
     {
         if ($this->totalPages > $this->showPreviousNext && $this->currentPage !== 1) {
             $this->pagination[] = $this->buildPageNumber(
-                false,
                 '&lsaquo;',
                 $link . ($this->currentPage - 1 > 1 ? 'page_' . ($this->currentPage - 1) . '/' : '') . $this->urlFragment,
-                $this->lang->t('system', 'previous_page')
+                $this->translator->t('system', 'previous_page')
             );
         }
     }
 
     /**
-     * @param $link
+     * @param string $link
      */
     private function showNextPageLink($link)
     {
         if ($this->totalPages > $this->showPreviousNext && $this->currentPage !== $this->totalPages) {
             $this->pagination[] = $this->buildPageNumber(
-                false,
                 '&rsaquo;',
                 $link . 'page_' . ($this->currentPage + 1) . '/' . $this->urlFragment,
-                $this->lang->t('system', 'next_page')
+                $this->translator->t('system', 'next_page')
             );
         }
     }
 
     /**
-     * @param $link
-     * @param $range
+     * @param string $link
+     * @param array  $range
      */
-    private function showLastPageLink($link, $range)
+    private function showLastPageLink($link, array $range)
     {
         if ($this->totalPages > $this->showFirstLast && $this->totalPages !== $range['end']) {
             $this->pagination[] = $this->buildPageNumber(
-                false,
                 '&raquo;',
                 $link . 'page_' . $this->totalPages . '/' . $this->urlFragment,
-                $this->lang->t('system', 'last_page')
+                $this->translator->t('system', 'last_page')
             );
         }
     }

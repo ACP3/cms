@@ -1,0 +1,16 @@
+imports:
+  - { resource: components/controllers.yml }
+  - { resource: components/events.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/validation.yml }
+
+services:
+  captcha.helpers:
+    class: ACP3\Modules\ACP3\Captcha\Helpers
+    arguments:
+      - '@users.model.user_model'
+      - '@core.http.request'
+      - '@core.router'
+      - '@core.session'
+      - '@core.view'
+      - '@core.helpers.secure'

@@ -1,0 +1,91 @@
+services:
+  news.controller.admin.index.create:
+    class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Create
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@news.model'
+      - '@news.validator'
+      - '@categories.helpers'
+    calls:
+      - ['setCommentsHelpers', ['@?comments.helpers']]
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+
+  news.controller.admin.index.delete:
+    class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Delete
+    arguments:
+      - '@core.context.admin'
+      - '@news.model.newsrepository'
+      - '@news.cache'
+    calls:
+      - ['setCommentsHelpers', ['@?comments.helpers']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+
+  news.controller.admin.index.edit:
+    class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Edit
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@news.model.newsrepository'
+      - '@news.model'
+      - '@news.cache'
+      - '@news.validator'
+      - '@categories.helpers'
+    calls:
+      - ['setCommentsHelpers', ['@?comments.helpers']]
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+
+  news.controller.admin.index.index:
+    class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Index
+    arguments:
+      - '@core.context.admin'
+      - '@news.model.data_grid_repository'
+
+  news.controller.admin.index.settings:
+    class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Settings
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@news.validation.admin_settings_form_validation'
+    calls:
+      - ['setCommentsHelpers', ['@?comments.helpers']]
+
+  news.controller.frontend.index.details:
+    class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Details
+    arguments:
+      - '@core.context.frontend'
+      - '@core.date'
+      - '@news.model.newsrepository'
+      - '@news.cache'
+
+  news.controller.frontend.index.index:
+    class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Index
+    arguments:
+      - '@core.context.frontend'
+      - '@core.date'
+      - '@core.helpers.stringFormatter'
+      - '@core.pagination'
+      - '@news.model.newsrepository'
+      - '@categories.helpers'
+      - '@categories.model.categories_repository'
+    calls:
+      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
+
+  news.controller.widget.index.index:
+    class: ACP3\Modules\ACP3\News\Controller\Widget\Index\Index
+    arguments:
+      - '@core.context.widget'
+      - '@core.date'
+      - '@news.model.newsrepository'
+
+  news.controller.widget.index.latest:
+    class: ACP3\Modules\ACP3\News\Controller\Widget\Index\Latest
+    arguments:
+      - '@core.context.widget'
+      - '@core.date'
+      - '@news.model.newsrepository'

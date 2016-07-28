@@ -1,0 +1,20 @@
+services:
+  menus.helpers.menuitemslist:
+    class: ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList
+    arguments:
+      - '@core.helpers.forms'
+      - '@menus.cache'
+
+  menus.helpers.managemenuitem:
+    class: ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem
+    arguments:
+      - '@core.helpers.secure'
+      - '@core.nested_set'
+      - '@menus.model.menuitemrepository'
+
+  menus.helpers.menuitemformfields:
+    class: ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields
+    arguments:
+      - '@core.helpers.forms'
+      - '@menus.helpers.menuitemslist'
+      - '@menus.model.menurepository'

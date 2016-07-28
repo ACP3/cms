@@ -25,7 +25,7 @@ class Nl2p extends AbstractModifier
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'nl2p';
     }

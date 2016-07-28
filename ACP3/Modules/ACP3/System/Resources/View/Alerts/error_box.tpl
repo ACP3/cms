@@ -8,14 +8,5 @@
                 <li{if intval($key) === 0} data-error="{$key}"{/if}>{$value}</li>
             {/foreach}
         </ul>
-        {if $error_box.non_integer_keys === true}
-            {if $IS_AJAX === true}
-                {include_js module="system" file="error_box"}
-            {else}
-                {javascripts}
-                    {include_js module="system" file="error_box"}
-                {/javascripts}
-            {/if}
-        {/if}
     </div>
 {/block}

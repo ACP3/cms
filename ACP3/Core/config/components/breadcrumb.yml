@@ -1,0 +1,15 @@
+services:
+  core.breadcrumb:
+    class: ACP3\Core\Breadcrumb\Steps
+    arguments:
+      - '@service_container'
+      - '@core.lang'
+      - '@core.http.request'
+      - '@core.router'
+      - '@core.eventDispatcher'
+
+  core.breadcrumb.title:
+    class: ACP3\Core\Breadcrumb\Title
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.breadcrumb'

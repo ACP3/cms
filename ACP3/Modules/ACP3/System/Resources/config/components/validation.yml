@@ -1,0 +1,11 @@
+services:
+  system.validator.settings:
+    class: ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation
+    parent: core.validator.abstract
+
+  system.validation.validation_rules.is_wysiwyg_editor_validation_rule:
+    class: ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidationRule
+    arguments:
+      - '@service_container'
+    tags:
+      - { name: core.validation.validation_rule }

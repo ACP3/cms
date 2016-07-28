@@ -1,0 +1,18 @@
+services:
+  seo.validator:
+    class: ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
+    parent: core.validator.abstract
+
+  seo.validation.admin_settings_form_validation:
+    class: ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation
+    parent: core.validator.abstract
+
+  seo.validation.validation_rules.uri_alias_validation_rule:
+    class: ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule
+    arguments:
+      - '@core.environment.application_path'
+      - '@core.validation.validation_rules.internal_uri_validation_rule'
+      - '@core.validation.validation_rules.uri_safe_validation_rule'
+      - '@seo.model.seorepository'
+    tags:
+      - { name: core.validation.validation_rule }

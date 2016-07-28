@@ -1,0 +1,6 @@
+services:
+  comments.installer.schema:
+    class: ACP3\Modules\ACP3\Comments\Installer\Schema
+
+  comments.installer.migration:
+    class: ACP3\Modules\ACP3\Comments\Installer\Migration

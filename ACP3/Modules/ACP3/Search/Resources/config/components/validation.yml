@@ -1,0 +1,5 @@
+services:
+  search.validator:
+    class: ACP3\Modules\ACP3\Search\Validation\FormValidation
+    parent: core.validator.abstract
+

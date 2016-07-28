@@ -41,7 +41,14 @@ abstract class AbstractWYSIWYG
     /**
      * Configures the given WYSIWYG-Editor
      *
+     * @return array
+     */
+    abstract public function getData();
+
+    /**
+     * Returns the name of the WYSIWYG Editor
+     *
      * @return string
      */
-    abstract public function display();
+    abstract public function getFriendlyName();
 }

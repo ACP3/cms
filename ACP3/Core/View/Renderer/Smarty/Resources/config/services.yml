@@ -1,4 +1,6 @@
 services:
   smarty.resource.asset:
     class: ACP3\Core\View\Renderer\Smarty\Resources\Asset
-    arguments: ['@core.assets.themeResolver']
+    arguments: ['@core.assets.file_resolver']
+    tags:
+      - { name: core.view.extension }

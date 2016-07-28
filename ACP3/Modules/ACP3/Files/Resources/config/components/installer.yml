@@ -1,0 +1,7 @@
+services:
+  files.installer.schema:
+    class: ACP3\Modules\ACP3\Files\Installer\Schema
+
+  files.installer.migration:
+    class: ACP3\Modules\ACP3\Files\Installer\Migration
+    parent: core.modules.installer.abstractMigration

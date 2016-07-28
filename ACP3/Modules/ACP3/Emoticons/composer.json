@@ -1,0 +1,21 @@
+{
+  "name": "acp3/module-emoticons",
+  "description": "Provides the emoticons module for the ACP3 CMS.",
+  "license": "GPL-2.0+",
+  "type": "acp3-module",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "acp3/composer-installer": "*",
+    "acp3/core": "^4.0.0",
+    "acp3/setup": "^4.0.0",
+    "acp3/module-errors": "^4.0.0",
+    "acp3/module-permissions": "^4.0.0",
+    "acp3/module-seo": "^4.0.0",
+    "acp3/module-system": "^4.0.0",
+    "acp3/module-users": "^4.0.0"
+  },
+  "extra": {
+    "installer-name": "ACP3/Emoticons"
+  }
+}

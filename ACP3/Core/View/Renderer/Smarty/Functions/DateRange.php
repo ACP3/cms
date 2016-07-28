@@ -1,8 +1,6 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
-use ACP3\Core\Date;
-
 /**
  * Class DateRange
  * @package ACP3\Core\View\Renderer\Smarty\Functions
@@ -10,22 +8,22 @@ use ACP3\Core\Date;
 class DateRange extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\Date
+     * @var \ACP3\Core\Helpers\Formatter\DateRange
      */
-    protected $date;
+    protected $dateRangeFormatter;
 
     /**
-     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Helpers\Formatter\DateRange $dateRangeFormatter
      */
-    public function __construct(Date $date)
+    public function __construct(\ACP3\Core\Helpers\Formatter\DateRange $dateRangeFormatter)
     {
-        $this->date = $date;
+        $this->dateRangeFormatter = $dateRangeFormatter;
     }
 
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'date_range';
     }
@@ -38,9 +36,9 @@ class DateRange extends AbstractFunction
         $format = isset($params['format']) ? $params['format'] : 'long';
 
         if (isset($params['start']) && isset($params['end'])) {
-            return $this->date->formatTimeRange($params['start'], $params['end'], $format);
+            return $this->dateRangeFormatter->formatTimeRange($params['start'], $params['end'], $format);
         } elseif (isset($params['start'])) {
-            return $this->date->formatTimeRange($params['start'], '', $format);
+            return $this->dateRangeFormatter->formatTimeRange($params['start'], '', $format);
         }
 
         return '';

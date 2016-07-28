@@ -1,7 +1,13 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Modules\ACP3\Articles;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
 
 /**
  * Class Cache
@@ -12,21 +18,21 @@ class Cache extends Core\Modules\AbstractCacheStorage
     const CACHE_ID = 'list_id_';
 
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model
+     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
-    protected $articlesModel;
+    protected $articleRepository;
 
     /**
-     * @param Core\Cache $cache
-     * @param Model $articlesModel
+     * @param Core\Cache        $cache
+     * @param ArticleRepository $articleRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Model $articlesModel
+        ArticleRepository $articleRepository
     ) {
         parent::__construct($cache);
 
-        $this->articlesModel = $articlesModel;
+        $this->articleRepository = $articleRepository;
     }
 
     /**
@@ -40,7 +46,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function getCache($id)
     {
         if ($this->cache->contains(self::CACHE_ID . $id) === false) {
-            $this->setCache($id);
+            $this->saveCache($id);
         }
 
         return $this->cache->fetch(self::CACHE_ID . $id);
@@ -54,8 +60,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function setCache($id)
+    public function saveCache($id)
     {
-        return $this->cache->save(self::CACHE_ID . $id, $this->articlesModel->getOneById($id));
+        return $this->cache->save(self::CACHE_ID . $id, $this->articleRepository->getOneById($id));
     }
 }

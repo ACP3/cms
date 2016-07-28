@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-    var $parent = $('#parent_id');
+    var $parent = $('#parent-id');
 
     // Nur die dem Block zugehörigen übergeordneten Seiten anzeigen
     $parent.find('optgroup').hide();

@@ -3,6 +3,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Helpers\StringFormatter;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use InlineStyle\InlineStyle;
 
 /**
@@ -11,6 +12,22 @@ use InlineStyle\InlineStyle;
  */
 class Mailer
 {
+    /**
+     * @var \ACP3\Core\Logger
+     */
+    protected $logger;
+    /**
+     * @var \ACP3\Core\View
+     */
+    protected $view;
+    /**
+     * @var \ACP3\Core\Config
+     */
+    protected $config;
+    /**
+     * @var \ACP3\Core\Helpers\StringFormatter
+     */
+    protected $stringFormatter;
     /**
      * @var string
      */
@@ -32,9 +49,9 @@ class Mailer
      */
     private $mailSignature = '';
     /**
-     * @var string
+     * @var string|array
      */
-    private $from = '';
+    private $from;
     /**
      * @var string|array
      */
@@ -55,26 +72,23 @@ class Mailer
      * @var \PHPMailer
      */
     private $phpMailer;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Core\Config
-     */
-    private $config;
 
     /**
-     * @param \ACP3\Core\View   $view
-     * @param \ACP3\Core\Config $config
+     * @param \ACP3\Core\Logger                  $logger
+     * @param \ACP3\Core\View                    $view
+     * @param \ACP3\Core\Config                  $config
+     * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
      */
     public function __construct(
+        Logger $logger,
         View $view,
-        Config $config
-    )
-    {
+        Config $config,
+        StringFormatter $stringFormatter
+    ) {
+        $this->logger = $logger;
         $this->view = $view;
         $this->config = $config;
+        $this->stringFormatter = $stringFormatter;
     }
 
     /**
@@ -162,13 +176,13 @@ class Mailer
     }
 
     /**
-     * @param array|string $to
+     * @param array|string $recipients
      *
      * @return $this
      */
-    public function setRecipients($to)
+    public function setRecipients($recipients)
     {
-        $this->recipients = $to;
+        $this->recipients = $recipients;
 
         return $this;
     }
@@ -207,7 +221,7 @@ class Mailer
         try {
             $this->configure();
 
-            $this->phpMailer->Subject = $this->subject;
+            $this->phpMailer->Subject = $this->generateSubject();
 
             if (is_array($this->from) === true) {
                 $this->phpMailer->SetFrom($this->from['email'], $this->from['name']);
@@ -215,7 +229,7 @@ class Mailer
                 $this->phpMailer->SetFrom($this->from);
             }
 
-            $this->_generateBody();
+            $this->generateBody();
 
             // Add attachments to the E-mail
             if (count($this->attachments) > 0) {
@@ -227,17 +241,23 @@ class Mailer
             }
 
             if (!empty($this->recipients)) {
-                return $this->bcc === true ? $this->_sendBcc() : $this->_sendTo();
+                return $this->bcc === true ? $this->sendBcc() : $this->sendTo();
             }
-
-            return false;
         } catch (\phpmailerException $e) {
-            Logger::error('mailer', $e->getMessage());
-            return false;
+            $this->logger->error('mailer', $e);
         } catch (\Exception $e) {
-            Logger::error('mailer', $e->getMessage());
-            return false;
+            $this->logger->error('mailer', $e);
         }
+
+        return false;
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateSubject()
+    {
+        return "=?utf-8?b?" . base64_encode($this->decodeHtmlEntities($this->subject)) . "?=";
     }
 
     /**
@@ -245,14 +265,14 @@ class Mailer
      *
      * @return $this
      */
-    private function _generateBody()
+    private function generateBody()
     {
         if (!empty($this->htmlBody) && !empty($this->template)) {
             $mail = [
                 'charset' => 'UTF-8',
                 'title' => $this->subject,
                 'body' => $this->htmlBody,
-                'signature' => $this->_getHtmlSignature(),
+                'signature' => $this->getHtmlSignature(),
                 'url_web_view' => $this->urlWeb
             ];
             $this->view->assign('mail', $mail);
@@ -264,12 +284,12 @@ class Mailer
 
             // Fallback for E-mail clients which don't support HTML E-mails
             if (!empty($this->body)) {
-                $this->phpMailer->AltBody = $this->_decodeHtmlEntities($this->body . $this->_getTextSignature());
+                $this->phpMailer->AltBody = $this->decodeHtmlEntities($this->body . $this->getTextSignature());
             } else {
-                $this->phpMailer->AltBody = $this->phpMailer->html2text($this->htmlBody . $this->_getHtmlSignature(), true);
+                $this->phpMailer->AltBody = $this->phpMailer->html2text($this->htmlBody . $this->getHtmlSignature(), true);
             }
         } else {
-            $this->phpMailer->Body = $this->_decodeHtmlEntities($this->body . $this->_getTextSignature());
+            $this->phpMailer->Body = $this->decodeHtmlEntities($this->body . $this->getTextSignature());
         }
 
         return $this;
@@ -278,12 +298,11 @@ class Mailer
     /**
      * @return string
      */
-    private function _getHtmlSignature()
+    private function getHtmlSignature()
     {
         if (!empty($this->mailSignature)) {
             if ($this->mailSignature === strip_tags($this->mailSignature)) {
-                $formatter = new StringFormatter();
-                return $formatter->nl2p($this->mailSignature);
+                return $this->stringFormatter->nl2p($this->mailSignature);
             }
             return $this->mailSignature;
         }
@@ -292,11 +311,11 @@ class Mailer
 
     /**
      *
-     * @param $data
+     * @param string $data
      *
      * @return string
      */
-    private function _decodeHtmlEntities($data)
+    private function decodeHtmlEntities($data)
     {
         return html_entity_decode($data, ENT_QUOTES, 'UTF-8');
     }
@@ -304,7 +323,7 @@ class Mailer
     /**
      * @return string
      */
-    private function _getTextSignature()
+    private function getTextSignature()
     {
         if (!empty($this->mailSignature)) {
             return "\n-- \n" . $this->phpMailer->html2text($this->mailSignature, true);
@@ -317,7 +336,7 @@ class Mailer
      *
      * @return bool
      */
-    private function _sendBcc()
+    private function sendBcc()
     {
         if (is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
             $this->recipients = [$this->recipients];
@@ -326,7 +345,7 @@ class Mailer
         foreach ($this->recipients as $recipient) {
             set_time_limit(10);
 
-            $this->_addRecipients($recipient, true);
+            $this->addRecipients($recipient, true);
         }
 
         return $this->phpMailer->send();
@@ -335,27 +354,27 @@ class Mailer
     /**
      * Adds multiple recipients to the to be send email
      *
-     * @param      $recipients
-     * @param bool $bcc
+     * @param string|array $recipients
+     * @param bool         $bcc
      *
      * @return $this
      */
-    private function _addRecipients($recipients, $bcc = false)
+    private function addRecipients($recipients, $bcc = false)
     {
         if (is_array($recipients) === true) {
             if (empty($recipients['email']) === false && empty($recipients['name']) === false) {
-                $this->_addRecipient($recipients['email'], $recipients['name'], $bcc);
+                $this->addRecipient($recipients['email'], $recipients['name'], $bcc);
             } else {
                 foreach ($recipients as $recipient) {
                     if (is_array($recipient) === true) {
-                        $this->_addRecipient($recipient['email'], $recipient['name'], '', $bcc);
+                        $this->addRecipient($recipient['email'], $recipient['name'], $bcc);
                     } else {
-                        $this->_addRecipient($recipient, '', $bcc);
+                        $this->addRecipient($recipient, '', $bcc);
                     }
                 }
             }
         } else {
-            $this->_addRecipient($recipients, '', $bcc);
+            $this->addRecipient($recipients, '', $bcc);
         }
 
         return $this;
@@ -364,13 +383,13 @@ class Mailer
     /**
      * Adds a single recipient to the to be send email
      *
-     * @param        $email
+     * @param string $email
      * @param string $name
      * @param bool   $bcc
      *
      * @return $this
      */
-    private function _addRecipient($email, $name = '', $bcc = false)
+    private function addRecipient($email, $name = '', $bcc = false)
     {
         if ($bcc === true) {
             $this->phpMailer->addBCC($email, $name);
@@ -386,7 +405,7 @@ class Mailer
      *
      * @return bool
      */
-    private function _sendTo()
+    private function sendTo()
     {
         if (is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
             $this->recipients = [$this->recipients];
@@ -394,7 +413,7 @@ class Mailer
 
         foreach ($this->recipients as $recipient) {
             set_time_limit(20);
-            $this->_addRecipients($recipient);
+            $this->addRecipients($recipient);
             $this->phpMailer->send();
             $this->phpMailer->clearAllRecipients();
         }
@@ -404,6 +423,7 @@ class Mailer
 
     /**
      * Resets the currently set mailer values back to there default values
+     *
      * @return $this
      */
     public function reset()
@@ -437,7 +457,7 @@ class Mailer
         if ($this->phpMailer === null) {
             $this->phpMailer = new \PHPMailer(true);
 
-            $settings = $this->config->getSettings('system');
+            $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
             if (strtolower($settings['mailer_type']) === 'smtp') {
                 $this->phpMailer->set('Mailer', 'smtp');
@@ -453,7 +473,7 @@ class Mailer
                 $this->phpMailer->set('Mailer', 'mail');
             }
             $this->phpMailer->CharSet = 'UTF-8';
-            $this->phpMailer->Encoding = '8bit';
+            $this->phpMailer->Encoding = 'quoted-printable';
             $this->phpMailer->WordWrap = 76;
         }
 

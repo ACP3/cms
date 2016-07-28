@@ -1,0 +1,6 @@
+services:
+  filemanager.installer.schema:
+    class: ACP3\Modules\ACP3\Filemanager\Installer\Schema
+
+  filemanager.installer.migration:
+    class: ACP3\Modules\ACP3\Filemanager\Installer\Migration

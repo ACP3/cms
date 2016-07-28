@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -14,10 +14,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="feed-type" class="col-sm-2 control-label">{lang t="feeds|feed_type"}</label>
+            <label for="feed-type" class="col-sm-2 control-label required">{lang t="feeds|feed_type"}</label>
 
             <div class="col-sm-10">
-                <select class="form-control" name="feed_type" id="feed-type">
+                <select class="form-control" name="feed_type" id="feed-type" required>
                     {foreach $feed_types as $row}
                         <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                     {/foreach}
@@ -33,6 +33,6 @@
         </div>
     </form>
     {javascripts}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

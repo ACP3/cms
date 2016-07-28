@@ -1,0 +1,36 @@
+services:
+  permissions.validator.role:
+    class: ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation
+    parent: core.validator.abstract
+
+  permissions.validator.resource:
+    class: ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
+    parent: core.validator.abstract
+
+  permissions.validation.validation_rules.privilege_exists_validation_rule:
+    class: ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegeExistsValidationRule
+    arguments:
+      - '@permissions.model.privilegerepository'
+    tags:
+      - { name: core.validation.validation_rule }
+
+  permissions.validation.validation_rules.privileges_exist_validation_rule:
+    class: ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegesExistValidationRule
+    arguments:
+      - '@permissions.model.privilegerepository'
+    tags:
+      - { name: core.validation.validation_rule }
+
+  permissions.validation.validation_rules.role_not_exists_validation_rule:
+    class: ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RoleNotExistsValidationRule
+    arguments:
+      - '@permissions.model.rolerepository'
+    tags:
+      - { name: core.validation.validation_rule }
+
+  permissions.validation.validation_rules.roles_exist_validation_rule:
+    class: ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RolesExistValidationRule
+    arguments:
+      - '@core.acl'
+    tags:
+      - { name: core.validation.validation_rule }

@@ -10,16 +10,11 @@ use ACP3\Core;
 class PageCssClasses extends AbstractFilter
 {
     /**
-     * @var string
-     */
-    protected $filterType = 'output';
-
-    /**
      * @var \ACP3\Core\Assets\PageCssClasses
      */
     protected $pageCssClasses;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
     /**
@@ -29,34 +24,39 @@ class PageCssClasses extends AbstractFilter
 
     /**
      * @param \ACP3\Core\Assets\PageCssClasses $pageCssClasses
-     * @param \ACP3\Core\Request               $request
+     * @param \ACP3\Core\Http\RequestInterface $request
      */
     public function __construct(
         Core\Assets\PageCssClasses $pageCssClasses,
-        Core\Request $request)
+        Core\Http\RequestInterface $request)
     {
         $this->pageCssClasses = $pageCssClasses;
         $this->request = $request;
     }
 
     /**
-     * @param                           $tpl_output
-     * @param \Smarty_Internal_Template $smarty
-     *
-     * @return string
+     * @inheritdoc
      */
-    public function process($tpl_output, \Smarty_Internal_Template $smarty)
+    public function getExtensionName()
     {
-        if (strpos($tpl_output, '<body') !== false) {
+        return 'output';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function process($tplOutput, \Smarty_Internal_Template $smarty)
+    {
+        if (strpos($tplOutput, '<body') !== false) {
             if ($this->cssClassCache === '') {
                 $pieces = [
                     $this->pageCssClasses->getModule(),
                     $this->pageCssClasses->getControllerAction()
                 ];
 
-                if ($this->request->area === 'admin') {
+                if ($this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN) {
                     $pieces[] = 'in-admin';
-                } elseif ($this->request->getIsHomepage() === true) {
+                } elseif ($this->request->isHomepage() === true) {
                     $pieces[] = 'is-homepage';
                 } else {
                     $pieces[] = $this->pageCssClasses->getDetails();
@@ -65,9 +65,9 @@ class PageCssClasses extends AbstractFilter
                 $this->cssClassCache = 'class="' . implode(' ', $pieces) . '"';
             }
 
-            $tpl_output = str_replace('<body', '<body ' . $this->cssClassCache, $tpl_output);
+            $tplOutput = str_replace('<body', '<body ' . $this->cssClassCache, $tplOutput);
         }
 
-        return $tpl_output;
+        return $tplOutput;
     }
 }

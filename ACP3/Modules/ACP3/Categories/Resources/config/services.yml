@@ -1,0 +1,19 @@
+imports:
+  - { resource: components/cache.yml }
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
+
+services:
+  categories.helpers:
+    class: ACP3\Modules\ACP3\Categories\Helpers
+    arguments:
+      - '@core.acl'
+      - '@core.lang'
+      - '@core.modules'
+      - '@core.http.request'
+      - '@core.helpers.forms'
+      - '@core.helpers.secure'
+      - '@categories.cache'
+      - '@categories.model.categories_repository'

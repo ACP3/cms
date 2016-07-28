@@ -1,0 +1,43 @@
+services:
+  system.controller.admin.extensions.designs:
+    class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Designs
+    arguments:
+      - '@core.context.admin'
+      - '@core.xml'
+
+  system.controller.admin.extensions.index:
+    class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Index
+    parent: core.controller.admin
+
+  system.controller.admin.extensions.modules:
+    class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Modules
+    arguments:
+      - '@core.context.admin'
+      - '@core.modules.moduleInfoCache'
+      - '@system.model.modulerepository'
+      - '@system.helpers.installer'
+      - '@permissions.cache'
+
+  system.controller.admin.index.configuration:
+    class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Configuration
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@system.validator.settings'
+
+  system.controller.admin.index.index:
+    class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Index
+    parent: core.controller.admin
+
+  system.controller.admin.maintenance.cache:
+    class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Cache
+    parent: core.controller.admin
+
+  system.controller.admin.maintenance.index:
+    class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Index
+    parent: core.controller.admin
+
+  system.controller.admin.maintenance.update_check:
+    class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\UpdateCheck
+    parent: core.controller.admin

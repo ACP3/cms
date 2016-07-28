@@ -1,0 +1,7 @@
+services:
+  newsletter.installer.schema:
+    class: ACP3\Modules\ACP3\Newsletter\Installer\Schema
+
+  newsletter.installer.migration:
+    class: ACP3\Modules\ACP3\Newsletter\Installer\Migration
+    parent: core.modules.installer.abstractMigration

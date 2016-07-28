@@ -1,0 +1,26 @@
+{
+  "name": "acp3/module-search",
+  "description": "Provides the search module for the ACP3 CMS.",
+  "license": "GPL-2.0+",
+  "type": "acp3-module",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "acp3/composer-installer": "*",
+    "acp3/core": "^4.0.0",
+    "acp3/setup": "^4.0.0",
+    "acp3/module-errors": "^4.0.0",
+    "acp3/module-permissions": "^4.0.0",
+    "acp3/module-seo": "^4.0.0",
+    "acp3/module-system": "^4.0.0",
+    "acp3/module-users": "^4.0.0"
+  },
+  "suggest": {
+    "acp3/module-articles": "Makes it possible to search through Articles.",
+    "acp3/module-files": "Makes it possible to search through the Downloads.",
+    "acp3/module-news": "Makes it possible to search through the News."
+  },
+  "extra": {
+    "installer-name": "ACP3/Search"
+  }
+}

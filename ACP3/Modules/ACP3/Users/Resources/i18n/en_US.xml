@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>English (United States)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="account_locked">Your user account has been locked. To reactivate it, please use the &quot;forgot password&quot; function, to receive a new password.</item>
+        <item key="address">Address</item>
+        <item key="address_street">Street</item>
+        <item key="address_house_number">House number</item>
+        <item key="address_zip">Zip code</item>
+        <item key="address_city">City</item>
+        <item key="administration">Administration</item>
+        <item key="admin_index_create">Create new user</item>
+        <item key="admin_index_delete">Delete users</item>
+        <item key="admin_index_edit">Edit user</item>
+        <item key="admin_index_settings">Settings</item>
+        <item key="admin_user_undeletable">The administrator can't be deleted.</item>
+        <item key="allow_language_override">Allow users to override the default language</item>
+        <item key="allow_entries_override">Allow users to override the number of displayed resultsets per page</item>
+        <item key="birthday">Birthday</item>
+        <item key="birthday_hide">Hide birthday</item>
+        <item key="birthday_display_completely">Display birthday completely</item>
+        <item key="birthday_hide_year">Hide year of birth</item>
+        <item key="contact">Contact</item>
+        <item key="country">Country</item>
+        <item key="deleted_user">Deleted user</item>
+        <item key="display_address">Display address in public profile</item>
+        <item key="display_country">Display country in public profile</item>
+        <item key="display_mail">Display E-mail address in public profile</item>
+        <item key="display_profile_field_info">If you don't want to display a certain profile field, just untick the respective field.</item>
+        <item key="enable_registration">Enable registration of new users</item>
+        <item key="forgot_pwd">Forgot password?</item>
+        <item key="forgot_pwd_error">While sending the E-mail with your new password an error has occurred.</item>
+        <item key="forgot_pwd_description">Please enter your user name or E-mail address of your user account.</item>
+        <item key="forgot_pwd_mail_subject">Password change on {title} ({host})</item>
+        <item key="forgot_pwd_mail_message">Hello {name},
+
+            You have requested on the website {title} ({host}) a new password for your account. Enclosed all details:
+
+            User name: {name}
+            E-mail address: {mail}
+            Password: {password}
+
+            Please change the password again, after you logged in to your account.
+        </item>
+        <item key="forgot_pwd_success">An E-mail with your new password has been successfully sent to your E-mail address.</item>
+        <item key="frontend_account_edit">Edit profile</item>
+        <item key="frontend_account_index">Control center</item>
+        <item key="frontend_account_settings">Edit settings</item>
+        <item key="frontend_index_forgot_pwd">Forgot password?</item>
+        <item key="frontend_index_login">Login</item>
+        <item key="frontend_index_register">Register</item>
+        <item key="frontend_index_view_profile">View profile</item>
+        <item key="gender">Gender</item>
+        <item key="gender_female">Female</item>
+        <item key="gender_male">Male</item>
+        <item key="gender_not_specified">Not specified</item>
+        <item key="home">Control center</item>
+        <item key="icq">ICQ-Number</item>
+        <item key="invalid_birthday">Please type in a valid birthday.</item>
+        <item key="invalid_icq_number">Please type in a valid ICQ number.</item>
+        <item key="language">Language</item>
+        <item key="log_in">Log in</item>
+        <item key="login">Login</item>
+        <item key="logout">Logout</item>
+        <item key="mod_description">With this module you can administer the users.</item>
+        <item key="new_pwd">New password</item>
+        <item key="new_pwd_repeat">Repeat new password</item>
+        <item key="nickname_or_email">User name or E-mail address</item>
+        <item key="nickname">User name</item>
+        <item key="nickname_or_password_wrong">Either the user name or the password is wrong.</item>
+        <item key="privacy">Privacy</item>
+        <item key="pwd">Password</item>
+        <item key="pwd_repeat">Repeat password</item>
+        <item key="realname">Real name</item>
+        <item key="remember_me">Stay logged in</item>
+        <item key="register">Register</item>
+        <item key="register_error">While creating the user account an error has occurred.</item>
+        <item key="register_mail_subject">Your registration at {title} ({host})</item>
+        <item key="register_mail_message">Hello {name},
+
+            You have just registered a user account on the website of {title} ({host}). Enclosed all details:
+
+            User name: {name}
+            E-mail address: {mail}
+            Password: {password}
+        </item>
+        <item key="register_success">The user account has been created successfully.</item>
+        <item key="select_access_level">Please select an access level for this user.</item>
+        <item key="select_address_display">Please select whether you want to display your address in the public profile or not.</item>
+        <item key="select_birthday_display">Please select the format of your birthday in which it should be displayed in your public profile.</item>
+        <item key="select_country_display">Please select whether you want to display your country in the public profile or not.</item>
+        <item key="select_enable_registration">Please select whether users should be allowed to register on this website.</item>
+        <item key="select_entries_override">Please select whether users should be allowed to override the number of displayed resultsets per page.</item>
+        <item key="select_language">Please select the language in which you want to see the website.</item>
+        <item key="select_language_override">Please select whether users should be allowed to override the default language.</item>
+        <item key="select_mail_display">Please select whether you want to display your E-mail address in the public profile or not.</item>
+        <item key="select_super_user">Please select whether the user should be a super user or not.</item>
+        <item key="send_email">Send E-mail</item>
+        <item key="settings">Settings</item>
+        <item key="skype">Skype</item>
+        <item key="super_user">Super user</item>
+        <item key="type_in_nickname_or_email">Please either enter the E-mail address or the user name you used with the registration.</item>
+        <item key="type_in_pwd">Either the password is empty or there is a typo in the repetition.</item>
+        <item key="user_email_already_exists">There is already an user account registered with the same E-mail address.</item>
+        <item key="user_menu">User menu</item>
+        <item key="user_name_already_exists">There is already an user account registered with the same user name.</item>
+        <item key="user_not_exists">There is no user profile registered with the typed in user name respectively the typed in E-mail address.</item>
+        <item key="user_profile_not_exists">The requested user profile doesn't exists.</item>
+        <item key="user_registration_disabled">The registration for new users is currently diabled!</item>
+        <item key="users">Users</item>
+        <item key="users_found">In total there are %count% users registered on this Website.</item>
+        <item key="view_profile">View user profile</item>
+        <item key="visit_website">Visit website</item>
+    </keys>
+</language>

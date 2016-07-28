@@ -1,0 +1,134 @@
+services:
+  gallery.controller.admin.index.create:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Create
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@gallery.model'
+      - '@gallery.validator.gallery'
+    calls:
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+
+  gallery.controller.admin.index.delete:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Delete
+    arguments:
+      - '@core.context.admin'
+      - '@gallery.cache'
+      - '@gallery.helpers'
+      - '@gallery.model.galleryrepository'
+      - '@gallery.model.picturerepository'
+    calls:
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+
+  gallery.controller.admin.index.edit:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Edit
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@gallery.model.galleryrepository'
+      - '@gallery.model.picturerepository'
+      - '@gallery.model'
+      - '@gallery.validator.gallery'
+    calls:
+      - ['setAliases', ['@?seo.core.router.aliases']]
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
+
+  gallery.controller.admin.index.index:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Index
+    arguments:
+      - '@core.context.admin'
+      - '@gallery.model.gallery_data_grid_repository'
+
+  gallery.controller.admin.index.settings:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Settings
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@gallery.validator.settings'
+
+  gallery.controller.admin.pictures.create:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Create
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@gallery.model.galleryrepository'
+      - '@gallery.model.picturerepository'
+      - '@gallery.model.picture_model'
+      - '@gallery.cache'
+      - '@gallery.validator.picture'
+    calls:
+      - ['setAliases', ['@?seo.core.router.aliases']]
+      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+
+  gallery.controller.admin.pictures.delete:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Delete
+    arguments:
+      - '@core.context.admin'
+      - '@gallery.helpers'
+      - '@gallery.model.picturerepository'
+      - '@gallery.cache'
+    calls:
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+
+  gallery.controller.admin.pictures.edit:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Edit
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@gallery.helpers'
+      - '@gallery.model.picturerepository'
+      - '@gallery.model.picture_model'
+      - '@gallery.cache'
+      - '@gallery.validator.picture'
+
+  gallery.controller.admin.pictures.order:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Order
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.sort'
+      - '@gallery.model.picturerepository'
+      - '@gallery.cache'
+
+  gallery.controller.frontend.index.details:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Details
+    arguments:
+      - '@core.context.frontend'
+      - '@core.date'
+      - '@gallery.model.picturerepository'
+    calls:
+      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
+
+  gallery.controller.frontend.index.image:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Image
+    arguments:
+      - '@core.context.frontend'
+      - '@gallery.model.picturerepository'
+
+  gallery.controller.frontend.index.index:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Index
+    arguments:
+      - '@core.context.frontend'
+      - '@core.date'
+      - '@core.pagination'
+      - '@gallery.model.galleryrepository'
+
+  gallery.controller.frontend.index.pics:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Pics
+    arguments:
+      - '@core.context.frontend'
+      - '@core.date'
+      - '@gallery.model.galleryrepository'
+      - '@gallery.cache'
+
+  gallery.controller.widget.index.index:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Widget\Index\Index
+    arguments:
+      - '@core.context.widget'
+      - '@core.date'
+      - '@gallery.model.galleryrepository'
+

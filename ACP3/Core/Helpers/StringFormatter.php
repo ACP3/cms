@@ -10,9 +10,7 @@ use ACP3\Core;
 class StringFormatter
 {
     /**
-     * Macht einen String URL sicher
-     *
-     * @param string $var Die unzuwandelnde Variable
+     * @param string $var
      *
      * @return string
      */
@@ -22,6 +20,7 @@ class StringFormatter
         if (!preg_match('/&([a-z]+);/', $var)) {
             $var = htmlentities($var, ENT_QUOTES, 'UTF-8');
         }
+
         $search = [
             '/&([a-z]{1})uml;/',
             '/&szlig;/',
@@ -38,53 +37,59 @@ class StringFormatter
             '-',
             '',
         ];
+
         return preg_replace($search, $replace, strtolower($var));
     }
 
     /**
-     * Konvertiert Zeilenumbrüche zu neuen Absätzen
+     * Converts new lines to HTML paragraphs and/or line breaks
      *
      * @param string  $data
-     * @param boolean $isXhtml
-     * @param boolean $lineBreaks
+     * @param boolean $useLineBreaks
      *
      * @return string
      */
-    public function nl2p($data, $isXhtml = true, $lineBreaks = false)
+    public function nl2p($data, $useLineBreaks = false)
     {
         $data = trim($data);
-        if ($lineBreaks === true) {
-            return '<p>' . preg_replace(["/([\n]{2,})/i", "/([^>])\n([^<])/i"], ["</p>\n<p>", '<br' . ($isXhtml == true ? ' /' : '') . '>'], $data) . '</p>';
-        } else {
-            return '<p>' . preg_replace("/([\n]{1,})/i", "</p>\n<p>", $data) . '</p>';
+        $pattern = "/([\n]{1,})/i";
+        $replace = "</p>\n<p>";
+
+        if ($useLineBreaks === true) {
+            $pattern = [
+                "/([\n]{2,})/i", // multiple new lines
+                "/([^>])\n([^<])/i" // get the remaining new lines
+            ];
+            $replace = [
+                "</p>\n<p>",
+                '${1}<br>${2}'
+            ];
         }
+
+        return '<p>' . preg_replace($pattern, $replace, $data) . '</p>';
     }
 
     /**
-     * Kürzt einen String, welcher im UTF-8-Charset vorliegt
-     * auf eine bestimmte Länge
+     * Shortens a string to the given length
      *
      * @param string  $data
-     *    Der zu kürzende String
      * @param integer $chars
-     *    Die anzuzeigenden Zeichen
-     * @param integer $diff
-     *    Anzahl der Zeichen, welche nach strlen($data) - $chars noch kommen müssen
+     * @param integer $offset
      * @param string  $append
-     *    Kann bspw. dazu genutzt werden, um an den gekürzten Text noch einen Weiterlesen-Link anzuhängen
      *
      * @return string
      */
-    public function shortenEntry($data, $chars = 300, $diff = 50, $append = '')
+    public function shortenEntry($data, $chars = 300, $offset = 50, $append = '')
     {
-        if ($chars <= $diff) {
-            $diff = 0;
+        if ($chars <= $offset) {
+            throw new \InvalidArgumentException('The offset should not be bigger then the to be displayed characters.');
         }
 
         $shortened = utf8_decode(html_entity_decode(strip_tags($data), ENT_QUOTES, 'UTF-8'));
-        if (strlen($shortened) > $chars && strlen($shortened) - $chars >= $diff) {
-            return utf8_encode(substr($shortened, 0, $chars - $diff)) . $append;
+        if (strlen($shortened) > $chars && strlen($shortened) - $chars >= $offset) {
+            return utf8_encode(substr($shortened, 0, $chars - $offset)) . $append;
         }
+
         return $data;
     }
 }

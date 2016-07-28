@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -6,13 +6,13 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="nickname" class="col-sm-2 control-label">{lang t="users|nickname"}</label>
+            <label for="nickname" class="col-sm-2 control-label required">{lang t="users|nickname"}</label>
 
             <div class="col-sm-10">
                 <input class="form-control" type="text" name="nickname" id="nickname" maxlength="30" required></div>
         </div>
         <div class="form-group">
-            <label for="pwd" class="col-sm-2 control-label">{lang t="users|pwd"}</label>
+            <label for="pwd" class="col-sm-2 control-label required">{lang t="users|pwd"}</label>
 
             <div class="col-sm-10"><input class="form-control" type="password" name="pwd" id="pwd" required></div>
         </div>
@@ -34,6 +34,6 @@
         </div>
     </form>
     {javascripts}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

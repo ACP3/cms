@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -9,15 +9,14 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general_statements"}</a></li>
                 <li><a href="#tab-2" data-toggle="tab">{lang t="menus|page_type"}</a></li>
-                <li><a href="#tab-3" data-toggle="tab">{lang t="seo|seo"}</a></li>
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
                     <div class="form-group">
-                        <label for="mode" class="col-sm-2 control-label">{lang t="menus|page_type"}</label>
+                        <label for="mode" class="col-sm-2 control-label required">{lang t="menus|page_type"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="mode" id="mode">
+                            <select class="form-control" name="mode" id="mode" required>
                                 {foreach $mode as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                                 {/foreach}
@@ -25,17 +24,17 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">{lang t="menus|title"}</label>
+                        <label for="title" class="col-sm-2 control-label required">{lang t="menus|title"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
                         </div>
                     </div>
-                    {include file="asset:menus/create_menu_item.tpl"}
+                    {include file="asset:Menus/Partials/create_menu_item.tpl"}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div id="module-container" class="form-group">
-                        <label for="link-module" class="col-sm-2 control-label">{lang t="menus|module"}</label>
+                        <label for="link-module" class="col-sm-2 control-label required">{lang t="menus|module"}</label>
 
                         <div class="col-sm-10">
                             <select class="form-control" name="module" id="link-module">
@@ -47,7 +46,7 @@
                         </div>
                     </div>
                     <div id="link-container" class="form-group">
-                        <label for="link-uri" class="col-sm-2 control-label">{lang t="menus|uri"}</label>
+                        <label for="link-uri" class="col-sm-2 control-label required">{lang t="menus|uri"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="uri" id="link-uri" value="{$form.uri}" maxlength="120">
@@ -57,7 +56,7 @@
                     </div>
                     {if isset($articles)}
                         <div id="articles-container" class="form-group">
-                            <label for="link-articles" class="col-sm-2 control-label">{lang t="articles|articles"}</label>
+                            <label for="link-articles" class="col-sm-2 control-label required">{lang t="articles|articles"}</label>
 
                             <div class="col-sm-10">
                                 <select class="form-control" name="articles" id="link-articles">
@@ -70,7 +69,7 @@
                         </div>
                     {/if}
                     <div id="target-container" class="form-group">
-                        <label for="link-target" class="col-sm-2 control-label">{lang t="menus|target_page"}</label>
+                        <label for="link-target" class="col-sm-2 control-label required">{lang t="menus|target_page"}</label>
 
                         <div class="col-sm-10">
                             <select class="form-control" name="target" id="link-target">
@@ -80,9 +79,6 @@
                             </select>
                         </div>
                     </div>
-                </div>
-                <div id="tab-3" class="tab-pane fade">
-                    {include file="asset:seo/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
                 </div>
             </div>
         </div>
@@ -96,6 +92,6 @@
     </form>
     {javascripts}
         {include_js module="menus" file="admin/acp"}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

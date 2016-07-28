@@ -2,105 +2,67 @@
 
 namespace ACP3\Core\View\Renderer;
 
-use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
-use ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilter;
-use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
+use ACP3\Core\Environment\ApplicationMode;
+use ACP3\Core\Environment\ApplicationPath;
 
 /**
  * Renderer for the Smarty template engine
  *
  * @package ACP3\Core\View\Renderer
  */
-class Smarty extends AbstractRenderer
+class Smarty extends \Smarty implements RendererInterface
 {
     /**
-     * @var \Smarty
+     * @var \ACP3\Core\Environment\ApplicationPath
      */
-    public $renderer;
+    protected $appPath;
+    /**
+     * @var string
+     */
+    protected $environment;
+
+    /**
+     * Smarty constructor.
+     *
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param string                                 $environment
+     */
+    public function __construct(ApplicationPath $appPath, $environment)
+    {
+        parent::__construct();
+
+        $this->appPath = $appPath;
+        $this->environment = $environment;
+    }
 
     /**
      * @param array $params
+     *
      * @throws \SmartyException
      */
     public function configure(array $params = [])
     {
-        $settings = $this->container->get('core.config')->getSettings('system');
-
-        $this->renderer = new \Smarty();
-        $this->renderer->error_reporting = defined('IN_INSTALL') === true || (defined('DEBUG') === true && DEBUG === true) ? E_ALL : 0;
-        $this->renderer->compile_id = !empty($params['compile_id']) ? $params['compile_id'] : $settings['design'];
-        $this->renderer->compile_check = defined('DEBUG') === true && DEBUG === true;
-        $this->renderer->compile_dir = CACHE_DIR . 'tpl_compiled/';
-        $this->renderer->cache_dir = CACHE_DIR . 'tpl_cached/';
-
-        $this->_registerPlugins();
+        $this->setErrorReporting($this->isDevOrInstall() ? E_ALL : 0);
+        $this->setCompileId(!empty($params['compile_id']) ? $params['compile_id'] : $this->environment);
+        $this->setCompileCheck($this->isDevOrInstall());
+        $this->setCompileDir($this->appPath->getCacheDir() . 'tpl_compiled/');
+        $this->setCacheDir($this->appPath->getCacheDir() . 'tpl_cached/');
     }
 
     /**
-     * @inheritdoc
+     * @return bool
      */
-    public function assign($name, $value = null)
+    protected function isDevOrInstall()
     {
-        if (is_array($name)) {
-            $this->renderer->assign($name);
-        } else {
-            $this->renderer->assign($name, $value);
-        }
+        $environments = [ApplicationMode::DEVELOPMENT, ApplicationMode::INSTALLER, ApplicationMode::UPDATER];
+        return in_array($this->environment, $environments);
     }
 
     /**
-     * @param      $template
-     * @param null $cache_id
-     * @param null $compile_id
-     * @param null $parent
-     * @param bool $display
-     *
-     * @return bool|mixed|string
+     * @param \ACP3\Core\View\Renderer\Smarty\PluginInterface $plugin
      */
-    public function fetch($template, $cache_id = null, $compile_id = null, $parent = null, $display = false)
+    public function registerSmartyPlugin(Smarty\PluginInterface $plugin)
     {
-        return $this->renderer->fetch($template, $cache_id, $compile_id, $parent, $display);
-    }
-
-    /**
-     * @param      $template
-     * @param null $cache_id
-     * @param null $compile_id
-     * @param null $parent
-     */
-    public function display($template, $cache_id = null, $compile_id = null, $parent = null)
-    {
-        $this->renderer->display($template, $cache_id, $compile_id, $parent);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function templateExists($template)
-    {
-        return $this->renderer->templateExists($template);
-    }
-
-    /**
-     * Register all available Smarty plugins
-     */
-    protected function _registerPlugins()
-    {
-        $services = $this->container->getServiceIds();
-        foreach ($services as $serviceName) {
-            if (strpos($serviceName, 'smarty.plugin.') === 0) {
-                /** @var AbstractPlugin $plugin */
-                $plugin = $this->container->get($serviceName);
-                $plugin->registerPlugin($this->renderer);
-            } elseif (strpos($serviceName, 'smarty.filter.') === 0) {
-                /** @var AbstractFilter $filter */
-                $filter = $this->container->get($serviceName);
-                $filter->registerFilter($this->renderer);
-            } elseif (strpos($serviceName, 'smarty.resource.') === 0) {
-                /** @var AbstractResource $resource */
-                $resource = $this->container->get($serviceName);
-                $resource->registerResource($this->renderer);
-            }
-        }
+        $plugin->register($this);
     }
 }

@@ -14,30 +14,37 @@ class IncludeJs extends AbstractFunction
      */
     protected $assets;
     /**
-     * @var \ACP3\Core\Assets\ThemeResolver
+     * @var \ACP3\Core\Assets\FileResolver
      */
-    protected $themeResolver;
+    protected $fileResolver;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    protected $appPath;
     /**
      * @var array
      */
     protected $alreadyIncluded = [];
 
     /**
-     * @param \ACP3\Core\Assets               $assets
-     * @param \ACP3\Core\Assets\ThemeResolver $themeResolver
+     * @param \ACP3\Core\Assets                      $assets
+     * @param \ACP3\Core\Assets\FileResolver         $fileResolved
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
         Core\Assets $assets,
-        Core\Assets\ThemeResolver $themeResolver
+        Core\Assets\FileResolver $fileResolved,
+        Core\Environment\ApplicationPath $appPath
     ) {
         $this->assets = $assets;
-        $this->themeResolver = $themeResolver;
+        $this->fileResolver = $fileResolved;
+        $this->appPath = $appPath;
     }
 
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'include_js';
     }
@@ -64,12 +71,12 @@ class IncludeJs extends AbstractFunction
                 $module = ucfirst($params['module']);
                 $file = $params['file'];
 
-                $path = $this->themeResolver->getStaticAssetPath($module . '/Resources/', $module . '/', 'Assets/js', $file . '.js');
+                $path = $this->fileResolver->getStaticAssetPath($module . '/Resources/', $module . '/', 'Assets/js', $file . '.js');
 
                 if (strpos($path, '/ACP3/Modules/') !== false) {
-                    $path = ROOT_DIR . substr($path, strpos($path, '/ACP3/Modules/') + 1);
+                    $path = $this->appPath->getWebRoot() . substr($path, strpos($path, '/ACP3/Modules/') + 1);
                 } else {
-                    $path = ROOT_DIR . substr($path, strlen(ACP3_ROOT_DIR));
+                    $path = $this->appPath->getWebRoot() . substr($path, strlen(ACP3_ROOT_DIR));
                 }
                 return sprintf($script, $path);
             }

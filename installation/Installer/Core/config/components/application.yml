@@ -1,0 +1,20 @@
+services:
+  core.application.controller_action_dispatcher:
+    class: ACP3\Core\Application\ControllerActionDispatcher
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.http.request'
+      - '@service_container'
+      - '@core.application.argument_resolver'
+
+  core.application.argument_resolver:
+    class: Symfony\Component\HttpKernel\Controller\ArgumentResolver
+
+  core.application.event.listener.on_controller_action_dispatcher_before_dispatch_listener:
+    class: ACP3\Installer\Core\Application\Event\Listener\OnControllerActionDispatcherBeforeDispatchListener
+    arguments:
+      - '@core.http.request'
+      - '@core.http.redirect_response'
+    tags:
+      - { name: core.eventListener, event: core.application.controller_resolver.before_dispatch, method: onLanguageChange }
+

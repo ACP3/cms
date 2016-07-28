@@ -1,0 +1,29 @@
+imports:
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
+
+services:
+  core.authentication.native:
+    class: ACP3\Modules\ACP3\Users\Core\Authentication\Native
+    arguments:
+      - '@core.http.request'
+      - '@core.session'
+      - '@users.model.authentication_model'
+      - '@users.model.userrepository'
+
+  users.helpers.forms:
+    class: ACP3\Modules\ACP3\Users\Helpers\Forms
+    arguments:
+      - '@core.lang'
+      - '@core.http.request'
+      - '@core.helpers.date'
+      - '@core.helpers.forms'
+
+  users.helpers.data_grid.column_renderer.user_roles_column_renderer:
+    class: ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer
+    arguments:
+      - '@core.acl'
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }

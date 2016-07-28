@@ -10,159 +10,85 @@ use ACP3\Core;
 class TableOfContents
 {
     /**
-     * @var \ACP3\Core\Breadcrumb
+     * @var \ACP3\Core\Breadcrumb\Title
      */
-    protected $breadcrumb;
+    protected $title;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
-     * @var \ACP3\Core\SEO
-     */
-    protected $seo;
-    /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router
+     * @var \ACP3\Core\RouterInterface
      */
     protected $router;
     /**
-     * @var \ACP3\Core\Validator\Rules\Misc
+     * @var \ACP3\Core\Validation\ValidationRules\IntegerValidationRule
      */
-    protected $validate;
+    protected $integerValidationRule;
     /**
      * @var \ACP3\Core\View
      */
     protected $view;
 
     /**
-     * @param \ACP3\Core\Breadcrumb           $breadcrumb
-     * @param \ACP3\Core\Lang                 $lang
-     * @param \ACP3\Core\SEO                  $seo
-     * @param \ACP3\Core\Request              $request
-     * @param \ACP3\Core\Router               $router
-     * @param \ACP3\Core\Validator\Rules\Misc $validate
-     * @param \ACP3\Core\View                 $view
+     * TableOfContents constructor.
+     *
+     * @param \ACP3\Core\Breadcrumb\Title                                 $title
+     * @param \ACP3\Core\I18n\Translator                                  $translator
+     * @param \ACP3\Core\Http\RequestInterface                            $request
+     * @param \ACP3\Core\RouterInterface                                  $router
+     * @param \ACP3\Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule
+     * @param \ACP3\Core\View                                             $view
      */
     public function __construct(
-        Core\Breadcrumb $breadcrumb,
-        Core\Lang $lang,
-        Core\SEO $seo,
-        Core\Request $request,
-        Core\Router $router,
-        Core\Validator\Rules\Misc $validate,
+        Core\Breadcrumb\Title $title,
+        Core\I18n\Translator $translator,
+        Core\Http\RequestInterface $request,
+        Core\RouterInterface $router,
+        Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule,
         Core\View $view
     ) {
-        $this->breadcrumb = $breadcrumb;
-        $this->lang = $lang;
-        $this->seo = $seo;
+        $this->title = $title;
+        $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
-        $this->validate = $validate;
+        $this->integerValidationRule = $integerValidationRule;
         $this->view = $view;
     }
 
     /**
-     * Parst einen Text und zerlegt diesen bei Bedarf mehrere Seiten
-     *
-     * @param string $text
-     *    Der zu parsende Text
-     * @param string $path
-     *    Der ACP3-interne URI-Pfad, um die Links zu generieren
-     *
-     * @return string|array
-     */
-    public function splitTextIntoPages($text, $path)
-    {
-        // Falls keine Seitenumbrüche vorhanden sein sollten, Text nicht unnötig bearbeiten
-        if (strpos($text, 'class="page-break"') === false) {
-            return $text;
-        } else {
-            $regex = '/<hr(.+)class="page-break"(.*)(\/>|>)/iU';
-
-            $pages = preg_split($regex, $text, -1, PREG_SPLIT_NO_EMPTY);
-            $c_pages = count($pages);
-
-            // Falls zwar Seitenumbruch gesetzt ist, aber danach
-            // kein weiterer Text kommt, den unbearbeiteten Text ausgeben
-            if ($c_pages == 1) {
-                return $text;
-            } else {
-                $matches = [];
-                preg_match_all($regex, $text, $matches);
-
-                $currentPage = $this->validate->isNumber($this->request->page) === true && $this->request->page <= $c_pages ? $this->request->page : 1;
-                $nextPage = !empty($pages[$currentPage]) ? $this->router->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
-                $previousPage = $currentPage > 1 ? $this->router->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
-
-                if (!empty($nextPage)) {
-                    $this->seo->setNextPage($nextPage);
-                }
-                if (!empty($previousPage)) {
-                    $this->seo->setPreviousPage($previousPage);
-                }
-
-                $page = [
-                    'toc' => $this->generateTOC($matches[0], $path),
-                    'text' => $pages[$currentPage - 1],
-                    'next' => $nextPage,
-                    'previous' => $previousPage,
-                ];
-
-                return $page;
-            }
-        }
-    }
-
-    /**
-     * Generiert ein Inhaltsverzeichnis
+     * Generates the table of contents
      *
      * @param array   $pages
-     * @param string  $path
+     * @param string  $baseUrlPath
      * @param boolean $titlesFromDb
      * @param boolean $customUris
      *
      * @return string
      */
-    public function generateTOC(array $pages, $path = '', $titlesFromDb = false, $customUris = false)
+    public function generateTOC(array $pages, $baseUrlPath = '', $titlesFromDb = false, $customUris = false)
     {
         if (!empty($pages)) {
-            $request = $this->request;
-            $path = empty($path) ? $request->getUriWithoutPages() : $path;
+            $baseUrlPath = $baseUrlPath === '' ? $this->request->getUriWithoutPages() : $baseUrlPath;
             $toc = [];
             $i = 0;
             foreach ($pages as $page) {
                 $pageNumber = $i + 1;
-                if ($titlesFromDb === false) {
-                    $attributes = $this->_getHtmlAttributes($page);
-                    $toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf($this->lang->t('system', 'toc_page'), $pageNumber);
-                } else {
-                    $toc[$i]['title'] = !empty($page['title']) ? $page['title'] : sprintf($this->lang->t('system', 'toc_page'), $pageNumber);
-                }
+                $toc[$i]['title'] = $this->fetchTocPageTitle($page, $pageNumber, $titlesFromDb);
+                $toc[$i]['uri'] = $this->fetchTocPageUri($customUris, $page, $pageNumber, $baseUrlPath);
+                $toc[$i]['selected'] = $this->isCurrentPage($customUris, $page, $pageNumber, $i);
 
-                $toc[$i]['uri'] = $customUris === true ? $page['uri'] : $this->router->route($path) . ($pageNumber > 1 ? 'page_' . $pageNumber . '/' : '');
-
-                $toc[$i]['selected'] = false;
-                if ($customUris === true) {
-                    if ($page['uri'] === $this->router->route($request->query) ||
-                        $this->router->route($request->query) === $this->router->route($request->mod . '/' . $request->controller . '/' . $request->file) && $i == 0
-                    ) {
-                        $toc[$i]['selected'] = true;
-                        $this->breadcrumb->setTitlePostfix($toc[$i]['title']);
-                    }
-                } else {
-                    if (($this->validate->isNumber($request->page) === false && $i === 0) || $request->page === $pageNumber) {
-                        $toc[$i]['selected'] = true;
-                        $this->breadcrumb->setTitlePostfix($toc[$i]['title']);
-                    }
+                if ($toc[$i]['selected'] === true) {
+                    $this->title->setPageTitlePostfix($toc[$i]['title']);
                 }
                 ++$i;
             }
             $this->view->assign('toc', $toc);
-            return $this->view->fetchTemplate('system/toc.tpl');
+            return $this->view->fetchTemplate('System/Partials/toc.tpl');
         }
         return '';
     }
@@ -175,19 +101,78 @@ class TableOfContents
      *
      * @return array
      */
-    protected function _getHtmlAttributes($string)
+    protected function getHtmlAttributes($string)
     {
         $matches = [];
         preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $matches);
 
         $return = [];
         if (!empty($matches)) {
-            $c_matches = count($matches[1]);
-            for ($i = 0; $i < $c_matches; ++$i) {
+            $cMatches = count($matches[1]);
+            for ($i = 0; $i < $cMatches; ++$i) {
                 $return[$matches[1][$i]] = $matches[2][$i];
             }
         }
 
         return $return;
+    }
+
+    /**
+     * @param bool         $customUris
+     * @param array|string $page
+     * @param int          $pageNumber
+     * @param int          $currentIndex
+     *
+     * @return bool
+     */
+    protected function isCurrentPage($customUris, $page, $pageNumber, $currentIndex)
+    {
+        if ($customUris === true) {
+            if (is_array($page) === true && $page['uri'] === $this->router->route($this->request->getQuery())
+                || $this->router->route($this->request->getQuery()) === $this->router->route($this->request->getFullPath()) && $currentIndex == 0
+            ) {
+                return true;
+            }
+        } elseif (($this->integerValidationRule->isValid($this->request->getParameters()->get('page')) === false && $currentIndex === 0)
+            || $this->request->getParameters()->get('page') === $pageNumber
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array|string $page
+     * @param int          $pageNumber
+     * @param bool         $titlesFromDb
+     *
+     * @return string
+     */
+    protected function fetchTocPageTitle($page, $pageNumber, $titlesFromDb)
+    {
+        if ($titlesFromDb === false && is_array($page) === false) {
+            $page = $this->getHtmlAttributes($page);
+        }
+
+        $transPageNumber = $this->translator->t('system', 'toc_page', ['%page%' => $pageNumber]);
+        return !empty($page['title']) ? $page['title'] : $transPageNumber;
+    }
+
+    /**
+     * @param bool         $customUris
+     * @param array|string $page
+     * @param int          $pageNumber
+     * @param string       $requestQuery
+     *
+     * @return string
+     */
+    protected function fetchTocPageUri($customUris, $page, $pageNumber, $requestQuery)
+    {
+        if ($customUris === true && is_array($page) === true) {
+            return $page['uri'];
+        }
+
+        return $this->router->route($requestQuery) . ($pageNumber > 1 ? 'page_' . $pageNumber . '/' : '');
     }
 }

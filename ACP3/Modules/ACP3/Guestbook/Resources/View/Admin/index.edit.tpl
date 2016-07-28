@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -6,32 +6,28 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">{lang t="system|name"}</label>
+            <label for="message" class="col-sm-2 control-label required">{lang t="system|message"}</label>
 
             <div class="col-sm-10">
-                <input class="form-control" type="text" name="name" id="name" value="{$form.name}" required></div>
-        </div>
-        <div class="form-group">
-            <label for="message" class="col-sm-2 control-label">{lang t="system|message"}</label>
-
-            <div class="col-sm-10">
-                {if isset($emoticons)}{$emoticons}{/if}
+                {if $can_use_emoticons}
+                    {event name="emoticons.render_emoticons_list"}
+                {/if}
                 <textarea class="form-control" name="message" id="message" cols="50" rows="5" required>{$form.message}</textarea>
             </div>
         </div>
-        {if isset($activate)}
+        {if !empty($activate)}
             <div class="form-group">
-                <label for="active-1" class="col-sm-2 control-label">{lang t="guestbook|activate_entry"}</label>
+                <label for="active-1" class="col-sm-2 control-label required">{lang t="guestbook|activate_entry"}</label>
 
                 <div class="col-sm-10">
-                    {foreach $activate as $row}
-                        <div class="checkbox">
-                            <label for="active-{$row.value}">
+                    <div class="btn-group" data-toggle="buttons">
+                        {foreach $activate as $row}
+                            <label for="active-{$row.value}" class="btn btn-default{if !empty($row.checked)} active{/if}">
                                 <input type="radio" name="active" id="active-{$row.value}" value="{$row.value}"{$row.checked}>
                                 {$row.lang}
                             </label>
-                        </div>
-                    {/foreach}
+                        {/foreach}
+                    </div>
                 </div>
             </div>
         {/if}
@@ -44,6 +40,6 @@
         </div>
     </form>
     {javascripts}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

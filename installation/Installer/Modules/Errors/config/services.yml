@@ -1,4 +1,0 @@
-services:
-  errors.controller.install.index:
-    class: ACP3\Installer\Modules\Errors\Controller\Index
-    parent: core.modules.controller.install

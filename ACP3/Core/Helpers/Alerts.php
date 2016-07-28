@@ -10,44 +10,37 @@ use ACP3\Core;
 class Alerts
 {
     /**
-     * @var \ACP3\Core\Helpers\Output
-     */
-    protected $outputHelper;
-    /**
      * @var \ACP3\Core\View
      */
     protected $view;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
 
     /**
-     * @param \ACP3\Core\Request        $request
-     * @param \ACP3\Core\View           $view
-     * @param \ACP3\Core\Helpers\Output $outputHelper
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\View $view
      */
     public function __construct(
-        Core\Request $request,
-        Core\View $view,
-        Core\Helpers\Output $outputHelper
+        Core\Http\RequestInterface $request,
+        Core\View $view
     ) {
         $this->request = $request;
         $this->view = $view;
-        $this->outputHelper = $outputHelper;
     }
 
     /**
-     * Displays a confirm box
+     * Displays a confirmation box
      *
      * @param string $text
-     * @param int|string|array $forward
-     * @param int|string $backward
+     * @param string|array $forward
+     * @param string $backward
      * @param integer $overlay
      *
      * @return string
      */
-    public function confirmBox($text, $forward = 0, $backward = 0, $overlay = 0)
+    public function confirmBox($text, $forward = '', $backward = '', $overlay = 0)
     {
         if (!empty($text)) {
             $confirm = [
@@ -67,16 +60,16 @@ class Alerts
     }
 
     /**
-     * Displays a confirm box, where the forward button triggers a form submit using POST
+     * Displays a confirmation box, where the forward button triggers a form submit using POST
      *
-     * @param       $text
+     * @param string $text
      * @param array $data
-     * @param       $forward
-     * @param int $backward
+     * @param string $forward
+     * @param string $backward
      *
-     * @return string
+     * @return array
      */
-    public function confirmBoxPost($text, array $data, $forward, $backward = 0)
+    public function confirmBoxPost($text, array $data, $forward, $backward = '')
     {
         if (!empty($text) && !empty($data)) {
             $confirm = [
@@ -88,33 +81,51 @@ class Alerts
                 $confirm['backward'] = $backward;
             }
 
-            $this->view->assign('confirm', $confirm);
-
-            return 'system/alerts/confirm_box_post.tpl';
+            return [
+                'confirm' => $confirm
+            ];
         }
-        return '';
+        return [];
     }
 
     /**
-     * @param $errors
+     * Returns the pretty printed form errors
+     *
+     * @param string|array $errors
+     * @return string
      */
-    protected function _setErrorBoxData($errors)
+    public function errorBox($errors)
+    {
+        $this->view->assign('CONTENT_ONLY', $this->request->isXmlHttpRequest() === true);
+        return $this->view->fetchTemplate($this->errorBoxContent($errors));
+    }
+
+    /**
+     * @param string|array $errors
+     *
+     * @return string
+     */
+    public function errorBoxContent($errors)
+    {
+        $this->setErrorBoxData($errors);
+
+        return 'system/alerts/error_box.tpl';
+    }
+
+    /**
+     * @param string|array $errors
+     */
+    protected function setErrorBoxData($errors)
     {
         $hasNonIntegerKeys = false;
 
-        if (is_string($errors) && ($data = @unserialize($errors)) !== false) {
-            $errors = $data;
-        }
+        $errors = $this->prepareErrorBoxData($errors);
 
-        if (is_array($errors) === true) {
-            foreach (array_keys($errors) as $key) {
-                if (is_numeric($key) === false) {
-                    $hasNonIntegerKeys = true;
-                    break;
-                }
+        foreach (array_keys($errors) as $key) {
+            if (is_numeric($key) === false) {
+                $hasNonIntegerKeys = true;
+                break;
             }
-        } else {
-            $errors = (array)$errors;
         }
 
         $this->view->assign(
@@ -127,40 +138,19 @@ class Alerts
     }
 
     /**
-     * Gibt eine Box mit den aufgetretenen Fehlern aus
-     *
      * @param string|array $errors
-     * @param bool $contentOnly
-     * @return string
+     * @return array
      */
-    public function errorBox($errors, $contentOnly = true)
+    protected function prepareErrorBoxData($errors)
     {
-        if ($this->request->getIsAjax() === true) {
-            $contentOnly = true;
+        if (is_string($errors) && ($data = @unserialize($errors)) !== false) {
+            $errors = $data;
         }
 
-        $this->view->assign('CONTENT_ONLY', $contentOnly);
-        $content = $this->view->fetchTemplate($this->errorBoxContent($errors));
-
-        if ($this->request->getIsAjax() === true) {
-            $return = [
-                'success' => false,
-                'content' => $content,
-            ];
-
-            $this->outputHelper->outputJson($return);
+        if (is_array($errors) === false) {
+            $errors = (array)$errors;
         }
-        return $content;
-    }
 
-    /**
-     * @param $errors
-     * @return string
-     */
-    public function errorBoxContent($errors)
-    {
-        $this->_setErrorBoxData($errors);
-
-        return 'system/alerts/error_box.tpl';
+        return $errors;
     }
 }

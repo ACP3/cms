@@ -37,9 +37,10 @@ class Cache
 
     /**
      * @param array $paths
+     *
      * @return bool
      */
-    public function setCache(array $paths)
+    public function saveCache(array $paths)
     {
         return $this->cache->save(self::CACHE_ID, $paths);
     }

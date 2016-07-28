@@ -1,0 +1,34 @@
+services:
+  newsletter.model.newsletterrepository:
+    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
+    arguments:
+      - '@core.db'
+
+  newsletter.model.newsletter_data_grid_repository:
+    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterDataGridRepository
+    arguments:
+      - '@core.db'
+
+  newsletter.model.accountrepository:
+    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
+    arguments:
+      - '@core.db'
+
+  newsletter.model.account_data_grid_repository:
+    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountDataGridRepository
+    arguments:
+      - '@core.db'
+
+  newsletter.model.accounthistoryrepository:
+    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository
+    arguments:
+      - '@core.db'
+
+  newsletter.model:
+    class: ACP3\Modules\ACP3\Newsletter\Model\NewsletterModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.config'
+      - '@core.date'
+      - '@core.helpers.secure'
+      - '@newsletter.model.newsletterrepository'

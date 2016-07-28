@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Files;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
 /**
  * Class Cache
@@ -12,21 +13,21 @@ class Cache extends Core\Modules\AbstractCacheStorage
     const CACHE_ID = 'details_id_';
 
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model
+     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
      */
-    protected $filesModel;
+    protected $filesRepository;
 
     /**
-     * @param Core\Cache $cache
-     * @param Model $filesModel
+     * @param \ACP3\Core\Cache                               $cache
+     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Model $filesModel
+        FilesRepository $filesRepository
     ) {
         parent::__construct($cache);
 
-        $this->filesModel = $filesModel;
+        $this->filesRepository = $filesRepository;
     }
 
     /**
@@ -37,7 +38,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function getCache($id)
     {
         if ($this->cache->contains(self::CACHE_ID . $id) === false) {
-            $this->setCache($id);
+            $this->saveCache($id);
         }
 
         return $this->cache->fetch(self::CACHE_ID . $id);
@@ -48,8 +49,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function setCache($id)
+    public function saveCache($id)
     {
-        return $this->cache->save(self::CACHE_ID . $id, $this->filesModel->getOneById($id));
+        return $this->cache->save(self::CACHE_ID . $id, $this->filesRepository->getOneById($id));
     }
 }

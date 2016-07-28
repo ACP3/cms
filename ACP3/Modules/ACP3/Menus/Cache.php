@@ -2,6 +2,8 @@
 namespace ACP3\Modules\ACP3\Menus;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
 
 /**
  * Class Cache
@@ -13,133 +15,164 @@ class Cache extends Core\Modules\AbstractCacheStorage
     const CACHE_ID_VISIBLE = 'visible_items_';
 
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\I18n\Translator
      */
-    protected $lang;
+    protected $translator;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
      */
-    protected $menuModel;
+    protected $menuRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
+     */
+    protected $menuItemRepository;
 
     /**
-     * @param Core\Cache $cache
-     * @param Core\Lang $lang
-     * @param Model $menuModel
+     * @param Core\Cache                                        $cache
+     * @param \ACP3\Core\I18n\Translator                        $translator
+     * @param MenuRepository                                    $menuRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Core\Lang $lang,
-        Model $menuModel
+        Core\I18n\Translator $translator,
+        MenuRepository $menuRepository,
+        MenuItemRepository $menuItemRepository
     ) {
         parent::__construct($cache);
 
-        $this->lang = $lang;
-        $this->menuModel = $menuModel;
+        $this->translator = $translator;
+        $this->menuRepository = $menuRepository;
+        $this->menuItemRepository = $menuItemRepository;
     }
 
     /**
-     * Bindet die gecacheten Menüpunkte ein
+     * Returns the cached menu items
      *
      * @return array
      */
-    public function getMenuItemsCache()
+    public function getMenusCache()
     {
         if ($this->cache->contains(self::CACHE_ID) === false) {
-            $this->setMenuItemsCache();
+            $this->saveMenusCache();
         }
 
         return $this->cache->fetch(self::CACHE_ID);
     }
 
     /**
-     * Erstellt den Cache für die Menüpunkte
+     * Saves the menu items to the cache
      *
      * @return boolean
      */
-    public function setMenuItemsCache()
+    public function saveMenusCache()
     {
-        $items = $this->menuModel->getAllMenuItems();
-        $c_items = count($items);
+        $menuItems = $this->menuItemRepository->getAllMenuItems();
+        $cMenuItems = count($menuItems);
 
-        if ($c_items > 0) {
-            $menus = $this->menuModel->getAllMenus();
-            $c_menus = count($menus);
+        if ($cMenuItems > 0) {
+            $menus = $this->menuRepository->getAllMenus();
+            $cMenus = count($menus);
 
-            for ($i = 0; $i < $c_menus; ++$i) {
-                $this->setVisibleMenuItemsCache($menus[$i]['index_name']);
+            for ($i = 0; $i < $cMenus; ++$i) {
+                $this->saveVisibleMenuItemsCache($menus[$i]['index_name']);
             }
 
-            for ($i = 0; $i < $c_items; ++$i) {
-                for ($j = 0; $j < $c_menus; ++$j) {
-                    if ($items[$i]['block_id'] == $menus[$j]['id']) {
-                        $items[$i]['block_title'] = $menus[$j]['title'];
-                        $items[$i]['block_name'] = $menus[$j]['index_name'];
+            for ($i = 0; $i < $cMenuItems; ++$i) {
+                for ($j = 0; $j < $cMenus; ++$j) {
+                    if ($menuItems[$i]['block_id'] == $menus[$j]['id']) {
+                        $menuItems[$i]['block_title'] = $menus[$j]['title'];
+                        $menuItems[$i]['block_name'] = $menus[$j]['index_name'];
                     }
                 }
             }
 
             $modeSearch = ['1', '2', '3', '4'];
             $modeReplace = [
-                $this->lang->t('menus', 'module'),
-                $this->lang->t('menus', 'dynamic_page'),
-                $this->lang->t('menus', 'hyperlink'),
-                $this->lang->t('menus', 'article')
+                $this->translator->t('menus', 'module'),
+                $this->translator->t('menus', 'dynamic_page'),
+                $this->translator->t('menus', 'hyperlink'),
+                $this->translator->t('menus', 'article')
             ];
 
-            for ($i = 0; $i < $c_items; ++$i) {
-                $items[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, $items[$i]['mode']);
-
-                // Bestimmen, ob die Seite die Erste und/oder Letzte eines Knotens ist
-                $first = $last = true;
-                if ($i > 0) {
-                    for ($j = $i - 1; $j >= 0; --$j) {
-                        if ($items[$j]['parent_id'] == $items[$i]['parent_id'] && $items[$j]['block_name'] == $items[$i]['block_name']) {
-                            $first = false;
-                            break;
-                        }
-                    }
-                }
-
-                for ($j = $i + 1; $j < $c_items; ++$j) {
-                    if ($items[$i]['parent_id'] == $items[$j]['parent_id'] && $items[$j]['block_name'] == $items[$i]['block_name']) {
-                        $last = false;
-                        break;
-                    }
-                }
-
-                $items[$i]['first'] = $first;
-                $items[$i]['last'] = $last;
+            for ($i = 0; $i < $cMenuItems; ++$i) {
+                $menuItems[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, $menuItems[$i]['mode']);
+                $menuItems[$i]['first'] = $this->isFirstItemInSet($i, $menuItems);
+                $menuItems[$i]['last'] = $this->isLastItemInSet($i, $menuItems);
             }
         }
-        return $this->cache->save(self::CACHE_ID, $items);
+        return $this->cache->save(self::CACHE_ID, $menuItems);
     }
 
     /**
-     * Erstellt den Cache für die Menüpunkte
+     * Svaes the visible menu items to the cache
      *
-     * @param $block
+     * @param string $menuIdentifier
      *
      * @return boolean
      */
-    public function setVisibleMenuItemsCache($block)
+    public function saveVisibleMenuItemsCache($menuIdentifier)
     {
-        $items = $this->menuModel->getVisibleMenuItemsByBlockName($block);
-        return $this->cache->save(self::CACHE_ID_VISIBLE . $block, $items);
+        return $this->cache->save(
+            self::CACHE_ID_VISIBLE . $menuIdentifier,
+            $this->menuItemRepository->getVisibleMenuItemsByBlockName($menuIdentifier)
+        );
     }
 
     /**
-     * Bindet die gecacheten Menüpunkte ein
+     * Returns the cached visible menu items
      *
-     * @param $block
+     * @param string $menuIdentifier
      *
      * @return array
      */
-    public function getVisibleMenuItems($block)
+    public function getVisibleMenuItems($menuIdentifier)
     {
-        if ($this->cache->contains(self::CACHE_ID_VISIBLE . $block) === false) {
-            $this->setVisibleMenuItemsCache($block);
+        if ($this->cache->contains(self::CACHE_ID_VISIBLE . $menuIdentifier) === false) {
+            $this->saveVisibleMenuItemsCache($menuIdentifier);
         }
 
-        return $this->cache->fetch(self::CACHE_ID_VISIBLE . $block);
+        return $this->cache->fetch(self::CACHE_ID_VISIBLE . $menuIdentifier);
+    }
+
+    /**
+     * @param int   $index
+     * @param array $menuItems
+     *
+     * @return bool
+     */
+    protected function isFirstItemInSet($index, array $menuItems)
+    {
+        if ($index > 0) {
+            for ($j = $index - 1; $j >= 0; --$j) {
+                if ($menuItems[$j]['parent_id'] == $menuItems[$index]['parent_id']
+                    && $menuItems[$j]['block_name'] == $menuItems[$index]['block_name']
+                ) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param int   $index
+     * @param array $menuItems
+     *
+     * @return bool
+     */
+    protected function isLastItemInSet($index, array $menuItems)
+    {
+        $cItems = count($menuItems);
+        for ($j = $index + 1; $j < $cItems; ++$j) {
+            if ($menuItems[$index]['parent_id'] == $menuItems[$j]['parent_id']
+                && $menuItems[$j]['block_name'] == $menuItems[$index]['block_name']
+            ) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

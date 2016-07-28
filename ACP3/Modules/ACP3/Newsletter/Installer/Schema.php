@@ -1,0 +1,118 @@
+<?php
+
+namespace ACP3\Modules\ACP3\Newsletter\Installer;
+
+use ACP3\Core\Modules;
+
+/**
+ * Class Schema
+ * @package ACP3\Modules\ACP3\Newsletter\Installer
+ */
+class Schema implements Modules\Installer\SchemaInterface
+{
+    const MODULE_NAME = 'newsletter';
+
+    /**
+     * @return array
+     */
+    public function specialResources()
+    {
+        return [
+            'Admin' => [
+                'Index' => [
+                    'send' => 4
+                ]
+            ]
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getModuleName()
+    {
+        return static::MODULE_NAME;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSchemaVersion()
+    {
+        return 51;
+    }
+
+    /**
+     * @return array
+     */
+    public function createTables()
+    {
+        return [
+            "CREATE TABLE `{pre}newsletters` (
+                `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `date` DATETIME NOT NULL,
+                `title` VARCHAR(120) NOT NULL,
+                `text` TEXT NOT NULL,
+                `html` TINYINT(1) NOT NULL,
+                `status` TINYINT(1) UNSIGNED NOT NULL,
+                `user_id` INT UNSIGNED,
+                PRIMARY KEY (`id`),
+                INDEX (`user_id`),
+                FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
+            ) {ENGINE} {CHARSET};",
+            "CREATE TABLE `{pre}newsletter_accounts` (
+                `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `mail` VARCHAR(255) NOT NULL,
+                `salutation` TINYINT(1) NOT NULL,
+                `first_name` VARCHAR(255) NOT NULL,
+                `last_name` VARCHAR(255) NOT NULL,
+                `hash` VARCHAR(128) NOT NULL,
+                `status` TINYINT(1) NOT NULL,
+                PRIMARY KEY (`id`),
+                INDEX(`mail`),
+                INDEX(`hash`)
+            ) {ENGINE} {CHARSET};",
+            "CREATE TABLE `{pre}newsletter_account_history` (
+                `newsletter_account_id` INT(10) UNSIGNED NOT NULL,
+                `date` DATETIME NOT NULL,
+                `action` TINYINT(1) NOT NULL,
+                INDEX (`newsletter_account_id`),
+                FOREIGN KEY (`newsletter_account_id`) REFERENCES `{pre}newsletter_accounts` (`id`)
+            ) {ENGINE} {CHARSET};",
+            "CREATE TABLE `{pre}newsletter_queue` (
+                `newsletter_account_id` INT(10) UNSIGNED NOT NULL,
+                `newsletter_id` INT(10) UNSIGNED NOT NULL,
+                UNIQUE KEY (`newsletter_account_id`, `newsletter_id`),
+                INDEX (`newsletter_account_id`),
+                INDEX (`newsletter_id`),
+                FOREIGN KEY (`newsletter_account_id`) REFERENCES `{pre}newsletter_accounts` (`id`),
+                FOREIGN KEY (`newsletter_id`) REFERENCES `{pre}newsletters` (`id`) ON DELETE CASCADE
+            ) {ENGINE} {CHARSET};"
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function removeTables()
+    {
+        return [
+            "DROP TABLE `{pre}newsletter_account_history`;",
+            "DROP TABLE `{pre}newsletter_accounts`;",
+            "DROP TABLE `{pre}newsletter_queue`;",
+            "DROP TABLE `{pre}newsletters`;"
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function settings()
+    {
+        return [
+            'mail' => '',
+            'mailsig' => '',
+            'html' => 1
+        ];
+    }
+}

@@ -1,0 +1,16 @@
+services:
+  files.validator:
+    class: ACP3\Modules\ACP3\Files\Validation\AdminFormValidation
+    parent: core.validator.abstract
+
+  files.validation.admin_settings_form_validation:
+    class: ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation
+    arguments:
+      - '@core.lang'
+      - '@core.validator'
+      - '@core.modules'
+
+  files.validation.validation_rules.is_external_file_validation_rule:
+    class: ACP3\Modules\ACP3\Files\Validation\ValidationRules\IsExternalFileValidationRule
+    tags:
+      - { name: core.validation.validation_rule }

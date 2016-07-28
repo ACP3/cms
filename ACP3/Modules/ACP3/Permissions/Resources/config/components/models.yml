@@ -1,0 +1,39 @@
+services:
+  permissions.model.rolerepository:
+    class: ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
+    arguments:
+      - '@core.db'
+
+  permissions.model.rulerepository:
+    class: ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository
+    arguments:
+      - '@core.db'
+
+  permissions.model.resourcerepository:
+    class: ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
+    arguments:
+      - '@core.db'
+
+  permissions.model.privilegerepository:
+    class: ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
+    arguments:
+      - '@core.db'
+
+  permissions.model.userrolerepository:
+    class: ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository
+    arguments:
+      - '@core.db'
+
+  permissions.model.resources_model:
+    class: ACP3\Modules\ACP3\Permissions\Model\ResourcesModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@permissions.model.resourcerepository'
+
+  permissions.model:role_model:
+    class: ACP3\Modules\ACP3\Permissions\Model\RoleModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.helpers.secure'
+      - '@core.nested_set'
+      - '@permissions.model.rolerepository'

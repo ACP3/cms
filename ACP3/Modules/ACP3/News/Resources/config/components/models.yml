@@ -1,0 +1,19 @@
+services:
+  news.model.data_grid_repository:
+    class: ACP3\Modules\ACP3\News\Model\Repository\DataGridRepository
+    arguments:
+      - '@core.db'
+
+  news.model.newsrepository:
+    class: ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
+    arguments:
+      - '@core.db'
+
+  news.model:
+    class: ACP3\Modules\ACP3\News\Model\NewsModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.config'
+      - '@core.date'
+      - '@core.helpers.secure'
+      - '@news.model.newsrepository'

@@ -1,0 +1,26 @@
+services:
+  files.events.onDisplayFeedListener:
+    class: ACP3\Modules\ACP3\Files\Event\Listener\OnDisplayFeedListener
+    arguments:
+      - '@core.date'
+      - '@core.router'
+      - '@core.helpers.stringFormatter'
+      - '@files.model.filesrepository'
+    tags:
+      - { name: core.eventListener, event: feeds.events.displayFeed.files, method: onDisplayFeed }
+
+  files.events.onAvailableModulesListener:
+    class: ACP3\Modules\ACP3\Files\Event\Listener\OnAvailableModulesListener
+    tags:
+      - { name: core.eventListener, event: search.events.availableModules, method: onAvailableModules }
+
+  files.events.onDisplaySearchResultsListener:
+    class: ACP3\Modules\ACP3\Files\Event\Listener\OnDisplaySearchResultsListener
+    arguments:
+      - '@core.acl'
+      - '@core.date'
+      - '@core.lang'
+      - '@core.router'
+      - '@files.model.filesrepository'
+    tags:
+      - { name: core.eventListener, event: search.events.displaySearchResults, method: onDisplaySearchResults }

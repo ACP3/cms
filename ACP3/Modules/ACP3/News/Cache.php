@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\News;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 
 /**
  * Class Cache
@@ -11,21 +12,21 @@ class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID = 'details_id_';
     /**
-     * @var Model
+     * @var NewsRepository
      */
-    protected $newsModel;
+    protected $newsRepository;
 
     /**
-     * @param Core\Cache $cache
-     * @param Model $newsModel
+     * @param \ACP3\Core\Cache                             $cache
+     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Model $newsModel
+        NewsRepository $newsRepository
     ) {
         parent::__construct($cache);
 
-        $this->newsModel = $newsModel;
+        $this->newsRepository = $newsRepository;
     }
 
     /**
@@ -39,7 +40,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function getCache($id)
     {
         if ($this->cache->contains(self::CACHE_ID . $id) === false) {
-            $this->setCache($id);
+            $this->saveCache($id);
         }
 
         return $this->cache->fetch(self::CACHE_ID . $id);
@@ -53,8 +54,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function setCache($id)
+    public function saveCache($id)
     {
-        return $this->cache->save(self::CACHE_ID . $id, $this->newsModel->getOneById($id));
+        return $this->cache->save(self::CACHE_ID . $id, $this->newsRepository->getOneById($id));
     }
 }

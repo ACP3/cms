@@ -1,0 +1,31 @@
+services:
+  gallery.model.galleryrepository:
+    class: ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
+    arguments:
+      - '@core.db'
+
+  gallery.model.gallery_data_grid_repository:
+    class: ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryDataGridRepository
+    arguments:
+      - '@core.db'
+
+  gallery.model.picturerepository:
+    class: ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+    arguments:
+      - '@core.db'
+
+  gallery.model:
+    class: ACP3\Modules\ACP3\Gallery\Model\GalleryModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.date'
+      - '@core.helpers.secure'
+      - '@gallery.model.galleryrepository'
+
+  gallery.model.picture_model:
+    class: ACP3\Modules\ACP3\Gallery\Model\PictureModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.config'
+      - '@core.helpers.secure'
+      - '@gallery.model.picturerepository'

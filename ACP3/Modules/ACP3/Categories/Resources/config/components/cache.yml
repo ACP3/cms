@@ -1,0 +1,12 @@
+services:
+  categories.cache:
+    class: ACP3\Modules\ACP3\Categories\Cache
+    arguments:
+      - '@categories.cache.core'
+      - '@categories.model.categories_repository'
+
+  categories.cache.core:
+    class: ACP3\Core\Cache
+    arguments:
+      - '@core.cache.cache_driver_factory'
+      - 'categories'

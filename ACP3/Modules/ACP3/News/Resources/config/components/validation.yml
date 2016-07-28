@@ -1,0 +1,18 @@
+services:
+  news.validator:
+    class: ACP3\Modules\ACP3\News\Validation\AdminFormValidation
+    parent: core.validator.abstract
+
+  news.validation.admin_settings_form_validation:
+    class: ACP3\Modules\ACP3\News\Validation\AdminSettingsFormValidation
+    arguments:
+      - '@core.lang'
+      - '@core.validator'
+      - '@core.modules'
+
+  news.validation.validation_rules.external_link_validation_rule:
+    class: ACP3\Modules\ACP3\News\Validation\ValidationRules\ExternalLinkValidationRule
+    arguments:
+      - '@core.validation.validation_rules.in_array_validation_rule'
+    tags:
+      - { name: core.validation.validation_rule }

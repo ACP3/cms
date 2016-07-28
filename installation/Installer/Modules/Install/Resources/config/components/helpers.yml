@@ -1,0 +1,17 @@
+services:
+  install.helpers.install:
+    class: ACP3\Installer\Modules\Install\Helpers\Install
+
+  install.helpers.requirements:
+    class: ACP3\Installer\Modules\Install\Helpers\Requirements
+    arguments:
+      - '@core.environment.application_path'
+      - '@core.lang'
+
+  install.helpers.module_installer:
+    class: ACP3\Installer\Modules\Install\Helpers\ModuleInstaller
+    arguments:
+      - '@core.environment.application_path'
+      - '@core.modules.vendors'
+      - '@core.xml'
+      - '@install.helpers.install'

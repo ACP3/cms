@@ -1,0 +1,12 @@
+imports:
+  - { resource: components/controllers.yml }
+  - { resource: components/events.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/validation.yml }
+
+services:
+  feeds.helper.feedgenerator:
+    class: ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator
+    arguments:
+      - '@core.config'
+      - '@core.router'

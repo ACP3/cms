@@ -1,0 +1,4 @@
+imports:
+  - { resource: components/controllers.yml }
+  - { resource: components/events.yml }
+  - { resource: components/installer.yml }

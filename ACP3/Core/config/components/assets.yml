@@ -1,0 +1,44 @@
+services:
+  core.assets:
+    class: ACP3\Core\Assets
+    arguments:
+      - '@core.environment.application_path'
+
+  core.assets.cache:
+    class: ACP3\Core\Assets\Cache
+    arguments:
+      - '@core.cache.system'
+
+  core.assets.abstractMinifier:
+    arguments:
+      - '@core.assets'
+      - '@core.environment.application_path'
+      - '@core.cache.system'
+      - '@core.config'
+      - '@core.modules'
+      - '@core.assets.file_resolver'
+      - %core.environment%
+    abstract: true
+
+  core.assets.minifier.css:
+    class: ACP3\Core\Assets\Minifier\CSS
+    parent: core.assets.abstractMinifier
+
+  core.assets.minifier.javascript:
+    class: ACP3\Core\Assets\Minifier\JavaScript
+    parent: core.assets.abstractMinifier
+
+  core.assets.file_resolver:
+    class: ACP3\Core\Assets\FileResolver
+    arguments:
+      - '@core.xml'
+      - '@core.assets.cache'
+      - '@core.environment.application_path'
+      - '@core.modules.vendors'
+
+  core.assets.pageCssClasses:
+    class: ACP3\Core\Assets\PageCssClasses
+    arguments:
+      - '@core.breadcrumb'
+      - '@core.breadcrumb.title'
+      - '@core.http.request'

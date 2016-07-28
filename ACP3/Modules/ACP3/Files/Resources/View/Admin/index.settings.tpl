@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -6,10 +6,10 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="date-format" class="col-sm-2 control-label">{lang t="system|date_format"}</label>
+            <label for="date-format" class="col-sm-2 control-label required">{lang t="system|date_format"}</label>
 
             <div class="col-sm-10">
-                <select class="form-control" name="dateformat" id="date-format">
+                <select class="form-control" name="dateformat" id="date-format" required>
                     {foreach $dateformat as $row}
                         <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                     {/foreach}
@@ -17,10 +17,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="sidebar-entries" class="col-sm-2 control-label">{lang t="system|sidebar_entries_to_display"}</label>
+            <label for="sidebar-entries" class="col-sm-2 control-label required">{lang t="system|sidebar_entries_to_display"}</label>
 
             <div class="col-sm-10">
-                <select class="form-control" name="sidebar" id="sidebar-entries">
+                <select class="form-control" name="sidebar" id="sidebar-entries" required>
                     {foreach $sidebar_entries as $row}
                         <option value="{$row.value}"{$row.selected}>{$row.value}</option>
                     {/foreach}
@@ -29,7 +29,7 @@
         </div>
         {if isset($comments)}
             <div class="form-group">
-                <label for="{$comments.0.id}" class="col-sm-2 control-label">{lang t="system|allow_comments"}</label>
+                <label for="{$comments.0.id}" class="col-sm-2 control-label required">{lang t="system|allow_comments"}</label>
 
                 <div class="col-sm-10">
                     <div class="btn-group" data-toggle="buttons">
@@ -52,6 +52,6 @@
         </div>
     </form>
     {javascripts}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

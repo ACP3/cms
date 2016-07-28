@@ -29,7 +29,7 @@ class JsLibraries extends AbstractFunction
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'js_libraries';
     }

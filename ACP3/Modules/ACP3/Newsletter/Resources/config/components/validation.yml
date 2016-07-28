@@ -1,0 +1,34 @@
+services:
+  newsletter.validator:
+    class: ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
+    parent: core.validator.abstract
+
+  newsletter.validation.activate_account_form_validation:
+    class: ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation
+    parent: core.validator.abstract
+
+  newsletter.validation.admin_settings_form_validation:
+    class: ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation
+    parent: core.validator.abstract
+
+  newsletter.validation.subscribe_form_validation:
+    class: ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation
+    parent: core.validator.abstract
+
+  newsletter.validation.unsubscribe_form_validation:
+    class: ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation
+    parent: core.validator.abstract
+
+  newsletter.validation.validation_rules.account_exists_validation_rule:
+    class: ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidationRule
+    arguments:
+      - '@newsletter.model.accountrepository'
+    tags:
+      - { name: core.validation.validation_rule }
+
+  newsletter.validation.validation_rules.account_exists_by_hash_validation_rule:
+    class: ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsByHashValidationRule
+    arguments:
+      - '@newsletter.model.accountrepository'
+    tags:
+      - { name: core.validation.validation_rule }

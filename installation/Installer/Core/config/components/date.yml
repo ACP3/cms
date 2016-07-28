@@ -1,0 +1,10 @@
+services:
+  core.date:
+    class: ACP3\Installer\Core\Date
+    arguments:
+      - '@core.date.date_translator'
+
+  core.date.date_translator:
+    class: ACP3\Core\Date\DateTranslator
+    arguments:
+      - '@core.lang'

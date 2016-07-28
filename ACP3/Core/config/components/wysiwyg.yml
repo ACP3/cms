@@ -1,0 +1,8 @@
+services:
+  core.wysiwyg.wysiwyg_factory:
+    class: ACP3\Core\WYSIWYG\WysiwygFactory
+
+  core.wysiwyg.textarea:
+    class: ACP3\Core\WYSIWYG\Textarea
+    tags:
+      - { name: core.wysiwyg.editor }

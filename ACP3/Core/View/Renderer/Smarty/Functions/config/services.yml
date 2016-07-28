@@ -1,72 +1,122 @@
 services:
   smarty.plugin.check_access:
     class: ACP3\Core\View\Renderer\Smarty\Functions\CheckAccess
-    arguments: ['@core.acl', '@core.lang', '@core.router', '@smarty.plugin.icon']
+    arguments: ['@core.helpers.view.checkAccess']
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.date_format:
     class: ACP3\Core\View\Renderer\Smarty\Functions\DateFormat
     arguments: ['@core.date']
+    tags:
+      - { name: core.view.extension }
+
+  smarty.plugin.date_picker:
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Datepicker
+    arguments: ['@core.helpers.date']
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.date_ramge:
     class: ACP3\Core\View\Renderer\Smarty\Functions\DateRange
-    arguments: ['@core.date']
+    arguments: ['@core.helpers.formatter.dateRange']
+    tags:
+      - { name: core.view.extension }
+
+  smarty.plugin.event:
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Event
+    arguments: ['@core.eventDispatcher']
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.redirect_message:
     class: ACP3\Core\View\Renderer\Smarty\Functions\RedirectMessage
     arguments: ['@core.helpers.redirect']
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.has_permission:
     class: ACP3\Core\View\Renderer\Smarty\Functions\HasPermission
     arguments: ['@core.acl']
-
-  smarty.plugin.icon:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\Icon
-    arguments: ['@core.assets.themeResolver', '@core.validator.rules.misc']
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.include_js:
     class: ACP3\Core\View\Renderer\Smarty\Functions\IncludeJs
-    arguments: ['@core.assets', '@core.assets.themeResolver']
+    arguments: ['@core.assets', '@core.assets.file_resolver', '@core.environment.application_path']
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.js_libraries:
     class: ACP3\Core\View\Renderer\Smarty\Functions\JsLibraries
     arguments: ['@core.assets']
-
-  smarty.plugin.lang:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\Lang
-    arguments: ['@core.lang']
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.load_module:
     class: ACP3\Core\View\Renderer\Smarty\Functions\LoadModule
-    arguments: ['@service_container']
+    arguments:
+      - '@core.acl'
+      - '@core.router'
+      - '%core.environment%'
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.mark:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Mark
-    arguments: ['@core.lang']
+    arguments: ['@core.helpers.formatter.mark_entries']
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.page_css_classes:
     class: ACP3\Core\View\Renderer\Smarty\Functions\PageCssClasses
     arguments: ['@core.assets.pageCssClasses']
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.page_title:
     class: ACP3\Core\View\Renderer\Smarty\Functions\PageTitle
-    arguments: ['@core.breadcrumb']
+    arguments:
+      - '@core.breadcrumb.title'
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.site_title:
     class: ACP3\Core\View\Renderer\Smarty\Functions\SiteTitle
-    arguments: ['@core.breadcrumb']
+    arguments:
+      - '@core.breadcrumb.title'
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.site_and_page_title:
     class: ACP3\Core\View\Renderer\Smarty\Functions\SiteAndPageTitle
-    arguments: ['@core.breadcrumb']
+    arguments:
+      - '@core.breadcrumb.title'
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.template_path:
     class: ACP3\Core\View\Renderer\Smarty\Functions\TemplatePath
-    arguments: ['@core.assets.themeResolver']
+    arguments: ['@core.assets.file_resolver']
+    tags:
+      - { name: core.view.extension }
+
+  smarty.plugin.translate:
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Translate
+    arguments: ['@core.lang']
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.uri:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Uri
     arguments: ['@core.router']
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.wysiwyg:
     class: ACP3\Core\View\Renderer\Smarty\Functions\WYSIWYG
-    arguments: ['@service_container']
+    arguments:
+      - '@core.wysiwyg.wysiwyg_factory'
+      - '@core.config'
+    tags:
+      - { name: core.view.extension }

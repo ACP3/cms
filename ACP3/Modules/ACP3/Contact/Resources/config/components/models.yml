@@ -1,0 +1,8 @@
+services:
+  contact.model.contact_form_model:
+    class: ACP3\Modules\ACP3\Contact\Model\ContactFormModel
+    arguments:
+      - '@core.config'
+      - '@core.lang'
+      - '@core.helpers.secure'
+      - '@core.helpers.sendEmail'

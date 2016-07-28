@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Seo;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 
 /**
  * Class Cache
@@ -10,21 +11,21 @@ use ACP3\Core;
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model
+     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
      */
-    protected $seoModel;
+    protected $seoRepository;
 
     /**
-     * @param \ACP3\Core\Cache        $cache
-     * @param \ACP3\Modules\ACP3\Seo\Model $seoModel
+     * @param \ACP3\Core\Cache                           $cache
+     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Model $seoModel)
+        SeoRepository $seoRepository)
     {
         parent::__construct($cache);
 
-        $this->seoModel = $seoModel;
+        $this->seoRepository = $seoRepository;
     }
 
     /**
@@ -35,7 +36,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function getCache()
     {
         if ($this->cache->contains('seo') === false) {
-            $this->setCache();
+            $this->saveCache();
         }
 
         return $this->cache->fetch('seo');
@@ -46,13 +47,13 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function setCache()
+    public function saveCache()
     {
-        $aliases = $this->seoModel->getAllMetaTags();
-        $c_aliases = count($aliases);
+        $aliases = $this->seoRepository->getAllMetaTags();
+        $cAliases = count($aliases);
         $data = [];
 
-        for ($i = 0; $i < $c_aliases; ++$i) {
+        for ($i = 0; $i < $cAliases; ++$i) {
             $data[$aliases[$i]['uri']] = [
                 'alias' => $aliases[$i]['alias'],
                 'keywords' => $aliases[$i]['keywords'],

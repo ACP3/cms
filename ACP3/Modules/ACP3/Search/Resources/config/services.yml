@@ -1,0 +1,13 @@
+imports:
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/validation.yml }
+
+services:
+  search.helpers:
+    class: ACP3\Modules\ACP3\Search\Helpers
+    arguments:
+      - '@core.acl'
+      - '@core.modules'
+      - '@core.helpers.forms'
+      - '@core.eventDispatcher'

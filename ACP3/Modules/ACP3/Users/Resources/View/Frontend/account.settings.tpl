@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -14,7 +14,7 @@
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
                     <div class="form-group">
-                        <label for="language" class="col-sm-2 control-label">{lang t="users|language"}</label>
+                        <label for="language" class="col-sm-2 control-label required">{lang t="users|language"}</label>
 
                         <div class="col-sm-10">
                             <select class="form-control" name="language" id="language"{if $language_override == 0} disabled{/if}>
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="entries" class="col-sm-2 control-label">{lang t="system|records_per_page"}</label>
+                        <label for="entries" class="col-sm-2 control-label required">{lang t="system|records_per_page"}</label>
 
                         <div class="col-sm-10">
                             <select class="form-control" name="entries" id="entries"{if $entries_override == 0} disabled{/if}>
@@ -39,7 +39,7 @@
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="date-format-long" class="col-sm-2 control-label">{lang t="system|date_format_long"}</label>
+                        <label for="date-format-long" class="col-sm-2 control-label required">{lang t="system|date_format_long"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="date_format_long" id="date-format-long" value="{$form.date_format_long}" maxlength="20">
@@ -48,14 +48,14 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="date-format-short" class="col-sm-2 control-label">{lang t="system|date_format_short"}</label>
+                        <label for="date-format-short" class="col-sm-2 control-label required">{lang t="system|date_format_short"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="date_format_short" id="date-format-short" value="{$form.date_format_short}" maxlength="20">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="date-time-zone" class="col-sm-2 control-label">{lang t="system|time_zone"}</label>
+                        <label for="date-time-zone" class="col-sm-2 control-label required">{lang t="system|time_zone"}</label>
 
                         <div class="col-sm-10">
                             <select class="form-control" name="date_time_zone" id="date-time-zone">
@@ -72,7 +72,7 @@
                 </div>
                 <div id="tab-3" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="{$mail_display.0.id}" class="col-sm-2 control-label">{lang t="users|display_mail"}</label>
+                        <label for="{$mail_display.0.id}" class="col-sm-2 control-label required">{lang t="users|display_mail"}</label>
 
                         <div class="col-sm-10">
                             <div class="btn-group" data-toggle="buttons">
@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="{$address_display.0.id}" class="col-sm-2 control-label">{lang t="users|display_address"}</label>
+                        <label for="{$address_display.0.id}" class="col-sm-2 control-label required">{lang t="users|display_address"}</label>
 
                         <div class="col-sm-10">
                             <div class="btn-group" data-toggle="buttons">
@@ -100,7 +100,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="{$country_display.0.id}" class="col-sm-2 control-label">{lang t="users|display_country"}</label>
+                        <label for="{$country_display.0.id}" class="col-sm-2 control-label required">{lang t="users|display_country"}</label>
 
                         <div class="col-sm-10">
                             <div class="btn-group" data-toggle="buttons">
@@ -114,7 +114,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="{$birthday_display.0.id}" class="col-sm-2 control-label">{lang t="users|birthday"}</label>
+                        <label for="{$birthday_display.0.id}" class="col-sm-2 control-label required">{lang t="users|birthday"}</label>
 
                         <div class="col-sm-10">
                             {foreach $birthday_display as $row}
@@ -139,6 +139,6 @@
         </div>
     </form>
     {javascripts}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

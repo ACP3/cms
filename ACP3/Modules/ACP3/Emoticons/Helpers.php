@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Modules\ACP3\Emoticons;
 
 use ACP3\Core;
@@ -14,13 +19,13 @@ class Helpers
      */
     protected $emoticonsCache;
     /**
-     * @var Core\View
+     * @var \ACP3\Core\View
      */
     protected $view;
 
     /**
-     * @param Core\View $view
-     * @param Cache     $emoticonsCache
+     * @param \ACP3\Core\View                    $view
+     * @param \ACP3\Modules\ACP3\Emoticons\Cache $emoticonsCache
      */
     public function __construct(Core\View $view, Cache $emoticonsCache)
     {

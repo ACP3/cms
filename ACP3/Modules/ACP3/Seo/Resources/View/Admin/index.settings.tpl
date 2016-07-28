@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -6,10 +6,10 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="title" class="col-sm-2 control-label">{lang t="system|title"}</label>
+            <label for="title" class="col-sm-2 control-label required">{lang t="system|title"}</label>
 
             <div class="col-sm-10">
-                <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120">
+                <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
             </div>
         </div>
         <div class="form-group">
@@ -29,29 +29,14 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="robots" class="col-sm-2 control-label">{lang t="seo|robots"}</label>
+            <label for="robots" class="col-sm-2 control-label required">{lang t="seo|robots"}</label>
 
             <div class="col-sm-10">
-                <select class="form-control" name="robots" id="robots">
+                <select class="form-control" name="robots" id="robots" required>
                     {foreach $robots as $row}
                         <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                     {/foreach}
                 </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="{$mod_rewrite.0.id}" class="col-sm-2 control-label">{lang t="seo|mod_rewrite"}</label>
-
-            <div class="col-sm-10">
-                <div class="btn-group" data-toggle="buttons">
-                    {foreach $mod_rewrite as $row}
-                        <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                            <input type="radio" name="mod_rewrite" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                            {$row.lang}
-                        </label>
-                    {/foreach}
-                </div>
-                <p class="help-block">{lang t="seo|mod_rewrite_description"}</p>
             </div>
         </div>
         <div class="form-group">
@@ -63,6 +48,6 @@
         </div>
     </form>
     {javascripts}
-    {include_js module="system" file="forms"}
+    {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

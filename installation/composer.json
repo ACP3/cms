@@ -1,0 +1,24 @@
+{
+  "name": "acp3/setup",
+  "description": "Provides the installation wizard for the ACP3 CMS.",
+  "license": "GPL-2.0+",
+  "type": "acp3-core",
+  "authors": [
+    {
+      "name": "Tino Goratsch",
+      "email": "mail@acp3-cms.net"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "ACP3\\Installer\\": "/Installer"
+    }
+  },
+  "require": {
+    "acp3/composer-installer": "*",
+    "acp3/core": "^4.0.0"
+  },
+  "extra": {
+    "installer-name": "installation"
+  }
+}

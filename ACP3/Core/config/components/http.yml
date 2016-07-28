@@ -1,0 +1,22 @@
+services:
+  core.http.redirect_response:
+    class: ACP3\Core\Http\RedirectResponse
+    arguments:
+      - '@core.http.request'
+      - '@core.router'
+
+  core.http.request:
+    class: ACP3\Core\Http\Request
+    factory: ['@core.http.request_factory', create]
+
+  core.http.symfony_request:
+    synthetic: true
+
+  core.http.request_factory:
+    class: ACP3\Core\Http\RequestFactory
+    arguments:
+      - '@core.config'
+      - '@core.http.symfony_request'
+
+  core.http.response:
+    class: Symfony\Component\HttpFoundation\Response

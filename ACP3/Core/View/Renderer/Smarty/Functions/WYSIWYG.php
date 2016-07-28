@@ -1,8 +1,13 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
-use Symfony\Component\DependencyInjection\Container;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class WYSIWYG
@@ -14,19 +19,31 @@ class WYSIWYG extends AbstractFunction
      * @var \Symfony\Component\DependencyInjection\Container
      */
     protected $container;
+    /**
+     * @var \ACP3\Core\WYSIWYG\WysiwygFactory
+     */
+    protected $wysiwygFactory;
+    /**
+     * @var \ACP3\Core\Config
+     */
+    protected $config;
 
     /**
-     * @param \Symfony\Component\DependencyInjection\Container $container
+     * @param \ACP3\Core\WYSIWYG\WysiwygFactory $wysiwygFactory
+     * @param \ACP3\Core\Config                 $config
      */
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
+    public function __construct(
+        Core\WYSIWYG\WysiwygFactory $wysiwygFactory,
+        Core\Config $config
+    ) {
+        $this->wysiwygFactory = $wysiwygFactory;
+        $this->config = $config;
     }
 
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'wysiwyg';
     }
@@ -38,15 +55,12 @@ class WYSIWYG extends AbstractFunction
     {
         $params['id'] = !empty($params['id']) ? $params['id'] : $params['name'];
 
-        $serviceId = 'core.wysiwyg.' . $this->container->get('core.config')->getSettings('system')['wysiwyg'];
+        $serviceId = $this->config->getSettings(Schema::MODULE_NAME)['wysiwyg'];
+        $wysiwyg = $this->wysiwygFactory->create($serviceId);
 
-        if ($this->container->has($serviceId) === true) {
-            /** @var Core\WYSIWYG\AbstractWYSIWYG $wysiwyg */
-            $wysiwyg = $this->container->get($serviceId);
-            $wysiwyg->setParameters($params);
-            return $wysiwyg->display();
-        } else {
-            throw new \InvalidArgumentException('Can not find wysiwyg service ' . $serviceId);
-        }
+        $wysiwyg->setParameters($params);
+        $smarty->smarty->assign($wysiwyg->getData());
+
+        return $smarty->smarty->fetch('asset:System/Partials/wysiwyg.tpl');
     }
 }

@@ -1,0 +1,6 @@
+services:
+  seo.installer.schema:
+    class: ACP3\Modules\ACP3\Seo\Installer\Schema
+
+  seo.installer.migration:
+    class: ACP3\Modules\ACP3\Seo\Installer\Migration

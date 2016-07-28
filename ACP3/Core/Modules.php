@@ -1,8 +1,17 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Core;
 
+use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Modules\Helper\ControllerActionExists;
+use ACP3\Core\Modules\ModuleInfoCache;
+use ACP3\Core\Modules\Vendor;
 use ACP3\Modules\ACP3\System;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class Modules
@@ -11,91 +20,69 @@ use Symfony\Component\DependencyInjection\Container;
 class Modules
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\Container
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected $container;
     /**
-     * @var \ACP3\Core\Lang
+     * @var \ACP3\Core\Environment\ApplicationPath
      */
-    protected $lang;
+    protected $appPath;
     /**
-     * @var \ACP3\Core\XML
+     * @var \ACP3\Core\Modules\Helper\ControllerActionExists
      */
-    protected $xml;
+    protected $controllerActionExists;
     /**
-     * @var \ACP3\Core\Cache
+     * @var \ACP3\Core\Modules\ModuleInfoCache
      */
-    protected $modulesCache;
+    protected $moduleInfoCache;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model
+     * @var \ACP3\Core\Modules\Vendor
      */
-    protected $systemModel;
+    protected $vendors;
     /**
      * @var array
      */
-    private $parseModules = [];
+    private $modulesInfo = [];
     /**
      * @var array
      */
     private $allModules = [];
-    /**
-     * @var array
-     */
-    private $moduleNamespaces = [];
 
     /**
-     * @param \Symfony\Component\DependencyInjection\Container $container
-     * @param \ACP3\Core\Lang                                  $lang
-     * @param \ACP3\Core\XML                                   $xml
-     * @param \ACP3\Core\Cache                                 $modulesCache
-     * @param \ACP3\Modules\ACP3\System\Model                  $systemModel
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param \ACP3\Core\Environment\ApplicationPath                    $appPath
+     * @param \ACP3\Core\Modules\Helper\ControllerActionExists          $controllerActionExists
+     * @param \ACP3\Core\Modules\ModuleInfoCache                        $moduleInfoCache
+     * @param \ACP3\Core\Modules\Vendor                                 $vendors
      */
     public function __construct(
-        Container $container,
-        Lang $lang,
-        XML $xml,
-        Cache $modulesCache,
-        System\Model $systemModel
-    )
-    {
+        ContainerInterface $container,
+        ApplicationPath $appPath,
+        ControllerActionExists $controllerActionExists,
+        ModuleInfoCache $moduleInfoCache,
+        Vendor $vendors
+    ) {
         $this->container = $container;
-        $this->lang = $lang;
-        $this->xml = $xml;
-        $this->modulesCache = $modulesCache;
-        $this->systemModel = $systemModel;
+        $this->appPath = $appPath;
+        $this->controllerActionExists = $controllerActionExists;
+        $this->moduleInfoCache = $moduleInfoCache;
+        $this->vendors = $vendors;
     }
 
     /**
-     * Überprüft, ob eine Modulaktion überhaupt existiert
+     * Returns, whether the given module controller action exists
      *
      * @param string $path
      *
      * @return boolean
      */
-    public function actionExists($path)
+    public function controllerActionExists($path)
     {
-        $pathArray = array_map(function ($value) {
-            return str_replace(' ', '', strtolower(str_replace('_', ' ', $value)));
-        }, explode('/', $path));
-
-        if (empty($pathArray[2]) === true) {
-            $pathArray[2] = 'index';
-        }
-        if (empty($pathArray[3]) === true) {
-            $pathArray[3] = 'index';
-        }
-
-        $serviceId = $pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2];
-
-        if ($this->container->has($serviceId)) {
-            return method_exists($this->container->get($serviceId), 'action' . $pathArray[3]);
-        }
-
-        return false;
+        return $this->controllerActionExists->controllerActionExists($path);
     }
 
     /**
-     * Gibt zurück, ob ein Modul aktiv ist oder nicht
+     * Returns, whether a module is active or not
      *
      * @param string $module
      *
@@ -108,8 +95,7 @@ class Modules
     }
 
     /**
-     * Durchläuft für das angeforderte Modul den <info> Abschnitt in der
-     * module.xml und gibt die gefundenen Informationen als Array zurück
+     * Returns the available information about the given module
      *
      * @param string $module
      *
@@ -118,14 +104,10 @@ class Modules
     public function getModuleInfo($module)
     {
         $module = strtolower($module);
-        if (empty($this->parseModules)) {
-            $filename = $this->_getCacheKey();
-            if ($this->modulesCache->contains($filename) === false) {
-                $this->setModulesCache();
-            }
-            $this->parseModules = $this->modulesCache->fetch($filename);
+        if (empty($this->modulesInfo)) {
+            $this->modulesInfo = $this->moduleInfoCache->getModulesInfoCache();
         }
-        return !empty($this->parseModules[$module]) ? $this->parseModules[$module] : [];
+        return !empty($this->modulesInfo[$module]) ? $this->modulesInfo[$module] : [];
     }
 
     /**
@@ -140,111 +122,7 @@ class Modules
     }
 
     /**
-     * @return string
-     */
-    protected function _getCacheKey()
-    {
-        return 'infos_' . $this->lang->getLanguage();
-    }
-
-    /**
-     * @return array
-     */
-    public function getModuleNamespaces()
-    {
-        if ($this->moduleNamespaces === []) {
-            $this->moduleNamespaces = array_merge(
-                ['ACP3'],
-                array_diff(scandir(MODULES_DIR), ['.', '..', 'ACP3', 'Custom']),
-                ['Custom']
-            );
-        }
-
-        return $this->moduleNamespaces;
-    }
-
-    /**
-     * Setzt den Cache für alle vorliegenden Modulinformationen
-     */
-    public function setModulesCache()
-    {
-        $infos = [];
-
-        // 1. fetch all core modules
-        // 2. Fetch all 3rd party modules
-        // 3. Fetch all local module customizations
-        foreach ($this->getModuleNamespaces() as $namespace) {
-            $infos += $this->_fetchModulesInNamespaces($namespace);
-        }
-
-        $this->modulesCache->save($this->_getCacheKey(), $infos);
-    }
-
-    /**
-     * @param string $namespace
-     *
-     * @return array
-     */
-    protected function _fetchModulesInNamespaces($namespace)
-    {
-        $infos = [];
-
-        $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..']);
-
-        if (!empty($modules)) {
-            foreach ($modules as $module) {
-                $moduleInfo = $this->_fetchModuleInfo($module);
-
-                if (!empty($moduleInfo)) {
-                    $infos[strtolower($module)] = $moduleInfo;
-                }
-            }
-        }
-
-        return $infos;
-    }
-
-    /**
-     * @param $moduleDirectory
-     *
-     * @return array
-     */
-    protected function _fetchModuleInfo($moduleDirectory)
-    {
-        $namespaces = array_reverse($this->getModuleNamespaces()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
-        foreach ($namespaces as $namespace) {
-            $path = MODULES_DIR . $namespace . '/' . $moduleDirectory . '/config/module.xml';
-            if (is_file($path) === true) {
-                $moduleInfo = $this->xml->parseXmlFile($path, 'info');
-
-                if (!empty($moduleInfo)) {
-                    $moduleName = strtolower($moduleDirectory);
-                    $moduleInfoDb = $this->systemModel->getInfoByModuleName($moduleName);
-
-                    return [
-                        'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
-                        'dir' => $moduleDirectory,
-                        'installed' => (!empty($moduleInfoDb)),
-                        'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
-                        'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
-                        'description' => isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true' ? $this->lang->t($moduleName, 'mod_description') : $moduleInfo['description']['lang'],
-                        'author' => $moduleInfo['author'],
-                        'version' => $moduleInfo['version'],
-                        'name' => isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true' ? $this->lang->t($moduleName, $moduleName) : $moduleInfo['name'],
-                        'categories' => isset($moduleInfo['categories']),
-                        'protected' => isset($moduleInfo['protected']),
-                        'dependencies' => array_values($this->xml->parseXmlFile($path, 'info/dependencies')),
-                    ];
-                }
-            }
-        }
-
-        return [];
-    }
-
-    /**
-     * Überprüft, ob ein Modul in der modules DB-Tabelle
-     * eingetragen und somit installiert ist
+     * Checks, whether a modules in currently installed or not
      *
      * @param string $moduleName
      *
@@ -277,7 +155,7 @@ class Modules
     /**
      * Returns all currently installed modules
      *
-     * @return mixed
+     * @return array
      */
     public function getInstalledModules()
     {
@@ -293,17 +171,15 @@ class Modules
     }
 
     /**
-     * Gibt ein alphabetisch sortiertes Array mit allen gefundenen
-     * Modulen des ACP3 mitsamt Modulinformationen aus
+     * Returns an alphabetically sorted array of all found ACP3 modules
      *
-     * @return mixed
+     * @return array
      */
     public function getAllModules()
     {
         if (empty($this->allModules)) {
-            foreach ($this->getModuleNamespaces() as $namespace) {
-                $modules = array_diff(scandir(MODULES_DIR . $namespace . '/'), ['.', '..']);
-                foreach ($modules as $module) {
+            foreach ($this->vendors->getVendors() as $vendor) {
+                foreach (Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/') as $module) {
                     $info = $this->getModuleInfo($module);
                     if (!empty($info)) {
                         $this->allModules[$info['name']] = $info;

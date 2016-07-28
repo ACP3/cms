@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -13,39 +13,42 @@
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
-                    {include file="asset:system/datepicker.tpl" datepicker=$publication_period}
+                    {datepicker name=['start', 'end'] value=[$form.start, $form.end]}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">{lang t="files|title"}</label>
+                        <label for="title" class="col-sm-2 control-label required">{lang t="files|title"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120">
+                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="file-internal" class="col-sm-2 control-label">{lang t="files|filename"}</label>
+                    {block FILES_FILE_UPLOAD}
+                        <div class="form-group">
+                            <label for="file-internal" class="col-sm-2 control-label required">{lang t="files|file"}</label>
 
-                        <div class="col-sm-10">
-                            <div class="checkbox">
-                                <label for="external">
-                                    <input type="checkbox" name="external" id="external" value="1"{$checked_external}>
-                                    {lang t="files|external_resource"}
-                                </label>
+                            <div class="col-sm-10">
+                                <div class="checkbox">
+                                    <label for="external">
+                                        <input type="checkbox" name="external" id="external" value="1"{$checked_external}>
+                                        {lang t="files|external_resource"}
+                                    </label>
+                                </div>
+                                <input type="file" name="file_internal" id="file-internal">
+                                <input class="form-control" type="url" name="file_external" id="file-external" value="{$form.file_external}" maxlength="120">
                             </div>
-                            <input type="file" name="file_internal" id="file-internal">
-                            <input class="form-control" type="url" name="file_external" id="file-external" value="{$form.file_external}" maxlength="120">
                         </div>
-                    </div>
+                    {/block}
                     <div id="external-filesize" class="form-group">
-                        <label for="filesize" class="col-sm-2 control-label">{lang t="files|filesize"}</label>
+                        <label for="filesize" class="col-sm-2 control-label required">{lang t="files|filesize"}</label>
 
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <div class="row">
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <input class="form-control" type="text" name="filesize" id="filesize" value="{$form.filesize}" maxlength="15">
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-4">
+                                    <label for="unit" class="sr-only">{lang t="files|unit"}</label>
                                     <select class="form-control" name="unit" id="unit">
                                         {foreach $units as $row}
                                             <option value="{$row.value}"{$row.selected}>{$row.value}</option>
@@ -56,16 +59,18 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="text" class="col-sm-2 control-label">{lang t="system|description"}</label>
+                        <label for="text" class="col-sm-2 control-label required">{lang t="system|description"}</label>
 
                         <div class="col-sm-10">{wysiwyg name="text" value="`$form.text`" height="200" toolbar="simple"}</div>
                     </div>
                     <div class="form-group">
-                        <label for="cat" class="col-sm-2 control-label">{lang t="categories|category"}</label>
+                        <label for="cat" class="col-sm-2 control-label required">{lang t="categories|category"}</label>
 
-                        <div class="col-sm-10">{$categories}</div>
+                        <div class="col-sm-10">
+                            {include file="asset:Categories/Partials/create_list.tpl" categories=$categories}
+                        </div>
                     </div>
-                    {if isset($options)}
+                    {if !empty($options)}
                         <div class="form-group">
                             <label for="{$options.0.name}" class="col-sm-2 control-label">{lang t="system|options"}</label>
 
@@ -83,7 +88,7 @@
                     {/if}
                 </div>
                 <div id="tab-3" class="tab-pane fade">
-                    {include file="asset:seo/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
+                    {include file="asset:Seo/Partials/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
                 </div>
             </div>
         </div>
@@ -97,6 +102,6 @@
     </form>
     {javascripts}
         {include_js module="files" file="admin/acp"}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

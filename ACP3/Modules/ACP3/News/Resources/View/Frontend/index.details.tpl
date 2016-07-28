@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     <article>
@@ -16,13 +16,17 @@
                 <footer>
                     <div class="hyperlink">
                         <strong>{lang t="news|hyperlink"}:</strong>
-                        <a href="{$news.uri}"{$news.target}>{$news.link_title}</a>
+                        <a href="{$news.uri|prefix_uri}"{$news.target}>{$news.link_title}</a>
                     </div>
                 </footer>
             {/if}
+            {event name="news.event.news_details_after" id=$news.id title=$news.title}
         </section>
-        {if isset($comments)}
-            {$comments}
+        {if $comments_allowed === true}
+            <section id="comments">
+                {load_module module="frontend/comments/" args=['module' => 'news', 'entryId' => $news.id]}
+                {load_module module="frontend/comments/index/create" args=['module' => 'news', 'entryId' => $news.id]}
+            </section>
         {/if}
     </article>
 {/block}

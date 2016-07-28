@@ -1,0 +1,8 @@
+imports:
+  - { resource: components/installer.yml }
+
+services:
+  filemanager.helpers:
+    class: ACP3\Modules\ACP3\Filemanager\Helpers
+    arguments:
+      - '@core.environment.application_path'

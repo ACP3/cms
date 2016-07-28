@@ -1,0 +1,45 @@
+.tab-content {
+  > .tab-pane {
+    padding-top: 15px;
+  }
+}
+
+.control-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &.required {
+    &:after {
+      content: ' *';
+    }
+  }
+}
+
+.form-horizontal {
+  .control-label {
+    &.required {
+      position: relative;
+
+      &:after {
+        position: absolute;
+        right: 5px;
+
+        @media (min-width: 768px) {
+          top: 7px;
+        }
+      }
+    }
+  }
+}
+
+input,
+textarea {
+  &[placeholder] {
+    font-style: italic;
+  }
+}
+
+/* Pagination */
+.pagination {
+  margin: 0 0 10px;
+}

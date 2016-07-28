@@ -25,7 +25,7 @@ class HasPermission extends AbstractFunction
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'has_permission';
     }
@@ -37,8 +37,8 @@ class HasPermission extends AbstractFunction
     {
         if (isset($params['path']) === true) {
             return $this->acl->hasPermission($params['path']);
-        } else {
-            return false;
         }
+
+        return false;
     }
 }

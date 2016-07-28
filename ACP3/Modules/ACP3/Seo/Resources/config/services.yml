@@ -1,0 +1,20 @@
+imports:
+  - { resource: components/controllers.yml }
+  - { resource: components/events.yml }
+  - { resource: components/helpers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/overrides.yml }
+  - { resource: components/validation.yml }
+
+services:
+  seo.cache:
+    class: ACP3\Modules\ACP3\Seo\Cache
+    arguments:
+      - '@core.cache.system'
+      - '@seo.model.seorepository'
+
+  seo.core.router.aliases:
+    class: ACP3\Modules\ACP3\Seo\Core\Router\Aliases
+    arguments:
+      - '@seo.cache'

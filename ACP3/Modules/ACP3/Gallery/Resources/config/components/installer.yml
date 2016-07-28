@@ -1,0 +1,7 @@
+services:
+  gallery.installer.schema:
+    class: ACP3\Modules\ACP3\Gallery\Installer\Schema
+
+  gallery.installer.migration:
+    class: ACP3\Modules\ACP3\Gallery\Installer\Migration
+    parent: core.modules.installer.abstractMigration

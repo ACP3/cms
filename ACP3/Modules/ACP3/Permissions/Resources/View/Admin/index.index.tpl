@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     <form action="{uri args="acp/permissions/index/delete"}" method="post">
@@ -64,12 +64,10 @@
                 </tbody>
             </table>
             {if $can_delete === true}
-                {include file="asset:system/mark.tpl"}
+                {include file="asset:System/Partials/mark.tpl"}
             {/if}
         {else}
-            <div class="alert alert-warning text-center">
-                <strong>{lang t="system|no_entries"}</strong>
-            </div>
+            {include file="asset:System/Partials/no_results.tpl"}
         {/if}
     </form>
 {/block}

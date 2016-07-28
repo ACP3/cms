@@ -1,0 +1,8 @@
+services:
+  contact.validator:
+    class: ACP3\Modules\ACP3\Contact\Validation\FormValidation
+    parent: core.validator.abstract
+
+  contact.validation.admin_settings_form_validation:
+    class: ACP3\Modules\ACP3\Contact\Validation\AdminSettingsFormValidation
+    parent: core.validator.abstract

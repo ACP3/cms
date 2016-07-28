@@ -1,0 +1,6 @@
+services:
+  update.controller.install.index.index:
+    class: ACP3\Installer\Modules\Update\Controller\Index\Index
+    arguments:
+      - '@core.context.install'
+      - '@update.model.schema_update_model'

@@ -1,0 +1,86 @@
+services:
+  files.controller.admin.index.create:
+    class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Create
+    arguments:
+      - '@core.context.admin'
+      - '@core.date'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@files.model.filesrepository'
+      - '@files.validator'
+      - '@categories.helpers'
+    calls:
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+
+  files.controller.admin.index.delete:
+    class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Delete
+    arguments:
+      - '@core.context.admin'
+      - '@files.model.filesrepository'
+      - '@files.cache'
+    calls:
+      - ['setCommentsHelpers', ['@?comments.helpers']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+
+  files.controller.admin.index.edit:
+    class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Edit
+    arguments:
+      - '@core.context.admin'
+      - '@core.date'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@files.model.filesrepository'
+      - '@files.cache'
+      - '@files.validator'
+      - '@categories.helpers'
+    calls:
+      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+
+  files.controller.admin.index.index:
+    class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Index
+    arguments:
+      - '@core.context.admin'
+      - '@files.model.data_grid_repository'
+
+  files.controller.admin.index.settings:
+    class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Settings
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@files.validation.admin_settings_form_validation'
+    calls:
+      - ['setCommentsHelpers', ['@?comments.helpers']]
+
+  files.controller.frontend.index.details:
+    class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Details
+    arguments:
+      - '@core.context.frontend'
+      - '@core.date'
+      - '@core.helpers.stringFormatter'
+      - '@files.model.filesrepository'
+      - '@files.cache'
+      - '@categories.model.categories_repository'
+
+  files.controller.frontend.index.files:
+    class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Files
+    arguments:
+      - '@core.context.frontend'
+      - '@core.date'
+      - '@files.model.filesrepository'
+      - '@categories.model.categories_repository'
+
+  files.controller.frontend.index.index:
+    class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Index
+    arguments:
+      - '@core.context.frontend'
+      - '@categories.cache'
+
+  files.controller.widget.index.index:
+    class: ACP3\Modules\ACP3\Files\Controller\Widget\Index\Index
+    arguments:
+      - '@core.context.widget'
+      - '@core.date'
+      - '@files.model.filesrepository'

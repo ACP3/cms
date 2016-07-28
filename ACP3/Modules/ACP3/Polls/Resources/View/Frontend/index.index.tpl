@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($polls)}
@@ -27,8 +27,6 @@
             </tbody>
         </table>
     {else}
-        <div class="alert alert-warning text-center">
-            <strong>{lang t="system|no_entries"}</strong>
-        </div>
+        {include file="asset:System/Partials/no_results.tpl"}
     {/if}
 {/block}

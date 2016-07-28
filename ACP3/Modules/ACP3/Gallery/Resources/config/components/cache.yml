@@ -1,0 +1,14 @@
+services:
+  gallery.cache:
+    class: ACP3\Modules\ACP3\Gallery\Cache
+    arguments:
+      - '@gallery.cache.core'
+      - '@core.environment.application_path'
+      - '@gallery.model.picturerepository'
+      - '@core.config'
+
+  gallery.cache.core:
+    class: ACP3\Core\Cache
+    arguments:
+      - '@core.cache.cache_driver_factory'
+      - 'gallery'

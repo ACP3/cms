@@ -1,0 +1,7 @@
+services:
+  polls.installer.schema:
+    class: ACP3\Modules\ACP3\Polls\Installer\Schema
+
+  polls.installer.migration:
+    class: ACP3\Modules\ACP3\Polls\Installer\Migration
+    parent: core.modules.installer.abstractMigration

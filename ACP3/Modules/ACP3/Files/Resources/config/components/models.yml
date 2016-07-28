@@ -1,0 +1,10 @@
+services:
+  files.model.data_grid_repository:
+    class: ACP3\Modules\ACP3\Files\Model\Repository\DataGridRepository
+    arguments:
+      - '@core.db'
+
+  files.model.filesrepository:
+    class: ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
+    arguments:
+      - '@core.db'

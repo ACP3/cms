@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     <form action="{uri args="acp/permissions/resources/delete"}" method="post">
@@ -22,49 +22,69 @@
         </nav>
         {redirect_message}
         {if isset($resources)}
-            <table id="resources-table" class="table table-hover">
-                <thead>
-                <tr>
-                    {if $can_delete_resource === true}
-                        <th style="width:3%"><input type="checkbox" id="mark-all" value="1" {mark name="entries"}></th>
-                    {/if}
-                    <th>{lang t="permissions|area"}</th>
-                    <th>{lang t="permissions|controller"}</th>
-                    <th>{lang t="permissions|filename"}</th>
-                    <th>{lang t="permissions|assigned_privilege"}</th>
-                    <th style="width:5%">{lang t="system|id"}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {foreach $resources as $module => $values}
-                    <tr class="sub-table-header">
-                        <th colspan="{if $can_delete_resource === true}6{else}5{/if}">{$module}</th>
+            <div class="table-responsive">
+                <table id="resources-table" class="table table-hover datagrid">
+                    <thead>
+                    <tr>
+                        {if $can_delete_resource === true}
+                            <th class="datagrid-column__mass-action">
+                                <input type="checkbox" id="mark-all" value="1" {mark name="entries"}></th>
+                        {/if}
+                        <th>{lang t="permissions|route"}</th>
+                        <th>{lang t="permissions|assigned_privilege"}</th>
+                        <th style="width:5%">{lang t="system|id"}</th>
+                        {if $can_edit_resource === true || $can_delete_resource === true}
+                            <th class="datagrid-column__actions">{lang t="system|action"}</th>
+                        {/if}
                     </tr>
-                    {foreach $values as $row}
-                        <tr>
-                            {if $can_delete_resource === true}
-                                <td><input type="checkbox" name="entries[]" value="{$row.resource_id}"></td>
-                            {/if}
-                            <td>{$row.area}</td>
-                            <td>{$row.controller}</td>
-                            <td>{check_access mode="link" path="acp/permissions/resources/edit/id_`$row.resource_id`" title=$row.page}</td>
-                            <td>{$row.privilege_name}</td>
-                            <td>{$row.resource_id}</td>
+                    </thead>
+                    <tbody>
+                    {foreach $resources as $module => $values}
+                        <tr class="sub-table-header">
+                            <th colspan="{if $can_delete_resource === true}5{else}4{/if}">{$module}</th>
                         </tr>
+                        {foreach $values as $row}
+                            <tr>
+                                {if $can_delete_resource === true}
+                                    <td><input type="checkbox" name="entries[]" value="{$row.resource_id}"></td>
+                                {/if}
+                                <td>{$row.area}/{$row.controller}/{$row.page}/</td>
+                                <td>{$row.privilege_name}</td>
+                                <td>{$row.resource_id}</td>
+                                {if $can_edit_resource === true || $can_delete_resource === true}
+                                    <td class="datagrid-column__actions">
+                                        <div class="btn-group pull-right">
+                                            {if $can_edit_resource === true}
+                                                <a href="{uri args="acp/permissions/resources/edit/id_`$row.resource_id`"}"
+                                                   class="btn btn-default btn-xs"
+                                                   title="{lang t="permissions|admin_resources_edit"}">
+                                                    <i class="glyphicon glyphicon-edit"></i>
+                                                </a>
+                                            {/if}
+                                            {if $can_delete_resource === true}
+                                                <a href="{uri args="acp/permissions/resources/delete/entries_`$row.resource_id`"}"
+                                                   class="btn btn-danger btn-xs"
+                                                   title="{lang t="permissions|admin_resources_delete"}">
+                                                    <i class="glyphicon glyphicon-remove"></i>
+                                                </a>
+                                            {/if}
+                                        </div>
+                                    </td>
+                                {/if}
+                            </tr>
+                        {/foreach}
                     {/foreach}
-                {/foreach}
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
             {if $can_delete_resource === true}
-                {include file="asset:system/mark.tpl"}
+                {include file="asset:System/Partials/mark.tpl"}
             {/if}
             {javascripts}
                 {include_js module="permissions" file="admin/resources.index"}
             {/javascripts}
         {else}
-            <div class="alert alert-warning text-center">
-                <strong>{lang t="system|no_entries"}</strong>
-            </div>
+            {include file="asset:System/Partials/no_results.tpl"}
         {/if}
     </form>
 {/block}

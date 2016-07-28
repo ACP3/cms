@@ -1,0 +1,14 @@
+imports:
+  - { resource: componenets/installer.yml }
+
+services:
+  core.wysiwyg.tinymce:
+    class: ACP3\Modules\ACP3\WYSIWYGTinyMCE\WYSIWYG\TinyMCE
+    arguments:
+      - '@core.assets.minifier.css'
+      - '@core.lang'
+      - '@core.environment.application_path'
+    calls:
+      - ['setFilemanagerHelpers', ['@?filemanager.helpers']]
+    tags:
+      - { name: core.wysiwyg.editor }

@@ -1,0 +1,31 @@
+services:
+  core.helpers.alerts:
+    class: ACP3\Installer\Core\Helpers\Alerts
+    arguments:
+      - '@core.http.request'
+      - '@core.view'
+
+  core.helpers.date:
+    class: ACP3\Core\Helpers\Date
+    arguments:
+      - '@core.date'
+      - '@core.lang'
+      - '@core.http.request'
+      - '@core.helpers.forms'
+      - '@core.validation.validation_rules.date_validation_rule'
+
+  core.helpers.forms:
+    class: ACP3\Core\Helpers\Forms
+    arguments:
+      - '@core.lang'
+      - '@core.http.request'
+
+  core.helpers.redirect:
+    class: ACP3\Core\Helpers\RedirectMessages
+    arguments:
+      - '@core.http.redirect_response'
+      - '@core.http.request'
+      - '@core.session'
+
+  core.helpers.secure:
+    class: ACP3\Core\Helpers\Secure

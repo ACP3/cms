@@ -1,7 +1,13 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Modules\ACP3\Categories;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 
 /**
  * Class Cache
@@ -10,21 +16,21 @@ use ACP3\Core;
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     /**
-     * @var Model
+     * @var CategoryRepository
      */
-    protected $categoriesModel;
+    protected $categoryRepository;
 
     /**
-     * @param Core\Cache $cache
-     * @param Model $categoriesModel
+     * @param Core\Cache         $cache
+     * @param CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Model $categoriesModel
+        CategoryRepository $categoryRepository
     ) {
         parent::__construct($cache);
 
-        $this->categoriesModel = $categoriesModel;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -38,7 +44,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function getCache($moduleName)
     {
         if ($this->cache->contains($moduleName) === false) {
-            $this->setCache($moduleName);
+            $this->saveCache($moduleName);
         }
 
         return $this->cache->fetch($moduleName);
@@ -52,8 +58,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function setCache($moduleName)
+    public function saveCache($moduleName)
     {
-        return $this->cache->save($moduleName, $this->categoriesModel->getAllByModuleName($moduleName));
+        return $this->cache->save($moduleName, $this->categoryRepository->getAllByModuleName($moduleName));
     }
 }

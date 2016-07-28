@@ -1,0 +1,12 @@
+imports:
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
+
+services:
+  comments.helpers:
+    class: ACP3\Modules\ACP3\Comments\Helpers
+    arguments:
+      - '@core.modules'
+      - '@comments.model.commentrepository'

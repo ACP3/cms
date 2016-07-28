@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -13,17 +13,17 @@
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
                     <div class="form-group">
-                        <label for="name" class="col-sm-2 control-label">{lang t="system|name"}</label>
+                        <label for="name" class="col-sm-2 control-label required">{lang t="system|name"}</label>
 
                         <div class="col-sm-10">
                             <input class="form-control" type="text" name="name" id="name" value="{$form.name}" maxlength="120" required>
                         </div>
                     </div>
-                    {if isset($parent)}
+                    {if !empty($parent)}
                         <div class="form-group">
-                            <label for="parent-id" class="col-sm-2 control-label">{lang t="permissions|superior_role"}</label>
+                            <label for="parent-id" class="col-sm-2 control-label required">{lang t="permissions|superior_role"}</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="parent_id" id="parent-id">
+                                <select class="form-control" name="parent_id" id="parent-id" required>
                                     {foreach $parent as $row}
                                         <option value="{$row.id}"{$row.selected}>{$row.name}</option>
                                     {/foreach}
@@ -33,9 +33,8 @@
                     {/if}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
-                    {$i=1}
                     {foreach $modules as $module => $values}
-                        {if $i % 2 !== 0}
+                        {if $values@iteration % 2 !== 0}
                             <div class="row">
                         {/if}
                         <fieldset class="col-sm-6">
@@ -50,6 +49,9 @@
                                                 <label for="privileges-{$values.id}-{$privilege.id}-{$row.value}" class="btn btn-default{if !empty($row.selected)} active{/if}">
                                                     <input type="radio" name="privileges[{$values.id}][{$privilege.id}]" id="privileges-{$values.id}-{$privilege.id}-{$row.value}" value="{$row.value}"{$row.selected}>
                                                     {$row.lang}
+                                                    {if $row.value === 2 && isset($privilege.calculated)}
+                                                        <small>({$privilege.calculated})</small>
+                                                    {/if}
                                                 </label>
                                             {/foreach}
                                         </div>
@@ -57,10 +59,9 @@
                                 </div>
                             {/foreach}
                         </fieldset>
-                        {if $i % 2 === 0 || count($modules) === $i}
+                        {if $values@iteration % 2 === 0 || $values@last}
                             </div>
                         {/if}
-                        {$i=$i+1}
                     {/foreach}
                 </div>
             </div>
@@ -74,6 +75,6 @@
         </div>
     </form>
     {javascripts}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

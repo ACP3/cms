@@ -1,0 +1,23 @@
+services:
+  guestbook.validator:
+    class: ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
+    parent: core.validator.abstract
+
+  guestbook.validation.admin_form_validation:
+    class: ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation
+    parent: core.validator.abstract
+
+  guestbook.validation.admin_settings_form_validation:
+    class: ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation
+    arguments:
+      - '@core.lang'
+      - '@core.validator'
+      - '@core.modules'
+
+  guestbook.validation.validation_rules.flood_barrier_validation_rule:
+    class: ACP3\Modules\ACP3\Guestbook\Validation\ValidationRules\FloodBarrierValidationRule
+    arguments:
+      - '@core.date'
+      - '@guestbook.model.guestbookrepository'
+    tags:
+      - { name: core.validation.validation_rule }

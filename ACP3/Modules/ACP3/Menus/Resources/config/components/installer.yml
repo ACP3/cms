@@ -1,0 +1,10 @@
+services:
+  menus.installer.schema:
+    class: ACP3\Modules\ACP3\Menus\Installer\Schema
+
+  menus.installer.migration:
+    class: ACP3\Modules\ACP3\Menus\Installer\Migration
+
+  menus.installer.sampleData:
+    class: ACP3\Modules\ACP3\Menus\Installer\SampleData
+    parent: core.modules.installer.abstractSampleData

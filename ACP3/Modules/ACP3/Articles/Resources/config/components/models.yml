@@ -1,0 +1,18 @@
+services:
+  articles.model.data_grid_repository:
+    class: ACP3\Modules\ACP3\Articles\Model\Repository\DataGridRepository
+    arguments:
+      - '@core.db'
+
+  articles.model.articlerepository:
+    class: ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
+    arguments:
+      - '@core.db'
+
+  articles.model:
+    class: ACP3\Modules\ACP3\Articles\Model\ArticlesModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.date'
+      - '@core.helpers.secure'
+      - '@articles.model.articlerepository'

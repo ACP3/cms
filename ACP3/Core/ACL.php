@@ -2,30 +2,38 @@
 namespace ACP3\Core;
 
 use ACP3\Modules\ACP3\Permissions;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
- * Access control lists
- *
- * @author Tino Goratsch
+ * Class ACL
+ * @package ACP3\Core
  */
 class ACL
 {
     /**
-     * @var Auth
+     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
      */
-    protected $auth;
+    protected $user;
     /**
-     * @var Modules
+     * @var \ACP3\Core\Modules
      */
     protected $modules;
     /**
-     * @var Permissions\Cache
+     * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
     protected $permissionsCache;
     /**
-     * @var Permissions\Model
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
      */
-    protected $permissionsModel;
+    protected $roleRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository
+     */
+    protected $userRoleRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
+     */
+    protected $privilegeRepository;
     /**
      * Array mit den jeweiligen Rollen zugewiesenen Berechtigungen
      *
@@ -46,52 +54,46 @@ class ACL
     protected $resources = [];
 
     /**
-     * @param \ACP3\Core\Auth                 $auth
-     * @param \ACP3\Core\Modules              $modules
-     * @param \ACP3\Modules\ACP3\Permissions\Model $permissionsModel
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                                          $user
+     * @param \ACP3\Core\Modules                                       $modules
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository      $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository  $userRoleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Cache                     $permissionsCache
      */
     public function __construct(
-        Auth $auth,
+        UserModel $user,
         Modules $modules,
-        Permissions\Model $permissionsModel,
+        Permissions\Model\Repository\RoleRepository $roleRepository,
+        Permissions\Model\Repository\UserRoleRepository $userRoleRepository,
+        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Permissions\Cache $permissionsCache
-    )
-    {
-        $this->auth = $auth;
+    ) {
+        $this->user = $user;
         $this->modules = $modules;
-        $this->permissionsModel = $permissionsModel;
+        $this->roleRepository = $roleRepository;
+        $this->userRoleRepository = $userRoleRepository;
+        $this->privilegeRepository = $privilegeRepository;
         $this->permissionsCache = $permissionsCache;
-    }
-
-    /**
-     * Initializes the available user privileges
-     */
-    protected function getPrivileges()
-    {
-        if ($this->privileges === []) {
-            $this->privileges = $this->getRules($this->getUserRoleIds($this->auth->getUserId()));
-        }
-
-        return $this->privileges;
     }
 
     /**
      * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
      *
      * @param integer $userId
-     *    ID des Benutzers, dessen Rollen ausgegeben werden sollen
      *
      * @return array
      */
     public function getUserRoleIds($userId)
     {
         if (isset($this->userRoles[$userId]) === false) {
-            $userRoles = $this->permissionsModel->getRolesByUserId($userId);
-            $c_userRoles = count($userRoles);
-
-            for ($i = 0; $i < $c_userRoles; ++$i) {
-                $this->userRoles[$userId][] = $userRoles[$i]['id'];
+            // Special case for guest user
+            if ($userId == 0) {
+                $this->userRoles[$userId][] = 1; // @TODO: Add config option for this
+            } else {
+                foreach ($this->userRoleRepository->getRolesByUserId($userId) as $userRole) {
+                    $this->userRoles[$userId][] = $userRole['id'];
+                }
             }
         }
         return $this->userRoles[$userId];
@@ -101,51 +103,19 @@ class ACL
      * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
      *
      * @param integer $userId
-     *    ID des Benutzers, dessen Rollen ausgegeben werden sollen
      *
      * @return array
      */
     public function getUserRoleNames($userId)
     {
-        $userRoles = $this->permissionsModel->getRolesByUserId($userId);
-        $c_userRoles = count($userRoles);
         $roles = [];
-
-        for ($i = 0; $i < $c_userRoles; ++$i) {
-            $roles[] = $userRoles[$i]['name'];
+        foreach ($this->userRoleRepository->getRolesByUserId($userId) as $userRole) {
+            $roles[] = $userRole['name'];
         }
         return $roles;
     }
 
     /**
-     * Gibt alle in der Datenbank vorhandenen Ressourcen zurück
-     *
-     * @return array
-     */
-    public function getResources()
-    {
-        if ($this->resources === []) {
-            $this->resources = $this->permissionsCache->getResourcesCache();
-        }
-
-        return $this->resources;
-    }
-
-    /**
-     * Returns the role permissions
-     *
-     * @param array $roleIds
-     *
-     * @return boolean
-     */
-    public function getRules(array $roleIds)
-    {
-        return $this->permissionsCache->getRulesCache($roleIds);
-    }
-
-    /**
-     * Returns all existing roles
-     *
      * @return array
      */
     public function getAllRoles()
@@ -154,37 +124,87 @@ class ACL
     }
 
     /**
-     * Returns all existing privileges
-     *
-     * @return array
-     */
-    public function getAllPrivileges()
-    {
-        return $this->permissionsModel->getAllPrivileges();
-    }
-
-    /**
-     * Gibt zurück ob dem Benutzer die jeweilige Rolle zugeordnet ist
-     *
      * @param integer $roleId
-     *    ID der zu überprüfenden Rolle
      *
      * @return boolean
      */
     public function userHasRole($roleId)
     {
-        return in_array($roleId, $this->getUserRoleIds($this->auth->getUserId()));
+        return in_array($roleId, $this->getUserRoleIds($this->user->getUserId()));
     }
 
     /**
-     * Gibt zurück, ob ein Benutzer berichtigt ist, eine Ressource zu betreten
+     * Initializes the available user privileges
+     */
+    protected function getPrivileges()
+    {
+        if ($this->privileges === []) {
+            $this->privileges = $this->getRules($this->getUserRoleIds($this->user->getUserId()));
+        }
+
+        return $this->privileges;
+    }
+
+    /**
+     * Returns the role permissions
+     *
+     * @param array $roleIds
+     *
+     * @return array
+     */
+    protected function getRules(array $roleIds)
+    {
+        return $this->permissionsCache->getRulesCache($roleIds);
+    }
+
+    /**
+     * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat
      *
      * @param string $resource
-     *    The path of a resource in the format of an internal ACP3 url
      *
      * @return boolean
      */
-    public function canAccessResource($resource)
+    public function hasPermission($resource)
+    {
+        if (!empty($resource) && $this->modules->controllerActionExists($resource) === true) {
+            $resourceParts = explode('/', $resource);
+
+            if ($this->modules->isActive($resourceParts[1]) === true) {
+                return $this->canAccessResource($resource);
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $resource
+     *
+     * @return boolean
+     */
+    protected function canAccessResource($resource)
+    {
+        $resourceParts = $this->convertResourcePathToArray($resource);
+
+        $area = $resourceParts[0];
+        $resource = $resourceParts[1] . '/' . $resourceParts[2] . '/' . $resourceParts[3] . '/';
+
+        // At least allow users to access the login page
+        if (isset($this->getResources()[$area][$resource])) {
+            $module = $resourceParts[1];
+            $privilegeKey = $this->getResources()[$area][$resource]['key'];
+            return $this->userHasPrivilege($module, $privilegeKey) === true || $this->user->isSuperUser() === true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $resource
+     *
+     * @return array
+     */
+    protected function convertResourcePathToArray($resource)
     {
         $resourceArray = explode('/', $resource);
 
@@ -194,58 +214,37 @@ class ACL
         if (empty($resourceArray[3]) === true) {
             $resourceArray[3] = 'index';
         }
-
-        $area = $resourceArray[0];
-        $resource = $resourceArray[1] . '/' . $resourceArray[2] . '/' . $resourceArray[3] . '/';
-
-        // At least allow users to access the login page
-        if ($area === 'frontend' && $resource === 'users/index/login/') {
-            return true;
-        } elseif (isset($this->getResources()[$area][$resource])) {
-            $module = $resourceArray[1];
-            $key = $this->getResources()[$area][$resource]['key'];
-            return $this->userHasPrivilege($module, $key) === true || $this->auth->isSuperUser() === true;
-        }
-
-        return false;
+        return $resourceArray;
     }
 
     /**
-     * Gibt zurück, ob ein Benutzer die Berechtigung auf eine Privilegie besitzt
+     * Gibt alle in der Datenbank vorhandenen Ressourcen zurück
      *
-     * @param        $module
-     * @param string $key
-     *    The key of the privilege
+     * @return array
+     */
+    protected function getResources()
+    {
+        if ($this->resources === []) {
+            $this->resources = $this->permissionsCache->getResourcesCache();
+        }
+
+        return $this->resources;
+    }
+
+    /**
+     * Returns, whether the current user has the given privilege
+     *
+     * @param string $module
+     * @param string $privilegeKey
      *
      * @return boolean
      */
-    public function userHasPrivilege($module, $key)
+    protected function userHasPrivilege($module, $privilegeKey)
     {
-        $key = strtolower($key);
-        if (isset($this->getPrivileges()[$module][$key])) {
-            return $this->getPrivileges()[$module][$key]['access'];
+        $privilegeKey = strtolower($privilegeKey);
+        if (isset($this->getPrivileges()[$module][$privilegeKey])) {
+            return $this->getPrivileges()[$module][$privilegeKey]['access'];
         }
         return false;
-    }
-
-    /**
-     * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat
-     *
-     * @param string $path
-     *    Zu überprüfendes Modul
-     *
-     * @return integer
-     */
-    public function hasPermission($path)
-    {
-        if ($this->modules->actionExists($path) === true) {
-            $pathArray = explode('/', $path);
-
-            if ($this->modules->isActive($pathArray[1]) === true) {
-                return $this->canAccessResource($path);
-            }
-        }
-
-        return 0;
     }
 }

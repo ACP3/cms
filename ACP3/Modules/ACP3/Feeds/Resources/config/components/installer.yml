@@ -1,0 +1,6 @@
+services:
+  feeds.installer.schema:
+    class: ACP3\Modules\ACP3\Feeds\Installer\Schema
+
+  feeds.installer.migration:
+    class: ACP3\Modules\ACP3\Feeds\Installer\Migration

@@ -1,0 +1,12 @@
+services:
+  core.date:
+    class: ACP3\Core\Date
+    arguments:
+      - '@users.model.user_model'
+      - '@core.date.date_translator'
+      - '@core.config'
+
+  core.date.date_translator:
+    class: ACP3\Core\Date\DateTranslator
+    arguments:
+      - '@core.lang'

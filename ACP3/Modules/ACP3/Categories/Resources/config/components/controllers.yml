@@ -1,0 +1,40 @@
+services:
+  categories.controller.admin.index.create:
+    class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Create
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@categories.model.categories_model'
+      - '@categories.cache'
+      - '@categories.validator'
+      - '@core.helpers.formToken'
+
+  categories.controller.admin.index.delete:
+    class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Delete
+    arguments:
+      - '@core.context.admin'
+      - '@categories.model.categories_repository'
+      - '@categories.cache'
+
+  categories.controller.admin.index.edit:
+    class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Edit
+    arguments:
+      - '@core.context.admin'
+      - '@categories.model.categories_model'
+      - '@categories.model.categories_repository'
+      - '@categories.cache'
+      - '@categories.validator'
+      - '@core.helpers.formToken'
+
+  categories.controller.admin.index.index:
+    class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Index
+    arguments:
+      - '@core.context.admin'
+      - '@categories.model.data_grid_repository'
+
+  categories.controller.admin.index.settings:
+    class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Settings
+    arguments:
+      - '@core.context.admin'
+      - '@categories.validation.admin_settings_form_validation'
+      - '@core.helpers.formToken'

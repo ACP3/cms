@@ -1,0 +1,10 @@
+services:
+  core.breadcrumb:
+    class: ACP3\Modules\ACP3\Menus\Core\Breadcrumb\Steps
+    arguments:
+      - '@service_container'
+      - '@core.lang'
+      - '@core.http.request'
+      - '@core.router'
+      - '@core.eventDispatcher'
+      - '@menus.model.menuitemrepository'

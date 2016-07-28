@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     <nav id="adm-list" class="navbar navbar-default" role="navigation">
@@ -13,8 +13,6 @@
             <div class="navbar-text pull-right">
                 {check_access mode="link" path="acp/system/maintenance/update_check" class="glyphicon glyphicon-refresh text-success"}
                 {check_access mode="link" path="acp/system/maintenance/cache" class="glyphicon glyphicon-asterisk text-warning"}
-                {check_access mode="link" path="acp/system/maintenance/sql_import" class="glyphicon glyphicon-import"}
-                {check_access mode="link" path="acp/system/maintenance/sql_export" class="glyphicon glyphicon-export"}
             </div>
         </div>
     </nav>

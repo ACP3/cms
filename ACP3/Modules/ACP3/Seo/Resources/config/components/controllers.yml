@@ -1,0 +1,42 @@
+services:
+  seo.controller.admin.index.create:
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Create
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@seo.helper.meta_form_fields'
+      - '@seo.helper.uri_alias_manager'
+      - '@seo.model.seorepository'
+      - '@seo.validator'
+
+  seo.controller.admin.index.delete:
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Delete
+    arguments:
+      - '@core.context.admin'
+      - '@seo.cache'
+      - '@seo.model.seorepository'
+
+  seo.controller.admin.index.edit:
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Edit
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@seo.cache'
+      - '@seo.helper.meta_form_fields'
+      - '@seo.model.seorepository'
+      - '@seo.validator'
+
+  seo.controller.admin.index.index:
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Index
+    arguments:
+      - '@core.context.admin'
+      - '@seo.model.data_grid_repository'
+      - '@seo.helper.meta_statements'
+
+  seo.controller.admin.index.settings:
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Settings
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@seo.validation.admin_settings_form_validation'

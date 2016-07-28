@@ -2,24 +2,23 @@
 
 namespace ACP3\Core;
 
-use ACP3\Core\View\Renderer\AbstractRenderer;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use ACP3\Core\View\Renderer\RendererInterface;
 
 /**
  * Klasse für die Ausgabe der Seite
  * @package ACP3\Core
  */
-class View extends ContainerAware
+class View
 {
     /**
-     * @var AbstractRenderer
+     * @var RendererInterface
      */
     protected $renderer;
 
     /**
      * Gets the renderer
      *
-     * @return AbstractRenderer
+     * @return RendererInterface
      */
     public function getRenderer()
     {
@@ -27,52 +26,57 @@ class View extends ContainerAware
     }
 
     /**
-     * Set the desired renderer with an optional config array
+     * View constructor.
      *
-     * @param string $renderer
-     * @param array $params
-     *
-     * @throws \Exception
+     * @param \ACP3\Core\View\Renderer\RendererInterface $renderer
+     * @param array                                      $params
      */
-    public function setRenderer($renderer = 'smarty', array $params = [])
+    public function __construct(RendererInterface $renderer, array $params = [])
     {
-        $serviceId = 'core.view.renderer.' . $renderer;
-        if ($this->container->has($serviceId) === true) {
-            $this->renderer = $this->container->get($serviceId);
-            $this->renderer->configure($params);
-        } else {
-            throw new \Exception('Renderer ' . $renderer . ' not found!');
-        }
+        $this->renderer = $renderer;
+        $this->renderer->configure($params);
     }
 
     /**
      * Fetches a template and outputs its contents
      *
-     * @param      $template
-     * @param null $cacheId
-     * @param null $compileId
-     * @param null $parent
+     * @param string      $template
+     * @param mixed       $cacheId
+     * @param mixed       $compileId
+     * @param object|null $parent
      */
     public function displayTemplate($template, $cacheId = null, $compileId = null, $parent = null)
     {
-        echo $this->fetchTemplate($template, $cacheId, $compileId, $parent, true);
+        $this->renderer->display('asset:' . $template, $cacheId, $compileId, $parent);
     }
 
     /**
      * Fetches a template and returns its contents
      *
-     * @param string $template
-     * @param mixed $cacheId
-     * @param mixed $compileId
-     * @param object $parent
-     * @param boolean $display
+     * @param string      $template
+     * @param mixed       $cacheId
+     * @param mixed       $compileId
+     * @param object|null $parent
      *
-     * @throws \Exception
      * @return string
      */
-    public function fetchTemplate($template, $cacheId = null, $compileId = null, $parent = null, $display = false)
+    public function fetchTemplate($template, $cacheId = null, $compileId = null, $parent = null)
     {
-        return $this->renderer->fetch('asset:' . $template, $cacheId, $compileId, $parent, $display);
+        return $this->renderer->fetch('asset:' . $template, $cacheId, $compileId, $parent);
+    }
+
+    /**
+     * @param string $template
+     *
+     * @return string
+     */
+    public function fetchStringAsTemplate($template)
+    {
+        try {
+            return $this->renderer->fetch('string:' . $template);
+        } catch (\Exception $e) {
+            return $template; // fail silently when invalid statements have been given in the string template
+        }
     }
 
     /**
@@ -90,8 +94,8 @@ class View extends ContainerAware
     /**
      * Assigns a new template variable
      *
-     * @param string $name
-     * @param mixed $value
+     * @param string|array $name
+     * @param mixed        $value
      *
      * @return boolean
      */

@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Helpers;
 
-use ACP3\Core\DB;
+use ACP3\Core\Database\Connection;
 
 /**
  * Class Sort
@@ -10,14 +10,14 @@ use ACP3\Core\DB;
 class Sort
 {
     /**
-     * @var \ACP3\Core\DB
+     * @var \ACP3\Core\Database\Connection
      */
     protected $db;
 
     /**
-     * @param \ACP3\Core\DB $db
+     * @param \ACP3\Core\Database\Connection $db
      */
-    public function __construct(DB $db)
+    public function __construct(Connection $db)
     {
         $this->db = $db;
     }
@@ -30,11 +30,12 @@ class Sort
      * @param string $sortField
      * @param string $id
      * @param string $where
+     *
      * @return boolean
      */
     public function up($table, $idField, $sortField, $id, $where = '')
     {
-        return $this->_moveOneStep('up', $table, $idField, $sortField, $id, $where);
+        return $this->moveOneStep('up', $table, $idField, $sortField, $id, $where);
     }
 
     /**
@@ -45,11 +46,12 @@ class Sort
      * @param string $sortField
      * @param string $id
      * @param string $where
+     *
      * @return boolean
      */
     public function down($table, $idField, $sortField, $id, $where = '')
     {
-        return $this->_moveOneStep('down', $table, $idField, $sortField, $id, $where);
+        return $this->moveOneStep('down', $table, $idField, $sortField, $id, $where);
     }
 
     /**
@@ -61,9 +63,10 @@ class Sort
      * @param string $sortField
      * @param string $id
      * @param string $where
+     *
      * @return boolean
      */
-    private function _moveOneStep($action, $table, $idField, $sortField, $id, $where = '')
+    private function moveOneStep($action, $table, $idField, $sortField, $id, $where = '')
     {
         $this->db->getConnection()->beginTransaction();
         try {

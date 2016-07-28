@@ -1,0 +1,7 @@
+services:
+  core.cache.event.listener.on_model_after_save_listener:
+    class: ACP3\Core\Cache\Event\Listener\OnModelAfterSaveListener
+    arguments:
+      - '@core.environment.application_path'
+    tags:
+      - { name: core.eventListener, event: core.model.after_save, method: purgeHttpCache }

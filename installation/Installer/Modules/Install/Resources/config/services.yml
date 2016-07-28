@@ -1,0 +1,5 @@
+imports:
+  - { resource: components/controllers.yml }
+  - { resource: components/helpers.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }

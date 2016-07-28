@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     <article>
@@ -24,8 +24,11 @@
                 </a>
             </footer>
         </section>
-        {if isset($comments)}
-            {$comments}
+        {if $comments_allowed === true}
+            <section id="comments">
+                {load_module module="frontend/comments" args=['module' => 'files', 'entryId' => $file.id]}
+                {load_module module="frontend/comments/index/create" args=['module' => 'files', 'entryId' => $file.id]}
+            </section>
         {/if}
     </article>
 {/block}

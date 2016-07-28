@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -13,10 +13,10 @@
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
                     <div class="form-group">
-                        <label for="date-format" class="col-sm-2 control-label">{lang t="system|date_format"}</label>
+                        <label for="date-format" class="col-sm-2 control-label required">{lang t="system|date_format"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="dateformat" id="date-format">
+                            <select class="form-control" name="dateformat" id="date-format" required>
                                 {foreach $dateformat as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                                 {/foreach}
@@ -24,10 +24,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="sidebar-entries" class="col-sm-2 control-label">{lang t="system|sidebar_entries_to_display"}</label>
+                        <label for="sidebar-entries" class="col-sm-2 control-label required">{lang t="system|sidebar_entries_to_display"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="sidebar" id="sidebar-entries">
+                            <select class="form-control" name="sidebar" id="sidebar-entries" required>
                                 {foreach $sidebar_entries as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.value}</option>
                                 {/foreach}
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="{$overlay.0.id}" class="col-sm-2 control-label">{lang t="gallery|use_overlay"}</label>
+                        <label for="{$overlay.0.id}" class="col-sm-2 control-label required">{lang t="gallery|use_overlay"}</label>
 
                         <div class="col-sm-10">
                             <div class="btn-group" data-toggle="buttons">
@@ -51,7 +51,7 @@
                     </div>
                     {if isset($comments)}
                         <div id="comments-container" class="form-group">
-                            <label for="{$comments.0.id}" class="col-sm-2 control-label">{lang t="system|allow_comments"}</label>
+                            <label for="{$comments.0.id}" class="col-sm-2 control-label required">{lang t="system|allow_comments"}</label>
 
                             <div class="col-sm-10">
                                 <div class="btn-group" data-toggle="buttons">
@@ -68,66 +68,39 @@
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="thumbwidth" class="col-sm-2 control-label">{lang t="gallery|thumb_image_width"}</label>
+                        <label for="thumbwidth" class="col-sm-2 control-label required">{lang t="gallery|thumb_image_width"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="number" name="thumbwidth" id="thumbwidth" value="{$form.thumbwidth}">
+                            <input class="form-control" type="number" name="thumbwidth" id="thumbwidth" value="{$form.thumbwidth}" required>
 
                             <p class="help-block">{lang t="system|statements_in_pixel"}</p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="thumbheight" class="col-sm-2 control-label">{lang t="gallery|thumb_image_height"}</label>
+                        <label for="thumbheight" class="col-sm-2 control-label required">{lang t="gallery|thumb_image_height"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="number" name="thumbheight" id="thumbheight" value="{$form.thumbheight}">
+                            <input class="form-control" type="number" name="thumbheight" id="thumbheight" value="{$form.thumbheight}" required>
 
                             <p class="help-block">{lang t="system|statements_in_pixel"}</p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="width" class="col-sm-2 control-label">{lang t="gallery|image_width"}</label>
+                        <label for="width" class="col-sm-2 control-label required">{lang t="gallery|image_width"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="number" name="width" id="width" value="{$form.width}">
+                            <input class="form-control" type="number" name="width" id="width" value="{$form.width}" required>
 
                             <p class="help-block">{lang t="system|statements_in_pixel"}</p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="height" class="col-sm-2 control-label">{lang t="gallery|image_height"}</label>
+                        <label for="height" class="col-sm-2 control-label required">{lang t="gallery|image_height"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="number" name="height" id="height" value="{$form.height}">
+                            <input class="form-control" type="number" name="height" id="height" value="{$form.height}" required>
 
                             <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="maxwidth" class="col-sm-2 control-label">{lang t="gallery|max_image_width"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="maxwidth" id="maxwidth" value="{$form.maxwidth}">
-
-                            <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="maxheight" class="col-sm-2 control-label">{lang t="gallery|max_image_height"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="maxheight" id="maxheight" value="{$form.maxheight}">
-
-                            <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="filesize" class="col-sm-2 control-label">{lang t="gallery|image_filesize"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="filesize" id="filesize" value="{$form.filesize}">
-
-                            <p class="help-block">{lang t="system|statements_in_byte"}</p>
                         </div>
                     </div>
                 </div>
@@ -143,6 +116,6 @@
     </form>
     {javascripts}
         {include_js module="gallery" file="admin/index.settings"}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if $overlay == 1}
@@ -17,14 +17,14 @@
         </p>
     {/if}
     {redirect_message}
-    {if isset($guestbook)}
-        {$pagination}
+    {if !empty($guestbook)}
+        {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
         {foreach $guestbook as $row}
             <article id="gb-entry-{$row.id}" class="dataset-box clearfix" style="width: 65%">
                 <header class="navbar navbar-default">
                     <div class="navbar-header">
                         <strong class="navbar-text">
-                            {if !empty($row.user_id) && !empty($row.user_id_real)}
+                            {if !is_null($row.user_id)}
                                 <a href="{uri args="users/index/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>
                             {else}
                                 {$row.name}
@@ -36,7 +36,7 @@
                 <div class="content">
                     <div class="pull-right">
                         {if $row.website != ''}
-                            <a href="{$row.website}" target="_blank" rel="nofollow" title="{lang t="guestbook|visit_website"}">
+                            <a href="{$row.website|prefix_uri}" target="_blank" rel="nofollow" title="{lang t="guestbook|visit_website"}">
                                 <i class="glyphicon glyphicon-link"></i>
                             </a>
                             <br>
@@ -49,9 +49,8 @@
                 </div>
             </article>
         {/foreach}
+        {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
     {else}
-        <div class="alert alert-warning text-center">
-            <strong>{lang t="system|no_entries"}</strong>
-        </div>
+        {include file="asset:System/Partials/no_results.tpl"}
     {/if}
 {/block}

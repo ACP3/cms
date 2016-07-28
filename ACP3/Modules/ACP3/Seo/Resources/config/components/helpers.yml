@@ -1,0 +1,23 @@
+services:
+  seo.helper.meta_form_fields:
+    class: ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
+    arguments:
+      - '@seo.helper.meta_statements'
+      - '@core.lang'
+      - '@core.http.request'
+      - '@seo.core.router.aliases'
+      - '@core.helpers.forms'
+
+  seo.helper.meta_statements:
+    class: ACP3\Modules\ACP3\Seo\Helper\MetaStatements
+    arguments:
+      - '@core.http.request'
+      - '@seo.cache'
+      - '@core.config'
+
+  seo.helper.uri_alias_manager:
+    class: ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+    arguments:
+      - '@core.helpers.secure'
+      - '@seo.cache'
+      - '@seo.model.seorepository'

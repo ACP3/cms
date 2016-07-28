@@ -1,0 +1,7 @@
+services:
+  search.installer.schema:
+    class: ACP3\Modules\ACP3\Search\Installer\Schema
+
+  search.installer.migration:
+    class: ACP3\Modules\ACP3\Search\Installer\Migration
+    parent: core.modules.installer.abstractMigration

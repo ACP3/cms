@@ -10,37 +10,35 @@ use ACP3\Core;
 class PageCssClasses
 {
     /**
-     * @var \ACP3\Core\Breadcrumb
+     * @var \ACP3\Core\Breadcrumb\Steps
      */
     protected $breadcrumb;
     /**
-     * @var \ACP3\Core\Request
+     * @var \ACP3\Core\Breadcrumb\Title
+     */
+    protected $title;
+    /**
+     * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
 
     /**
      * @var string
      */
-    protected $module;
-    /**
-     * @var string
-     */
-    protected $controllerAction;
-    /**
-     * @var string
-     */
     protected $details;
 
     /**
-     * @param \ACP3\Core\Breadcrumb $breadcrumb
-     * @param \ACP3\Core\Request    $request
+     * @param \ACP3\Core\Breadcrumb\Steps      $breadcrumb
+     * @param \ACP3\Core\Breadcrumb\Title      $title
+     * @param \ACP3\Core\Http\RequestInterface $request
      */
     public function __construct(
-        Core\Breadcrumb $breadcrumb,
-        Core\Request $request
-    )
-    {
+        Core\Breadcrumb\Steps $breadcrumb,
+        Core\Breadcrumb\Title $title,
+        Core\Http\RequestInterface $request
+    ) {
         $this->breadcrumb = $breadcrumb;
+        $this->title = $title;
         $this->request = $request;
     }
 
@@ -49,10 +47,7 @@ class PageCssClasses
      */
     public function getModule()
     {
-        if ($this->module === null) {
-            $this->module = $this->request->mod;
-        }
-        return $this->module;
+        return $this->request->getModule();
     }
 
     /**
@@ -60,10 +55,7 @@ class PageCssClasses
      */
     public function getControllerAction()
     {
-        if ($this->controllerAction === null) {
-            $this->controllerAction = $this->request->mod . '-' . $this->request->controller . '-' . $this->request->file;
-        }
-        return $this->controllerAction;
+        return $this->request->getModule() . '-' . $this->request->getController() . '-' . $this->request->getAction();
     }
 
     /**
@@ -80,14 +72,14 @@ class PageCssClasses
                         str_replace(
                             ' ',
                             '-',
-                            strtolower($this->breadcrumb->getPageTitle())
+                            strtolower($this->title->getPageTitle())
                         ),
                         ENT_QUOTES,
                         'UTF-8'
                     )
                 )
             );
-            $this->details = $this->request->mod . '-' . $this->request->controller . '-' . $pageTitle;
+            $this->details = $this->request->getModule() . '-' . $this->request->getController() . '-' . $pageTitle;
         }
 
         return $this->details;

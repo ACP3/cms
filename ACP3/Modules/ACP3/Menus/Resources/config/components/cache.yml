@@ -1,0 +1,14 @@
+services:
+  menus.cache:
+    class: ACP3\Modules\ACP3\Menus\Cache
+    arguments:
+      - '@menus.cache.core'
+      - '@core.lang'
+      - '@menus.model.menurepository'
+      - '@menus.model.menuitemrepository'
+
+  menus.cache.core:
+    class: ACP3\Core\Cache
+    arguments:
+      - '@core.cache.cache_driver_factory'
+      - 'menus'

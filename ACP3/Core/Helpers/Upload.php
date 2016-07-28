@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Helpers;
 
-use ACP3\Core\Exceptions;
+use ACP3\Core\Environment\ApplicationPath;
 
 /**
  * Class Upload
@@ -10,15 +10,23 @@ use ACP3\Core\Exceptions;
 class Upload
 {
     /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    private $appPath;
+    /**
      * @var string
      */
     private $directory = '';
 
     /**
-     * @param $directory
+     * Upload constructor.
+     *
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param string                                 $directory
      */
-    public function __construct($directory)
+    public function __construct(ApplicationPath $appPath, $directory)
     {
+        $this->appPath = $appPath;
         $this->directory = $directory;
     }
 
@@ -35,7 +43,7 @@ class Upload
      */
     public function moveFile($tmpFilename, $filename, $retainFilename = false)
     {
-        $path = UPLOADS_DIR . $this->directory . '/';
+        $path = $this->appPath->getUploadsDir() . $this->directory . '/';
 
         if ($retainFilename === true) {
             $newFilename = $filename;
@@ -99,15 +107,14 @@ class Upload
      * Löscht eine Datei im uploads Ordner
      *
      * @param string $file
-     *    Der Name der Datei
      *
      * @return boolean
      */
     public function removeUploadedFile($file)
     {
-        $path = UPLOADS_DIR . $this->directory . '/' . $file;
-        if (!empty($dir) && !empty($file) && !preg_match('=/=', $file) && is_file($path) === true) {
-            return @unlink($path);
+        $path = $this->appPath->getUploadsDir() . $this->directory . '/' . $file;
+        if (!empty($file) && !preg_match('=/=', $file) && is_file($path) === true) {
+            return unlink($path);
         }
         return false;
     }

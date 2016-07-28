@@ -25,7 +25,7 @@ class RedirectMessage extends AbstractFunction
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'redirect_message';
     }
@@ -35,6 +35,8 @@ class RedirectMessage extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        return $this->redirectMessages->getMessage();
+        $smarty->smarty->assign('redirect', $this->redirectMessages->getMessage());
+
+        return $smarty->smarty->fetch('asset:System/Partials/redirect_message.tpl');
     }
 }

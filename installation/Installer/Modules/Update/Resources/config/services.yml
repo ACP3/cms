@@ -1,0 +1,3 @@
+imports:
+  - { resource: components/controllers.yml }
+  - { resource: components/models.yml }

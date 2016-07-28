@@ -1,0 +1,6 @@
+services:
+  captcha.installer.schema:
+    class: ACP3\Modules\ACP3\Captcha\Installer\Schema
+
+  captcha.installer.migration:
+    class: ACP3\Modules\ACP3\Captcha\Installer\Migration

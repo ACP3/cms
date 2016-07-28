@@ -1,0 +1,80 @@
+services:
+  permissions.controller.admin.index.create:
+    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Create
+    arguments:
+      - '@core.context.admin'
+      - '@permissions.model:role_model'
+      - '@permissions.model.privilegerepository'
+      - '@permissions.model.rulerepository'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@permissions.cache'
+      - '@permissions.validator.role'
+
+  permissions.controller.admin.index.delete:
+    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Delete
+    arguments:
+      - '@core.context.admin'
+      - '@core.nested_set'
+      - '@permissions.cache'
+
+  permissions.controller.admin.index.edit:
+    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Edit
+    arguments:
+      - '@core.context.admin'
+      - '@permissions.model:role_model'
+      - '@permissions.model.privilegerepository'
+      - '@permissions.model.rulerepository'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@permissions.model.rolerepository'
+      - '@permissions.cache'
+      - '@permissions.validator.role'
+
+  permissions.controller.admin.index.index:
+    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Index
+    parent: core.controller.admin
+
+  permissions.controller.admin.index.order:
+    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Order
+    arguments:
+      - '@core.context.admin'
+      - '@core.nested_set'
+      - '@permissions.model.rolerepository'
+      - '@permissions.cache'
+
+  permissions.controller.admin.resources.create:
+    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Create
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@permissions.model.privilegerepository'
+      - '@permissions.model.resources_model'
+      - '@permissions.cache'
+      - '@permissions.validator.resource'
+
+  permissions.controller.admin.resources.delete:
+    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Delete
+    arguments:
+      - '@core.context.admin'
+      - '@permissions.model.resourcerepository'
+      - '@permissions.cache'
+
+  permissions.controller.admin.resources.edit:
+    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Edit
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@permissions.model.privilegerepository'
+      - '@permissions.model.resourcerepository'
+      - '@permissions.model.resources_model'
+      - '@permissions.cache'
+      - '@permissions.validator.resource'
+
+  permissions.controller.admin.resources.index:
+    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Index
+    arguments:
+      - '@core.context.admin'
+      - '@permissions.model.resourcerepository'

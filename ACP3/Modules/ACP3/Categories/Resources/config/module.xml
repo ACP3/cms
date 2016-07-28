@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <info>
+        <name lang="true"/>
+        <description lang="true"/>
+        <author>Tino Goratsch</author>
+        <version core="true"/>
+        <dependencies>
+            <module>permissions</module>
+            <module>system</module>
+        </dependencies>
+    </info>
+</module>

@@ -1,0 +1,30 @@
+services:
+  smarty.plugin.lang:
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Translate
+    arguments: ['@core.lang']
+    tags:
+      - { name: core.view.extension }
+
+  smarty.plugin.uri:
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Uri
+    arguments: ['@core.router']
+    tags:
+      - { name: core.view.extension }
+
+  smarty.resource.asset:
+    class: ACP3\Installer\Core\View\Renderer\Smarty\Resources\Asset
+    arguments:
+      - '@core.environment.application_path'
+    tags:
+      - { name: core.view.extension }
+
+  smarty.filter.move_to_bottom:
+    class: ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToBottom
+    tags:
+      - { name: core.view.extension }
+
+  smarty.filter.move_to_head:
+    class: ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToHead
+    tags:
+      - { name: core.view.extension }
+

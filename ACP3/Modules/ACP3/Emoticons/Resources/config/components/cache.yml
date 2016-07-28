@@ -1,0 +1,13 @@
+services:
+  emoticons.cache:
+    class: ACP3\Modules\ACP3\Emoticons\Cache
+    arguments:
+      - '@emoticons.cache.core'
+      - '@core.environment.application_path'
+      - '@emoticons.model.emoticonrepository'
+
+  emoticons.cache.core:
+    class: ACP3\Core\Cache
+    arguments:
+      - '@core.cache.cache_driver_factory'
+      - 'emoticons'

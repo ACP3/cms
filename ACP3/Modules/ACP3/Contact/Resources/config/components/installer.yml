@@ -1,0 +1,7 @@
+services:
+  contact.installer.schema:
+    class: ACP3\Modules\ACP3\Contact\Installer\Schema
+
+  contact.installer.migration:
+    class: ACP3\Modules\ACP3\Contact\Installer\Migration
+    parent: core.modules.installer.abstractMigration

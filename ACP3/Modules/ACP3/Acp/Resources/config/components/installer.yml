@@ -1,0 +1,6 @@
+services:
+  acp.installer.schema:
+    class: ACP3\Modules\ACP3\Acp\Installer\Schema
+
+  acp.installer.migration:
+    class: ACP3\Modules\ACP3\Acp\Installer\Migration

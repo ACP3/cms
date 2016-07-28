@@ -1,7 +1,12 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Installer\Core;
 
-use ACP3\Core\Helpers\Forms;
+use ACP3\Core\Date\DateTranslator;
 
 /**
  * Class Date
@@ -10,18 +15,14 @@ use ACP3\Core\Helpers\Forms;
 class Date extends \ACP3\Core\Date
 {
     /**
-     * @param Lang $lang
-     * @param Forms $formsHelper
-     * @param \ACP3\Core\Validator\Rules\Date $dateValidator
+     * Date constructor.
+     *
+     * @param \ACP3\Core\Date\DateTranslator $dateTranslator
      */
     public function __construct(
-        Lang $lang,
-        Forms $formsHelper,
-        \ACP3\Core\Validator\Rules\Date $dateValidator
+        DateTranslator $dateTranslator
     ) {
-        $this->lang = $lang;
-        $this->formsHelper = $formsHelper;
-        $this->dateValidator = $dateValidator;
+        $this->dateTranslator = $dateTranslator;
 
         $defaultTimeZone = date_default_timezone_get();
 
@@ -30,6 +31,6 @@ class Date extends \ACP3\Core\Date
             'date_format_short' => 'd.m.y',
             'time_zone' => !empty($defaultTimeZone) ? $defaultTimeZone : 'UTC',
         ];
-        $this->_setFormatAndTimeZone($settings);
+        $this->setFormatAndTimeZone($settings);
     }
 }

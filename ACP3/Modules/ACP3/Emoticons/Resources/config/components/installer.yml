@@ -1,0 +1,10 @@
+services:
+  emoticons.installer.schema:
+    class: ACP3\Modules\ACP3\Emoticons\Installer\Schema
+
+  emoticons.installer.migration:
+    class: ACP3\Modules\ACP3\Emoticons\Installer\Migration
+
+  emoticons.installer.sampleData:
+    class: ACP3\Modules\ACP3\Emoticons\Installer\SampleData
+    parent: core.modules.installer.abstractSampleData

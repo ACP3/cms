@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<design>
+    <name>PHPUnit Theme</name>
+    <description>PHPUnit Theme Description</description>
+    <author>Tino Goratsch</author>
+    <version core="true"/>
+    <use_bootstrap>true</use_bootstrap>
+    <css>
+        <item>additional-style.css</item>
+    </css>
+    <js>
+        <item>additional-script.js</item>
+    </js>
+</design>

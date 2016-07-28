@@ -1,0 +1,17 @@
+services:
+  categories.model.categories_repository:
+    class: ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+    arguments:
+      - '@core.db'
+
+  categories.model.data_grid_repository:
+    class: ACP3\Modules\ACP3\Categories\Model\Repository\DataGridRepository
+    arguments:
+      - '@core.db'
+
+  categories.model.categories_model:
+    class: ACP3\Modules\ACP3\Categories\Model\CategoriesModel
+    arguments:
+      - '@core.eventDispatcher'
+      - '@core.helpers.secure'
+      - '@categories.model.categories_repository'

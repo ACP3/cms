@@ -1,0 +1,17 @@
+services:
+  core.context.install:
+    class: ACP3\Installer\Core\Controller\Context\InstallerContext
+    arguments:
+      - '@service_container'
+      - '@core.lang'
+      - '@core.http.request'
+      - '@core.router'
+      - '@core.view'
+      - '@core.http.response'
+      - '@core.environment.application_path'
+    public: false
+
+  core.controller.install:
+    abstract: true
+    arguments:
+      - '@core.context.install'

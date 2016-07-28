@@ -1,0 +1,22 @@
+services:
+  acp.event.listener.on_build_admin_cache_empty_steps_before_listener:
+    class: ACP3\Modules\ACP3\Acp\Event\Listener\OnBuildAdminCacheEmptyStepsBeforeListener
+    arguments:
+      - '@core.lang'
+    tags:
+      - { name: core.eventListener, event: core.breadcrumb.steps.build_admin_cache_empty_steps_before, method: execute }
+
+  acp.event.listener.on_build_admin_cache_not_empty_steps_after_listener:
+    class: ACP3\Modules\ACP3\Acp\Event\Listener\OnBuildAdminCacheNotEmptyStepsAfterListener
+    arguments:
+      - '@core.lang'
+    tags:
+      - { name: core.eventListener, event: core.breadcrumb.steps.build_admin_cache_not_empty_steps_after, method: execute }
+
+  acp.event.listener.on_get_site_and_page_title_before_listener:
+    class: ACP3\Modules\ACP3\Acp\Event\Listener\OnGetSiteAndPageTitleBeforeListener
+    arguments:
+      - '@core.http.request'
+      - '@core.lang'
+    tags:
+      - { name: core.eventListener, event: core.breadcrumb.title.get_site_and_page_title_before, method: execute }

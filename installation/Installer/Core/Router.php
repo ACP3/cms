@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
 namespace ACP3\Installer\Core;
 
 use ACP3\Core;
@@ -10,23 +15,19 @@ use ACP3\Core;
 class Router extends Core\Router
 {
     /**
-     * @var \ACP3\Installer\Core\Request
+     * @param \ACP3\Core\Http\RequestInterface       $request
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
-    protected $request;
-
-    /**
-     * @param \ACP3\Installer\Core\Request $request
-     */
-    public function __construct(Request $request)
-    {
+    public function __construct(
+        Core\Http\RequestInterface $request,
+        Core\Environment\ApplicationPath $appPath
+    ) {
         $this->request = $request;
+        $this->appPath = $appPath;
     }
 
     /**
-     * @param $path
-     * @param bool $absolute
-     * @param bool $forceSecure
-     * @return string
+     * @inheritdoc
      */
     public function route($path, $absolute = false, $forceSecure = false)
     {
@@ -43,11 +44,11 @@ class Router extends Core\Router
         $prefix = '';
         // Append the current hostname to the URL
         if ($absolute === true) {
-            $prefix .= ($forceSecure === true) ? 'https://' : $this->request->getProtocol();
-            $prefix .= $this->request->getHostname();
+            $prefix .= ($forceSecure === true) ? 'https://' : $this->request->getScheme() . '://';
+            $prefix .= $this->request->getHost();
         }
 
-        $prefix.= PHP_SELF . '/';
+        $prefix .= $this->appPath->getPhpSelf() . '/';
         return $prefix . $path;
     }
 }

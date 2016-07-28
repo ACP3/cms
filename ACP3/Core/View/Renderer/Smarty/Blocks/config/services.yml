@@ -1,6 +1,10 @@
 services:
   smarty.plugin.javascripts:
     class: ACP3\Core\View\Renderer\Smarty\Blocks\Javascripts
+    tags:
+      - { name: core.view.extension }
 
   smarty.plugin.stylesheets:
     class: ACP3\Core\View\Renderer\Smarty\Blocks\Stylesheets
+    tags:
+      - { name: core.view.extension }

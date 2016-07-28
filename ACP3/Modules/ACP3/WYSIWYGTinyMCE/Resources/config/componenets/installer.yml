@@ -1,0 +1,6 @@
+services:
+  wysiwygtinymce.installer.schema:
+    class: ACP3\Modules\ACP3\WYSIWYGTinyMCE\Installer\Schema
+
+  wysiwygtinymce.installer.migration:
+    class: ACP3\Modules\ACP3\WYSIWYGTinyMCE\Installer\Migration

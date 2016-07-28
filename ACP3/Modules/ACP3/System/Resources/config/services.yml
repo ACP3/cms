@@ -1,0 +1,16 @@
+imports:
+  - { resource: components/controllers.yml }
+  - { resource: components/installer.yml }
+  - { resource: components/models.yml }
+  - { resource: components/validation.yml }
+
+services:
+  system.helpers.installer:
+    class: ACP3\Modules\ACP3\System\Helper\Installer
+    arguments:
+      - '@core.environment.application_path'
+      - '@core.modules'
+      - '@core.modules.vendors'
+      - '@core.modules.schemaInstaller'
+      - '@core.xml'
+      - '%core.environment%'

@@ -1,0 +1,26 @@
+services:
+  contact.controller.admin.index.index:
+    class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Index
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.formToken'
+      - '@contact.validation.admin_settings_form_validation'
+
+  contact.controller.frontend.index.imprint:
+    class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Imprint
+    parent: core.controller.frontend
+
+  contact.controller.frontend.index.index:
+    class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Index
+    arguments:
+      - '@core.context.frontend'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@contact.validator'
+      - '@contact.model.contact_form_model'
+
+  contact.controller.widget.index.index:
+    class: ACP3\Modules\ACP3\Contact\Controller\Widget\Index\Index
+    arguments:
+      - '@core.context.widget'
+

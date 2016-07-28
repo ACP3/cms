@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     {if isset($error_msg)}
@@ -14,27 +14,29 @@
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
-                    {include file="asset:system/datepicker.tpl" datepicker=$publication_period}
+                    {datepicker name=['start', 'end'] value=[$form.start, $form.end]}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">{lang t="news|title"}</label>
+                        <label for="title" class="col-sm-2 control-label required">{lang t="news|title"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120">
+                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="text" class="col-sm-2 control-label">{lang t="news|text"}</label>
+                        <label for="text" class="col-sm-2 control-label required">{lang t="news|text"}</label>
 
                         <div class="col-sm-10">{wysiwyg name="text" value="`$form.text`" height="250"}</div>
                     </div>
                     <div class="form-group">
-                        <label for="cat" class="col-sm-2 control-label">{lang t="categories|category"}</label>
+                        <label for="cat" class="col-sm-2 control-label required">{lang t="categories|category"}</label>
 
-                        <div class="col-sm-10">{$categories}</div>
+                        <div class="col-sm-10">
+                            {include file="asset:Categories/Partials/create_list.tpl" categories=$categories}
+                        </div>
                     </div>
-                    {if isset($options)}
+                    {if !empty($options)}
                         <div class="form-group">
                             <label for="{$options.0.name}" class="col-sm-2 control-label">{lang t="system|options"}</label>
 
@@ -70,7 +72,7 @@
                         <label for="link-target" class="col-sm-2 control-label">{lang t="news|target_page"}</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" name="target" id="link-target">
+                            <select class="form-control" name="target" id="link-target" required>
                                 {foreach $target as $row}
                                     <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                                 {/foreach}
@@ -79,7 +81,7 @@
                     </div>
                 </div>
                 <div id="tab-4" class="tab-pane fade">
-                    {include file="asset:seo/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
+                    {include file="asset:Seo/Partials/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
                 </div>
             </div>
         </div>
@@ -92,6 +94,6 @@
         </div>
     </form>
     {javascripts}
-        {include_js module="system" file="forms"}
+        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

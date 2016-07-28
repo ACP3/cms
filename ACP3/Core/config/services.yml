@@ -1,0 +1,109 @@
+imports:
+  - { resource: cache.yml }
+  - { resource: ../../config.yml }
+  - { resource: components/application.yml }
+  - { resource: components/assets.yml }
+  - { resource: components/authentication.yml }
+  - { resource: components/controller.yml }
+  - { resource: components/database.yml }
+  - { resource: components/datagrid.yml }
+  - { resource: components/date.yml }
+  - { resource: components/helpers.yml }
+  - { resource: components/http.yml }
+  - { resource: components/language.yml }
+  - { resource: components/modules.yml }
+  - { resource: components/nestedsets.yml }
+  - { resource: components/validation.yml }
+  - { resource: components/view.yml }
+  - { resource: components/wysiwyg.yml }
+  - { resource: ../../Modules/ACP3/Permissions/Resources/config/services.yml }
+  - { resource: ../../Modules/ACP3/Seo/Resources/config/services.yml }
+  - { resource: ../../Modules/ACP3/System/Resources/config/services.yml }
+  - { resource: ../../Modules/ACP3/Users/Resources/config/services.yml }
+
+services:
+  core.acl:
+    class: ACP3\Core\ACL
+    arguments:
+      - '@users.model.user_model'
+      - '@core.modules'
+      - '@permissions.model.rolerepository'
+      - '@permissions.model.userrolerepository'
+      - '@permissions.model.privilegerepository'
+      - '@permissions.cache'
+
+  core.cache.system:
+    class: ACP3\Core\Cache
+    arguments:
+      - '@core.cache.cache_driver_factory'
+      - 'system'
+
+  core.cache.cache_driver_factory:
+    class: ACP3\Core\Cache\CacheDriverFactory
+    arguments:
+      - '@service_container'
+      - '@core.environment.application_path'
+
+  core.config:
+    class: ACP3\Core\Config
+    arguments:
+      - '@core.cache.system'
+      - '@system.model.modulerepository'
+      - '@system.model.settingsrepository'
+
+  core.environment.application_path:
+    synthetic: true
+
+  core.image:
+    class: ACP3\Core\Picture
+    arguments:
+      - '@core.http.response'
+      - '@core.environment.application_path'
+      - '%core.environment%'
+    shared: false
+
+  core.logger:
+    class: ACP3\Core\Logger
+    arguments:
+      - '@core.environment.application_path'
+
+  core.mailer:
+    class: ACP3\Core\Mailer
+    arguments:
+      - '@core.logger'
+      - '@core.view'
+      - '@core.config'
+      - '@core.helpers.stringFormatter'
+
+  core.pagination:
+    class: ACP3\Core\Pagination
+    arguments:
+      - '@users.model.user_model'
+      - '@core.breadcrumb.title'
+      - '@core.lang'
+      - '@core.http.request'
+      - '@core.router'
+
+  core.router:
+    class: ACP3\Core\Router
+    arguments:
+      - '@core.http.request'
+      - '@core.environment.application_path'
+      - '@core.config'
+      - '%core.environment%'
+
+  core.session:
+    class: ACP3\Core\Session\SessionHandler
+    arguments:
+      - '@core.db'
+      - '@core.environment.application_path'
+      - '@core.http.request'
+      - '@core.http.response'
+
+  core.xml:
+    class: ACP3\Core\XML
+
+  core.eventDispatcher:
+    class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
+    arguments:
+      - '@service_container'

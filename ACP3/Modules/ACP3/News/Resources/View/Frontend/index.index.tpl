@@ -1,4 +1,4 @@
-{extends file="asset:layout.tpl"}
+{extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
     <div class="navbar navbar-default">
@@ -11,15 +11,15 @@
             {/if}
             <form action="{uri args="news"}" method="post" class="navbar-form navbar-right">
                 <div class="form-group">
-                    {$categories}
+                    {include file="asset:Categories/Partials/create_list.tpl" categories=$categories}
                 </div>
                 <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
             </form>
         {/if}
     </div>
     </div>
-    {if isset($news)}
-        {$pagination}
+    {if !empty($news)}
+        {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
         {foreach $news as $row}
             <article class="dataset-box">
                 <header class="navbar navbar-default">
@@ -37,13 +37,12 @@
                         <span>({$row.comments_count})</span>
                     </footer>
                 {/if}
+                {event name="news.event.news_index_after" id=$row.id title=$row.title}
             </article>
         {/foreach}
-        {$pagination}
+        {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
     {else}
-        <div class="alert alert-warning text-center">
-            <strong>{lang t="system|no_entries"}</strong>
-        </div>
+        {include file="asset:System/Partials/no_results.tpl"}
     {/if}
 
     {$smarty.block.parent}

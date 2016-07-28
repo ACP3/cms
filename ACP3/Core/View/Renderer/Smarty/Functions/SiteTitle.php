@@ -1,8 +1,12 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
-use ACP3\Core\Breadcrumb;
+use ACP3\Core\Breadcrumb\Title;
 
 /**
  * Class SiteTitle
@@ -11,16 +15,16 @@ use ACP3\Core\Breadcrumb;
 class SiteTitle extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\Breadcrumb
+     * @var \ACP3\Core\Breadcrumb\Title
      */
-    protected $breadcrumb;
+    protected $title;
 
     /**
-     * @param \ACP3\Core\Breadcrumb $breadcrumb
+     * @param \ACP3\Core\Breadcrumb\Title $title
      */
-    public function __construct(Breadcrumb $breadcrumb)
+    public function __construct(Title $title)
     {
-        $this->breadcrumb = $breadcrumb;
+        $this->title = $title;
     }
 
     /**
@@ -31,13 +35,13 @@ class SiteTitle extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        return $this->breadcrumb->getSiteTitle();
+        return $this->title->getSiteTitle();
     }
 
     /**
      * @inheritdoc
      */
-    public function getPluginName()
+    public function getExtensionName()
     {
         return 'site_title';
     }

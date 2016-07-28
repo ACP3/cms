@@ -1,0 +1,11 @@
+services:
+  captcha.validation.validation_rules.captcha_validation_rule:
+    class: ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaValidationRule
+    arguments:
+      - '@core.acl'
+      - '@core.http.request'
+      - '@core.router'
+      - '@core.session'
+      - '@users.model.user_model'
+    tags:
+      - { name: core.validation.validation_rule }
