@@ -4,10 +4,10 @@ namespace ACP3\Modules\ACP3\Search\Event;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * Class AvailableModules
+ * Class AvailableModulesEvent
  * @package ACP3\Modules\ACP3\Search\Event
  */
-class AvailableModules extends Event
+class AvailableModulesEvent extends Event
 {
     /**
      * @var array

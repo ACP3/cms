@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Articles\Event\Listener;
 
-use ACP3\Modules\ACP3\Search\Event\AvailableModules;
+use ACP3\Modules\ACP3\Search\Event\AvailableModulesEvent;
 
 /**
  * Class OnAvailableModulesListener
@@ -15,9 +15,9 @@ use ACP3\Modules\ACP3\Search\Event\AvailableModules;
 class OnAvailableModulesListener
 {
     /**
-     * @param \ACP3\Modules\ACP3\Search\Event\AvailableModules $availableModules
+     * @param \ACP3\Modules\ACP3\Search\Event\AvailableModulesEvent $availableModules
      */
-    public function onAvailableModules(AvailableModules $availableModules)
+    public function onAvailableModules(AvailableModulesEvent $availableModules)
     {
         $availableModules->addAvailableModule('articles');
     }

@@ -3,7 +3,7 @@
 namespace ACP3\Modules\ACP3\Search;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Search\Event\AvailableModules;
+use ACP3\Modules\ACP3\Search\Event\AvailableModulesEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
@@ -54,7 +54,7 @@ class Helpers
      */
     public function getModules()
     {
-        $availableModules = new AvailableModules();
+        $availableModules = new AvailableModulesEvent();
         $this->eventDispatcher->dispatch('search.events.availableModules', $availableModules);
         $searchModules = [];
 

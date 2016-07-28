@@ -29,17 +29,17 @@ class Index extends Core\Controller\AbstractFrontendAction
     protected $formsHelper;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
-     * @param \ACP3\Core\Helpers\Forms                            $formsHelper
-     * @param \ACP3\Modules\ACP3\Search\Helpers                   $searchHelpers
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Modules\ACP3\Search\Helpers $searchHelpers
      * @param \ACP3\Modules\ACP3\Search\Validation\FormValidation $searchValidator
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Search\Helpers $searchHelpers,
-        Search\Validation\FormValidation $searchValidator)
-    {
+        Search\Validation\FormValidation $searchValidator
+    ) {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
@@ -84,61 +84,18 @@ class Index extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array  $modules
-     * @param string $searchTerm
-     * @param string $area
-     * @param string $sort
-     */
-    protected function displaySearchResults(array $modules, $searchTerm, $area, $sort)
-    {
-        $this->breadcrumb
-            ->append($this->translator->t('search', 'search'), 'search')
-            ->append($this->translator->t('search', 'search_results'));
-
-        $searchResultsEvent = new Search\Event\DisplaySearchResults($modules, $searchTerm, $area, $sort);
-        $this->eventDispatcher->dispatch('search.events.displaySearchResults', $searchResultsEvent);
-
-        $searchResults = $searchResultsEvent->getSearchResults();
-        if (!empty($searchResults)) {
-            ksort($searchResults);
-            $this->view->assign('results_mods', $searchResults);
-        } else {
-            $this->view->assign('no_search_results',
-                $this->translator->t('search', 'no_search_results', ['%search_term%' => $searchTerm]));
-        }
-
-        $this->setTemplate('Search/Frontend/index.results.tpl');
-    }
-
-    /**
      * @param array $formData
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
     protected function executePost(array $formData)
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
-                if (isset($formData['search_term']) === true) {
-                    if (isset($formData['mods']) === false) {
-                        $modules = $this->searchHelpers->getModules();
-
-                        $formData['mods'] = [];
-                        foreach ($modules as $row) {
-                            $formData['mods'][] = $row['dir'];
-                        }
-                    }
-                    if (isset($formData['area']) === false) {
-                        $formData['area'] = 'title_content';
-                    }
-                    if (isset($formData['sort']) === false) {
-                        $formData['sort'] = 'asc';
-                    }
-                }
+                $formData = $this->prepareFormData($formData);
 
                 $this->searchValidator->validate($formData);
 
-                $this->displaySearchResults(
+                return $this->renderSearchResults(
                     $formData['mods'],
                     $this->get('core.helpers.secure')->strEncode($formData['search_term']),
                     $formData['area'],
@@ -146,5 +103,65 @@ class Index extends Core\Controller\AbstractFrontendAction
                 );
             }
         );
+    }
+
+    /**
+     * @param array $formData
+     * @return array
+     */
+    protected function prepareFormData(array $formData)
+    {
+        if (isset($formData['search_term']) === true) {
+            if (isset($formData['mods']) === false) {
+                $modules = $this->searchHelpers->getModules();
+
+                $formData['mods'] = [];
+                foreach ($modules as $row) {
+                    $formData['mods'][] = $row['dir'];
+                }
+            }
+            if (isset($formData['area']) === false) {
+                $formData['area'] = 'title_content';
+            }
+            if (isset($formData['sort']) === false) {
+                $formData['sort'] = 'asc';
+            }
+        }
+        return $formData;
+    }
+
+    /**
+     * @param array $modules
+     * @param string $searchTerm
+     * @param string $area
+     * @param string $sort
+     * @return array
+     */
+    protected function renderSearchResults(array $modules, $searchTerm, $area, $sort)
+    {
+        $this->breadcrumb
+            ->append($this->translator->t('search', 'search'), 'search')
+            ->append($this->translator->t('search', 'search_results'));
+
+        $searchResultsEvent = new Search\Event\SearchResultsEvent($modules, $searchTerm, $area, $sort);
+        $this->eventDispatcher->dispatch('search.events.displaySearchResults', $searchResultsEvent);
+
+        $this->setTemplate('Search/Frontend/index.results.tpl');
+
+        $searchResults = $searchResultsEvent->getSearchResults();
+        if (!empty($searchResults)) {
+            ksort($searchResults);
+            return [
+                'results_mods' => $searchResults
+            ];
+        }
+
+        return [
+            'no_search_results' => $this->translator->t(
+                'search',
+                'no_search_results',
+                ['%search_term%' => $searchTerm]
+            )
+        ];
     }
 }

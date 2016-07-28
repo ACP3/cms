@@ -11,7 +11,7 @@ use ACP3\Core\Date;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\RouterInterface;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
-use ACP3\Modules\ACP3\Search\Event\DisplaySearchResults;
+use ACP3\Modules\ACP3\Search\Event\SearchResultsEvent;
 
 /**
  * Class OnDisplaySearchResultsListener
@@ -64,9 +64,9 @@ class OnDisplaySearchResultsListener
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Search\Event\DisplaySearchResults $displaySearchResults
+     * @param \ACP3\Modules\ACP3\Search\Event\SearchResultsEvent $displaySearchResults
      */
-    public function onDisplaySearchResults(DisplaySearchResults $displaySearchResults)
+    public function onDisplaySearchResults(SearchResultsEvent $displaySearchResults)
     {
         if (in_array('articles', $displaySearchResults->getModules())
             && $this->acl->hasPermission('frontend/articles') === true
