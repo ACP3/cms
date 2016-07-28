@@ -9,10 +9,8 @@ use ACP3\Core\Database\Connection;
  */
 abstract class AbstractRepository
 {
-    /**
-     * The name of the sql table
-     */
     const TABLE_NAME = '';
+
     /**
      * @var \ACP3\Core\Database\Connection
      */
