@@ -1,0 +1,21 @@
+{
+  "name": "acp3-cms",
+  "homepage": "http://www.acp3-cms.net",
+  "authors": [
+    "Tino Goratsch <mail@acp3-cms.net>"
+  ],
+  "description": "ACP3 is a highly customizable and easy to use web content management system based on PHP5 and MySQL.",
+  "main": "",
+  "license": "GPL-2.0+",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^1.12.4"
+  }
+}
