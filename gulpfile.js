@@ -4,10 +4,11 @@
  */
 
 var gulp = require('gulp'),
+    modifyCssUrls = require('gulp-modify-css-urls'),
     bowerBasePath = 'bower_components',
     systemBasePath = 'ACP3/Modules/ACP3/System/Resources/Assets';
 
-gulp.task('cp-jquery', function() {
+gulp.task('cp-jquery', function () {
     gulp.src(bowerBasePath + '/jquery/dist/jquery.min.js')
         .pipe(gulp.dest(systemBasePath + '/js/libs'));
 });
@@ -42,7 +43,7 @@ gulp.task('cp-bs-datetime', function () {
         .pipe(gulp.dest(systemBasePath + '/css'));
 });
 
-gulp.task('cp-dt', function() {
+gulp.task('cp-dt', function () {
     var basePath = bowerBasePath + '/datatables.net';
 
     gulp.src(basePath + '/js/jquery.dataTables.min.js')
@@ -51,7 +52,25 @@ gulp.task('cp-dt', function() {
         .pipe(gulp.dest(systemBasePath + '/css'));
 });
 
+gulp.task('cp-fancybox', function () {
+    var basePath = bowerBasePath + '/fancybox/source';
+
+    gulp
+        .src([
+            basePath + '/*.gif',
+            basePath + '/*.png'
+        ])
+        .pipe(gulp.dest(systemBasePath + '/images/fancybox'));
+    gulp.src(basePath + '/jquery.fancybox.pack.js')
+        .pipe(gulp.dest(systemBasePath + '/js/libs'));
+    gulp.src(basePath + '/jquery.fancybox.css')
+        .pipe(modifyCssUrls({
+            prepend: '../images/fancybox/'
+        }))
+        .pipe(gulp.dest(systemBasePath + '/css'));
+});
+
 gulp.task(
     'cp-libs',
-    ['cp-jquery', 'cp-bs', 'cp-bootbox', 'cp-moment', 'cp-bs-datetime', 'cp-dt']
+    ['cp-jquery', 'cp-bs', 'cp-bootbox', 'cp-moment', 'cp-bs-datetime', 'cp-dt', 'cp-fancybox']
 );

@@ -16,6 +16,7 @@
   },
   "homepage": "http://www.acp3-cms.net",
   "devDependencies": {
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "gulp-modify-css-urls": "^0.2.2"
   }
 }

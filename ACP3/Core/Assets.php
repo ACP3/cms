@@ -26,7 +26,7 @@ class Assets
             'enabled' => false,
             'dependencies' => ['jquery'],
             'css' => 'jquery.fancybox.css',
-            'js' => 'jquery.fancybox.min.js'
+            'js' => 'jquery.fancybox.pack.js'
         ],
         'bootstrap' => [
             'enabled' => false,
