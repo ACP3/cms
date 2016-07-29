@@ -1,0 +1,21 @@
+{
+  "name": "acp3-cms",
+  "version": "4.0.0-rc.17",
+  "description": "The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP and MySQL.",
+  "main": "",
+  "directories": {},
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ACP3/cms.git"
+  },
+  "author": "Tino Goratsch <mail@acp3-cms.net>",
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/ACP3/cms/issues"
+  },
+  "homepage": "http://www.acp3-cms.net",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}

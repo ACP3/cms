@@ -4,7 +4,7 @@
   "authors": [
     "Tino Goratsch <mail@acp3-cms.net>"
   ],
-  "description": "ACP3 is a highly customizable and easy to use web content management system based on PHP5 and MySQL.",
+  "description": "The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP and MySQL.",
   "main": "",
   "license": "GPL-2.0+",
   "private": true,

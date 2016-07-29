@@ -5,7 +5,7 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/55ca41bedfed0a001f000026/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55ca41bedfed0a001f000026)
 
 # ACP3 CMS
-The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP5 and MySQL. 
+The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP and MySQL. 
 
 ## Features
 
