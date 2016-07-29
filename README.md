@@ -24,16 +24,23 @@ If you want to find out more information about the features and the requirements
 
 To install the current development version directly from github, you have to do the following steps:
 
+Clone the repository into a new directory:
 ```sh
-$ git clone https://github.com/ACP3/cms.git
+$ git clone https://github.com/ACP3/cms.git <directory>
 ```
 
-Make sure that you have composer already installed. If so, execute the following command from the projects root directory:
+Make sure that you have composer already installed.
+
+If so, execute the following command from the projects root directory:
+
 ```sh
 $ composer install
 ```
 
-Make sure that you have node.js with npm and bower globally installed. If so, execute the follow command from the projects root directory:
+Make sure that you have node.js with npm, bower and gulp-cli globally installed.
+
+If so, execute the following commands from the projects root directory:
 ```sh
+$ npm install
 $ bower install
 ```
