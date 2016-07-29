@@ -1,0 +1,28 @@
+{
+  "name": "acp3-cms",
+  "homepage": "http://www.acp3-cms.net",
+  "authors": [
+    "Tino Goratsch <mail@acp3-cms.net>"
+  ],
+  "description": "The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP and MySQL.",
+  "main": "",
+  "license": "GPL-2.0+",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^1.12.4",
+    "datatables.net": "^1.10.12",
+    "datatables.net-bs": "^1.10.12",
+    "bootstrap": "^3.3.7",
+    "fancybox": "^2.1.5",
+    "bootbox.js": "bootbox#^4.4.0",
+    "moment": "^2.14.1",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.37"
+  }
+}

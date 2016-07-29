@@ -1,5 +1,7 @@
 /.idea
 /ACP3/config.yml
+/bower_components
+/node_modules
 /cache/*
 /uploads/assets/*
 /uploads/categories/*
