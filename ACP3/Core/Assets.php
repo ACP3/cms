@@ -38,7 +38,7 @@ class Assets
             'enabled' => false,
             'dependencies' => ['bootstrap'],
             'css' => 'dataTables.bootstrap.css',
-            'js' => 'jquery.datatables.min.js'
+            'js' => 'jquery.dataTables.min.js'
         ],
         'bootbox' => [
             'enabled' => false,

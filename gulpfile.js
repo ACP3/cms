@@ -7,42 +7,51 @@ var gulp = require('gulp'),
     bowerBasePath = 'bower_components',
     systemBasePath = 'ACP3/Modules/ACP3/System/Resources/Assets';
 
-gulp.task('copy-jquery', function() {
+gulp.task('cp-jquery', function() {
     gulp.src(bowerBasePath + '/jquery/dist/jquery.min.js')
         .pipe(gulp.dest(systemBasePath + '/js/libs'));
 });
 
-gulp.task('copy-bs', function () {
-    var bsBasePath = bowerBasePath + '/bootstrap/dist';
+gulp.task('cp-bs', function () {
+    var basePath = bowerBasePath + '/bootstrap/dist';
 
-    gulp.src(bsBasePath + '/js/bootstrap.min.js')
+    gulp.src(basePath + '/js/bootstrap.min.js')
         .pipe(gulp.dest(systemBasePath + '/js/libs'));
-
-    gulp.src(bsBasePath + '/fonts/*')
+    gulp.src(basePath + '/fonts/*')
         .pipe(gulp.dest(systemBasePath + '/fonts'));
-
-    gulp.src(bsBasePath + '/css/bootstrap.min.css')
+    gulp.src(basePath + '/css/bootstrap.min.css')
         .pipe(gulp.dest(systemBasePath + '/css'));
 });
 
-gulp.task('copy-bootbox', function () {
+gulp.task('cp-bootbox', function () {
     gulp.src(bowerBasePath + '/bootbox.js/bootbox.js')
         .pipe(gulp.dest(systemBasePath + '/js/libs'));
 });
 
-gulp.task('copy-moment', function () {
+gulp.task('cp-moment', function () {
     gulp.src(bowerBasePath + '/moment/min/moment.min.js')
         .pipe(gulp.dest(systemBasePath + '/js/libs'));
 });
 
-gulp.task('copy-bs-datetime', function () {
-    var bsBasePath = bowerBasePath + '/eonasdan-bootstrap-datetimepicker/build';
+gulp.task('cp-bs-datetime', function () {
+    var basePath = bowerBasePath + '/eonasdan-bootstrap-datetimepicker/build';
 
-    gulp.src(bsBasePath + '/js/bootstrap-datetimepicker.min.js')
+    gulp.src(basePath + '/js/bootstrap-datetimepicker.min.js')
         .pipe(gulp.dest(systemBasePath + '/js/libs'));
-
-    gulp.src(bsBasePath + '/css/bootstrap-datetimepicker.css')
+    gulp.src(basePath + '/css/bootstrap-datetimepicker.css')
         .pipe(gulp.dest(systemBasePath + '/css'));
 });
 
-gulp.task('copy', ['copy-jquery', 'copy-bs', 'copy-bootbox', 'copy-moment', 'copy-bs-datetime']);
+gulp.task('cp-dt', function() {
+    var basePath = bowerBasePath + '/datatables.net';
+
+    gulp.src(basePath + '/js/jquery.dataTables.min.js')
+        .pipe(gulp.dest(systemBasePath + '/js/libs'));
+    gulp.src(basePath + '-bs/css/dataTables.bootstrap.css')
+        .pipe(gulp.dest(systemBasePath + '/css'));
+});
+
+gulp.task(
+    'cp-libs',
+    ['cp-jquery', 'cp-bs', 'cp-bootbox', 'cp-moment', 'cp-bs-datetime', 'cp-dt']
+);
