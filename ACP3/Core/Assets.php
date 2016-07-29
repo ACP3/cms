@@ -43,7 +43,7 @@ class Assets
         'bootbox' => [
             'enabled' => false,
             'dependencies' => ['bootstrap'],
-            'js' => 'bootbox.min.js'
+            'js' => 'bootbox.js'
         ],
         'datetimepicker' => [
             'enabled' => false,
