@@ -30,4 +30,19 @@ gulp.task('copy-bootbox', function () {
         .pipe(gulp.dest(systemBasePath + '/js/libs'));
 });
 
-gulp.task('copy', ['copy-jquery', 'copy-bs', 'copy-bootbox']);
+gulp.task('copy-moment', function () {
+    gulp.src(bowerBasePath + '/moment/min/moment.min.js')
+        .pipe(gulp.dest(systemBasePath + '/js/libs'));
+});
+
+gulp.task('copy-bs-datetime', function () {
+    var bsBasePath = bowerBasePath + '/eonasdan-bootstrap-datetimepicker/build';
+
+    gulp.src(bsBasePath + '/js/bootstrap-datetimepicker.min.js')
+        .pipe(gulp.dest(systemBasePath + '/js/libs'));
+
+    gulp.src(bsBasePath + '/css/bootstrap-datetimepicker.css')
+        .pipe(gulp.dest(systemBasePath + '/css'));
+});
+
+gulp.task('copy', ['copy-jquery', 'copy-bs', 'copy-bootbox', 'copy-moment', 'copy-bs-datetime']);
