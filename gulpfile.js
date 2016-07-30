@@ -4,73 +4,58 @@
  */
 
 var gulp = require('gulp'),
-    modifyCssUrls = require('gulp-modify-css-urls'),
-    bowerBasePath = 'bower_components',
-    systemBasePath = 'ACP3/Modules/ACP3/System/Resources/Assets';
+    modifyCssUrls = require('gulp-modify-css-urls');
 
-gulp.task('cp-jquery', function () {
-    gulp.src(bowerBasePath + '/jquery/dist/jquery.min.js')
-        .pipe(gulp.dest(systemBasePath + '/js/libs'));
-});
+gulp.task('copy', function () {
+    var bowerBasePath = 'bower_components',
+        systemBasePath = 'ACP3/Modules/ACP3/System/Resources/Assets',
+        paths = [
+        {
+            'src': [
+                bowerBasePath + '/jquery/dist/jquery.min.js',
+                bowerBasePath + '/bootbox.js/bootbox.js',
+                bowerBasePath + '/moment/min/moment.min.js',
+                bowerBasePath + '/datatables.net/js/jquery.dataTables.min.js',
+                bowerBasePath + '/bootstrap/dist/js/bootstrap.min.js',
+                bowerBasePath + '/fancybox/source/jquery.fancybox.pack.js',
+                bowerBasePath + '/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
+            ],
+            'dest': systemBasePath + '/js/libs'
+        },
+        {
+            'src': bowerBasePath + '/datatables.net-bs/js/dataTables.bootstrap.js',
+            'dest': systemBasePath + '/js'
+        },
+        {
+            'src': bowerBasePath + '/bootstrap/dist/fonts/*',
+            'dest': systemBasePath + '/fonts'
+        },
+        {
+            'src': [
+                bowerBasePath + '/fancybox/source/*.gif',
+                bowerBasePath + '/fancybox/source/*.png'
+            ],
+            'dest': systemBasePath + '/images/fancybox'
+        },
+        {
+            'src': [
+                bowerBasePath + '/bootstrap/dist/css/bootstrap.min.css',
+                bowerBasePath + '/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
+                bowerBasePath + '/datatables.net-bs/css/dataTables.bootstrap.css'
 
-gulp.task('cp-bs', function () {
-    var basePath = bowerBasePath + '/bootstrap/dist';
+            ],
+            'dest': systemBasePath + '/css'
+        }
+    ];
 
-    gulp.src(basePath + '/js/bootstrap.min.js')
-        .pipe(gulp.dest(systemBasePath + '/js/libs'));
-    gulp.src(basePath + '/fonts/*')
-        .pipe(gulp.dest(systemBasePath + '/fonts'));
-    gulp.src(basePath + '/css/bootstrap.min.css')
-        .pipe(gulp.dest(systemBasePath + '/css'));
-});
+    for (var i = 0; i < paths.length; i++) {
+        gulp.src(paths[i].src)
+            .pipe(gulp.dest(paths[i].dest));
+    }
 
-gulp.task('cp-bootbox', function () {
-    gulp.src(bowerBasePath + '/bootbox.js/bootbox.js')
-        .pipe(gulp.dest(systemBasePath + '/js/libs'));
-});
-
-gulp.task('cp-moment', function () {
-    gulp.src(bowerBasePath + '/moment/min/moment.min.js')
-        .pipe(gulp.dest(systemBasePath + '/js/libs'));
-});
-
-gulp.task('cp-bs-datetime', function () {
-    var basePath = bowerBasePath + '/eonasdan-bootstrap-datetimepicker/build';
-
-    gulp.src(basePath + '/js/bootstrap-datetimepicker.min.js')
-        .pipe(gulp.dest(systemBasePath + '/js/libs'));
-    gulp.src(basePath + '/css/bootstrap-datetimepicker.css')
-        .pipe(gulp.dest(systemBasePath + '/css'));
-});
-
-gulp.task('cp-dt', function () {
-    var basePath = bowerBasePath + '/datatables.net';
-
-    gulp.src(basePath + '/js/jquery.dataTables.min.js')
-        .pipe(gulp.dest(systemBasePath + '/js/libs'));
-    gulp.src(basePath + '-bs/css/dataTables.bootstrap.css')
-        .pipe(gulp.dest(systemBasePath + '/css'));
-});
-
-gulp.task('cp-fancybox', function () {
-    var basePath = bowerBasePath + '/fancybox/source';
-
-    gulp
-        .src([
-            basePath + '/*.gif',
-            basePath + '/*.png'
-        ])
-        .pipe(gulp.dest(systemBasePath + '/images/fancybox'));
-    gulp.src(basePath + '/jquery.fancybox.pack.js')
-        .pipe(gulp.dest(systemBasePath + '/js/libs'));
-    gulp.src(basePath + '/jquery.fancybox.css')
+    gulp.src(bowerBasePath + '/fancybox/source/jquery.fancybox.css')
         .pipe(modifyCssUrls({
             prepend: '../images/fancybox/'
         }))
         .pipe(gulp.dest(systemBasePath + '/css'));
 });
-
-gulp.task(
-    'cp-libs',
-    ['cp-jquery', 'cp-bs', 'cp-bootbox', 'cp-moment', 'cp-bs-datetime', 'cp-dt', 'cp-fancybox']
-);
