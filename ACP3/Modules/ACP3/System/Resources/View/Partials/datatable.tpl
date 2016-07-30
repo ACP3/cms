@@ -1,5 +1,5 @@
 {javascripts}
-    {include_js module="system" file="dataTables.bootstrap" depends="datatables"}
+    {include_js module="system" file="libs/dataTables.bootstrap" depends="datatables"}
     <script type="text/javascript">
         $(document).ready(function () {
             $('{$dt.element}').dataTable({
