@@ -23,6 +23,7 @@
     "fancybox": "^2.1.5",
     "bootbox.js": "bootbox#^4.4.0",
     "moment": "^2.14.1",
-    "eonasdan-bootstrap-datetimepicker": "^4.17.37"
+    "eonasdan-bootstrap-datetimepicker": "^4.17.37",
+    "html5shiv": "^3.7.3"
   }
 }

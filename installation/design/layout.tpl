@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}Assets/css/style.css">
     <!-- STYLESHEETS -->
     <!--[if lt IE 9]>
-        <script src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/libs/html5shiv.js"></script>
+        <script src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/libs/html5shiv.min.js"></script>
     <![endif]-->
 </head>
 

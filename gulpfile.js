@@ -16,15 +16,13 @@ gulp.task('copy', function () {
                 bowerBasePath + '/bootbox.js/bootbox.js',
                 bowerBasePath + '/moment/min/moment.min.js',
                 bowerBasePath + '/datatables.net/js/jquery.dataTables.min.js',
+                bowerBasePath + '/datatables.net-bs/js/dataTables.bootstrap.js',
                 bowerBasePath + '/bootstrap/dist/js/bootstrap.min.js',
                 bowerBasePath + '/fancybox/source/jquery.fancybox.pack.js',
-                bowerBasePath + '/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
+                bowerBasePath + '/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+                bowerBasePath + '/html5shiv/dist/html5shiv.min.js'
             ],
             'dest': systemBasePath + '/js/libs'
-        },
-        {
-            'src': bowerBasePath + '/datatables.net-bs/js/dataTables.bootstrap.js',
-            'dest': systemBasePath + '/js'
         },
         {
             'src': bowerBasePath + '/bootstrap/dist/fonts/*',
