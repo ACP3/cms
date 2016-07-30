@@ -30,6 +30,7 @@ class Index extends Core\Controller\AbstractAdminAction
         return [
             'roles' => $roles,
             'can_delete' => $this->acl->hasPermission('admin/permissions/index/delete'),
+            'can_edit' => $this->acl->hasPermission('admin/permissions/index/edit'),
             'can_order' => $this->acl->hasPermission('admin/permissions/index/order')
         ];
     }
