@@ -26,7 +26,7 @@ class Assets
             'enabled' => false,
             'dependencies' => ['jquery'],
             'css' => 'jquery.fancybox.css',
-            'js' => 'jquery.fancybox.min.js'
+            'js' => 'jquery.fancybox.pack.js'
         ],
         'bootstrap' => [
             'enabled' => false,
@@ -38,12 +38,12 @@ class Assets
             'enabled' => false,
             'dependencies' => ['bootstrap'],
             'css' => 'dataTables.bootstrap.css',
-            'js' => 'jquery.datatables.min.js'
+            'js' => 'jquery.dataTables.min.js'
         ],
         'bootbox' => [
             'enabled' => false,
             'dependencies' => ['bootstrap'],
-            'js' => 'bootbox.min.js'
+            'js' => 'bootbox.js'
         ],
         'datetimepicker' => [
             'enabled' => false,
