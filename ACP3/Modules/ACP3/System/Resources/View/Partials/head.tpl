@@ -5,5 +5,5 @@
 <!-- STYLESHEETS -->
 {event name="core.layout.head"}
 <!--[if lt IE 9]>
-{include_js module="system" file="libs/html5shiv"}
+{include_js module="system" file="libs/html5shiv.min"}
 <![endif]-->

@@ -152,7 +152,7 @@ class Assets
                     $this->enableLibraries($this->libraries[$library]['dependencies']);
                 }
 
-                // Enabled the javascript library
+                // Enable the javascript library
                 $this->libraries[$library]['enabled'] = true;
             }
         }

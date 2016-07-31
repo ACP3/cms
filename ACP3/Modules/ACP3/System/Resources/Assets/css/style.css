@@ -56,10 +56,18 @@
   height: auto;
   margin: 0;
 }
+.dataset-box .navbar-header {
+  float: left;
+}
 .dataset-box small.navbar-text,
 .dataset-box .small.navbar-text {
-  margin-top: 17px;
-  margin-bottom: 16px;
+  line-height: 20px;
+}
+@media (max-width: 767px) {
+  .dataset-box small.navbar-text,
+  .dataset-box .small.navbar-text {
+    margin-right: 15px;
+  }
 }
 .dataset-box .content {
   margin: -8px 20px 10px;
