@@ -42,12 +42,6 @@
     </nav>
     <div class="row">
         <div class="col-sm-3 col-md-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{lang t="system|navigation"}</h3>
-                </div>
-                {navbar block="sidebar" class="list-group" classLink="list-group-item" dropdownItemClass="dropdown" itemTag="" dropdownWrapperTag="div" tag="div"}
-            </div>
             {load_module module="widget/users/index/user_menu"}
             {load_module module="widget/users/index/login"}
         </div>
@@ -70,6 +64,14 @@
             {load_module module="widget/polls"}
         </div>
     </div>
+    <footer class="row footer">
+        <div class="col-xs-5 copyright">
+            &copy; {site_title}
+        </div>
+        <div class="col-xs-7">
+            {navbar block="sidebar" class="list-inline text-right" use_bootstrap=false}
+        </div>
+    </footer>
 </div>
 <!-- JAVASCRIPTS -->
 </body>

@@ -17,9 +17,12 @@
   "homepage": "http://www.acp3-cms.net",
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-change": "^1.0.0",
     "gulp-less": "^3.1.0",
     "gulp-modify-css-urls": "^0.2.2",
     "gulp-plumber": "^1.1.0",
-    "gulp-rename": "^1.2.2"
+    "gulp-rename": "^1.2.2",
+    "gulp-util": "^3.0.7",
+    "yargs": "^4.8.1"
   }
 }

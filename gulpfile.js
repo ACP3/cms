@@ -7,7 +7,10 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     plumber = require('gulp-plumber'),
     less = require('gulp-less'),
-    modifyCssUrls = require('gulp-modify-css-urls');
+    modifyCssUrls = require('gulp-modify-css-urls'),
+    gutil = require('gulp-util'),
+    change = require('gulp-change'),
+    argv = require('yargs').argv;
 
 gulp.task('copy', function () {
     var bowerBasePath = './bower_components',
@@ -54,11 +57,30 @@ gulp.task('copy', function () {
             .pipe(gulp.dest(paths[i].dest));
     }
 
-    gulp.src(bowerBasePath + '/fancybox/source/jquery.fancybox.css')
+    return gulp.src(bowerBasePath + '/fancybox/source/jquery.fancybox.css')
         .pipe(modifyCssUrls({
             prepend: '../images/fancybox/'
         }))
         .pipe(gulp.dest(systemBasePath + '/css'));
+});
+
+gulp.task('acp3-version', function () {
+    if (argv.from === undefined || argv.to === undefined) {
+        gutil.log(gutil.colors.red('Error: Please specify the arguments "from" and "to".'));
+        return;
+    }
+
+    return gulp.src(
+        [
+            './ACP3/Core/Application/BootstrapInterface.php',
+            './package.json'
+        ],
+        {base: './'}
+    )
+        .pipe(change(function (content) {
+            return content.replace(argv.from, argv.to);
+        }))
+        .pipe(gulp.dest('./'))
 });
 
 gulp.task('less', function () {
@@ -76,7 +98,7 @@ gulp.task('less', function () {
     )
         .pipe(plumber())
         .pipe(less())
-        .pipe(rename(function(path) {
+        .pipe(rename(function (path) {
             path.dirname = path.dirname.substring(0, path.dirname.length - 4) + 'css'
         }))
         .pipe(gulp.dest('./'));
@@ -84,7 +106,13 @@ gulp.task('less', function () {
 
 gulp.task('watch', function () {
     // Watch all the .less files, then run the less task
-    gulp.watch('./ACP3/Modules/*/*/Resources/Assets/less/**/*.less', ['less']);
+    return gulp.watch(
+        [
+            './ACP3/Modules/*/*/Resources/Assets/less/**/*.less',
+            './designs/*/**/Assets/less/*.less'
+        ],
+        ['less']
+    );
 });
 
 gulp.task('default', ['watch']);

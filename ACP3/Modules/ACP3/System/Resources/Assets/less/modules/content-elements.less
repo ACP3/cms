@@ -6,10 +6,17 @@
     margin: 0;
   }
 
+  .navbar-header {
+    float: left;
+  }
+
   small.navbar-text,
   .small.navbar-text {
-    margin-top: 17px;
-    margin-bottom: 16px;
+    line-height: 20px;
+
+    @media(max-width: 767px) {
+      margin-right: 15px;
+    }
   }
 
   .content {
