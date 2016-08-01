@@ -50,7 +50,7 @@ class Details extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return array
      * @throws Core\Controller\Exception\ResultNotExistsException
      */

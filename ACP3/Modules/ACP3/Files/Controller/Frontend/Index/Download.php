@@ -56,7 +56,7 @@ class Download extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
