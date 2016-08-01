@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Files;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
@@ -70,18 +71,13 @@ class Download extends Core\Controller\AbstractFrontendAction
                 $ext = strrchr($file['file'], '.');
                 $filename = $this->stringFormatter->makeStringUrlSafe($file['title']) . $ext;
 
-                $disposition = $this->response->headers->makeDisposition(
+                $response = new BinaryFileResponse($path . $file['file']);
+                $response->setContentDisposition(
                     ResponseHeaderBag::DISPOSITION_ATTACHMENT,
                     $filename
                 );
-                $this->setContentType('application/force-download');
-                $this->response->headers->add([
-                    'Content-Disposition' => $disposition,
-                    'Content-Transfer-Encoding' => 'binary',
-                    'Content-Length' => filesize($path . $file['file'])
-                ]);
 
-                return $this->response->setContent(file_get_contents($path . $file['file']));
+                return $response;
             } elseif (preg_match('/^([a-z]+):\/\//', $file['file'])) { // External file
                 return $this->redirect()->toNewPage($file['file']);
             }
