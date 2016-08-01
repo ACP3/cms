@@ -7,9 +7,16 @@ services:
     tags:
       - { name: core.eventListener, event: core.wysiwyg.textarea.before, method: onWysiwygTextareaBefore }
 
-  emoticons.event_on_render_emoticons_list_listener:
+  emoticons.event.on_render_emoticons_list_listener:
     class: ACP3\Modules\ACP3\Emoticons\Event\Listener\RenderEmoticonsListListener
     arguments:
       - '@emoticons.helpers'
     tags:
       - { name: core.eventListener, event: emoticons.render_emoticons_list, method: renderEmoticonsList }
+
+  emoticons.event.update_emoticons_cache_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Emoticons\Event\Listener\UpdateEmoticonsCacheOnModelAfterSaveListener
+    arguments:
+      - '@emoticons.cache'
+    tags:
+      - { name: core.eventListener, event: emoticons.model.emoticons.after_save, method: execute }

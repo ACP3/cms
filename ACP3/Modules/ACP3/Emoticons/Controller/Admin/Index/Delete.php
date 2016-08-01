@@ -27,15 +27,15 @@ class Delete extends Core\Controller\AbstractAdminAction
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext            $context
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository $emoticonRepository
-     * @param \ACP3\Modules\ACP3\Emoticons\Cache                    $emoticonsCache
+     * @param \ACP3\Modules\ACP3\Emoticons\Cache $emoticonsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Emoticons\Model\Repository\EmoticonRepository $emoticonRepository,
-        Emoticons\Cache $emoticonsCache)
-    {
+        Emoticons\Cache $emoticonsCache
+    ) {
         parent::__construct($context);
 
         $this->emoticonRepository = $emoticonRepository;
@@ -51,25 +51,26 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function ($items) {
-            $bool = false;
+            $action,
+            function ($items) {
+                $bool = false;
 
-            $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
-            foreach ($items as $item) {
-                if (!empty($item) && $this->emoticonRepository->resultExists($item) === true) {
-                    // Datei ebenfalls löschen
-                    $file = $this->emoticonRepository->getOneImageById($item);
-                    $upload->removeUploadedFile($file);
-                    $bool = $this->emoticonRepository->delete($item);
+                $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
+                foreach ($items as $item) {
+                    if (!empty($item) && $this->emoticonRepository->resultExists($item) === true) {
+                        // Datei ebenfalls löschen
+                        $file = $this->emoticonRepository->getOneImageById($item);
+                        $upload->removeUploadedFile($file);
+                        $bool = $this->emoticonRepository->delete($item);
+                    }
                 }
+
+                $this->emoticonsCache->saveCache();
+
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+                return $bool;
             }
-
-            $this->emoticonsCache->saveCache();
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $bool;
-        }
         );
     }
 }
