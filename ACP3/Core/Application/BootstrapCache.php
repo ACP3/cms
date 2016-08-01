@@ -54,7 +54,7 @@ class BootstrapCache extends EventDispatchingHttpCache
     {
         $response = parent::handle($request, $type, $catch);
 
-        //$this->moveStaticAssetsAround($response);
+        $this->moveStaticAssetsAround($response);
 
         return $response;
     }
