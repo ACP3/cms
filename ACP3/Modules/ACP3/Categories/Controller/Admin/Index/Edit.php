@@ -20,10 +20,6 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected $categoryRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Cache
-     */
-    protected $categoriesCache;
-    /**
      * @var \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -40,7 +36,6 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param Categories\Model\CategoriesModel $categoriesModel
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
-     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
@@ -48,14 +43,12 @@ class Edit extends Core\Controller\AbstractAdminAction
         Core\Controller\Context\AdminContext $context,
         Categories\Model\CategoriesModel $categoriesModel,
         Categories\Model\Repository\CategoryRepository $categoryRepository,
-        Categories\Cache $categoriesCache,
         Categories\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
         $this->categoryRepository = $categoryRepository;
-        $this->categoriesCache = $categoriesCache;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
         $this->categoriesModel = $categoriesModel;
@@ -112,11 +105,7 @@ class Edit extends Core\Controller\AbstractAdminAction
                 $formData['picture'] = $result['name'];
             }
 
-            $bool = $this->categoriesModel->saveCategory($formData, $categoryId);
-
-            $this->categoriesCache->saveCache($this->categoryRepository->getModuleNameFromCategoryId($categoryId));
-
-            return $bool;
+            return $this->categoriesModel->saveCategory($formData, $categoryId);
         });
     }
 }

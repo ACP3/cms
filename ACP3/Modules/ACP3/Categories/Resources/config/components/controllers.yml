@@ -5,7 +5,6 @@ services:
       - '@core.context.admin'
       - '@core.helpers.forms'
       - '@categories.model.categories_model'
-      - '@categories.cache'
       - '@categories.validator'
       - '@core.helpers.formToken'
 
@@ -22,7 +21,6 @@ services:
       - '@core.context.admin'
       - '@categories.model.categories_model'
       - '@categories.model.categories_repository'
-      - '@categories.cache'
       - '@categories.validator'
       - '@core.helpers.formToken'
 

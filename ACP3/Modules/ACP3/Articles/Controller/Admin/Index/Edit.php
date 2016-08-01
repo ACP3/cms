@@ -22,10 +22,6 @@ class Edit extends AbstractFormAction
      */
     protected $articleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Cache
-     */
-    protected $articlesCache;
-    /**
      * @var \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -55,7 +51,6 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param Articles\Model\ArticlesModel $articlesModel
      * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache $articlesCache
      * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
@@ -64,14 +59,12 @@ class Edit extends AbstractFormAction
         Core\Helpers\Forms $formsHelper,
         Articles\Model\ArticlesModel $articlesModel,
         Articles\Model\Repository\ArticleRepository $articleRepository,
-        Articles\Cache $articlesCache,
         Articles\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper
     ) {
         parent::__construct($context, $formsHelper);
 
         $this->articleRepository = $articleRepository;
-        $this->articlesCache = $articlesCache;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
         $this->articlesModel = $articlesModel;
@@ -153,8 +146,6 @@ class Edit extends AbstractFormAction
                 ->validate($formData);
 
             $bool = $this->articlesModel->saveArticle($formData, $this->user->getUserId(), $articleId);
-
-            $this->articlesCache->saveCache($articleId);
 
             $this->insertUriAlias($formData, $articleId);
             $this->createOrUpdateMenuItem($formData, $articleId);
