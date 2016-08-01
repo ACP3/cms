@@ -31,10 +31,6 @@ class Edit extends AbstractFormAction
      */
     protected $filesRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Cache
-     */
-    protected $filesCache;
-    /**
      * @var \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -42,6 +38,10 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Comments\Helpers
      */
     protected $commentsHelpers;
+    /**
+     * @var Files\Model\FilesModel
+     */
+    protected $filesModel;
 
     /**
      * Edit constructor.
@@ -51,7 +51,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache $filesCache
+     * @param Files\Model\FilesModel $filesModel
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
@@ -61,7 +61,7 @@ class Edit extends AbstractFormAction
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Files\Model\Repository\FilesRepository $filesRepository,
-        Files\Cache $filesCache,
+        Files\Model\FilesModel $filesModel,
         Files\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
     ) {
@@ -70,8 +70,8 @@ class Edit extends AbstractFormAction
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
         $this->filesRepository = $filesRepository;
-        $this->filesCache = $filesCache;
         $this->adminFormValidation = $adminFormValidation;
+        $this->filesModel = $filesModel;
     }
 
     /**
@@ -140,29 +140,18 @@ class Edit extends AbstractFormAction
                 ->setUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $fileId))
                 ->validate($formData);
 
-            $updateValues = [
-                'start' => $this->date->toSQL($formData['start']),
-                'end' => $this->date->toSQL($formData['end']),
-                'category_id' => $this->fetchCategoryId($formData),
-                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
-                'text' => $this->get('core.helpers.secure')->strEncode($formData['text'], true),
-                'comments' => $this->useComments($formData, $settings),
-                'user_id' => $this->user->getUserId(),
-            ];
+            $formData['cat'] = $this->fetchCategoryId($formData);
+            $formData['comments'] = $this->useComments($formData, $settings);
 
             if (!empty($file)) {
                 $newFileSql = $this->updateAssociatedFile($file, $formData, $dl['file']);
 
-                $updateValues = array_merge($updateValues, $newFileSql);
+                $formData = array_merge($formData, $newFileSql);
             }
 
-            $bool = $this->filesRepository->update($updateValues, $fileId);
+            $bool = $this->filesModel->saveFile($formData, $this->user->getUserId(), $fileId);
 
             $this->insertUriAlias($formData, $fileId);
-
-            $this->filesCache->saveCache($fileId);
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $bool;
         });
@@ -193,7 +182,7 @@ class Edit extends AbstractFormAction
 
         return [
             'file' => $newFile,
-            'size' => $fileSize,
+            'filesize' => $fileSize,
         ];
     }
 }

@@ -6,7 +6,7 @@ services:
       - '@core.date'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@files.model.filesrepository'
+      - '@files.model.files_model'
       - '@files.validator'
       - '@categories.helpers'
     calls:
@@ -31,7 +31,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@files.model.filesrepository'
-      - '@files.cache'
+      - '@files.model.files_model'
       - '@files.validator'
       - '@categories.helpers'
     calls:
