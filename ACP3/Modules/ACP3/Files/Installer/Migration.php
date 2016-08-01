@@ -55,6 +55,9 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             40 => [
                 "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
+            ],
+            41 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'frontend', 'index', 'download', '', 1);",
             ]
         ];
     }
