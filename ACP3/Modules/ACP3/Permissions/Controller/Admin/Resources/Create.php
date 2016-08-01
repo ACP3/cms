@@ -20,10 +20,6 @@ class Create extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache
-     */
-    protected $permissionsCache;
-    /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
      */
     protected $resourceFormValidation;
@@ -38,7 +34,6 @@ class Create extends AbstractFormAction
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
      * @param Permissions\Model\ResourcesModel $resourcesModel
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation $resourceFormValidation
      */
     public function __construct(
@@ -47,13 +42,11 @@ class Create extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Permissions\Model\ResourcesModel $resourcesModel,
-        Permissions\Cache $permissionsCache,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
         parent::__construct($context, $formsHelper, $privilegeRepository);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->permissionsCache = $permissionsCache;
         $this->resourceFormValidation = $resourceFormValidation;
         $this->resourcesModel = $resourcesModel;
     }
@@ -89,11 +82,7 @@ class Create extends AbstractFormAction
             $this->resourceFormValidation->validate($formData);
 
             $formData['module_id'] = $this->fetchModuleId($formData['modules']);
-            $bool = $this->resourcesModel->saveResource($formData);
-
-            $this->permissionsCache->saveResourcesCache();
-
-            return $bool;
+            return $this->resourcesModel->saveResource($formData);
         });
     }
 }

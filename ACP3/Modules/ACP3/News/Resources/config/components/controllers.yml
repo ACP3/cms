@@ -31,7 +31,6 @@ services:
       - '@core.helpers.formToken'
       - '@news.model.newsrepository'
       - '@news.model'
-      - '@news.cache'
       - '@news.validator'
       - '@categories.helpers'
     calls:

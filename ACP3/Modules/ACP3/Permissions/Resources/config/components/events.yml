@@ -1,0 +1,15 @@
+services:
+  permissions.event.update_roles_cache_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Permissions\Event\Listener\UpdateRolesCacheOnModelAfterSaveListener
+    arguments:
+      - '@permissions.cache'
+      - '@permissions.model.rulerepository'
+    tags:
+      - { name: core.eventListener, event: permissions.model.acl_roles.after_save, method: execute }
+
+  permissions.event.update_resources_cache_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Permissions\Event\Listener\UpdateResourcesCacheOnModelAfterSaveListener
+    arguments:
+      - '@permissions.cache'
+    tags:
+      - { name: core.eventListener, event: permissions.model.acl_resources.after_save, method: execute }

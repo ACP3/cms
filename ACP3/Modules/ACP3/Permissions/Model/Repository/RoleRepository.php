@@ -23,7 +23,7 @@ class RoleRepository extends Core\Model\AbstractRepository
      */
     public function roleExists($roleId)
     {
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $roleId]) > 0);
+        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id', ['id' => $roleId]) > 0);
     }
 
     /**
