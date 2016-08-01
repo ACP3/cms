@@ -28,10 +28,6 @@ class Create extends AbstractFormAction
      */
     protected $galleryRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Cache
-     */
-    protected $galleryCache;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation
      */
     protected $pictureFormValidation;
@@ -65,7 +61,6 @@ class Create extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      * @param Gallery\Model\PictureModel $pictureModel
-     * @param \ACP3\Modules\ACP3\Gallery\Cache $galleryCache
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
     public function __construct(
@@ -75,7 +70,6 @@ class Create extends AbstractFormAction
         Gallery\Model\Repository\GalleryRepository $galleryRepository,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Model\PictureModel $pictureModel,
-        Gallery\Cache $galleryCache,
         Gallery\Validation\PictureFormValidation $pictureFormValidation
     ) {
         parent::__construct($context, $formsHelper);
@@ -83,7 +77,6 @@ class Create extends AbstractFormAction
         $this->formTokenHelper = $formTokenHelper;
         $this->galleryRepository = $galleryRepository;
         $this->pictureRepository = $pictureRepository;
-        $this->galleryCache = $galleryCache;
         $this->pictureFormValidation = $pictureFormValidation;
         $this->pictureModel = $pictureModel;
     }
@@ -173,8 +166,6 @@ class Create extends AbstractFormAction
                 $lastId = $this->pictureModel->savePicture($formData, $galleryId);
 
                 $bool2 = $this->generatePictureAlias($lastId);
-
-                $this->galleryCache->saveCache($galleryId);
 
                 return $lastId && $bool2;
             },

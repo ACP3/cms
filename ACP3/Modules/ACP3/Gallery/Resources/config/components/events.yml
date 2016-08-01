@@ -1,0 +1,7 @@
+services:
+  gallery.event.update_picture_cache_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Gallery\Event\Listener\UpdatePictureCacheOnModelAfterSaveListener
+    arguments:
+      - '@gallery.cache'
+    tags:
+      - { name: core.eventListener, event: gallery.model.gallery_pictures.after_save, method: execute }
