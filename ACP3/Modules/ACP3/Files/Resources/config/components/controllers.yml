@@ -59,6 +59,15 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.date'
+      - '@files.model.filesrepository'
+      - '@files.cache'
+      - '@categories.model.categories_repository'
+
+  files.controller.frontend.index.download:
+    class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Download
+    arguments:
+      - '@core.context.frontend'
+      - '@core.date'
       - '@core.helpers.stringFormatter'
       - '@files.model.filesrepository'
       - '@files.cache'
