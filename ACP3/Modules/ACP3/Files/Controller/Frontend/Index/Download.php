@@ -70,8 +70,10 @@ class Download extends Core\Controller\AbstractFrontendAction
                 $ext = strrchr($file['file'], '.');
                 $filename = $this->stringFormatter->makeStringUrlSafe($file['title']) . $ext;
 
-                $disposition = $this->response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-                    $filename);
+                $disposition = $this->response->headers->makeDisposition(
+                    ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                    $filename
+                );
                 $this->setContentType('application/force-download');
                 $this->response->headers->add([
                     'Content-Disposition' => $disposition,
