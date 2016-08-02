@@ -24,10 +24,6 @@ class Create extends Core\Controller\AbstractAdminAction
      */
     protected $metaFormFieldsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
-     */
-    protected $seoRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -35,15 +31,19 @@ class Create extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
      */
     protected $uriAliasManager;
+    /**
+     * @var Seo\Model\SeoModel
+     */
+    protected $seoModel;
 
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext            $context
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields          $metaFormFieldsHelper
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager         $uriAliasManager
-     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository            $seoRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
+     * @param Seo\Model\SeoModel $seoModel
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
@@ -51,7 +51,7 @@ class Create extends Core\Controller\AbstractAdminAction
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Helper\MetaFormFields $metaFormFieldsHelper,
         Seo\Helper\UriAliasManager $uriAliasManager,
-        Seo\Model\Repository\SeoRepository $seoRepository,
+        Seo\Model\SeoModel $seoModel,
         Seo\Validation\AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);
@@ -59,8 +59,8 @@ class Create extends Core\Controller\AbstractAdminAction
         $this->formTokenHelper = $formTokenHelper;
         $this->metaFormFieldsHelper = $metaFormFieldsHelper;
         $this->uriAliasManager = $uriAliasManager;
-        $this->seoRepository = $seoRepository;
         $this->adminFormValidation = $adminFormValidation;
+        $this->seoModel = $seoModel;
     }
 
     /**
@@ -89,17 +89,7 @@ class Create extends Core\Controller\AbstractAdminAction
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->adminFormValidation->validate($formData);
 
-            $bool = $this->uriAliasManager->insertUriAlias(
-                $formData['uri'],
-                $formData['alias'],
-                $formData['seo_keywords'],
-                $formData['seo_description'],
-                (int)$formData['seo_robots']
-            );
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $bool;
+            return $this->seoModel->saveUriAlias($formData);
         });
     }
 }

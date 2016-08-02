@@ -6,7 +6,7 @@ services:
       - '@core.helpers.formToken'
       - '@seo.helper.meta_form_fields'
       - '@seo.helper.uri_alias_manager'
-      - '@seo.model.seorepository'
+      - '@seo.model.seo_model'
       - '@seo.validator'
 
   seo.controller.admin.index.delete:
@@ -21,9 +21,9 @@ services:
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
-      - '@seo.cache'
       - '@seo.helper.meta_form_fields'
       - '@seo.model.seorepository'
+      - '@seo.model.seo_model'
       - '@seo.validator'
 
   seo.controller.admin.index.index:

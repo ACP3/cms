@@ -20,10 +20,6 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Cache
-     */
-    protected $seoCache;
-    /**
      * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
      */
     protected $metaFormFieldsHelper;
@@ -35,32 +31,36 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
+    /**
+     * @var Seo\Model\SeoModel
+     */
+    protected $seoModel;
 
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext            $context
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Seo\Cache                          $seoCache
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields          $metaFormFieldsHelper
-     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository            $seoRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
+     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
+     * @param Seo\Model\SeoModel $seoModel
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Seo\Cache $seoCache,
         Seo\Helper\MetaFormFields $metaFormFieldsHelper,
         Seo\Model\Repository\SeoRepository $seoRepository,
+        Seo\Model\SeoModel $seoModel,
         Seo\Validation\AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->seoCache = $seoCache;
         $this->metaFormFieldsHelper = $metaFormFieldsHelper;
         $this->seoRepository = $seoRepository;
         $this->adminFormValidation = $adminFormValidation;
+        $this->seoModel = $seoModel;
     }
 
     /**
@@ -104,21 +104,7 @@ class Edit extends Core\Controller\AbstractAdminAction
                 ->setUriAlias($path)
                 ->validate($formData);
 
-            $updateValues = [
-                'uri' => $formData['uri'],
-                'alias' => $formData['alias'],
-                'keywords' => $this->get('core.helpers.secure')->strEncode($formData['seo_keywords']),
-                'description' => $this->get('core.helpers.secure')->strEncode($formData['seo_description']),
-                'robots' => (int)$formData['seo_robots']
-            ];
-
-            $bool = $this->seoRepository->update($updateValues, $seoId);
-
-            $this->seoCache->saveCache();
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $bool;
+            return $this->seoModel->saveUriAlias($formData, $seoId);
         });
     }
 }
