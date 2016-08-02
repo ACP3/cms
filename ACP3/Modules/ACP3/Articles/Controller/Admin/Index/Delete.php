@@ -34,8 +34,8 @@ class Delete extends AbstractFormAction
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelper,
         Articles\Model\Repository\ArticleRepository $articleRepository,
-        Articles\Cache $articlesCache)
-    {
+        Articles\Cache $articlesCache
+    ) {
         parent::__construct($context, $formsHelper);
 
         $this->articleRepository = $articleRepository;
@@ -51,33 +51,34 @@ class Delete extends AbstractFormAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function ($items) {
-            $bool = false;
+            $action,
+            function (array $items) {
+                $bool = false;
 
-            foreach ($items as $item) {
-                $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
+                foreach ($items as $item) {
+                    $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
 
-                $bool = $this->articleRepository->delete($item);
+                    $bool = $this->articleRepository->delete($item);
 
-                if ($this->manageMenuItemHelper) {
-                    $this->manageMenuItemHelper->manageMenuItem($uri, false);
+                    if ($this->manageMenuItemHelper) {
+                        $this->manageMenuItemHelper->manageMenuItem($uri, false);
+                    }
+
+                    $this->articlesCache->getCacheDriver()->delete(Articles\Cache::CACHE_ID . $item);
+
+                    if ($this->uriAliasManager) {
+                        $this->uriAliasManager->deleteUriAlias($uri);
+                    }
                 }
 
-                $this->articlesCache->getCacheDriver()->delete(Articles\Cache::CACHE_ID . $item);
-
-                if ($this->uriAliasManager) {
-                    $this->uriAliasManager->deleteUriAlias($uri);
+                if ($this->menusCache) {
+                    $this->menusCache->saveMenusCache();
                 }
+
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+                return $bool;
             }
-
-            if ($this->menusCache) {
-                $this->menusCache->saveMenusCache();
-            }
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $bool;
-        }
         );
     }
 }

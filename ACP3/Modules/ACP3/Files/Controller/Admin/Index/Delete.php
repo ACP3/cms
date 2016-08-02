@@ -81,7 +81,7 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function ($items) {
+            $action, function (array $items) {
             $bool = false;
 
             $upload = new Core\Helpers\Upload($this->appPath, 'files');

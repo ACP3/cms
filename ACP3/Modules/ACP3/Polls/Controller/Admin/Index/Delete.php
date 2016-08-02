@@ -16,45 +16,37 @@ use ACP3\Modules\ACP3\Polls;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
+     * @var Polls\Model\PollsModel
      */
-    protected $pollRepository;
+    protected $pollsModel;
 
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext    $context
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param Polls\Model\PollsModel $pollsModel
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Polls\Model\Repository\PollRepository $pollRepository
+        Polls\Model\PollsModel $pollsModel
     ) {
         parent::__construct($context);
 
-        $this->pollRepository = $pollRepository;
+        $this->pollsModel = $pollsModel;
     }
 
     /**
      * @param string $action
      *
-     * @return mixed
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $this,
             $action,
-            function ($items) {
-                $bool = false;
-                foreach ($items as $item) {
-                    $bool = $this->pollRepository->delete($item);
-                }
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-                return $bool !== false;
+            function (array $items) {
+                return $this->pollsModel->delete($items) !== false;
             }
         );
     }

@@ -52,7 +52,7 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleCustomDeleteAction(
-            $action, function ($items) {
+            $action, function (array $items) {
             $bool = $levelNotDeletable = false;
 
             foreach ($items as $item) {

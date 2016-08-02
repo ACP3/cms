@@ -52,7 +52,7 @@ class Delete extends Core\Controller\AbstractAdminAction
     {
         return $this->actionHelper->handleCustomDeleteAction(
             $action,
-            function ($items) {
+            function (array $items) {
                 $bool = false;
                 $isInUse = false;
 

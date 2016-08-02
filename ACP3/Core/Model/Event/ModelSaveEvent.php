@@ -23,7 +23,7 @@ class ModelSaveEvent extends Event
     /**
      * ModelSaveEvent constructor.
      * @param array $data
-     * @param int|null $entryId
+     * @param int|null|array $entryId
      */
     public function __construct(array $data, $entryId)
     {
@@ -40,10 +40,18 @@ class ModelSaveEvent extends Event
     }
 
     /**
-     * @return int|null
+     * @return int|null|array
      */
     public function getEntryId()
     {
         return $this->entryId;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleteStatement()
+    {
+        return count($this->data) === 0;
     }
 }

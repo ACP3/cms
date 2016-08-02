@@ -52,7 +52,7 @@ class Delete extends Core\Controller\AbstractAdminAction
     {
         return $this->actionHelper->handleDeleteAction(
             $action,
-            function ($items) {
+            function (array $items) {
                 $bool = false;
 
                 $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
