@@ -46,7 +46,7 @@ class Delete extends Core\Controller\AbstractAdminAction
         return $this->actionHelper->handleDeleteAction(
             $action,
             function (array $items) {
-                return $this->pollsModel->delete($items) !== false;
+                return $this->pollsModel->delete($items);
             }
         );
     }

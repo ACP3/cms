@@ -16,30 +16,23 @@ use ACP3\Modules\ACP3\Permissions;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
+     * @var Permissions\Model\ResourcesModel
      */
-    protected $resourceRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache
-     */
-    protected $permissionsCache;
+    protected $resourcesModel;
 
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext              $context
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                    $permissionsCache
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param Permissions\Model\ResourcesModel $resourcesModel
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Permissions\Model\Repository\ResourceRepository $resourceRepository,
-        Permissions\Cache $permissionsCache
+        Permissions\Model\ResourcesModel $resourcesModel
     ) {
         parent::__construct($context);
 
-        $this->resourceRepository = $resourceRepository;
-        $this->permissionsCache = $permissionsCache;
+        $this->resourcesModel = $resourcesModel;
     }
 
     /**
@@ -51,19 +44,10 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function (array $items) {
-            $bool = false;
-
-            foreach ($items as $item) {
-                $bool = $this->resourceRepository->delete($item);
+            $action,
+            function (array $items) {
+                return $this->resourcesModel->delete($items);
             }
-
-            $this->permissionsCache->saveResourcesCache();
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $bool;
-        }
         );
     }
 }

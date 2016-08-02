@@ -16,23 +16,23 @@ use ACP3\Modules\ACP3\Newsletter;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
+     * @var Newsletter\Model\NewsletterModel
      */
-    protected $newsletterRepository;
+    protected $newsletterModel;
 
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext               $context
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param Newsletter\Model\NewsletterModel $newsletterModel
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository)
-    {
+        Newsletter\Model\NewsletterModel $newsletterModel
+    ) {
         parent::__construct($context);
 
-        $this->newsletterRepository = $newsletterRepository;
+        $this->newsletterModel = $newsletterModel;
     }
 
     /**
@@ -44,16 +44,10 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function (array $items) {
-            $bool = false;
-            foreach ($items as $item) {
-                $bool = $this->newsletterRepository->delete($item);
+            $action,
+            function (array $items) {
+                return $this->newsletterModel->delete($items);
             }
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $bool;
-        }
         );
     }
 }

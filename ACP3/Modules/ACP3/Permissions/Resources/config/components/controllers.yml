@@ -55,8 +55,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Delete
     arguments:
       - '@core.context.admin'
-      - '@permissions.model.resourcerepository'
-      - '@permissions.cache'
+      - '@permissions.model.resources_model'
 
   permissions.controller.admin.resources.edit:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Edit
