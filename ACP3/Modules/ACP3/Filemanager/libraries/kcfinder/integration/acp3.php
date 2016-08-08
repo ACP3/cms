@@ -36,7 +36,7 @@ class acp3
 
                 chdir(ACP3_ROOT_DIR);
 
-                $application->getContainer()->get('users.model.user_model')->authenticate();
+                $application->getContainer()->get('core.authentication')->authenticate();
 
                 // if user has access permission...
                 if ($application->getContainer()->get('users.model.user_model')->isAuthenticated()) {
@@ -60,4 +60,4 @@ class acp3
     }
 }
 
-\kcfinder\cms\ACP3::checkAuth();
+\kcfinder\cms\acp3::checkAuth();
