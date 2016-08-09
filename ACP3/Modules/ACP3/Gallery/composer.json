@@ -7,13 +7,13 @@
   "prefer-stable": true,
   "require": {
     "acp3/composer-installer": "*",
-    "acp3/core": "4.0.0-rc.19.2",
-    "acp3/setup": "4.0.0-rc.19.2",
-    "acp3/module-errors": "4.0.0-rc.19.2",
-    "acp3/module-permissions": "4.0.0-rc.19.2",
-    "acp3/module-seo": "4.0.0-rc.19.2",
-    "acp3/module-system": "4.0.0-rc.19.2",
-    "acp3/module-users": "4.0.0-rc.19.2"
+    "acp3/core": "4.0.0-rc.20",
+    "acp3/setup": "4.0.0-rc.20",
+    "acp3/module-errors": "4.0.0-rc.20",
+    "acp3/module-permissions": "4.0.0-rc.20",
+    "acp3/module-seo": "4.0.0-rc.20",
+    "acp3/module-system": "4.0.0-rc.20",
+    "acp3/module-users": "4.0.0-rc.20"
   },
   "extra": {
     "installer-name": "ACP3/Gallery"
