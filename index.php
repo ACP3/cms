@@ -34,7 +34,7 @@ $cacheStore = new \Symfony\Component\HttpKernel\HttpCache\Store(
 $appCache = new \ACP3\Core\Application\BootstrapCache(
     $kernel,
     $cacheStore,
-    new \Symfony\Component\HttpKernel\HttpCache\Esi(),
+    new \ACP3\Core\Application\BootstrapCache\Esi(),
     ['debug' => $appMode === \ACP3\Core\Environment\ApplicationMode::DEVELOPMENT]
 );
 

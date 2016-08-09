@@ -9,7 +9,7 @@
             <label for="salutation" class="col-sm-2 control-label">{lang t="newsletter|salutation"}</label>
             <div class="col-sm-10">
                 <select class="form-control" name="salutation" id="salutation">
-                    <option value=""></option>
+                    <option value="">{lang t="newsletter|salutation_unspecified"}</option>
                     {foreach $salutation as $row}
                         <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                     {/foreach}

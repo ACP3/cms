@@ -42,6 +42,7 @@
         <item key="salutation">Anrede</item>
         <item key="salutation_female">Frau</item>
         <item key="salutation_male">Herr</item>
+        <item key="salutation_unspecified">Keine Angabe</item>
         <item key="save_success">Der Newsletter wurde erfolgreich gespeichert.</item>
         <item key="select_salutation">Bitte wählen Sie eine Anrede aus.</item>
         <item key="send">Newsletter versenden</item>
