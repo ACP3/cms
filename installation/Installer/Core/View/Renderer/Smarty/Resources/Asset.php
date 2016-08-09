@@ -31,8 +31,28 @@ class Asset extends AbstractResource
     public function __construct(ApplicationPath $appPath)
     {
         $this->appPath = $appPath;
-
         $this->recompiled = true;
+        $this->hasCompiledHandler = true;
+    }
+
+    /**
+     * fetch template and its modification time from data source
+     *
+     * @param string $name template name
+     * @param string &$source template source
+     * @param integer &$mtime template modification timestamp (epoch)
+     */
+    protected function fetch($name, &$source, &$mtime)
+    {
+        $asset = $this->resolveTemplatePath($name);
+
+        if ($asset !== '') {
+            $source = file_get_contents($asset);
+            $mtime = filemtime($asset);
+        } else {
+            $source = null;
+            $mtime = null;
+        }
     }
 
     /**
@@ -62,36 +82,61 @@ class Asset extends AbstractResource
     }
 
     /**
-     * fetch template and its modification time from data source
+     * compile template from source
      *
-     * @param string  $name    template name
-     * @param string  &$source template source
-     * @param integer &$mtime  template modification timestamp (epoch)
+     * @param \Smarty_Internal_Template $_smarty_tpl do not change variable name, is used by compiled template
+     *
+     * @throws \Exception
      */
-    protected function fetch($name, &$source, &$mtime)
+    public function process(\Smarty_Internal_Template $_smarty_tpl)
     {
-        $asset = $this->resolveTemplatePath($name);
-
-        if ($asset !== '') {
-            $source = file_get_contents($asset);
-            $mtime = filemtime($asset);
-        } else {
-            $source = null;
-            $mtime = null;
+        $compiled = &$_smarty_tpl->compiled;
+        $compiled->file_dependency = array();
+        $compiled->includes = array();
+        $compiled->nocache_hash = null;
+        $compiled->unifunc = null;
+        $level = ob_get_level();
+        ob_start();
+        $_smarty_tpl->loadCompiler();
+        // call compiler
+        try {
+            eval("?>" . $_smarty_tpl->compiler->compileTemplate($_smarty_tpl));
+        } catch (\Exception $e) {
+            unset($_smarty_tpl->compiler);
+            while (ob_get_level() > $level) {
+                ob_end_clean();
+            }
+            throw $e;
         }
+        // release compiler object to free memory
+        unset($_smarty_tpl->compiler);
+        ob_get_clean();
+        $compiled->timestamp = time();
+        $compiled->exists = true;
     }
 
     /**
-     * Fetch a template's modification time from data source
+     * populate Compiled Object with compiled filepath
      *
-     * @param string $name template name
+     * @param \Smarty_Template_Compiled $compiled compiled object
+     * @param \Smarty_Internal_Template $_template template object
      *
-     * @return integer timestamp (epoch) the template was modified
+     * @return void
      */
-    protected function fetchTimestamp($name)
+    public function populateCompiledFilepath(\Smarty_Template_Compiled $compiled, \Smarty_Internal_Template $_template)
     {
-        $asset = $this->resolveTemplatePath($name);
+        $compiled->filepath = false;
+        $compiled->timestamp = false;
+        $compiled->exists = false;
+    }
 
-        return filemtime($asset);
+    /*
+       * Disable timestamp checks for recompiled resource.
+       *
+       * @return bool
+       */
+    public function checkTimestamps()
+    {
+        return false;
     }
 }
