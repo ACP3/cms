@@ -12,7 +12,7 @@ services:
   menus.model.menus_model:
     class: ACP3\Modules\ACP3\Menus\Model\MenusModel
     arguments:
-      - '@core.eventDispatcher'
+      - '@core.event_dispatcher'
       - '@core.helpers.secure'
       - '@menus.model.menurepository'
       - '@menus.cache'

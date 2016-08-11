@@ -73,7 +73,7 @@ services:
       - '@core.logger'
       - '@core.view'
       - '@core.config'
-      - '@core.helpers.stringFormatter'
+      - '@core.helpers.string_formatter'
 
   core.pagination:
     class: ACP3\Core\Pagination
@@ -103,7 +103,7 @@ services:
   core.xml:
     class: ACP3\Core\XML
 
-  core.eventDispatcher:
+  core.event_dispatcher:
     class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
     arguments:
       - '@service_container'

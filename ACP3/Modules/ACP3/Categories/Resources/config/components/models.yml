@@ -12,6 +12,6 @@ services:
   categories.model.categories_model:
     class: ACP3\Modules\ACP3\Categories\Model\CategoriesModel
     arguments:
-      - '@core.eventDispatcher'
+      - '@core.event_dispatcher'
       - '@core.helpers.secure'
       - '@categories.model.categories_repository'

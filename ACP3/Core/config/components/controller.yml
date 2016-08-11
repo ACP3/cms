@@ -3,7 +3,7 @@ services:
     class: ACP3\Core\Controller\Context\WidgetContext
     arguments:
       - '@service_container'
-      - '@core.eventDispatcher'
+      - '@core.event_dispatcher'
       - '@core.acl'
       - '@users.model.user_model'
       - '@core.lang'

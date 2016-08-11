@@ -2,6 +2,7 @@
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
+use Cocur\Slugify\Slugify;
 
 /**
  * Class StringFormatter
@@ -10,41 +11,35 @@ use ACP3\Core;
 class StringFormatter
 {
     /**
+     * @var Slugify
+     */
+    protected $slugify;
+
+    /**
+     * StringFormatter constructor.
+     * @param Slugify $slugify
+     */
+    public function __construct(Slugify $slugify)
+    {
+        $this->slugify = $slugify;
+    }
+
+    /**
      * @param string $var
      *
      * @return string
      */
-    public static function makeStringUrlSafe($var)
+    public function makeStringUrlSafe($var)
     {
-        $var = strip_tags($var);
-        if (!preg_match('/&([a-z]+);/', $var)) {
-            $var = htmlentities($var, ENT_QUOTES, 'UTF-8');
-        }
+        $var = html_entity_decode(strip_tags($var));
 
-        $search = [
-            '/&([a-z]{1})uml;/',
-            '/&szlig;/',
-            '/&([a-z0-9]+);/',
-            '/(\s+)/',
-            '/-{2,}/',
-            '/[^a-z0-9-]/',
-        ];
-        $replace = [
-            '${1}e',
-            'ss',
-            '',
-            '-',
-            '-',
-            '',
-        ];
-
-        return preg_replace($search, $replace, strtolower($var));
+        return $this->slugify->slugify($var, '-');
     }
 
     /**
      * Converts new lines to HTML paragraphs and/or line breaks
      *
-     * @param string  $data
+     * @param string $data
      * @param boolean $useLineBreaks
      *
      * @return string
@@ -72,10 +67,10 @@ class StringFormatter
     /**
      * Shortens a string to the given length
      *
-     * @param string  $data
+     * @param string $data
      * @param integer $chars
      * @param integer $offset
-     * @param string  $append
+     * @param string $append
      *
      * @return string
      */

@@ -12,7 +12,7 @@ services:
   articles.model:
     class: ACP3\Modules\ACP3\Articles\Model\ArticlesModel
     arguments:
-      - '@core.eventDispatcher'
+      - '@core.event_dispatcher'
       - '@core.date'
       - '@core.helpers.secure'
       - '@articles.model.articlerepository'

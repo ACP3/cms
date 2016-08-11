@@ -12,6 +12,6 @@ services:
   emoticons.model:
     class: ACP3\Modules\ACP3\Emoticons\Model\EmoticonsModel
     arguments:
-      - '@core.eventDispatcher'
+      - '@core.event_dispatcher'
       - '@core.helpers.secure'
       - '@emoticons.model.emoticonrepository'

@@ -20,7 +20,14 @@
                         <label for="title" class="col-sm-2 control-label required">{lang t="articles|title"}</label>
 
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
+                            <input class="form-control"
+                                   type="text"
+                                   name="title"
+                                   id="title"
+                                   value="{$form.title}"
+                                   maxlength="120"
+                                   data-seo-slug-base="true"
+                                   required>
                         </div>
                     </div>
                     <div class="form-group">

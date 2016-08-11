@@ -10,7 +10,7 @@ services:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer
     arguments:
       - '@core.date'
-      - '@core.helpers.formatter.dateRange'
+      - '@core.helpers.formatter.date_range'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 
@@ -34,7 +34,7 @@ services:
   core.helpers.data_grid.column_renderer.nl2p_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer
     arguments:
-      - '@core.helpers.stringFormatter'
+      - '@core.helpers.string_formatter'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 
@@ -43,7 +43,7 @@ services:
     arguments:
       - '@core.lang'
       - '@core.helpers.data_grid.column_renderer.option_column_renderer.option_renderer'
-      - '@core.eventDispatcher'
+      - '@core.event_dispatcher'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
 

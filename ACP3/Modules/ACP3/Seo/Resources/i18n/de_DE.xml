@@ -24,6 +24,7 @@
         <item key="robots_noindex_nofollow">noindex, nofollow</item>
         <item key="select_robots">Bitte wählen Sie aus, wie die Website von Suchmaschinen-Crawlern indexiert werden soll.</item>
         <item key="seo">SEO</item>
+        <item key="suggest_alias">Alias vorschlagen</item>
         <item key="uri">Pfad</item>
     </keys>
 </language>

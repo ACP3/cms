@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Seo\Core\Breadcrumb\Title
     arguments:
       - '@core.breadcrumb'
-      - '@core.eventDispatcher'
+      - '@core.event_dispatcher'
       - '@core.config'
 
   core.helpers.pageBreaks:
