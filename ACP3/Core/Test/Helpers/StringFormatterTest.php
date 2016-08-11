@@ -8,6 +8,7 @@ namespace ACP3\Core\Test\Helpers;
 
 
 use ACP3\Core\Helpers\StringFormatter;
+use Cocur\Slugify\Slugify;
 
 class StringFormatterTest extends \PHPUnit_Framework_TestCase
 {
@@ -34,7 +35,7 @@ HTML;
 
     protected function setUp()
     {
-        $this->stringFormatter = new StringFormatter();
+        $this->stringFormatter = new StringFormatter(new Slugify());
     }
 
     public function makeStringUrlSafeDataProvider()
@@ -43,7 +44,7 @@ HTML;
             'german_umlauts' => ['äüöumß', 'aeueoeumss'],
             'german_umlauts_source_entities' => ['&auml;&ouml;&szlig;', 'aeoess'],
             'complex_characters' => ['ピックアップ', ''],
-            'preserve_numbers' => ['ピ23ッ6ク7アップ', '2367'],
+            'preserve_numbers' => ['ピ23ッ6ク7アップ', '23-6-7'],
             'to_lower_case' => ['ÄÜÖumß', 'aeueoeumss'],
         ];
     }

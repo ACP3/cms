@@ -3,6 +3,7 @@ namespace ACP3\Core\Test\Helpers\ColumnRenderer;
 
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer;
 use ACP3\Core\Helpers\StringFormatter;
+use Cocur\Slugify\Slugify;
 
 class Nl2pColumnRendererTest extends AbstractColumnRendererTest
 {
@@ -13,7 +14,7 @@ class Nl2pColumnRendererTest extends AbstractColumnRendererTest
 
     protected function setUp()
     {
-        $this->stringFormatter = new StringFormatter();
+        $this->stringFormatter = new StringFormatter(new Slugify());
 
         $this->columnRenderer = new Nl2pColumnRenderer($this->stringFormatter);
 
