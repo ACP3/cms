@@ -10,4 +10,4 @@ services:
       - '@core.acl'
       - '@core.modules'
       - '@core.helpers.forms'
-      - '@core.eventDispatcher'
+      - '@core.event_dispatcher'

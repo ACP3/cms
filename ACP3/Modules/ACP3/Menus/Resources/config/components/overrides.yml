@@ -6,5 +6,5 @@ services:
       - '@core.lang'
       - '@core.http.request'
       - '@core.router'
-      - '@core.eventDispatcher'
+      - '@core.event_dispatcher'
       - '@menus.model.menuitemrepository'

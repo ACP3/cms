@@ -68,7 +68,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.date'
-      - '@core.helpers.stringFormatter'
+      - '@core.helpers.string_formatter'
       - '@core.pagination'
       - '@news.model.newsrepository'
       - '@categories.helpers'

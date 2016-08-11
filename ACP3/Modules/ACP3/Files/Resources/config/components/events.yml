@@ -4,7 +4,7 @@ services:
     arguments:
       - '@core.date'
       - '@core.router'
-      - '@core.helpers.stringFormatter'
+      - '@core.helpers.string_formatter'
       - '@files.model.filesrepository'
     tags:
       - { name: core.eventListener, event: feeds.events.displayFeed.files, method: onDisplayFeed }

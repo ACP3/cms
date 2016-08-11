@@ -29,7 +29,7 @@ services:
       - '@core.mailer'
       - '@core.http.request'
       - '@core.router'
-      - '@core.helpers.stringFormatter'
+      - '@core.helpers.string_formatter'
       - '@core.helpers.secure'
       - '@core.config'
       - '@newsletter.helper.accountstatus'
