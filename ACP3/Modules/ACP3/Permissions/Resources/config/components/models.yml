@@ -27,13 +27,13 @@ services:
   permissions.model.resources_model:
     class: ACP3\Modules\ACP3\Permissions\Model\ResourcesModel
     arguments:
-      - '@core.eventDispatcher'
+      - '@core.event_dispatcher'
       - '@permissions.model.resourcerepository'
 
   permissions.model:role_model:
     class: ACP3\Modules\ACP3\Permissions\Model\RoleModel
     arguments:
-      - '@core.eventDispatcher'
+      - '@core.event_dispatcher'
       - '@core.helpers.secure'
       - '@core.nested_set'
       - '@permissions.model.rolerepository'

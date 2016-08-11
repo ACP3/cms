@@ -2,7 +2,7 @@ services:
   core.application.controller_action_dispatcher:
     class: ACP3\Core\Application\ControllerActionDispatcher
     arguments:
-      - '@core.eventDispatcher'
+      - '@core.event_dispatcher'
       - '@core.http.request'
       - '@service_container'
       - '@core.application.argument_resolver'

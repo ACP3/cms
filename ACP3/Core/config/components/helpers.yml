@@ -70,10 +70,12 @@ services:
       - '@core.validation.validation_rules.integer_validation_rule'
       - '@core.view'
 
-  core.helpers.stringFormatter:
+  core.helpers.string_formatter:
     class: ACP3\Core\Helpers\StringFormatter
+    arguments:
+      - '@slugify'
 
-  core.helpers.formatter.dateRange:
+  core.helpers.formatter.date_range:
     class: ACP3\Core\Helpers\Formatter\DateRange
     arguments:
       - '@core.date'
@@ -84,7 +86,7 @@ services:
     arguments:
       - '@core.lang'
 
-  core.helpers.formatter.rewriteInternalUri:
+  core.helpers.formatter.rewrite_internal_uri:
     class: ACP3\Core\Helpers\Formatter\RewriteInternalUri
     arguments:
       - '@core.environment.application_path'
@@ -92,3 +94,6 @@ services:
       - '@core.http.request'
       - '@core.router'
       - '@seo.validation.validation_rules.uri_alias_validation_rule'
+
+  slugify:
+    class: Cocur\Slugify\Slugify

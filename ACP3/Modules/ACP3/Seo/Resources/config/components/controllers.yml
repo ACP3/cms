@@ -40,3 +40,9 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@seo.validation.admin_settings_form_validation'
+
+  seo.controller.admin.index.suggest:
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Suggest
+    arguments:
+      - '@core.context.admin'
+      - '@core.helpers.string_formatter'

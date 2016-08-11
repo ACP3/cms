@@ -34,7 +34,7 @@ services:
       - '@core.environment.application_path'
       - '%core.environment%'
 
-  core.eventDispatcher:
+  core.event_dispatcher:
     class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
     arguments:
       - '@service_container'

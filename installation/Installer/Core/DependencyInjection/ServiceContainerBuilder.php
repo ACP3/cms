@@ -69,7 +69,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         $this->set('core.http.symfony_request', $this->symfonyRequest);
         $this->set('core.environment.application_path', $this->applicationPath);
         $this->addCompilerPass(
-            new RegisterListenersPass('core.eventDispatcher', 'core.eventListener', 'core.eventSubscriber')
+            new RegisterListenersPass('core.event_dispatcher', 'core.eventListener', 'core.eventSubscriber')
         );
         $this->addCompilerPass(new RegisterSmartyPluginsPass());
         $this->addCompilerPass(new RegisterValidationRulesPass());

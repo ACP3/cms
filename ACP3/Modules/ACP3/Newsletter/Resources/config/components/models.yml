@@ -27,7 +27,7 @@ services:
   newsletter.model:
     class: ACP3\Modules\ACP3\Newsletter\Model\NewsletterModel
     arguments:
-      - '@core.eventDispatcher'
+      - '@core.event_dispatcher'
       - '@core.config'
       - '@core.date'
       - '@core.helpers.secure'

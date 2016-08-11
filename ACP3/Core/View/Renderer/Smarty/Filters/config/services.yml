@@ -13,6 +13,6 @@ services:
 
   smarty.filter.page_css_classes:
     class: ACP3\Core\View\Renderer\Smarty\Filters\PageCssClasses
-    arguments: ['@core.assets.pageCssClasses', '@core.http.request']
+    arguments: ['@core.assets.page_css_classes', '@core.http.request']
     tags:
       - { name: core.view.extension }
