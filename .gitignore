@@ -8,7 +8,7 @@
 /uploads/files/*
 /uploads/gallery/*
 /vendor
-/build/logs
+/build/logs/
 /.htaccess
 
 !.gitignore
