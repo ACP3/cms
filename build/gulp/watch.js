@@ -3,7 +3,7 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-module.exports = function (gulp, plugins) {
+module.exports = function (gulp) {
     "use strict";
 
     return function () {
