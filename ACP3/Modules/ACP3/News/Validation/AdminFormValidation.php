@@ -2,8 +2,8 @@
 namespace ACP3\Modules\ACP3\News\Validation;
 
 use ACP3\Core;
+use ACP3\Core\Validation\ValidationRules\ExternalLinkValidationRule;
 use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\News\Validation\ValidationRules\ExternalLinkValidationRule;
 use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 
 /**

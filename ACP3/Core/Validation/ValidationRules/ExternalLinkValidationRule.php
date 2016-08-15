@@ -1,12 +1,9 @@
 <?php
-namespace ACP3\Modules\ACP3\News\Validation\ValidationRules;
-
-use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
+namespace ACP3\Core\Validation\ValidationRules;
 
 /**
  * Class ExternalLinkValidationRule
- * @package ACP3\Modules\ACP3\News\Validation\ValidationRules
+ * @package ACP3\Core\Validation\ValidationRules
  */
 class ExternalLinkValidationRule extends AbstractValidationRule
 {
