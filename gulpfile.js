@@ -7,11 +7,10 @@
     "use strict";
 
     var gulp = require('gulp'),
-        $ = require('gulp-load-plugins');
-        //modifyCssUrls = require('gulp-modify-css-urls');
+        plugins = require('gulp-load-plugins');
 
     function getTask(task) {
-        return require('./build/gulp/' + task)(gulp, $);
+        return require('./build/gulp/' + task)(gulp, plugins);
     }
 
     gulp.task('copy', getTask('copy'));
@@ -19,5 +18,5 @@
     gulp.task('less', getTask('less'));
     gulp.task('watch', getTask('watch'));
 
-    gulp.task('default', ['watch']);
+    gulp.task('default', ['less', 'watch']);
 })();

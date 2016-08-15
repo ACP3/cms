@@ -3,17 +3,19 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-module.exports = function(gulp) {
+module.exports = function (gulp, plugins) {
     "use strict";
 
-    gulp.task('watch', function () {
-        // Watch all the .less files, then run the less task
-        return gulp.watch(
-            [
-                './ACP3/Modules/*/*/Resources/Assets/less/**/*.less',
-                './designs/*/**/Assets/less/*.less'
-            ],
-            ['less']
-        );
-    });
+    return function () {
+        gulp.task('watch', function () {
+            // Watch all the .less files, then run the less task
+            return gulp.watch(
+                [
+                    './ACP3/Modules/*/*/Resources/Assets/less/**/*.less',
+                    './designs/*/**/Assets/less/*.less'
+                ],
+                ['less']
+            );
+        });
+    }
 };

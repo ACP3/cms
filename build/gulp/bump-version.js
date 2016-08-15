@@ -5,38 +5,40 @@
 
 argv = require('yargs').argv;
 
-module.exports = function(gulp, $) {
+module.exports = function (gulp, plugins) {
     "use strict";
 
-    gulp.task('bump-version', function () {
-        if (argv.from === undefined || argv.to === undefined) {
-            $.util.log($.util.colors.red('Error: Please specify the arguments "from" and "to".'));
-            return;
-        }
-
-        function replaceAll(str, find, replace) {
-            return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
-        }
-
-        function escapeRegExp(str) {
-            return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
-        }
-
-        return gulp.src(
-            [
-                './ACP3/Core/composer.json',
-                './ACP3/Core/Application/BootstrapInterface.php',
-                './ACP3/Modules/ACP3/*/composer.json',
-                './installation/composer.json',
-                './package.json'
-            ],
-            {
-                base: './'
+    return function () {
+        gulp.task('bump-version', function () {
+            if (argv.from === undefined || argv.to === undefined) {
+                plugins.util.log(plugins.util.colors.red('Error: Please specify the arguments "from" and "to".'));
+                return;
             }
-        )
-            .pipe($.change(function (content) {
-                return replaceAll(content, argv.from, argv.to);
-            }))
-            .pipe(gulp.dest('./'))
-    });
+
+            function replaceAll(str, find, replace) {
+                return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+            }
+
+            function escapeRegExp(str) {
+                return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+            }
+
+            return gulp.src(
+                [
+                    './ACP3/Core/composer.json',
+                    './ACP3/Core/Application/BootstrapInterface.php',
+                    './ACP3/Modules/ACP3/*/composer.json',
+                    './installation/composer.json',
+                    './package.json'
+                ],
+                {
+                    base: './'
+                }
+            )
+                .pipe(plugins.change(function (content) {
+                    return replaceAll(content, argv.from, argv.to);
+                }))
+                .pipe(gulp.dest('./'))
+        });
+    }
 };
