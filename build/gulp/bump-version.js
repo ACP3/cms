@@ -3,10 +3,10 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
+argv = require('yargs').argv;
+
 module.exports = function(gulp, $) {
     "use strict";
-
-    argv = require('yargs').argv;
 
     gulp.task('bump-version', function () {
         if (argv.from === undefined || argv.to === undefined) {
