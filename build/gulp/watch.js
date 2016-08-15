@@ -7,15 +7,13 @@ module.exports = function (gulp, plugins) {
     "use strict";
 
     return function () {
-        gulp.task('watch', function () {
-            // Watch all the .less files, then run the less task
-            return gulp.watch(
-                [
-                    './ACP3/Modules/*/*/Resources/Assets/less/**/*.less',
-                    './designs/*/**/Assets/less/*.less'
-                ],
-                ['less']
-            );
-        });
+        // Watch all the .less files, then run the less task
+        return gulp.watch(
+            [
+                './ACP3/Modules/*/*/Resources/Assets/less/**/*.less',
+                './designs/*/**/Assets/less/*.less'
+            ],
+            ['less']
+        );
     }
 };
