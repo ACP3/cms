@@ -16,6 +16,11 @@
     "acp3/module-users": "4.0.0-rc.21.1",
     "acp3/module-categories": "4.0.0-rc.21.1"
   },
+  "autoload": {
+    "psr-4": {
+      "ACP3\\Modules\\ACP3\\News\\": ""
+    }
+  },
   "extra": {
     "installer-name": "ACP3/News"
   }

@@ -16,6 +16,11 @@
     "acp3/module-users": "4.0.0-rc.21.1",
     "mibe/feedwriter": "^1.0"
   },
+  "autoload": {
+    "psr-4": {
+      "ACP3\\Modules\\ACP3\\Feeds\\": ""
+    }
+  },
   "suggest": {
     "acp3/module-files": "Makes it possible to show feeds for the Downloads module.",
     "acp3/module-news": "Makes it possible to show feeds for the News module."

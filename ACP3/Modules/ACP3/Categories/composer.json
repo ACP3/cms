@@ -15,6 +15,11 @@
     "acp3/module-system": "4.0.0-rc.21.1",
     "acp3/module-users": "4.0.0-rc.21.1"
   },
+  "autoload": {
+    "psr-4": {
+      "ACP3\\Modules\\ACP3\\Categories\\": ""
+    }
+  },
   "extra": {
     "installer-name": "ACP3/Categories"
   }
