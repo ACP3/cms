@@ -9,12 +9,6 @@
       "email": "mail@acp3-cms.net"
     }
   ],
-  "autoload": {
-    "psr-4": {
-      "ACP3\\": "./ACP3",
-      "ACP3\\Installer\\": "./installation/Installer"
-    }
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
@@ -43,5 +37,39 @@
     "phpunit/phpunit": "^5.5",
     "satooshi/php-coveralls": "dev-master",
     "friendsofphp/php-cs-fixer": "^1.11"
+  },
+  "autoload": {
+    "psr-4": {
+      "ACP3\\": "./ACP3",
+      "ACP3\\Installer\\": "./installation/Installer"
+    }
+  },
+  "replace": {
+    "acp3/core": "self.version",
+    "acp3/setup": "self.version",
+    "acp3/module-acp": "self.version",
+    "acp3/module-articles": "self.version",
+    "acp3/module-captcha": "self.version",
+    "acp3/module-categories": "self.version",
+    "acp3/module-comments": "self.version",
+    "acp3/module-contact": "self.version",
+    "acp3/module-emoticons": "self.version",
+    "acp3/module-errors": "self.version",
+    "acp3/module-feeds": "self.version",
+    "acp3/module-filemanager": "self.version",
+    "acp3/module-files": "self.version",
+    "acp3/module-gallery": "self.version",
+    "acp3/module-guestbook": "self.version",
+    "acp3/module-menus": "self.version",
+    "acp3/module-news": "self.version",
+    "acp3/module-newsletter": "self.version",
+    "acp3/module-permissions": "self.version",
+    "acp3/module-polls": "self.version",
+    "acp3/module-search": "self.version",
+    "acp3/module-seo": "self.version",
+    "acp3/module-system": "self.version",
+    "acp3/module-users": "self.version",
+    "acp3/module-wysiwyg-ckeditor": "self.version",
+    "acp3/module-wysiwyg-tinymce": "self.version"
   }
 }
