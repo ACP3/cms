@@ -83,8 +83,9 @@ class Delete extends Core\Controller\AbstractAdminAction
                     $bool = $this->pictureRepository->delete($item);
 
                     if ($this->uriAliasManager) {
-                        $this->uriAliasManager->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE,
-                            $item));
+                        $this->uriAliasManager->deleteUriAlias(
+                            sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item)
+                        );
                     }
 
                     $this->galleryCache->saveCache($picture['gallery_id']);

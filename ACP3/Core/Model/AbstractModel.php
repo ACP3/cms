@@ -112,7 +112,18 @@ abstract class AbstractModel
      */
     public function delete($entryId)
     {
-        $this->dispatchBeforeSaveEvent($this->repository, [], $entryId);
+        $repository = $this->repository;
+
+        $this->dispatchEvent(
+            'core.model.before_delete',
+            [],
+            $entryId
+        );
+        $this->dispatchEvent(
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete',
+            [],
+            $entryId
+        );
 
         if (!is_array($entryId)) {
             $entryId = [$entryId];
@@ -123,7 +134,16 @@ abstract class AbstractModel
             $affectedRows += (int)$this->repository->delete($item);
         }
 
-        $this->dispatchAfterSaveEvent($this->repository, [], $entryId);
+        $this->dispatchEvent(
+            'core.model.before_delete',
+            [],
+            $entryId
+        );
+        $this->dispatchEvent(
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete',
+            [],
+            $entryId
+        );
 
         return $affectedRows;
     }

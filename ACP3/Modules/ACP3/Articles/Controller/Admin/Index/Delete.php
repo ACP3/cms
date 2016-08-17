@@ -16,30 +16,30 @@ use ACP3\Modules\ACP3\Articles;
 class Delete extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
-     */
-    protected $articleRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Articles\Cache
      */
     protected $articlesCache;
+    /**
+     * @var Articles\Model\ArticlesModel
+     */
+    protected $articlesModel;
 
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
+     * @param Articles\Model\ArticlesModel $articlesModel
      * @param \ACP3\Modules\ACP3\Articles\Cache $articlesCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelper,
-        Articles\Model\Repository\ArticleRepository $articleRepository,
+        Articles\Model\ArticlesModel $articlesModel,
         Articles\Cache $articlesCache
     ) {
         parent::__construct($context, $formsHelper);
 
-        $this->articleRepository = $articleRepository;
         $this->articlesCache = $articlesCache;
+        $this->articlesModel = $articlesModel;
     }
 
     /**
@@ -58,7 +58,7 @@ class Delete extends AbstractFormAction
                 foreach ($items as $item) {
                     $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
 
-                    $bool = $this->articleRepository->delete($item);
+                    $bool = $this->articlesModel->delete($item);
 
                     if ($this->manageMenuItemHelper) {
                         $this->manageMenuItemHelper->manageMenuItem($uri, false);
@@ -74,8 +74,6 @@ class Delete extends AbstractFormAction
                 if ($this->menusCache) {
                     $this->menusCache->saveMenusCache();
                 }
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
                 return $bool;
             }

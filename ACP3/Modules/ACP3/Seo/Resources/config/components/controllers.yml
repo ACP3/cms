@@ -14,7 +14,7 @@ services:
     arguments:
       - '@core.context.admin'
       - '@seo.cache'
-      - '@seo.model.seorepository'
+      - '@seo.model.seo_model'
 
   seo.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Edit

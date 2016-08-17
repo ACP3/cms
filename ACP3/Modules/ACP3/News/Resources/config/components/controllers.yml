@@ -17,7 +17,7 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
-      - '@news.model.newsrepository'
+      - '@news.model'
       - '@news.cache'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]

@@ -20,26 +20,26 @@ class Delete extends Core\Controller\AbstractAdminAction
      */
     protected $seoCache;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
+     * @var Seo\Model\SeoModel
      */
-    protected $seoRepository;
+    protected $seoModel;
 
     /**
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param \ACP3\Modules\ACP3\Seo\Cache               $seoCache
-     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
+     * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
+     * @param Seo\Model\SeoModel $seoModel
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Seo\Cache $seoCache,
-        Seo\Model\Repository\SeoRepository $seoRepository
+        Seo\Model\SeoModel $seoModel
     ) {
         parent::__construct($context);
 
         $this->seoCache = $seoCache;
-        $this->seoRepository = $seoRepository;
+        $this->seoModel = $seoModel;
     }
 
     /**
@@ -52,17 +52,12 @@ class Delete extends Core\Controller\AbstractAdminAction
     {
         return $this->actionHelper->handleDeleteAction(
             $action, function (array $items) {
-            $bool = false;
 
-            foreach ($items as $item) {
-                $bool = $this->seoRepository->delete($item);
-            }
+            $result = $this->seoModel->delete($items);
 
             $this->seoCache->saveCache();
 
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $bool;
+            return $result;
         }
         );
     }

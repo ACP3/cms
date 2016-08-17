@@ -19,7 +19,7 @@ services:
     arguments:
       - '@core.context.admin'
       - '@core.helpers.forms'
-      - '@articles.model.articlerepository'
+      - '@articles.model'
       - '@articles.cache'
     calls:
       - ['setMenusCache', ['@?menus.cache']]

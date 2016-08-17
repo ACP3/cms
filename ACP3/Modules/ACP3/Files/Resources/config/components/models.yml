@@ -12,7 +12,7 @@ services:
   files.model.files_model:
     class: ACP3\Modules\ACP3\Files\Model\FilesModel
     arguments:
-      - '@core.eventDispatcher'
+      - '@core.event_dispatcher'
       - '@core.date'
       - '@core.helpers.secure'
       - '@files.model.filesrepository'
