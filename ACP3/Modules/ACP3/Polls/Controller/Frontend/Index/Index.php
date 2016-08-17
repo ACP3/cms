@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Index
@@ -53,7 +54,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
+        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
         $polls = $this->pollRepository->getAll($this->date->getCurrentDateTime());
         $cPolls = count($polls);

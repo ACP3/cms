@@ -7,6 +7,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Index
@@ -49,7 +50,7 @@ class Index extends AbstractFrontendAction
      */
     public function execute($module, $entryId)
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
+        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
         $comments = $this->commentRepository->getAllByModule(
             $this->modules->getModuleId($module),

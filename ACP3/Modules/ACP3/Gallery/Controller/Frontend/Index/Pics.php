@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Pics
@@ -60,7 +61,7 @@ class Pics extends AbstractAction
     public function execute($id)
     {
         if ($this->galleryRepository->galleryExists($id, $this->date->getCurrentDateTime()) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
+            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
             $this->breadcrumb
                 ->append($this->translator->t('gallery', 'gallery'), 'gallery')

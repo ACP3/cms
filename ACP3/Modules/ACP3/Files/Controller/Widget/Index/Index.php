@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Files\Controller\Widget\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Files;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Index
@@ -50,7 +51,7 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     public function execute($categoryId = 0, $template = '')
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
+        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
         $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
 

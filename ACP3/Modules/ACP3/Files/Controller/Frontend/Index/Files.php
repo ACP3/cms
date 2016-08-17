@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files as FilesModule;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Files
@@ -61,7 +62,7 @@ class Files extends Core\Controller\AbstractFrontendAction
     public function execute($cat)
     {
         if ($this->categoryRepository->resultExists($cat) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
+            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
             $category = $this->categoryRepository->getOneById($cat);
 

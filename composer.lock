@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "67ab1061db830f152bed6df5a2180c4d",
-    "content-hash": "0a325ee3218957c2a44de0a36dc288fd",
+    "hash": "0d86c011bb6d8a1a6a9f89617e84cc37",
+    "content-hash": "3147bab7fc62de74bf91f198e5535b07",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
@@ -1940,16 +1940,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v1.11.6",
+            "version": "v1.11.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "41dc93abd2937a85a3889e28765231d574d2bac8"
+                "reference": "ddb5565cdc864114a3e68503855db467416e0df5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/41dc93abd2937a85a3889e28765231d574d2bac8",
-                "reference": "41dc93abd2937a85a3889e28765231d574d2bac8",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/ddb5565cdc864114a3e68503855db467416e0df5",
+                "reference": "ddb5565cdc864114a3e68503855db467416e0df5",
                 "shasum": ""
             },
             "require": {
@@ -1994,7 +1994,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2016-07-22 06:46:28"
+            "time": "2016-08-16 07:42:01"
         },
         {
             "name": "guzzlehttp/guzzle",

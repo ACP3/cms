@@ -10,6 +10,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Index
@@ -93,7 +94,7 @@ class Index extends AbstractAction
      */
     public function execute($cat = 0)
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
+        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
         $this->addBreadcrumbStep($cat);
 

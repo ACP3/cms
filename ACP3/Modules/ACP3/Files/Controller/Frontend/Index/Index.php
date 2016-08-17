@@ -43,7 +43,9 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
+        $this->setCacheResponseCacheable(
+            $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME)['cache_lifetime']
+        );
 
         return [
             'categories' => $this->categoriesCache->getCache(Schema::MODULE_NAME)

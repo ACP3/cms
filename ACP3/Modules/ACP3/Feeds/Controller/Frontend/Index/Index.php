@@ -45,7 +45,9 @@ class Index extends Core\Controller\AbstractFrontendAction
     public function execute($feed)
     {
         if ($this->acl->hasPermission('frontend/' . $feed) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
+            $this->setCacheResponseCacheable(
+                $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME)['cache_lifetime']
+            );
 
             $this->feedGenerator
                 ->setTitle($this->config->getSettings(Schema::MODULE_NAME)['title'])

@@ -7,13 +7,18 @@
   "prefer-stable": true,
   "require": {
     "acp3/composer-installer": "*",
-    "acp3/core": "4.0.0-rc.21.1",
-    "acp3/setup": "4.0.0-rc.21.1",
-    "acp3/module-errors": "4.0.0-rc.21.1",
-    "acp3/module-permissions": "4.0.0-rc.21.1",
-    "acp3/module-seo": "4.0.0-rc.21.1",
-    "acp3/module-system": "4.0.0-rc.21.1",
-    "acp3/module-users": "4.0.0-rc.21.1"
+    "acp3/core": "4.0.0-rc.22",
+    "acp3/setup": "4.0.0-rc.22",
+    "acp3/module-errors": "4.0.0-rc.22",
+    "acp3/module-permissions": "4.0.0-rc.22",
+    "acp3/module-seo": "4.0.0-rc.22",
+    "acp3/module-system": "4.0.0-rc.22",
+    "acp3/module-users": "4.0.0-rc.22"
+  },
+  "autoload": {
+    "psr-4": {
+      "ACP3\\Modules\\ACP3\\Categories\\": ""
+    }
   },
   "extra": {
     "installer-name": "ACP3/Categories"
