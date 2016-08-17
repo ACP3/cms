@@ -114,6 +114,10 @@ abstract class AbstractModel
     {
         $repository = $this->repository;
 
+        if (!is_array($entryId)) {
+            $entryId = [$entryId];
+        }
+
         $this->dispatchEvent(
             'core.model.before_delete',
             [],
@@ -124,10 +128,6 @@ abstract class AbstractModel
             [],
             $entryId
         );
-
-        if (!is_array($entryId)) {
-            $entryId = [$entryId];
-        }
 
         $affectedRows = 0;
         foreach ($entryId as $item) {

@@ -13,12 +13,8 @@ use ACP3\Modules\ACP3\Articles;
  * Class Delete
  * @package ACP3\Modules\ACP3\Articles\Controller\Admin\Index
  */
-class Delete extends AbstractFormAction
+class Delete extends Core\Controller\AbstractAdminAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Cache
-     */
-    protected $articlesCache;
     /**
      * @var Articles\Model\ArticlesModel
      */
@@ -26,19 +22,14 @@ class Delete extends AbstractFormAction
 
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param Core\Helpers\Forms $formsHelper
      * @param Articles\Model\ArticlesModel $articlesModel
-     * @param \ACP3\Modules\ACP3\Articles\Cache $articlesCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Articles\Model\ArticlesModel $articlesModel,
-        Articles\Cache $articlesCache
+        Articles\Model\ArticlesModel $articlesModel
     ) {
-        parent::__construct($context, $formsHelper);
+        parent::__construct($context);
 
-        $this->articlesCache = $articlesCache;
         $this->articlesModel = $articlesModel;
     }
 
@@ -53,29 +44,7 @@ class Delete extends AbstractFormAction
         return $this->actionHelper->handleDeleteAction(
             $action,
             function (array $items) {
-                $bool = false;
-
-                foreach ($items as $item) {
-                    $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
-
-                    $bool = $this->articlesModel->delete($item);
-
-                    if ($this->manageMenuItemHelper) {
-                        $this->manageMenuItemHelper->manageMenuItem($uri, false);
-                    }
-
-                    $this->articlesCache->getCacheDriver()->delete(Articles\Cache::CACHE_ID . $item);
-
-                    if ($this->uriAliasManager) {
-                        $this->uriAliasManager->deleteUriAlias($uri);
-                    }
-                }
-
-                if ($this->menusCache) {
-                    $this->menusCache->saveMenusCache();
-                }
-
-                return $bool;
+                return $this->articlesModel->delete($items);
             }
         );
     }

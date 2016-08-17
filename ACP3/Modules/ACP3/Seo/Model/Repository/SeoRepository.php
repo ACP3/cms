@@ -51,6 +51,16 @@ class SeoRepository extends Core\Model\AbstractRepository
     }
 
     /**
+     * @param string $uri
+     *
+     * @return array
+     */
+    public function getOneByUri($uri)
+    {
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE `uri` = ?', [$uri]);
+    }
+
+    /**
      * @return array
      */
     public function getAllMetaTags()
