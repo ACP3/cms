@@ -58,7 +58,7 @@ class PictureModel extends AbstractModel
      */
     public function savePicture(array $formData, $galleryId, $entryId = null)
     {
-        $settings = $this->config->getSettings('gallery');
+        $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
         $data = [
             'gallery_id' => $galleryId,

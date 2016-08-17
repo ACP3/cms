@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Details
@@ -48,7 +49,7 @@ class Details extends Core\Controller\AbstractFrontendAction
         $newsletter = $this->newsletterRepository->getOneById($id, 1);
 
         if (!empty($newsletter)) {
-            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
+            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
             $this->breadcrumb
                 ->append($this->translator->t('newsletter', 'index'), 'newsletter')

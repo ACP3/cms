@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Image
@@ -51,7 +52,7 @@ class Image extends AbstractAction
         /** @var Core\Picture $image */
         $image = $this->get('core.image');
         $image
-            ->setEnableCache($this->config->getSettings('system')['cache_images'] == 1)
+            ->setEnableCache($this->config->getSettings(Schema::MODULE_NAME)['cache_images'] == 1)
             ->setCachePrefix('gallery_' . $action)
             ->setMaxWidth($this->settings[$action . 'width'])
             ->setMaxHeight($this->settings[$action . 'height'])

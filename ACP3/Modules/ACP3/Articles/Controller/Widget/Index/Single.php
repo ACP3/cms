@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Widget\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Single
@@ -56,7 +57,7 @@ class Single extends Core\Controller\AbstractWidgetAction
     public function execute($id)
     {
         if ($this->articleRepository->resultExists((int)$id, $this->date->getCurrentDateTime()) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
+            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
             return [
                 'sidebar_article' => $this->articlesCache->getCache($id)

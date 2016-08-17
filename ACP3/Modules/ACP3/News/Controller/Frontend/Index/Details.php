@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Details
@@ -60,7 +61,7 @@ class Details extends AbstractAction
     public function execute($id)
     {
         if ($this->newsRepository->resultExists($id, $this->date->getCurrentDateTime()) == 1) {
-            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
+            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
             $news = $this->newsCache->getCache($id);
 

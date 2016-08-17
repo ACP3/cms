@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class UserMenu
@@ -44,7 +45,7 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
+        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
         if ($this->user->isAuthenticated() === true) {
             $prefix = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN ? 'acp/' : '';

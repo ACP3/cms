@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
 /**
@@ -46,7 +47,7 @@ class ViewProfile extends Core\Controller\AbstractFrontendAction
     public function execute($id)
     {
         if ($this->userRepository->resultExists($id) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings('system')['cache_lifetime']);
+            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
             $user = $this->user->getUserInfo($id);
             $user['gender'] = str_replace([1, 2, 3],
