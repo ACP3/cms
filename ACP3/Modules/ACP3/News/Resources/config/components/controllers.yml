@@ -18,10 +18,6 @@ services:
     arguments:
       - '@core.context.admin'
       - '@news.model'
-      - '@news.cache'
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   news.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Edit

@@ -1,4 +1,15 @@
 services:
+  news.event.on_news_model_after_delete_listener:
+    class: ACP3\Modules\ACP3\News\Event\OnNewsModelAfterDeleteListener
+    arguments:
+      - '@core.modules'
+      - '@news.cache'
+    calls:
+      - ['setCommentsHelpers', ['@?comments.helpers']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+    tags:
+      - { name: core.eventListener, event: news.model.news.after_delete, method: execute }
+
   news.event.on_display_feed_listener:
     class: ACP3\Modules\ACP3\News\Event\Listener\OnDisplayFeedListener
     arguments:

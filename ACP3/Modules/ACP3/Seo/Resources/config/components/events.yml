@@ -23,3 +23,4 @@ services:
       - '@seo.cache'
     tags:
       - { name: core.eventListener, event: seo.model.seo.after_save, method: execute }
+      - { name: core.eventListener, event: seo.model.seo.after_delete, method: execute }
