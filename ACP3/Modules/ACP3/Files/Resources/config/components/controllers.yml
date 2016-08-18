@@ -17,11 +17,7 @@ services:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
-      - '@files.model.filesrepository'
-      - '@files.cache'
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+      - '@files.model.files_model'
 
   files.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Edit

@@ -1,4 +1,17 @@
 services:
+  files.event.on_files_model_before_delete_listener:
+    class: ACP3\Modules\ACP3\Files\Event\Listener\OnFilesModelBeforeDeleteListener
+    arguments:
+      - '@core.environment.application_path'
+      - '@core.modules'
+      - '@files.model.filesrepository'
+      - '@files.cache'
+    calls:
+      - ['setCommentsHelpers', ['@?comments.helpers']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+    tags:
+      - { name: core.eventListener, event: files.model.files.before_delete, method: execute }
+
   files.event.on_display_feed_listener:
     class: ACP3\Modules\ACP3\Files\Event\Listener\OnDisplayFeedListener
     arguments:
