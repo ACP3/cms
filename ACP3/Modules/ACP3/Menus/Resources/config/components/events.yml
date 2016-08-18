@@ -1,0 +1,17 @@
+services:
+  menus.event.on_menus_model_before_delete_listener:
+    class: ACP3\Modules\ACP3\Menus\Event\Listener\OnMenusModelBeforeDeleteListener
+    arguments:
+      - '@menus.cache'
+      - '@menus.model.menurepository'
+      - '@menus.model.menuitemrepository'
+      - '@core.nested_set'
+    tags:
+      - { name: core.eventListener, event: menus.model.menus.before_delete, method: execute }
+
+  menus.event.update_menus_cache_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Menus\Event\Listener\UpdateMenusCacheOnModelAfterSaveListener
+    arguments:
+      - '@menus.cache'
+    tags:
+      - { name: core.eventListener, event: menus.model.menus.after_save, method: execute }

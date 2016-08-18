@@ -1,10 +1,21 @@
 services:
-  articles.events.onAvailableModulesListener:
+  articles.events.on_articles_model_delete_after_listener:
+    class: ACP3\Modules\ACP3\Articles\Event\Listener\OnArticlesModelDeleteAfterListener
+    arguments:
+      - '@articles.cache'
+    calls:
+      - ['setMenusCache', ['@?menus.cache']]
+      - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+    tags:
+      - { name: core.eventListener, event: articles.model.articles.after_delete, method: execute }
+
+  articles.events.on_available_modules_listener:
     class: ACP3\Modules\ACP3\Articles\Event\Listener\OnAvailableModulesListener
     tags:
       - { name: core.eventListener, event: search.events.availableModules, method: onAvailableModules }
 
-  articles.events.onDisplaySearchResultsListener:
+  articles.events.on_display_search_results_listener:
     class: ACP3\Modules\ACP3\Articles\Event\Listener\OnDisplaySearchResultsListener
     arguments:
       - '@core.acl'
@@ -14,3 +25,10 @@ services:
       - '@articles.model.articlerepository'
     tags:
       - { name: core.eventListener, event: search.events.displaySearchResults, method: onDisplaySearchResults }
+
+  articles.events.update_article_cache_on_model_save_after_listener:
+    class: ACP3\Modules\ACP3\Articles\Event\Listener\UpdateArticleCacheOnModelSaveAfterListener
+    arguments:
+      - '@articles.cache'
+    tags:
+      - { name: core.eventListener, event: articles.model.articles.after_save, method: execute }

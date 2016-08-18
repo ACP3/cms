@@ -23,7 +23,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $articleRepository;
 
     /**
-     * @param Core\Cache        $cache
+     * @param Core\Cache $cache
      * @param ArticleRepository $articleRepository
      */
     public function __construct(
@@ -36,32 +36,26 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Bindet den gecacheten Artikel ein
-     *
-     * @param integer $id
-     *  Die ID der statischen Seite
+     * @param integer $articleId
      *
      * @return array
      */
-    public function getCache($id)
+    public function getCache($articleId)
     {
-        if ($this->cache->contains(self::CACHE_ID . $id) === false) {
-            $this->saveCache($id);
+        if ($this->cache->contains(self::CACHE_ID . $articleId) === false) {
+            $this->saveCache($articleId);
         }
 
-        return $this->cache->fetch(self::CACHE_ID . $id);
+        return $this->cache->fetch(self::CACHE_ID . $articleId);
     }
 
     /**
-     * Erstellt den Cache eines Artikels anhand der angegebenen ID
-     *
-     * @param integer $id
-     *  Die ID der statischen Seite
+     * @param integer $articleId
      *
      * @return boolean
      */
-    public function saveCache($id)
+    public function saveCache($articleId)
     {
-        return $this->cache->save(self::CACHE_ID . $id, $this->articleRepository->getOneById($id));
+        return $this->cache->save(self::CACHE_ID . $articleId, $this->articleRepository->getOneById($articleId));
     }
 }

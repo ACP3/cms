@@ -52,8 +52,7 @@ class AccountStatus
     public function changeAccountStatus($status, $id)
     {
         $bool = $this->accountRepository->update(
-            ['status' => $status],
-            $id
+            ['status' => $status], $id
         );
 
         if (is_array($id)) {

@@ -16,44 +16,23 @@ use ACP3\Modules\ACP3\Menus;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Core\NestedSet\NestedSet
+     * @var Menus\Model\MenusModel
      */
-    protected $nestedSet;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
-     */
-    protected $menuRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Cache
-     */
-    protected $menusCache;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
-     */
-    protected $menuItemRepository;
+    protected $menusModel;
 
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext        $context
-     * @param \ACP3\Core\NestedSet\NestedSet                              $nestedSet
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository     $menuRepository
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
-     * @param \ACP3\Modules\ACP3\Menus\Cache                    $menusCache
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param Menus\Model\MenusModel $menusModel
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\NestedSet\NestedSet $nestedSet,
-        Menus\Model\Repository\MenuRepository $menuRepository,
-        Menus\Model\Repository\MenuItemRepository $menuItemRepository,
-        Menus\Cache $menusCache
+        Menus\Model\MenusModel $menusModel
     ) {
         parent::__construct($context);
 
-        $this->nestedSet = $nestedSet;
-        $this->menuRepository = $menuRepository;
-        $this->menuItemRepository = $menuItemRepository;
-        $this->menusCache = $menusCache;
+        $this->menusModel = $menusModel;
     }
 
     /**
@@ -64,33 +43,10 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function ($items) {
-            $bool = false;
-
-            foreach ($items as $item) {
-                if (!empty($item) && $this->menuRepository->menuExists($item) === true) {
-                    // Delete the assigned menu items and update the nested set tree
-                    $items = $this->menuItemRepository->getAllItemsByBlockId($item);
-                    foreach ($items as $row) {
-                        $this->nestedSet->deleteNode(
-                            $row['id'],
-                            Menus\Model\Repository\MenuItemRepository::TABLE_NAME,
-                            true
-                        );
-                    }
-
-                    $block = $this->menuRepository->getMenuNameById($item);
-                    $bool = $this->menuRepository->delete($item);
-                    $this->menusCache->getCacheDriver()->delete(Menus\Cache::CACHE_ID_VISIBLE . $block);
-                }
+            $action,
+            function (array $items) {
+                return $this->menusModel->delete($items);
             }
-
-            $this->menusCache->saveMenusCache();
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $bool;
-        }
         );
     }
 }

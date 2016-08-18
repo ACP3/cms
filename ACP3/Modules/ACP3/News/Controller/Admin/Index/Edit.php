@@ -27,10 +27,6 @@ class Edit extends AbstractFormAction
      */
     protected $newsRepository;
     /**
-     * @var \ACP3\Modules\ACP3\News\Cache
-     */
-    protected $newsCache;
-    /**
      * @var \ACP3\Modules\ACP3\News\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -47,7 +43,6 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
      * @param News\Model\NewsModel $newsModel
-     * @param \ACP3\Modules\ACP3\News\Cache $newsCache
      * @param \ACP3\Modules\ACP3\News\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
@@ -57,7 +52,6 @@ class Edit extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         News\Model\Repository\NewsRepository $newsRepository,
         News\Model\NewsModel $newsModel,
-        News\Cache $newsCache,
         News\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
     ) {
@@ -66,7 +60,6 @@ class Edit extends AbstractFormAction
         $this->formTokenHelper = $formTokenHelper;
         $this->newsRepository = $newsRepository;
         $this->newsModel = $newsModel;
-        $this->newsCache = $newsCache;
         $this->adminFormValidation = $adminFormValidation;
     }
 
@@ -122,8 +115,6 @@ class Edit extends AbstractFormAction
             $bool = $this->newsModel->saveNews($formData, $this->user->getUserId(), $newsId);
 
             $this->insertUriAlias($formData, $newsId);
-
-            $this->newsCache->saveCache($newsId);
 
             return $bool;
         });

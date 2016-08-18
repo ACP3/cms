@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\Categories\Model\Repository;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository;
 
 /**
  * Class CategoryRepository
@@ -65,7 +66,7 @@ class CategoryRepository extends Core\Model\AbstractRepository
      */
     public function getAllByModuleName($moduleName)
     {
-        return $this->db->fetchAll('SELECT c.* FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE m.name = ? ORDER BY c.title ASC', [$moduleName]);
+        return $this->db->fetchAll('SELECT c.* FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE m.name = ? ORDER BY c.title ASC', [$moduleName]);
     }
 
     /**
@@ -75,7 +76,7 @@ class CategoryRepository extends Core\Model\AbstractRepository
      */
     public function getModuleNameFromCategoryId($categoryId)
     {
-        return $this->db->fetchColumn('SELECT m.name FROM ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository::TABLE_NAME) . ' AS m JOIN ' . $this->getTableName() . ' AS c ON(m.id = c.module_id) WHERE c.id = ?', [$categoryId]);
+        return $this->db->fetchColumn('SELECT m.name FROM ' . $this->getTableName(ModuleRepository::TABLE_NAME) . ' AS m JOIN ' . $this->getTableName() . ' AS c ON(m.id = c.module_id) WHERE c.id = ?', [$categoryId]);
     }
 
     /**
@@ -95,7 +96,7 @@ class CategoryRepository extends Core\Model\AbstractRepository
      */
     public function getCategoryDeleteInfosById($categoryId)
     {
-        return $this->db->fetchAssoc('SELECT c.picture, m.name AS module FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.id = ?', [$categoryId]);
+        return $this->db->fetchAssoc('SELECT c.picture, m.name AS module FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.id = ?', [$categoryId]);
     }
 
     /**
@@ -106,6 +107,6 @@ class CategoryRepository extends Core\Model\AbstractRepository
      */
     public function getOneByTitleAndModule($title, $moduleName)
     {
-        return $this->db->fetchAssoc('SELECT c.* FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.title = ? AND m.name = ?', [$title, $moduleName]);
+        return $this->db->fetchAssoc('SELECT c.* FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.title = ? AND m.name = ?', [$title, $moduleName]);
     }
 }

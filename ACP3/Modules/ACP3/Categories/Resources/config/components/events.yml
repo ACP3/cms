@@ -1,0 +1,8 @@
+services:
+  categories.event.update_categories_cache_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Categories\Event\Listener\UpdateCategoriesCacheOnModelAfterSaveListener
+    arguments:
+      - '@categories.cache'
+      - '@categories.model.categories_repository'
+    tags:
+      - { name: core.eventListener, event: categories.model.categories.after_save, method: execute }

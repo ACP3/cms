@@ -15,7 +15,7 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
-      - '@polls.model.pollrepository'
+      - '@polls.model.polls_model'
 
   polls.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Edit

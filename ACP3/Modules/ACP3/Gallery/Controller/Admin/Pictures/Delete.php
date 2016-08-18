@@ -36,10 +36,10 @@ class Delete extends Core\Controller\AbstractAdminAction
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext         $context
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers                 $galleryHelpers
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Cache $galleryCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
@@ -63,7 +63,7 @@ class Delete extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param int    $id
+     * @param int $id
      * @param string $action
      *
      * @return mixed
@@ -72,29 +72,33 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($id, $action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function ($items) {
-            $bool = false;
-            foreach ($items as $item) {
-                if (!empty($item) && $this->pictureRepository->pictureExists($item) === true) {
-                    $picture = $this->pictureRepository->getPictureById($item);
-                    $this->pictureRepository->updatePicturesNumbers($picture['pic'], $picture['gallery_id']);
-                    $this->galleryHelpers->removePicture($picture['file']);
+            $action,
+            function (array $items) {
+                $bool = false;
+                foreach ($items as $item) {
+                    if (!empty($item) && $this->pictureRepository->pictureExists($item) === true) {
+                        $picture = $this->pictureRepository->getPictureById($item);
+                        $this->pictureRepository->updatePicturesNumbers($picture['pic'], $picture['gallery_id']);
+                        $this->galleryHelpers->removePicture($picture['file']);
 
-                    $bool = $this->pictureRepository->delete($item);
+                        $bool = $this->pictureRepository->delete($item);
 
-                    if ($this->uriAliasManager) {
-                        $this->uriAliasManager->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE,
-                            $item));
+                        if ($this->uriAliasManager) {
+                            $this->uriAliasManager->deleteUriAlias(
+                                sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item)
+                            );
+                        }
+
+                        $this->galleryCache->saveCache($picture['gallery_id']);
                     }
-
-                    $this->galleryCache->saveCache($picture['gallery_id']);
                 }
-            }
 
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $bool;
-        }, 'acp/gallery/pictures/delete/id_' . $id, 'acp/gallery/index/edit/id_' . $id
+                return $bool;
+            },
+            'acp/gallery/pictures/delete/id_' . $id,
+            'acp/gallery/index/edit/id_' . $id
         );
     }
 }

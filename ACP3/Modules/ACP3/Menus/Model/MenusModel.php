@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Menus\Model;
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
-use ACP3\Modules\ACP3\Menus\Cache;
 use ACP3\Modules\ACP3\Menus\Installer\Schema;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -22,28 +21,21 @@ class MenusModel extends AbstractModel
      * @var Secure
      */
     protected $secure;
-    /**
-     * @var Cache
-     */
-    protected $menusCache;
 
     /**
      * MenusModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
      * @param Secure $secure
      * @param MenuRepository $menuRepository
-     * @param Cache $menusCache
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         Secure $secure,
-        MenuRepository $menuRepository,
-        Cache $menusCache)
+        MenuRepository $menuRepository)
     {
         parent::__construct($eventDispatcher, $menuRepository);
 
         $this->secure = $secure;
-        $this->menusCache = $menusCache;
     }
 
     /**
@@ -58,10 +50,6 @@ class MenusModel extends AbstractModel
             'title' => $this->secure->strEncode($formData['title']),
         ];
 
-        $result = $this->save($values, $menuId);
-
-        $this->menusCache->saveMenusCache();
-
-        return $result;
+        return $this->save($values, $menuId);
     }
 }

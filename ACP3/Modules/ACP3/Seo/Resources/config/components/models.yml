@@ -8,3 +8,10 @@ services:
     class: ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
     arguments:
       - '@core.db'
+
+  seo.model.seo_model:
+    class: ACP3\Modules\ACP3\Seo\Model\SeoModel
+    arguments:
+      - '@core.event_dispatcher'
+      - '@core.helpers.secure'
+      - '@seo.model.seorepository'

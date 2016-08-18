@@ -27,37 +27,33 @@ abstract class AbstractRepository
     /**
      * Executes the SQL insert statement
      *
-     * @param array  $params
-     * @param string $tableName
-     *
-     * @return int|bool
+     * @param array $data
+     * @return bool|int
      */
-    public function insert(array $params, $tableName = '')
+    public function insert(array $data)
     {
-        return $this->db->executeTransactionalQuery(function () use ($params, $tableName) {
+        return $this->db->executeTransactionalQuery(function () use ($data) {
             $this->db->getConnection()->insert(
-                $this->getTableName($tableName),
-                $params
+                $this->getTableName(),
+                $data
             );
             return (int)$this->db->getConnection()->lastInsertId();
         });
     }
 
     /**
-     * Executes thr SQL delete statement
+     * Executes the SQL delete statement
      *
-     * @param int|array $id
-     * @param string    $field
-     * @param string    $tableName
-     *
-     * @return int|bool
+     * @param int|array $entryId
+     * @param string $columnName
+     * @return bool|int
      */
-    public function delete($id, $field = 'id', $tableName = '')
+    public function delete($entryId, $columnName = 'id')
     {
-        return $this->db->executeTransactionalQuery(function () use ($id, $field, $tableName) {
+        return $this->db->executeTransactionalQuery(function () use ($entryId, $columnName) {
             return $this->db->getConnection()->delete(
-                $this->getTableName($tableName),
-                $this->getIdentifier($id, $field)
+                $this->getTableName(),
+                $this->getIdentifier($entryId, $columnName)
             );
         });
     }
@@ -65,19 +61,17 @@ abstract class AbstractRepository
     /**
      * Executes the SQL update statement
      *
-     * @param array     $params
-     * @param int|array $id
-     * @param string    $tableName
-     *
-     * @return int|bool
+     * @param array $data
+     * @param int|array $entryId
+     * @return bool|int
      */
-    public function update(array $params, $id, $tableName = '')
+    public function update(array $data, $entryId)
     {
-        return $this->db->executeTransactionalQuery(function () use ($params, $id, $tableName) {
+        return $this->db->executeTransactionalQuery(function () use ($data, $entryId) {
             return $this->db->getConnection()->update(
-                $this->getTableName($tableName),
-                $params,
-                $this->getIdentifier($id)
+                $this->getTableName(),
+                $data,
+                $this->getIdentifier($entryId)
             );
         });
     }
@@ -93,14 +87,14 @@ abstract class AbstractRepository
     }
 
     /**
-     * @param int|array $id
-     * @param string    $fieldName
+     * @param int|array $entryId
+     * @param string    $columnName
      *
      * @return array
      */
-    private function getIdentifier($id, $fieldName = 'id')
+    private function getIdentifier($entryId, $columnName = 'id')
     {
-        return is_array($id) === true ? $id : [$fieldName => (int)$id];
+        return is_array($entryId) === true ? $entryId : [$columnName => (int)$entryId];
     }
 
     /**

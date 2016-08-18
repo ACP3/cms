@@ -5,7 +5,6 @@ services:
       - '@core.context.admin'
       - '@permissions.model:role_model'
       - '@permissions.model.privilegerepository'
-      - '@permissions.model.rulerepository'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@permissions.cache'
@@ -24,7 +23,6 @@ services:
       - '@core.context.admin'
       - '@permissions.model:role_model'
       - '@permissions.model.privilegerepository'
-      - '@permissions.model.rulerepository'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@permissions.model.rolerepository'
@@ -51,15 +49,13 @@ services:
       - '@core.helpers.formToken'
       - '@permissions.model.privilegerepository'
       - '@permissions.model.resources_model'
-      - '@permissions.cache'
       - '@permissions.validator.resource'
 
   permissions.controller.admin.resources.delete:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Delete
     arguments:
       - '@core.context.admin'
-      - '@permissions.model.resourcerepository'
-      - '@permissions.cache'
+      - '@permissions.model.resources_model'
 
   permissions.controller.admin.resources.edit:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Edit
@@ -70,7 +66,6 @@ services:
       - '@permissions.model.privilegerepository'
       - '@permissions.model.resourcerepository'
       - '@permissions.model.resources_model'
-      - '@permissions.cache'
       - '@permissions.validator.resource'
 
   permissions.controller.admin.resources.index:

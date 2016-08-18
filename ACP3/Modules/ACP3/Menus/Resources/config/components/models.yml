@@ -15,4 +15,3 @@ services:
       - '@core.event_dispatcher'
       - '@core.helpers.secure'
       - '@menus.model.menurepository'
-      - '@menus.cache'

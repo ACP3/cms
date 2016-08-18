@@ -8,3 +8,11 @@ services:
     class: ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
     arguments:
       - '@core.db'
+
+  files.model.files_model:
+    class: ACP3\Modules\ACP3\Files\Model\FilesModel
+    arguments:
+      - '@core.event_dispatcher'
+      - '@core.date'
+      - '@core.helpers.secure'
+      - '@files.model.filesrepository'

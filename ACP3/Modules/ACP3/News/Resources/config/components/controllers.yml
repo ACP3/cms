@@ -17,11 +17,7 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
-      - '@news.model.newsrepository'
-      - '@news.cache'
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+      - '@news.model'
 
   news.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Edit
@@ -31,7 +27,6 @@ services:
       - '@core.helpers.formToken'
       - '@news.model.newsrepository'
       - '@news.model'
-      - '@news.cache'
       - '@news.validator'
       - '@categories.helpers'
     calls:

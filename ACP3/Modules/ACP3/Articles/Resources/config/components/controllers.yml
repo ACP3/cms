@@ -18,13 +18,7 @@ services:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
-      - '@core.helpers.forms'
-      - '@articles.model.articlerepository'
-      - '@articles.cache'
-    calls:
-      - ['setMenusCache', ['@?menus.cache']]
-      - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+      - '@articles.model'
 
   articles.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit
@@ -33,7 +27,6 @@ services:
       - '@core.helpers.forms'
       - '@articles.model'
       - '@articles.model.articlerepository'
-      - '@articles.cache'
       - '@articles.validator'
       - '@core.helpers.formToken'
     calls:

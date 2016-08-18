@@ -37,7 +37,6 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param Permissions\Model\RoleModel $roleModel
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository $ruleRepository
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
@@ -48,14 +47,13 @@ class Edit extends AbstractFormAction
         Core\Controller\Context\AdminContext $context,
         Permissions\Model\RoleModel $roleModel,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
-        Permissions\Model\Repository\RuleRepository $ruleRepository,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model\Repository\RoleRepository $roleRepository,
         Permissions\Cache $permissionsCache,
         Permissions\Validation\RoleFormValidation $roleFormValidation
     ) {
-        parent::__construct($context, $formsHelper, $privilegeRepository, $ruleRepository, $permissionsCache);
+        parent::__construct($context, $formsHelper, $privilegeRepository, $permissionsCache);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->roleRepository = $roleRepository;
@@ -108,15 +106,8 @@ class Edit extends AbstractFormAction
                 ->validate($formData);
 
             $formData['parent_id'] = $roleId === 1 ? 0 : $formData['parent_id'];
-            $bool = $this->roleModel->saveRole($formData, $roleId);
 
-            // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten
-            $this->ruleRepository->delete($roleId, 'role_id');
-            $this->saveRules($formData['privileges'], $roleId);
-
-            $this->permissionsCache->getCacheDriver()->deleteAll();
-
-            return $bool;
+            return $this->roleModel->saveRole($formData, $roleId);
         });
     }
 }

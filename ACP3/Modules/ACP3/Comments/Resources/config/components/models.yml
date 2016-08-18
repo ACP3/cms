@@ -3,3 +3,9 @@ services:
     class: ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
     arguments:
       - '@core.db'
+
+  comments.model.comments_model:
+    class: ACP3\Modules\ACP3\Comments\Model\CommentsModel
+    arguments:
+      - '@core.event_dispatcher'
+      - '@comments.model.commentrepository'
