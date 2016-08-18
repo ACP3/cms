@@ -3,6 +3,7 @@
 namespace ACP3\Modules\ACP3\Gallery;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 
 /**
  * Class Helpers
@@ -40,7 +41,7 @@ class Helpers
         $upload->removeUploadedFile('gallery_thumb_' . $file);
         $upload->removeUploadedFile('gallery_' . $file);
 
-        $upload = new Core\Helpers\Upload($this->appPath, 'gallery');
+        $upload = new Core\Helpers\Upload($this->appPath, Schema::MODULE_NAME);
         $upload->removeUploadedFile($file);
     }
 }
