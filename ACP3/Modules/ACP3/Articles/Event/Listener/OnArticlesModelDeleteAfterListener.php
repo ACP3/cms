@@ -81,23 +81,25 @@ class OnArticlesModelDeleteAfterListener
     public function execute(ModelSaveEvent $event)
     {
         if ($event->isDeleteStatement()) {
-            foreach ($event->getEntryId() as $entryId) {
-                $this->articlesCache->getCacheDriver()->delete(Cache::CACHE_ID . $entryId);
+            return;
+        }
 
-                $uri = sprintf(Helpers::URL_KEY_PATTERN, $entryId);
+        foreach ($event->getEntryId() as $entryId) {
+            $this->articlesCache->getCacheDriver()->delete(Cache::CACHE_ID . $entryId);
 
-                if ($this->manageMenuItemHelper) {
-                    $this->manageMenuItemHelper->manageMenuItem($uri, false);
-                }
+            $uri = sprintf(Helpers::URL_KEY_PATTERN, $entryId);
 
-                if ($this->uriAliasManager) {
-                    $this->uriAliasManager->deleteUriAlias($uri);
-                }
+            if ($this->manageMenuItemHelper) {
+                $this->manageMenuItemHelper->manageMenuItem($uri, false);
             }
 
-            if ($this->menusCache) {
-                $this->menusCache->saveMenusCache();
+            if ($this->uriAliasManager) {
+                $this->uriAliasManager->deleteUriAlias($uri);
             }
+        }
+
+        if ($this->menusCache) {
+            $this->menusCache->saveMenusCache();
         }
     }
 }
