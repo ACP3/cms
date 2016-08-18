@@ -3,6 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Delete
     arguments:
       - '@core.context.admin'
+      - '@comments.model.comments_model'
       - '@comments.model.commentrepository'
 
   comments.controller.admin.details.edit:

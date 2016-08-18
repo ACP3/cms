@@ -8,3 +8,9 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository
     arguments:
       - '@core.db'
+
+  guestbook.model.guestbook_model:
+    class: ACP3\Modules\ACP3\Guestbook\Model\GuestbookModel
+    arguments:
+      - '@core.event_dispatcher'
+      - '@guestbook.model.guestbookrepository'

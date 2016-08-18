@@ -16,23 +16,23 @@ use ACP3\Modules\ACP3\Guestbook;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository
+     * @var Guestbook\Model\GuestbookModel
      */
-    protected $guestbookRepository;
+    protected $guestbookModel;
 
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext             $context
-     * @param \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param Guestbook\Model\GuestbookModel $guestbookModel
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
+        Guestbook\Model\GuestbookModel $guestbookModel
     ) {
         parent::__construct($context);
 
-        $this->guestbookRepository = $guestbookRepository;
+        $this->guestbookModel = $guestbookModel;
     }
 
     /**
@@ -44,16 +44,10 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function (array $items) {
-            $bool = false;
-            foreach ($items as $item) {
-                $bool = $this->guestbookRepository->delete($item);
+            $action,
+            function (array $items) {
+                return $this->guestbookModel->delete($items);
             }
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $bool;
-        }
         );
     }
 }

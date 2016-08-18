@@ -20,24 +20,31 @@ class Delete extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
      */
     protected $commentRepository;
+    /**
+     * @var Comments\Model\CommentsModel
+     */
+    protected $commentsModel;
 
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext          $context
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param Comments\Model\CommentsModel $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Comments\Model\Repository\CommentRepository $commentRepository)
-    {
+        Comments\Model\CommentsModel $commentsModel,
+        Comments\Model\Repository\CommentRepository $commentRepository
+    ) {
         parent::__construct($context);
 
         $this->commentRepository = $commentRepository;
+        $this->commentsModel = $commentsModel;
     }
 
     /**
-     * @param int    $id
+     * @param int $id
      * @param string $action
      *
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -46,30 +53,27 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($id, $action = '')
     {
         return $this->actionHelper->handleCustomDeleteAction(
-            $action, function ($items) use ($id) {
-            $bool = false;
+            $action,
+            function (array $items) use ($id) {
+                $result = $this->commentsModel->delete($items);
 
-            foreach ($items as $item) {
-                $bool = $this->commentRepository->delete($item);
-            }
+                // If there are no comments for the given module, redirect to the general comments admin panel page
+                if ($this->commentRepository->countAll($id) == 0) {
+                    return $this->redirectMessages()->setMessage(
+                        $result,
+                        $this->translator->t('system', $result !== false ? 'delete_success' : 'delete_error'),
+                        'acp/comments'
+                    );
+                }
 
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            // If there are no comments for the given module, redirect to the general comments admin panel page
-            if ($this->commentRepository->countAll($id) == 0) {
                 return $this->redirectMessages()->setMessage(
-                    $bool,
-                    $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error'),
-                    'acp/comments'
+                    $result,
+                    $this->translator->t('system', $result !== false ? 'delete_success' : 'delete_error'),
+                    'acp/comments/details/index/id_' . $id
                 );
-            }
-
-            return $this->redirectMessages()->setMessage(
-                $bool,
-                $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error'),
-                'acp/comments/details/index/id_' . $id
-            );
-        }, 'acp/comments/details/delete/id_' . $id, 'acp/comments/details/index/id_' . $id
+            },
+            'acp/comments/details/delete/id_' . $id,
+            'acp/comments/details/index/id_' . $id
         );
     }
 }

@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
-      - '@guestbook.model.guestbookrepository'
+      - '@guestbook.model.guestbook_model'
 
   guestbook.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Edit
