@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus;
-use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class Delete
@@ -36,10 +35,10 @@ class Delete extends Core\Controller\AbstractAdminAction
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext        $context
-     * @param \ACP3\Core\NestedSet\NestedSet                              $nestedSet
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\NestedSet\NestedSet $nestedSet
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
-     * @param \ACP3\Modules\ACP3\Menus\Cache                    $menusCache
+     * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
@@ -55,14 +54,6 @@ class Delete extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
-     */
-    public function setUriAliasManager(UriAliasManager $uriAliasManager)
-    {
-        $this->uriAliasManager = $uriAliasManager;
-    }
-
-    /**
      * @param string $action
      *
      * @return mixed
@@ -71,26 +62,25 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function (array $items) {
-            $bool = false;
+            $action,
+            function (array $items) {
+                $bool = false;
 
-            foreach ($items as $item) {
-                // URI-Alias löschen
-                $itemUri = $this->menuItemRepository->getMenuItemUriById($item);
-                $bool = $this->nestedSet->deleteNode($item, Menus\Model\Repository\MenuItemRepository::TABLE_NAME,
-                    true);
-
-                if ($this->uriAliasManager) {
-                    $this->uriAliasManager->deleteUriAlias($itemUri);
+                foreach ($items as $item) {
+                    $bool = $this->nestedSet->deleteNode($item,
+                        Menus\Model\Repository\MenuItemRepository::TABLE_NAME,
+                        true
+                    );
                 }
-            }
 
-            $this->menusCache->saveMenusCache();
+                $this->menusCache->saveMenusCache();
 
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $bool;
-        }, null, 'acp/menus'
+                return $bool;
+            },
+            null,
+            'acp/menus'
         );
     }
 }

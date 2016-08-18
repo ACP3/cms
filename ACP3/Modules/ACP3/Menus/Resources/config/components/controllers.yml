@@ -11,10 +11,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
-      - '@core.nested_set'
-      - '@menus.model.menurepository'
-      - '@menus.model.menuitemrepository'
-      - '@menus.cache'
+      - '@menus.model.menus_model'
 
   menus.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Edit
@@ -54,8 +51,6 @@ services:
       - '@core.nested_set'
       - '@menus.model.menuitemrepository'
       - '@menus.cache'
-    calls:
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   menus.controller.admin.items.edit:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Edit
