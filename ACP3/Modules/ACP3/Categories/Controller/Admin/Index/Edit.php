@@ -99,7 +99,7 @@ class Edit extends Core\Controller\AbstractAdminAction
                 ->validate($formData);
 
             if (empty($file) === false) {
-                $upload = new Core\Helpers\Upload($this->appPath, 'categories');
+                $upload = new Core\Helpers\Upload($this->appPath, Categories\Installer\Schema::MODULE_NAME);
                 $upload->removeUploadedFile($category['picture']);
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $formData['picture'] = $result['name'];

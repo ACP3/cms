@@ -86,7 +86,7 @@ class Create extends Core\Controller\AbstractAdminAction
                 ->validate($formData);
 
             if (!empty($file)) {
-                $upload = new Core\Helpers\Upload($this->appPath, 'categories');
+                $upload = new Core\Helpers\Upload($this->appPath, Categories\Installer\Schema::MODULE_NAME);
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $formData['picture'] = $result['name'];
             }

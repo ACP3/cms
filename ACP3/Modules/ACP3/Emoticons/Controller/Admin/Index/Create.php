@@ -80,7 +80,7 @@ class Create extends Core\Controller\AbstractAdminAction
                 ->setFileRequired(true)
                 ->validate($formData);
 
-            $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
+            $upload = new Core\Helpers\Upload($this->appPath, Emoticons\Installer\Schema::MODULE_NAME);
             $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
             $formData['img'] = $result['name'];
 

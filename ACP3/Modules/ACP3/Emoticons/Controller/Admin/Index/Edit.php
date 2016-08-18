@@ -98,7 +98,7 @@ class Edit extends Core\Controller\AbstractAdminAction
                 ->validate($formData);
 
             if (empty($file) === false) {
-                $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
+                $upload = new Core\Helpers\Upload($this->appPath, Emoticons\Installer\Schema::MODULE_NAME);
                 $upload->removeUploadedFile($emoticon['img']);
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $formData['img'] = $result['name'];

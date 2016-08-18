@@ -116,7 +116,7 @@ class Create extends AbstractFormAction
                 ->validate($formData);
 
             if (is_array($file) === true) {
-                $upload = new Core\Helpers\Upload($this->appPath, 'files');
+                $upload = new Core\Helpers\Upload($this->appPath, Files\Installer\Schema::MODULE_NAME);
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $formData['file'] = $result['name'];
                 $formData['filesize'] = $result['size'];

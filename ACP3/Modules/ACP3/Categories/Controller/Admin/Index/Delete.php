@@ -69,7 +69,7 @@ class Delete extends Core\Controller\AbstractAdminAction
                         }
 
                         // Kategoriebild ebenfalls löschen
-                        $upload = new Core\Helpers\Upload($this->appPath, 'categories');
+                        $upload = new Core\Helpers\Upload($this->appPath, Categories\Installer\Schema::MODULE_NAME);
                         $upload->removeUploadedFile($category['picture']);
                         $bool = $this->categoryRepository->delete($item);
                     }

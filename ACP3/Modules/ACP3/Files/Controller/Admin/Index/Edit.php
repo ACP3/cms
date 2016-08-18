@@ -166,7 +166,7 @@ class Edit extends AbstractFormAction
      */
     protected function updateAssociatedFile($file, array $formData, $currentFileName)
     {
-        $upload = new Core\Helpers\Upload($this->appPath, 'files');
+        $upload = new Core\Helpers\Upload($this->appPath, Files\Installer\Schema::MODULE_NAME);
 
         if ($file instanceof UploadedFile) {
             $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());

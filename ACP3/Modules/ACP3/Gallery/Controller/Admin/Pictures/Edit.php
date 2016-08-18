@@ -129,7 +129,7 @@ class Edit extends AbstractFormAction
                     ->validate([]);
 
                 if (!empty($file)) {
-                    $upload = new Core\Helpers\Upload($this->appPath, 'gallery');
+                    $upload = new Core\Helpers\Upload($this->appPath, Gallery\Installer\Schema::MODULE_NAME);
                     $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                     $oldFile = $this->pictureRepository->getFileById($pictureId);
 

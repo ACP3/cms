@@ -159,7 +159,7 @@ class Create extends AbstractFormAction
                     ->setFile($file)
                     ->validate([]);
 
-                $upload = new Core\Helpers\Upload($this->appPath, 'gallery');
+                $upload = new Core\Helpers\Upload($this->appPath, Gallery\Installer\Schema::MODULE_NAME);
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
 
                 $formData['file'] = $result['name'];
