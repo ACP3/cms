@@ -37,15 +37,15 @@ class Delete extends Core\Controller\AbstractAdminAction
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext     $context
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache                 $filesCache
+     * @param \ACP3\Modules\ACP3\Files\Cache $filesCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Files\Model\Repository\FilesRepository $filesRepository,
-        Files\Cache $filesCache)
-    {
+        Files\Cache $filesCache
+    ) {
         parent::__construct($context);
 
         $this->filesRepository = $filesRepository;
@@ -81,30 +81,34 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function (array $items) {
-            $bool = false;
+            $action,
+            function (array $items) {
+                $bool = false;
 
-            $upload = new Core\Helpers\Upload($this->appPath, 'files');
-            foreach ($items as $item) {
-                if (!empty($item)) {
-                    $upload->removeUploadedFile($this->filesRepository->getFileById($item)); // Datei ebenfalls löschen
-                    $bool = $this->filesRepository->delete($item);
-                    if ($this->commentsHelpers) {
-                        $this->commentsHelpers->deleteCommentsByModuleAndResult('files', $item);
-                    }
+                $upload = new Core\Helpers\Upload($this->appPath, 'files');
+                foreach ($items as $item) {
+                    if (!empty($item)) {
+                        $upload->removeUploadedFile($this->filesRepository->getFileById($item)); // Datei ebenfalls löschen
+                        $bool = $this->filesRepository->delete($item);
+                        if ($this->commentsHelpers) {
+                            $this->commentsHelpers->deleteCommentsByModuleAndResult(
+                                $this->modules->getModuleId(Files\Installer\Schema::MODULE_NAME),
+                                $item
+                            );
+                        }
 
-                    $this->filesCache->getCacheDriver()->delete(Files\Cache::CACHE_ID);
+                        $this->filesCache->getCacheDriver()->delete(Files\Cache::CACHE_ID);
 
-                    if ($this->uriAliasManager) {
-                        $this->uriAliasManager->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
+                        if ($this->uriAliasManager) {
+                            $this->uriAliasManager->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
+                        }
                     }
                 }
+
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+                return $bool;
             }
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $bool;
-        }
         );
     }
 }
