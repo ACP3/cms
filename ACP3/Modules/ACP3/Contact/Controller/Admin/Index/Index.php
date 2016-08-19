@@ -48,7 +48,7 @@ class Index extends Core\Controller\AbstractAdminAction
     public function execute()
     {
         if ($this->request->getPost()->count() !== 0) {
-            return $this->indexPost($this->request->getPost()->all());
+            return $this->executePost($this->request->getPost()->all());
         }
 
         $settings = $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME);
@@ -64,7 +64,7 @@ class Index extends Core\Controller\AbstractAdminAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function indexPost(array $formData)
+    protected function executePost(array $formData)
     {
         return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
             $this->adminSettingsFormValidation->validate($formData);

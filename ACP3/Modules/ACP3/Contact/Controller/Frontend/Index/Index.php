@@ -60,7 +60,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     public function execute()
     {
         if ($this->request->getPost()->count() !== 0) {
-            return $this->indexPost($this->request->getPost()->all());
+            return $this->executePost($this->request->getPost()->all());
         }
 
         return [
@@ -76,7 +76,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function indexPost(array $formData)
+    protected function executePost(array $formData)
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
