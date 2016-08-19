@@ -67,8 +67,6 @@ class Index extends Core\Controller\AbstractWidgetAction
         if (!empty($poll)) {
             $answers = $this->answerRepository->getAnswersWithVotesByPollId($poll['id']);
 
-            $this->view->assign('sidebar_polls', $poll);
-
             if ($this->hasAlreadyVoted($poll['id'])) {
                 $totalVotes = $poll['total_votes'];
 
