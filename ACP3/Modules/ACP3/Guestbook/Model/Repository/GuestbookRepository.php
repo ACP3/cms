@@ -23,18 +23,10 @@ class GuestbookRepository extends Core\Model\AbstractRepository implements Core\
      */
     public function resultExists($guestbookId)
     {
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id',
-                ['id' => $guestbookId]) > 0);
-    }
-
-    /**
-     * @param int $guestbookId
-     *
-     * @return array
-     */
-    public function getOneById($guestbookId)
-    {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$guestbookId]);
+        return ((int)$this->db->fetchColumn(
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id',
+                ['id' => $guestbookId]
+            ) > 0);
     }
 
     /**

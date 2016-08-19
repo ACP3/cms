@@ -35,7 +35,7 @@ class PictureRepository extends Core\Model\AbstractRepository
      *
      * @return array
      */
-    public function getPictureById($pictureId)
+    public function getOneById($pictureId)
     {
         return $this->db->fetchAssoc('SELECT g.id AS gallery_id, g.title, p.* FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = ? AND p.gallery_id = g.id', [$pictureId]);
     }

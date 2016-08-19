@@ -77,7 +77,7 @@ class Delete extends Core\Controller\AbstractAdminAction
                 $bool = false;
                 foreach ($items as $item) {
                     if (!empty($item) && $this->pictureRepository->pictureExists($item) === true) {
-                        $picture = $this->pictureRepository->getPictureById($item);
+                        $picture = $this->pictureRepository->getOneById($item);
                         $this->pictureRepository->updatePicturesNumbers($picture['pic'], $picture['gallery_id']);
                         $this->galleryHelpers->removePicture($picture['file']);
 

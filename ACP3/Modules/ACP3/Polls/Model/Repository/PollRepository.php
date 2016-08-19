@@ -38,16 +38,6 @@ class PollRepository extends Core\Model\AbstractRepository
      *
      * @return array
      */
-    public function getOneById($pollId)
-    {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $pollId]);
-    }
-
-    /**
-     * @param int $pollId
-     *
-     * @return array
-     */
     public function getOneByIdWithTotalVotes($pollId)
     {
         return $this->db->fetchAssoc(

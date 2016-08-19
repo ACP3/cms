@@ -34,16 +34,6 @@ class GalleryRepository extends Core\Model\AbstractRepository
     /**
      * @param int $galleryId
      *
-     * @return array
-     */
-    public function getGalleryById($galleryId)
-    {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$galleryId]);
-    }
-
-    /**
-     * @param int $galleryId
-     *
      * @return mixed
      */
     public function getGalleryTitle($galleryId)

@@ -98,7 +98,7 @@ class Edit extends AbstractFormAction
     public function execute($id)
     {
         if ($this->galleryRepository->galleryExists($id) === true) {
-            $gallery = $this->galleryRepository->getGalleryById($id);
+            $gallery = $this->galleryRepository->getOneById($id);
 
             $this->title->setPageTitlePostfix($gallery['title']);
 

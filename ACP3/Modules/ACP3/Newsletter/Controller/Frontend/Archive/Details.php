@@ -46,7 +46,7 @@ class Details extends Core\Controller\AbstractFrontendAction
      */
     public function execute($id)
     {
-        $newsletter = $this->newsletterRepository->getOneById($id, 1);
+        $newsletter = $this->newsletterRepository->getOneByIdAndStatus($id, 1);
 
         if (!empty($newsletter)) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);

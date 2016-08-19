@@ -42,16 +42,6 @@ class RoleRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param int $roleId
-     *
-     * @return array
-     */
-    public function getRoleById($roleId)
-    {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$roleId]);
-    }
-
-    /**
      * @return array
      */
     public function getAllRoles()

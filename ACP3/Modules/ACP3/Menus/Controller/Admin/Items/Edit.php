@@ -80,7 +80,7 @@ class Edit extends AbstractFormAction
      */
     public function execute($id)
     {
-        $menuItem = $this->menuItemRepository->getOneMenuItemById($id);
+        $menuItem = $this->menuItemRepository->getOneById($id);
 
         if (empty($menuItem) === false) {
             $this->title->setPageTitlePostfix($menuItem['title']);

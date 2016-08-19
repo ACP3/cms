@@ -41,19 +41,6 @@ class MenuRepository extends Core\Model\AbstractRepository
     /**
      * @param int $menuId
      *
-     * @return array
-     */
-    public function getOneById($menuId)
-    {
-        return $this->db->fetchAssoc(
-            "SELECT * FROM {$this->getTableName()} WHERE id = ?",
-            [$menuId]
-        );
-    }
-
-    /**
-     * @param int $menuId
-     *
      * @return mixed
      */
     public function getMenuNameById($menuId)

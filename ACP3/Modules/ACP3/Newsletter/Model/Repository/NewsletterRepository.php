@@ -17,7 +17,7 @@ class NewsletterRepository extends Core\Model\AbstractRepository
     const TABLE_NAME = 'newsletters';
 
     /**
-     * @param int    $newsletterId
+     * @param int $newsletterId
      * @param string $status
      *
      * @return bool
@@ -32,16 +32,15 @@ class NewsletterRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param int    $newsletterId
-     * @param string $status
+     * @param int $newsletterId
+     * @param int $status
      *
      * @return array
      */
-    public function getOneById($newsletterId, $status = '')
+    public function getOneByIdAndStatus($newsletterId, $status)
     {
-        $where = empty($status) === false ? ' AND status = :status' : '';
         return $this->db->fetchAssoc(
-            "SELECT * FROM {$this->getTableName()} WHERE id = :id {$where}",
+            "SELECT * FROM {$this->getTableName()} WHERE id = :id  AND status = :status;",
             ['id' => $newsletterId, 'status' => $status]
         );
     }
@@ -55,7 +54,7 @@ class NewsletterRepository extends Core\Model\AbstractRepository
     {
         $where = empty($time) === false ? ' WHERE status = :status' : '';
         return $this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->getTableName()}{$where}", 
+            "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
             ['status' => $status]
         );
     }

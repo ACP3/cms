@@ -75,7 +75,7 @@ class Edit extends AbstractFormAction
     public function execute($id)
     {
         if ($this->pictureRepository->pictureExists($id) === true) {
-            $picture = $this->pictureRepository->getPictureById($id);
+            $picture = $this->pictureRepository->getOneById($id);
 
             $this->breadcrumb
                 ->append($picture['title'], 'acp/gallery/index/edit/id_' . $picture['gallery_id'])

@@ -69,7 +69,7 @@ class Edit extends AbstractFormAction
      */
     public function execute($id)
     {
-        $role = $this->roleRepository->getRoleById($id);
+        $role = $this->roleRepository->getOneById($id);
 
         if (!empty($role)) {
             $this->title->setPageTitlePostfix($role['name']);

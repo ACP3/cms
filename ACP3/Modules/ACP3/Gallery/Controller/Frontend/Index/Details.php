@@ -73,7 +73,7 @@ class Details extends AbstractAction
         if ($this->pictureRepository->pictureExists($id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            $picture = $this->pictureRepository->getPictureById($id);
+            $picture = $this->pictureRepository->getOneById($id);
 
             $this->breadcrumb
                 ->append($this->translator->t('gallery', 'gallery'), 'gallery')

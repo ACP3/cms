@@ -42,6 +42,16 @@ abstract class AbstractRepository
     }
 
     /**
+     * @param string $tableName
+     *
+     * @return string
+     */
+    protected function getTableName($tableName = '')
+    {
+        return $this->db->getPrefixedTableName(!empty($tableName) ? $tableName : static::TABLE_NAME);
+    }
+
+    /**
      * Executes the SQL delete statement
      *
      * @param int|array $entryId
@@ -56,6 +66,17 @@ abstract class AbstractRepository
                 $this->getIdentifier($entryId, $columnName)
             );
         });
+    }
+
+    /**
+     * @param int|array $entryId
+     * @param string    $columnName
+     *
+     * @return array
+     */
+    private function getIdentifier($entryId, $columnName = 'id')
+    {
+        return is_array($entryId) === true ? $entryId : [$columnName => (int)$entryId];
     }
 
     /**
@@ -77,27 +98,6 @@ abstract class AbstractRepository
     }
 
     /**
-     * @param string $tableName
-     *
-     * @return string
-     */
-    protected function getTableName($tableName = '')
-    {
-        return $this->db->getPrefixedTableName(!empty($tableName) ? $tableName : static::TABLE_NAME);
-    }
-
-    /**
-     * @param int|array $entryId
-     * @param string    $columnName
-     *
-     * @return array
-     */
-    private function getIdentifier($entryId, $columnName = 'id')
-    {
-        return is_array($entryId) === true ? $entryId : [$columnName => (int)$entryId];
-    }
-
-    /**
      * Build the SQL limit
      *
      * @param int|string $limitStart
@@ -114,5 +114,15 @@ abstract class AbstractRepository
         }
 
         return '';
+    }
+
+    /**
+     * @param int $entryId
+     *
+     * @return array
+     */
+    public function getOneById($entryId)
+    {
+        return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE id = ?", [$entryId]);
     }
 }

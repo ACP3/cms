@@ -64,16 +64,6 @@ class UserRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param int $userId
-     *
-     * @return array
-     */
-    public function getOneById($userId)
-    {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$userId]);
-    }
-
-    /**
      * @param string $nickname
      *
      * @return array
