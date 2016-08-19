@@ -9,7 +9,6 @@ services:
       - '@core.helpers.formToken'
     calls:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
-      - ['setMenusCache', ['@?menus.cache']]
       - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
       - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
@@ -30,7 +29,6 @@ services:
       - '@core.helpers.formToken'
     calls:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
-      - ['setMenusCache', ['@?menus.cache']]
       - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
       - ['setMenuItemRepository', ['@?menus.model.menuitemrepository']]
       - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]

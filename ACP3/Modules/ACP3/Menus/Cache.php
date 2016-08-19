@@ -105,7 +105,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Svaes the visible menu items to the cache
+     * Saves the visible menu items to the cache
      *
      * @param string $menuIdentifier
      *
