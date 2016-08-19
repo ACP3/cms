@@ -81,7 +81,7 @@ abstract class AbstractModel
     /**
      * @param string $eventName
      * @param array $data
-     * @param int|null $entryId
+     * @param int|null|array $entryId
      */
     private function dispatchEvent($eventName, array $data, $entryId)
     {
