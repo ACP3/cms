@@ -63,9 +63,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         $cPolls = count($polls);
 
         for ($i = 0; $i < $cPolls; ++$i) {
-            $query = $this->fetchVote($polls[$i]['id']);
-
-            if ($query != 0 ||
+            if ($this->hasAlreadyVoted($polls[$i]['id']) ||
                 $polls[$i]['start'] !== $polls[$i]['end'] && $this->date->timestamp($polls[$i]['end']) <= $this->date->timestamp()
             ) {
                 $polls[$i]['link'] = 'result';
@@ -83,7 +81,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @param int $pollId
      * @return int
      */
-    protected function fetchVote($pollId)
+    protected function hasAlreadyVoted($pollId)
     {
         // Check, whether the logged user has already voted
         if ($this->user->isAuthenticated() === true) {
@@ -99,6 +97,6 @@ class Index extends Core\Controller\AbstractFrontendAction
             );
         }
 
-        return $query;
+        return $query > 0;
     }
 }

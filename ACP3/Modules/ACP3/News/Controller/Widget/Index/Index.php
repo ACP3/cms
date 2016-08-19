@@ -71,8 +71,11 @@ class Index extends Core\Controller\AbstractWidgetAction
     private function fetchNews($categoryId, array $settings)
     {
         if (!empty($categoryId)) {
-            $news = $this->newsRepository->getAllByCategoryId((int)$categoryId, $this->date->getCurrentDateTime(),
-                $settings['sidebar']);
+            $news = $this->newsRepository->getAllByCategoryId(
+                (int)$categoryId,
+                $this->date->getCurrentDateTime(),
+                $settings['sidebar']
+            );
         } else {
             $news = $this->newsRepository->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         }
