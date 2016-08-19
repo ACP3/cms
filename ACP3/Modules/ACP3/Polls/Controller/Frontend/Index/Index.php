@@ -52,6 +52,9 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->voteRepository = $voteRepository;
     }
 
+    /**
+     * @return array
+     */
     public function execute()
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
