@@ -10,7 +10,6 @@ namespace ACP3\Modules\ACP3\Articles\Event\Listener;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Articles\Cache;
 use ACP3\Modules\ACP3\Articles\Helpers;
-use ACP3\Modules\ACP3\Menus\Cache as MenusCache;
 use ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
@@ -20,10 +19,6 @@ class OnArticlesModelDeleteAfterListener
      * @var Cache
      */
     protected $articlesCache;
-    /**
-     * @var MenusCache
-     */
-    protected $menusCache;
     /**
      * @var ManageMenuItem
      */
@@ -40,17 +35,6 @@ class OnArticlesModelDeleteAfterListener
     public function __construct(Cache $articlesCache)
     {
         $this->articlesCache = $articlesCache;
-    }
-
-    /**
-     * @param MenusCache $menusCache
-     * @return $this
-     */
-    public function setMenusCache(MenusCache $menusCache)
-    {
-        $this->menusCache = $menusCache;
-
-        return $this;
     }
 
     /**
@@ -96,10 +80,6 @@ class OnArticlesModelDeleteAfterListener
             if ($this->uriAliasManager) {
                 $this->uriAliasManager->deleteUriAlias($uri);
             }
-        }
-
-        if ($this->menusCache) {
-            $this->menusCache->saveMenusCache();
         }
     }
 }

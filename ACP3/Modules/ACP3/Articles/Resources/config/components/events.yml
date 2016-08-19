@@ -4,7 +4,6 @@ services:
     arguments:
       - '@articles.cache'
     calls:
-      - ['setMenusCache', ['@?menus.cache']]
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
     tags:
