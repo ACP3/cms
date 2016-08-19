@@ -20,10 +20,6 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
-     */
-    protected $menuRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation
      */
     protected $menuFormValidation;
@@ -37,21 +33,18 @@ class Edit extends Core\Controller\AbstractAdminAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository $menuRepository
      * @param Menus\Model\MenusModel $menusModel
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation $menuFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Menus\Model\Repository\MenuRepository $menuRepository,
         Menus\Model\MenusModel $menusModel,
         Menus\Validation\MenuFormValidation $menuFormValidation
     ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->menuRepository = $menuRepository;
         $this->menusModel = $menusModel;
         $this->menuFormValidation = $menuFormValidation;
     }
@@ -64,7 +57,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     public function execute($id)
     {
-        $menu = $this->menuRepository->getOneById($id);
+        $menu = $this->menusModel->getOneById($id);
 
         if (empty($menu) === false) {
             $this->title->setPageTitlePostfix($menu['title']);

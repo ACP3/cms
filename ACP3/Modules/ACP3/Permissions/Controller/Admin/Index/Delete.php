@@ -29,8 +29,8 @@ class Delete extends Core\Controller\AbstractAdminAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param \ACP3\Core\NestedSet\NestedSet                       $nestedSet
-     * @param \ACP3\Modules\ACP3\Permissions\Cache       $permissionsCache
+     * @param \ACP3\Core\NestedSet\NestedSet $nestedSet
+     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
@@ -52,31 +52,32 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleCustomDeleteAction(
-            $action, function ($items) {
-            $bool = $levelNotDeletable = false;
+            $action,
+            function (array $items) {
+                $bool = $levelNotDeletable = false;
 
-            foreach ($items as $item) {
-                if (in_array($item, [1, 2, 4]) === true) {
-                    $levelNotDeletable = true;
-                } else {
-                    $bool = $this->nestedSet->deleteNode($item, RoleRepository::TABLE_NAME);
+                foreach ($items as $item) {
+                    if (in_array($item, [1, 2, 4]) === true) {
+                        $levelNotDeletable = true;
+                    } else {
+                        $bool = $this->nestedSet->deleteNode($item, RoleRepository::TABLE_NAME);
+                    }
                 }
+
+                $this->permissionsCache->getCacheDriver()->deleteAll();
+
+                if ($levelNotDeletable === true) {
+                    $result = !$levelNotDeletable;
+                    $text = $this->translator->t('permissions', 'role_not_deletable');
+                } else {
+                    $result = $bool !== false;
+                    $text = $this->translator->t('system', $result ? 'delete_success' : 'delete_error');
+                }
+
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+                return $this->redirectMessages()->setMessage($result, $text);
             }
-
-            $this->permissionsCache->getCacheDriver()->deleteAll();
-
-            if ($levelNotDeletable === true) {
-                $result = !$levelNotDeletable;
-                $text = $this->translator->t('permissions', 'role_not_deletable');
-            } else {
-                $result = $bool !== false;
-                $text = $this->translator->t('system', $result ? 'delete_success' : 'delete_error');
-            }
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $this->redirectMessages()->setMessage($result, $text);
-        }
         );
     }
 }

@@ -32,16 +32,6 @@ class ArticleRepository extends Core\Model\AbstractRepository
     }
 
     /**
-     * @param int $articleId
-     *
-     * @return array
-     */
-    public function getOneById($articleId)
-    {
-        return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE id = ?", [$articleId]);
-    }
-
-    /**
      * @param string $time
      *
      * @return int

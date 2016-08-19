@@ -22,10 +22,6 @@ class Edit extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
-     */
-    protected $galleryRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation
      */
     protected $galleryFormValidation;
@@ -51,7 +47,6 @@ class Edit extends AbstractFormAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      * @param Gallery\Model\GalleryModel $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
@@ -59,7 +54,6 @@ class Edit extends AbstractFormAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Gallery\Model\Repository\GalleryRepository $galleryRepository,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation
@@ -67,7 +61,6 @@ class Edit extends AbstractFormAction
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->galleryRepository = $galleryRepository;
         $this->pictureRepository = $pictureRepository;
         $this->galleryModel = $galleryModel;
         $this->galleryFormValidation = $galleryFormValidation;
@@ -97,9 +90,9 @@ class Edit extends AbstractFormAction
      */
     public function execute($id)
     {
-        if ($this->galleryRepository->galleryExists($id) === true) {
-            $gallery = $this->galleryRepository->getGalleryById($id);
+        $gallery = $this->galleryModel->getOneById($id);
 
+        if (!empty($gallery)) {
             $this->title->setPageTitlePostfix($gallery['title']);
 
             if ($this->request->getPost()->count() !== 0) {
@@ -118,6 +111,7 @@ class Edit extends AbstractFormAction
                 $this->executeListPictures($id)
             );
         }
+
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 

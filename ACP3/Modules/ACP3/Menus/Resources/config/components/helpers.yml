@@ -11,6 +11,7 @@ services:
       - '@core.helpers.secure'
       - '@core.nested_set'
       - '@menus.model.menuitemrepository'
+      - '@menus.cache'
 
   menus.helpers.menuitemformfields:
     class: ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields

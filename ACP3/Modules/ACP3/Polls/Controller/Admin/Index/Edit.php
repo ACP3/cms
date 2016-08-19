@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
@@ -23,10 +24,6 @@ class Edit extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
-     */
-    protected $pollRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation
      */
     protected $pollsValidator;
@@ -40,7 +37,6 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Date $date
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
      * @param Polls\Model\PollsModel $pollsModel
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
      * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation $pollsValidator
@@ -50,7 +46,6 @@ class Edit extends AbstractFormAction
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Polls\Model\Repository\PollRepository $pollRepository,
         Polls\Model\PollsModel $pollsModel,
         Polls\Model\Repository\AnswerRepository $answerRepository,
         Polls\Validation\AdminFormValidation $pollsValidator
@@ -59,7 +54,6 @@ class Edit extends AbstractFormAction
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
-        $this->pollRepository = $pollRepository;
         $this->pollsModel = $pollsModel;
         $this->pollsValidator = $pollsValidator;
     }
@@ -72,7 +66,7 @@ class Edit extends AbstractFormAction
      */
     public function execute($id)
     {
-        $poll = $this->pollRepository->getOneById($id);
+        $poll = $this->pollsModel->getOneById($id);
 
         if (empty($poll) === false) {
             $this->title->setPageTitlePostfix($poll['title']);

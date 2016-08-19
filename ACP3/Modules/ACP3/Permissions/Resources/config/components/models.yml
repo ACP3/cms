@@ -30,8 +30,8 @@ services:
       - '@core.event_dispatcher'
       - '@permissions.model.resourcerepository'
 
-  permissions.model:role_model:
-    class: ACP3\Modules\ACP3\Permissions\Model\RoleModel
+  permissions.model.roles_model:
+    class: ACP3\Modules\ACP3\Permissions\Model\RolesModel
     arguments:
       - '@core.event_dispatcher'
       - '@core.helpers.secure'

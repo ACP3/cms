@@ -23,10 +23,6 @@ abstract class AbstractFormAction extends AbstractAdminAction
      */
     protected $formsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Cache
-     */
-    protected $menusCache;
-    /**
      * @var \ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem
      */
     protected $manageMenuItemHelper;
@@ -35,6 +31,11 @@ abstract class AbstractFormAction extends AbstractAdminAction
      */
     protected $uriAliasManager;
 
+    /**
+     * AbstractFormAction constructor.
+     * @param Core\Controller\Context\AdminContext $context
+     * @param Core\Helpers\Forms $formsHelper
+     */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelper
@@ -42,18 +43,6 @@ abstract class AbstractFormAction extends AbstractAdminAction
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
-     *
-     * @return $this
-     */
-    public function setMenusCache(Menus\Cache $menusCache)
-    {
-        $this->menusCache = $menusCache;
-
-        return $this;
     }
 
     /**
@@ -78,30 +67,25 @@ abstract class AbstractFormAction extends AbstractAdminAction
 
     /**
      * @param array $formData
-     * @param int $id
+     * @param int $articleId
      */
-    protected function createOrUpdateMenuItem(array $formData, $id)
+    protected function createOrUpdateMenuItem(array $formData, $articleId)
     {
-        if ($this->menusCache) {
-            if ($this->acl->hasPermission('admin/menus/items/create') === true) {
-                $data = [
-                    'mode' => 4,
-                    'block_id' => $formData['block_id'],
-                    'parent_id' => (int)$formData['parent_id'],
-                    'display' => $formData['display'],
-                    'title' => $formData['title'],
-                    'target' => 1
-                ];
+        if ($this->acl->hasPermission('admin/menus/items/create') === true) {
+            $data = [
+                'mode' => 4,
+                'block_id' => $formData['block_id'],
+                'parent_id' => (int)$formData['parent_id'],
+                'display' => $formData['display'],
+                'title' => $formData['title'],
+                'target' => 1
+            ];
 
-                $this->manageMenuItemHelper->manageMenuItem(
-                    sprintf(Articles\Helpers::URL_KEY_PATTERN, $id),
-                    isset($formData['create']) === true,
-                    $data
-                );
-            }
-
-            // Refresh the menu items cache
-            $this->menusCache->saveMenusCache();
+            $this->manageMenuItemHelper->manageMenuItem(
+                sprintf(Articles\Helpers::URL_KEY_PATTERN, $articleId),
+                isset($formData['create']) === true,
+                $data
+            );
         }
     }
 

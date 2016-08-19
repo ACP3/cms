@@ -27,19 +27,6 @@ class MenuItemRepository extends AbstractRepository
     }
 
     /**
-     * @param int $menuItemId
-     *
-     * @return array
-     */
-    public function getOneMenuItemById($menuItemId)
-    {
-        return $this->db->fetchAssoc(
-            "SELECT * FROM {$this->getTableName()} WHERE id = ?",
-            [$menuItemId]
-        );
-    }
-
-    /**
      * @param string $uri
      *
      * @return mixed

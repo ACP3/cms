@@ -2,7 +2,7 @@
     <div class="panel-heading">
         <h3 class="panel-title">{lang t="polls|latest_poll"}</h3>
     </div>
-    {if isset($sidebar_polls)}
+    {if !empty($sidebar_polls)}
         <div class="panel-body">
             <h5>{$sidebar_polls.title}</h5>
 

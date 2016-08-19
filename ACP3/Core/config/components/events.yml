@@ -5,3 +5,4 @@ services:
       - '@core.environment.application_path'
     tags:
       - { name: core.eventListener, event: core.model.after_save, method: purgeHttpCache }
+      - { name: core.eventListener, event: core.model.after_delete, method: purgeHttpCache }

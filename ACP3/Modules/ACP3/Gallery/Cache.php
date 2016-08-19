@@ -51,29 +51,29 @@ class Cache extends Core\Modules\AbstractCacheStorage
     /**
      * Bindet die gecachete Galerie anhand ihrer ID ein
      *
-     * @param integer $id
+     * @param integer $galleryId
      *
      * @return array
      */
-    public function getCache($id)
+    public function getCache($galleryId)
     {
-        if ($this->cache->contains(self::CACHE_ID . $id) === false) {
-            $this->saveCache($id);
+        if ($this->cache->contains(self::CACHE_ID . $galleryId) === false) {
+            $this->saveCache($galleryId);
         }
 
-        return $this->cache->fetch(self::CACHE_ID . $id);
+        return $this->cache->fetch(self::CACHE_ID . $galleryId);
     }
 
     /**
      * Erstellt den Galerie-Cache anhand der angegebenen ID
      *
-     * @param integer $id
+     * @param integer $galleryId
      *
      * @return boolean
      */
-    public function saveCache($id)
+    public function saveCache($galleryId)
     {
-        $pictures = $this->pictureRepository->getPicturesByGalleryId($id);
+        $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
         $cPictures = count($pictures);
 
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
@@ -93,6 +93,6 @@ class Cache extends Core\Modules\AbstractCacheStorage
             }
         }
 
-        return $this->cache->save(self::CACHE_ID . $id, $pictures);
+        return $this->cache->save(self::CACHE_ID . $galleryId, $pictures);
     }
 }

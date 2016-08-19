@@ -1,5 +1,5 @@
 services:
-  seo.events.on_controller_action_dispatcher_before_dispatch_listener:
+  seo.event.on_controller_action_dispatcher_before_dispatch_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\OnControllerActionDispatcherBeforeDispatchListener
     arguments:
       - '@core.http.request'
@@ -9,10 +9,18 @@ services:
     tags:
       - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch, method: onBeforeDispatch }
 
-  seo.events.on_layout_meta_listener:
+  seo.event.on_layout_meta_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\OnLayoutMetaListener
     arguments:
       - '@core.view'
       - '@seo.helper.meta_statements'
     tags:
       - { name: core.eventListener, event: core.layout.meta, method: renderSeoMetaTags }
+
+  seo.event.update_seo_cache_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Seo\Event\Listener\UpdateSeoCacheOnModelAfterSaveListener
+    arguments:
+      - '@seo.cache'
+    tags:
+      - { name: core.eventListener, event: seo.model.seo.after_save, method: execute }
+      - { name: core.eventListener, event: seo.model.seo.after_delete, method: execute }

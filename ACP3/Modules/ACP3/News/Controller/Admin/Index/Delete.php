@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\News;
-use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class Delete
@@ -16,45 +15,24 @@ use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
  */
 class Delete extends Core\Controller\AbstractAdminAction
 {
-    use CommentsHelperTrait;
-
     /**
-     * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
+     * @var News\Model\NewsModel
      */
-    protected $newsRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\News\Cache
-     */
-    protected $newsCache;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
-     */
-    protected $uriAliasManager;
+    protected $newsModel;
 
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext   $context
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
-     * @param \ACP3\Modules\ACP3\News\Cache                $newsCache
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param News\Model\NewsModel $newsModel
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        News\Model\Repository\NewsRepository $newsRepository,
-        News\Cache $newsCache)
-    {
+        News\Model\NewsModel $newsModel
+    ) {
         parent::__construct($context);
 
-        $this->newsRepository = $newsRepository;
-        $this->newsCache = $newsCache;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
-     */
-    public function setUriAliasManager(UriAliasManager $uriAliasManager)
-    {
-        $this->uriAliasManager = $uriAliasManager;
+        $this->newsModel = $newsModel;
     }
 
     /**
@@ -66,26 +44,10 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function ($items) {
-            $bool = false;
-
-            foreach ($items as $item) {
-                $bool = $this->newsRepository->delete($item);
-                if ($this->commentsHelpers) {
-                    $this->commentsHelpers->deleteCommentsByModuleAndResult('news', $item);
-                }
-
-                $this->newsCache->getCacheDriver()->delete(News\Cache::CACHE_ID . $item);
-
-                if ($this->uriAliasManager) {
-                    $this->uriAliasManager->deleteUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $item));
-                }
+            $action,
+            function (array $items) {
+                return $this->newsModel->delete($items);
             }
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $bool;
-        }
         );
     }
 }

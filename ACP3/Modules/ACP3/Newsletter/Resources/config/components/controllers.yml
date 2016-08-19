@@ -31,7 +31,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
-      - '@newsletter.model.newsletterrepository'
+      - '@newsletter.model'
 
   newsletter.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Edit
@@ -39,7 +39,6 @@ services:
       - '@core.context.admin'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@newsletter.model.newsletterrepository'
       - '@newsletter.model'
       - '@newsletter.validator'
       - '@newsletter.helper.sendnewsletter'

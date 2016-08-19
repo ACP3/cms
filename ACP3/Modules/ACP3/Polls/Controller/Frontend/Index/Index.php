@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
-    
+
     /**
      * @var Core\Date
      */
@@ -35,7 +35,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date                               $date
+     * @param \ACP3\Core\Date $date
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository $voteRepository
      */
@@ -43,8 +43,8 @@ class Index extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Polls\Model\Repository\PollRepository $pollRepository,
-        Polls\Model\Repository\VoteRepository $voteRepository)
-    {
+        Polls\Model\Repository\VoteRepository $voteRepository
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
@@ -52,6 +52,9 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->voteRepository = $voteRepository;
     }
 
+    /**
+     * @return array
+     */
     public function execute()
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
@@ -59,30 +62,41 @@ class Index extends Core\Controller\AbstractFrontendAction
         $polls = $this->pollRepository->getAll($this->date->getCurrentDateTime());
         $cPolls = count($polls);
 
-        if ($cPolls > 0) {
-            for ($i = 0; $i < $cPolls; ++$i) {
-                if ($this->user->isAuthenticated() === true) {
-                    $query = $this->voteRepository->getVotesByUserId(
-                        $polls[$i]['id'],
-                        $this->user->getUserId(),
-                        $this->request->getServer()->get('REMOTE_ADDR', '')
-                    ); // Check, whether the logged user has already voted
-                } else {
-                    $query = $this->voteRepository->getVotesByIpAddress(
-                        $polls[$i]['id'],
-                        $this->request->getServer()->get('REMOTE_ADDR', '')
-                    ); // For guest users check against the IP-address
-                }
-
-                if ($query != 0 ||
-                    $polls[$i]['start'] !== $polls[$i]['end'] && $this->date->timestamp($polls[$i]['end']) <= $this->date->timestamp()
-                ) {
-                    $polls[$i]['link'] = 'result';
-                } else {
-                    $polls[$i]['link'] = 'vote';
-                }
+        for ($i = 0; $i < $cPolls; ++$i) {
+            if ($this->hasAlreadyVoted($polls[$i]['id']) ||
+                $polls[$i]['start'] !== $polls[$i]['end'] && $this->date->timestamp($polls[$i]['end']) <= $this->date->timestamp()
+            ) {
+                $polls[$i]['link'] = 'result';
+            } else {
+                $polls[$i]['link'] = 'vote';
             }
-            $this->view->assign('polls', $polls);
         }
+
+        return [
+            'polls' => $polls
+        ];
+    }
+
+    /**
+     * @param int $pollId
+     * @return int
+     */
+    protected function hasAlreadyVoted($pollId)
+    {
+        // Check, whether the logged user has already voted
+        if ($this->user->isAuthenticated() === true) {
+            $query = $this->voteRepository->getVotesByUserId(
+                $pollId,
+                $this->user->getUserId(),
+                $this->request->getServer()->get('REMOTE_ADDR', '')
+            );
+        } else { // For guest users check against the IP-address
+            $query = $this->voteRepository->getVotesByIpAddress(
+                $pollId,
+                $this->request->getServer()->get('REMOTE_ADDR', '')
+            );
+        }
+
+        return $query > 0;
     }
 }

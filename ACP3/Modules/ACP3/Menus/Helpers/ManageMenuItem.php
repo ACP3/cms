@@ -2,6 +2,7 @@
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Menus\Cache;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 
 /**
@@ -22,20 +23,27 @@ class ManageMenuItem
      * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
      */
     protected $menuItemRepository;
+    /**
+     * @var Cache
+     */
+    protected $menusCache;
 
     /**
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param \ACP3\Core\NestedSet\NestedSet $nestedSet
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
+     * @param Cache $menusCache
      */
     public function __construct(
         Core\Helpers\Secure $secureHelper,
         Core\NestedSet\NestedSet $nestedSet,
-        MenuItemRepository $menuItemRepository
+        MenuItemRepository $menuItemRepository,
+        Cache $menusCache
     ) {
         $this->secureHelper = $secureHelper;
         $this->nestedSet = $nestedSet;
         $this->menuItemRepository = $menuItemRepository;
+        $this->menusCache = $menusCache;
     }
 
     /**
@@ -48,22 +56,25 @@ class ManageMenuItem
     public function manageMenuItem($menuItemUri, $createOrUpdateMenuItem, array $data = [])
     {
         $menuItem = $this->menuItemRepository->getOneMenuItemByUri($menuItemUri);
+        $result = true;
 
         if ($createOrUpdateMenuItem === true) {
             if (empty($menuItem)) {
-                return $this->createMenuItem($data, $menuItemUri);
+                $result = $this->createMenuItem($data, $menuItemUri);
+            } else {
+                $result = $this->updateMenuItem($data, $menuItem);
             }
-
-            return $this->updateMenuItem($data, $menuItem);
         } elseif (!empty($menuItem)) {
-            return $this->nestedSet->deleteNode(
+            $result = $this->nestedSet->deleteNode(
                 $menuItem['id'],
                 MenuItemRepository::TABLE_NAME,
                 true
             );
         }
 
-        return true;
+        $this->menusCache->saveMenusCache();
+
+        return $result;
     }
 
     /**

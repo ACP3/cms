@@ -20,17 +20,9 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository
-     */
-    protected $emoticonRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Cache
-     */
-    protected $emoticonsCache;
     /**
      * @var Emoticons\Model\EmoticonsModel
      */
@@ -42,24 +34,18 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param Emoticons\Model\EmoticonsModel $emoticonsModel
-     * @param \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository $emoticonRepository
      * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Emoticons\Cache $emoticonsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Emoticons\Model\EmoticonsModel $emoticonsModel,
-        Emoticons\Model\Repository\EmoticonRepository $emoticonRepository,
-        Emoticons\Validation\AdminFormValidation $adminFormValidation,
-        Emoticons\Cache $emoticonsCache)
+        Emoticons\Validation\AdminFormValidation $adminFormValidation)
     {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->emoticonRepository = $emoticonRepository;
         $this->adminFormValidation = $adminFormValidation;
-        $this->emoticonsCache = $emoticonsCache;
         $this->emoticonsModel = $emoticonsModel;
     }
 
@@ -71,7 +57,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     public function execute($id)
     {
-        $emoticon = $this->emoticonRepository->getOneById($id);
+        $emoticon = $this->emoticonsModel->getOneById($id);
 
         if (empty($emoticon) === false) {
             if ($this->request->getPost()->count() !== 0) {
@@ -105,17 +91,13 @@ class Edit extends Core\Controller\AbstractAdminAction
                 ->validate($formData);
 
             if (empty($file) === false) {
-                $upload = new Core\Helpers\Upload($this->appPath, 'emoticons');
+                $upload = new Core\Helpers\Upload($this->appPath, Emoticons\Installer\Schema::MODULE_NAME);
                 $upload->removeUploadedFile($emoticon['img']);
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $formData['img'] = $result['name'];
             }
 
-            $bool = $this->emoticonsModel->saveEmoticon($formData, $emoticonId);
-
-            $this->emoticonsCache->saveCache();
-
-            return $bool;
+            return $this->emoticonsModel->saveEmoticon($formData, $emoticonId);
         });
     }
 }

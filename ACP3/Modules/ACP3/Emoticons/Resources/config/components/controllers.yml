@@ -12,8 +12,7 @@ services:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
-      - '@emoticons.model.emoticonrepository'
-      - '@emoticons.cache'
+      - '@emoticons.model'
 
   emoticons.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Edit
@@ -21,7 +20,6 @@ services:
       - '@core.context.admin'
       - '@core.helpers.formToken'
       - '@emoticons.model'
-      - '@emoticons.model.emoticonrepository'
       - '@emoticons.validator'
       - '@emoticons.cache'
 

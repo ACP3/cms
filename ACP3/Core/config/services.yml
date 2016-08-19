@@ -8,6 +8,7 @@ imports:
   - { resource: components/database.yml }
   - { resource: components/datagrid.yml }
   - { resource: components/date.yml }
+  - { resource: components/events.yml }
   - { resource: components/helpers.yml }
   - { resource: components/http.yml }
   - { resource: components/language.yml }

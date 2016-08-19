@@ -23,7 +23,7 @@ class RoleRepository extends Core\Model\AbstractRepository
      */
     public function roleExists($roleId)
     {
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $roleId]) > 0);
+        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id', ['id' => $roleId]) > 0);
     }
 
     /**
@@ -39,16 +39,6 @@ class RoleRepository extends Core\Model\AbstractRepository
         } else {
             return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?', [$roleName]) == 1;
         }
-    }
-
-    /**
-     * @param int $roleId
-     *
-     * @return array
-     */
-    public function getRoleById($roleId)
-    {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$roleId]);
     }
 
     /**

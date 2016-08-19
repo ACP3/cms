@@ -25,17 +25,9 @@ class Edit extends AbstractFormAction
      */
     protected $galleryHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Cache
-     */
-    protected $galleryCache;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation
      */
     protected $pictureFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
-     */
-    protected $pictureRepository;
     /**
      * @var Gallery\Model\PictureModel
      */
@@ -48,9 +40,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      * @param Gallery\Model\PictureModel $pictureModel
-     * @param \ACP3\Modules\ACP3\Gallery\Cache $galleryCache
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
     public function __construct(
@@ -58,17 +48,13 @@ class Edit extends AbstractFormAction
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Helpers $galleryHelpers,
-        Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Model\PictureModel $pictureModel,
-        Gallery\Cache $galleryCache,
         Gallery\Validation\PictureFormValidation $pictureFormValidation
     ) {
         parent::__construct($context, $formsHelper);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->galleryHelpers = $galleryHelpers;
-        $this->pictureRepository = $pictureRepository;
-        $this->galleryCache = $galleryCache;
         $this->pictureFormValidation = $pictureFormValidation;
         $this->pictureModel = $pictureModel;
     }
@@ -81,9 +67,9 @@ class Edit extends AbstractFormAction
      */
     public function execute($id)
     {
-        if ($this->pictureRepository->pictureExists($id) === true) {
-            $picture = $this->pictureRepository->getPictureById($id);
+        $picture = $this->pictureModel->getOneById($id);
 
+        if (!empty($picture)) {
             $this->breadcrumb
                 ->append($picture['title'], 'acp/gallery/index/edit/id_' . $picture['gallery_id'])
                 ->append($this->translator->t('gallery', 'admin_pictures_edit'));
@@ -136,20 +122,15 @@ class Edit extends AbstractFormAction
                     ->validate([]);
 
                 if (!empty($file)) {
-                    $upload = new Core\Helpers\Upload($this->appPath, 'gallery');
+                    $upload = new Core\Helpers\Upload($this->appPath, Gallery\Installer\Schema::MODULE_NAME);
                     $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
-                    $oldFile = $this->pictureRepository->getFileById($pictureId);
 
-                    $this->galleryHelpers->removePicture($oldFile);
+                    $this->galleryHelpers->removePicture($picture['file']);
 
                     $formData['file'] = $result['name'];
                 }
 
-                $bool = $this->pictureModel->savePicture($formData, $picture['gallery_id'], $pictureId);
-
-                $this->galleryCache->saveCache($picture['gallery_id']);
-
-                return $bool;
+                return $this->pictureModel->savePicture($formData, $picture['gallery_id'], $pictureId);
             },
             'acp/gallery/index/edit/id_' . $picture['gallery_id']
         );

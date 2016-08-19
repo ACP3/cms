@@ -23,7 +23,7 @@ class AbstractCacheStorage
     }
 
     /**
-     * @return \ACP3\Core\Cache
+     * @return \Doctrine\Common\Cache\CacheProvider
      */
     public function getCacheDriver()
     {

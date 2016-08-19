@@ -25,7 +25,6 @@ services:
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
-      - '@gallery.model.galleryrepository'
       - '@gallery.model.picturerepository'
       - '@gallery.model'
       - '@gallery.validator.gallery'
@@ -57,7 +56,6 @@ services:
       - '@gallery.model.galleryrepository'
       - '@gallery.model.picturerepository'
       - '@gallery.model.picture_model'
-      - '@gallery.cache'
       - '@gallery.validator.picture'
     calls:
       - ['setAliases', ['@?seo.core.router.aliases']]
@@ -81,9 +79,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.helpers'
-      - '@gallery.model.picturerepository'
       - '@gallery.model.picture_model'
-      - '@gallery.cache'
       - '@gallery.validator.picture'
 
   gallery.controller.admin.pictures.order:

@@ -1,6 +1,7 @@
 imports:
   - { resource: components/cache.yml }
   - { resource: components/controllers.yml }
+  - { resource: components/events.yml }
   - { resource: components/helpers.yml }
   - { resource: components/installer.yml }
   - { resource: components/models.yml }

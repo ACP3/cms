@@ -19,10 +19,6 @@ class Edit extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
-     */
-    protected $newsletterRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -41,7 +37,6 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
      * @param Newsletter\Model\NewsletterModel $newsletterModel
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter $newsletterHelpers
@@ -50,7 +45,6 @@ class Edit extends AbstractFormAction
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
         Newsletter\Model\NewsletterModel $newsletterModel,
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
         Newsletter\Helper\SendNewsletter $newsletterHelpers)
@@ -59,7 +53,6 @@ class Edit extends AbstractFormAction
 
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
-        $this->newsletterRepository = $newsletterRepository;
         $this->newsletterModel = $newsletterModel;
         $this->adminFormValidation = $adminFormValidation;
     }
@@ -72,7 +65,7 @@ class Edit extends AbstractFormAction
      */
     public function execute($id)
     {
-        $newsletter = $this->newsletterRepository->getOneById($id);
+        $newsletter = $this->newsletterModel->getOneById($id);
 
         if (empty($newsletter) === false) {
             $this->title->setPageTitlePostfix($newsletter['title']);

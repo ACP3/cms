@@ -42,16 +42,6 @@ class EmoticonRepository extends Core\Model\AbstractRepository
     /**
      * @param int $emoticonId
      *
-     * @return array
-     */
-    public function getOneById($emoticonId)
-    {
-        return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE id = ?', [$emoticonId]);
-    }
-
-    /**
-     * @param int $emoticonId
-     *
      * @return mixed
      */
     public function getOneImageById($emoticonId)

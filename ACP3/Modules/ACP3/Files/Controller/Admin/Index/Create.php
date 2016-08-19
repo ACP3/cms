@@ -24,10 +24,6 @@ class Create extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
-     */
-    protected $filesRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -35,24 +31,28 @@ class Create extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Comments\Helpers
      */
     protected $commentsHelpers;
+    /**
+     * @var Files\Model\FilesModel
+     */
+    protected $filesModel;
 
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext              $context
-     * @param \ACP3\Core\Date                                         $date
-     * @param \ACP3\Core\Helpers\Forms                                $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository          $filesRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Files\Model\FilesModel $filesModel
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Categories\Helpers                   $categoriesHelpers
+     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Files\Model\Repository\FilesRepository $filesRepository,
+        Files\Model\FilesModel $filesModel,
         Files\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers)
     {
@@ -60,8 +60,8 @@ class Create extends AbstractFormAction
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
-        $this->filesRepository = $filesRepository;
         $this->adminFormValidation = $adminFormValidation;
+        $this->filesModel = $filesModel;
     }
 
     /**
@@ -116,35 +116,21 @@ class Create extends AbstractFormAction
                 ->validate($formData);
 
             if (is_array($file) === true) {
-                $upload = new Core\Helpers\Upload($this->appPath, 'files');
+                $upload = new Core\Helpers\Upload($this->appPath, Files\Installer\Schema::MODULE_NAME);
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
-                $newFile = $result['name'];
-                $filesize = $result['size'];
+                $formData['file'] = $result['name'];
+                $formData['filesize'] = $result['size'];
             } else {
-                $formData['filesize'] = (float)$formData['filesize'];
-                $newFile = $file;
-                $filesize = $formData['filesize'] . ' ' . $formData['unit'];
+                $formData['file'] = $file;
+                $formData['filesize'] = ((float)$formData['filesize']) . ' ' . $formData['unit'];
             }
 
-            $insertValues = [
-                'id' => '',
-                'start' => $this->date->toSQL($formData['start']),
-                'end' => $this->date->toSQL($formData['end']),
-                'category_id' => $this->fetchCategoryId($formData),
-                'file' => $newFile,
-                'size' => $filesize,
-                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
-                'text' => $this->get('core.helpers.secure')->strEncode($formData['text'], true),
-                'comments' => $this->useComments($formData, $settings),
-                'user_id' => $this->user->getUserId(),
-            ];
+            $formData['cat'] = $this->fetchCategoryId($formData);
+            $formData['comments'] = $this->useComments($formData, $settings);
 
-
-            $lastId = $this->filesRepository->insert($insertValues);
+            $lastId = $this->filesModel->saveFile($formData, $this->user->getUserId());
 
             $this->insertUriAlias($formData, $lastId);
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $lastId;
         });

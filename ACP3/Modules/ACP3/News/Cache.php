@@ -32,30 +32,28 @@ class Cache extends Core\Modules\AbstractCacheStorage
     /**
      * Bindet die gecachete News ein
      *
-     * @param integer $id
-     *  Die ID der News
+     * @param integer $newsId
      *
      * @return array
      */
-    public function getCache($id)
+    public function getCache($newsId)
     {
-        if ($this->cache->contains(self::CACHE_ID . $id) === false) {
-            $this->saveCache($id);
+        if ($this->cache->contains(self::CACHE_ID . $newsId) === false) {
+            $this->saveCache($newsId);
         }
 
-        return $this->cache->fetch(self::CACHE_ID . $id);
+        return $this->cache->fetch(self::CACHE_ID . $newsId);
     }
 
     /**
      * Erstellt den Cache einer News anhand der angegebenen ID
      *
-     * @param integer $id
-     *  Die ID der News
+     * @param integer $newsId
      *
      * @return boolean
      */
-    public function saveCache($id)
+    public function saveCache($newsId)
     {
-        return $this->cache->save(self::CACHE_ID . $id, $this->newsRepository->getOneById($id));
+        return $this->cache->save(self::CACHE_ID . $newsId, $this->newsRepository->getOneById($newsId));
     }
 }

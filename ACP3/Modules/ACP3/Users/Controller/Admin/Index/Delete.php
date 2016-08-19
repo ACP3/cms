@@ -51,7 +51,7 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleCustomDeleteAction(
-            $action, function ($items) {
+            $action, function (array $items) {
             $bool = $isAdminUser = $selfDelete = false;
             foreach ($items as $item) {
                 $user = $this->user->getUserInfo($item);

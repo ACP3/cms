@@ -1,7 +1,7 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    {if isset($polls)}
+    {if !empty($polls)}
         <table class="table table-striped">
             <thead>
             <tr>

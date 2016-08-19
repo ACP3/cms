@@ -23,7 +23,7 @@ class Create extends AbstractFormAction
      */
     protected $roleFormValidation;
     /**
-     * @var Permissions\Model\RoleModel
+     * @var Permissions\Model\RolesModel
      */
     protected $roleModel;
 
@@ -31,9 +31,8 @@ class Create extends AbstractFormAction
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param Permissions\Model\RoleModel $roleModel
+     * @param Permissions\Model\RolesModel $rolesModel
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository $ruleRepository
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
@@ -41,19 +40,18 @@ class Create extends AbstractFormAction
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Permissions\Model\RoleModel $roleModel,
+        Permissions\Model\RolesModel $rolesModel,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
-        Permissions\Model\Repository\RuleRepository $ruleRepository,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Cache $permissionsCache,
         Permissions\Validation\RoleFormValidation $roleFormValidation
     ) {
-        parent::__construct($context, $formsHelper, $privilegeRepository, $ruleRepository, $permissionsCache);
+        parent::__construct($context, $formsHelper, $privilegeRepository, $permissionsCache);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->roleFormValidation = $roleFormValidation;
-        $this->roleModel = $roleModel;
+        $this->roleModel = $rolesModel;
     }
 
     /**
@@ -84,13 +82,7 @@ class Create extends AbstractFormAction
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->roleFormValidation->validate($formData);
 
-            $roleId = $this->roleModel->saveRole($formData);
-
-            $this->saveRules($formData['privileges'], $roleId);
-
-            $this->permissionsCache->saveRolesCache();
-
-            return $roleId;
+            return $this->roleModel->saveRole($formData);
         });
     }
 }

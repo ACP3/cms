@@ -6,9 +6,8 @@
 
 namespace ACP3\Modules\ACP3\Seo\Helper;
 
-use ACP3\Core\Helpers\Secure;
-use ACP3\Modules\ACP3\Seo\Cache as SeoCache;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
+use ACP3\Modules\ACP3\Seo\Model\SeoModel;
 
 /**
  * Class UriAliasManager
@@ -17,33 +16,26 @@ use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 class UriAliasManager
 {
     /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    protected $secureHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Cache
-     */
-    protected $seoCache;
-    /**
      * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
      */
     protected $seoRepository;
+    /**
+     * @var SeoModel
+     */
+    protected $seoModel;
 
     /**
      * UriAliasManager constructor.
      *
-     * @param \ACP3\Core\Helpers\Secure                  $secureHelper
-     * @param \ACP3\Modules\ACP3\Seo\Cache               $seoCache
+     * @param SeoModel $seoModel
      * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
-        Secure $secureHelper,
-        SeoCache $seoCache,
+        SeoModel $seoModel,
         SeoRepository $seoRepository
     ) {
-        $this->secureHelper = $secureHelper;
-        $this->seoCache = $seoCache;
         $this->seoRepository = $seoRepository;
+        $this->seoModel = $seoModel;
     }
 
     /**
@@ -55,10 +47,19 @@ class UriAliasManager
      */
     public function deleteUriAlias($path)
     {
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
+        $path .= $this->preparePath($path);
+        $seo = $this->seoRepository->getOneByUri($path);
 
-        $bool = $this->seoRepository->delete($path, 'uri');
-        return $bool !== false && $this->seoCache->saveCache() !== false;
+        return !empty($seo) && $this->seoModel->delete($seo['id']) !== false;
+    }
+
+    /**
+     * @param string $path
+     * @return string
+     */
+    protected function preparePath($path)
+    {
+        return !preg_match('/\/$/', $path) ? '/' : '';
     }
 
     /**
@@ -74,24 +75,25 @@ class UriAliasManager
      */
     public function insertUriAlias($path, $alias, $keywords = '', $description = '', $robots = 0)
     {
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
-        $keywords = $this->secureHelper->strEncode($keywords);
-        $description = $this->secureHelper->strEncode($description);
-        $values = [
+        $path .= $this->preparePath($path);
+        $data = [
             'alias' => $alias,
-            'keywords' => $keywords,
-            'description' => $description,
-            'robots' => (int)$robots
+            'seo_keywords' => $keywords,
+            'seo_description' => $description,
+            'seo_robots' => (int)$robots
         ];
 
+        $seo = $this->seoRepository->getOneByUri($path);
+
         // Update an existing result
-        if ($this->seoRepository->uriAliasExists($path) === true) {
-            $bool = $this->seoRepository->update($values, ['uri' => $path]);
+        if (!empty($seo)) {
+            $data['uri'] = $seo['uri'];
+            $bool = $this->seoModel->saveUriAlias($data, $seo['id']);
         } else {
-            $values['uri'] = $path;
-            $bool = $this->seoRepository->insert($values);
+            $data['uri'] = $path;
+            $bool = $this->seoModel->saveUriAlias($data);
         }
 
-        return $bool !== false && $this->seoCache->saveCache() !== false;
+        return $bool !== false;
     }
 }

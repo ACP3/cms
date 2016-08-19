@@ -33,8 +33,8 @@ abstract class AbstractModel
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        AbstractRepository $repository)
-    {
+        AbstractRepository $repository
+    ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->repository = $repository;
     }
@@ -66,7 +66,7 @@ abstract class AbstractModel
     /**
      * @param AbstractRepository $repository
      * @param array $data
-     * @param int|null $entryId
+     * @param int|null|array $entryId
      */
     protected function dispatchBeforeSaveEvent(AbstractRepository $repository, array $data, $entryId)
     {
@@ -81,7 +81,7 @@ abstract class AbstractModel
     /**
      * @param string $eventName
      * @param array $data
-     * @param int|null $entryId
+     * @param int|null|array $entryId
      */
     private function dispatchEvent($eventName, array $data, $entryId)
     {
@@ -94,7 +94,7 @@ abstract class AbstractModel
     /**
      * @param AbstractRepository $repository
      * @param array $data
-     * @param int|null $entryId
+     * @param int|null|array $entryId
      */
     protected function dispatchAfterSaveEvent(AbstractRepository $repository, array $data, $entryId)
     {
@@ -104,5 +104,56 @@ abstract class AbstractModel
             $data,
             $entryId
         );
+    }
+
+    /**
+     * @param int|array $entryId
+     * @return int
+     */
+    public function delete($entryId)
+    {
+        $repository = $this->repository;
+
+        if (!is_array($entryId)) {
+            $entryId = [$entryId];
+        }
+
+        $this->dispatchEvent(
+            'core.model.before_delete',
+            [],
+            $entryId
+        );
+        $this->dispatchEvent(
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete',
+            [],
+            $entryId
+        );
+
+        $affectedRows = 0;
+        foreach ($entryId as $item) {
+            $affectedRows += (int)$this->repository->delete($item);
+        }
+
+        $this->dispatchEvent(
+            'core.model.before_delete',
+            [],
+            $entryId
+        );
+        $this->dispatchEvent(
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete',
+            [],
+            $entryId
+        );
+
+        return $affectedRows;
+    }
+
+    /**
+     * @param int $entryId
+     * @return array
+     */
+    public function getOneById($entryId)
+    {
+        return $this->repository->getOneById($entryId);
     }
 }

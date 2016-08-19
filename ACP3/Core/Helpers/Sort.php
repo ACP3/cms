@@ -97,7 +97,7 @@ class Sort
                 return true;
             }
         } catch (\Exception $e) {
-            $this->db->getConnection()->rollback();
+            $this->db->getConnection()->rollBack();
         }
 
         return false;

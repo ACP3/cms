@@ -18,6 +18,5 @@ services:
   seo.helper.uri_alias_manager:
     class: ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
     arguments:
-      - '@core.helpers.secure'
-      - '@seo.cache'
+      - '@seo.model.seo_model'
       - '@seo.model.seorepository'

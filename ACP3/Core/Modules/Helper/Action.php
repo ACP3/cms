@@ -110,7 +110,7 @@ class Action
     ) {
         return $this->handleCustomDeleteAction(
             $action,
-            function ($items) use ($callback, $moduleIndexUrl) {
+            function (array $items) use ($callback, $moduleIndexUrl) {
                 $result = $callback($items);
 
                 return $this->prepareRedirectMessageAfterPost($result, 'delete', $moduleIndexUrl);

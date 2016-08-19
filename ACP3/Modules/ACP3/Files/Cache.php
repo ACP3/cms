@@ -31,26 +31,26 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * @param integer $id
+     * @param integer $fileId
      *
      * @return array
      */
-    public function getCache($id)
+    public function getCache($fileId)
     {
-        if ($this->cache->contains(self::CACHE_ID . $id) === false) {
-            $this->saveCache($id);
+        if ($this->cache->contains(self::CACHE_ID . $fileId) === false) {
+            $this->saveCache($fileId);
         }
 
-        return $this->cache->fetch(self::CACHE_ID . $id);
+        return $this->cache->fetch(self::CACHE_ID . $fileId);
     }
 
     /**
-     * @param integer $id
+     * @param integer $fileId
      *
      * @return boolean
      */
-    public function saveCache($id)
+    public function saveCache($fileId)
     {
-        return $this->cache->save(self::CACHE_ID . $id, $this->filesRepository->getOneById($id));
+        return $this->cache->save(self::CACHE_ID . $fileId, $this->filesRepository->getOneById($fileId));
     }
 }
