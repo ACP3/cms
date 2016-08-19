@@ -47,7 +47,9 @@ class Activate extends Core\Controller\AbstractAdminAction
             $id
         );
 
-        return $this->redirectMessages()->setMessage($bool,
-            $this->translator->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'));
+        return $this->redirectMessages()->setMessage(
+            $bool,
+            $this->translator->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error')
+        );
     }
 }

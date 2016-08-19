@@ -21,21 +21,21 @@ class VoteRepository extends Core\Model\AbstractRepository
      * @param int $userId
      * @param string $ipAddress
      *
-     * @return mixed
+     * @return int
      */
     public function getVotesByUserId($pollId, $userId, $ipAddress)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE poll_id = ? AND (user_id = ? OR ip = ?)', [$pollId, $userId, $ipAddress]);
+        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE poll_id = ? AND (user_id = ? OR ip = ?)', [$pollId, $userId, $ipAddress]);
     }
 
     /**
      * @param int $pollId
      * @param string $ipAddress
      *
-     * @return mixed
+     * @return int
      */
     public function getVotesByIpAddress($pollId, $ipAddress)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE poll_id = ? AND ip = ?', [$pollId, $ipAddress]);
+        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE poll_id = ? AND ip = ?', [$pollId, $ipAddress]);
     }
 }

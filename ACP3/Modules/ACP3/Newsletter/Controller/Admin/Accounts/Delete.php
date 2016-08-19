@@ -23,13 +23,13 @@ class Delete extends Core\Controller\AbstractAdminAction
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext         $context
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Newsletter\Helper\AccountStatus $accountStatusHelper)
-    {
+        Newsletter\Helper\AccountStatus $accountStatusHelper
+    ) {
         parent::__construct($context);
 
         $this->accountStatusHelper = $accountStatusHelper;
@@ -44,17 +44,18 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function (array $items) {
-            $bool = false;
-            foreach ($items as $item) {
-                $bool = $this->accountStatusHelper->changeAccountStatus(
-                    Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_DISABLED,
-                    $item
-                );
-            }
+            $action,
+            function (array $items) {
+                $bool = false;
+                foreach ($items as $item) {
+                    $bool = $this->accountStatusHelper->changeAccountStatus(
+                        Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_DISABLED,
+                        $item
+                    );
+                }
 
-            return $bool;
-        }
+                return $bool;
+            }
         );
     }
 }
