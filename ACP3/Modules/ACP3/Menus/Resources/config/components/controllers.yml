@@ -18,7 +18,6 @@ services:
     arguments:
       - '@core.context.admin'
       - '@core.helpers.formToken'
-      - '@menus.model.menurepository'
       - '@menus.model.menus_model'
       - '@menus.validator.menu'
 

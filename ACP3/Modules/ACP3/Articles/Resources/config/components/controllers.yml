@@ -26,7 +26,6 @@ services:
       - '@core.context.admin'
       - '@core.helpers.forms'
       - '@articles.model'
-      - '@articles.model.articlerepository'
       - '@articles.validator'
       - '@core.helpers.formToken'
     calls:

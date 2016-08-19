@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Permissions\Installer\Schema;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class RoleModel extends AbstractModel
+class RolesModel extends AbstractModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
 

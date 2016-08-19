@@ -19,46 +19,39 @@ class Edit extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
-     */
-    protected $roleRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation
      */
     protected $roleFormValidation;
     /**
-     * @var Permissions\Model\RoleModel
+     * @var Permissions\Model\RolesModel
      */
-    protected $roleModel;
+    protected $rolesModel;
 
     /**
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param Permissions\Model\RoleModel $roleModel
+     * @param Permissions\Model\RolesModel $rolesModel
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Permissions\Model\RoleModel $roleModel,
+        Permissions\Model\RolesModel $rolesModel,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Permissions\Model\Repository\RoleRepository $roleRepository,
         Permissions\Cache $permissionsCache,
         Permissions\Validation\RoleFormValidation $roleFormValidation
     ) {
         parent::__construct($context, $formsHelper, $privilegeRepository, $permissionsCache);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->roleRepository = $roleRepository;
         $this->roleFormValidation = $roleFormValidation;
-        $this->roleModel = $roleModel;
+        $this->rolesModel = $rolesModel;
     }
 
     /**
@@ -69,7 +62,7 @@ class Edit extends AbstractFormAction
      */
     public function execute($id)
     {
-        $role = $this->roleRepository->getOneById($id);
+        $role = $this->rolesModel->getOneById($id);
 
         if (!empty($role)) {
             $this->title->setPageTitlePostfix($role['name']);
@@ -107,7 +100,7 @@ class Edit extends AbstractFormAction
 
             $formData['parent_id'] = $roleId === 1 ? 0 : $formData['parent_id'];
 
-            return $this->roleModel->saveRole($formData, $roleId);
+            return $this->rolesModel->saveRole($formData, $roleId);
         });
     }
 }

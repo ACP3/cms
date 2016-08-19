@@ -22,7 +22,6 @@ services:
       - '@core.context.admin'
       - '@core.helpers.formToken'
       - '@seo.helper.meta_form_fields'
-      - '@seo.model.seorepository'
       - '@seo.model.seo_model'
       - '@seo.validator'
 

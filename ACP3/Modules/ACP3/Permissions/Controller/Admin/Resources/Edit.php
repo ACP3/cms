@@ -20,10 +20,6 @@ class Edit extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
-     */
-    protected $resourceRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
      */
     protected $resourceFormValidation;
@@ -37,7 +33,6 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
      * @param Permissions\Model\ResourcesModel $resourcesModel
      * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation $resourceFormValidation
      */
@@ -46,14 +41,12 @@ class Edit extends AbstractFormAction
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
-        Permissions\Model\Repository\ResourceRepository $resourceRepository,
         Permissions\Model\ResourcesModel $resourcesModel,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
         parent::__construct($context, $formsHelper, $privilegeRepository);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->resourceRepository = $resourceRepository;
         $this->resourceFormValidation = $resourceFormValidation;
         $this->resourcesModel = $resourcesModel;
     }
@@ -66,7 +59,8 @@ class Edit extends AbstractFormAction
      */
     public function execute($id)
     {
-        $resource = $this->resourceRepository->getResourceById($id);
+        $resource = $this->resourcesModel->getOneById($id);
+
         if (!empty($resource)) {
             if ($this->request->getPost()->count() !== 0) {
                 return $this->executePost($this->request->getPost()->all(), $id);

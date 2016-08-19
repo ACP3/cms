@@ -18,10 +18,6 @@ use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
 class Edit extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
-     */
-    protected $articleRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -50,7 +46,6 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param Articles\Model\ArticlesModel $articlesModel
-     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
      * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
@@ -58,13 +53,11 @@ class Edit extends AbstractFormAction
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelper,
         Articles\Model\ArticlesModel $articlesModel,
-        Articles\Model\Repository\ArticleRepository $articleRepository,
         Articles\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper
     ) {
         parent::__construct($context, $formsHelper);
 
-        $this->articleRepository = $articleRepository;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
         $this->articlesModel = $articlesModel;
@@ -110,7 +103,7 @@ class Edit extends AbstractFormAction
      */
     public function execute($id)
     {
-        $article = $this->articleRepository->getOneById($id);
+        $article = $this->articlesModel->getOneById($id);
 
         if (empty($article) === false) {
             $this->title->setPageTitlePostfix($article['title']);

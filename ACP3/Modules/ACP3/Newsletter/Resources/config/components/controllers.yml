@@ -39,7 +39,6 @@ services:
       - '@core.context.admin'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@newsletter.model.newsletterrepository'
       - '@newsletter.model'
       - '@newsletter.validator'
       - '@newsletter.helper.sendnewsletter'

@@ -25,7 +25,6 @@ services:
       - '@core.context.admin'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@news.model.newsrepository'
       - '@news.model'
       - '@news.validator'
       - '@categories.helpers'

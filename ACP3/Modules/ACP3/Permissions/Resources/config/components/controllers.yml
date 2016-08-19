@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Create
     arguments:
       - '@core.context.admin'
-      - '@permissions.model:role_model'
+      - '@permissions.model.roles_model'
       - '@permissions.model.privilegerepository'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
@@ -21,11 +21,10 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.admin'
-      - '@permissions.model:role_model'
+      - '@permissions.model.roles_model'
       - '@permissions.model.privilegerepository'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@permissions.model.rolerepository'
       - '@permissions.cache'
       - '@permissions.validator.role'
 
@@ -64,7 +63,6 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@permissions.model.privilegerepository'
-      - '@permissions.model.resourcerepository'
       - '@permissions.model.resources_model'
       - '@permissions.validator.resource'
 

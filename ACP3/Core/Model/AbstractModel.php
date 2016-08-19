@@ -147,4 +147,13 @@ abstract class AbstractModel
 
         return $affectedRows;
     }
+
+    /**
+     * @param int $entryId
+     * @return array
+     */
+    public function getOneById($entryId)
+    {
+        return $this->repository->getOneById($entryId);
+    }
 }

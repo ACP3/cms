@@ -20,7 +20,6 @@ services:
     arguments:
       - '@core.context.admin'
       - '@categories.model.categories_model'
-      - '@categories.model.categories_repository'
       - '@categories.validator'
       - '@core.helpers.formToken'
 

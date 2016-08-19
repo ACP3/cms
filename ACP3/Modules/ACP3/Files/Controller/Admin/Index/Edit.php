@@ -27,10 +27,6 @@ class Edit extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
-     */
-    protected $filesRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -50,7 +46,6 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Date $date
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
      * @param Files\Model\FilesModel $filesModel
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
@@ -60,7 +55,6 @@ class Edit extends AbstractFormAction
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Files\Model\Repository\FilesRepository $filesRepository,
         Files\Model\FilesModel $filesModel,
         Files\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
@@ -69,7 +63,6 @@ class Edit extends AbstractFormAction
 
         $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
-        $this->filesRepository = $filesRepository;
         $this->adminFormValidation = $adminFormValidation;
         $this->filesModel = $filesModel;
     }
@@ -82,7 +75,7 @@ class Edit extends AbstractFormAction
      */
     public function execute($id)
     {
-        $file = $this->filesRepository->getOneById($id);
+        $file = $this->filesModel->getOneById($id);
 
         if (empty($file) === false) {
             $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);

@@ -24,10 +24,6 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected $metaFormFieldsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
-     */
-    protected $seoRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -42,7 +38,6 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
-     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      * @param Seo\Model\SeoModel $seoModel
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
@@ -50,7 +45,6 @@ class Edit extends Core\Controller\AbstractAdminAction
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Helper\MetaFormFields $metaFormFieldsHelper,
-        Seo\Model\Repository\SeoRepository $seoRepository,
         Seo\Model\SeoModel $seoModel,
         Seo\Validation\AdminFormValidation $adminFormValidation
     ) {
@@ -58,7 +52,6 @@ class Edit extends Core\Controller\AbstractAdminAction
 
         $this->formTokenHelper = $formTokenHelper;
         $this->metaFormFieldsHelper = $metaFormFieldsHelper;
-        $this->seoRepository = $seoRepository;
         $this->adminFormValidation = $adminFormValidation;
         $this->seoModel = $seoModel;
     }
@@ -71,7 +64,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     public function execute($id)
     {
-        $seo = $this->seoRepository->getOneById($id);
+        $seo = $this->seoModel->getOneById($id);
 
         if (empty($seo) === false) {
             $this->title->setPageTitlePostfix($seo['alias']);

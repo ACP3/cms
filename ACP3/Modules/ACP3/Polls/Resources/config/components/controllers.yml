@@ -24,7 +24,6 @@ services:
       - '@core.date'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@polls.model.pollrepository'
       - '@polls.model.polls_model'
       - '@polls.model.answerrepository'
       - '@polls.validator'

@@ -26,7 +26,6 @@ services:
       - '@core.date'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@files.model.filesrepository'
       - '@files.model.files_model'
       - '@files.validator'
       - '@categories.helpers'

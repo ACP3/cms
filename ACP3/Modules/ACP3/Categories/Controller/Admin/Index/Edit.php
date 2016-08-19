@@ -16,10 +16,6 @@ use ACP3\Modules\ACP3\Categories;
 class Edit extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
-     */
-    protected $categoryRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -35,20 +31,17 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param Categories\Model\CategoriesModel $categoriesModel
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Categories\Model\CategoriesModel $categoriesModel,
-        Categories\Model\Repository\CategoryRepository $categoryRepository,
         Categories\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
-        $this->categoryRepository = $categoryRepository;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
         $this->categoriesModel = $categoriesModel;
@@ -62,7 +55,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     public function execute($id)
     {
-        $category = $this->categoryRepository->getOneById($id);
+        $category = $this->categoriesModel->getOneById($id);
 
         if (empty($category) === false) {
             $this->title->setPageTitlePostfix($category['title']);

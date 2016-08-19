@@ -22,7 +22,7 @@ class ResourceRepository extends Core\Model\AbstractRepository
      *
      * @return array
      */
-    public function getResourceById($resourceId)
+    public function getOneById($resourceId)
     {
         return $this->db->fetchAssoc(
             'SELECT r.page, r.area, r.controller, r.privilege_id, m.name AS module_name FROM ' . $this->getTableName() . ' AS r JOIN ' . $this->getTableName(ModuleRepository::TABLE_NAME) . ' AS m ON(m.id = r.module_id) WHERE r.id = ?',

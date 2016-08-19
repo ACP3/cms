@@ -23,7 +23,7 @@ class Create extends AbstractFormAction
      */
     protected $roleFormValidation;
     /**
-     * @var Permissions\Model\RoleModel
+     * @var Permissions\Model\RolesModel
      */
     protected $roleModel;
 
@@ -31,7 +31,7 @@ class Create extends AbstractFormAction
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param Permissions\Model\RoleModel $roleModel
+     * @param Permissions\Model\RolesModel $rolesModel
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
@@ -40,7 +40,7 @@ class Create extends AbstractFormAction
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Permissions\Model\RoleModel $roleModel,
+        Permissions\Model\RolesModel $rolesModel,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
@@ -51,7 +51,7 @@ class Create extends AbstractFormAction
 
         $this->formTokenHelper = $formTokenHelper;
         $this->roleFormValidation = $roleFormValidation;
-        $this->roleModel = $roleModel;
+        $this->roleModel = $rolesModel;
     }
 
     /**
