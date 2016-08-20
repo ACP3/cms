@@ -32,11 +32,10 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Create
     arguments:
       - '@core.context.admin'
-      - '@menus.nested_set.operation.insert'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@menus.model.menurepository'
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.menu_items_model'
       - '@menus.cache'
       - '@menus.helpers.menuitemformfields'
       - '@menus.validator.menuitem'
@@ -54,10 +53,9 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Edit
     arguments:
       - '@core.context.admin'
-      - '@menus.nested_set.operation.edit'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.menu_items_model'
       - '@menus.cache'
       - '@menus.helpers.menuitemformfields'
       - '@menus.validator.menuitem'

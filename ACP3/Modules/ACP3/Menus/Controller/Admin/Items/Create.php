@@ -36,38 +36,32 @@ class Create extends AbstractFormAction
      */
     protected $menuItemFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
-     */
-    protected $menuItemRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields
      */
     protected $menuItemFormFieldsHelper;
     /**
-     * @var Core\NestedSet\Operation\Insert
+     * @var Menus\Model\MenuItemsModel
      */
-    protected $insertOperation;
+    protected $menuItemsModel;
 
     /**
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param Core\NestedSet\Operation\Insert $insertOperation
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository $menuRepository
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
+     * @param Menus\Model\MenuItemsModel $menuItemsModel
      * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\NestedSet\Operation\Insert $insertOperation,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\Repository\MenuRepository $menuRepository,
-        Menus\Model\Repository\MenuItemRepository $menuItemRepository,
+        Menus\Model\MenuItemsModel $menuItemsModel,
         Menus\Cache $menusCache,
         Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper,
         Menus\Validation\MenuItemFormValidation $menuItemFormValidation
@@ -76,11 +70,10 @@ class Create extends AbstractFormAction
 
         $this->formTokenHelper = $formTokenHelper;
         $this->menuRepository = $menuRepository;
-        $this->menuItemRepository = $menuItemRepository;
         $this->menusCache = $menusCache;
         $this->menuItemFormFieldsHelper = $menuItemFormFieldsHelper;
         $this->menuItemFormValidation = $menuItemFormValidation;
-        $this->insertOperation = $insertOperation;
+        $this->menuItemsModel = $menuItemsModel;
     }
 
     /**
@@ -123,22 +116,11 @@ class Create extends AbstractFormAction
             function () use ($formData) {
                 $this->menuItemFormValidation->validate($formData);
 
-                $insertValues = [
-                    'id' => '',
-                    'mode' => $this->fetchMenuItemModeForSave($formData),
-                    'block_id' => (int)$formData['block_id'],
-                    'parent_id' => (int)$formData['parent_id'],
-                    'display' => $formData['display'],
-                    'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
-                    'uri' => $this->fetchMenuItemUriForSave($formData),
-                    'target' => $formData['display'] == 0 ? 1 : $formData['target'],
-                ];
-
-                $result = $this->insertOperation->execute($insertValues, (int)$formData['parent_id']);
+                $formData['mode'] = $this->fetchMenuItemModeForSave($formData);
+                $formData['uri'] = $this->fetchMenuItemUriForSave($formData);
+                $result = $this->menuItemsModel->saveMenuItem($formData);
 
                 $this->menusCache->saveMenusCache();
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
                 return $this->redirectMessages()->setMessage(
                     $result,

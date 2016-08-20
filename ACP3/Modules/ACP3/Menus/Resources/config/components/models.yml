@@ -15,3 +15,12 @@ services:
       - '@core.event_dispatcher'
       - '@core.helpers.secure'
       - '@menus.model.menurepository'
+
+  menus.model.menu_items_model:
+    class: ACP3\Modules\ACP3\Menus\Model\MenuItemsModel
+    arguments:
+      - '@core.event_dispatcher'
+      - '@menus.model.menuitemrepository'
+      - '@menus.nested_set.operation.insert'
+      - '@menus.nested_set.operation.edit'
+      - '@core.helpers.secure'
