@@ -11,11 +11,14 @@ use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractNestedSetModel;
 use ACP3\Core\NestedSet\Operation\Edit;
 use ACP3\Core\NestedSet\Operation\Insert;
+use ACP3\Modules\ACP3\Menus\Installer\Schema;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class MenuItemsModel extends AbstractNestedSetModel
 {
+    const EVENT_PREFIX = Schema::MODULE_NAME;
+
     /**
      * @var Secure
      */
