@@ -81,7 +81,7 @@ class Edit extends AbstractOperation
     protected function nodeIsRootItemAndNoChangeNeed($parentId, $blockId, array $items)
     {
         return empty($parentId) &&
-        ($this->enableBlocks === false || ($this->enableBlocks === true && $blockId == $items['block_id'])) &&
+        ($this->isBlockAware === false || ($this->isBlockAware === true && $blockId == $items['block_id'])) &&
         $this->nestedSetRepository->nodeIsRootItem($items['left_id'], $items['right_id']) === true;
     }
 
@@ -96,7 +96,7 @@ class Edit extends AbstractOperation
     protected function nodeBecomesRootNode($id, $blockId, array $nodes)
     {
         $itemDiff = $this->calcDiffBetweenNodes($nodes[0]['left_id'], $nodes[0]['right_id']);
-        if ($this->enableBlocks === true) {
+        if ($this->isBlockAware === true) {
             if ($nodes[0]['block_id'] != $blockId) {
                 $diff = $this->nodeBecomesRootNodeInNewBlock($blockId, $nodes, $itemDiff);
             } else {
@@ -184,7 +184,7 @@ class Edit extends AbstractOperation
             $parentId = $this->nestedSetRepository->fetchParentNode(
                 $node['left_id'], $node['right_id']
             );
-            if ($this->enableBlocks === true) {
+            if ($this->isBlockAware === true) {
                 $bool = $this->db->getConnection()->executeUpdate(
                     "UPDATE {$this->nestedSetRepository->getTableName()} SET block_id = ?, root_id = ?, parent_id = ?, left_id = ?, right_id = ? WHERE id = ?",
                     [

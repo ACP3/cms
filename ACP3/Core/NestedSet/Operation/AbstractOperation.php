@@ -7,6 +7,7 @@
 namespace ACP3\Core\NestedSet\Operation;
 
 use ACP3\Core\Database\Connection;
+use ACP3\Core\NestedSet\Model\Repository\BlockAwareNestedSetRepositoryInterface;
 use ACP3\Core\NestedSet\Model\Repository\NestedSetRepository;
 
 /**
@@ -23,11 +24,10 @@ abstract class AbstractOperation
      * @var \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository
      */
     protected $nestedSetRepository;
-
     /**
      * @var bool
      */
-    protected $enableBlocks = false;
+    protected $isBlockAware;
 
     /**
      * @param \ACP3\Core\Database\Connection $db
@@ -39,18 +39,7 @@ abstract class AbstractOperation
     ) {
         $this->db = $db;
         $this->nestedSetRepository = $nestedSetRepository;
-    }
-
-    /**
-     * @param bool $enableBlocks
-     *
-     * @return $this
-     */
-    public function setEnableBlocks($enableBlocks)
-    {
-        $this->enableBlocks = (bool)$enableBlocks;
-
-        return $this;
+        $this->isBlockAware = $nestedSetRepository instanceof BlockAwareNestedSetRepositoryInterface;
     }
 
     /**

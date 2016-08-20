@@ -6,13 +6,14 @@
 
 namespace ACP3\Modules\ACP3\Menus\Model\Repository;
 
+use ACP3\Core\NestedSet\Model\Repository\BlockAwareNestedSetRepositoryInterface;
 use ACP3\Core\NestedSet\Model\Repository\NestedSetRepository;
 
 /**
  * Class MenuItemRepository
  * @package ACP3\Modules\ACP3\Menus\Model\Repository
  */
-class MenuItemRepository extends NestedSetRepository
+class MenuItemRepository extends NestedSetRepository implements BlockAwareNestedSetRepositoryInterface
 {
     const TABLE_NAME = 'menu_items';
 

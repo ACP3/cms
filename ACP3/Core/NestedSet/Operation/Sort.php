@@ -147,6 +147,6 @@ class Sort extends AbstractOperation
      */
     protected function getBlockId(array $node)
     {
-        return ($this->enableBlocks === true ? $node['block_id'] : 0);
+        return ($this->isBlockAware === true ? $node['block_id'] : 0);
     }
 }
