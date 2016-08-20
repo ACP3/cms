@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Polls\Model\Repository;
  * Class DataGridRepository
  * @package ACP3\Modules\ACP3\Polls\Model\Repository
  */
-class DataGridRepository extends \ACP3\Core\Model\DataGridRepository
+class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
 {
     const TABLE_NAME = PollRepository::TABLE_NAME;
 }

@@ -10,7 +10,7 @@ namespace ACP3\Core\NestedSet\Model\Repository;
  * Class NestedSetRepository
  * @package ACP3\Core\NestedSet\Model\Repository
  */
-class NestedSetRepository extends \ACP3\Core\Model\AbstractRepository
+class NestedSetRepository extends \ACP3\Core\Model\Repository\AbstractRepository
 {
     /**
      * Die aktuelle Seite mit allen untergeordneten Seiten selektieren

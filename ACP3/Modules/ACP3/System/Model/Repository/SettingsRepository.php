@@ -12,7 +12,7 @@ use ACP3\Core;
  * Class SettingsRepository
  * @package ACP3\Modules\ACP3\System\Model\Repository
  */
-class SettingsRepository extends Core\Model\AbstractRepository
+class SettingsRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'settings';
 

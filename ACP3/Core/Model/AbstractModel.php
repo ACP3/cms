@@ -7,6 +7,7 @@
 namespace ACP3\Core\Model;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Repository\AbstractRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

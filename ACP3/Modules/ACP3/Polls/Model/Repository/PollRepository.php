@@ -12,9 +12,9 @@ use ACP3\Core;
  * Class PollRepository
  * @package ACP3\Modules\ACP3\Polls\Model\Repository
  */
-class PollRepository extends Core\Model\AbstractRepository
+class PollRepository extends Core\Model\Repository\AbstractRepository
 {
-    use Core\Model\PublicationPeriodAwareTrait;
+    use Core\Model\Repository\PublicationPeriodAwareTrait;
 
     const TABLE_NAME = 'polls';
 

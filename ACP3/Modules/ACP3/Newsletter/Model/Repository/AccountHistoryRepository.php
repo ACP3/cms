@@ -12,7 +12,7 @@ use ACP3\Core;
  * Class AccountHistoryRepository
  * @package ACP3\Modules\ACP3\Newsletter\Model\Repository
  */
-class AccountHistoryRepository extends Core\Model\AbstractRepository
+class AccountHistoryRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'newsletter_account_history';
 }

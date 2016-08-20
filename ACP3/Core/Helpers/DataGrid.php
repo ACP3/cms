@@ -8,7 +8,7 @@ use ACP3\Core\Helpers\DataGrid\ColumnRenderer\HeaderColumnRenderer;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\MassActionColumnRenderer;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Model\DataGridRepository;
+use ACP3\Core\Model\Repository\DataGridRepository;
 
 /**
  * Class DataGrid
@@ -25,7 +25,7 @@ class DataGrid
      */
     protected $translator;
     /**
-     * @var \ACP3\Core\Model\DataGridRepository
+     * @var \ACP3\Core\Model\Repository\DataGridRepository
      */
     protected $repository;
     /**
@@ -95,7 +95,7 @@ class DataGrid
     }
 
     /**
-     * @param \ACP3\Core\Model\DataGridRepository $repository
+     * @param \ACP3\Core\Model\Repository\DataGridRepository $repository
      *
      * @return $this
      */

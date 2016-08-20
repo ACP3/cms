@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Menus\Model\Repository;
 
-use ACP3\Core\Model\AbstractRepository;
+use ACP3\Core\Model\Repository\AbstractRepository;
 
 /**
  * Class MenuItemRepository

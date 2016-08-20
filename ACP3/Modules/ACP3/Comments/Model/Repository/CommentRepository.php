@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository;
  * Class CommentRepository
  * @package ACP3\Modules\ACP3\Comments\Model\Repository
  */
-class CommentRepository extends Core\Model\AbstractRepository implements Core\Model\FloodBarrierAwareRepositoryInterface
+class CommentRepository extends Core\Model\Repository\AbstractRepository implements Core\Model\Repository\FloodBarrierAwareRepositoryInterface
 {
     const TABLE_NAME = 'comments';
 
@@ -73,7 +73,7 @@ class CommentRepository extends Core\Model\AbstractRepository implements Core\Mo
     /**
      * @param string $ipAddress
      *
-     * @return mixed
+     * @return string
      */
     public function getLastDateFromIp($ipAddress)
     {

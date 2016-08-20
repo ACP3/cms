@@ -12,7 +12,7 @@ use ACP3\Core;
  * Class ModuleRepository
  * @package ACP3\Modules\ACP3\System\Model\Repository
  */
-class ModuleRepository extends Core\Model\AbstractRepository
+class ModuleRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'modules';
 
