@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Permissions\Model;
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
-use ACP3\Core\NestedSet\NestedSet;
 use ACP3\Core\NestedSet\Operation\Edit;
 use ACP3\Core\NestedSet\Operation\Insert;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
