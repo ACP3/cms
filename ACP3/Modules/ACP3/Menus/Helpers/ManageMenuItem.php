@@ -16,10 +16,6 @@ class ManageMenuItem
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Core\NestedSet\NestedSet
-     */
-    protected $nestedSet;
-    /**
      * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
      */
     protected $menuItemRepository;
@@ -27,23 +23,41 @@ class ManageMenuItem
      * @var Cache
      */
     protected $menusCache;
+    /**
+     * @var Core\NestedSet\Operation\Delete
+     */
+    protected $deleteOperation;
+    /**
+     * @var Core\NestedSet\Operation\Insert
+     */
+    protected $insertOperation;
+    /**
+     * @var Core\NestedSet\Operation\Edit
+     */
+    protected $editOperation;
 
     /**
      * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Core\NestedSet\NestedSet $nestedSet
+     * @param Core\NestedSet\Operation\Insert $insertOperation
+     * @param Core\NestedSet\Operation\Edit $editOperation
+     * @param Core\NestedSet\Operation\Delete $deleteOperation
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      * @param Cache $menusCache
      */
     public function __construct(
         Core\Helpers\Secure $secureHelper,
-        Core\NestedSet\NestedSet $nestedSet,
+        Core\NestedSet\Operation\Insert $insertOperation,
+        Core\NestedSet\Operation\Edit $editOperation,
+        Core\NestedSet\Operation\Delete $deleteOperation,
         MenuItemRepository $menuItemRepository,
         Cache $menusCache
     ) {
         $this->secureHelper = $secureHelper;
-        $this->nestedSet = $nestedSet;
         $this->menuItemRepository = $menuItemRepository;
         $this->menusCache = $menusCache;
+        $this->deleteOperation = $deleteOperation;
+        $this->insertOperation = $insertOperation;
+        $this->editOperation = $editOperation;
     }
 
     /**
@@ -65,11 +79,7 @@ class ManageMenuItem
                 $result = $this->updateMenuItem($data, $menuItem);
             }
         } elseif (!empty($menuItem)) {
-            $result = $this->nestedSet->deleteNode(
-                $menuItem['id'],
-                MenuItemRepository::TABLE_NAME,
-                true
-            );
+            $result = $this->deleteOperation->execute($menuItem['id']);
         }
 
         $this->menusCache->saveMenusCache();
@@ -95,12 +105,7 @@ class ManageMenuItem
             'target' => $data['target'],
         ];
 
-        return $this->nestedSet->insertNode(
-            (int)$data['parent_id'],
-            $insertValues,
-            MenuItemRepository::TABLE_NAME,
-            true
-        ) !== false;
+        return $this->insertOperation->execute($insertValues, (int)$data['parent_id']) !== false;
     }
 
     /**
@@ -117,13 +122,8 @@ class ManageMenuItem
             'title' => $this->secureHelper->strEncode($data['title'])
         ];
 
-        return $this->nestedSet->editNode(
-            $menuItem['id'],
-            (int)$data['parent_id'],
-            (int)$data['block_id'],
-            $updateValues,
-            MenuItemRepository::TABLE_NAME,
-            true
+        return $this->editOperation->execute(
+            $menuItem['id'], (int)$data['parent_id'], (int)$data['block_id'], $updateValues
         );
     }
 }

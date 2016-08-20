@@ -16,10 +16,6 @@ use ACP3\Modules\ACP3\Permissions;
 class Order extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Core\NestedSet\NestedSet
-     */
-    protected $nestedSet;
-    /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
      */
     protected $roleRepository;
@@ -27,26 +23,30 @@ class Order extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
     protected $permissionsCache;
+    /**
+     * @var Core\NestedSet\Operation\Sort
+     */
+    protected $sortOperation;
 
     /**
      * Order constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext          $context
-     * @param \ACP3\Core\NestedSet\NestedSet                                $nestedSet
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param Core\NestedSet\Operation\Sort $sortOperation
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\NestedSet\NestedSet $nestedSet,
+        Core\NestedSet\Operation\Sort $sortOperation,
         Permissions\Model\Repository\RoleRepository $roleRepository,
         Permissions\Cache $permissionsCache
     ) {
         parent::__construct($context);
 
-        $this->nestedSet = $nestedSet;
         $this->roleRepository = $roleRepository;
         $this->permissionsCache = $permissionsCache;
+        $this->sortOperation = $sortOperation;
     }
 
     /**
@@ -59,11 +59,7 @@ class Order extends Core\Controller\AbstractAdminAction
     public function execute($id, $action)
     {
         if ($this->roleRepository->roleExists($id) === true) {
-            $this->nestedSet->sort(
-                $id,
-                $action,
-                Permissions\Model\Repository\RoleRepository::TABLE_NAME
-            );
+            $this->sortOperation->execute($id, $action);
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
 

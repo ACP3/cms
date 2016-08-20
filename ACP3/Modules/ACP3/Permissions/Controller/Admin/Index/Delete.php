@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
 
 /**
  * Class Delete
@@ -17,30 +16,30 @@ use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Core\NestedSet\NestedSet
-     */
-    protected $nestedSet;
-    /**
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
     protected $permissionsCache;
+    /**
+     * @var Core\NestedSet\Operation\Delete
+     */
+    protected $deleteOperation;
 
     /**
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param \ACP3\Core\NestedSet\NestedSet $nestedSet
+     * @param Core\NestedSet\Operation\Delete $deleteOperation
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\NestedSet\NestedSet $nestedSet,
+        Core\NestedSet\Operation\Delete $deleteOperation,
         Permissions\Cache $permissionsCache
     ) {
         parent::__construct($context);
 
-        $this->nestedSet = $nestedSet;
         $this->permissionsCache = $permissionsCache;
+        $this->deleteOperation = $deleteOperation;
     }
 
     /**
@@ -60,7 +59,7 @@ class Delete extends Core\Controller\AbstractAdminAction
                     if (in_array($item, [1, 2, 4]) === true) {
                         $levelNotDeletable = true;
                     } else {
-                        $bool = $this->nestedSet->deleteNode($item, RoleRepository::TABLE_NAME);
+                        $bool = $this->deleteOperation->execute($item);
                     }
                 }
 

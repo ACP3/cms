@@ -20,22 +20,18 @@ class Sort extends AbstractOperation
      */
     public function execute($resultId, $mode)
     {
-        if ($this->nestedSetRepository->nodeExists($this->tableName, $resultId) === true) {
-            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($this->tableName, $resultId);
+        if ($this->nestedSetRepository->nodeExists($resultId) === true) {
+            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($resultId);
 
             if ($mode === 'up' &&
                 $this->nestedSetRepository->nextNodeExists(
-                    $this->tableName,
-                    $nodes[0]['left_id'] - 1,
-                    $this->getBlockId($nodes[0])
+                    $nodes[0]['left_id'] - 1, $this->getBlockId($nodes[0])
                 ) === true
             ) {
                 return $this->sortUp($nodes);
             } elseif ($mode === 'down' &&
                 $this->nestedSetRepository->previousNodeExists(
-                    $this->tableName,
-                    $nodes[0]['right_id'] + 1,
-                    $this->getBlockId($nodes[0])
+                    $nodes[0]['right_id'] + 1, $this->getBlockId($nodes[0])
                 ) === true
             ) {
                 return $this->sortDown($nodes);
@@ -54,7 +50,7 @@ class Sort extends AbstractOperation
     protected function sortUp(array $nodes)
     {
         $callback = function () use ($nodes) {
-            $prevNodes = $this->nestedSetRepository->fetchPrevNodeWithSiblings($this->tableName, $nodes[0]['left_id'] - 1);
+            $prevNodes = $this->nestedSetRepository->fetchPrevNodeWithSiblings($nodes[0]['left_id'] - 1);
 
             list($diffLeft, $diffRight) = $this->calcDiffBetweenNodes($nodes[0], $prevNodes[0]);
 
@@ -73,7 +69,7 @@ class Sort extends AbstractOperation
     protected function sortDown(array $nodes)
     {
         $callback = function () use ($nodes) {
-            $nextNodes = $this->nestedSetRepository->fetchNextNodeWithSiblings($this->tableName, $nodes[0]['right_id'] + 1);
+            $nextNodes = $this->nestedSetRepository->fetchNextNodeWithSiblings($nodes[0]['right_id'] + 1);
 
             list($diffLeft, $diffRight) = $this->calcDiffBetweenNodes($nextNodes[0], $nodes[0]);
 
@@ -108,7 +104,7 @@ class Sort extends AbstractOperation
     protected function updateNodesDown($diff, array $nodes)
     {
         return $this->db->getConnection()->executeUpdate(
-            "UPDATE {$this->tableName} SET left_id = left_id + ?, right_id = right_id + ? WHERE id IN(?)",
+            "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id + ?, right_id = right_id + ? WHERE id IN(?)",
             [$diff, $diff, $this->fetchAffectedNodesForReorder($nodes)],
             [\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
         );
@@ -124,7 +120,7 @@ class Sort extends AbstractOperation
     protected function moveNodesUp($diff, array $nodes)
     {
         return $this->db->getConnection()->executeUpdate(
-            "UPDATE {$this->tableName} SET left_id = left_id - ?, right_id = right_id - ? WHERE id IN(?)",
+            "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE id IN(?)",
             [$diff, $diff, $this->fetchAffectedNodesForReorder($nodes)],
             [\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
         );

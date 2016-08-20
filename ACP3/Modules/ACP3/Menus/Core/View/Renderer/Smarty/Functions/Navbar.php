@@ -174,7 +174,7 @@ class Navbar extends AbstractFunction
                 $this->request->getModuleAndController(),
                 $this->request->getModule()
             ];
-            return (int)$this->menuItemRepository->getLeftIdByUris($menu, $in);
+            return $this->menuItemRepository->getLeftIdByUris($menu, $in);
         }
 
         return 0;

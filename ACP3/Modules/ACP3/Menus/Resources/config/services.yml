@@ -5,6 +5,7 @@ imports:
   - { resource: components/helpers.yml }
   - { resource: components/installer.yml }
   - { resource: components/models.yml }
+  - { resource: components/nested_set.yml }
   - { resource: components/overrides.yml }
   - { resource: components/validation.yml }
 

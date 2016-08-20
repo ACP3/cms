@@ -51,7 +51,7 @@ abstract class AbstractRepository
      *
      * @return string
      */
-    protected function getTableName($tableName = '')
+    public function getTableName($tableName = '')
     {
         return $this->db->getPrefixedTableName(!empty($tableName) ? $tableName : static::TABLE_NAME);
     }

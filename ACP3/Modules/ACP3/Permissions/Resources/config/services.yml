@@ -3,6 +3,7 @@ imports:
   - { resource: components/events.yml }
   - { resource: components/installer.yml }
   - { resource: components/models.yml }
+  - { resource: components/nested_set.yml }
   - { resource: components/validation.yml }
 
 services:

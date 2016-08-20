@@ -16,14 +16,6 @@ use ACP3\Modules\ACP3\Menus;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Core\NestedSet\NestedSet
-     */
-    protected $nestedSet;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
-     */
-    protected $menuItemRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Menus\Cache
      */
     protected $menusCache;
@@ -31,26 +23,27 @@ class Delete extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
      */
     protected $uriAliasManager;
+    /**
+     * @var Core\NestedSet\Operation\Delete
+     */
+    protected $deleteOperation;
 
     /**
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param \ACP3\Core\NestedSet\NestedSet $nestedSet
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
+     * @param Core\NestedSet\Operation\Delete $deleteOperation
      * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\NestedSet\NestedSet $nestedSet,
-        Menus\Model\Repository\MenuItemRepository $menuItemRepository,
+        Core\NestedSet\Operation\Delete $deleteOperation,
         Menus\Cache $menusCache
     ) {
         parent::__construct($context);
 
-        $this->nestedSet = $nestedSet;
-        $this->menuItemRepository = $menuItemRepository;
         $this->menusCache = $menusCache;
+        $this->deleteOperation = $deleteOperation;
     }
 
     /**
@@ -67,10 +60,7 @@ class Delete extends Core\Controller\AbstractAdminAction
                 $bool = false;
 
                 foreach ($items as $item) {
-                    $bool = $this->nestedSet->deleteNode($item,
-                        Menus\Model\Repository\MenuItemRepository::TABLE_NAME,
-                        true
-                    );
+                    $bool = $this->deleteOperation->execute($item);
                 }
 
                 $this->menusCache->saveMenusCache();

@@ -16,10 +16,6 @@ use ACP3\Modules\ACP3\Menus;
 class Create extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\NestedSet\NestedSet
-     */
-    protected $nestedSet;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
@@ -47,23 +43,27 @@ class Create extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields
      */
     protected $menuItemFormFieldsHelper;
+    /**
+     * @var Core\NestedSet\Operation\Insert
+     */
+    protected $insertOperation;
 
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                 $context
-     * @param \ACP3\Core\NestedSet\NestedSet                                       $nestedSet
-     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository              $menuRepository
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository          $menuItemRepository
-     * @param \ACP3\Modules\ACP3\Menus\Cache                             $menusCache
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields        $menuItemFormFieldsHelper
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param Core\NestedSet\Operation\Insert $insertOperation
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository $menuRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\NestedSet\NestedSet $nestedSet,
+        Core\NestedSet\Operation\Insert $insertOperation,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\Repository\MenuRepository $menuRepository,
@@ -74,13 +74,13 @@ class Create extends AbstractFormAction
     ) {
         parent::__construct($context, $formsHelper);
 
-        $this->nestedSet = $nestedSet;
         $this->formTokenHelper = $formTokenHelper;
         $this->menuRepository = $menuRepository;
         $this->menuItemRepository = $menuItemRepository;
         $this->menusCache = $menusCache;
         $this->menuItemFormFieldsHelper = $menuItemFormFieldsHelper;
         $this->menuItemFormValidation = $menuItemFormValidation;
+        $this->insertOperation = $insertOperation;
     }
 
     /**
@@ -134,12 +134,7 @@ class Create extends AbstractFormAction
                     'target' => $formData['display'] == 0 ? 1 : $formData['target'],
                 ];
 
-                $result = $this->nestedSet->insertNode(
-                    (int)$formData['parent_id'],
-                    $insertValues,
-                    Menus\Model\Repository\MenuItemRepository::TABLE_NAME,
-                    true
-                );
+                $result = $this->insertOperation->execute($insertValues, (int)$formData['parent_id']);
 
                 $this->menusCache->saveMenusCache();
 

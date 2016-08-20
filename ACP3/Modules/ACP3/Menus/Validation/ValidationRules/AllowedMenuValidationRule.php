@@ -52,7 +52,7 @@ class AllowedMenuValidationRule extends AbstractValidationRule
             return true;
         }
 
-        $parentMenuId = $this->menuItemRepository->getMenuItemMenuIdById($parentId);
+        $parentMenuId = $this->menuItemRepository->getMenuIdByMenuItemId($parentId);
 
         return (!empty($parentMenuId) && $parentMenuId == $menuId);
     }

@@ -35,5 +35,6 @@ services:
     arguments:
       - '@core.event_dispatcher'
       - '@core.helpers.secure'
-      - '@core.nested_set'
+      - '@permissions.nested_set.operation.insert'
+      - '@permissions.nested_set.operation.edit'
       - '@permissions.model.rolerepository'
