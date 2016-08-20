@@ -3,9 +3,9 @@ services:
     class: ACP3\Modules\ACP3\Menus\Event\Listener\OnMenusModelBeforeDeleteListener
     arguments:
       - '@menus.cache'
-      - '@menus.nested_set.operation.delete'
       - '@menus.model.menurepository'
       - '@menus.model.menuitemrepository'
+      - '@menus.model.menu_items_model'
     tags:
       - { name: core.eventListener, event: menus.model.menus.before_delete, method: execute }
 

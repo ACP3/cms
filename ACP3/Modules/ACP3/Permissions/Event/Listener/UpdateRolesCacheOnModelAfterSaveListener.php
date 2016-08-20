@@ -55,7 +55,6 @@ class UpdateRolesCacheOnModelAfterSaveListener
         foreach ($privileges as $moduleId => $modulePrivileges) {
             foreach ($modulePrivileges as $privilegeId => $permission) {
                 $ruleInsertValues = [
-                    'id' => '',
                     'role_id' => $roleId,
                     'module_id' => $moduleId,
                     'privilege_id' => $privilegeId,
