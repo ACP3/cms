@@ -24,8 +24,10 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      */
     public function menuItemExists($menuItemId)
     {
-        return ((int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id",
-                ['id' => $menuItemId]) > 0);
+        return ((int)$this->db->fetchColumn(
+                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id",
+                ['id' => $menuItemId]
+            ) > 0);
     }
 
     /**
