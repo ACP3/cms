@@ -14,10 +14,6 @@ use ACP3\Modules\ACP3\Users\Model\UserModel;
 class Pagination
 {
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
-     */
-    protected $user;
-    /**
      * @var \ACP3\Core\Breadcrumb\Title
      */
     protected $title;
@@ -86,7 +82,6 @@ class Pagination
         RequestInterface $request,
         RouterInterface $router
     ) {
-        $this->user = $user;
         $this->title = $title;
         $this->translator = $translator;
         $this->request = $request;
@@ -148,7 +143,9 @@ class Pagination
      */
     public function getResultsStartOffset()
     {
-        return (int)$this->request->getParameters()->get('page') >= 1 ? (int)($this->request->getParameters()->get('page') - 1) * $this->resultsPerPage : 0;
+        return (int)$this->request->getParameters()->get('page') >= 1
+            ? (int)($this->request->getParameters()->get('page') - 1) * $this->resultsPerPage
+            : 0;
     }
 
     /**
@@ -157,7 +154,9 @@ class Pagination
     public function render()
     {
         if ($this->totalResults > $this->resultsPerPage) {
-            $link = $this->router->route(($this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $this->request->getUriWithoutPages());
+            $areaPrefix = $this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '';
+            $link = $this->router->route($areaPrefix . $this->request->getUriWithoutPages());
+
             $this->currentPage = (int)$this->request->getParameters()->get('page', 1);
             $this->totalPages = (int)ceil($this->totalResults / $this->resultsPerPage);
 
@@ -183,6 +182,9 @@ class Pagination
         return $this->pagination;
     }
 
+    /**
+     * @return void
+     */
     protected function setMetaStatements()
     {
         if ($this->currentPage > 1) {

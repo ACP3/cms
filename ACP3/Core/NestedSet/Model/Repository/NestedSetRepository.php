@@ -6,17 +6,19 @@
 
 namespace ACP3\Core\NestedSet\Model\Repository;
 
+use ACP3\Core\Model\Repository\AbstractRepository;
+
 /**
  * Class NestedSetRepository
  * @package ACP3\Core\NestedSet\Model\Repository
  */
-class NestedSetRepository extends \ACP3\Core\Model\Repository\AbstractRepository
+class NestedSetRepository extends AbstractRepository
 {
     /**
      * Die aktuelle Seite mit allen untergeordneten Seiten selektieren
      *
      * @param string $tableName
-     * @param int    $nodeId
+     * @param int $nodeId
      *
      * @return array
      */
@@ -30,7 +32,7 @@ class NestedSetRepository extends \ACP3\Core\Model\Repository\AbstractRepository
 
     /**
      * @param string $tableName
-     * @param int    $leftId
+     * @param int $leftId
      *
      * @return array
      */
@@ -44,7 +46,7 @@ class NestedSetRepository extends \ACP3\Core\Model\Repository\AbstractRepository
 
     /**
      * @param string $tableName
-     * @param int    $rightId
+     * @param int $rightId
      *
      * @return array
      */
@@ -58,7 +60,7 @@ class NestedSetRepository extends \ACP3\Core\Model\Repository\AbstractRepository
 
     /**
      * @param string $tableName
-     * @param int    $nodeId
+     * @param int $nodeId
      *
      * @return bool
      */
@@ -69,57 +71,67 @@ class NestedSetRepository extends \ACP3\Core\Model\Repository\AbstractRepository
 
     /**
      * @param string $tableName
-     * @param int    $rightId
-     * @param int    $blockId
+     * @param int $rightId
+     * @param int $blockId
      *
      * @return bool
      */
     public function nextNodeExists($tableName, $rightId, $blockId = 0)
     {
         $where = ($blockId !== 0) ? ' AND block_id = ?' : '';
-        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$tableName} WHERE right_id = ? {$where}", [$rightId, $blockId]) > 0;
+        return $this->db->fetchColumn(
+            "SELECT COUNT(*) FROM {$tableName} WHERE right_id = ? {$where}",
+            [$rightId, $blockId]
+        ) > 0;
     }
 
     /**
      * @param string $tableName
-     * @param int    $rightId
-     * @param int    $blockId
+     * @param int $rightId
+     * @param int $blockId
      *
      * @return bool
      */
     public function previousNodeExists($tableName, $rightId, $blockId = 0)
     {
         $where = ($blockId !== 0) ? ' AND block_id = ?' : '';
-        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$tableName} WHERE left_id = ? {$where}", [$rightId, $blockId]) > 0;
+        return $this->db->fetchColumn(
+            "SELECT COUNT(*) FROM {$tableName} WHERE left_id = ? {$where}",
+            [$rightId, $blockId]
+        ) > 0;
     }
 
     /**
      * @param string $tableName
-     * @param int    $nodeId
+     * @param int $nodeId
      *
      * @return array
      */
     public function fetchNodeById($tableName, $nodeId)
     {
-        return $this->db->fetchAssoc("SELECT `root_id`, `left_id`, `right_id` FROM {$tableName} WHERE id = ?", [$nodeId]);
+        return $this->db->fetchAssoc("SELECT `root_id`, `left_id`, `right_id` FROM {$tableName} WHERE id = ?",
+            [$nodeId]);
     }
 
     /**
      * @param string $tableName
-     * @param int    $leftId
-     * @param int    $rightId
+     * @param int $leftId
+     * @param int $rightId
      *
      * @return bool
      */
     public function nodeIsRootItem($tableName, $leftId, $rightId)
     {
-        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$tableName} WHERE left_id < ? AND right_id > ?", [$leftId, $rightId]) == 0;
+        return $this->db->fetchColumn(
+            "SELECT COUNT(*) FROM {$tableName} WHERE left_id < ? AND right_id > ?",
+            [$leftId, $rightId]
+        ) == 0;
     }
 
     /**
      * @param string $tableName
-     * @param int    $leftId
-     * @param int    $rightId
+     * @param int $leftId
+     * @param int $rightId
      *
      * @return int
      */
@@ -133,8 +145,8 @@ class NestedSetRepository extends \ACP3\Core\Model\Repository\AbstractRepository
 
     /**
      * @param string $tableName
-     * @param int    $leftId
-     * @param int    $rightId
+     * @param int $leftId
+     * @param int $rightId
      *
      * @return int
      */
@@ -148,7 +160,7 @@ class NestedSetRepository extends \ACP3\Core\Model\Repository\AbstractRepository
 
     /**
      * @param string $tableName
-     * @param int    $blockId
+     * @param int $blockId
      *
      * @return int
      */
@@ -163,7 +175,7 @@ class NestedSetRepository extends \ACP3\Core\Model\Repository\AbstractRepository
     /**
      * @param string $tableName
      *
-     * @return mixed
+     * @return int
      */
     public function fetchMaximumRightId($tableName)
     {
@@ -172,7 +184,7 @@ class NestedSetRepository extends \ACP3\Core\Model\Repository\AbstractRepository
 
     /**
      * @param string $tableName
-     * @param int    $blockId
+     * @param int $blockId
      *
      * @return int
      */
