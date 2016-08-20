@@ -14,7 +14,7 @@ class UpdateResourcesCacheOnModelAfterSaveListener
     /**
      * @var Cache
      */
-    private $cache;
+    protected $cache;
 
     /**
      * UpdateResourcesCacheOnModelAfterSaveListener constructor.

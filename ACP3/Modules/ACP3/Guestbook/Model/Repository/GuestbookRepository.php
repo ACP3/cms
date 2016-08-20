@@ -12,7 +12,7 @@ use ACP3\Core;
  * Class GuestbookRepository
  * @package ACP3\Modules\ACP3\Guestbook\Model\Repository
  */
-class GuestbookRepository extends Core\Model\AbstractRepository implements Core\Model\FloodBarrierAwareRepositoryInterface
+class GuestbookRepository extends Core\Model\Repository\AbstractRepository implements Core\Model\Repository\FloodBarrierAwareRepositoryInterface
 {
     const TABLE_NAME = 'guestbook';
 
@@ -57,10 +57,10 @@ class GuestbookRepository extends Core\Model\AbstractRepository implements Core\
     /**
      * @param string $ipAddress
      *
-     * @return mixed
+     * @return string
      */
     public function getLastDateFromIp($ipAddress)
     {
-        return $this->db->fetchColumn('SELECT MAX(date) FROM ' . $this->getTableName() . ' WHERE ip = ?', [$ipAddress]);
+        return $this->db->fetchColumn('SELECT MAX(`date`) FROM ' . $this->getTableName() . ' WHERE ip = ?', [$ipAddress]);
     }
 }

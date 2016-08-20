@@ -34,6 +34,8 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Model\RolesModel
     arguments:
       - '@core.event_dispatcher'
-      - '@core.helpers.secure'
-      - '@core.nested_set'
       - '@permissions.model.rolerepository'
+      - '@permissions.nested_set.operation.insert'
+      - '@permissions.nested_set.operation.edit'
+      - '@menus.nested_set.operation.delete'
+      - '@core.helpers.secure'

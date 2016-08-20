@@ -12,9 +12,9 @@ use ACP3\Core;
  * Class ArticleRepository
  * @package ACP3\Modules\ACP3\Articles\Model\Repository
  */
-class ArticleRepository extends Core\Model\AbstractRepository
+class ArticleRepository extends Core\Model\Repository\AbstractRepository
 {
-    use Core\Model\PublicationPeriodAwareTrait;
+    use Core\Model\Repository\PublicationPeriodAwareTrait;
 
     const TABLE_NAME = 'articles';
 

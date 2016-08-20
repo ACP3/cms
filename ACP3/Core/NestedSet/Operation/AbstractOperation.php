@@ -7,6 +7,7 @@
 namespace ACP3\Core\NestedSet\Operation;
 
 use ACP3\Core\Database\Connection;
+use ACP3\Core\NestedSet\Model\Repository\BlockAwareNestedSetRepositoryInterface;
 use ACP3\Core\NestedSet\Model\Repository\NestedSetRepository;
 
 /**
@@ -23,18 +24,13 @@ abstract class AbstractOperation
      * @var \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository
      */
     protected $nestedSetRepository;
-
     /**
      * @var bool
      */
-    protected $enableBlocks;
-    /**
-     * @var string
-     */
-    protected $tableName;
+    protected $isBlockAware;
 
     /**
-     * @param \ACP3\Core\Database\Connection           $db
+     * @param \ACP3\Core\Database\Connection $db
      * @param \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository $nestedSetRepository
      */
     public function __construct(
@@ -43,30 +39,7 @@ abstract class AbstractOperation
     ) {
         $this->db = $db;
         $this->nestedSetRepository = $nestedSetRepository;
-    }
-
-    /**
-     * @param string $tableName
-     *
-     * @return $this
-     */
-    public function setTableName($tableName)
-    {
-        $this->tableName = $this->db->getPrefixedTableName($tableName);
-
-        return $this;
-    }
-
-    /**
-     * @param bool $enableBlocks
-     *
-     * @return $this
-     */
-    public function setEnableBlocks($enableBlocks)
-    {
-        $this->enableBlocks = $enableBlocks;
-
-        return $this;
+        $this->isBlockAware = $nestedSetRepository instanceof BlockAwareNestedSetRepositoryInterface;
     }
 
     /**
@@ -79,7 +52,7 @@ abstract class AbstractOperation
     protected function adjustParentNodesAfterSeparation($diff, $leftId, $rightId)
     {
         $this->db->getConnection()->executeUpdate(
-            "UPDATE {$this->tableName} SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?",
+            "UPDATE {$this->nestedSetRepository->getTableName()} SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?",
             [$diff, $leftId, $rightId]
         );
     }
@@ -94,7 +67,7 @@ abstract class AbstractOperation
     protected function adjustParentNodesAfterInsert($diff, $leftId, $rightId)
     {
         $this->db->getConnection()->executeUpdate(
-            "UPDATE {$this->tableName} SET right_id = right_id + ? WHERE left_id <= ? AND right_id >= ?",
+            "UPDATE {$this->nestedSetRepository->getTableName()} SET right_id = right_id + ? WHERE left_id <= ? AND right_id >= ?",
             [$diff, $leftId, $rightId]
         );
     }
@@ -108,7 +81,7 @@ abstract class AbstractOperation
     protected function adjustFollowingNodesAfterSeparation($diff, $leftId)
     {
         $this->db->getConnection()->executeUpdate(
-            "UPDATE {$this->tableName} SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?",
+            "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?",
             [$diff, $diff, $leftId]
         );
     }
@@ -122,7 +95,7 @@ abstract class AbstractOperation
     protected function adjustFollowingNodesAfterInsert($diff, $leftId)
     {
         $this->db->getConnection()->executeUpdate(
-            "UPDATE {$this->tableName} SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id >= ?",
+            "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id >= ?",
             [$diff, $diff, $leftId]
         );
     }

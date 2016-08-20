@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
 
 /**
  * Class Delete
@@ -17,30 +16,30 @@ use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Core\NestedSet\NestedSet
-     */
-    protected $nestedSet;
-    /**
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
     protected $permissionsCache;
+    /**
+     * @var Permissions\Model\RolesModel
+     */
+    protected $rolesModel;
 
     /**
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param \ACP3\Core\NestedSet\NestedSet $nestedSet
+     * @param Permissions\Model\RolesModel $rolesModel
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\NestedSet\NestedSet $nestedSet,
+        Permissions\Model\RolesModel $rolesModel,
         Permissions\Cache $permissionsCache
     ) {
         parent::__construct($context);
 
-        $this->nestedSet = $nestedSet;
         $this->permissionsCache = $permissionsCache;
+        $this->rolesModel = $rolesModel;
     }
 
     /**
@@ -60,7 +59,7 @@ class Delete extends Core\Controller\AbstractAdminAction
                     if (in_array($item, [1, 2, 4]) === true) {
                         $levelNotDeletable = true;
                     } else {
-                        $bool = $this->nestedSet->deleteNode($item, RoleRepository::TABLE_NAME);
+                        $bool = $this->rolesModel->delete($item);
                     }
                 }
 
@@ -73,8 +72,6 @@ class Delete extends Core\Controller\AbstractAdminAction
                     $result = $bool !== false;
                     $text = $this->translator->t('system', $result ? 'delete_success' : 'delete_error');
                 }
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
                 return $this->redirectMessages()->setMessage($result, $text);
             }

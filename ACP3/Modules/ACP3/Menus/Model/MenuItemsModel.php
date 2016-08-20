@@ -4,7 +4,7 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Permissions\Model;
+namespace ACP3\Modules\ACP3\Menus\Model;
 
 
 use ACP3\Core\Helpers\Secure;
@@ -12,11 +12,11 @@ use ACP3\Core\Model\AbstractNestedSetModel;
 use ACP3\Core\NestedSet\Operation\Delete;
 use ACP3\Core\NestedSet\Operation\Edit;
 use ACP3\Core\NestedSet\Operation\Insert;
-use ACP3\Modules\ACP3\Permissions\Installer\Schema;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
+use ACP3\Modules\ACP3\Menus\Installer\Schema;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class RolesModel extends AbstractNestedSetModel
+class MenuItemsModel extends AbstractNestedSetModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
@@ -26,9 +26,9 @@ class RolesModel extends AbstractNestedSetModel
     protected $secure;
 
     /**
-     * RoleModel constructor.
+     * MenuItemsModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
-     * @param RoleRepository $roleRepository
+     * @param MenuItemRepository $repository
      * @param Insert $insertOperation
      * @param Edit $editOperation
      * @param Delete $deleteOperation
@@ -36,27 +36,32 @@ class RolesModel extends AbstractNestedSetModel
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        RoleRepository $roleRepository,
+        MenuItemRepository $repository,
         Insert $insertOperation,
         Edit $editOperation,
         Delete $deleteOperation,
         Secure $secure
     ) {
-        parent::__construct($eventDispatcher, $roleRepository, $insertOperation, $editOperation, $deleteOperation);
+        parent::__construct($eventDispatcher, $repository, $insertOperation, $editOperation, $deleteOperation);
 
         $this->secure = $secure;
     }
 
     /**
      * @param array $formData
-     * @param int|null $entryId
+     * @param null|int $entryId
      * @return bool|int
      */
-    public function saveRole(array $formData, $entryId = null)
+    public function saveMenuItem(array $formData, $entryId = null)
     {
         $data = [
-            'name' => $this->secure->strEncode($formData['name']),
+            'mode' => (int)$formData['mode'],
+            'block_id' => (int)$formData['block_id'],
             'parent_id' => (int)$formData['parent_id'],
+            'display' => $formData['display'],
+            'title' => $this->secure->strEncode($formData['title']),
+            'uri' => $formData['uri'],
+            'target' => $formData['display'] == 0 ? 1 : $formData['target'],
         ];
 
         return $this->save($data, $entryId);

@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository;
  * Class CategoryRepository
  * @package ACP3\Modules\ACP3\Categories\Model\Repository
  */
-class CategoryRepository extends Core\Model\AbstractRepository
+class CategoryRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'categories';
 

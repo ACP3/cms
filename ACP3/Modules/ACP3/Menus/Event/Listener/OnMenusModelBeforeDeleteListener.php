@@ -8,8 +8,8 @@ namespace ACP3\Modules\ACP3\Menus\Event\Listener;
 
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Core\NestedSet\NestedSet;
 use ACP3\Modules\ACP3\Menus\Cache;
+use ACP3\Modules\ACP3\Menus\Model\MenuItemsModel;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
 
@@ -28,27 +28,27 @@ class OnMenusModelBeforeDeleteListener
      */
     protected $menuItemRepository;
     /**
-     * @var NestedSet
+     * @var MenuItemsModel
      */
-    protected $nestedSet;
+    protected $menuItemsModel;
 
     /**
      * OnMenusModelBeforeDeleteListener constructor.
      * @param Cache $cache
      * @param MenuRepository $menuRepository
      * @param MenuItemRepository $menuItemRepository
-     * @param NestedSet $nestedSet
+     * @param MenuItemsModel $menuItemsModel
      */
     public function __construct(
         Cache $cache,
         MenuRepository $menuRepository,
         MenuItemRepository $menuItemRepository,
-        NestedSet $nestedSet
+        MenuItemsModel $menuItemsModel
     ) {
         $this->cache = $cache;
         $this->menuRepository = $menuRepository;
         $this->menuItemRepository = $menuItemRepository;
-        $this->nestedSet = $nestedSet;
+        $this->menuItemsModel = $menuItemsModel;
     }
 
     /**
@@ -65,11 +65,7 @@ class OnMenusModelBeforeDeleteListener
                 // Delete the assigned menu items and update the nested set tree
                 $menuItems = $this->menuItemRepository->getAllItemsByBlockId($item);
                 foreach ($menuItems as $menuItem) {
-                    $this->nestedSet->deleteNode(
-                        $menuItem['id'],
-                        MenuItemRepository::TABLE_NAME,
-                        true
-                    );
+                    $this->menuItemsModel->delete($menuItem['id']);
                 }
 
                 $menuName = $this->menuRepository->getMenuNameById($item);

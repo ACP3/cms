@@ -13,7 +13,6 @@ imports:
   - { resource: components/http.yml }
   - { resource: components/language.yml }
   - { resource: components/modules.yml }
-  - { resource: components/nestedsets.yml }
   - { resource: components/validation.yml }
   - { resource: components/view.yml }
   - { resource: components/wysiwyg.yml }

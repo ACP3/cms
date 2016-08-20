@@ -1,11 +1,16 @@
 <?php
-namespace ACP3\Core\Model;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\Model\Repository;
 
 use ACP3\Core\Database\Connection;
 
 /**
  * Class AbstractRepository
- * @package ACP3\Core\Model
+ * @package ACP3\Core\Model\Repository
  */
 abstract class AbstractRepository
 {
@@ -46,7 +51,7 @@ abstract class AbstractRepository
      *
      * @return string
      */
-    protected function getTableName($tableName = '')
+    public function getTableName($tableName = '')
     {
         return $this->db->getPrefixedTableName(!empty($tableName) ? $tableName : static::TABLE_NAME);
     }

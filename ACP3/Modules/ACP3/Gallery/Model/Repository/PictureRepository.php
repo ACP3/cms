@@ -12,9 +12,9 @@ use ACP3\Core;
  * Class PictureRepository
  * @package ACP3\Modules\ACP3\Gallery\Model\Repository
  */
-class PictureRepository extends Core\Model\AbstractRepository
+class PictureRepository extends Core\Model\Repository\AbstractRepository
 {
-    use Core\Model\PublicationPeriodAwareTrait;
+    use Core\Model\Repository\PublicationPeriodAwareTrait;
 
     const TABLE_NAME = 'gallery_pictures';
 

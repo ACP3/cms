@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository;
  * Class ResourceRepository
  * @package ACP3\Modules\ACP3\Permissions\Model\Repository
  */
-class ResourceRepository extends Core\Model\AbstractRepository
+class ResourceRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'acl_resources';
 

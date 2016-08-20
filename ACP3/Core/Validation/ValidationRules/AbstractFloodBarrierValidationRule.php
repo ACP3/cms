@@ -2,7 +2,7 @@
 namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\Date;
-use ACP3\Core\Model\FloodBarrierAwareRepositoryInterface;
+use ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface;
 
 /**
  * Class FloodBarrierValidationRule
@@ -15,7 +15,7 @@ abstract class AbstractFloodBarrierValidationRule extends AbstractValidationRule
      */
     protected $date;
     /**
-     * @var \ACP3\Core\Model\FloodBarrierAwareRepositoryInterface
+     * @var \ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface
      */
     protected $repository;
 
@@ -23,7 +23,7 @@ abstract class AbstractFloodBarrierValidationRule extends AbstractValidationRule
      * FloodBarrierValidationRule constructor.
      *
      * @param \ACP3\Core\Date                                       $date
-     * @param \ACP3\Core\Model\FloodBarrierAwareRepositoryInterface $repository
+     * @param \ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface $repository
      */
     public function __construct(
         Date $date,

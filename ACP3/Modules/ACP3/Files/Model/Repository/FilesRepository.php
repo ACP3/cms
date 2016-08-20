@@ -12,9 +12,9 @@ use ACP3\Core;
  * Class FilesRepository
  * @package ACP3\Modules\ACP3\Files\Model\Repository
  */
-class FilesRepository extends Core\Model\AbstractRepository
+class FilesRepository extends Core\Model\Repository\AbstractRepository
 {
-    use Core\Model\PublicationPeriodAwareTrait;
+    use Core\Model\Repository\PublicationPeriodAwareTrait;
 
     const TABLE_NAME = 'files';
 

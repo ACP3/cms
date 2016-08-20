@@ -16,41 +16,30 @@ use ACP3\Modules\ACP3\Menus;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Core\NestedSet\NestedSet
-     */
-    protected $nestedSet;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
-     */
-    protected $menuItemRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Menus\Cache
      */
     protected $menusCache;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     * @var Menus\Model\MenuItemsModel
      */
-    protected $uriAliasManager;
+    protected $menuItemsModel;
 
     /**
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param \ACP3\Core\NestedSet\NestedSet $nestedSet
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
+     * @param Menus\Model\MenuItemsModel $menuItemsModel
      * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\NestedSet\NestedSet $nestedSet,
-        Menus\Model\Repository\MenuItemRepository $menuItemRepository,
+        Menus\Model\MenuItemsModel $menuItemsModel,
         Menus\Cache $menusCache
     ) {
         parent::__construct($context);
 
-        $this->nestedSet = $nestedSet;
-        $this->menuItemRepository = $menuItemRepository;
         $this->menusCache = $menusCache;
+        $this->menuItemsModel = $menuItemsModel;
     }
 
     /**
@@ -64,20 +53,11 @@ class Delete extends Core\Controller\AbstractAdminAction
         return $this->actionHelper->handleDeleteAction(
             $action,
             function (array $items) {
-                $bool = false;
-
-                foreach ($items as $item) {
-                    $bool = $this->nestedSet->deleteNode($item,
-                        Menus\Model\Repository\MenuItemRepository::TABLE_NAME,
-                        true
-                    );
-                }
+                $result = $this->menuItemsModel->delete($items);
 
                 $this->menusCache->saveMenusCache();
 
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-                return $bool;
+                return $result;
             },
             null,
             'acp/menus'

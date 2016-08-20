@@ -12,7 +12,7 @@ use ACP3\Core;
  * Class PrivilegeRepository
  * @package ACP3\Modules\ACP3\Permissions\Model\Repository
  */
-class PrivilegeRepository extends Core\Model\AbstractRepository
+class PrivilegeRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'acl_privileges';
 

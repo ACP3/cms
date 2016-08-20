@@ -5,7 +5,7 @@ services:
       - '@menus.cache'
       - '@menus.model.menurepository'
       - '@menus.model.menuitemrepository'
-      - '@core.nested_set'
+      - '@menus.model.menu_items_model'
     tags:
       - { name: core.eventListener, event: menus.model.menus.before_delete, method: execute }
 

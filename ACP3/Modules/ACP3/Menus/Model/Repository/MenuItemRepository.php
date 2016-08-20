@@ -6,13 +6,14 @@
 
 namespace ACP3\Modules\ACP3\Menus\Model\Repository;
 
-use ACP3\Core\Model\AbstractRepository;
+use ACP3\Core\NestedSet\Model\Repository\BlockAwareNestedSetRepositoryInterface;
+use ACP3\Core\NestedSet\Model\Repository\NestedSetRepository;
 
 /**
  * Class MenuItemRepository
  * @package ACP3\Modules\ACP3\Menus\Model\Repository
  */
-class MenuItemRepository extends AbstractRepository
+class MenuItemRepository extends NestedSetRepository implements BlockAwareNestedSetRepositoryInterface
 {
     const TABLE_NAME = 'menu_items';
 
@@ -23,13 +24,16 @@ class MenuItemRepository extends AbstractRepository
      */
     public function menuItemExists($menuItemId)
     {
-        return ((int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id", ['id' => $menuItemId]) > 0);
+        return ((int)$this->db->fetchColumn(
+                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id",
+                ['id' => $menuItemId]
+            ) > 0);
     }
 
     /**
      * @param string $uri
      *
-     * @return mixed
+     * @return array
      */
     public function getOneMenuItemByUri($uri)
     {
@@ -55,7 +59,7 @@ class MenuItemRepository extends AbstractRepository
     /**
      * @param int $menuItemId
      *
-     * @return mixed
+     * @return string
      */
     public function getMenuItemUriById($menuItemId)
     {
@@ -68,11 +72,11 @@ class MenuItemRepository extends AbstractRepository
     /**
      * @param int $menuItemId
      *
-     * @return mixed
+     * @return int
      */
-    public function getMenuItemMenuIdById($menuItemId)
+    public function getMenuIdByMenuItemId($menuItemId)
     {
-        return $this->db->fetchColumn(
+        return (int)$this->db->fetchColumn(
             "SELECT `block_id` FROM {$this->getTableName()} WHERE id = ?",
             [$menuItemId]
         );
@@ -81,11 +85,11 @@ class MenuItemRepository extends AbstractRepository
     /**
      * @param string $uri
      *
-     * @return mixed
+     * @return int
      */
     public function getMenuItemIdByUri($uri)
     {
-        return $this->db->fetchColumn(
+        return (int)$this->db->fetchColumn(
             "SELECT `id` FROM {$this->getTableName()} WHERE uri = ?",
             [$uri]
         );
@@ -118,12 +122,12 @@ class MenuItemRepository extends AbstractRepository
      * @param string $menuName
      * @param array $uris
      *
-     * @return mixed
+     * @return int
      * @throws \Doctrine\DBAL\DBALException
      */
     public function getLeftIdByUris($menuName, array $uris)
     {
-        return $this->db->executeQuery(
+        return (int)$this->db->executeQuery(
             "SELECT m.left_id FROM {$this->getTableName()} AS m JOIN {$this->getTableName(MenuRepository::TABLE_NAME)} AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC",
             [$menuName, $uris],
             [\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY])->fetch(\PDO::FETCH_COLUMN

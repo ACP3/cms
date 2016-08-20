@@ -32,11 +32,10 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Create
     arguments:
       - '@core.context.admin'
-      - '@core.nested_set'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@menus.model.menurepository'
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.menu_items_model'
       - '@menus.cache'
       - '@menus.helpers.menuitemformfields'
       - '@menus.validator.menuitem'
@@ -47,18 +46,16 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Delete
     arguments:
       - '@core.context.admin'
-      - '@core.nested_set'
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.menu_items_model'
       - '@menus.cache'
 
   menus.controller.admin.items.edit:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Edit
     arguments:
       - '@core.context.admin'
-      - '@core.nested_set'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.menu_items_model'
       - '@menus.cache'
       - '@menus.helpers.menuitemformfields'
       - '@menus.validator.menuitem'
@@ -69,6 +66,6 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Order
     arguments:
       - '@core.context.admin'
-      - '@core.nested_set'
+      - '@menus.nested_set.operation.sort'
       - '@menus.model.menuitemrepository'
       - '@menus.cache'

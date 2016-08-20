@@ -4,14 +4,14 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Core\Model;
+namespace ACP3\Core\Model\Repository;
 
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
  * Class DataGridRepository
- * @package ACP3\Core\Model
+ * @package ACP3\Core\Model\Repository
  */
 class DataGridRepository extends AbstractRepository
 {

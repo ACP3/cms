@@ -9,7 +9,9 @@ services:
     class: ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem
     arguments:
       - '@core.helpers.secure'
-      - '@core.nested_set'
+      - '@menus.nested_set.operation.insert'
+      - '@menus.nested_set.operation.edit'
+      - '@menus.nested_set.operation.delete'
       - '@menus.model.menuitemrepository'
       - '@menus.cache'
 
