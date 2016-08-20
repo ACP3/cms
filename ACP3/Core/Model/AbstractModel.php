@@ -84,7 +84,7 @@ abstract class AbstractModel
      * @param array $data
      * @param int|null|array $entryId
      */
-    private function dispatchEvent($eventName, array $data, $entryId)
+    protected function dispatchEvent($eventName, array $data, $entryId)
     {
         $this->eventDispatcher->dispatch(
             $eventName,

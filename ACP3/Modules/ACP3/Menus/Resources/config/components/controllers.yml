@@ -46,7 +46,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Delete
     arguments:
       - '@core.context.admin'
-      - '@menus.nested_set.operation.delete'
+      - '@menus.model.menu_items_model'
       - '@menus.cache'
 
   menus.controller.admin.items.edit:

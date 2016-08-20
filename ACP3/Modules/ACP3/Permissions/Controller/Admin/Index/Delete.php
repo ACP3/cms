@@ -20,26 +20,26 @@ class Delete extends Core\Controller\AbstractAdminAction
      */
     protected $permissionsCache;
     /**
-     * @var Core\NestedSet\Operation\Delete
+     * @var Permissions\Model\RolesModel
      */
-    protected $deleteOperation;
+    protected $rolesModel;
 
     /**
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param Core\NestedSet\Operation\Delete $deleteOperation
+     * @param Permissions\Model\RolesModel $rolesModel
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\NestedSet\Operation\Delete $deleteOperation,
+        Permissions\Model\RolesModel $rolesModel,
         Permissions\Cache $permissionsCache
     ) {
         parent::__construct($context);
 
         $this->permissionsCache = $permissionsCache;
-        $this->deleteOperation = $deleteOperation;
+        $this->rolesModel = $rolesModel;
     }
 
     /**
@@ -59,7 +59,7 @@ class Delete extends Core\Controller\AbstractAdminAction
                     if (in_array($item, [1, 2, 4]) === true) {
                         $levelNotDeletable = true;
                     } else {
-                        $bool = $this->deleteOperation->execute($item);
+                        $bool = $this->rolesModel->delete($item);
                     }
                 }
 
@@ -72,8 +72,6 @@ class Delete extends Core\Controller\AbstractAdminAction
                     $result = $bool !== false;
                     $text = $this->translator->t('system', $result ? 'delete_success' : 'delete_error');
                 }
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
                 return $this->redirectMessages()->setMessage($result, $text);
             }

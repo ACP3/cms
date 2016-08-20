@@ -14,7 +14,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
-      - '@permissions.nested_set.operation.delete'
+      - '@permissions.model.roles_model'
       - '@permissions.cache'
 
   permissions.controller.admin.index.edit:

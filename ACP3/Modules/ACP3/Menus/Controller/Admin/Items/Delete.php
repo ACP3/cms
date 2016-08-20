@@ -20,30 +20,26 @@ class Delete extends Core\Controller\AbstractAdminAction
      */
     protected $menusCache;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     * @var Menus\Model\MenuItemsModel
      */
-    protected $uriAliasManager;
-    /**
-     * @var Core\NestedSet\Operation\Delete
-     */
-    protected $deleteOperation;
+    protected $menuItemsModel;
 
     /**
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param Core\NestedSet\Operation\Delete $deleteOperation
+     * @param Menus\Model\MenuItemsModel $menuItemsModel
      * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\NestedSet\Operation\Delete $deleteOperation,
+        Menus\Model\MenuItemsModel $menuItemsModel,
         Menus\Cache $menusCache
     ) {
         parent::__construct($context);
 
         $this->menusCache = $menusCache;
-        $this->deleteOperation = $deleteOperation;
+        $this->menuItemsModel = $menuItemsModel;
     }
 
     /**
@@ -57,17 +53,11 @@ class Delete extends Core\Controller\AbstractAdminAction
         return $this->actionHelper->handleDeleteAction(
             $action,
             function (array $items) {
-                $bool = false;
-
-                foreach ($items as $item) {
-                    $bool = $this->deleteOperation->execute($item);
-                }
+                $result = $this->menuItemsModel->delete($items);
 
                 $this->menusCache->saveMenusCache();
 
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-                return $bool;
+                return $result;
             },
             null,
             'acp/menus'

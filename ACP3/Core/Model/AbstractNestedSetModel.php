@@ -8,6 +8,7 @@ namespace ACP3\Core\Model;
 
 
 use ACP3\Core\Model\Repository\AbstractRepository;
+use ACP3\Core\NestedSet\Operation\Delete;
 use ACP3\Core\NestedSet\Operation\Edit;
 use ACP3\Core\NestedSet\Operation\Insert;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -22,6 +23,10 @@ abstract class AbstractNestedSetModel extends AbstractModel
      * @var Edit
      */
     protected $editOperation;
+    /**
+     * @var
+     */
+    protected $deleteOperation;
 
     /**
      * AbstractNestedSetModel constructor.
@@ -29,17 +34,20 @@ abstract class AbstractNestedSetModel extends AbstractModel
      * @param AbstractRepository $repository
      * @param Insert $insertOperation
      * @param Edit $editOperation
+     * @param $deleteOperation
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         AbstractRepository $repository,
         Insert $insertOperation,
-        Edit $editOperation
+        Edit $editOperation,
+        Delete $deleteOperation
     ) {
         parent::__construct($eventDispatcher, $repository);
 
         $this->insertOperation = $insertOperation;
         $this->editOperation = $editOperation;
+        $this->deleteOperation = $deleteOperation;
     }
 
     /**
@@ -64,5 +72,47 @@ abstract class AbstractNestedSetModel extends AbstractModel
         $this->dispatchAfterSaveEvent($this->repository, $data, $entryId);
 
         return $result;
+    }
+
+    /**
+     * @param int|array $entryId
+     * @return int
+     */
+    public function delete($entryId)
+    {
+        $repository = $this->repository;
+
+        if (!is_array($entryId)) {
+            $entryId = [$entryId];
+        }
+
+        $this->dispatchEvent(
+            'core.model.before_delete',
+            [],
+            $entryId
+        );
+        $this->dispatchEvent(
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete',
+            [],
+            $entryId
+        );
+
+        $affectedRows = 0;
+        foreach ($entryId as $item) {
+            $affectedRows += (int)$this->deleteOperation->execute($item);
+        }
+
+        $this->dispatchEvent(
+            'core.model.before_delete',
+            [],
+            $entryId
+        );
+        $this->dispatchEvent(
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete',
+            [],
+            $entryId
+        );
+
+        return $affectedRows;
     }
 }
