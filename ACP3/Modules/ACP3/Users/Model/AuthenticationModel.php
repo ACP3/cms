@@ -141,7 +141,8 @@ class AuthenticationModel
             $userId . '|' . $token,
             (new \DateTime())->modify('+' . $expiry . ' seconds'),
             $this->appPath->getWebRoot(),
-            $this->getCookieDomain()
+            $this->getCookieDomain(),
+            $this->request->getSymfonyRequest()->isSecure()
         );
     }
 

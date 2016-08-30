@@ -64,7 +64,13 @@ class SessionHandler extends AbstractSessionHandler
     protected function startSession()
     {
         // Set the session cookie parameters
-        session_set_cookie_params(0, $this->appPath->getWebRoot());
+        session_set_cookie_params(
+            0,
+            $this->appPath->getWebRoot(),
+            null,
+            $this->request->getSymfonyRequest()->isSecure(),
+            true
+        );
 
         // Start the session
         session_start();
@@ -153,7 +159,8 @@ class SessionHandler extends AbstractSessionHandler
                 self::SESSION_NAME,
                 '',
                 (new \DateTime())->modify('-3600 seconds'),
-                $this->appPath->getWebRoot()
+                $this->appPath->getWebRoot(),
+                $this->request->getSymfonyRequest()->isSecure()
             );
             $this->response->headers->setCookie($cookie);
         }
