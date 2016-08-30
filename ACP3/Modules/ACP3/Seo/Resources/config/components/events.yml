@@ -1,6 +1,6 @@
 services:
-  seo.event.on_controller_action_dispatcher_before_dispatch_listener:
-    class: ACP3\Modules\ACP3\Seo\Event\Listener\OnControllerActionDispatcherBeforeDispatchListener
+  seo.event.on_controller_action_before_dispatch_listener:
+    class: ACP3\Modules\ACP3\Seo\Event\Listener\OnControllerActionBeforeDispatchListener
     arguments:
       - '@core.http.request'
       - '@core.router'
