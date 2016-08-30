@@ -6,7 +6,8 @@
 
 namespace ACP3\Core\Application;
 
-use ACP3\Core\Application\Event\ControllerActionDispatcherDispatchEvent;
+use ACP3\Core\Application\Event\ControllerActionAfterDispatchEvent;
+use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
 use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -72,7 +73,7 @@ class ControllerActionDispatcher
         if ($this->container->has($serviceId)) {
             $this->eventDispatcher->dispatch(
                 'core.application.controller_action_dispatcher.before_dispatch',
-                new ControllerActionDispatcherDispatchEvent($serviceId)
+                new ControllerActionBeforeDispatchEvent($serviceId)
             );
 
             /** @var \ACP3\Core\Controller\ActionInterface $controller */
@@ -82,7 +83,7 @@ class ControllerActionDispatcher
 
             $this->eventDispatcher->dispatch(
                 'core.application.controller_action_dispatcher.after_dispatch',
-                new ControllerActionDispatcherDispatchEvent($serviceId)
+                new ControllerActionAfterDispatchEvent($serviceId, $response)
             );
 
             return $response;

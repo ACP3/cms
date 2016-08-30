@@ -6,14 +6,13 @@
 
 namespace ACP3\Core\Application\Event;
 
-
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * Class ControllerActionDispatcherDispatchEvent
+ * Class ControllerActionBeforeDispatchEvent
  * @package ACP3\Core\Application\Event
  */
-class ControllerActionDispatcherDispatchEvent extends Event
+class ControllerActionBeforeDispatchEvent extends Event
 {
     /**
      * @var string
