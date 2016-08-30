@@ -160,6 +160,7 @@ class SessionHandler extends AbstractSessionHandler
                 '',
                 (new \DateTime())->modify('-3600 seconds'),
                 $this->appPath->getWebRoot(),
+                null,
                 $this->request->getSymfonyRequest()->isSecure()
             );
             $this->response->headers->setCookie($cookie);
