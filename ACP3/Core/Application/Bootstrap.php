@@ -7,10 +7,10 @@ use ACP3\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Http\RedirectResponse;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\View;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Patchwork\Utf8;
 use Symfony\Component\Config\ConfigCache;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +24,7 @@ class Bootstrap extends AbstractBootstrap
     /**
      * @var array
      */
-    protected $systemSettings = [];
+    private $systemSettings = [];
 
     /**
      * @inheritdoc
@@ -40,47 +40,7 @@ class Bootstrap extends AbstractBootstrap
     /**
      * @inheritdoc
      */
-    public function startupChecks()
-    {
-        // Standardzeitzone festlegen
-        date_default_timezone_set('UTC');
-
-        return $this->databaseConfigExists();
-    }
-
-    /**
-     * Checks, whether the maintenance mode is active
-     *
-     * @param \ACP3\Core\Http\RequestInterface $request
-     *
-     * @return bool
-     */
-    private function maintenanceModeIsEnabled(RequestInterface $request)
-    {
-        return (bool)$this->systemSettings['maintenance_mode'] === true &&
-        $request->getArea() !== AreaEnum::AREA_ADMIN &&
-        strpos($request->getQuery(), 'users/index/login/') !== 0;
-    }
-
-    /**
-     * @return Response
-     */
-    private function displayMaintenanceMode()
-    {
-        header('HTTP/1.0 503 Service Unavailable');
-
-        $view = $this->container->get('core.view');
-        $view->assign('PAGE_TITLE', 'ACP3');
-        $view->assign('ROOT_DIR', $this->appPath->getWebRoot());
-        $view->assign('CONTENT', $this->systemSettings['maintenance_message']);
-
-        return new Response($view->fetchTemplate('system/maintenance.tpl'));
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function initializeClasses(SymfonyRequest $symfonySymfonyRequest)
+    public function initializeClasses(SymfonyRequest $symfonyRequest)
     {
         Utf8\Bootup::initAll(); // Enables the portability layer and configures PHP for UTF-8
         Utf8\Bootup::filterRequestUri(); // Redirects to an UTF-8 encoded URL if it's not already the case
@@ -88,30 +48,32 @@ class Bootstrap extends AbstractBootstrap
 
         $file = $this->appPath->getCacheDir() . 'container.php';
 
-        $this->dumpContainer($symfonySymfonyRequest, $file);
+        $this->dumpContainer($symfonyRequest, $file);
 
         require_once $file;
 
         $this->container = new \ACP3ServiceContainer();
         $this->container->set('core.environment.application_path', $this->appPath);
-        $this->container->set('core.http.symfony_request', $symfonySymfonyRequest);
+        $this->container->set('core.http.symfony_request', $symfonyRequest);
     }
 
     /**
-     * Sets the theme paths
+     * @param SymfonyRequest $symfonyRequest
+     * @param string $filePath
      */
-    private function setThemePaths()
+    private function dumpContainer(SymfonyRequest $symfonyRequest, $filePath)
     {
-        $path = 'designs/' . $this->systemSettings['design'] . '/';
+        $containerConfigCache = new ConfigCache($filePath, ($this->appMode === ApplicationMode::DEVELOPMENT));
 
-        $this->appPath
-            ->setDesignPathWeb($this->appPath->getWebRoot() . $path)
-            ->setDesignPathInternal(ACP3_ROOT_DIR . $path)
-            ->setDesignPathAbsolute(
-                $this->container->get('core.http.request')->getScheme()
-                . $this->container->get('core.http.request')->getHttpHost()
-                . $this->appPath->getDesignPathWeb()
+        if (!$containerConfigCache->isFresh()) {
+            $containerBuilder = ServiceContainerBuilder::create($this->appPath, $symfonyRequest, $this->appMode);
+
+            $dumper = new PhpDumper($containerBuilder);
+            $containerConfigCache->write(
+                $dumper->dump(['class' => 'ACP3ServiceContainer']),
+                $containerBuilder->getResources()
             );
+        }
     }
 
     /**
@@ -119,7 +81,6 @@ class Bootstrap extends AbstractBootstrap
      */
     public function outputPage()
     {
-        // Load system settings
         $this->systemSettings = $this->container->get('core.config')->getSettings(Schema::MODULE_NAME);
         $this->setThemePaths();
         $this->container->get('core.authentication')->authenticate();
@@ -127,8 +88,8 @@ class Bootstrap extends AbstractBootstrap
         /** @var \ACP3\Core\Http\Request $request */
         $request = $this->container->get('core.http.request');
 
-        if ($this->maintenanceModeIsEnabled($request)) {
-            return $this->displayMaintenanceMode();
+        if ($this->isMaintenanceModeEnabled($request)) {
+            return $this->handleMaintenanceMode();
         }
 
         /** @var \ACP3\Core\Http\RedirectResponse $redirect */
@@ -157,11 +118,69 @@ class Bootstrap extends AbstractBootstrap
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * Sets the theme paths
      */
-    public function setContainer(ContainerInterface $container)
+    private function setThemePaths()
     {
-        $this->container = $container;
+        $path = 'designs/' . $this->systemSettings['design'] . '/';
+
+        $this->appPath
+            ->setDesignPathWeb($this->appPath->getWebRoot() . $path)
+            ->setDesignPathInternal(ACP3_ROOT_DIR . $path)
+            ->setDesignPathAbsolute(
+                $this->container->get('core.http.request')->getScheme()
+                . $this->container->get('core.http.request')->getHttpHost()
+                . $this->appPath->getDesignPathWeb()
+            );
+    }
+
+    /**
+     * Checks, whether the maintenance mode is active
+     *
+     * @param \ACP3\Core\Http\RequestInterface $request
+     *
+     * @return bool
+     */
+    private function isMaintenanceModeEnabled(RequestInterface $request)
+    {
+        return (bool)$this->systemSettings['maintenance_mode'] === true &&
+        $request->getArea() !== AreaEnum::AREA_ADMIN &&
+        strpos($request->getQuery(), 'users/index/login/') !== 0;
+    }
+
+    /**
+     * @return Response
+     */
+    private function handleMaintenanceMode()
+    {
+        /** @var View $view */
+        $view = $this->container->get('core.view');
+
+        $view->assign([
+            'PAGE_TITLE' => 'ACP3',
+            'ROOT_DIR' => $this->appPath->getWebRoot(),
+            'CONTENT' => $this->systemSettings['maintenance_message']
+        ]);
+
+        $response = new Response($view->fetchTemplate('system/maintenance.tpl'));
+        $response->setStatusCode(Response::HTTP_SERVICE_UNAVAILABLE);
+
+        return $response;
+    }
+
+    /**
+     * @param \Exception $exception
+     * @param \ACP3\Core\Http\RedirectResponse $redirect
+     * @param string $route
+     * @return Response
+     */
+    private function handleException(\Exception $exception, RedirectResponse $redirect, $route)
+    {
+        if ($this->appMode === ApplicationMode::DEVELOPMENT) {
+            return $this->renderApplicationException($exception);
+        }
+
+        return $redirect->temporary($route);
     }
 
     /**
@@ -172,45 +191,28 @@ class Bootstrap extends AbstractBootstrap
      */
     private function renderApplicationException(\Exception $exception)
     {
+        /** @var View $view */
         $view = $this->container->get('core.view');
-        $view->assign('ROOT_DIR', $this->appPath->getWebRoot());
-        $view->assign('PAGE_TITLE', 'ACP3');
-        $view->assign('EXCEPTION', $exception);
 
-        return new Response($view->fetchTemplate('system/exception.tpl'));
+        $view->assign([
+            'PAGE_TITLE' => 'ACP3',
+            'ROOT_DIR' => $this->appPath->getWebRoot(),
+            'EXCEPTION' => $exception
+        ]);
+
+        $response = new Response($view->fetchTemplate('system/exception.tpl'));
+        $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+
+        return $response;
     }
 
     /**
-     * @param \Exception $exception
-     * @param \ACP3\Core\Http\RedirectResponse $redirect
-     * @param string $route
-     * @return Response
+     * @inheritdoc
      */
-    protected function handleException(\Exception $exception, RedirectResponse $redirect, $route)
+    public function startupChecks()
     {
-        if ($this->appMode === ApplicationMode::DEVELOPMENT) {
-            return $this->renderApplicationException($exception);
-        }
+        date_default_timezone_set('UTC');
 
-        return $redirect->temporary($route);
-    }
-
-    /**
-     * @param SymfonyRequest $symfonyRequest
-     * @param string $filePath
-     */
-    protected function dumpContainer(SymfonyRequest $symfonyRequest, $filePath)
-    {
-        $containerConfigCache = new ConfigCache($filePath, ($this->appMode === ApplicationMode::DEVELOPMENT));
-
-        if (!$containerConfigCache->isFresh()) {
-            $containerBuilder = ServiceContainerBuilder::create($this->appPath, $symfonyRequest, $this->appMode);
-
-            $dumper = new PhpDumper($containerBuilder);
-            $containerConfigCache->write(
-                $dumper->dump(['class' => 'ACP3ServiceContainer']),
-                $containerBuilder->getResources()
-            );
-        }
+        return $this->databaseConfigExists();
     }
 }
