@@ -43,8 +43,8 @@ class JavaScript extends AbstractMinifier
         foreach ($this->assets->getLibraries() as $library) {
             if ($library['enabled'] === true && isset($library[$this->assetGroup]) === true) {
                 $this->javascript[] = $this->fileResolver->getStaticAssetPath(
-                    $this->systemAssetsModulePath,
-                    $this->systemAssetsDesignPath,
+                    !empty($library['module']) ? $library['module'] . '/Resources' : $this->systemAssetsModulePath,
+                    !empty($library['module']) ? $library['module'] : $this->systemAssetsDesignPath,
                     static::ASSETS_PATH_JS,
                     $library[$this->assetGroup]
                 );

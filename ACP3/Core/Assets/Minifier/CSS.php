@@ -44,8 +44,8 @@ class CSS extends AbstractMinifier
         foreach ($this->assets->getLibraries() as $library) {
             if ($library['enabled'] === true && isset($library[$this->assetGroup]) === true) {
                 $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-                    $this->systemAssetsModulePath,
-                    $this->systemAssetsDesignPath,
+                    !empty($library['module']) ? $library['module'] . '/Resources' : $this->systemAssetsModulePath,
+                    !empty($library['module']) ? $library['module'] : $this->systemAssetsDesignPath,
                     static::ASSETS_PATH_CSS,
                     $library[$this->assetGroup]
                 );
