@@ -23,7 +23,7 @@ class JavaScript extends AbstractMinifier
      */
     protected function processLibraries($layout)
     {
-        $cacheId = $this->buildCacheId('js', $layout);
+        $cacheId = $this->buildCacheId($this->assetGroup, $layout);
 
         if ($this->systemCache->contains($cacheId) === false) {
             $this->fetchLibraries();
@@ -41,8 +41,13 @@ class JavaScript extends AbstractMinifier
     protected function fetchLibraries()
     {
         foreach ($this->assets->getLibraries() as $library) {
-            if ($library['enabled'] === true && isset($library['js']) === true) {
-                $this->javascript[] = $this->fileResolver->getStaticAssetPath($this->systemAssetsModulePath, $this->systemAssetsDesignPath, static::ASSETS_PATH_JS_LIBS, $library['js']);
+            if ($library['enabled'] === true && isset($library[$this->assetGroup]) === true) {
+                $this->javascript[] = $this->fileResolver->getStaticAssetPath(
+                    !empty($library['module']) ? $library['module'] . '/Resources' : $this->systemAssetsModulePath,
+                    !empty($library['module']) ? $library['module'] : $this->systemAssetsDesignPath,
+                    static::ASSETS_PATH_JS,
+                    $library[$this->assetGroup]
+                );
             }
         }
     }

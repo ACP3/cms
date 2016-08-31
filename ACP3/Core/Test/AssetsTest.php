@@ -5,6 +5,7 @@ namespace ACP3\Core\Test;
 use ACP3\Core\Assets;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AssetsTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,13 +13,37 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
      * @var Assets
      */
     private $assets;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $eventDispatcherMock;
 
     protected function setUp()
     {
+        $this->setUpMockObjects();
+
         $appPath = new ApplicationPath(ApplicationMode::DEVELOPMENT);
         $appPath->setDesignPathInternal(ACP3_ROOT_DIR . 'tests/designs/acp3/');
+        $libraries = new Assets\Libraries($this->eventDispatcherMock);
 
-        $this->assets = new Assets($appPath);
+        $this->assets = new Assets($appPath, $libraries);
+    }
+
+    private function setUpMockObjects()
+    {
+        $this->eventDispatcherMock = $this->getMockBuilder(EventDispatcherInterface::class)
+            ->setMethods([
+                'dispatch',
+                'addListener',
+                'addSubscriber',
+                'removeListener',
+                'removeSubscriber',
+                'getListeners',
+                'getListenerPriority',
+                'hasListeners'
+            ])
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
     public function testDefaultLibrariesEnabled()
@@ -48,5 +73,4 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(['additional-script.js'], $files);
     }
-
 }

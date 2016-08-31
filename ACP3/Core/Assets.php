@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\Assets\Libraries;
 use ACP3\Core\Environment\ApplicationPath;
 
 /**
@@ -9,50 +10,6 @@ use ACP3\Core\Environment\ApplicationPath;
  */
 class Assets
 {
-    /**
-     * Legt fest, welche Bibliotheken beim Seitenaufruf geladen werden sollen
-     * @var array
-     */
-    protected $libraries = [
-        'moment' => [
-            'enabled' => false,
-            'js' => 'moment.min.js'
-        ],
-        'jquery' => [
-            'enabled' => true,
-            'js' => 'jquery.min.js'
-        ],
-        'fancybox' => [
-            'enabled' => false,
-            'dependencies' => ['jquery'],
-            'css' => 'jquery.fancybox.css',
-            'js' => 'jquery.fancybox.pack.js'
-        ],
-        'bootstrap' => [
-            'enabled' => false,
-            'dependencies' => ['jquery'],
-            'css' => 'bootstrap.min.css',
-            'js' => 'bootstrap.min.js'
-        ],
-        'datatables' => [
-            'enabled' => false,
-            'dependencies' => ['bootstrap'],
-            'css' => 'dataTables.bootstrap.css',
-            'js' => 'jquery.dataTables.min.js'
-        ],
-        'bootbox' => [
-            'enabled' => false,
-            'dependencies' => ['bootstrap'],
-            'js' => 'bootbox.js'
-        ],
-        'datetimepicker' => [
-            'enabled' => false,
-            'dependencies' => ['jquery', 'moment'],
-            'css' => 'bootstrap-datetimepicker.css',
-            'js' => 'bootstrap-datetimepicker.min.js'
-        ],
-    ];
-
     /**
      * @var array
      */
@@ -69,19 +26,27 @@ class Assets
      * @var \SimpleXMLElement
      */
     protected $designXml;
+    /**
+     * @var Libraries
+     */
+    protected $libraries;
 
     /**
-     * Checks, whether the current design uses Twitter Bootstrap or not
+     * Checks, whether the current design uses Bootstrap or not
      *
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param Libraries $libraries
      */
-    public function __construct(ApplicationPath $appPath)
+    public function __construct(ApplicationPath $appPath, Libraries $libraries)
     {
         $this->designXml = simplexml_load_file($appPath->getDesignPathInternal() . 'info.xml');
+        $this->libraries = $libraries;
 
         if (isset($this->designXml->use_bootstrap) && (string)$this->designXml->use_bootstrap === 'true') {
             $this->enableLibraries(['bootstrap']);
         }
+
+        $this->libraries->dispatchAddLibraryEvent();
     }
 
     /**
@@ -145,17 +110,7 @@ class Assets
      */
     public function enableLibraries(array $libraries)
     {
-        foreach ($libraries as $library) {
-            if (array_key_exists($library, $this->libraries) === true) {
-                // Resolve javascript library dependencies recursively
-                if (!empty($this->libraries[$library]['dependencies'])) {
-                    $this->enableLibraries($this->libraries[$library]['dependencies']);
-                }
-
-                // Enable the javascript library
-                $this->libraries[$library]['enabled'] = true;
-            }
-        }
+        $this->libraries->enableLibraries($libraries);
 
         return $this;
     }
@@ -165,7 +120,7 @@ class Assets
      */
     public function getLibraries()
     {
-        return $this->libraries;
+        return $this->libraries->getLibraries();
     }
 
     /**
@@ -174,14 +129,7 @@ class Assets
     public function getEnabledLibrariesAsString()
     {
         if (empty($this->enabledLibraries)) {
-            $enabledLibraries = [];
-            foreach ($this->libraries as $library => $values) {
-                if ($values['enabled'] === true) {
-                    $enabledLibraries[] = $library;
-                }
-            }
-
-            $this->enabledLibraries = implode(',', $enabledLibraries);
+            $this->enabledLibraries = implode(',', $this->libraries->getEnabledLibraries());
         }
 
         return $this->enabledLibraries;

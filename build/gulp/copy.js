@@ -22,7 +22,7 @@ module.exports = function (gulp, plugins) {
                         bowerBasePath + '/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
                         bowerBasePath + '/html5shiv/dist/html5shiv.min.js'
                     ],
-                    'dest': systemBasePath + '/js/libs'
+                    'dest': systemBasePath + '/js'
                 },
                 {
                     'src': bowerBasePath + '/bootstrap/dist/fonts/*',
