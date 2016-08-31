@@ -89,10 +89,10 @@ class FileResolver
      */
     public function getStaticAssetPath($modulePath, $designPath, $dir = '', $file = '')
     {
-        if (!$this->hasTrailingSlash($modulePath)) {
+        if ($this->needsTrailingSlash($modulePath)) {
             $modulePath .= '/';
         }
-        if (!$this->hasTrailingSlash($designPath)) {
+        if ($this->needsTrailingSlash($designPath)) {
             $designPath .= '/';
         }
         if (!empty($dir) && !preg_match('=/$=', $dir)) {
@@ -113,7 +113,7 @@ class FileResolver
      * @param string $path
      * @return bool
      */
-    protected function hasTrailingSlash($path)
+    protected function needsTrailingSlash($path)
     {
         return strpos($path, '.') === false && !preg_match('=/$=', $path);
     }
