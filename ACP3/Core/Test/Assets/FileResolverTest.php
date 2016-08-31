@@ -43,7 +43,9 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
 
         $this->xml = new XML();
         $this->appPath = new ApplicationPath(ApplicationMode::DEVELOPMENT);
-        $this->appPath->setDesignPathInternal(ACP3_ROOT_DIR . 'tests/designs/acp3/');
+        $this->appPath
+            ->setDesignRootPathInternal(ACP3_ROOT_DIR . 'tests/designs/')
+            ->setDesignPathInternal('acp3/');
         $this->vendors = new Vendor($this->appPath);
 
         $this->fileResolver = new FileResolver(
@@ -72,6 +74,15 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
     {
         $expected = $this->appPath->getDesignPathInternal() . 'System/View/Partials/mark.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/mark.tpl');
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testResolveTemplatePathWithMultipleInheritance()
+    {
+        $this->appPath->setDesignPathInternal('acp3-inherit/');
+
+        $expected = ACP3_ROOT_DIR . 'tests/designs/acp3/layout.tpl';
+        $actual = $this->fileResolver->resolveTemplatePath('layout.tpl');
         $this->assertEquals($expected, $actual);
     }
 }

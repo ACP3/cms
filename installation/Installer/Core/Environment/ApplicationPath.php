@@ -43,6 +43,7 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
         $this->installerAppDir = realpath($this->appDir . '../installation') . '/Installer/';
         $this->installerModulesDir = $this->installerAppDir . 'Modules/';
         $this->installerClassesDir = $this->installerAppDir . 'Core/';
+        $this->designRootPathInternal = ACP3_ROOT_DIR . 'installation/design/';
     }
 
     /**

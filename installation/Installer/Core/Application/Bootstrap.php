@@ -61,7 +61,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     {
         $this->appPath
             ->setDesignPathWeb($this->appPath->getInstallerWebRoot() . 'design/')
-            ->setDesignPathInternal(ACP3_ROOT_DIR . 'installation/design/');
+            ->setDesignPathInternal('');
     }
 
     /**

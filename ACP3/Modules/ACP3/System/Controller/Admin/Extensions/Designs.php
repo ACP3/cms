@@ -62,7 +62,7 @@ class Designs extends Core\Controller\AbstractAdminAction
         $bool = false;
 
         if ((bool)preg_match('=/=', $design) === false &&
-            is_file(ACP3_ROOT_DIR . 'designs/' . $design . '/info.xml') === true
+            is_file($this->appPath->getDesignRootPathInternal() . $design . '/info.xml') === true
         ) {
             $bool = $this->config->setSettings(['design' => $design], Schema::MODULE_NAME);
 
@@ -85,7 +85,7 @@ class Designs extends Core\Controller\AbstractAdminAction
     protected function getAvailableDesigns()
     {
         $designs = [];
-        $path = ACP3_ROOT_DIR . 'designs/';
+        $path = $this->appPath->getDesignRootPathInternal();
         $directories = Core\Filesystem::scandir($path);
         foreach ($directories as $directory) {
             $designInfo = $this->xml->parseXmlFile($path . $directory . '/info.xml', '/design');
