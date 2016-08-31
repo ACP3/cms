@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}Assets/css/style.css">
     <!-- STYLESHEETS -->
     <!--[if lt IE 9]>
-        <script src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/libs/html5shiv.min.js"></script>
+        <script src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/html5shiv.min.js"></script>
     <![endif]-->
 </head>
 
@@ -62,8 +62,8 @@
         {block CONTENT}{/block}
     </main>
 </div>
-<script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/libs/jquery.min.js"></script>
-<script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/libs/bootstrap.min.js"></script>
+<script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{$DESIGN_PATH}Assets/js/language-switcher.js"></script>
 <!-- JAVASCRIPTS -->
 </body>
