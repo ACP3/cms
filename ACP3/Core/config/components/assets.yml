@@ -3,6 +3,7 @@ services:
     class: ACP3\Core\Assets
     arguments:
       - '@core.environment.application_path'
+      - '@core.assets.libraries'
 
   core.assets.cache:
     class: ACP3\Core\Assets\Cache
@@ -17,7 +18,7 @@ services:
       - '@core.config'
       - '@core.modules'
       - '@core.assets.file_resolver'
-      - %core.environment%
+      - '%core.environment%'
     abstract: true
 
   core.assets.minifier.css:
@@ -35,6 +36,11 @@ services:
       - '@core.assets.cache'
       - '@core.environment.application_path'
       - '@core.modules.vendors'
+
+  core.assets.libraries:
+    class: ACP3\Core\Assets\Libraries
+    arguments:
+      - '@core.event_dispatcher'
 
   core.assets.page_css_classes:
     class: ACP3\Core\Assets\PageCssClasses

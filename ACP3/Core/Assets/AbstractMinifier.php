@@ -16,7 +16,6 @@ abstract class AbstractMinifier implements MinifierInterface
 {
     const ASSETS_PATH_CSS = 'Assets/css';
     const ASSETS_PATH_JS = 'Assets/js';
-    const ASSETS_PATH_JS_LIBS = 'Assets/js/libs';
 
     /**
      * @var \ACP3\Core\Assets
