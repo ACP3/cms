@@ -38,6 +38,10 @@ class ApplicationPath
     /**
      * @var string
      */
+    protected $designRootPathInternal;
+    /**
+     * @var string
+     */
     protected $designPathInternal;
     /**
      * @var string
@@ -62,6 +66,7 @@ class ApplicationPath
         $this->modulesDir = $this->appDir . 'Modules/';
         $this->uploadsDir = ACP3_ROOT_DIR . 'uploads/';
         $this->cacheDir = ACP3_ROOT_DIR . 'cache/' . $applicationMode . '/';
+        $this->designRootPathInternal = ACP3_ROOT_DIR . 'designs/';
     }
 
     /**
@@ -200,6 +205,25 @@ class ApplicationPath
     /**
      * @return string
      */
+    public function getDesignRootPathInternal()
+    {
+        return $this->designRootPathInternal;
+    }
+
+    /**
+     * @param string $designRootPathInternal
+     *
+     * @return ApplicationPath
+     */
+    public function setDesignRootPathInternal($designRootPathInternal)
+    {
+        $this->designRootPathInternal = $designRootPathInternal;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getDesignPathInternal()
     {
         return $this->designPathInternal;
@@ -212,7 +236,7 @@ class ApplicationPath
      */
     public function setDesignPathInternal($designPathInternal)
     {
-        $this->designPathInternal = $designPathInternal;
+        $this->designPathInternal = $this->designRootPathInternal . $designPathInternal;
         return $this;
     }
 

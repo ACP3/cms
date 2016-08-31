@@ -23,7 +23,9 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
         $this->setUpMockObjects();
 
         $appPath = new ApplicationPath(ApplicationMode::DEVELOPMENT);
-        $appPath->setDesignPathInternal(ACP3_ROOT_DIR . 'tests/designs/acp3/');
+        $appPath
+            ->setDesignRootPathInternal(ACP3_ROOT_DIR . 'tests/designs/')
+            ->setDesignPathInternal('acp3/');
         $libraries = new Assets\Libraries($this->eventDispatcherMock);
 
         $this->assets = new Assets($appPath, $libraries);

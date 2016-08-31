@@ -41,10 +41,6 @@ class FileResolver
     /**
      * @var string
      */
-    protected $modulesAssetsPath;
-    /**
-     * @var string
-     */
     protected $designAssetsPath;
 
     /**
@@ -64,9 +60,6 @@ class FileResolver
         $this->appPath = $appPath;
         $this->vendors = $vendors;
         $this->cachedPaths = $resourcesCache->getCache();
-
-        $this->modulesAssetsPath = $appPath->getModulesDir();
-        $this->designAssetsPath = $appPath->getDesignPathInternal();
     }
 
     /**
@@ -89,17 +82,17 @@ class FileResolver
      */
     public function getStaticAssetPath($modulePath, $designPath, $dir = '', $file = '')
     {
-        if (!$this->hasTrailingSlash($modulePath)) {
+        if ($this->needsTrailingSlash($modulePath)) {
             $modulePath .= '/';
         }
-        if (!$this->hasTrailingSlash($designPath)) {
+        if ($this->needsTrailingSlash($designPath)) {
             $designPath .= '/';
         }
         if (!empty($dir) && !preg_match('=/$=', $dir)) {
             $dir .= '/';
         }
 
-        $systemAssetPath = $this->modulesAssetsPath . $modulePath . $dir . $file;
+        $systemAssetPath = $this->appPath->getModulesDir() . $modulePath . $dir . $file;
 
         // Return early, if the path has been already cached
         if (isset($this->cachedPaths[$systemAssetPath])) {
@@ -113,9 +106,9 @@ class FileResolver
      * @param string $path
      * @return bool
      */
-    protected function hasTrailingSlash($path)
+    protected function needsTrailingSlash($path)
     {
-        return strpos($path, '.') === false && !preg_match('=/$=', $path);
+        return $path !== '' && strpos($path, '.') === false && !preg_match('=/$=', $path);
     }
 
     /**
@@ -128,6 +121,10 @@ class FileResolver
      */
     private function resolveAssetPath($modulePath, $designPath, $dir, $file)
     {
+        if ($this->designAssetsPath === null) {
+            $this->designAssetsPath = $this->appPath->getDesignPathInternal();
+        }
+
         $assetPath = '';
         $designAssetPath = $this->designAssetsPath . $designPath . $dir . $file;
 
@@ -139,14 +136,14 @@ class FileResolver
 
             // Recursively iterate over the nested themes
             if (!empty($designInfo['parent'])) {
-                $this->designAssetsPath = ACP3_ROOT_DIR . 'designs/' . $designInfo['parent'];
+                $this->designAssetsPath = $this->appPath->getDesignRootPathInternal() . $designInfo['parent'] . '/';
                 $assetPath = $this->getStaticAssetPath($modulePath, $designPath, $dir, $file);
                 $this->designAssetsPath = $this->appPath->getDesignPathInternal();
             }
 
             // No overrides have been found -> iterate over all possible module namespaces
             foreach (array_reverse($this->vendors->getVendors()) as $vendor) {
-                $moduleAssetPath = $this->modulesAssetsPath . $vendor . '/' . $modulePath . $dir . $file;
+                $moduleAssetPath = $this->appPath->getModulesDir() . $vendor . '/' . $modulePath . $dir . $file;
                 if (is_file($moduleAssetPath) === true) {
                     $assetPath = $moduleAssetPath;
                     break;
@@ -154,7 +151,7 @@ class FileResolver
             }
         }
 
-        $systemAssetPath = $this->modulesAssetsPath . $modulePath . $dir . $file;
+        $systemAssetPath = $this->appPath->getModulesDir() . $modulePath . $dir . $file;
         $this->cachedPaths[$systemAssetPath] = $assetPath;
         $this->newAssetPathsAdded = true;
 
@@ -168,11 +165,9 @@ class FileResolver
      */
     public function resolveTemplatePath($template)
     {
-        $modulesPath = '';
-
         // A path without any slash was given -> has to be the layout file of the current design
         if (strpos($template, '/') === false) {
-            return $this->getStaticAssetPath($modulesPath, '', '', $template);
+            return $this->getStaticAssetPath('', '', '', $template);
         } else {
             // Split the template path in its components
             $fragments = explode('/', ucfirst($template));
@@ -180,7 +175,7 @@ class FileResolver
             if (isset($fragments[2])) {
                 $fragments[1] = ucfirst($fragments[1]);
             }
-            $modulesPath .= $fragments[0] . '/Resources/';
+            $modulesPath = $fragments[0] . '/Resources/';
             $designPath = $fragments[0];
             $template = $fragments[1];
             if (isset($fragments[2])) {
