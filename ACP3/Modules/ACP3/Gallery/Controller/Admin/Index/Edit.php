@@ -150,7 +150,7 @@ class Edit extends AbstractFormAction
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'order'),
-                'type' => Gallery\Helper\DataGrid\ColumnRenderer\PictureSortColumnRenderer::class,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\SortColumnRenderer::class,
                 'fields' => ['pic'],
                 'default_sort' => true,
                 'custom' => [

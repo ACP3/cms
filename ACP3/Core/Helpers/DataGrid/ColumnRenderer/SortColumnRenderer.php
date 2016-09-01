@@ -1,15 +1,19 @@
 <?php
-namespace ACP3\Modules\ACP3\Gallery\Helper\DataGrid\ColumnRenderer;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
+namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
+
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\RouterInterface;
 
 /**
- * Class PictureSortColumnRenderer
- * @package ACP3\Modules\ACP3\Gallery\Helper\DataGrid\ColumnRenderer
+ * Class SortColumnRenderer
+ * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
  */
-class PictureSortColumnRenderer extends AbstractColumnRenderer
+class SortColumnRenderer extends AbstractColumnRenderer
 {
     /**
      * @var \ACP3\Core\I18n\Translator
