@@ -142,28 +142,32 @@ class Edit extends AbstractFormAction
                     'pattern' => 'gallery/index/image/id_%s/action_thumb',
                     'isRoute' => true
                 ]
-            ], 30)
+            ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'description'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['description'],
-            ], 20)
-            ->addColumn([
-                'label' => $this->translator->t('system', 'order'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\SortColumnRenderer::class,
-                'fields' => ['pic'],
-                'default_sort' => true,
-                'custom' => [
-                    'route_sort_down' => 'acp/gallery/pictures/order/id_%d/action_down',
-                    'route_sort_up' => 'acp/gallery/pictures/order/id_%d/action_up',
-                ]
-            ], 20)
+            ], 30)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true
             ], 10);
+
+        if ($this->acl->hasPermission('admin/gallery/pictures/order')) {
+            $dataGrid
+                ->addColumn([
+                    'label' => $this->translator->t('system', 'order'),
+                    'type' => Core\Helpers\DataGrid\ColumnRenderer\SortColumnRenderer::class,
+                    'fields' => ['pic'],
+                    'default_sort' => true,
+                    'custom' => [
+                        'route_sort_down' => 'acp/gallery/pictures/order/id_%d/action_down',
+                        'route_sort_up' => 'acp/gallery/pictures/order/id_%d/action_up',
+                    ]
+                ], 20);
+        }
 
         return [
             'grid' => $dataGrid->render(),

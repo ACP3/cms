@@ -7,11 +7,11 @@
   "prefer-stable": true,
   "require": {
     "acp3/composer-installer": "*",
-    "acp3/core": "4.0.0-rc.28",
-    "acp3/setup": "4.0.0-rc.28",
-    "acp3/module-errors": "4.0.0-rc.28",
-    "acp3/module-system": "4.0.0-rc.28",
-    "acp3/module-users": "4.0.0-rc.28"
+    "acp3/core": "4.0.0-rc.28.1",
+    "acp3/setup": "4.0.0-rc.28.1",
+    "acp3/module-errors": "4.0.0-rc.28.1",
+    "acp3/module-system": "4.0.0-rc.28.1",
+    "acp3/module-users": "4.0.0-rc.28.1"
   },
   "autoload": {
     "psr-4": {
