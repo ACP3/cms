@@ -22,13 +22,6 @@ $(document).ready(function () {
     $mode.change(function () {
         var mode = $(this).val();
 
-        // SEO Tab bei einem externen Hyperlink deaktivieren
-        if (mode == 3) {
-            $('.tabbable .nav-tabs a[href="#tab-3"]').addClass('hide');
-        } else {
-            $('.tabbable .nav-tabs a[href="#tab-3"]').removeClass('hide');
-        }
-
         if (mode == 1) {
             alias.hide();
             module.show();
