@@ -142,12 +142,12 @@ class Edit extends AbstractFormAction
                     'pattern' => 'gallery/index/image/id_%s/action_thumb',
                     'isRoute' => true
                 ]
-            ], 30)
+            ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'description'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['description'],
-            ], 20)
+            ], 30)
             ->addColumn([
                 'label' => $this->translator->t('system', 'order'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\SortColumnRenderer::class,
