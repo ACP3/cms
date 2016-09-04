@@ -1,12 +1,6 @@
 <div class="row">
     <div class="col-sm-{if isset($categories.create)}6{else}12{/if}">
-        <label for="{$categories.name}" class="sr-only">{lang t="categories|category"}</label>
-        <select class="form-control" name="{$categories.name}" id="{$categories.name}">
-            <option value="">{$categories.custom_text}</option>
-            {foreach $categories.categories as $row}
-                <option value="{$row.id}"{$row.selected}>{$row.title}</option>
-            {/foreach}
-        </select>
+        {include file="asset:Categories/Partials/list.tpl" categories=$categories}
     </div>
     {if isset($categories.create)}
         <div class="col-sm-6">
