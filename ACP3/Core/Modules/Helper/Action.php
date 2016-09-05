@@ -85,7 +85,7 @@ class Action
      * @param \Exception $exception
      * @return array|JsonResponse
      */
-    private function renderErrorBoxOnFailedFormValidation(\Exception $exception)
+    public function renderErrorBoxOnFailedFormValidation(\Exception $exception)
     {
         $errors = $this->alerts->errorBox($exception->getMessage());
         if ($this->request->isXmlHttpRequest()) {
