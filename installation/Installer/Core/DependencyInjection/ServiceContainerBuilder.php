@@ -104,8 +104,8 @@ class ServiceContainerBuilder extends ContainerBuilder
     private function includeModules(YamlFileLoader $loader)
     {
         if ($this->canIncludeModules() === true) {
-            // Ugly hack to prevent request override from included ACP3 modules
             $request = $this->get('core.http.request');
+            $router = $this->get('core.router');
 
             $vendors = $this->get('core.modules.vendors')->getVendors();
             foreach ($vendors as $vendor) {
@@ -116,6 +116,7 @@ class ServiceContainerBuilder extends ContainerBuilder
             }
 
             $this->set('core.http.request', $request);
+            $this->set('core.router', $router);
         }
     }
 
