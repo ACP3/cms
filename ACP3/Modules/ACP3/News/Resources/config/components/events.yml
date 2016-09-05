@@ -1,6 +1,6 @@
 services:
   news.event.on_news_model_after_delete_listener:
-    class: ACP3\Modules\ACP3\News\Event\OnNewsModelAfterDeleteListener
+    class: ACP3\Modules\ACP3\News\Event\Listener\OnNewsModelAfterDeleteListener
     arguments:
       - '@core.modules'
       - '@news.cache'

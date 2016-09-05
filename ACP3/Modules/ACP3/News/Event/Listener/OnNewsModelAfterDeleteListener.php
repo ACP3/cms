@@ -4,7 +4,7 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\News\Event;
+namespace ACP3\Modules\ACP3\News\Event\Listener;
 
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
