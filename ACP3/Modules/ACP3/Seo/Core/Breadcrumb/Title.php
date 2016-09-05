@@ -28,6 +28,9 @@ class Title extends \ACP3\Core\Breadcrumb\Title
     {
         parent::__construct($steps, $eventDispatcher);
 
-        $this->siteTitle = $config->getSettings(Schema::MODULE_NAME)['title'];
+        $settings = $config->getSettings(Schema::MODULE_NAME);
+        if (isset($settings['title'])) {
+            $this->siteTitle = $settings['title'];
+        }
     }
 }
