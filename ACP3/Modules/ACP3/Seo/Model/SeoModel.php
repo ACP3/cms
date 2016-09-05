@@ -9,11 +9,14 @@ namespace ACP3\Modules\ACP3\Seo\Model;
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SeoModel extends AbstractModel
 {
+    const EVENT_PREFIX = Schema::MODULE_NAME;
+
     /**
      * @var Secure
      */
