@@ -15,6 +15,7 @@ use ACP3\Core\Database\Connection;
 abstract class AbstractRepository
 {
     const TABLE_NAME = '';
+    const PRIMARY_KEY_COLUMN = 'id';
 
     /**
      * @var \ACP3\Core\Database\Connection
@@ -63,7 +64,7 @@ abstract class AbstractRepository
      * @param string $columnName
      * @return bool|int
      */
-    public function delete($entryId, $columnName = 'id')
+    public function delete($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
     {
         return $this->db->executeTransactionalQuery(function () use ($entryId, $columnName) {
             return $this->db->getConnection()->delete(
@@ -79,7 +80,7 @@ abstract class AbstractRepository
      *
      * @return array
      */
-    private function getIdentifier($entryId, $columnName = 'id')
+    private function getIdentifier($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
     {
         return is_array($entryId) === true ? $entryId : [$columnName => (int)$entryId];
     }

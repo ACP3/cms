@@ -6,6 +6,7 @@
 
 namespace ACP3\Core\Database;
 
+use ACP3\Core\Cache\CacheDriverFactory;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Logger;
@@ -27,6 +28,10 @@ class Connection
      */
     protected $appPath;
     /**
+     * @var \ACP3\Core\Cache\CacheDriverFactory
+     */
+    protected $cacheDriverFactory;
+    /**
      * @var \Doctrine\DBAL\Connection
      */
     protected $connection;
@@ -41,34 +46,30 @@ class Connection
     /**
      * @var string
      */
-    protected $cacheDriverName = '';
-    /**
-     * @var string
-     */
     protected $prefix = '';
 
     /**
-     * @param \ACP3\Core\Logger                      $logger
+     * @param \ACP3\Core\Logger $logger
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param string                                 $appMode
-     * @param array                                  $connectionParams
-     * @param string                                 $tablePrefix
-     * @param string                                 $cacheDriverName
+     * @param \ACP3\Core\Cache\CacheDriverFactory $cacheDriverFactory
+     * @param string $appMode
+     * @param array $connectionParams
+     * @param string $tablePrefix
      */
     public function __construct(
         Logger $logger,
         ApplicationPath $appPath,
+        CacheDriverFactory $cacheDriverFactory,
         $appMode,
         array $connectionParams,
-        $tablePrefix,
-        $cacheDriverName
+        $tablePrefix
     ) {
         $this->logger = $logger;
         $this->appPath = $appPath;
+        $this->cacheDriverFactory = $cacheDriverFactory;
         $this->appMode = $appMode;
         $this->connectionParams = $connectionParams;
         $this->prefix = $tablePrefix;
-        $this->cacheDriverName = $cacheDriverName;
 
         $this->connection = $this->connect();
     }
@@ -230,26 +231,8 @@ class Connection
             $config->setSQLLogger(new SQLLogger($this->logger));
         }
 
-        $this->applyQueryCache($config);
+        $config->setResultCacheImpl($this->cacheDriverFactory->create('db-queries'));
 
         return DBAL\DriverManager::getConnection($this->connectionParams, $config);
-    }
-
-    /**
-     * @param \Doctrine\DBAL\Configuration $config
-     */
-    protected function applyQueryCache(DBAL\Configuration $config)
-    {
-        $className = "\\Doctrine\\Common\\Cache\\" . $this->cacheDriverName . "Cache";
-        /** @var \Doctrine\Common\Cache\CacheProvider $cacheDriver */
-        if (strtolower($this->cacheDriverName) === 'phpfile') {
-            $cacheDriver = new $className($this->appPath->getCacheDir() . 'sql/');
-        } else {
-            $cacheDriver = new $className();
-        }
-
-        $cacheDriver->setNamespace('db-queries');
-
-        $config->setResultCacheImpl($cacheDriver);
     }
 }
