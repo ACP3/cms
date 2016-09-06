@@ -79,19 +79,19 @@ class CacheDriverFactory
 
     /**
      * @param string $driverName
-     * @param string $driverNameFqdn
+     * @param string $driverNameFqn
      *
      * @return \Doctrine\Common\Cache\CacheProvider
      */
-    protected function initializeCacheDriver($driverName, $driverNameFqdn)
+    protected function initializeCacheDriver($driverName, $driverNameFqn)
     {
         /** @var \Doctrine\Common\Cache\CacheProvider $driver */
         switch (strtolower($driverName)) {
             case 'phpfile':
                 $cacheDir = $this->appPath->getCacheDir() . 'sql/';
-                return new $driverNameFqdn($cacheDir);
+                return new $driverNameFqn($cacheDir);
             default:
-                return new $driverNameFqdn();
+                return new $driverNameFqn();
         }
     }
 }
