@@ -10,9 +10,6 @@ namespace ACP3\Core\Test;
 use ACP3\Core\ACL;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Permissions\Cache;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
@@ -36,15 +33,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $roleRepositoryMock;
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
     private $userRoleRepositoryMock;
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    private $privilegeRepositoryMock;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
@@ -57,9 +46,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
         $this->acl = new ACL(
             $this->userMock,
             $this->modulesMock,
-            $this->roleRepositoryMock,
             $this->userRoleRepositoryMock,
-            $this->privilegeRepositoryMock,
             $this->permissionsCacheMock
         );
     }
@@ -74,17 +61,9 @@ class ACLTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['controllerActionExists', 'isActive'])
             ->getMock();
-        $this->roleRepositoryMock = $this->getMockBuilder(RoleRepository::class)
-            ->disableOriginalConstructor()
-            ->setMethods([])
-            ->getMock();
-        $this->userRoleRepositoryMock = $this->getMockBuilder(UserRoleRepository::class)
+        $this->userRoleRepositoryMock = $this->getMockBuilder(ACL\Model\Repository\UserRoleRepositoryInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(['getRolesByUserId'])
-            ->getMock();
-        $this->privilegeRepositoryMock = $this->getMockBuilder(PrivilegeRepository::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getAllPrivileges'])
             ->getMock();
         $this->permissionsCacheMock = $this->getMockBuilder(Cache::class)
             ->disableOriginalConstructor()
