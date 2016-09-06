@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
@@ -23,17 +24,9 @@ class ACL
      */
     protected $permissionsCache;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
-     */
-    protected $roleRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository
+     * @var \ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface
      */
     protected $userRoleRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
-     */
-    protected $privilegeRepository;
     /**
      * Array mit den jeweiligen Rollen zugewiesenen Berechtigungen
      *
@@ -54,26 +47,21 @@ class ACL
     protected $resources = [];
 
     /**
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                                          $user
-     * @param \ACP3\Core\Modules                                       $modules
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository      $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository  $userRoleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                     $permissionsCache
+     * ACL constructor.
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
+     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface $userRoleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */
     public function __construct(
         UserModel $user,
         Modules $modules,
-        Permissions\Model\Repository\RoleRepository $roleRepository,
-        Permissions\Model\Repository\UserRoleRepository $userRoleRepository,
-        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
+        UserRoleRepositoryInterface $userRoleRepository,
         Permissions\Cache $permissionsCache
     ) {
         $this->user = $user;
         $this->modules = $modules;
-        $this->roleRepository = $roleRepository;
         $this->userRoleRepository = $userRoleRepository;
-        $this->privilegeRepository = $privilegeRepository;
         $this->permissionsCache = $permissionsCache;
     }
 

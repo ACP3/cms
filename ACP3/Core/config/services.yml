@@ -27,9 +27,7 @@ services:
     arguments:
       - '@users.model.user_model'
       - '@core.modules'
-      - '@permissions.model.rolerepository'
       - '@permissions.model.userrolerepository'
-      - '@permissions.model.privilegerepository'
       - '@permissions.cache'
 
   core.cache.system:
