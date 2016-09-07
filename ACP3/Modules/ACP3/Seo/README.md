@@ -1,5 +1,5 @@
 # ACP3/module-seo
-Repository of the seo module of the ACP3 CMS.
+Repository of the SEO module of the ACP3 CMS.
 
 ## Attention
 Please do not make pull requests to this repository, as it is just a read only repository.

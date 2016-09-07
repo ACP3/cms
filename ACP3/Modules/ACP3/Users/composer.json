@@ -1,8 +1,18 @@
 {
   "name": "acp3/module-users",
   "description": "Provides the users module for the ACP3 CMS.",
-  "license": "GPL-2.0+",
   "type": "acp3-module",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "Tino Goratsch",
+      "email": "mail@acp3-cms.net"
+    }
+  ],
+  "support": {
+    "email": "mail@acp3-cms.net",
+    "issues": "https://github.com/ACP3/cms/issues"
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
