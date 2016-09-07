@@ -33,7 +33,7 @@ class Steps extends Core\Breadcrumb\Steps
      * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
      * @param \ACP3\Core\I18n\Translator                                  $translator
      * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \ACP3\Core\RouterInterface                                  $router
+     * @param \ACP3\Core\Router\RouterInterface                                  $router
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository           $menuItemRepository
      */
@@ -41,7 +41,7 @@ class Steps extends Core\Breadcrumb\Steps
         ContainerInterface $container,
         Core\I18n\Translator $translator,
         RequestInterface $request,
-        Core\RouterInterface $router,
+        Core\Router\RouterInterface $router,
         EventDispatcherInterface $eventDispatcher,
         Menus\Model\Repository\MenuItemRepository $menuItemRepository
     ) {

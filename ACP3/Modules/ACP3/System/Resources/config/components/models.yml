@@ -1,6 +1,6 @@
 services:
   system.model.modulerepository:
-    class: ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
+    class: ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository
     arguments:
       - '@core.db'
 

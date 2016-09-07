@@ -5,6 +5,7 @@ use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
@@ -26,7 +27,7 @@ class Pagination
      */
     protected $request;
     /**
-     * @var \ACP3\Core\RouterInterface
+     * @var \ACP3\Core\Router\RouterInterface
      */
     protected $router;
     /**
@@ -73,7 +74,7 @@ class Pagination
      * @param \ACP3\Core\Breadcrumb\Title               $title
      * @param \ACP3\Core\I18n\Translator                $translator
      * @param \ACP3\Core\Http\RequestInterface          $request
-     * @param \ACP3\Core\RouterInterface                $router
+     * @param \ACP3\Core\Router\RouterInterface                $router
      */
     public function __construct(
         UserModel $user,

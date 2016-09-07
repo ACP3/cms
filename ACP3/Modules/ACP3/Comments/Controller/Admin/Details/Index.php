@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
-use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\System;
 
 /**
@@ -22,21 +21,20 @@ class Index extends Core\Controller\AbstractAdminAction
      */
     protected $commentRepository;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
+     * @var Core\Model\Repository\ModuleAwareRepositoryInterface
      */
     protected $systemModuleRepository;
 
     /**
      * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\AdminContext          $context
-     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
-     * @param \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository    $systemModuleRepository
+     * @param Core\Controller\Context\AdminContext $context
+     * @param Comments\Model\Repository\CommentRepository $commentRepository
+     * @param Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Comments\Model\Repository\CommentRepository $commentRepository,
-        System\Model\Repository\ModuleRepository $systemModuleRepository)
+        Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository)
     {
         parent::__construct($context);
 

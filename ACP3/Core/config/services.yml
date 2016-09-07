@@ -27,9 +27,7 @@ services:
     arguments:
       - '@users.model.user_model'
       - '@core.modules'
-      - '@permissions.model.rolerepository'
       - '@permissions.model.userrolerepository'
-      - '@permissions.model.privilegerepository'
       - '@permissions.cache'
 
   core.cache.system:
@@ -45,7 +43,7 @@ services:
       - '@core.environment.application_path'
 
   core.config:
-    class: ACP3\Core\Config
+    class: ACP3\Core\Settings\Settings
     arguments:
       - '@core.cache.system'
       - '@system.model.modulerepository'
@@ -85,7 +83,7 @@ services:
       - '@core.router'
 
   core.router:
-    class: ACP3\Core\Router
+    class: ACP3\Core\Router\Router
     arguments:
       - '@core.http.request'
       - '@core.environment.application_path'

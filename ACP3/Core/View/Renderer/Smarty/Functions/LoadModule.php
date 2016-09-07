@@ -3,7 +3,7 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Core\Router;
+use ACP3\Core\Router\RouterInterface;
 
 /**
  * Class LoadModule
@@ -16,7 +16,7 @@ class LoadModule extends AbstractFunction
      */
     protected $acl;
     /**
-     * @var Router
+     * @var RouterInterface
      */
     protected $router;
     /**
@@ -28,12 +28,12 @@ class LoadModule extends AbstractFunction
      * LoadModule constructor.
      *
      * @param \ACP3\Core\ACL $acl
-     * @param Router $router
+     * @param RouterInterface $router
      * @param string $applicationMode
      */
     public function __construct(
         ACL $acl,
-        Router $router,
+        RouterInterface $router,
         $applicationMode)
     {
         $this->acl = $acl;

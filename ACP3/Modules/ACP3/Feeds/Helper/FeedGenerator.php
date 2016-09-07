@@ -2,8 +2,8 @@
 
 namespace ACP3\Modules\ACP3\Feeds\Helper;
 
-use ACP3\Core\Config;
-use ACP3\Core\RouterInterface;
+use ACP3\Core\Router\RouterInterface;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Feeds\Installer\Schema;
 use FeedWriter\ATOM;
 
@@ -14,11 +14,11 @@ use FeedWriter\ATOM;
 class FeedGenerator
 {
     /**
-     * @var \ACP3\Core\Config
+     * @var SettingsInterface
      */
     protected $config;
     /**
-     * @var \ACP3\Core\RouterInterface
+     * @var \ACP3\Core\Router\RouterInterface
      */
     protected $router;
     /**
@@ -41,12 +41,11 @@ class FeedGenerator
 
     /**
      * FeedGenerator constructor.
-     *
-     * @param \ACP3\Core\Config          $config
-     * @param \ACP3\Core\RouterInterface $router
+     * @param SettingsInterface $config
+     * @param RouterInterface $router
      */
     public function __construct(
-        Config $config,
+        SettingsInterface $config,
         RouterInterface $router)
     {
         $this->config = $config;

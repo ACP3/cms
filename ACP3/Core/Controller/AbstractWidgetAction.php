@@ -46,7 +46,7 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected $request;
     /**
-     * @var \ACP3\Core\RouterInterface
+     * @var \ACP3\Core\Router\RouterInterface
      */
     protected $router;
     /**
@@ -58,7 +58,7 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected $view;
     /**
-     * @var \ACP3\Core\Config
+     * @var \ACP3\Core\Settings\SettingsInterface
      */
     protected $config;
     /**

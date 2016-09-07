@@ -113,7 +113,7 @@ class Settings extends Core\Controller\AbstractAdminAction
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $this->config->setSettings($data, Files\Installer\Schema::MODULE_NAME);
+            return $this->config->saveSettings($data, Files\Installer\Schema::MODULE_NAME);
         });
     }
 }

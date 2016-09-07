@@ -11,7 +11,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Formatter\RewriteInternalUri;
 use ACP3\Core\Http\Request;
 use ACP3\Core\Modules\Helper\ControllerActionExists;
-use ACP3\Modules\ACP3\Seo\Core\Router;
+use ACP3\Modules\ACP3\Seo\Core\Router\Router;
 use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 use Symfony\Component\HttpFoundation\ServerBag;
 

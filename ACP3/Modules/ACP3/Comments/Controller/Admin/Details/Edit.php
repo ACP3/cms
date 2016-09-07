@@ -26,10 +26,6 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected $adminFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
-     */
-    protected $systemModuleRepository;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
@@ -40,21 +36,18 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @param \ACP3\Core\Controller\Context\AdminContext                 $context
      * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository        $commentRepository
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository           $systemModuleRepository
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Comments\Model\Repository\CommentRepository $commentRepository,
         Comments\Validation\AdminFormValidation $adminFormValidation,
-        System\Model\Repository\ModuleRepository $systemModuleRepository,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
         $this->commentRepository = $commentRepository;
         $this->adminFormValidation = $adminFormValidation;
-        $this->systemModuleRepository = $systemModuleRepository;
         $this->formTokenHelper = $formTokenHelper;
     }
 

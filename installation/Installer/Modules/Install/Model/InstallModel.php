@@ -169,7 +169,7 @@ class InstallModel
         ];
 
         foreach ($settings as $module => $data) {
-            $this->container->get('core.config')->setSettings($data, $module);
+            $this->container->get('core.config')->saveSettings($data, $module);
         }
     }
 

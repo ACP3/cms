@@ -4,16 +4,25 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Installer\Core;
+namespace ACP3\Installer\Core\Router;
 
 use ACP3\Core;
 
 /**
  * Class Router
- * @package ACP3\Installer\Core
+ * @package ACP3\Installer\Core\Router
  */
-class Router extends Core\Router
+class Router implements Core\Router\RouterInterface
 {
+    /**
+     * @var Core\Http\RequestInterface
+     */
+    protected $request;
+    /**
+     * @var Core\Environment\ApplicationPath
+     */
+    protected $appPath;
+
     /**
      * @param \ACP3\Core\Http\RequestInterface       $request
      * @param \ACP3\Core\Environment\ApplicationPath $appPath

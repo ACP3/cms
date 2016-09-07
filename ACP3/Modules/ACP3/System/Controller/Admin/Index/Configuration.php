@@ -153,7 +153,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
                     'wysiwyg' => $formData['wysiwyg']
                 ];
 
-                $bool = $this->config->setSettings($data, System\Installer\Schema::MODULE_NAME);
+                $bool = $this->config->saveSettings($data, System\Installer\Schema::MODULE_NAME);
 
                 Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 

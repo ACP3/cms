@@ -2,12 +2,12 @@
 
 namespace ACP3\Core\Test\Helpers\ColumnRenderer;
 
-use ACP3\Core\Config;
 use ACP3\Core\Date;
 use ACP3\Core\Date\DateTranslator;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer;
 use ACP3\Core\Helpers\Formatter\DateRange;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 class DateColumnRendererTest extends AbstractColumnRendererTest
@@ -21,7 +21,7 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
      */
     protected $userMock;
     /**
-     * @var Config|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $configMock;
     /**
@@ -47,8 +47,9 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
         $this->userMock = $this->getMockBuilder(UserModel::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->configMock = $this->getMockBuilder(Config::class)
+        $this->configMock = $this->getMockBuilder(SettingsInterface::class)
             ->disableOriginalConstructor()
+            ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
         $this->userMock->expects($this->once())

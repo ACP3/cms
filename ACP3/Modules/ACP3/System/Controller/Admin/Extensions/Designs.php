@@ -64,7 +64,7 @@ class Designs extends Core\Controller\AbstractAdminAction
         if ((bool)preg_match('=/=', $design) === false &&
             is_file($this->appPath->getDesignRootPathInternal() . $design . '/info.xml') === true
         ) {
-            $bool = $this->config->setSettings(['design' => $design], Schema::MODULE_NAME);
+            $bool = $this->config->saveSettings(['design' => $design], Schema::MODULE_NAME);
 
             // Template Cache leeren
             Core\Cache\Purge::doPurge([

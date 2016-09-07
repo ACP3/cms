@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\Http;
 
-use ACP3\Core\Config;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 class RequestFactory
 {
     /**
-     * @var \ACP3\Core\Config
+     * @var SettingsInterface
      */
     protected $config;
     /**
@@ -27,10 +27,10 @@ class RequestFactory
 
     /**
      * RequestFactory constructor.
-     * @param Config $config
+     * @param SettingsInterface $config
      * @param SymfonyRequest $symfonyRequest
      */
-    public function __construct(Config $config, SymfonyRequest $symfonyRequest)
+    public function __construct(SettingsInterface $config, SymfonyRequest $symfonyRequest)
     {
         $this->config = $config;
         $this->symfonyRequest = $symfonyRequest;

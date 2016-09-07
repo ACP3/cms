@@ -3,6 +3,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Date\DateTranslator;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
@@ -34,21 +35,20 @@ class Date
      */
     protected $dateTranslator;
     /**
-     * @var \ACP3\Core\Config
+     * @var SettingsInterface
      */
     protected $config;
 
     /**
      * Date constructor.
-     *
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                $user
-     * @param \ACP3\Core\Date\DateTranslator $dateTranslator
-     * @param \ACP3\Core\Config              $config
+     * @param UserModel $user
+     * @param DateTranslator $dateTranslator
+     * @param SettingsInterface $config
      */
     public function __construct(
         UserModel $user,
         DateTranslator $dateTranslator,
-        Config $config
+        SettingsInterface $config
     ) {
         $this->dateTranslator = $dateTranslator;
         $this->config = $config;

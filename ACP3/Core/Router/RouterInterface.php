@@ -4,11 +4,11 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Core;
+namespace ACP3\Core\Router;
 
 /**
  * Interface RouterInterface
- * @package ACP3\Core
+ * @package ACP3\Core\Router
  */
 interface RouterInterface
 {

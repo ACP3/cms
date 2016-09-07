@@ -106,7 +106,7 @@ class Settings extends Core\Controller\AbstractAdminAction
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $this->config->setSettings($data, Guestbook\Installer\Schema::MODULE_NAME);
+            return $this->config->saveSettings($data, Guestbook\Installer\Schema::MODULE_NAME);
         });
     }
 }

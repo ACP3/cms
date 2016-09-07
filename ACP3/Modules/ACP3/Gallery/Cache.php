@@ -25,21 +25,21 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     protected $pictureRepository;
     /**
-     * @var \ACP3\Core\Config
+     * @var \ACP3\Core\Settings\SettingsInterface
      */
     protected $config;
 
     /**
-     * @param \ACP3\Core\Cache                                   $cache
-     * @param \ACP3\Core\Environment\ApplicationPath             $appPath
+     * @param \ACP3\Core\Cache $cache
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param \ACP3\Core\Config                                  $config
+     * @param \ACP3\Core\Settings\SettingsInterface $config
      */
     public function __construct(
         Core\Cache $cache,
         Core\Environment\ApplicationPath $appPath,
         PictureRepository $pictureRepository,
-        Core\Config $config
+        Core\Settings\SettingsInterface $config
     ) {
         parent::__construct($cache);
 

@@ -90,7 +90,7 @@ class Settings extends Core\Controller\AbstractAdminAction
                 'html' => (int)$formData['html']
             ];
 
-            return $this->config->setSettings($data, Newsletter\Installer\Schema::MODULE_NAME);
+            return $this->config->saveSettings($data, Newsletter\Installer\Schema::MODULE_NAME);
         });
     }
 }

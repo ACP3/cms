@@ -7,9 +7,9 @@
 namespace ACP3\Modules\ACP3\Seo\Helper;
 
 
-use ACP3\Core\Config;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Cache as SeoCache;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
@@ -24,7 +24,7 @@ class MetaStatements
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Config
+     * @var \ACP3\Core\Settings\SettingsInterface
      */
     protected $config;
     /**
@@ -57,13 +57,13 @@ class MetaStatements
      * MetaStatements constructor.
      *
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Modules\ACP3\Seo\Cache     $seoCache
-     * @param \ACP3\Core\Config                $config
+     * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
+     * @param \ACP3\Core\Settings\SettingsInterface $config
      */
     public function __construct(
         RequestInterface $request,
         SeoCache $seoCache,
-        Config $config
+        SettingsInterface $config
     ) {
         $this->request = $request;
         $this->seoCache = $seoCache;

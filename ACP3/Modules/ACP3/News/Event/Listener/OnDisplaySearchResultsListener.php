@@ -4,7 +4,7 @@ namespace ACP3\Modules\ACP3\News\Event\Listener;
 use ACP3\Core\ACL;
 use ACP3\Core\Date;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\RouterInterface;
+use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 use ACP3\Modules\ACP3\Search\Event\SearchResultsEvent;
 
@@ -27,7 +27,7 @@ class OnDisplaySearchResultsListener
      */
     private $translator;
     /**
-     * @var \ACP3\Core\RouterInterface
+     * @var \ACP3\Core\Router\RouterInterface
      */
     private $router;
     /**
@@ -41,7 +41,7 @@ class OnDisplaySearchResultsListener
      * @param \ACP3\Core\ACL                               $acl
      * @param \ACP3\Core\Date                              $date
      * @param \ACP3\Core\I18n\Translator                   $translator
-     * @param \ACP3\Core\RouterInterface                   $router
+     * @param \ACP3\Core\Router\RouterInterface                   $router
      * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
      */
     public function __construct(

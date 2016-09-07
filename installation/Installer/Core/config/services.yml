@@ -20,6 +20,12 @@ services:
     arguments:
       - '@core.environment.application_path'
 
+  core.router:
+    class: ACP3\Installer\Core\Router\Router
+    arguments:
+      - '@core.http.request'
+      - '@core.environment.application_path'
+
   core.session:
     class: ACP3\Installer\Core\Session\SessionHandler
 

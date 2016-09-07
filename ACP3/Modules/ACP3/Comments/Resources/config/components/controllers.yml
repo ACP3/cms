@@ -12,7 +12,6 @@ services:
       - '@core.context.admin'
       - '@comments.model.commentrepository'
       - '@comments.validation.admin_form_validation'
-      - '@system.model.modulerepository'
       - '@core.helpers.formToken'
 
   comments.controller.admin.details.index:

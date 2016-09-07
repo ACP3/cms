@@ -1,20 +1,30 @@
 <?php
-namespace ACP3\Core;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
+namespace ACP3\Core\Settings;
+
+use ACP3\Core\Cache;
+use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
+use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
 use ACP3\Modules\ACP3\System;
 
 /**
  * Manages the various module settings
- * @package ACP3\Core
+ * @package ACP3\Core\Settings
  */
-class Config
+class Settings implements SettingsInterface
 {
+    const CACHE_ID = 'settings';
+
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
+     * @var ModuleAwareRepositoryInterface
      */
     protected $systemModuleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository
+     * @var SettingsAwareRepositoryInterface
      */
     protected $systemSettingsRepository;
     /**
@@ -27,14 +37,15 @@ class Config
     protected $settings = [];
 
     /**
-     * @param \ACP3\Core\Cache                                   $coreCache
-     * @param \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository   $systemModuleRepository
-     * @param \ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository $systemSettingsRepository
+     * Settings constructor.
+     * @param Cache $coreCache
+     * @param ModuleAwareRepositoryInterface $systemModuleRepository
+     * @param SettingsAwareRepositoryInterface $systemSettingsRepository
      */
     public function __construct(
         Cache $coreCache,
-        System\Model\Repository\ModuleRepository $systemModuleRepository,
-        System\Model\Repository\SettingsRepository $systemSettingsRepository
+        ModuleAwareRepositoryInterface $systemModuleRepository,
+        SettingsAwareRepositoryInterface $systemSettingsRepository
     ) {
         $this->coreCache = $coreCache;
         $this->systemModuleRepository = $systemModuleRepository;
@@ -42,14 +53,14 @@ class Config
     }
 
     /**
-     * Erstellt/Verändert die Konfigurationsdateien für die Module
+     * Saves the module's settings to the database
      *
-     * @param array  $data
+     * @param array $data
      * @param string $module
      *
      * @return bool
      */
-    public function setSettings($data, $module)
+    public function saveSettings($data, $module)
     {
         $bool = $bool2 = false;
         $moduleId = $this->systemModuleRepository->getModuleId($module);
@@ -71,43 +82,36 @@ class Config
     }
 
     /**
-     * Setzt den Cache für die Einstellungen eines Moduls
+     * Saves the modules settings to the cache
      *
      * @return bool
      */
     protected function saveCache()
     {
-        $settings = $this->systemSettingsRepository->getAllModuleSettings();
+        $settings = $this->systemSettingsRepository->getAllSettings();
 
         $data = [];
         foreach ($settings as $setting) {
-            if (is_int($setting['value'])) {
-                $data[$setting['module_name']][$setting['name']] = (int)$setting['value'];
-            } elseif (is_float($setting['value'])) {
-                $data[$setting['module_name']][$setting['name']] = (float)$setting['value'];
-            } else {
-                $data[$setting['module_name']][$setting['name']] = $setting['value'];
-            }
+            $data[$setting['module_name']][$setting['name']] = $setting['value'];
         }
 
-        return $this->coreCache->save('settings', $data);
+        return $this->coreCache->save(static::CACHE_ID, $data);
     }
 
     /**
-     * Gibt den Inhalt der Konfigurationsdateien der Module aus
+     * Returns the module's settings from the cache
      *
      * @param string $module
-     *
      * @return array
      */
     public function getSettings($module)
     {
         if ($this->settings === []) {
-            if ($this->coreCache->contains('settings') === false) {
+            if ($this->coreCache->contains(static::CACHE_ID) === false) {
                 $this->saveCache();
             }
 
-            $this->settings = $this->coreCache->fetch('settings');
+            $this->settings = $this->coreCache->fetch(static::CACHE_ID);
         }
 
         return isset($this->settings[$module]) ? $this->settings[$module] : [];

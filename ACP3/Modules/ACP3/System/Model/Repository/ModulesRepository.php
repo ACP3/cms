@@ -6,20 +6,19 @@
 
 namespace ACP3\Modules\ACP3\System\Model\Repository;
 
-use ACP3\Core;
+use ACP3\Core\Model\Repository\AbstractRepository;
+use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 
 /**
- * Class ModuleRepository
+ * Class ModulesRepository
  * @package ACP3\Modules\ACP3\System\Model\Repository
  */
-class ModuleRepository extends Core\Model\Repository\AbstractRepository
+class ModulesRepository extends AbstractRepository  implements ModuleAwareRepositoryInterface
 {
     const TABLE_NAME = 'modules';
 
     /**
-     * @param string $moduleName
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function getModuleId($moduleName)
     {
@@ -32,7 +31,7 @@ class ModuleRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param string $moduleName
      *
-     * @return mixed
+     * @return int
      */
     public function getModuleSchemaVersion($moduleName)
     {
@@ -71,7 +70,7 @@ class ModuleRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param int $moduleId
      *
-     * @return mixed
+     * @return string
      */
     public function getModuleNameById($moduleId)
     {

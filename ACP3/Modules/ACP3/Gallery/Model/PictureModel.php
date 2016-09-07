@@ -7,9 +7,9 @@
 namespace ACP3\Modules\ACP3\Gallery\Model;
 
 
-use ACP3\Core\Config;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -27,20 +27,20 @@ class PictureModel extends AbstractModel
      */
     protected $repository;
     /**
-     * @var Config
+     * @var SettingsInterface
      */
     protected $config;
 
     /**
      * PictureModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
-     * @param Config $config
+     * @param SettingsInterface $config
      * @param Secure $secure
      * @param PictureRepository $pictureRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        Config $config,
+        SettingsInterface $config,
         Secure $secure,
         PictureRepository $pictureRepository
     ) {

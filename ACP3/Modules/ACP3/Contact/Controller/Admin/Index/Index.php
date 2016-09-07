@@ -81,7 +81,7 @@ class Index extends Core\Controller\AbstractAdminAction
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $this->config->setSettings($data, Contact\Installer\Schema::MODULE_NAME);
+            return $this->config->saveSettings($data, Contact\Installer\Schema::MODULE_NAME);
         });
     }
 }

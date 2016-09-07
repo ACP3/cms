@@ -24,17 +24,17 @@ class WYSIWYG extends AbstractFunction
      */
     protected $wysiwygFactory;
     /**
-     * @var \ACP3\Core\Config
+     * @var \ACP3\Core\Settings\SettingsInterface
      */
     protected $config;
 
     /**
      * @param \ACP3\Core\WYSIWYG\WysiwygFactory $wysiwygFactory
-     * @param \ACP3\Core\Config                 $config
+     * @param \ACP3\Core\Settings\SettingsInterface $config
      */
     public function __construct(
         Core\WYSIWYG\WysiwygFactory $wysiwygFactory,
-        Core\Config $config
+        Core\Settings\SettingsInterface $config
     ) {
         $this->wysiwygFactory = $wysiwygFactory;
         $this->config = $config;

@@ -5,7 +5,7 @@ namespace ACP3\Core\Test\Helpers;
 use ACP3\Core\Helpers\PageBreaks;
 use ACP3\Core\Helpers\TableOfContents;
 use ACP3\Core\Http\Request;
-use ACP3\Core\RouterInterface;
+use ACP3\Core\Router\RouterInterface;
 
 class PageBreaksTest extends \PHPUnit_Framework_TestCase
 {

@@ -28,7 +28,7 @@ abstract class AbstractInstallerAction implements ActionInterface
      */
     protected $translator;
     /**
-     * @var \ACP3\Core\RouterInterface
+     * @var \ACP3\Core\Router\RouterInterface
      */
     protected $router;
     /**

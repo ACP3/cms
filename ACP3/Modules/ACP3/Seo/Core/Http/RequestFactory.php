@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Seo\Core\Http;
 
-use ACP3\Core\Config;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
@@ -24,11 +24,11 @@ class RequestFactory extends \ACP3\Core\Http\RequestFactory
     /**
      * RequestFactory constructor.
      *
-     * @param \ACP3\Core\Config $config
+     * @param \ACP3\Core\Settings\SettingsInterface $config
      * @param SymfonyRequest $symfonyRequest
      * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
-    public function __construct(Config $config, SymfonyRequest $symfonyRequest, SeoRepository $seoRepository)
+    public function __construct(SettingsInterface $config, SymfonyRequest $symfonyRequest, SeoRepository $seoRepository)
     {
         parent::__construct($config, $symfonyRequest);
 

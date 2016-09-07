@@ -30,7 +30,7 @@ class Helpers
      */
     protected $request;
     /**
-     * @var \ACP3\Core\RouterInterface
+     * @var \ACP3\Core\Router\RouterInterface
      */
     protected $router;
     /**
@@ -47,7 +47,7 @@ class Helpers
      *
      * @param \ACP3\Modules\ACP3\Users\Model\UserModel                            $user
      * @param \ACP3\Core\Http\RequestInterface           $request
-     * @param \ACP3\Core\RouterInterface                 $router
+     * @param \ACP3\Core\Router\RouterInterface                 $router
      * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
      * @param \ACP3\Core\View                            $view
      * @param \ACP3\Core\Helpers\Secure                  $secureHelper
@@ -55,7 +55,7 @@ class Helpers
     public function __construct(
         \ACP3\Modules\ACP3\Users\Model\UserModel $user,
         Core\Http\RequestInterface $request,
-        Core\RouterInterface $router,
+        Core\Router\RouterInterface $router,
         Core\Session\SessionHandlerInterface $sessionHandler,
         Core\View $view,
         Core\Helpers\Secure $secureHelper
