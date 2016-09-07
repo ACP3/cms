@@ -2,18 +2,18 @@
 namespace ACP3\Modules\ACP3\Newsletter\Test\Helper\DataGrid\ColumnRenderer;
 
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Router;
+use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Test\Helpers\ColumnRenderer\AbstractColumnRendererTest;
 use ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer\AccountStatusColumnRenderer;
 
 class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 {
     /**
-     * @var Translator|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $langMock;
     /**
-     * @var Router|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $routerMock;
 
@@ -24,7 +24,7 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
             ->setMethods(['t'])
             ->getMock();
 
-        $this->routerMock = $this->getMockBuilder(Router::class)
+        $this->routerMock = $this->getMockBuilder(RouterInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(['route'])
             ->getMock();

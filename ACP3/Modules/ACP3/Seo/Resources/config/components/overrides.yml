@@ -32,7 +32,7 @@ services:
       - '@seo.model.seorepository'
 
   core.router:
-    class: ACP3\Modules\ACP3\Seo\Core\Router
+    class: ACP3\Modules\ACP3\Seo\Core\Router\Router
     arguments:
       - '@seo.core.router.aliases'
       - '@core.http.request'

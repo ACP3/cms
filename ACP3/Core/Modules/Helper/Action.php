@@ -25,7 +25,7 @@ class Action
      */
     protected $request;
     /**
-     * @var \ACP3\Core\RouterInterface
+     * @var \ACP3\Core\Router\RouterInterface
      */
     protected $router;
     /**
@@ -42,14 +42,14 @@ class Action
      *
      * @param \ACP3\Core\I18n\Translator $translator
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\RouterInterface $router
+     * @param \ACP3\Core\Router\RouterInterface $router
      * @param \ACP3\Core\Helpers\Alerts $alerts
      * @param \ACP3\Core\Helpers\RedirectMessages $redirectMessages
      */
     public function __construct(
         Core\I18n\Translator $translator,
         Core\Http\RequestInterface $request,
-        Core\RouterInterface $router,
+        Core\Router\RouterInterface $router,
         Core\Helpers\Alerts $alerts,
         Core\Helpers\RedirectMessages $redirectMessages
     ) {

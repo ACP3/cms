@@ -11,7 +11,7 @@ use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\Request;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Router;
+use ACP3\Core\Router\RouterInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -66,8 +66,9 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $this->requestMock = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->routerMock = $this->getMockBuilder(Router::class)
+        $this->routerMock = $this->getMockBuilder(RouterInterface::class)
             ->disableOriginalConstructor()
+            ->setMethods(['route'])
             ->getMock();
         $this->eventDispatcherMock = $this->getMockBuilder(EventDispatcher::class)
             ->disableOriginalConstructor()

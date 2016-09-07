@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\Http;
 
-use ACP3\Core\RouterInterface;
+use ACP3\Core\Router\RouterInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +22,7 @@ class RedirectResponse
      */
     protected $request;
     /**
-     * @var \ACP3\Core\RouterInterface
+     * @var \ACP3\Core\Router\RouterInterface
      */
     protected $router;
 
@@ -30,7 +30,7 @@ class RedirectResponse
      * Redirect constructor.
      *
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\RouterInterface       $router
+     * @param \ACP3\Core\Router\RouterInterface       $router
      */
     public function __construct(
         RequestInterface $request,

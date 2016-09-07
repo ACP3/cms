@@ -14,7 +14,7 @@ class PageBreaks
      */
     protected $request;
     /**
-     * @var \ACP3\Core\RouterInterface
+     * @var \ACP3\Core\Router\RouterInterface
      */
     protected $router;
     /**
@@ -26,12 +26,12 @@ class PageBreaks
      * PageBreaks constructor.
      *
      * @param \ACP3\Core\Http\RequestInterface   $request
-     * @param \ACP3\Core\RouterInterface         $router
+     * @param \ACP3\Core\Router\RouterInterface         $router
      * @param \ACP3\Core\Helpers\TableOfContents $tableOfContents
      */
     public function __construct(
         Core\Http\RequestInterface $request,
-        Core\RouterInterface $router,
+        Core\Router\RouterInterface $router,
         TableOfContents $tableOfContents
     ) {
         $this->tableOfContents = $tableOfContents;

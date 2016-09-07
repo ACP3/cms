@@ -4,18 +4,17 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Seo\Core;
+namespace ACP3\Modules\ACP3\Seo\Core\Router;
 
 use ACP3\Core\Config;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
 /**
  * Class Router
- * @package ACP3\Modules\ACP3\Seo\Core
+ * @package ACP3\Modules\ACP3\Seo\Core\Router
  */
-class Router extends \ACP3\Core\Router
+class Router extends \ACP3\Core\Router\Router
 {
     /**
      * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases

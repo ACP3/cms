@@ -21,9 +21,3 @@ services:
 
   core.http.response:
     class: Symfony\Component\HttpFoundation\Response
-
-  core.router:
-    class: ACP3\Installer\Core\Router
-    arguments:
-      - '@core.http.request'
-      - '@core.environment.application_path'

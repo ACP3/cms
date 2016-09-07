@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
 
-use ACP3\Core\RouterInterface;
+use ACP3\Core\Router\RouterInterface;
 
 /**
  * Class OptionRenderer
@@ -10,7 +10,7 @@ use ACP3\Core\RouterInterface;
 class OptionRenderer
 {
     /**
-     * @var \ACP3\Core\RouterInterface
+     * @var \ACP3\Core\Router\RouterInterface
      */
     protected $router;
     /**
@@ -21,7 +21,7 @@ class OptionRenderer
     /**
      * OptionRenderer constructor.
      *
-     * @param \ACP3\Core\RouterInterface $router
+     * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(RouterInterface $router)
     {

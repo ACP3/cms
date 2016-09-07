@@ -9,7 +9,7 @@ namespace ACP3\Core\Test\Http;
 
 use ACP3\Core\Http\RedirectResponse;
 use ACP3\Core\Http\Request;
-use ACP3\Core\Router;
+use ACP3\Core\Router\RouterInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RedirectResponseTest extends \PHPUnit_Framework_TestCase
@@ -30,7 +30,7 @@ class RedirectResponseTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->setUpMockObjects();
-        
+
         $this->redirectResponse = new RedirectResponse(
             $this->requestMock,
             $this->routerMock
@@ -42,8 +42,9 @@ class RedirectResponseTest extends \PHPUnit_Framework_TestCase
         $this->requestMock = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->routerMock = $this->getMockBuilder(Router::class)
+        $this->routerMock = $this->getMockBuilder(RouterInterface::class)
             ->disableOriginalConstructor()
+            ->setMethods(['route'])
             ->getMock();
     }
 

@@ -2,18 +2,18 @@
 namespace ACP3\Core\Test\Helpers\ColumnRenderer;
 
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer;
-use ACP3\Core\Router;
+use ACP3\Core\Router\RouterInterface;
 
 class PictureColumnRendererTest extends AbstractColumnRendererTest
 {
     /**
-     * @var Router|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $routerMock;
 
     protected function setUp()
     {
-        $this->routerMock = $this->getMockBuilder(Router::class)
+        $this->routerMock = $this->getMockBuilder(RouterInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(['route'])
             ->getMock();

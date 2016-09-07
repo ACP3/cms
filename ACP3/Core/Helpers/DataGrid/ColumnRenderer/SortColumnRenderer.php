@@ -7,7 +7,7 @@
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\RouterInterface;
+use ACP3\Core\Router\RouterInterface;
 
 /**
  * Class SortColumnRenderer
@@ -20,7 +20,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
      */
     protected $translator;
     /**
-     * @var \ACP3\Core\RouterInterface
+     * @var \ACP3\Core\Router\RouterInterface
      */
     protected $router;
 
@@ -28,7 +28,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
      * PictureSortColumnRenderer constructor.
      *
      * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\RouterInterface $router
+     * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(
         Translator $translator,

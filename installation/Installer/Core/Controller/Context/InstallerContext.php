@@ -7,7 +7,7 @@
 namespace ACP3\Installer\Core\Controller\Context;
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\RouterInterface;
+use ACP3\Core\Router\RouterInterface;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 use ACP3\Installer\Core\I18n\Translator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -36,7 +36,7 @@ class InstallerContext
      */
     protected $response;
     /**
-     * @var \ACP3\Core\RouterInterface
+     * @var \ACP3\Core\Router\RouterInterface
      */
     protected $router;
     /**
@@ -54,7 +54,7 @@ class InstallerContext
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param \ACP3\Installer\Core\I18n\Translator                      $translator
      * @param \ACP3\Core\Http\RequestInterface                          $request
-     * @param \ACP3\Core\RouterInterface                                $router
+     * @param \ACP3\Core\Router\RouterInterface                                $router
      * @param \ACP3\Core\View                                           $view
      * @param \Symfony\Component\HttpFoundation\Response                $response
      * @param \ACP3\Installer\Core\Environment\ApplicationPath          $appPath
@@ -102,7 +102,7 @@ class InstallerContext
     }
 
     /**
-     * @return \ACP3\Core\RouterInterface
+     * @return \ACP3\Core\Router\RouterInterface
      */
     public function getRouter()
     {

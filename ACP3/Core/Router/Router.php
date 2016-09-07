@@ -1,14 +1,19 @@
 <?php
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Core;
+namespace ACP3\Core\Router;
 
+use ACP3\Core\Config;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Modules\ACP3\System;
 
 /**
  * Class Router
- * @package ACP3\Core
+ * @package ACP3\Core\Router
  */
 class Router implements RouterInterface
 {

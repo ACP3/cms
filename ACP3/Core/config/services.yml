@@ -83,7 +83,7 @@ services:
       - '@core.router'
 
   core.router:
-    class: ACP3\Core\Router
+    class: ACP3\Core\Router\Router
     arguments:
       - '@core.http.request'
       - '@core.environment.application_path'

@@ -28,7 +28,7 @@ class Subscribe
      */
     protected $request;
     /**
-     * @var \ACP3\Core\RouterInterface
+     * @var \ACP3\Core\Router\RouterInterface
      */
     protected $router;
     /**
@@ -59,7 +59,7 @@ class Subscribe
      * @param \ACP3\Core\I18n\Translator                            $translator
      * @param \ACP3\Core\Mailer                                     $mailer
      * @param \ACP3\Core\Http\RequestInterface                      $request
-     * @param \ACP3\Core\RouterInterface                            $router
+     * @param \ACP3\Core\Router\RouterInterface                            $router
      * @param \ACP3\Core\Helpers\StringFormatter                    $stringFormatter
      * @param \ACP3\Core\Helpers\Secure                             $secureHelper
      * @param \ACP3\Core\Config                                     $config
@@ -71,7 +71,7 @@ class Subscribe
         Core\I18n\Translator $translator,
         Core\Mailer $mailer,
         Core\Http\RequestInterface $request,
-        Core\RouterInterface $router,
+        Core\Router\RouterInterface $router,
         Core\Helpers\StringFormatter $stringFormatter,
         Core\Helpers\Secure $secureHelper,
         Core\Config $config,
