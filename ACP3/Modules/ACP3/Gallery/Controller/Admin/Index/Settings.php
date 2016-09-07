@@ -98,7 +98,7 @@ class Settings extends Core\Controller\AbstractAdminAction
                 $data['comments'] = (int)$formData['comments'];
             }
 
-            $bool = $this->config->setSettings($data, Gallery\Installer\Schema::MODULE_NAME);
+            $bool = $this->config->saveSettings($data, Gallery\Installer\Schema::MODULE_NAME);
 
             if ($formData['thumbwidth'] !== $settings['thumbwidth']
                 || $formData['thumbheight'] !== $settings['thumbheight']

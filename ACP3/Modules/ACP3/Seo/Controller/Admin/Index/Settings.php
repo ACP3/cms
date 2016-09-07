@@ -92,7 +92,7 @@ class Settings extends Core\Controller\AbstractAdminAction
                 'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
             ];
 
-            $bool = $this->config->setSettings($data, Seo\Installer\Schema::MODULE_NAME);
+            $bool = $this->config->saveSettings($data, Seo\Installer\Schema::MODULE_NAME);
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 

@@ -25,5 +25,5 @@ interface SettingsInterface
      *
      * @return bool
      */
-    public function setSettings($data, $module);
+    public function saveSettings($data, $module);
 }

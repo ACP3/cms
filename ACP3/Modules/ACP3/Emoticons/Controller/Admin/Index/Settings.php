@@ -76,7 +76,7 @@ class Settings extends Core\Controller\AbstractAdminAction
                 'filesize' => (int)$formData['filesize'],
             ];
 
-            return $this->config->setSettings($data, Emoticons\Installer\Schema::MODULE_NAME);
+            return $this->config->saveSettings($data, Emoticons\Installer\Schema::MODULE_NAME);
         });
     }
 }

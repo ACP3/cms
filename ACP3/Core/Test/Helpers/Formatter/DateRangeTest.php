@@ -48,7 +48,7 @@ class DateRangeTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $this->configMock = $this->getMockBuilder(SettingsInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getSettings', 'setSettings'])
+            ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
         $this->userMock->expects($this->once())

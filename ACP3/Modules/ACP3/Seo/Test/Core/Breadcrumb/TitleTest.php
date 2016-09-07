@@ -34,7 +34,7 @@ class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
 
         $this->configMock = $this->getMockBuilder(SettingsInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getSettings', 'setSettings'])
+            ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
         $this->configMock->expects($this->once())

@@ -86,7 +86,7 @@ class Index extends Core\Controller\AbstractAdminAction
                 'feed_type' => $formData['feed_type']
             ];
 
-            return $this->config->setSettings($data, Feeds\Installer\Schema::MODULE_NAME);
+            return $this->config->saveSettings($data, Feeds\Installer\Schema::MODULE_NAME);
         });
     }
 }
