@@ -18,23 +18,24 @@ class SchemaHelper
      */
     protected $db;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
+     * @var Core\Model\Repository\ModuleAwareRepositoryInterface
      */
     protected $systemModuleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository
+     * @var Core\Model\Repository\SettingsAwareRepositoryInterface
      */
     protected $systemSettingsRepository;
 
     /**
-     * @param \ACP3\Core\Database\Connection                     $db
-     * @param \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository   $systemModuleRepository
-     * @param \ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository $systemSettingsRepository
+     * SchemaHelper constructor.
+     * @param Core\Database\Connection $db
+     * @param Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
+     * @param Core\Model\Repository\SettingsAwareRepositoryInterface $systemSettingsRepository
      */
     public function __construct(
         Core\Database\Connection $db,
-        System\Model\Repository\ModuleRepository $systemModuleRepository,
-        System\Model\Repository\SettingsRepository $systemSettingsRepository
+        Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository,
+        Core\Model\Repository\SettingsAwareRepositoryInterface $systemSettingsRepository
     ) {
         $this->db = $db;
         $this->systemModuleRepository = $systemModuleRepository;
@@ -58,7 +59,7 @@ class SchemaHelper
     }
 
     /**
-     * @return \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
+     * @return Core\Model\Repository\ModuleAwareRepositoryInterface
      */
     public function getSystemModuleRepository()
     {
@@ -68,7 +69,7 @@ class SchemaHelper
     /**
      * Executes all given SQL queries
      *
-     * @param array  $queries
+     * @param array $queries
      * @param string $moduleName
      *
      * @return bool
@@ -124,6 +125,9 @@ class SchemaHelper
      */
     public function moduleIsInstalled($moduleName)
     {
-        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->db->getPrefixedTableName(System\Model\Repository\ModuleRepository::TABLE_NAME)} WHERE `name` = ?", [$moduleName]) == 1;
+        return $this->db->fetchColumn(
+            "SELECT COUNT(*) FROM {$this->systemModuleRepository->getTableName()} WHERE `name` = ?",
+            [$moduleName]
+        ) == 1;
     }
 }

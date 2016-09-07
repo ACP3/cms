@@ -37,8 +37,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     protected function moduleNeedsInstallation(SchemaInterface $schema)
     {
-        $tableName = $this->db->getPrefixedTableName(System\Model\Repository\ModuleRepository::TABLE_NAME);
-        $modulesTableExists = $this->db->fetchColumn("SHOW TABLES LIKE '{$tableName}'");
+        $modulesTableExists = $this->db->fetchColumn("SHOW TABLES LIKE '{$this->systemModuleRepository->getTableName()}'");
 
         return !$modulesTableExists || !$this->systemModuleRepository->moduleExists($schema->getModuleName());
     }

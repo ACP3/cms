@@ -7,6 +7,8 @@
 namespace ACP3\Core\Settings;
 
 use ACP3\Core\Cache;
+use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
+use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
 use ACP3\Modules\ACP3\System;
 
 /**
@@ -18,11 +20,11 @@ class Settings implements SettingsInterface
     const CACHE_ID = 'settings';
 
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
+     * @var ModuleAwareRepositoryInterface
      */
     protected $systemModuleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository
+     * @var SettingsAwareRepositoryInterface
      */
     protected $systemSettingsRepository;
     /**
@@ -35,14 +37,15 @@ class Settings implements SettingsInterface
     protected $settings = [];
 
     /**
-     * @param \ACP3\Core\Cache $coreCache
-     * @param \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository $systemModuleRepository
-     * @param \ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository $systemSettingsRepository
+     * Settings constructor.
+     * @param Cache $coreCache
+     * @param ModuleAwareRepositoryInterface $systemModuleRepository
+     * @param SettingsAwareRepositoryInterface $systemSettingsRepository
      */
     public function __construct(
         Cache $coreCache,
-        System\Model\Repository\ModuleRepository $systemModuleRepository,
-        System\Model\Repository\SettingsRepository $systemSettingsRepository
+        ModuleAwareRepositoryInterface $systemModuleRepository,
+        SettingsAwareRepositoryInterface $systemSettingsRepository
     ) {
         $this->coreCache = $coreCache;
         $this->systemModuleRepository = $systemModuleRepository;
@@ -85,7 +88,7 @@ class Settings implements SettingsInterface
      */
     protected function saveCache()
     {
-        $settings = $this->systemSettingsRepository->getAllModuleSettings();
+        $settings = $this->systemSettingsRepository->getAllSettings();
 
         $data = [];
         foreach ($settings as $setting) {

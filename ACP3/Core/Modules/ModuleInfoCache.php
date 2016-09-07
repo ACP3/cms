@@ -10,8 +10,8 @@ use ACP3\Core\Cache;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\XML;
-use ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository;
 
 /**
  * Class ModuleInfoCache
@@ -42,17 +42,18 @@ class ModuleInfoCache
      */
     protected $xml;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository
+     * @var ModuleAwareRepositoryInterface
      */
     protected $systemModuleRepository;
 
     /**
-     * @param \ACP3\Core\Cache                                 $cache
-     * @param \ACP3\Core\Environment\ApplicationPath           $appPath
-     * @param \ACP3\Core\I18n\Translator                       $translator
-     * @param \ACP3\Core\Modules\Vendor                        $vendors
-     * @param \ACP3\Core\XML                                   $xml
-     * @param \ACP3\Modules\ACP3\System\Model\Repository\ModuleRepository $systemModuleRepository
+     * ModuleInfoCache constructor.
+     * @param Cache $cache
+     * @param ApplicationPath $appPath
+     * @param Translator $translator
+     * @param Vendor $vendors
+     * @param XML $xml
+     * @param ModuleAwareRepositoryInterface $systemModuleRepository
      */
     public function __construct(
         Cache $cache,
@@ -60,7 +61,7 @@ class ModuleInfoCache
         Translator $translator,
         Vendor $vendors,
         XML $xml,
-        ModuleRepository $systemModuleRepository
+        ModuleAwareRepositoryInterface $systemModuleRepository
     ) {
         $this->cache = $cache;
         $this->appPath = $appPath;
