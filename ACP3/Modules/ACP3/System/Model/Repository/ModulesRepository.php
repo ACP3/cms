@@ -10,10 +10,10 @@ use ACP3\Core\Model\Repository\AbstractRepository;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 
 /**
- * Class ModuleRepository
+ * Class ModulesRepository
  * @package ACP3\Modules\ACP3\System\Model\Repository
  */
-class ModuleRepository extends AbstractRepository  implements ModuleAwareRepositoryInterface
+class ModulesRepository extends AbstractRepository  implements ModuleAwareRepositoryInterface
 {
     const TABLE_NAME = 'modules';
 
