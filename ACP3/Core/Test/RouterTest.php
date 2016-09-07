@@ -6,11 +6,11 @@
 
 namespace ACP3\Core\Test;
 
-use ACP3\Core\Config;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\Request;
 use ACP3\Core\Router\Router;
+use ACP3\Core\Settings\SettingsInterface;
 
 /**
  * Class RouterTest
@@ -57,9 +57,9 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['getWebRoot', 'getPhpSelf'])
             ->getMock();
-        $this->configMock = $this->getMockBuilder(Config::class)
+        $this->configMock = $this->getMockBuilder(SettingsInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getSettings'])
+            ->setMethods(['getSettings', 'setSettings'])
             ->getMock();
     }
 

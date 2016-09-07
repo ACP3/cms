@@ -7,10 +7,10 @@
 namespace ACP3\Modules\ACP3\News\Model;
 
 
-use ACP3\Core\Config;
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\News\Installer\Schema;
 use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -28,21 +28,21 @@ class NewsModel extends AbstractModel
      */
     protected $secure;
     /**
-     * @var Config
+     * @var SettingsInterface
      */
     protected $config;
 
     /**
      * NewsModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
-     * @param Config $config
+     * @param SettingsInterface $config
      * @param Date $date
      * @param Secure $secure
      * @param NewsRepository $newsRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        Config $config,
+        SettingsInterface $config,
         Date $date,
         Secure $secure,
         NewsRepository $newsRepository

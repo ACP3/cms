@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Seo\Core\Breadcrumb;
 
 use ACP3\Core\Breadcrumb\Steps;
-use ACP3\Core\Config;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -19,12 +19,11 @@ class Title extends \ACP3\Core\Breadcrumb\Title
 {
     /**
      * Title constructor.
-     *
-     * @param \ACP3\Core\Breadcrumb\Steps                                 $steps
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \ACP3\Core\Config                                           $config
+     * @param Steps $steps
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param SettingsInterface $config
      */
-    public function __construct(Steps $steps, EventDispatcherInterface $eventDispatcher, Config $config)
+    public function __construct(Steps $steps, EventDispatcherInterface $eventDispatcher, SettingsInterface $config)
     {
         parent::__construct($steps, $eventDispatcher);
 

@@ -1,9 +1,9 @@
 <?php
 namespace ACP3\Core\I18n;
 
-use ACP3\Core\Config;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\I18n\DictionaryCache as LanguageCache;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
@@ -26,7 +26,7 @@ class Translator
      */
     protected $dictionaryCache;
     /**
-     * @var \ACP3\Core\Config
+     * @var SettingsInterface
      */
     protected $config;
     /**
@@ -49,16 +49,17 @@ class Translator
     protected $buffer = [];
 
     /**
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                        $user
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\I18n\DictionaryCache        $dictionaryCache
-     * @param \ACP3\Core\Config                      $config
+     * Translator constructor.
+     * @param UserModel $user
+     * @param ApplicationPath $appPath
+     * @param DictionaryCache $dictionaryCache
+     * @param SettingsInterface $config
      */
     public function __construct(
         UserModel $user,
         ApplicationPath $appPath,
         LanguageCache $dictionaryCache,
-        Config $config
+        SettingsInterface $config
     ) {
         $this->user = $user;
         $this->appPath = $appPath;

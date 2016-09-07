@@ -12,7 +12,7 @@ use ACP3\Core\Database\Connection;
  * Class AbstractRepository
  * @package ACP3\Core\Model\Repository
  */
-abstract class AbstractRepository
+abstract class AbstractRepository implements RepositoryInterface
 {
     const TABLE_NAME = '';
     const PRIMARY_KEY_COLUMN = 'id';

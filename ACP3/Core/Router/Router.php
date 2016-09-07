@@ -6,9 +6,9 @@
 
 namespace ACP3\Core\Router;
 
-use ACP3\Core\Config;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System;
 
 /**
@@ -28,7 +28,7 @@ class Router implements RouterInterface
      */
     protected $appPath;
     /**
-     * @var \ACP3\Core\Config
+     * @var SettingsInterface
      */
     protected $config;
     /**
@@ -38,16 +38,15 @@ class Router implements RouterInterface
 
     /**
      * Router constructor.
-     *
-     * @param \ACP3\Core\Http\RequestInterface       $request
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Config                      $config
-     * @param string                                 $environment
+     * @param RequestInterface $request
+     * @param ApplicationPath $appPath
+     * @param SettingsInterface $config
+     * @param $environment
      */
     public function __construct(
         RequestInterface $request,
         ApplicationPath $appPath,
-        Config $config,
+        SettingsInterface $config,
         $environment
     ) {
         $this->request = $request;

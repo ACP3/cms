@@ -1,13 +1,19 @@
 <?php
-namespace ACP3\Core;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
+namespace ACP3\Core\Settings;
+
+use ACP3\Core\Cache;
 use ACP3\Modules\ACP3\System;
 
 /**
  * Manages the various module settings
- * @package ACP3\Core
+ * @package ACP3\Core\Settings
  */
-class Config
+class Settings implements SettingsInterface
 {
     const CACHE_ID = 'settings';
 

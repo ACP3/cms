@@ -6,8 +6,8 @@
 
 namespace ACP3\Core\View\Renderer;
 
-use ACP3\Core\Config;
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
@@ -21,7 +21,7 @@ class SmartyRendererFactory
      */
     protected $appPath;
     /**
-     * @var \ACP3\Core\Config
+     * @var SettingsInterface
      */
     protected $config;
     /**
@@ -31,12 +31,11 @@ class SmartyRendererFactory
 
     /**
      * SmartyRendererFactory constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Config                      $config
-     * @param string                                 $environment
+     * @param ApplicationPath $appPath
+     * @param SettingsInterface $config
+     * @param $environment
      */
-    public function __construct(ApplicationPath $appPath, Config $config, $environment)
+    public function __construct(ApplicationPath $appPath, SettingsInterface $config, $environment)
     {
         $this->appPath = $appPath;
         $this->config = $config;

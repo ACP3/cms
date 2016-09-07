@@ -58,7 +58,7 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected $view;
     /**
-     * @var \ACP3\Core\Config
+     * @var \ACP3\Core\Settings\SettingsInterface
      */
     protected $config;
     /**

@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Seo\Test\Core\Breadcrumb;
 
 
-use ACP3\Core\Config;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Core\Breadcrumb\Title;
 
 class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
@@ -32,8 +32,9 @@ class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
     {
         parent::initializeMockObjects();
 
-        $this->configMock = $this->getMockBuilder(Config::class)
+        $this->configMock = $this->getMockBuilder(SettingsInterface::class)
             ->disableOriginalConstructor()
+            ->setMethods(['getSettings', 'setSettings'])
             ->getMock();
 
         $this->configMock->expects($this->once())

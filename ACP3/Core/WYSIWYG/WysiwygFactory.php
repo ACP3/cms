@@ -10,10 +10,6 @@ namespace ACP3\Core\WYSIWYG;
 class WysiwygFactory
 {
     /**
-     * @var \ACP3\Core\Config
-     */
-    protected $config;
-    /**
      * @var AbstractWYSIWYG[]
      */
     protected $wysiwygEditors = [];

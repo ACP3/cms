@@ -43,7 +43,7 @@ services:
       - '@core.environment.application_path'
 
   core.config:
-    class: ACP3\Core\Config
+    class: ACP3\Core\Settings\Settings
     arguments:
       - '@core.cache.system'
       - '@system.model.modulerepository'

@@ -3,9 +3,9 @@ namespace ACP3\Core\Assets;
 
 use ACP3\Core\Assets;
 use ACP3\Core\Cache;
-use ACP3\Core\Config;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
@@ -30,7 +30,7 @@ abstract class AbstractMinifier implements MinifierInterface
      */
     protected $systemCache;
     /**
-     * @var \ACP3\Core\Config
+     * @var SettingsInterface
      */
     protected $config;
     /**
@@ -60,19 +60,19 @@ abstract class AbstractMinifier implements MinifierInterface
     protected $assetGroup = '';
 
     /**
-     * @param \ACP3\Core\Assets                      $assets
+     * @param \ACP3\Core\Assets $assets
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Cache                       $systemCache
-     * @param \ACP3\Core\Config                      $config
-     * @param \ACP3\Core\Modules                     $modules
-     * @param \ACP3\Core\Assets\FileResolver         $fileResolver
-     * @param string                                 $environment
+     * @param \ACP3\Core\Cache $systemCache
+     * @param SettingsInterface $config
+     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\Assets\FileResolver $fileResolver
+     * @param string $environment
      */
     public function __construct(
         Assets $assets,
         ApplicationPath $appPath,
         Cache $systemCache,
-        Config $config,
+        SettingsInterface $config,
         Modules $modules,
         FileResolver $fileResolver,
         $environment

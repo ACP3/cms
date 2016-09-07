@@ -3,6 +3,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Helpers\StringFormatter;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use InlineStyle\InlineStyle;
 
@@ -21,7 +22,7 @@ class Mailer
      */
     protected $view;
     /**
-     * @var \ACP3\Core\Config
+     * @var SettingsInterface
      */
     protected $config;
     /**
@@ -74,15 +75,16 @@ class Mailer
     private $phpMailer;
 
     /**
-     * @param \ACP3\Core\Logger                  $logger
-     * @param \ACP3\Core\View                    $view
-     * @param \ACP3\Core\Config                  $config
-     * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
+     * Mailer constructor.
+     * @param Logger $logger
+     * @param View $view
+     * @param SettingsInterface $config
+     * @param StringFormatter $stringFormatter
      */
     public function __construct(
         Logger $logger,
         View $view,
-        Config $config,
+        SettingsInterface $config,
         StringFormatter $stringFormatter
     ) {
         $this->logger = $logger;

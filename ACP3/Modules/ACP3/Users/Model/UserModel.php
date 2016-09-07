@@ -6,8 +6,8 @@
 
 namespace ACP3\Modules\ACP3\Users\Model;
 
-use ACP3\Core\Config;
 use ACP3\Core\Helpers\Country;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
@@ -44,7 +44,7 @@ class UserModel
      */
     protected $userInfo = [];
     /**
-     * @var \ACP3\Core\Config
+     * @var \ACP3\Core\Settings\SettingsInterface
      */
     protected $config;
     /**
@@ -55,11 +55,11 @@ class UserModel
     /**
      * User constructor.
      *
-     * @param \ACP3\Core\Config $config
+     * @param \ACP3\Core\Settings\SettingsInterface $config
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      */
     public function __construct(
-        Config $config,
+        SettingsInterface $config,
         Users\Model\Repository\UserRepository $userRepository
     ) {
         $this->config = $config;
