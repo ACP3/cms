@@ -19,7 +19,7 @@
                 <input class="form-control" type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120" required>
             </div>
         </div>
-        {include file="asset:Users/Partials/password_fields.tpl"}
+        {include file="asset:Users/Partials/password_fields.tpl" required=true}
         {event name="captcha.event.display_captcha"}
         {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token}
     </form>

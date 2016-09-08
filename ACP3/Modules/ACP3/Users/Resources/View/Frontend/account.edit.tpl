@@ -28,22 +28,12 @@
                             <input class="form-control" type="text" name="realname" id="realname" value="{$form.realname}" maxlength="80">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="gender" class="col-sm-2 control-label required">{lang t="users|gender"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="gender" id="gender" required>
-                                {foreach $gender as $row}
-                                    <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.select.tpl" options=$gender required=true label={lang t="users|gender"}}
                     <div class="form-group">
                         <label for="date-birthday-input" class="col-sm-2 control-label">{lang t="users|birthday"}</label>
 
                         <div class="col-sm-10">
-                            {datepicker name="birthday" value=$birthday inputFieldOnly=true}
+                            {datepicker name="birthday" value=$birthday inputFieldOnly=true withTime=false}
                         </div>
                     </div>
                 </div>
@@ -87,18 +77,7 @@
                             <input class="form-control" type="text" name="city" id="city" value="{$form.city}" maxlength="80">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="country" class="col-sm-2 control-label">{lang t="users|country"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="country" id="country">
-                                <option value="">{lang t="system|pls_select"}</option>
-                                {foreach $countries as $row}
-                                    <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.select.tpl" options=$countries label={lang t="users|country"}}
                 </div>
                 <div id="tab-4" class="tab-pane fade">
                     {include file="asset:Users/Partials/password_fields.tpl" field_name='new_pwd' translator_phrase="new_pwd"}

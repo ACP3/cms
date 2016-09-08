@@ -16,6 +16,7 @@
             </div>
         </div>
     </nav>
+    {redirect_message}
     <div class="alert alert-warning text-center">
         <strong>{lang t="system|select_menu_item"}</strong>
     </div>

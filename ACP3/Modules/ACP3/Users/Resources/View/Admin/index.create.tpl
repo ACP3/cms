@@ -241,7 +241,7 @@
                 </div>
                 <div id="tab-6" class="tab-pane fade">
                     {block PASSWORD_FIELDS}
-                        {include file="asset:Users/Partials/password_fields.tpl"}
+                        {include file="asset:Users/Partials/password_fields.tpl" required=true}
                     {/block}
                 </div>
             </div>
