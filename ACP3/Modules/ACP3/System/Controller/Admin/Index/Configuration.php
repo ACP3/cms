@@ -60,25 +60,11 @@ class Configuration extends Core\Controller\AbstractAdminAction
 
         $systemSettings = $this->config->getSettings(System\Installer\Schema::MODULE_NAME);
 
-        // WYSIWYG editors
-        $services = $this->get('core.wysiwyg.wysiwyg_factory')->getWysiwygEditors();
-        $wysiwyg = [];
-        foreach ($services as $serviceId => $editorInstance) {
-            /** @var \ACP3\Core\WYSIWYG\AbstractWYSIWYG $editorInstance */
-            $wysiwyg[] = [
-                'value' => $serviceId,
-                'selected' => $this->formsHelper->selectEntry('wysiwyg', $serviceId, $systemSettings['wysiwyg']),
-                'lang' => $editorInstance->getFriendlyName()
-            ];
-        }
-
-        // Mailertyp
         $mailerTypes = [
             'mail' => $this->translator->t('system', 'mailer_type_php_mail'),
             'smtp' => $this->translator->t('system', 'mailer_type_smtp')
         ];
 
-        // Mailer SMTP Verschlüsselung
         $mailerSmtpSecurity = [
             'none' => $this->translator->t('system', 'mailer_smtp_security_none'),
             'ssl' => $this->translator->t('system', 'mailer_smtp_security_ssl'),
@@ -87,7 +73,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
 
         return [
             'entries' => $this->formsHelper->recordsPerPage($systemSettings['entries']),
-            'wysiwyg' => $wysiwyg,
+            'wysiwyg' => $this->fetchWysiwygEditors($systemSettings),
             'languages' => $this->translator->getLanguagePack($systemSettings['lang']),
             'mod_rewrite' => $this->formsHelper->yesNoCheckboxGenerator('mod_rewrite', $systemSettings['mod_rewrite']),
             'time_zones' => $this->get('core.helpers.date')->getTimeZones($systemSettings['date_time_zone']),
@@ -165,5 +151,20 @@ class Configuration extends Core\Controller\AbstractAdminAction
             },
             $this->request->getFullPath()
         );
+    }
+
+    /**
+     * @param $systemSettings
+     * @return array
+     */
+    protected function fetchWysiwygEditors($systemSettings)
+    {
+        $services = $this->get('core.wysiwyg.wysiwyg_factory')->getWysiwygEditors();
+        $wysiwyg = [];
+        foreach ($services as $serviceId => $editorInstance) {
+            /** @var \ACP3\Core\WYSIWYG\AbstractWYSIWYG $editorInstance */
+            $wysiwyg[$serviceId] =  $editorInstance->getFriendlyName();
+        }
+        return $this->formsHelper->choicesGenerator('wysiwyg', $wysiwyg, $systemSettings['wysiwyg']);
     }
 }

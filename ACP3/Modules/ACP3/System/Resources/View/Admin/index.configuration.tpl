@@ -25,17 +25,7 @@
                             <p class="help-block">{lang t="system|homepage_description"}</p>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="entries" class="col-sm-2 control-label required">{lang t="system|records_per_page"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="entries" id="entries" required>
-                                {foreach $entries as $row}
-                                    <option value="{$row.value}"{$row.selected}>{$row.value}</option>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.select.tpl" options=$entries required=true label={lang t="system|records_per_page"}}
                     <div class="form-group">
                         <label for="flood" class="col-sm-2 control-label required">{lang t="system|flood_barrier"}</label>
 
@@ -45,17 +35,7 @@
                             <p class="help-block">{lang t="system|flood_barrier_description"}</p>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="wysiwyg" class="col-sm-2 control-label required">{lang t="system|editor"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="wysiwyg" id="wysiwyg" required>
-                                {foreach $wysiwyg as $row}
-                                    <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.select.tpl" options=$wysiwyg required=true label={lang t="system|editor"}}
                     <div class="form-group">
                         <label for="language" class="col-sm-2 control-label required">{lang t="system|language"}</label>
 
@@ -75,7 +55,7 @@
                             <div class="btn-group" data-toggle="buttons">
                                 {foreach $mod_rewrite as $row}
                                     <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                        <input type="radio" name="mod_rewrite" id="{$row.id}" value="{$row.value}"{$row.checked}>
+                                        <input type="radio" name="{$row.name}" id="{$row.id}" value="{$row.value}"{$row.checked}>
                                         {$row.lang}
                                     </label>
                                 {/foreach}
@@ -125,7 +105,7 @@
                             <div class="btn-group" data-toggle="buttons">
                                 {foreach $maintenance as $row}
                                     <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                        <input type="radio" name="maintenance_mode" id="{$row.id}" value="{$row.value}"{$row.checked}>
+                                        <input type="radio" name="{$row.name}" id="{$row.id}" value="{$row.value}"{$row.checked}>
                                         {$row.lang}
                                     </label>
                                 {/foreach}
@@ -148,7 +128,7 @@
                             <div class="btn-group" data-toggle="buttons">
                                 {foreach $cache_images as $row}
                                     <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                        <input type="radio" name="cache_images" id="{$row.id}" value="{$row.value}"{$row.checked}>
+                                        <input type="radio" name="{$row.name}" id="{$row.id}" value="{$row.value}"{$row.checked}>
                                         {$row.lang}
                                     </label>
                                 {/foreach}
@@ -166,17 +146,7 @@
                     </div>
                 </div>
                 <div id="tab-6" class="tab-pane fade">
-                    <div class="form-group">
-                        <label for="mailer-type" class="col-sm-2 control-label required">{lang t="system|mailer_type"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="mailer_type" id="mailer-type" required>
-                                {foreach $mailer_type as $row}
-                                    <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.select.tpl" options=$mailer_type required=true label={lang t="system|mailer_type"}}
                     <div id="mailer-smtp-1">
                         <div class="form-group">
                             <label for="mailer-smtp-host" class="col-sm-2 control-label required">{lang t="system|mailer_smtp_hostname"}</label>
@@ -192,17 +162,7 @@
                                 <input class="form-control" type="number" name="mailer_smtp_port" id="mailer-smtp-port" value="{$form.mailer_smtp_port}">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="mailer-smtp-security" class="col-sm-2 control-label required">{lang t="system|mailer_smtp_security"}</label>
-
-                            <div class="col-sm-10">
-                                <select class="form-control" name="mailer_smtp_security" id="mailer-smtp-security">
-                                    {foreach $mailer_smtp_security as $row}
-                                        <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                                    {/foreach}
-                                </select>
-                            </div>
-                        </div>
+                        {include file="asset:System/Partials/form_group.select.tpl" options=$mailer_smtp_security required=true label={lang t="system|mailer_smtp_security"}}
                         <div class="form-group">
                             <label for="{$mailer_smtp_auth.0.id}" class="col-sm-2 control-label required">{lang t="system|mailer_smtp_auth"}</label>
 
@@ -210,7 +170,7 @@
                                 <div class="btn-group" data-toggle="buttons">
                                     {foreach $mailer_smtp_auth as $row}
                                         <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                            <input type="radio" name="mailer_smtp_auth" id="{$row.id}" value="{$row.value}"{$row.checked}>
+                                            <input type="radio" name="{$row.name}" id="{$row.id}" value="{$row.value}"{$row.checked}>
                                             {$row.lang}
                                         </label>
                                     {/foreach}
