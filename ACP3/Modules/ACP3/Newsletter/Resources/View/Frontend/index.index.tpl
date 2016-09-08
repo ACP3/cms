@@ -5,17 +5,7 @@
         {$error_msg}
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-        <div class="form-group">
-            <label for="{$salutation.0.id}" class="col-sm-2 control-label">{lang t="newsletter|salutation"}</label>
-            <div class="col-sm-10">
-                <select class="form-control" name="{$salutation.0.name}" id="{$salutation.0.id}">
-                    <option value="">{lang t="newsletter|salutation_unspecified"}</option>
-                    {foreach $salutation as $row}
-                        <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                    {/foreach}
-                </select>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.select.tpl" options=$salutation emptyOptionLabel={lang t="newsletter|salutation_unspecified"} label={lang t="newsletter|salutation"}}
         <div class="form-group">
             <label for="first_name" class="col-sm-2 control-label">{lang t="newsletter|first_name"}</label>
             <div class="col-sm-10">

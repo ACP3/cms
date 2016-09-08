@@ -59,7 +59,7 @@
                         </div>
                     {/if}
                     <div id="target-container">
-                        {include file="asset:System/Partials/form_group.select.tpl" options=$target label={lang t="menus|target_page"}}
+                        {include file="asset:System/Partials/form_group.select.tpl" options=$target labelRequired=true label={lang t="menus|target_page"}}
                     </div>
                 </div>
             </div>
