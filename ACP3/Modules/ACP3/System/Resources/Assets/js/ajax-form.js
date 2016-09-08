@@ -59,7 +59,6 @@
             for (var i = 0; i < form.elements.length; i++) {
                 field = form.elements[i];
 
-                // ignore buttons, fieldsets, etc.
                 if (field.nodeName !== "INPUT" && field.nodeName !== "TEXTAREA" && field.nodeName !== "SELECT") {
                     continue;
                 }
@@ -87,11 +86,11 @@
         removeErrorMessageFromFormField: function ($elem) {
             $elem.closest('div').find('.validation-failed').remove();
         },
-        addErrorMessageToFormField: function (formField, errorMessage) {
-            this.removeErrorMessageFromFormField(formField);
+        addErrorMessageToFormField: function ($formField, errorMessage) {
+            this.removeErrorMessageFromFormField($formField);
 
-            formField
-                .closest('div:not(.input-group)')
+            $formField
+                .closest('div:not(.input-group):not(.btn-group)')
                 .append(
                     '<small class="help-block validation-failed"><i class="glyphicon glyphicon-remove"></i> ' + errorMessage + '</small>'
                 );

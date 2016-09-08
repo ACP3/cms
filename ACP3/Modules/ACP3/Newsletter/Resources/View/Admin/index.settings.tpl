@@ -16,19 +16,7 @@
                 {wysiwyg name="mailsig" value="`$form.mailsig`" height="250"}
             </div>
         </div>
-        <div class="form-group">
-            <label for="{$html.0.id}" class="col-sm-2 control-label required">{lang t="newsletter|send_html_emails"}</label>
-            <div class="col-sm-10">
-                <div class="btn-group" data-toggle="buttons">
-                    {foreach $html as $row}
-                        <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                            <input type="radio" name="html" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                            {$row.lang}
-                        </label>
-                    {/foreach}
-                </div>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.button_group.tpl" options=$html required=true label={lang t="newsletter|send_html_emails"}}
         {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/newsletter"}}
     </form>
     {javascripts}
