@@ -70,7 +70,7 @@ class Settings extends Core\Controller\AbstractAdminAction
             'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
             'readmore' => $this->formsHelper->yesNoCheckboxGenerator('readmore', $settings['readmore']),
             'readmore_chars' => $this->request->getPost()->get('readmore_chars', $settings['readmore_chars']),
-            'sidebar_entries' => $this->formsHelper->recordsPerPage((int)$settings['sidebar'], 1, 10),
+            'sidebar_entries' => $this->formsHelper->recordsPerPage((int)$settings['sidebar'], 1, 10, 'sidebar'),
             'category_in_breadcrumb' => $this->formsHelper->yesNoCheckboxGenerator('category_in_breadcrumb', $settings['category_in_breadcrumb']),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

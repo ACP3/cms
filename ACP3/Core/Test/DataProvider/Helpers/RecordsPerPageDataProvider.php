@@ -29,19 +29,31 @@ class RecordsPerPageDataProvider implements DataProviderInterface
                 [
                     [
                         'value' => 5,
-                        'selected' => ''
+                        'selected' => '',
+                        'id' => 'entries',
+                        'name' => 'entries',
+                        'lang' => 5
                     ],
                     [
                         'value' => 10,
-                        'selected' => ''
+                        'selected' => '',
+                        'id' => 'entries',
+                        'name' => 'entries',
+                        'lang' => 10
                     ],
                     [
                         'value' => 15,
-                        'selected' => ''
+                        'selected' => '',
+                        'id' => 'entries',
+                        'name' => 'entries',
+                        'lang' => 15
                     ],
                     [
                         'value' => 20,
-                        'selected' => ''
+                        'selected' => '',
+                        'id' => 'entries',
+                        'name' => 'entries',
+                        'lang' => 20
                     ],
                 ]
             ],
@@ -53,19 +65,31 @@ class RecordsPerPageDataProvider implements DataProviderInterface
                 [
                     [
                         'value' => 5,
-                        'selected' => ''
+                        'selected' => '',
+                        'id' => 'entries',
+                        'name' => 'entries',
+                        'lang' => 5
                     ],
                     [
                         'value' => 10,
-                        'selected' => ' selected="selected"'
+                        'selected' => ' selected="selected"',
+                        'id' => 'entries',
+                        'name' => 'entries',
+                        'lang' => 10
                     ],
                     [
                         'value' => 15,
-                        'selected' => ''
+                        'selected' => '',
+                        'id' => 'entries',
+                        'name' => 'entries',
+                        'lang' => 15
                     ],
                     [
                         'value' => 20,
-                        'selected' => ''
+                        'selected' => '',
+                        'id' => 'entries',
+                        'name' => 'entries',
+                        'lang' => 20
                     ],
                 ]
             ],
@@ -77,19 +101,31 @@ class RecordsPerPageDataProvider implements DataProviderInterface
                 [
                     [
                         'value' => 5,
-                        'selected' => ''
+                        'selected' => '',
+                        'id' => 'entries',
+                        'name' => 'entries',
+                        'lang' => 5
                     ],
                     [
                         'value' => 10,
-                        'selected' => ''
+                        'selected' => '',
+                        'id' => 'entries',
+                        'name' => 'entries',
+                        'lang' => 10
                     ],
                     [
                         'value' => 15,
-                        'selected' => ' selected="selected"'
+                        'selected' => ' selected="selected"',
+                        'id' => 'entries',
+                        'name' => 'entries',
+                        'lang' => 15
                     ],
                     [
                         'value' => 20,
-                        'selected' => ''
+                        'selected' => '',
+                        'id' => 'entries',
+                        'name' => 'entries',
+                        'lang' => 20
                     ],
                 ]
             ],

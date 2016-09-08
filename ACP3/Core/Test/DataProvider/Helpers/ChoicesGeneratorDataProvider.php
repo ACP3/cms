@@ -29,21 +29,21 @@ class ChoicesGeneratorDataProvider implements DataProviderInterface
                 [
                     [
                         'value' => 'foo',
-                        'id' => '',
+                        'id' => 'form-field',
                         'selected' => '',
                         'lang' => 'Lorem',
                         'name' => 'form_field'
                     ],
                     [
                         'value' => 'bar',
-                        'id' => '',
+                        'id' => 'form-field',
                         'selected' => '',
                         'lang' => 'Ipsum',
                         'name' => 'form_field'
                     ],
                     [
                         'value' => 'baz',
-                        'id' => '',
+                        'id' => 'form-field',
                         'selected' => '',
                         'lang' => 'Dolor',
                         'name' => 'form_field'
@@ -57,21 +57,21 @@ class ChoicesGeneratorDataProvider implements DataProviderInterface
                 [
                     [
                         'value' => 'foo',
-                        'id' => '',
+                        'id' => 'form-field',
                         'selected' => '',
                         'lang' => 'Lorem',
                         'name' => 'form_field'
                     ],
                     [
                         'value' => 'bar',
-                        'id' => '',
+                        'id' => 'form-field',
                         'selected' => ' selected="selected"',
                         'lang' => 'Ipsum',
                         'name' => 'form_field'
                     ],
                     [
                         'value' => 'baz',
-                        'id' => '',
+                        'id' => 'form-field',
                         'selected' => '',
                         'lang' => 'Dolor',
                         'name' => 'form_field'

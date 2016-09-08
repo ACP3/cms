@@ -38,17 +38,16 @@ class Forms
      * @param integer $currentValue
      * @param integer $steps
      * @param integer $maxValue
-     *
+     * @param string $formFieldName
      * @return array
      */
-    public function recordsPerPage($currentValue, $steps = 5, $maxValue = 50)
+    public function recordsPerPage($currentValue, $steps = 5, $maxValue = 50, $formFieldName = 'entries')
     {
-        $records = [];
-        for ($i = 0, $j = $steps; $j <= $maxValue; $i++, $j += $steps) {
-            $records[$i]['value'] = $j;
-            $records[$i]['selected'] = $this->selectEntry('entries', $j, $currentValue);
+        $values = [];
+        for ($i = $steps; $i <= $maxValue; $i += $steps) {
+            $values[$i] = $i;
         }
-        return $records;
+        return $this->choicesGenerator($formFieldName, $values, $currentValue);
     }
 
     /**
@@ -105,7 +104,7 @@ class Forms
         foreach ($values as $value => $phrase) {
             $choices[] = [
                 'value' => $value,
-                'id' => ($htmlAttribute === 'checked' ? $id . '-' . $value : ''),
+                'id' => ($htmlAttribute === 'checked' ? $id . '-' . $value : $id),
                 'name' => $formFieldName,
                 $htmlAttribute => $this->selectEntry($formFieldName, $value, $currentValue, $htmlAttribute),
                 'lang' => $phrase
