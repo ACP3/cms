@@ -11,6 +11,7 @@
         <item key="add_answer">Antwort hinzufügen</item>
         <item key="already_voted">Sie haben bereits an dieser Umfrage teilgenommen.</item>
         <item key="answer">Antwort</item>
+        <item key="answer_x">Antwort %number%</item>
         <item key="answers">Antworten</item>
         <item key="can_not_delete_all_answers">Es ist nicht möglich alle Antworten zu löschen</item>
         <item key="delete_answer_description">Sie können Antworten löschen, indem Sie einfach auf das Auswahlfeld links neben den Antworten klicken.</item>

@@ -24,7 +24,7 @@
                     </div>
                     {foreach $answers as $row}
                         <div class="form-group">
-                            <label for="answer-{$row@index}" class="col-sm-2 control-label">{lang t="polls|answer"} {$row@index+1}</label>
+                            <label for="answer-{$row@index}" class="col-sm-2 control-label">{lang t="polls|answer_x" args=['%number%' => $row@index+1]}</label>
 
                             <div class="col-sm-10">
                                 {if isset($row.id)}
