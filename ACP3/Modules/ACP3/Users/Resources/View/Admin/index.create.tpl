@@ -141,20 +141,7 @@
                     {include file="asset:System/Partials/form_group.button_group.tpl" options=$mail_display required=true label={lang t="users|display_mail"}}
                     {include file="asset:System/Partials/form_group.button_group.tpl" options=$address_display required=true label={lang t="users|display_address"}}
                     {include file="asset:System/Partials/form_group.button_group.tpl" options=$country_display required=true label={lang t="users|display_country"}}
-                    <div class="form-group">
-                        <label for="{$birthday_display.0.id}" class="col-sm-2 control-label required">{lang t="users|birthday"}</label>
-
-                        <div class="col-sm-10">
-                            {foreach $birthday_display as $row}
-                                <div class="radio">
-                                    <label for="{$row.id}">
-                                        <input type="radio" name="{$row.name}" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                                        {$row.lang}
-                                    </label>
-                                </div>
-                            {/foreach}
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.radio.tpl" options=$birthday_display required=true label={lang t="users|birthday"}}
                 </div>
                 <div id="tab-6" class="tab-pane fade">
                     {block PASSWORD_FIELDS}

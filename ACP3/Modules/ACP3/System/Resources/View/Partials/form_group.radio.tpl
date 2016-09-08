@@ -2,9 +2,9 @@
 
 {block FORM_GROUP_FORM_FIELD}
     {foreach $options as $row}
-        <div class="checkbox">
+        <div class="radio">
             <label for="{$row.id}">
-                <input type="checkbox"
+                <input type="radio"
                        name="{$row.name}"
                        id="{$row.id}"
                        value="{$row.value}"
