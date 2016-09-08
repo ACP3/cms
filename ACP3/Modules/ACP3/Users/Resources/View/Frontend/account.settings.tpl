@@ -25,17 +25,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="entries" class="col-sm-2 control-label required">{lang t="system|records_per_page"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="entries" id="entries"{if $entries_override == 0} disabled{/if}>
-                                {foreach $entries as $row}
-                                    <option value="{$row.value}"{$row.selected}>{$row.value}</option>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.select.tpl" options=$entries required=true disabled=($entries_override == 0) label={lang t="system|records_per_page"}}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="form-group">
