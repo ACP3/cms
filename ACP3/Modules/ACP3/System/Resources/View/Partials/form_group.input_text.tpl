@@ -6,7 +6,7 @@
            type="{block FORM_GROUP_INPUT_TYPE}text{/block}"
            name="{$name}"
            id="{$name|replace:'_':'-'}"
-           value="{$value}"
+           value="{if !empty($value)}{$value}{/if}"
            {if !empty($maxlength)}maxlength="{$maxlength}"{/if}
             {if (isset($required) && $required === true)} required{/if}
             {if (isset($readonly) && $readonly === true)} readonly{/if}
