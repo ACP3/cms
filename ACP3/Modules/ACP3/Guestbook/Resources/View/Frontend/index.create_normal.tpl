@@ -7,13 +7,7 @@
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         {include file="asset:System/Partials/form_group.input_text.tpl" name="name" value=$form.name required=true readonly=$form.name_disabled maxlength=20 label={lang t="system|name"}}
         {include file="asset:System/Partials/form_group.input_email.tpl" name="mail" value=$form.mail readonly=$form.mail_disabled maxlength=120 label={lang t="system|email_address"}}
-        <div class="form-group">
-            <label for="website" class="col-sm-2 control-label">{lang t="system|website"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="url" name="website" id="website" size="35" value="{$form.website}"{$form.website_disabled}>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.input_url.tpl" name="website" value=$form.website readonly=$form.website_disabled maxlength=120 label={lang t="system|website"}}
         <div class="form-group">
             <label for="message" class="col-sm-2 control-label required">{lang t="system|message"}</label>
 

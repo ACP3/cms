@@ -48,20 +48,8 @@
                     {/if}
                 </div>
                 <div id="tab-3" class="tab-pane fade">
-                    <div class="form-group">
-                        <label for="link-title" class="col-sm-2 control-label">{lang t="news|link_title"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="link_title" id="link-title" value="{$form.link_title}" maxlength="120">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="link-uri" class="col-sm-2 control-label">{lang t="news|uri"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="url" name="uri" id="link-uri" value="{$form.uri}" maxlength="120">
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.input_text.tpl" name="link_title" value=$form.link_title maxlength=120 label={lang t="news|link_title"}}
+                    {include file="asset:System/Partials/form_group.input_url.tpl" name="uri" value=$form.uri maxlength=120 label={lang t="news|uri"}}
                     {include file="asset:System/Partials/form_group.select.tpl" options=$target label={lang t="news|target_page"}}
                 </div>
                 <div id="tab-4" class="tab-pane fade">
