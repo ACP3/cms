@@ -203,24 +203,22 @@ class Create extends AbstractAction
     {
         $defaults = [
             'name' => '',
-            'name_disabled' => '',
+            'name_disabled' => false,
             'mail' => '',
-            'mail_disabled' => '',
+            'mail_disabled' => false,
             'website' => '',
-            'website_disabled' => '',
+            'website_disabled' => false,
             'message' => '',
         ];
 
-        // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
         if ($this->user->isAuthenticated() === true) {
             $users = $this->user->getUserInfo();
-            $disabled = ' readonly="readonly"';
             $defaults['name'] = $users['nickname'];
-            $defaults['name_disabled'] = $disabled;
+            $defaults['name_disabled'] = true;
             $defaults['mail'] = $users['mail'];
-            $defaults['mail_disabled'] = $disabled;
+            $defaults['mail_disabled'] = true;
             $defaults['website'] = $users['website'];
-            $defaults['website_disabled'] = !empty($users['website']) ? $disabled : '';
+            $defaults['website_disabled'] = !empty($users['website']);
         }
         return $defaults;
     }
