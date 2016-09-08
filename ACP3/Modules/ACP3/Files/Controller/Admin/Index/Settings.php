@@ -87,7 +87,7 @@ class Settings extends Core\Controller\AbstractAdminAction
 
         return [
             'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
-            'sidebar_entries' => $this->formsHelper->recordsPerPage((int)$settings['sidebar'], 1, 10),
+            'sidebar_entries' => $this->formsHelper->recordsPerPage((int)$settings['sidebar'], 1, 10, 'sidebar'),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }

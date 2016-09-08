@@ -92,18 +92,21 @@ abstract class AbstractFormAction extends AbstractAdminAction
         $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
         $options = [];
         if ($settings['readmore'] == 1) {
-            $options[] = [
-                'name' => 'readmore',
-                'checked' => $this->formsHelper->selectEntry('readmore', '1', $readMoreValue, 'checked'),
-                'lang' => $this->translator->t('news', 'activate_readmore')
+            $readMore = [
+                '1' => $this->translator->t('news', 'activate_readmore')
             ];
+
+            $options = $this->formsHelper->checkboxGenerator('readmore', $readMore, $readMoreValue);
         }
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-            $options[] = [
-                'name' => 'comments',
-                'checked' => $this->formsHelper->selectEntry('comments', '1', $commentsValue, 'checked'),
-                'lang' => $this->translator->t('system', 'allow_comments')
+            $comments = [
+                '1' => $this->translator->t('system', 'allow_comments')
             ];
+
+            $options = array_merge(
+                $options,
+                $this->formsHelper->checkboxGenerator('comments', $comments, $commentsValue)
+            );
         }
 
         return $options;

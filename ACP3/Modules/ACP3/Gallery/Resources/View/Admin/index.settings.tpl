@@ -12,107 +12,24 @@
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
-                    <div class="form-group">
-                        <label for="date-format" class="col-sm-2 control-label required">{lang t="system|date_format"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="dateformat" id="date-format" required>
-                                {foreach $dateformat as $row}
-                                    <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="sidebar-entries" class="col-sm-2 control-label required">{lang t="system|sidebar_entries_to_display"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="sidebar" id="sidebar-entries" required>
-                                {foreach $sidebar_entries as $row}
-                                    <option value="{$row.value}"{$row.selected}>{$row.value}</option>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="{$overlay.0.id}" class="col-sm-2 control-label required">{lang t="gallery|use_overlay"}</label>
-
-                        <div class="col-sm-10">
-                            <div class="btn-group" data-toggle="buttons">
-                                {foreach $overlay as $row}
-                                    <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                        <input type="radio" name="overlay" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                                        {$row.lang}
-                                    </label>
-                                {/foreach}
-                            </div>
-                            <p class="help-block">{lang t="gallery|use_overlay_description"}</p>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.select.tpl" options=$dateformat required=true label={lang t="system|date_format"}}
+                    {include file="asset:System/Partials/form_group.select.tpl" options=$sidebar_entries required=true label={lang t="system|sidebar_entries_to_display"}}
+                    {include file="asset:System/Partials/form_group.button_group.tpl" options=$overlay required=true label={lang t="gallery|use_overlay"} help={lang t="gallery|use_overlay_description"}}
                     {if isset($comments)}
-                        <div id="comments-container" class="form-group">
-                            <label for="{$comments.0.id}" class="col-sm-2 control-label required">{lang t="system|allow_comments"}</label>
-
-                            <div class="col-sm-10">
-                                <div class="btn-group" data-toggle="buttons">
-                                    {foreach $comments as $row}
-                                        <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                            <input type="radio" name="comments" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                                            {$row.lang}
-                                        </label>
-                                    {/foreach}
-                                </div>
-                            </div>
+                        <div id="comments-container">
+                            {include file="asset:System/Partials/form_group.button_group.tpl" options=$comments required=true label={lang t="system|allow_comments"}}
                         </div>
                     {/if}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
-                    <div class="form-group">
-                        <label for="thumbwidth" class="col-sm-2 control-label required">{lang t="gallery|thumb_image_width"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="thumbwidth" id="thumbwidth" value="{$form.thumbwidth}" required>
-
-                            <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="thumbheight" class="col-sm-2 control-label required">{lang t="gallery|thumb_image_height"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="thumbheight" id="thumbheight" value="{$form.thumbheight}" required>
-
-                            <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="width" class="col-sm-2 control-label required">{lang t="gallery|image_width"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="width" id="width" value="{$form.width}" required>
-
-                            <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="height" class="col-sm-2 control-label required">{lang t="gallery|image_height"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="height" id="height" value="{$form.height}" required>
-
-                            <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.input_number.tpl" name="thumbwidth" value=$form.thumbwidth required=true label={lang t="gallery|thumb_image_width"} help={lang t="system|statements_in_pixel"}}
+                    {include file="asset:System/Partials/form_group.input_number.tpl" name="thumbheight" value=$form.thumbheight required=true label={lang t="gallery|thumb_image_height"} help={lang t="system|statements_in_pixel"}}
+                    {include file="asset:System/Partials/form_group.input_number.tpl" name="width" value=$form.width required=true label={lang t="gallery|image_width"} help={lang t="system|statements_in_pixel"}}
+                    {include file="asset:System/Partials/form_group.input_number.tpl" name="height" value=$form.height required=true label={lang t="gallery|image_height"} help={lang t="system|statements_in_pixel"}}
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-                <a href="{uri args="acp/gallery"}" class="btn btn-default">{lang t="system|cancel"}</a>
-                {$form_token}
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/gallery"}}
     </form>
     {javascripts}
         {include_js module="gallery" file="admin/index.settings"}

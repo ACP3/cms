@@ -5,20 +5,8 @@
         {$error_msg}
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-        <div class="form-group">
-            <label for="title" class="col-sm-2 control-label required">{lang t="system|title"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="meta-description" class="col-sm-2 control-label">{lang t="seo|description"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="text" name="meta_description" id="meta-description" value="{$form.meta_description}" maxlength="120">
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 label={lang t="system|title"}}
+        {include file="asset:System/Partials/form_group.input_text.tpl" name="meta_description" value=$form.meta_description maxlength=120 label={lang t="seo|description"}}
         <div class="form-group">
             <label for="meta-keywords" class="col-sm-2 control-label">{lang t="seo|keywords"}</label>
 
@@ -28,24 +16,8 @@
                 <p class="help-block">{lang t="seo|keywords_separate_with_commas"}</p>
             </div>
         </div>
-        <div class="form-group">
-            <label for="robots" class="col-sm-2 control-label required">{lang t="seo|robots"}</label>
-
-            <div class="col-sm-10">
-                <select class="form-control" name="robots" id="robots" required>
-                    {foreach $robots as $row}
-                        <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                    {/foreach}
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-                <a href="{uri args="acp/seo"}" class="btn btn-default">{lang t="system|cancel"}</a>
-                {$form_token}
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.select.tpl" options=$robots required=true label={lang t="seo|robots"}}
+        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/seo"}}
     </form>
     {javascripts}
     {include_js module="system" file="ajax-form"}

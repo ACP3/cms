@@ -44,61 +44,20 @@
                         </div>
                     </div>
                     {if !empty($options)}
-                        <div class="form-group">
-                            <label for="{$options.0.name}" class="col-sm-2 control-label">{lang t="system|options"}</label>
-
-                            <div class="col-sm-10">
-                                {foreach $options as $row}
-                                    <div class="checkbox">
-                                        <label for="{$row.name}">
-                                            <input type="checkbox" name="{$row.name}" id="{$row.name}" value="1"{$row.checked}>
-                                            {$row.lang}
-                                        </label>
-                                    </div>
-                                {/foreach}
-                            </div>
-                        </div>
+                        {include file="asset:System/Partials/form_group.checkbox.tpl" options=$options label={lang t="system|options"}}
                     {/if}
                 </div>
                 <div id="tab-3" class="tab-pane fade">
-                    <div class="form-group">
-                        <label for="link-title" class="col-sm-2 control-label">{lang t="news|link_title"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="link_title" id="link-title" value="{$form.link_title}" maxlength="120">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="link-uri" class="col-sm-2 control-label">{lang t="news|uri"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="url" name="uri" id="link-uri" value="{$form.uri}" maxlength="120">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="link-target" class="col-sm-2 control-label">{lang t="news|target_page"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="target" id="link-target" required>
-                                {foreach $target as $row}
-                                    <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.input_text.tpl" name="link_title" value=$form.link_title maxlength=120 label={lang t="news|link_title"}}
+                    {include file="asset:System/Partials/form_group.input_url.tpl" name="uri" value=$form.uri maxlength=120 label={lang t="news|uri"}}
+                    {include file="asset:System/Partials/form_group.select.tpl" options=$target label={lang t="news|target_page"}}
                 </div>
                 <div id="tab-4" class="tab-pane fade">
                     {include file="asset:Seo/Partials/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-                <a href="{uri args="acp/news"}" class="btn btn-default">{lang t="system|cancel"}</a>
-                {$form_token}
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/news"}}
     </form>
     {javascripts}
         {include_js module="system" file="ajax-form"}

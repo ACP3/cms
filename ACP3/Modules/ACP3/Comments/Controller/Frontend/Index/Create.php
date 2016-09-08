@@ -120,16 +120,14 @@ class Create extends AbstractFrontendAction
     {
         $defaults = [
             'name' => '',
-            'name_disabled' => '',
+            'name_disabled' => false,
             'message' => ''
         ];
 
-        // If the user is already logged in, prepopulate the form
         if ($this->user->isAuthenticated() === true) {
             $user = $this->user->getUserInfo();
-            $disabled = ' readonly="readonly"';
             $defaults['name'] = $user['nickname'];
-            $defaults['name_disabled'] = $disabled;
+            $defaults['name_disabled'] = true;
             $defaults['message'] = '';
         }
         return $defaults;

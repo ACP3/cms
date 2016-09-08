@@ -12,13 +12,7 @@
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
-                    <div class="form-group">
-                        <label for="name" class="col-sm-2 control-label required">{lang t="system|name"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="name" id="name" value="{$form.name}" maxlength="120" required>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.input_text.tpl" name="name" value=$form.name required=true maxlength=100 label={lang t="system|name"}}
                     {if !empty($parent)}
                         <div class="form-group">
                             <label for="parent-id" class="col-sm-2 control-label required">{lang t="permissions|superior_role"}</label>
@@ -66,13 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-                <a href="{uri args="acp/permissions"}" class="btn btn-default">{lang t="system|cancel"}</a>
-                {$form_token}
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/permissions"}}
     </form>
     {javascripts}
         {include_js module="system" file="ajax-form"}

@@ -96,16 +96,7 @@ class Forms
      */
     public function generateWorldCountriesSelect($defaultValue = '')
     {
-        $countries = Country::worldCountries();
-        $countriesSelect = [];
-        foreach ($countries as $key => $value) {
-            $countriesSelect[] = [
-                'value' => $key,
-                'lang' => $value,
-                'selected' => $this->formsHelpers->selectEntry('countries', $key, $defaultValue),
-            ];
-        }
-        return $countriesSelect;
+        return $this->formsHelpers->choicesGenerator('country', Country::worldCountries(), $defaultValue);
     }
 
     /**

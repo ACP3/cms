@@ -103,20 +103,18 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         $defaults = [
             'name' => '',
-            'name_disabled' => '',
+            'name_disabled' => false,
             'mail' => '',
-            'mail_disabled' => '',
+            'mail_disabled' => false,
             'message' => '',
         ];
 
-        // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
         if ($this->user->isAuthenticated() === true) {
             $user = $this->user->getUserInfo();
-            $disabled = ' readonly="readonly"';
             $defaults['name'] = !empty($user['realname']) ? $user['realname'] : $user['nickname'];
-            $defaults['name_disabled'] = $disabled;
+            $defaults['name_disabled'] = true;
             $defaults['mail'] = $user['mail'];
-            $defaults['mail_disabled'] = $disabled;
+            $defaults['mail_disabled'] = true;
         }
 
         return $defaults;

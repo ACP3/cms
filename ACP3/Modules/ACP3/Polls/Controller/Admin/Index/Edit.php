@@ -88,7 +88,7 @@ class Edit extends AbstractFormAction
 
     /**
      * @param array $formData
-     * @param int   $pollId
+     * @param int $pollId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -129,13 +129,13 @@ class Edit extends AbstractFormAction
      */
     protected function fetchOptions($useMultipleChoice)
     {
-        $options = parent::fetchOptions($useMultipleChoice);
-        $options[] = [
-            'name' => 'reset',
-            'checked' => $this->formsHelper->selectEntry('reset', '1', '0', 'checked'),
-            'lang' => $this->translator->t('polls', 'reset_votes')
+        $reset = [
+            '1' => $this->translator->t('polls', 'reset_votes')
         ];
 
-        return $options;
+        return array_merge(
+            parent::fetchOptions($useMultipleChoice),
+            $this->formsHelper->checkboxGenerator('reset', $reset, '0')
+        );
     }
 }

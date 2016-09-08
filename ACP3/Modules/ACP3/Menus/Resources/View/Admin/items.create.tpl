@@ -12,24 +12,8 @@
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
-                    <div class="form-group">
-                        <label for="mode" class="col-sm-2 control-label required">{lang t="menus|page_type"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="mode" id="mode" required>
-                                {foreach $mode as $row}
-                                    <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label required">{lang t="menus|title"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.select.tpl" options=$mode required=true label={lang t="menus|page_type"}}
+                    {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 label={lang t="menus|title"}}
                     {include file="asset:Menus/Partials/create_menu_item.tpl"}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
@@ -68,27 +52,13 @@
                             </div>
                         </div>
                     {/if}
-                    <div id="target-container" class="form-group">
-                        <label for="link-target" class="col-sm-2 control-label required">{lang t="menus|target_page"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="target" id="link-target">
-                                {foreach $target as $row}
-                                    <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                                {/foreach}
-                            </select>
-                        </div>
+                    <div id="target-container">
+                        {include file="asset:System/Partials/form_group.select.tpl" options=$target labelRequired=true label={lang t="menus|target_page"}}
                     </div>
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-                <a href="{uri args="acp/menus"}" class="btn btn-default">{lang t="system|cancel"}</a>
-                {$form_token}
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/menus"}}
     </form>
     {javascripts}
         {include_js module="menus" file="admin/acp"}

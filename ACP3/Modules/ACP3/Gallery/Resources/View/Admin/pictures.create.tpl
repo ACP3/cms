@@ -16,27 +16,9 @@
             <div class="col-sm-10">{wysiwyg name="description" value="`$form.description`" height="150" toolbar="simple"}</div>
         </div>
         {if isset($options)}
-            <div class="form-group">
-                <label for="{$options.0.name}" class="col-sm-2 control-label">{lang t="system|options"}</label>
-                <div class="col-sm-10">
-                    {foreach $options as $row}
-                        <div class="checkbox">
-                            <label for="{$row.name}">
-                                <input type="checkbox" name="{$row.name}" id="{$row.name}" value="1"{$row.checked}>
-                                {$row.lang}
-                            </label>
-                        </div>
-                    {/foreach}
-                </div>
-            </div>
+            {include file="asset:System/Partials/form_group.checkbox.tpl" options=$options label={lang t="system|options"}}
         {/if}
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-                <a href="{uri args="acp/gallery/index/edit/id_`$gallery_id`"}" class="btn btn-default">{lang t="system|cancel"}</a>
-                {$form_token}
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/gallery/index/edit/id_`$gallery_id`"}}
     </form>
     {javascripts}
         {include_js module="system" file="ajax-form"}

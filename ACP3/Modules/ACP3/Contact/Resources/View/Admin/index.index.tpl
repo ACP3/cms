@@ -13,41 +13,11 @@
                 {wysiwyg name="address" value="`$form.address`" toolbar="simple"}
             </div>
         </div>
-        <div class="form-group">
-            <label for="ceo" class="col-sm-2 control-label">{lang t="contact|ceo"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="text" name="ceo" id="ceo" value="{$form.ceo}" maxlength="120">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="mail" class="col-sm-2 control-label">{lang t="system|email_address"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="telephone" class="col-sm-2 control-label">{lang t="contact|telephone"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="tel" name="telephone" id="telephone" value="{$form.telephone}" maxlength="120">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="fax" class="col-sm-2 control-label">{lang t="contact|fax"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="tel" name="fax" id="fax" value="{$form.fax}" maxlength="120">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="vat-id" class="col-sm-2 control-label">{lang t="contact|vat_id"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="text" name="vat_id" id="vat-id" value="{$form.vat_id}" maxlength="120">
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.input_text.tpl" name="ceo" value=$form.ceo maxlength=120 label={lang t="contact|ceo"}}
+        {include file="asset:System/Partials/form_group.input_email.tpl" name="mail" value=$form.mail maxlength=120 label={lang t="system|email_address"}}
+        {include file="asset:System/Partials/form_group.input_tel.tpl" name="telephone" value=$form.telephone maxlength=120 label={lang t="contact|telephone"}}
+        {include file="asset:System/Partials/form_group.input_tel.tpl" name="fax" value=$form.fax maxlength=120 label={lang t="contact|fax"}}
+        {include file="asset:System/Partials/form_group.input_text.tpl" name="vat_id" value=$form.vat_id maxlength=120 label={lang t="contact|vat_id"}}
         <div class="form-group">
             <label for="disclaimer" class="col-sm-2 control-label">{lang t="contact|disclaimer"}</label>
 
@@ -55,13 +25,7 @@
                 {wysiwyg name="disclaimer" value="`$form.disclaimer`" toolbar="simple"}
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-                <a href="{uri args="acp/contact"}" class="btn btn-default">{lang t="system|cancel"}</a>
-                {$form_token}
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/contact"}}
     </form>
     {javascripts}
         {include_js module="system" file="ajax-form"}
