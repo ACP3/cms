@@ -5,7 +5,7 @@
         {$error_msg}
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-        {include file="asset:System/Partials/form_group.input_text.tpl" name="nickname" value=$form.nickname required=true maxlength=30 label={lang t="users|nickname"}}
+        {include file="asset:System/Partials/form_group.input_text.tpl" name="nickname" required=true maxlength=30 label={lang t="users|nickname"}}
         <div class="form-group">
             <label for="pwd" class="col-sm-2 control-label required">{lang t="users|pwd"}</label>
 
