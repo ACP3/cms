@@ -29,11 +29,7 @@
         </div>
         {include file="asset:System/Partials/form_group.button_group.tpl" options=$search_areas required=true label={lang t="search|search_after_areas"}}
         {include file="asset:System/Partials/form_group.button_group.tpl" options=$sort_hits required=true label={lang t="search|sort_hits"}}
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="submit" class="btn btn-primary">{lang t="search|submit_search"}</button>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.submit.tpl" submitLabel={lang t="search|submit_search"}}
     </form>
     {javascripts}
         {include_js module="system" file="ajax-form"}
