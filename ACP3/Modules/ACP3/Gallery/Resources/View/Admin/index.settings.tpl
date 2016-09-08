@@ -22,42 +22,10 @@
                     {/if}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
-                    <div class="form-group">
-                        <label for="thumbwidth" class="col-sm-2 control-label required">{lang t="gallery|thumb_image_width"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="thumbwidth" id="thumbwidth" value="{$form.thumbwidth}" required>
-
-                            <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="thumbheight" class="col-sm-2 control-label required">{lang t="gallery|thumb_image_height"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="thumbheight" id="thumbheight" value="{$form.thumbheight}" required>
-
-                            <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="width" class="col-sm-2 control-label required">{lang t="gallery|image_width"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="width" id="width" value="{$form.width}" required>
-
-                            <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="height" class="col-sm-2 control-label required">{lang t="gallery|image_height"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="height" id="height" value="{$form.height}" required>
-
-                            <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.input_number.tpl" name="thumbwidth" value=$form.thumbwidth required=true label={lang t="gallery|thumb_image_width"} help={lang t="system|statements_in_pixel"}}
+                    {include file="asset:System/Partials/form_group.input_number.tpl" name="thumbheight" value=$form.thumbheight required=true label={lang t="gallery|thumb_image_height"} help={lang t="system|statements_in_pixel"}}
+                    {include file="asset:System/Partials/form_group.input_number.tpl" name="width" value=$form.width required=true label={lang t="gallery|image_width"} help={lang t="system|statements_in_pixel"}}
+                    {include file="asset:System/Partials/form_group.input_number.tpl" name="height" value=$form.height required=true label={lang t="gallery|image_height"} help={lang t="system|statements_in_pixel"}}
                 </div>
             </div>
         </div>

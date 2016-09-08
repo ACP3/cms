@@ -5,33 +5,9 @@
         {$error_msg}
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-        <div class="form-group">
-            <label for="width" class="col-sm-2 control-label required">{lang t="emoticons|image_width"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="number" name="width" id="width" value="{$form.width}" required>
-
-                <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="height" class="col-sm-2 control-label required">{lang t="emoticons|image_height"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="number" name="height" id="height" value="{$form.height}" required>
-
-                <p class="help-block">{lang t="system|statements_in_pixel"}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="filesize" class="col-sm-2 control-label required">{lang t="emoticons|image_filesize"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="number" name="filesize" id="filesize" value="{$form.filesize}" required>
-
-                <p class="help-block">{lang t="system|statements_in_byte"}</p>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.input_number.tpl" name="width" value=$form.width required=true label={lang t="emoticons|image_width"} help={lang t="system|statements_in_pixel"}}
+        {include file="asset:System/Partials/form_group.input_number.tpl" name="height" value=$form.height required=true label={lang t="emoticons|image_height"} help={lang t="system|statements_in_pixel"}}
+        {include file="asset:System/Partials/form_group.input_number.tpl" name="filesize" value=$form.filesize required=true label={lang t="emoticons|image_filesize"} help={lang t="system|statements_in_byte"}}
         {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/emoticons"}}
     </form>
     {javascripts}

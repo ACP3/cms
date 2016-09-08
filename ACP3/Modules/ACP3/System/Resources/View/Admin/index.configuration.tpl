@@ -16,25 +16,9 @@
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
-                    <div class="form-group">
-                        <label for="homepage" class="col-sm-2 control-label required">{lang t="system|homepage"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="homepage" id="homepage" value="{$form.homepage}" required>
-
-                            <p class="help-block">{lang t="system|homepage_description"}</p>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.input_text.tpl" name="homepage" value=$form.homepage required=true label={lang t="system|homepage"} help={lang t="system|homepage_description"}}
                     {include file="asset:System/Partials/form_group.select.tpl" options=$entries required=true label={lang t="system|records_per_page"}}
-                    <div class="form-group">
-                        <label for="flood" class="col-sm-2 control-label required">{lang t="system|flood_barrier"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="number" name="flood" id="flood" value="{$form.flood}" min="0" required>
-
-                            <p class="help-block">{lang t="system|flood_barrier_description"}</p>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.input_number.tpl" name="flood" value=$form.flood required=true label={lang t="system|flood_barrier"} help={lang t="system|flood_barrier_description"}}
                     {include file="asset:System/Partials/form_group.select.tpl" options=$wysiwyg required=true label={lang t="system|editor"}}
                     <div class="form-group">
                         <label for="language" class="col-sm-2 control-label required">{lang t="system|language"}</label>
@@ -51,22 +35,8 @@
                     {include file="asset:System/Partials/form_group.button_group.tpl" options=$mod_rewrite required=true label={lang t="system|mod_rewrite"} help={lang t="system|mod_rewrite_description"}}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
-                    <div class="form-group">
-                        <label for="date-format-long" class="col-sm-2 control-label required">{lang t="system|date_format_long"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="date_format_long" id="date-format-long" value="{$form.date_format_long}" maxlength="20" required>
-
-                            <p class="help-block">{lang t="system|php_date_function"}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="date-format-short" class="col-sm-2 control-label required">{lang t="system|date_format_short"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="date_format_short" id="date-format-short" value="{$form.date_format_short}" maxlength="20" required>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_long" value=$form.date_format_long required=true maxlength=20 label={lang t="system|date_format_long"} help={lang t="system|php_date_function"}}
+                    {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_short" value=$form.date_format_short required=true maxlength=20 label={lang t="system|date_format_short"} help={lang t="system|php_date_function"}}
                     <div class="form-group">
                         <label for="date-time-zone" class="col-sm-2 control-label required">{lang t="system|time_zone"}</label>
 
@@ -95,15 +65,7 @@
                 </div>
                 <div id="tab-5" class="tab-pane fade">
                     {include file="asset:System/Partials/form_group.button_group.tpl" options=$cache_images required=true label={lang t="system|cache_images"}}
-                    <div class="form-group">
-                        <label for="cache-lifetime" class="col-sm-2 control-label required">{lang t="system|cache_lifetime"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="cache_lifetime" id="cache-lifetime" value="{$form.cache_lifetime}" maxlength="20" required>
-
-                            <p class="help-block">{lang t="system|cache_lifetime_description"}</p>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.input_number.tpl" name="cache_lifetime" value=$form.cache_lifetime required=true label={lang t="system|cache_lifetime"}}
                 </div>
                 <div id="tab-6" class="tab-pane fade">
                     {include file="asset:System/Partials/form_group.select.tpl" options=$mailer_type required=true label={lang t="system|mailer_type"}}

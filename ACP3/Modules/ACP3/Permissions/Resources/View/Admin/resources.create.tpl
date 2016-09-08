@@ -18,27 +18,9 @@
                 </div>
             </div>
         {/block}
-        <div class="form-group">
-            <label for="area" class="col-sm-2 control-label required">{lang t="permissions|area"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="text" name="area" id="area" value="{$form.area}" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="controller" class="col-sm-2 control-label required">{lang t="permissions|controller"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="text" name="controller" id="controller" value="{$form.controller}" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="resource" class="col-sm-2 control-label required">{lang t="permissions|resource_name"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="text" name="resource" id="resource" value="{$form.resource}" required>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.input_text.tpl" name="area" value=$form.area required=true maxlength=255 label={lang t="permissions|area"}}
+        {include file="asset:System/Partials/form_group.input_text.tpl" name="controller" value=$form.controller required=true maxlength=255 label={lang t="permissions|controller"}}
+        {include file="asset:System/Partials/form_group.input_text.tpl" name="resource" value=$form.resource required=true maxlength=255 label={lang t="permissions|resource_name"}}
         <div class="form-group">
             <label for="privileges" class="col-sm-2 control-label required">{lang t="permissions|assigned_privilege"}</label>
 

@@ -13,13 +13,7 @@
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
                     {include file="asset:System/Partials/form_group.select.tpl" options=$mode required=true label={lang t="menus|page_type"}}
-                    <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label required">{lang t="menus|title"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 label={lang t="menus|title"}}
                     {include file="asset:Menus/Partials/create_menu_item.tpl"}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
