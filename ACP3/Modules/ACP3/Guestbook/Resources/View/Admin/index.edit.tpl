@@ -16,20 +16,7 @@
             </div>
         </div>
         {if !empty($activate)}
-            <div class="form-group">
-                <label for="active-1" class="col-sm-2 control-label required">{lang t="guestbook|activate_entry"}</label>
-
-                <div class="col-sm-10">
-                    <div class="btn-group" data-toggle="buttons">
-                        {foreach $activate as $row}
-                            <label for="active-{$row.value}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                <input type="radio" name="active" id="active-{$row.value}" value="{$row.value}"{$row.checked}>
-                                {$row.lang}
-                            </label>
-                        {/foreach}
-                    </div>
-                </div>
-            </div>
+            {include file="asset:System/Partials/form_group.button_group.tpl" options=$activate required=true label={lang t="guestbook|activate_entry"}}
         {/if}
         {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/guestbook"}}
     </form>

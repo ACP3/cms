@@ -48,21 +48,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="{$mod_rewrite.0.id}" class="col-sm-2 control-label required">{lang t="system|mod_rewrite"}</label>
-
-                        <div class="col-sm-10">
-                            <div class="btn-group" data-toggle="buttons">
-                                {foreach $mod_rewrite as $row}
-                                    <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                        <input type="radio" name="{$row.name}" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                                        {$row.lang}
-                                    </label>
-                                {/foreach}
-                            </div>
-                            <p class="help-block">{lang t="system|mod_rewrite_description"}</p>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.button_group.tpl" options=$mod_rewrite required=true label={lang t="system|mod_rewrite"} help={lang t="system|mod_rewrite_description"}}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="form-group">
@@ -98,20 +84,7 @@
                     </div>
                 </div>
                 <div id="tab-3" class="tab-pane fade">
-                    <div class="form-group">
-                        <label for="{$maintenance.0.id}" class="col-sm-2 control-label required">{lang t="system|maintenance_mode"}</label>
-
-                        <div class="col-sm-10">
-                            <div class="btn-group" data-toggle="buttons">
-                                {foreach $maintenance as $row}
-                                    <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                        <input type="radio" name="{$row.name}" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                                        {$row.lang}
-                                    </label>
-                                {/foreach}
-                            </div>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.button_group.tpl" options=$maintenance required=true label={lang t="system|maintenance_mode"}}
                     <div class="form-group">
                         <label for="maintenance-message" class="col-sm-2 control-label required">{lang t="system|maintenance_msg"}</label>
 
@@ -121,20 +94,7 @@
                     </div>
                 </div>
                 <div id="tab-5" class="tab-pane fade">
-                    <div class="form-group">
-                        <label for="{$cache_images.0.id}" class="col-sm-2 control-label required">{lang t="system|cache_images"}</label>
-
-                        <div class="col-sm-10">
-                            <div class="btn-group" data-toggle="buttons">
-                                {foreach $cache_images as $row}
-                                    <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                        <input type="radio" name="{$row.name}" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                                        {$row.lang}
-                                    </label>
-                                {/foreach}
-                            </div>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.button_group.tpl" options=$cache_images required=true label={lang t="system|cache_images"}}
                     <div class="form-group">
                         <label for="cache-lifetime" class="col-sm-2 control-label required">{lang t="system|cache_lifetime"}</label>
 
@@ -163,20 +123,7 @@
                             </div>
                         </div>
                         {include file="asset:System/Partials/form_group.select.tpl" options=$mailer_smtp_security required=true label={lang t="system|mailer_smtp_security"}}
-                        <div class="form-group">
-                            <label for="{$mailer_smtp_auth.0.id}" class="col-sm-2 control-label required">{lang t="system|mailer_smtp_auth"}</label>
-
-                            <div class="col-sm-10">
-                                <div class="btn-group" data-toggle="buttons">
-                                    {foreach $mailer_smtp_auth as $row}
-                                        <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                            <input type="radio" name="{$row.name}" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                                            {$row.lang}
-                                        </label>
-                                    {/foreach}
-                                </div>
-                            </div>
-                        </div>
+                        {include file="asset:System/Partials/form_group.button_group.tpl" options=$mailer_smtp_auth required=true label={lang t="system|mailer_smtp_auth"}}
                         <div id="mailer-smtp-2">
                             <div class="form-group">
                                 <label for="mailer-smtp-user" class="col-sm-2 control-label required">{lang t="system|mailer_smtp_username"}</label>

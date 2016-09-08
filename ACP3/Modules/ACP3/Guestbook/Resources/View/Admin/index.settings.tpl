@@ -14,51 +14,12 @@
                 <input class="form-control" type="text" name="notify_email" id="notify-email" value="{$form.notify_email}" required>
             </div>
         </div>
-        <div class="form-group">
-            <label for="{$overlay.0.id}" class="col-sm-2 control-label required">{lang t="guestbook|use_overlay"}</label>
-
-            <div class="col-sm-10">
-                <div class="btn-group" data-toggle="buttons">
-                    {foreach $overlay as $row}
-                        <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                            <input type="radio" name="overlay" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                            {$row.lang}
-                        </label>
-                    {/foreach}
-                </div>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.button_group.tpl" options=$overlay required=true label={lang t="guestbook|use_overlay"}}
         {if isset($allow_emoticons)}
-            <div class="form-group">
-                <label for="{$allow_emoticons.0.id}" class="col-sm-2 control-label required">{lang t="guestbook|allow_emoticons"}</label>
-
-                <div class="col-sm-10">
-                    <div class="btn-group" data-toggle="buttons">
-                        {foreach $allow_emoticons as $row}
-                            <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                <input type="radio" name="emoticons" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                                {$row.lang}
-                            </label>
-                        {/foreach}
-                    </div>
-                </div>
-            </div>
+            {include file="asset:System/Partials/form_group.button_group.tpl" options=$allow_emoticons required=true label={lang t="guestbook|allow_emoticons"}}
         {/if}
         {if isset($newsletter_integration)}
-            <div class="form-group">
-                <label for="{$newsletter_integration.0.id}" class="col-sm-2 control-label required">{lang t="guestbook|newsletter_integration"}</label>
-
-                <div class="col-sm-10">
-                    <div class="btn-group" data-toggle="buttons">
-                        {foreach $newsletter_integration as $row}
-                            <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                <input type="radio" name="newsletter_integration" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                                {$row.lang}
-                            </label>
-                        {/foreach}
-                    </div>
-                </div>
-            </div>
+            {include file="asset:System/Partials/form_group.button_group.tpl" options=$newsletter_integration required=true label={lang t="guestbook|newsletter_integration"}}
         {/if}
         {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/guestbook"}}
     </form>

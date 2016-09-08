@@ -26,20 +26,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
-        <label for="{$display.0.id}" class="col-sm-2 control-label required">{lang t="menus|display_item"}</label>
-
-        <div class="col-sm-10">
-            <div class="btn-group" data-toggle="buttons">
-                {foreach $display as $row}
-                    <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                        <input type="radio" name="display" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                        {$row.lang}
-                    </label>
-                {/foreach}
-            </div>
-        </div>
-    </div>
+    {include file="asset:System/Partials/form_group.button_group.tpl" options=$display required=true label={lang t="menus|display_item"}}
 </div>
 {javascripts}
     {include_js module="menus" file="create-menu-item"}

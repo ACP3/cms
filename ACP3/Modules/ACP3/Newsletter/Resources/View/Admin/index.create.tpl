@@ -23,24 +23,10 @@
                 {/if}
             </div>
         </div>
-        <div id="test-newsletter" class="form-group">
-            <label for="test-1" class="col-sm-2 control-label required">{lang t="newsletter|test_newsletter"}</label>
-            <div class="col-sm-10">
-                <div class="btn-group" data-toggle="buttons">
-                    {foreach $test as $row}
-                        <label for="test-{$row.value}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                            <input type="radio" name="test" id="test-{$row.value}" value="{$row.value}"{$row.checked}>
-                            {$row.lang}
-                        </label>
-                    {/foreach}
-                </div>
-                <p class="help-block">{lang t="newsletter|test_newsletter_description"}</p>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.button_group.tpl" options=$test required=true label={lang t="newsletter|test_newsletter"} help={lang t="newsletter|test_newsletter_description"}}
         {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/newsletter"}}
     </form>
     {javascripts}
-        {include_js module="newsletter" file="admin/acp"}
         {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/block}

@@ -61,48 +61,9 @@
                     </div>
                 </div>
                 <div id="tab-3" class="tab-pane fade">
-                    <div class="form-group">
-                        <label for="{$mail_display.0.id}" class="col-sm-2 control-label required">{lang t="users|display_mail"}</label>
-
-                        <div class="col-sm-10">
-                            <div class="btn-group" data-toggle="buttons">
-                                {foreach $mail_display as $row}
-                                    <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                        <input type="radio" name="mail_display" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                                        {$row.lang}
-                                    </label>
-                                {/foreach}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="{$address_display.0.id}" class="col-sm-2 control-label required">{lang t="users|display_address"}</label>
-
-                        <div class="col-sm-10">
-                            <div class="btn-group" data-toggle="buttons">
-                                {foreach $address_display as $row}
-                                    <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                        <input type="radio" name="address_display" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                                        {$row.lang}
-                                    </label>
-                                {/foreach}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="{$country_display.0.id}" class="col-sm-2 control-label required">{lang t="users|display_country"}</label>
-
-                        <div class="col-sm-10">
-                            <div class="btn-group" data-toggle="buttons">
-                                {foreach $country_display as $row}
-                                    <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                        <input type="radio" name="country_display" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                                        {$row.lang}
-                                    </label>
-                                {/foreach}
-                            </div>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.button_group.tpl" options=$mail_display required=true label={lang t="users|display_mail"}}
+                    {include file="asset:System/Partials/form_group.button_group.tpl" options=$address_display required=true label={lang t="users|display_address"}}
+                    {include file="asset:System/Partials/form_group.button_group.tpl" options=$country_display required=true label={lang t="users|display_country"}}
                     <div class="form-group">
                         <label for="{$birthday_display.0.id}" class="col-sm-2 control-label required">{lang t="users|birthday"}</label>
 
@@ -110,7 +71,7 @@
                             {foreach $birthday_display as $row}
                                 <div class="radio">
                                     <label for="{$row.id}">
-                                        <input type="radio" name="birthday_display" id="{$row.id}" value="{$row.value}"{$row.checked}>
+                                        <input type="radio" name="{$row.name}" id="{$row.id}" value="{$row.value}"{$row.checked}>
                                         {$row.lang}
                                     </label>
                                 </div>

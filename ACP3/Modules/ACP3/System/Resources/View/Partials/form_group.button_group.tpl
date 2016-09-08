@@ -17,5 +17,8 @@
                 </label>
             {/foreach}
         </div>
+        {if !empty($help)}
+            <p class="help-block">{$help}</p>
+        {/if}
     </div>
 </div>
