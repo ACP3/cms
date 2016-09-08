@@ -28,7 +28,9 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" name="submit" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-lock"></i> {lang t="users|log_in"}</button>
+                    <i class="glyphicon glyphicon-lock"></i>
+                    {lang t="users|log_in"}
+                </button>
                 <a href="{uri args="users/index/forgot_pwd"}" class="btn btn-link">{lang t="users|forgot_pwd"}</a>
             </div>
         </div>

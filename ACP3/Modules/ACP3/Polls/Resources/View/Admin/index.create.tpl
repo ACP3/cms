@@ -55,17 +55,17 @@
                             {/foreach}
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" name="add_answer" class="btn btn-default" data-hash-change="#tab-2">
+                                {lang t="polls|add_answer"}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="add_answer" class="btn btn-primary" data-hash-change="#tab-2">{lang t="polls|add_answer"}</button>
-                <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-                <a href="{uri args="acp/polls"}" class="btn btn-default">{lang t="system|cancel"}</a>
-                {$form_token}
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/polls"}}
     </form>
     {javascripts}
     {include_js module="system" file="ajax-form"}

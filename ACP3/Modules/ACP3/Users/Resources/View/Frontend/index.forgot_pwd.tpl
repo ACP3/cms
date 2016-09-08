@@ -15,12 +15,7 @@
             </div>
         </div>
         {event name="captcha.event.display_captcha"}
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-                {$form_token}
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token}
     </form>
     {javascripts}
         {include_js module="system" file="ajax-form"}

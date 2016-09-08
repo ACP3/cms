@@ -25,11 +25,7 @@
                 {/foreach}
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.submit.tpl"}
     </form>
     {javascripts}
         {include_js module="system" file="ajax-form"}
