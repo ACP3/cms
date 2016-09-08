@@ -106,6 +106,7 @@ class Forms
             $choices[] = [
                 'value' => $value,
                 'id' => ($htmlAttribute === 'checked' ? $id . '-' . $value : ''),
+                'name' => $formFieldName,
                 $htmlAttribute => $this->selectEntry($formFieldName, $value, $currentValue, $htmlAttribute),
                 'lang' => $phrase
             ];

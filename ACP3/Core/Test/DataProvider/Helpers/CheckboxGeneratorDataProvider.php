@@ -30,19 +30,22 @@ class CheckboxGeneratorDataProvider implements DataProviderInterface
                         'value' => 'foo',
                         'id' => 'form-field-foo',
                         'checked' => '',
-                        'lang' => 'Lorem'
+                        'lang' => 'Lorem',
+                        'name' => 'form_field'
                     ],
                     [
                         'value' => 'bar',
                         'id' => 'form-field-bar',
                         'checked' => ' checked="checked"',
-                        'lang' => 'Ipsum'
+                        'lang' => 'Ipsum',
+                        'name' => 'form_field'
                     ],
                     [
                         'value' => 'baz',
                         'id' => 'form-field-baz',
                         'checked' => '',
-                        'lang' => 'Dolor'
+                        'lang' => 'Dolor',
+                        'name' => 'form_field'
                     ],
                 ]
             ],
@@ -54,19 +57,22 @@ class CheckboxGeneratorDataProvider implements DataProviderInterface
                         'value' => 'foo',
                         'id' => 'form-field-foo',
                         'checked' => '',
-                        'lang' => 'Lorem'
+                        'lang' => 'Lorem',
+                        'name' => 'form_field'
                     ],
                     [
                         'value' => 'bar',
                         'id' => 'form-field-bar',
                         'checked' => '',
-                        'lang' => 'Ipsum'
+                        'lang' => 'Ipsum',
+                        'name' => 'form_field'
                     ],
                     [
                         'value' => 'baz',
                         'id' => 'form-field-baz',
                         'checked' => '',
-                        'lang' => 'Dolor'
+                        'lang' => 'Dolor',
+                        'name' => 'form_field'
                     ],
                 ]
             ]

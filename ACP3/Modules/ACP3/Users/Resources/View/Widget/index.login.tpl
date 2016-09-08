@@ -11,7 +11,8 @@
                 <input class="form-control" type="password" name="pwd" id="nav-pwd" placeholder="{lang t="users|pwd"}" required>
             </div>
             <div class="checkbox">
-                <label for="nav-remember"> <input type="checkbox" name="remember" id="nav-remember" value="1">
+                <label for="nav-remember">
+                    <input type="checkbox" name="remember" id="nav-remember" value="1">
                     {lang t="users|remember_me"}
                 </label>
             </div>

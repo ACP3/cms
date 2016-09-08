@@ -29,7 +29,8 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <div class="checkbox">
-                    <label for="copy"> <input type="checkbox" name="copy" id="copy" value="1"{$copy_checked}>
+                    <label for="copy">
+                        <input type="checkbox" name="copy" id="copy" value="1"{$copy_checked}>
                         {lang t="contact|send_copy_to_sender"}
                     </label>
                 </div>

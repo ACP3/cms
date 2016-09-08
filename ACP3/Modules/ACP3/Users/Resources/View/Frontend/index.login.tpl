@@ -19,7 +19,8 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <div class="checkbox">
-                    <label for="remember"> <input type="checkbox" name="remember" id="remember" value="1">
+                    <label for="remember">
+                        <input type="checkbox" name="remember" id="remember" value="1">
                         {lang t="users|remember_me"}
                     </label>
                 </div>

@@ -76,10 +76,7 @@ abstract class AbstractFormAction extends AbstractAdminAction
      */
     protected function fetchOptions($useMultipleChoice)
     {
-        $options = [];
-        $options[] = $this->fetchMultipleChoiceOption($useMultipleChoice);
-
-        return $options;
+        return $this->fetchMultipleChoiceOption($useMultipleChoice);
     }
 
     /**
@@ -89,10 +86,9 @@ abstract class AbstractFormAction extends AbstractAdminAction
      */
     protected function fetchMultipleChoiceOption($currentValue)
     {
-        return [
-            'name' => 'multiple',
-            'checked' => $this->formsHelper->selectEntry('multiple', '1', $currentValue, 'checked'),
-            'lang' => $this->translator->t('polls', 'multiple_choice')
+        $values = [
+            '1' => $this->translator->t('polls', 'multiple_choice')
         ];
+        return $this->formsHelper->checkboxGenerator('multiple', $values, $currentValue);
     }
 }

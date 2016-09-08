@@ -42,11 +42,10 @@ class AbstractFormAction extends AbstractAdminAction
      */
     protected function getOptions($currentValue = '0')
     {
-        $options = [];
-        $options[0]['name'] = 'comments';
-        $options[0]['checked'] = $this->formsHelper->selectEntry('comments', '1', $currentValue, 'checked');
-        $options[0]['lang'] = $this->translator->t('system', 'allow_comments');
+        $comments = [
+            '1' => $this->translator->t('system', 'allow_comments')
+        ];
 
-        return $options;
+        return $this->formsHelper->checkboxGenerator('comments', $comments, $currentValue);
     }
 }
