@@ -1,1 +1,1 @@
-{extends file="aSchsset:menus/admin/items.create.tpl"}
+{extends file="asset:menus/admin/items.create.tpl"}

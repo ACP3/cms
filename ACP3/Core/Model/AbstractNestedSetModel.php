@@ -60,7 +60,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
         $this->dispatchBeforeSaveEvent($this->repository, $data, $entryId);
 
         if ($entryId === null) {
-            $result = $this->insertOperation->execute($data['parent_id'], $data);
+            $result = $this->insertOperation->execute($data, $data['parent_id']);
 
             if ($result !== false) {
                 $entryId = $result;

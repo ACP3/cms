@@ -28,17 +28,7 @@
                 <p class="help-block">{lang t="seo|keywords_separate_with_commas"}</p>
             </div>
         </div>
-        <div class="form-group">
-            <label for="robots" class="col-sm-2 control-label required">{lang t="seo|robots"}</label>
-
-            <div class="col-sm-10">
-                <select class="form-control" name="robots" id="robots" required>
-                    {foreach $robots as $row}
-                        <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                    {/foreach}
-                </select>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.select.tpl" options=$robots required=true label={lang t="seo|robots"}}
         {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/seo"}}
     </form>
     {javascripts}

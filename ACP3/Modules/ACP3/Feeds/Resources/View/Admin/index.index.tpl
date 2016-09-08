@@ -13,17 +13,7 @@
                 <input class="form-control" type="text" name="feed_image" id="feed-image" value="{$form.feed_image}" maxlength="120">
             </div>
         </div>
-        <div class="form-group">
-            <label for="feed-type" class="col-sm-2 control-label required">{lang t="feeds|feed_type"}</label>
-
-            <div class="col-sm-10">
-                <select class="form-control" name="feed_type" id="feed-type" required>
-                    {foreach $feed_types as $row}
-                        <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                    {/foreach}
-                </select>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.select.tpl" options=$feed_types required=true label={lang t="feeds|feed_type"}}
         {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/feeds"}}
     </form>
     {javascripts}

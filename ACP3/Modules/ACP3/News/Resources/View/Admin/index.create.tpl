@@ -62,17 +62,7 @@
                             <input class="form-control" type="url" name="uri" id="link-uri" value="{$form.uri}" maxlength="120">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="link-target" class="col-sm-2 control-label">{lang t="news|target_page"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="target" id="link-target" required>
-                                {foreach $target as $row}
-                                    <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.select.tpl" options=$target label={lang t="news|target_page"}}
                 </div>
                 <div id="tab-4" class="tab-pane fade">
                     {include file="asset:Seo/Partials/seo_fields.tpl" seo=$SEO_FORM_FIELDS}

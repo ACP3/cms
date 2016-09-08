@@ -12,17 +12,7 @@
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade in active">
-                    <div class="form-group">
-                        <label for="mode" class="col-sm-2 control-label required">{lang t="menus|page_type"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="mode" id="mode" required>
-                                {foreach $mode as $row}
-                                    <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.select.tpl" options=$mode required=true label={lang t="menus|page_type"}}
                     <div class="form-group">
                         <label for="title" class="col-sm-2 control-label required">{lang t="menus|title"}</label>
 
@@ -68,16 +58,8 @@
                             </div>
                         </div>
                     {/if}
-                    <div id="target-container" class="form-group">
-                        <label for="link-target" class="col-sm-2 control-label required">{lang t="menus|target_page"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="target" id="link-target">
-                                {foreach $target as $row}
-                                    <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                                {/foreach}
-                            </select>
-                        </div>
+                    <div id="target-container">
+                        {include file="asset:System/Partials/form_group.select.tpl" options=$target label={lang t="menus|target_page"}}
                     </div>
                 </div>
             </div>

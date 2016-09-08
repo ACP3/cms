@@ -45,7 +45,7 @@ class MenuItemFormFields
      *
      * @return array
      */
-    protected function menusDropdown($selected = 0)
+    protected function menusDropDown($selected = 0)
     {
         $menus = $this->menusModel->getAllMenus();
         $cMenus = count($menus);
@@ -68,7 +68,7 @@ class MenuItemFormFields
     public function createMenuItemFormFields($blockId = 0, $parentId = 0, $leftId = 0, $rightId = 0, $displayMenuItem = 1)
     {
         return [
-            'blocks' => $this->menusDropdown($blockId),
+            'blocks' => $this->menusDropDown($blockId),
             'display' => $this->formsHelper->yesNoCheckboxGenerator('display', $displayMenuItem),
             'menuItems' => $this->menusHelper->menuItemsList($parentId, $leftId, $rightId)
         ];

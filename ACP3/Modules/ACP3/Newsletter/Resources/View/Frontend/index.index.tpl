@@ -6,9 +6,9 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="form-group">
-            <label for="salutation" class="col-sm-2 control-label">{lang t="newsletter|salutation"}</label>
+            <label for="{$salutation.0.id}" class="col-sm-2 control-label">{lang t="newsletter|salutation"}</label>
             <div class="col-sm-10">
-                <select class="form-control" name="salutation" id="salutation">
+                <select class="form-control" name="{$salutation.0.name}" id="{$salutation.0.id}">
                     <option value="">{lang t="newsletter|salutation_unspecified"}</option>
                     {foreach $salutation as $row}
                         <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
