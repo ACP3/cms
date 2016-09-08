@@ -10,7 +10,7 @@ use ACP3\Core\Modules;
 class Schema implements Modules\Installer\SchemaInterface
 {
     const MODULE_NAME = 'categories';
-    
+
     /**
      * @return array
      */
@@ -35,7 +35,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function removeTables()
     {
-        return ["DROP TABLE `{pre}categories`;"];
+        return ["DROP TABLE IF EXISTS `{pre}categories`;"];
     }
 
     /**

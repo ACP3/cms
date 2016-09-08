@@ -11,7 +11,7 @@ use ACP3\Core\Modules;
 class Schema implements Modules\Installer\SchemaInterface
 {
     const MODULE_NAME = 'articles';
-    
+
     /**
      * @return string
      */
@@ -62,7 +62,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function removeTables()
     {
-        return ["DROP TABLE `{pre}articles`;"];
+        return ["DROP TABLE IF EXISTS `{pre}articles`;"];
     }
 
     /**

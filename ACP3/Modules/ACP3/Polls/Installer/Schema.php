@@ -83,9 +83,9 @@ class Schema implements Modules\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            "DROP TABLE `{pre}poll_votes`;",
-            "DROP TABLE `{pre}poll_answers`;",
-            "DROP TABLE `{pre}polls`;"
+            "DROP TABLE IF EXISTS `{pre}poll_votes`;",
+            "DROP TABLE IF EXISTS `{pre}poll_answers`;",
+            "DROP TABLE IF EXISTS `{pre}polls`;"
         ];
     }
 

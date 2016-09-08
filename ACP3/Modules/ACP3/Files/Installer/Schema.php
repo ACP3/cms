@@ -69,7 +69,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            "DROP TABLE `{pre}files`;"
+            "DROP TABLE IF EXISTS `{pre}files`;"
         ];
     }
 
