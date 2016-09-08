@@ -20,13 +20,7 @@
                 <input class="form-control" type="text" name="ceo" id="ceo" value="{$form.ceo}" maxlength="120">
             </div>
         </div>
-        <div class="form-group">
-            <label for="mail" class="col-sm-2 control-label">{lang t="system|email_address"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120">
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.input_email.tpl" name="mail" value=$form.mail maxlength=120 label={lang t="system|email_address"}}
         <div class="form-group">
             <label for="telephone" class="col-sm-2 control-label">{lang t="contact|telephone"}</label>
 

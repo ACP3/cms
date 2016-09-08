@@ -5,12 +5,7 @@
         {$error_msg}
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-        <div class="form-group">
-            <label for="mail" class="col-sm-2 control-label required">{lang t="system|email_address"}</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="email" name="mail" id="mail" maxlength="120" value="{$form.mail}" required>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.input_email.tpl" name="mail" value=$form.mail required=true maxlength=120 label={lang t="system|email_address"}}
         {event name="captcha.event.display_captcha"}
         {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token}
     </form>

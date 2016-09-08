@@ -6,13 +6,7 @@
     {/if}
     {redirect_message}
     <form action="{uri args="search"}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-        <div class="form-group">
-            <label for="search-term" class="col-sm-2 control-label required">{lang t="search|search_term"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="text" name="search_term" id="search-term" value="{$form.search_term}" required>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.input_text.tpl" name="search_term" value=$form.search_term required=true label={lang t="search|search_term"}}
         <div class="form-group">
             <label class="col-sm-2 control-label required">{lang t="search|search_after_modules"}</label>
 

@@ -12,13 +12,7 @@
                 <input class="form-control" type="text" name="name" id="name" maxlength="20" value="{$form.name}" required{$form.name_disabled}>
             </div>
         </div>
-        <div class="form-group">
-            <label for="mail" class="col-sm-2 control-label required">{lang t="system|email_address"}</label>
-
-            <div class="col-sm-10">
-                <input class="form-control" type="email" name="mail" id="mail" maxlength="120" value="{$form.mail}" required{$form.mail_disabled}>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.input_email.tpl" name="mail" value=$form.mail required=true readonly=$form.mail_disabled maxlength=120 label={lang t="system|email_address"}}
         <div class="form-group">
             <label for="message" class="col-sm-2 control-label required">{lang t="system|message"}</label>
 

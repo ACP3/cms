@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label for="{$options.0.id}"
+    <label for="{block FORM_GROUP_LABEL_ID}{$options.0.id}{/block}"
            class="col-sm-2 control-label{if (isset($required) && $required === true) || (isset($labelRequired) && $labelRequired === true)} required{/if}">
         {$label}
     </label>
