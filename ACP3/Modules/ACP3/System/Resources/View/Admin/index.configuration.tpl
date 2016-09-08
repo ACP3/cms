@@ -70,30 +70,12 @@
                 <div id="tab-6" class="tab-pane fade">
                     {include file="asset:System/Partials/form_group.select.tpl" options=$mailer_type required=true label={lang t="system|mailer_type"}}
                     <div id="mailer-smtp-1">
-                        <div class="form-group">
-                            <label for="mailer-smtp-host" class="col-sm-2 control-label required">{lang t="system|mailer_smtp_hostname"}</label>
-
-                            <div class="col-sm-10">
-                                <input class="form-control" type="text" name="mailer_smtp_host" id="mailer-smtp-host" value="{$form.mailer_smtp_host}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="mailer-smtp-port" class="col-sm-2 control-label required">{lang t="system|mailer_smtp_port"}</label>
-
-                            <div class="col-sm-10">
-                                <input class="form-control" type="number" name="mailer_smtp_port" id="mailer-smtp-port" value="{$form.mailer_smtp_port}">
-                            </div>
-                        </div>
+                        {include file="asset:System/Partials/form_group.input_number.tpl" name="mailer_smtp_host" value=$form.mailer_smtp_host labelRequired=true label={lang t="system|mailer_smtp_hostname"}}
+                        {include file="asset:System/Partials/form_group.input_number.tpl" name="mailer_smtp_port" value=$form.mailer_smtp_port labelRequired=true label={lang t="system|mailer_smtp_port"}}
                         {include file="asset:System/Partials/form_group.select.tpl" options=$mailer_smtp_security required=true label={lang t="system|mailer_smtp_security"}}
                         {include file="asset:System/Partials/form_group.button_group.tpl" options=$mailer_smtp_auth required=true label={lang t="system|mailer_smtp_auth"}}
                         <div id="mailer-smtp-2">
-                            <div class="form-group">
-                                <label for="mailer-smtp-user" class="col-sm-2 control-label required">{lang t="system|mailer_smtp_username"}</label>
-
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="text" name="mailer_smtp_user" id="mailer-smtp-user" value="{$form.mailer_smtp_user}" maxlength="40">
-                                </div>
-                            </div>
+                            {include file="asset:System/Partials/form_group.input_number.tpl" name="mailer_smtp_user" value=$form.mailer_smtp_user labelRequired=true label={lang t="system|mailer_smtp_username"}}
                             <div class="form-group">
                                 <label for="mailer-smtp-password" class="col-sm-2 control-label">{lang t="system|mailer_smtp_password"}</label>
 

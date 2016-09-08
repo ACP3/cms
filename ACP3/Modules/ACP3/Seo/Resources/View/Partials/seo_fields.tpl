@@ -21,23 +21,9 @@
         <p class="help-block">{lang t="seo|alias_description"}</p>
     </div>
 </div>
-<div class="form-group">
-    <label for="seo-keywords" class="col-sm-2 control-label">{lang t="seo|keywords"}</label>
-
-    <div class="col-sm-10">
-        <input class="form-control" type="text" name="seo_keywords" id="seo-keywords" value="{$seo.keywords}">
-
-        <p class="help-block">{lang t="seo|keywords_separate_with_commas"}</p>
-    </div>
-</div>
-<div class="form-group">
-    <label for="seo-description" class="col-sm-2 control-label">{lang t="seo|description"}</label>
-
-    <div class="col-sm-10">
-        <input class="form-control" type="text" name="seo_description" id="seo-description" value="{$seo.description}">
-    </div>
-</div>
-{include file="asset:System/Partials/form_group.select.tpl" options=$seo.robots label={lang t="seo|robots"}}
+{include file="asset:System/Partials/form_group.input_text.tpl" name="seo_keywords" value=$seo.keywords maxlength=255 label={lang t="seo|keywords"}}
+{include file="asset:System/Partials/form_group.input_text.tpl" name="seo_description" value=$seo.description maxlength=255 label={lang t="seo|description"}}
+{include file="asset:System/Partials/form_group.select.tpl" options=$seo.robots required=true label={lang t="seo|robots"}}
 {if !isset($disable_alias_suggest)}
     {javascripts}
         {include_js module="seo" file="suggest_alias"}

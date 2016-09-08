@@ -28,22 +28,8 @@
                     {include file="asset:System/Partials/form_group.select.tpl" options=$entries required=true disabled=($entries_override == 0) label={lang t="system|records_per_page"}}
                 </div>
                 <div id="tab-2" class="tab-pane fade">
-                    <div class="form-group">
-                        <label for="date-format-long" class="col-sm-2 control-label required">{lang t="system|date_format_long"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="date_format_long" id="date-format-long" value="{$form.date_format_long}" maxlength="20">
-
-                            <p class="help-block">{lang t="system|php_date_function"}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="date-format-short" class="col-sm-2 control-label required">{lang t="system|date_format_short"}</label>
-
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="date_format_short" id="date-format-short" value="{$form.date_format_short}" maxlength="20">
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_long" value=$form.date_format_long required=true maxlength=20 label={lang t="system|date_format_long"} help={lang t="system|php_date_function"}}
+                    {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_short" value=$form.date_format_short required=true maxlength=20 label={lang t="system|date_format_short"} help={lang t="system|php_date_function"}}
                     <div class="form-group">
                         <label for="date-time-zone" class="col-sm-2 control-label required">{lang t="system|time_zone"}</label>
 
