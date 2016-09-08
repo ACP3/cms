@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Gallery\Installer;
 
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
 
 /**
@@ -74,8 +73,8 @@ class Schema implements Modules\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            "DROP TABLE `{pre}gallery_pictures`;",
-            "DROP TABLE `{pre}gallery`;"
+            "DROP TABLE IF EXISTS `{pre}gallery_pictures`;",
+            "DROP TABLE IF EXISTS `{pre}gallery`;"
         ];
     }
 

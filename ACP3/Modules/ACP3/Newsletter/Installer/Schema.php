@@ -97,10 +97,10 @@ class Schema implements Modules\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            "DROP TABLE `{pre}newsletter_account_history`;",
-            "DROP TABLE `{pre}newsletter_accounts`;",
-            "DROP TABLE `{pre}newsletter_queue`;",
-            "DROP TABLE `{pre}newsletters`;"
+            "DROP TABLE IF EXISTS `{pre}newsletter_account_history`;",
+            "DROP TABLE IF EXISTS `{pre}newsletter_queue`;",
+            "DROP TABLE IF EXISTS `{pre}newsletter_accounts`;",
+            "DROP TABLE IF EXISTS `{pre}newsletters`;"
         ];
     }
 

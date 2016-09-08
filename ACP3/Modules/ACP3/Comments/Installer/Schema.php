@@ -42,7 +42,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function removeTables()
     {
-        return ["DROP TABLE `{pre}comments`;"];
+        return ["DROP TABLE IF EXISTS `{pre}comments`;"];
     }
 
     /**
