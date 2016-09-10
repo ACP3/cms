@@ -4,7 +4,7 @@
         {$label}
     </label>
 
-    <div class="col-sm-10">
+    <div class="{if !empty($cssSelector)}{$cssSelector}{else}col-sm-10{/if}">
         {block FORM_GROUP_FORM_FIELD}{/block}
         {if !empty($help)}
             <p class="help-block">{$help}</p>
