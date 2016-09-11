@@ -2,7 +2,7 @@
 
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block AJAX_FORM_CONTENT}
+{block CONTENT_AJAX_FORM}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="code" value=$form.code required=true maxlength=10 label={lang t="emoticons|code"}}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="description" value=$form.description required=true maxlength=15 label={lang t="system|description"}}
     {block EMOTICONS_PICTURE_UPLOAD}

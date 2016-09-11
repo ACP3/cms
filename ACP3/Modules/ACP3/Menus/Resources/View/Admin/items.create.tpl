@@ -1,6 +1,6 @@
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block AJAX_FORM_CONTENT}
+{block CONTENT_AJAX_FORM}
     <div class="tabbable">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general_statements"}</a></li>

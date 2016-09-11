@@ -1,6 +1,6 @@
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block AJAX_FORM_CONTENT}
+{block CONTENT_AJAX_FORM}
     {include file="asset:System/Partials/form_group.select.tpl" options=$dateformat required=true label={lang t="system|date_format"}}
     {if isset($allow_emoticons)}
         {include file="asset:System/Partials/form_group.button_group.tpl" options=$allow_emoticons required=true label={lang t="comments|allow_emoticons"}}

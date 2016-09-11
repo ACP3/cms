@@ -1,6 +1,6 @@
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block AJAX_FORM_CONTENT}
+{block CONTENT_AJAX_FORM}
     {if !isset($form.user_id)}
         {include file="asset:System/Partials/form_group.input_text.tpl" name="name" value=$form.name required=true maxlength=20 label={lang t="system|name"}}
     {elseif $form.user_id != '0'}

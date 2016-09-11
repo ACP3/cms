@@ -1,6 +1,6 @@
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block AJAX_FORM_CONTENT}
+{block CONTENT_AJAX_FORM}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 label={lang t="system|title"}}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="meta_description" value=$form.meta_description maxlength=120 label={lang t="seo|description"}}
     {include file="asset:System/Partials/form_group.textarea.tpl" name="meta_keywords" value=$form.meta_keywords label={lang t="seo|keywords"} help={lang t="seo|keywords_separate_with_commas"}}

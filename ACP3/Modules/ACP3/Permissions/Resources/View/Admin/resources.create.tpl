@@ -1,6 +1,6 @@
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block AJAX_FORM_CONTENT}
+{block CONTENT_AJAX_FORM}
     {block PERMISSIONS_RESOURCES_MODULE}
         <div class="form-group">
             <label for="modules" class="col-sm-2 control-label required">{lang t="system|module"}</label>

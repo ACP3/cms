@@ -2,7 +2,7 @@
 
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block AJAX_FORM_CONTENT}
+{block CONTENT_AJAX_FORM}
     <div class="modal-body">
         {if isset($error_msg)}
             {$error_msg}

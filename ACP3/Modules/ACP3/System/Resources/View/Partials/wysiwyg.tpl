@@ -12,13 +12,11 @@
                     <h4 class="modal-title">{lang t="system|insert_page_break"}</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="toc-title">{lang t="system|title_for_toc"}</label>
-                        <input type="text" id="toc-title" class="form-control">
-                    </div>
+                    <label for="toc-title">{lang t="system|title_for_toc"}</label>
+                    <input type="text" id="toc-title" class="form-control">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{lang t="system|close"}</button>
                     <button class="btn btn-primary">{lang t="system|submit"}</button>
                 </div>
             </div>

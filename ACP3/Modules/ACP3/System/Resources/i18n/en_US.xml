@@ -41,6 +41,7 @@
         <item key="cache_type_templates_delete_error">While emptying the Templates-Cache an error has occurred.</item>
         <item key="cache_type_templates_delete_success">The Templates-Cache has been successfully emptied.</item>
         <item key="cancel">Cancel</item>
+        <item key="close">Close</item>
         <item key="close_window">Close window</item>
         <item key="configuration">Configuration</item>
         <item key="config_edit_error">While editing the ACP3 configuration an error has occurred.</item>

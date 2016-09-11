@@ -1,6 +1,6 @@
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block AJAX_FORM_CONTENT}
+{block CONTENT_AJAX_FORM}
     <div class="form-group">
         <label for="answer-{$answers.0.id}" class="col-sm-2 control-label">{$question}</label>
 

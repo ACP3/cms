@@ -1,6 +1,6 @@
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block AJAX_FORM_CONTENT}
+{block CONTENT_AJAX_FORM}
     {if $can_use_emoticons}
         {$before_textarea={event name="emoticons.render_emoticons_list"}}
     {else}

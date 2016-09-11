@@ -41,6 +41,7 @@
         <item key="cache_type_templates_delete_error">Beim leeren des Template-Caches ist ein Fehler aufgetreten.</item>
         <item key="cache_type_templates_delete_success">Der Template-Cache wurde erfolgreich geleert.</item>
         <item key="cancel">Abbrechen</item>
+        <item key="close">Schließen</item>
         <item key="close_window">Fenster schließen</item>
         <item key="configuration">Konfiguration</item>
         <item key="config_edit_error">Beim Bearbeiten der Konfiguration ist ein Fehler aufgetreten.</item>

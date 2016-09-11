@@ -1,6 +1,6 @@
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block AJAX_FORM_CONTENT}
+{block CONTENT_AJAX_FORM}
     <div class="tabbable">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication_period"}</a></li>
@@ -26,11 +26,7 @@
                                required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="text" class="col-sm-2 control-label required">{lang t="articles|text"}</label>
-
-                    <div class="col-sm-10">{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</div>
-                </div>
+                {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="text" value=$form.text required=true advanced=true label={lang t="articles|text"}}
                 {if !empty($options)}
                     {include file="asset:System/Partials/form_group.checkbox.tpl" label={lang t="system|options"}}
                     {include file="asset:Menus/Partials/create_menu_item.tpl"}

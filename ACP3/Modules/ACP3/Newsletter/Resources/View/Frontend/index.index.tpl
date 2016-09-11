@@ -1,6 +1,6 @@
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block AJAX_FORM_CONTENT}
+{block CONTENT_AJAX_FORM}
     {include file="asset:System/Partials/form_group.input_email.tpl" name="mail" value=$form.mail required=true maxlength=120 label={lang t="system|email_address"}}
     {include file="asset:System/Partials/form_group.select.tpl" options=$salutation cssSelector="col-sm-3" emptyOptionLabel={lang t="newsletter|salutation_unspecified"} label={lang t="newsletter|salutation"}}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="first_name" value=$form.first_name maxlength=120 label={lang t="newsletter|first_name"}}

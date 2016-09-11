@@ -1,9 +1,9 @@
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block AJAX_FORM_CONTENT_BEFORE}
+{block CONTENT_BEFORE_AJAX_FORM}
     {redirect_message}
 {/block}
-{block AJAX_FORM_CONTENT}
+{block CONTENT_AJAX_FORM}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="search_term" value=$form.search_term required=true label={lang t="search|search_term"}}
     <div class="form-group">
         <label class="col-sm-2 control-label required">{lang t="search|search_after_modules"}</label>

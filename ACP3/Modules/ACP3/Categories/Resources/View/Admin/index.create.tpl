@@ -2,7 +2,7 @@
 
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block AJAX_FORM_CONTENT}
+{block CONTENT_AJAX_FORM}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength="120" label={lang t="categories|title"}}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="description" value=$form.description required=true maxlength="120" label={lang t="system|description"}}
     {include file="asset:System/Partials/form_group.input_file.tpl" name="picture" label={lang t="categories|picture"}}
