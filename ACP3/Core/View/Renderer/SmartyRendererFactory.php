@@ -47,7 +47,8 @@ class SmartyRendererFactory
      */
     public function create()
     {
-        $renderer = new Smarty($this->appPath, $this->environment);
+        $smarty = new \Smarty();
+        $renderer = new Smarty($smarty, $this->appPath, $this->environment);
         $renderer->configure(['compile_id' => $this->config->getSettings(Schema::MODULE_NAME)['design']]);
         return $renderer;
     }

@@ -4,10 +4,6 @@ namespace ACP3\Core;
 
 use ACP3\Core\View\Renderer\RendererInterface;
 
-/**
- * Klasse für die Ausgabe der Seite
- * @package ACP3\Core
- */
 class View
 {
     /**
@@ -41,28 +37,22 @@ class View
      * Fetches a template and outputs its contents
      *
      * @param string      $template
-     * @param mixed       $cacheId
-     * @param mixed       $compileId
-     * @param object|null $parent
      */
-    public function displayTemplate($template, $cacheId = null, $compileId = null, $parent = null)
+    public function displayTemplate($template)
     {
-        $this->renderer->display('asset:' . $template, $cacheId, $compileId, $parent);
+        $this->renderer->display('asset:' . $template);
     }
 
     /**
      * Fetches a template and returns its contents
      *
      * @param string      $template
-     * @param mixed       $cacheId
-     * @param mixed       $compileId
-     * @param object|null $parent
      *
      * @return string
      */
-    public function fetchTemplate($template, $cacheId = null, $compileId = null, $parent = null)
+    public function fetchTemplate($template)
     {
-        return $this->renderer->fetch('asset:' . $template, $cacheId, $compileId, $parent);
+        return $this->renderer->fetch('asset:' . $template);
     }
 
     /**
@@ -97,10 +87,12 @@ class View
      * @param string|array $name
      * @param mixed        $value
      *
-     * @return boolean
+     * @return $this
      */
     public function assign($name, $value = null)
     {
-        return $this->renderer->assign($name, $value);
+        $this->renderer->assign($name, $value);
+
+        return $this;
     }
 }

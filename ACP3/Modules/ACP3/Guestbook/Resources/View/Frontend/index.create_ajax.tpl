@@ -1,3 +1,5 @@
+{$LAYOUT='Guestbook/ajax.tpl'}
+
 {extends file="asset:System/ajax-form.tpl"}
 
 {block AJAX_FORM_CONTENT}
