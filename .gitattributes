@@ -20,3 +20,9 @@
 *.PDF   diff=astextplain
 *.rtf   diff=astextplain
 *.RTF   diff=astextplain
+
+.codeclimate.yml export.ignore
+.coveralls.yml export.ignore
+.eslintignore.yml export.ignore
+.eslintrc export.ignore
+.travis.yml export.ignore
