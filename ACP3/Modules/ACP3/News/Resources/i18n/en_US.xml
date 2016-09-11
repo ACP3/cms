@@ -30,9 +30,9 @@
         </item>
         <item key="target_page">Target page</item>
         <item key="text">Text</item>
-        <item key="text_to_short">The news text should be at least 3 characters long.</item>
+        <item key="text_to_short">The news text should not be empty.</item>
         <item key="title">Title</item>
-        <item key="title_to_short">The title should be at least 3 characters long.</item>
+        <item key="title_to_short">The title should not be empty.</item>
         <item key="type_in_readmore_chars">
             <![CDATA[Please specify how many characters a news needs to have to enable the &quot;read more...&quot;-function.]]></item>
         <item key="uri">URI</item>

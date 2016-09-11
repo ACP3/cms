@@ -116,6 +116,9 @@ abstract class AbstractWidgetAction implements ActionInterface
         return $this->request->getModule() . '/' . ucfirst($this->request->getArea()) . '/' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl';
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function addCustomTemplateVarsBeforeOutput()
     {
     }

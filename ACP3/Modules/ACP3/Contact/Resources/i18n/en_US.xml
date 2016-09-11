@@ -6,7 +6,7 @@
     </info>
     <keys>
         <item key="address">Address</item>
-        <item key="address_to_short">The address should be at least 3 characters long.</item>
+        <item key="address_to_short">The address should not be empty.</item>
         <item key="ceo">Chief executive officer</item>
         <item key="contact">Contact</item>
         <item key="contact_body">%name% (%mail%) has left the following message:
@@ -16,7 +16,7 @@
         <item key="contact_information">Contact statements</item>
         <item key="contact_subject">Contact form on "%title%".</item>
         <item key="disclaimer">Disclaimer</item>
-        <item key="disclaimer_to_short">The disclaimer should be at least 3 characters long.</item>
+        <item key="disclaimer_to_short">The disclaimer should not be empty.</item>
         <item key="fax">FAX number</item>
         <item key="frontend_index_imprint">Imprint</item>
         <item key="imprint">Imprint</item>

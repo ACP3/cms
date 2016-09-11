@@ -84,12 +84,12 @@ abstract class AbstractFormAction extends AbstractAdminAction
 
     /**
      * @param array $formData
-     * @param array $settings
-     *
      * @return int
      */
-    protected function useComments(array $formData, array $settings)
+    protected function useComments(array $formData)
     {
+        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
+
         return $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0;
     }
 
@@ -124,13 +124,21 @@ abstract class AbstractFormAction extends AbstractAdminAction
         }
     }
 
-    protected function getOptions(array $settings, array $file)
+    /**
+     * @param array $file
+     * @return array
+     */
+    protected function getOptions(array $file)
     {
+        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
+
         $options = [];
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-            $options[0]['name'] = 'comments';
-            $options[0]['checked'] = $this->formsHelper->selectEntry('comments', '1', $file['comments'], 'checked');
-            $options[0]['lang'] = $this->translator->t('system', 'allow_comments');
+            $comments = [
+                '1' => $this->translator->t('system', 'allow_comments')
+            ];
+
+            $options = $this->formsHelper->checkboxGenerator('comments', $comments, $file['comments']);
         }
 
         return $options;

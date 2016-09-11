@@ -78,18 +78,21 @@ class Edit extends AbstractFormAction
         $file = $this->filesModel->getOneById($id);
 
         if (empty($file) === false) {
-            $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
-
             $this->title->setPageTitlePostfix($file['title']);
 
             if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $settings, $file, $id);
+                return $this->executePost($this->request->getPost()->all(), $file, $id);
             }
 
             $file['filesize'] = substr($file['size'], 0, strpos($file['size'], ' '));
+            $file['file_external'] = '';
+
+            $external = [
+                1 => $this->translator->t('files', 'external_resource')
+            ];
 
             return [
-                'options' => $this->getOptions($settings, $file),
+                'options' => $this->getOptions($file),
                 'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(),
                     trim(strrchr($file['size'], ' '))),
                 'categories' => $this->categoriesHelpers->categoriesList(
@@ -97,7 +100,7 @@ class Edit extends AbstractFormAction
                     $file['category_id'],
                     true
                 ),
-                'checked_external' => $this->request->getPost()->has('external') ? ' checked="checked"' : '',
+                'external' => $this->formsHelper->checkboxGenerator('external', $external),
                 'current_file' => $file['file'],
                 'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
                     ? $this->metaFormFieldsHelper->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $id))
@@ -112,15 +115,13 @@ class Edit extends AbstractFormAction
 
     /**
      * @param array $formData
-     * @param array $settings
      * @param array $dl
      * @param int $fileId
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings, array $dl, $fileId)
+    protected function executePost(array $formData, array $dl, $fileId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $dl, $fileId) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $dl, $fileId) {
             $file = null;
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
@@ -134,7 +135,7 @@ class Edit extends AbstractFormAction
                 ->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryId($formData);
-            $formData['comments'] = $this->useComments($formData, $settings);
+            $formData['comments'] = $this->useComments($formData);
 
             if (!empty($file)) {
                 $newFileSql = $this->updateAssociatedFile($file, $formData, $dl['file']);

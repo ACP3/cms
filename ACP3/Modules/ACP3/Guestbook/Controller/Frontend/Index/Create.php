@@ -100,19 +100,17 @@ class Create extends AbstractAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        // In Newsletter integrieren
         if ($this->newsletterActive === true && $this->newsletterSubscribeHelper) {
-            $this->view->assign(
-                'subscribe_newsletter',
-                $this->formsHelper->selectEntry('subscribe_newsletter', '1', '1', 'checked')
-            );
-            $this->view->assign(
-                'LANG_subscribe_to_newsletter',
-                $this->translator->t(
+            $newsletterSubscription = [
+                1 => $this->translator->t(
                     'guestbook',
                     'subscribe_to_newsletter',
                     ['%title%' => $this->config->getSettings(Schema::MODULE_NAME)['title']]
                 )
+            ];
+            $this->view->assign(
+                'subscribe_newsletter',
+                $this->formsHelper->checkboxGenerator('subscribe_newsletter', $newsletterSubscription, '1')
             );
         }
 
@@ -132,15 +130,17 @@ class Create extends AbstractAction
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
+                $ipAddress = $this->request->getSymfonyRequest()->getClientIp();
+
                 $this->formValidation
-                    ->setIpAddress($this->request->getServer()->get('REMOTE_ADDR', ''))
+                    ->setIpAddress($ipAddress)
                     ->setNewsletterAccess($this->newsletterActive)
                     ->validate($formData);
 
                 $insertValues = [
                     'id' => '',
                     'date' => $this->date->toSQL(),
-                    'ip' => $this->request->getServer()->get('REMOTE_ADDR', ''),
+                    'ip' => $ipAddress,
                     'name' => $this->get('core.helpers.secure')->strEncode($formData['name']),
                     'user_id' => $this->user->isAuthenticated() ? $this->user->getUserId() : null,
                     'message' => $this->get('core.helpers.secure')->strEncode($formData['message']),

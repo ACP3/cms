@@ -43,17 +43,18 @@ trait DisplayActionTrait
         }
 
         if (empty($this->getContent()) && $this->getContent() !== false) {
-            // Set the template automatically
             if ($this->getTemplate() === '') {
                 $this->setTemplate($this->applyTemplateAutomatically());
             }
 
             $this->addCustomTemplateVarsBeforeOutput();
 
-            $this->getResponse()->setContent($this->getView()->fetchTemplate($this->getTemplate()));
+            $content = $this->getView()->fetchTemplate($this->getTemplate());
         } else {
-            $this->getResponse()->setContent($this->getContent() === false ? '' : $this->getContent());
+            $content = $this->getContent() === false ? '' : $this->getContent();
         }
+
+        $this->getResponse()->setContent($content);
 
         return $this->getResponse();
     }

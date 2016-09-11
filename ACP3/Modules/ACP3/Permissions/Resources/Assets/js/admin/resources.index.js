@@ -1,4 +1,4 @@
-$(document).ready(function () {
+jQuery(document).ready(function ($) {
     var $resourcesTable = $('#resources-table');
     $resourcesTable.find('tbody tr:not(.sub-table-header)').hide();
 

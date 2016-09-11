@@ -1,37 +1,16 @@
-{extends file="asset:`$LAYOUT`"}
+{extends file="asset:System/layout.ajax-form.tpl"}
 
-{block CONTENT}
-    {if isset($error_msg)}
-        {$error_msg}
-    {/if}
-    <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-        {include file="asset:System/Partials/form_group.input_text.tpl" name="nickname" required=true maxlength=30 label={lang t="users|nickname"}}
-        <div class="form-group">
-            <label for="pwd" class="col-sm-2 control-label required">{lang t="users|pwd"}</label>
-
-            <div class="col-sm-10"><input class="form-control" type="password" name="pwd" id="pwd" required></div>
+{block CONTENT_AJAX_FORM}
+    {include file="asset:System/Partials/form_group.input_text.tpl" name="nickname" required=true maxlength=30 label={lang t="users|nickname"}}
+    {include file="asset:System/Partials/form_group.input_password.tpl" name="pwd" required=true label={lang t="users|pwd"}}
+    {include file="asset:System/Partials/form_group.checkbox.tpl" options=$remember_me}
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" name="submit" class="btn btn-primary">
+                <i class="glyphicon glyphicon-lock"></i>
+                {lang t="users|log_in"}
+            </button>
+            <a href="{uri args="users/index/forgot_pwd"}" class="btn btn-link">{lang t="users|forgot_pwd"}</a>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <div class="checkbox">
-                    <label for="remember">
-                        <input type="checkbox" name="remember" id="remember" value="1">
-                        {lang t="users|remember_me"}
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="submit" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-lock"></i>
-                    {lang t="users|log_in"}
-                </button>
-                <a href="{uri args="users/index/forgot_pwd"}" class="btn btn-link">{lang t="users|forgot_pwd"}</a>
-            </div>
-        </div>
-    </form>
-    {javascripts}
-        {include_js module="system" file="ajax-form"}
-    {/javascripts}
+    </div>
 {/block}

@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing details.
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
@@ -54,8 +55,8 @@ class Create extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Files\Model\FilesModel $filesModel,
         Files\Validation\AdminFormValidation $adminFormValidation,
-        Categories\Helpers $categoriesHelpers)
-    {
+        Categories\Helpers $categoriesHelpers
+    ) {
         parent::__construct($context, $formsHelper, $categoriesHelpers);
 
         $this->date = $date;
@@ -69,10 +70,8 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
-
         if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all(), $settings);
+            return $this->executePost($this->request->getPost()->all());
         }
 
         $defaults = [
@@ -85,11 +84,15 @@ class Create extends AbstractFormAction
             'end' => ''
         ];
 
+        $external = [
+            1 => $this->translator->t('files', 'external_resource')
+        ];
+
         return [
-            'options' => $this->getOptions($settings, ['comments' => '0']),
+            'options' => $this->getOptions(['comments' => '0']),
             'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(), ''),
             'categories' => $this->categoriesHelpers->categoriesList(Files\Installer\Schema::MODULE_NAME, '', true),
-            'checked_external' => $this->request->getPost()->has('external') ? ' checked="checked"' : '',
+            'external' => $this->formsHelper->checkboxGenerator('external', $external),
             'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper ? $this->metaFormFieldsHelper->formFields() : [],
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
@@ -98,13 +101,11 @@ class Create extends AbstractFormAction
 
     /**
      * @param array $formData
-     * @param array $settings
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings)
+    protected function executePost(array $formData)
     {
-        return $this->actionHelper->handleCreatePostAction(function () use ($formData, $settings) {
+        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
             } else {
@@ -126,7 +127,7 @@ class Create extends AbstractFormAction
             }
 
             $formData['cat'] = $this->fetchCategoryId($formData);
-            $formData['comments'] = $this->useComments($formData, $settings);
+            $formData['comments'] = $this->useComments($formData);
 
             $lastId = $this->filesModel->saveFile($formData, $this->user->getUserId());
 

@@ -2,8 +2,10 @@
 
 {block FORM_GROUP_FORM_FIELD}
     <select class="form-control"
-            name="{$options.0.name}"
+            name="{$options.0.name}{if isset($multiple) && $multiple === true || isset($is_array) && $is_array === true}[]{/if}"
             id="{$options.0.id}"
+            style="max-height:100px"
+            {if isset($multiple) && $multiple === true} multiple{/if}
             {if isset($required) && $required === true} required size="{count($options)}"{/if}
             {if isset($disabled) && $disabled === true} disabled{/if}>
         {if !isset($required) || $required === false}

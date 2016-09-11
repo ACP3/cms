@@ -82,18 +82,72 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
             'LANG' => $this->translator->getShortIsoCode(),
         ]);
 
-        return parent::preDispatch();
+        parent::preDispatch();
+
+        return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function addCustomTemplateVarsBeforeOutput()
     {
         $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());
-        $this->view->assign('LAYOUT', $this->request->isXmlHttpRequest() ? 'system/ajax.tpl' : $this->getLayout());
+        $this->view->assign('LAYOUT', $this->fetchLayoutViaInheritance());
 
         $this->eventDispatcher->dispatch(
             'core.controller.custom_template_variable',
             new Core\Controller\Event\CustomTemplateVariableEvent($this->view)
         );
+    }
+
+    /**
+     * @return string
+     */
+    protected function fetchLayoutViaInheritance()
+    {
+        if ($this->request->isXmlHttpRequest()) {
+            $paths = $this->fetchLayoutPaths('layout.ajax', 'System/layout.ajax.tpl');
+        } else {
+            $paths = $this->fetchLayoutPaths('layout', 'layout.tpl');
+        }
+
+        $this->iterateOverLayoutPaths($paths);
+
+        return $this->getLayout();
+    }
+
+    /**
+     * @param string $layoutFileName
+     * @param string $defaultLayoutName
+     * @return array
+     */
+    private function fetchLayoutPaths($layoutFileName, $defaultLayoutName)
+    {
+        return [
+            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl',
+            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.' . $this->request->getController() . '.tpl',
+            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.tpl',
+            $this->request->getModule() . '/' . $layoutFileName . '.tpl',
+            $defaultLayoutName
+        ];
+    }
+
+    /**
+     * @param $paths
+     */
+    private function iterateOverLayoutPaths($paths)
+    {
+        if ($this->getLayout() !== 'layout.tpl') {
+            return;
+        }
+
+        foreach ($paths as $path) {
+            if ($this->view->templateExists($path)) {
+                $this->setLayout($path);
+                break;
+            }
+        }
     }
 
     /**

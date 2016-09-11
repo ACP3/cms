@@ -32,9 +32,9 @@
         </item>
         <item key="target_page">Zielseite</item>
         <item key="text">Text</item>
-        <item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein.</item>
+        <item key="text_to_short">Der Text darf nicht leer sein.</item>
         <item key="title">Titel</item>
-        <item key="title_to_short">Der Titel sollte mindestens 3 Zeichen lang sein.</item>
+        <item key="title_to_short">Der Titel darf nicht leer sein.</item>
         <item key="type_in_readmore_chars">
             <![CDATA[Bitte geben Sie ein, wie viele Zeichen die News mindestens haben muss, um die &quot;weiterlesen...&quot;-Funktion zu aktivieren.]]></item>
         <item key="uri">URI</item>

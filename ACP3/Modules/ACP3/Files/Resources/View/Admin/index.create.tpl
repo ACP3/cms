@@ -1,52 +1,28 @@
-{extends file="asset:`$LAYOUT`"}
+{$is_multipart=true}
 
-{block CONTENT}
-    {if isset($error_msg)}
-        {$error_msg}
-    {/if}
-    <form action="{$REQUEST_URI}" method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-        <div class="tabbable">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication_period"}</a></li>
-                <li><a href="#tab-2" data-toggle="tab">{lang t="files|file_statements"}</a></li>
-                <li><a href="#tab-3" data-toggle="tab">{lang t="seo|seo"}</a></li>
-            </ul>
-            <div class="tab-content">
-                <div id="tab-1" class="tab-pane fade in active">
-                    {datepicker name=['start', 'end'] value=[$form.start, $form.end]}
-                </div>
-                <div id="tab-2" class="tab-pane fade">
-                    <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label required">{lang t="files|title"}</label>
+{extends file="asset:System/layout.ajax-form.tpl"}
 
-                        <div class="col-sm-10">
-                            <input class="form-control"
-                                   type="text"
-                                   name="title"
-                                   id="title"
-                                   value="{$form.title}"
-                                   maxlength="120"
-                                   data-seo-slug-base="true"
-                                   required>
-                        </div>
+{block CONTENT_AJAX_FORM}
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication_period"}</a></li>
+            <li><a href="#tab-2" data-toggle="tab">{lang t="files|file_statements"}</a></li>
+            <li><a href="#tab-3" data-toggle="tab">{lang t="seo|seo"}</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="tab-1" class="tab-pane fade in active">
+                {datepicker name=['start', 'end'] value=[$form.start, $form.end]}
+            </div>
+            <div id="tab-2" class="tab-pane fade">
+                {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 data_attributes=['seo-slug-base' => 'true'] label={lang t="files|title"}}
+                {block FILES_FILE_UPLOAD}
+                    <div id="file-internal-toggle">
+                        {include file="asset:System/Partials/form_group.input_file.tpl" name="file_internal" labelRequired=true label={lang t="files|file"}}
                     </div>
-                    {block FILES_FILE_UPLOAD}
-                        <div class="form-group">
-                            <label for="file-internal" class="col-sm-2 control-label required">{lang t="files|file"}</label>
-
-                            <div class="col-sm-10">
-                                <div class="checkbox">
-                                    <label for="external">
-                                        <input type="checkbox" name="external" id="external" value="1"{$checked_external}>
-                                        {lang t="files|external_resource"}
-                                    </label>
-                                </div>
-                                <input type="file" name="file_internal" id="file-internal">
-                                <input class="form-control" type="url" name="file_external" id="file-external" value="{$form.file_external}" maxlength="120">
-                            </div>
-                        </div>
-                    {/block}
-                    <div id="external-filesize" class="form-group">
+                {/block}
+                <div id="file-external-toggle">
+                    {include file="asset:System/Partials/form_group.input_url.tpl" name="file_external" value=$form.file_external labelRequired=true maxlength=120 label={lang t="files|uri"}}
+                    <div class="form-group">
                         <label for="filesize" class="col-sm-2 control-label required">{lang t="files|filesize"}</label>
 
                         <div class="col-sm-4">
@@ -65,44 +41,27 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="text" class="col-sm-2 control-label required">{lang t="system|description"}</label>
-
-                        <div class="col-sm-10">{wysiwyg name="text" value="`$form.text`" height="200" toolbar="simple"}</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="cat" class="col-sm-2 control-label required">{lang t="categories|category"}</label>
-
-                        <div class="col-sm-10">
-                            {include file="asset:Categories/Partials/create_list.tpl" categories=$categories}
-                        </div>
-                    </div>
-                    {if !empty($options)}
-                        <div class="form-group">
-                            <label for="{$options.0.name}" class="col-sm-2 control-label">{lang t="system|options"}</label>
-
-                            <div class="col-sm-10">
-                                {foreach $options as $row}
-                                    <div class="checkbox">
-                                        <label for="{$row.name}">
-                                            <input type="checkbox" name="{$row.name}" id="{$row.name}" value="1"{$row.checked}>
-                                            {$row.lang}
-                                        </label>
-                                    </div>
-                                {/foreach}
-                            </div>
-                        </div>
-                    {/if}
                 </div>
-                <div id="tab-3" class="tab-pane fade">
-                    {include file="asset:Seo/Partials/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
+                {include file="asset:System/Partials/form_group.checkbox.tpl" options=$external}
+                {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="text" value=$form.text required=true toolbar="simple" label={lang t="system|description"}}
+                <div class="form-group">
+                    <label for="cat" class="col-sm-2 control-label required">{lang t="categories|category"}</label>
+
+                    <div class="col-sm-10">
+                        {include file="asset:Categories/Partials/create_list.tpl" categories=$categories}
+                    </div>
                 </div>
+                {if !empty($options)}
+                    {include file="asset:System/Partials/form_group.checkbox.tpl" options=$options label={lang t="system|options"}}
+                {/if}
+            </div>
+            <div id="tab-3" class="tab-pane fade">
+                {include file="asset:Seo/Partials/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
             </div>
         </div>
-        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/files"}}
-    </form>
+    </div>
+    {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/files"}}
     {javascripts}
-        {include_js module="files" file="admin/acp"}
-        {include_js module="system" file="ajax-form"}
+        {include_js module="files" file="admin/index.create"}
     {/javascripts}
 {/block}

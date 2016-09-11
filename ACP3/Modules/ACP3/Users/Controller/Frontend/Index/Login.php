@@ -19,19 +19,26 @@ class Login extends Core\Controller\AbstractFrontendAction
      * @var Users\Model\AuthenticationModel
      */
     protected $authenticationModel;
+    /**
+     * @var Core\Helpers\Forms
+     */
+    protected $forms;
 
     /**
      * Login constructor.
      * @param Core\Controller\Context\FrontendContext $context
+     * @param Core\Helpers\Forms $forms
      * @param Users\Model\AuthenticationModel $authenticationModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\Forms $forms,
         Users\Model\AuthenticationModel $authenticationModel)
     {
         parent::__construct($context);
 
         $this->authenticationModel = $authenticationModel;
+        $this->forms = $forms;
     }
 
     /**
@@ -44,6 +51,14 @@ class Login extends Core\Controller\AbstractFrontendAction
         } elseif ($this->request->getPost()->count() !== 0) {
             return $this->executePost();
         }
+
+        $rememberMe = [
+            1 => $this->translator->t('users', 'remember_me')
+        ];
+
+        return [
+            'remember_me' => $this->forms->checkboxGenerator('remember', $rememberMe, 0)
+        ];
     }
 
     /**

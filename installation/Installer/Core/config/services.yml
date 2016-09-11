@@ -34,9 +34,13 @@ services:
     arguments:
       - '@core.view.renderer.smarty'
 
+  smarty:
+    class: Smarty
+
   core.view.renderer.smarty:
     class: ACP3\Core\View\Renderer\Smarty
     arguments:
+      - '@smarty'
       - '@core.environment.application_path'
       - '%core.environment%'
 

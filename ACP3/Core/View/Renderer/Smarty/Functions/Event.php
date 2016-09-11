@@ -42,13 +42,20 @@ class Event extends AbstractFunction
      * @param array                     $params
      * @param \Smarty_Internal_Template $smarty
      *
-     * @return mixed
+     * @return string
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         if (isset($params['name'])) {
+            ob_start();
             $this->eventDispatcher->dispatch($params['name'], new TemplateEvent($this->parseArguments($params)));
+            $result = ob_get_contents();
+            ob_end_clean();
+
+            return $result;
         }
+
+        return '';
     }
 
     /**
