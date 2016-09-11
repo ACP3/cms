@@ -2,6 +2,9 @@
 
 {block FORM_GROUP_LABEL_ID}{$name|replace:'_':'-'}{/block}
 {block FORM_GROUP_FORM_FIELD}
+    {if !empty($before_textarea)}
+        {$before_textarea}
+    {/if}
     <textarea class="form-control"
               name="{$name}"
               id="{$name|replace:'_':'-'}"
