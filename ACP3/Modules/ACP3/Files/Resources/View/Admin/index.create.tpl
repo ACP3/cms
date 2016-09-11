@@ -15,11 +15,11 @@
             </div>
             <div id="tab-2" class="tab-pane fade">
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 data_attributes=['seo-slug-base' => 'true'] label={lang t="files|title"}}
-                <div id="file-internal-toggle">
-                    {block FILES_FILE_UPLOAD}
+                {block FILES_FILE_UPLOAD}
+                    <div id="file-internal-toggle">
                         {include file="asset:System/Partials/form_group.input_file.tpl" name="file_internal" labelRequired=true label={lang t="files|file"}}
-                    {/block}
-                </div>
+                    </div>
+                {/block}
                 <div id="file-external-toggle">
                     {include file="asset:System/Partials/form_group.input_url.tpl" name="file_external" value=$form.file_external labelRequired=true maxlength=120 label={lang t="files|uri"}}
                     <div class="form-group">
