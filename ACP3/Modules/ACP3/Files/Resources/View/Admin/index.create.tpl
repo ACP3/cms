@@ -15,41 +15,34 @@
             </div>
             <div id="tab-2" class="tab-pane fade">
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 data_attributes=['seo-slug-base' => 'true'] label={lang t="files|title"}}
-                {block FILES_FILE_UPLOAD}
+                <div id="file-internal-toggle">
+                    {block FILES_FILE_UPLOAD}
+                        {include file="asset:System/Partials/form_group.input_file.tpl" name="file_internal" labelRequired=true label={lang t="files|file"}}
+                    {/block}
+                </div>
+                <div id="file-external-toggle">
+                    {include file="asset:System/Partials/form_group.input_url.tpl" name="file_external" value=$form.file_external labelRequired=true maxlength=120 label={lang t="files|uri"}}
                     <div class="form-group">
-                        <label for="file-internal" class="col-sm-2 control-label required">{lang t="files|file"}</label>
+                        <label for="filesize" class="col-sm-2 control-label required">{lang t="files|filesize"}</label>
 
-                        <div class="col-sm-10">
-                            <div class="checkbox">
-                                <label for="external">
-                                    <input type="checkbox" name="external" id="external" value="1"{$checked_external}>
-                                    {lang t="files|external_resource"}
-                                </label>
-                            </div>
-                            <input type="file" name="file_internal" id="file-internal">
-                            <input class="form-control" type="url" name="file_external" id="file-external" value="{$form.file_external}" maxlength="120">
-                        </div>
-                    </div>
-                {/block}
-                <div id="external-filesize" class="form-group">
-                    <label for="filesize" class="col-sm-2 control-label required">{lang t="files|filesize"}</label>
-
-                    <div class="col-sm-4">
-                        <div class="row">
-                            <div class="col-sm-8">
-                                <input class="form-control" type="text" name="filesize" id="filesize" value="{$form.filesize}" maxlength="15">
-                            </div>
-                            <div class="col-sm-4">
-                                <label for="unit" class="sr-only">{lang t="files|unit"}</label>
-                                <select class="form-control" name="unit" id="unit">
-                                    {foreach $units as $row}
-                                        <option value="{$row.value}"{$row.selected}>{$row.value}</option>
-                                    {/foreach}
-                                </select>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="filesize" id="filesize" value="{$form.filesize}" maxlength="15">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="unit" class="sr-only">{lang t="files|unit"}</label>
+                                    <select class="form-control" name="unit" id="unit">
+                                        {foreach $units as $row}
+                                            <option value="{$row.value}"{$row.selected}>{$row.value}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                {include file="asset:System/Partials/form_group.checkbox.tpl" options=$external}
                 {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="text" value=$form.text required=true toolbar="simple" label={lang t="system|description"}}
                 <div class="form-group">
                     <label for="cat" class="col-sm-2 control-label required">{lang t="categories|category"}</label>
@@ -69,6 +62,6 @@
     </div>
     {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/files"}}
     {javascripts}
-        {include_js module="files" file="admin/acp"}
+        {include_js module="files" file="admin/index.create"}
     {/javascripts}
 {/block}

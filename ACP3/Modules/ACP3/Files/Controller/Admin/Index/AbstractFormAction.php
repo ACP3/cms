@@ -84,12 +84,12 @@ abstract class AbstractFormAction extends AbstractAdminAction
 
     /**
      * @param array $formData
-     * @param array $settings
-     *
      * @return int
      */
-    protected function useComments(array $formData, array $settings)
+    protected function useComments(array $formData)
     {
+        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
+
         return $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0;
     }
 
@@ -125,12 +125,13 @@ abstract class AbstractFormAction extends AbstractAdminAction
     }
 
     /**
-     * @param array $settings
      * @param array $file
      * @return array
      */
-    protected function getOptions(array $settings, array $file)
+    protected function getOptions(array $file)
     {
+        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
+
         $options = [];
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
             $comments = [

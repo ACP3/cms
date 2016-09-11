@@ -1,6 +1,6 @@
 {extends file="asset:System/Partials/form_group.base.tpl"}
 
-{block FORM_GROUP_LABEL_ID}{$name|replace:'_':'-'}{/block}
+{block FORM_GROUP_LABEL_ID}for="{$name|replace:'_':'-'}"{/block}
 {block FORM_GROUP_FORM_FIELD}
     {if !empty($before_textarea)}
         {$before_textarea}

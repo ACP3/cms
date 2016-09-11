@@ -1,7 +1,7 @@
 <div class="form-group">
     {if !empty($label)}
-        <label for="{block FORM_GROUP_LABEL_ID}{$options.0.id}{/block}"
-               class="col-sm-2 control-label{if (isset($required) && $required === true) || (isset($labelRequired) && $labelRequired === true)} required{/if}">
+        <label class="col-sm-2 control-label{if (isset($required) && $required === true) || (isset($labelRequired) && $labelRequired === true)} required{/if}"
+               {block FORM_GROUP_LABEL_ID}for="{$options.0.id}"{/block}>
             {$label}
         </label>
     {/if}

@@ -4,7 +4,7 @@
     {$label=(!empty($label)) ? $label : {lang t="system|date"}}
 {/if}
 
-{block FORM_GROUP_LABEL_ID}{$datepicker.id}-input{/block}
+{block FORM_GROUP_LABEL_ID}for="{$datepicker.id}-input"{/block}
 {block FORM_GROUP_FORM_FIELD}
     <div class="input-group date"
          id="{$datepicker.id}"

@@ -5,7 +5,7 @@
     {$label=(!empty($label)) ? $label : {lang t="system|publication_period"}}
 {/if}
 
-{block FORM_GROUP_LABEL_ID}{$datepicker.id_start}-input{/block}
+{block FORM_GROUP_LABEL_ID}for="{$datepicker.id_start}-input"{/block}
 {block FORM_GROUP_FORM_FIELD}
     <div class="row" data-datepicker-range='{$datepicker.range_json}'>
         <div class="col-sm-6">

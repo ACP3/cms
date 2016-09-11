@@ -31,5 +31,6 @@
         <item key="type_in_title">Der Titel darf nicht leer sein.</item>
         <item key="unit">Einheit</item>
         <item key="unknown_filesize">Dateigröße unbekannt</item>
+        <item key="uri">URI</item>
     </keys>
 </language>
