@@ -11,16 +11,7 @@
 
             <div class="col-sm-10"><input class="form-control" type="password" name="pwd" id="pwd" required></div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <div class="checkbox">
-                    <label for="remember">
-                        <input type="checkbox" name="remember" id="remember" value="1">
-                        {lang t="users|remember_me"}
-                    </label>
-                </div>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.checkbox.tpl" options=$remember_me}
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" name="submit" class="btn btn-primary">

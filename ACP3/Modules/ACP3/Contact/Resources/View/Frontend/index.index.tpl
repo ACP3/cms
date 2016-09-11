@@ -14,16 +14,7 @@
                 <textarea class="form-control" name="message" id="message" cols="50" rows="5" required>{$form.message}</textarea>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <div class="checkbox">
-                    <label for="copy">
-                        <input type="checkbox" name="copy" id="copy" value="1"{$copy_checked}>
-                        {lang t="contact|send_copy_to_sender"}
-                    </label>
-                </div>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.checkbox.tpl" options=$copy}
         {event name="captcha.event.display_captcha"}
         {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token}
     </form>

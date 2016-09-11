@@ -63,9 +63,13 @@ class Index extends Core\Controller\AbstractFrontendAction
             return $this->executePost($this->request->getPost()->all());
         }
 
+        $copy = [
+            1 => $this->translator->t('contact', 'send_copy_to_sender')
+        ];
+
         return [
             'form' => array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
-            'copy_checked' => $this->formsHelper->selectEntry('copy', 1, 0, 'checked'),
+            'copy' => $this->formsHelper->checkboxGenerator('copy', $copy, 0),
             'contact' => $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

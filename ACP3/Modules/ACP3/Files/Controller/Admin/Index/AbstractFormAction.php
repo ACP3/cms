@@ -124,13 +124,20 @@ abstract class AbstractFormAction extends AbstractAdminAction
         }
     }
 
+    /**
+     * @param array $settings
+     * @param array $file
+     * @return array
+     */
     protected function getOptions(array $settings, array $file)
     {
         $options = [];
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-            $options[0]['name'] = 'comments';
-            $options[0]['checked'] = $this->formsHelper->selectEntry('comments', '1', $file['comments'], 'checked');
-            $options[0]['lang'] = $this->translator->t('system', 'allow_comments');
+            $comments = [
+                '1' => $this->translator->t('system', 'allow_comments')
+            ];
+
+            $options = $this->formsHelper->checkboxGenerator('comments', $comments, $file['comments']);
         }
 
         return $options;

@@ -90,6 +90,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Login
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.forms'
       - '@users.model.authentication_model'
 
   users.controller.frontend.index.logout:

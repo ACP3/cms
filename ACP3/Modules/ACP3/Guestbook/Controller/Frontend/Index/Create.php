@@ -100,19 +100,17 @@ class Create extends AbstractAction
             return $this->executePost($this->request->getPost()->all());
         }
 
-        // In Newsletter integrieren
         if ($this->newsletterActive === true && $this->newsletterSubscribeHelper) {
-            $this->view->assign(
-                'subscribe_newsletter',
-                $this->formsHelper->selectEntry('subscribe_newsletter', '1', '1', 'checked')
-            );
-            $this->view->assign(
-                'LANG_subscribe_to_newsletter',
-                $this->translator->t(
+            $newsletterSubscription = [
+                1 => $this->translator->t(
                     'guestbook',
                     'subscribe_to_newsletter',
                     ['%title%' => $this->config->getSettings(Schema::MODULE_NAME)['title']]
                 )
+            ];
+            $this->view->assign(
+                'subscribe_newsletter',
+                $this->formsHelper->checkboxGenerator('subscribe_newsletter', $newsletterSubscription, '1')
             );
         }
 

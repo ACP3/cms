@@ -20,16 +20,7 @@
                 </div>
             </div>
             {if isset($subscribe_newsletter)}
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <div class="checkbox">
-                            <label for="subscribe-newsletter">
-                                <input type="checkbox" name="subscribe_newsletter" id="subscribe-newsletter" value="1"{$subscribe_newsletter}>
-                                {$LANG_subscribe_to_newsletter}
-                            </label>
-                        </div>
-                    </div>
-                </div>
+                {include file="asset:System/Partials/form_group.checkbox.tpl" options=$subscribe_newsletter}
             {/if}
             {event name="captcha.event.display_captcha"}
         </div>
