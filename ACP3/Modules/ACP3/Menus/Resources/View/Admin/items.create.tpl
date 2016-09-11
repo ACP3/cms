@@ -25,14 +25,8 @@
                         </select>
                     </div>
                 </div>
-                <div id="link-container" class="form-group">
-                    <label for="link-uri" class="col-sm-2 control-label required">{lang t="menus|uri"}</label>
-
-                    <div class="col-sm-10">
-                        <input class="form-control" type="text" name="uri" id="link-uri" value="{$form.uri}" maxlength="120">
-
-                        <p id="link-hints" class="help-block">{lang t="menus|dynamic_page_hints"}</p>
-                    </div>
+                <div id="link-container">
+                    {include file="asset:System/Partials/form_group.input_text.tpl" name="uri" value=$form.uri labelRequired=true maxlength=120 label={lang t="menus|uri"} help={lang t="menus|dynamic_page_hints"}}
                 </div>
                 {if isset($articles)}
                     <div id="articles-container" class="form-group">
@@ -56,6 +50,6 @@
     </div>
     {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/menus"}}
     {javascripts}
-        {include_js module="menus" file="admin/acp"}
+        {include_js module="menus" file="admin/items.create"}
     {/javascripts}
 {/block}

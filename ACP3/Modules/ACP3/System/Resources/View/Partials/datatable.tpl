@@ -1,7 +1,7 @@
 {javascripts}
     {include_js module="system" file="dataTables.bootstrap" depends="datatables"}
     <script type="text/javascript">
-        $(document).ready(function () {
+        jQuery(document).ready(function ($) {
             $('{$dt.element}').dataTable({
                 lengthMenu: [
                     [10, 15, 20, 25, 50, -1],
