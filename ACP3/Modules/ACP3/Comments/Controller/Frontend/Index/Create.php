@@ -83,16 +83,16 @@ class Create extends AbstractFrontendAction
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData, $module, $entryId) {
-                $ip = $this->request->getServer()->get('REMOTE_ADDR', '');
+                $ipAddress = $this->request->getSymfonyRequest()->getClientIp();
 
                 $this->formValidation
-                    ->setIpAddress($ip)
+                    ->setIpAddress($ipAddress)
                     ->validate($formData);
 
                 $insertValues = [
                     'id' => '',
                     'date' => $this->date->toSQL(),
-                    'ip' => $ip,
+                    'ip' => $ipAddress,
                     'name' => $this->get('core.helpers.secure')->strEncode($formData['name']),
                     'user_id' => $this->user->isAuthenticated() === true ? $this->user->getUserId() : null,
                     'message' => $this->get('core.helpers.secure')->strEncode($formData['message']),

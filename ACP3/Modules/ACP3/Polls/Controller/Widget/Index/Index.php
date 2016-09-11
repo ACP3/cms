@@ -100,12 +100,12 @@ class Index extends Core\Controller\AbstractWidgetAction
             $votes = $this->voteRepository->getVotesByUserId(
                 $pollId,
                 $this->user->getUserId(),
-                $this->request->getServer()->get('REMOTE_ADDR', '')
+                $this->request->getSymfonyRequest()->getClientIp()
             );
         } else { // For guest users check against the ip address
             $votes = $this->voteRepository->getVotesByIpAddress(
                 $pollId,
-                $this->request->getServer()->get('REMOTE_ADDR', '')
+                $this->request->getSymfonyRequest()->getClientIp()
             );
         }
 

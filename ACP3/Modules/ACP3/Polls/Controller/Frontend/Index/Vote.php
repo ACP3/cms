@@ -99,7 +99,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData, $time, $pollId) {
-                $ipAddress = $this->request->getServer()->get('REMOTE_ADDR', '');
+                $ipAddress = $this->request->getSymfonyRequest()->getClientIp();
 
                 $this->voteValidation
                     ->setPollId($pollId)
