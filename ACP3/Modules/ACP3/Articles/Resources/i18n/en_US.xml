@@ -15,8 +15,8 @@
         <item key="page_statements">Page statements</item>
         <item key="select_create_menu_item">Please select, whether you want to create am menu item for this article or not.</item>
         <item key="text">Text</item>
-        <item key="text_to_short">The text should be at least 3 characters long.</item>
+        <item key="text_to_short">The text should not be empty.</item>
         <item key="title">Title</item>
-        <item key="title_to_short">The title should be at least 3 characters long.</item>
+        <item key="title_to_short">The title should not be empty.</item>
     </keys>
 </language>

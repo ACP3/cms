@@ -25,7 +25,7 @@
         <item key="menus">Navigationsleisten</item>
         <item key="menu_bar">Navigationsleiste</item>
         <item key="menu_bar_title">Name der Navigationsleiste</item>
-        <item key="menu_bar_title_to_short">Der Name der Navigationsleiste sollte mindestens 3 Zeichen lang sein.</item>
+        <item key="menu_bar_title_to_short">Der Name der Navigationsleiste darf nicht leer sein.</item>
         <item key="menu_items">Menüpunkte</item>
         <item key="mod_description">Dieses Modul verwaltet die Navigationsleisten.</item>
         <item key="module">Modul</item>
@@ -39,7 +39,7 @@
         <item key="superior_page_not_allowed">Die gerade ausgewählte Seite kann nicht als übergeordnete Seite verwendet werden.</item>
         <item key="target_page">Zielseite</item>
         <item key="title">Seitentitel</item>
-        <item key="title_to_short">Der Seitentitel sollte mindestens 3 Zeichen lang sein.</item>
+        <item key="title_to_short">Der Seitentitel darf nicht leer sein.</item>
         <item key="type_in_index_name">Der Index Name darf nur Buchstaben, Ziffern und den Unterstrich enthalten.</item>
         <item key="type_in_uri_and_target">Bitte geben Sie die Zielseite und das zu verlinkende Modul bzw. die zu verlinkende URI an.</item>
         <item key="uri">URI</item>

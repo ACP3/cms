@@ -50,7 +50,7 @@
         <item key="send_html_emails">HTML-E-Mails versenden</item>
         <item key="status">Status</item>
         <item key="subject">Betreff</item>
-        <item key="subject_to_short">Der Betreff sollte mindestens 3 Zeichen lang sein</item>
+        <item key="subject_to_short">Der Betreff darf nicht leer sein.</item>
         <item key="subscribe">Eintragen</item>
         <item key="subscribe_error">Es ist ein Fehler beim Erstellen des Newsletterkontos aufgetreten.</item>
         <item key="subscribe_mail_body">Sie haben sich erfolgreich im Newsletter auf der Website {host} eingetragen. Um die Registrierung abzuschließen, klicken Sie bitte auf den unten stehenden Link. Falls Sie diese E-Mail fälschlicherweise zugestellt bekommen haben sollten, so ignorieren/löschen Sie sie bitte einfach.</item>
@@ -61,7 +61,7 @@
         <item key="test_newsletter">Test-Newsletter versenden</item>
         <item key="test_newsletter_description">Wird an die E-Mail-Adresse der Newsletter-Einstellungen gesendet.</item>
         <item key="text">Text</item>
-        <item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein.</item>
+        <item key="text_to_short">Der Text darf nicht leer sein.</item>
         <item key="unsubscribe">Austragen</item>
         <item key="unsubscribe_error">Beim Löschen des Newsletterkontos ist ein Fehler aufgetreten.</item>
         <item key="unsubscribe_success">Das Newsletterkonto wurde erfolgreich gelöscht.</item>

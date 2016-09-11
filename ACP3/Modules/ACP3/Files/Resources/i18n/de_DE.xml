@@ -11,7 +11,7 @@
         <item key="admin_index_settings">Einstellungen</item>
         <item key="category_select">Bitte wählen Sie eine der untenstehenden Kategorien aus.</item>
         <item key="current_file">Aktuelle Datei</item>
-        <item key="description_to_short">Der Beschreibungstext sollte mindestens 3 Zeichen lang sein.</item>
+        <item key="description_to_short">Die Beschreibung darf nicht leer sein.</item>
         <item key="details">Downloads</item>
         <item key="download_file">Datei herunterladen</item>
         <item key="external_resource">Externe Quelle</item>
@@ -28,7 +28,7 @@
         <item key="select_internal_resource">Bitte geben Sie den Pfad zur hochzuladenden Datei an.</item>
         <item key="title">Titel</item>
         <item key="type_in_external_resource">Bitte geben Sie den Pfad zur Datei und die Dateigröße ein.</item>
-        <item key="type_in_title">Der Titel sollte mindestens 3 Zeichen lang sein.</item>
+        <item key="type_in_title">Der Titel darf nicht leer sein.</item>
         <item key="unit">Einheit</item>
         <item key="unknown_filesize">Dateigröße unbekannt</item>
     </keys>

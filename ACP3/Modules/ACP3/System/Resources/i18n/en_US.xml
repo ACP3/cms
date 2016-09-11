@@ -155,14 +155,14 @@
         <item key="mailer_type_php_mail">PHP Mail</item>
         <item key="mailer_type_smtp">SMTP</item>
         <item key="maintenance">Maintenance</item>
-        <item key="maintenance_message_to_short">The maintenance message should be at least 3 characters long.</item>
+        <item key="maintenance_message_to_short">The maintenance message should not be empty.</item>
         <item key="maintenance_mode">Turn maintenance mode on</item>
         <item key="maintenance_msg">Maintenance message</item>
         <item key="mark">Mark</item>
         <item key="mark_all">Mark all entries</item>
         <item key="max_upload_size">Maximum upload size</item>
         <item key="message">Message</item>
-        <item key="message_to_short">The message should be a least 3 characters long.</item>
+        <item key="message_to_short">The message should not be empty.</item>
         <item key="min">Minute</item>
         <item key="cache_lifetime">Page-Cache lifetime</item>
         <item key="cache_lifetime_description">Statements in seconds.</item>

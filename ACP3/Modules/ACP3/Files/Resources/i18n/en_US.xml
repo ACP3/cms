@@ -11,7 +11,7 @@
         <item key="admin_index_settings">Settings</item>
         <item key="category_select">Please select one of the categories below.</item>
         <item key="current_file">Current file</item>
-        <item key="description_to_short">The description should be at least 3 characters long.</item>
+        <item key="description_to_short">The description should not be empty.</item>
         <item key="details">Downloads</item>
         <item key="download_file">Download file</item>
         <item key="external_resource">External resource</item>
@@ -28,7 +28,7 @@
         <item key="select_internal_resource">Please select the path to the file you want to upload.</item>
         <item key="title">Title</item>
         <item key="type_in_external_resource">Please type in the external resource for the file.</item>
-        <item key="type_in_title">The title should be at least 3 characters long.</item>
+        <item key="type_in_title">The title should not be empty.</item>
         <item key="unit">Unit</item>
         <item key="unknown_filesize">Unknown filesize</item>
     </keys>
