@@ -12,20 +12,7 @@
                 {datepicker name=['start', 'end'] value=[$form.start, $form.end]}
             </div>
             <div id="tab-2" class="tab-pane fade">
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label required">{lang t="articles|title"}</label>
-
-                    <div class="col-sm-10">
-                        <input class="form-control"
-                               type="text"
-                               name="title"
-                               id="title"
-                               value="{$form.title}"
-                               maxlength="120"
-                               data-seo-slug-base="true"
-                               required>
-                    </div>
-                </div>
+                {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 data_attributes=['seo-slug-base' => 'true'] label={lang t="articles|title"}}
                 {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="text" value=$form.text required=true advanced=true label={lang t="articles|text"}}
                 {if !empty($options)}
                     {include file="asset:System/Partials/form_group.checkbox.tpl" label={lang t="system|options"}}

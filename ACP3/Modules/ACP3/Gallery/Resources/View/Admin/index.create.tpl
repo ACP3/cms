@@ -9,20 +9,7 @@
         <div class="tab-content">
             <div id="tab-1" class="tab-pane fade in active">
                 {datepicker name=['start', 'end'] value=[$form.start, $form.end]}
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label required">{lang t="gallery|title"}</label>
-
-                    <div class="col-sm-10">
-                        <input class="form-control"
-                               type="text"
-                               name="title"
-                               id="title"
-                               value="{$form.title}"
-                               maxlength="120"
-                               data-seo-slug-base="true"
-                               required>
-                    </div>
-                </div>
+                {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 data_attributes=['seo-slug-base' => 'true'] label={lang t="gallery|title"}}
             </div>
             <div id="tab-2" class="tab-pane fade">
                 {include file="asset:Seo/Partials/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
