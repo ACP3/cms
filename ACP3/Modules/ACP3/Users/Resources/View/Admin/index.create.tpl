@@ -16,17 +16,7 @@
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="realname" value=$form.realname maxlength=80 label={lang t="users|realname"}}
                 {include file="asset:System/Partials/form_group.select.tpl" options=$gender required=true label={lang t="users|gender"}}
                 {datepicker name="birthday" value=$birthday inputFieldOnly=true withTime=false label={lang t="users|birthday"}}
-                <div class="form-group">
-                    <label for="roles" class="col-sm-2 control-label required">{lang t="permissions|roles"}</label>
-
-                    <div class="col-sm-10">
-                        <select class="form-control" name="roles[]" id="roles" multiple="multiple" required style="height:100px">
-                            {foreach $roles as $row}
-                                <option value="{$row.id}"{$row.selected}>{$row.name}</option>
-                            {/foreach}
-                        </select>
-                    </div>
-                </div>
+                {include file="asset:System/Partials/form_group.select.tpl" options=$roles required=true multiple=true label={lang t="permissions|roles"}}
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$super_user required=true label={lang t="users|super_user"}}
             </div>
             <div id="tab-2" class="tab-pane fade">
