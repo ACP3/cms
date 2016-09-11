@@ -4,10 +4,7 @@
 
 {block AJAX_FORM_CONTENT}
     {block GALLERY_PICTURE_UPLOAD}
-        <div class="form-group">
-            <label for="file" class="col-sm-2 control-label required">{lang t="gallery|select_picture"}</label>
-            <div class="col-sm-10"><input type="file" name="file" id="file" required></div>
-        </div>
+        {include file="asset:System/Partials/form_group.input_file.tpl" name="file" required=true label={lang t="gallery|select_picture"}}
     {/block}
     <div class="form-group">
         <label for="description" class="col-sm-2 control-label">{lang t="system|description"}</label>

@@ -3,13 +3,9 @@
 {extends file="asset:System/ajax-form.tpl"}
 
 {block AJAX_FORM_CONTENT}
-        {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength="120" label={lang t="categories|title"}}
-        {include file="asset:System/Partials/form_group.input_text.tpl" name="description" value=$form.description required=true maxlength="120" label={lang t="system|description"}}
-    <div class="form-group">
-        <label for="picture" class="col-sm-2 control-label">{lang t="categories|picture"}</label>
-
-        <div class="col-sm-10"><input type="file" id="picture" name="picture"></div>
-    </div>
+    {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength="120" label={lang t="categories|title"}}
+    {include file="asset:System/Partials/form_group.input_text.tpl" name="description" value=$form.description required=true maxlength="120" label={lang t="system|description"}}
+    {include file="asset:System/Partials/form_group.input_file.tpl" name="picture" label={lang t="categories|picture"}}
     {block CATEGORIES_MODULE}
         <div class="form-group">
             <label for="module" class="col-sm-2 control-label required">{lang t="categories|module"}</label>

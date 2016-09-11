@@ -2,7 +2,7 @@
 
 {block FORM_GROUP_LABEL_ID}{$name|replace:'_':'-'}{/block}
 {block FORM_GROUP_FORM_FIELD}
-    <input class="form-control"
+    <input {if isset($use_form_control) && $use_form_control === false}{else}class="form-control"{/if}
            type="{block FORM_GROUP_INPUT_TYPE}text{/block}"
            name="{$name}"
            id="{$name|replace:'_':'-'}"
