@@ -1,6 +1,6 @@
 {$LAYOUT='Guestbook/ajax.tpl'}
 
-{extends file="asset:System/ajax-form.tpl"}
+{extends file="asset:System/layout.ajax-form.tpl"}
 
 {block AJAX_FORM_CONTENT}
     <div class="modal-body">

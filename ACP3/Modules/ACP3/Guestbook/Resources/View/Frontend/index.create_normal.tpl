@@ -1,4 +1,4 @@
-{extends file="asset:System/ajax-form.tpl"}
+{extends file="asset:System/layout.ajax-form.tpl"}
 
 {block AJAX_FORM_CONTENT}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="name" value=$form.name required=true readonly=$form.name_disabled maxlength=20 label={lang t="system|name"}}

@@ -1,6 +1,6 @@
 {$is_multipart=true}
 
-{extends file="asset:System/ajax-form.tpl"}
+{extends file="asset:System/layout.ajax-form.tpl"}
 
 {block AJAX_FORM_CONTENT}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="code" value=$form.code required=true maxlength=10 label={lang t="emoticons|code"}}

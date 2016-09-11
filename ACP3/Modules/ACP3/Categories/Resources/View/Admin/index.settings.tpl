@@ -1,4 +1,4 @@
-{extends file="asset:System/ajax-form.tpl"}
+{extends file="asset:System/layout.ajax-form.tpl"}
 
 {block AJAX_FORM_CONTENT}
     {include file="asset:System/Partials/form_group.input_number.tpl" name="width" value=$form.width required=true label={lang t="categories|image_width"} help={lang t="system|statements_in_pixel"}}
