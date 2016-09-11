@@ -76,13 +76,7 @@
                         {include file="asset:System/Partials/form_group.button_group.tpl" options=$mailer_smtp_auth required=true label={lang t="system|mailer_smtp_auth"}}
                         <div id="mailer-smtp-2">
                             {include file="asset:System/Partials/form_group.input_number.tpl" name="mailer_smtp_user" value=$form.mailer_smtp_user labelRequired=true label={lang t="system|mailer_smtp_username"}}
-                            <div class="form-group">
-                                <label for="mailer-smtp-password" class="col-sm-2 control-label">{lang t="system|mailer_smtp_password"}</label>
-
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="password" name="mailer_smtp_password" id="mailer-smtp-password" value="{$form.mailer_smtp_password}">
-                                </div>
-                            </div>
+                            {include file="asset:System/Partials/form_group.input_password.tpl" name="mailer_smtp_password" value=$form.mailer_smtp_password label={lang t="system|mailer_smtp_password"}}
                         </div>
                     </div>
                 </div>

@@ -6,11 +6,7 @@
     {/if}
     <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         {include file="asset:System/Partials/form_group.input_text.tpl" name="nickname" required=true maxlength=30 label={lang t="users|nickname"}}
-        <div class="form-group">
-            <label for="pwd" class="col-sm-2 control-label required">{lang t="users|pwd"}</label>
-
-            <div class="col-sm-10"><input class="form-control" type="password" name="pwd" id="pwd" required></div>
-        </div>
+        {include file="asset:System/Partials/form_group.input_password.tpl" name="pwd" required=true label={lang t="users|pwd"}}
         {include file="asset:System/Partials/form_group.checkbox.tpl" options=$remember_me}
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
