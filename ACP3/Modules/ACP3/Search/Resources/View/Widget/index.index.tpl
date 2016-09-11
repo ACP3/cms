@@ -1,10 +1,10 @@
 <form action="{uri args="search"}" method="post" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
     <div class="form-group">
-        <label for="search-term" class="sr-only">{lang t="search|search_term"}</label>
+        <label for="widget-search-term" class="sr-only">{lang t="search|search_term"}</label>
         <input class="form-control"
                type="text"
                name="search_term"
-               id="search-term"
+               id="widget-search-term"
                value=""
                placeholder="{lang t="search|search_term"}"
                required>
