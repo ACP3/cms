@@ -15,13 +15,7 @@
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="nickname" value=$form.nickname required=true maxlength=30 label={lang t="users|nickname"}}
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="realname" value=$form.realname maxlength=80 label={lang t="users|realname"}}
                 {include file="asset:System/Partials/form_group.select.tpl" options=$gender required=true label={lang t="users|gender"}}
-                <div class="form-group">
-                    <label for="date-birthday-input" class="col-sm-2 control-label">{lang t="users|birthday"}</label>
-
-                    <div class="col-sm-10">
-                        {datepicker name="birthday" value=$birthday inputFieldOnly=true withTime=false}
-                    </div>
-                </div>
+                {datepicker name="birthday" value=$birthday inputFieldOnly=true withTime=false label={lang t="users|birthday"}}
                 <div class="form-group">
                     <label for="roles" class="col-sm-2 control-label required">{lang t="permissions|roles"}</label>
 
@@ -60,7 +54,7 @@
                         </select>
                     </div>
                 </div>
-                {include file="asset:System/Partials/form_group.select.tpl" options=$entries required=true label={lang t="users|records_per_page"}}
+                {include file="asset:System/Partials/form_group.select.tpl" options=$entries required=true label={lang t="system|records_per_page"}}
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_long" value=$form.date_format_long required=true maxlength=20 label={lang t="system|date_format_long"} help={lang t="system|php_date_function"}}
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_short" value=$form.date_format_short required=true maxlength=20 label={lang t="system|date_format_short"} help={lang t="system|php_date_function"}}
                 <div class="form-group">
@@ -68,10 +62,10 @@
 
                     <div class="col-sm-10">
                         <select class="form-control" name="date_time_zone" id="date-time-zone">
-                            {foreach $time_zones as $key => $values}
-                                <optgroup label="{$key}">
-                                    {foreach $values as $country => $value}
-                                        <option value="{$country}" style="margin:0 0 0 10px"{$value.selected}>{$country}</option>
+                            {foreach $time_zones as $continent => $countries}
+                                <optgroup label="{$continent}">
+                                    {foreach $countries as $country => $data}
+                                        <option value="{$country}"{$data.selected}>{$country}</option>
                                     {/foreach}
                                 </optgroup>
                             {/foreach}

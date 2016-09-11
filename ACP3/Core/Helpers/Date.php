@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers;
 
-use ACP3\Core\Http\Request;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Validation\ValidationRules\DateValidationRule;
@@ -84,7 +83,7 @@ class Date
             foreach ($values as $row) {
                 unset($timeZones[$key][$i]);
                 $timeZones[$key][$row]['selected'] = $this->formsHelper->selectEntry(
-                    'date_time_zone', 
+                    'date_time_zone',
                     $row,
                     $currentValue
                 );

@@ -33,6 +33,8 @@ class Datepicker extends AbstractFunction
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         $params = $this->mergeParameters($params);
+
+        $smarty->smarty->assign('label', $params['label']);
         $smarty->smarty->assign('datepicker', $this->dateHelper->datepicker(
             $params['name'],
             $params['value'],
@@ -49,7 +51,8 @@ class Datepicker extends AbstractFunction
             'name' => '',
             'value' => '',
             'withTime' => true,
-            'inputFieldOnly' => false
+            'inputFieldOnly' => false,
+            'label' => ''
         ];
         return array_merge($defaults, $params);
     }

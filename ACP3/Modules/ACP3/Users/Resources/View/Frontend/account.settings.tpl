@@ -31,10 +31,10 @@
 
                     <div class="col-sm-10">
                         <select class="form-control" name="date_time_zone" id="date-time-zone">
-                            {foreach $time_zones as $key => $values}
-                                <optgroup label="{$key}">
-                                    {foreach $values as $country => $value}
-                                        <option value="{$country}"{$value.selected}>{$country}</option>
+                            {foreach $time_zones as $continent => $countries}
+                                <optgroup label="{$continent}">
+                                    {foreach $countries as $country => $data}
+                                        <option value="{$country}"{$data.selected}>{$country}</option>
                                     {/foreach}
                                 </optgroup>
                             {/foreach}

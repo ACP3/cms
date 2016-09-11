@@ -13,13 +13,7 @@
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="nickname" value=$form.nickname required=true maxlength=30 label={lang t="users|nickname"}}
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="realname" value=$form.realname maxlength=80 label={lang t="users|realname"}}
                 {include file="asset:System/Partials/form_group.select.tpl" options=$gender required=true label={lang t="users|gender"}}
-                <div class="form-group">
-                    <label for="date-birthday-input" class="col-sm-2 control-label">{lang t="users|birthday"}</label>
-
-                    <div class="col-sm-10">
-                        {datepicker name="birthday" value=$birthday inputFieldOnly=true withTime=false}
-                    </div>
-                </div>
+                {datepicker name="birthday" value=$birthday inputFieldOnly=true withTime=false label={lang t="users|birthday"}}
             </div>
             <div id="tab-2" class="tab-pane fade">
                 {foreach $contact as $row}
