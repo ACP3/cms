@@ -78,7 +78,7 @@ class View
      */
     public function templateExists($template)
     {
-        return $this->renderer->templateExists($template);
+        return $this->renderer->templateExists('asset:' . $template);
     }
 
     /**
