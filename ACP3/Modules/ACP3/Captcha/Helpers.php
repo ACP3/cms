@@ -84,7 +84,6 @@ class Helpers
         $inputOnly = false,
         $path = ''
     ) {
-        // Wenn man als User angemeldet ist, Captcha nicht anzeigen
         if ($this->user->isAuthenticated() === false) {
             $path = sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
 
@@ -97,7 +96,7 @@ class Helpers
                 'input_only' => $inputOnly,
                 'path' => $path
             ]);
-            return $this->view->fetchTemplate('captcha/captcha.tpl');
+            return $this->view->fetchTemplate('Captcha/Partials/captcha.tpl');
         }
         return '';
     }
