@@ -39,6 +39,8 @@ abstract class AbstractAdminAction extends Core\Controller\AbstractFrontendActio
             throw new Core\Authentication\Exception\UnauthorizedAccessException();
         }
 
-        return parent::preDispatch();
+        parent::preDispatch();
+
+        return $this;
     }
 }

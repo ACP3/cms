@@ -1,4 +1,4 @@
-{$LAYOUT='Guestbook/ajax.tpl'}
+{$LAYOUT='Guestbook/layout.midal.tpl'}
 
 {extends file="asset:System/layout.ajax-form.tpl"}
 

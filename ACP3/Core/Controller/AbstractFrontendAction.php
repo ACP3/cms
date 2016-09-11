@@ -82,13 +82,15 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
             'LANG' => $this->translator->getShortIsoCode(),
         ]);
 
-        return parent::preDispatch();
+        parent::preDispatch();
+
+        return $this;
     }
 
     protected function addCustomTemplateVarsBeforeOutput()
     {
         $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());
-        $this->view->assign('LAYOUT', $this->request->isXmlHttpRequest() ? 'system/ajax.tpl' : $this->getLayout());
+        $this->view->assign('LAYOUT', $this->request->isXmlHttpRequest() ? 'System/layout.ajax.tpl' : $this->getLayout());
 
         $this->eventDispatcher->dispatch(
             'core.controller.custom_template_variable',
