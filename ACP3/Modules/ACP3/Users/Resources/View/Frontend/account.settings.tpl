@@ -13,8 +13,7 @@
                     <label for="language" class="col-sm-2 control-label required">{lang t="users|language"}</label>
 
                     <div class="col-sm-10">
-                        <select class="form-control" name="language" id="language"{if $language_override == 0} disabled{/if}>
-                            <option value="">{lang t="system|pls_select"}</option>
+                        <select class="form-control" name="language" id="language" size="{count($languages)}" required{if $language_override == 0} disabled{/if}>
                             {foreach $languages as $row}
                                 <option value="{$row.iso}"{if $row.selected} selected="selected"{/if}>{$row.name}</option>
                             {/foreach}
