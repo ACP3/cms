@@ -26,6 +26,6 @@
     </div>
     {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/articles"}}
     {javascripts}
-        {include_js module="articles" file="admin/acp"}
+        {include_js module="articles" file="admin/index.create"}
     {/javascripts}
 {/block}
