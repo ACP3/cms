@@ -1,10 +1,5 @@
 jQuery(document).ready(function ($) {
-    $('input[name="readmore"]').on('click',function () {
-        var $elem = $('#readmore-container');
-        if ($(this).val() == 1) {
-            $elem.show();
-        } else {
-            $elem.hide();
-        }
+    $('input[name="readmore"]').on('click change', function () {
+        $('#readmore-container').toggle(this.value == 1);
     }).filter(':checked').click();
 });

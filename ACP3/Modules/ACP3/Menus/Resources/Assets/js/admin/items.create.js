@@ -1,6 +1,5 @@
 jQuery(document).ready(function ($) {
-    var $alias = $('#alias').parents('div.control-group'),
-        $module = $('#module-container'),
+    var $module = $('#module-container'),
         $link = $('#link-container'),
         $hints = $link.find('.help-block'),
         $articles = $('#articles-container'),
@@ -20,7 +19,6 @@ jQuery(document).ready(function ($) {
         var mode = this.value;
 
         if (mode == 1) {
-            $alias.hide();
             $module.show();
             $hints.hide();
             $link.hide();
@@ -35,7 +33,6 @@ jQuery(document).ready(function ($) {
                 }
             }
         } else if (mode == 2) {
-            $alias.show();
             $module.hide();
             $hints.show();
             $link.show();
@@ -46,13 +43,11 @@ jQuery(document).ready(function ($) {
             $link.show();
             $articles.hide();
         } else if (mode == 4) {
-            $alias.show();
             $module.hide();
             $hints.hide();
             $link.hide();
             $articles.show();
         } else {
-            $alias.hide();
             $module.hide();
             $hints.hide();
             $link.hide();
