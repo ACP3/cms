@@ -17,7 +17,7 @@ jQuery(document).ready(function ($) {
                     $datepickerEnd.data("DateTimePicker").minDate(e.date);
                 });
 
-                $datepickerEnd.data('DateTimePicker').minDate(new Date(datepickers.startDefaultDate));
+                $datepickerEnd.data('DateTimePicker').minDate(datepickers.startDefaultDate);
             }
         });
     }
