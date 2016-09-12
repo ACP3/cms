@@ -108,5 +108,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         ]
                     ]);
         }
+
+        $this->validator->validate();
     }
 }

@@ -185,18 +185,18 @@ class Date
         if ($this->request->getPost()->has($name[0]) && $this->request->getPost()->has($name[1])) {
             $valueStart = $this->request->getPost()->get($name[0]);
             $valueEnd = $this->request->getPost()->get($name[1]);
-            $valueStartR = $this->date->format($valueStart, 'r', false);
-            $valueEndR = $this->date->format($valueEnd, 'r', false);
+            $valueStartR = $this->date->format($valueStart, 'c', false);
+            $valueEndR = $this->date->format($valueEnd, 'c', false);
         } elseif (is_array($value) && $this->dateValidationRule->isValid($value) === true) {
             $valueStart = $this->date->format($value[0], $this->getDateFormat($showTime));
             $valueEnd = $this->date->format($value[1], $this->getDateFormat($showTime));
-            $valueStartR = $this->date->format($value[0], 'r');
-            $valueEndR = $this->date->format($value[1], 'r');
+            $valueStartR = $this->date->format($value[0], 'c');
+            $valueEndR = $this->date->format($value[1], 'c');
         } else {
             $valueStart = $this->date->format('now', $this->getDateFormat($showTime), false);
             $valueEnd = $this->date->format('now', $this->getDateFormat($showTime), false);
-            $valueStartR = $this->date->format('now', 'r', false);
-            $valueEndR = $this->date->format('now', 'r', false);
+            $valueStartR = $this->date->format('now', 'c', false);
+            $valueEndR = $this->date->format('now', 'c', false);
         }
 
         return [
