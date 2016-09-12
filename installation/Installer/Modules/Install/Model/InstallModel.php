@@ -156,15 +156,6 @@ class InstallModel
             ],
             \ACP3\Modules\ACP3\Users\Installer\Schema::MODULE_NAME => [
                 'mail' => $formData['mail']
-            ],
-            \ACP3\Modules\ACP3\Newsletter\Installer\Schema::MODULE_NAME => [
-                'mail' => $formData['mail'],
-                'mailsig' => $this->translator->t('install', 'sincerely') . "\n\n" . $this->translator->t('install',
-                        'newsletter_mailsig')
-            ],
-            \ACP3\Modules\ACP3\Contact\Installer\Schema::MODULE_NAME => [
-                'mail' => $formData['mail'],
-                'disclaimer' => $this->translator->t('install', 'disclaimer')
             ]
         ];
 
