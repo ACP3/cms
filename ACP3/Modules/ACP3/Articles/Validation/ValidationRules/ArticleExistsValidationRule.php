@@ -39,10 +39,6 @@ class ArticleExistsValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        $result = $this->articleRepository->resultExists($data);
-
-        var_dump($result);
-
-        return $result;
+        return $this->articleRepository->resultExists($data);
     }
 }
