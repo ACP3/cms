@@ -61,12 +61,12 @@
             <div id="tab-6" class="tab-pane fade">
                 {include file="asset:System/Partials/form_group.select.tpl" options=$mailer_type required=true label={lang t="system|mailer_type"}}
                 <div id="mailer-smtp-1">
-                    {include file="asset:System/Partials/form_group.input_number.tpl" name="mailer_smtp_host" value=$form.mailer_smtp_host labelRequired=true label={lang t="system|mailer_smtp_hostname"}}
+                    {include file="asset:System/Partials/form_group.input_text.tpl" name="mailer_smtp_host" value=$form.mailer_smtp_host labelRequired=true label={lang t="system|mailer_smtp_hostname"}}
                     {include file="asset:System/Partials/form_group.input_number.tpl" name="mailer_smtp_port" value=$form.mailer_smtp_port labelRequired=true label={lang t="system|mailer_smtp_port"}}
                     {include file="asset:System/Partials/form_group.select.tpl" options=$mailer_smtp_security required=true label={lang t="system|mailer_smtp_security"}}
                     {include file="asset:System/Partials/form_group.button_group.tpl" options=$mailer_smtp_auth required=true label={lang t="system|mailer_smtp_auth"}}
                     <div id="mailer-smtp-2">
-                        {include file="asset:System/Partials/form_group.input_number.tpl" name="mailer_smtp_user" value=$form.mailer_smtp_user labelRequired=true label={lang t="system|mailer_smtp_username"}}
+                        {include file="asset:System/Partials/form_group.input_text.tpl" name="mailer_smtp_user" value=$form.mailer_smtp_user labelRequired=true label={lang t="system|mailer_smtp_username"}}
                         {include file="asset:System/Partials/form_group.input_password.tpl" name="mailer_smtp_password" value=$form.mailer_smtp_password label={lang t="system|mailer_smtp_password"}}
                     </div>
                 </div>
