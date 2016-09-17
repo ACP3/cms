@@ -6,7 +6,7 @@
            type="{block FORM_GROUP_INPUT_TYPE}text{/block}"
            name="{$name}"
            id="{$name|replace:'_':'-'}"
-            {if !empty($value)}value="{$value}"{/if}
+            {if isset($value)}value="{$value}"{/if}
             {if !empty($maxlength)}maxlength="{$maxlength}"{/if}
             {if !empty($data_attributes) && is_array($data_attributes)}
                 {foreach $data_attributes as $attrName => $attrValue}
