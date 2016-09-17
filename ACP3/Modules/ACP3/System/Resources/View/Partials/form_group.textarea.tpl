@@ -12,5 +12,5 @@
               rows="6"
             {if (isset($required) && $required === true)} required{/if}
             {if (isset($readonly) && $readonly === true)} readonly{/if}
-            {if (isset($disabled) && $disabled === true)} disabled{/if}>{if !empty($value)}{$value}{/if}</textarea>
+            {if (isset($disabled) && $disabled === true)} disabled{/if}>{if isset($value)}{$value}{/if}</textarea>
 {/block}

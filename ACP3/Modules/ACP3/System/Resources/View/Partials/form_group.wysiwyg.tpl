@@ -4,6 +4,6 @@
 {block FORM_GROUP_FORM_FIELD}
     {$toolbar=(!empty($toolbar)) ? $toolbar : ''}
     {$advanced=(isset($advanced)) ? $advanced : false}
-    {$value=(!empty($value)) ? $value : ''}
+    {$value=(isset($value)) ? $value : ''}
     {wysiwyg name=$name value=$value toolbar=$toolbar advanced=$advanced}
 {/block}

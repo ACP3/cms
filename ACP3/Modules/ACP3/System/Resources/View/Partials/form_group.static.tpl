@@ -3,7 +3,7 @@
 {block FORM_GROUP_LABEL_ID}{/block}
 {block FORM_GROUP_FORM_FIELD}
     <div class="form-control-static">
-        {if !empty($value)}
+        {if isset($value)}
             {$value}
         {/if}
     </div>
