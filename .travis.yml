@@ -18,10 +18,6 @@ addons:
 before_script:
   - composer self-update
   - if [ -n "$ACP3_CI_USER_GH_TOKEN" ]; then composer config github-oauth.github.com ${ACP3_CI_USER_GH_TOKEN}; fi;
-  - git config --global push.default simple
-  - git config --global credential.helper "cache"
-  - git config --global credential.helper "cache --timeout=3600"
-  - git config --global credential.https://github.com.username ${ACP3_CI_USER_GH_TOKEN}
   - composer install --prefer-dist --ignore-platform-reqs -n -o
 
 script:
@@ -29,6 +25,11 @@ script:
 
 after_success:
   - travis_retry php vendor/bin/coveralls -v
+  - git config --global push.default simple
+  - git config --global credential.helper "store --file=.git-credentials"
+  - echo "https://${ACP3_CI_USER_GH_TOKEN}:x-oauth-basic@github.com\n" > .git-credentials
+  - git config --global user.email "mail@acp3-cms.net"
+  - git config --global user.name "ACP3-CI"
   - if [ "$TRAVIS_PHP_VERSION" = '7.0' ] && [ ! -z "$TRAVIS_TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then composer require acp3/subtree-pushes && git config --global push.default simple && ./vendor/acp3/subtree-pushes/exec-command.sh ${TRAVIS_TAG}; fi
 
 cache:
