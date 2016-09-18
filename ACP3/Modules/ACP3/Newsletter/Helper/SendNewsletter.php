@@ -77,7 +77,7 @@ class SendNewsletter
             ->setMailSignature($settings['mailsig']);
 
         if ($newsletter['html'] == 1) {
-            $this->mailer->setTemplate('newsletter/email.tpl');
+            $this->mailer->setTemplate('newsletter/layout.email.tpl');
             $this->mailer->setHtmlBody($newsletter['text']);
         } else {
             $this->mailer->setBody($newsletter['text']);
