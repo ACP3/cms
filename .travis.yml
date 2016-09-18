@@ -25,6 +25,8 @@ before_script:
   # Run ssh-agent (inside the build environment)
   - eval $(ssh-agent -s)
 
+  - echo -e "Host *\n\tBatchMode yes\n\n" > ~/.ssh/config
+
   # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
   - echo "${SSH_PRIVATE_KEY}" > ./ssh-private-key
   - chmod 700 ~/.ssh
