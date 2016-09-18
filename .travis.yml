@@ -19,8 +19,9 @@ before_script:
   - composer self-update
   - if [ -n "$ACP3_CI_USER_GH_TOKEN" ]; then composer config github-oauth.github.com ${ACP3_CI_USER_GH_TOKEN}; fi;
   - git config --global push.default simple
-  - git config credential.helper "store --file=.git/credentials"
-  - echo "https://${ACP3_CI_USER_GH_TOKEN}:@github.com" > .git/credentials
+  - git config --global credential.helper "cache"
+  - git config --global credential.helper "cache --timeout=3600"
+  - git config --global credential.https://github.com.username ${ACP3_CI_USER_GH_TOKEN}
   - composer install --prefer-dist --ignore-platform-reqs -n -o
 
 script:
