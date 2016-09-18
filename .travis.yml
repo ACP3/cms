@@ -27,7 +27,7 @@ before_script:
 
   - cat ~/.ssh/config
 
-  - echo -e "Host *\n\UseRoaming no\n\n\tBatchMode yes\n\n\tIdentityFile ~/.ssh/id_rsa yes\n\n\tStrictHostKeyChecking no\n\n\tPasswordAuthentication no\n\n" > ~/.ssh/config
+  - echo -e "Host *\n\UseRoaming no\n\tBatchMode yes\n\tIdentityFile ~/.ssh/id_rsa yes\n\tStrictHostKeyChecking no\n\tPasswordAuthentication no\n\n" > ~/.ssh/config
 
   # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
   - echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
@@ -41,6 +41,7 @@ after_success:
   - git config --global push.default simple
   - git config --global user.email "mail@acp3-cms.net"
   - git config --global user.name "ACP3-CI"
+  - git clone git@github.com:ACP3/setup.git acp3-setup
   - if [ "$TRAVIS_PHP_VERSION" = '7.0' ] && [ ! -z "$TRAVIS_TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then composer require acp3/subtree-pushes && git config --global push.default simple && ./vendor/acp3/subtree-pushes/exec-command.sh ${TRAVIS_TAG}; fi
 
 cache:
