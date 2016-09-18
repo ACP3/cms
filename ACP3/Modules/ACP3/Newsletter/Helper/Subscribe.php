@@ -164,7 +164,7 @@ class Subscribe
             ->setMailSignature($settings['mailsig']);
 
         if ($settings['html'] == 1) {
-            $this->mailer->setTemplate('newsletter/email.tpl');
+            $this->mailer->setTemplate('newsletter/layout.email.tpl');
 
             $body .= '<a href="' . $url . '">' . $url . '<a>';
             $this->mailer->setHtmlBody($this->stringFormatter->nl2p($body));
