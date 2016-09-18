@@ -17,14 +17,17 @@ addons:
 
 before_script:
   - composer self-update
-  - if [ -n "$GH_TOKEN" ]; then composer config github-oauth.github.com ${GH_TOKEN}; fi;
-  - composer install --prefer-dist -n -o
+  - if [ -n "$ACP3_CI_USER_GH_TOKEN" ]; then composer config github-oauth.github.com ${ACP3_CI_USER_GH_TOKEN}; fi;
+  - composer install --prefer-dist --ignore-platform-reqs -n -o
 
 script:
-  php vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover build/logs/clover.xml
+  php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover ./build/logs/clover.xml
 
 after_success:
   - travis_retry php vendor/bin/coveralls -v
+  if [[ $TRAVIS_PHP_VERSION = '7.0' ] && [ ! -z "$TRAVIS_TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    php ./vendor/acp3/subtree-pushes/exec-command.sh  ${TRAVIS_TAG}
+  fi
 
 cache:
   directories:
