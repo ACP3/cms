@@ -40,8 +40,7 @@
   "require-dev": {
     "phpunit/phpunit": "^5.5",
     "satooshi/php-coveralls": "dev-master",
-    "friendsofphp/php-cs-fixer": "^1.11",
-    "acp3/subtree-pushes": "dev-master"
+    "friendsofphp/php-cs-fixer": "^1.11"
   },
   "autoload": {
     "psr-4": {
