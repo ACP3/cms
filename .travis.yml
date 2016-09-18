@@ -25,7 +25,7 @@ script:
 
 after_success:
   - travis_retry php vendor/bin/coveralls -v
-  - if [ "$TRAVIS_PHP_VERSION" = '7.0' ] && [ ! -z "$TRAVIS_TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then composer require acp3/subtree-pushes && php ./vendor/acp3/subtree-pushes/exec-command.sh ${TRAVIS_TAG}; fi
+  - if [ "$TRAVIS_PHP_VERSION" = '7.0' ] && [ ! -z "$TRAVIS_TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then composer require acp3/subtree-pushes && ./vendor/acp3/subtree-pushes/exec-command.sh ${TRAVIS_TAG}; fi
 
 cache:
   directories:
