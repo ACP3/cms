@@ -27,12 +27,11 @@ before_script:
 
   - cat ~/.ssh/config
 
-  - echo -e "Host *\n\tBatchMode yes\n\n" > ~/.ssh/config
+  - echo -e "Host *\n\UseRoaming no\n\n\tBatchMode yes\n\n\tIdentityFile ~/.ssh/id_rsa yes\n\n\tStrictHostKeyChecking no\n\n\tPasswordAuthentication no\n\n" > ~/.ssh/config
 
   # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
-  - echo "${SSH_PRIVATE_KEY}" > ./ssh-private-key
-  - chmod 600 ./ssh-private-key
-  - ssh-add ./ssh-private-key
+  - echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
+  - chmod 600 ~/.ssh/id_rsa
 
 script:
   php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover ./build/logs/clover.xml
