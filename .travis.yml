@@ -40,6 +40,7 @@ after_success:
   - git config --global push.default simple
   - git config --global user.email "mail@acp3-cms.net"
   - git config --global user.name "ACP3-CI"
+  - git clone git@github.com:ACP3/setup.git acp3-setup
   - if [ "$TRAVIS_PHP_VERSION" = '7.0' ] && [ ! -z "$TRAVIS_TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then composer require acp3/subtree-pushes && git config --global push.default simple && ./vendor/acp3/subtree-pushes/exec-command.sh ${TRAVIS_TAG}; fi
 
 cache:
