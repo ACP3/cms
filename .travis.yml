@@ -27,8 +27,8 @@ before_script:
   - eval $(ssh-agent -s)
 
   # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
-  - mkdir /root/.ssh
-  - echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
+  - mkdir ~/.ssh
+  - echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
 
 script:
   php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover ./build/logs/clover.xml
