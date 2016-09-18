@@ -27,7 +27,7 @@ before_script:
 
   - cat ~/.ssh/config
 
-  - echo -e "Host *\n\tUseRoaming no\n\tBatchMode yes\n\tIdentityFile ~/.ssh/id_rsa yes\n\tStrictHostKeyChecking no\n\tPasswordAuthentication no\n\n" > ~/.ssh/config
+  - echo -e "Host *\n\tUseRoaming no\n\tBatchMode yes\n\tIdentityFile ~/.ssh/id_rsa\n\tStrictHostKeyChecking no\n\tPasswordAuthentication no\n\n" > ~/.ssh/config
 
   # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
   - echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
