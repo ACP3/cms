@@ -20,15 +20,15 @@ before_script:
   - if [ -n "$ACP3_CI_USER_GH_TOKEN" ]; then composer config github-oauth.github.com ${ACP3_CI_USER_GH_TOKEN}; fi;
   - composer install --prefer-dist --ignore-platform-reqs -n -o
   # Install ssh-agent if not already installed, it is required by Docker.
-  # (change apt-get to yum if you use a CentOS-based image)
   - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
 
   # Run ssh-agent (inside the build environment)
-  - eval $(ssh-agent)
+  - eval $(ssh-agent -s)
 
   # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
-  - mkdir -p ~/.ssh
   - echo "${SSH_PRIVATE_KEY}" > ./ssh-private-key
+  - chmod 700 ~/.ssh
+  - chmod 600 ~/.ssh/.
   - chmod 600 ./ssh-private-key
   - ssh-add ./ssh-private-key
 
