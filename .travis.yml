@@ -30,7 +30,7 @@ before_script:
   # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
   - echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
   - chmod 600 ~/.ssh/id_rsa
-  - ssh-add -l
+  - ssh-add ~/.ssh/id_rsa
 
 script:
   php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover ./build/logs/clover.xml
