@@ -22,13 +22,20 @@ before_script:
   - composer self-update
   - if [ -n "$ACP3_CI_USER_GH_TOKEN" ]; then composer config github-oauth.github.com ${ACP3_CI_USER_GH_TOKEN}; fi;
   - composer install --prefer-dist --ignore-platform-reqs -n -o
+  - git config --global push.default simple
 
 script:
   php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover ./build/logs/clover.xml
 
 after_success:
   - travis_retry php vendor/bin/coveralls -v
-  - git clone https://github.com/acp3/setup acp3-setup
+
+deploy:
+  provider: script
+  script: composer require acp3/subtree-pushes && ./vendor/acp3/subtree-pushes/exec-command.sh ${TRAVIS_TAG};
+  on:
+    tags: true
+    condition: "$TRAVIS_PHP_VERSION = '7.0'"
 
 cache:
   directories:
