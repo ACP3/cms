@@ -15,6 +15,9 @@ addons:
   code_climate:
     repo_token: $CC_REPO_TOKEN
 
+before_install:
+- echo -e "machine github.com\n\tlogin $ACP3_CI_USER_GH_TOKEN" >> ~/.netrc
+
 before_script:
   - composer self-update
   - if [ -n "$ACP3_CI_USER_GH_TOKEN" ]; then composer config github-oauth.github.com ${ACP3_CI_USER_GH_TOKEN}; fi;
@@ -25,6 +28,7 @@ script:
 
 after_success:
   - travis_retry php vendor/bin/coveralls -v
+  - git clone https://github.com/acp3/setup acp3-setup
 
 cache:
   directories:
