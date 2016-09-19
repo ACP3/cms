@@ -39,6 +39,7 @@
                 <directory>./../ACP3/Core/Test/</directory>
                 <directory>./../ACP3/Modules/*/*/Test/</directory>
                 <directory suffix=".php">./../ACP3/Modules/ACP3/Filemanager/libraries/kcfinder/</directory>
+                <directory>./vendor/</directory>
             </exclude>
         </whitelist>
     </filter>
