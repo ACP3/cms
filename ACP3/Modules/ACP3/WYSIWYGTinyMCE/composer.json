@@ -17,12 +17,12 @@
   "prefer-stable": true,
   "require": {
     "acp3/composer-installer": "*",
-    "acp3/core": "4.1.14",
-    "acp3/setup": "4.1.14",
-    "acp3/module-errors": "4.1.14",
-    "acp3/module-permissions": "4.1.14",
-    "acp3/module-system": "4.1.14",
-    "acp3/module-users": "4.1.14",
+    "acp3/core": "4.1.15",
+    "acp3/setup": "4.1.15",
+    "acp3/module-errors": "4.1.15",
+    "acp3/module-permissions": "4.1.15",
+    "acp3/module-system": "4.1.15",
+    "acp3/module-users": "4.1.15",
     "tinymce/tinymce": "^4.4"
   },
   "autoload": {
