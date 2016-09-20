@@ -1,6 +1,6 @@
 {
-  "name": "acp3/setup",
-  "description": "Provides the installation wizard for the ACP3 CMS.",
+  "name": "acp3/tests",
+  "description": "Repository of the ACP3 CMS unit test configuration files.",
   "license": "GPL-2.0+",
   "type": "acp3-core",
   "authors": [
@@ -13,16 +13,14 @@
     "email": "mail@acp3-cms.net",
     "issues": "https://github.com/ACP3/cms/issues"
   },
-  "autoload": {
-    "psr-4": {
-      "ACP3\\Installer\\": "/Installer"
-    }
-  },
   "require": {
-    "acp3/composer-installer": "*",
-    "acp3/core": "4.1.15"
+    "php": ">=5.6.0",
+    "acp3/composer-installer": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.5"
   },
   "extra": {
-    "installer-name": "installation"
+    "installer-name": "tests"
   }
 }
