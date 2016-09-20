@@ -1,14 +1,15 @@
 /.idea
 /ACP3/config.yml
 /bower_components
-/node_modules
+/build/logs/
 /cache/*
+/node_modules
+/tests/cache/
 /uploads/assets/*
 /uploads/categories/*
 /uploads/files/*
 /uploads/gallery/*
 /vendor
-/build/logs/
 /.htaccess
 
 !.gitignore
