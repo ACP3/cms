@@ -66,7 +66,12 @@ abstract class AbstractNestedSetModel extends AbstractModel
                 $entryId = $result;
             }
         } else {
-            $result = $this->editOperation->execute($entryId, $entryId === 1 ? '' : $data['parent_id'], 0, $data);
+            $result = $this->editOperation->execute(
+                $entryId,
+                $data['parent_id'],
+                isset($data['block_id']) ? $data['block_id'] : 0,
+                $data
+            );
         }
 
         $this->dispatchAfterSaveEvent($this->repository, $data, $entryId);

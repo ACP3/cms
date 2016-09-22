@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Users;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class Login
@@ -42,27 +43,25 @@ class Login extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|void
      */
     public function execute()
     {
-        if ($this->user->isAuthenticated() === true) {
-            return $this->redirect()->toNewPage($this->appPath->getWebRoot());
-        } elseif ($this->request->getPost()->count() !== 0) {
-            return $this->executePost();
-        }
-
         $rememberMe = [
             1 => $this->translator->t('users', 'remember_me')
         ];
 
-        return [
-            'remember_me' => $this->forms->checkboxGenerator('remember', $rememberMe, 0)
-        ];
+        $this->view->assign('remember_me', $this->forms->checkboxGenerator('remember', $rememberMe, 0));
+
+        if ($this->user->isAuthenticated() === true) {
+            return $this->redirect()->toNewPage($this->appPath->getWebRoot());
+        } elseif ($this->request->getPost()->count() > 0) {
+            return $this->executePost();
+        }
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executePost()
     {
@@ -86,8 +85,13 @@ class Login extends Core\Controller\AbstractFrontendAction
             $errorPhrase = 'account_locked';
         }
 
+        $errors = $this->get('core.helpers.alerts')->errorBox($this->translator->t('users', $errorPhrase));
+        if ($this->request->isXmlHttpRequest()) {
+            return new JsonResponse(['success' => false, 'content' => $errors]);
+        }
+
         return [
-            'error_msg' => $this->get('core.helpers.alerts')->errorBox($this->translator->t('users', $errorPhrase))
+            'error_msg' => $errors
         ];
     }
 }

@@ -26,12 +26,17 @@ class Edit extends AbstractFormAction
      * @var Permissions\Model\RolesModel
      */
     protected $rolesModel;
+    /**
+     * @var Permissions\Model\RulesModel
+     */
+    protected $rulesModel;
 
     /**
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param Permissions\Model\RolesModel $rolesModel
+     * @param Permissions\Model\RulesModel $rulesModel
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
@@ -41,6 +46,7 @@ class Edit extends AbstractFormAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Permissions\Model\RolesModel $rolesModel,
+        Permissions\Model\RulesModel $rulesModel,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
@@ -52,6 +58,7 @@ class Edit extends AbstractFormAction
         $this->formTokenHelper = $formTokenHelper;
         $this->roleFormValidation = $roleFormValidation;
         $this->rolesModel = $rolesModel;
+        $this->rulesModel = $rulesModel;
     }
 
     /**
@@ -100,7 +107,10 @@ class Edit extends AbstractFormAction
 
             $formData['parent_id'] = $roleId === 1 ? 0 : $formData['parent_id'];
 
-            return $this->rolesModel->saveRole($formData, $roleId);
+            $result = $this->rolesModel->saveRole($formData, $roleId);
+            $this->rulesModel->updateRules($formData['privileges'], $roleId);
+
+            return $result;
         });
     }
 }

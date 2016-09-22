@@ -4,6 +4,7 @@ services:
     arguments:
       - '@core.context.admin'
       - '@permissions.model.roles_model'
+      - '@permissions.model.rules_model'
       - '@permissions.model.privilegerepository'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
@@ -22,6 +23,7 @@ services:
     arguments:
       - '@core.context.admin'
       - '@permissions.model.roles_model'
+      - '@permissions.model.rules_model'
       - '@permissions.model.privilegerepository'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
