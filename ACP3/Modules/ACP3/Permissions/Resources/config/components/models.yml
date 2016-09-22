@@ -39,3 +39,10 @@ services:
       - '@permissions.nested_set.operation.edit'
       - '@menus.nested_set.operation.delete'
       - '@core.helpers.secure'
+
+  permissions.model.rules_model:
+    class: ACP3\Modules\ACP3\Permissions\Model\RulesModel
+    arguments:
+      - '@core.event_dispatcher'
+      - '@permissions.model.rulerepository'
+      - '@permissions.cache'
