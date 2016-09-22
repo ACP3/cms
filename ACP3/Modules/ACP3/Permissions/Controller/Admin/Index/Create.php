@@ -26,12 +26,17 @@ class Create extends AbstractFormAction
      * @var Permissions\Model\RolesModel
      */
     protected $roleModel;
+    /**
+     * @var Permissions\Model\RulesModel
+     */
+    protected $rulesModel;
 
     /**
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param Permissions\Model\RolesModel $rolesModel
+     * @param Permissions\Model\RulesModel $rulesModel
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
@@ -41,6 +46,7 @@ class Create extends AbstractFormAction
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Permissions\Model\RolesModel $rolesModel,
+        Permissions\Model\RulesModel $rulesModel,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
@@ -52,6 +58,7 @@ class Create extends AbstractFormAction
         $this->formTokenHelper = $formTokenHelper;
         $this->roleFormValidation = $roleFormValidation;
         $this->roleModel = $rolesModel;
+        $this->rulesModel = $rulesModel;
     }
 
     /**
@@ -82,7 +89,10 @@ class Create extends AbstractFormAction
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->roleFormValidation->validate($formData);
 
-            return $this->roleModel->saveRole($formData);
+            $roleId = $this->roleModel->saveRole($formData);
+            $this->rulesModel->updateRules($formData['privileges'], $roleId);
+
+            return $roleId;
         });
     }
 }
