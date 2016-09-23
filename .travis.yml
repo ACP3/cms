@@ -18,19 +18,19 @@ matrix:
 
 addons:
   code_climate:
-    repo_token: $CC_REPO_TOKEN
+    repo_token: ${CC_REPO_TOKEN}
 
 before_install:
-  - echo -e "machine github.com\n\tlogin $ACP3_CI_USER_GH_TOKEN" >> ~/.netrc
+  - echo -e "machine github.com\n\tlogin ${ACP3_CI_USER_GH_TOKEN}" >> ~/.netrc
 
 before_script:
-  - ./build/travis/before_script.sh $ACP3_CI_USER_GH_TOKEN
+  - ./build/travis/before_script.sh ${ACP3_CI_USER_GH_TOKEN}
 
 script:
-  - ./build/travis/run_unit_tests.sh $TRAVIS_PHP_VERSION
+  - ./build/travis/run_unit_tests.sh ${TRAVIS_PHP_VERSION}
 
 after_success:
-  - ./build/travis/push_code_coverage.sh $TRAVIS_PHP_VERSION
+  - ./build/travis/push_code_coverage.sh ${TRAVIS_PHP_VERSION}
 
 deploy:
   provider: script
