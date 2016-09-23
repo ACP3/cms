@@ -2,7 +2,7 @@
 
 ACP3_CI_USER_GH_TOKEN=$1;
 
-if [ -n ${ACP3_CI_USER_GH_TOKEN} ]
+if [[ -n ${ACP3_CI_USER_GH_TOKEN} ]]
 then
     composer config github-oauth.github.com ${ACP3_CI_USER_GH_TOKEN}
 fi
