@@ -97,11 +97,22 @@ class Navbar extends AbstractFunction
         $menu,
         Menus\Helpers\MenuConfiguration $menuConfig)
     {
-        if (isset($this->menus[$menu])) {
-            return $this->menus[$menu];
+        $cacheKey = $this->buildMenuCacheKey($menu, $menuConfig);
+        if (isset($this->menus[$cacheKey])) {
+            return $this->menus[$cacheKey];
         }
 
         return $this->generateMenu($menu, $menuConfig);
+    }
+
+    /**
+     * @param string $menu
+     * @param Menus\Helpers\MenuConfiguration $menuConfig
+     * @return string
+     */
+    protected function buildMenuCacheKey($menu, Menus\Helpers\MenuConfiguration $menuConfig)
+    {
+        return $menu . ':' . $menuConfig->__toString();
     }
 
     /**
@@ -118,23 +129,25 @@ class Navbar extends AbstractFunction
         if ($cItems > 0) {
             $selected = $this->selectMenuItem($menu);
 
-            $this->menus[$menu] = '';
+            $cacheKey = $this->buildMenuCacheKey($menu, $menuConfig);
+
+            $this->menus[$cacheKey] = '';
 
             for ($i = 0; $i < $cItems; ++$i) {
                 if (isset($items[$i + 1]) && $items[$i + 1]['level'] > $items[$i]['level']) {
-                    $this->menus[$menu] .= $this->processMenuItemWithChildren(
+                    $this->menus[$cacheKey] .= $this->processMenuItemWithChildren(
                         $menu,
                         $menuConfig,
                         $items[$i],
                         $this->getMenuItemSelector($items[$i], $selected)
                     );
                 } else {
-                    $this->menus[$menu] .= $this->processMenuItemWithoutChildren(
+                    $this->menus[$cacheKey] .= $this->processMenuItemWithoutChildren(
                         $menuConfig,
                         $items[$i],
                         $this->getMenuItemSelector($items[$i], $selected)
                     );
-                    $this->menus[$menu] .= $this->closeOpenedMenus(
+                    $this->menus[$cacheKey] .= $this->closeOpenedMenus(
                         $menuConfig,
                         $items,
                         $i
@@ -142,18 +155,18 @@ class Navbar extends AbstractFunction
                 }
             }
 
-            if (!empty($this->menus[$menu])) {
-                $this->menus[$menu] = sprintf(
+            if (!empty($this->menus[$cacheKey])) {
+                $this->menus[$cacheKey] = sprintf(
                     '<%1$s%2$s>%3$s</%1$s>',
                     $menuConfig->getTag(),
                     $this->prepareMenuHtmlAttributes($menu, $menuConfig),
-                    $this->menus[$menu]
+                    $this->menus[$cacheKey]
                 );
             } else {
-                $this->menus[$menu] = '';
+                $this->menus[$cacheKey] = '';
             }
 
-            return $this->menus[$menu];
+            return $this->menus[$cacheKey];
         }
         return '';
     }
@@ -165,7 +178,6 @@ class Navbar extends AbstractFunction
      */
     protected function selectMenuItem($menu)
     {
-        // Selektion nur vornehmen, wenn man sich im Frontend befindet
         if ($this->request->getArea() !== Core\Controller\AreaEnum::AREA_ADMIN) {
             $in = [
                 $this->request->getQuery(),
