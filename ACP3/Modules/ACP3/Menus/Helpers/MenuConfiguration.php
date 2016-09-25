@@ -133,4 +133,12 @@ class MenuConfiguration
     {
         return $this->inlineStyle;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return implode(':', get_object_vars($this));
+    }
 }
