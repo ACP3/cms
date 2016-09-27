@@ -1,27 +1,22 @@
 jQuery(document).ready(function ($) {
-    var $parent = $('#parent-id');
-
-    // Nur die dem Block zugehörigen übergeordneten Seiten anzeigen
-    $parent.find('optgroup').hide();
-
-    var $blockId = $('#block-id'),
-        defaultBlock = $blockId.find('option:selected').index() || 0;
+    var $parentId = $('#parent-id'),
+        $blockId = $('#block-id'),
+        defaultBlockIndex = $blockId.find('option:selected').index() || 0;
 
     $blockId.change(function () {
         var blockName = $blockId.find('option:selected').eq(0).text();
 
-        $parent.find('optgroup:not([label="' + blockName + '"])')
+        $parentId.find('optgroup')
             .prop('disabled', true)
             .hide();
-        $parent.find('optgroup[label="' + blockName + '"]')
-            .removeProp('disabled')
+        $parentId.find('optgroup[label="' + blockName + '"]')
+            .prop('disabled', false)
             .show();
 
         $blockId.find('option').each(function (index) {
-            if ($(this).is(':selected') && index !== defaultBlock) {
-                $parent.find('optgroup option:selected').removeAttr('selected');
+            if ($(this).is(':selected') && index !== defaultBlockIndex) {
+                $parentId.find('optgroup option:selected').removeAttr('selected');
             }
         });
     }).triggerHandler('change');
-
 });
