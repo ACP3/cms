@@ -7,8 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - 2016-xx-xx
 ### Added
 
-
 ### Changed
+
+### Fixed
+
+## [4.1.20] - 2016-09-28
+### Changed
+- Dropped the usage of bower and use npm for all CSS and JS dependencies
+
+### Fixed
+- fixed the parent menu item selector when switching the menu block
 
 ## [4.1.19] - 2016-09-25
 ### Enhanced

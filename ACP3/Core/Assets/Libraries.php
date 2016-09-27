@@ -40,7 +40,7 @@ class Libraries
             'enabled' => false,
             'dependencies' => ['bootstrap'],
             'css' => 'dataTables.bootstrap.css',
-            'js' => 'jquery.dataTables.min.js'
+            'js' => 'jquery.dataTables.js'
         ],
         'bootbox' => [
             'enabled' => false,

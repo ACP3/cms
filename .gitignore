@@ -1,6 +1,5 @@
 /.idea
 /ACP3/config.yml
-/bower_components
 /build/logs/
 /cache/*
 /node_modules

@@ -37,10 +37,9 @@ If so, execute the following command from the projects root directory:
 $ composer install
 ```
 
-Make sure that you have node.js with npm, bower and gulp-cli globally installed.
+Make sure that you have installed node.js with npm and gulp-cli globally.
 
-If so, execute the following commands from the projects root directory:
+If so, execute the following command from the projects root directory, to install the necessary frontend development dependencies:
 ```sh
 $ npm install
-$ bower install
 ```
