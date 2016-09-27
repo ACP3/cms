@@ -7,39 +7,39 @@ module.exports = function (gulp, plugins) {
     "use strict";
 
     return function () {
-        var bowerBasePath = './bower_components',
+        var nodeBasePath = './node_modules',
             systemBasePath = './ACP3/Modules/ACP3/System/Resources/Assets',
             paths = [
                 {
                     'src': [
-                        bowerBasePath + '/jquery/dist/jquery.min.js',
-                        bowerBasePath + '/bootbox.js/bootbox.js',
-                        bowerBasePath + '/moment/min/moment.min.js',
-                        bowerBasePath + '/datatables.net/js/jquery.dataTables.min.js',
-                        bowerBasePath + '/datatables.net-bs/js/dataTables.bootstrap.js',
-                        bowerBasePath + '/bootstrap/dist/js/bootstrap.min.js',
-                        bowerBasePath + '/fancybox/source/jquery.fancybox.pack.js',
-                        bowerBasePath + '/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-                        bowerBasePath + '/html5shiv/dist/html5shiv.min.js'
+                        nodeBasePath + '/jquery/dist/jquery.min.js',
+                        nodeBasePath + '/bootbox/bootbox.js',
+                        nodeBasePath + '/moment/min/moment.min.js',
+                        nodeBasePath + '/datatables.net/js/jquery.dataTables.js',
+                        nodeBasePath + '/datatables.net-bs/js/dataTables.bootstrap.js',
+                        nodeBasePath + '/bootstrap/dist/js/bootstrap.min.js',
+                        nodeBasePath + '/fancybox/source/jquery.fancybox.pack.js',
+                        nodeBasePath + '/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+                        nodeBasePath + '/html5shiv/dist/html5shiv.min.js'
                     ],
                     'dest': systemBasePath + '/js'
                 },
                 {
-                    'src': bowerBasePath + '/bootstrap/dist/fonts/*',
+                    'src': nodeBasePath + '/bootstrap/dist/fonts/*',
                     'dest': systemBasePath + '/fonts'
                 },
                 {
                     'src': [
-                        bowerBasePath + '/fancybox/source/*.gif',
-                        bowerBasePath + '/fancybox/source/*.png'
+                        nodeBasePath + '/fancybox/source/*.gif',
+                        nodeBasePath + '/fancybox/source/*.png'
                     ],
                     'dest': systemBasePath + '/images/fancybox'
                 },
                 {
                     'src': [
-                        bowerBasePath + '/bootstrap/dist/css/bootstrap.min.css',
-                        bowerBasePath + '/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
-                        bowerBasePath + '/datatables.net-bs/css/dataTables.bootstrap.css'
+                        nodeBasePath + '/bootstrap/dist/css/bootstrap.min.css',
+                        nodeBasePath + '/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
+                        nodeBasePath + '/datatables.net-bs/css/dataTables.bootstrap.css'
 
                     ],
                     'dest': systemBasePath + '/css'
@@ -51,7 +51,7 @@ module.exports = function (gulp, plugins) {
                 .pipe(gulp.dest(paths[i].dest));
         }
 
-        return gulp.src(bowerBasePath + '/fancybox/source/jquery.fancybox.css')
+        return gulp.src(nodeBasePath + '/fancybox/source/jquery.fancybox.css')
             .pipe(plugins.modifyCssUrls({
                 prepend: '../images/fancybox/'
             }))
