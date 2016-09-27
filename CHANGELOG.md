@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ### Changed
+- Dropped the usage of bower and use npm for all CSS and JS dependencies
+
+### Fixed
+- fixed the menu item dropdown when switching the menu block
 
 ## [4.1.19] - 2016-09-25
 ### Enhanced
