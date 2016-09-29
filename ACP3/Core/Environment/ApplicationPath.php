@@ -274,6 +274,10 @@ class ApplicationPath
      */
     public function setDesignPathAbsolute($designPathAbsolute)
     {
+        if (!preg_match('=^(http(s?))://=', $designPathAbsolute)) {
+            throw new \InvalidArgumentException('The given absolute design path (' . $designPathAbsolute . ') doesn\'t start with a valid protocol.');
+        }
+
         $this->designPathAbsolute = $designPathAbsolute;
         return $this;
     }

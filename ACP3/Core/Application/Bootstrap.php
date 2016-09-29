@@ -81,21 +81,21 @@ class Bootstrap extends AbstractBootstrap
      */
     public function outputPage()
     {
-        $this->systemSettings = $this->container->get('core.config')->getSettings(Schema::MODULE_NAME);
-        $this->setThemePaths();
-        $this->container->get('core.authentication')->authenticate();
-
         /** @var \ACP3\Core\Http\Request $request */
         $request = $this->container->get('core.http.request');
-
-        if ($this->isMaintenanceModeEnabled($request)) {
-            return $this->handleMaintenanceMode();
-        }
 
         /** @var \ACP3\Core\Http\RedirectResponse $redirect */
         $redirect = $this->container->get('core.http.redirect_response');
 
         try {
+            $this->systemSettings = $this->container->get('core.config')->getSettings(Schema::MODULE_NAME);
+            $this->setThemePaths();
+            $this->container->get('core.authentication')->authenticate();
+
+            if ($this->isMaintenanceModeEnabled($request)) {
+                return $this->handleMaintenanceMode();
+            }
+
             $response = $this->container->get('core.application.controller_action_dispatcher')->dispatch();
         } catch (\ACP3\Core\Controller\Exception\ResultNotExistsException $e) {
             $response = $redirect->temporary('errors/index/not_found');
@@ -124,7 +124,7 @@ class Bootstrap extends AbstractBootstrap
             ->setDesignPathWeb($this->appPath->getWebRoot() . $path)
             ->setDesignPathInternal($this->systemSettings['design'] . '/')
             ->setDesignPathAbsolute(
-                $this->container->get('core.http.request')->getScheme()
+                $this->container->get('core.http.request')->getScheme() . '://'
                 . $this->container->get('core.http.request')->getHttpHost()
                 . $this->appPath->getDesignPathWeb()
             );
