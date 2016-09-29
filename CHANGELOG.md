@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 ### Fixed
+
+## [4.1.21] - 2016-09-29
+### Fixed
 - Fixed the design path absolute and protected at against invalid values
 
 ## [4.1.20] - 2016-09-28
