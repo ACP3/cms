@@ -11,7 +11,7 @@ php:
 
 matrix:
   fast_finish: true
-  allowed_failues:
+  allow_failures:
     - php: 7.1
     - php: nightly
     - php: hhvm
@@ -33,11 +33,18 @@ after_success:
   - ./build/travis/push_code_coverage.sh ${TRAVIS_PHP_VERSION}
 
 deploy:
-  provider: script
-  script: ./build/travis/update_module_repositories.sh ${TRAVIS_TAG}
-  on:
-    tags: true
-    condition: "$TRAVIS_PHP_VERSION = '7.0'"
+  - provider: releases
+    api_key: ${ACP3_CI_USER_GH_TOKEN}
+    before_deploy: "rm -rf build/logs/* && rm -rf ./vendor && composer install --no-dev --prefer-dist -o -n --ignore-platform-reqs"
+    skip_cleanup: true
+    on:
+      tags: true
+      condition: "$TRAVIS_PHP_VERSION = '7.0'"
+  - provider: script
+    script: ./build/travis/update_module_repositories.sh ${TRAVIS_TAG}
+    on:
+      tags: true
+      condition: "$TRAVIS_PHP_VERSION = '7.0'"
 
 cache:
   directories:
