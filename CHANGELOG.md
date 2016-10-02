@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 ### Fixed
+- The $IS_HOMEPAGE Smarty variable should now be always correct
 
 ## [4.1.21] - 2016-09-29
 ### Fixed
