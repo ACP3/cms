@@ -38,6 +38,7 @@ before_deploy:
 deploy:
   - provider: releases
     api_key: ${ACP3_CI_USER_GH_TOKEN}
+    file: 'release.zip'
     skip_cleanup: true
     on:
       tags: true
