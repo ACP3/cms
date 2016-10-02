@@ -7,5 +7,5 @@ then
     rm -rf build/logs/* ./vendor
     rm -rf ./vendor
     composer install --no-dev --prefer-dist -o -n --ignore-platform-reqs
-    zip release.zip ./*
+    zip -r release.zip ./*
 fi
