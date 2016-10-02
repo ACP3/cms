@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+## [4.1.22] - 2016-10-02
+### Added
+- Added a drop menu to select the right controller action area when adding/editing a new resource
+- Added a new deployment stage to Travis CI which uploads a build artifact to the Github releases
+
+### Changed
+- Made it possible to run the ACP3 without the ACP3/Modules/Custom folder
+
+### Fixed
+- The $IS_HOMEPAGE Smarty variable should now be always correct
+
 ## [4.1.21] - 2016-09-29
 ### Fixed
 - Fixed the design path absolute and protected at against invalid values
@@ -27,7 +38,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Refactored the Travis CI integration 
 
 ### Fixed
-- Menus with different configuration parameters but the same menu index name should not colide anymore
+- Menus with different configuration parameters but the same menu index name should not collide anymore
 
 ## [4.1.18] - 2016-09-22
 ### Added

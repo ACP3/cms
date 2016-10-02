@@ -20,11 +20,17 @@ class Filesystem
      */
     public static function scandir($directory, array $excluded = [])
     {
-        $filesAndDirectories = array_diff(
-            scandir($directory),
-            array_merge(static::$excluded, $excluded)
-        );
+        $directory = @scandir($directory);
 
-        return array_values($filesAndDirectories);
+        if ($directory !== false) {
+            $filesAndDirectories = array_diff(
+                $directory,
+                array_merge(static::$excluded, $excluded)
+            );
+
+            return array_values($filesAndDirectories);
+        }
+
+        return [];
     }
 }

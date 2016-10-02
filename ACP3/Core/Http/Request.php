@@ -2,7 +2,6 @@
 namespace ACP3\Core\Http;
 
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Core\Modules;
 
 /**
  * Class Request
@@ -184,7 +183,7 @@ class Request extends AbstractRequest
      */
     public function isHomepage()
     {
-        return ($this->query === $this->homepage);
+        return ($this->query === $this->homepage) && $this->getArea() === AreaEnum::AREA_FRONTEND;
     }
 
     /**

@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 
 
 use ACP3\Core\Controller\AbstractAdminAction;
+use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Controller\Context\AdminContext;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository;
@@ -79,5 +80,16 @@ class AbstractFormAction extends AbstractAdminAction
         $moduleInfo = $this->modules->getModuleInfo($moduleName);
 
         return isset($moduleInfo['id']) ? $moduleInfo['id'] : 0;
+    }
+
+    /**
+     * @param string $currentArea
+     * @return array
+     */
+    protected function fetchAreas($currentArea = '')
+    {
+        $areas = array_values(AreaEnum::getAreas());
+
+        return $this->formsHelper->choicesGenerator('area', array_combine($areas, $areas), $currentArea);
     }
 }

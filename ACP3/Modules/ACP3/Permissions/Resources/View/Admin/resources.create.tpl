@@ -14,7 +14,7 @@
             </div>
         </div>
     {/block}
-    {include file="asset:System/Partials/form_group.input_text.tpl" name="area" value=$form.area required=true maxlength=255 label={lang t="permissions|area"}}
+    {include file="asset:System/Partials/form_group.select.tpl" options=$areas required=true label={lang t="permissions|area"}}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="controller" value=$form.controller required=true maxlength=255 label={lang t="permissions|controller"}}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="resource" value=$form.resource required=true maxlength=255 label={lang t="permissions|resource_name"}}
     <div class="form-group">
