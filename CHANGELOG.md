@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Refactored the Travis CI integration 
 
 ### Fixed
-- Menus with different configuration parameters but the same menu index name should not colide anymore
+- Menus with different configuration parameters but the same menu index name should not collide anymore
 
 ## [4.1.18] - 2016-09-22
 ### Added
