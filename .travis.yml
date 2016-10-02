@@ -32,10 +32,12 @@ script:
 after_success:
   - ./build/travis/push_code_coverage.sh ${TRAVIS_PHP_VERSION}
 
+before_deploy:
+  - ./build/travis/generate_artifact.sh ${TRAVIS_PHP_VERSION}
+
 deploy:
   - provider: releases
     api_key: ${ACP3_CI_USER_GH_TOKEN}
-    before_deploy: "rm -rf build/logs/* && rm -rf ./vendor && composer install --no-dev --prefer-dist -o -n --ignore-platform-reqs"
     skip_cleanup: true
     on:
       tags: true
