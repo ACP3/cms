@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - 2016-xx-xx
 ### Added
 - Added a drop menu to select the right controller action area when adding/editing a new resource
+- Added a new deployment stage to Travis CI which uploads a build artifact to the Github releases
 
 ### Changed
+- Made it possible to run the ACP3 without the ACP3/Modules/Custom folder
 
 ### Fixed
 - The $IS_HOMEPAGE Smarty variable should now be always correct
