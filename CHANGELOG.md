@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2016-xx-xx
 ### Added
+- Added a drop menu to select the right controller action area when adding/editing a new resource
 
 ### Changed
 

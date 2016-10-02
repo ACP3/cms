@@ -74,6 +74,7 @@ class Edit extends AbstractFormAction
 
             return [
                 'modules' => $this->fetchActiveModules($resource['module_name']),
+                'areas' => $this->fetchAreas($resource['area']),
                 'privileges' => $this->fetchPrivileges($resource['privilege_id']),
                 'form' => array_merge($defaults, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()

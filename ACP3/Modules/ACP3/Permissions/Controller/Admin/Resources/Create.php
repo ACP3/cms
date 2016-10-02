@@ -62,6 +62,7 @@ class Create extends AbstractFormAction
 
         return [
             'modules' => $this->fetchActiveModules(),
+            'areas' => $this->fetchAreas(),
             'privileges' => $this->fetchPrivileges(0),
             'form' => array_merge(
                 ['resource' => '', 'area' => '', 'controller' => ''],
