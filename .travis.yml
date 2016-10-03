@@ -49,6 +49,9 @@ deploy:
       tags: true
       condition: "$TRAVIS_PHP_VERSION = '7.0'"
 
+after_deply:
+  - ./build/travis/update_version_check.sh ${TRAVIS_PHP_VERSION} ${TRAVIS_TAG}
+
 cache:
   directories:
     - vendor
