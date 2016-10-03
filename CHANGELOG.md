@@ -12,9 +12,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+## [4.1.27] - 2016-10.03
+### Changed
+- Reworked the version update check
+
 ## [4.1.22] - 2016-10-02
 ### Added
-- Added a drop menu to select the right controller action area when adding/editing a new resource
+- Added a drop down menu to select the right controller action area when adding/editing a new resource
 - Added a new deployment stage to Travis CI which uploads a build artifact to the Github releases
 
 ### Changed
