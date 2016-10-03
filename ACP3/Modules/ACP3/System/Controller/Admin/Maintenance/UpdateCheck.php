@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\System\Controller\Admin\Maintenance;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\System;
+use Composer\Semver\Comparator;
 
 /**
  * Class UpdateCheck
@@ -15,34 +16,37 @@ use ACP3\Modules\ACP3\System;
  */
 class UpdateCheck extends Core\Controller\AbstractAdminAction
 {
+    /**
+     * @return array
+     */
     public function execute()
     {
-        $file = @file_get_contents('http://www.acp3-cms.net/update.txt');
+        $update = [];
+        $file = @file_get_contents('https://acp3.github.io/update.txt');
         if ($file !== false) {
-            $data = explode('||', $file);
-            if (count($data) === 2) {
-                $update = [
-                    'installed_version' => Core\Application\BootstrapInterface::VERSION,
-                    'current_version' => $data[0],
-                ];
-
-                if (version_compare($update['installed_version'], $update['current_version'], '>=')) {
-                    $update['text'] = $this->translator->t('system', 'acp3_up_to_date');
-                    $update['class'] = 'success';
-                } else {
-                    $update['text'] = $this->translator->t(
-                        'system',
-                        'acp3_not_up_to_date',
-                        [
-                            '%link_start%' => '<a href="' . $data[1] . '" target="_blank">',
-                            '%link_end%' => '</a>'
-                        ]
-                    );
-                    $update['class'] = 'error';
-                }
-
-                $this->view->assign('update', $update);
-            }
+            list($latestVersion, $url) = explode('||', $file);
+            $update = [
+                'installed_version' => Core\Application\BootstrapInterface::VERSION,
+                'latest_version' => $latestVersion,
+                'is_latest' => $this->isLatestVersion($latestVersion),
+                'url' => $url
+            ];
         }
+
+        return [
+            'update' => $update
+        ];
+    }
+
+    /**
+     * @param string $latestVersion
+     * @return bool
+     */
+    protected function isLatestVersion($latestVersion)
+    {
+        return Comparator::greaterThanOrEqualTo(
+            Core\Application\BootstrapInterface::VERSION,
+            $latestVersion
+        );
     }
 }
