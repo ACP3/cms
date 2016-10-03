@@ -17,7 +17,7 @@ then
     git checkout master
     rm update.txt
     touch update.txt
-    echo "${TRAVIS_TAG_CROPPED}||https://acp3.github.io/update.txt" >> update.txt
+    echo "${TRAVIS_TAG_CROPPED}||https://github.com/ACP3/cms/releases/tag/${TRAVIS_TAG}" >> update.txt
     git add update.txt
     git commit -am "Updated the latest version to ${TRAVIS_TAG}"
     git push
