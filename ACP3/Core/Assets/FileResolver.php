@@ -139,6 +139,7 @@ class FileResolver
                 $this->designAssetsPath = $this->appPath->getDesignRootPathInternal() . $designInfo['parent'] . '/';
                 $assetPath = $this->getStaticAssetPath($modulePath, $designPath, $dir, $file);
                 $this->designAssetsPath = $this->appPath->getDesignPathInternal();
+                return $assetPath;
             }
 
             // No overrides have been found -> iterate over all possible module namespaces
