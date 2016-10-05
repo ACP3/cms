@@ -8,11 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 ### Changed
-- Reworked the version update check
 
 ### Fixed
 
-## [4.1.27] - 2016-10.03
+## [4.1.28] - 2016-10-05
+### Changed
+- Reworked the version update check
+
+### Fixed
+- Fixed the theme inheritance
+
+## [4.1.27] - 2016-10-03
 ### Changed
 - Reworked the version update check
 
