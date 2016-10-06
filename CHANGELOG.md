@@ -12,9 +12,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 ## [4.1.28] - 2016-10-05
-### Changed
-- Reworked the version update check
-
 ### Fixed
 - Fixed the theme inheritance
 
