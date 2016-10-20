@@ -76,13 +76,13 @@ class MenuItemsModel extends AbstractNestedSetModel
     protected function getAllowedColumns()
     {
         return [
-            'mode',
-            'block_id',
-            'parent_id',
-            'display',
-            'title',
-            'uri',
-            'target'
+            'mode' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'block_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'parent_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'display' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
+            'target' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
         ];
     }
 }

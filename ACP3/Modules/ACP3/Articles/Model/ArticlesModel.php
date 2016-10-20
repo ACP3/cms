@@ -10,26 +10,10 @@ namespace ACP3\Modules\ACP3\Articles\Model;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Articles\Installer\Schema;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ArticlesModel extends AbstractModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
-
-    /**
-     * ArticlesModel constructor.
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param ArticleRepository $articleRepository
-     */
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        DataProcessor $dataProcessor,
-        ArticleRepository $articleRepository
-    ) {
-        parent::__construct($eventDispatcher, $dataProcessor, $articleRepository);
-    }
 
     /**
      * @param array $data

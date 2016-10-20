@@ -15,6 +15,4 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@core.config'
-      - '@core.date'
-      - '@core.helpers.secure'
       - '@news.model.newsrepository'

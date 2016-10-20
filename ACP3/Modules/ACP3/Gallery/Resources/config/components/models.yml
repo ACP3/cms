@@ -19,8 +19,6 @@ services:
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
-      - '@core.date'
-      - '@core.helpers.secure'
       - '@gallery.model.galleryrepository'
 
   gallery.model.picture_model:
@@ -29,5 +27,4 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@core.config'
-      - '@core.helpers.secure'
       - '@gallery.model.picturerepository'

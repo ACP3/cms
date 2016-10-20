@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Polls\Model;
 
 
-use ACP3\Core\Date;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
@@ -26,10 +25,6 @@ class PollsModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @var Date
-     */
-    protected $date;
-    /**
      * @var Secure
      */
     protected $secure;
@@ -46,7 +41,6 @@ class PollsModel extends AbstractModel
      * PollsModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
      * @param DataProcessor $dataProcessor
-     * @param Date $date
      * @param Secure $secure
      * @param PollRepository $pollRepository
      * @param AnswerRepository $answerRepository
@@ -55,42 +49,34 @@ class PollsModel extends AbstractModel
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
-        Date $date,
         Secure $secure,
         PollRepository $pollRepository,
         AnswerRepository $answerRepository,
-        VoteRepository $voteRepository)
-    {
+        VoteRepository $voteRepository
+    ) {
         parent::__construct($eventDispatcher, $dataProcessor, $pollRepository);
 
-        $this->date = $date;
         $this->secure = $secure;
         $this->answerRepository = $answerRepository;
         $this->voteRepository = $voteRepository;
     }
 
     /**
-     * @param array $formData
+     * @param array $data
      * @param int $userId
      * @param null|int $pollId
      * @return bool|int
      */
-    public function savePoll(array $formData, $userId, $pollId = null)
+    public function savePoll(array $data, $userId, $pollId = null)
     {
-        $values = [
-            'start' => $this->date->toSQL($formData['start']),
-            'end' => $this->date->toSQL($formData['end']),
-            'title' => $this->secure->strEncode($formData['title']),
-            'multiple' => isset($formData['multiple']) ? '1' : '0',
-            'user_id' => $userId,
-        ];
+        $data['user_id'] = $userId;
 
-        return $this->save($values, $pollId);
+        return $this->save($data, $pollId);
     }
 
     /**
      * @param array $answers
-     * @param int   $pollId
+     * @param int $pollId
      *
      * @return bool|int
      */
@@ -134,11 +120,11 @@ class PollsModel extends AbstractModel
     protected function getAllowedColumns()
     {
         return [
-            'start',
-            'end',
-            'title',
-            'multiple',
-            'user_id'
+            'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
+            'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
+            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'multiple' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
+            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
         ];
     }
 }

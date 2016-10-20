@@ -14,6 +14,4 @@ services:
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
-      - '@core.date'
-      - '@core.helpers.secure'
       - '@files.model.filesrepository'

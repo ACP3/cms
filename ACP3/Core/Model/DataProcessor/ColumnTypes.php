@@ -10,6 +10,7 @@ namespace ACP3\Core\Model\DataProcessor;
 interface ColumnTypes
 {
     const COLUMN_TYPE_DATETIME = 'datetime';
+    const COLUMN_TYPE_BOOLEAN = 'boolean';
     const COLUMN_TYPE_INT = 'integer';
     const COLUMN_TYPE_DOUBLE = 'double';
     const COLUMN_TYPE_TEXT = 'text';

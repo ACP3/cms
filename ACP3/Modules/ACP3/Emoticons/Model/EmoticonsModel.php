@@ -7,53 +7,21 @@
 namespace ACP3\Modules\ACP3\Emoticons\Model;
 
 
-use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Emoticons\Installer\Schema;
-use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class EmoticonsModel extends AbstractModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @var Secure
-     */
-    protected $secure;
-
-    /**
-     * EmoticonsModel constructor.
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param Secure $secure
-     * @param EmoticonRepository $emoticonRepository
-     */
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        DataProcessor $dataProcessor,
-        Secure $secure,
-        EmoticonRepository $emoticonRepository
-    ) {
-        parent::__construct($eventDispatcher, $dataProcessor, $emoticonRepository);
-
-        $this->secure = $secure;
-    }
-
-    /**
-     * @param array $formData
+     * @param array $data
      * @param int|null $entryId
      * @return bool|int
      */
-    public function saveEmoticon(array $formData, $entryId = null)
+    public function saveEmoticon(array $data, $entryId = null)
     {
-        $data = [
-            'code' => $this->secure->strEncode($formData['code']),
-            'description' => $this->secure->strEncode($formData['description']),
-            'img' => $formData['img'],
-        ];
-
         return $this->save($data, $entryId);
     }
 
@@ -63,9 +31,9 @@ class EmoticonsModel extends AbstractModel
     protected function getAllowedColumns()
     {
         return [
-            'code',
-            'description',
-            'img'
+            'code' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'img' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW
         ];
     }
 }

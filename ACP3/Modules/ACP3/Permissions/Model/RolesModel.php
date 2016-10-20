@@ -71,8 +71,8 @@ class RolesModel extends AbstractNestedSetModel
     protected function getAllowedColumns()
     {
         return [
-            'name',
-            'parent_id'
+            'name' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'parent_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
         ];
     }
 }

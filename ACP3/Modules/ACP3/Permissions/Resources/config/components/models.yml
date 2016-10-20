@@ -28,6 +28,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Model\ResourcesModel
     arguments:
       - '@core.event_dispatcher'
+      - '@core.model.data_processor'
       - '@permissions.model.resourcerepository'
 
   permissions.model.roles_model:

@@ -71,10 +71,10 @@ class RulesModel extends AbstractModel
     protected function getAllowedColumns()
     {
         return [
-            'role_id',
-            'module_id',
-            'privilege_id',
-            'permission'
+            'role_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'module_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'privilege_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'permission' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
         ];
     }
 }

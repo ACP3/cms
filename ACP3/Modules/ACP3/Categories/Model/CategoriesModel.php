@@ -7,57 +7,23 @@
 namespace ACP3\Modules\ACP3\Categories\Model;
 
 
-use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Categories\Installer\Schema;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CategoriesModel extends AbstractModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @var Secure
-     */
-    protected $secure;
-
-    /**
-     * CategoriesModel constructor.
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param Secure $secure
-     * @param CategoryRepository $categoryRepository
-     */
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        DataProcessor $dataProcessor,
-        Secure $secure,
-        CategoryRepository $categoryRepository
-    ) {
-        parent::__construct($eventDispatcher, $dataProcessor, $categoryRepository);
-
-        $this->secure = $secure;
-    }
-
-    /**
-     * @param array $formData
+     * @param array $data
      * @param int|null $entryId
      * @return bool|int
      */
-    public function saveCategory(array $formData, $entryId = null)
+    public function saveCategory(array $data, $entryId = null)
     {
-        $data = [
-            'title' => $this->secure->strEncode($formData['title']),
-            'description' => $this->secure->strEncode($formData['description']),
-        ];
-
-        if (isset($formData['module'])) {
-            $data['module_id'] = (int)$formData['module'];
-        }
-        if (isset($formData['picture'])) {
-            $data['picture'] = $formData['picture'];
+        if (isset($data['module'])) {
+            $data['module_id'] = $data['module'];
         }
 
         return $this->save($data, $entryId);
@@ -69,10 +35,10 @@ class CategoriesModel extends AbstractModel
     protected function getAllowedColumns()
     {
         return [
-            'title',
-            'description',
-            'module_id',
-            'picture'
+            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'module_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'picture' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW
         ];
     }
 }

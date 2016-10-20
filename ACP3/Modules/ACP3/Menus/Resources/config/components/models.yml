@@ -14,7 +14,6 @@ services:
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
-      - '@core.helpers.secure'
       - '@menus.model.menurepository'
 
   menus.model.menu_items_model:
