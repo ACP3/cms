@@ -13,20 +13,18 @@
             </header>
             <div class="content">
                 {$news.text|rewrite_uri}
-            </div>
-            {if $news.uri != '' && $news.link_title != ''}
-                <footer>
-                    <div class="hyperlink">
+                {if $news.uri != '' && $news.link_title != ''}
+                    <footer class="well well-sm hyperlink">
                         <strong>{lang t="news|hyperlink"}:</strong>
                         <a href="{$news.uri|prefix_uri}"{$news.target}>{$news.link_title}</a>
-                    </div>
-                </footer>
-            {/if}
+                    </footer>
+                {/if}
+            </div>
             {event name="news.event.news_details_after" id=$news.id title=$news.title}
         </section>
         {if $comments_allowed === true}
             <section id="comments">
-                {load_module module="frontend/comments/" args=['module' => 'news', 'entryId' => $news.id]}
+                {load_module module="frontend/comments" args=['module' => 'news', 'entryId' => $news.id]}
                 {load_module module="frontend/comments/index/create" args=['module' => 'news', 'entryId' => $news.id]}
             </section>
         {/if}
