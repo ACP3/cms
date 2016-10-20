@@ -6,8 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2016-xx-xx
 ### Added
+- Added the possibility to clear just the page cache
+- Added the new template event `layout.content_before`
 
 ### Changed
+- When creating/modifying/deleting a result to the database, the page cache isn't cleared immediately anymore
 
 ### Fixed
 
