@@ -44,6 +44,7 @@ services:
   core.config:
     class: ACP3\Core\Settings\Settings
     arguments:
+      - '@core.event_dispatcher'
       - '@core.cache.system'
       - '@system.model.modulerepository'
       - '@system.model.settingsrepository'

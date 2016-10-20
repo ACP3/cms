@@ -72,8 +72,6 @@ class Send extends Core\Controller\AbstractAdminAction
                 $bool2 = $this->newsletterRepository->update(['status' => '1'], $id);
             }
 
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
             return $this->redirectMessages()->setMessage(
                 $bool === true && $bool2 !== false,
                 $this->translator->t(

@@ -63,8 +63,6 @@ class Order extends Core\Controller\AbstractAdminAction
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
 
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
             return $this->redirect()->temporary('acp/permissions');
         }
 

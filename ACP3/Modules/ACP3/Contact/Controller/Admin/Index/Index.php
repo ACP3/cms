@@ -79,8 +79,6 @@ class Index extends Core\Controller\AbstractAdminAction
                 'vat_id' => $this->get('core.helpers.secure')->strEncode($formData['vat_id'], true),
             ];
 
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
             return $this->config->saveSettings($data, Contact\Installer\Schema::MODULE_NAME);
         });
     }

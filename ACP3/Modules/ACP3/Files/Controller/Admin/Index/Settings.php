@@ -111,8 +111,6 @@ class Settings extends Core\Controller\AbstractAdminAction
                 $data['comments'] = $formData['comments'];
             }
 
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
             return $this->config->saveSettings($data, Files\Installer\Schema::MODULE_NAME);
         });
     }

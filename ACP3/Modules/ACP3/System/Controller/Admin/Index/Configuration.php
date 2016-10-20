@@ -141,8 +141,6 @@ class Configuration extends Core\Controller\AbstractAdminAction
 
                 $bool = $this->config->saveSettings($data, System\Installer\Schema::MODULE_NAME);
 
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
                 return $this->redirectMessages()->setMessage(
                     $bool,
                     $this->translator->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'),

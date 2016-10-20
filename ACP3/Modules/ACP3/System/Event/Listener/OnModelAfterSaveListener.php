@@ -7,27 +7,40 @@
 namespace ACP3\Modules\ACP3\System\Event\Listener;
 
 
-use ACP3\Core\Settings\SettingsInterface;
+use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository;
 
 class OnModelAfterSaveListener
 {
     /**
-     * @var SettingsInterface
+     * @var SettingsRepository
      */
-    private $settings;
+    private $settingsRepository;
+    /**
+     * @var Modules
+     */
+    private $modules;
 
     /**
      * OnModelAfterSaveListener constructor.
-     * @param SettingsInterface $settings
+     * @param Modules $modules
+     * @param SettingsRepository $settingsRepository
      */
-    public function __construct(SettingsInterface $settings)
+    public function __construct(
+        Modules $modules,
+        SettingsRepository $settingsRepository)
     {
-        $this->settings = $settings;
+        $this->settingsRepository = $settingsRepository;
+        $this->modules = $modules;
     }
 
     public function invalidatePageCache()
     {
-        $this->settings->saveSettings(['page_cache_is_valid' => false], Schema::MODULE_NAME);
+        $systemModuleId = $this->modules->getModuleId(Schema::MODULE_NAME);
+        $this->settingsRepository->update(
+            ['value' => false],
+            ['module_id' => $systemModuleId, 'name' => 'page_cache_is_valid']
+        );
     }
 }

@@ -75,8 +75,6 @@ class Settings extends Core\Controller\AbstractAdminAction
                 'filesize' => (int)$formData['filesize'],
             ];
 
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
             return $this->config->saveSettings($data, Categories\Installer\Schema::MODULE_NAME);
         });
     }
