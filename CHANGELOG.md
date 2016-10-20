@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Added the possibility to clear just the page cache
 - Added the new template event `layout.content_before`
+- Added the new event `core.settings.save_before` so that it is possible to modify the module settings before saving then to the database
 
 ### Changed
 - When creating/modifying/deleting a result to the database, the page cache isn't cleared immediately anymore
