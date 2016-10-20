@@ -37,6 +37,9 @@
         <item key="cache_type_minify_delete_error">While emptying the Stylesheets and JavaScript files cache an error has occurred.</item>
         <item key="cache_type_minify_delete_success">The Stylesheets and JavaScript files cache has been successfully emptied.</item>
         <item key="cache_type_not_found">The requested cache type could not be found.</item>
+        <item key="cache_type_page">Page cache (HTTP-Cache)</item>
+        <item key="cache_type_page_delete_error">While clearing the page cache as error has occurred.</item>
+        <item key="cache_type_page_delete_success">The page cache has been succesfully cleared.</item>
         <item key="cache_type_templates">Cached Smarty-Templates</item>
         <item key="cache_type_templates_delete_error">While emptying the Templates-Cache an error has occurred.</item>
         <item key="cache_type_templates_delete_success">The Templates-Cache has been successfully emptied.</item>

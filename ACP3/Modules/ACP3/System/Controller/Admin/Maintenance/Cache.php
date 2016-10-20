@@ -18,7 +18,7 @@ class Cache extends Core\Controller\AbstractAdminAction
     /**
      * @param string $action
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function execute($action = '')
     {
@@ -27,6 +27,16 @@ class Cache extends Core\Controller\AbstractAdminAction
 
             return $this->redirectMessages()->setMessage($result, $text, 'acp/system/maintenance/cache');
         }
+
+        return [
+            'cache_types' => [
+                'general',
+                'images',
+                'minify',
+                'page',
+                'templates'
+            ]
+        ];
     }
 
     /**
@@ -43,6 +53,7 @@ class Cache extends Core\Controller\AbstractAdminAction
             ],
             'images' => $this->appPath->getCacheDir() . 'images',
             'minify' => $this->appPath->getUploadsDir() . 'assets',
+            'page' => $this->appPath->getCacheDir() . 'http',
             'templates' => [
                 $this->appPath->getCacheDir() . 'tpl_compiled',
                 $this->appPath->getCacheDir() . 'tpl_cached'
@@ -54,6 +65,7 @@ class Cache extends Core\Controller\AbstractAdminAction
             case 'general':
             case 'images':
             case 'minify':
+            case 'page':
             case 'templates':
                 $result = Core\Cache\Purge::doPurge($cacheTypes[$action]);
                 $text = $this->translator->t(
