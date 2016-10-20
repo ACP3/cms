@@ -52,6 +52,7 @@
                 {/block}
             </div>
             <h2>{page_title}</h2>
+            {event name="layout.content_before"}
             {block CONTENT}{/block}
         </main>
         <div class="col-md-2 hidden-xs hidden-sm">

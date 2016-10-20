@@ -72,6 +72,13 @@ class Cache extends Core\Controller\AbstractAdminAction
                         ? 'cache_type_' . $action . '_delete_success'
                         : 'cache_type_' . $action . '_delete_error'
                 );
+
+                if ($action === 'page') {
+                    $this->config->saveSettings(
+                        ['page_cache_is_valid' => true],
+                        System\Installer\Schema::MODULE_NAME
+                    );
+                }
                 break;
             default:
                 $text = $this->translator->t('system', 'cache_type_not_found');
