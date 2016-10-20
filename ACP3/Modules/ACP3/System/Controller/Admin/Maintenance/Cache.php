@@ -23,9 +23,7 @@ class Cache extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         if (!empty($action)) {
-            list($result, $text) = $this->executePurge($action);
-
-            return $this->redirectMessages()->setMessage($result, $text, 'acp/system/maintenance/cache');
+            return $this->executePurge($action);
         }
 
         return [
@@ -42,7 +40,7 @@ class Cache extends Core\Controller\AbstractAdminAction
     /**
      * @param string $action
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executePurge($action)
     {
@@ -78,6 +76,7 @@ class Cache extends Core\Controller\AbstractAdminAction
             default:
                 $text = $this->translator->t('system', 'cache_type_not_found');
         }
-        return [$result, $text];
+
+        return $this->redirectMessages()->setMessage($result, $text, 'acp/system/maintenance/cache');
     }
 }
