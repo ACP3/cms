@@ -63,4 +63,17 @@ class GalleryModel extends AbstractModel
 
         return $this->save($data, $galleryId);
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'start',
+            'end',
+            'ttile',
+            'user_id'
+        ];
+    }
 }

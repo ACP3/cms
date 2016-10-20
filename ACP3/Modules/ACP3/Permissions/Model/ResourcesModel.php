@@ -45,4 +45,18 @@ class ResourcesModel extends AbstractModel
 
         return $this->save($data, $entryId);
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'module_id',
+            'area',
+            'controller',
+            'page',
+            'privilege_id'
+        ];
+    }
 }

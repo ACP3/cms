@@ -64,4 +64,18 @@ class ArticlesModel extends AbstractModel
 
         return $this->save($data, $entryId);
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'start',
+            'end',
+            'title',
+            'text',
+            'user_id'
+        ];
+    }
 }

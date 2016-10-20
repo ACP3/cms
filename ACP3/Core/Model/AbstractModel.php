@@ -49,6 +49,8 @@ abstract class AbstractModel
     {
         $this->dispatchBeforeSaveEvent($this->repository, $data, $entryId);
 
+        $data = $this->prepareData($data);
+
         if (intval($entryId)) {
             $result = $this->repository->update($data, $entryId);
         } else {
@@ -91,6 +93,28 @@ abstract class AbstractModel
             new ModelSaveEvent($data, $entryId)
         );
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected function prepareData(array $data)
+    {
+        $allowedColumns = $this->getAllowedColumns();
+
+        foreach ($data as $key => $value) {
+            if (!in_array($key, $allowedColumns)) {
+                unset($data[$key]);
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return array
+     */
+    abstract protected function getAllowedColumns();
 
     /**
      * @param AbstractRepository $repository

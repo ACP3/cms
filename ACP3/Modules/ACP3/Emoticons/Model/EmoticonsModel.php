@@ -53,4 +53,16 @@ class EmoticonsModel extends AbstractModel
 
         return $this->save($data, $entryId);
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'code',
+            'description',
+            'img'
+        ];
+    }
 }

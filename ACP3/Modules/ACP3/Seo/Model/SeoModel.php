@@ -55,4 +55,18 @@ class SeoModel extends AbstractModel
 
         return $this->save($data, $entryId);
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'uri',
+            'alias',
+            'keywords',
+            'description',
+            'robots'
+        ];
+    }
 }

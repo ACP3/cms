@@ -78,4 +78,22 @@ class FilesModel extends AbstractModel
 
         return $this->save($data, $entryId);
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'start',
+            'end',
+            'category_id',
+            'title',
+            'text',
+            'comments',
+            'user_id',
+            'file',
+            'size'
+        ];
+    }
 }

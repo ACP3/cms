@@ -13,4 +13,20 @@ use ACP3\Modules\ACP3\Comments\Installer\Schema;
 class CommentsModel extends AbstractModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'ip',
+            'date',
+            'name',
+            'user_id',
+            'message',
+            'module_id',
+            'entry_id'
+        ];
+    }
 }

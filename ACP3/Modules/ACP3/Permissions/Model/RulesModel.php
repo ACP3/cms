@@ -61,4 +61,17 @@ class RulesModel extends AbstractModel
             }
         }
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'role_id',
+            'module_id',
+            'privilege_id',
+            'permission'
+        ];
+    }
 }

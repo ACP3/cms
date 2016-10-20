@@ -124,4 +124,18 @@ class PollsModel extends AbstractModel
     {
         return $this->voteRepository->delete($pollId, 'poll_id');
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'start',
+            'end',
+            'title',
+            'multiple',
+            'user_id'
+        ];
+    }
 }

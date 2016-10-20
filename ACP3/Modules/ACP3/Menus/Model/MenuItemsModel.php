@@ -66,4 +66,20 @@ class MenuItemsModel extends AbstractNestedSetModel
 
         return $this->save($data, $entryId);
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'mode',
+            'block_id',
+            'parent_id',
+            'display',
+            'title',
+            'uri',
+            'target'
+        ];
+    }
 }

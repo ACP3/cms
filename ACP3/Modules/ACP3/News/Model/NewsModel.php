@@ -102,4 +102,24 @@ class NewsModel extends AbstractModel
     {
         return $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0;
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'start',
+            'end',
+            'title',
+            'text',
+            'readmore',
+            'comments',
+            'category_id',
+            'uri',
+            'target',
+            'link_title',
+            'user_id'
+        ];
+    }
 }

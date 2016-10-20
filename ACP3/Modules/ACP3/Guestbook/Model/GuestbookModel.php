@@ -13,4 +13,21 @@ use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
 class GuestbookModel extends AbstractModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'date',
+            'ip',
+            'name',
+            'user_id',
+            'message',
+            'website',
+            'mail',
+            'active'
+        ];
+    }
 }

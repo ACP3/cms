@@ -78,4 +78,18 @@ class PictureModel extends AbstractModel
 
         return $this->save($data, $entryId);
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'gallery_id',
+            'description',
+            'comments',
+            'file',
+            'pic'
+        ];
+    }
 }

@@ -52,4 +52,15 @@ class MenusModel extends AbstractModel
 
         return $this->save($values, $menuId);
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'index_name',
+            'title'
+        ];
+    }
 }

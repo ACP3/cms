@@ -61,4 +61,15 @@ class RolesModel extends AbstractNestedSetModel
 
         return $this->save($data, $entryId);
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'name',
+            'parent_id'
+        ];
+    }
 }

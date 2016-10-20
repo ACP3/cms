@@ -59,4 +59,17 @@ class CategoriesModel extends AbstractModel
 
         return $this->save($data, $entryId);
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'title',
+            'description',
+            'module_id',
+            'picture'
+        ];
+    }
 }

@@ -77,4 +77,19 @@ class NewsletterModel extends AbstractModel
 
         return $this->save($data, $newsletterId);
     }
+
+    /**
+     * @return array
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'date',
+            'title',
+            'text',
+            'user_id',
+            'html',
+            'status'
+        ];
+    }
 }
