@@ -79,6 +79,9 @@ textarea[placeholder] {
 .pagination {
   margin: 0 0 10px;
 }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
 ul.unstyled,
 ol.unstyled {
   padding-left: 20px;
