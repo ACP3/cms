@@ -54,7 +54,7 @@ class Alerts
 
             $this->view->assign('confirm', $confirm);
 
-            return 'system/alerts/confirm_box.tpl';
+            return 'System/Alerts/confirm_box.tpl';
         }
         return '';
     }
