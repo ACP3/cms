@@ -4,7 +4,6 @@ body {
 ul {
   padding-left: 20px;
 }
-/* Logo */
 #logo {
   margin: 10px 20px;
 }
@@ -17,4 +16,11 @@ ul {
 }
 .footer {
   margin-bottom: 10px;
+}
+.in-admin #content {
+  width: auto;
+  float: none;
+}
+.in-admin #sidebar {
+  display: none;
 }
