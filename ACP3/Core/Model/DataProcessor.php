@@ -36,8 +36,6 @@ class DataProcessor
         foreach ($formData as $column => $value) {
             if (array_key_exists($column, $allowedColumns)) {
                 $data[$column] = $this->factory->getStrategy($allowedColumns[$column])->doEscape($value);
-            } elseif (in_array($column, $allowedColumns)) {
-                $data[$column] = $value;
             }
         }
 
