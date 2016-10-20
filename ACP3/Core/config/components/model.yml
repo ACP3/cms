@@ -1,0 +1,34 @@
+services:
+  core.model.column_type.date_time_column_type_strategy:
+    class: ACP3\Core\Model\DataProcessor\ColumnType\DateTimeColumnType
+    arguments:
+      - '@core.date'
+
+  core.model.column_type.double_column_type_strategy:
+    class: ACP3\Core\Model\DataProcessor\ColumnType\DoubleColumnType
+
+  core.model.column_type.integer_column_type_strategy:
+    class: ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType
+
+  core.model.column_type.raw_column_type_strategy:
+    class: ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType
+
+  core.model.column_type.text_column_type_strategy:
+    class: ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType
+    arguments:
+      - '@core.helpers.secure'
+
+  core.model.column_type.text_wysiwyg_column_type_strategy:
+    class: ACP3\Core\Model\DataProcessor\ColumnType\TextWysiwygColumnType
+    arguments:
+      - '@core.helpers.secure'
+
+  core.model.data_processor:
+    class: ACP3\Core\Model\DataProcessor
+    arguments:
+      - '@core.model.column_type_strategy_factory'
+
+  core.model.column_type_strategy_factory:
+    class: ACP3\Core\Model\DataProcessor\ColumnTypeStrategyFactory
+    arguments:
+      - '@service_container'

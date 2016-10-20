@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Permissions\Model;
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractNestedSetModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\NestedSet\Operation\Delete;
 use ACP3\Core\NestedSet\Operation\Edit;
 use ACP3\Core\NestedSet\Operation\Insert;
@@ -28,6 +29,7 @@ class RolesModel extends AbstractNestedSetModel
     /**
      * RoleModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param RoleRepository $roleRepository
      * @param Insert $insertOperation
      * @param Edit $editOperation
@@ -36,13 +38,14 @@ class RolesModel extends AbstractNestedSetModel
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         RoleRepository $roleRepository,
         Insert $insertOperation,
         Edit $editOperation,
         Delete $deleteOperation,
         Secure $secure
     ) {
-        parent::__construct($eventDispatcher, $roleRepository, $insertOperation, $editOperation, $deleteOperation);
+        parent::__construct($eventDispatcher, $dataProcessor, $roleRepository, $insertOperation, $editOperation, $deleteOperation);
 
         $this->secure = $secure;
     }

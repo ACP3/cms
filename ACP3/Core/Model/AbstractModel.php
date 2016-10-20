@@ -26,18 +26,25 @@ abstract class AbstractModel
      * @var AbstractRepository
      */
     protected $repository;
+    /**
+     * @var DataProcessor
+     */
+    private $dataProcessor;
 
     /**
      * AbstractModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param AbstractRepository $repository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         AbstractRepository $repository
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->repository = $repository;
+        $this->dataProcessor = $dataProcessor;
     }
 
     /**
@@ -100,15 +107,7 @@ abstract class AbstractModel
      */
     protected function prepareData(array $data)
     {
-        $allowedColumns = $this->getAllowedColumns();
-
-        foreach ($data as $key => $value) {
-            if (!in_array($key, $allowedColumns)) {
-                unset($data[$key]);
-            }
-        }
-
-        return $data;
+        return $this->dataProcessor->processColumnData($data, $this->getAllowedColumns());
     }
 
     /**

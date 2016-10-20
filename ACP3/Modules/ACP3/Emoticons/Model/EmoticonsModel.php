@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Emoticons\Model;
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Emoticons\Installer\Schema;
 use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -25,15 +26,17 @@ class EmoticonsModel extends AbstractModel
     /**
      * EmoticonsModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param Secure $secure
      * @param EmoticonRepository $emoticonRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         Secure $secure,
         EmoticonRepository $emoticonRepository
     ) {
-        parent::__construct($eventDispatcher, $emoticonRepository);
+        parent::__construct($eventDispatcher, $dataProcessor, $emoticonRepository);
 
         $this->secure = $secure;
     }

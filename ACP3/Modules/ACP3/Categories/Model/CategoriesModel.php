@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Categories\Model;
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Categories\Installer\Schema;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -25,15 +26,17 @@ class CategoriesModel extends AbstractModel
     /**
      * CategoriesModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param Secure $secure
      * @param CategoryRepository $categoryRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         Secure $secure,
         CategoryRepository $categoryRepository
     ) {
-        parent::__construct($eventDispatcher, $categoryRepository);
+        parent::__construct($eventDispatcher, $dataProcessor, $categoryRepository);
 
         $this->secure = $secure;
     }

@@ -7,9 +7,8 @@
 namespace ACP3\Modules\ACP3\Newsletter\Model;
 
 
-use ACP3\Core\Date;
-use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository;
@@ -20,14 +19,6 @@ class NewsletterModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @var Date
-     */
-    protected $date;
-    /**
-     * @var Secure
-     */
-    protected $secure;
-    /**
      * @var SettingsInterface
      */
     protected $config;
@@ -35,39 +26,30 @@ class NewsletterModel extends AbstractModel
     /**
      * NewsletterModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param SettingsInterface $config
-     * @param Date $date
-     * @param Secure $secure
      * @param NewsletterRepository $newsletterRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         SettingsInterface $config,
-        Date $date,
-        Secure $secure,
         NewsletterRepository $newsletterRepository
     ) {
-        parent::__construct($eventDispatcher, $newsletterRepository);
+        parent::__construct($eventDispatcher, $dataProcessor, $newsletterRepository);
 
         $this->config = $config;
-        $this->date = $date;
-        $this->secure = $secure;
     }
 
     /**
-     * @param array $formData
+     * @param array $data
      * @param int $userId
      * @param int|null $newsletterId
      * @return bool|int
      */
-    public function saveNewsletter(array $formData, $userId, $newsletterId = null)
+    public function saveNewsletter(array $data, $userId, $newsletterId = null)
     {
-        $data = [
-            'date' => $this->date->toSQL($formData['date']),
-            'title' => $this->secure->strEncode($formData['title']),
-            'text' => $this->secure->strEncode($formData['text'], true),
-            'user_id' => $userId,
-        ];
+        $data['user_id'] = $userId;
 
         if ($newsletterId === null) {
             $settings = $this->config->getSettings(Schema::MODULE_NAME);
@@ -84,12 +66,12 @@ class NewsletterModel extends AbstractModel
     protected function getAllowedColumns()
     {
         return [
-            'date',
-            'title',
-            'text',
-            'user_id',
-            'html',
-            'status'
+            'date' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
+            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'text' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
+            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'html' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'status' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
         ];
     }
 }

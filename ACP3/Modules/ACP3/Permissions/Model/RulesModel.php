@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Permissions\Model;
 
 
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Permissions\Cache;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository;
@@ -25,15 +26,17 @@ class RulesModel extends AbstractModel
     /**
      * RulesModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param RuleRepository $repository
      * @param Cache $cache
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         RuleRepository $repository,
         Cache $cache)
     {
-        parent::__construct($eventDispatcher, $repository);
+        parent::__construct($eventDispatcher, $dataProcessor, $repository);
 
         $this->cache = $cache;
     }

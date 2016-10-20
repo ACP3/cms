@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Seo\Model;
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -25,15 +26,17 @@ class SeoModel extends AbstractModel
     /**
      * SeoModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param Secure $secure
      * @param SeoRepository $seoRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         Secure $secure,
         SeoRepository $seoRepository
     ) {
-        parent::__construct($eventDispatcher, $seoRepository);
+        parent::__construct($eventDispatcher, $dataProcessor, $seoRepository);
 
         $this->secure = $secure;
     }

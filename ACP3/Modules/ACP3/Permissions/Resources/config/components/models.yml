@@ -34,6 +34,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Model\RolesModel
     arguments:
       - '@core.event_dispatcher'
+      - '@core.model.data_processor'
       - '@permissions.model.rolerepository'
       - '@permissions.nested_set.operation.insert'
       - '@permissions.nested_set.operation.edit'
@@ -44,5 +45,6 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Model\RulesModel
     arguments:
       - '@core.event_dispatcher'
+      - '@core.model.data_processor'
       - '@permissions.model.rulerepository'
       - '@permissions.cache'

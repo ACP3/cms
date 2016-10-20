@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Gallery\Model;
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
@@ -34,17 +35,19 @@ class PictureModel extends AbstractModel
     /**
      * PictureModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param SettingsInterface $config
      * @param Secure $secure
      * @param PictureRepository $pictureRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         SettingsInterface $config,
         Secure $secure,
         PictureRepository $pictureRepository
     ) {
-        parent::__construct($eventDispatcher, $pictureRepository);
+        parent::__construct($eventDispatcher, $dataProcessor, $pictureRepository);
 
         $this->secure = $secure;
         $this->config = $config;

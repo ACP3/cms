@@ -31,19 +31,21 @@ abstract class AbstractNestedSetModel extends AbstractModel
     /**
      * AbstractNestedSetModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param AbstractRepository $repository
      * @param Insert $insertOperation
      * @param Edit $editOperation
-     * @param $deleteOperation
+     * @param Delete $deleteOperation
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         AbstractRepository $repository,
         Insert $insertOperation,
         Edit $editOperation,
         Delete $deleteOperation
     ) {
-        parent::__construct($eventDispatcher, $repository);
+        parent::__construct($eventDispatcher, $dataProcessor, $repository);
 
         $this->insertOperation = $insertOperation;
         $this->editOperation = $editOperation;

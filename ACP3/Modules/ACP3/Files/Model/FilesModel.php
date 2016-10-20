@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Files\Model;
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -34,17 +35,19 @@ class FilesModel extends AbstractModel
     /**
      * FilesModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param Date $date
      * @param Secure $secure
      * @param FilesRepository $filesRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         Date $date,
         Secure $secure,
         FilesRepository $filesRepository
     ) {
-        parent::__construct($eventDispatcher, $filesRepository);
+        parent::__construct($eventDispatcher, $dataProcessor, $filesRepository);
 
         $this->secure = $secure;
         $this->filesRepository = $filesRepository;

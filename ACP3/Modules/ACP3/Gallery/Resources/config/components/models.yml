@@ -18,6 +18,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Model\GalleryModel
     arguments:
       - '@core.event_dispatcher'
+      - '@core.model.data_processor'
       - '@core.date'
       - '@core.helpers.secure'
       - '@gallery.model.galleryrepository'
@@ -26,6 +27,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Model\PictureModel
     arguments:
       - '@core.event_dispatcher'
+      - '@core.model.data_processor'
       - '@core.config'
       - '@core.helpers.secure'
       - '@gallery.model.picturerepository'

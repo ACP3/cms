@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\News\Model;
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\News\Installer\Schema;
 use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
@@ -35,6 +36,7 @@ class NewsModel extends AbstractModel
     /**
      * NewsModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param SettingsInterface $config
      * @param Date $date
      * @param Secure $secure
@@ -42,12 +44,13 @@ class NewsModel extends AbstractModel
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         SettingsInterface $config,
         Date $date,
         Secure $secure,
         NewsRepository $newsRepository
     ) {
-        parent::__construct($eventDispatcher, $newsRepository);
+        parent::__construct($eventDispatcher, $dataProcessor, $newsRepository);
 
         $this->config = $config;
         $this->date = $date;

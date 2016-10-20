@@ -7,9 +7,8 @@
 namespace ACP3\Modules\ACP3\Articles\Model;
 
 
-use ACP3\Core\Date;
-use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Articles\Installer\Schema;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -19,48 +18,28 @@ class ArticlesModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @var Date
-     */
-    protected $date;
-    /**
-     * @var Secure
-     */
-    protected $secure;
-
-    /**
      * ArticlesModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
-     * @param Date $date
-     * @param Secure $secure
+     * @param DataProcessor $dataProcessor
      * @param ArticleRepository $articleRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        Date $date,
-        Secure $secure,
+        DataProcessor $dataProcessor,
         ArticleRepository $articleRepository
     ) {
-        parent::__construct($eventDispatcher, $articleRepository);
-
-        $this->date = $date;
-        $this->secure = $secure;
+        parent::__construct($eventDispatcher, $dataProcessor, $articleRepository);
     }
 
     /**
-     * @param array $formData
+     * @param array $data
      * @param int $userId
      * @param int|null $entryId
      * @return bool|int
      */
-    public function saveArticle(array $formData, $userId, $entryId = null)
+    public function saveArticle(array $data, $userId, $entryId = null)
     {
-        $data = [
-            'start' => $this->date->toSQL($formData['start']),
-            'end' => $this->date->toSQL($formData['end']),
-            'title' => $this->secure->strEncode($formData['title']),
-            'text' => $this->secure->strEncode($formData['text'], true),
-            'user_id' => $userId,
-        ];
+        $data['user_id'] = $userId;
 
         return $this->save($data, $entryId);
     }
@@ -71,11 +50,11 @@ class ArticlesModel extends AbstractModel
     protected function getAllowedColumns()
     {
         return [
-            'start',
-            'end',
-            'title',
-            'text',
-            'user_id'
+            'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
+            'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
+            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'text' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
+            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
         ];
     }
 }

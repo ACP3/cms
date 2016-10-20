@@ -8,4 +8,5 @@ services:
     class: ACP3\Modules\ACP3\Comments\Model\CommentsModel
     arguments:
       - '@core.event_dispatcher'
+      - '@core.model.data_processor'
       - '@comments.model.commentrepository'

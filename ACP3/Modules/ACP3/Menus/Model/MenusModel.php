@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Menus\Model;
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Menus\Installer\Schema;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -25,15 +26,17 @@ class MenusModel extends AbstractModel
     /**
      * MenusModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param Secure $secure
      * @param MenuRepository $menuRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         Secure $secure,
         MenuRepository $menuRepository)
     {
-        parent::__construct($eventDispatcher, $menuRepository);
+        parent::__construct($eventDispatcher, $dataProcessor, $menuRepository);
 
         $this->secure = $secure;
     }

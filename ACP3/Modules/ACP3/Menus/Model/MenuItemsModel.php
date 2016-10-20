@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Menus\Model;
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractNestedSetModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\NestedSet\Operation\Delete;
 use ACP3\Core\NestedSet\Operation\Edit;
 use ACP3\Core\NestedSet\Operation\Insert;
@@ -28,6 +29,7 @@ class MenuItemsModel extends AbstractNestedSetModel
     /**
      * MenuItemsModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param MenuItemRepository $repository
      * @param Insert $insertOperation
      * @param Edit $editOperation
@@ -36,13 +38,14 @@ class MenuItemsModel extends AbstractNestedSetModel
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         MenuItemRepository $repository,
         Insert $insertOperation,
         Edit $editOperation,
         Delete $deleteOperation,
         Secure $secure
     ) {
-        parent::__construct($eventDispatcher, $repository, $insertOperation, $editOperation, $deleteOperation);
+        parent::__construct($eventDispatcher, $dataProcessor, $repository, $insertOperation, $editOperation, $deleteOperation);
 
         $this->secure = $secure;
     }

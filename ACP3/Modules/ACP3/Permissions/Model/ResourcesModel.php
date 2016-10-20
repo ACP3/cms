@@ -25,7 +25,7 @@ class ResourcesModel extends AbstractModel
         EventDispatcherInterface $eventDispatcher,
         ResourceRepository $resourceRepository
     ) {
-        parent::__construct($eventDispatcher, $resourceRepository);
+        parent::__construct($eventDispatcher, , $resourceRepository);
     }
 
     /**

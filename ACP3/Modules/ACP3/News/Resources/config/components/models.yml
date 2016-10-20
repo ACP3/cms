@@ -13,6 +13,7 @@ services:
     class: ACP3\Modules\ACP3\News\Model\NewsModel
     arguments:
       - '@core.event_dispatcher'
+      - '@core.model.data_processor'
       - '@core.config'
       - '@core.date'
       - '@core.helpers.secure'

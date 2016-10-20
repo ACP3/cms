@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Polls\Model;
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Polls\Installer\Schema;
 use ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository;
 use ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository;
@@ -44,6 +45,7 @@ class PollsModel extends AbstractModel
     /**
      * PollsModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param Date $date
      * @param Secure $secure
      * @param PollRepository $pollRepository
@@ -52,13 +54,14 @@ class PollsModel extends AbstractModel
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         Date $date,
         Secure $secure,
         PollRepository $pollRepository,
         AnswerRepository $answerRepository,
         VoteRepository $voteRepository)
     {
-        parent::__construct($eventDispatcher, $pollRepository);
+        parent::__construct($eventDispatcher, $dataProcessor, $pollRepository);
 
         $this->date = $date;
         $this->secure = $secure;
