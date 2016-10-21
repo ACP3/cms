@@ -15,7 +15,7 @@ class ColumnTypeStrategyFactory
     /**
      * @var ContainerInterface
      */
-    private $container;
+    protected $container;
 
     /**
      * ColumnTypeStrategyFactory constructor.

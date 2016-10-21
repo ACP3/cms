@@ -26,16 +26,16 @@ class DataProcessor
     }
 
     /**
-     * @param array $formData
-     * @param array $allowedColumns
+     * @param array $columnData
+     * @param array $columnConstraints
      * @return array
      */
-    public function processColumnData(array $formData, array $allowedColumns)
+    public function processColumnData(array $columnData, array $columnConstraints)
     {
         $data = [];
-        foreach ($formData as $column => $value) {
-            if (array_key_exists($column, $allowedColumns)) {
-                $data[$column] = $this->factory->getStrategy($allowedColumns[$column])->doEscape($value);
+        foreach ($columnData as $column => $value) {
+            if (array_key_exists($column, $columnConstraints)) {
+                $data[$column] = $this->factory->getStrategy($columnConstraints[$column])->doEscape($value);
             }
         }
 
