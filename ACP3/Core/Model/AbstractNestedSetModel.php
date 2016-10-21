@@ -59,6 +59,8 @@ abstract class AbstractNestedSetModel extends AbstractModel
      */
     protected function save(array $data, $entryId = null)
     {
+        $data = $this->prepareData($data);
+
         $this->dispatchBeforeSaveEvent($this->repository, $data, $entryId);
 
         if ($entryId === null) {

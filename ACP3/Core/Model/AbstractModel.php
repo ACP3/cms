@@ -54,18 +54,18 @@ abstract class AbstractModel
      */
     protected function save(array $data, $entryId = null)
     {
-        $this->dispatchBeforeSaveEvent($this->repository, $data, $entryId);
-
         $data = $this->prepareData($data);
 
-        if (intval($entryId)) {
-            $result = $this->repository->update($data, $entryId);
-        } else {
+        $this->dispatchBeforeSaveEvent($this->repository, $data, $entryId);
+
+        if ($entryId === null) {
             $result = $this->repository->insert($data);
 
             if ($result !== false) {
                 $entryId = $result;
             }
+        } else {
+            $result = $this->repository->update($data, $entryId);
         }
 
         $this->dispatchAfterSaveEvent($this->repository, $data, $entryId);
