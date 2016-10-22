@@ -48,27 +48,27 @@ abstract class AbstractModel
     }
 
     /**
-     * @param array $data
+     * @param array $columnData
      * @param null|int $entryId
      * @return bool|int
      */
-    protected function save(array $data, $entryId = null)
+    public function save(array $columnData, $entryId = null)
     {
-        $data = $this->prepareData($data);
+        $columnData = $this->prepareData($columnData);
 
-        $this->dispatchBeforeSaveEvent($this->repository, $data, $entryId);
+        $this->dispatchBeforeSaveEvent($this->repository, $columnData, $entryId);
 
         if ($entryId === null) {
-            $result = $this->repository->insert($data);
+            $result = $this->repository->insert($columnData);
 
             if ($result !== false) {
                 $entryId = $result;
             }
         } else {
-            $result = $this->repository->update($data, $entryId);
+            $result = $this->repository->update($columnData, $entryId);
         }
 
-        $this->dispatchAfterSaveEvent($this->repository, $data, $entryId);
+        $this->dispatchAfterSaveEvent($this->repository, $columnData, $entryId);
 
         return $result;
     }

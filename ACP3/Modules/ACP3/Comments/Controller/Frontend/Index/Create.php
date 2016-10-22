@@ -15,42 +15,35 @@ use ACP3\Modules\ACP3\Comments;
 class Create extends AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
-     */
-    protected $commentRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\FormValidation
      */
     protected $formValidation;
+    /**
+     * @var Comments\Model\CommentsModel
+     */
+    protected $commentsModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
-     * @param \ACP3\Core\Date                                       $date
-     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository   $commentRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Comments\Model\CommentsModel $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $formValidation
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Date $date,
-        Comments\Model\Repository\CommentRepository $commentRepository,
+        Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\FormValidation $formValidation,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
-        $this->date = $date;
-        $this->commentRepository = $commentRepository;
         $this->formValidation = $formValidation;
         $this->formTokenHelper = $formTokenHelper;
+        $this->commentsModel = $commentsModel;
     }
 
     /**
@@ -89,20 +82,17 @@ class Create extends AbstractFrontendAction
                     ->setIpAddress($ipAddress)
                     ->validate($formData);
 
-                $insertValues = [
-                    'id' => '',
-                    'date' => $this->date->toSQL(),
+                $columnData = [
+                    'date' => 'now',
                     'ip' => $ipAddress,
-                    'name' => $this->get('core.helpers.secure')->strEncode($formData['name']),
+                    'name' => $formData['name'],
                     'user_id' => $this->user->isAuthenticated() === true ? $this->user->getUserId() : null,
-                    'message' => $this->get('core.helpers.secure')->strEncode($formData['message']),
+                    'message' => $formData['message'],
                     'module_id' => $this->modules->getModuleId($module),
                     'entry_id' => $entryId,
                 ];
 
-                $bool = $this->commentRepository->insert($insertValues);
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+                $bool = $this->commentsModel->save($columnData);
 
                 return $this->redirectMessages()->setMessage(
                     $bool,
