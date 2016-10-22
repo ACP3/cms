@@ -1,5 +1,5 @@
 <header>
-    <h1 class="text-center">{lang t="comments|comments"}</h1>
+    <h2 class="text-center">{lang t="comments|comments"}</h2>
 </header>
 {redirect_message}
 {if isset($comments)}
@@ -8,7 +8,7 @@
         <article class="dataset-box" style="width:65%">
             <header class="navbar navbar-default">
                 <div class="navbar-header">
-                    <strong class="navbar-brand">
+                    <strong class="navbar-text">
                         {if !is_null($row.user_id)}
                             <a href="{uri args="users/index/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>
                         {else}
