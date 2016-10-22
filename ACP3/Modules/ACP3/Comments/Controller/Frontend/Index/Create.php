@@ -82,17 +82,13 @@ class Create extends AbstractFrontendAction
                     ->setIpAddress($ipAddress)
                     ->validate($formData);
 
-                $columnData = [
-                    'date' => 'now',
-                    'ip' => $ipAddress,
-                    'name' => $formData['name'],
-                    'user_id' => $this->user->isAuthenticated() === true ? $this->user->getUserId() : null,
-                    'message' => $formData['message'],
-                    'module_id' => $this->modules->getModuleId($module),
-                    'entry_id' => $entryId,
-                ];
+                $formData['date'] = 'now';
+                $formData['ip'] = $ipAddress;
+                $formData['user_id'] = $this->user->isAuthenticated() === true ? $this->user->getUserId() : null;
+                $formData['module_id'] = $this->modules->getModuleId($module);
+                $formData['entry_id'] = $entryId;
 
-                $bool = $this->commentsModel->save($columnData);
+                $bool = $this->commentsModel->save($formData);
 
                 return $this->redirectMessages()->setMessage(
                     $bool,
