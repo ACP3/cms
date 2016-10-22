@@ -23,13 +23,13 @@ class Delete extends Core\Controller\AbstractAdminAction
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext          $context
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Comments\Model\Repository\CommentRepository $commentRepository)
-    {
+        Comments\Model\Repository\CommentRepository $commentRepository
+    ) {
         parent::__construct($context);
 
         $this->commentRepository = $commentRepository;
@@ -44,16 +44,17 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function (array $items) {
-            $bool = false;
-            foreach ($items as $item) {
-                $bool = $this->commentRepository->delete($item, 'module_id');
+            $action,
+            function (array $items) {
+                $bool = false;
+                foreach ($items as $item) {
+                    $bool = $this->commentRepository->delete($item, 'module_id');
+                }
+
+                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+
+                return $bool;
             }
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $bool;
-        }
         );
     }
 }

@@ -14,7 +14,7 @@ services:
     arguments:
       - '@core.db'
 
-  gallery.model:
+  gallery.model.gallery_model:
     class: ACP3\Modules\ACP3\Gallery\Model\GalleryModel
     arguments:
       - '@core.event_dispatcher'

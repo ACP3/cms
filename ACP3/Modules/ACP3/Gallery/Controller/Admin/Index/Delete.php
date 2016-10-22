@@ -25,10 +25,6 @@ class Delete extends Core\Controller\AbstractAdminAction
      */
     protected $galleryHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
-     */
-    protected $galleryRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     protected $pictureRepository;
@@ -36,29 +32,33 @@ class Delete extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
      */
     protected $uriAliasManager;
+    /**
+     * @var Gallery\Model\GalleryModel
+     */
+    protected $galleryModel;
 
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext         $context
-     * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers                 $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Modules\ACP3\Gallery\Cache $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
+     * @param Gallery\Model\GalleryModel $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Gallery\Cache $galleryCache,
         Gallery\Helpers $galleryHelpers,
-        Gallery\Model\Repository\GalleryRepository $galleryRepository,
-        Gallery\Model\Repository\PictureRepository $pictureRepository)
-    {
+        Gallery\Model\GalleryModel $galleryModel,
+        Gallery\Model\Repository\PictureRepository $pictureRepository
+    ) {
         parent::__construct($context);
 
         $this->galleryCache = $galleryCache;
         $this->galleryHelpers = $galleryHelpers;
-        $this->galleryRepository = $galleryRepository;
         $this->pictureRepository = $pictureRepository;
+        $this->galleryModel = $galleryModel;
     }
 
     /**
@@ -77,11 +77,9 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function (array $items) {
-            $bool = false;
-
-            foreach ($items as $item) {
-                if (!empty($item) && $this->galleryRepository->galleryExists($item) === true) {
+            $action,
+            function (array $items) {
+                foreach ($items as $item) {
                     $pictures = $this->pictureRepository->getPicturesByGalleryId($item);
                     foreach ($pictures as $row) {
                         $this->galleryHelpers->removePicture($row['file']);
@@ -96,15 +94,10 @@ class Delete extends Core\Controller\AbstractAdminAction
                     }
 
                     $this->deletePictureAliases($item);
-
-                    $bool = $this->galleryRepository->delete($item);
                 }
+
+                return $this->galleryModel->delete($items);
             }
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $bool !== false;
-        }
         );
     }
 
@@ -120,7 +113,10 @@ class Delete extends Core\Controller\AbstractAdminAction
             $cPictures = count($pictures);
 
             for ($i = 0; $i < $cPictures; ++$i) {
-                $this->uriAliasManager->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']));
+                $this->uriAliasManager->deleteUriAlias(
+                    sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE,
+                    $pictures[$i]['id'])
+                );
             }
         }
 
