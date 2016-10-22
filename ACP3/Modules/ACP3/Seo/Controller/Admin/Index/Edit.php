@@ -97,7 +97,7 @@ class Edit extends Core\Controller\AbstractAdminAction
                 ->setUriAlias($path)
                 ->validate($formData);
 
-            return $this->seoModel->saveUriAlias($formData, $seoId);
+            return $this->seoModel->save($formData, $seoId);
         });
     }
 }

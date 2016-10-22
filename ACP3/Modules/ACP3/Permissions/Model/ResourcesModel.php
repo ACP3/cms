@@ -16,18 +16,16 @@ class ResourcesModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @param array $data
-     * @param int|null $entryId
-     * @return bool|int
+     * @inheritdoc
      */
-    public function saveResource(array $data, $entryId = null)
+    public function save(array $data, $entryId = null)
     {
         $data = array_merge($data, [
             'page' => $data['resource'],
             'privilege_id' => $data['privileges'],
         ]);
 
-        return $this->save($data, $entryId);
+        return parent::save($data, $entryId);
     }
 
     /**

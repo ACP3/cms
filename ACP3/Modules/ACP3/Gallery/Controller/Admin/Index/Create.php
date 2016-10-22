@@ -81,7 +81,8 @@ class Create extends AbstractFormAction
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->galleryFormValidation->validate($formData);
 
-            $lastId = $this->galleryModel->saveGallery($formData, $this->user->getUserId());
+            $formData['user_id'] = $this->user->getUserId();
+            $lastId = $this->galleryModel->save($formData);
 
             $this->insertUriAlias($formData, $lastId);
 

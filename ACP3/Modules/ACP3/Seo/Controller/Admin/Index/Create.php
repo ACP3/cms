@@ -89,7 +89,7 @@ class Create extends Core\Controller\AbstractAdminAction
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->adminFormValidation->validate($formData);
 
-            return $this->seoModel->saveUriAlias($formData);
+            return $this->seoModel->save($formData);
         });
     }
 }

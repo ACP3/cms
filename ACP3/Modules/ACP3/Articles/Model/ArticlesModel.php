@@ -16,19 +16,6 @@ class ArticlesModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @param array $data
-     * @param int $userId
-     * @param int|null $entryId
-     * @return bool|int
-     */
-    public function saveArticle(array $data, $userId, $entryId = null)
-    {
-        $data['user_id'] = $userId;
-
-        return $this->save($data, $entryId);
-    }
-
-    /**
      * @return array
      */
     protected function getAllowedColumns()

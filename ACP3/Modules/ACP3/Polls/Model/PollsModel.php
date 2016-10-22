@@ -62,19 +62,6 @@ class PollsModel extends AbstractModel
     }
 
     /**
-     * @param array $data
-     * @param int $userId
-     * @param null|int $pollId
-     * @return bool|int
-     */
-    public function savePoll(array $data, $userId, $pollId = null)
-    {
-        $data['user_id'] = $userId;
-
-        return $this->save($data, $pollId);
-    }
-
-    /**
      * @param array $answers
      * @param int $pollId
      *

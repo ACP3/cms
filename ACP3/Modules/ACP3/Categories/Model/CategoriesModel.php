@@ -16,17 +16,15 @@ class CategoriesModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @param array $data
-     * @param int|null $entryId
-     * @return bool|int
+     * @inheritdoc
      */
-    public function saveCategory(array $data, $entryId = null)
+    public function save(array $data, $entryId = null)
     {
         if (isset($data['module'])) {
             $data['module_id'] = $data['module'];
         }
 
-        return $this->save($data, $entryId);
+        return parent::save($data, $entryId);
     }
 
     /**

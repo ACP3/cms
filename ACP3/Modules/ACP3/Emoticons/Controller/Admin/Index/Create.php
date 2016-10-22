@@ -84,7 +84,7 @@ class Create extends Core\Controller\AbstractAdminAction
             $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
             $formData['img'] = $result['name'];
 
-            return $this->emoticonsModel->saveEmoticon($formData);
+            return $this->emoticonsModel->save($formData);
         });
     }
 }

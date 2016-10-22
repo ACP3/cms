@@ -46,17 +46,13 @@ class PictureModel extends AbstractModel
     }
 
     /**
-     * @param array $data
-     * @param int $galleryId
-     * @param int|null $entryId
-     * @return bool|int
+     * @inheritdoc
      */
-    public function savePicture(array $data, $galleryId, $entryId = null)
+    public function save(array $data, $entryId = null)
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
         $data = array_merge($data, [
-            'gallery_id' => $galleryId,
             'comments' => $settings['comments'] == 1
                 ? (isset($data['comments']) && $data['comments'] == 1 ? 1 : 0)
                 : $settings['comments'],
@@ -67,7 +63,7 @@ class PictureModel extends AbstractModel
             $data['pic'] = !is_null($picNum) ? $picNum + 1 : 1;
         }
 
-        return $this->save($data, $entryId);
+        return parent::save($data, $entryId);
     }
 
     /**

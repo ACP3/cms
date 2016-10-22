@@ -42,22 +42,17 @@ class NewsletterModel extends AbstractModel
     }
 
     /**
-     * @param array $data
-     * @param int $userId
-     * @param int|null $newsletterId
-     * @return bool|int
+     * @inheritdoc
      */
-    public function saveNewsletter(array $data, $userId, $newsletterId = null)
+    public function save(array $data, $entryId = null)
     {
-        $data['user_id'] = $userId;
-
-        if ($newsletterId === null) {
+        if ($entryId === null) {
             $settings = $this->config->getSettings(Schema::MODULE_NAME);
             $data['html'] = $settings['html'];
             $data['status'] = 0;
         }
 
-        return $this->save($data, $newsletterId);
+        return parent::save($data, $entryId);
     }
 
     /**

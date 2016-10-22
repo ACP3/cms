@@ -106,7 +106,8 @@ class Edit extends AbstractFormAction
         return $this->actionHelper->handlePostAction(function () use ($formData, $newsletter, $settings, $newsletterId) {
             $this->adminFormValidation->validate($formData);
 
-            $bool = $this->newsletterModel->saveNewsletter($formData, $this->user->getUserId(), $newsletterId);
+            $formData['user_id'] = $this->user->getUserId();
+            $bool = $this->newsletterModel->saveNewsletter($formData, $newsletterId);
 
             list($text, $result) = $this->sendTestNewsletter(
                 $formData['test'] == 1,

@@ -16,16 +16,6 @@ class RolesModel extends AbstractNestedSetModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @param array $data
-     * @param int|null $entryId
-     * @return bool|int
-     */
-    public function saveRole(array $data, $entryId = null)
-    {
-        return $this->save($data, $entryId);
-    }
-
-    /**
      * @return array
      */
     protected function getAllowedColumns()

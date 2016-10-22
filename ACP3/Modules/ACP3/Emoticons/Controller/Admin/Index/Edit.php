@@ -97,7 +97,7 @@ class Edit extends Core\Controller\AbstractAdminAction
                 $formData['img'] = $result['name'];
             }
 
-            return $this->emoticonsModel->saveEmoticon($formData, $emoticonId);
+            return $this->emoticonsModel->save($formData, $emoticonId);
         });
     }
 }

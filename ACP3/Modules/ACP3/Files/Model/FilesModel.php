@@ -16,23 +16,19 @@ class FilesModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @param array $data
-     * @param int $userId
-     * @param int|null $entryId
-     * @return bool|int
+     * @inheritdoc
      */
-    public function saveFile(array $data, $userId, $entryId = null)
+    public function save(array $data, $entryId = null)
     {
         $data = array_merge($data, [
-            'category_id' => (int)$data['cat'],
-            'user_id' => $userId,
+            'category_id' => (int)$data['cat']
         ]);
 
         if (!empty($data['filesize'])) {
             $data['size'] = $data['filesize'];
         }
 
-        return $this->save($data, $entryId);
+        return parent::save($data, $entryId);
     }
 
     /**

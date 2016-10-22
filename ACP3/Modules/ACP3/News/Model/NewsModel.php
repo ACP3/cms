@@ -42,12 +42,9 @@ class NewsModel extends AbstractModel
     }
 
     /**
-     * @param array $data
-     * @param int $userId
-     * @param int|null $newsId
-     * @return bool|int
+     * @inheritdoc
      */
-    public function saveNews(array $data, $userId, $newsId = null)
+    public function save(array $data, $newsId = null)
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
@@ -55,10 +52,9 @@ class NewsModel extends AbstractModel
             'readmore' => $this->useReadMore($data, $settings),
             'comments' => $this->useComments($data, $settings),
             'category_id' => $data['cat'],
-            'user_id' => $userId,
         ]);
 
-        return $this->save($data, $newsId);
+        return parent::save($data, $newsId);
     }
 
     /**

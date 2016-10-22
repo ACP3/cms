@@ -16,15 +16,13 @@ class MenuItemsModel extends AbstractNestedSetModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @param array $data
-     * @param null|int $entryId
-     * @return bool|int
+     * @inheritdoc
      */
-    public function saveMenuItem(array $data, $entryId = null)
+    public function save(array $data, $entryId = null)
     {
         $data['target'] = $data['display'] == 0 ? 1 : $data['target'];
 
-        return $this->save($data, $entryId);
+        return parent::save($data, $entryId);
     }
 
     /**

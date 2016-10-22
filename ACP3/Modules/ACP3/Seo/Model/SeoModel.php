@@ -16,11 +16,9 @@ class SeoModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @param array $data
-     * @param int|null $entryId
-     * @return bool|int
+     * @inheritdoc
      */
-    public function saveUriAlias(array $data, $entryId = null)
+    public function save(array $data, $entryId = null)
     {
         $data = array_merge($data, [
             'keywords' => $data['seo_keywords'],
@@ -28,7 +26,7 @@ class SeoModel extends AbstractModel
             'robots' => $data['seo_robots']
         ]);
 
-        return $this->save($data, $entryId);
+        return parent::save($data, $entryId);
     }
 
     /**

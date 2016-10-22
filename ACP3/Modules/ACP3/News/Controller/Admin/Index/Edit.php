@@ -105,7 +105,8 @@ class Edit extends AbstractFormAction
                 ->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryIdForSave($formData);
-            $bool = $this->newsModel->saveNews($formData, $this->user->getUserId(), $newsId);
+            $formData['user_id'] = $this->user->getUserId();
+            $bool = $this->newsModel->save($formData, $newsId);
 
             $this->insertUriAlias($formData, $newsId);
 

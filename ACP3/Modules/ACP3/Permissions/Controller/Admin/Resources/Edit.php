@@ -96,7 +96,7 @@ class Edit extends AbstractFormAction
             $this->resourceFormValidation->validate($formData);
 
             $formData['module_id'] = $this->fetchModuleId($formData['modules']);
-            return $this->resourcesModel->saveResource($formData, $resourceId);
+            return $this->resourcesModel->save($formData, $resourceId);
         });
     }
 }

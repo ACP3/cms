@@ -93,7 +93,8 @@ class Create extends AbstractFormAction
         return $this->actionHelper->handlePostAction(function () use ($formData, $settings) {
             $this->adminFormValidation->validate($formData);
 
-            $newsletterId = $this->newsletterModel->saveNewsletter($formData, $this->user->getUserId());
+            $formData['user_id'] = $this->user->getUserId();
+            $newsletterId = $this->newsletterModel->save($formData);
 
             list($text, $result) = $this->sendTestNewsletter(
                 $formData['test'] == 1,

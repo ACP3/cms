@@ -16,16 +16,6 @@ class MenusModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @param array $data
-     * @param null|int $menuId
-     * @return mixed
-     */
-    public function saveMenu(array $data, $menuId = null)
-    {
-        return $this->save($data, $menuId);
-    }
-
-    /**
      * @return array
      */
     protected function getAllowedColumns()

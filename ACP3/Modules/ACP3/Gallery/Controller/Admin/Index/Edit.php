@@ -188,7 +188,8 @@ class Edit extends AbstractFormAction
                 ->setUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId))
                 ->validate($formData);
 
-            $bool = $this->galleryModel->saveGallery($formData, $this->user->getUserId(), $galleryId);
+            $formData['user_id'] = $this->user->getUserId();
+            $bool = $this->galleryModel->save($formData, $galleryId);
 
             $this->insertUriAlias($formData, $galleryId);
 

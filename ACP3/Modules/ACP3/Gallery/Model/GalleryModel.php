@@ -16,18 +16,6 @@ class GalleryModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @param array $data
-     * @param int $userId
-     * @param int|null $galleryId
-     * @return int|bool
-     */
-    public function saveGallery(array $data, $userId, $galleryId = null)
-    {
-        $data['user_id'] = $userId;
-        return $this->save($data, $galleryId);
-    }
-
-    /**
      * @return array
      */
     protected function getAllowedColumns()

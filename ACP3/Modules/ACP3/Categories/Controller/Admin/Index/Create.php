@@ -91,7 +91,7 @@ class Create extends Core\Controller\AbstractAdminAction
                 $formData['picture'] = $result['name'];
             }
 
-            return $this->categoriesModel->saveCategory($formData);
+            return $this->categoriesModel->save($formData);
         });
     }
 

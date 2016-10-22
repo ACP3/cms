@@ -16,16 +16,6 @@ class EmoticonsModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @param array $data
-     * @param int|null $entryId
-     * @return bool|int
-     */
-    public function saveEmoticon(array $data, $entryId = null)
-    {
-        return $this->save($data, $entryId);
-    }
-
-    /**
      * @return array
      */
     protected function getAllowedColumns()

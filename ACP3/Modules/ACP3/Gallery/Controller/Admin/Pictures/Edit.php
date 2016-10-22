@@ -130,7 +130,8 @@ class Edit extends AbstractFormAction
                     $formData['file'] = $result['name'];
                 }
 
-                return $this->pictureModel->savePicture($formData, $picture['gallery_id'], $pictureId);
+                $formData['gallery_id'] = $picture['gallery_id'];
+                return $this->pictureModel->save($formData, $pictureId);
             },
             'acp/gallery/index/edit/id_' . $picture['gallery_id']
         );

@@ -88,7 +88,7 @@ class Edit extends Core\Controller\AbstractAdminAction
                 ->setMenuId($menuId)
                 ->validate($formData);
 
-            return $this->menusModel->saveMenu($formData, $menuId);
+            return $this->menusModel->save($formData, $menuId);
         });
     }
 }
