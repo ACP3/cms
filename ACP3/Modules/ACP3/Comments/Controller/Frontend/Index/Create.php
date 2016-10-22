@@ -97,7 +97,7 @@ class Create extends AbstractFrontendAction
                 return $this->redirectMessages()->setMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),
-                    $this->request->getQuery()
+                    $module . '/index/details/id_' . $entryId
                 );
             }
         );
