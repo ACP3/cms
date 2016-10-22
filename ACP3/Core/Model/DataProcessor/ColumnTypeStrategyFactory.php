@@ -8,22 +8,24 @@ namespace ACP3\Core\Model\DataProcessor;
 
 
 use ACP3\Core\Model\DataProcessor\ColumnType\ColumnTypeStrategyInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ColumnTypeStrategyFactory
 {
     /**
-     * @var ContainerInterface
+     * @var ColumnTypeStrategyInterface[]
      */
-    protected $container;
+    protected $columnTypes = [];
 
     /**
-     * ColumnTypeStrategyFactory constructor.
-     * @param ContainerInterface $container
+     * @param ColumnTypeStrategyInterface $columnTypeStrategy
+     * @param $columnTypeName
+     * @return $this
      */
-    public function __construct(ContainerInterface $container)
+    public function registerColumnType(ColumnTypeStrategyInterface $columnTypeStrategy, $columnTypeName)
     {
-        $this->container = $container;
+        $this->columnTypes[$columnTypeName] = $columnTypeStrategy;
+
+        return $this;
     }
 
     /**
@@ -32,9 +34,10 @@ class ColumnTypeStrategyFactory
      */
     public function getStrategy($columnType)
     {
-        $serviceId = 'core.model.column_type.' . $columnType . '_column_type_strategy';
-        /** @var ColumnTypeStrategyInterface $service */
-        $service = $this->container->get($serviceId);
-        return $service;
+        if (!isset($this->columnTypes[$columnType])) {
+            throw new \InvalidArgumentException('Invalid column type constraint given: ' . $columnType);
+        }
+
+        return $this->columnTypes[$columnType];
     }
 }

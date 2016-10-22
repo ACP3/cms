@@ -11,7 +11,6 @@ use ACP3\Core\Model\DataProcessor\ColumnType\ColumnTypeStrategyInterface;
 use ACP3\Core\Model\DataProcessor\ColumnTypes;
 use ACP3\Core\Model\DataProcessor\ColumnTypeStrategyFactory;
 use ACP3\Core\Test\Model\CreateRawColumnTypeMockTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ColumnTypeStrategyFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,35 +20,25 @@ class ColumnTypeStrategyFactoryTest extends \PHPUnit_Framework_TestCase
      * @var ColumnTypeStrategyFactory
      */
     private $columnTypeStrategyFactory;
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    private $containerMock;
 
     protected function setUp()
     {
-        $this->containerMock = $this->getMockBuilder(ContainerInterface::class)
-            ->setMethods(['set', 'get', 'has', 'initialized', 'setParameter', 'getParameter', 'hasParameter'])
-            ->getMock();
-
-        $this->columnTypeStrategyFactory = new ColumnTypeStrategyFactory($this->containerMock);
+        $this->columnTypeStrategyFactory = new ColumnTypeStrategyFactory();
     }
 
     public function testGetStrategyWithValidColumnType()
     {
-        $this->setUpContainerMockExpectations();
+        $columnTypeMock = $this->getRawColumnTypeInstance($this);
+        $this->columnTypeStrategyFactory->registerColumnType($columnTypeMock, 'raw');
 
         $this->assertInstanceOf(ColumnTypeStrategyInterface::class, $this->columnTypeStrategyFactory->getStrategy(ColumnTypes::COLUMN_TYPE_RAW));
     }
 
-    private function setUpContainerMockExpectations()
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testGetStrategyWithInvalidColumnType()
     {
-        $serviceId = 'core.model.column_type.' . ColumnTypes::COLUMN_TYPE_RAW . '_column_type_strategy';
-
-        $this->containerMock
-            ->expects($this->once())
-            ->method('get')
-            ->with($serviceId)
-            ->willReturn($this->getRawColumnTypeInstance($this));
+        $this->columnTypeStrategyFactory->getStrategy(ColumnTypes::COLUMN_TYPE_RAW);
     }
 }
