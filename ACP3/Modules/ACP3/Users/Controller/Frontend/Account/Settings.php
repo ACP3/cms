@@ -19,47 +19,40 @@ class Settings extends AbstractAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
-     */
-    protected $userRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation
      */
     protected $accountSettingsFormValidation;
     /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    protected $secureHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Users\Helpers\Forms
      */
     protected $userFormsHelper;
+    /**
+     * @var Users\Model\UsersModel
+     */
+    protected $usersModel;
 
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                                         $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms                            $userFormsHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository                     $userRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms $userFormsHelper
+     * @param Users\Model\UsersModel $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Core\Helpers\Secure $secureHelper,
         Users\Helpers\Forms $userFormsHelper,
-        Users\Model\Repository\UserRepository $userRepository,
+        Users\Model\UsersModel $usersModel,
         Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
     ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->secureHelper = $secureHelper;
         $this->userFormsHelper = $userFormsHelper;
-        $this->userRepository = $userRepository;
         $this->accountSettingsFormValidation = $accountSettingsFormValidation;
+        $this->usersModel = $usersModel;
     }
 
     /**
@@ -73,7 +66,7 @@ class Settings extends AbstractAction
             return $this->executePost($this->request->getPost()->all(), $settings);
         }
 
-        $user = $this->userRepository->getOneById($this->user->getUserId());
+        $user = $this->usersModel->getOneById($this->user->getUserId());
 
         $this->view->assign(
             $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
@@ -109,25 +102,16 @@ class Settings extends AbstractAction
                     ->setSettings($settings)
                     ->validate($formData);
 
-                $updateValues = [
-                    'mail_display' => (int)$formData['mail_display'],
-                    'birthday_display' => (int)$formData['birthday_display'],
-                    'address_display' => (int)$formData['address_display'],
-                    'country_display' => (int)$formData['country_display'],
-                    'date_format_long' => $this->get('core.helpers.secure')->strEncode($formData['date_format_long']),
-                    'date_format_short' => $this->get('core.helpers.secure')->strEncode($formData['date_format_short']),
-                    'time_zone' => $formData['date_time_zone'],
-                ];
-                if ($settings['language_override'] == 1) {
-                    $updateValues['language'] = $formData['language'];
+                $formData['time_zone'] = $formData['date_time_zone'];
+
+                if ($settings['language_override'] == 0) {
+                    unset($formData['language']);
                 }
-                if ($settings['entries_override'] == 1) {
-                    $updateValues['entries'] = (int)$formData['entries'];
+                if ($settings['entries_override'] == 0) {
+                    unset($formData['entries']);
                 }
 
-                $bool = $this->userRepository->update($updateValues, $this->user->getUserId());
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+                $bool = $this->usersModel->save($formData, $this->user->getUserId());
 
                 return $this->redirectMessages()->setMessage(
                     $bool,

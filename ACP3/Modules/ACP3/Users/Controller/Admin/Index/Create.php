@@ -18,10 +18,6 @@ use ACP3\Modules\ACP3\Users;
 class Create extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
@@ -30,10 +26,6 @@ class Create extends AbstractFormAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
-     */
-    protected $userRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -41,37 +33,38 @@ class Create extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Permissions\Helpers
      */
     protected $permissionsHelpers;
+    /**
+     * @var Users\Model\UsersModel
+     */
+    protected $usersModel;
 
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext              $context
-     * @param \ACP3\Core\Date                                         $date
-     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                               $secureHelper
-     * @param \ACP3\Core\Helpers\Forms                                $formsHelpers
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository           $userRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Core\Helpers\Forms $formsHelpers
+     * @param Users\Model\UsersModel $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Permissions\Helpers                  $permissionsHelpers
+     * @param \ACP3\Modules\ACP3\Permissions\Helpers $permissionsHelpers
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Core\Date $date,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Forms $formsHelpers,
-        Users\Model\Repository\UserRepository $userRepository,
+        Users\Model\UsersModel $usersModel,
         Users\Validation\AdminFormValidation $adminFormValidation,
         Permissions\Helpers $permissionsHelpers)
     {
         parent::__construct($context, $formsHelpers);
 
-        $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
-        $this->userRepository = $userRepository;
         $this->adminFormValidation = $adminFormValidation;
         $this->permissionsHelpers = $permissionsHelpers;
+        $this->usersModel = $usersModel;
     }
 
     /**
@@ -128,41 +121,16 @@ class Create extends AbstractFormAction
 
             $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
 
-            $insertValues = [
-                'id' => '',
-                'super_user' => (int)$formData['super_user'],
-                'nickname' => $this->secureHelper->strEncode($formData['nickname']),
+            $formData = array_merge($formData, [
                 'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd'], 'sha512'),
                 'pwd_salt' => $salt,
-                'realname' => $this->secureHelper->strEncode($formData['realname']),
-                'gender' => (int)$formData['gender'],
-                'birthday' => $formData['birthday'],
-                'birthday_display' => (int)$formData['birthday_display'],
-                'mail' => $formData['mail'],
-                'mail_display' => isset($formData['mail_display']) ? 1 : 0,
-                'website' => $this->secureHelper->strEncode($formData['website']),
-                'icq' => $formData['icq'],
-                'skype' => $this->secureHelper->strEncode($formData['skype']),
-                'street' => $this->secureHelper->strEncode($formData['street']),
-                'house_number' => $this->secureHelper->strEncode($formData['house_number']),
-                'zip' => $this->secureHelper->strEncode($formData['zip']),
-                'city' => $this->secureHelper->strEncode($formData['city']),
-                'address_display' => isset($formData['address_display']) ? 1 : 0,
-                'country' => $this->secureHelper->strEncode($formData['country']),
-                'country_display' => isset($formData['country_display']) ? 1 : 0,
-                'date_format_long' => $this->secureHelper->strEncode($formData['date_format_long']),
-                'date_format_short' => $this->secureHelper->strEncode($formData['date_format_short']),
                 'time_zone' => $formData['date_time_zone'],
-                'language' => $formData['language'],
-                'entries' => (int)$formData['entries'],
-                'registration_date' => $this->date->getCurrentDateTime(),
-            ];
+                'registration_date' => 'now',
+            ]);
 
-            $lastId = $this->userRepository->insert($insertValues);
+            $lastId = $this->usersModel->save($formData);
 
             $this->permissionsHelpers->updateUserRoles($formData['roles'], $lastId);
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $lastId;
         });

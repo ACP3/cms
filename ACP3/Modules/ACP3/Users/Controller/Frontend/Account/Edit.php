@@ -28,10 +28,6 @@ class Edit extends AbstractAction
      */
     protected $userFormsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
-     */
-    protected $userRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation
      */
     protected $accountFormValidation;
@@ -39,6 +35,10 @@ class Edit extends AbstractAction
      * @var \ACP3\Modules\ACP3\Users\Model\AuthenticationModel
      */
     protected $authenticationModel;
+    /**
+     * @var Users\Model\UsersModel
+     */
+    protected $usersModel;
 
     /**
      * Edit constructor.
@@ -48,7 +48,7 @@ class Edit extends AbstractAction
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Helpers\Forms $userFormsHelper
      * @param \ACP3\Modules\ACP3\Users\Model\AuthenticationModel $authenticationModel
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
+     * @param Users\Model\UsersModel $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation $accountFormValidation
      */
     public function __construct(
@@ -57,7 +57,7 @@ class Edit extends AbstractAction
         Core\Helpers\Secure $secureHelper,
         Users\Helpers\Forms $userFormsHelper,
         Users\Model\AuthenticationModel $authenticationModel,
-        Users\Model\Repository\UserRepository $userRepository,
+        Users\Model\UsersModel $usersModel,
         Users\Validation\AccountFormValidation $accountFormValidation
     ) {
         parent::__construct($context);
@@ -66,8 +66,8 @@ class Edit extends AbstractAction
         $this->secureHelper = $secureHelper;
         $this->userFormsHelper = $userFormsHelper;
         $this->authenticationModel = $authenticationModel;
-        $this->userRepository = $userRepository;
         $this->accountFormValidation = $accountFormValidation;
+        $this->usersModel = $usersModel;
     }
 
     /**
@@ -114,40 +114,21 @@ class Edit extends AbstractAction
                     ->setUserId($this->user->getUserId())
                     ->validate($formData);
 
-                $updateValues = [
-                    'nickname' => $this->secureHelper->strEncode($formData['nickname']),
-                    'realname' => $this->secureHelper->strEncode($formData['realname']),
-                    'gender' => (int)$formData['gender'],
-                    'birthday' => $formData['birthday'],
-                    'mail' => $formData['mail'],
-                    'website' => $this->secureHelper->strEncode($formData['website']),
-                    'icq' => $formData['icq'],
-                    'skype' => $this->secureHelper->strEncode($formData['skype']),
-                    'street' => $this->secureHelper->strEncode($formData['street']),
-                    'house_number' => $this->secureHelper->strEncode($formData['house_number']),
-                    'zip' => $this->secureHelper->strEncode($formData['zip']),
-                    'city' => $this->secureHelper->strEncode($formData['city']),
-                    'country' => $this->secureHelper->strEncode($formData['country']),
-                ];
-
-                // Neues Passwort
                 if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
                     $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
                     $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd'], 'sha512');
-                    $updateValues['pwd'] = $newPassword;
-                    $updateValues['pwd_salt'] = $salt;
+                    $formData['pwd'] = $newPassword;
+                    $formData['pwd_salt'] = $salt;
                 }
 
-                $bool = $this->userRepository->update($updateValues, $this->user->getUserId());
+                $bool = $this->usersModel->save($formData, $this->user->getUserId());
 
-                $user = $this->userRepository->getOneById($this->user->getUserId());
+                $user = $this->usersModel->getOneById($this->user->getUserId());
                 $cookie = $this->authenticationModel->setRememberMeCookie(
                     $this->user->getUserId(),
                     $user['remember_me_token']
                 );
                 $this->response->headers->setCookie($cookie);
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
                 return $this->redirectMessages()->setMessage(
                     $bool,

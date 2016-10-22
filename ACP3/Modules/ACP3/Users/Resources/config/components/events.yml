@@ -1,0 +1,7 @@
+services:
+  users.event.on_users_model_delete_before_listener:
+    class: ACP3\Modules\ACP3\Users\Event\Listener\OnUsersModelDeleteBeforeListener
+    arguments:
+      - '@users.model.user_model'
+    tags:
+      - { name: core.eventListener, event: users.model.users.before_delete, method: forbidSuperUserDelete }

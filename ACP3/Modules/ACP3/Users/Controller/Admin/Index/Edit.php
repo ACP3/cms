@@ -24,10 +24,6 @@ class Edit extends AbstractFormAction
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
-     */
-    protected $userRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -39,6 +35,10 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Users\Model\AuthenticationModel
      */
     protected $authenticationModel;
+    /**
+     * @var Users\Model\UsersModel
+     */
+    protected $usersModel;
 
     /**
      * Edit constructor.
@@ -48,7 +48,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param \ACP3\Core\Helpers\Forms $formsHelpers
      * @param \ACP3\Modules\ACP3\Users\Model\AuthenticationModel $authenticationModel
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
+     * @param Users\Model\UsersModel $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Permissions\Helpers $permissionsHelpers
      */
@@ -58,7 +58,7 @@ class Edit extends AbstractFormAction
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Forms $formsHelpers,
         Users\Model\AuthenticationModel $authenticationModel,
-        Users\Model\Repository\UserRepository $userRepository,
+        Users\Model\UsersModel $usersModel,
         Users\Validation\AdminFormValidation $adminFormValidation,
         Permissions\Helpers $permissionsHelpers
     ) {
@@ -67,9 +67,9 @@ class Edit extends AbstractFormAction
         $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
         $this->authenticationModel = $authenticationModel;
-        $this->userRepository = $userRepository;
         $this->adminFormValidation = $adminFormValidation;
         $this->permissionsHelpers = $permissionsHelpers;
+        $this->usersModel = $usersModel;
     }
 
     /**
@@ -80,9 +80,9 @@ class Edit extends AbstractFormAction
      */
     public function execute($id)
     {
-        if ($this->userRepository->resultExists($id) === true) {
-            $user = $this->user->getUserInfo($id);
+        $user = $this->user->getUserInfo($id);
 
+        if (!empty($user)) {
             $this->title->setPageTitlePostfix($user['nickname']);
 
             if ($this->request->getPost()->count() !== 0) {
@@ -128,57 +128,31 @@ class Edit extends AbstractFormAction
 
     /**
      * @param array $formData
-     * @param int $id
+     * @param int $userId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $id)
+    protected function executePost(array $formData, $userId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $id) {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $userId) {
             $this->adminFormValidation
-                ->setUserId($id)
+                ->setUserId($userId)
                 ->validate($formData);
 
-            $updateValues = [
-                'super_user' => (int)$formData['super_user'],
-                'nickname' => $this->secureHelper->strEncode($formData['nickname']),
-                'realname' => $this->secureHelper->strEncode($formData['realname']),
-                'gender' => (int)$formData['gender'],
-                'birthday' => $formData['birthday'],
-                'birthday_display' => (int)$formData['birthday_display'],
-                'mail' => $formData['mail'],
-                'mail_display' => (int)$formData['mail_display'],
-                'website' => $this->secureHelper->strEncode($formData['website']),
-                'icq' => $formData['icq'],
-                'skype' => $this->secureHelper->strEncode($formData['skype']),
-                'street' => $this->secureHelper->strEncode($formData['street']),
-                'house_number' => $this->secureHelper->strEncode($formData['house_number']),
-                'zip' => $this->secureHelper->strEncode($formData['zip']),
-                'city' => $this->secureHelper->strEncode($formData['city']),
-                'address_display' => (int)$formData['address_display'],
-                'country' => $this->secureHelper->strEncode($formData['country']),
-                'country_display' => (int)$formData['country_display'],
-                'date_format_long' => $this->secureHelper->strEncode($formData['date_format_long']),
-                'date_format_short' => $this->secureHelper->strEncode($formData['date_format_short']),
-                'time_zone' => $formData['date_time_zone'],
-                'language' => $formData['language'],
-                'entries' => (int)$formData['entries'],
-            ];
+            $formData['time_zone'] = $formData['date_time_zone'];
 
-            $this->permissionsHelpers->updateUserRoles($formData['roles'], $id);
+            $this->permissionsHelpers->updateUserRoles($formData['roles'], $userId);
 
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
                 $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
                 $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd'], 'sha512');
-                $updateValues['pwd'] = $newPassword;
-                $updateValues['pwd_salt'] = $salt;
+                $formData['pwd'] = $newPassword;
+                $formData['pwd_salt'] = $salt;
             }
 
-            $bool = $this->userRepository->update($updateValues, $id);
+            $bool = $this->usersModel->save($formData, $userId);
 
-            $this->updateCurrentlyLoggedInUserCookie($id);
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+            $this->updateCurrentlyLoggedInUserCookie($userId);
 
             return $bool;
         });
@@ -190,7 +164,7 @@ class Edit extends AbstractFormAction
     protected function updateCurrentlyLoggedInUserCookie($userId)
     {
         if ($userId == $this->user->getUserId() && $this->request->getCookies()->has(Users\Model\AuthenticationModel::AUTH_NAME)) {
-            $user = $this->userRepository->getOneById($userId);
+            $user = $this->usersModel->getOneById($userId);
             $cookie = $this->authenticationModel->setRememberMeCookie(
                 $userId,
                 $user['remember_me_token']

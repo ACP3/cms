@@ -16,6 +16,13 @@ services:
       - '@core.config'
       - '@users.model.userrepository'
 
+  users.model.users_model:
+    class: ACP3\Modules\ACP3\Users\Model\UsersModel
+    arguments:
+      - '@core.event_dispatcher'
+      - '@core.model.data_processor'
+      - '@users.model.userrepository'
+
   users.model.data_grid_repository:
     class: ACP3\Modules\ACP3\Users\Model\Repository\DataGridRepository
     arguments:

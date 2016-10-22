@@ -3,11 +3,10 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Create
     arguments:
       - '@core.context.admin'
-      - '@core.date'
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
       - '@core.helpers.forms'
-      - '@users.model.userrepository'
+      - '@users.model.users_model'
       - '@users.validator.admin'
       - '@permissions.helpers'
 
@@ -15,8 +14,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
-      - '@users.model.authentication_model'
-      - '@users.model.userrepository'
+      - '@users.model.users_model'
 
   users.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Edit
@@ -26,7 +24,7 @@ services:
       - '@core.helpers.secure'
       - '@core.helpers.forms'
       - '@users.model.authentication_model'
-      - '@users.model.userrepository'
+      - '@users.model.users_model'
       - '@users.validator.admin'
       - '@permissions.helpers'
 
@@ -52,7 +50,7 @@ services:
       - '@core.helpers.secure'
       - '@users.helpers.forms'
       - '@users.model.authentication_model'
-      - '@users.model.userrepository'
+      - '@users.model.users_model'
       - '@users.validator.account'
 
   users.controller.frontend.account.index:
@@ -64,9 +62,8 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
-      - '@core.helpers.secure'
       - '@users.helpers.forms'
-      - '@users.model.userrepository'
+      - '@users.model.users_model'
       - '@users.validation.account_settings_form_validation'
 
   users.controller.frontend.index.forgot_pwd:
