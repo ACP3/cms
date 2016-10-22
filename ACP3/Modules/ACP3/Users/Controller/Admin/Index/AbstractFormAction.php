@@ -44,14 +44,12 @@ abstract class AbstractFormAction extends AbstractAdminAction
     protected function fetchUserRoles(array $currentUserRoles = [])
     {
         $roles = $this->acl->getAllRoles();
-        $cRoles = count($roles);
 
-        for ($i = 0; $i < $cRoles; ++$i) {
-            $roles[$i]['lang'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
-            $roles[$i]['selected'] = $this->formsHelpers->selectEntry('roles', $roles[$i]['id'], in_array($roles[$i]['id'], $currentUserRoles) ? $roles[$i]['id'] : '');
-            $roles[$i]['value'] = $roles[$i]['id'];
+        $availableUserRoles = [];
+        foreach ($roles as $role) {
+            $availableUserRoles[$role['id']] = str_repeat('&nbsp;&nbsp;', $role['level']) . $role['name'];
         }
-        return $roles;
+        return $this->formsHelpers->choicesGenerator('roles', $availableUserRoles, $currentUserRoles);
     }
 
     /**
