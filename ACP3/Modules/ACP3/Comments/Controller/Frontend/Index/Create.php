@@ -48,34 +48,34 @@ class Create extends AbstractFrontendAction
 
     /**
      * @param string $module
-     * @param int    $entryId
-     *
+     * @param int $entryId
+     * @param string $redirectUrl
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute($module, $entryId)
+    public function execute($module, $entryId, $redirectUrl)
     {
         if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all(), $module, $entryId);
+            return $this->executePost($this->request->getPost()->all(), $module, $entryId, $redirectUrl);
         }
 
         return [
-            'form' => array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
+            'form' => array_merge($this->fetchFormDefaults($redirectUrl), $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'can_use_emoticons' => $this->emoticonsActive === true
         ];
     }
 
     /**
-     * @param array  $formData
+     * @param array $formData
      * @param string $module
-     * @param int    $entryId
-     *
+     * @param int $entryId
+     * @param string $redirectUrl
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $module, $entryId)
+    protected function executePost(array $formData, $module, $entryId, $redirectUrl)
     {
         return $this->actionHelper->handlePostAction(
-            function () use ($formData, $module, $entryId) {
+            function () use ($formData, $module, $entryId, $redirectUrl) {
                 $ipAddress = $this->request->getSymfonyRequest()->getClientIp();
 
                 $this->formValidation
@@ -93,7 +93,7 @@ class Create extends AbstractFrontendAction
                 return $this->redirectMessages()->setMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),
-                    $module . '/index/details/id_' . $entryId
+                    base64_decode(urldecode($redirectUrl))
                 );
             }
         );
