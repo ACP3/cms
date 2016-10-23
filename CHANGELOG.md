@@ -11,9 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added the new event `core.settings.save_before` so that it is possible to modify the module settings before saving then to the database
 
 ### Changed
-- When creating/modifying/deleting a result to the database, the page cache isn't cleared immediately anymore
+- When creating/modifying/deleting a result to the database, the page cache isn't cleared immediately anymore (for most operations)
+- Improved the default layout of the ACP3
 
 ### Fixed
+- fixed the users administration
+- fixed the redirect url when posting a comment
 
 ## [4.1.28] - 2016-10-05
 ### Fixed
