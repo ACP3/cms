@@ -27,12 +27,34 @@ p {
     padding-bottom: 5px;
   }
 
+  .navbar-nav {
+    > li {
+
+      > a {
+        cursor: default;
+      }
+
+      &.complete {
+        > a,
+        > a:focus,
+        > a:hover {
+          background-color: #449d44;
+          color: #fff;
+        }
+      }
+    }
+
+    @media (min-width: 768px) {
+      margin-left: -15px;
+    }
+  }
+
   img {
     height: 40px;
   }
 }
 
-#content {
-  margin: 0 20px;
-  display: block;
+#footer {
+  margin-bottom: 10px;
+  line-height: 30px;
 }

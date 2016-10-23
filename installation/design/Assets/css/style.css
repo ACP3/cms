@@ -97,10 +97,24 @@ p {
   padding-top: 5px;
   padding-bottom: 5px;
 }
+#main-navigation .navbar-nav > li > a {
+  cursor: default;
+}
+#main-navigation .navbar-nav > li.complete > a,
+#main-navigation .navbar-nav > li.complete > a:focus,
+#main-navigation .navbar-nav > li.complete > a:hover {
+  background-color: #449d44;
+  color: #fff;
+}
+@media (min-width: 768px) {
+  #main-navigation .navbar-nav {
+    margin-left: -15px;
+  }
+}
 #main-navigation img {
   height: 40px;
 }
-#content {
-  margin: 0 20px;
-  display: block;
+#footer {
+  margin-bottom: 10px;
+  line-height: 30px;
 }
