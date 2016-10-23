@@ -21,7 +21,7 @@
             </a>
         {/if}
     </h1>
-    <nav id="main-navigation" class="navbar navbar-default" role="navigation">
+    <nav id="main-navigation" class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
@@ -43,7 +43,7 @@
         </div>
     </nav>
     <div class="row">
-        <main role="main" id="content" class="col-sm-12 col-md-9">
+        <main id="content" class="col-sm-12 col-md-9">
             <div id="breadcrumb">
                 {block BREADCRUMB}
                     {include file="asset:System/Partials/breadcrumb.tpl" breadcrumb=$BREADCRUMB}

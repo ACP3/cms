@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" id="nav-user-menu" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" id="nav-user-menu">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-user-menu-collapse">

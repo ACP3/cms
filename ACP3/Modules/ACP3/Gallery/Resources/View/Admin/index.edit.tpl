@@ -2,7 +2,7 @@
 
 {block CONTENT append}
     <form action="{uri args="acp/gallery/pictures/delete/id_$gallery_id"}" method="post">
-        <nav id="adm-list" class="navbar navbar-default" role="navigation">
+        <nav id="adm-list" class="navbar navbar-default">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex2-collapse">
                     <span class="sr-only">{lang t="system|toggle_navigation"}</span>

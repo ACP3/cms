@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top" id="nav-user-login" role="navigation">
+<nav class="navbar navbar-default navbar-static-top" id="nav-user-login">
     <div class="container">
         <form class="navbar-form navbar-right" action="{uri args="users/index/login/redirect_`$redirect_uri`"}" method="post" accept-charset="UTF-8">
             <input class="form-control input-sm" type="text" name="nickname" id="nav-nickname" maxlength="30" placeholder="{lang t="users|nickname"}" required>

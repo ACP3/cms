@@ -13,7 +13,7 @@
                  alt="{site_title}">
         </a>
     </h1>
-    <main role="main" id="content">
+    <main id="content">
         <h2>{page_title}</h2>
         {block CONTENT}{/block}
     </main>

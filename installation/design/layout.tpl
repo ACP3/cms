@@ -19,7 +19,7 @@
              srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
              alt="{$PAGE_TITLE}">
     </h1>
-    <nav id="main-navigation" class="navbar navbar-default" role="navigation">
+    <nav id="main-navigation" class="navbar navbar-default">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
                 <span class="sr-only">{lang t="install|toggle_navigation"}</span>
@@ -57,7 +57,7 @@
             </form>
         </div>
     </nav>
-    <main role="main" id="content">
+    <main id="content">
         <h2>{$TITLE}</h2>
         {block CONTENT}{/block}
     </main>
