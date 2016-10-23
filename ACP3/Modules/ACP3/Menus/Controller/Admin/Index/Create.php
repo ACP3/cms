@@ -74,7 +74,7 @@ class Create extends Core\Controller\AbstractAdminAction
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->menuFormValidation->validate($formData);
 
-            return $this->menusModel->saveMenu($formData);
+            return $this->menusModel->save($formData);
         });
     }
 }

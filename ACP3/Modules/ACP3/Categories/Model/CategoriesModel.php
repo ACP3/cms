@@ -7,56 +7,36 @@
 namespace ACP3\Modules\ACP3\Categories\Model;
 
 
-use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Categories\Installer\Schema;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CategoriesModel extends AbstractModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @var Secure
+     * @inheritdoc
      */
-    protected $secure;
+    public function save(array $data, $entryId = null)
+    {
+        if (isset($data['module'])) {
+            $data['module_id'] = $data['module'];
+        }
 
-    /**
-     * CategoriesModel constructor.
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param Secure $secure
-     * @param CategoryRepository $categoryRepository
-     */
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        Secure $secure,
-        CategoryRepository $categoryRepository
-    ) {
-        parent::__construct($eventDispatcher, $categoryRepository);
-
-        $this->secure = $secure;
+        return parent::save($data, $entryId);
     }
 
     /**
-     * @param array $formData
-     * @param int|null $entryId
-     * @return bool|int
+     * @return array
      */
-    public function saveCategory(array $formData, $entryId = null)
+    protected function getAllowedColumns()
     {
-        $data = [
-            'title' => $this->secure->strEncode($formData['title']),
-            'description' => $this->secure->strEncode($formData['description']),
+        return [
+            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'module_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'picture' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW
         ];
-
-        if (isset($formData['module'])) {
-            $data['module_id'] = (int)$formData['module'];
-        }
-        if (isset($formData['picture'])) {
-            $data['picture'] = $formData['picture'];
-        }
-
-        return $this->save($data, $entryId);
     }
 }

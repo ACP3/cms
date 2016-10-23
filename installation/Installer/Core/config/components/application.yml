@@ -16,5 +16,5 @@ services:
       - '@core.http.request'
       - '@core.http.redirect_response'
     tags:
-      - { name: core.eventListener, event: core.application.controller_resolver.before_dispatch, method: onLanguageChange }
+      - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch, method: onLanguageChange }
 

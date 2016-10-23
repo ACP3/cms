@@ -8,6 +8,7 @@ namespace ACP3\Core\DependencyInjection;
 
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\DataGrid\DependencyInjection\RegisterColumnRendererPass;
+use ACP3\Core\Model\DataProcessor\DependencyInjection\RegisterColumnTypesCompilerPass;
 use ACP3\Core\Modules;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
@@ -77,6 +78,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         $this->addCompilerPass(new RegisterColumnRendererPass());
         $this->addCompilerPass(new RegisterValidationRulesPass());
         $this->addCompilerPass(new RegisterWysiwygEditorsCompilerPass());
+        $this->addCompilerPass(new RegisterColumnTypesCompilerPass());
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
         $loader->load($this->applicationPath->getClassesDir() . 'config/services.yml');

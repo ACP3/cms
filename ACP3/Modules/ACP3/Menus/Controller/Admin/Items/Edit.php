@@ -130,7 +130,7 @@ class Edit extends AbstractFormAction
 
                 $formData['mode'] = $this->fetchMenuItemModeForSave($formData);
                 $formData['uri'] = $this->fetchMenuItemUriForSave($formData);
-                $result = $this->menuItemsModel->saveMenuItem($formData, $menuItemId);
+                $result = $this->menuItemsModel->save($formData, $menuItemId);
 
                 $this->menusCache->saveMenusCache();
 

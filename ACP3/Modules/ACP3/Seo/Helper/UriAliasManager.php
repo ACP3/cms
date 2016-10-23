@@ -88,10 +88,10 @@ class UriAliasManager
         // Update an existing result
         if (!empty($seo)) {
             $data['uri'] = $seo['uri'];
-            $bool = $this->seoModel->saveUriAlias($data, $seo['id']);
+            $bool = $this->seoModel->save($data, $seo['id']);
         } else {
             $data['uri'] = $path;
-            $bool = $this->seoModel->saveUriAlias($data);
+            $bool = $this->seoModel->save($data);
         }
 
         return $bool !== false;

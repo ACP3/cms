@@ -136,6 +136,7 @@ class Edit extends AbstractFormAction
 
             $formData['cat'] = $this->fetchCategoryId($formData);
             $formData['comments'] = $this->useComments($formData);
+            $formData['user_id'] = $this->user->getUserId();
 
             if (!empty($file)) {
                 $newFileSql = $this->updateAssociatedFile($file, $formData, $dl['file']);
@@ -143,7 +144,7 @@ class Edit extends AbstractFormAction
                 $formData = array_merge($formData, $newFileSql);
             }
 
-            $bool = $this->filesModel->saveFile($formData, $this->user->getUserId(), $fileId);
+            $bool = $this->filesModel->save($formData, $fileId);
 
             $this->insertUriAlias($formData, $fileId);
 

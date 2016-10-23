@@ -79,6 +79,9 @@ textarea[placeholder] {
 .pagination {
   margin: 0 0 10px;
 }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
 ul.unstyled,
 ol.unstyled {
   padding-left: 20px;
@@ -88,16 +91,30 @@ p {
 }
 /* Layout */
 #logo {
-  margin: 10px 20px;
+  margin: 10px 0;
 }
 #main-navigation .navbar-brand {
   padding-top: 5px;
   padding-bottom: 5px;
 }
+#main-navigation .navbar-nav > li > a {
+  cursor: default;
+}
+#main-navigation .navbar-nav > li.complete > a,
+#main-navigation .navbar-nav > li.complete > a:focus,
+#main-navigation .navbar-nav > li.complete > a:hover {
+  background-color: #449d44;
+  color: #fff;
+}
+@media (min-width: 768px) {
+  #main-navigation .navbar-nav {
+    margin-left: -15px;
+  }
+}
 #main-navigation img {
   height: 40px;
 }
-#content {
-  margin: 0 20px;
-  display: block;
+#footer {
+  margin-bottom: 10px;
+  line-height: 30px;
 }

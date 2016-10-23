@@ -136,6 +136,9 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             61 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'cache_vary_user', 0);",
+            ],
+            62 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'page_cache_is_valid', 1);",
             ]
         ];
     }
@@ -191,6 +194,7 @@ class Migration extends Modules\Installer\AbstractMigration
                 $this->schemaHelper->getSystemModuleRepository()->moduleExists('minify') === false
             ) {
                 $installer = $this->schemaHelper->getContainer()->get('core.modules.schemaInstaller');
+                /** @var Modules\Installer\SchemaInterface $moduleSchema */
                 $moduleSchema = $this->schemaHelper->getContainer()->get('minify.installer.schema');
                 $result = $installer->install($moduleSchema);
                 $aclResult = $this->schemaHelper->getContainer()->get('core.modules.aclInstaller')->install($moduleSchema);

@@ -59,17 +59,15 @@ class Delete extends Core\Controller\AbstractAdminAction
 
                 // If there are no comments for the given module, redirect to the general comments admin panel page
                 if ($this->commentRepository->countAll($id) == 0) {
-                    return $this->redirectMessages()->setMessage(
-                        $result,
-                        $this->translator->t('system', $result !== false ? 'delete_success' : 'delete_error'),
-                        'acp/comments'
-                    );
+                    $redirectUrl = 'acp/comments';
+                } else {
+                    $redirectUrl = 'acp/comments/details/index/id_' . $id;
                 }
 
                 return $this->redirectMessages()->setMessage(
                     $result,
                     $this->translator->t('system', $result !== false ? 'delete_success' : 'delete_error'),
-                    'acp/comments/details/index/id_' . $id
+                    $redirectUrl
                 );
             },
             'acp/comments/details/delete/id_' . $id,

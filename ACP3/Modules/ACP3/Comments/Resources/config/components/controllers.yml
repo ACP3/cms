@@ -10,7 +10,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Edit
     arguments:
       - '@core.context.admin'
-      - '@comments.model.commentrepository'
+      - '@comments.model.comments_model'
       - '@comments.validation.admin_form_validation'
       - '@core.helpers.formToken'
 
@@ -45,8 +45,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@comments.model.commentrepository'
+      - '@comments.model.comments_model'
       - '@comments.validator'
       - '@core.helpers.formToken'
 

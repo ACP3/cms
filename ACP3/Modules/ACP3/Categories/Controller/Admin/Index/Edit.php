@@ -98,7 +98,7 @@ class Edit extends Core\Controller\AbstractAdminAction
                 $formData['picture'] = $result['name'];
             }
 
-            return $this->categoriesModel->saveCategory($formData, $categoryId);
+            return $this->categoriesModel->save($formData, $categoryId);
         });
     }
 }

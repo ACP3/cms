@@ -107,7 +107,7 @@ class Edit extends AbstractFormAction
 
             $formData['parent_id'] = $roleId === 1 ? 0 : $formData['parent_id'];
 
-            $result = $this->rolesModel->saveRole($formData, $roleId);
+            $result = $this->rolesModel->save($formData, $roleId);
             $this->rulesModel->updateRules($formData['privileges'], $roleId);
 
             return $result;

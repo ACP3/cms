@@ -94,8 +94,6 @@ class Settings extends Core\Controller\AbstractAdminAction
 
             $bool = $this->config->saveSettings($data, Seo\Installer\Schema::MODULE_NAME);
 
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
             return $bool;
         });
     }

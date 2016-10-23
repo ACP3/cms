@@ -163,7 +163,8 @@ class Create extends AbstractFormAction
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
 
                 $formData['file'] = $result['name'];
-                $lastId = $this->pictureModel->savePicture($formData, $galleryId);
+                $formData['gallery_id'] = $galleryId;
+                $lastId = $this->pictureModel->save($formData);
 
                 $bool2 = $this->generatePictureAlias($lastId);
 

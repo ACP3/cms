@@ -60,11 +60,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      */
     public function preDispatch()
     {
-        $path = $this->request->getArea() . '/' . $this->request->getFullPathWithoutArea();
-
-        if ($this->acl->hasPermission($path) === false) {
-            throw new Core\ACL\Exception\AccessForbiddenException();
-        }
+        parent::preDispatch();
 
         $this->view->assign([
             'PHP_SELF' => $this->appPath->getPhpSelf(),
@@ -81,8 +77,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
             'LANG_DIRECTION' => $this->translator->getDirection(),
             'LANG' => $this->translator->getShortIsoCode(),
         ]);
-
-        parent::preDispatch();
 
         return $this;
     }

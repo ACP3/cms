@@ -84,7 +84,9 @@ class Index extends AbstractAction
 
     public function execute()
     {
-        if ($this->request->getPost()->count() > 0 && !$this->request->getPost()->get('languages')) {
+        if ($this->request->getPost()->count() > 0
+            && !$this->request->getPost()->get('lang')
+        ) {
             return $this->executePost($this->request->getPost()->all());
         }
 
@@ -129,6 +131,8 @@ class Index extends AbstractAction
             }
 
             $this->installModel->configureModules($formData);
+
+            $this->navbar['install_index']['complete'] = true;
 
             $this->setTemplate('install/install.result.tpl');
         } catch (ValidationFailedException $e) {

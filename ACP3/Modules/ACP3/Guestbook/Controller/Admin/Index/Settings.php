@@ -66,14 +66,18 @@ class Settings extends Core\Controller\AbstractAdminAction
             2 => $this->translator->t('guestbook', 'notify_and_enable')
         ];
 
-        // Emoticons erlauben
         if ($this->modules->isActive('emoticons') === true) {
-            $this->view->assign('allow_emoticons', $this->formsHelper->yesNoCheckboxGenerator('emoticons', $settings['emoticons']));
+            $this->view->assign(
+                'allow_emoticons',
+                $this->formsHelper->yesNoCheckboxGenerator('emoticons', $settings['emoticons'])
+            );
         }
 
-        // In Newsletter integrieren
         if ($this->modules->isActive('newsletter') === true) {
-            $this->view->assign('newsletter_integration', $this->formsHelper->yesNoCheckboxGenerator('newsletter_integration', $settings['newsletter_integration']));
+            $this->view->assign(
+                'newsletter_integration',
+                $this->formsHelper->yesNoCheckboxGenerator('newsletter_integration', $settings['newsletter_integration'])
+            );
         }
 
         return [
@@ -103,8 +107,6 @@ class Settings extends Core\Controller\AbstractAdminAction
                 'emoticons' => $formData['emoticons'],
                 'newsletter_integration' => $formData['newsletter_integration'],
             ];
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
             return $this->config->saveSettings($data, Guestbook\Installer\Schema::MODULE_NAME);
         });

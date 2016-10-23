@@ -56,7 +56,16 @@ class LoadModule extends AbstractFunction
     {
         $pathArray = $this->convertPathToArray($params['module']);
         $path = $pathArray[0] . '/' . $pathArray[1] . '/' . $pathArray[2] . '/' . $pathArray[3];
-        $arguments = isset($params['args']) ? $params['args'] : [];
+
+        $arguments = [];
+        if (isset($params['args']) && is_array($params['args'])) {
+            $arguments = array_map(
+                function($item) {
+                    return urlencode($item);
+                },
+                $params['args']
+            );
+        }
 
         $response = '';
         if ($this->acl->hasPermission($path) === true) {

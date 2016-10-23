@@ -11,7 +11,7 @@ services:
       - '@core.context.admin'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@guestbook.model.guestbookrepository'
+      - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.admin_form_validation'
 
   guestbook.controller.admin.index.index:
@@ -32,10 +32,9 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@guestbook.model.guestbookrepository'
+      - '@guestbook.model.guestbook_model'
       - '@guestbook.validator'
     calls:
       - ['setNewsletterSubscribeHelper', ['@?newsletter.helper.subscribe']]

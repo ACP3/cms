@@ -8,10 +8,10 @@ imports:
   - { resource: components/database.yml }
   - { resource: components/datagrid.yml }
   - { resource: components/date.yml }
-  - { resource: components/events.yml }
   - { resource: components/helpers.yml }
   - { resource: components/http.yml }
   - { resource: components/language.yml }
+  - { resource: components/model.yml }
   - { resource: components/modules.yml }
   - { resource: components/validation.yml }
   - { resource: components/view.yml }
@@ -45,6 +45,7 @@ services:
   core.config:
     class: ACP3\Core\Settings\Settings
     arguments:
+      - '@core.event_dispatcher'
       - '@core.cache.system'
       - '@system.model.modulerepository'
       - '@system.model.settingsrepository'

@@ -7,75 +7,45 @@
 namespace ACP3\Modules\ACP3\Files\Model;
 
 
-use ACP3\Core\Date;
-use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
-use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FilesModel extends AbstractModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @var Secure
+     * @inheritdoc
      */
-    protected $secure;
-    /**
-     * @var FilesRepository
-     */
-    protected $filesRepository;
-    /**
-     * @var Date
-     */
-    protected $date;
+    public function save(array $data, $entryId = null)
+    {
+        $data = array_merge($data, [
+            'category_id' => (int)$data['cat']
+        ]);
 
-    /**
-     * FilesModel constructor.
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param Date $date
-     * @param Secure $secure
-     * @param FilesRepository $filesRepository
-     */
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        Date $date,
-        Secure $secure,
-        FilesRepository $filesRepository
-    ) {
-        parent::__construct($eventDispatcher, $filesRepository);
+        if (!empty($data['filesize'])) {
+            $data['size'] = $data['filesize'];
+        }
 
-        $this->secure = $secure;
-        $this->filesRepository = $filesRepository;
-        $this->date = $date;
+        return parent::save($data, $entryId);
     }
 
     /**
-     * @param array $formData
-     * @param int $userId
-     * @param int|null $entryId
-     * @return bool|int
+     * @return array
      */
-    public function saveFile(array $formData, $userId, $entryId = null)
+    protected function getAllowedColumns()
     {
-        $data = [
-            'start' => $this->date->toSQL($formData['start']),
-            'end' => $this->date->toSQL($formData['end']),
-            'category_id' => (int)$formData['cat'],
-            'title' => $this->secure->strEncode($formData['title']),
-            'text' => $this->secure->strEncode($formData['text'], true),
-            'comments' => (int)$formData['comments'],
-            'user_id' => $userId,
+        return [
+            'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
+            'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
+            'category_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'text' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
+            'comments' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'file' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
+            'size' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW
         ];
-
-        if (!empty($formData['file'])) {
-            $data['file'] = $formData['file'];
-        }
-        if (!empty($formData['filesize'])) {
-            $data['size'] = $formData['filesize'];
-        }
-
-        return $this->save($data, $entryId);
     }
 }

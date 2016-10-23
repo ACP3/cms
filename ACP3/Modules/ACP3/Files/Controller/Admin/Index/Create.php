@@ -128,8 +128,9 @@ class Create extends AbstractFormAction
 
             $formData['cat'] = $this->fetchCategoryId($formData);
             $formData['comments'] = $this->useComments($formData);
+            $formData['user_id'] = $this->user->getUserId();
 
-            $lastId = $this->filesModel->saveFile($formData, $this->user->getUserId());
+            $lastId = $this->filesModel->save($formData);
 
             $this->insertUriAlias($formData, $lastId);
 

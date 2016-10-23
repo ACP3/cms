@@ -17,17 +17,9 @@ use ACP3\Modules\ACP3\Seo\Installer\Schema;
 class Create extends AbstractAction
 {
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository
-     */
-    protected $guestbookRepository;
     /**
      * @var \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
      */
@@ -41,6 +33,10 @@ class Create extends AbstractAction
      */
     protected $formsHelper;
     /**
+     * @var Guestbook\Model\GuestbookModel
+     */
+    protected $guestbookModel;
+    /**
      * @var bool
      */
     protected $newsletterActive = false;
@@ -49,27 +45,24 @@ class Create extends AbstractAction
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
+     * @param Guestbook\Model\GuestbookModel $guestbookModel
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $formValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Guestbook\Model\Repository\GuestbookRepository $guestbookRepository,
+        Guestbook\Model\GuestbookModel $guestbookModel,
         Guestbook\Validation\FormValidation $formValidation
     ) {
         parent::__construct($context);
 
-        $this->date = $date;
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
-        $this->guestbookRepository = $guestbookRepository;
         $this->formValidation = $formValidation;
+        $this->guestbookModel = $guestbookModel;
     }
 
     public function preDispatch()
@@ -137,19 +130,12 @@ class Create extends AbstractAction
                     ->setNewsletterAccess($this->newsletterActive)
                     ->validate($formData);
 
-                $insertValues = [
-                    'id' => '',
-                    'date' => $this->date->toSQL(),
-                    'ip' => $ipAddress,
-                    'name' => $this->get('core.helpers.secure')->strEncode($formData['name']),
-                    'user_id' => $this->user->isAuthenticated() ? $this->user->getUserId() : null,
-                    'message' => $this->get('core.helpers.secure')->strEncode($formData['message']),
-                    'website' => $this->get('core.helpers.secure')->strEncode($formData['website']),
-                    'mail' => $formData['mail'],
-                    'active' => $this->guestbookSettings['notify'] == 2 ? 0 : 1,
-                ];
+                $formData['date'] = 'now';
+                $formData['ip'] = $ipAddress;
+                $formData['user_id'] = $this->user->isAuthenticated() ? $this->user->getUserId() : null;
+                $formData['active'] = $this->guestbookSettings['notify'] == 2 ? 0 : 1;
 
-                $lastId = $this->guestbookRepository->insert($insertValues);
+                $lastId = $this->guestbookModel->save($formData);
 
                 if ($this->guestbookSettings['notify'] == 1 || $this->guestbookSettings['notify'] == 2) {
                     $this->sendNotificationEmail($lastId);
@@ -163,8 +149,6 @@ class Create extends AbstractAction
                 ) {
                     $this->newsletterSubscribeHelper->subscribeToNewsletter($formData['mail']);
                 }
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
                 return $this->redirectMessages()->setMessage(
                     $lastId,

@@ -113,7 +113,8 @@ class Create extends AbstractFormAction
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->adminFormValidation->validate($formData);
 
-            $articleId = $this->articlesModel->saveArticle($formData, $this->user->getUserId());
+            $formData['user_id'] = $this->user->getUserId();
+            $articleId = $this->articlesModel->save($formData);
 
             $this->insertUriAlias($formData, $articleId);
 

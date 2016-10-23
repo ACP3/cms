@@ -8,41 +8,37 @@ namespace ACP3\Modules\ACP3\Permissions\Model;
 
 
 use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ResourcesModel extends AbstractModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * ResourcesModel constructor.
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param ResourceRepository $resourceRepository
+     * @inheritdoc
      */
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        ResourceRepository $resourceRepository
-    ) {
-        parent::__construct($eventDispatcher, $resourceRepository);
+    public function save(array $data, $entryId = null)
+    {
+        $data = array_merge($data, [
+            'page' => $data['resource'],
+            'privilege_id' => $data['privileges'],
+        ]);
+
+        return parent::save($data, $entryId);
     }
 
     /**
-     * @param array $formData
-     * @param int|null $entryId
-     * @return bool|int
+     * @return array
      */
-    public function saveResource(array $formData, $entryId = null)
+    protected function getAllowedColumns()
     {
-        $data = [
-            'module_id' => $formData['module_id'],
-            'area' => $formData['area'],
-            'controller' => $formData['controller'],
-            'page' => $formData['resource'],
-            'privilege_id' => $formData['privileges'],
+        return [
+            'module_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'area' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
+            'controller' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
+            'page' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
+            'privilege_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
         ];
-
-        return $this->save($data, $entryId);
     }
 }

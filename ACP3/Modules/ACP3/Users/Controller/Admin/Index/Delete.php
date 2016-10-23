@@ -16,10 +16,6 @@ use ACP3\Modules\ACP3\Users;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var Users\Model\AuthenticationModel
-     */
-    protected $authenticationModel;
-    /**
      * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
     protected $userRepository;
@@ -28,18 +24,15 @@ class Delete extends Core\Controller\AbstractAdminAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
-     * @param Users\Model\AuthenticationModel $authenticationModel
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
+     * @param Users\Model\UsersModel $usersModel
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Users\Model\AuthenticationModel $authenticationModel,
-        Users\Model\Repository\UserRepository $userRepository
+        Users\Model\UsersModel $usersModel
     ) {
         parent::__construct($context);
 
-        $this->authenticationModel = $authenticationModel;
-        $this->userRepository = $userRepository;
+        $this->usersModel = $usersModel;
     }
 
     /**
@@ -51,37 +44,21 @@ class Delete extends Core\Controller\AbstractAdminAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleCustomDeleteAction(
-            $action, function (array $items) {
-            $bool = $isAdminUser = $selfDelete = false;
-            foreach ($items as $item) {
-                $user = $this->user->getUserInfo($item);
-                if ($user['super_user'] == 1) {
-                    $isAdminUser = true;
-                    continue;
+            $action,
+            function (array $items) {
+                try {
+                    $result = $this->usersModel->delete($items);
+                    $text = $this->translator->t('system', $result !== false ? 'delete_success' : 'delete_error');
+                } catch (Users\Exception\SuperUserNotDeletableException $e) {
+                    $result = false;
+                    $text = $this->translator->t('users', 'admin_user_undeletable');
                 }
 
-                if ($item == $this->user->getUserId()) {
-                    $this->authenticationModel->logout();
-                    $selfDelete = true;
-                }
-
-                $bool = $this->userRepository->delete($item);
+                return $this->redirectMessages()->setMessage(
+                    $result,
+                    $text
+                );
             }
-            if ($isAdminUser === true) {
-                $bool = false;
-                $text = $this->translator->t('users', 'admin_user_undeletable');
-            } else {
-                $text = $this->translator->t('system', $bool !== false ? 'delete_success' : 'delete_error');
-            }
-
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-            return $this->redirectMessages()->setMessage(
-                $bool,
-                $text,
-                $selfDelete === true ? $this->appPath->getWebRoot() : ''
-            );
-        }
         );
     }
 }

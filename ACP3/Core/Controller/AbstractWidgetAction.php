@@ -94,9 +94,16 @@ abstract class AbstractWidgetAction implements ActionInterface
 
     /**
      * @return $this
+     * @throws Core\ACL\Exception\AccessForbiddenException
      */
     public function preDispatch()
     {
+        $path = $this->request->getArea() . '/' . $this->request->getFullPathWithoutArea();
+
+        if ($this->acl->hasPermission($path) === false) {
+            throw new Core\ACL\Exception\AccessForbiddenException();
+        }
+
         return $this;
     }
 

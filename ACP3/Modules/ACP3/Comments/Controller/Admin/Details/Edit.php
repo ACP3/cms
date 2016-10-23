@@ -18,10 +18,6 @@ use ACP3\Modules\ACP3\System;
 class Edit extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
-     */
-    protected $commentRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
@@ -29,26 +25,30 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
+    /**
+     * @var Comments\Model\CommentsModel
+     */
+    protected $commentsModel;
 
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                 $context
-     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository        $commentRepository
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param Comments\Model\CommentsModel $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Comments\Model\Repository\CommentRepository $commentRepository,
+        Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
-        $this->commentRepository = $commentRepository;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
+        $this->commentsModel = $commentsModel;
     }
 
     /**
@@ -59,7 +59,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     public function execute($id)
     {
-        $comment = $this->commentRepository->getOneById($id);
+        $comment = $this->commentsModel->getOneById($id);
 
         if (empty($comment) === false) {
             $this->breadcrumb
@@ -105,19 +105,15 @@ class Edit extends Core\Controller\AbstractAdminAction
                 $this->adminFormValidation->validate($formData);
 
                 $updateValues = [
-                    'message' => $this->get('core.helpers.secure')->strEncode($formData['message'])
+                    'message' => $formData['message']
                 ];
                 if ((empty($comment['user_id']) || $this->validator->is(IntegerValidationRule::class, $comment['user_id']) === false) &&
                     !empty($formData['name'])
                 ) {
-                    $updateValues['name'] = $this->get('core.helpers.secure')->strEncode($formData['name']);
+                    $updateValues['name'] = $formData['name'];
                 }
 
-                $bool = $this->commentRepository->update($updateValues, $commentId);
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
-
-                return $bool;
+                return $this->commentsModel->save($updateValues, $commentId);
             },
             'acp/comments/details/index/id_' . $moduleId
         );

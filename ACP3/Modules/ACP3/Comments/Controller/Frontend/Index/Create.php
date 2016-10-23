@@ -15,99 +15,85 @@ use ACP3\Modules\ACP3\Comments;
 class Create extends AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
-     */
-    protected $commentRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\FormValidation
      */
     protected $formValidation;
+    /**
+     * @var Comments\Model\CommentsModel
+     */
+    protected $commentsModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
-     * @param \ACP3\Core\Date                                       $date
-     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository   $commentRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Comments\Model\CommentsModel $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $formValidation
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Date $date,
-        Comments\Model\Repository\CommentRepository $commentRepository,
+        Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\FormValidation $formValidation,
         Core\Helpers\FormToken $formTokenHelper)
     {
         parent::__construct($context);
 
-        $this->date = $date;
-        $this->commentRepository = $commentRepository;
         $this->formValidation = $formValidation;
         $this->formTokenHelper = $formTokenHelper;
+        $this->commentsModel = $commentsModel;
     }
 
     /**
      * @param string $module
-     * @param int    $entryId
-     *
+     * @param int $entryId
+     * @param string $redirectUrl
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute($module, $entryId)
+    public function execute($module, $entryId, $redirectUrl)
     {
         if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all(), $module, $entryId);
+            return $this->executePost($this->request->getPost()->all(), $module, $entryId, $redirectUrl);
         }
 
         return [
-            'form' => array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
+            'form' => array_merge($this->fetchFormDefaults($redirectUrl), $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'can_use_emoticons' => $this->emoticonsActive === true
         ];
     }
 
     /**
-     * @param array  $formData
+     * @param array $formData
      * @param string $module
-     * @param int    $entryId
-     *
+     * @param int $entryId
+     * @param string $redirectUrl
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $module, $entryId)
+    protected function executePost(array $formData, $module, $entryId, $redirectUrl)
     {
         return $this->actionHelper->handlePostAction(
-            function () use ($formData, $module, $entryId) {
+            function () use ($formData, $module, $entryId, $redirectUrl) {
                 $ipAddress = $this->request->getSymfonyRequest()->getClientIp();
 
                 $this->formValidation
                     ->setIpAddress($ipAddress)
                     ->validate($formData);
 
-                $insertValues = [
-                    'id' => '',
-                    'date' => $this->date->toSQL(),
-                    'ip' => $ipAddress,
-                    'name' => $this->get('core.helpers.secure')->strEncode($formData['name']),
-                    'user_id' => $this->user->isAuthenticated() === true ? $this->user->getUserId() : null,
-                    'message' => $this->get('core.helpers.secure')->strEncode($formData['message']),
-                    'module_id' => $this->modules->getModuleId($module),
-                    'entry_id' => $entryId,
-                ];
+                $formData['date'] = 'now';
+                $formData['ip'] = $ipAddress;
+                $formData['user_id'] = $this->user->isAuthenticated() === true ? $this->user->getUserId() : null;
+                $formData['module_id'] = $this->modules->getModuleId($module);
+                $formData['entry_id'] = $entryId;
 
-                $bool = $this->commentRepository->insert($insertValues);
-
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+                $bool = $this->commentsModel->save($formData);
 
                 return $this->redirectMessages()->setMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),
-                    $this->request->getQuery()
+                    base64_decode(urldecode($redirectUrl))
                 );
             }
         );

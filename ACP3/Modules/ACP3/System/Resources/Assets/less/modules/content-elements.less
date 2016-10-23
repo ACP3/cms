@@ -14,7 +14,7 @@
   .small.navbar-text {
     line-height: 20px;
 
-    @media(max-width: 767px) {
+    @media (max-width: 767px) {
       margin-right: 15px;
     }
   }
@@ -24,23 +24,18 @@
   }
 
   .hyperlink {
-    margin: 8px 0 0;
-    padding: 4px;
-    background-color: #eee;
-    background-image: -moz-linear-gradient(top, #eee, #fff);
-    background-image: -ms-linear-gradient(top, #eee, #fff);
-    background-image: -webkit-linear-gradient(top, #eee, #fff);
-    background-image: -o-linear-gradient(top, #eee, #fff);
-    background-image: linear-gradient(top, #eee, #fff);
-    background-repeat: repeat-x;
-    border-top: 1px dotted #ccc;
-    line-height: 20px;
-
     a.download-file {
-      padding: 0 8px;
       font-weight: bold;
-      line-height: 26px;
       display: block;
+
+      &:hover,
+      &:focus {
+        text-decoration: none;
+      }
+    }
+
+    .glyphicon-download-alt {
+      color: #333;
     }
   }
 }

@@ -118,7 +118,7 @@ class Create extends AbstractFormAction
 
                 $formData['mode'] = $this->fetchMenuItemModeForSave($formData);
                 $formData['uri'] = $this->fetchMenuItemUriForSave($formData);
-                $result = $this->menuItemsModel->saveMenuItem($formData);
+                $result = $this->menuItemsModel->save($formData);
 
                 $this->menusCache->saveMenusCache();
 

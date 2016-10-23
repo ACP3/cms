@@ -31,19 +31,21 @@ abstract class AbstractNestedSetModel extends AbstractModel
     /**
      * AbstractNestedSetModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param AbstractRepository $repository
      * @param Insert $insertOperation
      * @param Edit $editOperation
-     * @param $deleteOperation
+     * @param Delete $deleteOperation
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         AbstractRepository $repository,
         Insert $insertOperation,
         Edit $editOperation,
         Delete $deleteOperation
     ) {
-        parent::__construct($eventDispatcher, $repository);
+        parent::__construct($eventDispatcher, $dataProcessor, $repository);
 
         $this->insertOperation = $insertOperation;
         $this->editOperation = $editOperation;
@@ -51,16 +53,18 @@ abstract class AbstractNestedSetModel extends AbstractModel
     }
 
     /**
-     * @param array $data
+     * @param array $columnData
      * @param int|null $entryId
      * @return bool|int
      */
-    protected function save(array $data, $entryId = null)
+    public function save(array $columnData, $entryId = null)
     {
-        $this->dispatchBeforeSaveEvent($this->repository, $data, $entryId);
+        $columnData = $this->prepareData($columnData);
+
+        $this->dispatchBeforeSaveEvent($this->repository, $columnData, $entryId);
 
         if ($entryId === null) {
-            $result = $this->insertOperation->execute($data, $data['parent_id']);
+            $result = $this->insertOperation->execute($columnData, $columnData['parent_id']);
 
             if ($result !== false) {
                 $entryId = $result;
@@ -68,13 +72,13 @@ abstract class AbstractNestedSetModel extends AbstractModel
         } else {
             $result = $this->editOperation->execute(
                 $entryId,
-                $data['parent_id'],
-                isset($data['block_id']) ? $data['block_id'] : 0,
-                $data
+                $columnData['parent_id'],
+                isset($columnData['block_id']) ? $columnData['block_id'] : 0,
+                $columnData
             );
         }
 
-        $this->dispatchAfterSaveEvent($this->repository, $data, $entryId);
+        $this->dispatchAfterSaveEvent($this->repository, $columnData, $entryId);
 
         return $result;
     }

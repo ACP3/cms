@@ -9,7 +9,9 @@ namespace ACP3\Core\Settings;
 use ACP3\Core\Cache;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
+use ACP3\Core\Settings\Event\SettingsSaveEvent;
 use ACP3\Modules\ACP3\System;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Manages the various module settings
@@ -19,6 +21,10 @@ class Settings implements SettingsInterface
 {
     const CACHE_ID = 'settings';
 
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
     /**
      * @var ModuleAwareRepositoryInterface
      */
@@ -38,11 +44,13 @@ class Settings implements SettingsInterface
 
     /**
      * Settings constructor.
+     * @param EventDispatcherInterface $eventDispatcher
      * @param Cache $coreCache
      * @param ModuleAwareRepositoryInterface $systemModuleRepository
      * @param SettingsAwareRepositoryInterface $systemSettingsRepository
      */
     public function __construct(
+        EventDispatcherInterface $eventDispatcher,
         Cache $coreCache,
         ModuleAwareRepositoryInterface $systemModuleRepository,
         SettingsAwareRepositoryInterface $systemSettingsRepository
@@ -50,6 +58,7 @@ class Settings implements SettingsInterface
         $this->coreCache = $coreCache;
         $this->systemModuleRepository = $systemModuleRepository;
         $this->systemSettingsRepository = $systemSettingsRepository;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -65,6 +74,8 @@ class Settings implements SettingsInterface
         $bool = $bool2 = false;
         $moduleId = $this->systemModuleRepository->getModuleId($module);
         if (!empty($moduleId)) {
+            $this->eventDispatcher->dispatch('core.settings.save_before', new SettingsSaveEvent($module, $data));
+
             foreach ($data as $key => $value) {
                 $updateValues = [
                     'value' => $value

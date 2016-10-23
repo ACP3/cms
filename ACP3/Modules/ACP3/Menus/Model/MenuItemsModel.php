@@ -7,63 +7,37 @@
 namespace ACP3\Modules\ACP3\Menus\Model;
 
 
-use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractNestedSetModel;
-use ACP3\Core\NestedSet\Operation\Delete;
-use ACP3\Core\NestedSet\Operation\Edit;
-use ACP3\Core\NestedSet\Operation\Insert;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Menus\Installer\Schema;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class MenuItemsModel extends AbstractNestedSetModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @var Secure
+     * @inheritdoc
      */
-    protected $secure;
+    public function save(array $data, $entryId = null)
+    {
+        $data['target'] = $data['display'] == 0 ? 1 : $data['target'];
 
-    /**
-     * MenuItemsModel constructor.
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param MenuItemRepository $repository
-     * @param Insert $insertOperation
-     * @param Edit $editOperation
-     * @param Delete $deleteOperation
-     * @param Secure $secure
-     */
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        MenuItemRepository $repository,
-        Insert $insertOperation,
-        Edit $editOperation,
-        Delete $deleteOperation,
-        Secure $secure
-    ) {
-        parent::__construct($eventDispatcher, $repository, $insertOperation, $editOperation, $deleteOperation);
-
-        $this->secure = $secure;
+        return parent::save($data, $entryId);
     }
 
     /**
-     * @param array $formData
-     * @param null|int $entryId
-     * @return bool|int
+     * @return array
      */
-    public function saveMenuItem(array $formData, $entryId = null)
+    protected function getAllowedColumns()
     {
-        $data = [
-            'mode' => (int)$formData['mode'],
-            'block_id' => (int)$formData['block_id'],
-            'parent_id' => (int)$formData['parent_id'],
-            'display' => $formData['display'],
-            'title' => $this->secure->strEncode($formData['title']),
-            'uri' => $formData['uri'],
-            'target' => $formData['display'] == 0 ? 1 : $formData['target'],
+        return [
+            'mode' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'block_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'parent_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'display' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
+            'target' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
         ];
-
-        return $this->save($data, $entryId);
     }
 }

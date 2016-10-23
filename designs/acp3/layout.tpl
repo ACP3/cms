@@ -5,7 +5,9 @@
 </head>
 
 <body>
-<div class="container-fluid">
+{load_module module="widget/users/index/login"}
+{load_module module="widget/users/index/user_menu"}
+<div id="wrapper" class="container">
     <h1 id="logo" class="hidden-xs">
         {if $IS_HOMEPAGE}
             <img src="{$DESIGN_PATH}Assets/img/logo.png"
@@ -19,7 +21,7 @@
             </a>
         {/if}
     </h1>
-    <nav id="main-navigation" class="navbar navbar-default" role="navigation">
+    <nav id="main-navigation" class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
@@ -41,28 +43,26 @@
         </div>
     </nav>
     <div class="row">
-        <div class="col-sm-3 col-md-2">
-            {load_module module="widget/users/index/user_menu"}
-            {load_module module="widget/users/index/login"}
-        </div>
-        <main role="main" id="content" class="col-sm-9 col-md-8">
+        <main id="content" class="col-sm-12 col-md-9">
             <div id="breadcrumb">
                 {block BREADCRUMB}
                     {include file="asset:System/Partials/breadcrumb.tpl" breadcrumb=$BREADCRUMB}
                 {/block}
             </div>
             <h2>{page_title}</h2>
+            {event name="layout.content_before"}
             {block CONTENT}{/block}
         </main>
-        <div class="col-md-2 hidden-xs hidden-sm">
-            {load_module module="widget/news"}
-            {load_module module="widget/newsletter"}
-            {load_module module="widget/files"}
-            {load_module module="widget/articles"}
-            {load_module module="widget/articles/index/single" args=['id' => 1]}
-            {load_module module="widget/gallery"}
-            {load_module module="widget/polls"}
-        </div>
+        {if !$IN_ADM}
+            <aside id="sidebar" class="col-md-3 hidden-xs hidden-sm">
+                {load_module module="widget/news"}
+                {load_module module="widget/files"}
+                {load_module module="widget/articles"}
+                {load_module module="widget/articles/index/single" args=['id' => 1]}
+                {load_module module="widget/gallery"}
+                {load_module module="widget/polls"}
+            </aside>
+        {/if}
     </div>
     <footer class="row footer">
         <div class="col-xs-5 copyright">

@@ -97,6 +97,7 @@ class Index extends Core\Controller\AbstractAdminAction
 
             return [
                 'grid' => $dataGrid->render(),
+                'module_id' => $id,
                 'show_mass_delete_button' => $dataGrid->countDbResults() > 0
             ];
         }

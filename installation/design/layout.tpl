@@ -14,53 +14,64 @@
 
 <body>
 <div class="container">
-    <h1 id="logo" class="hidden-xs">
+    <h1 id="logo" class="text-center hidden-xs">
         <img src="{$DESIGN_PATH}Assets/img/logo.png"
              srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
              alt="{$PAGE_TITLE}">
     </h1>
-    <nav id="main-navigation" class="navbar navbar-default" role="navigation">
+    <nav id="main-navigation" class="navbar navbar-default{if empty($navbar)} visible-xs{/if}">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-                <span class="sr-only">{lang t="install|toggle_navigation"}</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+            {if !empty($navbar)}
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="sr-only">{lang t="install|toggle_navigation"}</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            {/if}
             <span class="navbar-brand hidden-sm hidden-md hidden-lg">
                 <img src="{$DESIGN_PATH}Assets/img/logo.png"
                      srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
                      alt="{$PAGE_TITLE}">
             </span>
         </div>
-        <div id="navbar-collapse" class="collapse navbar-collapse">
-            {if isset($navbar)}
+        {if !empty($navbar)}
+            <div id="navbar-collapse" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     {foreach $navbar as $key => $value}
-                        <li{if $value.active === true} class="active"{/if}><a href="#">{$value.lang}</a></li>
+                        <li {if $value.active === true} class="active"{elseif $value.complete === true} class="complete"{/if}>
+                            <a href="#">{$value.lang}</a>
+                        </li>
                     {/foreach}
                 </ul>
-            {/if}
-            <form action="{$REQUEST_URI}" method="post" id="languages" class="navbar-form navbar-right">
-                <div class="form-group">
+            </div>
+        {/if}
+    </nav>
+    <main id="content">
+        <h2>{$TITLE}</h2>
+        {block CONTENT}{/block}
+    </main>
+    <footer id="footer">
+        <div class="row">
+            <div class="col-sm-6">
+                &copy; ACP3
+            </div>
+            <div class="col-sm-6 text-right">
+                <form action="{$REQUEST_URI}" method="post" id="languages" class="form-inline">
                     <select name="lang"
                             id="lang"
-                            class="form-control"
+                            class="form-control input-sm"
                             title="{lang t="install|select_language"}"
                             data-change-language-warning="{lang t="install|form_change_warning"}">
                         {foreach $LANGUAGES as $row}
                             <option value="{$row.language}"{$row.selected}>{$row.name}</option>
                         {/foreach}
                     </select>
-                </div>
-                <input type="submit" name="languages" value="{lang t="install|submit"}" class="btn btn-primary">
-            </form>
+                    <input type="submit" name="languages" value="{lang t="install|submit"}" class="btn btn-primary btn-sm">
+                </form>
+            </div>
         </div>
-    </nav>
-    <main role="main" id="content">
-        <h2>{$TITLE}</h2>
-        {block CONTENT}{/block}
-    </main>
+    </footer>
 </div>
 <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/bootstrap.min.js"></script>

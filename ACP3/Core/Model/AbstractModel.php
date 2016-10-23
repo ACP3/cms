@@ -26,40 +26,49 @@ abstract class AbstractModel
      * @var AbstractRepository
      */
     protected $repository;
+    /**
+     * @var DataProcessor
+     */
+    private $dataProcessor;
 
     /**
      * AbstractModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
+     * @param DataProcessor $dataProcessor
      * @param AbstractRepository $repository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
         AbstractRepository $repository
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->repository = $repository;
+        $this->dataProcessor = $dataProcessor;
     }
 
     /**
-     * @param array $data
+     * @param array $columnData
      * @param null|int $entryId
      * @return bool|int
      */
-    protected function save(array $data, $entryId = null)
+    public function save(array $columnData, $entryId = null)
     {
-        $this->dispatchBeforeSaveEvent($this->repository, $data, $entryId);
+        $columnData = $this->prepareData($columnData);
 
-        if (intval($entryId)) {
-            $result = $this->repository->update($data, $entryId);
-        } else {
-            $result = $this->repository->insert($data);
+        $this->dispatchBeforeSaveEvent($this->repository, $columnData, $entryId);
+
+        if ($entryId === null) {
+            $result = $this->repository->insert($columnData);
 
             if ($result !== false) {
                 $entryId = $result;
             }
+        } else {
+            $result = $this->repository->update($columnData, $entryId);
         }
 
-        $this->dispatchAfterSaveEvent($this->repository, $data, $entryId);
+        $this->dispatchAfterSaveEvent($this->repository, $columnData, $entryId);
 
         return $result;
     }
@@ -91,6 +100,20 @@ abstract class AbstractModel
             new ModelSaveEvent($data, $entryId)
         );
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected function prepareData(array $data)
+    {
+        return $this->dataProcessor->processColumnData($data, $this->getAllowedColumns());
+    }
+
+    /**
+     * @return array
+     */
+    abstract protected function getAllowedColumns();
 
     /**
      * @param AbstractRepository $repository

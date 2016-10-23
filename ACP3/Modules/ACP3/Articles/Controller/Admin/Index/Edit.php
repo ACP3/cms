@@ -138,12 +138,13 @@ class Edit extends AbstractFormAction
                 ->setUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $articleId))
                 ->validate($formData);
 
-            $bool = $this->articlesModel->saveArticle($formData, $this->user->getUserId(), $articleId);
+            $formData['user_id'] = $this->user->getUserId();
+            $result = $this->articlesModel->save($formData, $articleId);
 
             $this->insertUriAlias($formData, $articleId);
             $this->createOrUpdateMenuItem($formData, $articleId);
 
-            return $bool;
+            return $result;
         });
     }
 

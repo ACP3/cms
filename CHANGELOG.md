@@ -4,17 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 2016-xx-xx
+## [4.1.29] - 2016-10-23
 ### Added
+- Added the possibility to clear just the page cache
+- Added the new template event `layout.content_before`
+- Added the new event `core.settings.save_before` so that it is possible to modify the module settings before saving then to the database
 
 ### Changed
+- When creating/modifying/deleting a result to the database, the page cache isn't cleared immediately anymore (for most operations)
+- Improved the default layout of the ACP3
 
 ### Fixed
+- fixed the users administration
+- fixed the redirect url when posting a comment
+- fixed the URL of delete controller action when performing a mass removal of comments
+- fixed the language switcher drop down of the installer
 
 ## [4.1.28] - 2016-10-05
-### Changed
-- Reworked the version update check
-
 ### Fixed
 - Fixed the theme inheritance
 

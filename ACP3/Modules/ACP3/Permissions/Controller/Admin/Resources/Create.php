@@ -83,7 +83,7 @@ class Create extends AbstractFormAction
             $this->resourceFormValidation->validate($formData);
 
             $formData['module_id'] = $this->fetchModuleId($formData['modules']);
-            return $this->resourcesModel->saveResource($formData);
+            return $this->resourcesModel->save($formData);
         });
     }
 }

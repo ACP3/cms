@@ -12,7 +12,7 @@ services:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.admin'
-      - '@categories.model.categories_repository'
+      - '@categories.model.categories_model'
       - '@categories.cache'
 
   categories.controller.admin.index.edit:

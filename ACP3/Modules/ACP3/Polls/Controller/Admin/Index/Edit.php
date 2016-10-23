@@ -97,7 +97,8 @@ class Edit extends AbstractFormAction
         return $this->actionHelper->handleEditPostAction(function () use ($formData, $pollId) {
             $this->pollsValidator->validate($formData);
 
-            $bool = $this->pollsModel->savePoll($formData, $this->user->getUserId(), $pollId);
+            $formData['user_id'] = $this->user->getUserId();
+            $bool = $this->pollsModel->save($formData, $pollId);
 
             if (!empty($formData['reset'])) {
                 $this->pollsModel->resetVotesByPollId($pollId);

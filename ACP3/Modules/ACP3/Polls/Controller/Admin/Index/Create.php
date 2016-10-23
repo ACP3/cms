@@ -97,7 +97,8 @@ class Create extends AbstractFormAction
         return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
             $this->pollsValidator->validate($formData);
 
-            $pollId = $this->pollsModel->savePoll($formData, $this->user->getUserId());
+            $formData['user_id'] = $this->user->getUserId();
+            $pollId = $this->pollsModel->save($formData);
 
             $bool2 = false;
             if ($pollId !== false) {

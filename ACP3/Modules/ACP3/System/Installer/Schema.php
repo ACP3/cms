@@ -48,7 +48,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 61;
+        return 62;
     }
 
     /**
@@ -97,8 +97,8 @@ class Schema implements Modules\Installer\SchemaInterface
     public function settings()
     {
         return [
-            'cache_images' => true,
             'cache_lifetime' => 3600,
+            'cache_images' => true,
             'cache_vary_user' => 0,
             'date_format_long' => '',
             'date_format_short' => '',
@@ -118,8 +118,9 @@ class Schema implements Modules\Installer\SchemaInterface
             'maintenance_mode' => false,
             'maintenance_message' => '',
             'mod_rewrite' => false,
+            'page_cache_is_valid' => true,
             'security_secret' => uniqid(mt_rand(), true),
-            'wysiwyg' => 'core.wysiwyg.ckeditor'
+            'wysiwyg' => 'core.wysiwyg.textarea'
         ];
     }
 }
