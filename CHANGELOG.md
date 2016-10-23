@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - fixed the users administration
 - fixed the redirect url when posting a comment
+- fixed the URL of delete controller action when performing a mass removal of comments
 
 ## [4.1.28] - 2016-10-05
 ### Fixed
