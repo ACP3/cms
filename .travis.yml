@@ -44,13 +44,10 @@ deploy:
       tags: true
       condition: "$TRAVIS_PHP_VERSION = '7.0'"
   - provider: script
-    script: ./build/travis/update_module_repositories.sh ${TRAVIS_TAG}
+    script: ./build/travis/update_module_repositories.sh ${TRAVIS_TAG} && ./build/travis/update_version_check.sh ${TRAVIS_TAG}
     on:
       tags: true
       condition: "$TRAVIS_PHP_VERSION = '7.0'"
-
-after_deploy:
-  - ./build/travis/update_version_check.sh ${TRAVIS_PHP_VERSION} ${TRAVIS_TAG}
 
 cache:
   directories:
