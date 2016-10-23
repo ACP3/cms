@@ -14,27 +14,29 @@
 
 <body>
 <div class="container">
-    <h1 id="logo" class="hidden-xs">
+    <h1 id="logo" class="text-center hidden-xs">
         <img src="{$DESIGN_PATH}Assets/img/logo.png"
              srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
              alt="{$PAGE_TITLE}">
     </h1>
-    <nav id="main-navigation" class="navbar navbar-default">
+    <nav id="main-navigation" class="navbar navbar-default{if empty($navbar)} visible-xs{/if}">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-                <span class="sr-only">{lang t="install|toggle_navigation"}</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+            {if !empty($navbar)}
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="sr-only">{lang t="install|toggle_navigation"}</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            {/if}
             <span class="navbar-brand hidden-sm hidden-md hidden-lg">
                 <img src="{$DESIGN_PATH}Assets/img/logo.png"
                      srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
                      alt="{$PAGE_TITLE}">
             </span>
         </div>
-        <div id="navbar-collapse" class="collapse navbar-collapse">
-            {if isset($navbar)}
+        {if !empty($navbar)}
+            <div id="navbar-collapse" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     {foreach $navbar as $key => $value}
                         <li {if $value.active === true} class="active"{elseif $value.complete === true} class="complete"{/if}>
@@ -42,8 +44,8 @@
                         </li>
                     {/foreach}
                 </ul>
-            {/if}
-        </div>
+            </div>
+        {/if}
     </nav>
     <main id="content">
         <h2>{$TITLE}</h2>
