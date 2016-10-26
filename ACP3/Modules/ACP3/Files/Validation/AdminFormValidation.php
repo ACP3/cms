@@ -4,7 +4,6 @@ namespace ACP3\Modules\ACP3\Files\Validation;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files\Validation\ValidationRules\IsExternalFileValidationRule;
-use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 
 /**
  * Class AdminFormValidation
@@ -82,16 +81,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ])
             ->addConstraint(
-                UriAliasValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'alias',
-                    'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
-                    'extra' => [
-                        'path' => $this->uriAlias
-                    ]
-                ])
-            ->addConstraint(
                 Categories\Validation\ValidationRules\CategoryExistsValidationRule::class,
                 [
                     'data' => $formData,
@@ -112,6 +101,12 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                         ]
                     ]);
         }
+
+        $this->validator->dispatchValidationEvent(
+            'seo.validation.validate_uri_alias',
+            $formData,
+            ['path' => $this->uriAlias]
+        );
 
         $this->validator->validate();
     }

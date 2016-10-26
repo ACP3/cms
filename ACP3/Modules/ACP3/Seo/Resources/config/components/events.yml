@@ -17,12 +17,19 @@ services:
     tags:
       - { name: core.eventListener, event: core.layout.meta, method: renderSeoMetaTags }
 
-  seo.event.on_layout.seo_render_form_fields_listener:
+  seo.event.on_layout_seo_render_form_fields_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\OnLayoutSeoRenderFormFieldsListener
     arguments:
       - '@core.view'
     tags:
       - { name: core.eventListener, event: seo.layout.render_form_fields, method: renderSeoFormFields }
+
+  seo.event.on_validation_validate_uri_alias_listener:
+    class: ACP3\Modules\ACP3\Seo\Event\Listener\OnSeoValidationValidateUriAlias
+    arguments:
+      - '@core.lang'
+    tags:
+      - { name: core.eventListener, event: seo.validation.validate_uri_alias, method: validateUriAlias }
 
   seo.event.update_seo_cache_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\UpdateSeoCacheOnModelAfterSaveListener
