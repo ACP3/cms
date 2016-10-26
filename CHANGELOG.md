@@ -6,10 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2016-xx-xx
 ### Added
+- added a new system config option which makes it possible to enable or disable the page cache 
 
 ### Changed
 
 ### Fixed
+- fixed the page cache invalidation notification when in production mode
 
 ## [4.1.29] - 2016-10-23
 ### Added
