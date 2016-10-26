@@ -8,7 +8,6 @@
         <dependencies>
             <module>permissions</module>
             <module>system</module>
-            <module>seo</module>
         </dependencies>
     </info>
 </module>
