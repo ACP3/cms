@@ -7,7 +7,8 @@
 namespace ACP3\Core\Cache;
 
 use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
+use ACP3\Core\Settings\SettingsInterface;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -16,11 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 trait CacheResponseTrait
 {
-    /**
-     * @return UserModel
-     */
-    abstract protected function getUser();
-
     /**
      * @return Response
      */
@@ -32,21 +28,38 @@ trait CacheResponseTrait
     abstract protected function getApplicationMode();
 
     /**
+     * @return SettingsInterface
+     */
+    abstract protected function getSettings();
+
+    /**
      * @param int $lifetime
      */
     public function setCacheResponseCacheable($lifetime = 60)
     {
         $response = $this->getResponse();
 
-        if ($this->getApplicationMode() === ApplicationMode::DEVELOPMENT) {
+        if ($this->disallowPageCache()) {
             $response->setPrivate();
             $lifetime = null;
+        } else {
+            $response->setPublic();
         }
 
         $response
             ->setVary('X-User-Context-Hash')
-            ->setPublic()
             ->setMaxAge($lifetime)
             ->setSharedMaxAge($lifetime);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function disallowPageCache()
+    {
+        $systemSettings = $this->getSettings()->getSettings(Schema::MODULE_NAME);
+
+        return $this->getApplicationMode() === ApplicationMode::DEVELOPMENT
+        || $systemSettings['page_cache_is_enabled'] == 0;
     }
 }

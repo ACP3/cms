@@ -21,14 +21,15 @@ class OnModelAfterSaveListener
      * OnModelAfterSaveListener constructor.
      * @param SettingsInterface $settings
      */
-    public function __construct(
-        SettingsInterface $settings)
+    public function __construct(SettingsInterface $settings)
     {
         $this->settings = $settings;
     }
 
     public function invalidatePageCache()
     {
-        $this->settings->saveSettings(['page_cache_is_valid' => false], Schema::MODULE_NAME);
+        if ($this->settings->getSettings(Schema::MODULE_NAME)['page_cache_is_enabled'] == 1) {
+            $this->settings->saveSettings(['page_cache_is_valid' => false], Schema::MODULE_NAME);
+        }
     }
 }

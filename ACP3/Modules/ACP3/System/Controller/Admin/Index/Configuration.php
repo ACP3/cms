@@ -81,6 +81,10 @@ class Configuration extends Core\Controller\AbstractAdminAction
                 'maintenance_mode',
                 $systemSettings['maintenance_mode']
             ),
+            'page_cache' => $this->formsHelper->yesNoCheckboxGenerator(
+                'page_cache_is_enabled',
+                $systemSettings['page_cache_is_enabled']
+            ),
             'cache_images' => $this->formsHelper->yesNoCheckboxGenerator(
                 'cache_images',
                 $systemSettings['cache_images']
@@ -136,6 +140,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
                     'mailer_type' => $formData['mailer_type'],
                     'maintenance_message' => $formData['maintenance_message'],
                     'maintenance_mode' => (int)$formData['maintenance_mode'],
+                    'page_cache_is_enabled' => (int)$formData['page_cache_is_enabled'],
                     'wysiwyg' => $formData['wysiwyg']
                 ];
 

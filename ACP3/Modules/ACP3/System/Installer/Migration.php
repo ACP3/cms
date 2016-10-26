@@ -139,6 +139,9 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             62 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'page_cache_is_valid', 1);",
+            ],
+            63 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'page_cache_is_enabled', 1);",
             ]
         ];
     }

@@ -139,19 +139,19 @@ abstract class AbstractWidgetAction implements ActionInterface
     }
 
     /**
-     * @return \ACP3\Modules\ACP3\Users\Model\UserModel
-     */
-    protected function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * @return \ACP3\Core\View
      */
     protected function getView()
     {
         return $this->view;
+    }
+
+    /**
+     * @return Core\Settings\SettingsInterface
+     */
+    protected function getSettings()
+    {
+        return $this->config;
     }
 
     /**
