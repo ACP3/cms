@@ -2,11 +2,17 @@ services:
   system.event.listener.on_model_after_save_listener:
     class: ACP3\Modules\ACP3\System\Event\Listener\OnModelAfterSaveListener
     arguments:
-      - '@core.modules'
-      - '@system.model.settingsrepository'
+      - '@core.config'
     tags:
       - { name: core.eventListener, event: core.model.after_save, method: invalidatePageCache }
       - { name: core.eventListener, event: core.model.after_delete, method: invalidatePageCache }
+
+  system.event.listener.on_settings_save_before_listener:
+    class: ACP3\Modules\ACP3\System\Event\Listener\OnSettingsSaveBeforeListener
+    arguments:
+      - '@core.modules'
+      - '@system.model.settingsrepository'
+    tags:
       - { name: core.eventListener, event: core.settings.save_before, method: invalidatePageCache }
 
   system.event.listener.on_layout_content_before_listener:
