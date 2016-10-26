@@ -10,7 +10,7 @@
                 {datepicker name=['start', 'end'] value=[$form.start, $form.end]}
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 data_attributes=['seo-slug-base' => 'true'] label={lang t="gallery|title"}}
             </div>
-            {include file="asset:Seo/Partials/tab_seo_fields.tpl" seo=$SEO_FORM_FIELDS}
+            {event name="seo.layout.render_form_fields" SEO_FORM_FIELDS=$SEO_FORM_FIELDS}
         </div>
     </div>
     {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/gallery"}}

@@ -30,7 +30,7 @@
                 {include file="asset:System/Partials/form_group.input_url.tpl" name="uri" value=$form.uri maxlength=120 label={lang t="news|uri"}}
                 {include file="asset:System/Partials/form_group.select.tpl" options=$target label={lang t="news|target_page"}}
             </div>
-            {include file="asset:Seo/Partials/tab_seo_fields.tpl" seo=$SEO_FORM_FIELDS}
+            {event name="seo.layout.render_form_fields" SEO_FORM_FIELDS=$SEO_FORM_FIELDS}
         </div>
     </div>
     {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/news"}}
