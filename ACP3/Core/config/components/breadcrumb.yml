@@ -11,5 +11,5 @@ services:
   core.breadcrumb.title:
     class: ACP3\Core\Breadcrumb\Title
     arguments:
-      - '@core.event_dispatcher'
       - '@core.breadcrumb'
+      - '@core.event_dispatcher'

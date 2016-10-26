@@ -31,10 +31,10 @@ class UriAliasValidationRule extends AbstractValidationRule
     /**
      * UriAliasValidationRule constructor.
      *
-     * @param \ACP3\Core\Environment\ApplicationPath                          $appPath
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule
-     * @param \ACP3\Core\Validation\ValidationRules\UriSafeValidationRule     $uriSafeValidationRule
-     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository                      $seoRepository
+     * @param \ACP3\Core\Validation\ValidationRules\UriSafeValidationRule $uriSafeValidationRule
+     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
         Core\Environment\ApplicationPath $appPath,
