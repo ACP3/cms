@@ -4,7 +4,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Validation;
 use ACP3\Core;
 use ACP3\Core\Validation\AbstractFormValidation;
 use ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaValidationRule;
-use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidationRule;
+use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountNotExistsValidationRule;
 
 /**
  * Class SubscribeFormValidation
@@ -12,7 +12,6 @@ use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidat
  */
 class SubscribeFormValidation extends AbstractFormValidation
 {
-
     /**
      * @inheritdoc
      */
@@ -27,7 +26,7 @@ class SubscribeFormValidation extends AbstractFormValidation
                     'field' => 'salutation',
                     'message' => $this->translator->t('newsletter', 'select_salutation'),
                     'extra' => [
-                        'haystack' => [1, 2]
+                        'haystack' => [0, 1, 2]
                     ]
                 ])
             ->addConstraint(
@@ -38,11 +37,11 @@ class SubscribeFormValidation extends AbstractFormValidation
                     'message' => $this->translator->t('system', 'wrong_email_format')
                 ])
             ->addConstraint(
-                AccountExistsValidationRule::class,
+                AccountNotExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->translator->t('newsletter', 'account_not_exists')
+                    'message' => $this->translator->t('newsletter', 'account_exists')
                 ])
             ->addConstraint(
                 CaptchaValidationRule::class,

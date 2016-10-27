@@ -32,3 +32,10 @@ services:
       - '@newsletter.model.accountrepository'
     tags:
       - { name: core.validation.validation_rule }
+
+  newsletter.validation.validation_rules.account_not_exists_validation_rule:
+    class: ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountNotExistsValidationRule
+    arguments:
+      - '@newsletter.model.accountrepository'
+    tags:
+      - { name: core.validation.validation_rule }

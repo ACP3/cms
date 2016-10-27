@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - fixed the redirect url when posting a comment
 - fixed the URL of delete controller action when performing a mass removal of comments
 - fixed the language switcher drop down of the installer
+- fixed the newsletter subscription
 
 ## [4.1.28] - 2016-10-05
 ### Fixed

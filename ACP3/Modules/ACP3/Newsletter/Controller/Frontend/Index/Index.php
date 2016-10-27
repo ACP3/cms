@@ -72,6 +72,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         ];
 
         $salutations = [
+            0 => $this->translator->t('newsletter', 'salutation_unspecified'),
             1 => $this->translator->t('newsletter', 'salutation_female'),
             2 => $this->translator->t('newsletter', 'salutation_male')
         ];
