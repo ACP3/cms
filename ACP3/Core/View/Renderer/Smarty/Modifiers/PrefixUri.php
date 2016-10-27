@@ -29,6 +29,6 @@ class PrefixUri extends AbstractModifier
             return 'http://' . $value;
         }
 
-        return '';
+        return $value;
     }
 }

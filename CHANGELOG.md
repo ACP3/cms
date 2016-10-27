@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 ### Fixed
+- fixed the PrefixUri class when there is an URL given with a valid protocol
 
 ## [4.1.30] - 2016-10-27
 ### Added
