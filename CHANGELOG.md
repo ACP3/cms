@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.30] - 2016-10-27
+### Added
+- added a new system config option which makes it possible to enable or disable the page cache
+- made it possible to dispatch custom events to the validator to make the form validation much more flexible
+
+### Changed
+- made it possible to run the ACP3 without the SEO module
+- the SEO form fields are now getting injected via a template event 
+
+### Fixed
+- fixed the page cache invalidation notification when in production mode
+- fixed the newsletter subscription
+
 ## [4.1.29] - 2016-10-23
 ### Added
 - Added the possibility to clear just the page cache

@@ -43,6 +43,6 @@ class OnLayoutMetaListener
     {
         $this->view->assign('META', $this->metaStatements->getMetaTags());
 
-        echo $this->view->fetchTemplate('Seo/Partials/meta.tpl');
+        $this->view->displayTemplate('Seo/Partials/meta.tpl');
     }
 }

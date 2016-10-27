@@ -4,7 +4,6 @@ namespace ACP3\Modules\ACP3\News\Validation;
 use ACP3\Core;
 use ACP3\Core\Validation\ValidationRules\ExternalLinkValidationRule;
 use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 
 /**
  * Class AdminFormValidation
@@ -67,17 +66,13 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => ['link_title', 'uri', 'target'],
                     'message' => $this->translator->t('news', 'complete_hyperlink_statements')
-                ])
-            ->addConstraint(
-                UriAliasValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'alias',
-                    'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
-                    'extra' => [
-                        'path' => $this->uriAlias
-                    ]
                 ]);
+
+        $this->validator->dispatchValidationEvent(
+            'seo.validation.validate_uri_alias',
+            $formData,
+            ['path' => $this->uriAlias]
+        );
 
         $this->validator->validate();
     }

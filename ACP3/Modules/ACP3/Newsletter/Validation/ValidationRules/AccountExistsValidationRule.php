@@ -34,6 +34,15 @@ class AccountExistsValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
+        return $this->checkAccountExists($data);
+    }
+
+    /**
+     * @param string $data
+     * @return bool
+     */
+    protected function checkAccountExists($data)
+    {
         return $this->accountRepository->accountExists($data);
     }
 }

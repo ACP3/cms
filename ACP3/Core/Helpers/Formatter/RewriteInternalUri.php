@@ -2,7 +2,6 @@
 namespace ACP3\Core\Helpers\Formatter;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 
 /**
  * Class RewriteInternalUri
@@ -27,31 +26,31 @@ class RewriteInternalUri
      */
     protected $router;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule
+     * @var Core\Validation\ValidationRules\InternalUriValidationRule
      */
-    protected $uriAliasValidationRule;
+    private $internalUriValidationRule;
 
     /**
      * RewriteInternalUri constructor.
      *
-     * @param \ACP3\Core\Environment\ApplicationPath                                   $appPath
-     * @param \ACP3\Core\Modules\Helper\ControllerActionExists                         $controllerActionExists
-     * @param \ACP3\Core\Http\RequestInterface                                         $request
-     * @param \ACP3\Core\Router\RouterInterface                                               $router
-     * @param \ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule $uriAliasValidationRule
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Modules\Helper\ControllerActionExists $controllerActionExists
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Router\RouterInterface $router
+     * @param Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule
      */
     public function __construct(
         Core\Environment\ApplicationPath $appPath,
         Core\Modules\Helper\ControllerActionExists $controllerActionExists,
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
-        UriAliasValidationRule $uriAliasValidationRule
+        Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule
     ) {
         $this->appPath = $appPath;
         $this->controllerActionExists = $controllerActionExists;
         $this->request = $request;
         $this->router = $router;
-        $this->uriAliasValidationRule = $uriAliasValidationRule;
+        $this->internalUriValidationRule = $internalUriValidationRule;
     }
 
     /**
@@ -79,7 +78,7 @@ class RewriteInternalUri
      */
     private function rewriteInternalUriCallback(array $matches)
     {
-        if ($this->uriAliasValidationRule->isValid($matches[7]) !== true) {
+        if ($this->internalUriValidationRule->isValid($matches[7]) === true) {
             $resourceParts = explode('/', $matches[7]);
             $path = $this->getResourcePath($resourceParts);
             if ($this->controllerActionExists->controllerActionExists($path) === true) {

@@ -2,7 +2,6 @@
 namespace ACP3\Modules\ACP3\Gallery\Validation;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 
 /**
  * Class GalleryFormValidation
@@ -47,17 +46,13 @@ class GalleryFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'title',
                     'message' => $this->translator->t('gallery', 'type_in_gallery_title')
-                ])
-            ->addConstraint(
-                UriAliasValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'alias',
-                    'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
-                    'extra' => [
-                        'path' => $this->uriAlias
-                    ]
                 ]);
+
+        $this->validator->dispatchValidationEvent(
+            'seo.validation.validate_uri_alias',
+            $formData,
+            ['path' => $this->uriAlias]
+        );
 
         $this->validator->validate();
     }

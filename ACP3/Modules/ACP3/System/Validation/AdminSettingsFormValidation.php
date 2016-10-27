@@ -145,6 +145,16 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
+                    'field' => 'page_cache_is_enabled',
+                    'message' => $this->translator->t('system', 'select_enable_page_cache'),
+                    'extra' => [
+                        'haystack' => [0, 1]
+                    ]
+                ])
+            ->addConstraint(
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
+                [
+                    'data' => $formData,
                     'field' => 'cache_images',
                     'message' => $this->translator->t('system', 'select_cache_images'),
                     'extra' => [

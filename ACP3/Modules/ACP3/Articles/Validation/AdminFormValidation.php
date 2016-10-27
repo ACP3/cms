@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Articles\Validation;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus;
-use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 
 /**
  * Class AdminFormValidation
@@ -87,20 +86,17 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'length' => 3
                     ]
-                ])
-            ->addConstraint(
-                UriAliasValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'alias',
-                    'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
-                    'extra' => [
-                        'path' => $this->uriAlias
-                    ]
                 ]);
+
         if ($this->acl->hasPermission('admin/menus/items/create') === true && isset($formData['create']) === true) {
             $this->validateMenuItem($formData);
         }
+
+        $this->validator->dispatchValidationEvent(
+            'seo.validation.validate_uri_alias',
+            $formData,
+            ['path' => $this->uriAlias]
+        );
 
         $this->validator->validate();
     }

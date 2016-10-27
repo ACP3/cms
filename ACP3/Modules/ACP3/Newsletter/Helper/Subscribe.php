@@ -104,13 +104,9 @@ class Subscribe
     {
         $hash = $this->secureHelper->generateSaltedPassword('', mt_rand(0, microtime(true)), 'sha512');
         $mailSent = $this->sendDoubleOptInEmail($emailAddress, $hash);
-        $bool = false;
+        $result = $this->addNewsletterAccount($emailAddress, $salutation, $firstName, $lastName, $hash);
 
-        if ($mailSent === true) {
-            $bool = $this->addNewsletterAccount($emailAddress, $salutation, $firstName, $lastName, $hash);
-        }
-
-        return $mailSent === true && $bool !== false;
+        return $mailSent === true && $result !== false;
     }
 
     /**

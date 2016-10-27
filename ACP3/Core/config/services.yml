@@ -4,6 +4,7 @@ imports:
   - { resource: components/application.yml }
   - { resource: components/assets.yml }
   - { resource: components/authentication.yml }
+  - { resource: components/breadcrumb.yml }
   - { resource: components/controller.yml }
   - { resource: components/database.yml }
   - { resource: components/datagrid.yml }
@@ -17,7 +18,6 @@ imports:
   - { resource: components/view.yml }
   - { resource: components/wysiwyg.yml }
   - { resource: ../../Modules/ACP3/Permissions/Resources/config/services.yml }
-  - { resource: ../../Modules/ACP3/Seo/Resources/config/services.yml }
   - { resource: ../../Modules/ACP3/System/Resources/config/services.yml }
   - { resource: ../../Modules/ACP3/Users/Resources/config/services.yml }
 

@@ -1,9 +1,11 @@
 <?php
 namespace ACP3\Core\Validation;
 
+use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException;
 use ACP3\Core\Validation\ValidationRules\ValidationRuleInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Validator
@@ -11,6 +13,10 @@ use ACP3\Core\Validation\ValidationRules\ValidationRuleInterface;
  */
 class Validator
 {
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
     /**
      * @var \ACP3\Core\Validation\ValidationRules\ValidationRuleInterface[]
      */
@@ -23,6 +29,15 @@ class Validator
      * @var array
      */
     protected $constraints = [];
+
+    /**
+     * Validator constructor.
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
 
     /**
      * @param \ACP3\Core\Validation\ValidationRules\ValidationRuleInterface $validationRule
@@ -97,6 +112,22 @@ class Validator
         return str_replace('_', '-', $field);
     }
 
+    /**
+     * @param string $eventName
+     * @param array $formData
+     * @param array $extra
+     */
+    public function dispatchValidationEvent($eventName, array $formData, array $extra = [])
+    {
+        $this->eventDispatcher->dispatch($eventName, new FormValidationEvent($this, $formData, $extra));
+    }
+
+    /**
+     * Validates a form
+     *
+     * @throws ValidationFailedException
+     * @throws ValidationRuleNotFoundException
+     */
     public function validate()
     {
         $this->errors = [];

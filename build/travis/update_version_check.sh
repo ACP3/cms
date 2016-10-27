@@ -1,9 +1,8 @@
 #!/bin/bash
 
-TRAVIS_PHP_VERSION=$1
 TRAVIS_TAG=$2
 
-if [[ ${TRAVIS_PHP_VERSION} = "7.0" && -n ${TRAVIS_TAG} ]]
+if [[ -n ${TRAVIS_TAG} ]]
 then
     if [[ ${TRAVIS_TAG} == v* ]]
     then

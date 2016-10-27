@@ -13,6 +13,7 @@ use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Core\Validation\ValidationRules\FormTokenValidationRule;
 use ACP3\Core\Validation\Validator;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Class AbstractFormValidationTest
@@ -26,6 +27,10 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
      * @var \ACP3\Core\Validation\AbstractFormValidation
      */
     protected $formValidation;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $eventDispatcherMock;
     /**
      * @var Translator|\PHPUnit_Framework_MockObject_MockObject
      */
@@ -53,7 +58,10 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['t'])
             ->getMock();
-        $this->validator = new Validator();
+        $this->eventDispatcherMock = $this->getMockBuilder(EventDispatcher::class)
+            ->getMock();
+
+        $this->validator = new Validator($this->eventDispatcherMock);
     }
 
     /**

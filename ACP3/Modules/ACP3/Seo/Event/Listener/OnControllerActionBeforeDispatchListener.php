@@ -40,9 +40,9 @@ class OnControllerActionBeforeDispatchListener
     /**
      * OnFrontControllerBeforeDispatchListener constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface             $request
-     * @param \ACP3\Core\Router\RouterInterface                   $router
-     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases   $aliases
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Router\RouterInterface $router
+     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
      */
     public function __construct(

@@ -6,7 +6,6 @@
             <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication_period"}</a></li>
             <li><a href="#tab-2" data-toggle="tab">{lang t="news|news"}</a></li>
             <li><a href="#tab-3" data-toggle="tab">{lang t="news|hyperlink"}</a></li>
-            <li><a href="#tab-4" data-toggle="tab">{lang t="seo|seo"}</a></li>
         </ul>
         <div class="tab-content">
             <div id="tab-1" class="tab-pane fade in active">
@@ -31,9 +30,7 @@
                 {include file="asset:System/Partials/form_group.input_url.tpl" name="uri" value=$form.uri maxlength=120 label={lang t="news|uri"}}
                 {include file="asset:System/Partials/form_group.select.tpl" options=$target label={lang t="news|target_page"}}
             </div>
-            <div id="tab-4" class="tab-pane fade">
-                {include file="asset:Seo/Partials/seo_fields.tpl" seo=$SEO_FORM_FIELDS}
-            </div>
+            {event name="seo.layout.render_form_fields" SEO_FORM_FIELDS=$SEO_FORM_FIELDS}
         </div>
     </div>
     {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/news"}}

@@ -93,7 +93,7 @@ services:
       - '@core.modules.helper.controllerActionExists'
       - '@core.http.request'
       - '@core.router'
-      - '@seo.validation.validation_rules.uri_alias_validation_rule'
+      - '@core.validation.validation_rules.internal_uri_validation_rule'
 
   slugify:
     class: Cocur\Slugify\Slugify

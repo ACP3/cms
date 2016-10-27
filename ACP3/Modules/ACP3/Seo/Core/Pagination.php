@@ -28,11 +28,11 @@ class Pagination extends \ACP3\Core\Pagination
     /**
      * Pagination constructor.
      *
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                              $user
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
      * @param \ACP3\Modules\ACP3\Seo\Core\Breadcrumb\Title $title
-     * @param \ACP3\Core\I18n\Translator                   $translator
-     * @param \ACP3\Core\Http\RequestInterface             $request
-     * @param \ACP3\Core\Router\RouterInterface                   $router
+     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Router\RouterInterface $router
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
      */
     public function __construct(

@@ -2,7 +2,6 @@
 namespace ACP3\Modules\ACP3\Seo\Validation;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 
 /**
  * Class AdminFormValidation
@@ -42,16 +41,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'message' => $this->translator->t('seo', 'type_in_valid_resource')
                 ])
             ->addConstraint(
-                UriAliasValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'alias',
-                    'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
-                    'extra' => [
-                        'path' => $this->uriAlias
-                    ]
-                ])
-            ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
@@ -61,6 +50,12 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                         'haystack' => [0, 1, 2, 3, 4]
                     ]
                 ]);
+
+        $this->validator->dispatchValidationEvent(
+            'seo.validation.validate_uri_alias',
+            $formData,
+            ['path' => $this->uriAlias]
+        );
 
         $this->validator->validate();
     }

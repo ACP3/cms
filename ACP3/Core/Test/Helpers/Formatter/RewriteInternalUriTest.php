@@ -11,8 +11,8 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Formatter\RewriteInternalUri;
 use ACP3\Core\Http\Request;
 use ACP3\Core\Modules\Helper\ControllerActionExists;
+use ACP3\Core\Validation\ValidationRules\InternalUriValidationRule;
 use ACP3\Modules\ACP3\Seo\Core\Router\Router;
-use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 use Symfony\Component\HttpFoundation\ServerBag;
 
 class RewriteInternalUriTest extends \PHPUnit_Framework_TestCase
@@ -40,7 +40,7 @@ class RewriteInternalUriTest extends \PHPUnit_Framework_TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $uriAliasValidationRuleMock;
+    private $internalUriValidationRule;
 
     protected function setUp()
     {
@@ -51,7 +51,7 @@ class RewriteInternalUriTest extends \PHPUnit_Framework_TestCase
             $this->controllerActionExistsMock,
             $this->requestMock,
             $this->routerMock,
-            $this->uriAliasValidationRuleMock
+            $this->internalUriValidationRule
         );
     }
 
@@ -69,7 +69,7 @@ class RewriteInternalUriTest extends \PHPUnit_Framework_TestCase
         $this->routerMock = $this->getMockBuilder(Router::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->uriAliasValidationRuleMock = $this->getMockBuilder(UriAliasValidationRule::class)
+        $this->internalUriValidationRule = $this->getMockBuilder(InternalUriValidationRule::class)
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -94,7 +94,7 @@ HTML;
     {
         $this->setUpAppPathExpectations();
         $this->setUpRequestMockExpectations();
-        $this->setUpValidationRuleMockExpectations(1, 'foo/bar/baz/', false);
+        $this->setUpValidationRuleMockExpectations(1, 'foo/bar/baz/', true);
         $this->setUpControllerActionExistsMockExpectations(1, 'frontend/foo/bar/baz', false);
         $this->setUpRouterMockExpectations(0, '', '');
 
@@ -110,7 +110,7 @@ HTML;
     {
         $this->setUpAppPathExpectations();
         $this->setUpRequestMockExpectations();
-        $this->setUpValidationRuleMockExpectations(1, 'foo/bar/baz/', false);
+        $this->setUpValidationRuleMockExpectations(1, 'foo/bar/baz/', true);
         $this->setUpControllerActionExistsMockExpectations(1, 'frontend/foo/bar/baz', true);
         $this->setUpRouterMockExpectations(1, 'foo/bar/baz/', '/foo-bar/');
 
@@ -153,7 +153,7 @@ HTML;
      */
     private function setUpValidationRuleMockExpectations($callCount, $uri, $isValid)
     {
-        $this->uriAliasValidationRuleMock->expects($this->exactly($callCount))
+        $this->internalUriValidationRule->expects($this->exactly($callCount))
             ->method('isValid')
             ->with($uri)
             ->willReturn($isValid);
