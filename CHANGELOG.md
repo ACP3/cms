@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The captcha validation is now handled by the new event `captcha.validation.validate_captcha`
 
 ### Fixed
-- fixed the PrefixUri class when there is an URL given with a valid protocol
+- fixed the Smarty modifier plugin `PrefixUri` when there is an URL given with a valid protocol
 
 ## [4.1.30] - 2016-10-27
 ### Added
