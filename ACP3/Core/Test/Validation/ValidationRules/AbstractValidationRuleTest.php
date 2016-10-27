@@ -19,6 +19,7 @@ abstract class AbstractValidationRuleTest extends \PHPUnit_Framework_TestCase
 
         $this->validator = $this
             ->getMockBuilder(\ACP3\Core\Validation\Validator::class)
+            ->disableOriginalConstructor()
             ->getMock();
 
         $this->validator->registerValidationRule($this->validationRule);

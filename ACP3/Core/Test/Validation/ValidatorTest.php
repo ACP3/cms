@@ -4,9 +4,14 @@ namespace ACP3\Core\Test\Validation\ValidationRules;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 use ACP3\Core\Validation\Validator;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $eventDispatcherMock;
     /**
      * @var Validator
      */
@@ -16,7 +21,10 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->validator = new Validator();
+        $this->eventDispatcherMock = $this->getMockBuilder(EventDispatcher::class)
+            ->getMock();
+
+        $this->validator = new Validator($this->eventDispatcherMock);
     }
 
     public function testValidateValidValidationRuleWithValidValue()
