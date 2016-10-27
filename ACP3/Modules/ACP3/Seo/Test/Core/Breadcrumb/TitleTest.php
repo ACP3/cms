@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Seo\Test\Core\Breadcrumb;
 
 
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\Seo\Core\Breadcrumb\Title;
+use ACP3\Modules\ACP3\System\Core\Breadcrumb\Title;
 
 class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
 {

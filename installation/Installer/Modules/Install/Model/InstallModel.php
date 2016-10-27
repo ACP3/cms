@@ -149,10 +149,8 @@ class InstallModel
                 'date_time_zone' => $formData['date_time_zone'],
                 'maintenance_message' => $this->translator->t('install', 'offline_message'),
                 'lang' => $this->translator->getLocale(),
-                'design' => $formData['design']
-            ],
-            \ACP3\Modules\ACP3\Seo\Installer\Schema::MODULE_NAME => [
-                'title' => !empty($formData['title']) ? $formData['title'] : 'ACP3'
+                'design' => $formData['design'],
+                'site_title' => !empty($formData['title']) ? $formData['title'] : 'ACP3'
             ],
             \ACP3\Modules\ACP3\Users\Installer\Schema::MODULE_NAME => [
                 'mail' => $formData['mail']

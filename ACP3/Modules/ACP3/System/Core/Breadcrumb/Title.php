@@ -4,11 +4,11 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Seo\Core\Breadcrumb;
+namespace ACP3\Modules\ACP3\System\Core\Breadcrumb;
 
 use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\Seo\Installer\Schema;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -28,8 +28,8 @@ class Title extends \ACP3\Core\Breadcrumb\Title
         parent::__construct($steps, $eventDispatcher);
 
         $settings = $config->getSettings(Schema::MODULE_NAME);
-        if (isset($settings['title'])) {
-            $this->siteTitle = $settings['title'];
+        if (isset($settings['site_title'])) {
+            $this->siteTitle = $settings['site_title'];
         }
     }
 }

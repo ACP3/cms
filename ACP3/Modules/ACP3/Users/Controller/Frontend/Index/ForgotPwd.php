@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Seo\Installer\Schema;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
 /**
@@ -146,13 +146,13 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
     protected function sendPasswordChangeEmail(array $user, $newPassword)
     {
         $host = $this->request->getHost();
-        $seoSettings = $this->config->getSettings(Schema::MODULE_NAME);
+        $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
 
         $subject = $this->translator->t(
             'users',
             'forgot_pwd_mail_subject',
             [
-                '{title}' => $seoSettings['title'],
+                '{title}' => $systemSettings['site_title'],
                 '{host}' => $host
             ]
         );
@@ -162,7 +162,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
                 '{name}' => $user['nickname'],
                 '{mail}' => $user['mail'],
                 '{password}' => $newPassword,
-                '{title}' => $seoSettings['title'],
+                '{title}' => $systemSettings['site_title'],
                 '{host}' => $host
             ]
         );

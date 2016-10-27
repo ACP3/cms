@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - The captcha validation is now handled by the new event `captcha.validation.validate_captcha`
+- moved the site title from the SEO module to the system module
 
 ### Fixed
 - fixed the Smarty modifier plugin `PrefixUri` when there is an URL given with a valid protocol

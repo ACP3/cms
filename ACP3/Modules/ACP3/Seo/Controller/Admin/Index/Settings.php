@@ -60,7 +60,6 @@ class Settings extends Core\Controller\AbstractAdminAction
 
         $seoSettings = $this->config->getSettings(Seo\Installer\Schema::MODULE_NAME);
 
-        // Robots
         $robots = [
             1 => $this->translator->t('seo', 'robots_index_follow'),
             2 => $this->translator->t('seo', 'robots_index_nofollow'),
@@ -89,12 +88,9 @@ class Settings extends Core\Controller\AbstractAdminAction
                 'meta_description' => $this->get('core.helpers.secure')->strEncode($formData['meta_description']),
                 'meta_keywords' => $this->get('core.helpers.secure')->strEncode($formData['meta_keywords']),
                 'robots' => (int)$formData['robots'],
-                'title' => $this->get('core.helpers.secure')->strEncode($formData['title']),
             ];
 
-            $bool = $this->config->saveSettings($data, Seo\Installer\Schema::MODULE_NAME);
-
-            return $bool;
+            return $this->config->saveSettings($data, Seo\Installer\Schema::MODULE_NAME);
         });
     }
 }

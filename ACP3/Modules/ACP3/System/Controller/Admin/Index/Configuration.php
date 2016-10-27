@@ -119,7 +119,6 @@ class Configuration extends Core\Controller\AbstractAdminAction
             function () use ($formData) {
                 $this->systemValidator->validate($formData);
 
-                // Update the system config
                 $data = [
                     'cache_images' => (int)$formData['cache_images'],
                     'cache_lifetime' => (int)$formData['cache_lifetime'],
@@ -141,6 +140,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
                     'maintenance_message' => $formData['maintenance_message'],
                     'maintenance_mode' => (int)$formData['maintenance_mode'],
                     'page_cache_is_enabled' => (int)$formData['page_cache_is_enabled'],
+                    'site_title' => $this->get('core.helpers.secure')->strEncode($formData['site_title']),
                     'wysiwyg' => $formData['wysiwyg']
                 ];
 

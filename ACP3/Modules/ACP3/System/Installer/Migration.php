@@ -132,7 +132,8 @@ class Migration extends Modules\Installer\AbstractMigration
                 "UPDATE `{pre}settings` SET `name` = 'cache_lifetime' WHERE `module_id` = {moduleId} AND `name` = 'cache_minify';"
             ],
             60 => [
-                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'security_secret', '" . uniqid(mt_rand(), true) . "');",
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'security_secret', '" . uniqid(mt_rand(),
+                    true) . "');",
             ],
             61 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'cache_vary_user', 0);",
@@ -142,6 +143,10 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             63 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'page_cache_is_enabled', 1);",
+            ],
+            64 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'site_title', '');",
+                $this->migrateToVersion64()
             ]
         ];
     }
@@ -220,6 +225,30 @@ class Migration extends Modules\Installer\AbstractMigration
                     "DELETE FROM `{pre}acl_resources` WHERE `module_id` = {$minifyModuleId};",
                     "DELETE FROM `{pre}modules` WHERE `id` = {$minifyModuleId};",
                 ]);
+            }
+
+            return $result;
+        };
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function migrateToVersion64()
+    {
+        return function () {
+            $result = true;
+
+            $container = $this->schemaHelper->getContainer();
+            if ($container->get('core.modules')->isInstalled('seo')) {
+                $seoSettings = $container->get('core.config')->getSettings('seo');
+
+                if (isset($seoSettings['title'])) {
+                    return $container->get('core.config')->saveSettings(
+                        ['site_title' => $seoSettings['title']],
+                        Schema::MODULE_NAME
+                    );
+                }
             }
 
             return $result;

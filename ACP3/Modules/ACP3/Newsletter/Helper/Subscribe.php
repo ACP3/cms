@@ -141,16 +141,16 @@ class Subscribe
     {
         $url = $this->router->route('newsletter/index/activate/hash_' . $hash, true);
 
-        $seoSettings = $this->config->getSettings(\ACP3\Modules\ACP3\Seo\Installer\Schema::MODULE_NAME);
+        $systemSettings = $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME);
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-        $subject = $this->translator->t('newsletter', 'subscribe_mail_subject', ['%title%' => $seoSettings['title']]);
+        $subject = $this->translator->t('newsletter', 'subscribe_mail_subject', ['%title%' => $systemSettings['site_title']]);
         $body = $this->translator->t('newsletter', 'subscribe_mail_body',
                 ['{host}' => $this->request->getHost()]) . "\n\n";
 
         $from = [
             'email' => $settings['mail'],
-            'name' => $seoSettings['title']
+            'name' => $systemSettings['site_title']
         ];
 
         $this->mailer
