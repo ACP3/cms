@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 2016-xx-xx
+## [4.1.30] - 2016-10-27
 ### Added
 - added a new system config option which makes it possible to enable or disable the page cache
 - made it possible to dispatch custom events to the validator to make the form validation much more flexible
@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - fixed the page cache invalidation notification when in production mode
+- fixed the newsletter subscription
 
 ## [4.1.29] - 2016-10-23
 ### Added
@@ -31,7 +32,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - fixed the redirect url when posting a comment
 - fixed the URL of delete controller action when performing a mass removal of comments
 - fixed the language switcher drop down of the installer
-- fixed the newsletter subscription
 
 ## [4.1.28] - 2016-10-05
 ### Fixed
