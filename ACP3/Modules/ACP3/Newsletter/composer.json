@@ -24,6 +24,9 @@
     "acp3/module-system": "^4.1.30",
     "acp3/module-users": "^4.1.30"
   },
+  "suggest": {
+    "acp3/module-captcha": "^4.1.30"
+  },
   "autoload": {
     "psr-4": {
       "ACP3\\Modules\\ACP3\\Newsletter\\": ""
