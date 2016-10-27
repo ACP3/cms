@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 ### Changed
+- The captcha validation is now handled by the new event `captcha.validation.validate_captcha`
 
 ### Fixed
 - fixed the PrefixUri class when there is an URL given with a valid protocol

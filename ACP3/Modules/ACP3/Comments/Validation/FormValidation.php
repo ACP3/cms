@@ -2,7 +2,6 @@
 namespace ACP3\Modules\ACP3\Comments\Validation;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaValidationRule;
 use ACP3\Modules\ACP3\Comments\Validation\ValidationRules\FloodBarrierValidationRule;
 
 /**
@@ -53,15 +52,9 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'message',
                     'message' => $this->translator->t('system', 'message_to_short')
-                ])
-            ->addConstraint(
-                CaptchaValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'captcha',
-                    'message' => $this->translator->t('captcha', 'invalid_captcha_entered')
-                ]
-            );
+                ]);
+
+        $this->validator->dispatchValidationEvent('captcha.validation.validate_captcha', $formData);
 
         $this->validator->validate();
     }

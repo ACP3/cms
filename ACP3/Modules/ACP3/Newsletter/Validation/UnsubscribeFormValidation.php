@@ -3,7 +3,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Validation;
 
 use ACP3\Core;
 use ACP3\Core\Validation\AbstractFormValidation;
-use ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaValidationRule;
 use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidationRule;
 
 /**
@@ -33,15 +32,9 @@ class UnsubscribeFormValidation extends AbstractFormValidation
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('newsletter', 'account_not_exists')
-                ])
-            ->addConstraint(
-                CaptchaValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'captcha',
-                    'message' => $this->translator->t('captcha', 'invalid_captcha_entered')
                 ]);
 
+        $this->validator->dispatchValidationEvent('captcha.validation.validate_captcha', $formData);
 
         $this->validator->validate();
     }
