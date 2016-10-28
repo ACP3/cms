@@ -152,21 +152,9 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->setTemplate('Search/Frontend/index.results.tpl');
 
-        $searchResults = $this->processSearchResults($modules, $searchTerm, $area, $sort);
-
-        if (!empty($searchResults)) {
-            ksort($searchResults);
-            return [
-                'results_mods' => $searchResults
-            ];
-        }
-
         return [
-            'no_search_results' => $this->translator->t(
-                'search',
-                'no_search_results',
-                ['%search_term%' => $searchTerm]
-            )
+            'results_mods' => $this->processSearchResults($modules, $searchTerm, $area, $sort),
+            'search_term' => $searchTerm
         ];
     }
 
@@ -181,7 +169,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         $searchResults = [];
         foreach ($this->availableModulesRegistrar->getAvailableModules() as $moduleName => $searchAvailability) {
-            if (in_array($moduleName, $modules)) {
+            if (in_array($moduleName, $modules) && $this->acl->hasPermission('frontend/' . $moduleName)) {
                 $results = $searchAvailability->fetchSearchResults($searchTerm, $area, $sort);
 
                 if (!empty($results)) {
@@ -189,6 +177,8 @@ class Index extends Core\Controller\AbstractFrontendAction
                 }
             }
         }
+        ksort($searchResults);
+
         return $searchResults;
     }
 }
