@@ -20,22 +20,6 @@ services:
     tags:
       - { name: core.eventListener, event: feeds.events.displayFeed.news, method: onDisplayFeed }
 
-  news.event.on_available_modules_listener:
-    class: ACP3\Modules\ACP3\News\Event\Listener\OnAvailableModulesListener
-    tags:
-      - { name: core.eventListener, event: search.events.availableModules, method: onAvailableModules }
-
-  news.event.on_display_search_results_listener:
-    class: ACP3\Modules\ACP3\News\Event\Listener\OnDisplaySearchResultsListener
-    arguments:
-      - '@core.acl'
-      - '@core.date'
-      - '@core.lang'
-      - '@core.router'
-      - '@news.model.newsrepository'
-    tags:
-      - { name: core.eventListener, event: search.events.displaySearchResults, method: onDisplaySearchResults }
-
   news.event.update_news_cache_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\News\Event\Listener\UpdateNewsCacheOnModelAfterSaveListener
     arguments:

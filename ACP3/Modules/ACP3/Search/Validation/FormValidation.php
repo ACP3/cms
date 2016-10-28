@@ -33,11 +33,14 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'message' => $this->translator->t('search', 'no_module_selected')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'area',
-                    'message' => $this->translator->t('search', 'no_area_selected')
+                    'message' => $this->translator->t('search', 'no_area_selected'),
+                    'extra' => [
+                        'haystack' => ['title_content', 'title', 'content']
+                    ]
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,

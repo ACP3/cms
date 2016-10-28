@@ -1,18 +1,20 @@
 <?php
-namespace ACP3\Modules\ACP3\News\Event\Listener;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Modules\ACP3\News\Search;
+
 
 use ACP3\Core\ACL;
 use ACP3\Core\Date;
-use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
+use ACP3\Modules\ACP3\News\Installer\Schema;
 use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
-use ACP3\Modules\ACP3\Search\Event\SearchResultsEvent;
+use ACP3\Modules\ACP3\Search\Utility\SearchAvailabilityInterface;
 
-/**
- * Class OnDisplaySearchResultsListener
- * @package ACP3\Modules\ACP3\News\Event\Listener
- */
-class OnDisplaySearchResultsListener
+class SearchAvailability implements SearchAvailabilityInterface
 {
     /**
      * @var \ACP3\Core\ACL
@@ -22,10 +24,6 @@ class OnDisplaySearchResultsListener
      * @var \ACP3\Core\Date
      */
     private $date;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
@@ -38,46 +36,53 @@ class OnDisplaySearchResultsListener
     /**
      * OnDisplaySearchResultsListener constructor.
      *
-     * @param \ACP3\Core\ACL                               $acl
-     * @param \ACP3\Core\Date                              $date
-     * @param \ACP3\Core\I18n\Translator                   $translator
-     * @param \ACP3\Core\Router\RouterInterface                   $router
+     * @param \ACP3\Core\ACL $acl
+     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Router\RouterInterface $router
      * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
      */
     public function __construct(
         ACL $acl,
         Date $date,
-        Translator $translator,
         RouterInterface $router,
         NewsRepository $newsRepository
     ) {
         $this->acl = $acl;
         $this->date = $date;
-        $this->translator = $translator;
         $this->router = $router;
         $this->newsRepository = $newsRepository;
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Search\Event\SearchResultsEvent $displaySearchResults
+     * @return string
      */
-    public function onDisplaySearchResults(SearchResultsEvent $displaySearchResults)
+    public function getModuleName()
     {
-        if (in_array('news', $displaySearchResults->getModules())
-            && $this->acl->hasPermission('frontend/news') === true) {
-            $fields = $this->mapSearchAreasToFields($displaySearchResults->getAreas());
+        return Schema::MODULE_NAME;
+    }
+
+    /**
+     * @param string $searchTerm
+     * @param string $areas
+     * @param string $sortDirection
+     * @return array
+     */
+    public function fetchSearchResults($searchTerm, $areas, $sortDirection)
+    {
+        if ($this->acl->hasPermission('frontend/news') === true) {
+            $fields = $this->mapSearchAreasToFields($areas);
 
             $results = $this->newsRepository->getAllSearchResults(
                 $fields,
-                $displaySearchResults->getSearchTerm(),
-                $displaySearchResults->getSortDirection(),
+                $searchTerm,
+                $sortDirection,
                 $this->date->getCurrentDateTime()
             );
             $cResults = count($results);
 
             if ($cResults > 0) {
                 $searchResults = [];
-                $searchResults['dir'] = 'news';
+                $searchResults['dir'] = $this->getModuleName();
                 for ($i = 0; $i < $cResults; ++$i) {
                     $searchResults['results'][$i] = $results[$i];
                     $searchResults['results'][$i]['hyperlink'] = $this->router->route(
@@ -85,12 +90,11 @@ class OnDisplaySearchResultsListener
                     );
                 }
 
-                $displaySearchResults->addSearchResultsByModule(
-                    $this->translator->t('news', 'news'),
-                    $searchResults
-                );
+                return $searchResults;
             }
         }
+
+        return [];
     }
 
     /**

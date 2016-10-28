@@ -4,20 +4,17 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Articles\Event\Listener;
+namespace ACP3\Modules\ACP3\Articles\Search;
+
 
 use ACP3\Core\ACL;
 use ACP3\Core\Date;
-use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
+use ACP3\Modules\ACP3\Articles\Installer\Schema;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
-use ACP3\Modules\ACP3\Search\Event\SearchResultsEvent;
+use ACP3\Modules\ACP3\Search\Utility\SearchAvailabilityInterface;
 
-/**
- * Class OnDisplaySearchResultsListener
- * @package ACP3\Modules\ACP3\Articles\Event\Listener
- */
-class OnDisplaySearchResultsListener
+class SearchAvailability implements SearchAvailabilityInterface
 {
     /**
      * @var \ACP3\Core\ACL
@@ -28,10 +25,6 @@ class OnDisplaySearchResultsListener
      */
     private $date;
     /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
      * @var \ACP3\Core\Router\RouterInterface
      */
     private $router;
@@ -41,42 +34,47 @@ class OnDisplaySearchResultsListener
     private $articleRepository;
 
     /**
-     * OnDisplaySearchResultsListener constructor.
-     *
-     * @param \ACP3\Core\ACL                                      $acl
-     * @param \ACP3\Core\Date                                     $date
-     * @param \ACP3\Core\I18n\Translator                          $translator
-     * @param \ACP3\Core\Router\RouterInterface                          $router
-     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
+     * SearchAvailability constructor.
+     * @param ACL $acl
+     * @param Date $date
+     * @param RouterInterface $router
+     * @param ArticleRepository $articleRepository
      */
     public function __construct(
         ACL $acl,
         Date $date,
-        Translator $translator,
         RouterInterface $router,
         ArticleRepository $articleRepository
     ) {
         $this->acl = $acl;
         $this->date = $date;
-        $this->translator = $translator;
         $this->router = $router;
         $this->articleRepository = $articleRepository;
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Search\Event\SearchResultsEvent $displaySearchResults
+     * @return string
      */
-    public function onDisplaySearchResults(SearchResultsEvent $displaySearchResults)
+    public function getModuleName()
     {
-        if (in_array('articles', $displaySearchResults->getModules())
-            && $this->acl->hasPermission('frontend/articles') === true
-        ) {
-            $fields = $this->mapSearchAreasToFields($displaySearchResults->getAreas());
+        return Schema::MODULE_NAME;
+    }
+
+    /**
+     * @param string $searchTerm
+     * @param string $areas
+     * @param string $sortDirection
+     * @return array
+     */
+    public function fetchSearchResults($searchTerm, $areas, $sortDirection)
+    {
+        if ($this->acl->hasPermission('frontend/articles') === true) {
+            $fields = $this->mapSearchAreasToFields($areas);
 
             $results = $this->articleRepository->getAllSearchResults(
                 $fields,
-                $displaySearchResults->getSearchTerm(),
-                $displaySearchResults->getSortDirection(),
+                $searchTerm,
+                $sortDirection,
                 $this->date->getCurrentDateTime()
             );
             $cResults = count($results);
@@ -91,12 +89,11 @@ class OnDisplaySearchResultsListener
                     );
                 }
 
-                $displaySearchResults->addSearchResultsByModule(
-                    $this->translator->t('articles', 'articles'),
-                    $searchResults
-                );
+                return $searchResults;
             }
         }
+
+        return [];
     }
 
     /**

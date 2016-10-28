@@ -3,7 +3,7 @@
 namespace ACP3\Modules\ACP3\Search;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Search\Event\AvailableModulesEvent;
+use ACP3\Modules\ACP3\Search\Utility\AvailableModulesRegistrar;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
@@ -28,23 +28,30 @@ class Helpers
      * @var \Symfony\Component\EventDispatcher\EventDispatcher
      */
     protected $eventDispatcher;
+    /**
+     * @var AvailableModulesRegistrar
+     */
+    protected $availableModulesRegistrar;
 
     /**
-     * @param \ACP3\Core\ACL                                     $acl
-     * @param \ACP3\Core\Modules                                 $modules
-     * @param \ACP3\Core\Helpers\Forms                           $formsHelper
+     * @param \ACP3\Core\ACL $acl
+     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param AvailableModulesRegistrar $availableModulesRegistrar
      * @param \Symfony\Component\EventDispatcher\EventDispatcher $eventDispatcher
      */
     public function __construct(
         Core\ACL $acl,
         Core\Modules $modules,
         Core\Helpers\Forms $formsHelper,
+        AvailableModulesRegistrar $availableModulesRegistrar,
         EventDispatcher $eventDispatcher
     ) {
         $this->acl = $acl;
         $this->modules = $modules;
         $this->formsHelper = $formsHelper;
         $this->eventDispatcher = $eventDispatcher;
+        $this->availableModulesRegistrar = $availableModulesRegistrar;
     }
 
     /**
@@ -54,17 +61,17 @@ class Helpers
      */
     public function getModules()
     {
-        $availableModules = new AvailableModulesEvent();
-        $this->eventDispatcher->dispatch('search.events.availableModules', $availableModules);
         $searchModules = [];
-
-        foreach ($availableModules->getAvailableModules() as $module) {
+        foreach ($this->availableModulesRegistrar->getAvailableModuleNames() as $module) {
             if ($this->acl->hasPermission('frontend/' . $module) === true) {
                 $info = $this->modules->getModuleInfo($module);
                 $name = $info['name'];
-                $searchModules[$name]['dir'] = $module;
-                $searchModules[$name]['checked'] = $this->formsHelper->selectEntry('mods', $module, $module, 'checked');
-                $searchModules[$name]['name'] = $name;
+
+                $searchModules[$name] = [
+                    'dir' => $module,
+                    'checked' => $this->formsHelper->selectEntry('mods', $module, $module, 'checked'),
+                    'name' => $name
+                ];
             }
         }
         ksort($searchModules);

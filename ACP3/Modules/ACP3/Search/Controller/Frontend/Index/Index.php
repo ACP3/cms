@@ -27,24 +27,31 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var Search\Utility\AvailableModulesRegistrar
+     */
+    protected $availableModulesRegistrar;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Modules\ACP3\Search\Helpers $searchHelpers
      * @param \ACP3\Modules\ACP3\Search\Validation\FormValidation $searchValidator
+     * @param Search\Utility\AvailableModulesRegistrar $availableModulesRegistrar
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Search\Helpers $searchHelpers,
-        Search\Validation\FormValidation $searchValidator
+        Search\Validation\FormValidation $searchValidator,
+        Search\Utility\AvailableModulesRegistrar $availableModulesRegistrar
     ) {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
         $this->searchHelpers = $searchHelpers;
         $this->searchValidator = $searchValidator;
+        $this->availableModulesRegistrar = $availableModulesRegistrar;
     }
 
     /**
@@ -143,12 +150,10 @@ class Index extends Core\Controller\AbstractFrontendAction
             ->append($this->translator->t('search', 'search'), 'search')
             ->append($this->translator->t('search', 'search_results'));
 
-        $searchResultsEvent = new Search\Event\SearchResultsEvent($modules, $searchTerm, $area, $sort);
-        $this->eventDispatcher->dispatch('search.events.displaySearchResults', $searchResultsEvent);
-
         $this->setTemplate('Search/Frontend/index.results.tpl');
 
-        $searchResults = $searchResultsEvent->getSearchResults();
+        $searchResults = $this->processSearchResults($modules, $searchTerm, $area, $sort);
+
         if (!empty($searchResults)) {
             ksort($searchResults);
             return [
@@ -163,5 +168,27 @@ class Index extends Core\Controller\AbstractFrontendAction
                 ['%search_term%' => $searchTerm]
             )
         ];
+    }
+
+    /**
+     * @param array $modules
+     * @param string $searchTerm
+     * @param string $area
+     * @param string $sort
+     * @return array
+     */
+    protected function processSearchResults(array $modules, $searchTerm, $area, $sort)
+    {
+        $searchResults = [];
+        foreach ($this->availableModulesRegistrar->getAvailableModules() as $moduleName => $searchAvailability) {
+            if (in_array($moduleName, $modules)) {
+                $results = $searchAvailability->fetchSearchResults($searchTerm, $area, $sort);
+
+                if (!empty($results)) {
+                    $searchResults[$moduleName] = $results;
+                }
+            }
+        }
+        return $searchResults;
     }
 }

@@ -118,7 +118,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     {
         $period = ' AND ' . $this->getPublicationPeriod();
         return $this->db->fetchAll(
-            'SELECT id, title, `text` FROM ' . $this->getTableName() . ' WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY `start` ' . $sort . ', `end` ' . $sort . ', id ' . $sort,
+            'SELECT id, title, `text` FROM ' . $this->getTableName() . ' WHERE MATCH(' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY `start` ' . $sort . ', `end` ' . $sort . ', id ' . $sort,
             ['time' => $time]
         );
     }

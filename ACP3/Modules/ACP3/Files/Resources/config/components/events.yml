@@ -22,22 +22,6 @@ services:
     tags:
       - { name: core.eventListener, event: feeds.events.displayFeed.files, method: onDisplayFeed }
 
-  files.event.on_available_modules_listener:
-    class: ACP3\Modules\ACP3\Files\Event\Listener\OnAvailableModulesListener
-    tags:
-      - { name: core.eventListener, event: search.events.availableModules, method: onAvailableModules }
-
-  files.event.on_display_search_results_listener:
-    class: ACP3\Modules\ACP3\Files\Event\Listener\OnDisplaySearchResultsListener
-    arguments:
-      - '@core.acl'
-      - '@core.date'
-      - '@core.lang'
-      - '@core.router'
-      - '@files.model.filesrepository'
-    tags:
-      - { name: core.eventListener, event: search.events.displaySearchResults, method: onDisplaySearchResults }
-
   files.event.update_file_cache_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Files\Event\Listener\UpdateFileCacheOnModelAfterSaveListener
     arguments:

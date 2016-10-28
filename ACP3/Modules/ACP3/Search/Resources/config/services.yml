@@ -10,4 +10,8 @@ services:
       - '@core.acl'
       - '@core.modules'
       - '@core.helpers.forms'
+      - '@search.utility.available_modules_registrar'
       - '@core.event_dispatcher'
+
+  search.utility.available_modules_registrar:
+    class: ACP3\Modules\ACP3\Search\Utility\AvailableModulesRegistrar

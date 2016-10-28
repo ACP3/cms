@@ -6,14 +6,16 @@
             <ul class="nav nav-tabs">
                 {$i=0}
                 {foreach $results_mods as $module => $values}
-                    <li{if $i === 0} class="active"{/if}><a href="#tab-{$values.dir}" data-toggle="tab">{$module}</a></li>
-                    {$i=$i+1}
+                    <li{if $values@first} class="active"{/if}>
+                        <a href="#tab-{$values.dir}" data-toggle="tab">
+                            {lang t="`$module`|`$module`"}
+                        </a>
+                    </li>
                 {/foreach}
             </ul>
             <div class="tab-content">
-                {$i=0}
                 {foreach $results_mods as $module => $values}
-                    <div id="tab-{$values.dir}" class="tab-pane{if $i === 0} active{/if}">
+                    <div id="tab-{$values.dir}" class="tab-pane fade{if $values@first} in active{/if}">
                         {foreach $values.results as $row}
                             <div class="dataset-box">
                                 <header class="navbar navbar-default">
@@ -29,7 +31,6 @@
                             </div>
                         {/foreach}
                     </div>
-                    {$i=$i+1}
                 {/foreach}
             </div>
         </div>
