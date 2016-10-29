@@ -38,6 +38,6 @@ class OnLayoutHeadListener
     {
         $this->view->assign('available_feeds', $this->availableFeedsRegistrar->getAvailableModuleNames());
 
-        $this->view->displayTemplate('Feeds/Partials/feed_link_tags.tpl');
+        $this->view->displayTemplate('Feeds/Partials/head.feed_links.tpl');
     }
 }
