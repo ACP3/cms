@@ -12,5 +12,6 @@
 /uploads/kcfinder/*
 /vendor
 /.htaccess
+/sitemap*.xml
 
 !.gitignore
