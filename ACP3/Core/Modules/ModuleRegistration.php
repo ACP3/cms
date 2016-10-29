@@ -11,6 +11,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ModuleRegistration
 {
+    /**
+     * @param ContainerBuilder $containerBuilder
+     */
     public function build(ContainerBuilder $containerBuilder)
     {
 
