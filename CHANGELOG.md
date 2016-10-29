@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - fixed the Smarty modifier plugin `PrefixUri` when there is an URL given with a valid protocol
 - fixed the hardcoded feed links
+- corrected the package information of the various `suggest` nodes inside the composer.json files 
 
 ## [4.1.30] - 2016-10-27
 ### Added
