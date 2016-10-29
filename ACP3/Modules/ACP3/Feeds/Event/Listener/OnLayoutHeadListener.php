@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Feeds\Event\Listener;
 
 
 use ACP3\Core\View;
+use ACP3\Modules\ACP3\Feeds\Utility\AvailableFeedsRegistrar;
 
 class OnLayoutHeadListener
 {
@@ -15,18 +16,28 @@ class OnLayoutHeadListener
      * @var View
      */
     private $view;
+    /**
+     * @var AvailableFeedsRegistrar
+     */
+    private $availableFeedsRegistrar;
 
     /**
      * OnLayoutHeadListener constructor.
      * @param View $view
+     * @param AvailableFeedsRegistrar $availableFeedsRegistrar
      */
-    public function __construct(View $view)
-    {
+    public function __construct(
+        View $view,
+        AvailableFeedsRegistrar $availableFeedsRegistrar
+    ) {
         $this->view = $view;
+        $this->availableFeedsRegistrar = $availableFeedsRegistrar;
     }
 
     public function renderFeedLinkTags()
     {
-        echo  $this->view->fetchTemplate('Feeds/Partials/feed_link_tags.tpl');
+        $this->view->assign('available_feeds', $this->availableFeedsRegistrar->getAvailableModuleNames());
+
+        $this->view->displayTemplate('Feeds/Partials/feed_link_tags.tpl');
     }
 }

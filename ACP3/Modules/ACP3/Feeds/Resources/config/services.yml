@@ -5,8 +5,11 @@ imports:
   - { resource: components/validation.yml }
 
 services:
-  feeds.helper.feedgenerator:
-    class: ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator
+  feeds.view.renderer.feedgenerator:
+    class: ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator
     arguments:
       - '@core.config'
       - '@core.router'
+
+  feeds.utility.available_feeds_registrar:
+    class: ACP3\Modules\ACP3\Feeds\Utility\AvailableFeedsRegistrar

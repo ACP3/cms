@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Feeds\Event;
 
-use ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator;
+use ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -16,12 +16,12 @@ use Symfony\Component\EventDispatcher\Event;
 class DisplayFeed extends Event
 {
     /**
-     * @var \ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator
+     * @var \ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator
      */
     protected $feedGenerator;
 
     /**
-     * @param \ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator $feedGenerator
+     * @param \ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator $feedGenerator
      */
     public function __construct(FeedGenerator $feedGenerator)
     {
@@ -29,7 +29,7 @@ class DisplayFeed extends Event
     }
 
     /**
-     * @return \ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator
+     * @return \ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator
      */
     public function getFeedGenerator()
     {

@@ -1,17 +1,20 @@
 <?php
-namespace ACP3\Modules\ACP3\News\Event\Listener;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Modules\ACP3\News\Feeds;
+
 
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\StringFormatter;
 use ACP3\Core\Router\RouterInterface;
-use ACP3\Modules\ACP3\Feeds\Event\DisplayFeed;
+use ACP3\Modules\ACP3\Feeds\Utility\FeedAvailabilityInterface;
+use ACP3\Modules\ACP3\News\Installer\Schema;
 use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 
-/**
- * Class OnDisplayFeedListener
- * @package ACP3\Modules\ACP3\News\Event\Listener
- */
-class OnDisplayFeedListener
+class FeedAvailability implements FeedAvailabilityInterface
 {
     /**
      * @var \ACP3\Core\Date
@@ -31,12 +34,11 @@ class OnDisplayFeedListener
     protected $newsRepository;
 
     /**
-     * OnDisplayFeedListener constructor.
-     *
-     * @param \ACP3\Core\Date                              $date
-     * @param \ACP3\Core\Router\RouterInterface                   $router
-     * @param \ACP3\Core\Helpers\StringFormatter           $formatter
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
+     * FeedAvailability constructor.
+     * @param Date $date
+     * @param RouterInterface $router
+     * @param StringFormatter $formatter
+     * @param NewsRepository $newsRepository
      */
     public function __construct(
         Date $date,
@@ -51,9 +53,17 @@ class OnDisplayFeedListener
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Feeds\Event\DisplayFeed $displayFeed
+     * @return string
      */
-    public function onDisplayFeed(DisplayFeed $displayFeed)
+    public function getModuleName()
+    {
+        return Schema::MODULE_NAME;
+    }
+
+    /**
+     * @return array
+     */
+    public function fetchFeedItems()
     {
         $items = [];
         $results = $this->newsRepository->getAll($this->date->getCurrentDateTime(), 10);
@@ -68,6 +78,6 @@ class OnDisplayFeedListener
             ];
         }
 
-        $displayFeed->getFeedGenerator()->assign($items);
+        return $items;
     }
 }

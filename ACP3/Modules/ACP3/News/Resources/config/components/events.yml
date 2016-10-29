@@ -10,16 +10,6 @@ services:
     tags:
       - { name: core.eventListener, event: news.model.news.after_delete, method: execute }
 
-  news.event.on_display_feed_listener:
-    class: ACP3\Modules\ACP3\News\Event\Listener\OnDisplayFeedListener
-    arguments:
-      - '@core.date'
-      - '@core.router'
-      - '@core.helpers.string_formatter'
-      - '@news.model.newsrepository'
-    tags:
-      - { name: core.eventListener, event: feeds.events.displayFeed.news, method: onDisplayFeed }
-
   news.event.update_news_cache_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\News\Event\Listener\UpdateNewsCacheOnModelAfterSaveListener
     arguments:

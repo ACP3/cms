@@ -19,21 +19,28 @@ class Index extends Core\Controller\AbstractFrontendAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator
+     * @var \ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator
      */
     protected $feedGenerator;
+    /**
+     * @var Feeds\Utility\AvailableFeedsRegistrar
+     */
+    protected $availableFeedsRegistrar;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Feeds\Helper\FeedGenerator $feedGenerator
+     * @param \ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator $feedGenerator
+     * @param Feeds\Utility\AvailableFeedsRegistrar $availableFeedsRegistrar
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Feeds\Helper\FeedGenerator $feedGenerator)
-    {
+        Feeds\View\Renderer\FeedGenerator $feedGenerator,
+        Feeds\Utility\AvailableFeedsRegistrar $availableFeedsRegistrar
+    ) {
         parent::__construct($context);
 
         $this->feedGenerator = $feedGenerator;
+        $this->availableFeedsRegistrar = $availableFeedsRegistrar;
     }
 
     /**
@@ -49,17 +56,21 @@ class Index extends Core\Controller\AbstractFrontendAction
                 $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']
             );
 
-            $this->feedGenerator
-                ->setTitle($this->config->getSettings(Schema::MODULE_NAME)['site_title'])
-                ->setDescription($this->translator->t($feed, $feed));
+            try {
+                $feedItems = $this->availableFeedsRegistrar
+                    ->getFeedItemsByModuleName($feed)
+                    ->fetchFeedItems();
 
-            $this->eventDispatcher->dispatch(
-                'feeds.events.displayFeed.' . strtolower($feed),
-                new Feeds\Event\DisplayFeed($this->feedGenerator)
-            );
+                $this->feedGenerator
+                    ->setTitle($this->config->getSettings(Schema::MODULE_NAME)['site_title'])
+                    ->setDescription($this->translator->t($feed, $feed))
+                    ->assign($feedItems);
 
-            $this->setContentType('text/xml');
-            return $this->response->setContent($this->feedGenerator->generateFeed());
+                $this->setContentType('text/xml');
+                return $this->response->setContent($this->feedGenerator->generateFeed());
+            } catch (\InvalidArgumentException $e) {
+
+            }
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
