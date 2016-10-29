@@ -49,14 +49,14 @@ class Register extends Core\Controller\AbstractFrontendAction
     /**
      * Register constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param \ACP3\Core\Date                                                $date
-     * @param \ACP3\Core\Helpers\FormToken                                   $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                                      $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository                  $userRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation $registrationFormValidation
-     * @param \ACP3\Modules\ACP3\Permissions\Helpers                         $permissionsHelpers
-     * @param \ACP3\Core\Helpers\SendEmail                                   $sendEmail
+     * @param \ACP3\Modules\ACP3\Permissions\Helpers $permissionsHelpers
+     * @param \ACP3\Core\Helpers\SendEmail $sendEmail
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -92,21 +92,21 @@ class Register extends Core\Controller\AbstractFrontendAction
             $this->setContent($this->get('core.helpers.alerts')->errorBox(
                 $this->translator->t('users', 'user_registration_disabled'))
             );
-        } else {
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $settings);
-            }
-
-            $defaults = [
-                'nickname' => '',
-                'mail' => '',
-            ];
-
-            return [
-                'form' => array_merge($defaults, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken()
-            ];
         }
+
+        if ($this->request->getPost()->count() !== 0) {
+            return $this->executePost($this->request->getPost()->all(), $settings);
+        }
+
+        $defaults = [
+            'nickname' => '',
+            'mail' => '',
+        ];
+
+        return [
+            'form' => array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken()
+        ];
     }
 
     /**
@@ -122,13 +122,12 @@ class Register extends Core\Controller\AbstractFrontendAction
                 $this->registrationFormValidation->validate($formData);
 
                 $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
-                $seoSettings = $this->config->getSettings(\ACP3\Modules\ACP3\Seo\Installer\Schema::MODULE_NAME);
 
                 $subject = $this->translator->t(
                     'users',
                     'register_mail_subject',
                     [
-                        '{title}' => $seoSettings['title'],
+                        '{title}' => $systemSettings['site_title'],
                         '{host}' => $this->request->getHost(),
                     ]);
                 $body = $this->translator->t(
@@ -138,7 +137,7 @@ class Register extends Core\Controller\AbstractFrontendAction
                         '{name}' => $formData['nickname'],
                         '{mail}' => $formData['mail'],
                         '{password}' => $formData['pwd'],
-                        '{title}' => $seoSettings['title'],
+                        '{title}' => $systemSettings['site_title'],
                         '{host}' => $this->request->getHost()
                     ]
                 );

@@ -70,10 +70,10 @@ class ContactFormModel
      */
     protected function sendEmail(array $formData)
     {
-        $seoSettings = $this->getSeoSettings();
+        $systemSettings = $this->getSystemSettings();
         $settings = $this->getContactSettings();
 
-        $subject = $this->buildSubject('contact_subject', $seoSettings['title']);
+        $subject = $this->buildSubject('contact_subject', $systemSettings['site_title']);
         $body = $this->buildEmailBody($formData, 'contact_body');
 
         return $this->sendEmail->execute(
@@ -88,9 +88,9 @@ class ContactFormModel
     /**
      * @return array
      */
-    protected function getSeoSettings()
+    protected function getSystemSettings()
     {
-        return $this->config->getSettings(\ACP3\Modules\ACP3\Seo\Installer\Schema::MODULE_NAME);
+        return $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME);
     }
 
     /**
@@ -135,10 +135,10 @@ class ContactFormModel
      */
     protected function sendEmailCopy(array $formData)
     {
-        $seoSettings = $this->getSeoSettings();
+        $systemSettings = $this->getSystemSettings();
         $settings = $this->getContactSettings();
 
-        $subject = $this->buildSubject('sender_subject', $seoSettings['title']);
+        $subject = $this->buildSubject('sender_subject', $systemSettings['site_title']);
         $body = $this->buildEmailBody($formData, 'sender_body');
 
         return $this->sendEmail->execute(

@@ -1,0 +1,9 @@
+services:
+  news.search.search_availability:
+    class: ACP3\Modules\ACP3\News\Search\SearchAvailability
+    arguments:
+      - '@core.date'
+      - '@core.router'
+      - '@news.model.newsrepository'
+    tags:
+      - { name: search.available_module }

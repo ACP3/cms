@@ -48,7 +48,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 63;
+        return 64;
     }
 
     /**
@@ -121,6 +121,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'page_cache_is_enabled' => false,
             'page_cache_is_valid' => true,
             'security_secret' => uniqid(mt_rand(), true),
+            'site_title' => '',
             'wysiwyg' => 'core.wysiwyg.textarea'
         ];
     }

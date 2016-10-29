@@ -4,11 +4,11 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Seo\Test\Core\Breadcrumb;
+namespace ACP3\Modules\ACP3\System\Test\Core\Breadcrumb;
 
 
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\Seo\Core\Breadcrumb\Title;
+use ACP3\Modules\ACP3\System\Core\Breadcrumb\Title;
 
 class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
 {
@@ -39,9 +39,9 @@ class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
 
         $this->configMock->expects($this->once())
             ->method('getSettings')
-            ->with('seo')
+            ->with('system')
             ->willReturn([
-                'title' => 'SEO Title'
+                'site_title' => 'SEO Title'
             ]);
     }
 

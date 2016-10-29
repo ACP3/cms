@@ -1,17 +1,20 @@
 <?php
-namespace ACP3\Modules\ACP3\Files\Event\Listener;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Modules\ACP3\Files\Feeds;
+
 
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\StringFormatter;
 use ACP3\Core\Router\RouterInterface;
-use ACP3\Modules\ACP3\Feeds\Event\DisplayFeed;
+use ACP3\Modules\ACP3\Feeds\Utility\FeedAvailabilityInterface;
+use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
-/**
- * Class OnDisplayFeedListener
- * @package ACP3\Modules\ACP3\Files\Event\Listener
- */
-class OnDisplayFeedListener
+class FeedAvailability implements FeedAvailabilityInterface
 {
     /**
      * @var \ACP3\Core\Date
@@ -33,9 +36,9 @@ class OnDisplayFeedListener
     /**
      * OnDisplayFeedListener constructor.
      *
-     * @param \ACP3\Core\Date                                $date
-     * @param \ACP3\Core\Router\RouterInterface                     $router
-     * @param \ACP3\Core\Helpers\StringFormatter             $formatter
+     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Router\RouterInterface $router
+     * @param \ACP3\Core\Helpers\StringFormatter $formatter
      * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
      */
     public function __construct(
@@ -51,9 +54,17 @@ class OnDisplayFeedListener
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Feeds\Event\DisplayFeed $displayFeed
+     * @return string
      */
-    public function onDisplayFeed(DisplayFeed $displayFeed)
+    public function getModuleName()
+    {
+        return Schema::MODULE_NAME;
+    }
+
+    /**
+     * @return array
+     */
+    public function fetchFeedItems()
     {
         $items = [];
         $results = $this->filesRepository->getAll($this->date->getCurrentDateTime(), 10);
@@ -68,6 +79,6 @@ class OnDisplayFeedListener
             ];
         }
 
-        $displayFeed->getFeedGenerator()->assign($items);
+        return $items;
     }
 }

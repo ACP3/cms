@@ -35,6 +35,13 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
     {
         $this->validator
             ->addConstraint(
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'site_title',
+                    'message' => $this->translator->t('system', 'title_to_short')
+                ])
+            ->addConstraint(
                 Core\Validation\ValidationRules\InternalUriValidationRule::class,
                 [
                     'data' => $formData,

@@ -21,7 +21,6 @@
     "acp3/setup": "^4.1.30",
     "acp3/module-errors": "^4.1.30",
     "acp3/module-permissions": "^4.1.30",
-    "acp3/module-seo": "^4.1.30",
     "acp3/module-system": "^4.1.30",
     "acp3/module-users": "^4.1.30",
     "mibe/feedwriter": "^1.0"
@@ -30,10 +29,6 @@
     "psr-4": {
       "ACP3\\Modules\\ACP3\\Feeds\\": ""
     }
-  },
-  "suggest": {
-    "acp3/module-files": "Makes it possible to show feeds for the Downloads module.",
-    "acp3/module-news": "Makes it possible to show feeds for the News module."
   },
   "extra": {
     "installer-name": "ACP3/Feeds"

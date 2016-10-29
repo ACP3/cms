@@ -92,11 +92,14 @@ class ServiceContainerBuilder extends ContainerBuilder
 
         foreach ($availableModules as $module) {
             foreach ($vendors as $vendor) {
-                $path = $this->applicationPath->getModulesDir() . $vendor . '/' . $module['dir'] . '/Resources/config/services.yml';
+                $modulePath = $this->applicationPath->getModulesDir() . $vendor . '/' . $module['dir'];
+                $path = $modulePath . '/Resources/config/services.yml';
 
                 if (is_file($path)) {
                     $loader->load($path);
                 }
+
+                $this->registerCompilerPass($vendor, $module['dir']);
             }
         }
 
@@ -117,5 +120,22 @@ class ServiceContainerBuilder extends ContainerBuilder
         $allModules = false
     ) {
         return new static($applicationPath, $symfonyRequest, $applicationMode, $allModules);
+    }
+
+    /**
+     * @param string $vendor
+     * @param string $moduleName
+     */
+    private function registerCompilerPass($vendor, $moduleName)
+    {
+        $fqn = "\\ACP3\\Modules\\" . $vendor . "\\" . $moduleName . "\\ModuleRegistration";
+
+        if (class_exists($fqn)) {
+            $instance = new $fqn;
+
+            if ($instance instanceof Modules\ModuleRegistration) {
+                $instance->build($this);
+            }
+        }
     }
 }

@@ -18,13 +18,6 @@ class AdminSettingsFormValidation extends AbstractFormValidation
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'title',
-                    'message' => $this->translator->t('system', 'title_to_short'),
-                ])
-            ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,

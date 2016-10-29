@@ -33,7 +33,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 7;
+        return 8;
     }
 
     /**
@@ -72,8 +72,7 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             'meta_description' => '',
             'meta_keywords' => '',
-            'robots' => 1,
-            'title' => ''
+            'robots' => 1
         ];
     }
 }

@@ -1,0 +1,9 @@
+services:
+  files.search.search_availability:
+    class: ACP3\Modules\ACP3\Files\Search\SearchAvailability
+    arguments:
+      - '@core.date'
+      - '@core.router'
+      - '@files.model.filesrepository'
+    tags:
+      - { name: search.available_module }

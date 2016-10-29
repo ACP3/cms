@@ -21,7 +21,6 @@
     "acp3/setup": "^4.1.30",
     "acp3/module-errors": "^4.1.30",
     "acp3/module-permissions": "^4.1.30",
-    "acp3/module-seo": "^4.1.30",
     "acp3/module-system": "^4.1.30",
     "acp3/module-users": "^4.1.30"
   },
@@ -29,11 +28,6 @@
     "psr-4": {
       "ACP3\\Modules\\ACP3\\Search\\": ""
     }
-  },
-  "suggest": {
-    "acp3/module-articles": "Makes it possible to search through Articles.",
-    "acp3/module-files": "Makes it possible to search through the Downloads.",
-    "acp3/module-news": "Makes it possible to search through the News."
   },
   "extra": {
     "installer-name": "ACP3/Search"

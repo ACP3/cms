@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2016-xx-xx
+### Added
+- Modules can now add service container compiler passes too
+
+### Changed
+- The captcha validation is now handled by the new event `captcha.validation.validate_captcha`
+- moved the site title from the SEO module to the system module
+- refactored the search module to use the new compiler pass functionality
+- refactored the feeds module to use the new compiler pass functionality
+
+### Fixed
+- fixed the Smarty modifier plugin `PrefixUri` when there is an URL given with a valid protocol
+- fixed the hardcoded feed links
+- corrected the package information of the various `suggest` nodes inside the composer.json files 
+
 ## [4.1.30] - 2016-10-27
 ### Added
 - added a new system config option which makes it possible to enable or disable the page cache

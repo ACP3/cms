@@ -6,3 +6,10 @@ services:
       - '@captcha.helpers'
     tags:
       - { name: core.eventListener, event: captcha.event.display_captcha, method: onDisplayCaptcha }
+
+  captcha.event.on_captcha_validation_validate_captcha_listener:
+    class: ACP3\Modules\ACP3\Captcha\Event\Listener\OnCaptchaValidationValidateCaptchaListener
+    arguments:
+      - '@core.lang'
+    tags:
+      - { name: core.eventListener, event: captcha.validation.validate_captcha, method: validateCaptcha }

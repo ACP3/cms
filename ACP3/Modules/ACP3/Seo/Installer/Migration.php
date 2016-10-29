@@ -36,6 +36,9 @@ class Migration implements Modules\Installer\MigrationInterface
             ],
             7 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'suggest', '', 4);",
+            ],
+            8 => [
+                "DELETE FROM `{pre}settings` WHERE `module_id` = '{moduleId}' AND `name` = 'title';",
             ]
         ];
     }

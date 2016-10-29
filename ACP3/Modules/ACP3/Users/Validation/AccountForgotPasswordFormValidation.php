@@ -3,7 +3,6 @@ namespace ACP3\Modules\ACP3\Users\Validation;
 
 use ACP3\Core;
 use ACP3\Core\Validation\AbstractFormValidation;
-use ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaValidationRule;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByEmailValidationRule;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameValidationRule;
 
@@ -34,19 +33,14 @@ class AccountForgotPasswordFormValidation extends AbstractFormValidation
                     'message' => $this->translator->t('users', 'type_in_nickname_or_email')
                 ])
             ->addConstraint(
-                CaptchaValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'captcha',
-                    'message' => $this->translator->t('captcha', 'invalid_captcha_entered')
-                ])
-            ->addConstraint(
                 $ruleName,
                 [
                     'data' => $formData,
                     'field' => 'nick_mail',
                     'message' => $this->translator->t('users', 'user_not_exists')
                 ]);
+
+        $this->validator->dispatchValidationEvent('captcha.validation.validate_captcha', $formData);
 
         $this->validator->validate();
     }

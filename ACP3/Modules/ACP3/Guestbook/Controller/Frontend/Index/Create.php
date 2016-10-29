@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Guestbook;
 use ACP3\Modules\ACP3\Newsletter;
-use ACP3\Modules\ACP3\Seo\Installer\Schema;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Create
@@ -98,7 +98,7 @@ class Create extends AbstractAction
                 1 => $this->translator->t(
                     'guestbook',
                     'subscribe_to_newsletter',
-                    ['%title%' => $this->config->getSettings(Schema::MODULE_NAME)['title']]
+                    ['%title%' => $this->config->getSettings(Schema::MODULE_NAME)['site_title']]
                 )
             ];
             $this->view->assign(

@@ -81,11 +81,16 @@ class CaptchaValidationRule extends AbstractValidationRule
         return true;
     }
 
-    protected function checkCaptcha($input, $path)
+    /**
+     * @param string $value
+     * @param string $path
+     * @return bool
+     */
+    protected function checkCaptcha($value, $path)
     {
-        $index = 'captcha_' . sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
+        $indexName = 'captcha_' . sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
 
-        return preg_match('/^[a-zA-Z0-9]+$/', $input)
-        && strtolower($input) === strtolower($this->sessionHandler->get($index, ''));
+        return preg_match('/^[a-zA-Z0-9]+$/', $value)
+        && strtolower($value) === strtolower($this->sessionHandler->get($indexName, ''));
     }
 }

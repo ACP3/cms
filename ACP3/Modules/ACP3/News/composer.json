@@ -21,10 +21,12 @@
     "acp3/setup": "^4.1.30",
     "acp3/module-errors": "^4.1.30",
     "acp3/module-permissions": "^4.1.30",
-    "acp3/module-seo": "^4.1.30",
     "acp3/module-system": "^4.1.30",
     "acp3/module-users": "^4.1.30",
     "acp3/module-categories": "^4.1.30"
+  },
+  "suggest": {
+    "acp3/module-seo": "Provides additional SEO capabilities"
   },
   "autoload": {
     "psr-4": {
