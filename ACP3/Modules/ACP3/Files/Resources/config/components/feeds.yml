@@ -7,4 +7,4 @@ services:
       - '@core.helpers.string_formatter'
       - '@files.model.filesrepository'
     tags:
-      - { name: feeds.available_module }
+      - { name: feeds.feed_availability }

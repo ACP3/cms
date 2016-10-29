@@ -6,4 +6,4 @@ services:
       - '@core.router'
       - '@files.model.filesrepository'
     tags:
-      - { name: search.available_module }
+      - { name: search.search_availability }

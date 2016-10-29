@@ -12,4 +12,4 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@feeds.view.renderer.feedgenerator'
-      - '@feeds.utility.available_feeds_registrar'
+      - '@feeds.utility.feed_availability_registrar'

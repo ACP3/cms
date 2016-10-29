@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Feeds\Utility;
 
 
-class AvailableFeedsRegistrar
+class FeedAvailabilityRegistrar
 {
     /**
      * @var FeedAvailabilityInterface[]

@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Search\Utility;
 
 
-class AvailableModulesRegistrar
+class SearchAvailabilityRegistrar
 {
     /**
      * @var SearchAvailabilityInterface[]

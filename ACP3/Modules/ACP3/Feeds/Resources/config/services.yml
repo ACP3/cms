@@ -11,5 +11,5 @@ services:
       - '@core.config'
       - '@core.router'
 
-  feeds.utility.available_feeds_registrar:
-    class: ACP3\Modules\ACP3\Feeds\Utility\AvailableFeedsRegistrar
+  feeds.utility.feed_availability_registrar:
+    class: ACP3\Modules\ACP3\Feeds\Utility\FeedAvailabilityRegistrar

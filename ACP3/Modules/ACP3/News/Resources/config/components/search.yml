@@ -6,4 +6,4 @@ services:
       - '@core.router'
       - '@news.model.newsrepository'
     tags:
-      - { name: search.available_module }
+      - { name: search.search_availability }

@@ -23,19 +23,19 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     protected $feedGenerator;
     /**
-     * @var Feeds\Utility\AvailableFeedsRegistrar
+     * @var Feeds\Utility\FeedAvailabilityRegistrar
      */
     protected $availableFeedsRegistrar;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator $feedGenerator
-     * @param Feeds\Utility\AvailableFeedsRegistrar $availableFeedsRegistrar
+     * @param Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Feeds\View\Renderer\FeedGenerator $feedGenerator,
-        Feeds\Utility\AvailableFeedsRegistrar $availableFeedsRegistrar
+        Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
     ) {
         parent::__construct($context);
 
