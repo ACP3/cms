@@ -1,41 +1,42 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    {if isset($results_mods)}
+    {if !empty($results_mods)}
         <div class="tabbable">
             <ul class="nav nav-tabs">
                 {$i=0}
                 {foreach $results_mods as $module => $values}
-                    <li{if $i === 0} class="active"{/if}><a href="#tab-{$values.dir}" data-toggle="tab">{$module}</a></li>
-                    {$i=$i+1}
+                    <li{if $values@first} class="active"{/if}>
+                        <a href="#tab-{$module}" data-toggle="tab">
+                            {lang t="`$module`|`$module`"}
+                        </a>
+                    </li>
                 {/foreach}
             </ul>
             <div class="tab-content">
-                {$i=0}
-                {foreach $results_mods as $module => $values}
-                    <div id="tab-{$values.dir}" class="tab-pane{if $i === 0} active{/if}">
-                        {foreach $values.results as $row}
+                {foreach $results_mods as $module => $results}
+                    <div id="tab-{$module}" class="tab-pane fade{if $results@first} in active{/if}">
+                        {foreach $results as $result}
                             <div class="dataset-box">
                                 <header class="navbar navbar-default">
                                     <div class="navbar-header">
-                                        <h2 class="navbar-brand"><a href="{$row.hyperlink}">{$row.title}</a></h2>
+                                        <h2 class="navbar-brand"><a href="{$result.hyperlink}">{$result.title}</a></h2>
                                     </div>
                                 </header>
-                                {if !empty($row.text)}
+                                {if !empty($result.text)}
                                     <div class="content">
-                                        {$row.text|strip_tags|truncate:200}
+                                        {$result.text|strip_tags|truncate:200}
                                     </div>
                                 {/if}
                             </div>
                         {/foreach}
                     </div>
-                    {$i=$i+1}
                 {/foreach}
             </div>
         </div>
     {else}
         <div class="alert alert-warning text-center">
-            <strong>{$no_search_results}</strong>
+            <strong>{lang t="search|no_search_results" args=['%search_term%' => $search_term]}</strong>
         </div>
     {/if}
 {/block}
