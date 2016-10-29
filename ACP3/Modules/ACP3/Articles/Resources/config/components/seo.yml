@@ -1,0 +1,10 @@
+services:
+  articles.seo.sitemap_availability:
+    class: ACP3\Modules\ACP3\Articles\Seo\SitemapAvailability
+    arguments:
+      - '@core.date'
+      - '@core.router'
+      - '@articles.model.articlerepository'
+      - '@seo.helper.meta_statements'
+    tags:
+      - { name: seo.sitemap_availability }

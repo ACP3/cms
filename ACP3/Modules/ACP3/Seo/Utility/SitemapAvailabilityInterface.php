@@ -7,6 +7,8 @@
 namespace ACP3\Modules\ACP3\Seo\Utility;
 
 
+use Thepixeldeveloper\Sitemap\Url;
+
 interface SitemapAvailabilityInterface
 {
     /**
@@ -15,7 +17,7 @@ interface SitemapAvailabilityInterface
     public function getModuleName();
 
     /**
-     * @return array
+     * @return Url[]
      */
-    public function fetchPossibleSitemapItems();
+    public function fetchSitemapItems();
 }
