@@ -12,6 +12,10 @@ use Symfony\Component\EventDispatcher\Event;
 class ModelSaveEvent extends Event
 {
     /**
+     * @var string
+     */
+    private $moduleName;
+    /**
      * @var array
      */
     private $data;
@@ -22,13 +26,23 @@ class ModelSaveEvent extends Event
 
     /**
      * ModelSaveEvent constructor.
+     * @param string $moduleName
      * @param array $data
      * @param int|null|array $entryId
      */
-    public function __construct(array $data, $entryId)
+    public function __construct($moduleName, array $data, $entryId)
     {
+        $this->moduleName = $moduleName;
         $this->data = $data;
         $this->entryId = $entryId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModuleName()
+    {
+        return $this->moduleName;
     }
 
     /**
