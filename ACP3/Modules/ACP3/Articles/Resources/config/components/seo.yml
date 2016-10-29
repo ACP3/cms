@@ -5,6 +5,6 @@ services:
       - '@core.date'
       - '@core.router'
       - '@articles.model.articlerepository'
-      - '@seo.helper.meta_statements'
+      - '@?seo.helper.meta_statements'
     tags:
       - { name: seo.sitemap_availability }
