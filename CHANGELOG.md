@@ -6,13 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2016-xx-xx
 ### Added
+- Modules can now add service container compiler passes too
 
 ### Changed
 - The captcha validation is now handled by the new event `captcha.validation.validate_captcha`
 - moved the site title from the SEO module to the system module
+- refactored the search module to use the new compiler pass functionality
+- refactored the feeds module to use the new compiler pass functionality
 
 ### Fixed
 - fixed the Smarty modifier plugin `PrefixUri` when there is an URL given with a valid protocol
+- fixed the hardcoded feed links
 
 ## [4.1.30] - 2016-10-27
 ### Added
