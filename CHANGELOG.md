@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2016-xx-xx
+### Added
+- The SEO module is now able to automatically generate XML sitemaps
+
+### Changed
+
+### Fixed
+
 ## [4.2.0] - 2016-10-29
 ### Added
 - Modules can now add service container compiler passes too
