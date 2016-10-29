@@ -25,7 +25,7 @@
     "acp3/module-users": "^4.1.30"
   },
   "suggest": {
-    "acp3/module-captcha": "^4.1.30"
+    "acp3/module-captcha": "Provides basic protection against spam bots."
   },
   "autoload": {
     "psr-4": {

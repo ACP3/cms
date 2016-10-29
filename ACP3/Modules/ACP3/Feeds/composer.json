@@ -30,10 +30,6 @@
       "ACP3\\Modules\\ACP3\\Feeds\\": ""
     }
   },
-  "suggest": {
-    "acp3/module-files": "Makes it possible to show feeds for the Downloads module.",
-    "acp3/module-news": "Makes it possible to show feeds for the News module."
-  },
   "extra": {
     "installer-name": "ACP3/Feeds"
   }

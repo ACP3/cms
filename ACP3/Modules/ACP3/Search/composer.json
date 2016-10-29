@@ -29,11 +29,6 @@
       "ACP3\\Modules\\ACP3\\Search\\": ""
     }
   },
-  "suggest": {
-    "acp3/module-articles": "Makes it possible to search through Articles.",
-    "acp3/module-files": "Makes it possible to search through the Downloads.",
-    "acp3/module-news": "Makes it possible to search through the News."
-  },
   "extra": {
     "installer-name": "ACP3/Search"
   }
