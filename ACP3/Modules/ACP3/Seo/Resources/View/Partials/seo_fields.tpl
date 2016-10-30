@@ -8,9 +8,12 @@
             <div class="input-group">
                 <input class="form-control" type="text" name="alias" id="alias" value="{$seo.alias}">
                 <span class="input-group-btn">
-                    <a href="{uri args="acp/seo/index/suggest"}" id="seo-alias-suggestion" class="btn btn-default">
+                    <a href="{uri args="acp/seo/index/suggest"}"
+                       id="seo-alias-suggestion"
+                       class="btn btn-default"
+                       title="{lang t="seo|suggest_alias"}">
                         <i class="glyphicon glyphicon-refresh"></i>
-                        {lang t="seo|suggest_alias"}
+                        <span class="hidden-xs">{lang t="seo|suggest_alias"}</span>
                     </a>
                 </span>
             </div>
