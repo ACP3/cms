@@ -4,13 +4,13 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\News\Extension;
+namespace ACP3\Modules\ACP3\Files\Extension;
 
 
 use ACP3\Core\Date;
 use ACP3\Core\Router\Router;
-use ACP3\Modules\ACP3\News\Installer\Schema;
-use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
+use ACP3\Modules\ACP3\Files\Installer\Schema;
+use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use Thepixeldeveloper\Sitemap\Url;
@@ -20,29 +20,29 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     /**
      * @var Date
      */
-    protected $date;
+    private $date;
     /**
-     * @var NewsRepository
+     * @var FilesRepository
      */
-    protected $newsRepository;
+    private $filesRepository;
 
     /**
      * SitemapAvailabilityExtension constructor.
      * @param Date $date
      * @param Router $router
-     * @param NewsRepository $newsRepository
+     * @param FilesRepository $filesRepository
      * @param MetaStatements $metaStatements
      */
     public function __construct(
         Date $date,
         Router $router,
-        NewsRepository $newsRepository,
+        FilesRepository $filesRepository,
         MetaStatements $metaStatements
     ) {
         parent::__construct($router, $metaStatements);
 
         $this->date = $date;
-        $this->newsRepository = $newsRepository;
+        $this->filesRepository = $filesRepository;
     }
 
     /**
@@ -58,10 +58,12 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
      */
     public function fetchSitemapItems()
     {
-        foreach ($this->newsRepository->getAll($this->date->getCurrentDateTime()) as $result) {
-            $routeName = 'news/index/details/id_' . $result['id'];
+        $this->addUrl('files/index/index');
 
-            $this->addUrl($routeName, $result['start']);
+        foreach ($this->filesRepository->getAll($this->date->getCurrentDateTime()) as $result) {
+            $fileUrl = 'files/index/details/id_' . $result['id'];
+
+            $this->addUrl($fileUrl, $result['start']);
         }
 
         return $this->getUrls();

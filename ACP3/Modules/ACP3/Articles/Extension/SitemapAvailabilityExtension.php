@@ -39,10 +39,10 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         ArticleRepository $articleRepository,
         MetaStatements $metaStatements
     ) {
+        parent::__construct($router, $metaStatements);
+
         $this->date = $date;
         $this->articleRepository = $articleRepository;
-
-        parent::__construct($router, $metaStatements);
     }
 
     /**
