@@ -57,9 +57,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         $this->addUrl('files/index/index');
 
         foreach ($this->filesRepository->getAll($this->date->getCurrentDateTime()) as $result) {
-            $fileUrl = 'files/index/details/id_' . $result['id'];
-
-            $this->addUrl($fileUrl, $result['start']);
+            $this->addUrl('files/index/details/id_' . $result['id'], $result['start']);
         }
     }
 }

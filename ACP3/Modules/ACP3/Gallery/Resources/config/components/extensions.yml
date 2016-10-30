@@ -1,0 +1,11 @@
+services:
+  gallery.extension.sitemap_availability_extension:
+    class: ACP3\Modules\ACP3\Gallery\Extension\SitemapAvailabilityExtension
+    arguments:
+      - '@core.date'
+      - '@core.router'
+      - '@gallery.model.galleryrepository'
+      - '@gallery.model.picturerepository'
+      - '@?seo.helper.meta_statements'
+    tags:
+      - { name: seo.extension.sitemap_availability }
