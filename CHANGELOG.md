@@ -6,11 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2016-xx-xx
 ### Added
-- The SEO module is now able to automatically generate XML sitemaps
+- The SEO module is now able to automatically generate XML sitemaps.
+- The following modules can now add their own URLs to the sitemap:
+    - Articles
+    - Contact
+    - Files
+    - Gallery
+    - News
 
 ### Changed
+- unified all module extensions to be located under the same namespace of the specific module 
 
 ### Fixed
+- fixed the wrong initial value of the mailer_smtp_security system setting 
 
 ## [4.2.0] - 2016-10-29
 ### Added
