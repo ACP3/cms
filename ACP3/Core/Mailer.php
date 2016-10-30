@@ -226,9 +226,9 @@ class Mailer
             $this->phpMailer->Subject = $this->generateSubject();
 
             if (is_array($this->from) === true) {
-                $this->phpMailer->SetFrom($this->from['email'], $this->from['name']);
+                $this->phpMailer->setFrom($this->from['email'], $this->from['name']);
             } else {
-                $this->phpMailer->SetFrom($this->from);
+                $this->phpMailer->setFrom($this->from);
             }
 
             $this->generateBody();
@@ -288,7 +288,8 @@ class Mailer
             if (!empty($this->body)) {
                 $this->phpMailer->AltBody = $this->decodeHtmlEntities($this->body . $this->getTextSignature());
             } else {
-                $this->phpMailer->AltBody = $this->phpMailer->html2text($this->htmlBody . $this->getHtmlSignature(), true);
+                $this->phpMailer->AltBody = $this->phpMailer->html2text($this->htmlBody . $this->getHtmlSignature(),
+                    true);
             }
         } else {
             $this->phpMailer->Body = $this->decodeHtmlEntities($this->body . $this->getTextSignature());
@@ -357,7 +358,7 @@ class Mailer
      * Adds multiple recipients to the to be send email
      *
      * @param string|array $recipients
-     * @param bool         $bcc
+     * @param bool $bcc
      *
      * @return $this
      */
@@ -387,7 +388,7 @@ class Mailer
      *
      * @param string $email
      * @param string $name
-     * @param bool   $bcc
+     * @param bool $bcc
      *
      * @return $this
      */
@@ -465,7 +466,9 @@ class Mailer
                 $this->phpMailer->set('Mailer', 'smtp');
                 $this->phpMailer->Host = $settings['mailer_smtp_host'];
                 $this->phpMailer->Port = $settings['mailer_smtp_port'];
-                $this->phpMailer->SMTPSecure = in_array($settings['mailer_smtp_security'], ['ssl', 'tls']) ? $settings['mailer_smtp_security'] : '';
+                $this->phpMailer->SMTPSecure = in_array($settings['mailer_smtp_security'], ['ssl', 'tls'])
+                    ? $settings['mailer_smtp_security']
+                    : '';
                 if ((bool)$settings['mailer_smtp_auth'] === true) {
                     $this->phpMailer->SMTPAuth = true;
                     $this->phpMailer->Username = $settings['mailer_smtp_user'];
