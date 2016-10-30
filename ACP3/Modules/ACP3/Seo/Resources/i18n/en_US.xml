@@ -28,9 +28,12 @@
         <item key="seo">SEO</item>
         <item key="sitemap">Sitemap</item>
         <item key="sitemap_enable">Enable sitemap generation</item>
+        <item key="sitemap_error">While refreshing the sitemap an error has occurred.</item>
+        <item key="sitemap_refresh_now">Refresh sitemap now</item>
         <item key="sitemap_save_mode">Sitemap generation mode</item>
         <item key="sitemap_save_mode_automatically">Automatically</item>
         <item key="sitemap_save_mode_manually">Manually</item>
+        <item key="sitemap_success">The sitemap has been successfully refreshed.</item>
         <item key="suggest_alias">Suggest alias</item>
         <item key="uri">Path</item>
     </keys>

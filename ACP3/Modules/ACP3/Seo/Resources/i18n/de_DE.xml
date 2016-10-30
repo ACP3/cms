@@ -28,9 +28,12 @@
         <item key="seo">SEO</item>
         <item key="sitemap">Sitemap</item>
         <item key="sitemap_enable">Sitemap-Generierung aktivieren</item>
+        <item key="sitemap_error">Beim Aktualisieren der Sitemap ist ein Fehler aufgetreten.</item>
+        <item key="sitemap_refresh_now">Sitemap jetzt aktualisieren</item>
         <item key="sitemap_save_mode">Modus der Sitemap-Generierung</item>
         <item key="sitemap_save_mode_automatically">Automatisch</item>
         <item key="sitemap_save_mode_manually">Manuell</item>
+        <item key="sitemap_success">Die Sitemap wurde erfolgreich aktualisiert.</item>
         <item key="suggest_alias">Alias vorschlagen</item>
         <item key="uri">Pfad</item>
     </keys>

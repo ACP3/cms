@@ -1,7 +1,7 @@
 jQuery(document).ready(function ($) {
     $(':radio[name="mailer_smtp_auth"]').on('click change', function () {
         $('#mailer-smtp-2').toggle(this.value == 1);
-    }).triggerHandler('click');
+    }).filter(':checked').triggerHandler('click');
 
     $('#mailer-type').on('change', function () {
         if ($(this).val() === 'smtp') {

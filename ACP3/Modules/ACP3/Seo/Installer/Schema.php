@@ -17,7 +17,14 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function specialResources()
     {
-        return [];
+        return [
+            'Admin' => [
+                'Index' => [
+                    'sitemap' => 7,
+                    'suggest' => 4,
+                ],
+            ]
+        ];
     }
 
     /**
@@ -33,7 +40,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 9;
+        return 10;
     }
 
     /**

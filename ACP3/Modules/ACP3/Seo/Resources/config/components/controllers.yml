@@ -40,6 +40,12 @@ services:
       - '@core.helpers.formToken'
       - '@seo.validation.admin_settings_form_validation'
 
+  seo.controller.admin.index.sitemap:
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Sitemap
+    arguments:
+      - '@core.context.admin'
+      - '@seo.model.sitemap_generation_model'
+
   seo.controller.admin.index.suggest:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Suggest
     arguments:
