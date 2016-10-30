@@ -17,3 +17,13 @@ services:
       - '@news.model.newsrepository'
     tags:
       - { name: search.extension.search_availability }
+
+  news.extension.sitemap_availability_extension:
+    class: ACP3\Modules\ACP3\News\Extension\SitemapAvailabilityExtension
+    arguments:
+      - '@core.date'
+      - '@core.router'
+      - '@news.model.newsrepository'
+      - '@?seo.helper.meta_statements'
+    tags:
+      - { name: seo.extension.sitemap_availability }
