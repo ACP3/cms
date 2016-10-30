@@ -7,18 +7,20 @@
 namespace ACP3\Modules\ACP3\Feeds\Utility;
 
 
-class AvailableFeedsRegistrar
+use ACP3\Modules\ACP3\Feeds\Extension\FeedAvailabilityExtensionInterface;
+
+class FeedAvailabilityRegistrar
 {
     /**
-     * @var FeedAvailabilityInterface[]
+     * @var FeedAvailabilityExtensionInterface[]
      */
     protected $availableModules = [];
 
     /**
-     * @param FeedAvailabilityInterface $searchAvailability
+     * @param FeedAvailabilityExtensionInterface $searchAvailability
      * @return $this
      */
-    public function registerModule(FeedAvailabilityInterface $searchAvailability)
+    public function registerModule(FeedAvailabilityExtensionInterface $searchAvailability)
     {
         $this->availableModules[$searchAvailability->getModuleName()] = $searchAvailability;
 
@@ -35,7 +37,7 @@ class AvailableFeedsRegistrar
 
     /**
      * @param string $moduleName
-     * @return FeedAvailabilityInterface
+     * @return FeedAvailabilityExtensionInterface
      */
     public function getFeedItemsByModuleName($moduleName)
     {

@@ -20,8 +20,8 @@ class SearchAvailabilityCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('search.utility.available_modules_registrar');
-        $plugins = $container->findTaggedServiceIds('search.available_module');
+        $definition = $container->findDefinition('search.utility.search_availability_registrar');
+        $plugins = $container->findTaggedServiceIds('search.extension.search_availability');
 
         foreach ($plugins as $serviceId => $tags) {
             $definition->addMethodCall(

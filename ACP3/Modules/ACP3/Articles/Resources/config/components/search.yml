@@ -1,9 +1,0 @@
-services:
-  articles.search.search_availability:
-    class: ACP3\Modules\ACP3\Articles\Search\SearchAvailability
-    arguments:
-      - '@core.date'
-      - '@core.router'
-      - '@articles.model.articlerepository'
-    tags:
-      - { name: search.available_module }

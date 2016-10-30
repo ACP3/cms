@@ -4,17 +4,17 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\News\Feeds;
+namespace ACP3\Modules\ACP3\News\Extension;
 
 
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\StringFormatter;
 use ACP3\Core\Router\RouterInterface;
-use ACP3\Modules\ACP3\Feeds\Utility\FeedAvailabilityInterface;
+use ACP3\Modules\ACP3\Feeds\Extension\FeedAvailabilityExtensionInterface;
 use ACP3\Modules\ACP3\News\Installer\Schema;
 use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 
-class FeedAvailability implements FeedAvailabilityInterface
+class FeedAvailabilityExtension implements FeedAvailabilityExtensionInterface
 {
     /**
      * @var \ACP3\Core\Date

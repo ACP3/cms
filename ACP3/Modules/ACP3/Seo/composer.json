@@ -22,7 +22,8 @@
     "acp3/module-errors": "^4.2.0",
     "acp3/module-permissions": "^4.2.0",
     "acp3/module-system": "^4.2.0",
-    "acp3/module-users": "^4.2.0"
+    "acp3/module-users": "^4.2.0",
+    "thepixeldeveloper/sitemap": "^4.4.2"
   },
   "autoload": {
     "psr-4": {

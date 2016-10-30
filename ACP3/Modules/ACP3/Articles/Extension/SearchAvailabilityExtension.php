@@ -4,16 +4,16 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\News\Search;
+namespace ACP3\Modules\ACP3\Articles\Extension;
 
 
 use ACP3\Core\Date;
 use ACP3\Core\Router\RouterInterface;
-use ACP3\Modules\ACP3\News\Installer\Schema;
-use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
-use ACP3\Modules\ACP3\Search\Utility\SearchAvailabilityInterface;
+use ACP3\Modules\ACP3\Articles\Installer\Schema;
+use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Search\Extension\SearchAvailabilityExtensionInterface;
 
-class SearchAvailability implements SearchAvailabilityInterface
+class SearchAvailabilityExtension implements SearchAvailabilityExtensionInterface
 {
     /**
      * @var \ACP3\Core\Date
@@ -24,24 +24,24 @@ class SearchAvailability implements SearchAvailabilityInterface
      */
     private $router;
     /**
-     * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
+     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
-    private $newsRepository;
+    private $articleRepository;
 
     /**
      * SearchAvailability constructor.
      * @param Date $date
      * @param RouterInterface $router
-     * @param NewsRepository $newsRepository
+     * @param ArticleRepository $articleRepository
      */
     public function __construct(
         Date $date,
         RouterInterface $router,
-        NewsRepository $newsRepository
+        ArticleRepository $articleRepository
     ) {
         $this->date = $date;
         $this->router = $router;
-        $this->newsRepository = $newsRepository;
+        $this->articleRepository = $articleRepository;
     }
 
     /**
@@ -62,7 +62,7 @@ class SearchAvailability implements SearchAvailabilityInterface
     {
         $fields = $this->mapSearchAreasToFields($areas);
 
-        $results = $this->newsRepository->getAllSearchResults(
+        $results = $this->articleRepository->getAllSearchResults(
             $fields,
             $searchTerm,
             $sortDirection,
@@ -71,7 +71,7 @@ class SearchAvailability implements SearchAvailabilityInterface
         $cResults = count($results);
 
         for ($i = 0; $i < $cResults; ++$i) {
-            $results[$i]['hyperlink'] = $this->router->route('news/index/details/id_' . $results[$i]['id']);
+            $results[$i]['hyperlink'] = $this->router->route('articles/index/details/id_' . $results[$i]['id']);
         }
 
         return $results;

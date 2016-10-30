@@ -15,3 +15,9 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@seo.model.seorepository'
+
+  seo.model.sitemap_generation_model:
+    class: ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel
+    arguments:
+      - '@core.environment.application_path'
+      - '@seo.utility.sitemap_availability_registrar'

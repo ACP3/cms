@@ -4,10 +4,12 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Feeds\Utility;
+namespace ACP3\Modules\ACP3\Seo\Extension;
 
 
-interface FeedAvailabilityInterface
+use Thepixeldeveloper\Sitemap\Url;
+
+interface SitemapAvailabilityExtensionInterface
 {
     /**
      * @return string
@@ -15,7 +17,7 @@ interface FeedAvailabilityInterface
     public function getModuleName();
 
     /**
-     * @return array
+     * @return Url[]
      */
-    public function fetchFeedItems();
+    public function getUrls();
 }

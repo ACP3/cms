@@ -97,7 +97,7 @@ abstract class AbstractModel
     {
         $this->eventDispatcher->dispatch(
             $eventName,
-            new ModelSaveEvent($data, $entryId)
+            new ModelSaveEvent(static::EVENT_PREFIX, $data, $entryId)
         );
     }
 

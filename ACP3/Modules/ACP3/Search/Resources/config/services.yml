@@ -10,7 +10,7 @@ services:
       - '@core.acl'
       - '@core.modules'
       - '@core.helpers.forms'
-      - '@search.utility.available_modules_registrar'
+      - '@search.utility.search_availability_registrar'
 
-  search.utility.available_modules_registrar:
-    class: ACP3\Modules\ACP3\Search\Utility\AvailableModulesRegistrar
+  search.utility.search_availability_registrar:
+    class: ACP3\Modules\ACP3\Search\Utility\SearchAvailabilityRegistrar

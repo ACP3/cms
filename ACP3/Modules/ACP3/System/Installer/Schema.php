@@ -112,7 +112,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'mailer_smtp_host' => '',
             'mailer_smtp_password' => '',
             'mailer_smtp_port' => 25,
-            'mailer_smtp_security' => '',
+            'mailer_smtp_security' => 'none',
             'mailer_smtp_user' => '',
             'mailer_type' => 'mail',
             'maintenance_mode' => false,

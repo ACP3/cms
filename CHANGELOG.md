@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2016-xx-xx
+### Added
+- [#42](https://github.com/ACP3/cms/issues/42) The SEO module is now able to automatically generate XML sitemaps.
+- The following modules can now add their own URLs to the sitemap:
+    - Articles
+    - Contact
+    - Files
+    - Gallery
+    - News
+
+### Changed
+- unified all module extensions to be located under the same namespace of the specific module 
+
+### Fixed
+- fixed the wrong initial value of the mailer_smtp_security system setting 
+
 ## [4.2.0] - 2016-10-29
 ### Added
 - Modules can now add service container compiler passes too
@@ -21,7 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.1.30] - 2016-10-27
 ### Added
-- added a new system config option which makes it possible to enable or disable the page cache
+- [#39](https://github.com/ACP3/cms/issues/39) Added a new system config option which makes it possible to enable or disable the page cache
 - made it possible to dispatch custom events to the validator to make the form validation much more flexible
 
 ### Changed
@@ -93,3 +109,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save menu items
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
+
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.2.0...HEAD
+[4.2.0]: https://github.com/ACP3/cms/compare/v4.1.30...v4.2.0
+[4.1.30]: https://github.com/ACP3/cms/compare/v4.1.29...v4.1.30
+[4.1.29]: https://github.com/ACP3/cms/compare/v4.1.28...v4.1.29
+[4.1.28]: https://github.com/ACP3/cms/compare/v4.1.27...v4.1.28
+[4.1.27]: https://github.com/ACP3/cms/compare/v4.1.22...v4.1.27
+[4.1.22]: https://github.com/ACP3/cms/compare/v4.1.21...v4.1.22
+[4.1.21]: https://github.com/ACP3/cms/compare/v4.1.20...v4.1.21
+[4.1.20]: https://github.com/ACP3/cms/compare/v4.1.19...v4.1.20
+[4.1.19]: https://github.com/ACP3/cms/compare/v4.1.18...v4.1.19
+[4.1.18]: https://github.com/ACP3/cms/compare/v4.1.17...v4.1.18

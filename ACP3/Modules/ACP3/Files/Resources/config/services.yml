@@ -2,8 +2,7 @@ imports:
   - { resource: components/cache.yml }
   - { resource: components/controllers.yml }
   - { resource: components/events.yml }
-  - { resource: components/feeds.yml }
+  - { resource: components/extensions.yml }
   - { resource: components/installer.yml }
   - { resource: components/models.yml }
-  - { resource: components/search.yml }
   - { resource: components/validation.yml }

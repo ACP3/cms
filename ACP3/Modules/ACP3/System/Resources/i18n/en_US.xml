@@ -258,6 +258,7 @@
         <item key="select_enable_page_cache">Please select whether you want to enabled the page cache or not.</item>
         <item key="select_language">Please select the language in which you want to see the website.</item>
         <item key="select_mailer_type">Please select the mailer type.</item>
+        <item key="select_mailer_smtp_security">Please select which transport encryption you want to use for sending E-mails.</item>
         <item key="select_menu_item">Please choose from one of the menu items above to get to the desired action.</item>
         <item key="select_mod_rewrite">Please select whether search engine friendly URIs should be used or not.</item>
         <item key="select_online_maintenance">Please select whether the maintenance mode should be turned on or off.</item>

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TRAVIS_TAG=$2
+TRAVIS_TAG=$1
 
 if [[ -n ${TRAVIS_TAG} ]]
 then

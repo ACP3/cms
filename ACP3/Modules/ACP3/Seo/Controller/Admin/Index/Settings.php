@@ -31,9 +31,9 @@ class Settings extends Core\Controller\AbstractAdminAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                    $context
-     * @param \ACP3\Core\Helpers\Forms                                      $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                  $formTokenHelper
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
@@ -67,8 +67,22 @@ class Settings extends Core\Controller\AbstractAdminAction
             4 => $this->translator->t('seo', 'robots_noindex_nofollow')
         ];
 
+        $sitemapSaveMode = [
+            1 => $this->translator->t('seo', 'sitemap_save_mode_automatically'),
+            2 => $this->translator->t('seo', 'sitemap_save_mode_manually'),
+        ];
+
         return [
             'robots' => $this->formsHelper->choicesGenerator('robots', $robots, $seoSettings['robots']),
+            'sitemap_is_enabled' => $this->formsHelper->yesNoCheckboxGenerator(
+                'sitemap_is_enabled',
+                $seoSettings['sitemap_is_enabled']
+            ),
+            'sitemap_save_mode' => $this->formsHelper->checkboxGenerator(
+                'sitemap_save_mode',
+                $sitemapSaveMode,
+                $seoSettings['sitemap_save_mode']
+            ),
             'form' => array_merge($seoSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
@@ -88,6 +102,8 @@ class Settings extends Core\Controller\AbstractAdminAction
                 'meta_description' => $this->get('core.helpers.secure')->strEncode($formData['meta_description']),
                 'meta_keywords' => $this->get('core.helpers.secure')->strEncode($formData['meta_keywords']),
                 'robots' => (int)$formData['robots'],
+                'sitemap_is_enabled' => (int)$formData['sitemap_is_enabled'],
+                'sitemap_save_mode' => (int)$formData['sitemap_save_mode']
             ];
 
             return $this->config->saveSettings($data, Seo\Installer\Schema::MODULE_NAME);

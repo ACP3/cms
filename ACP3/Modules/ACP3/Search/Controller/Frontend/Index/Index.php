@@ -28,7 +28,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     protected $formsHelper;
     /**
-     * @var Search\Utility\AvailableModulesRegistrar
+     * @var Search\Utility\SearchAvailabilityRegistrar
      */
     protected $availableModulesRegistrar;
 
@@ -37,14 +37,14 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Modules\ACP3\Search\Helpers $searchHelpers
      * @param \ACP3\Modules\ACP3\Search\Validation\FormValidation $searchValidator
-     * @param Search\Utility\AvailableModulesRegistrar $availableModulesRegistrar
+     * @param Search\Utility\SearchAvailabilityRegistrar $availableModulesRegistrar
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Search\Helpers $searchHelpers,
         Search\Validation\FormValidation $searchValidator,
-        Search\Utility\AvailableModulesRegistrar $availableModulesRegistrar
+        Search\Utility\SearchAvailabilityRegistrar $availableModulesRegistrar
     ) {
         parent::__construct($context);
 

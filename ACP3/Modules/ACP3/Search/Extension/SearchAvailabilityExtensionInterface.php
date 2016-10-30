@@ -4,10 +4,10 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Search\Utility;
+namespace ACP3\Modules\ACP3\Search\Extension;
 
 
-interface SearchAvailabilityInterface
+interface SearchAvailabilityExtensionInterface
 {
     /**
      * @return string
