@@ -13,7 +13,6 @@ use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
-use Thepixeldeveloper\Sitemap\Url;
 
 class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 {
@@ -53,10 +52,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         return Schema::MODULE_NAME;
     }
 
-    /**
-     * @return Url[]
-     */
-    public function fetchSitemapItems()
+    public function fetchSitemapUrls()
     {
         $this->addUrl('files/index/index');
 
@@ -65,7 +61,5 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 
             $this->addUrl($fileUrl, $result['start']);
         }
-
-        return $this->getUrls();
     }
 }

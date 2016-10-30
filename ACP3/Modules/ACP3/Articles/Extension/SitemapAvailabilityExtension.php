@@ -13,7 +13,6 @@ use ACP3\Modules\ACP3\Articles\Installer\Schema;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
-use Thepixeldeveloper\Sitemap\Url;
 
 class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 {
@@ -53,17 +52,14 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         return Schema::MODULE_NAME;
     }
 
-    /**
-     * @return Url[]
-     */
-    public function fetchSitemapItems()
+    public function fetchSitemapUrls()
     {
+        $this->addUrl('articles/index/index');
+
         foreach ($this->articleRepository->getAll($this->date->getCurrentDateTime()) as $result) {
             $routeName = 'articles/index/details/id_' . $result['id'];
 
             $this->addUrl($routeName, $result['start']);
         }
-
-        return $this->getUrls();
     }
 }

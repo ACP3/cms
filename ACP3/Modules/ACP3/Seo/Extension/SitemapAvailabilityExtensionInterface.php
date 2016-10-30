@@ -19,5 +19,5 @@ interface SitemapAvailabilityExtensionInterface
     /**
      * @return Url[]
      */
-    public function fetchSitemapItems();
+    public function getUrls();
 }

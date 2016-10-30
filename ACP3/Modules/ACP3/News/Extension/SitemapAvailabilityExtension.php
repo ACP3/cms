@@ -13,7 +13,6 @@ use ACP3\Modules\ACP3\News\Installer\Schema;
 use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
-use Thepixeldeveloper\Sitemap\Url;
 
 class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 {
@@ -53,17 +52,14 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         return Schema::MODULE_NAME;
     }
 
-    /**
-     * @return Url[]
-     */
-    public function fetchSitemapItems()
+    public function fetchSitemapUrls()
     {
+        $this->addUrl('news/index/index');
+
         foreach ($this->newsRepository->getAll($this->date->getCurrentDateTime()) as $result) {
             $routeName = 'news/index/details/id_' . $result['id'];
 
             $this->addUrl($routeName, $result['start']);
         }
-
-        return $this->getUrls();
     }
 }

@@ -65,8 +65,12 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
     /**
      * @return \Thepixeldeveloper\Sitemap\Url[]
      */
-    protected function getUrls()
+    public function getUrls()
     {
+        $this->fetchSitemapUrls();
+
         return $this->urls;
     }
+
+    abstract protected function fetchSitemapUrls();
 }

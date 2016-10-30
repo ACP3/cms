@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Contact\Extension;
 
 use ACP3\Modules\ACP3\Contact\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
-use Thepixeldeveloper\Sitemap\Url;
 
 class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 {
@@ -21,10 +20,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         return Schema::MODULE_NAME;
     }
 
-    /**
-     * @return Url[]
-     */
-    public function fetchSitemapItems()
+    public function fetchSitemapUrls()
     {
         $routeNames = [
             'contact/index/index',
@@ -34,7 +30,5 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         foreach ($routeNames as $routeName) {
             $this->addUrl($routeName);
         }
-
-        return $this->getUrls();
     }
 }

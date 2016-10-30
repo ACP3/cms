@@ -87,7 +87,7 @@ class SitemapGenerationModel
     {
         $urlSet = new Urlset();
         foreach ($this->sitemapRegistrar->getAvailableModules() as $module) {
-            foreach ($module->fetchSitemapItems() as $sitemapItem) {
+            foreach ($module->getUrls() as $sitemapItem) {
                 $urlSet->addUrl($sitemapItem);
             }
         }
