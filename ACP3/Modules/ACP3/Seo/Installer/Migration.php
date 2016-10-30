@@ -39,6 +39,10 @@ class Migration implements Modules\Installer\MigrationInterface
             ],
             8 => [
                 "DELETE FROM `{pre}settings` WHERE `module_id` = '{moduleId}' AND `name` = 'title';",
+            ],
+            9 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'sitemap_is_enabled', '0');",
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'sitemap_save_mode', '2');",
             ]
         ];
     }

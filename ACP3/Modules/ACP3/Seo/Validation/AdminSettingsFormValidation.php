@@ -26,6 +26,26 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'extra' => [
                         'haystack' => [1, 2, 3, 4]
                     ]
+                ])
+            ->addConstraint(
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'sitemap_is_enabled',
+                    'message' => $this->translator->t('seo', 'select_sitemap_is_enabled'),
+                    'extra' => [
+                        'haystack' => [0, 1]
+                    ]
+                ])
+            ->addConstraint(
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'sitemap_save_mode',
+                    'message' => $this->translator->t('seo', 'select_sitemap_save_mode'),
+                    'extra' => [
+                        'haystack' => [1, 2]
+                    ]
                 ]);
 
         $this->validator->validate();

@@ -28,6 +28,7 @@ services:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\OnModelAfterSaveListener
     arguments:
       - '@core.logger'
+      - '@core.config'
       - '@seo.utility.sitemap_availability_registrar'
       - '@seo.model.sitemap_generation_model'
     tags:
