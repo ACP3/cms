@@ -18,22 +18,28 @@ class ModelSaveEvent extends Event
     /**
      * @var array
      */
-    private $data;
+    private $filteredData;
     /**
      * @var int|null
      */
     private $entryId;
+    /**
+     * @var array
+     */
+    private $rawData;
 
     /**
      * ModelSaveEvent constructor.
      * @param string $moduleName
-     * @param array $data
+     * @param array $filteredData
+     * @param array $rawData
      * @param int|null|array $entryId
      */
-    public function __construct($moduleName, array $data, $entryId)
+    public function __construct($moduleName, array $filteredData, array $rawData, $entryId)
     {
         $this->moduleName = $moduleName;
-        $this->data = $data;
+        $this->filteredData = $filteredData;
+        $this->rawData = $rawData;
         $this->entryId = $entryId;
     }
 
@@ -50,7 +56,15 @@ class ModelSaveEvent extends Event
      */
     public function getData()
     {
-        return $this->data;
+        return $this->filteredData;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRawData()
+    {
+        return $this->rawData;
     }
 
     /**
@@ -66,6 +80,6 @@ class ModelSaveEvent extends Event
      */
     public function isDeleteStatement()
     {
-        return count($this->data) === 0 && is_array($this->entryId);
+        return count($this->filteredData) === 0 && is_array($this->entryId);
     }
 }
