@@ -1,0 +1,20 @@
+services:
+  articles.extension.search_availability_extension:
+    class: ACP3\Modules\ACP3\Articles\Extension\SearchAvailabilityExtension
+    arguments:
+      - '@core.date'
+      - '@core.router'
+      - '@articles.model.articlerepository'
+    tags:
+      - { name: search.extension.search_availability }
+
+  articles.extension.sitemap_availability_extension:
+    class: ACP3\Modules\ACP3\Articles\Extension\SitemapAvailabilityExtension
+    arguments:
+      - '@core.date'
+      - '@core.router'
+      - '@articles.model.articlerepository'
+      - '@?seo.helper.meta_statements'
+    tags:
+      - { name: seo.extension.sitemap_availability }
+

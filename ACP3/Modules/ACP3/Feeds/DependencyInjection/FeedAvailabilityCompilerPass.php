@@ -21,7 +21,7 @@ class FeedAvailabilityCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $definition = $container->findDefinition('feeds.utility.feed_availability_registrar');
-        $plugins = $container->findTaggedServiceIds('feeds.feed_availability');
+        $plugins = $container->findTaggedServiceIds('feeds.extension.feed_availability');
 
         foreach ($plugins as $serviceId => $tags) {
             $definition->addMethodCall(

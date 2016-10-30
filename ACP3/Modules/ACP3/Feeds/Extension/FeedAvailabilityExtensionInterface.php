@@ -4,10 +4,10 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Feeds\Utility;
+namespace ACP3\Modules\ACP3\Feeds\Extension;
 
 
-interface FeedAvailabilityInterface
+interface FeedAvailabilityExtensionInterface
 {
     /**
      * @return string

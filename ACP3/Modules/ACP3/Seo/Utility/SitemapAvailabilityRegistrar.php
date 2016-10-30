@@ -7,23 +7,25 @@
 namespace ACP3\Modules\ACP3\Seo\Utility;
 
 
+use ACP3\Modules\ACP3\Seo\Extension\SitemapAvailabilityExtensionInterface;
+
 class SitemapAvailabilityRegistrar
 {
     /**
-     * @var SitemapAvailabilityInterface[]
+     * @var SitemapAvailabilityExtensionInterface[]
      */
     protected $availableModules = [];
 
     /**
-     * @param SitemapAvailabilityInterface $availability
+     * @param SitemapAvailabilityExtensionInterface $availability
      */
-    public function registerModule(SitemapAvailabilityInterface $availability)
+    public function registerModule(SitemapAvailabilityExtensionInterface $availability)
     {
         $this->availableModules[$availability->getModuleName()] = $availability;
     }
 
     /**
-     * @return SitemapAvailabilityInterface[]
+     * @return SitemapAvailabilityExtensionInterface[]
      */
     public function getAvailableModules()
     {

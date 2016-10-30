@@ -21,7 +21,7 @@ class SitemapAvailabilityCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $definition = $container->findDefinition('seo.utility.sitemap_availability_registrar');
-        $plugins = $container->findTaggedServiceIds('seo.sitemap_availability');
+        $plugins = $container->findTaggedServiceIds('seo.extension.sitemap_availability');
 
         foreach ($plugins as $serviceId => $tags) {
             $definition->addMethodCall(

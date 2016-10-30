@@ -1,0 +1,19 @@
+services:
+  news.extension.feed_availability_extension:
+    class: ACP3\Modules\ACP3\News\Extension\FeedAvailabilityExtension
+    arguments:
+      - '@core.date'
+      - '@core.router'
+      - '@core.helpers.string_formatter'
+      - '@news.model.newsrepository'
+    tags:
+      - { name: feeds.extension.feed_availability }
+
+  news.extension.search_availability_extension:
+    class: ACP3\Modules\ACP3\News\Extension\SearchAvailabilityExtension
+    arguments:
+      - '@core.date'
+      - '@core.router'
+      - '@news.model.newsrepository'
+    tags:
+      - { name: search.extension.search_availability }

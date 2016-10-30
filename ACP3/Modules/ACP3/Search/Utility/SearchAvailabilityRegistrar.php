@@ -7,18 +7,20 @@
 namespace ACP3\Modules\ACP3\Search\Utility;
 
 
+use ACP3\Modules\ACP3\Search\Extension\SearchAvailabilityExtensionInterface;
+
 class SearchAvailabilityRegistrar
 {
     /**
-     * @var SearchAvailabilityInterface[]
+     * @var SearchAvailabilityExtensionInterface[]
      */
     protected $availableModules = [];
 
     /**
-     * @param SearchAvailabilityInterface $searchAvailability
+     * @param SearchAvailabilityExtensionInterface $searchAvailability
      * @return $this
      */
-    public function registerModule(SearchAvailabilityInterface $searchAvailability)
+    public function registerModule(SearchAvailabilityExtensionInterface $searchAvailability)
     {
         $this->availableModules[$searchAvailability->getModuleName()] = $searchAvailability;
 
@@ -26,7 +28,7 @@ class SearchAvailabilityRegistrar
     }
 
     /**
-     * @return SearchAvailabilityInterface[]
+     * @return SearchAvailabilityExtensionInterface[]
      */
     public function getAvailableModules()
     {

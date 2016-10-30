@@ -1,0 +1,19 @@
+services:
+  files.extenion.feed_availability_extension:
+    class: ACP3\Modules\ACP3\Files\Extension\FeedAvailabilityExtension
+    arguments:
+      - '@core.date'
+      - '@core.router'
+      - '@core.helpers.string_formatter'
+      - '@files.model.filesrepository'
+    tags:
+      - { name: feeds.extension.feed_availability }
+
+  files.extension.search_availability_extension:
+    class: ACP3\Modules\ACP3\Files\Extension\SearchAvailabilityExtension
+    arguments:
+      - '@core.date'
+      - '@core.router'
+      - '@files.model.filesrepository'
+    tags:
+      - { name: search.extension.search_availability }

@@ -4,18 +4,18 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Articles\Seo;
+namespace ACP3\Modules\ACP3\Articles\Extension;
 
 
 use ACP3\Core\Date;
 use ACP3\Core\Router\Router;
 use ACP3\Modules\ACP3\Articles\Installer\Schema;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Seo\Extension\SitemapAvailabilityExtensionInterface;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
-use ACP3\Modules\ACP3\Seo\Utility\SitemapAvailabilityInterface;
 use Thepixeldeveloper\Sitemap\Url;
 
-class SitemapAvailability implements SitemapAvailabilityInterface
+class SitemapAvailabilityExtension implements SitemapAvailabilityExtensionInterface
 {
     /**
      * @var Date

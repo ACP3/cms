@@ -4,12 +4,12 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Seo\Utility;
+namespace ACP3\Modules\ACP3\Seo\Extension;
 
 
 use Thepixeldeveloper\Sitemap\Url;
 
-interface SitemapAvailabilityInterface
+interface SitemapAvailabilityExtensionInterface
 {
     /**
      * @return string
