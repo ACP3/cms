@@ -6,10 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2016-xx-xx
 ### Added
-- The SEO module is now able to automatically generate XML sitemaps.
+- [#42](https://github.com/ACP3/cms/issues/42) The SEO module is now able to automatically generate XML sitemaps.
 - The following modules can now add their own URLs to the sitemap:
     - Articles
-    - Contact``
+    - Contact
     - Files
     - Gallery
     - News
@@ -37,7 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.1.30] - 2016-10-27
 ### Added
-- added a new system config option which makes it possible to enable or disable the page cache
+- [#39](https://github.com/ACP3/cms/issues/39) Added a new system config option which makes it possible to enable or disable the page cache
 - made it possible to dispatch custom events to the validator to make the form validation much more flexible
 
 ### Changed
