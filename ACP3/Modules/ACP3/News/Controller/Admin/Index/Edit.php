@@ -81,11 +81,10 @@ class Edit extends AbstractFormAction
                 ),
                 'options' => $this->fetchOptions($news['readmore'], $news['comments']),
                 'target' => $this->formsHelper->linkTargetChoicesGenerator('target', $news['target']),
-                'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
-                    ? $this->metaFormFieldsHelper->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $id))
-                    : [],
                 'form' => array_merge($news, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken()
+                'form_token' => $this->formTokenHelper->renderFormToken(),
+                'SEO_URI_PATTERN' => News\Helpers::URL_KEY_PATTERN,
+                'SEO_ROUTE_NAME' => sprintf(News\Helpers::URL_KEY_PATTERN, $id),
             ];
         }
 

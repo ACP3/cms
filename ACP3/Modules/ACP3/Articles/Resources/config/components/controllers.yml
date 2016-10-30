@@ -10,7 +10,6 @@ services:
     calls:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
       - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
-      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   articles.controller.admin.index.delete:
@@ -31,7 +30,6 @@ services:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
       - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
       - ['setMenuItemRepository', ['@?menus.model.menuitemrepository']]
-      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   articles.controller.admin.index.index:

@@ -101,12 +101,12 @@ class Edit extends AbstractFormAction
 
             return array_merge(
                 [
-                    'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
-                        ? $this->metaFormFieldsHelper->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id))
-                        : [],
                     'gallery_id' => $id,
                     'form' => array_merge($gallery, $this->request->getPost()->all()),
-                    'form_token' => $this->formTokenHelper->renderFormToken()
+                    'form_token' => $this->formTokenHelper->renderFormToken(),
+                    'SEO_URI_PATTERN' => Gallery\Helpers::URL_KEY_PATTERN_GALLERY,
+                    'SEO_ROUTE_NAME' => sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)
+
                 ],
                 $this->executeListPictures($id)
             );
@@ -212,16 +212,13 @@ class Edit extends AbstractFormAction
             $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
 
             $alias = $this->aliases->getUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId), true);
-            if (!empty($alias)) {
-                $alias .= '/img';
-            }
             $seoKeywords = $this->metaStatements->getKeywords(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId));
             $seoDescription = $this->metaStatements->getDescription(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId));
 
             foreach ($pictures as $picture) {
                 $this->uriAliasManager->insertUriAlias(
                     sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
-                    !empty($alias) ? $alias . '-' . $picture['id'] : '',
+                    !empty($alias) ? $alias . '/img-' . $picture['id'] : '',
                     $seoKeywords,
                     $seoDescription
                 );

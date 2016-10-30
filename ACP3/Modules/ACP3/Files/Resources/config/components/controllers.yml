@@ -10,7 +10,6 @@ services:
       - '@files.validator'
       - '@categories.helpers'
     calls:
-      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   files.controller.admin.index.delete:
@@ -30,7 +29,6 @@ services:
       - '@files.validator'
       - '@categories.helpers'
     calls:
-      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   files.controller.admin.index.index:

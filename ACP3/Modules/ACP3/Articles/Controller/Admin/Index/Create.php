@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
-use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
 
 /**
  * Class Create
@@ -29,10 +28,6 @@ class Create extends AbstractFormAction
      * @var Menus\Helpers\MenuItemFormFields
      */
     protected $menuItemFormFieldsHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
-     */
-    protected $metaFormFieldsHelper;
     /**
      * @var Articles\Model\ArticlesModel
      */
@@ -57,14 +52,6 @@ class Create extends AbstractFormAction
         $this->articlesModel = $articlesModel;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
-     */
-    public function setMetaFormFieldsHelper(MetaFormFields $metaFormFieldsHelper)
-    {
-        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
     }
 
     /**
@@ -97,9 +84,10 @@ class Create extends AbstractFormAction
 
         return [
             'options' => $this->fetchOptions(),
-            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper ? $this->metaFormFieldsHelper->formFields() : [],
             'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form_token' => $this->formTokenHelper->renderFormToken(),
+            'SEO_URI_PATTERN' => Articles\Helpers::URL_KEY_PATTERN,
+            'SEO_ROUTE_NAME' => ''
         ];
     }
 

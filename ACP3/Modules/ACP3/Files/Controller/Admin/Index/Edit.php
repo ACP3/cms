@@ -102,11 +102,10 @@ class Edit extends AbstractFormAction
                 ),
                 'external' => $this->formsHelper->checkboxGenerator('external', $external),
                 'current_file' => $file['file'],
-                'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
-                    ? $this->metaFormFieldsHelper->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $id))
-                    : [],
                 'form' => array_merge($file, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken()
+                'form_token' => $this->formTokenHelper->renderFormToken(),
+                'SEO_URI_PATTERN' => Files\Helpers::URL_KEY_PATTERN,
+                'SEO_ROUTE_NAME' => sprintf(Files\Helpers::URL_KEY_PATTERN, $id)
             ];
         }
 

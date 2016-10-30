@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractAdminAction;
 use ACP3\Modules\ACP3\Gallery;
-use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
@@ -19,21 +18,9 @@ use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 class AbstractFormAction extends AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
-     */
-    protected $metaFormFieldsHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
      */
     protected $uriAliasManager;
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
-     */
-    public function setMetaFormFieldsHelper(MetaFormFields $metaFormFieldsHelper)
-    {
-        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
-    }
 
     /**
      * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager

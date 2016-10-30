@@ -82,11 +82,10 @@ class Create extends AbstractFormAction
             ),
             'options' => $this->fetchOptions(0, 0),
             'target' => $this->formsHelper->linkTargetChoicesGenerator('target'),
-            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
-                ? $this->metaFormFieldsHelper->formFields()
-                : [],
             'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form_token' => $this->formTokenHelper->renderFormToken(),
+            'SEO_URI_PATTERN' => News\Helpers::URL_KEY_PATTERN,
+            'SEO_ROUTE_NAME' => ''
         ];
     }
 

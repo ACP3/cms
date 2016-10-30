@@ -18,7 +18,7 @@
                     {include file="asset:Menus/Partials/create_menu_item.tpl"}
                 {/if}
             </div>
-            {event name="seo.layout.render_form_fields" SEO_FORM_FIELDS=$SEO_FORM_FIELDS}
+            {event name="seo.layout.render_form_fields" uri_pattern=$SEO_URI_PATTERN path=$SEO_ROUTE_NAME}
         </div>
     </div>
     {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/articles"}}

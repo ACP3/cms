@@ -10,7 +10,6 @@ use ACP3\Core;
 use ACP3\Core\Controller\AbstractAdminAction;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
-use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
@@ -23,10 +22,6 @@ abstract class AbstractFormAction extends AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Categories\Helpers
      */
     protected $categoriesHelpers;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
-     */
-    protected $metaFormFieldsHelper;
     /**
      * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
      */
@@ -52,14 +47,6 @@ abstract class AbstractFormAction extends AbstractAdminAction
 
         $this->formsHelper = $formsHelper;
         $this->categoriesHelpers = $categoriesHelpers;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
-     */
-    public function setMetaFormFieldsHelper(MetaFormFields $metaFormFieldsHelper)
-    {
-        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
     }
 
     /**

@@ -65,9 +65,10 @@ class Create extends AbstractFormAction
         ];
 
         return [
-            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper ? $this->metaFormFieldsHelper->formFields() : [],
             'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form_token' => $this->formTokenHelper->renderFormToken(),
+            'SEO_URI_PATTERN' => Gallery\Helpers::URL_KEY_PATTERN_GALLERY,
+            'SEO_ROUTE_NAME' => ''
         ];
     }
 

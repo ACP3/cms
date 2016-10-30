@@ -1,4 +1,4 @@
-{extends file="asset:gallery/admin/index.create.tpl"}
+{extends file="asset:Gallery/Admin/index.create.tpl"}
 
 {block CONTENT append}
     <form action="{uri args="acp/gallery/pictures/delete/id_$gallery_id"}" method="post">
@@ -6,7 +6,8 @@
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex2-collapse">
                     <span class="sr-only">{lang t="system|toggle_navigation"}</span>
-                    <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
                 <span class="navbar-brand">{lang t="gallery|pictures"}</span>

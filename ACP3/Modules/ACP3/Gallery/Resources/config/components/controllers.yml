@@ -7,7 +7,7 @@ services:
       - '@gallery.model.gallery_model'
       - '@gallery.validator.gallery'
     calls:
-      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   gallery.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Delete
@@ -30,7 +30,7 @@ services:
       - '@gallery.validator.gallery'
     calls:
       - ['setAliases', ['@?seo.core.router.aliases']]
-      - ['setMetaFormFieldsHelper', ['@?seo.helper.meta_form_fields']]
+      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
       - ['setMetaStatements', ['@?seo.helper.meta_statements']]
 
   gallery.controller.admin.index.index:
