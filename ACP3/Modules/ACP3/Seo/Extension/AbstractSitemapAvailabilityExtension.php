@@ -21,6 +21,10 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
      * @var Router
      */
     private $router;
+    /**
+     * @var Url[]
+     */
+    private $urls = [];
 
     /**
      * AbstractSitemapAvailabilityExtension constructor.
@@ -36,21 +40,33 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
     }
 
     /**
+     * @param $routeName
+     * @param null|string $lastModificationDate
+     * @return $this
+     */
+    protected function addUrl($routeName, $lastModificationDate = null)
+    {
+        if ($this->pageIsIndexable($routeName)) {
+            $this->urls[] = (new Url($this->router->route($routeName, true)))->setLastMod($lastModificationDate);
+        }
+
+        return $this;
+    }
+
+    /**
      * @param string $routeName
      * @return bool
      */
-    protected function pageIsIndexable($routeName)
+    private function pageIsIndexable($routeName)
     {
         return in_array($this->metaStatements->getRobotsSetting($routeName), ['index,follow', 'index,nofollow']);
     }
 
     /**
-     * @param $routeName
-     * @param null|string $lastModificationDate
-     * @return Url
+     * @return \Thepixeldeveloper\Sitemap\Url[]
      */
-    protected function instantiateSitemapUrl($routeName, $lastModificationDate = null)
+    protected function getUrls()
     {
-        return (new Url($this->router->route($routeName, true)))->setLastMod($lastModificationDate);
+        return $this->urls;
     }
 }

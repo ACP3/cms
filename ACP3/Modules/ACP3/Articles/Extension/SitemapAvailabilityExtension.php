@@ -58,15 +58,12 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
      */
     public function fetchSitemapItems()
     {
-        $feedItems = [];
         foreach ($this->articleRepository->getAll($this->date->getCurrentDateTime()) as $result) {
             $routeName = 'articles/index/details/id_' . $result['id'];
 
-            if ($this->pageIsIndexable($routeName)) {
-                $feedItems[] = $this->instantiateSitemapUrl($routeName, $result['start']);
-            }
+            $this->addUrl($routeName, $result['start']);
         }
 
-        return $feedItems;
+        return $this->getUrls();
     }
 }
