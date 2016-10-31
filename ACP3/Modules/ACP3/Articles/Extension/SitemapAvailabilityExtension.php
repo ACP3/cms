@@ -26,7 +26,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     protected $articleRepository;
 
     /**
-     * SitemapAvailability constructor.
+     * SitemapAvailabilityExtension constructor.
      * @param Date $date
      * @param Router $router
      * @param ArticleRepository $articleRepository
