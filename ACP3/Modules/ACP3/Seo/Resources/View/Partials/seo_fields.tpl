@@ -25,7 +25,9 @@
 {include file="asset:System/Partials/form_group.input_text.tpl" name="seo_keywords" value=$seo.keywords maxlength=255 label={lang t="seo|keywords"}}
 {include file="asset:System/Partials/form_group.input_text.tpl" name="seo_description" value=$seo.description maxlength=255 label={lang t="seo|description"}}
 {include file="asset:System/Partials/form_group.select.tpl" options=$seo.robots required=true label={lang t="seo|robots"}}
-<input type="hidden" name="seo_uri_pattern" value="{$seo.uri_pattern}">
+{if !empty($seo.uri_pattern)}
+    <input type="hidden" name="seo_uri_pattern" value="{$seo.uri_pattern}">
+{/if}
 {if !isset($disable_alias_suggest)}
     {javascripts}
         {include_js module="seo" file="suggest_alias"}
