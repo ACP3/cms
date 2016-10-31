@@ -33,7 +33,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 41;
+        return 42;
     }
 
     /**
@@ -46,6 +46,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `start` DATETIME NOT NULL,
                 `end` DATETIME NOT NULL,
+                `updated_at` DATETIME NOT NULL,
                 `category_id` INT(10) UNSIGNED NOT NULL,
                 `file` VARCHAR(120) NOT NULL,
                 `size` VARCHAR(20) NOT NULL,

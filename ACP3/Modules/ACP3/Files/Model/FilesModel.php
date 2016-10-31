@@ -21,7 +21,8 @@ class FilesModel extends AbstractModel
     public function save(array $data, $entryId = null)
     {
         $data = array_merge($data, [
-            'category_id' => (int)$data['cat']
+            'category_id' => (int)$data['cat'],
+            'updated_at' => 'now'
         ]);
 
         if (!empty($data['filesize'])) {
