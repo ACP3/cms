@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - unified all module extensions to be located under the same namespace of the specific module
 - reworked the SEO URI alias saving logic to use the `core.model.after_save` event
+- refactored the `SearchAvailabilityExtension` classes to reduce the code duplication
 
 ### Fixed
 - fixed the wrong initial value of the `mailer_smtp_security` system config entry
