@@ -48,66 +48,70 @@ abstract class AbstractModel
     }
 
     /**
-     * @param array $columnData
+     * @param array $rawData
      * @param null|int $entryId
      * @return bool|int
      */
-    public function save(array $columnData, $entryId = null)
+    public function save(array $rawData, $entryId = null)
     {
-        $columnData = $this->prepareData($columnData);
+        $filteredData = $this->prepareData($rawData);
 
-        $this->dispatchBeforeSaveEvent($this->repository, $columnData, $entryId);
+        $this->dispatchBeforeSaveEvent($this->repository, $entryId, $filteredData, $rawData);
 
         if ($entryId === null) {
-            $result = $this->repository->insert($columnData);
+            $result = $this->repository->insert($filteredData);
 
             if ($result !== false) {
                 $entryId = $result;
             }
         } else {
-            $result = $this->repository->update($columnData, $entryId);
+            $result = $this->repository->update($filteredData, $entryId);
         }
 
-        $this->dispatchAfterSaveEvent($this->repository, $columnData, $entryId);
+        $this->dispatchAfterSaveEvent($this->repository, $entryId, $filteredData, $rawData);
 
         return $result;
     }
 
     /**
      * @param AbstractRepository $repository
-     * @param array $data
      * @param int|null|array $entryId
+     * @param array $filteredData
+     * @param array $rawData
      */
-    protected function dispatchBeforeSaveEvent(AbstractRepository $repository, array $data, $entryId)
-    {
-        $this->dispatchEvent('core.model.before_save', $data, $entryId);
+    protected function dispatchBeforeSaveEvent(
+        AbstractRepository $repository,
+        $entryId,
+        array $filteredData,
+        array $rawData
+    ) {
+        $this->dispatchEvent('core.model.before_save', $entryId, $filteredData, $rawData);
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_save',
-            $data,
-            $entryId
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_save', $entryId, $filteredData
         );
     }
 
     /**
      * @param string $eventName
-     * @param array $data
      * @param int|null|array $entryId
+     * @param array $filteredData
+     * @param array $rawData
      */
-    protected function dispatchEvent($eventName, array $data, $entryId)
+    protected function dispatchEvent($eventName, $entryId, array $filteredData = [], array $rawData = [])
     {
         $this->eventDispatcher->dispatch(
             $eventName,
-            new ModelSaveEvent($data, $entryId)
+            new ModelSaveEvent(static::EVENT_PREFIX, $filteredData, $rawData, $entryId)
         );
     }
 
     /**
-     * @param array $data
+     * @param array $rawData
      * @return array
      */
-    protected function prepareData(array $data)
+    protected function prepareData(array $rawData)
     {
-        return $this->dataProcessor->processColumnData($data, $this->getAllowedColumns());
+        return $this->dataProcessor->processColumnData($rawData, $this->getAllowedColumns());
     }
 
     /**
@@ -117,16 +121,19 @@ abstract class AbstractModel
 
     /**
      * @param AbstractRepository $repository
-     * @param array $data
      * @param int|null|array $entryId
+     * @param array $filteredData
+     * @param array $rawData
      */
-    protected function dispatchAfterSaveEvent(AbstractRepository $repository, array $data, $entryId)
-    {
-        $this->dispatchEvent('core.model.after_save', $data, $entryId);
+    protected function dispatchAfterSaveEvent(
+        AbstractRepository $repository,
+        $entryId,
+        array $filteredData,
+        array $rawData
+    ) {
+        $this->dispatchEvent('core.model.after_save', $entryId, $filteredData, $rawData);
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_save',
-            $data,
-            $entryId
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_save', $entryId, $filteredData
         );
     }
 
@@ -142,15 +149,9 @@ abstract class AbstractModel
             $entryId = [$entryId];
         }
 
+        $this->dispatchEvent('core.model.before_delete', $entryId);
         $this->dispatchEvent(
-            'core.model.before_delete',
-            [],
-            $entryId
-        );
-        $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete',
-            [],
-            $entryId
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete', $entryId
         );
 
         $affectedRows = 0;
@@ -158,15 +159,9 @@ abstract class AbstractModel
             $affectedRows += (int)$this->repository->delete($item);
         }
 
+        $this->dispatchEvent('core.model.before_delete', $entryId);
         $this->dispatchEvent(
-            'core.model.before_delete',
-            [],
-            $entryId
-        );
-        $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete',
-            [],
-            $entryId
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete', $entryId
         );
 
         return $affectedRows;

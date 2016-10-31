@@ -41,7 +41,7 @@ class MenuRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param int $menuId
      *
-     * @return mixed
+     * @return string
      */
     public function getMenuNameById($menuId)
     {

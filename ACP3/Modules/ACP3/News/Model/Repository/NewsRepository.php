@@ -107,27 +107,10 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $fields
-     * @param string $searchTerm
-     * @param string $sort
-     * @param string $time
-     *
-     * @return array
-     */
-    public function getAllSearchResults($fields, $searchTerm, $sort, $time)
-    {
-        $period = ' AND ' . $this->getPublicationPeriod();
-        return $this->db->fetchAll(
-            'SELECT id, title, `text` FROM ' . $this->getTableName() . ' WHERE MATCH(' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY `start` ' . $sort . ', `end` ' . $sort . ', id ' . $sort,
-            ['time' => $time]
-        );
-    }
-
-    /**
      * @param int    $categoryId
      * @param string $time
      *
-     * @return mixed
+     * @return array
      */
     public function getLatestByCategoryId($categoryId, $time)
     {
@@ -142,7 +125,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param string $time
      *
-     * @return mixed
+     * @return array
      */
     public function getLatest($time)
     {

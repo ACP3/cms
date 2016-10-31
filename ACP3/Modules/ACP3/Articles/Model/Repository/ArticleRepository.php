@@ -78,20 +78,4 @@ class ArticleRepository extends Core\Model\Repository\AbstractRepository
             ['time' => $time]
         );
     }
-
-    /**
-     * @param string $fields
-     * @param string $searchTerm
-     * @param string $sortDirection
-     * @param string $time
-     *
-     * @return array
-     */
-    public function getAllSearchResults($fields, $searchTerm, $sortDirection, $time)
-    {
-        return $this->db->fetchAll(
-            "SELECT `id`, `title`, `text` FROM {$this->getTableName()} WHERE MATCH ({$fields}) AGAINST ({$this->db->getConnection()->quote($searchTerm)} IN BOOLEAN MODE) AND {$this->getPublicationPeriod()} ORDER BY `start` {$sortDirection}, `end` {$sortDirection}, `title` {$sortDirection}",
-            ['time' => $time]
-        );
-    }
 }

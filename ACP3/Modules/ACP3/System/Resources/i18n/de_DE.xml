@@ -258,6 +258,7 @@
         <item key="select_enable_page_cache">Bitte wählen Sie aus, ob Seiten-Cache verwendet werden soll oder nicht.</item>
         <item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten.</item>
         <item key="select_mailer_type">Bitte wählen Sie den zu verwendenten Mailertyp aus.</item>
+        <item key="select_mailer_smtp_security">Bitte wählen Sie aus, welche Transportverschlüsselung zum Versand von E-Mails verwendet werden soll.</item>
         <item key="select_menu_item">Bitte wählen Sie einen der oben stehenden Menüpunkte aus, um zur gewünschten Aktion zu gelangen.</item>
         <item key="select_mod_rewrite">Bitte geben Sie an, ob die suchmaschinenfreundlichen URIs verwendet werden sollen, oder nicht.</item>
         <item key="select_online_maintenance">Bitte wählen Sie aus, ob sich die Seite im Wartungsmodus befinden soll oder nicht.</item>

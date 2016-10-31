@@ -209,7 +209,18 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                         'data' => $formData,
                         'field' => 'mailer_smtp_port',
                         'message' => $this->translator->t('system', 'type_in_mailer_smtp_port')
-                    ]);
+                    ])
+                ->addConstraint(
+                    Core\Validation\ValidationRules\InArrayValidationRule::class,
+                    [
+                        'data' => $formData,
+                        'field' => 'mailer_smtp_host',
+                        'message' => $this->translator->t('system', 'select_mailer_smtp_security'),
+                        'extra' => [
+                            'haystack' => ['none', 'ssl', 'tls']
+                        ]
+                    ])
+            ;
 
             if ($formData['mailer_smtp_auth'] == 1) {
                 $this->validator

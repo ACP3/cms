@@ -27,13 +27,13 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      */
     protected $title;
     /**
-     * @var Core\Helpers\RedirectMessages
-     */
-    protected $redirectMessages;
-    /**
      * @var \ACP3\Core\Modules\Helper\Action
      */
     protected $actionHelper;
+    /**
+     * @var Core\Helpers\RedirectMessages
+     */
+    private $redirectMessages;
     /**
      * @var string
      */

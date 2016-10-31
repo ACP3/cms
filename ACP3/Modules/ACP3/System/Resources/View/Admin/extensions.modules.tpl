@@ -98,9 +98,7 @@
                         </tbody>
                     </table>
                 {else}
-                    <div class="alert alert-warning text-center">
-                        <strong>{lang t="system|no_modules_available_for_installation"}</strong>
-                    </div>
+                    {include file="asset:System/Partials/no_results.tpl" no_results_text={lang t="system|no_modules_available_for_installation"}}
                 {/if}
             </div>
         </div>

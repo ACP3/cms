@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Gallery;
  * Class Create
  * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
  */
-class Create extends AbstractFormAction
+class Create extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -65,9 +65,10 @@ class Create extends AbstractFormAction
         ];
 
         return [
-            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper ? $this->metaFormFieldsHelper->formFields() : [],
             'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form_token' => $this->formTokenHelper->renderFormToken(),
+            'SEO_URI_PATTERN' => Gallery\Helpers::URL_KEY_PATTERN_GALLERY,
+            'SEO_ROUTE_NAME' => ''
         ];
     }
 
@@ -82,11 +83,8 @@ class Create extends AbstractFormAction
             $this->galleryFormValidation->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $lastId = $this->galleryModel->save($formData);
 
-            $this->insertUriAlias($formData, $lastId);
-
-            return $lastId;
+            return $this->galleryModel->save($formData);
         });
     }
 }

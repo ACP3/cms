@@ -12,23 +12,43 @@ use Symfony\Component\EventDispatcher\Event;
 class ModelSaveEvent extends Event
 {
     /**
+     * @var string
+     */
+    private $moduleName;
+    /**
      * @var array
      */
-    private $data;
+    private $filteredData;
     /**
      * @var int|null
      */
     private $entryId;
+    /**
+     * @var array
+     */
+    private $rawData;
 
     /**
      * ModelSaveEvent constructor.
-     * @param array $data
+     * @param string $moduleName
+     * @param array $filteredData
+     * @param array $rawData
      * @param int|null|array $entryId
      */
-    public function __construct(array $data, $entryId)
+    public function __construct($moduleName, array $filteredData, array $rawData, $entryId)
     {
-        $this->data = $data;
+        $this->moduleName = $moduleName;
+        $this->filteredData = $filteredData;
+        $this->rawData = $rawData;
         $this->entryId = $entryId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModuleName()
+    {
+        return $this->moduleName;
     }
 
     /**
@@ -36,7 +56,15 @@ class ModelSaveEvent extends Event
      */
     public function getData()
     {
-        return $this->data;
+        return $this->filteredData;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRawData()
+    {
+        return $this->rawData;
     }
 
     /**
@@ -52,6 +80,6 @@ class ModelSaveEvent extends Event
      */
     public function isDeleteStatement()
     {
-        return count($this->data) === 0 && is_array($this->entryId);
+        return count($this->filteredData) === 0 && is_array($this->entryId);
     }
 }

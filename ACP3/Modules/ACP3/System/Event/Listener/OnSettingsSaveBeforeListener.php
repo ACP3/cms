@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\System\Event\Listener;
 
 use ACP3\Core\Modules;
-use ACP3\Core\Settings\SettingsInterface;
+use ACP3\Modules\ACP3\System\Helper\CanUsePageCache;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository;
 
@@ -22,29 +22,29 @@ class OnSettingsSaveBeforeListener
      */
     private $modules;
     /**
-     * @var SettingsInterface
+     * @var CanUsePageCache
      */
-    private $settings;
+    private $canUsePageCache;
 
     /**
      * OnModelAfterSaveListener constructor.
-     * @param SettingsInterface $settings
      * @param Modules $modules
      * @param SettingsRepository $settingsRepository
+     * @param CanUsePageCache $canUsePageCache
      */
     public function __construct(
-        SettingsInterface $settings,
         Modules $modules,
-        SettingsRepository $settingsRepository
+        SettingsRepository $settingsRepository,
+        CanUsePageCache $canUsePageCache
     ) {
         $this->settingsRepository = $settingsRepository;
         $this->modules = $modules;
-        $this->settings = $settings;
+        $this->canUsePageCache = $canUsePageCache;
     }
 
     public function invalidatePageCache()
     {
-        if ($this->settings->getSettings(Schema::MODULE_NAME)['page_cache_is_enabled'] == 1) {
+        if ($this->canUsePageCache->canUsePageCache()) {
             $systemModuleId = $this->modules->getModuleId(Schema::MODULE_NAME);
             $this->settingsRepository->update(
                 ['value' => false],

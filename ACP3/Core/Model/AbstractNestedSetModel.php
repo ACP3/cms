@@ -53,18 +53,18 @@ abstract class AbstractNestedSetModel extends AbstractModel
     }
 
     /**
-     * @param array $columnData
+     * @param array $rawData
      * @param int|null $entryId
      * @return bool|int
      */
-    public function save(array $columnData, $entryId = null)
+    public function save(array $rawData, $entryId = null)
     {
-        $columnData = $this->prepareData($columnData);
+        $filteredData = $this->prepareData($rawData);
 
-        $this->dispatchBeforeSaveEvent($this->repository, $columnData, $entryId);
+        $this->dispatchBeforeSaveEvent($this->repository, $entryId, $filteredData, $rawData);
 
         if ($entryId === null) {
-            $result = $this->insertOperation->execute($columnData, $columnData['parent_id']);
+            $result = $this->insertOperation->execute($filteredData, $rawData['parent_id']);
 
             if ($result !== false) {
                 $entryId = $result;
@@ -72,13 +72,13 @@ abstract class AbstractNestedSetModel extends AbstractModel
         } else {
             $result = $this->editOperation->execute(
                 $entryId,
-                $columnData['parent_id'],
-                isset($columnData['block_id']) ? $columnData['block_id'] : 0,
-                $columnData
+                $filteredData['parent_id'],
+                isset($filteredData['block_id']) ? $filteredData['block_id'] : 0,
+                $filteredData
             );
         }
 
-        $this->dispatchAfterSaveEvent($this->repository, $columnData, $entryId);
+        $this->dispatchAfterSaveEvent($this->repository, $entryId, $filteredData, $rawData);
 
         return $result;
     }
@@ -95,15 +95,9 @@ abstract class AbstractNestedSetModel extends AbstractModel
             $entryId = [$entryId];
         }
 
+        $this->dispatchEvent('core.model.before_delete', $entryId);
         $this->dispatchEvent(
-            'core.model.before_delete',
-            [],
-            $entryId
-        );
-        $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete',
-            [],
-            $entryId
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete', $entryId
         );
 
         $affectedRows = 0;
@@ -111,15 +105,9 @@ abstract class AbstractNestedSetModel extends AbstractModel
             $affectedRows += (int)$this->deleteOperation->execute($item);
         }
 
+        $this->dispatchEvent('core.model.before_delete', $entryId);
         $this->dispatchEvent(
-            'core.model.before_delete',
-            [],
-            $entryId
-        );
-        $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete',
-            [],
-            $entryId
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete', $entryId
         );
 
         return $affectedRows;

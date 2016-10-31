@@ -9,7 +9,9 @@
                placeholder="{lang t="search|search_term"}"
                required>
     </div>
-    <button type="submit" name="submit" class="btn btn-primary">{lang t="search|submit_search"}</button>
+    <button type="submit" name="submit" class="btn btn-primary" title="{lang t="search|submit_search"}">
+        <i class="glyphicon glyphicon-search"></i>
+    </button>
     {foreach $search_mods as $row}
         <input type="hidden" name="mods[]" value="{$row.dir}">
     {/foreach}
