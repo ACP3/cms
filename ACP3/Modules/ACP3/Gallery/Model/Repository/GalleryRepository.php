@@ -34,7 +34,7 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param int $galleryId
      *
-     * @return mixed
+     * @return string
      */
     public function getGalleryTitle($galleryId)
     {

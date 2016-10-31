@@ -42,7 +42,7 @@ class EmoticonRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param int $emoticonId
      *
-     * @return mixed
+     * @return string
      */
     public function getOneImageById($emoticonId)
     {

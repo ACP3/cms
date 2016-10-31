@@ -49,7 +49,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param int $fileId
      *
-     * @return mixed
+     * @return string
      */
     public function getFileById($fileId)
     {

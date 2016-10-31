@@ -14,9 +14,9 @@
                 {$picture.description}
             </div>
             <footer>
-                <ul class="pager">
+                <ul class="pagination">
                     {if !empty($picture_previous)}
-                        <li class="previous">
+                        <li>
                             <a href="{uri args="gallery/index/details/id_`$picture_previous`"}" rel="prev">
                                 &laquo;
                                 {lang t="gallery|previous_image"}
@@ -29,7 +29,7 @@
                         </a>
                     </li>
                     {if !empty($picture_next)}
-                        <li class="next">
+                        <li>
                             <a href="{uri args="gallery/index/details/id_`$picture_next`"}" rel="next">
                                 {lang t="gallery|next_image"}
                                 &raquo;
