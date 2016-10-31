@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 ### Fixed
+- fixed the editing of newsletters
 
 ## [4.3.1] - 2016-10-31
 ### Fixed
