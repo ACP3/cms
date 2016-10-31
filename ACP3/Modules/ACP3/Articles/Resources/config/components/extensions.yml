@@ -2,9 +2,8 @@ services:
   articles.extension.search_availability_extension:
     class: ACP3\Modules\ACP3\Articles\Extension\SearchAvailabilityExtension
     arguments:
-      - '@core.date'
       - '@core.router'
-      - '@articles.model.articlerepository'
+      - '@articles.model.search_results_aware_repository'
     tags:
       - { name: search.extension.search_availability }
 

@@ -7,41 +7,30 @@
 namespace ACP3\Modules\ACP3\Articles\Extension;
 
 
-use ACP3\Core\Date;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Articles\Installer\Schema;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
-use ACP3\Modules\ACP3\Search\Extension\SearchAvailabilityExtensionInterface;
+use ACP3\Modules\ACP3\Articles\Model\Repository\SearchResultsAwareRepository;
+use ACP3\Modules\ACP3\Search\Extension\AbstractSearchAvailabilityExtension;
 
-class SearchAvailabilityExtension implements SearchAvailabilityExtensionInterface
+class SearchAvailabilityExtension extends AbstractSearchAvailabilityExtension
 {
-    /**
-     * @var \ACP3\Core\Date
-     */
-    private $date;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
     private $router;
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
-     */
-    private $articleRepository;
 
     /**
      * SearchAvailability constructor.
-     * @param Date $date
      * @param RouterInterface $router
-     * @param ArticleRepository $articleRepository
+     * @param SearchResultsAwareRepository $repository
      */
     public function __construct(
-        Date $date,
         RouterInterface $router,
-        ArticleRepository $articleRepository
+        SearchResultsAwareRepository $repository
     ) {
-        $this->date = $date;
+        parent::__construct($repository);
+
         $this->router = $router;
-        $this->articleRepository = $articleRepository;
     }
 
     /**
@@ -60,14 +49,7 @@ class SearchAvailabilityExtension implements SearchAvailabilityExtensionInterfac
      */
     public function fetchSearchResults($searchTerm, $areas, $sortDirection)
     {
-        $fields = $this->mapSearchAreasToFields($areas);
-
-        $results = $this->articleRepository->getAllSearchResults(
-            $fields,
-            $searchTerm,
-            $sortDirection,
-            $this->date->getCurrentDateTime()
-        );
+        $results = parent::fetchSearchResults($searchTerm, $areas, $sortDirection);
         $cResults = count($results);
 
         for ($i = 0; $i < $cResults; ++$i) {
