@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-    $(".thumbnail").fancybox({
+    $('[data-fancybox-group="gallery"]').fancybox({
         type: 'image',
         padding: 0,
         nextClick: true,

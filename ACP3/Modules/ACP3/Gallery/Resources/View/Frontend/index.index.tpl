@@ -3,25 +3,28 @@
 {block CONTENT}
     {if !empty($galleries)}
         {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
-        {foreach $galleries as $row}
-            <div class="dataset-box">
-                <div class="navbar navbar-default">
-                    <div class="navbar-header">
-                        <h2 class="navbar-brand">
-                            <a href="{uri args="gallery/index/pics/id_`$row.id`"}">
-                                {$row.title}
-                                {if $row.pics == 1}
-                                    ({$row.pics} {lang t="gallery|picture"})
-                                {else}
-                                    ({$row.pics} {lang t="gallery|pictures"})
-                                {/if}
-                            </a>
-                        </h2>
+        <div class="row">
+            {foreach $galleries as $row}
+                <div class="col-sm-3">
+                    <div class="thumbnail">
+                        <img src="{uri args="gallery/index/image/id_`$row.picture_id`/action_thumb"}" alt="">
+                        <div class="caption">
+                            <h3>{$row.title}</h3>
+                            <p>
+                                <time datetime="{date_format date=$row.start format="c"}">
+                                    {date_format date=$row.start format=$dateformat}
+                                </time>
+                            </p>
+                            <p>
+                                <a href="{uri args="gallery/index/pics/id_`$row.id`"}" class="btn btn-primary btn-block" role="button">
+                                    {lang t="gallery|show_pictures" args=['%pictures%' => {$row.pics}]}
+                                </a>
+                            </p>
+                        </div>
                     </div>
-                    <time class="navbar-text small pull-right" datetime="{date_format date=$row.start format="c"}">{date_format date=$row.start format=$dateformat}</time>
                 </div>
-            </div>
-        {/foreach}
+            {/foreach}
+        </div>
     {else}
         {include file="asset:System/Partials/no_results.tpl"}
     {/if}
