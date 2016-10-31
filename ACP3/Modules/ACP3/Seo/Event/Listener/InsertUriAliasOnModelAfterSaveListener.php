@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
+use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
 class InsertUriAliasOnModelAfterSaveListener
 {
@@ -33,7 +34,7 @@ class InsertUriAliasOnModelAfterSaveListener
     {
         $formData = $event->getRawData();
 
-        if (!empty($formData['seo_uri_pattern'])) {
+        if ($event->getModuleName() !== Schema::MODULE_NAME && !empty($formData['seo_uri_pattern'])) {
             $this->uriAliasManager->insertUriAlias(
                 sprintf($formData['seo_uri_pattern'], $event->getEntryId()),
                 $formData['alias'],

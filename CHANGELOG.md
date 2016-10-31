@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.3.1] - 2016-10-31
+### Fixed
+- fixed the SEO module's administration forms
+
 ## [4.3.0] - 2016-10-31
 ### Added
 - [#42](https://github.com/ACP3/cms/issues/42) The SEO module is now able to automatically generate XML sitemaps.
@@ -117,7 +121,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.3.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.3.1...HEAD
+[4.3.1]: https://github.com/ACP3/cms/compare/v4.3.0...v4.3.1
 [4.3.0]: https://github.com/ACP3/cms/compare/v4.2.0...v4.3.0
 [4.2.0]: https://github.com/ACP3/cms/compare/v4.1.30...v4.2.0
 [4.1.30]: https://github.com/ACP3/cms/compare/v4.1.29...v4.1.30
