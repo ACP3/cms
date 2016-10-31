@@ -10,12 +10,13 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
+use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class Edit
  * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
  */
-class Edit extends AbstractFormAction
+class Edit extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -41,6 +42,10 @@ class Edit extends AbstractFormAction
      * @var Gallery\Model\GalleryModel
      */
     protected $galleryModel;
+    /**
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     */
+    protected $uriAliasManager;
 
     /**
      * Edit constructor.
@@ -80,6 +85,14 @@ class Edit extends AbstractFormAction
     public function setMetaStatements(MetaStatements $metaStatements)
     {
         $this->metaStatements = $metaStatements;
+    }
+
+    /**
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
+     */
+    public function setUriAliasManager(UriAliasManager $uriAliasManager)
+    {
+        $this->uriAliasManager = $uriAliasManager;
     }
 
     /**
@@ -189,13 +202,11 @@ class Edit extends AbstractFormAction
                 ->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $bool = $this->galleryModel->save($formData, $galleryId);
-
-            $this->insertUriAlias($formData, $galleryId);
+            $result = $this->galleryModel->save($formData, $galleryId);
 
             $this->generatePictureAliases($galleryId);
 
-            return $bool;
+            return $result;
         });
     }
 

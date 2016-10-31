@@ -10,7 +10,6 @@ use ACP3\Core;
 use ACP3\Core\Controller\AbstractAdminAction;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
-use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class AbstractFormAction
@@ -26,10 +25,6 @@ abstract class AbstractFormAction extends AbstractAdminAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
-     */
-    protected $uriAliasManager;
 
     /**
      * AbstractFormAction constructor.
@@ -47,14 +42,6 @@ abstract class AbstractFormAction extends AbstractAdminAction
 
         $this->formsHelper = $formsHelper;
         $this->categoriesHelpers = $categoriesHelpers;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
-     */
-    public function setUriAliasManager(UriAliasManager $uriAliasManager)
-    {
-        $this->uriAliasManager = $uriAliasManager;
     }
 
     /**
@@ -97,22 +84,5 @@ abstract class AbstractFormAction extends AbstractAdminAction
         }
 
         return $options;
-    }
-
-    /**
-     * @param array $formData
-     * @param int   $newsId
-     */
-    protected function insertUriAlias(array $formData, $newsId)
-    {
-        if ($this->uriAliasManager) {
-            $this->uriAliasManager->insertUriAlias(
-                sprintf(News\Helpers::URL_KEY_PATTERN, $newsId),
-                $formData['alias'],
-                $formData['seo_keywords'],
-                $formData['seo_description'],
-                (int)$formData['seo_robots']
-            );
-        }
     }
 }

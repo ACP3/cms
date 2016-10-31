@@ -10,7 +10,6 @@ services:
       - '@categories.helpers'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   news.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Delete
@@ -29,7 +28,6 @@ services:
       - '@categories.helpers'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   news.controller.admin.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Index

@@ -104,8 +104,6 @@ class Create extends AbstractFormAction
             $formData['user_id'] = $this->user->getUserId();
             $articleId = $this->articlesModel->save($formData);
 
-            $this->insertUriAlias($formData, $articleId);
-
             $this->createOrUpdateMenuItem($formData, $articleId);
 
             return $articleId;

@@ -127,7 +127,6 @@ class Edit extends AbstractFormAction
             $formData['user_id'] = $this->user->getUserId();
             $result = $this->articlesModel->save($formData, $articleId);
 
-            $this->insertUriAlias($formData, $articleId);
             $this->createOrUpdateMenuItem($formData, $articleId);
 
             return $result;

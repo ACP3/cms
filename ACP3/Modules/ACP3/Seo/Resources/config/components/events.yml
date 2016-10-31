@@ -25,15 +25,22 @@ services:
     tags:
       - { name: core.eventListener, event: seo.layout.render_form_fields, method: renderSeoFormFields }
 
-  seo.event.on_model_after_save_listener:
-    class: ACP3\Modules\ACP3\Seo\Event\Listener\OnModelAfterSaveListener
+  seo.event.generate_sitemap_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Seo\Event\Listener\GenerateSitemapOnModelAfterSaveListener
     arguments:
       - '@core.logger'
       - '@core.config'
       - '@seo.utility.sitemap_availability_registrar'
       - '@seo.model.sitemap_generation_model'
     tags:
-      - { name: core.eventListener, event: core.model.after_save, method: generateSeoSitemap }
+      - { name: core.eventListener, event: core.model.after_save, method: generateSeoSitemap, priority: -255 }
+
+  seo.event.insert_uri_alias_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Seo\Event\Listener\InsertUriAliasOnModelAfterSaveListener
+    arguments:
+      - '@seo.helper.uri_alias_manager'
+    tags:
+      - { name: core.eventListener, event: core.model.after_save, method: insertUriAlias, priority: -245 }
 
   seo.event.on_validation_validate_uri_alias_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\OnSeoValidationValidateUriAlias

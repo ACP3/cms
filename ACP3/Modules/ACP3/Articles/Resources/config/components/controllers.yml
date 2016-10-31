@@ -10,7 +10,6 @@ services:
     calls:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
       - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   articles.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Delete
@@ -30,7 +29,6 @@ services:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
       - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
       - ['setMenuItemRepository', ['@?menus.model.menuitemrepository']]
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   articles.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Index

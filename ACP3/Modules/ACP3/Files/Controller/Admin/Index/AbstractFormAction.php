@@ -10,7 +10,6 @@ use ACP3\Core;
 use ACP3\Core\Controller\AbstractAdminAction;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
-use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class AbstractFormAction
@@ -22,10 +21,6 @@ abstract class AbstractFormAction extends AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Categories\Helpers
      */
     protected $categoriesHelpers;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
-     */
-    protected $uriAliasManager;
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
@@ -47,14 +42,6 @@ abstract class AbstractFormAction extends AbstractAdminAction
 
         $this->formsHelper = $formsHelper;
         $this->categoriesHelpers = $categoriesHelpers;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
-     */
-    public function setUriAliasManager(UriAliasManager $uriAliasManager)
-    {
-        $this->uriAliasManager = $uriAliasManager;
     }
 
     /**
@@ -92,23 +79,6 @@ abstract class AbstractFormAction extends AbstractAdminAction
             'GiB' => 'GiB',
             'TiB' => 'TiB'
         ];
-    }
-
-    /**
-     * @param array $formData
-     * @param int   $fileId
-     */
-    protected function insertUriAlias(array $formData, $fileId)
-    {
-        if ($this->uriAliasManager) {
-            $this->uriAliasManager->insertUriAlias(
-                sprintf(Files\Helpers::URL_KEY_PATTERN, $fileId),
-                $formData['alias'],
-                $formData['seo_keywords'],
-                $formData['seo_description'],
-                (int)$formData['seo_robots']
-            );
-        }
     }
 
     /**

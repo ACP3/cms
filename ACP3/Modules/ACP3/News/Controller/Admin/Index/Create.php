@@ -100,11 +100,8 @@ class Create extends AbstractFormAction
 
             $formData['cat'] = $this->fetchCategoryIdForSave($formData);
             $formData['user_id'] = $this->user->getUserId();
-            $newsId = $this->newsModel->save($formData);
 
-            $this->insertUriAlias($formData, $newsId);
-
-            return $newsId;
+            return $this->newsModel->save($formData);
         });
     }
 }

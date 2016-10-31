@@ -143,11 +143,7 @@ class Edit extends AbstractFormAction
                 $formData = array_merge($formData, $newFileSql);
             }
 
-            $bool = $this->filesModel->save($formData, $fileId);
-
-            $this->insertUriAlias($formData, $fileId);
-
-            return $bool;
+            return $this->filesModel->save($formData, $fileId);
         });
     }
 
