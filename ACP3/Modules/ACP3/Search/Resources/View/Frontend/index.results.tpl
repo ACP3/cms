@@ -35,8 +35,6 @@
             </div>
         </div>
     {else}
-        <div class="alert alert-warning text-center">
-            <strong>{lang t="search|no_search_results" args=['%search_term%' => $search_term]}</strong>
-        </div>
+        {include file="asset:System/Partials/no_results.tpl" no_results_text={lang t="search|no_search_results" args=['%search_term%' => $search_term]}}
     {/if}
 {/block}

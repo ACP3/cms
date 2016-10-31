@@ -1,7 +1,7 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    {if isset($pictures)}
+    {if !empty($pictures)}
         {if $overlay == 1}
             {foreach $pictures as $row}
                 <a href="{uri args="gallery/index/image/id_`$row.id`/action_normal"}"
@@ -21,8 +21,6 @@
             {/foreach}
         {/if}
     {else}
-        <div class="alert alert-warning text-center">
-            <strong>{lang t="gallery|no_pictures"}</strong>
-        </div>
+        {include file="asset:System/Partials/no_results.tpl" no_results_text={lang t="gallery|no_pictures"}}
     {/if}
 {/block}
