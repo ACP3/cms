@@ -8,7 +8,7 @@
             </h3>
         </div>
         <div class="panel-body">
-            {$sidebar_article.text}
+            {$sidebar_article.text|rewrite_uri}
         </div>
     </div>
 {/if}
