@@ -8,9 +8,6 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
-use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
-use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
-use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 /**
  * Class Edit
@@ -31,21 +28,9 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected $pictureRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
-     */
-    protected $aliases;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
-     */
-    protected $metaStatements;
-    /**
      * @var Gallery\Model\GalleryModel
      */
     protected $galleryModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
-     */
-    protected $uriAliasManager;
 
     /**
      * Edit constructor.
@@ -69,30 +54,6 @@ class Edit extends Core\Controller\AbstractAdminAction
         $this->pictureRepository = $pictureRepository;
         $this->galleryModel = $galleryModel;
         $this->galleryFormValidation = $galleryFormValidation;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases
-     */
-    public function setAliases(Aliases $aliases)
-    {
-        $this->aliases = $aliases;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
-     */
-    public function setMetaStatements(MetaStatements $metaStatements)
-    {
-        $this->metaStatements = $metaStatements;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
-     */
-    public function setUriAliasManager(UriAliasManager $uriAliasManager)
-    {
-        $this->uriAliasManager = $uriAliasManager;
     }
 
     /**
@@ -202,40 +163,8 @@ class Edit extends Core\Controller\AbstractAdminAction
                 ->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $result = $this->galleryModel->save($formData, $galleryId);
 
-            $this->generatePictureAliases($galleryId);
-
-            return $result;
+            return $this->galleryModel->save($formData, $galleryId);
         });
-    }
-
-    /**
-     * Setzt alle Bild-Aliase einer Fotogalerie neu
-     *
-     * @param integer $galleryId
-     *
-     * @return boolean
-     */
-    protected function generatePictureAliases($galleryId)
-    {
-        if ($this->aliases && $this->metaStatements && $this->uriAliasManager) {
-            $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
-
-            $alias = $this->aliases->getUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId), true);
-            $seoKeywords = $this->metaStatements->getKeywords(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId));
-            $seoDescription = $this->metaStatements->getDescription(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId));
-
-            foreach ($pictures as $picture) {
-                $this->uriAliasManager->insertUriAlias(
-                    sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
-                    !empty($alias) ? $alias . '/img-' . $picture['id'] : '',
-                    $seoKeywords,
-                    $seoDescription
-                );
-            }
-        }
-
-        return true;
     }
 }

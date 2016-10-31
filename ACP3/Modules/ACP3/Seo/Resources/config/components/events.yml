@@ -40,7 +40,7 @@ services:
     arguments:
       - '@seo.helper.uri_alias_manager'
     tags:
-      - { name: core.eventListener, event: core.model.after_save, method: insertUriAlias, priority: -245 }
+      - { name: core.eventListener, event: core.model.after_save, method: insertUriAlias }
 
   seo.event.on_validation_validate_uri_alias_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\OnSeoValidationValidateUriAlias
