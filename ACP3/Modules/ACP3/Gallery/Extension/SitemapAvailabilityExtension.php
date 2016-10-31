@@ -65,10 +65,10 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         $this->addUrl('gallery/index/index');
 
         foreach ($this->galleryRepository->getAll($this->date->getCurrentDateTime()) as $result) {
-            $this->addUrl('gallery/index/pics/id_' . $result['id'], $result['start']);
+            $this->addUrl('gallery/index/pics/id_' . $result['id'], $result['updated_at']);
 
             foreach ($this->pictureRepository->getPicturesByGalleryId($result['id']) as $picture) {
-                $this->addUrl('gallery/index/details/id_' . $picture['id']);
+                $this->addUrl('gallery/index/details/id_' . $picture['id'], $result['updated_at']);
             }
         }
     }

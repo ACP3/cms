@@ -3,7 +3,6 @@
 namespace ACP3\Modules\ACP3\Gallery\Installer;
 
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
 
 /**
@@ -59,6 +58,10 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             40 => [
                 "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
+            ],
+            41 => [
+                "ALTER TABLE `{pre}gallery` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `end`;",
+                "UPDATE `{pre}gallery` SET `updated_at` = `start`;"
             ]
         ];
     }
