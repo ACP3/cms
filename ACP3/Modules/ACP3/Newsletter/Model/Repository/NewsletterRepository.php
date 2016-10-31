@@ -48,12 +48,12 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param string $status
      *
-     * @return mixed
+     * @return int
      */
     public function countAll($status = '')
     {
         $where = empty($time) === false ? ' WHERE status = :status' : '';
-        return $this->db->fetchColumn(
+        return (int)$this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
             ['status' => $status]
         );

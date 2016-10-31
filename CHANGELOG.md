@@ -14,7 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - Gallery
     - News
 - The `ModelSaveEvent` class now accepts the raw post data too
-- Applied the `RewriteUri` Smarty modifier to the single article widget 
+- Applied the `RewriteUri` Smarty modifier to the article module's single article widget action 
+- [#20](https://github.com/ACP3/cms/issues/20) Redesigned some parts of the gallery module's templates
+- the template under `System/Partials/no_results.tpl` now accepts the parameter `no_results_text` to render a custom translation phrase 
 
 ### Changed
 - unified all module extensions to be located under the same namespace of the specific module
@@ -22,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - fixed the wrong initial value of the `mailer_smtp_security` system config entry
+- fixed `PictureRepository::getNextPictureId()` method 
 
 ## [4.2.0] - 2016-10-29
 ### Added

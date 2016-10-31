@@ -52,7 +52,7 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param int $categoryId
      *
-     * @return mixed
+     * @return string
      */
     public function getTitleById($categoryId)
     {
@@ -75,7 +75,7 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param int $categoryId
      *
-     * @return mixed
+     * @return string
      */
     public function getModuleNameFromCategoryId($categoryId)
     {
@@ -88,11 +88,11 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param int $categoryId
      *
-     * @return mixed
+     * @return int
      */
     public function getModuleIdByCategoryId($categoryId)
     {
-        return $this->db->fetchColumn("SELECT `module_id` FROM {$this->getTableName()} WHERE `id` = ?", [$categoryId]);
+        return (int)$this->db->fetchColumn("SELECT `module_id` FROM {$this->getTableName()} WHERE `id` = ?", [$categoryId]);
     }
 
     /**

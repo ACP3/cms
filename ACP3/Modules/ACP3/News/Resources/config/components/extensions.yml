@@ -12,9 +12,8 @@ services:
   news.extension.search_availability_extension:
     class: ACP3\Modules\ACP3\News\Extension\SearchAvailabilityExtension
     arguments:
-      - '@core.date'
       - '@core.router'
-      - '@news.model.newsrepository'
+      - '@news.model.search_results_aware_repository'
     tags:
       - { name: search.extension.search_availability }
 

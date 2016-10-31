@@ -6,7 +6,5 @@
 {/block}
 {block CONTENT_AFTER_HEADER_BAR}
     {redirect_message}
-    <div class="alert alert-warning text-center">
-        <strong>{lang t="system|select_menu_item"}</strong>
-    </div>
+    {include file="asset:System/Partials/no_results.tpl" no_results_text={lang t="system|select_menu_item"}}
 {/block}

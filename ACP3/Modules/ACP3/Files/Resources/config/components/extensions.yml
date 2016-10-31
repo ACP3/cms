@@ -12,9 +12,8 @@ services:
   files.extension.search_availability_extension:
     class: ACP3\Modules\ACP3\Files\Extension\SearchAvailabilityExtension
     arguments:
-      - '@core.date'
       - '@core.router'
-      - '@files.model.filesrepository'
+      - '@files.model.search_results_aware_repository'
     tags:
       - { name: search.extension.search_availability }
 

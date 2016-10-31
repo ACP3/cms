@@ -49,7 +49,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param int $fileId
      *
-     * @return mixed
+     * @return string
      */
     public function getFileById($fileId)
     {
@@ -104,23 +104,6 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll(
             'SELECT * FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC' . $limitStmt,
-            ['time' => $time]
-        );
-    }
-
-    /**
-     * @param string $fields
-     * @param string $searchTerm
-     * @param string $sortDirection
-     * @param string $time
-     *
-     * @return array
-     */
-    public function getAllSearchResults($fields, $searchTerm, $sortDirection, $time)
-    {
-        $period = ' AND ' . $this->getPublicationPeriod();
-        return $this->db->fetchAll(
-            'SELECT id, title, `text` FROM ' . $this->getTableName() . ' WHERE MATCH(' . $fields . ') AGAINST (' . $this->db->getConnection()->quote($searchTerm) . ' IN BOOLEAN MODE)' . $period . ' ORDER BY `start` ' . $sortDirection . ', `end` ' . $sortDirection . ', id ' . $sortDirection,
             ['time' => $time]
         );
     }

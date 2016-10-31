@@ -9,6 +9,12 @@ services:
     arguments:
       - '@core.db'
 
+  news.model.search_results_aware_repository:
+    class: ACP3\Modules\ACP3\News\Model\Repository\SearchResultsAwareRepository
+    arguments:
+      - '@core.db'
+      - '@core.date'
+
   news.model:
     class: ACP3\Modules\ACP3\News\Model\NewsModel
     arguments:

@@ -72,22 +72,22 @@ class AccountRepository extends AbstractRepository
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function countAllAccounts()
     {
-        return $this->db->fetchColumn(
+        return (int)$this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `status` != :status",
             ['status' => AccountStatus::ACCOUNT_STATUS_DISABLED]
         );
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function countAllActiveAccounts()
     {
-        return $this->db->fetchColumn(
+        return (int)$this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `status` = :status",
             ['status' => AccountStatus::ACCOUNT_STATUS_CONFIRMED]
         );
