@@ -58,6 +58,10 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             41 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'frontend', 'index', 'download', '', 1);",
+            ],
+            42 => [
+                "ALTER TABLE `{pre}files` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `end`;",
+                "UPDATE `{pre}files` SET `updated_at` = `start`;"
             ]
         ];
     }

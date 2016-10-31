@@ -26,7 +26,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     protected $articleRepository;
 
     /**
-     * SitemapAvailability constructor.
+     * SitemapAvailabilityExtension constructor.
      * @param Date $date
      * @param Router $router
      * @param ArticleRepository $articleRepository
@@ -57,7 +57,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         $this->addUrl('articles/index/index');
 
         foreach ($this->articleRepository->getAll($this->date->getCurrentDateTime()) as $result) {
-            $this->addUrl('articles/index/details/id_' . $result['id'], $result['start']);
+            $this->addUrl('articles/index/details/id_' . $result['id'], $result['updated_at']);
         }
     }
 }

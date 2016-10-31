@@ -39,7 +39,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 51;
+        return 52;
     }
 
     /**
@@ -51,6 +51,7 @@ class Schema implements Modules\Installer\SchemaInterface
             "CREATE TABLE `{pre}newsletters` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `date` DATETIME NOT NULL,
+                `updated_at` DATETIME NOT NULL,
                 `title` VARCHAR(120) NOT NULL,
                 `text` TEXT NOT NULL,
                 `html` TINYINT(1) NOT NULL,

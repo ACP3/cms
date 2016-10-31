@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.3.2] - 2016-10-31
+### Added
+- [#12](https://github.com/ACP3/cms/issues/12) Added the `updated_at` database column to the following modules:
+    - Articles
+    - Files
+    - Gallery
+    - News
+    - Newsletters
+    - Polls
+
+### Fixed
+- fixed the editing of newsletters
+
 ## [4.3.1] - 2016-10-31
 ### Fixed
 - fixed the SEO module's administration forms
@@ -121,7 +134,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.3.1...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.3.2...HEAD
+[4.3.2]: https://github.com/ACP3/cms/compare/v4.3.1...v4.3.2
 [4.3.1]: https://github.com/ACP3/cms/compare/v4.3.0...v4.3.1
 [4.3.0]: https://github.com/ACP3/cms/compare/v4.2.0...v4.3.0
 [4.2.0]: https://github.com/ACP3/cms/compare/v4.1.30...v4.2.0
