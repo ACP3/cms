@@ -13,12 +13,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - Files
     - Gallery
     - News
+- The `ModelSaveEvent` class now accepts the raw post data too
 
 ### Changed
-- unified all module extensions to be located under the same namespace of the specific module 
+- unified all module extensions to be located under the same namespace of the specific module
+- reworked the SEO URI alias saving logic to use the `core.model.after_save` event
 
 ### Fixed
-- fixed the wrong initial value of the mailer_smtp_security system setting 
+- fixed the wrong initial value of the `mailer_smtp_security` system config entry
 
 ## [4.2.0] - 2016-10-29
 ### Added

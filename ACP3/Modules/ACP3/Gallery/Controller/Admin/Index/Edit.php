@@ -8,14 +8,12 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
-use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
-use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
 /**
  * Class Edit
  * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
  */
-class Edit extends AbstractFormAction
+class Edit extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -29,14 +27,6 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     protected $pictureRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
-     */
-    protected $aliases;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
-     */
-    protected $metaStatements;
     /**
      * @var Gallery\Model\GalleryModel
      */
@@ -67,22 +57,6 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases
-     */
-    public function setAliases(Aliases $aliases)
-    {
-        $this->aliases = $aliases;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
-     */
-    public function setMetaStatements(MetaStatements $metaStatements)
-    {
-        $this->metaStatements = $metaStatements;
-    }
-
-    /**
      * @param int $id
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -101,12 +75,12 @@ class Edit extends AbstractFormAction
 
             return array_merge(
                 [
-                    'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
-                        ? $this->metaFormFieldsHelper->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id))
-                        : [],
                     'gallery_id' => $id,
                     'form' => array_merge($gallery, $this->request->getPost()->all()),
-                    'form_token' => $this->formTokenHelper->renderFormToken()
+                    'form_token' => $this->formTokenHelper->renderFormToken(),
+                    'SEO_URI_PATTERN' => Gallery\Helpers::URL_KEY_PATTERN_GALLERY,
+                    'SEO_ROUTE_NAME' => sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)
+
                 ],
                 $this->executeListPictures($id)
             );
@@ -189,45 +163,8 @@ class Edit extends AbstractFormAction
                 ->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $bool = $this->galleryModel->save($formData, $galleryId);
 
-            $this->insertUriAlias($formData, $galleryId);
-
-            $this->generatePictureAliases($galleryId);
-
-            return $bool;
+            return $this->galleryModel->save($formData, $galleryId);
         });
-    }
-
-    /**
-     * Setzt alle Bild-Aliase einer Fotogalerie neu
-     *
-     * @param integer $galleryId
-     *
-     * @return boolean
-     */
-    protected function generatePictureAliases($galleryId)
-    {
-        if ($this->aliases && $this->metaStatements && $this->uriAliasManager) {
-            $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
-
-            $alias = $this->aliases->getUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId), true);
-            if (!empty($alias)) {
-                $alias .= '/img';
-            }
-            $seoKeywords = $this->metaStatements->getKeywords(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId));
-            $seoDescription = $this->metaStatements->getDescription(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId));
-
-            foreach ($pictures as $picture) {
-                $this->uriAliasManager->insertUriAlias(
-                    sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
-                    !empty($alias) ? $alias . '-' . $picture['id'] : '',
-                    $seoKeywords,
-                    $seoDescription
-                );
-            }
-        }
-
-        return true;
     }
 }

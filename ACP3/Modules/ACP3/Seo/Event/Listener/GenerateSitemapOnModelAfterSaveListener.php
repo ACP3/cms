@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel;
 use ACP3\Modules\ACP3\Seo\Utility\SitemapAvailabilityRegistrar;
 
-class OnModelAfterSaveListener
+class GenerateSitemapOnModelAfterSaveListener
 {
     /**
      * @var Logger

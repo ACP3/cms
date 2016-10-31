@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
-use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
 
 /**
  * Class Edit
@@ -34,10 +33,6 @@ class Edit extends AbstractFormAction
      */
     protected $menuItemFormFieldsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
-     */
-    protected $metaFormFieldsHelper;
-    /**
      * @var Articles\Model\ArticlesModel
      */
     protected $articlesModel;
@@ -61,14 +56,6 @@ class Edit extends AbstractFormAction
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
         $this->articlesModel = $articlesModel;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
-     */
-    public function setMetaFormFieldsHelper(MetaFormFields $metaFormFieldsHelper)
-    {
-        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
     }
 
     /**
@@ -114,11 +101,10 @@ class Edit extends AbstractFormAction
 
             return [
                 'options' => $this->fetchOptions($id),
-                'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper
-                    ? $this->metaFormFieldsHelper->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id))
-                    : [],
                 'form' => array_merge($article, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken()
+                'form_token' => $this->formTokenHelper->renderFormToken(),
+                'SEO_URI_PATTERN' => Articles\Helpers::URL_KEY_PATTERN,
+                'SEO_ROUTE_NAME' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $id)
             ];
         }
 
@@ -141,7 +127,6 @@ class Edit extends AbstractFormAction
             $formData['user_id'] = $this->user->getUserId();
             $result = $this->articlesModel->save($formData, $articleId);
 
-            $this->insertUriAlias($formData, $articleId);
             $this->createOrUpdateMenuItem($formData, $articleId);
 
             return $result;

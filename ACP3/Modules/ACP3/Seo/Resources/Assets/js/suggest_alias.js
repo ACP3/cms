@@ -3,7 +3,7 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-;(function($) {
+;(function ($) {
     "use strict";
 
     var pluginName = "suggestAlias",
@@ -26,16 +26,16 @@
         init: function () {
             var that = this;
 
-            $(this.element).on('click', function(e) {
+            $(this.element).on('click', function (e) {
                 e.preventDefault();
 
                 that.performAjaxRequest();
             });
         },
-        performAjaxRequest: function() {
-            var that = this;
+        performAjaxRequest: function () {
+            if (this.canPerformAjaxRequest()) {
+                var that = this;
 
-            if (that.settings.slugBaseElement !== null && that.settings.aliasElement !== null) {
                 $.ajax({
                     url: that.element.href,
                     type: 'post',
@@ -43,7 +43,7 @@
                         prefix: that.settings.prefix,
                         title: that.settings.slugBaseElement.val()
                     },
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $(that.element).addClass('disabled');
                     },
                     success: function (responseData) {
@@ -59,6 +59,14 @@
                     }
                 });
             }
+        },
+        /**
+         * @returns {boolean}
+         */
+        canPerformAjaxRequest: function () {
+            return this.settings.slugBaseElement !== null
+                && this.settings.aliasElement !== null
+                && this.settings.slugBaseElement.val() !== '';
         }
     });
 
@@ -71,7 +79,7 @@
     };
 })(jQuery);
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
     $('#seo-alias-suggestion').suggestAlias({
         prefix: $('[data-seo-slug-prefix]').data('seo-slug-prefix'),
         slugBaseElement: $('[data-seo-slug-base="true"]'),

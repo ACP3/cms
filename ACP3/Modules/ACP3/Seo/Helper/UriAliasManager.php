@@ -85,7 +85,6 @@ class UriAliasManager
 
         $seo = $this->seoRepository->getOneByUri($path);
 
-        // Update an existing result
         if (!empty($seo)) {
             $data['uri'] = $seo['uri'];
             $bool = $this->seoModel->save($data, $seo['id']);

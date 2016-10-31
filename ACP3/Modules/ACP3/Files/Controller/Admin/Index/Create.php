@@ -93,9 +93,10 @@ class Create extends AbstractFormAction
             'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(), ''),
             'categories' => $this->categoriesHelpers->categoriesList(Files\Installer\Schema::MODULE_NAME, '', true),
             'external' => $this->formsHelper->checkboxGenerator('external', $external),
-            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper ? $this->metaFormFieldsHelper->formFields() : [],
             'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form_token' => $this->formTokenHelper->renderFormToken(),
+            'SEO_URI_PATTERN' => Files\Helpers::URL_KEY_PATTERN,
+            'SEO_ROUTE_NAME' => ''
         ];
     }
 
@@ -130,11 +131,7 @@ class Create extends AbstractFormAction
             $formData['comments'] = $this->useComments($formData);
             $formData['user_id'] = $this->user->getUserId();
 
-            $lastId = $this->filesModel->save($formData);
-
-            $this->insertUriAlias($formData, $lastId);
-
-            return $lastId;
+            return $this->filesModel->save($formData);
         });
     }
 }
