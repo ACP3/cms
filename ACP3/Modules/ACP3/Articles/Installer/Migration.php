@@ -61,6 +61,10 @@ class Migration extends AbstractMigration
             ],
             39 => [
                 "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
+            ],
+            40 => [
+                "ALTER TABLE `{pre}articles` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `end`;",
+                "UPDATE `{pre}articles` SET `updated_at` = `start`;"
             ]
         ];
     }

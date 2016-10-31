@@ -53,6 +53,10 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             37 => [
                 "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
+            ],
+            38 => [
+                "ALTER TABLE `{pre}polls` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `end`;",
+                "UPDATE `{pre}polls` SET `updated_at` = `start`;"
             ]
         ];
     }

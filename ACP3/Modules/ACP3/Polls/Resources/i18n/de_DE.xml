@@ -28,7 +28,7 @@
         <item key="poll_error">Beim Speichern Ihrer Stimme ist ein Fehler aufgetreten.</item>
         <item key="poll_success">Ihre Stimme wurde erfolgreich gezählt.</item>
         <item key="polls">Umfragen</item>
-        <item key="polls_archive">Umfragen Archiv</item>
+        <item key="polls_archive">Umfragen-Archiv</item>
         <item key="question">Frage</item>
         <item key="reset_votes">Stimmen zurücksetzen</item>
         <item key="total_votes">Gesamt</item>

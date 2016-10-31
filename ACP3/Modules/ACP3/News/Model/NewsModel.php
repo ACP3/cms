@@ -49,6 +49,7 @@ class NewsModel extends AbstractModel
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
         $data = array_merge($data, [
+            'updated_at' => 'now',
             'readmore' => $this->useReadMore($data, $settings),
             'comments' => $this->useComments($data, $settings),
             'category_id' => $data['cat'],
@@ -87,6 +88,7 @@ class NewsModel extends AbstractModel
         return [
             'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
+            'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'text' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
             'readmore' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,

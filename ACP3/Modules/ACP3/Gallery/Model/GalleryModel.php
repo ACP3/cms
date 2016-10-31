@@ -16,6 +16,16 @@ class GalleryModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
+     * @inheritdoc
+     */
+    public function save(array $rawData, $entryId = null)
+    {
+        $rawData['updated_at'] = 'now';
+
+        return parent::save($rawData, $entryId);
+    }
+
+    /**
      * @return array
      */
     protected function getAllowedColumns()
@@ -23,6 +33,7 @@ class GalleryModel extends AbstractModel
         return [
             'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
+            'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'ttile' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
         ];

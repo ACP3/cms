@@ -115,6 +115,10 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             51 => [
                 "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
+            ],
+            52 => [
+                "ALTER TABLE `{pre}newsletters` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `date`;",
+                "UPDATE `{pre}newsletters` SET `updated_at` = `date`;"
             ]
         ];
     }

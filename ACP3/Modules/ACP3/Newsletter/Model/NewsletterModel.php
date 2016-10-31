@@ -52,6 +52,8 @@ class NewsletterModel extends AbstractModel
             $data['status'] = 0;
         }
 
+        $data['updated_at'] = 'now';
+
         return parent::save($data, $entryId);
     }
 
@@ -62,6 +64,7 @@ class NewsletterModel extends AbstractModel
     {
         return [
             'date' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
+            'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'text' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
             'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,

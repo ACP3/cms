@@ -2,7 +2,7 @@
 
 {block CONTENT}
     {redirect_message}
-    <h4 style="margin-bottom:10px">{$question}</h4>
+    <h3>{$question}</h3>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -13,8 +13,8 @@
         </thead>
         <tfoot>
         <tr>
-            <td colspan="2">{lang t="polls|total_votes"}:</td>
-            <td>{$total_votes}</td>
+            <th colspan="2">{lang t="polls|total_votes"}:</th>
+            <th>{$total_votes}</th>
         </tr>
         </tfoot>
         <tbody>
@@ -28,6 +28,6 @@
         </tbody>
     </table>
     <p class="text-center">
-        <a href="{uri args="polls"}">{lang t="polls|polls_archive"}</a>
+        <a href="{uri args="polls"}" class="btn btn-default">{lang t="polls|polls_archive"}</a>
     </p>
 {/block}

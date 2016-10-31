@@ -72,5 +72,8 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
         return $this->urls;
     }
 
+    /**
+     * @return void
+     */
     abstract protected function fetchSitemapUrls();
 }
