@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - Gallery
     - News
 - The `ModelSaveEvent` class now accepts the raw post data too
+- Applied the `RewriteUri` Smarty modifier to the single article widget 
 
 ### Changed
 - unified all module extensions to be located under the same namespace of the specific module
