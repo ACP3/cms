@@ -7,10 +7,15 @@
 namespace ACP3\Modules\ACP3\Search\Extension;
 
 
+use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Search\Model\Repository\SearchResultsAwareRepositoryInterface;
 
 abstract class AbstractSearchAvailabilityExtension implements SearchAvailabilityExtensionInterface
 {
+    /**
+     * @var RouterInterface
+     */
+    protected $router;
     /**
      * @var SearchResultsAwareRepositoryInterface
      */
@@ -18,10 +23,14 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
 
     /**
      * AbstractSearchAvailabilityExtension constructor.
+     * @param RouterInterface $router
      * @param SearchResultsAwareRepositoryInterface $repository
      */
-    public function __construct(SearchResultsAwareRepositoryInterface $repository)
-    {
+    public function __construct(
+        RouterInterface $router,
+        SearchResultsAwareRepositoryInterface $repository
+    ) {
+        $this->router = $router;
         $this->repository = $repository;
     }
 
@@ -33,11 +42,18 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
      */
     public function fetchSearchResults($searchTerm, $areas, $sortDirection)
     {
-        return $this->repository->getAllSearchResults(
+        $results = $this->repository->getAllSearchResults(
             $this->mapSearchAreasToFields($areas),
             $searchTerm,
             $sortDirection
         );
+        $cResults = count($results);
+
+        for ($i = 0; $i < $cResults; ++$i) {
+            $results[$i]['hyperlink'] = $this->router->route(sprintf($this->getRouteName(), $results[$i]['id']));
+        }
+
+        return $results;
     }
 
     /**
@@ -45,4 +61,9 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
      * @return string
      */
     abstract protected function mapSearchAreasToFields($area);
+
+    /**
+     * @return string
+     */
+    abstract protected function getRouteName();
 }
