@@ -62,6 +62,21 @@ class PollsModel extends AbstractModel
     }
 
     /**
+     * @inheritdoc
+     */
+    public function save(array $rawData, $entryId = null)
+    {
+        $rawData = array_merge(
+            $rawData,
+            [
+                'updated_at' => 'now'
+            ]
+        );
+
+        return parent::save($rawData, $entryId);
+    }
+
+    /**
      * @param array $answers
      * @param int $pollId
      *
@@ -109,6 +124,7 @@ class PollsModel extends AbstractModel
         return [
             'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
+            'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'multiple' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
             'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
