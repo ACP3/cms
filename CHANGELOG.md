@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2016-xx-xx
+### Added
+- [#12](https://github.com/ACP3/cms/issues/12) Added the `updated_at` database column to the following modules:
+    - Articles
+    - Files
+    - Gallery
+    - News
+    - Newsletters
+    - Polls
+
+### Changed
+
+### Fixed
+
 ## [4.3.1] - 2016-10-31
 ### Fixed
 - fixed the SEO module's administration forms

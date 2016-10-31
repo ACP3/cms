@@ -66,12 +66,7 @@ class PollsModel extends AbstractModel
      */
     public function save(array $rawData, $entryId = null)
     {
-        $rawData = array_merge(
-            $rawData,
-            [
-                'updated_at' => 'now'
-            ]
-        );
+        $rawData['updated_at'] = 'now';
 
         return parent::save($rawData, $entryId);
     }
