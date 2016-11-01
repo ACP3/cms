@@ -57,7 +57,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         $this->addUrl('news/index/index');
 
         foreach ($this->newsRepository->getAll($this->date->getCurrentDateTime()) as $result) {
-            $this->addUrl('news/index/details/id_' . $result['id'], $result['updated_at']);
+            $this->addUrl('news/index/details/id_' . $result['id'], $this->date->format($result['updated_at'], 'Y-m-d'));
         }
     }
 }
