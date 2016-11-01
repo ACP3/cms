@@ -58,11 +58,7 @@ class GenerateSitemapOnModelAfterSaveListener
      */
     public function generateSeoSitemap(ModelSaveEvent $event)
     {
-        if  (!$this->canGenerateSitemapAutomatically()) {
-            return;
-        }
-
-        if (array_key_exists($event->getModuleName(), $this->sitemapRegistrar->getAvailableModules())) {
+        if ($this->canGenerateSitemapAutomatically() && $this->isAllowedModule($event->getModuleName())) {
             try {
                 $this->sitemapGenerationModel->save();
             } catch (SitemapGenerationException $e) {
@@ -79,5 +75,14 @@ class GenerateSitemapOnModelAfterSaveListener
         $seoSettings = $this->settings->getSettings(Schema::MODULE_NAME);
 
         return $seoSettings['sitemap_is_enabled'] == 1 && $seoSettings['sitemap_save_mode'] == 1;
+    }
+
+    /**
+     * @param string $moduleName
+     * @return bool
+     */
+    private function isAllowedModule($moduleName)
+    {
+        return array_key_exists($moduleName, $this->sitemapRegistrar->getAvailableModules());
     }
 }
