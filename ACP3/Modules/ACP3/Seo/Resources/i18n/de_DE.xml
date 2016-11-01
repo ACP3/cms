@@ -35,6 +35,7 @@
         <item key="sitemap_save_mode_manually">Manuell</item>
         <item key="sitemap_success">Die Sitemap wurde erfolgreich aktualisiert.</item>
         <item key="suggest_alias">Alias vorschlagen</item>
+        <item key="type_in_valid_resource">Bitte geben Sie einen validen Pfad zu einer ACP3 internen Ressource an.</item>
         <item key="uri">Pfad</item>
     </keys>
 </language>
