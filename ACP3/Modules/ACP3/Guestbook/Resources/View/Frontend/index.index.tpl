@@ -20,7 +20,7 @@
     {if !empty($guestbook)}
         {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
         {foreach $guestbook as $row}
-            <article id="gb-entry-{$row.id}" class="dataset-box clearfix" style="width: 65%">
+            <article id="gb-entry-{$row.id}" class="dataset-box dataset-box__guestbook clearfix">
                 <header class="navbar navbar-default">
                     <div class="navbar-header">
                         <strong class="navbar-text">

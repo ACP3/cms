@@ -59,6 +59,11 @@
 .dataset-box .navbar-header {
   float: left;
 }
+.dataset-box .navbar-header .navbar-text {
+  margin-right: 15px;
+  margin-left: 15px;
+  float: left;
+}
 .dataset-box small.navbar-text,
 .dataset-box .small.navbar-text {
   line-height: 20px;
@@ -70,7 +75,7 @@
   }
 }
 .dataset-box .content {
-  margin: -8px 20px 10px;
+  margin: -8px 15px 10px;
 }
 .dataset-box .hyperlink a.download-file {
   font-weight: bold;
