@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2016-xx-xx
+### Added
+
+### Changed
+- refined the default ACP3 design
+
+### Fixed
+- fixed the missing gallery title when saving a gallery
+
 ## [4.3.3] - 2016-11-01
 ### Fixed
 - fixed missing translation phrases in the SEO module
