@@ -34,7 +34,7 @@ class GalleryModel extends AbstractModel
             'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
-            'ttile' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
         ];
     }
