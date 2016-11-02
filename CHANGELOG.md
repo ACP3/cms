@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2016-xx-xx
+### Changed
+- improved the performance of the `\ACP3\Core\Cache\Purge::doPurge()` method 
+
+### Fixed
+- minor fixes for the default frontend templates of the gallery and files modules
+
 ## [4.3.4] - 2016-11-02
 ### Changed
 - refined the default ACP3 design
