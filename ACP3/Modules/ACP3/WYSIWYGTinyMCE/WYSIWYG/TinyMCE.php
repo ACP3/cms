@@ -11,7 +11,7 @@ use ACP3\Core;
 class TinyMCE extends Core\WYSIWYG\Textarea
 {
     /**
-     * @var \ACP3\Core\Assets\MinifierInterface
+     * @var \ACP3\Core\Assets\Minifier\MinifierInterface
      */
     protected $minifier;
     /**
@@ -33,12 +33,12 @@ class TinyMCE extends Core\WYSIWYG\Textarea
     private $initialized = false;
 
     /**
-     * @param \ACP3\Core\Assets\MinifierInterface    $minifier
+     * @param \ACP3\Core\Assets\Minifier\MinifierInterface    $minifier
      * @param \ACP3\Core\I18n\Translator             $translator
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
-        Core\Assets\MinifierInterface $minifier,
+        Core\Assets\Minifier\MinifierInterface $minifier,
         Core\I18n\Translator $translator,
         Core\Environment\ApplicationPath $appPath
     ) {

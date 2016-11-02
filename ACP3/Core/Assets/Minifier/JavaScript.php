@@ -1,8 +1,6 @@
 <?php
 namespace ACP3\Core\Assets\Minifier;
 
-use ACP3\Core\Assets\AbstractMinifier;
-
 /**
  * Class JavaScript
  * @package ACP3\Core\Assets\Minifier

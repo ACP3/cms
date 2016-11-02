@@ -1,17 +1,19 @@
 <?php
-namespace ACP3\Core\Assets;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\Assets\Minifier;
 
 use ACP3\Core\Assets;
+use ACP3\Core\Assets\FileResolver;
 use ACP3\Core\Cache;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class AbstractMinifier
- * @package ACP3\Core\Assets
- */
 abstract class AbstractMinifier implements MinifierInterface
 {
     const ASSETS_PATH_CSS = 'Assets/css';
@@ -164,6 +166,10 @@ abstract class AbstractMinifier implements MinifierInterface
         $options['minifiers']['text/css'] = ['Minify_CSSmin', 'minify'];
 
         $content = \Minify::combine($files, $options);
+
+        if (!is_dir($this->appPath->getUploadsDir() . 'assets')) {
+            @mkdir($this->appPath->getUploadsDir() . 'assets', 0755);
+        }
 
         // Write the contents of the file to the uploads folder
         file_put_contents($path, $content, LOCK_EX);

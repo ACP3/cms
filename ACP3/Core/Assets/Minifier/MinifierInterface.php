@@ -1,10 +1,11 @@
 <?php
-namespace ACP3\Core\Assets;
-
 /**
- * Interface MinifierInterface
- * @package ACP3\Core\Assets
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
+
+namespace ACP3\Core\Assets\Minifier;
+
 interface MinifierInterface
 {
     /**
