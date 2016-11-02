@@ -27,29 +27,21 @@ class Purge
             return self::handleMultipleDirectories($directory, $cacheId);
         }
 
-        if (!is_file($directory) && !is_dir($directory)) {
-            return true;
-        }
-
-        if (is_file($directory) === true) {
-            return @unlink($directory);
-        }
-
         self::purgeCurrentDirectory($directory, $cacheId);
 
         return true;
     }
 
     /**
-     * @param array  $directory
+     * @param array  $directories
      * @param string $cacheId
      *
      * @return bool
      */
-    protected static function handleMultipleDirectories(array $directory, $cacheId)
+    protected static function handleMultipleDirectories(array $directories, $cacheId)
     {
-        foreach ($directory as $item) {
-            static::doPurge($item, $cacheId);
+        foreach ($directories as $directory) {
+            static::doPurge($directory, $cacheId);
         }
 
         return true;
@@ -61,17 +53,22 @@ class Purge
      */
     protected static function purgeCurrentDirectory($directory, $cacheId)
     {
-        foreach (Filesystem::scandir($directory) as $file) {
-            $path = "$directory/$file";
+        if (is_dir($directory)) {
+            foreach (Filesystem::scandir($directory) as $dirContent) {
+                $path = "$directory/$dirContent";
 
-            if (is_dir($path)) {
-                static::doPurge($path, $cacheId);
-                if (empty($cacheId) && count(scandir($path)) == 2) {
-                    rmdir($path);
+                if (is_dir($path)) {
+                    static::purgeCurrentDirectory($path, $cacheId);
+                } elseif (empty($cacheId) || strpos($dirContent, $cacheId) !== false) {
+                    @unlink($path);
                 }
-            } elseif (empty($cacheId) || strpos($file, $cacheId) !== false) {
-                unlink($path);
             }
+
+            if (empty($cacheId)) {
+                @rmdir($directory);
+            }
+        } elseif (is_file($directory)) {
+            @unlink($directory);
         }
     }
 }

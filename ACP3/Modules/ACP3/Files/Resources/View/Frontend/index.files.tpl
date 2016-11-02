@@ -1,7 +1,7 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    {if isset($files)}
+    {if !empty($files)}
         {foreach $files as $row}
             <div class="dataset-box">
                 <div class="navbar navbar-default">
