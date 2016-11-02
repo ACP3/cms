@@ -37,7 +37,6 @@ class Secure
         $cChars = strlen($chars) - 1;
         while (strlen($salt) < $length) {
             $char = $chars[mt_rand(0, $cChars)];
-            // Zeichen nur hinzufügen, wenn sich dieses nicht bereits im Salz befindet
             if (strpos($salt, $char) === false) {
                 $salt .= $char;
             }

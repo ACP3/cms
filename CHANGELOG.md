@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.3.5] - 2016-11-02
+### Changed
+- improved the performance of the `\ACP3\Core\Cache\Purge::doPurge()` method 
+
+### Fixed
+- fixed a character encoding problem when trying to use formatted HTML/XML code with the WYSIWYG-Editor inputs
+- minor fixes for the default frontend templates of the gallery and files modules
+
 ## [4.3.4] - 2016-11-02
 ### Changed
 - refined the default ACP3 design
@@ -146,7 +154,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.3.4...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.3.5...HEAD
+[4.3.5]: https://github.com/ACP3/cms/compare/v4.3.4...v4.3.5
 [4.3.4]: https://github.com/ACP3/cms/compare/v4.3.3...v4.3.4
 [4.3.3]: https://github.com/ACP3/cms/compare/v4.3.2...v4.3.3
 [4.3.2]: https://github.com/ACP3/cms/compare/v4.3.1...v4.3.2

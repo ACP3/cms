@@ -7,7 +7,9 @@
             {foreach $galleries as $row}
                 <div class="col-sm-3">
                     <div class="thumbnail">
-                        <img src="{uri args="gallery/index/image/id_`$row.picture_id`/action_thumb"}" alt="">
+                        {if !empty($row.picture_id)}
+                            <img src="{uri args="gallery/index/image/id_`$row.picture_id`/action_thumb"}" alt="">
+                        {/if}
                         <div class="caption">
                             <h3>{$row.title}</h3>
                             <p>
