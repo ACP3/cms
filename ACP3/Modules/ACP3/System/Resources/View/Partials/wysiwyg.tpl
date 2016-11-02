@@ -1,5 +1,5 @@
 {event name="core.wysiwyg.`$wysiwyg.friendly_name|lower`.before" id=$wysiwyg.id}
-<textarea name="{$wysiwyg.name}" id="{$wysiwyg.id}" cols="60" rows="6" class="form-control">{$wysiwyg.value}</textarea>
+<textarea name="{$wysiwyg.name}" id="{$wysiwyg.id}" cols="60" rows="6" class="form-control">{$wysiwyg.value|escape:'html'}</textarea>
 {javascripts}
     {include file="asset:System/Partials/wysiwyg_config.tpl" js=$wysiwyg.js}
 {/javascripts}

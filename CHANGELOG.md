@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - improved the performance of the `\ACP3\Core\Cache\Purge::doPurge()` method 
 
 ### Fixed
+- fixed a character encoding problem when trying to use formatted HTML/XML code with the WYSIWYG-Editor inputs
 - minor fixes for the default frontend templates of the gallery and files modules
 
 ## [4.3.4] - 2016-11-02
