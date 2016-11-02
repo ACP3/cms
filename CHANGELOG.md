@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - 2016-xx-xx
 ### Added
 - automatically create the uploads/assets directory if it is missing
+- the `\ACP3\Core\Cache\Purge::purgeCurrentDirectory()` method now handles symbolic links gracefully too
 
 ## [4.3.5] - 2016-11-02
 ### Changed

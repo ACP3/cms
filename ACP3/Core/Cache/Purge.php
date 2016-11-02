@@ -17,7 +17,7 @@ class Purge
 {
     /**
      * @param string|array $directory
-     * @param string       $cacheId
+     * @param string $cacheId
      *
      * @return bool
      */
@@ -33,7 +33,7 @@ class Purge
     }
 
     /**
-     * @param array  $directories
+     * @param array $directories
      * @param string $cacheId
      *
      * @return bool
@@ -53,19 +53,20 @@ class Purge
      */
     protected static function purgeCurrentDirectory($directory, $cacheId)
     {
-        if (is_dir($directory)) {
+        if (is_link($directory)) {
+            static::purgeCurrentDirectory(readlink($directory), $cacheId);
+        } elseif (is_dir($directory)) {
             foreach (Filesystem::scandir($directory) as $dirContent) {
                 $path = "$directory/$dirContent";
 
                 if (is_dir($path)) {
                     static::purgeCurrentDirectory($path, $cacheId);
+                    if (empty($cacheId)) {
+                        @rmdir($directory);
+                    }
                 } elseif (empty($cacheId) || strpos($dirContent, $cacheId) !== false) {
                     @unlink($path);
                 }
-            }
-
-            if (empty($cacheId)) {
-                @rmdir($directory);
             }
         } elseif (is_file($directory)) {
             @unlink($directory);
