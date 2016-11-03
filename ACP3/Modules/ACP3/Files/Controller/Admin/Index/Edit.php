@@ -84,7 +84,7 @@ class Edit extends AbstractFormAction
                 return $this->executePost($this->request->getPost()->all(), $file, $id);
             }
 
-            $file['filesize'] = substr($file['size'], 0, strpos($file['size'], ' '));
+            $file['filesize'] = '';
             $file['file_external'] = '';
 
             $external = [

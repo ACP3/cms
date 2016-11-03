@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - automatically create the uploads/assets directory if it is missing
 - the `\ACP3\Core\Cache\Purge::purgeCurrentDirectory()` method now handles symbolic links gracefully too
 
+### Fixed
+- [#46](https://github.com/ACP3/cms/issues/46) fixed the disappearing file size unit when editing a download
+
 ## [4.3.5] - 2016-11-02
 ### Changed
 - improved the performance of the `\ACP3\Core\Cache\Purge::doPurge()` method 
