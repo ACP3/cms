@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.3.6] - 2016-11-03
+### Added
+- automatically create the uploads/assets directory if it is missing
+- the `\ACP3\Core\Cache\Purge::purgeCurrentDirectory()` method now handles symbolic links gracefully too
+
+### Fixed
+- [#46](https://github.com/ACP3/cms/issues/46) fixed the disappearing file size unit when editing a download
+
 ## [4.3.5] - 2016-11-02
 ### Changed
 - improved the performance of the `\ACP3\Core\Cache\Purge::doPurge()` method 
@@ -154,7 +162,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.3.5...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.3.6...HEAD
+[4.3.6]: https://github.com/ACP3/cms/compare/v4.3.5...v4.3.6
 [4.3.5]: https://github.com/ACP3/cms/compare/v4.3.4...v4.3.5
 [4.3.4]: https://github.com/ACP3/cms/compare/v4.3.3...v4.3.4
 [4.3.3]: https://github.com/ACP3/cms/compare/v4.3.2...v4.3.3

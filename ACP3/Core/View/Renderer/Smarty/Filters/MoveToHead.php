@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
-use ACP3\Core\Assets\MinifierInterface;
+use ACP3\Core\Assets\Minifier\MinifierInterface;
 
 /**
  * Class MoveToHead
@@ -13,12 +13,12 @@ class MoveToHead extends AbstractMoveElementFilter
     const PLACEHOLDER = '<!-- STYLESHEETS -->';
 
     /**
-     * @var \ACP3\Core\Assets\MinifierInterface
+     * @var \ACP3\Core\Assets\Minifier\MinifierInterface
      */
     protected $minifier;
 
     /**
-     * @param \ACP3\Core\Assets\MinifierInterface $minifier
+     * @param \ACP3\Core\Assets\Minifier\MinifierInterface $minifier
      */
     public function __construct(MinifierInterface $minifier)
     {
