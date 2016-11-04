@@ -8,8 +8,9 @@ namespace ACP3\Modules\ACP3\Files\Extension;
 
 
 use ACP3\Core\Date;
-use ACP3\Core\Router\Router;
+use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
@@ -33,14 +34,14 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     /**
      * SitemapAvailabilityExtension constructor.
      * @param Date $date
-     * @param Router $router
+     * @param RouterInterface $router
      * @param FilesRepository $filesRepository
      * @param CategoryRepository $categoryRepository
      * @param MetaStatements $metaStatements
      */
     public function __construct(
         Date $date,
-        Router $router,
+        RouterInterface $router,
         FilesRepository $filesRepository,
         CategoryRepository $categoryRepository,
         MetaStatements $metaStatements
@@ -69,7 +70,10 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         }
 
         foreach ($this->filesRepository->getAll($this->date->getCurrentDateTime()) as $result) {
-            $this->addUrl('files/index/details/id_' . $result['id'], $this->date->format($result['updated_at'], 'Y-m-d'));
+            $this->addUrl(
+                sprintf(Helpers::URL_KEY_PATTERN, $result['id']),
+                $this->date->format($result['updated_at'], 'Y-m-d')
+            );
         }
     }
 }

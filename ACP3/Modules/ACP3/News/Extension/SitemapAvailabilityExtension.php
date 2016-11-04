@@ -8,7 +8,8 @@ namespace ACP3\Modules\ACP3\News\Extension;
 
 
 use ACP3\Core\Date;
-use ACP3\Core\Router\Router;
+use ACP3\Core\Router\RouterInterface;
+use ACP3\Modules\ACP3\News\Helpers;
 use ACP3\Modules\ACP3\News\Installer\Schema;
 use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
@@ -28,13 +29,13 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     /**
      * SitemapAvailabilityExtension constructor.
      * @param Date $date
-     * @param Router $router
+     * @param RouterInterface $router
      * @param NewsRepository $newsRepository
      * @param MetaStatements $metaStatements
      */
     public function __construct(
         Date $date,
-        Router $router,
+        RouterInterface $router,
         NewsRepository $newsRepository,
         MetaStatements $metaStatements
     ) {
@@ -57,7 +58,10 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         $this->addUrl('news/index/index');
 
         foreach ($this->newsRepository->getAll($this->date->getCurrentDateTime()) as $result) {
-            $this->addUrl('news/index/details/id_' . $result['id'], $this->date->format($result['updated_at'], 'Y-m-d'));
+            $this->addUrl(
+                sprintf(Helpers::URL_KEY_PATTERN, $result['id']),
+                $this->date->format($result['updated_at'], 'Y-m-d')
+            );
         }
     }
 }

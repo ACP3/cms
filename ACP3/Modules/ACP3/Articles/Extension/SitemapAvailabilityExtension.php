@@ -8,7 +8,8 @@ namespace ACP3\Modules\ACP3\Articles\Extension;
 
 
 use ACP3\Core\Date;
-use ACP3\Core\Router\Router;
+use ACP3\Core\Router\RouterInterface;
+use ACP3\Modules\ACP3\Articles\Helpers;
 use ACP3\Modules\ACP3\Articles\Installer\Schema;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
@@ -28,13 +29,13 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     /**
      * SitemapAvailabilityExtension constructor.
      * @param Date $date
-     * @param Router $router
+     * @param RouterInterface $router
      * @param ArticleRepository $articleRepository
      * @param MetaStatements $metaStatements
      */
     public function __construct(
         Date $date,
-        Router $router,
+        RouterInterface $router,
         ArticleRepository $articleRepository,
         MetaStatements $metaStatements
     ) {
@@ -57,7 +58,10 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         $this->addUrl('articles/index/index');
 
         foreach ($this->articleRepository->getAll($this->date->getCurrentDateTime()) as $result) {
-            $this->addUrl('articles/index/details/id_' . $result['id'], $this->date->format($result['updated_at'], 'Y-m-d'));
+            $this->addUrl(
+                sprintf(Helpers::URL_KEY_PATTERN, $result['id']),
+                $this->date->format($result['updated_at'], 'Y-m-d')
+            );
         }
     }
 }
