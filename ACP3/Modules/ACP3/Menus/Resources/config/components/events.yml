@@ -15,3 +15,5 @@ services:
       - '@menus.cache'
     tags:
       - { name: core.eventListener, event: menus.model.menus.after_save, method: execute }
+      - { name: core.eventListener, event: menus.model.menu_items.after_save, method: execute }
+      - { name: core.eventListener, event: menus.model.menu_items.after_delete, method: execute }
