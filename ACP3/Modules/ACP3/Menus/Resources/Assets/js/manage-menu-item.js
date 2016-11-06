@@ -3,6 +3,10 @@ jQuery(document).ready(function ($) {
         $blockId = $('#block-id'),
         defaultBlockIndex = $blockId.find('option:selected').index() || 0;
 
+    $(':checkbox[name="create"]').on('click', function () {
+        $('#manage-menu-item-container').toggle(this.checked);
+    }).triggerHandler('click');
+
     $blockId.change(function () {
         var blockName = $blockId.find('option:selected').eq(0).text();
 

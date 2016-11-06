@@ -17,3 +17,23 @@ services:
       - { name: core.eventListener, event: menus.model.menus.after_save, method: execute }
       - { name: core.eventListener, event: menus.model.menu_items.after_save, method: execute }
       - { name: core.eventListener, event: menus.model.menu_items.after_delete, method: execute }
+
+  menus.event.on_menus_layout_render_manage_menu_item_listener:
+    class: ACP3\Modules\ACP3\Menus\Event\Listener\OnMenusLayoutRenderManageMenuItemListener
+    arguments:
+      - '@core.acl'
+      - '@core.lang'
+      - '@core.view'
+      - '@core.helpers.forms'
+      - '@menus.helpers.menuitemformfields'
+      - '@menus.model.menuitemrepository'
+    tags:
+      - { name: core.eventListener, event: menus.layout.render_manage_menu_item, method: renderManageMenuItem }
+
+  menus.event_on_menus_validation_validate_manage_menu_item_listener:
+    class: ACP3\Modules\ACP3\Menus\Event\Listener\OnMenusValidationValidateManageMenuItem
+    arguments:
+      - '@core.acl'
+      - '@core.lang'
+    tags:
+      - { name: core.eventListener, event: menus.validation.validate_manage_menu_item, method: validateManageMenuItem }

@@ -14,6 +14,7 @@
         <item key="admin_items_index">Menüpunkte</item>
         <item key="article">Artikel</item>
         <item key="chronology">Reihenfolge</item>
+        <item key="create_menu_item">Menüpunkt erstellen</item>
         <item key="display_item">Menüpunkt anzeigen</item>
         <item key="dynamic_page">Dynamische Seite</item>
         <item key="dynamic_page_hints">Bitte in der Form &quot;modul/controller/datei/weitere_parameter/&quot; eintragen, also bspw. news/details/id_1/.</item>
@@ -38,8 +39,8 @@
         <item key="superior_page">Übergeordnete Seite</item>
         <item key="superior_page_not_allowed">Die gerade ausgewählte Seite kann nicht als übergeordnete Seite verwendet werden.</item>
         <item key="target_page">Zielseite</item>
-        <item key="title">Seitentitel</item>
-        <item key="title_to_short">Der Seitentitel darf nicht leer sein.</item>
+        <item key="title">Name des Menüpunkts</item>
+        <item key="title_to_short">Der Name des Menüpunkts darf nicht leer sein.</item>
         <item key="type_in_index_name">Der Index Name darf nur Buchstaben, Ziffern und den Unterstrich enthalten.</item>
         <item key="type_in_uri_and_target">Bitte geben Sie die Zielseite und das zu verlinkende Modul bzw. die zu verlinkende URI an.</item>
         <item key="uri">URI</item>

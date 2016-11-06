@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
-use ACP3\Modules\ACP3\Menus;
 
 /**
  * Class Create
@@ -24,10 +23,6 @@ class Create extends AbstractFormAction
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
-    /**
-     * @var Menus\Helpers\MenuItemFormFields
-     */
-    protected $menuItemFormFieldsHelper;
     /**
      * @var Articles\Model\ArticlesModel
      */
@@ -55,18 +50,6 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper
-     *
-     * @return $this
-     */
-    public function setMenuItemFormFieldsHelper(Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper)
-    {
-        $this->menuItemFormFieldsHelper = $menuItemFormFieldsHelper;
-
-        return $this;
-    }
-
-    /**
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function execute()
@@ -83,7 +66,6 @@ class Create extends AbstractFormAction
         ];
 
         return [
-            'options' => $this->fetchOptions(),
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => Articles\Helpers::URL_KEY_PATTERN,
@@ -108,20 +90,5 @@ class Create extends AbstractFormAction
 
             return $articleId;
         });
-    }
-
-    /**
-     * @return array
-     */
-    protected function fetchOptions()
-    {
-        $options = [];
-        if ($this->acl->hasPermission('admin/menus/items/create') === true) {
-            $options = $this->fetchCreateMenuItemOption(0);
-
-            $this->view->assign($this->menuItemFormFieldsHelper->createMenuItemFormFields());
-        }
-
-        return $options;
     }
 }
