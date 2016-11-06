@@ -9,7 +9,6 @@ services:
       - '@core.helpers.formToken'
     calls:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
-      - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
 
   articles.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Delete
@@ -27,8 +26,6 @@ services:
       - '@core.helpers.formToken'
     calls:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
-      - ['setMenuItemFormFieldsHelper', ['@?menus.helpers.menuitemformfields']]
-      - ['setMenuItemRepository', ['@?menus.model.menuitemrepository']]
 
   articles.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Index

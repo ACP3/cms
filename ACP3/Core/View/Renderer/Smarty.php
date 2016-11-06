@@ -86,6 +86,14 @@ class Smarty implements RendererInterface
     /**
      * @inheritdoc
      */
+    public function getTemplateVars($variableName = null)
+    {
+        return $this->smarty->getTemplateVars($variableName);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function fetch($template, $cacheId = null, $compileId = null, $parent = null)
     {
         return $this->smarty->fetch($template, $cacheId, $compileId, $parent);

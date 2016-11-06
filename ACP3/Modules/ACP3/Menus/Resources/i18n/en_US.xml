@@ -14,6 +14,7 @@
         <item key="admin_items_index">Menu items</item>
         <item key="article">Article</item>
         <item key="chronology">Chronology</item>
+        <item key="create_menu_item">Create menu item for this article</item>
         <item key="display_item">Display menu item</item>
         <item key="dynamic_page">Dynamic page</item>
         <item key="dynamic_page_hints">Please use the format &quot;module/file/optional_parameters/&quot;, e.g.
@@ -29,7 +30,7 @@
         <item key="menu_bar_title">Name of the menu bar</item>
         <item key="menu_bar_title_to_short">The name of the menu bar should not be empty.</item>
         <item key="menu_items">Menu items</item>
-        <item key="mod_description">This module is responsible for the navbars.</item>
+        <item key="mod_description">This module is responsible for the navigation bars.</item>
         <item key="module">Module</item>
         <item key="no_superior_page">No superior page</item>
         <item key="page_type">Page type</item>
@@ -40,8 +41,8 @@
         <item key="superior_page">Superior page</item>
         <item key="superior_page_not_allowed">It's impossible to use the selected page as a superior page.</item>
         <item key="target_page">Target page</item>
-        <item key="title">Title</item>
-        <item key="title_to_short">The title should not be empty.</item>
+        <item key="title">Name of the menu item</item>
+        <item key="title_to_short">The name of the menu item should not be empty.</item>
         <item key="type_in_index_name">The index name can only contain letters, digits and the underscore.</item>
         <item key="type_in_uri_and_target">Please specify the target page and the module resp. the URI you want to link
             to.

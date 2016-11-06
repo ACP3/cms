@@ -13,16 +13,10 @@
             <div id="tab-2" class="tab-pane fade">
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 data_attributes=['seo-slug-base' => 'true'] label={lang t="articles|title"}}
                 {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="text" value=$form.text required=true advanced=true label={lang t="articles|text"}}
-                {if !empty($options)}
-                    {include file="asset:System/Partials/form_group.checkbox.tpl" label={lang t="system|options"}}
-                    {include file="asset:Menus/Partials/create_menu_item.tpl"}
-                {/if}
+                {event name="menus.layout.render_manage_menu_item" path=$SEO_ROUTE_NAME}
             </div>
             {event name="seo.layout.render_form_fields" uri_pattern=$SEO_URI_PATTERN path=$SEO_ROUTE_NAME}
         </div>
     </div>
     {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/articles"}}
-    {javascripts}
-        {include_js module="articles" file="admin/index.create"}
-    {/javascripts}
 {/block}

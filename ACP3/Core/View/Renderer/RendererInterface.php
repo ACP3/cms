@@ -20,6 +20,12 @@ interface RendererInterface
     public function assign($name, $value = null);
 
     /**
+     * @param string|null $variableName
+     * @return mixed
+     */
+    public function getTemplateVars($variableName = null);
+
+    /**
      * @param string      $template
      * @param mixed       $cacheId
      * @param mixed       $compileId

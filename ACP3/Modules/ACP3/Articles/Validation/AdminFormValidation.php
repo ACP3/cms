@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Articles\Validation;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Menus;
 
 /**
  * Class AdminFormValidation
@@ -16,30 +15,9 @@ use ACP3\Modules\ACP3\Menus;
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @var \ACP3\Core\ACL
-     */
-    protected $acl;
-    /**
      * @var string
      */
     protected $uriAlias = '';
-
-    /**
-     * Validator constructor.
-     *
-     * @param \ACP3\Core\I18n\Translator      $translator
-     * @param \ACP3\Core\Validation\Validator $validator
-     * @param \ACP3\Core\ACL                  $acl
-     */
-    public function __construct(
-        Core\I18n\Translator $translator,
-        Core\Validation\Validator $validator,
-        Core\ACL $acl)
-    {
-        parent::__construct($translator, $validator);
-
-        $this->acl = $acl;
-    }
 
     /**
      * @param string $uriAlias
@@ -88,9 +66,10 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ]);
 
-        if ($this->acl->hasPermission('admin/menus/items/create') === true && isset($formData['create']) === true) {
-            $this->validateMenuItem($formData);
-        }
+        $this->validator->dispatchValidationEvent(
+            'menus.validation.validate_manage_menu_item',
+            $formData
+        );
 
         $this->validator->dispatchValidationEvent(
             'seo.validation.validate_uri_alias',
@@ -99,44 +78,5 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
         );
 
         $this->validator->validate();
-    }
-
-    /**
-     * @param array $formData
-     */
-    protected function validateMenuItem(array $formData)
-    {
-        $this->validator
-            ->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'block_id',
-                    'message' => $this->translator->t('menus', 'select_menu_bar')
-                ])
-            ->addConstraint(
-                Menus\Validation\ValidationRules\ParentIdValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'parent_id',
-                    'message' => $this->translator->t('menus', 'select_superior_page')
-                ])
-            ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'display',
-                    'message' => $this->translator->t('menus', 'select_item_visibility'),
-                    'extra' => [
-                        'haystack' => [0, 1]
-                    ]
-                ])
-            ->addConstraint(
-                Menus\Validation\ValidationRules\AllowedMenuValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => ['parent_id', 'block_id'],
-                    'message' => $this->translator->t('menus', 'superior_page_not_allowed')
-                ]);
     }
 }

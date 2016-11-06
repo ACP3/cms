@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
-use ACP3\Modules\ACP3\Menus;
 
 /**
  * Class Edit
@@ -21,17 +20,9 @@ class Edit extends AbstractFormAction
      */
     protected $adminFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
-     */
-    protected $menuItemRepository;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
     protected $formTokenHelper;
-    /**
-     * @var Menus\Helpers\MenuItemFormFields
-     */
-    protected $menuItemFormFieldsHelper;
     /**
      * @var Articles\Model\ArticlesModel
      */
@@ -59,30 +50,6 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper
-     *
-     * @return $this
-     */
-    public function setMenuItemFormFieldsHelper(Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper)
-    {
-        $this->menuItemFormFieldsHelper = $menuItemFormFieldsHelper;
-
-        return $this;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
-     *
-     * @return $this
-     */
-    public function setMenuItemRepository(Menus\Model\Repository\MenuItemRepository $menuItemRepository)
-    {
-        $this->menuItemRepository = $menuItemRepository;
-
-        return $this;
-    }
-
-    /**
      * @param int $id
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -100,7 +67,6 @@ class Edit extends AbstractFormAction
             }
 
             return [
-                'options' => $this->fetchOptions($id),
                 'form' => array_merge($article, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
                 'SEO_URI_PATTERN' => Articles\Helpers::URL_KEY_PATTERN,
@@ -131,33 +97,5 @@ class Edit extends AbstractFormAction
 
             return $result;
         });
-    }
-
-    /**
-     * @param int $menuItemId
-     * @return array
-     */
-    protected function fetchOptions($menuItemId)
-    {
-        $options = [];
-        if ($this->acl->hasPermission('admin/menus/items/create') === true) {
-            $menuItem = $this->menuItemRepository->getOneMenuItemByUri(
-                sprintf(Articles\Helpers::URL_KEY_PATTERN, $menuItemId)
-            );
-
-            $options = $this->fetchCreateMenuItemOption(!empty($menuItem) ? 1 : 0);
-
-            $this->view->assign(
-                $this->menuItemFormFieldsHelper->createMenuItemFormFields(
-                    $menuItem['block_id'],
-                    $menuItem['parent_id'],
-                    $menuItem['left_id'],
-                    $menuItem['right_id'],
-                    $menuItem['display']
-                )
-            );
-        }
-
-        return $options;
     }
 }

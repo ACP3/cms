@@ -16,10 +16,6 @@ use ACP3\Modules\ACP3\Menus;
 class Delete extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Cache
-     */
-    protected $menusCache;
-    /**
      * @var Menus\Model\MenuItemsModel
      */
     protected $menuItemsModel;
@@ -29,16 +25,13 @@ class Delete extends Core\Controller\AbstractAdminAction
      *
      * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param Menus\Model\MenuItemsModel $menuItemsModel
-     * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Menus\Model\MenuItemsModel $menuItemsModel,
-        Menus\Cache $menusCache
+        Menus\Model\MenuItemsModel $menuItemsModel
     ) {
         parent::__construct($context);
 
-        $this->menusCache = $menusCache;
         $this->menuItemsModel = $menuItemsModel;
     }
 
@@ -53,11 +46,7 @@ class Delete extends Core\Controller\AbstractAdminAction
         return $this->actionHelper->handleDeleteAction(
             $action,
             function (array $items) {
-                $result = $this->menuItemsModel->delete($items);
-
-                $this->menusCache->saveMenusCache();
-
-                return $result;
+                return $this->menuItemsModel->delete($items);
             },
             null,
             'acp/menus'
