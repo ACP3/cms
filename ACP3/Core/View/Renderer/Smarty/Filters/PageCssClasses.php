@@ -49,25 +49,33 @@ class PageCssClasses extends AbstractFilter
     {
         if (strpos($tplOutput, '<body') !== false) {
             if ($this->cssClassCache === '') {
-                $pieces = [
-                    $this->pageCssClasses->getModule(),
-                    $this->pageCssClasses->getControllerAction()
-                ];
-
-                if ($this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN) {
-                    $pieces[] = 'in-admin';
-                } elseif ($this->request->isHomepage() === true) {
-                    $pieces[] = 'is-homepage';
-                } else {
-                    $pieces[] = $this->pageCssClasses->getDetails();
-                }
-
-                $this->cssClassCache = 'class="' . implode(' ', $pieces) . '"';
+                $this->cssClassCache = 'class="' . implode(' ', $this->buildPageCssClasses()) . '"';
             }
 
             $tplOutput = str_replace('<body', '<body ' . $this->cssClassCache, $tplOutput);
         }
 
         return $tplOutput;
+    }
+
+    /**
+     * @return array
+     */
+    protected function buildPageCssClasses()
+    {
+        $pieces = [
+            $this->pageCssClasses->getModule(),
+            $this->pageCssClasses->getControllerAction()
+        ];
+
+        if ($this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN) {
+            $pieces[] = 'in-admin';
+        } elseif ($this->request->isHomepage() === true) {
+            $pieces[] = 'is-homepage';
+        } else {
+            $pieces[] = $this->pageCssClasses->getDetails();
+        }
+
+        return $pieces;
     }
 }
