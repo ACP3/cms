@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
-    
+
     /**
      * @var Core\Pagination
      */
@@ -56,7 +56,7 @@ class Index extends Core\Controller\AbstractFrontendAction
             'newsletters' => $this->newsletterRepository->getAll(
                 Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,
                 $this->pagination->getResultsStartOffset(),
-                $this->user->getEntriesPerPage()
+                $this->resultsPerPage->getResultsPerPage(Newsletter\Installer\Schema::MODULE_NAME)
             ),
             'pagination' => $this->pagination->render()
         ];

@@ -67,7 +67,7 @@ class Index extends AbstractAction
             'galleries' => $this->galleryRepository->getAll(
                 $time,
                 $this->pagination->getResultsStartOffset(),
-                $this->user->getEntriesPerPage()
+                $this->resultsPerPage->getResultsPerPage(Gallery\Installer\Schema::MODULE_NAME)
             ),
             'dateformat' => $this->settings['dateformat'],
             'pagination' => $this->pagination->render()

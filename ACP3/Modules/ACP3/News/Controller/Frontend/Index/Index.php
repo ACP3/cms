@@ -140,13 +140,13 @@ class Index extends AbstractAction
                 $categoryId,
                 $time,
                 $this->pagination->getResultsStartOffset(),
-                $this->user->getEntriesPerPage()
+                $this->resultsPerPage->getResultsPerPage(News\Installer\Schema::MODULE_NAME)
             );
         } else {
             $news = $this->newsRepository->getAll(
                 $time,
                 $this->pagination->getResultsStartOffset(),
-                $this->user->getEntriesPerPage()
+                $this->resultsPerPage->getResultsPerPage(News\Installer\Schema::MODULE_NAME)
             );
         }
 

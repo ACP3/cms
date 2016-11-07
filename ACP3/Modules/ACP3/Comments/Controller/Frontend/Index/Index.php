@@ -56,7 +56,7 @@ class Index extends AbstractFrontendAction
             $this->modules->getModuleId($module),
             $entryId,
             $this->pagination->getResultsStartOffset(),
-            $this->user->getEntriesPerPage()
+            $this->resultsPerPage->getResultsPerPage(Comments\Installer\Schema::MODULE_NAME)
         );
         $cComments = count($comments);
 

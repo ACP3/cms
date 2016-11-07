@@ -69,6 +69,10 @@ abstract class AbstractWidgetAction implements ActionInterface
      * @var Response
      */
     protected $response;
+    /**
+     * @var Core\Helpers\ResultsPerPage
+     */
+    protected $resultsPerPage;
 
     /**
      * WidgetController constructor.
@@ -90,6 +94,7 @@ abstract class AbstractWidgetAction implements ActionInterface
         $this->config = $context->getConfig();
         $this->appPath = $context->getAppPath();
         $this->response = $context->getResponse();
+        $this->resultsPerPage = $context->getResultsPerPage();
     }
 
     /**

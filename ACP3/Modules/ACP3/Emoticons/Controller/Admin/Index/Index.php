@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Emoticons;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Index
@@ -41,7 +42,7 @@ class Index extends Core\Controller\AbstractAdminAction
         $dataGrid = $this->get('core.helpers.data_grid');
         $dataGrid
             ->setRepository($this->dataGridRepository)
-            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/emoticons/index/delete')
             ->setResourcePathEdit('admin/emoticons/index/edit');

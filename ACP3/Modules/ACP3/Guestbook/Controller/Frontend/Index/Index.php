@@ -55,7 +55,7 @@ class Index extends AbstractAction
         $guestbook = $this->guestbookRepository->getAll(
             $this->guestbookSettings['notify'],
             $this->pagination->getResultsStartOffset(),
-            $this->user->getEntriesPerPage()
+            $this->resultsPerPage->getResultsPerPage(Guestbook\Installer\Schema::MODULE_NAME)
         );
         $cGuestbook = count($guestbook);
 

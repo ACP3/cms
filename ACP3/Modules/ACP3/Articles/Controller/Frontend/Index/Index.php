@@ -63,7 +63,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         $articles = $this->articleRepository->getAll(
             $time,
             $this->pagination->getResultsStartOffset(),
-            $this->user->getEntriesPerPage()
+            $this->resultsPerPage->getResultsPerPage(Articles\Installer\Schema::MODULE_NAME)
         );
         $this->pagination->setTotalResults($this->articleRepository->countAll($time));
 

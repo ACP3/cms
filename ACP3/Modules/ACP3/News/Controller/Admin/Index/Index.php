@@ -7,9 +7,8 @@
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\News;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Index
@@ -46,7 +45,7 @@ class Index extends Core\Controller\AbstractAdminAction
         $dataGrid = $this->get('core.helpers.data_grid');
         $dataGrid
             ->setRepository($this->dataGridRepository)
-            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/news/index/delete')
             ->setResourcePathEdit('admin/news/index/edit');
