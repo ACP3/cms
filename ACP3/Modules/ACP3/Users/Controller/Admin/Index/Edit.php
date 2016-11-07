@@ -92,7 +92,6 @@ class Edit extends AbstractFormAction
             $userRoles = $this->acl->getUserRoleIds($id);
             $this->view->assign(
                 $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
-                    (int)$user['entries'],
                     $user['language'],
                     $user['time_zone'],
                     $user['address_display'],

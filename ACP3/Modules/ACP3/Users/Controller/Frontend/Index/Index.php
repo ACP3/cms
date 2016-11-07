@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Users;
 class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
-    
+
     /**
      * @var \ACP3\Core\Pagination
      */
@@ -52,13 +52,16 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        $users = $this->userRepository->getAll(
-            $this->pagination->getResultsStartOffset(), 
-            $this->user->getEntriesPerPage()
-        );
+        $resultsPerPage = $this->resultsPerPage->getResultsPerPage(Users\Installer\Schema::MODULE_NAME);
         $allUsers = $this->userRepository->countAll();
+        $this->pagination
+            ->setResultsPerPage($resultsPerPage)
+            ->setTotalResults($allUsers);
 
-        $this->pagination->setTotalResults($allUsers);
+        $users = $this->userRepository->getAll(
+            $this->pagination->getResultsStartOffset(),
+            $resultsPerPage
+        );
 
         return [
             'users' => $users,

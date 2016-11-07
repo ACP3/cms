@@ -1,7 +1,7 @@
 <section>
     <h3 class="text-center">{lang t="comments|comments"}</h3>
     {redirect_message}
-    {if isset($comments)}
+    {if !empty($comments)}
         {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
         {foreach $comments as $row}
             <article class="dataset-box dataset-box__comments">

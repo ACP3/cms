@@ -95,6 +95,10 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             45 => [
                 "ALTER TABLE `{pre}users` DROP COLUMN `draft`;"
+            ],
+            46 => [
+                "ALTER TABLE `{pre}users` DROP COLUMN `entries`;",
+                "DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND `name` = 'entries_override';"
             ]
         ];
     }

@@ -18,7 +18,6 @@
         <item key="admin_index_settings">Settings</item>
         <item key="admin_user_undeletable">The administrator can't be deleted.</item>
         <item key="allow_language_override">Allow users to override the default language</item>
-        <item key="allow_entries_override">Allow users to override the number of displayed resultsets per page</item>
         <item key="birthday">Birthday</item>
         <item key="birthday_hide">Hide birthday</item>
         <item key="birthday_display_completely">Display birthday completely</item>
@@ -62,6 +61,7 @@
         <item key="invalid_birthday">Please type in a valid birthday.</item>
         <item key="invalid_icq_number">Please type in a valid ICQ number.</item>
         <item key="language">Language</item>
+        <item key="localization">Localization</item>
         <item key="log_in">Log in</item>
         <item key="login">Login</item>
         <item key="logout">Logout</item>
@@ -93,7 +93,6 @@
         <item key="select_birthday_display">Please select the format of your birthday in which it should be displayed in your public profile.</item>
         <item key="select_country_display">Please select whether you want to display your country in the public profile or not.</item>
         <item key="select_enable_registration">Please select whether users should be allowed to register on this website.</item>
-        <item key="select_entries_override">Please select whether users should be allowed to override the number of displayed resultsets per page.</item>
         <item key="select_language">Please select the language in which you want to see the website.</item>
         <item key="select_language_override">Please select whether users should be allowed to override the default language.</item>
         <item key="select_mail_display">Please select whether you want to display your E-mail address in the public profile or not.</item>

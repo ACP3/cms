@@ -52,18 +52,24 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->articleRepository = $articleRepository;
     }
 
+    /**
+     * @return array
+     */
     public function execute()
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
+        $resultsPerPage = $this->resultsPerPage->getResultsPerPage(Articles\Installer\Schema::MODULE_NAME);
         $time = $this->date->getCurrentDateTime();
+        $this->pagination
+            ->setResultsPerPage($resultsPerPage)
+            ->setTotalResults($this->articleRepository->countAll($time));
+
         $articles = $this->articleRepository->getAll(
             $time,
             $this->pagination->getResultsStartOffset(),
-            $this->user->getEntriesPerPage()
+            $resultsPerPage
         );
-        $this->pagination->setTotalResults($this->articleRepository->countAll($time));
-
         return [
             'articles' => $articles,
             'pagination' => $this->pagination->render()

@@ -51,14 +51,12 @@ class AdminSettingsFormValidationTest extends AbstractFormValidationTest
                 \ACP3\Core\Session\SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'test@example.com',
                 'language_override' => 1,
-                'entries_override' => 1,
                 'enable_registration' => 1
             ],
             [
                 \ACP3\Core\Session\SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'test@example.com',
                 'language_override' => 0,
-                'entries_override' => 0,
                 'enable_registration' => 0
             ]
         ];
@@ -74,7 +72,6 @@ class AdminSettingsFormValidationTest extends AbstractFormValidationTest
                 \ACP3\Core\Session\SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'baz',
                 'language_override' => 'foo',
-                'entries_override' => 'bar',
                 'enable_registration' => ''
             ],
         ];

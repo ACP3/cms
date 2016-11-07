@@ -7,6 +7,7 @@ namespace ACP3\Core\Controller\Context;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
@@ -77,6 +78,10 @@ class WidgetContext
      * @var \Symfony\Component\HttpFoundation\Response
      */
     private $response;
+    /**
+     * @var ResultsPerPage
+     */
+    private $resultsPerPage;
 
     /**
      * WidgetContext constructor.
@@ -94,6 +99,7 @@ class WidgetContext
      * @param \ACP3\Core\Settings\SettingsInterface $config
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param Response $response
+     * @param ResultsPerPage $resultsPerPage
      */
     public function __construct(
         ContainerInterface $container,
@@ -108,7 +114,8 @@ class WidgetContext
         View $view,
         SettingsInterface $config,
         ApplicationPath $appPath,
-        Response $response
+        Response $response,
+        ResultsPerPage $resultsPerPage
     ) {
         $this->container = $container;
         $this->eventDispatcher = $eventDispatcher;
@@ -123,6 +130,7 @@ class WidgetContext
         $this->config = $config;
         $this->appPath = $appPath;
         $this->response = $response;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**
@@ -227,5 +235,13 @@ class WidgetContext
     public function getResponse()
     {
         return $this->response;
+    }
+
+    /**
+     * @return ResultsPerPage
+     */
+    public function getResultsPerPage()
+    {
+        return $this->resultsPerPage;
     }
 }

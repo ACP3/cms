@@ -154,7 +154,6 @@ class Register extends Core\Controller\AbstractFrontendAction
                     'date_format_short' => $systemSettings['date_format_short'],
                     'time_zone' => $systemSettings['date_time_zone'],
                     'language' => $systemSettings['lang'],
-                    'entries' => $systemSettings['entries'],
                     'registration_date' => $this->date->getCurrentDateTime(),
                 ];
 

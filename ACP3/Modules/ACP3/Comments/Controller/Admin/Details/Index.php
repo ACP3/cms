@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Index
@@ -61,7 +62,7 @@ class Index extends Core\Controller\AbstractAdminAction
             $dataGrid = $this->get('core.helpers.data_grid');
             $dataGrid
                 ->setResults($comments)
-                ->setRecordsPerPage($this->user->getEntriesPerPage())
+                ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
                 ->setIdentifier('#acp-table')
                 ->setResourcePathDelete('admin/comments/details/delete/id_' . $id)
                 ->setResourcePathEdit('admin/comments/details/edit');

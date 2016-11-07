@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
-    
+
     /**
      * @var Core\Pagination
      */
@@ -50,13 +50,16 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        $this->pagination->setTotalResults($this->newsletterRepository->countAll(1));
+        $resultsPerPage = $this->resultsPerPage->getResultsPerPage(Newsletter\Installer\Schema::MODULE_NAME);
+        $this->pagination
+            ->setResultsPerPage($resultsPerPage)
+            ->setTotalResults($this->newsletterRepository->countAll(1));
 
         return [
             'newsletters' => $this->newsletterRepository->getAll(
                 Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,
                 $this->pagination->getResultsStartOffset(),
-                $this->user->getEntriesPerPage()
+                $resultsPerPage
             ),
             'pagination' => $this->pagination->render()
         ];
