@@ -12,12 +12,21 @@ abstract class AbstractPlugin implements PluginInterface
      */
     public function register(\Smarty $smarty)
     {
-        if ($this->getExtensionType() === static::EXTENSION_TYPE_BLOCK ||
-            $this->getExtensionType() === static::EXTENSION_TYPE_FUNCTION ||
-            $this->getExtensionType() === static::EXTENSION_TYPE_MODIFIER) {
+        if ($this->isPlugin()) {
             $smarty->registerPlugin($this->getExtensionType(), $this->getExtensionName(), [$this, 'process']);
         } elseif ($this->getExtensionType() === static::EXTENSION_TYPE_FILTER) {
             $smarty->registerFilter($this->getExtensionName(), [$this, 'process']);
         }
+    }
+
+    /**
+     * @return bool
+     */
+    private function isPlugin()
+    {
+        return in_array(
+            $this->getExtensionType(),
+            [static::EXTENSION_TYPE_BLOCK, static::EXTENSION_TYPE_FUNCTION, static::EXTENSION_TYPE_MODIFIER]
+        );
     }
 }
