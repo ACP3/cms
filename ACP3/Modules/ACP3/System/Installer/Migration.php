@@ -147,6 +147,9 @@ class Migration extends Modules\Installer\AbstractMigration
             64 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'site_title', '');",
                 $this->migrateToVersion64()
+            ],
+            65 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'page_cache_purge_mode', 1);",
             ]
         ];
     }

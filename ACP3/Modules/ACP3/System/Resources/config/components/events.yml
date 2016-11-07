@@ -1,16 +1,19 @@
 services:
-  system.event.listener.on_model_after_save_listener:
-    class: ACP3\Modules\ACP3\System\Event\Listener\OnModelAfterSaveListener
+  system.event.listener.invalidate_page_cache_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\System\Event\Listener\InvalidatePageCacheOnModelAfterSaveListener
     arguments:
+      - '@core.environment.application_path'
       - '@core.config'
       - '@system.helpers.can_use_page_cache'
     tags:
       - { name: core.eventListener, event: core.model.after_save, method: invalidatePageCache }
       - { name: core.eventListener, event: core.model.after_delete, method: invalidatePageCache }
 
-  system.event.listener.on_settings_save_before_listener:
-    class: ACP3\Modules\ACP3\System\Event\Listener\OnSettingsSaveBeforeListener
+  system.event.listener.invalidate_page_cache_on_settings_save_before_listener:
+    class: ACP3\Modules\ACP3\System\Event\Listener\InvalidatePageCacheOnSettingsSaveBeforeListener
     arguments:
+      - '@core.environment.application_path'
+      - '@core.config'
       - '@core.modules'
       - '@system.model.settingsrepository'
       - '@system.helpers.can_use_page_cache'

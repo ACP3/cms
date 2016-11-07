@@ -162,6 +162,16 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
+                    'field' => 'page_cache_purge_mode',
+                    'message' => $this->translator->t('system', 'select_page_cache_purge_mode'),
+                    'extra' => [
+                        'haystack' => [1, 2]
+                    ]
+                ])
+            ->addConstraint(
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
+                [
+                    'data' => $formData,
                     'field' => 'cache_images',
                     'message' => $this->translator->t('system', 'select_cache_images'),
                     'extra' => [
