@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - 2016-xx-xx
 ### Added
 - [#49](https://github.com/ACP3/cms/issues/49) Added the ability to use a custom menu item title when creating a menu item via the articles module
+- [#8](https://github.com/ACP3/cms/issues/8) Added the foundation to get module specific results per page
 
 ### Changed
-
+- Deprecated the UserModel::getEntriesPerPage() and UserModel::setEntriesPerPage() methods
 
 ### Fixed
 
