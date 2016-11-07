@@ -10,6 +10,10 @@ use ACP3\Core;
 class PageCssClasses
 {
     /**
+     * @var Core\Helpers\StringFormatter
+     */
+    protected $stringFormatter;
+    /**
      * @var \ACP3\Core\Breadcrumb\Title
      */
     protected $title;
@@ -24,15 +28,18 @@ class PageCssClasses
     protected $details;
 
     /**
-     * @param \ACP3\Core\Breadcrumb\Title      $title
+     * @param Core\Helpers\StringFormatter $stringFormatter
+     * @param \ACP3\Core\Breadcrumb\Title $title
      * @param \ACP3\Core\Http\RequestInterface $request
      */
     public function __construct(
+        Core\Helpers\StringFormatter $stringFormatter,
         Core\Breadcrumb\Title $title,
         Core\Http\RequestInterface $request
     ) {
         $this->title = $title;
         $this->request = $request;
+        $this->stringFormatter = $stringFormatter;
     }
 
     /**
@@ -57,21 +64,7 @@ class PageCssClasses
     public function getDetails()
     {
         if ($this->details === null) {
-            $pageTitle = preg_replace(
-                '=[^a-z0-9\-]=',
-                '',
-                \Patchwork\Utf8::toAscii(
-                    html_entity_decode(
-                        str_replace(
-                            ' ',
-                            '-',
-                            strtolower($this->title->getPageTitle())
-                        ),
-                        ENT_QUOTES,
-                        'UTF-8'
-                    )
-                )
-            );
+            $pageTitle = $this->stringFormatter->makeStringUrlSafe($this->title->getPageTitle());
             $this->details = $this->request->getModule() . '-' . $this->request->getController() . '-' . $pageTitle;
         }
 
