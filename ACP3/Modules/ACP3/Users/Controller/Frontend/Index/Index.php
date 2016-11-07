@@ -52,13 +52,16 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
+        $resultsPerPage = $this->resultsPerPage->getResultsPerPage(Users\Installer\Schema::MODULE_NAME);
+        $allUsers = $this->userRepository->countAll();
+        $this->pagination
+            ->setResultsPerPage($resultsPerPage)
+            ->setTotalResults($allUsers);
+
         $users = $this->userRepository->getAll(
             $this->pagination->getResultsStartOffset(),
-            $this->resultsPerPage->getResultsPerPage(Users\Installer\Schema::MODULE_NAME)
+            $resultsPerPage
         );
-        $allUsers = $this->userRepository->countAll();
-
-        $this->pagination->setTotalResults($allUsers);
 
         return [
             'users' => $users,

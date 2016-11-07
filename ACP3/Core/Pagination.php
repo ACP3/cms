@@ -87,50 +87,68 @@ class Pagination
 
     /**
      * @param int $results
+     * @return $this
      */
     public function setResultsPerPage($results)
     {
         $this->resultsPerPage = (int)$results;
+
+        return $this;
     }
 
     /**
      * @param int $results
+     * @return $this
      */
     public function setTotalResults($results)
     {
         $this->totalResults = (int)$results;
+
+        return $this;
     }
 
     /**
      * @param string $fragment
+     * @return $this
      */
     public function setUrlFragment($fragment)
     {
         $this->urlFragment = $fragment;
+
+        return $this;
     }
 
     /**
      * @param int $pagesToDisplay
+     * @return $this
      */
     public function setPagesToDisplay($pagesToDisplay)
     {
         $this->pagesToDisplay = (int)$pagesToDisplay;
+
+        return $this;
     }
 
     /**
      * @param int $showFirstLast
+     * @return $this
      */
     public function setShowFirstLast($showFirstLast)
     {
         $this->showFirstLast = (int)$showFirstLast;
+
+        return $this;
     }
 
     /**
      * @param int $showPreviousNext
+     * @return $this
      */
     public function setShowPreviousNext($showPreviousNext)
     {
         $this->showPreviousNext = (int)$showPreviousNext;
+
+        return $this;
     }
 
     /**

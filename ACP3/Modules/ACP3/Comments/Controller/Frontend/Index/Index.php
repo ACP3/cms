@@ -52,35 +52,34 @@ class Index extends AbstractFrontendAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
+        $resultsPerPage = $this->resultsPerPage->getResultsPerPage(Comments\Installer\Schema::MODULE_NAME);
+        $this->pagination
+            ->setResultsPerPage($resultsPerPage)
+            ->setTotalResults(
+                $this->commentRepository->countAllByModule($this->modules->getModuleId($module), $entryId)
+            );
+
         $comments = $this->commentRepository->getAllByModule(
             $this->modules->getModuleId($module),
             $entryId,
             $this->pagination->getResultsStartOffset(),
-            $this->resultsPerPage->getResultsPerPage(Comments\Installer\Schema::MODULE_NAME)
+            $resultsPerPage
         );
         $cComments = count($comments);
 
-        if ($cComments > 0) {
-            $this->pagination->setTotalResults(
-                $this->commentRepository->countAllByModule($this->modules->getModuleId($module), $entryId)
-            );
-
-            for ($i = 0; $i < $cComments; ++$i) {
-                if (empty($comments[$i]['name'])) {
-                    $comments[$i]['name'] = $this->translator->t('users', 'deleted_user');
-                }
-                if ($this->emoticonsActive === true && $this->emoticonsHelpers) {
-                    $comments[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($comments[$i]['message']);
-                }
+        for ($i = 0; $i < $cComments; ++$i) {
+            if (empty($comments[$i]['name'])) {
+                $comments[$i]['name'] = $this->translator->t('users', 'deleted_user');
             }
-
-            return [
-                'comments' => $comments,
-                'dateformat' => $this->commentsSettings['dateformat'],
-                'pagination' => $this->pagination->render()
-            ];
+            if ($this->emoticonsActive === true && $this->emoticonsHelpers) {
+                $comments[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($comments[$i]['message']);
+            }
         }
 
-        return [];
+        return [
+            'comments' => $comments,
+            'dateformat' => $this->commentsSettings['dateformat'],
+            'pagination' => $this->pagination->render()
+        ];
     }
 }

@@ -59,15 +59,17 @@ class Index extends AbstractAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
+        $resultsPerPage = $this->resultsPerPage->getResultsPerPage(Gallery\Installer\Schema::MODULE_NAME);
         $time = $this->date->getCurrentDateTime();
-
-        $this->pagination->setTotalResults($this->galleryRepository->countAll($time));
+        $this->pagination
+            ->setResultsPerPage($resultsPerPage)
+            ->setTotalResults($this->galleryRepository->countAll($time));
 
         return [
             'galleries' => $this->galleryRepository->getAll(
                 $time,
                 $this->pagination->getResultsStartOffset(),
-                $this->resultsPerPage->getResultsPerPage(Gallery\Installer\Schema::MODULE_NAME)
+                $resultsPerPage
             ),
             'dateformat' => $this->settings['dateformat'],
             'pagination' => $this->pagination->render()

@@ -52,12 +52,12 @@ class Index extends AbstractAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
-     * @param \ACP3\Core\Date                                        $date
-     * @param \ACP3\Core\Helpers\StringFormatter                     $stringFormatter
-     * @param \ACP3\Core\Pagination                                  $pagination
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository           $newsRepository
-     * @param \ACP3\Modules\ACP3\Categories\Helpers                  $categoriesHelpers
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
+     * @param \ACP3\Core\Pagination $pagination
+     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
+     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
@@ -99,23 +99,23 @@ class Index extends AbstractAction
         $this->addBreadcrumbStep($cat);
 
         $time = $this->date->getCurrentDateTime();
+        $this->pagination
+            ->setResultsPerPage($this->resultsPerPage->getResultsPerPage(News\Installer\Schema::MODULE_NAME))
+            ->setTotalResults($this->newsRepository->countAll($time, $cat));
+
         $news = $this->fetchNews($cat, $time);
         $cNews = count($news);
 
-        if ($cNews > 0) {
-            $this->pagination->setTotalResults($this->newsRepository->countAll($time, $cat));
-
-            for ($i = 0; $i < $cNews; ++$i) {
-                $news[$i]['text'] = $this->view->fetchStringAsTemplate($news[$i]['text']);
-                if ($this->commentsActive === true && $news[$i]['comments'] == 1) {
-                    $news[$i]['comments_count'] = $this->get('comments.helpers')->commentsCount(
-                        News\Installer\Schema::MODULE_NAME,
-                        $news[$i]['id']
-                    );
-                }
-                if ($this->newsSettings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
-                    $news[$i]['text'] = $this->addReadMoreLink($news[$i]);
-                }
+        for ($i = 0; $i < $cNews; ++$i) {
+            $news[$i]['text'] = $this->view->fetchStringAsTemplate($news[$i]['text']);
+            if ($this->commentsActive === true && $news[$i]['comments'] == 1) {
+                $news[$i]['comments_count'] = $this->get('comments.helpers')->commentsCount(
+                    News\Installer\Schema::MODULE_NAME,
+                    $news[$i]['id']
+                );
+            }
+            if ($this->newsSettings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
+                $news[$i]['text'] = $this->addReadMoreLink($news[$i]);
             }
         }
 
@@ -128,7 +128,7 @@ class Index extends AbstractAction
     }
 
     /**
-     * @param int    $categoryId
+     * @param int $categoryId
      * @param string $time
      *
      * @return array
