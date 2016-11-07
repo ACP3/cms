@@ -45,7 +45,6 @@ class UsersModel extends AbstractModel
             'date_format_short' => ColumnTypes::COLUMN_TYPE_TEXT,
             'time_zone' => ColumnTypes::COLUMN_TYPE_RAW,
             'language' => ColumnTypes::COLUMN_TYPE_RAW,
-            'entries' => ColumnTypes::COLUMN_TYPE_INT,
             'registration_date' => ColumnTypes::COLUMN_TYPE_DATETIME
         ];
     }

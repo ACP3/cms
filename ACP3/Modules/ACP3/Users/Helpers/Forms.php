@@ -100,18 +100,15 @@ class Forms
     }
 
     /**
-     * @param int    $entries
      * @param string $language
      * @param string $timeZone
-     * @param int    $displayAddress
-     * @param int    $displayBirthday
-     * @param int    $displayCountry
-     * @param int    $displayMail
-     *
+     * @param int $displayAddress
+     * @param int $displayBirthday
+     * @param int $displayCountry
+     * @param int $displayMail
      * @return array
      */
     public function fetchUserSettingsFormFields(
-        $entries,
         $language,
         $timeZone,
         $displayAddress = 0,
@@ -120,7 +117,6 @@ class Forms
         $displayMail = 0
     ) {
         return [
-            'entries' => $this->formsHelpers->recordsPerPage((int)$entries),
             'languages' => $this->translator->getLanguagePack($this->request->getPost()->get('language', $language)),
             'time_zones' => $this->dateHelpers->getTimeZones($timeZone),
             'address_display' => $this->displayAddress($displayAddress),

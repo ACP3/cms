@@ -33,8 +33,7 @@ class AccountSettingsFormValidation extends AbstractUserFormValidation
     {
         $this->validator->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class);
 
-        parent::validateUserSettings($formData, $this->settings['language_override'],
-            $this->settings['entries_override']);
+        $this->validateUserSettings($formData, $this->settings['language_override']);
 
         $this->validator->validate();
     }

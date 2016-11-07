@@ -171,19 +171,11 @@ class UserModel
     }
 
     /**
-     * @param int $entries
-     *
      * @return $this
      */
-    public function setEntriesPerPage($entries)
+    public function setEntriesPerPage()
     {
-        $userSettings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
-        $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
-
-        $this->entriesPerPage = (int)$systemSettings['entries'];
-        if ($userSettings['entries_override'] == 1 && $entries > 0) {
-            $this->entriesPerPage = (int)$entries;
-        }
+        $this->entriesPerPage = (int)$this->config->getSettings(Schema::MODULE_NAME)['entries'];
 
         return $this;
     }

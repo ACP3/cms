@@ -70,7 +70,6 @@ class Settings extends AbstractAction
 
         $this->view->assign(
             $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
-                (int)$user['entries'],
                 $user['language'],
                 $user['time_zone'],
                 $user['address_display'],
@@ -82,7 +81,6 @@ class Settings extends AbstractAction
 
         return [
             'language_override' => $settings['language_override'],
-            'entries_override' => $settings['entries_override'],
             'form' => array_merge($user, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
@@ -106,9 +104,6 @@ class Settings extends AbstractAction
 
                 if ($settings['language_override'] == 0) {
                     unset($formData['language']);
-                }
-                if ($settings['entries_override'] == 0) {
-                    unset($formData['entries']);
                 }
 
                 $bool = $this->usersModel->save($formData, $this->user->getUserId());

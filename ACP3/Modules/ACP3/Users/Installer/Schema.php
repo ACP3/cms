@@ -33,7 +33,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 45;
+        return 46;
     }
 
     /**
@@ -70,7 +70,6 @@ class Schema implements Modules\Installer\SchemaInterface
                 `date_format_short` VARCHAR(30) NOT NULL,
                 `time_zone` VARCHAR(100) NOT NULL,
                 `language` VARCHAR(10) NOT NULL,
-                `entries` TINYINT(2) UNSIGNED NOT NULL,
                 `registration_date` DATETIME NOT NULL,
                 PRIMARY KEY (`id`)
             ) {ENGINE} {CHARSET};"
@@ -92,7 +91,6 @@ class Schema implements Modules\Installer\SchemaInterface
     {
         return [
             'enable_registration' => 1,
-            'entries_override' => 1,
             'language_override' => 1,
             'mail' => ''
         ];
