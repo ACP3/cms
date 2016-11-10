@@ -24,13 +24,13 @@ class Index extends Core\Controller\AbstractAdminAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext           $context
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Modules\ACP3\Articles\Model\Repository\DataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Articles\Model\Repository\DataGridRepository $dataGridRepository)
-    {
+        Articles\Model\Repository\DataGridRepository $dataGridRepository
+    ) {
         parent::__construct($context);
 
         $this->dataGridRepository = $dataGridRepository;
@@ -50,6 +50,19 @@ class Index extends Core\Controller\AbstractAdminAction
             ->setResourcePathDelete('admin/articles/index/delete')
             ->setResourcePathEdit('admin/articles/index/edit');
 
+        $this->addDataGridColumns($dataGrid);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+        ];
+    }
+
+    /**
+     * @param Core\Helpers\DataGrid $dataGrid
+     */
+    protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
+    {
         $dataGrid
             ->addColumn([
                 'label' => $this->translator->t('system', 'publication_period'),
@@ -68,10 +81,5 @@ class Index extends Core\Controller\AbstractAdminAction
                 'fields' => ['id'],
                 'primary' => true
             ], 10);
-
-        return [
-            'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
-        ];
     }
 }

@@ -24,13 +24,13 @@ class Index extends Core\Controller\AbstractAdminAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext          $context
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Comments\Model\Repository\CommentRepository $commentRepository)
-    {
+        Comments\Model\Repository\CommentRepository $commentRepository
+    ) {
         parent::__construct($context);
 
         $this->commentRepository = $commentRepository;
@@ -50,6 +50,19 @@ class Index extends Core\Controller\AbstractAdminAction
             ->setResourcePathDelete('admin/comments/index/delete')
             ->setResourcePathEdit('admin/comments/details/index');
 
+        $this->addDataGridColumns($dataGrid);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+        ];
+    }
+
+    /**
+     * @param Core\Helpers\DataGrid $dataGrid
+     */
+    protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
+    {
         $dataGrid
             ->addColumn([
                 'label' => $this->translator->t('comments', 'module'),
@@ -66,10 +79,5 @@ class Index extends Core\Controller\AbstractAdminAction
                 'fields' => ['module_id'],
                 'primary' => true
             ], 10);
-
-        return [
-            'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
-        ];
     }
 }
