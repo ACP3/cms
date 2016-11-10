@@ -67,6 +67,7 @@ class Designs extends Core\Controller\AbstractAdminAction
             $bool = $this->config->saveSettings(['design' => $design], Schema::MODULE_NAME);
 
             Core\Cache\Purge::doPurge([
+                $this->appPath->getCacheDir() . 'sql',
                 $this->appPath->getCacheDir() . 'tpl_compiled',
                 $this->appPath->getCacheDir() . 'tpl_cached',
                 $this->appPath->getCacheDir() . 'http',
