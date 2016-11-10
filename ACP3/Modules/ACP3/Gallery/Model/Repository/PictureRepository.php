@@ -70,8 +70,8 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
         return $this->db->fetchAll(
             'SELECT
               p.*,
-              (SELECT pmin.pic FROM ' . $this->getTableName() . ' AS pmin WHERE pmin.gallery_id = p.gallery_id ORDER BY pmin.pic ASC LIMIT 1) AS `first`,
-              (SELECT pmax.pic FROM ' . $this->getTableName() . ' AS pmax WHERE pmax.gallery_id = p.gallery_id ORDER BY pmax.pic DESC LIMIT 1) AS `last`
+              (SELECT MIN(pmin.pic) FROM ' . $this->getTableName() . ' AS pmin WHERE pmin.gallery_id = p.gallery_id) AS `first`,
+              (SELECT MAX(pmax.pic) FROM ' . $this->getTableName() . ' AS pmax WHERE pmax.gallery_id = p.gallery_id) AS `last`
             FROM
               ' . $this->getTableName() . ' AS p
             WHERE p.gallery_id = ?

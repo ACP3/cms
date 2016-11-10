@@ -29,7 +29,7 @@ class GalleryDataGridRepository extends DataGridRepository
             'main.start',
             'main.end',
             'main.title',
-            'COUNT(p.gallery_id) AS picture'
+            'COUNT(p.gallery_id) AS pictures'
         ];
     }
 

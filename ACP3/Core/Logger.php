@@ -56,6 +56,35 @@ class Logger
     }
 
     /**
+     * @param string $channel
+     * @param string $level
+     */
+    private function createChannel($channel, $level)
+    {
+        $fileName = $this->appPath->getCacheDir() . 'logs/' . $channel . '.log';
+        $logLevelConst = constant(\Monolog\Logger::class . '::' . strtoupper($level));
+
+        $stream = new StreamHandler($fileName, $logLevelConst);
+        $stream->setFormatter(new LineFormatter(null, null, true));
+
+        $this->channels[$channel] = new \Monolog\Logger($channel, [$stream]);
+    }
+
+    /**
+     * @param $message
+     *
+     * @return string
+     */
+    private function prettyPrintMessage($message)
+    {
+        if (is_array($message) || is_object($message)) {
+            $message = var_export($message, true);
+        }
+
+        return $message;
+    }
+
+    /**
      * Debug log
      *
      * @param string $channel
@@ -149,34 +178,5 @@ class Logger
     public function emergency($channel, $message, array $context = [])
     {
         $this->log($channel, LogLevel::EMERGENCY, $message, $context);
-    }
-
-    /**
-     * @param string $channel
-     * @param string $level
-     */
-    private function createChannel($channel, $level)
-    {
-        $fileName = $this->appPath->getCacheDir() . 'logs/' . $channel . '.log';
-        $logLevelConst = constant(\Monolog\Logger::class . '::' . strtoupper($level));
-
-        $stream = new StreamHandler($fileName, $logLevelConst);
-        $stream->setFormatter(new LineFormatter(null, null, true));
-
-        $this->channels[$channel] = new \Monolog\Logger($channel, [$stream]);
-    }
-
-    /**
-     * @param $message
-     *
-     * @return string
-     */
-    private function prettyPrintMessage($message)
-    {
-        if (is_array($message) || is_object($message)) {
-            $message = var_export($message, true);
-        }
-
-        return $message;
     }
 }
