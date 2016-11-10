@@ -110,7 +110,6 @@ class Modules extends Core\Controller\AbstractAdminAction
 
             $bool = $this->saveModuleState($moduleDirectory, 1);
 
-            $this->renewCaches();
             $this->purgeCaches();
 
             $text = $this->translator->t(
@@ -169,6 +168,7 @@ class Modules extends Core\Controller\AbstractAdminAction
     {
         Core\Cache\Purge::doPurge([
             $this->appPath->getCacheDir() . 'http',
+            $this->appPath->getCacheDir() . 'sql',
             $this->appPath->getCacheDir() . 'tpl_compiled',
             $this->appPath->getCacheDir() . 'tpl_cached',
             $this->appPath->getCacheDir() . 'container.php',
@@ -208,7 +208,6 @@ class Modules extends Core\Controller\AbstractAdminAction
 
             $bool = $this->saveModuleState($moduleDirectory, 0);
 
-            $this->renewCaches();
             $this->purgeCaches();
 
             $text = $this->translator->t(
@@ -251,7 +250,6 @@ class Modules extends Core\Controller\AbstractAdminAction
             $bool = $container->get('core.modules.schemaInstaller')->install($moduleSchema);
             $bool2 = $container->get('core.modules.aclInstaller')->install($moduleSchema);
 
-            $this->renewCaches();
             $this->purgeCaches();
 
             $text = $this->translator->t(
@@ -283,7 +281,7 @@ class Modules extends Core\Controller\AbstractAdminAction
             }
 
             $serviceId = strtolower($moduleDirectory . '.installer.schema');
-            $container = $this->installerHelper->updateServiceContainer($this->request);
+            $container = $this->installerHelper->updateServiceContainer($this->request, true);
             $this->moduleInstallerExists($container, $serviceId);
 
             /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
@@ -298,7 +296,6 @@ class Modules extends Core\Controller\AbstractAdminAction
             $bool = $this->container->get('core.modules.schemaInstaller')->uninstall($moduleSchema);
             $bool2 = $this->container->get('core.modules.aclInstaller')->uninstall($moduleSchema);
 
-            $this->renewCaches();
             $this->purgeCaches();
 
             $text = $this->translator->t(
