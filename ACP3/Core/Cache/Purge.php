@@ -62,7 +62,7 @@ class Purge
                 if (is_dir($path)) {
                     static::purgeCurrentDirectory($path, $cacheId);
                     if (empty($cacheId)) {
-                        @rmdir($directory);
+                        @rmdir($path);
                     }
                 } elseif (empty($cacheId) || strpos($dirContent, $cacheId) !== false) {
                     @unlink($path);
