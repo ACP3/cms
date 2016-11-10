@@ -857,16 +857,16 @@
         },
         {
             "name": "mibe/feedwriter",
-            "version": "v1.0.4",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mibe/FeedWriter.git",
-                "reference": "73b68701f357e70659e91f74ea8680b8526e413b"
+                "reference": "d1545ef3c38e8571c8ae2988380767055ce4ba28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mibe/FeedWriter/zipball/73b68701f357e70659e91f74ea8680b8526e413b",
-                "reference": "73b68701f357e70659e91f74ea8680b8526e413b",
+                "url": "https://api.github.com/repos/mibe/FeedWriter/zipball/d1545ef3c38e8571c8ae2988380767055ce4ba28",
+                "reference": "d1545ef3c38e8571c8ae2988380767055ce4ba28",
                 "shasum": ""
             },
             "require": {
@@ -875,7 +875,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -884,7 +884,8 @@
                     "Feed.php",
                     "Item.php",
                     "RSS1.php",
-                    "RSS2.php"
+                    "RSS2.php",
+                    "InvalidOperationException.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -892,9 +893,6 @@
                 "GPL-3.0"
             ],
             "authors": [
-                {
-                    "name": "Anis uddin Ahmad"
-                },
                 {
                     "name": "Michael Bemmerl",
                     "email": "mail@mx-server.de"
@@ -923,16 +921,38 @@
                 },
                 {
                     "name": "Julian Bogdani"
+                },
+                {
+                    "name": "Anis uddin Ahmad",
+                    "email": "anis.programmer@gmail.com"
+                },
+                {
+                    "name": "Cedric Gampert"
+                },
+                {
+                    "name": "Yamek"
+                },
+                {
+                    "name": "thielj"
+                },
+                {
+                    "name": "Pavel Khakhlou"
+                },
+                {
+                    "name": "Daniel"
                 }
             ],
             "description": "Generate feeds in either RSS 1.0, RSS 2.0 or ATOM formats",
             "homepage": "https://github.com/mibe/FeedWriter",
             "keywords": [
+                "RSS 1.0",
                 "atom",
                 "feed",
-                "rss"
+                "rss",
+                "rss 2.0",
+                "rss2"
             ],
-            "time": "2016-04-17 21:37:55"
+            "time": "2016-11-08 21:35:29"
         },
         {
             "name": "monolog/monolog",

@@ -12,42 +12,44 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Deprecated the `UserModel::getEntriesPerPage()` and `UserModel::setEntriesPerPage()` methods
-- extracted the adding of the data grid columns into separate methods
+- Extracted the adding of the data grid columns into separate methods
+- Updated the [mibe/feedwriter](https://github.com/mibe/FeedWriter) library to version v1.1.0
+- [#55](https://github.com/ACP3/cms/pull/55) Changed the argument order of the \FeedWriter\Feed::setImage() method (thanks @mibe)
 
 ### Fixed
-- fixed the pictures count of the gallery data grid
-- when switching the design, purge the following folders to prevent from corrupted layouts after the page reload:
+- Fixed the pictures count of the gallery data grid
+- When switching the design, purge the following folders to prevent from corrupted layouts after the page reload:
     - `cache/env/sql`
     - `cache/env/tpl_compiled`
     - `cache/env/http`
 
 ## [4.3.6] - 2016-11-03
 ### Added
-- automatically create the uploads/assets directory if it is missing
-- the `\ACP3\Core\Cache\Purge::purgeCurrentDirectory()` method now handles symbolic links gracefully too
+- Automatically create the uploads/assets directory if it is missing
+- Zhe `\ACP3\Core\Cache\Purge::purgeCurrentDirectory()` method now handles symbolic links gracefully too
 
 ### Fixed
-- [#46](https://github.com/ACP3/cms/issues/46) fixed the disappearing file size unit when editing a download
+- [#46](https://github.com/ACP3/cms/issues/46) Fixed the disappearing file size unit when editing a download
 
 ## [4.3.5] - 2016-11-02
 ### Changed
-- improved the performance of the `\ACP3\Core\Cache\Purge::doPurge()` method 
+- Improved the performance of the `\ACP3\Core\Cache\Purge::doPurge()` method 
 
 ### Fixed
-- fixed a character encoding problem when trying to use formatted HTML/XML code with the WYSIWYG-Editor inputs
-- minor fixes for the default frontend templates of the gallery and files modules
+- Fixed a character encoding problem when trying to use formatted HTML/XML code with the WYSIWYG-Editor inputs
+- Minor fixes for the default frontend templates of the gallery and files modules
 
 ## [4.3.4] - 2016-11-02
 ### Changed
-- refined the default ACP3 design
+- Refined the default ACP3 design
 
 ### Fixed
-- fixed the missing gallery title when saving a gallery
+- Fixed the missing gallery title when saving a gallery
 
 ## [4.3.3] - 2016-11-01
 ### Fixed
-- fixed missing translation phrases in the SEO module
-- fixed the date format of the `lastmod` node inside XML sitemaps
+- Fixed missing translation phrases in the SEO module
+- Fixed the date format of the `lastmod` node inside XML sitemaps
 
 ## [4.3.2] - 2016-10-31
 ### Added
@@ -60,11 +62,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - Polls
 
 ### Fixed
-- fixed the editing of newsletters
+- Fixed the editing of newsletters
 
 ## [4.3.1] - 2016-10-31
 ### Fixed
-- fixed the SEO module's administration forms
+- Fixed the SEO module's administration forms
 
 ## [4.3.0] - 2016-10-31
 ### Added
@@ -78,16 +80,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The `ModelSaveEvent` class now accepts the raw post data too
 - Applied the `RewriteUri` Smarty modifier to the article module's single article widget action 
 - [#20](https://github.com/ACP3/cms/issues/20) Redesigned some parts of the gallery module's templates
-- the template under `System/Partials/no_results.tpl` now accepts the parameter `no_results_text` to render a custom translation phrase 
+- The template under `System/Partials/no_results.tpl` now accepts the parameter `no_results_text` to render a custom translation phrase 
 
 ### Changed
-- unified all module extensions to be located under the same namespace of the specific module
-- reworked the SEO URI alias saving logic to use the `core.model.after_save` event
-- refactored the `SearchAvailabilityExtension` classes to reduce the code duplication
+- Unified all module extensions to be located under the same namespace of the specific module
+- Reworked the SEO URI alias saving logic to use the `core.model.after_save` event
+- Refactored the `SearchAvailabilityExtension` classes to reduce the code duplication
 
 ### Fixed
-- fixed the wrong initial value of the `mailer_smtp_security` system config entry
-- fixed `PictureRepository::getNextPictureId()` method 
+- Fixed the wrong initial value of the `mailer_smtp_security` system config entry
+- Fixed `PictureRepository::getNextPictureId()` method 
 
 ## [4.2.0] - 2016-10-29
 ### Added
@@ -95,27 +97,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - The captcha validation is now handled by the new event `captcha.validation.validate_captcha`
-- moved the site title from the SEO module to the system module
-- refactored the search module to use the new compiler pass functionality
-- refactored the feeds module to use the new compiler pass functionality
+- Moved the site title from the SEO module to the system module
+- Refactored the search module to use the new compiler pass functionality
+- Refactored the feeds module to use the new compiler pass functionality
 
 ### Fixed
-- fixed the Smarty modifier plugin `PrefixUri` when there is an URL given with a valid protocol
-- fixed the hardcoded feed links
-- corrected the package information of the various `suggest` nodes inside the composer.json files 
+- Fixed the Smarty modifier plugin `PrefixUri` when there is an URL given with a valid protocol
+- Fixed the hardcoded feed links
+- Corrected the package information of the various `suggest` nodes inside the composer.json files 
 
 ## [4.1.30] - 2016-10-27
 ### Added
 - [#39](https://github.com/ACP3/cms/issues/39) Added a new system config option which makes it possible to enable or disable the page cache
-- made it possible to dispatch custom events to the validator to make the form validation much more flexible
+- Made it possible to dispatch custom events to the validator to make the form validation much more flexible
 
 ### Changed
-- made it possible to run the ACP3 without the SEO module
-- the SEO form fields are now getting injected via a template event 
+- Made it possible to run the ACP3 without the SEO module
+- The SEO form fields are now getting injected via a template event 
 
 ### Fixed
-- fixed the page cache invalidation notification when in production mode
-- fixed the newsletter subscription
+- Fixed the page cache invalidation notification when in production mode
+- Fixed the newsletter subscription
 
 ## [4.1.29] - 2016-10-23
 ### Added
@@ -128,10 +130,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Improved the default layout of the ACP3
 
 ### Fixed
-- fixed the users administration
-- fixed the redirect url when posting a comment
-- fixed the URL of delete controller action when performing a mass removal of comments
-- fixed the language switcher drop down of the installer
+- Fixed the users administration
+- Fixed the redirect url when posting a comment
+- Fixed the URL of delete controller action when performing a mass removal of comments
+- Fixed the language switcher drop down of the installer
 
 ## [4.1.28] - 2016-10-05
 ### Fixed
@@ -161,7 +163,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Dropped the usage of bower and use npm for all CSS and JS dependencies
 
 ### Fixed
-- fixed the parent menu item selector when switching the menu block
+- Fixed the parent menu item selector when switching the menu block
 
 ## [4.1.19] - 2016-09-25
 ### Enhanced
