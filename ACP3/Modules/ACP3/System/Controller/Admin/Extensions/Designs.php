@@ -69,9 +69,7 @@ class Designs extends Core\Controller\AbstractAdminAction
             Core\Cache\Purge::doPurge([
                 $this->appPath->getCacheDir() . 'sql',
                 $this->appPath->getCacheDir() . 'tpl_compiled',
-                $this->appPath->getCacheDir() . 'tpl_cached',
-                $this->appPath->getCacheDir() . 'http',
-                $this->appPath->getUploadsDir() . 'assets'
+                $this->appPath->getCacheDir() . 'http'
             ]);
         }
 

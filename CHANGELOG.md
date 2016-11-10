@@ -16,7 +16,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - fixed the pictures count of the gallery data grid
-- when switching the design, the uploads/assets folder is now purged to prevent a corrupted layout after the page reload
+- when switching the design, purge the following folders to prevent from corrupted layouts after the page reload:
+    - `cache/env/sql`
+    - `cache/env/tpl_compiled`
+    - `cache/env/http`
 
 ## [4.3.6] - 2016-11-03
 ### Added
