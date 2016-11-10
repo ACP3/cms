@@ -11,9 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - [#8](https://github.com/ACP3/cms/issues/8) Added the foundation to get module specific results per page
 
 ### Changed
-- Deprecated the UserModel::getEntriesPerPage() and UserModel::setEntriesPerPage() methods
+- Deprecated the `UserModel::getEntriesPerPage()` and `UserModel::setEntriesPerPage()` methods
+- extracted the adding of the data grid columns into separate methods
 
 ### Fixed
+- fixed the pictures count of the gallery data grid
 
 ## [4.3.6] - 2016-11-03
 ### Added
