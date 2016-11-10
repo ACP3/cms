@@ -3,6 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/ACP3/cms/badge.svg?branch=develop)](https://coveralls.io/github/ACP3/cms?branch=develop)
 [![Build Status](https://travis-ci.org/ACP3/cms.svg)](https://travis-ci.org/ACP3/cms)
 [![Dependency Status](https://www.versioneye.com/user/projects/57f64a469907da003a1a64d1/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57f64a469907da003a1a64d1)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/481/badge)](https://bestpractices.coreinfrastructure.org/projects/481)
 
 # ACP3 CMS
 The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP and MySQL. 
