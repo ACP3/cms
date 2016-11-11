@@ -109,6 +109,17 @@ abstract class AbstractWidgetAction implements ActionInterface
             throw new Core\ACL\Exception\AccessForbiddenException();
         }
 
+        $this->view->assign([
+            'PHP_SELF' => $this->appPath->getPhpSelf(),
+            'ROOT_DIR' => $this->appPath->getWebRoot(),
+            'HOST_NAME' => $this->request->getHttpHost(),
+            'ROOT_DIR_ABSOLUTE' => $this->request->getScheme() . '://' . $this->request->getHttpHost() . $this->appPath->getWebRoot(),
+            'DESIGN_PATH' => $this->appPath->getDesignPathWeb(),
+            'DESIGN_PATH_ABSOLUTE' => $this->appPath->getDesignPathAbsolute(),
+            'LANG_DIRECTION' => $this->translator->getDirection(),
+            'LANG' => $this->translator->getShortIsoCode(),
+        ]);
+
         return $this;
     }
 
