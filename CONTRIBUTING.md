@@ -1,4 +1,4 @@
-# Contributing to Roots Projects
+# Contributing to the ACP3 CMS
 
 Please take a moment to review this document in order to make the contribution
 process easy and effective for everyone involved.
@@ -14,8 +14,7 @@ The issue tracker is the preferred channel for [bug reports](#bugs),
 [features requests](#features) and [submitting pull
 requests](#pull-requests), but please respect the following restrictions:
 
-* Please **do not** use the issue tracker for personal support requests (use the
-  [Roots Discourse](https://discourse.roots.io/) to ask the Roots Community for help, or if you want the Roots Team to dedicate some time to your issue, we [offer our services](https://roots.io/services/) as well).
+* Please **do not** use the issue tracker for personal support requests.
 
 * Please **do not** derail or troll issues. Keep the discussion on topic and
   respect the opinions of others.
@@ -47,7 +46,7 @@ information. Please try to be as detailed as possible in your report.
 
 Feature requests are welcome. But take a moment to find out whether your idea
 fits with the scope and aims of the project. It's up to *you* to make a strong
-case to convince the Roots developers of the merits of this feature. Please
+case to convince the ACP3 developers of the merits of this feature. Please
 provide as much detail and context as possible.
 
 

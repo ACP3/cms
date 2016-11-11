@@ -44,3 +44,7 @@ If so, execute the following command from the projects root directory, to instal
 ```sh
 $ npm install
 ```
+
+## Coding Style Guidelines
+### PHP
+We are using the [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) Coding Style for all PHP files.
