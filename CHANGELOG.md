@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Extracted the adding of the data grid columns into separate methods
 - Updated the [mibe/feedwriter](https://github.com/mibe/FeedWriter) library to version v1.1.0
 - [#55](https://github.com/ACP3/cms/pull/55) Changed the argument order of the \FeedWriter\Feed::setImage() method (thanks @mibe)
+- [#54](https://github.com/ACP3/cms/issues/54) Moved the password form fields from the users account profile action to the user account settings action 
 
 ### Fixed
 - Fixed the pictures count of the gallery data grid
