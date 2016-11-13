@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - [#49](https://github.com/ACP3/cms/issues/49) Added the ability to use a custom menu item title when creating a menu item via the articles module
 - [#52](https://github.com/ACP3/cms/issues/52) Added a new system config option to select, whether the page cache is getting purged automatically or manually
 - [#8](https://github.com/ACP3/cms/issues/8) Added the foundation to get module specific results per page
-- Extended the contact module's settings with the following new options:
+- Extended the contact module settings with the following new options:
     - Mobile phone
     - Picture credits
 
@@ -19,7 +19,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated the [mibe/feedwriter](https://github.com/mibe/FeedWriter) library to version v1.1.0
 - [#55](https://github.com/ACP3/cms/pull/55) Changed the argument order of the \FeedWriter\Feed::setImage() method (thanks @mibe)
 - [#54](https://github.com/ACP3/cms/issues/54) Moved the password form fields from the users account profile action to the user account settings action
-- The contact module's settings has been moved into its own controller action to match the structure of the other modules 
+- The contact module settings have been moved into its own controller action to match the structure of the other modules 
+- The feeds module settings have been moved into its own controller action to match the structure of the other modules 
 
 ### Fixed
 - Fixed the pictures count of the gallery data grid
