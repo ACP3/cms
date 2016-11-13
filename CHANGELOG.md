@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 2016-xx-xx
+## [4.4.0] - 2016-11-13
 ### Added
 - [#49](https://github.com/ACP3/cms/issues/49) Added the ability to use a custom menu item title when creating a menu item via the articles module
 - [#52](https://github.com/ACP3/cms/issues/52) Added a new system config option to select, whether the page cache is getting purged automatically or manually
@@ -187,7 +187,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.3.6...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.4.0...HEAD
+[4.4.0]: https://github.com/ACP3/cms/compare/v4.3.6...v4.4.0
 [4.3.6]: https://github.com/ACP3/cms/compare/v4.3.5...v4.3.6
 [4.3.5]: https://github.com/ACP3/cms/compare/v4.3.4...v4.3.5
 [4.3.4]: https://github.com/ACP3/cms/compare/v4.3.3...v4.3.4

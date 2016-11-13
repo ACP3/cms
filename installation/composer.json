@@ -20,7 +20,7 @@
   },
   "require": {
     "acp3/composer-installer": "*",
-    "acp3/core": "^4.3.6"
+    "acp3/core": "^4.4.0"
   },
   "extra": {
     "installer-name": "installation"
