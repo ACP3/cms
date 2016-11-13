@@ -12,13 +12,13 @@
     {if !empty($sidebar_contact.telephone)}
         <li>
             <strong>{lang t="contact|telephone"}</strong>
-            <a href="tel:{$sidebar_contact.telephone}">{$sidebar_contact.telephone}</a>
+            <a href="tel:{$sidebar_contact.telephone|replace:' ':''}">{$sidebar_contact.telephone}</a>
         </li>
     {/if}
     {if !empty($sidebar_contact.mobile_phone)}
         <li>
             <strong>{lang t="contact|mobile_phone"}</strong>
-            <a href="tel:{$sidebar_contact.mobile_phone}">{$sidebar_contact.mobile_phone}</a>
+            <a href="tel:{$sidebar_contact.mobile_phone|replace:' ':''}">{$sidebar_contact.mobile_phone}</a>
         </li>
     {/if}
     {if !empty($sidebar_contact.fax)}

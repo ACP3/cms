@@ -12,11 +12,11 @@
         {/if}
         {if !empty($imprint.telephone)}
             <dt>{lang t="contact|telephone"}</dt>
-            <dd><a href="tel:{$imprint.telephone}">{$imprint.telephone}</a></dd>
+            <dd><a href="tel:{$imprint.telephone|replace:' ':''}">{$imprint.telephone}</a></dd>
         {/if}
         {if !empty($imprint.mobile_phone)}
             <dt>{lang t="contact|mobile_phone"}</dt>
-            <dd><a href="tel:{$imprint.mobile_phone}">{$imprint.mobile_phone}</a></dd>
+            <dd><a href="tel:{$imprint.mobile_phone|replace:' ':''}">{$imprint.mobile_phone}</a></dd>
         {/if}
         {if !empty($imprint.fax)}
             <dt>{lang t="contact|fax"}</dt>
