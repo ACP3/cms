@@ -122,7 +122,7 @@ class Modules
     }
 
     /**
-     * Checks, whether a modules in currently installed or not
+     * Checks, whether a module is currently installed or not
      *
      * @param string $moduleName
      *

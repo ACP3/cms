@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Index
@@ -61,39 +62,12 @@ class Index extends Core\Controller\AbstractAdminAction
             $dataGrid = $this->get('core.helpers.data_grid');
             $dataGrid
                 ->setResults($comments)
-                ->setRecordsPerPage($this->user->getEntriesPerPage())
+                ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
                 ->setIdentifier('#acp-table')
                 ->setResourcePathDelete('admin/comments/details/delete/id_' . $id)
                 ->setResourcePathEdit('admin/comments/details/edit');
 
-            $dataGrid
-                ->addColumn([
-                    'label' => $this->translator->t('system', 'date'),
-                    'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
-                    'fields' => ['date'],
-                    'default_sort' => true
-                ], 50)
-                ->addColumn([
-                    'label' => $this->translator->t('system', 'name'),
-                    'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                    'fields' => ['name'],
-                ], 40)
-                ->addColumn([
-                    'label' => $this->translator->t('system', 'message'),
-                    'type' => Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer::class,
-                    'fields' => ['message'],
-                ], 30)
-                ->addColumn([
-                    'label' => $this->translator->t('comments', 'ip'),
-                    'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                    'fields' => ['ip'],
-                ], 20)
-                ->addColumn([
-                    'label' => $this->translator->t('system', 'id'),
-                    'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
-                    'fields' => ['id'],
-                    'primary' => true
-                ], 10);
+            $this->addDataGridColumns($dataGrid);
 
             return [
                 'grid' => $dataGrid->render(),
@@ -103,5 +77,40 @@ class Index extends Core\Controller\AbstractAdminAction
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
+    }
+
+    /**
+     * @param Core\Helpers\DataGrid $dataGrid
+     */
+    protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
+    {
+        $dataGrid
+            ->addColumn([
+                'label' => $this->translator->t('system', 'date'),
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
+                'fields' => ['date'],
+                'default_sort' => true
+            ], 50)
+            ->addColumn([
+                'label' => $this->translator->t('system', 'name'),
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
+                'fields' => ['name'],
+            ], 40)
+            ->addColumn([
+                'label' => $this->translator->t('system', 'message'),
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer::class,
+                'fields' => ['message'],
+            ], 30)
+            ->addColumn([
+                'label' => $this->translator->t('comments', 'ip'),
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
+                'fields' => ['ip'],
+            ], 20)
+            ->addColumn([
+                'label' => $this->translator->t('system', 'id'),
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
+                'fields' => ['id'],
+                'primary' => true
+            ], 10);
     }
 }

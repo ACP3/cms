@@ -45,6 +45,6 @@ services:
   core.assets.page_css_classes:
     class: ACP3\Core\Assets\PageCssClasses
     arguments:
-      - '@core.breadcrumb'
+      - '@core.helpers.string_formatter'
       - '@core.breadcrumb.title'
       - '@core.http.request'

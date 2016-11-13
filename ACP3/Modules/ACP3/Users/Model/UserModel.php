@@ -53,7 +53,7 @@ class UserModel
     protected $userRepository;
 
     /**
-     * User constructor.
+     * UserModel constructor.
      *
      * @param \ACP3\Core\Settings\SettingsInterface $config
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
@@ -94,7 +94,7 @@ class UserModel
     }
 
     /**
-     * Gibt den Status von $isUser zurück
+     * Returns, whether the current user is an authenticated user or not
      *
      * @return boolean
      */
@@ -104,7 +104,7 @@ class UserModel
     }
 
     /**
-     * @param $isAuthenticated
+     * @param boolean $isAuthenticated
      * @return $this
      */
     public function setIsAuthenticated($isAuthenticated)
@@ -115,7 +115,7 @@ class UserModel
     }
 
     /**
-     * Gibt die UserId des eingeloggten Benutzers zurück
+     * Returns the user id of the currently logged in user
      * @return integer
      */
     public function getUserId()
@@ -124,7 +124,7 @@ class UserModel
     }
 
     /**
-     * @param $userId
+     * @param int $userId
      * @return $this
      */
     public function setUserId($userId)
@@ -135,7 +135,7 @@ class UserModel
     }
 
     /**
-     * Gibt die eingestellte Standardsprache des Benutzers aus
+     * Returns the users default language
      *
      * @return string
      */
@@ -164,6 +164,7 @@ class UserModel
 
     /**
      * @return int
+     * @deprecated Use the \ACP3\Core\Helpers\ResultsPerPage::getResultsPerPage() method instead. Will be removed in version 4.5.0
      */
     public function getEntriesPerPage()
     {
@@ -171,25 +172,18 @@ class UserModel
     }
 
     /**
-     * @param int $entries
-     *
      * @return $this
+     * @deprecated will be removed in version 4.5.0
      */
-    public function setEntriesPerPage($entries)
+    public function setEntriesPerPage()
     {
-        $userSettings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
-        $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
-
-        $this->entriesPerPage = (int)$systemSettings['entries'];
-        if ($userSettings['entries_override'] == 1 && $entries > 0) {
-            $this->entriesPerPage = (int)$entries;
-        }
+        $this->entriesPerPage = (int)$this->config->getSettings(Schema::MODULE_NAME)['entries'];
 
         return $this;
     }
 
     /**
-     * Gibt aus, ob der aktuell eingeloggte Benutzer der Super User ist, oder nicht
+     * Returns, whether the currently logged in user is a super user or not
      *
      * @return boolean
      */

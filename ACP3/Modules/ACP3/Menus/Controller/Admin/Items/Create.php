@@ -24,10 +24,6 @@ class Create extends AbstractFormAction
      */
     protected $menuRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Cache
-     */
-    protected $menusCache;
-    /**
      * @var \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList
      */
     protected $menusHelpers;
@@ -52,7 +48,6 @@ class Create extends AbstractFormAction
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository $menuRepository
      * @param Menus\Model\MenuItemsModel $menuItemsModel
-     * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
      */
@@ -62,7 +57,6 @@ class Create extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\Repository\MenuRepository $menuRepository,
         Menus\Model\MenuItemsModel $menuItemsModel,
-        Menus\Cache $menusCache,
         Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper,
         Menus\Validation\MenuItemFormValidation $menuItemFormValidation
     ) {
@@ -70,7 +64,6 @@ class Create extends AbstractFormAction
 
         $this->formTokenHelper = $formTokenHelper;
         $this->menuRepository = $menuRepository;
-        $this->menusCache = $menusCache;
         $this->menuItemFormFieldsHelper = $menuItemFormFieldsHelper;
         $this->menuItemFormValidation = $menuItemFormValidation;
         $this->menuItemsModel = $menuItemsModel;
@@ -112,21 +105,13 @@ class Create extends AbstractFormAction
      */
     protected function executePost(array $formData)
     {
-        return $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handleCreatePostAction(
             function () use ($formData) {
                 $this->menuItemFormValidation->validate($formData);
 
                 $formData['mode'] = $this->fetchMenuItemModeForSave($formData);
                 $formData['uri'] = $this->fetchMenuItemUriForSave($formData);
-                $result = $this->menuItemsModel->save($formData);
-
-                $this->menusCache->saveMenusCache();
-
-                return $this->redirectMessages()->setMessage(
-                    $result,
-                    $this->translator->t('system', $result !== false ? 'create_success' : 'create_error'),
-                    'acp/menus'
-                );
+                return $this->menuItemsModel->save($formData);
             },
             'acp/menus'
         );

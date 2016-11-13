@@ -57,6 +57,7 @@
             </div>
             <div id="tab-5" class="tab-pane fade">
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$page_cache required=true label={lang t="system|enable_page_cache"}}
+                {include file="asset:System/Partials/form_group.button_group.tpl" options=$page_cache_purge_mode required=true label={lang t="system|page_cache_purge_mode"}}
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$cache_images required=true label={lang t="system|cache_images"}}
                 {include file="asset:System/Partials/form_group.input_number.tpl" name="cache_lifetime" value=$form.cache_lifetime required=true label={lang t="system|cache_lifetime"}}
             </div>

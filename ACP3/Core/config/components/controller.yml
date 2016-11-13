@@ -15,6 +15,7 @@ services:
       - '@core.config'
       - '@core.environment.application_path'
       - '@core.http.response'
+      - '@core.helpers.results_per_page'
     public: false
 
   core.context.admin:

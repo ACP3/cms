@@ -5,6 +5,7 @@
         <direction>ltr</direction>
     </info>
     <keys>
+        <item key="admin_index_settings">Settings</item>
         <item key="feed_image">Feed image</item>
         <item key="feed_type">Feed type</item>
         <item key="feeds">Feeds</item>

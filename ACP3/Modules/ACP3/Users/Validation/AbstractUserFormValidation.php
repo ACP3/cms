@@ -114,10 +114,9 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
 
     /**
      * @param array $formData
-     * @param int   $languageOverride
-     * @param int   $entriesOverride
+     * @param int $languageOverride
      */
-    protected function validateUserSettings(array $formData, $languageOverride = 1, $entriesOverride = 1)
+    protected function validateUserSettings(array $formData, $languageOverride = 1)
     {
         if ($languageOverride == 1) {
             $this->validator->addConstraint(
@@ -128,16 +127,6 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     'message' => $this->translator->t('users', 'select_language')
                 ]);
         }
-        if ($entriesOverride == 1) {
-            $this->validator->addConstraint(
-                Core\Validation\ValidationRules\IntegerValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'entries',
-                    'message' => $this->translator->t('system', 'select_records_per_page')
-                ]);
-        }
-
         $this->validator
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,

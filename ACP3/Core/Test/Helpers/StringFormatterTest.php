@@ -43,6 +43,7 @@ HTML;
         return [
             'german_umlauts' => ['äüöumß', 'aeueoeumss'],
             'german_umlauts_source_entities' => ['&auml;&ouml;&szlig;', 'aeoess'],
+            'underscore' => ['foo_bar', 'foo-bar'],
             'complex_characters' => ['ピックアップ', ''],
             'preserve_numbers' => ['ピ23ッ6ク7アップ', '23-6-7'],
             'to_lower_case' => ['ÄÜÖumß', 'aeueoeumss'],

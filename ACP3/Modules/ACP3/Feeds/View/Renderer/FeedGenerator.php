@@ -117,7 +117,7 @@ class FeedGenerator
         }
 
         if (!empty($this->settings['feed_image'])) {
-            $this->renderer->setImage($this->title, $link, $this->settings['feed_image']);
+            $this->renderer->setImage($this->settings['feed_image'], $this->title, $link);
         }
     }
 

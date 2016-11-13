@@ -18,7 +18,6 @@
         <item key="admin_index_settings">Einstellungen</item>
         <item key="admin_user_undeletable">Der Administrator kann nicht gelöscht werden.</item>
         <item key="allow_language_override">Benutzern erlauben, Sprache selber festzulegen</item>
-        <item key="allow_entries_override">Benutzern erlauben, angezeigte Datensätze pro Seite selber festzulegen</item>
         <item key="birthday">Geburtstag</item>
         <item key="birthday_hide">Geburtstag verstecken</item>
         <item key="birthday_display_completely">Geburtstag vollständig anzeigen</item>
@@ -62,6 +61,7 @@
         <item key="invalid_birthday">Bitte geben Sie ein gültiges Geburtsdatum an.</item>
         <item key="invalid_icq_number">Sie haben eine ungültige ICQ-Nummer eingegeben.</item>
         <item key="language">Sprache</item>
+        <item key="localization">Lokalisierung</item>
         <item key="log_in">Einloggen</item>
         <item key="login">Login</item>
         <item key="logout">Abmelden</item>
@@ -93,7 +93,6 @@
         <item key="select_birthday_display">Bitte geben Sie das Format Ihres Geburtstages in Ihrem öffentlichen Profil an.</item>
         <item key="select_country_display">Bitte geben Sie an, ob Ihre Nation im öffentlichen Profil angezeigt werden soll oder nicht.</item>
         <item key="select_enable_registration">Bitten wählen Sie aus, ob die Registrierung neuer Benutzer erlaubt werden soll oder nicht.</item>
-        <item key="select_entries_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die angezeigten Datensätze pro Seite selber festzulegen.</item>
         <item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten.</item>
         <item key="select_language_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die Anzeigesprache selber festzulegen.</item>
         <item key="select_mail_display">Bitte geben Sie an, ob Ihre E-Mail-Adresse im öffentlichen Profil angezeigt werden soll oder nicht.</item>

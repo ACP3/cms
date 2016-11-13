@@ -8,6 +8,6 @@ then
     then
         rm -rf build/logs/ ./vendor
         composer install --no-dev --prefer-dist -o -n --ignore-platform-reqs
-        zip -qr release.zip . -x *.git* "auth.json" ".codeclimate.yml" ".coveralls.yml" ".gitattributes" ".travis.yml" "./build/travis/*"
+        zip -qr release.zip . -x *.git* "auth.json" ".codeclimate.yml" ".coveralls.yml" "editorconfig" ".eslintignore" ".eslintrc" ".gitattributes" ".gitignore" ".travis.yml" "./build/travis/*" "./ACP3/Core/Test/*" "./ACP3/Modules/*/Test/*"
     fi
 fi

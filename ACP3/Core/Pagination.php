@@ -6,7 +6,6 @@ use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
  * Class Pagination
@@ -69,15 +68,12 @@ class Pagination
 
     /**
      * Pagination constructor.
-     *
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel  $user
-     * @param \ACP3\Core\Breadcrumb\Title               $title
-     * @param \ACP3\Core\I18n\Translator                $translator
-     * @param \ACP3\Core\Http\RequestInterface          $request
-     * @param \ACP3\Core\Router\RouterInterface                $router
+     * @param Title $title
+     * @param Translator $translator
+     * @param RequestInterface $request
+     * @param RouterInterface $router
      */
     public function __construct(
-        UserModel $user,
         Title $title,
         Translator $translator,
         RequestInterface $request,
@@ -87,56 +83,72 @@ class Pagination
         $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
-
-        $this->resultsPerPage = $user->getEntriesPerPage();
     }
 
     /**
      * @param int $results
+     * @return $this
      */
     public function setResultsPerPage($results)
     {
         $this->resultsPerPage = (int)$results;
+
+        return $this;
     }
 
     /**
      * @param int $results
+     * @return $this
      */
     public function setTotalResults($results)
     {
         $this->totalResults = (int)$results;
+
+        return $this;
     }
 
     /**
      * @param string $fragment
+     * @return $this
      */
     public function setUrlFragment($fragment)
     {
         $this->urlFragment = $fragment;
+
+        return $this;
     }
 
     /**
      * @param int $pagesToDisplay
+     * @return $this
      */
     public function setPagesToDisplay($pagesToDisplay)
     {
         $this->pagesToDisplay = (int)$pagesToDisplay;
+
+        return $this;
     }
 
     /**
      * @param int $showFirstLast
+     * @return $this
      */
     public function setShowFirstLast($showFirstLast)
     {
         $this->showFirstLast = (int)$showFirstLast;
+
+        return $this;
     }
 
     /**
      * @param int $showPreviousNext
+     * @return $this
      */
     public function setShowPreviousNext($showPreviousNext)
     {
         $this->showPreviousNext = (int)$showPreviousNext;
+
+        return $this;
     }
 
     /**

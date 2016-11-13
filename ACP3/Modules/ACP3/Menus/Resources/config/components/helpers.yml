@@ -8,12 +8,8 @@ services:
   menus.helpers.managemenuitem:
     class: ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem
     arguments:
-      - '@core.helpers.secure'
-      - '@menus.nested_set.operation.insert'
-      - '@menus.nested_set.operation.edit'
-      - '@menus.nested_set.operation.delete'
+      - '@menus.model.menu_items_model'
       - '@menus.model.menuitemrepository'
-      - '@menus.cache'
 
   menus.helpers.menuitemformfields:
     class: ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields

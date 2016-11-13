@@ -8,7 +8,8 @@ namespace ACP3\Modules\ACP3\Gallery\Extension;
 
 
 use ACP3\Core\Date;
-use ACP3\Core\Router\Router;
+use ACP3\Core\Router\RouterInterface;
+use ACP3\Modules\ACP3\Gallery\Helpers;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
@@ -33,14 +34,14 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     /**
      * SitemapAvailabilityExtension constructor.
      * @param Date $date
-     * @param Router $router
+     * @param RouterInterface $router
      * @param GalleryRepository $galleryRepository
      * @param PictureRepository $pictureRepository
      * @param MetaStatements $metaStatements
      */
     public function __construct(
         Date $date,
-        Router $router,
+        RouterInterface $router,
         GalleryRepository $galleryRepository,
         PictureRepository $pictureRepository,
         MetaStatements $metaStatements
@@ -65,10 +66,16 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         $this->addUrl('gallery/index/index');
 
         foreach ($this->galleryRepository->getAll($this->date->getCurrentDateTime()) as $result) {
-            $this->addUrl('gallery/index/pics/id_' . $result['id'], $this->date->format($result['updated_at'], 'Y-m-d'));
+            $this->addUrl(
+                sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $result['id']),
+                $this->date->format($result['updated_at'], 'Y-m-d')
+            );
 
             foreach ($this->pictureRepository->getPicturesByGalleryId($result['id']) as $picture) {
-                $this->addUrl('gallery/index/details/id_' . $picture['id'], $this->date->format($result['updated_at'], 'Y-m-d'));
+                $this->addUrl(
+                    sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
+                    $this->date->format($result['updated_at'], 'Y-m-d')
+                );
             }
         }
     }

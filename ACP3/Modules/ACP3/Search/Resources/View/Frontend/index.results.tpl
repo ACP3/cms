@@ -20,7 +20,9 @@
                             <div class="dataset-box">
                                 <header class="navbar navbar-default">
                                     <div class="navbar-header">
-                                        <h2 class="navbar-brand"><a href="{$result.hyperlink}">{$result.title}</a></h2>
+                                        <h3 class="navbar-brand">
+                                            <a href="{$result.hyperlink}">{$result.title}</a>
+                                        </h3>
                                     </div>
                                 </header>
                                 {if !empty($result.text)}

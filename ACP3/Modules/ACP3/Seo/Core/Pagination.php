@@ -12,7 +12,6 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 /**
  * Class Pagination
@@ -27,7 +26,6 @@ class Pagination extends \ACP3\Core\Pagination
 
     /**
      * Pagination constructor.
-     * @param UserModel $user
      * @param Title $title
      * @param Translator $translator
      * @param RequestInterface $request
@@ -35,14 +33,13 @@ class Pagination extends \ACP3\Core\Pagination
      * @param MetaStatements $metaStatements
      */
     public function __construct(
-        UserModel $user,
         Title $title,
         Translator $translator,
         RequestInterface $request,
         RouterInterface $router,
         MetaStatements $metaStatements
     ) {
-        parent::__construct($user, $title, $translator, $request, $router);
+        parent::__construct($title, $translator, $request, $router);
 
         $this->metaStatements = $metaStatements;
     }

@@ -36,7 +36,6 @@ services:
       - '@core.helpers.formToken'
       - '@menus.model.menurepository'
       - '@menus.model.menu_items_model'
-      - '@menus.cache'
       - '@menus.helpers.menuitemformfields'
       - '@menus.validator.menuitem'
     calls:
@@ -47,7 +46,6 @@ services:
     arguments:
       - '@core.context.admin'
       - '@menus.model.menu_items_model'
-      - '@menus.cache'
 
   menus.controller.admin.items.edit:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Edit
@@ -56,7 +54,6 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@menus.model.menu_items_model'
-      - '@menus.cache'
       - '@menus.helpers.menuitemformfields'
       - '@menus.validator.menuitem'
     calls:

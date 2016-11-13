@@ -25,7 +25,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 38;
+        return 40;
     }
 
     /**
@@ -55,6 +55,8 @@ class Schema implements Modules\Installer\SchemaInterface
             'disclaimer' => '',
             'fax' => '',
             'mail' => '',
+            'mobile_phone' => '',
+            'picture_credits' => '',
             'telephone' => '',
             'vat_id' => ''
         ];
@@ -65,12 +67,6 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function specialResources()
     {
-        return [
-            'Admin' => [
-                'Index' => [
-                    'index' => 7
-                ]
-            ]
-        ];
+        return [];
     }
 }

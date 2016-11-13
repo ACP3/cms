@@ -77,7 +77,6 @@ services:
   core.pagination:
     class: ACP3\Core\Pagination
     arguments:
-      - '@users.model.user_model'
       - '@core.breadcrumb.title'
       - '@core.lang'
       - '@core.http.request'

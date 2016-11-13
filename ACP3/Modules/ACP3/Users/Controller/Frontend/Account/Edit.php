@@ -20,10 +20,6 @@ class Edit extends AbstractAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    protected $secureHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Users\Helpers\Forms
      */
     protected $userFormsHelper;
@@ -31,10 +27,6 @@ class Edit extends AbstractAction
      * @var \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation
      */
     protected $accountFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Model\AuthenticationModel
-     */
-    protected $authenticationModel;
     /**
      * @var Users\Model\UsersModel
      */
@@ -45,27 +37,21 @@ class Edit extends AbstractAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Helpers\Forms $userFormsHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\AuthenticationModel $authenticationModel
      * @param Users\Model\UsersModel $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation $accountFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Core\Helpers\Secure $secureHelper,
         Users\Helpers\Forms $userFormsHelper,
-        Users\Model\AuthenticationModel $authenticationModel,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AccountFormValidation $accountFormValidation
     ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->secureHelper = $secureHelper;
         $this->userFormsHelper = $userFormsHelper;
-        $this->authenticationModel = $authenticationModel;
         $this->accountFormValidation = $accountFormValidation;
         $this->usersModel = $usersModel;
     }
@@ -114,21 +100,7 @@ class Edit extends AbstractAction
                     ->setUserId($this->user->getUserId())
                     ->validate($formData);
 
-                if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
-                    $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
-                    $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd'], 'sha512');
-                    $formData['pwd'] = $newPassword;
-                    $formData['pwd_salt'] = $salt;
-                }
-
                 $bool = $this->usersModel->save($formData, $this->user->getUserId());
-
-                $user = $this->usersModel->getOneById($this->user->getUserId());
-                $cookie = $this->authenticationModel->setRememberMeCookie(
-                    $this->user->getUserId(),
-                    $user['remember_me_token']
-                );
-                $this->response->headers->setCookie($cookie);
 
                 return $this->redirectMessages()->setMessage(
                     $bool,

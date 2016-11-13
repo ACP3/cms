@@ -10,7 +10,6 @@ services:
   core.pagination:
     class: ACP3\Modules\ACP3\Seo\Core\Pagination
     arguments:
-      - '@users.model.user_model'
       - '@core.breadcrumb.title'
       - '@core.lang'
       - '@core.http.request'

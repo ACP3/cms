@@ -60,6 +60,11 @@ class Configuration extends Core\Controller\AbstractAdminAction
 
         $systemSettings = $this->config->getSettings(System\Installer\Schema::MODULE_NAME);
 
+        $pageCachePurgeMode = [
+            1 => $this->translator->t('system', 'page_cache_purge_mode_automatically'),
+            2 => $this->translator->t('system', 'page_cache_purge_mode_manually'),
+        ];
+
         $mailerTypes = [
             'mail' => $this->translator->t('system', 'mailer_type_php_mail'),
             'smtp' => $this->translator->t('system', 'mailer_type_smtp')
@@ -84,6 +89,11 @@ class Configuration extends Core\Controller\AbstractAdminAction
             'page_cache' => $this->formsHelper->yesNoCheckboxGenerator(
                 'page_cache_is_enabled',
                 $systemSettings['page_cache_is_enabled']
+            ),
+            'page_cache_purge_mode' => $this->formsHelper->checkboxGenerator(
+                'page_cache_purge_mode',
+                $pageCachePurgeMode,
+                $systemSettings['page_cache_purge_mode']
             ),
             'cache_images' => $this->formsHelper->yesNoCheckboxGenerator(
                 'cache_images',
@@ -140,6 +150,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
                     'maintenance_message' => $formData['maintenance_message'],
                     'maintenance_mode' => (int)$formData['maintenance_mode'],
                     'page_cache_is_enabled' => (int)$formData['page_cache_is_enabled'],
+                    'page_cache_purge_mode' => (int)$formData['page_cache_purge_mode'],
                     'site_title' => $this->get('core.helpers.secure')->strEncode($formData['site_title']),
                     'wysiwyg' => $formData['wysiwyg']
                 ];

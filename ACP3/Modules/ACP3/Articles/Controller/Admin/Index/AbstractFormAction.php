@@ -64,7 +64,7 @@ abstract class AbstractFormAction extends AbstractAdminAction
                 'block_id' => $formData['block_id'],
                 'parent_id' => (int)$formData['parent_id'],
                 'display' => $formData['display'],
-                'title' => $formData['title'],
+                'title' => $formData['menu_item_title'],
                 'target' => 1
             ];
 
@@ -74,18 +74,5 @@ abstract class AbstractFormAction extends AbstractAdminAction
                 $data
             );
         }
-    }
-
-    /**
-     * @param int $currentValue
-     * @return array
-     */
-    protected function fetchCreateMenuItemOption($currentValue = 0)
-    {
-        $createMenuItem = [
-            1 => $this->translator->t('articles', 'create_menu_item')
-        ];
-
-        return $this->formsHelper->checkboxGenerator('create', $createMenuItem, $currentValue);
     }
 }

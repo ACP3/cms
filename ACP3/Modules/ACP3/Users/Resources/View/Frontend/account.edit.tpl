@@ -6,7 +6,6 @@
             <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general"}</a></li>
             <li><a href="#tab-2" data-toggle="tab">{lang t="users|contact"}</a></li>
             <li><a href="#tab-3" data-toggle="tab">{lang t="users|address"}</a></li>
-            <li><a href="#tab-4" data-toggle="tab">{lang t="users|pwd"}</a></li>
         </ul>
         <div class="tab-content">
             <div id="tab-1" class="tab-pane fade in active">
@@ -26,9 +25,6 @@
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="zip" value=$form.zip maxlength=5 label={lang t="users|address_zip"}}
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="city" value=$form.city maxlength=80 label={lang t="users|address_city"}}
                 {include file="asset:System/Partials/form_group.select.tpl" options=$countries label={lang t="users|country"}}
-            </div>
-            <div id="tab-4" class="tab-pane fade">
-                {include file="asset:Users/Partials/password_fields.tpl" field_name='new_pwd' translator_phrase="new_pwd"}
             </div>
         </div>
     </div>

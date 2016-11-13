@@ -58,7 +58,8 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
             $context->getView(),
             $context->getConfig(),
             $context->getAppPath(),
-            $context->getResponse()
+            $context->getResponse(),
+            $context->getResultsPerPage()
         );
 
         $this->assets = $assets;

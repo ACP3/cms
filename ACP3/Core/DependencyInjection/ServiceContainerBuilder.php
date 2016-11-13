@@ -87,7 +87,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         // Try to get all available services
         /** @var Modules $modules */
         $modules = $this->get('core.modules');
-        $availableModules = ($this->allModules === true) ? $modules->getAllModules() : $modules->getInstalledModules();
+        $availableModules = ($this->allModules === true) ? $modules->getAllModules() : $modules->getActiveModules();
         $vendors = $this->get('core.modules.vendors')->getVendors();
 
         foreach ($availableModules as $module) {

@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Index
@@ -23,13 +24,13 @@ class Index extends Core\Controller\AbstractAdminAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                    $context
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
      * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountDataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
-        Newsletter\Model\Repository\AccountDataGridRepository $dataGridRepository)
-    {
+        Newsletter\Model\Repository\AccountDataGridRepository $dataGridRepository
+    ) {
         parent::__construct($context);
 
         $this->dataGridRepository = $dataGridRepository;
@@ -44,10 +45,23 @@ class Index extends Core\Controller\AbstractAdminAction
         $dataGrid = $this->get('core.helpers.data_grid');
         $dataGrid
             ->setRepository($this->dataGridRepository)
-            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/newsletter/accounts/delete');
 
+        $this->addDataGridColumns($dataGrid);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+        ];
+    }
+
+    /**
+     * @param Core\Helpers\DataGrid $dataGrid
+     */
+    protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
+    {
         $dataGrid
             ->addColumn([
                 'label' => $this->translator->t('system', 'email_address'),
@@ -89,10 +103,5 @@ class Index extends Core\Controller\AbstractAdminAction
                 'fields' => ['id'],
                 'primary' => true
             ], 10);
-
-        return [
-            'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
-        ];
     }
 }

@@ -44,13 +44,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function specialResources()
     {
-        return [
-            'Admin' => [
-                'Index' => [
-                    'index' => 7
-                ]
-            ]
-        ];
+        return [];
     }
 
     /**
@@ -66,6 +60,6 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 31;
+        return 32;
     }
 }

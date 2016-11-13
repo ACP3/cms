@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Edit
@@ -90,6 +91,25 @@ class Edit extends Core\Controller\AbstractAdminAction
     }
 
     /**
+     * @param array $formData
+     * @param int   $galleryId
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executePost(array $formData, $galleryId)
+    {
+        return $this->actionHelper->handleEditPostAction(function () use ($formData, $galleryId) {
+            $this->galleryFormValidation
+                ->setUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId))
+                ->validate($formData);
+
+            $formData['user_id'] = $this->user->getUserId();
+
+            return $this->galleryModel->save($formData, $galleryId);
+        });
+    }
+
+    /**
      * @param int $id
      *
      * @return array
@@ -102,11 +122,24 @@ class Edit extends Core\Controller\AbstractAdminAction
         $dataGrid = $this->get('core.helpers.data_grid');
         $dataGrid
             ->setResults($pictures)
-            ->setRecordsPerPage($this->user->getEntriesPerPage())
+            ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#acp-table')
             ->setResourcePathDelete('admin/gallery/pictures/delete/id_' . $id)
             ->setResourcePathEdit('admin/gallery/pictures/edit');
 
+        $this->addDataGridColumns($dataGrid);
+
+        return [
+            'grid' => $dataGrid->render(),
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+        ];
+    }
+
+    /**
+     * @param Core\Helpers\DataGrid $dataGrid
+     */
+    protected function addDataGridColumns(Core\Helpers\DataGrid$dataGrid)
+    {
         $dataGrid
             ->addColumn([
                 'label' => $this->translator->t('gallery', 'picture'),
@@ -142,29 +175,5 @@ class Edit extends Core\Controller\AbstractAdminAction
                     ]
                 ], 20);
         }
-
-        return [
-            'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
-        ];
-    }
-
-    /**
-     * @param array $formData
-     * @param int   $galleryId
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function executePost(array $formData, $galleryId)
-    {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $galleryId) {
-            $this->galleryFormValidation
-                ->setUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId))
-                ->validate($formData);
-
-            $formData['user_id'] = $this->user->getUserId();
-
-            return $this->galleryModel->save($formData, $galleryId);
-        });
     }
 }

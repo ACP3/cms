@@ -30,20 +30,32 @@ class Settings extends AbstractAction
      * @var Users\Model\UsersModel
      */
     protected $usersModel;
+    /**
+     * @var Core\Helpers\Secure
+     */
+    protected $secureHelper;
+    /**
+     * @var Users\Model\AuthenticationModel
+     */
+    protected $authenticationModel;
 
     /**
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\Helpers\Secure $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Helpers\Forms $userFormsHelper
+     * @param Users\Model\AuthenticationModel $authenticationModel
      * @param Users\Model\UsersModel $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
+        Core\Helpers\Secure $secureHelper,
         Users\Helpers\Forms $userFormsHelper,
+        Users\Model\AuthenticationModel $authenticationModel,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
     ) {
@@ -53,6 +65,8 @@ class Settings extends AbstractAction
         $this->userFormsHelper = $userFormsHelper;
         $this->accountSettingsFormValidation = $accountSettingsFormValidation;
         $this->usersModel = $usersModel;
+        $this->secureHelper = $secureHelper;
+        $this->authenticationModel = $authenticationModel;
     }
 
     /**
@@ -70,7 +84,6 @@ class Settings extends AbstractAction
 
         $this->view->assign(
             $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
-                (int)$user['entries'],
                 $user['language'],
                 $user['time_zone'],
                 $user['address_display'],
@@ -82,7 +95,6 @@ class Settings extends AbstractAction
 
         return [
             'language_override' => $settings['language_override'],
-            'entries_override' => $settings['entries_override'],
             'form' => array_merge($user, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
@@ -107,11 +119,22 @@ class Settings extends AbstractAction
                 if ($settings['language_override'] == 0) {
                     unset($formData['language']);
                 }
-                if ($settings['entries_override'] == 0) {
-                    unset($formData['entries']);
+
+                if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
+                    $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
+                    $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd'], 'sha512');
+                    $formData['pwd'] = $newPassword;
+                    $formData['pwd_salt'] = $salt;
                 }
 
                 $bool = $this->usersModel->save($formData, $this->user->getUserId());
+
+                $user = $this->usersModel->getOneById($this->user->getUserId());
+                $cookie = $this->authenticationModel->setRememberMeCookie(
+                    $this->user->getUserId(),
+                    $user['remember_me_token']
+                );
+                $this->response->headers->setCookie($cookie);
 
                 return $this->redirectMessages()->setMessage(
                     $bool,

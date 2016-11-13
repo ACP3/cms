@@ -237,6 +237,9 @@
         <item key="output_as_file">As file</item>
         <item key="overview">Overview</item>
         <item key="page_cache_is_invalid"><![CDATA[The page cache is invalid. Please click <a href="%route%">here</a> and refresh the page cache.]]></item>
+        <item key="page_cache_purge_mode">Page cache purge mode</item>
+        <item key="page_cache_purge_mode_automatically">Automatically</item>
+        <item key="page_cache_purge_mode_manually">Manually</item>
         <item key="page_x">Page %page%</item>
         <item key="pagination">Pagination</item>
         <item key="performance">Performance</item>
@@ -262,6 +265,7 @@
         <item key="select_menu_item">Please choose from one of the menu items above to get to the desired action.</item>
         <item key="select_mod_rewrite">Please select whether search engine friendly URIs should be used or not.</item>
         <item key="select_online_maintenance">Please select whether the maintenance mode should be turned on or off.</item>
+        <item key="select_page_cache_purge_mode">Please select whether the page cache should be purged automatically or manually.</item>
         <item key="select_records_per_page">Please select how many records per page to display.</item>
         <item key="select_sidebar_entries">Please select how many entries should be to displayed in the Module-Sidebar.</item>
         <item key="select_time_zone">Please select the time zone.</item>

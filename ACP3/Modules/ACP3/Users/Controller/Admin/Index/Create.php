@@ -80,7 +80,6 @@ class Create extends AbstractFormAction
 
         $this->view->assign(
             $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
-                (int)$systemSettings['entries'],
                 $systemSettings['lang'],
                 $systemSettings['date_time_zone']
             )
