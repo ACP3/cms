@@ -7,6 +7,7 @@
     <keys>
         <item key="address">Address</item>
         <item key="address_to_short">The address should not be empty.</item>
+        <item key="admin_index_settings">Settings</item>
         <item key="ceo">Chief executive officer</item>
         <item key="contact">Contact</item>
         <item key="contact_body">%name% (%mail%) has left the following message:
@@ -20,7 +21,10 @@
         <item key="fax">FAX number</item>
         <item key="frontend_index_imprint">Imprint</item>
         <item key="imprint">Imprint</item>
+        <item key="legal_statements">Legal statements</item>
+        <item key="mobile_phone">Mobile phone</item>
         <item key="mod_description">This module is responsible for the contact form and the imprint.</item>
+        <item key="picture_credits">Picture credits</item>
         <item key="powered_by">This website is powered by %ACP3%.</item>
         <item key="send_copy_to_sender">Send a copy of the message to me.</item>
         <item key="send_mail_error">While sending the E-mail an error has occurred.</item>

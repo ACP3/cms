@@ -7,6 +7,7 @@
     <keys>
         <item key="address">Anschrift</item>
         <item key="address_to_short">Die Anschrift darf nicht leer sein.</item>
+        <item key="admin_index_settings">Einstellungen</item>
         <item key="ceo">Geschäftsführer</item>
         <item key="contact">Kontakt</item>
         <item key="contact_body">%name% (%mail%) hat folgende Nachricht hinterlassen:
@@ -20,7 +21,10 @@
         <item key="fax">FAX Nummer</item>
         <item key="frontend_index_imprint">Impressum</item>
         <item key="imprint">Impressum</item>
+        <item key="legal_statements">Rechtliche Angaben</item>
+        <item key="mobile_phone">Telefon (Mobil)</item>
         <item key="mod_description">Dieses Modul ist für das Kontaktformular und das Impressum zuständig.</item>
+        <item key="picture_credits">Bildnachweise</item>
         <item key="powered_by">Diese Website wird angetrieben vom %ACP3%</item>
         <item key="send_copy_to_sender">Kopie der Nachricht an mich senden.</item>
         <item key="send_mail_error">Beim Versenden der E-Mail ist ein Fehler aufgetreten.</item>
