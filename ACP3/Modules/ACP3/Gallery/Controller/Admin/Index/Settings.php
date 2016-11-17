@@ -105,7 +105,7 @@ class Settings extends Core\Controller\AbstractAdminAction
                 || $formData['width'] !== $settings['width']
                 || $formData['height'] !== $settings['height']
             ) {
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'images', 'gallery');
+                Core\Cache\Purge::doPurge($this->appPath->getUploadsDir() . 'gallery/cache', 'gallery');
 
                 $this->get('gallery.cache.core')->getDriver()->deleteAll();
             }

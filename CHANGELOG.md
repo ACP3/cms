@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.4.2] - 2016-11-17
+### Added
+- [#56](https://github.com/ACP3/cms/issues/56) Made the cache directory of the `ACP3\Core\Picture` class configurable
+ 
+### Changed
+- The cached pictures of the gallery module are now being generated in the uploads/gallery/cache folder 
+
 ## [4.4.1] - 2016-11-15
 ### Fixed
 - Fixed the menu item management
@@ -192,6 +199,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
 [Unreleased]: https://github.com/ACP3/cms/compare/v4.4.1...HEAD
+[4.4.2]: https://github.com/ACP3/cms/compare/v4.4.1...v4.4.2
 [4.4.1]: https://github.com/ACP3/cms/compare/v4.4.0...v4.4.1
 [4.4.0]: https://github.com/ACP3/cms/compare/v4.3.6...v4.4.0
 [4.3.6]: https://github.com/ACP3/cms/compare/v4.3.5...v4.3.6
