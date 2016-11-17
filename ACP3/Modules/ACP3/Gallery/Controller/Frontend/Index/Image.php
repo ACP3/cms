@@ -54,6 +54,7 @@ class Image extends AbstractAction
         $image
             ->setEnableCache($this->config->getSettings(Schema::MODULE_NAME)['cache_images'] == 1)
             ->setCachePrefix('gallery_' . $action)
+            ->setCacheDir($this->appPath->getUploadsDir() . 'gallery/cache/')
             ->setMaxWidth($this->settings[$action . 'width'])
             ->setMaxHeight($this->settings[$action . 'height'])
             ->setFile($this->appPath->getUploadsDir() . 'gallery/' . $picture)

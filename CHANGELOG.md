@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2016-xx-xx
+### Added
+- [#56](https://github.com/ACP3/cms/issues/56) Made the cache directory of the `ACP3\Core\Picture` class configurable
+ 
+### Changed
+- The cached pictures of the gallery module are now being generated in the uploads/gallery/cache folder 
+
 ## [4.4.1] - 2016-11-15
 ### Fixed
 - Fixed the menu item management

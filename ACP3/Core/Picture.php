@@ -16,7 +16,7 @@ class Picture
     /**
      * @var string
      */
-    protected $cacheDir = 'images/';
+    protected $cacheDir = '';
     /**
      * @var string
      */
@@ -81,6 +81,8 @@ class Picture
         $this->response = $response;
         $this->appPath = $appPath;
         $this->environment = $environment;
+
+        $this->cacheDir = $this->appPath->getCacheDir() . 'images/';
     }
 
     /**
@@ -111,7 +113,11 @@ class Picture
      */
     public function setCacheDir($cacheDir)
     {
-        $this->cacheDir = $cacheDir;
+        if (empty($cacheDir)) {
+            throw new \InvalidArgumentException('The cache directory for the images must not be empty.');
+        }
+
+        $this->cacheDir = $cacheDir . (!preg_match('=/$=', $cacheDir) ? '/' : '');
         return $this;
     }
 
@@ -245,14 +251,6 @@ class Picture
     }
 
     /**
-     * @return string
-     */
-    public function getWebFilePath()
-    {
-        return $this->appPath->getWebRoot() . 'cache/' . $this->environment . '/' . $this->cacheDir . $this->getCacheName();
-    }
-
-    /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function sendResponse()
@@ -267,7 +265,7 @@ class Picture
      */
     protected function getCacheFileName()
     {
-        return $this->appPath->getCacheDir() . $this->cacheDir . $this->getCacheName();
+        return $this->cacheDir . $this->getCacheName();
     }
 
     /**
@@ -392,9 +390,8 @@ class Picture
      */
     protected function createCacheDir()
     {
-        $path = $this->appPath->getCacheDir() . $this->cacheDir;
-        if (!is_dir($path) && is_writable($this->appPath->getCacheDir())) {
-            mkdir($path);
+        if (!is_dir($this->cacheDir)) {
+            @mkdir($this->cacheDir);
         }
     }
 }
