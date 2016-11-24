@@ -202,7 +202,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.4.1...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.4.2...HEAD
 [4.4.2]: https://github.com/ACP3/cms/compare/v4.4.1...v4.4.2
 [4.4.1]: https://github.com/ACP3/cms/compare/v4.4.0...v4.4.1
 [4.4.0]: https://github.com/ACP3/cms/compare/v4.3.6...v4.4.0
