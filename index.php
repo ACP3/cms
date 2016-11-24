@@ -18,7 +18,7 @@ if (getenv('ACP3_APPLICATION_MODE') === \ACP3\Core\Environment\ApplicationMode::
 
 $kernel = new \ACP3\Core\Application\Bootstrap($appMode);
 
-if ($kernel->startupChecks()) {
+if (!$kernel->startupChecks()) {
     echo <<<HTML
 The ACP3 is not correctly installed.
 Please navigate to the <a href="{$request->getBasePath()}/installation/">installation wizard</a>

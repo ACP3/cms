@@ -7,7 +7,7 @@
 namespace ACP3\Core\Application;
 
 
-use ACP3\Core\Application\BootstrapCache\UserContextSubscriber;
+use ACP3\Core\Application\BootstrapCache\Event\Listener\UserContextSubscriber;
 use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\View\Renderer\Smarty\Filters\MoveToBottom;
 use FOS\HttpCache\SymfonyCache\EventDispatchingHttpCache;

@@ -1,5 +1,10 @@
 <?php
-namespace ACP3\Core\Application\BootstrapCache;
+/**
+ * Copyright (c) 2016 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\Application\BootstrapCache\Event\Listener;
 
 use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
 use FOS\HttpCache\SymfonyCache\CacheEvent;
@@ -12,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class UserContextSubscriber
- * @package ACP3\Core\Application\BootstrapCache
+ * @package ACP3\Core\Application\BootstrapCache\Event\Listener
  * @see \FOS\HttpCache\SymfonyCache\UserContextSubscriber for the original file as we had to override some logic...
  */
 class UserContextSubscriber implements EventSubscriberInterface
@@ -47,17 +52,17 @@ class UserContextSubscriber implements EventSubscriberInterface
      *
      * @throws \InvalidArgumentException if unknown keys are found in $options
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         $resolver = new OptionsResolver();
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'anonymous_hash' => '38015b703d82206ebc01d17a39c727e5',
             'user_hash_accept_header' => 'application/vnd.fos.user-context-hash',
             'user_hash_header' => 'X-User-Context-Hash',
             'user_hash_uri' => '/_fos_user_context_hash',
             'user_hash_method' => 'GET',
             'session_name_prefix' => 'PHPSESSID',
-        ));
+        ]);
 
         $this->options = $resolver->resolve($options);
     }
@@ -67,9 +72,9 @@ class UserContextSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             Events::PRE_HANDLE => 'preHandle',
-        );
+        ];
     }
 
     /**
@@ -96,7 +101,10 @@ class UserContextSubscriber implements EventSubscriberInterface
             }
 
             if ($request->isMethodSafe()) {
-                $request->headers->set($this->options['user_hash_header'], $this->getUserHash($event->getKernel(), $request));
+                $request->headers->set(
+                    $this->options['user_hash_header'],
+                    $this->getUserHash($event->getKernel(), $request)
+                );
             }
         }
 
@@ -223,7 +231,14 @@ class UserContextSubscriber implements EventSubscriberInterface
      */
     private function generateHashLookupRequest(Request $request)
     {
-        $hashLookupRequest = Request::create($this->options['user_hash_uri'], $this->options['user_hash_method'], array(), array(), array(), $request->server->all());
+        $hashLookupRequest = Request::create(
+            $this->options['user_hash_uri'],
+            $this->options['user_hash_method'],
+            [],
+            [],
+            [],
+            $request->server->all()
+        );
         $hashLookupRequest->attributes->set('internalRequest', true);
         $hashLookupRequest->headers->set('Accept', $this->options['user_hash_accept_header']);
         $this->cleanupHashLookupRequest($hashLookupRequest, $request);
