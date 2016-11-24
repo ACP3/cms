@@ -21,7 +21,7 @@ $kernel = new \ACP3\Core\Application\Bootstrap($appMode);
 if (!$kernel->startupChecks()) {
     echo <<<HTML
 The ACP3 is not correctly installed.
-Please navigate to the <a href="{$request->getBasePath()}installation/">installation wizard</a>
+Please navigate to the <a href="{$request->getBasePath()}/installation/">installation wizard</a>
 and follow its instructions.
 HTML;
     exit;
