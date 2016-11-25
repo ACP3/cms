@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e2cfea2c641eca5cfc7c5b4068abd500",
-    "content-hash": "f7f013803d524e4b76329e14b2099f76",
+    "hash": "3ccf05aa1c927f3059ed7e9d507193f3",
+    "content-hash": "e1275f849346bbfffab241904941b356",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
-            "version": "dev-full/4.5.x",
+            "version": "dev-full/4.6.x",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "037abe2a96bd51df0d5e767963ab0ad042128a7f"
+                "reference": "67ebc628b742021b8874de084e87e8021879f8c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/037abe2a96bd51df0d5e767963ab0ad042128a7f",
-                "reference": "037abe2a96bd51df0d5e767963ab0ad042128a7f",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/67ebc628b742021b8874de084e87e8021879f8c1",
+                "reference": "67ebc628b742021b8874de084e87e8021879f8c1",
                 "shasum": ""
             },
             "type": "library",
@@ -46,7 +46,7 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2016-09-07 15:57:09"
+            "time": "2016-11-16 15:57:29"
         },
         {
             "name": "cocur/slugify",
@@ -2441,16 +2441,16 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "0.2",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "b39c7a5b194f9ed7bd0dd345c751007a41862443"
+                "reference": "e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/b39c7a5b194f9ed7bd0dd345c751007a41862443",
-                "reference": "b39c7a5b194f9ed7bd0dd345c751007a41862443",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb",
+                "reference": "e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb",
                 "shasum": ""
             },
             "require": {
@@ -2484,7 +2484,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2016-06-10 07:14:17"
+            "time": "2016-11-25 06:54:22"
         },
         {
             "name": "phpspec/prophecy",

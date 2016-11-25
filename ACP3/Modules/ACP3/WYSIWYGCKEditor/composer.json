@@ -23,7 +23,7 @@
     "acp3/module-permissions": "^4.4.3",
     "acp3/module-system": "^4.4.3",
     "acp3/module-users": "^4.4.3",
-    "ckeditor/ckeditor": "dev-full/4.5.x"
+    "ckeditor/ckeditor": "dev-full/4.6.x"
   },
   "autoload": {
     "psr-4": {

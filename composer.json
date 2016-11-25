@@ -17,7 +17,7 @@
   "prefer-stable": true,
   "require": {
     "php": ">=5.6.0",
-    "ckeditor/ckeditor": "dev-full/4.5.x",
+    "ckeditor/ckeditor": "dev-full/4.6.x",
     "cocur/slugify": "^2.3",
     "composer/semver": "^1.4",
     "doctrine/cache": "^1.6",
