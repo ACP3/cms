@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 20016-xx-xx
+### Changed
+- Updated the CKEditor WYSIWYG-Editor to version 4.6
+
 ## [4.4.3] - 20016-11-24
 ### Fixed
 - Fixed the retrieval of the user context hash when the remember me cookie is set
