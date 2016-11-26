@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Updated the CKEditor WYSIWYG-Editor to version 4.6
 
+### Fixed
+- Fixed the deleting of the category picture when deleting a category
+- Fixed the deleting of the assigned menu item and SEO settings when deleting an article
+
 ## [4.4.3] - 20016-11-24
 ### Fixed
 - Fixed the retrieval of the user context hash when the remember me cookie is set
