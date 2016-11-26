@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Polls\Validation;
 
 
 use ACP3\Core\Validation\AbstractFormValidation;
+use ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule;
 use ACP3\Modules\ACP3\Polls\Validation\ValidationRules\AlreadyVotedValidationRule;
 
 /**
@@ -56,6 +57,11 @@ class VoteValidation extends AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
+            ->addConstraint(NotEmptyValidationRule::class, [
+                'data' => $formData,
+                'field' => 'answer',
+                'message' => $this->translator->t('polls', 'select_answer')
+            ])
             ->addConstraint(AlreadyVotedValidationRule::class, [
                 'message' => $this->translator->t('polls', 'already_voted'),
                 'extra' => [

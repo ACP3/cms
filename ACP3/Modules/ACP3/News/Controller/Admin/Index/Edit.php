@@ -69,10 +69,6 @@ class Edit extends AbstractFormAction
         if (empty($news) === false) {
             $this->title->setPageTitlePostfix($news['title']);
 
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $id);
-            }
-
             return [
                 'categories' => $this->categoriesHelpers->categoriesList(
                     News\Installer\Schema::MODULE_NAME,
@@ -92,21 +88,22 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param int $newsId
+     * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $newsId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleSaveAction(function () use ($formData, $newsId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
             $this->adminFormValidation
-                ->setUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $newsId))
+                ->setUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $id))
                 ->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryIdForSave($formData);
             $formData['user_id'] = $this->user->getUserId();
 
-            return $this->newsModel->save($formData, $newsId);
+            return $this->newsModel->save($formData, $id);
         });
     }
 }

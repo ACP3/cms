@@ -72,10 +72,6 @@ class Edit extends AbstractFormAction
 
             $settings = $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME);
 
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $newsletter, $settings, $id);
-            }
-
             $actions = [
                 1 => $this->translator->t('newsletter', 'send_and_save'),
                 0 => $this->translator->t('newsletter', 'only_save')
@@ -94,24 +90,25 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param array $newsletter
-     * @param array $settings
-     * @param int   $newsletterId
+     * @param int   $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $newsletter, array $settings, $newsletterId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handlePostAction(function () use ($formData, $newsletter, $settings, $newsletterId) {
+        return $this->actionHelper->handlePostAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
+            $settings = $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME);
+
             $this->adminFormValidation->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $bool = $this->newsletterModel->save($formData, $newsletterId);
+            $bool = $this->newsletterModel->save($formData, $id);
 
             list($text, $result) = $this->sendTestNewsletter(
                 $formData['test'] == 1,
-                $newsletterId,
+                $id,
                 $bool,
                 $settings['mail']
             );

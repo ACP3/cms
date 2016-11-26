@@ -54,28 +54,27 @@ class Create extends AbstractFrontendAction
      */
     public function execute($module, $entryId, $redirectUrl)
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all(), $module, $entryId, $redirectUrl);
-        }
-
         return [
-            'form' => array_merge($this->fetchFormDefaults($redirectUrl), $this->request->getPost()->all()),
+            'form' => array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
+            'module' => $module,
+            'entry_id' => $entryId,
+            'redirect_url' => $redirectUrl,
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'can_use_emoticons' => $this->emoticonsActive === true
         ];
     }
 
     /**
-     * @param array $formData
      * @param string $module
      * @param int $entryId
      * @param string $redirectUrl
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $module, $entryId, $redirectUrl)
+    public function executePost($module, $entryId, $redirectUrl)
     {
         return $this->actionHelper->handlePostAction(
-            function () use ($formData, $module, $entryId, $redirectUrl) {
+            function () use ($module, $entryId, $redirectUrl) {
+                $formData = $this->request->getPost()->all();
                 $ipAddress = $this->request->getSymfonyRequest()->getClientIp();
 
                 $this->formValidation

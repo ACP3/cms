@@ -59,10 +59,6 @@ class Create extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         return [
             'form' => array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()),
             'mod_list' => $this->fetchModules(),
@@ -71,13 +67,12 @@ class Create extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleSaveAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () {
+            $formData = $this->request->getPost()->all();
             $file = $this->request->getFiles()->get('picture');
 
             $this->adminFormValidation

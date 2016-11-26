@@ -4,7 +4,13 @@
     {if isset($error_msg)}
         {$error_msg}
     {/if}
-    <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" id="polls-create-form" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
+    <form action="{$REQUEST_URI}"
+          method="post"
+          accept-charset="UTF-8"
+          class="form-horizontal"
+          id="polls-create-form"
+          data-ajax-form="true"
+          data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         <div class="tabbable">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication_period"}</a></li>

@@ -56,13 +56,10 @@ class Settings extends Core\Controller\AbstractAdminAction
     {
         $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
 
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all(), $settings);
-        }
-
         if ($this->modules->isActive('comments') === true) {
             $this->view->assign('comments',
-                $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments']));
+                $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments'])
+            );
         }
 
         return [
@@ -75,14 +72,13 @@ class Settings extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     * @param array $settings
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings)
+    public function executePost()
     {
-        return $this->actionHelper->handleSettingsPostAction(function () use ($formData, $settings) {
+        return $this->actionHelper->handleSettingsPostAction(function () {
+            $formData = $this->request->getPost()->all();
+
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
@@ -100,11 +96,7 @@ class Settings extends Core\Controller\AbstractAdminAction
 
             $bool = $this->config->saveSettings($data, Gallery\Installer\Schema::MODULE_NAME);
 
-            if ($formData['thumbwidth'] !== $settings['thumbwidth']
-                || $formData['thumbheight'] !== $settings['thumbheight']
-                || $formData['width'] !== $settings['width']
-                || $formData['height'] !== $settings['height']
-            ) {
+            if ($this->hasImageDimensionChanges($formData)) {
                 Core\Cache\Purge::doPurge($this->appPath->getUploadsDir() . 'gallery/cache', 'gallery');
 
                 $this->get('gallery.cache.core')->getDriver()->deleteAll();
@@ -112,5 +104,19 @@ class Settings extends Core\Controller\AbstractAdminAction
 
             return $bool;
         });
+    }
+
+    /**
+     * @param array $formData
+     * @return bool
+     */
+    protected function hasImageDimensionChanges(array $formData)
+    {
+        $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
+
+        return $formData['thumbwidth'] !== $settings['thumbwidth']
+            || $formData['thumbheight'] !== $settings['thumbheight']
+            || $formData['width'] !== $settings['width']
+            || $formData['height'] !== $settings['height'];
     }
 }

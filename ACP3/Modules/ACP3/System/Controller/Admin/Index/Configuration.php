@@ -54,10 +54,6 @@ class Configuration extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         $systemSettings = $this->config->getSettings(System\Installer\Schema::MODULE_NAME);
 
         $pageCachePurgeMode = [
@@ -119,14 +115,14 @@ class Configuration extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
         return $this->actionHelper->handlePostAction(
-            function () use ($formData) {
+            function () {
+                $formData = $this->request->getPost()->all();
+
                 $this->systemValidator->validate($formData);
 
                 $data = [

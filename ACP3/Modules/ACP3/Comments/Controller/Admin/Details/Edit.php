@@ -71,15 +71,6 @@ class Edit extends Core\Controller\AbstractAdminAction
 
             $this->title->setPageTitlePostfix($comment['name']);
 
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost(
-                    $this->request->getPost()->all(),
-                    $comment,
-                    $id,
-                    $comment['module_id']
-                );
-            }
-
             return [
                 'form' => array_merge($comment, $this->request->getPost()->all()),
                 'module_id' => (int)$comment['module_id'],
@@ -91,17 +82,17 @@ class Edit extends Core\Controller\AbstractAdminAction
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
     /**
-     * @param array $formData
-     * @param array $comment
-     * @param int   $commentId
-     * @param int   $moduleId
+     * @param int   $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $comment, $commentId, $moduleId)
+    public function executePost($id)
     {
+        $comment = $this->commentsModel->getOneById($id);
+
         return $this->actionHelper->handleSaveAction(
-            function () use ($formData, $comment, $commentId) {
+            function () use ($id) {
+                $formData = $this->request->getPost()->all();
                 $this->adminFormValidation->validate($formData);
 
                 $updateValues = [
@@ -113,9 +104,9 @@ class Edit extends Core\Controller\AbstractAdminAction
                     $updateValues['name'] = $formData['name'];
                 }
 
-                return $this->commentsModel->save($updateValues, $commentId);
+                return $this->commentsModel->save($updateValues, $id);
             },
-            'acp/comments/details/index/id_' . $moduleId
+            'acp/comments/details/index/id_' . $comment['module_id']
         );
     }
 }

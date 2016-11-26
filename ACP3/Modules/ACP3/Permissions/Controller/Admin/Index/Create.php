@@ -66,10 +66,6 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         return [
             'modules' => $this->fetchModulePermissions(0, 2),
             'parent' => $this->fetchRoles(),
@@ -79,14 +75,13 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleSaveAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () {
+            $formData = $this->request->getPost()->all();
+
             $this->roleFormValidation->validate($formData);
 
             $roleId = $this->roleModel->save($formData);

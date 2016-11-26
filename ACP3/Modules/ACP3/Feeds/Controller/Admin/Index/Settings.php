@@ -59,10 +59,6 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         $settings = $this->config->getSettings(Feeds\Installer\Schema::MODULE_NAME);
 
         $feedTypes = [
@@ -79,13 +75,12 @@ class Settings extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
+        return $this->actionHelper->handleSettingsPostAction(function () {
+            $formData = $this->request->getPost()->all();
             $this->adminFormValidation->validate($formData);
 
             $data = [

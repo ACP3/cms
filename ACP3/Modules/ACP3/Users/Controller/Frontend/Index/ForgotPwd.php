@@ -73,10 +73,6 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
             return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         }
 
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         return [
             'form' => array_merge(['nick_mail' => ''], $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
@@ -84,14 +80,14 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
         return $this->actionHelper->handlePostAction(
-            function () use ($formData) {
+            function () {
+                $formData = $this->request->getPost()->all();
+
                 $this->accountForgotPasswordFormValidation->validate($formData);
 
                 $newPassword = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);

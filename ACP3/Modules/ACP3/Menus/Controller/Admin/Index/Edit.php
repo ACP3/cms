@@ -62,10 +62,6 @@ class Edit extends Core\Controller\AbstractAdminAction
         if (empty($menu) === false) {
             $this->title->setPageTitlePostfix($menu['title']);
 
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $id);
-            }
-
             return [
                 'form' => array_merge($menu, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()
@@ -76,19 +72,20 @@ class Edit extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     * @param int   $menuId
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $menuId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleSaveAction(function () use ($formData, $menuId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
             $this->menuFormValidation
-                ->setMenuId($menuId)
+                ->setMenuId($id)
                 ->validate($formData);
 
-            return $this->menusModel->save($formData, $menuId);
+            return $this->menusModel->save($formData, $id);
         });
     }
 }

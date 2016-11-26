@@ -74,10 +74,6 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         if ($this->articlesHelpers) {
             $this->view->assign('articles', $this->articlesHelpers->articlesList());
         }
@@ -99,14 +95,14 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
         return $this->actionHelper->handleSaveAction(
-            function () use ($formData) {
+            function () {
+                $formData = $this->request->getPost()->all();
+
                 $this->menuItemFormValidation->validate($formData);
 
                 $formData['mode'] = $this->fetchMenuItemModeForSave($formData);

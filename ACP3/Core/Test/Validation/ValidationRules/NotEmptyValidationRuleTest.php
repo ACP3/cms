@@ -28,6 +28,7 @@ class NotEmptyValidationRuleTest extends AbstractValidationRuleTest
             'invalid-data-string-whitespaces-newlines' => ["    \r\n", '', [], false],
             'invalid-data-empty-array' => [['foo' => []], 'foo', [], false],
             'invalid-data-empty-array-2' => [[], '', [], false],
+            'invalid-data-missing-key' => [['foo' => ['bar-baz']], 'baz', [], false],
             'invalid-data-array' => [['foo' => ''], 'foo', [], false],
             'invalid-data-array-whitespace' => [['foo' => '    '], 'foo', [], false],
             'invalid-data-array-whitespaces-newlines' => [['foo' => "    \r\n"], 'foo', [], false],

@@ -69,10 +69,6 @@ class Edit extends Core\Controller\AbstractAdminAction
         if (empty($seo) === false) {
             $this->title->setPageTitlePostfix($seo['alias']);
 
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $seo['uri'], $id);
-            }
-
             return [
                 'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper->formFields($seo['uri']),
                 'form' => array_merge(['uri' => $seo['uri']], $this->request->getPost()->all()),
@@ -84,20 +80,22 @@ class Edit extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array  $formData
-     * @param string $path
-     * @param int    $seoId
+     * @param int    $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $path, $seoId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleSaveAction(function () use ($formData, $path, $seoId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
+            $seo = $this->seoModel->getOneById($id);
+
             $this->adminFormValidation
-                ->setUriAlias($path)
+                ->setUriAlias($seo['uri'])
                 ->validate($formData);
 
-            return $this->seoModel->save($formData, $seoId);
+            return $this->seoModel->save($formData, $id);
         });
     }
 }

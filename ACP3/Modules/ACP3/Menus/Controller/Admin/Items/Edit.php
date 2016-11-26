@@ -71,10 +71,6 @@ class Edit extends AbstractFormAction
         if (empty($menuItem) === false) {
             $this->title->setPageTitlePostfix($menuItem['title']);
 
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $menuItem, $id);
-            }
-
             if ($this->articlesHelpers) {
                 $matches = [];
                 if (count($this->request->getPost()->all()) == 0 && $menuItem['mode'] == 4) {
@@ -109,21 +105,21 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param array $menuItem
-     * @param int   $menuItemId
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $menuItem, $menuItemId)
+    public function executePost($id)
     {
         return $this->actionHelper->handleSaveAction(
-            function () use ($formData, $menuItem, $menuItemId) {
+            function () use ($id) {
+                $formData = $this->request->getPost()->all();
+
                 $this->menuItemFormValidation->validate($formData);
 
                 $formData['mode'] = $this->fetchMenuItemModeForSave($formData);
                 $formData['uri'] = $this->fetchMenuItemUriForSave($formData);
-                return $this->menuItemsModel->save($formData, $menuItemId);
+                return $this->menuItemsModel->save($formData, $id);
             },
             'acp/menus'
         );

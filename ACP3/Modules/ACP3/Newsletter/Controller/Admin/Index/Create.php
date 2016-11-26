@@ -62,19 +62,13 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME);
-
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all(), $settings);
-        }
-
         $actions = [
             1 => $this->translator->t('newsletter', 'send_and_save'),
             0 => $this->translator->t('newsletter', 'only_save')
         ];
 
         return [
-            'settings' => $settings,
+            'settings' => $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME),
             'test' => $this->formsHelper->yesNoCheckboxGenerator('test', 0),
             'action' => $this->formsHelper->checkboxGenerator('action', $actions, 1),
             'form' => array_merge(['title' => '', 'text' => '', 'date' => ''], $this->request->getPost()->all()),
@@ -83,14 +77,15 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param array $settings
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings)
+    public function executePost()
     {
-        return $this->actionHelper->handlePostAction(function () use ($formData, $settings) {
+        return $this->actionHelper->handlePostAction(function () {
+            $formData = $this->request->getPost()->all();
+
+            $settings = $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME);
+
             $this->adminFormValidation->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();

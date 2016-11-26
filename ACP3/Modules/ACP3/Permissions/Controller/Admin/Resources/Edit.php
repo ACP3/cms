@@ -62,10 +62,6 @@ class Edit extends AbstractFormAction
         $resource = $this->resourcesModel->getOneById($id);
 
         if (!empty($resource)) {
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $id);
-            }
-
             $defaults = [
                 'resource' => $resource['page'],
                 'area' => $resource['area'],
@@ -85,18 +81,19 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param int   $resourceId
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $resourceId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleSaveAction(function () use ($formData, $resourceId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
             $this->resourceFormValidation->validate($formData);
 
             $formData['module_id'] = $this->fetchModuleId($formData['modules']);
-            return $this->resourcesModel->save($formData, $resourceId);
+            return $this->resourcesModel->save($formData, $id);
         });
     }
 }

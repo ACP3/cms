@@ -31,6 +31,7 @@
         <item key="polls_archive">Umfragen-Archiv</item>
         <item key="question">Frage</item>
         <item key="reset_votes">Stimmen zurücksetzen</item>
+        <item key="select_answer">Bitte wählen Sie eine Antwortmöglichkeit aus.</item>
         <item key="total_votes">Gesamt</item>
         <item key="type_in_two_answers">Bitte geben Sie zumindest 2 Antworten ein.</item>
         <item key="type_in_question">Bitte geben Sie eine Frage ein.</item>
