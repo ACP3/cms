@@ -62,7 +62,7 @@
             </footer>
         </section>
         {if $comments_allowed === true}
-            <section id="comments">
+            <section>
                 {load_module module="frontend/comments" args=['module' => 'gallery', 'entryId' => $picture.id]}
                 {load_module module="frontend/comments/index/create" args=['module' => 'gallery', 'entryId' => $picture.id, 'redirectUrl' => base64_encode("gallery/index/details/id_`$picture.id`")]}
             </section>
