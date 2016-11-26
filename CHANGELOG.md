@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 20016-xx-xx
+### Added
+- Extended the ajax-form jQuery plugin with the ability to gracefully handle failed AJAX requests
+
 ### Changed
 - Reworked and improved the form handling a little bit
 - Updated the CKEditor WYSIWYG-Editor to version 4.6
