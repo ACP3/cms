@@ -85,10 +85,6 @@ class Edit extends AbstractFormAction
         if (!empty($user)) {
             $this->title->setPageTitlePostfix($user['nickname']);
 
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $id);
-            }
-
             $userRoles = $this->acl->getUserRoleIds($id);
             $this->view->assign(
                 $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
@@ -126,21 +122,22 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param int $userId
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $userId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleSaveAction(function () use ($formData, $userId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
             $this->adminFormValidation
-                ->setUserId($userId)
+                ->setUserId($id)
                 ->validate($formData);
 
             $formData['time_zone'] = $formData['date_time_zone'];
 
-            $this->permissionsHelpers->updateUserRoles($formData['roles'], $userId);
+            $this->permissionsHelpers->updateUserRoles($formData['roles'], $id);
 
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
                 $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
@@ -149,9 +146,9 @@ class Edit extends AbstractFormAction
                 $formData['pwd_salt'] = $salt;
             }
 
-            $bool = $this->usersModel->save($formData, $userId);
+            $bool = $this->usersModel->save($formData, $id);
 
-            $this->updateCurrentlyLoggedInUserCookie($userId);
+            $this->updateCurrentlyLoggedInUserCookie($id);
 
             return $bool;
         });

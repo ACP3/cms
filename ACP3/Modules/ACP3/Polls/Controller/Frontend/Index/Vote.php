@@ -72,10 +72,6 @@ class Vote extends Core\Controller\AbstractFrontendAction
         $answer = $this->request->getPost()->get('answer');
         $time = $this->date->getCurrentDateTime();
         if ($this->pollRepository->pollExists($id, $time, is_array($answer)) === true) {
-            if (!empty($answer) || is_array($answer) === true) {
-                return $this->executePost($this->request->getPost()->all(), $time, $id);
-            }
-
             $poll = $this->pollRepository->getOneById($id);
 
             return [
@@ -89,29 +85,29 @@ class Vote extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array $formData
-     * @param string $time
-     * @param int $pollId
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $time, $pollId)
+    public function executePost($id)
     {
         return $this->actionHelper->handlePostAction(
-            function () use ($formData, $time, $pollId) {
+            function () use ($id) {
+                $formData = $this->request->getPost()->all();
                 $ipAddress = $this->request->getSymfonyRequest()->getClientIp();
+                $time = $this->date->getCurrentDateTime();
 
                 $this->voteValidation
-                    ->setPollId($pollId)
+                    ->setPollId($id)
                     ->setIpAddress($ipAddress)
                     ->validate($formData);
 
-                $result = $this->pollsModel->vote($formData, $pollId, $ipAddress, $time);
+                $result = $this->pollsModel->vote($formData, $id, $ipAddress, $time);
 
                 $text = $this->translator->t('polls', $result !== false ? 'poll_success' : 'poll_error');
-                return $this->redirectMessages()->setMessage($result, $text, 'polls/index/result/id_' . $pollId);
+                return $this->redirectMessages()->setMessage($result, $text, 'polls/index/result/id_' . $id);
             },
-            'polls/index/vote/id_' . $pollId
+            'polls/index/vote/id_' . $id
         );
     }
 }

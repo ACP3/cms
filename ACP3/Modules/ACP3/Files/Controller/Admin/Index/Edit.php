@@ -80,10 +80,6 @@ class Edit extends AbstractFormAction
         if (empty($file) === false) {
             $this->title->setPageTitlePostfix($file['title']);
 
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $file, $id);
-            }
-
             $file['filesize'] = '';
             $file['file_external'] = '';
 
@@ -113,24 +109,24 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param array $dl
-     * @param int $fileId
+     * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $dl, $fileId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleSaveAction(function () use ($formData, $dl, $fileId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
             $file = null;
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
             } elseif ($this->request->getFiles()->has('file_internal')) {
                 $file = $this->request->getFiles()->get('file_internal');
             }
+            $dl = $this->filesModel->getOneById($id);
 
             $this->adminFormValidation
                 ->setFile($file)
-                ->setUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $fileId))
+                ->setUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $id))
                 ->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryId($formData);
@@ -143,7 +139,7 @@ class Edit extends AbstractFormAction
                 $formData = array_merge($formData, $newFileSql);
             }
 
-            return $this->filesModel->save($formData, $fileId);
+            return $this->filesModel->save($formData, $id);
         });
     }
 

@@ -107,8 +107,7 @@ class Create extends AbstractFormAction
 
     /**
      * @param int $id
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -121,10 +120,6 @@ class Create extends AbstractFormAction
                 ->append($this->translator->t('gallery', 'admin_pictures_create'));
 
             $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
-
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $settings, $id);
-            }
 
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                 $this->view->assign('options', $this->getOptions('0'));
@@ -141,16 +136,16 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param array $settings
-     * @param int   $galleryId
+     * @param int   $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings, $galleryId)
+    public function executePost($id)
     {
         return $this->actionHelper->handleSaveAction(
-            function () use ($formData, $settings, $galleryId) {
+            function () use ($id) {
+                $formData = $this->request->getPost()->all();
+
                 /** @var UploadedFile $file */
                 $file = $this->request->getFiles()->get('file');
 
@@ -163,14 +158,14 @@ class Create extends AbstractFormAction
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
 
                 $formData['file'] = $result['name'];
-                $formData['gallery_id'] = $galleryId;
-                $lastId = $this->pictureModel->save($formData);
+                $formData['gallery_id'] = $id;
+                $pictureId = $this->pictureModel->save($formData);
 
-                $bool2 = $this->generatePictureAlias($lastId);
+                $bool2 = $this->generatePictureAlias($pictureId);
 
-                return $lastId && $bool2;
+                return $pictureId && $bool2;
             },
-            'acp/gallery/index/edit/id_' . $galleryId
+            'acp/gallery/index/edit/id_' . $id
         );
     }
 

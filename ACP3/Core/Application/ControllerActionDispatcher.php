@@ -9,6 +9,7 @@ namespace ACP3\Core\Application;
 use ACP3\Core\Application\Event\ControllerActionAfterDispatchEvent;
 use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
 use ACP3\Core\Controller\ActionInterface;
+use ACP3\Core\Controller\Exception\ControllerActionNotFoundException;
 use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -61,7 +62,7 @@ class ControllerActionDispatcher
      * @param array $arguments
      * @return Response|string
      *
-     * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
+     * @throws ControllerActionNotFoundException
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function dispatch($serviceId = '', array $arguments = [])
@@ -89,9 +90,21 @@ class ControllerActionDispatcher
             return $response;
         }
 
-        throw new \ACP3\Core\Controller\Exception\ControllerActionNotFoundException(
+        throw new ControllerActionNotFoundException(
             'Service-Id ' . $serviceId . ' was not found!'
         );
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildControllerServiceId()
+    {
+        return $this->request->getModule()
+            . '.controller.'
+            . $this->request->getArea()
+            . '.' . $this->request->getController()
+            . '.' . $this->request->getAction();
     }
 
     /**
@@ -103,7 +116,7 @@ class ControllerActionDispatcher
      */
     private function executeControllerAction(ActionInterface $controller, array $arguments)
     {
-        $callable = [$controller, 'execute'];
+        $callable = $this->getCallable($controller);
 
         if (empty($arguments)) {
             $arguments = $this->argumentResolver->getArguments($this->request->getSymfonyRequest(), $callable);
@@ -113,14 +126,20 @@ class ControllerActionDispatcher
     }
 
     /**
-     * @return string
+     * @param ActionInterface $controller
+     * @return array
      */
-    protected function buildControllerServiceId()
+    private function getCallable(ActionInterface $controller)
     {
-        return $this->request->getModule()
-        . '.controller.'
-        . $this->request->getArea()
-        . '.' . $this->request->getController()
-        . '.' . $this->request->getAction();
+        $callable = [$controller, 'execute'];
+        if ($this->request->getPost()->has('submit') && method_exists($controller, 'executePost')) {
+            $reflection = new \ReflectionMethod($controller, 'executePost');
+
+            if ($reflection->isPublic()) {
+                $callable = [$controller, 'executePost'];
+            }
+        }
+
+        return $callable;
     }
 }

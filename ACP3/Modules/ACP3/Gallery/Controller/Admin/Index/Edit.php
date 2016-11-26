@@ -70,10 +70,6 @@ class Edit extends Core\Controller\AbstractAdminAction
         if (!empty($gallery)) {
             $this->title->setPageTitlePostfix($gallery['title']);
 
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $id);
-            }
-
             return array_merge(
                 [
                     'gallery_id' => $id,
@@ -91,21 +87,22 @@ class Edit extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     * @param int   $galleryId
+     * @param int   $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $galleryId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleSaveAction(function () use ($formData, $galleryId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
             $this->galleryFormValidation
-                ->setUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId))
+                ->setUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id))
                 ->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
 
-            return $this->galleryModel->save($formData, $galleryId);
+            return $this->galleryModel->save($formData, $id);
         });
     }
 

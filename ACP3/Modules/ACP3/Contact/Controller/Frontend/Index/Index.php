@@ -59,10 +59,6 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         $copy = [
             1 => $this->translator->t('contact', 'send_copy_to_sender')
         ];
@@ -76,14 +72,13 @@ class Index extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
         return $this->actionHelper->handlePostAction(
-            function () use ($formData) {
+            function () {
+                $formData = $this->request->getPost()->all();
                 $this->formValidation->validate($formData);
 
                 $bool = $this->contactFormModel->sendContactFormEmail($formData);

@@ -47,10 +47,6 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         return [
             'form' => array_merge(
                 $this->config->getSettings(Emoticons\Installer\Schema::MODULE_NAME),
@@ -61,13 +57,12 @@ class Settings extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
+        return $this->actionHelper->handleSettingsPostAction(function () {
+            $formData = $this->request->getPost()->all();
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [

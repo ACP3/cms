@@ -69,10 +69,6 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        if ($this->request->getPost()->has('submit')) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         $defaults = [
             'title' => '',
             'start' => '',
@@ -88,13 +84,13 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleSaveAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () {
+            $formData = $this->request->getPost()->all();
+
             $this->pollsValidator->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();

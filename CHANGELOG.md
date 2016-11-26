@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 20016-xx-xx
 ### Changed
+- Reworked and improved the form handling a little bit
 - Updated the CKEditor WYSIWYG-Editor to version 4.6
 - Unified the `\ACP3\Core\Helper\Action::handleCreatePostAction()` and `\ACP3\Core\Helper\Action::handleEditPostAction()` methods into the new method `\ACP3\Core\Helper\Action::handleSaveAction()`
 

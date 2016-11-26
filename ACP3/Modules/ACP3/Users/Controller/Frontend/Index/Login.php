@@ -43,7 +43,7 @@ class Login extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|void
+     * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function execute()
     {
@@ -51,19 +51,19 @@ class Login extends Core\Controller\AbstractFrontendAction
             1 => $this->translator->t('users', 'remember_me')
         ];
 
-        $this->view->assign('remember_me', $this->forms->checkboxGenerator('remember', $rememberMe, 0));
-
         if ($this->user->isAuthenticated() === true) {
             return $this->redirect()->toNewPage($this->appPath->getWebRoot());
-        } elseif ($this->request->getPost()->count() > 0) {
-            return $this->executePost();
         }
+
+        return [
+            'remember_me' => $this->forms->checkboxGenerator('remember', $rememberMe, 0)
+        ];
     }
 
     /**
      * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost()
+    public function executePost()
     {
         try {
             $this->authenticationModel->login(

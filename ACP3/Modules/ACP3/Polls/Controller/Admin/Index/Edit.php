@@ -71,10 +71,6 @@ class Edit extends AbstractFormAction
         if (empty($poll) === false) {
             $this->title->setPageTitlePostfix($poll['title']);
 
-            if ($this->request->getPost()->has('submit')) {
-                return $this->executePost($this->request->getPost()->all(), $id);
-            }
-
             return [
                 'answers' => $this->getAnswers($id),
                 'options' => $this->fetchOptions($poll['multiple']),
@@ -87,24 +83,25 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param int $pollId
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $pollId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleSaveAction(function () use ($formData, $pollId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
             $this->pollsValidator->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $bool = $this->pollsModel->save($formData, $pollId);
+            $bool = $this->pollsModel->save($formData, $id);
 
             if (!empty($formData['reset'])) {
-                $this->pollsModel->resetVotesByPollId($pollId);
+                $this->pollsModel->resetVotesByPollId($id);
             }
 
-            $bool2 = $this->pollsModel->saveAnswers($formData['answers'], $pollId);
+            $bool2 = $this->pollsModel->saveAnswers($formData['answers'], $id);
 
             return $bool !== false && $bool2 !== false;
         });

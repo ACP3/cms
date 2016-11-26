@@ -61,10 +61,6 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         $defaults = [
             'title' => '',
             'text' => '',
@@ -90,12 +86,13 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleSaveAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () {
+            $formData = $this->request->getPost()->all();
+
             $this->adminFormValidation->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryIdForSave($formData);

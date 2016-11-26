@@ -56,14 +56,13 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
 
         if ($this->modules->isActive('comments') === true) {
-            $this->view->assign('allow_comments', $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments']));
+            $this->view->assign(
+                'allow_comments',
+                $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments'])
+            );
         }
 
         return [
@@ -71,19 +70,22 @@ class Settings extends Core\Controller\AbstractAdminAction
             'readmore' => $this->formsHelper->yesNoCheckboxGenerator('readmore', $settings['readmore']),
             'readmore_chars' => $this->request->getPost()->get('readmore_chars', $settings['readmore_chars']),
             'sidebar_entries' => $this->formsHelper->recordsPerPage((int)$settings['sidebar'], 1, 10, 'sidebar'),
-            'category_in_breadcrumb' => $this->formsHelper->yesNoCheckboxGenerator('category_in_breadcrumb', $settings['category_in_breadcrumb']),
+            'category_in_breadcrumb' => $this->formsHelper->yesNoCheckboxGenerator(
+                'category_in_breadcrumb',
+                $settings['category_in_breadcrumb']
+            ),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
+        return $this->actionHelper->handleSettingsPostAction(function () {
+            $formData = $this->request->getPost()->all();
+
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [

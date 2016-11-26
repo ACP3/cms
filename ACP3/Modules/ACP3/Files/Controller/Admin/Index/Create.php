@@ -70,10 +70,6 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         $defaults = [
             'title' => '',
             'file_internal' => '',
@@ -101,12 +97,12 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleSaveAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () {
+            $formData = $this->request->getPost()->all();
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
             } else {

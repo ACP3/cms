@@ -74,10 +74,6 @@ class Edit extends AbstractFormAction
         if (!empty($role)) {
             $this->title->setPageTitlePostfix($role['name']);
 
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $id);
-            }
-
             return [
                 'parent' => $id != 1
                     ? $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id'])
@@ -92,23 +88,24 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param int   $roleId
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    protected function executePost(array $formData, $roleId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleSaveAction(function () use ($formData, $roleId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
             $this->roleFormValidation
-                ->setRoleId($roleId)
+                ->setRoleId($id)
                 ->validate($formData);
 
-            $formData['parent_id'] = $roleId === 1 ? 0 : $formData['parent_id'];
+            $formData['parent_id'] = $id === 1 ? 0 : $formData['parent_id'];
 
-            $result = $this->rolesModel->save($formData, $roleId);
-            $this->rulesModel->updateRules($formData['privileges'], $roleId);
+            $result = $this->rolesModel->save($formData, $id);
+            $this->rulesModel->updateRules($formData['privileges'], $id);
 
             return $result;
         });
