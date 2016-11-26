@@ -31,17 +31,17 @@ class Settings extends Core\Controller\AbstractAdminAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                         $context
-     * @param \ACP3\Core\Helpers\Forms                                           $formsHelper
+     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     * @param \ACP3\Core\Helpers\FormToken                                       $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\AdminContext $context,
         Core\Helpers\Forms $formsHelper,
         Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
-        Core\Helpers\FormToken $formTokenHelper)
-    {
+        Core\Helpers\FormToken $formTokenHelper
+    ) {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
@@ -50,7 +50,7 @@ class Settings extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {

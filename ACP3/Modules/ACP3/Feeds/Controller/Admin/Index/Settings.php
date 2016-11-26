@@ -55,7 +55,7 @@ class Settings extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {

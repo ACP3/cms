@@ -50,7 +50,7 @@ class Create extends AbstractFrontendAction
      * @param string $module
      * @param int $entryId
      * @param string $redirectUrl
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute($module, $entryId, $redirectUrl)
     {

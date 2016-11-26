@@ -70,7 +70,7 @@ class Settings extends AbstractAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {

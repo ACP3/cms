@@ -50,7 +50,7 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {

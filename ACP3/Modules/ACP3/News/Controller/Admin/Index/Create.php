@@ -57,7 +57,7 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {

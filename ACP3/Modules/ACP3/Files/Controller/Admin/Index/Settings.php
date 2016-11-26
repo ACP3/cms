@@ -71,14 +71,17 @@ class Settings extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {
         $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
 
         if ($this->commentsHelpers) {
-            $this->view->assign('comments', $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments']));
+            $this->view->assign(
+                'comments',
+                $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments'])
+            );
         }
 
         return [

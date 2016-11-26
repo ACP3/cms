@@ -64,7 +64,7 @@ class Edit extends AbstractFormAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
