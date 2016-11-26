@@ -94,7 +94,7 @@ class Create extends AbstractFormAction
      */
     protected function executePost(array $formData)
     {
-        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData) {
             $this->pollsValidator->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();

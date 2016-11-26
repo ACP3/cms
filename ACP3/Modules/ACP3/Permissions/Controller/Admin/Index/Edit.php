@@ -100,7 +100,7 @@ class Edit extends AbstractFormAction
      */
     protected function executePost(array $formData, $roleId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $roleId) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData, $roleId) {
             $this->roleFormValidation
                 ->setRoleId($roleId)
                 ->validate($formData);

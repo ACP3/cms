@@ -117,7 +117,7 @@ class Edit extends AbstractFormAction
      */
     protected function executePost(array $formData, array $menuItem, $menuItemId)
     {
-        return $this->actionHelper->handleEditPostAction(
+        return $this->actionHelper->handleSaveAction(
             function () use ($formData, $menuItem, $menuItemId) {
                 $this->menuItemFormValidation->validate($formData);
 

@@ -115,7 +115,7 @@ class Create extends AbstractFormAction
      */
     protected function executePost(array $formData)
     {
-        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData) {
             $this->adminFormValidation->validate($formData);
 
             $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);

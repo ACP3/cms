@@ -85,7 +85,7 @@ class Edit extends AbstractFormAction
      */
     protected function executePost(array $formData, $articleId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $articleId) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData, $articleId) {
             $this->adminFormValidation
                 ->setUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $articleId))
                 ->validate($formData);

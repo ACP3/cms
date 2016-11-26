@@ -98,7 +98,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected function executePost(array $formData, $galleryId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $galleryId) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData, $galleryId) {
             $this->galleryFormValidation
                 ->setUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId))
                 ->validate($formData);

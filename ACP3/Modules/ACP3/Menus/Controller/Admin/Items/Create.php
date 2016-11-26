@@ -105,7 +105,7 @@ class Create extends AbstractFormAction
      */
     protected function executePost(array $formData)
     {
-        return $this->actionHelper->handleCreatePostAction(
+        return $this->actionHelper->handleSaveAction(
             function () use ($formData) {
                 $this->menuItemFormValidation->validate($formData);
 

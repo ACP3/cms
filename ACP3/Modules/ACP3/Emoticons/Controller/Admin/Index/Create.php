@@ -71,7 +71,7 @@ class Create extends Core\Controller\AbstractAdminAction
      */
     protected function executePost(array $formData)
     {
-        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->adminFormValidation

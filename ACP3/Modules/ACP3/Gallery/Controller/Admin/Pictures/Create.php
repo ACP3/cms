@@ -149,7 +149,7 @@ class Create extends AbstractFormAction
      */
     protected function executePost(array $formData, array $settings, $galleryId)
     {
-        return $this->actionHelper->handleCreatePostAction(
+        return $this->actionHelper->handleSaveAction(
             function () use ($formData, $settings, $galleryId) {
                 /** @var UploadedFile $file */
                 $file = $this->request->getFiles()->get('file');

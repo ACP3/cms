@@ -133,7 +133,7 @@ class Edit extends AbstractFormAction
      */
     protected function executePost(array $formData, $userId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $userId) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData, $userId) {
             $this->adminFormValidation
                 ->setUserId($userId)
                 ->validate($formData);

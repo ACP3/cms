@@ -94,7 +94,7 @@ class Edit extends AbstractFormAction
      */
     protected function executePost(array $formData, $pollId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $pollId) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData, $pollId) {
             $this->pollsValidator->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();

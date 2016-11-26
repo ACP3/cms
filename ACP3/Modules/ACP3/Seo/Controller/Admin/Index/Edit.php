@@ -92,7 +92,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected function executePost(array $formData, $path, $seoId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $path, $seoId) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData, $path, $seoId) {
             $this->adminFormValidation
                 ->setUriAlias($path)
                 ->validate($formData);

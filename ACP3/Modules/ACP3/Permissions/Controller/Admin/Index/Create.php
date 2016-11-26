@@ -86,7 +86,7 @@ class Create extends AbstractFormAction
      */
     protected function executePost(array $formData)
     {
-        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData) {
             $this->roleFormValidation->validate($formData);
 
             $roleId = $this->roleModel->save($formData);

@@ -111,7 +111,7 @@ class Edit extends AbstractFormAction
      */
     protected function executePost(array $formData, array $settings, array $picture, $pictureId)
     {
-        return $this->actionHelper->handleEditPostAction(
+        return $this->actionHelper->handleSaveAction(
             function () use ($formData, $settings, $picture, $pictureId) {
                 /** @var UploadedFile $file */
                 $file = $this->request->getFiles()->get('file');

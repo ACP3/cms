@@ -100,7 +100,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected function executePost(array $formData, array $comment, $commentId, $moduleId)
     {
-        return $this->actionHelper->handleEditPostAction(
+        return $this->actionHelper->handleSaveAction(
             function () use ($formData, $comment, $commentId) {
                 $this->adminFormValidation->validate($formData);
 

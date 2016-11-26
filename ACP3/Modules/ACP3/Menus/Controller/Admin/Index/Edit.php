@@ -83,7 +83,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected function executePost(array $formData, $menuId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $menuId) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData, $menuId) {
             $this->menuFormValidation
                 ->setMenuId($menuId)
                 ->validate($formData);

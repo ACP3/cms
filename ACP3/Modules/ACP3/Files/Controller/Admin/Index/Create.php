@@ -106,7 +106,7 @@ class Create extends AbstractFormAction
      */
     protected function executePost(array $formData)
     {
-        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData) {
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
             } else {

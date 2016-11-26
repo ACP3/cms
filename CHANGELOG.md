@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - 20016-xx-xx
 ### Changed
 - Updated the CKEditor WYSIWYG-Editor to version 4.6
+- Unified the `\ACP3\Core\Helper\Action::handleCreatePostAction()` and `\ACP3\Core\Helper\Action::handleEditPostAction()` methods into the new method `\ACP3\Core\Helper\Action::handleSaveAction()`
 
 ### Fixed
 - Fixed the deleting of the category picture when deleting a category
 - Fixed the deleting of the assigned menu item and SEO settings when deleting an article
+
+### Deprecations
+- Deprecated `\ACP3\Core\Helper\Action::handleCreatePostAction()`, use `\ACP3\Core\Helper\Action::handleSaveAction()` instead
+- Deprecated `\ACP3\Core\Helper\Action::handleEditPostAction()`, use `\ACP3\Core\Helper\Action::handleSaveAction()` instead
 
 ## [4.4.3] - 20016-11-24
 ### Fixed

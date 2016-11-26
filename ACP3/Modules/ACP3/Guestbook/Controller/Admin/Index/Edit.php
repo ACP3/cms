@@ -96,7 +96,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected function executePost(array $formData, array $settings, $guestbookId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $guestbookId) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData, $settings, $guestbookId) {
             $this->adminFormValidation
                 ->setSettings($settings)
                 ->validate($formData);

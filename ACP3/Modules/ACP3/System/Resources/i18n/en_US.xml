@@ -254,6 +254,8 @@
         <item key="refresh">Refresh</item>
         <item key="reset">Reset</item>
         <item key="result">Result</item>
+        <item key="save_error">While saving the entry an error has occurred.</item>
+        <item key="save_success">The entry has been successfully saved.</item>
         <item key="select_cache_images">Please select whether you want to cache pictures.</item>
         <item key="select_date">Please complete the details of the release date and end date.</item>
         <item key="select_date_format">Please select whether the long or the short date format to be used.</item>

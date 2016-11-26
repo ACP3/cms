@@ -120,7 +120,7 @@ class Edit extends AbstractFormAction
      */
     protected function executePost(array $formData, array $dl, $fileId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $dl, $fileId) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData, $dl, $fileId) {
             $file = null;
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];

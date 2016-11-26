@@ -92,7 +92,7 @@ class Edit extends AbstractFormAction
      */
     protected function executePost(array $formData, $resourceId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $resourceId) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData, $resourceId) {
             $this->resourceFormValidation->validate($formData);
 
             $formData['module_id'] = $this->fetchModuleId($formData['modules']);

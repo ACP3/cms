@@ -173,14 +173,12 @@ class Action
      * @param null|string $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @deprecated since 4.4.4, to be removed with version 4.5.0
      */
     public function handleCreatePostAction(callable $callback, $path = null)
     {
-        return $this->handlePostAction(function () use ($callback, $path) {
-            $result = $callback();
-
-            return $this->prepareRedirectMessageAfterPost($result, 'create', $path);
-        });
+        return $this->handleSaveAction($callback, $path);
     }
 
     /**
@@ -188,28 +186,41 @@ class Action
      * @param null|string $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @deprecated since 4.4.4, to be removed with version 4.5.0
      */
     public function handleEditPostAction(callable $callback, $path = null)
+    {
+        return $this->handleSaveAction($callback, $path);
+    }
+
+    /**
+     * @param callable $callback
+     * @param null|string $path
+     *
+     * @return array|string|JsonResponse|RedirectResponse
+     */
+    public function handleSaveAction(callable $callback, $path = null)
     {
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
 
-            return $this->prepareRedirectMessageAfterPost($result, 'edit', $path);
+            return $this->prepareRedirectMessageAfterPost($result, 'save', $path);
         });
     }
 
     /**
      * @param bool|int $result
-     * @param string $localization
+     * @param string $phrase
      * @param null|string $path
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function prepareRedirectMessageAfterPost($result, $localization, $path = null)
+    private function prepareRedirectMessageAfterPost($result, $phrase, $path = null)
     {
         return $this->redirectMessages->setMessage(
             $result,
-            $this->translator->t('system', $localization . ($result !== false ? '_success' : '_error')),
+            $this->translator->t('system', $phrase . ($result !== false ? '_success' : '_error')),
             $path
         );
     }

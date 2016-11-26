@@ -95,7 +95,7 @@ class Create extends AbstractFormAction
      */
     protected function executePost(array $formData)
     {
-        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData) {
             $this->adminFormValidation->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryIdForSave($formData);

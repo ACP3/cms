@@ -82,7 +82,7 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected function executePost(array $formData, array $category, $categoryId)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $category, $categoryId) {
+        return $this->actionHelper->handleSaveAction(function () use ($formData, $category, $categoryId) {
             $file = $this->request->getFiles()->get('picture');
 
             $this->adminFormValidation
