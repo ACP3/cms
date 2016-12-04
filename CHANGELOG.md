@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Fixed the deleting of the category picture when deleting a category
 - Fixed the deleting of the assigned menu item and SEO settings when deleting an article
+- Fixed the `dropdown` CSS selector name when generating a bootstrap enabled menu
 
 ### Deprecations
 - Deprecated `\ACP3\Core\Helper\Action::handleCreatePostAction()`, use `\ACP3\Core\Helper\Action::handleSaveAction()` instead

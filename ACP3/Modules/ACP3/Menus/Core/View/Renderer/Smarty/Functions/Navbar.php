@@ -232,7 +232,7 @@ class Navbar extends AbstractFunction
         if ($menuConfig->isUseBootstrap() === true) {
             $dropDownItemClassName = 'navigation-' . $menu . '-subnav-' . $item['id'] . '-dropdown';
             $cssSelectors .= !empty($menuConfig->getDropdownItemSelector()) ? ' ' . $menuConfig->getDropdownItemSelector() : ' dropdown';
-            $cssSelectors .= $dropDownItemClassName;
+            $cssSelectors .= ' ' . $dropDownItemClassName;
             $caret = $item['level'] == 0 ? ' <b class="caret"></b>' : '';
             $attributes .= $item['level'] == 0 ? '  data-target=".' . $dropDownItemClassName . '"' : '';
             $attributes .= ' class="dropdown-toggle" data-toggle="dropdown"';
