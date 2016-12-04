@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed the `dropdown` CSS selector name when generating a bootstrap enabled menu
 
 ### Deprecations
+- Deprecated `\ACP3\Core\Controller\Context\AdminContext`, use `\ACP3\Core\Controller\Context\FrontendContext` instead
 - Deprecated `\ACP3\Core\Helper\Action::handleCreatePostAction()`, use `\ACP3\Core\Helper\Action::handleSaveAction()` instead
 - Deprecated `\ACP3\Core\Helper\Action::handleEditPostAction()`, use `\ACP3\Core\Helper\Action::handleSaveAction()` instead
 
