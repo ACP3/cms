@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 
 
 use ACP3\Core\Controller\AbstractAdminAction;
-use ACP3\Core\Controller\Context\AdminContext;
+use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Core\Helpers\StringFormatter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -21,10 +21,10 @@ class Suggest extends AbstractAdminAction
 
     /**
      * Suggest constructor.
-     * @param AdminContext $context
+     * @param FrontendContext $context
      * @param StringFormatter $stringFormatter
      */
-    public function __construct(AdminContext $context, StringFormatter $stringFormatter)
+    public function __construct(FrontendContext $context, StringFormatter $stringFormatter)
     {
         parent::__construct($context);
 

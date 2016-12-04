@@ -28,11 +28,11 @@ abstract class AbstractFormAction extends AbstractAdminAction
 
     /**
      * AbstractFormAction constructor.
-     * @param Core\Controller\Context\AdminContext $context
+     * @param Core\Controller\Context\FrontendContext $context
      * @param Core\Helpers\Forms $formsHelper
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper
     ) {
         parent::__construct($context);

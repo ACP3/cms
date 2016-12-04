@@ -28,12 +28,12 @@ class Index extends Core\Controller\AbstractAdminAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Modules\ACP3\Seo\Model\Repository\DataGridRepository $dataGridRepository
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Seo\Model\Repository\DataGridRepository $dataGridRepository,
         Seo\Helper\MetaStatements $metaStatements
     ) {

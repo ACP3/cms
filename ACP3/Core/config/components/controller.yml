@@ -22,6 +22,7 @@ services:
     class: ACP3\Core\Controller\Context\AdminContext
     parent: core.context.frontend
     public: false
+    deprecated: 'The "%service_id%" service is deprecated. Use "core.context.frontend" instead'
 
   core.context.frontend:
     class: ACP3\Core\Controller\Context\FrontendContext

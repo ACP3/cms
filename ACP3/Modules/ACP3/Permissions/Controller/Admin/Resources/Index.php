@@ -23,11 +23,11 @@ class Index extends Core\Controller\AbstractAdminAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext              $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Permissions\Model\Repository\ResourceRepository $resourceRepository
     ) {
         parent::__construct($context);

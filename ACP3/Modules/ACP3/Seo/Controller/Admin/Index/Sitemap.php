@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 
 
 use ACP3\Core\Controller\AbstractAdminAction;
-use ACP3\Core\Controller\Context\AdminContext;
+use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel;
 
@@ -21,11 +21,11 @@ class Sitemap extends AbstractAdminAction
 
     /**
      * Sitemap constructor.
-     * @param AdminContext $context
+     * @param FrontendContext $context
      * @param SitemapGenerationModel $sitemapGenerationModel
      */
     public function __construct(
-        AdminContext $context,
+        FrontendContext $context,
         SitemapGenerationModel $sitemapGenerationModel
     ) {
         parent::__construct($context);

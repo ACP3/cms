@@ -2,7 +2,7 @@ services:
   articles.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Create
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@articles.model'
       - '@articles.validator'
@@ -13,13 +13,13 @@ services:
   articles.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Delete
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@articles.model'
 
   articles.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@articles.model'
       - '@articles.validator'
@@ -30,7 +30,7 @@ services:
   articles.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Index
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@articles.model.data_grid_repository'
 
   articles.controller.frontend.index.details:

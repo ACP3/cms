@@ -2,7 +2,7 @@ services:
   menus.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Create
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@core.helpers.formToken'
       - '@menus.model.menus_model'
       - '@menus.validator.menu'
@@ -10,13 +10,13 @@ services:
   menus.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Delete
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@menus.model.menus_model'
 
   menus.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Edit
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@core.helpers.formToken'
       - '@menus.model.menus_model'
       - '@menus.validator.menu'
@@ -24,14 +24,14 @@ services:
   menus.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Index
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@menus.helpers.menuitemslist'
       - '@menus.model.menurepository'
 
   menus.controller.admin.items.create:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Create
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@menus.model.menurepository'
@@ -44,13 +44,13 @@ services:
   menus.controller.admin.items.delete:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Delete
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@menus.model.menu_items_model'
 
   menus.controller.admin.items.edit:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Edit
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@menus.model.menu_items_model'
@@ -62,7 +62,7 @@ services:
   menus.controller.admin.items.order:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Order
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@menus.nested_set.operation.sort'
       - '@menus.model.menuitemrepository'
       - '@menus.cache'

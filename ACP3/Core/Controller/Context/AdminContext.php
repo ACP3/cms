@@ -10,6 +10,8 @@ use ACP3\Core;
 /**
  * Class AdminContext
  * @package ACP3\Core\Controller\Context
+ *
+ * @deprecated since version 4.5.0, to be removed in version 5.0.0
  */
 class AdminContext extends FrontendContext
 {
