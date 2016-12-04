@@ -20,9 +20,7 @@ services:
 
   core.context.admin:
     class: ACP3\Core\Controller\Context\AdminContext
-    arguments:
-      - '@core.context.frontend'
-      - '@core.session'
+    parent: core.context.frontend
     public: false
 
   core.context.frontend:

@@ -13,38 +13,4 @@ use ACP3\Core;
  */
 class AdminContext extends FrontendContext
 {
-    /**
-     * @var \ACP3\Core\Session\SessionHandlerInterface
-     */
-    protected $session;
-
-    /**
-     * AdminContext constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Session\SessionHandlerInterface    $session
-     */
-    public function __construct(
-        Core\Controller\Context\FrontendContext $context,
-        Core\Session\SessionHandlerInterface $session
-    ) {
-        parent::__construct(
-            $context,
-            $context->getAssets(),
-            $context->getBreadcrumb(),
-            $context->getTitle(),
-            $context->getActionHelper(),
-            $context->getResponse()
-        );
-
-        $this->session = $session;
-    }
-
-    /**
-     * @return \ACP3\Core\Session\SessionHandlerInterface
-     */
-    public function getSession()
-    {
-        return $this->session;
-    }
 }
