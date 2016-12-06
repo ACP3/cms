@@ -24,7 +24,7 @@ class GuestbookModel extends AbstractModel
             'date' => ColumnTypes::COLUMN_TYPE_DATETIME,
             'ip' => ColumnTypes::COLUMN_TYPE_RAW,
             'name' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'user_id' => ColumnTypes::COLUMN_TYPE_INT,
+            'user_id' => ColumnTypes::COLUMN_TYPE_INT_NULLABLE,
             'message' => ColumnTypes::COLUMN_TYPE_TEXT,
             'website' => ColumnTypes::COLUMN_TYPE_TEXT,
             'mail' => ColumnTypes::COLUMN_TYPE_RAW,
