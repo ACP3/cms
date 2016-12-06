@@ -136,15 +136,6 @@ class Create extends AbstractAction
                     $this->sendNotificationEmail($lastId);
                 }
 
-                // Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
-                if ($this->newsletterActive === true &&
-                    $this->newsletterSubscribeHelper &&
-                    isset($formData['subscribe_newsletter']) &&
-                    $formData['subscribe_newsletter'] == 1
-                ) {
-                    $this->newsletterSubscribeHelper->subscribeToNewsletter($formData['mail']);
-                }
-
                 return $this->redirectMessages()->setMessage(
                     $lastId,
                     $this->translator->t('system', $lastId !== false ? 'create_success' : 'create_error')
