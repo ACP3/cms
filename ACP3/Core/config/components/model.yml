@@ -21,6 +21,11 @@ services:
     tags:
       - { name: core.model.column_type, columnType: 'integer' }
 
+  core.model.column_type.integer_nullable_column_type_strategy:
+    class: ACP3\Core\Model\DataProcessor\ColumnType\IntegerNullableColumnType
+    tags:
+      - { name: core.model.column_type, columnType: 'integer_nullable' }
+
   core.model.column_type.raw_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType
     tags:

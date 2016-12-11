@@ -1,0 +1,11 @@
+services:
+  guestbook.events.listener.subscribe_to_newsletter_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Guestbook\Event\Listener\SubscribeToNewsletterOnModelAfterSaveListener
+    arguments:
+      - '@core.config'
+      - '@core.router'
+      - '@core.lang'
+    calls:
+      - ['setNewsletterSubscribe', ['@?newsletter.helper.subscribe']]
+    tags:
+      - { name: core.eventListener, event: guestbook.model.guestbook.after_save, method: subscribeToNewsletter }
