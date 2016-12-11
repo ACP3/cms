@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.4.4] - 20016-12-11
+### Fixed
+- Fixed the the inability to create guestbook entries or comments when not being logged in
+
 ## [4.4.3] - 20016-11-24
 ### Fixed
 - Fixed the retrieval of the user context hash when the remember me cookie is set
