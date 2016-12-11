@@ -24,7 +24,7 @@ class CommentsModel extends AbstractModel
             'ip' => ColumnTypes::COLUMN_TYPE_RAW,
             'date' => ColumnTypes::COLUMN_TYPE_DATETIME,
             'name' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'user_id' => ColumnTypes::COLUMN_TYPE_INT,
+            'user_id' => ColumnTypes::COLUMN_TYPE_INT_NULLABLE,
             'message' => ColumnTypes::COLUMN_TYPE_TEXT,
             'module_id' => ColumnTypes::COLUMN_TYPE_INT,
             'entry_id' => ColumnTypes::COLUMN_TYPE_INT

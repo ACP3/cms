@@ -87,7 +87,10 @@ abstract class AbstractModel
     ) {
         $this->dispatchEvent('core.model.before_save', $entryId, $filteredData, $rawData);
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_save', $entryId, $filteredData
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_save',
+            $entryId,
+            $filteredData,
+            $rawData
         );
     }
 
@@ -133,7 +136,10 @@ abstract class AbstractModel
     ) {
         $this->dispatchEvent('core.model.after_save', $entryId, $filteredData, $rawData);
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_save', $entryId, $filteredData
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_save',
+            $entryId,
+            $filteredData,
+            $rawData
         );
     }
 

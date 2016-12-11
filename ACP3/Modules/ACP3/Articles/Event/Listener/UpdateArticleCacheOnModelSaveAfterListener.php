@@ -23,7 +23,6 @@ class UpdateArticleCacheOnModelSaveAfterListener
      */
     public function __construct(Cache $cache)
     {
-
         $this->cache = $cache;
     }
 
