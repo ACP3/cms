@@ -3,7 +3,7 @@ imports:
 
 services:
   core.wysiwyg.tinymce:
-    class: ACP3\Modules\ACP3\WYSIWYGTinyMCE\WYSIWYG\TinyMCE
+    class: ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG\TinyMCE
     arguments:
       - '@core.assets.minifier.css'
       - '@core.lang'

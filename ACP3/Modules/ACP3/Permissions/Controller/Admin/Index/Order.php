@@ -31,13 +31,13 @@ class Order extends Core\Controller\AbstractAdminAction
     /**
      * Order constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\NestedSet\Operation\Sort $sortOperation
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\NestedSet\Operation\Sort $sortOperation,
         Permissions\Model\Repository\RoleRepository $roleRepository,
         Permissions\Cache $permissionsCache

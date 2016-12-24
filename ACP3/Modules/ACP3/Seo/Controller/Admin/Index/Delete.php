@@ -27,12 +27,12 @@ class Delete extends Core\Controller\AbstractAdminAction
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
      * @param Seo\Model\SeoModel $seoModel
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Seo\Cache $seoCache,
         Seo\Model\SeoModel $seoModel
     ) {

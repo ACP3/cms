@@ -3,7 +3,7 @@ imports:
 
 services:
   core.wysiwyg.ckeditor:
-    class: ACP3\Modules\ACP3\WYSIWYGCKEditor\WYSIWYG\CKEditor
+    class: ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\CKEditor
     arguments:
       - '@core.modules'
       - '@core.lang'

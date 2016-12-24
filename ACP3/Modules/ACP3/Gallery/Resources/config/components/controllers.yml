@@ -2,7 +2,7 @@ services:
   gallery.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Create
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@core.helpers.formToken'
       - '@gallery.model.gallery_model'
       - '@gallery.validator.gallery'
@@ -10,7 +10,7 @@ services:
   gallery.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Delete
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@gallery.cache'
       - '@gallery.helpers'
       - '@gallery.model.gallery_model'
@@ -21,7 +21,7 @@ services:
   gallery.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Edit
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@core.helpers.formToken'
       - '@gallery.model.picturerepository'
       - '@gallery.model.gallery_model'
@@ -30,13 +30,13 @@ services:
   gallery.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Index
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@gallery.model.gallery_data_grid_repository'
 
   gallery.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Settings
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.validator.settings'
@@ -44,7 +44,7 @@ services:
   gallery.controller.admin.pictures.create:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Create
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.model.galleryrepository'
@@ -59,7 +59,7 @@ services:
   gallery.controller.admin.pictures.delete:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Delete
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@gallery.helpers'
       - '@gallery.model.picturerepository'
       - '@gallery.cache'
@@ -69,7 +69,7 @@ services:
   gallery.controller.admin.pictures.edit:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Edit
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.helpers'
@@ -79,7 +79,7 @@ services:
   gallery.controller.admin.pictures.order:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Order
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@core.helpers.sort'
       - '@gallery.model.picturerepository'
       - '@gallery.cache'

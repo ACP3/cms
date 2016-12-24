@@ -27,10 +27,10 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Modules\\ACP3\\WYSIWYGTinyMCE\\": ""
+      "ACP3\\Modules\\ACP3\\Wysiwygtinymce\\": ""
     }
   },
   "extra": {
-    "installer-name": "ACP3/WYSIWYGTinyMCE"
+    "installer-name": "ACP3/Wysiwygtinymce"
   }
 }

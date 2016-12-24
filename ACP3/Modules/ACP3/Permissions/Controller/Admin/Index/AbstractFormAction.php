@@ -36,14 +36,14 @@ abstract class AbstractFormAction extends AbstractAdminAction
     /**
      * AbstractFormAction constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      * @internal param Permissions\Model\Repository\RuleRepository $ruleRepository
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Permissions\Cache $permissionsCache

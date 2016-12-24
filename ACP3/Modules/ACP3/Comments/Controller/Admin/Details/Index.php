@@ -28,12 +28,12 @@ class Index extends Core\Controller\AbstractAdminAction
 
     /**
      * Index constructor.
-     * @param Core\Controller\Context\AdminContext $context
+     * @param Core\Controller\Context\FrontendContext $context
      * @param Comments\Model\Repository\CommentRepository $commentRepository
      * @param Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Comments\Model\Repository\CommentRepository $commentRepository,
         Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository)
     {

@@ -27,12 +27,12 @@ class Settings extends Core\Controller\AbstractAdminAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                           $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                           $context
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      * @param \ACP3\Core\Helpers\FormToken                                         $formTokenHelper
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
         Core\Helpers\FormToken $formTokenHelper)
     {

@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
 
 use ACP3\Core\Controller\AbstractAdminAction;
-use ACP3\Core\Controller\Context\AdminContext;
+use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Core\Helpers\Forms;
 
 /**
@@ -25,10 +25,10 @@ class AbstractFormAction extends AbstractAdminAction
     /**
      * AbstractFormAction constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\Forms                   $formsHelper
      */
-    public function __construct(AdminContext $context, Forms $formsHelper)
+    public function __construct(FrontendContext $context, Forms $formsHelper)
     {
         parent::__construct($context);
 

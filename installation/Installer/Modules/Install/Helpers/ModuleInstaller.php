@@ -37,7 +37,7 @@ class ModuleInstaller
     /**
      * @var array
      */
-    protected $results = [];
+    protected $alreadyInstalledModules = [];
 
     /**
      * ModuleInstaller constructor.
@@ -68,19 +68,19 @@ class ModuleInstaller
     {
         foreach ($this->vendor->getVendors() as $vendor) {
             $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
-            $vendorModules = count($modules) > 0 ? $modules : Filesystem::scandir($vendorPath);
+            $vendorModules = $this->fetchModuleByVendor($modules, $vendorPath);
 
             foreach ($vendorModules as $module) {
                 $module = strtolower($module);
 
-                if (isset($this->results[$module])) {
+                if (isset($this->alreadyInstalledModules[$module])) {
                     continue;
                 }
 
                 $modulePath = $vendorPath . ucfirst($module) . '/';
                 $moduleConfigPath = $modulePath . 'Resources/config/module.xml';
 
-                if (is_dir($modulePath) && is_file($moduleConfigPath)) {
+                if ($this->isValidModule($modulePath, $moduleConfigPath)) {
                     $dependencies = $this->getModuleDependencies($moduleConfigPath);
 
                     if (count($dependencies) > 0) {
@@ -91,12 +91,32 @@ class ModuleInstaller
                         throw new \Exception("Error while installing module {$module}.");
                     }
 
-                    $this->results[$module] = true;
+                    $this->alreadyInstalledModules[$module] = true;
                 }
             }
         }
 
-        return $this->results;
+        return $this->alreadyInstalledModules;
+    }
+
+    /**
+     * @param array $modules
+     * @param string $vendorPath
+     * @return array
+     */
+    private function fetchModuleByVendor(array $modules, $vendorPath)
+    {
+        return count($modules) > 0 ? $modules : Filesystem::scandir($vendorPath);
+    }
+
+    /**
+     * @param string $modulePath
+     * @param string $moduleConfigPath
+     * @return bool
+     */
+    private function isValidModule($modulePath, $moduleConfigPath)
+    {
+        return is_dir($modulePath) && is_file($moduleConfigPath);
     }
 
     /**

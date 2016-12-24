@@ -39,7 +39,7 @@ class Create extends Core\Controller\AbstractAdminAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
      * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
@@ -47,7 +47,7 @@ class Create extends Core\Controller\AbstractAdminAction
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Helper\MetaFormFields $metaFormFieldsHelper,
         Seo\Helper\UriAliasManager $uriAliasManager,

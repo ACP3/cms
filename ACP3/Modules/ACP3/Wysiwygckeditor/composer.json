@@ -27,10 +27,10 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Modules\\ACP3\\WYSIWYGCKEditor\\": ""
+      "ACP3\\Modules\\ACP3\\Wysiwygckeditor\\": ""
     }
   },
   "extra": {
-    "installer-name": "ACP3/WYSIWYGCKEditor"
+    "installer-name": "ACP3/Wysiwygckeditor"
   }
 }
