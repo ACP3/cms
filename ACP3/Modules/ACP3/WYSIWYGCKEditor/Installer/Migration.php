@@ -1,12 +1,12 @@
 <?php
 
-namespace ACP3\Modules\ACP3\WYSIWYGCKEditor\Installer;
+namespace ACP3\Modules\ACP3\Wysiwygckeditor\Installer;
 
 use ACP3\Core\Modules;
 
 /**
  * Class Migration
- * @package ACP3\Modules\ACP3\WYSIWYGCKEditor\Installer
+ * @package ACP3\Modules\ACP3\Wysiwygckeditor\Installer
  */
 class Migration implements Modules\Installer\MigrationInterface
 {

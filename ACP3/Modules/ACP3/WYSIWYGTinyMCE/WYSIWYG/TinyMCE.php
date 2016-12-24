@@ -1,12 +1,12 @@
 <?php
 
-namespace ACP3\Modules\ACP3\WYSIWYGTinyMCE\WYSIWYG;
+namespace ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG;
 
 use ACP3\Core;
 
 /**
  * Implementation of the AbstractWYSIWYG class for TinyMCE
- * @package ACP3\Modules\ACP3\WYSIWYGTinyMCE\WYSIWYG
+ * @package ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG
  */
 class TinyMCE extends Core\WYSIWYG\Textarea
 {
@@ -145,7 +145,7 @@ class TinyMCE extends Core\WYSIWYG\Textarea
         $config['image_advtab'] = $imagesAdvanced;
 
         return [
-            'template' => 'WYSIWYGTinyMCE/tinymce.tpl',
+            'template' => 'Wysiwygtinymce/tinymce.tpl',
             'config' => $config
         ];
     }

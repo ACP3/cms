@@ -1,13 +1,13 @@
 <?php
 
-namespace ACP3\Modules\ACP3\WYSIWYGCKEditor\WYSIWYG;
+namespace ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG;
 
 use ACP3\Core;
 use ACP3\Core\WYSIWYG\Textarea;
 
 /**
  * Class CKEditor
- * @package ACP3\Modules\ACP3\WYSIWYGCKEditor
+ * @package ACP3\Modules\ACP3\Wysiwygckeditor
  */
 class CKEditor extends Textarea
 {
@@ -166,7 +166,7 @@ class CKEditor extends Textarea
         $out = $this->init();
 
         // Add custom plugins
-        $ckeditorPluginsDir = $this->appPath->getWebRoot() . 'ACP3/Modules/ACP3/WYSIWYGCKEditor/Resources/Assets/js/ckeditor/plugins/';
+        $ckeditorPluginsDir = $this->appPath->getWebRoot() . 'ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets/js/ckeditor/plugins/';
 
         $js = "CKEDITOR.plugins.addExternal('codemirror', '" . $ckeditorPluginsDir . "codemirror/');\n";
         $js .= "CKEDITOR.plugins.addExternal('divarea', '" . $ckeditorPluginsDir . "divarea/');\n";
@@ -184,7 +184,7 @@ class CKEditor extends Textarea
         $out .= $this->script($js);
 
         return [
-            'template' => 'WYSIWYGCKEditor/ckeditor.tpl',
+            'template' => 'Wysiwygckeditor/ckeditor.tpl',
             'config' => $out
         ];
     }
