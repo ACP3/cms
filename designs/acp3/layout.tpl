@@ -55,6 +55,7 @@
         </main>
         {if !$IN_ADM}
             <aside id="sidebar" class="col-md-3 hidden-xs hidden-sm">
+                {load_module module="widget/newsletter"}
                 {load_module module="widget/news"}
                 {load_module module="widget/files"}
                 {load_module module="widget/articles"}

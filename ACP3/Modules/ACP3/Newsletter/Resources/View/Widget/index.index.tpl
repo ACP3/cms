@@ -10,7 +10,9 @@
             {event name="captcha.event.display_captcha" length=3 input_only=true path='newsletter'}
             <div class="form-group" style="margin: 10px 0 0">
                 <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-                <input type="hidden" name="action" value="subscribe">
+                <input type="hidden" name="salutation" value="0">
+                <input type="hidden" name="first_name" value="">
+                <input type="hidden" name="last_name" value="">
                 {$form_token}
             </div>
         </form>
