@@ -12,11 +12,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Reworked and improved the form handling a little bit
 - Updated the CKEditor WYSIWYG-Editor to version 4.6
 - Unified the `\ACP3\Core\Helper\Action::handleCreatePostAction()` and `\ACP3\Core\Helper\Action::handleEditPostAction()` methods into the new method `\ACP3\Core\Helper\Action::handleSaveAction()`
+- added an alternate syntax for the load_module Smarty function
 
 ### Fixed
 - Fixed the deleting of the category picture when deleting a category
 - Fixed the deleting of the assigned menu item and SEO settings when deleting an article
 - Fixed the `dropdown` CSS selector name when generating a bootstrap enabled menu
+- Fixed the newsletter subscription via the newsletter widget
 
 ### Deprecations
 - Deprecated `\ACP3\Core\Controller\Context\AdminContext`, use `\ACP3\Core\Controller\Context\FrontendContext` instead
