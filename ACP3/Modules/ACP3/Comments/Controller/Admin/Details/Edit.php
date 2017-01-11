@@ -91,7 +91,7 @@ class Edit extends Core\Controller\AbstractAdminAction
         $comment = $this->commentsModel->getOneById($id);
 
         return $this->actionHelper->handleSaveAction(
-            function () use ($id) {
+            function () use ($id, $comment) {
                 $formData = $this->request->getPost()->all();
                 $this->adminFormValidation->validate($formData);
 
