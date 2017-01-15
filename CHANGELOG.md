@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 20016-xx-xx
+## [4.5.0] - 20017-01-15
 ### Security
 - Updated the PHPMailer library to version 5.2.22 to fix various security issues
 
@@ -232,7 +232,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.4.4...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.5.0...HEAD
+[4.5.0]: https://github.com/ACP3/cms/compare/v4.4.4...4.5.0
 [4.4.4]: https://github.com/ACP3/cms/compare/v4.4.3...v4.4.4
 [4.4.3]: https://github.com/ACP3/cms/compare/v4.4.2...v4.4.3
 [4.4.2]: https://github.com/ACP3/cms/compare/v4.4.1...v4.4.2
