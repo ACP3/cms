@@ -233,7 +233,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
 [Unreleased]: https://github.com/ACP3/cms/compare/v4.5.0...HEAD
-[4.5.0]: https://github.com/ACP3/cms/compare/v4.4.4...4.5.0
+[4.5.0]: https://github.com/ACP3/cms/compare/v4.4.4...v4.5.0
 [4.4.4]: https://github.com/ACP3/cms/compare/v4.4.3...v4.4.4
 [4.4.3]: https://github.com/ACP3/cms/compare/v4.4.2...v4.4.3
 [4.4.2]: https://github.com/ACP3/cms/compare/v4.4.1...v4.4.2
