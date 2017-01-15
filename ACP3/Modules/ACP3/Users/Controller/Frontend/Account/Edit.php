@@ -57,14 +57,10 @@ class Edit extends AbstractAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         $user = $this->user->getUserInfo();
 
         $this->view->assign(
@@ -88,14 +84,14 @@ class Edit extends AbstractAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
         return $this->actionHelper->handlePostAction(
-            function () use ($formData) {
+            function () {
+                $formData = $this->request->getPost()->all();
+
                 $this->accountFormValidation
                     ->setUserId($this->user->getUserId())
                     ->validate($formData);

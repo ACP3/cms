@@ -94,10 +94,6 @@ class Register extends Core\Controller\AbstractFrontendAction
             );
         }
 
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all(), $settings);
-        }
-
         $defaults = [
             'nickname' => '',
             'mail' => '',
@@ -110,18 +106,18 @@ class Register extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array $formData
-     * @param array $settings
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings)
+    public function executePost()
     {
         return $this->actionHelper->handlePostAction(
-            function () use ($formData, $settings) {
+            function () {
+                $formData = $this->request->getPost()->all();
+
                 $this->registrationFormValidation->validate($formData);
 
                 $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
+                $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
 
                 $subject = $this->translator->t(
                     'users',

@@ -40,13 +40,13 @@ class Settings extends Core\Controller\AbstractAdminAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                      $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
      * @param \ACP3\Core\Helpers\Forms                                        $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                    $formTokenHelper
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation)
@@ -71,18 +71,17 @@ class Settings extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
 
         if ($this->commentsHelpers) {
-            $this->view->assign('comments', $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments']));
+            $this->view->assign(
+                'comments',
+                $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments'])
+            );
         }
 
         return [
@@ -93,13 +92,13 @@ class Settings extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
+        return $this->actionHelper->handleSettingsPostAction(function () {
+            $formData = $this->request->getPost()->all();
+
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [

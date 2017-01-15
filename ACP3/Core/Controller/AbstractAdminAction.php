@@ -15,21 +15,6 @@ use ACP3\Core;
 abstract class AbstractAdminAction extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Session\SessionHandlerInterface
-     */
-    protected $session;
-
-    /**
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
-     */
-    public function __construct(Context\AdminContext $context)
-    {
-        parent::__construct($context);
-
-        $this->session = $context->getSession();
-    }
-
-    /**
      * @return $this
      * @throws \ACP3\Core\Authentication\Exception\UnauthorizedAccessException
      */

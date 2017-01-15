@@ -31,13 +31,13 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param Emoticons\Model\EmoticonsModel $emoticonsModel
      * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Emoticons\Model\EmoticonsModel $emoticonsModel,
         Emoticons\Validation\AdminFormValidation $adminFormValidation)
@@ -52,7 +52,7 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -60,10 +60,6 @@ class Edit extends Core\Controller\AbstractAdminAction
         $emoticon = $this->emoticonsModel->getOneById($id);
 
         if (empty($emoticon) === false) {
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $emoticon, $id);
-            }
-
             return [
                 'form' => array_merge($emoticon, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()
@@ -74,15 +70,15 @@ class Edit extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     * @param array $emoticon
-     * @param int   $emoticonId
+     * @param int   $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $emoticon, $emoticonId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $emoticon, $emoticonId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+            $emoticon = $this->emoticonsModel->getOneById($id);
             $file = $this->request->getFiles()->get('picture');
 
             $this->adminFormValidation
@@ -97,7 +93,7 @@ class Edit extends Core\Controller\AbstractAdminAction
                 $formData['img'] = $result['name'];
             }
 
-            return $this->emoticonsModel->save($formData, $emoticonId);
+            return $this->emoticonsModel->save($formData, $id);
         });
     }
 }

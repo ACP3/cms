@@ -43,7 +43,7 @@ class Edit extends AbstractFormAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param \ACP3\Core\Helpers\Forms $formsHelpers
@@ -53,7 +53,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Permissions\Helpers $permissionsHelpers
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Forms $formsHelpers,
@@ -75,7 +75,7 @@ class Edit extends AbstractFormAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -84,10 +84,6 @@ class Edit extends AbstractFormAction
 
         if (!empty($user)) {
             $this->title->setPageTitlePostfix($user['nickname']);
-
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $id);
-            }
 
             $userRoles = $this->acl->getUserRoleIds($id);
             $this->view->assign(
@@ -126,21 +122,22 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param int $userId
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $userId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $userId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
             $this->adminFormValidation
-                ->setUserId($userId)
+                ->setUserId($id)
                 ->validate($formData);
 
             $formData['time_zone'] = $formData['date_time_zone'];
 
-            $this->permissionsHelpers->updateUserRoles($formData['roles'], $userId);
+            $this->permissionsHelpers->updateUserRoles($formData['roles'], $id);
 
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
                 $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
@@ -149,9 +146,9 @@ class Edit extends AbstractFormAction
                 $formData['pwd_salt'] = $salt;
             }
 
-            $bool = $this->usersModel->save($formData, $userId);
+            $bool = $this->usersModel->save($formData, $id);
 
-            $this->updateCurrentlyLoggedInUserCookie($userId);
+            $this->updateCurrentlyLoggedInUserCookie($id);
 
             return $bool;
         });

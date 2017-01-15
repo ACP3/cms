@@ -5,10 +5,18 @@
         <section class="picture">
             {if isset($picture_next)}
                 <a href="{uri args="gallery/index/details/id_`$picture_next`"}">
-                    <img src="{uri args="gallery/index/image/id_`$picture.id`/action_normal"}" width="{$picture.width}" height="{$picture.height}" alt="" class="img-thumbnail">
+                    <img src="{uri args="gallery/index/image/id_`$picture.id`/action_normal"}"
+                         width="{$picture.width}"
+                         height="{$picture.height}"
+                         alt=""
+                         class="img-thumbnail">
                 </a>
             {else}
-                <img src="{uri args="gallery/index/image/id_`$picture.id`/action_normal"}" width="{$picture.width}" height="{$picture.height}" alt="" class="img-thumbnail">
+                <img src="{uri args="gallery/index/image/id_`$picture.id`/action_normal"}"
+                     width="{$picture.width}"
+                     height="{$picture.height}"
+                     alt=""
+                     class="img-thumbnail">
             {/if}
             <div class="description">
                 {$picture.description}
@@ -21,6 +29,13 @@
                                 &laquo;
                                 {lang t="gallery|previous_image"}
                             </a>
+                        </li>
+                    {else}
+                        <li class="disabled">
+                            <span>
+                                &laquo;
+                                {lang t="gallery|previous_image"}
+                            </span>
                         </li>
                     {/if}
                     <li>
@@ -35,12 +50,19 @@
                                 &raquo;
                             </a>
                         </li>
+                    {else}
+                        <li class="disabled">
+                            <span>
+                                {lang t="gallery|next_image"}
+                                &raquo;
+                            </span>
+                        </li>
                     {/if}
                 </ul>
             </footer>
         </section>
         {if $comments_allowed === true}
-            <section id="comments">
+            <section>
                 {load_module module="frontend/comments" args=['module' => 'gallery', 'entryId' => $picture.id]}
                 {load_module module="frontend/comments/index/create" args=['module' => 'gallery', 'entryId' => $picture.id, 'redirectUrl' => base64_encode("gallery/index/details/id_`$picture.id`")]}
             </section>

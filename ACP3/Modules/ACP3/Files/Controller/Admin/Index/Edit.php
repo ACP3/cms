@@ -42,7 +42,7 @@ class Edit extends AbstractFormAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Date $date
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
@@ -51,7 +51,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
@@ -70,7 +70,7 @@ class Edit extends AbstractFormAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -79,10 +79,6 @@ class Edit extends AbstractFormAction
 
         if (empty($file) === false) {
             $this->title->setPageTitlePostfix($file['title']);
-
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $file, $id);
-            }
 
             $file['filesize'] = '';
             $file['file_external'] = '';
@@ -113,24 +109,24 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param array $dl
-     * @param int $fileId
+     * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $dl, $fileId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $dl, $fileId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
             $file = null;
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
             } elseif ($this->request->getFiles()->has('file_internal')) {
                 $file = $this->request->getFiles()->get('file_internal');
             }
+            $dl = $this->filesModel->getOneById($id);
 
             $this->adminFormValidation
                 ->setFile($file)
-                ->setUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $fileId))
+                ->setUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $id))
                 ->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryId($formData);
@@ -143,7 +139,7 @@ class Edit extends AbstractFormAction
                 $formData = array_merge($formData, $newFileSql);
             }
 
-            return $this->filesModel->save($formData, $fileId);
+            return $this->filesModel->save($formData, $id);
         });
     }
 

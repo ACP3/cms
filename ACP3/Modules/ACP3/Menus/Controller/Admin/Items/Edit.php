@@ -35,7 +35,7 @@ class Edit extends AbstractFormAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param Menus\Model\MenuItemsModel $menuItemsModel
@@ -43,7 +43,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\MenuItemsModel $menuItemsModel,
@@ -61,7 +61,7 @@ class Edit extends AbstractFormAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -70,10 +70,6 @@ class Edit extends AbstractFormAction
 
         if (empty($menuItem) === false) {
             $this->title->setPageTitlePostfix($menuItem['title']);
-
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $menuItem, $id);
-            }
 
             if ($this->articlesHelpers) {
                 $matches = [];
@@ -109,21 +105,21 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param array $menuItem
-     * @param int   $menuItemId
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $menuItem, $menuItemId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(
-            function () use ($formData, $menuItem, $menuItemId) {
+        return $this->actionHelper->handleSaveAction(
+            function () use ($id) {
+                $formData = $this->request->getPost()->all();
+
                 $this->menuItemFormValidation->validate($formData);
 
                 $formData['mode'] = $this->fetchMenuItemModeForSave($formData);
                 $formData['uri'] = $this->fetchMenuItemUriForSave($formData);
-                return $this->menuItemsModel->save($formData, $menuItemId);
+                return $this->menuItemsModel->save($formData, $id);
             },
             'acp/menus'
         );

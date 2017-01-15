@@ -36,7 +36,7 @@ class Edit extends AbstractFormAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
@@ -44,7 +44,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Helpers $galleryHelpers,
@@ -83,10 +83,6 @@ class Edit extends AbstractFormAction
 
             $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
 
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $settings, $picture, $id);
-            }
-
             if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                 $this->view->assign('options', $this->getOptions($picture['comments']));
             }
@@ -102,17 +98,17 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param array $settings
-     * @param array $picture
-     * @param int   $pictureId
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings, array $picture, $pictureId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(
-            function () use ($formData, $settings, $picture, $pictureId) {
+        $picture = $this->pictureModel->getOneById($id);
+
+        return $this->actionHelper->handleSaveAction(
+            function () use ($picture, $id) {
+                $formData = $this->request->getPost()->all();
                 /** @var UploadedFile $file */
                 $file = $this->request->getFiles()->get('file');
 
@@ -131,7 +127,7 @@ class Edit extends AbstractFormAction
                 }
 
                 $formData['gallery_id'] = $picture['gallery_id'];
-                return $this->pictureModel->save($formData, $pictureId);
+                return $this->pictureModel->save($formData, $id);
             },
             'acp/gallery/index/edit/id_' . $picture['gallery_id']
         );

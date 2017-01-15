@@ -11,6 +11,7 @@
         <item key="add_answer">Add answer</item>
         <item key="already_voted">You have already voted in this poll.</item>
         <item key="answer">Answer</item>
+        <item key="answer_x">Answer %number%</item>
         <item key="answers">Answers</item>
         <item key="can_not_delete_all_answers">It's impossible to delete all answers.</item>
         <item key="delete_answer_description">You can delete answers by simply left-clicking on the selection box next to the answers.</item>
@@ -30,6 +31,7 @@
         <item key="polls_archive">Polls archive</item>
         <item key="question">Question</item>
         <item key="reset_votes">Reset votes</item>
+        <item key="select_answer">Please select an answer.</item>
         <item key="total_votes">Total votes</item>
         <item key="type_in_two_answers">Please type in at least two answers.</item>
         <item key="type_in_question">Please type in a question.</item>

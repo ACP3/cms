@@ -6,7 +6,7 @@ services:
   feeds.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Feeds\Controller\Admin\Index\Settings
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
       - '@core.helpers.secure'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'

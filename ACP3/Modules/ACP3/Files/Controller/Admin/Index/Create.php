@@ -40,7 +40,7 @@ class Create extends AbstractFormAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Date $date
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
@@ -49,7 +49,7 @@ class Create extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
@@ -66,14 +66,10 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         $defaults = [
             'title' => '',
             'file_internal' => '',
@@ -101,12 +97,12 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () {
+            $formData = $this->request->getPost()->all();
             if (isset($formData['external'])) {
                 $file = $formData['file_external'];
             } else {

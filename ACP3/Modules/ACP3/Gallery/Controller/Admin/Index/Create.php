@@ -31,13 +31,13 @@ class Create extends Core\Controller\AbstractAdminAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param Gallery\Model\GalleryModel $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation
@@ -50,14 +50,10 @@ class Create extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         $defaults = [
             'title' => '',
             'start' => '',
@@ -73,13 +69,13 @@ class Create extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () {
+            $formData = $this->request->getPost()->all();
+
             $this->galleryFormValidation->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();

@@ -24,11 +24,11 @@ class Designs extends Core\Controller\AbstractAdminAction
     /**
      * Designs constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\XML                             $xml
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\XML $xml
     ) {
         parent::__construct($context);

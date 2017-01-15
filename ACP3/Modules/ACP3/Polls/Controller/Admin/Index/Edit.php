@@ -33,7 +33,7 @@ class Edit extends AbstractFormAction
     protected $pollsModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Date $date
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
@@ -42,7 +42,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation $pollsValidator
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
@@ -61,7 +61,7 @@ class Edit extends AbstractFormAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -70,10 +70,6 @@ class Edit extends AbstractFormAction
 
         if (empty($poll) === false) {
             $this->title->setPageTitlePostfix($poll['title']);
-
-            if ($this->request->getPost()->has('submit')) {
-                return $this->executePost($this->request->getPost()->all(), $id);
-            }
 
             return [
                 'answers' => $this->getAnswers($id),
@@ -87,24 +83,25 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param int $pollId
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $pollId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $pollId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
             $this->pollsValidator->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $bool = $this->pollsModel->save($formData, $pollId);
+            $bool = $this->pollsModel->save($formData, $id);
 
             if (!empty($formData['reset'])) {
-                $this->pollsModel->resetVotesByPollId($pollId);
+                $this->pollsModel->resetVotesByPollId($id);
             }
 
-            $bool2 = $this->pollsModel->saveAnswers($formData['answers'], $pollId);
+            $bool2 = $this->pollsModel->saveAnswers($formData['answers'], $id);
 
             return $bool !== false && $bool2 !== false;
         });

@@ -34,7 +34,7 @@ class Edit extends AbstractFormAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param Newsletter\Model\NewsletterModel $newsletterModel
@@ -42,7 +42,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter $newsletterHelpers
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Model\NewsletterModel $newsletterModel,
@@ -60,7 +60,7 @@ class Edit extends AbstractFormAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -71,10 +71,6 @@ class Edit extends AbstractFormAction
             $this->title->setPageTitlePostfix($newsletter['title']);
 
             $settings = $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME);
-
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $newsletter, $settings, $id);
-            }
 
             $actions = [
                 1 => $this->translator->t('newsletter', 'send_and_save'),
@@ -94,24 +90,25 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param array $newsletter
-     * @param array $settings
-     * @param int   $newsletterId
+     * @param int   $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $newsletter, array $settings, $newsletterId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handlePostAction(function () use ($formData, $newsletter, $settings, $newsletterId) {
+        return $this->actionHelper->handlePostAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
+            $settings = $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME);
+
             $this->adminFormValidation->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $bool = $this->newsletterModel->save($formData, $newsletterId);
+            $bool = $this->newsletterModel->save($formData, $id);
 
             list($text, $result) = $this->sendTestNewsletter(
                 $formData['test'] == 1,
-                $newsletterId,
+                $id,
                 $bool,
                 $settings['mail']
             );

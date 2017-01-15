@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 
 use ACP3\Core\Controller\AbstractAdminAction;
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Core\Controller\Context\AdminContext;
+use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository;
 
@@ -25,7 +25,7 @@ class AbstractFormAction extends AbstractAdminAction
     protected $privilegeRepository;
 
     public function __construct(
-        AdminContext $context,
+        FrontendContext $context,
         Forms $formsHelper,
         PrivilegeRepository $privilegeRepository
     ) {

@@ -36,14 +36,14 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      * @param Gallery\Model\GalleryModel $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Model\GalleryModel $galleryModel,
@@ -60,7 +60,7 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -69,10 +69,6 @@ class Edit extends Core\Controller\AbstractAdminAction
 
         if (!empty($gallery)) {
             $this->title->setPageTitlePostfix($gallery['title']);
-
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $id);
-            }
 
             return array_merge(
                 [
@@ -91,21 +87,22 @@ class Edit extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     * @param int   $galleryId
+     * @param int   $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $galleryId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $galleryId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
             $this->galleryFormValidation
-                ->setUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId))
+                ->setUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id))
                 ->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
 
-            return $this->galleryModel->save($formData, $galleryId);
+            return $this->galleryModel->save($formData, $id);
         });
     }
 

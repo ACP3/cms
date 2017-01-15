@@ -29,13 +29,13 @@ class Edit extends Core\Controller\AbstractAdminAction
     protected $categoriesModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Categories\Model\CategoriesModel $categoriesModel
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Categories\Model\CategoriesModel $categoriesModel,
         Categories\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper)
@@ -50,7 +50,7 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -59,10 +59,6 @@ class Edit extends Core\Controller\AbstractAdminAction
 
         if (empty($category) === false) {
             $this->title->setPageTitlePostfix($category['title']);
-
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $category, $id);
-            }
 
             return [
                 'form' => array_merge($category, $this->request->getPost()->all()),
@@ -74,31 +70,30 @@ class Edit extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     * @param array $category
-     * @param int   $categoryId
-     *
+     * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $category, $categoryId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $category, $categoryId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
             $file = $this->request->getFiles()->get('picture');
 
             $this->adminFormValidation
                 ->setFile($file)
                 ->setSettings($this->config->getSettings(Categories\Installer\Schema::MODULE_NAME))
-                ->setCategoryId($categoryId)
+                ->setCategoryId($id)
                 ->validate($formData);
 
             if (empty($file) === false) {
+                $category = $this->categoriesModel->getOneById($id);
                 $upload = new Core\Helpers\Upload($this->appPath, Categories\Installer\Schema::MODULE_NAME);
                 $upload->removeUploadedFile($category['picture']);
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $formData['picture'] = $result['name'];
             }
 
-            return $this->categoriesModel->save($formData, $categoryId);
+            return $this->categoriesModel->save($formData, $id);
         });
     }
 }

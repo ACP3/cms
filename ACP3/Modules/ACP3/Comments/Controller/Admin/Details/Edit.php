@@ -33,13 +33,13 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Comments\Model\CommentsModel $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper)
@@ -54,7 +54,7 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -71,15 +71,6 @@ class Edit extends Core\Controller\AbstractAdminAction
 
             $this->title->setPageTitlePostfix($comment['name']);
 
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost(
-                    $this->request->getPost()->all(),
-                    $comment,
-                    $id,
-                    $comment['module_id']
-                );
-            }
-
             return [
                 'form' => array_merge($comment, $this->request->getPost()->all()),
                 'module_id' => (int)$comment['module_id'],
@@ -91,17 +82,17 @@ class Edit extends Core\Controller\AbstractAdminAction
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
     /**
-     * @param array $formData
-     * @param array $comment
-     * @param int   $commentId
-     * @param int   $moduleId
+     * @param int   $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $comment, $commentId, $moduleId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(
-            function () use ($formData, $comment, $commentId) {
+        $comment = $this->commentsModel->getOneById($id);
+
+        return $this->actionHelper->handleSaveAction(
+            function () use ($id, $comment) {
+                $formData = $this->request->getPost()->all();
                 $this->adminFormValidation->validate($formData);
 
                 $updateValues = [
@@ -113,9 +104,9 @@ class Edit extends Core\Controller\AbstractAdminAction
                     $updateValues['name'] = $formData['name'];
                 }
 
-                return $this->commentsModel->save($updateValues, $commentId);
+                return $this->commentsModel->save($updateValues, $id);
             },
-            'acp/comments/details/index/id_' . $moduleId
+            'acp/comments/details/index/id_' . $comment['module_id']
         );
     }
 }

@@ -34,7 +34,7 @@ class Edit extends AbstractFormAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param News\Model\NewsModel $newsModel
@@ -42,7 +42,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         News\Model\NewsModel $newsModel,
@@ -59,7 +59,7 @@ class Edit extends AbstractFormAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -68,10 +68,6 @@ class Edit extends AbstractFormAction
 
         if (empty($news) === false) {
             $this->title->setPageTitlePostfix($news['title']);
-
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $id);
-            }
 
             return [
                 'categories' => $this->categoriesHelpers->categoriesList(
@@ -92,21 +88,22 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param int $newsId
+     * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $newsId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $newsId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
             $this->adminFormValidation
-                ->setUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $newsId))
+                ->setUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $id))
                 ->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryIdForSave($formData);
             $formData['user_id'] = $this->user->getUserId();
 
-            return $this->newsModel->save($formData, $newsId);
+            return $this->newsModel->save($formData, $id);
         });
     }
 }

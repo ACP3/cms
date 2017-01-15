@@ -140,40 +140,47 @@
                 contentType: processData ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,
                 beforeSend: function () {
                     self.showLoadingLayer();
-                },
-                success: function (responseData) {
-                    try {
-                        if (responseData.redirect_url) {
-                            window.location.href = responseData.redirect_url;
+                }
+            }).done(function (responseData) {
+                try {
+                    if (responseData.redirect_url) {
+                        window.location.href = responseData.redirect_url;
+                    } else {
+                        var $content = $(self.settings.targetElement),
+                            offsetTop = $content.offset().top;
+
+                        // Scroll to the beginning of the content area, if the current viewport is near the bottom
+                        if ($(document).scrollTop() > offsetTop) {
+                            $('html, body').animate(
+                                {
+                                    scrollTop: offsetTop
+                                },
+                                'fast'
+                            );
+                        }
+
+                        if (responseData.success === false) {
+                            self.handleFormErrorMessages($form, responseData.content);
                         } else {
-                            var $content = $(self.settings.targetElement),
-                                offsetTop = $content.offset().top;
+                            $content.html(responseData);
 
-                            // Scroll to the beginning of the content area, if the current viewport is near the bottom
-                            if ($(document).scrollTop() > offsetTop) {
-                                $('html, body').animate(
-                                    {
-                                        scrollTop: offsetTop
-                                    },
-                                    'fast'
-                                );
-                            }
-
-                            if (responseData.success === false) {
-                                self.handleFormErrorMessages($form, responseData.content);
-                            } else {
-                                $content.html(responseData);
-
-                                if (typeof hash !== "undefined") {
-                                    location.hash = hash;
-                                }
+                            if (typeof hash !== "undefined") {
+                                location.hash = hash;
                             }
                         }
-                    } catch (err) {
-                        console.log(err.message);
-                    } finally {
-                        self.hideLoadingLayer();
                     }
+                } catch (err) {
+                    console.log(err.message);
+                } finally {
+                    self.hideLoadingLayer();
+                }
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                self.hideLoadingLayer();
+
+                if (jqXHR.responseText.length > 0) {
+                    document.open();
+                    document.write(jqXHR.responseText);
+                    document.close();
                 }
             });
         },

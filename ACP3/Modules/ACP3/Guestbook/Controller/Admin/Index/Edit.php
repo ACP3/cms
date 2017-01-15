@@ -35,14 +35,14 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param Guestbook\Model\GuestbookModel $guestbookModel
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model\GuestbookModel $guestbookModel,
@@ -59,7 +59,7 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -69,10 +69,6 @@ class Edit extends Core\Controller\AbstractAdminAction
             $settings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
 
             $this->title->setPageTitlePostfix($guestbook['name']);
-
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $settings, $id);
-            }
 
             return [
                 'form' => array_merge($guestbook, $this->request->getPost()->all()),
@@ -88,22 +84,23 @@ class Edit extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     * @param array $settings
-     * @param int $guestbookId
-     *
+     * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings, $guestbookId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $settings, $guestbookId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
+            $settings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
+
             $this->adminFormValidation
                 ->setSettings($settings)
                 ->validate($formData);
 
             $formData['active'] = $settings['notify'] == 2 ? $formData['active'] : 1;
 
-            $bool = $this->guestbookModel->save($formData, $guestbookId);
+            $bool = $this->guestbookModel->save($formData, $id);
 
             return $bool;
         });

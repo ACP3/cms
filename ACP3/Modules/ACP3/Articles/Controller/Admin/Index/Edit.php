@@ -29,14 +29,14 @@ class Edit extends AbstractFormAction
     protected $articlesModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param Articles\Model\ArticlesModel $articlesModel
      * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Articles\Model\ArticlesModel $articlesModel,
         Articles\Validation\AdminFormValidation $adminFormValidation,
@@ -52,7 +52,7 @@ class Edit extends AbstractFormAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -61,10 +61,6 @@ class Edit extends AbstractFormAction
 
         if (empty($article) === false) {
             $this->title->setPageTitlePostfix($article['title']);
-
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $id);
-            }
 
             return [
                 'form' => array_merge($article, $this->request->getPost()->all()),
@@ -78,22 +74,22 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param int $articleId
-     *
+     * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $articleId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $articleId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
             $this->adminFormValidation
-                ->setUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $articleId))
+                ->setUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id))
                 ->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $result = $this->articlesModel->save($formData, $articleId);
+            $result = $this->articlesModel->save($formData, $id);
 
-            $this->createOrUpdateMenuItem($formData, $articleId);
+            $this->createOrUpdateMenuItem($formData, $id);
 
             return $result;
         });

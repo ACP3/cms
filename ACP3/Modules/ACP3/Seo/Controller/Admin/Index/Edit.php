@@ -35,14 +35,14 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
      * @param Seo\Model\SeoModel $seoModel
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Helper\MetaFormFields $metaFormFieldsHelper,
         Seo\Model\SeoModel $seoModel,
@@ -59,7 +59,7 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -68,10 +68,6 @@ class Edit extends Core\Controller\AbstractAdminAction
 
         if (empty($seo) === false) {
             $this->title->setPageTitlePostfix($seo['alias']);
-
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $seo['uri'], $id);
-            }
 
             return [
                 'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper->formFields($seo['uri']),
@@ -84,20 +80,22 @@ class Edit extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array  $formData
-     * @param string $path
-     * @param int    $seoId
+     * @param int    $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $path, $seoId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $path, $seoId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
+            $seo = $this->seoModel->getOneById($id);
+
             $this->adminFormValidation
-                ->setUriAlias($path)
+                ->setUriAlias($seo['uri'])
                 ->validate($formData);
 
-            return $this->seoModel->save($formData, $seoId);
+            return $this->seoModel->save($formData, $id);
         });
     }
 }

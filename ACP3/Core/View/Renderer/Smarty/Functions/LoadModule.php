@@ -57,19 +57,9 @@ class LoadModule extends AbstractFunction
         $pathArray = $this->convertPathToArray($params['module']);
         $path = $pathArray[0] . '/' . $pathArray[1] . '/' . $pathArray[2] . '/' . $pathArray[3];
 
-        $arguments = [];
-        if (isset($params['args']) && is_array($params['args'])) {
-            $arguments = array_map(
-                function($item) {
-                    return urlencode($item);
-                },
-                $params['args']
-            );
-        }
-
         $response = '';
         if ($this->acl->hasPermission($path) === true) {
-            $response = $this->esiInclude($path, $arguments);
+            $response = $this->esiInclude($path, $this->parseControllerActionArguments($params));
         }
 
         return $response;
@@ -94,6 +84,34 @@ class LoadModule extends AbstractFunction
     }
 
     /**
+     * @param array $arguments
+     * @return array
+     */
+    protected function parseControllerActionArguments(array $arguments)
+    {
+        if (isset($arguments['args']) && is_array($arguments['args'])) {
+            return $this->urlEncodeArguments($arguments['args']);
+        }
+
+        unset($arguments['module']);
+        return $this->urlEncodeArguments($arguments);
+    }
+
+    /**
+     * @param array $arguments
+     * @return array
+     */
+    protected function urlEncodeArguments(array $arguments)
+    {
+        return array_map(
+            function ($item) {
+                return urlencode($item);
+            },
+            $arguments
+        );
+    }
+
+    /**
      * @param string $path
      * @param array $arguments
      * @return string
@@ -110,8 +128,6 @@ class LoadModule extends AbstractFunction
             $debug = ' onerror="continue"';
         }
 
-        $esiTag = '<esi:include src="' . $this->router->route($path . $routeArguments, true) . '"' . $debug . ' />';
-
-        return $esiTag;
+        return '<esi:include src="' . $this->router->route($path . $routeArguments, true) . '"' . $debug . ' />';
     }
 }

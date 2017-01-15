@@ -70,16 +70,11 @@ class Settings extends AbstractAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {
         $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
-
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all(), $settings);
-        }
-
         $user = $this->usersModel->getOneById($this->user->getUserId());
 
         $this->view->assign(
@@ -101,15 +96,16 @@ class Settings extends AbstractAction
     }
 
     /**
-     * @param array $formData
-     * @param array $settings
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, array $settings)
+    public function executePost()
     {
         return $this->actionHelper->handlePostAction(
-            function () use ($formData, $settings) {
+            function () {
+                $formData = $this->request->getPost()->all();
+
+                $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
+
                 $this->accountSettingsFormValidation
                     ->setSettings($settings)
                     ->validate($formData);

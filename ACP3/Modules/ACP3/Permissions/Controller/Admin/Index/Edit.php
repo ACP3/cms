@@ -34,7 +34,7 @@ class Edit extends AbstractFormAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Permissions\Model\RolesModel $rolesModel
      * @param Permissions\Model\RulesModel $rulesModel
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
@@ -44,7 +44,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Permissions\Model\RolesModel $rolesModel,
         Permissions\Model\RulesModel $rulesModel,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
@@ -64,7 +64,7 @@ class Edit extends AbstractFormAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -73,10 +73,6 @@ class Edit extends AbstractFormAction
 
         if (!empty($role)) {
             $this->title->setPageTitlePostfix($role['name']);
-
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $id);
-            }
 
             return [
                 'parent' => $id != 1
@@ -92,23 +88,24 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     * @param int   $roleId
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    protected function executePost(array $formData, $roleId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $roleId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
             $this->roleFormValidation
-                ->setRoleId($roleId)
+                ->setRoleId($id)
                 ->validate($formData);
 
-            $formData['parent_id'] = $roleId === 1 ? 0 : $formData['parent_id'];
+            $formData['parent_id'] = $id === 1 ? 0 : $formData['parent_id'];
 
-            $result = $this->rolesModel->save($formData, $roleId);
-            $this->rulesModel->updateRules($formData['privileges'], $roleId);
+            $result = $this->rolesModel->save($formData, $id);
+            $this->rulesModel->updateRules($formData['privileges'], $id);
 
             return $result;
         });

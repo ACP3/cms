@@ -31,13 +31,13 @@ class Create extends Core\Controller\AbstractAdminAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param Menus\Model\MenusModel $menusModel
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation $menuFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\MenusModel $menusModel,
         Menus\Validation\MenuFormValidation $menuFormValidation
@@ -50,14 +50,10 @@ class Create extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         return [
             'form' => array_merge(['index_name' => '', 'title' => ''], $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
@@ -65,13 +61,13 @@ class Create extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () {
+            $formData = $this->request->getPost()->all();
+
             $this->menuFormValidation->validate($formData);
 
             return $this->menusModel->save($formData);

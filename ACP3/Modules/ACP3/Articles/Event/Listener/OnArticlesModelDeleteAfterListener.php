@@ -64,7 +64,7 @@ class OnArticlesModelDeleteAfterListener
      */
     public function execute(ModelSaveEvent $event)
     {
-        if ($event->isDeleteStatement()) {
+        if (!$event->isDeleteStatement()) {
             return;
         }
 

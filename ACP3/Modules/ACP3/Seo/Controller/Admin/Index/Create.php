@@ -39,7 +39,7 @@ class Create extends Core\Controller\AbstractAdminAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
      * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
@@ -47,7 +47,7 @@ class Create extends Core\Controller\AbstractAdminAction
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Helper\MetaFormFields $metaFormFieldsHelper,
         Seo\Helper\UriAliasManager $uriAliasManager,
@@ -64,14 +64,10 @@ class Create extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         return [
             'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper->formFields(),
             'form' => array_merge(['uri' => ''], $this->request->getPost()->all()),
@@ -80,13 +76,13 @@ class Create extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleCreatePostAction(function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(function () {
+            $formData = $this->request->getPost()->all();
+
             $this->adminFormValidation->validate($formData);
 
             return $this->seoModel->save($formData);

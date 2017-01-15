@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.5.0] - 20017-01-15
+### Security
+- Updated the PHPMailer library to version 5.2.22 to fix various security issues
+
+### Added
+- Extended the ajax-form jQuery plugin with the ability to gracefully handle failed AJAX requests
+- Extended the ModelSaveEvent with the ability to determine, whether the saved result is actually new or an existing result has been saved
+
+### Changed
+- Reworked and improved the form handling a little bit
+- Updated the CKEditor WYSIWYG-Editor to version 4.6
+- Unified the `\ACP3\Core\Helper\Action::handleCreatePostAction()` and `\ACP3\Core\Helper\Action::handleEditPostAction()` methods into the new method `\ACP3\Core\Helper\Action::handleSaveAction()`
+- added an alternate syntax for the load_module Smarty function
+
+### Fixed
+- Fixed the deleting of the category picture when deleting a category
+- Fixed the deleting of the assigned menu item and SEO settings when deleting an article
+- Fixed the `dropdown` CSS selector name when generating a bootstrap enabled menu
+- Fixed the newsletter subscription via the newsletter widget
+
+### Deprecations
+- Deprecated `\ACP3\Core\Controller\Context\AdminContext`, use `\ACP3\Core\Controller\Context\FrontendContext` instead
+- Deprecated `\ACP3\Core\Helper\Action::handleCreatePostAction()`, use `\ACP3\Core\Helper\Action::handleSaveAction()` instead
+- Deprecated `\ACP3\Core\Helper\Action::handleEditPostAction()`, use `\ACP3\Core\Helper\Action::handleSaveAction()` instead
+
 ## [4.4.4] - 20016-12-11
 ### Fixed
 - Fixed the the inability to create guestbook entries or comments when not being logged in
@@ -207,7 +232,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.4.4...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.5.0...HEAD
+[4.5.0]: https://github.com/ACP3/cms/compare/v4.4.4...4.5.0
 [4.4.4]: https://github.com/ACP3/cms/compare/v4.4.3...v4.4.4
 [4.4.3]: https://github.com/ACP3/cms/compare/v4.4.2...v4.4.3
 [4.4.2]: https://github.com/ACP3/cms/compare/v4.4.1...v4.4.2

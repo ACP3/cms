@@ -43,7 +43,7 @@ class Create extends AbstractFormAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository $menuRepository
@@ -52,7 +52,7 @@ class Create extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\Repository\MenuRepository $menuRepository,
@@ -70,14 +70,10 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         if ($this->articlesHelpers) {
             $this->view->assign('articles', $this->articlesHelpers->articlesList());
         }
@@ -99,14 +95,14 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleCreatePostAction(
-            function () use ($formData) {
+        return $this->actionHelper->handleSaveAction(
+            function () {
+                $formData = $this->request->getPost()->all();
+
                 $this->menuItemFormValidation->validate($formData);
 
                 $formData['mode'] = $this->fetchMenuItemModeForSave($formData);

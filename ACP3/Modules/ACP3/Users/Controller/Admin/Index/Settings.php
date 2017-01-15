@@ -31,13 +31,13 @@ class Settings extends Core\Controller\AbstractAdminAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                      $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
      * @param \ACP3\Core\Helpers\FormToken                                    $formTokenHelper
      * @param \ACP3\Core\Helpers\Forms                                        $formsHelpers
      * @param \ACP3\Modules\ACP3\Users\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Forms $formsHelpers,
         Users\Validation\AdminSettingsFormValidation $adminSettingsFormValidation)
@@ -50,14 +50,10 @@ class Settings extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
 
         return [
@@ -75,13 +71,13 @@ class Settings extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
-        return $this->actionHelper->handleSettingsPostAction(function () use ($formData) {
+        return $this->actionHelper->handleSettingsPostAction(function () {
+            $formData = $this->request->getPost()->all();
+
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [

@@ -31,13 +31,13 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param Menus\Model\MenusModel $menusModel
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation $menuFormValidation
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\MenusModel $menusModel,
         Menus\Validation\MenuFormValidation $menuFormValidation
@@ -52,7 +52,7 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * @param int $id
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -61,10 +61,6 @@ class Edit extends Core\Controller\AbstractAdminAction
 
         if (empty($menu) === false) {
             $this->title->setPageTitlePostfix($menu['title']);
-
-            if ($this->request->getPost()->count() !== 0) {
-                return $this->executePost($this->request->getPost()->all(), $id);
-            }
 
             return [
                 'form' => array_merge($menu, $this->request->getPost()->all()),
@@ -76,19 +72,20 @@ class Edit extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     * @param int   $menuId
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData, $menuId)
+    public function executePost($id)
     {
-        return $this->actionHelper->handleEditPostAction(function () use ($formData, $menuId) {
+        return $this->actionHelper->handleSaveAction(function () use ($id) {
+            $formData = $this->request->getPost()->all();
+
             $this->menuFormValidation
-                ->setMenuId($menuId)
+                ->setMenuId($id)
                 ->validate($formData);
 
-            return $this->menusModel->save($formData, $menuId);
+            return $this->menusModel->save($formData, $id);
         });
     }
 }

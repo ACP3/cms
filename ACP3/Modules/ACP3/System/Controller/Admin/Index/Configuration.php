@@ -31,13 +31,13 @@ class Configuration extends Core\Controller\AbstractAdminAction
     /**
      * Configuration constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext                       $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
      * @param \ACP3\Core\Helpers\Forms                                         $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
      * @param \ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation $systemValidator
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         System\Validation\AdminSettingsFormValidation $systemValidator
@@ -50,14 +50,10 @@ class Configuration extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
     public function execute()
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         $systemSettings = $this->config->getSettings(System\Installer\Schema::MODULE_NAME);
 
         $pageCachePurgeMode = [
@@ -119,14 +115,14 @@ class Configuration extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
         return $this->actionHelper->handlePostAction(
-            function () use ($formData) {
+            function () {
+                $formData = $this->request->getPost()->all();
+
                 $this->systemValidator->validate($formData);
 
                 $data = [

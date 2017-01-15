@@ -31,13 +31,13 @@ class Send extends Core\Controller\AbstractAdminAction
     /**
      * Send constructor.
      *
-     * @param \ACP3\Core\Controller\Context\AdminContext               $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
      * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
      * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository    $accountRepository
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter      $newsletterHelpers
      */
     public function __construct(
-        Core\Controller\Context\AdminContext $context,
+        Core\Controller\Context\FrontendContext $context,
         Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
         Newsletter\Model\Repository\AccountRepository $accountRepository,
         Newsletter\Helper\SendNewsletter $newsletterHelpers)
