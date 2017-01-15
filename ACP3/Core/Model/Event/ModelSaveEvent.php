@@ -27,6 +27,10 @@ class ModelSaveEvent extends Event
      * @var array
      */
     private $rawData;
+    /**
+     * @var bool
+     */
+    private $isNewEntry;
 
     /**
      * ModelSaveEvent constructor.
@@ -34,13 +38,15 @@ class ModelSaveEvent extends Event
      * @param array $filteredData
      * @param array $rawData
      * @param int|null|array $entryId
+     * @param bool $isNewEntry
      */
-    public function __construct($moduleName, array $filteredData, array $rawData, $entryId)
+    public function __construct($moduleName, array $filteredData, array $rawData, $entryId, $isNewEntry)
     {
         $this->moduleName = $moduleName;
         $this->filteredData = $filteredData;
         $this->rawData = $rawData;
         $this->entryId = $entryId;
+        $this->isNewEntry = $isNewEntry;
     }
 
     /**
@@ -81,5 +87,13 @@ class ModelSaveEvent extends Event
     public function isDeleteStatement()
     {
         return count($this->filteredData) === 0 && is_array($this->entryId);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isIsNewEntry()
+    {
+        return $this->isNewEntry;
     }
 }
