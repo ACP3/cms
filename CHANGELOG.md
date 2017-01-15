@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 20016-xx-xx
+### Security
+- Updated the PHPMailer library to version 5.2.22 to fix various security issues
+
 ### Added
 - Extended the ajax-form jQuery plugin with the ability to gracefully handle failed AJAX requests
 - Extended the ModelSaveEvent with the ability to determine, whether the saved result is actually new or an existing result has been saved
