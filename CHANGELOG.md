@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2017-xx-xx
+### Fixed
+- Fixed the SMTP mailer validation in the system settings
+
 ## [4.5.0] - 2017-01-15
 ### Security
 - Updated the PHPMailer library to version 5.2.22 to fix various security issues

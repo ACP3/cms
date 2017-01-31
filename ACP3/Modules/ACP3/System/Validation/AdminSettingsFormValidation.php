@@ -224,13 +224,12 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     Core\Validation\ValidationRules\InArrayValidationRule::class,
                     [
                         'data' => $formData,
-                        'field' => 'mailer_smtp_host',
+                        'field' => 'mailer_smtp_security',
                         'message' => $this->translator->t('system', 'select_mailer_smtp_security'),
                         'extra' => [
                             'haystack' => ['none', 'ssl', 'tls']
                         ]
-                    ])
-            ;
+                    ]);
 
             if ($formData['mailer_smtp_auth'] == 1) {
                 $this->validator
