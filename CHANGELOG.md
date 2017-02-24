@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - added the umpirsky/country-list lib, so that we have a localized list of the world countries
 - added the possibility to add additional HTML attributes to the form_group.input_*.tpl partials
 - added the possibility to use input-groups for the form_group.input_*.tpl based partials 
+- added the following two new template events to the users account index template
+    - `users.account.index.header_bar`
+    - `user.account.index.dashboard`
 
 ### Changed
 - Removed the user specific short and long date formats, time zone and language because of low usage
