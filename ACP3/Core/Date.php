@@ -5,12 +5,7 @@ namespace ACP3\Core;
 use ACP3\Core\Date\DateTranslator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-/**
- * Class Date
- * @package ACP3\Core
- */
 class Date
 {
     const DEFAULT_DATE_FORMAT_LONG = 'Y-m-d H:i';
@@ -41,37 +36,26 @@ class Date
 
     /**
      * Date constructor.
-     * @param UserModel $user
      * @param DateTranslator $dateTranslator
      * @param SettingsInterface $config
      */
     public function __construct(
-        UserModel $user,
         DateTranslator $dateTranslator,
         SettingsInterface $config
     ) {
         $this->dateTranslator = $dateTranslator;
         $this->config = $config;
 
-        $this->setFormatAndTimeZone($user->getUserInfo());
+        $this->setFormatAndTimeZone();
     }
 
-    /**
-     * @param array $userInfo
-     */
-    protected function setFormatAndTimeZone(array $userInfo = [])
+    protected function setFormatAndTimeZone()
     {
-        if (!empty($userInfo)) {
-            $this->dateFormatLong = $userInfo['date_format_long'];
-            $this->dateFormatShort = $userInfo['date_format_short'];
-            $timeZone = $userInfo['time_zone'];
-        } else {
-            $settings = $this->config->getSettings(Schema::MODULE_NAME);
+        $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-            $this->dateFormatLong = $settings['date_format_long'];
-            $this->dateFormatShort = $settings['date_format_short'];
-            $timeZone = $settings['date_time_zone'];
-        }
+        $this->dateFormatLong = $settings['date_format_long'];
+        $this->dateFormatShort = $settings['date_format_short'];
+        $timeZone = $settings['date_time_zone'];
         $this->dateTimeZone = new \DateTimeZone($timeZone);
     }
 
@@ -120,8 +104,8 @@ class Date
      *
      * @param string $time
      * @param string $format
-     * @param bool   $toLocalTimeZone
-     * @param bool   $isLocalTimeZone
+     * @param bool $toLocalTimeZone
+     * @param bool $isLocalTimeZone
      *
      * @return string
      */
@@ -156,7 +140,7 @@ class Date
      * Gibt einen einfachen Zeitstempel zurück, welcher sich an UTC ausrichtet
      *
      * @param string $value
-     * @param bool   $isLocalTime
+     * @param bool $isLocalTime
      *
      * @return int
      */
@@ -193,7 +177,7 @@ class Date
      * Konvertiert einen Unixstamp in das MySQL-Datetime Format
      *
      * @param string $value
-     * @param bool   $isLocalTime
+     * @param bool $isLocalTime
      *
      * @return string
      */

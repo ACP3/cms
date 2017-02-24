@@ -7,26 +7,13 @@
 namespace ACP3\Modules\ACP3\Users\Model;
 
 use ACP3\Core\Helpers\Country;
-use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\System\Installer\Schema;
+use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class UserModel
- * @package ACP3\Modules\ACP3\Users\Model
- */
 class UserModel
 {
     const SALT_LENGTH = 16;
 
-    /**
-     * @var integer
-     */
-    protected $entriesPerPage = 0;
-    /**
-     * @var string
-     */
-    protected $language = '';
     /**
      * @var boolean
      */
@@ -44,26 +31,26 @@ class UserModel
      */
     protected $userInfo = [];
     /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    protected $config;
-    /**
      * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
     protected $userRepository;
+    /**
+     * @var Translator
+     */
+    private $translator;
 
     /**
      * UserModel constructor.
      *
-     * @param \ACP3\Core\Settings\SettingsInterface $config
+     * @param Translator $translator
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      */
     public function __construct(
-        SettingsInterface $config,
+        Translator $translator,
         Users\Model\Repository\UserRepository $userRepository
     ) {
-        $this->config = $config;
         $this->userRepository = $userRepository;
+        $this->translator = $translator;
     }
 
     /**
@@ -82,7 +69,7 @@ class UserModel
         $userId = (int)$userId;
 
         if (empty($this->userInfo[$userId])) {
-            $countries = Country::worldCountries($this->getLanguage());
+            $countries = Country::worldCountries($this->translator->getLocale());
             $info = $this->userRepository->getOneById($userId);
             if (!empty($info)) {
                 $info['country_formatted'] = !empty($info['country']) && isset($countries[$info['country']]) ? $countries[$info['country']] : '';
@@ -130,54 +117,6 @@ class UserModel
     public function setUserId($userId)
     {
         $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Returns the users default language
-     *
-     * @return string
-     */
-    public function getLanguage()
-    {
-        return $this->language;
-    }
-
-    /**
-     * @param string $language
-     *
-     * @return $this
-     */
-    public function setLanguage($language)
-    {
-        $userSettings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
-        $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
-
-        $this->language = $systemSettings['lang'];
-        if ($userSettings['language_override'] == 1 && !empty($language)) {
-            $this->language = $language;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     * @deprecated Use the \ACP3\Core\Helpers\ResultsPerPage::getResultsPerPage() method instead. Will be removed in version 4.5.0
-     */
-    public function getEntriesPerPage()
-    {
-        return $this->entriesPerPage;
-    }
-
-    /**
-     * @return $this
-     * @deprecated will be removed in version 4.5.0
-     */
-    public function setEntriesPerPage()
-    {
-        $this->entriesPerPage = (int)$this->config->getSettings(Schema::MODULE_NAME)['entries'];
 
         return $this;
     }

@@ -13,7 +13,7 @@ services:
   users.model.user_model:
     class: ACP3\Modules\ACP3\Users\Model\UserModel
     arguments:
-      - '@core.config'
+      - '@core.lang'
       - '@users.model.userrepository'
 
   users.model.users_model:

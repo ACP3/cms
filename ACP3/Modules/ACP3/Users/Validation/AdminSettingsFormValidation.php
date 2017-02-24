@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Users\Validation;
 use ACP3\Core;
 use ACP3\Core\Validation\AbstractFormValidation;
 
-/**
- * Class AdminSettingsFormValidation
- * @package ACP3\Modules\ACP3\Users\Validation
- */
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
 
@@ -24,16 +20,6 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('system', 'wrong_email_format')
-                ])
-            ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'language_override',
-                    'message' => $this->translator->t('users', 'select_language_override'),
-                    'extra' => [
-                        'haystack' => [0, 1]
-                    ]
                 ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,

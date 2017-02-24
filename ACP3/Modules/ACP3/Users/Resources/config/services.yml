@@ -19,7 +19,6 @@ services:
     arguments:
       - '@core.lang'
       - '@core.http.request'
-      - '@core.helpers.date'
       - '@core.helpers.forms'
 
   users.helpers.data_grid.column_renderer.user_roles_column_renderer:

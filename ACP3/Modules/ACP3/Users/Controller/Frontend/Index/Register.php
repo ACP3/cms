@@ -146,10 +146,6 @@ class Register extends Core\Controller\AbstractFrontendAction
                     'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd'], 'sha512'),
                     'pwd_salt' => $salt,
                     'mail' => $formData['mail'],
-                    'date_format_long' => $systemSettings['date_format_long'],
-                    'date_format_short' => $systemSettings['date_format_short'],
-                    'time_zone' => $systemSettings['date_time_zone'],
-                    'language' => $systemSettings['lang'],
                     'registration_date' => $this->date->getCurrentDateTime(),
                 ];
 

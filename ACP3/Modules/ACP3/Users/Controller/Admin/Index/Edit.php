@@ -88,8 +88,6 @@ class Edit extends AbstractFormAction
             $userRoles = $this->acl->getUserRoleIds($id);
             $this->view->assign(
                 $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
-                    $user['language'],
-                    $user['time_zone'],
                     $user['address_display'],
                     $user['birthday_display'],
                     $user['country_display'],
@@ -134,8 +132,6 @@ class Edit extends AbstractFormAction
             $this->adminFormValidation
                 ->setUserId($id)
                 ->validate($formData);
-
-            $formData['time_zone'] = $formData['date_time_zone'];
 
             $this->permissionsHelpers->updateUserRoles($formData['roles'], $id);
 

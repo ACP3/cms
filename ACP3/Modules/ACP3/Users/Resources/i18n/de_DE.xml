@@ -17,7 +17,6 @@
         <item key="admin_index_edit">Benutzer bearbeiten</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="admin_user_undeletable">Der Administrator kann nicht gelöscht werden.</item>
-        <item key="allow_language_override">Benutzern erlauben, Sprache selber festzulegen</item>
         <item key="birthday">Geburtstag</item>
         <item key="birthday_hide">Geburtstag verstecken</item>
         <item key="birthday_display_completely">Geburtstag vollständig anzeigen</item>
@@ -94,7 +93,6 @@
         <item key="select_country_display">Bitte geben Sie an, ob Ihre Nation im öffentlichen Profil angezeigt werden soll oder nicht.</item>
         <item key="select_enable_registration">Bitten wählen Sie aus, ob die Registrierung neuer Benutzer erlaubt werden soll oder nicht.</item>
         <item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten.</item>
-        <item key="select_language_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die Anzeigesprache selber festzulegen.</item>
         <item key="select_mail_display">Bitte geben Sie an, ob Ihre E-Mail-Adresse im öffentlichen Profil angezeigt werden soll oder nicht.</item>
         <item key="select_super_user">Bitte geben Sie an, ob der gewählte Benutzer Super User sein soll oder nicht.</item>
         <item key="send_email">E-Mail senden</item>
