@@ -82,7 +82,7 @@ class UserModel
         $userId = (int)$userId;
 
         if (empty($this->userInfo[$userId])) {
-            $countries = Country::worldCountries();
+            $countries = Country::worldCountries($this->getLanguage());
             $info = $this->userRepository->getOneById($userId);
             if (!empty($info)) {
                 $info['country_formatted'] = !empty($info['country']) && isset($countries[$info['country']]) ? $countries[$info['country']] : '';

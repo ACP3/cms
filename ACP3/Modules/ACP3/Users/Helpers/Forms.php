@@ -96,7 +96,11 @@ class Forms
      */
     public function generateWorldCountriesSelect($defaultValue = '')
     {
-        return $this->formsHelpers->choicesGenerator('country', Country::worldCountries(), $defaultValue);
+        return $this->formsHelpers->choicesGenerator(
+            'country',
+            Country::worldCountries($this->translator->getLocale()),
+            $defaultValue
+        );
     }
 
     /**
