@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-xx
+### Added
+- added the umpirsky/country-list lib, so that we have a localized list of the world countries
+
+### Changed
+- Removed the user specific short and long date formats, time zone and language because of low usage
+
 ### Fixed
 - Fixed the SMTP mailer validation in the system settings
 
