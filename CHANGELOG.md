@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - added the following two new template events to the users account index template
     - `users.account.index.header_bar`
     - `user.account.index.dashboard`
-- reworked the ajax-form jQuery pugin so that it is possible to execute callbacks after a successful AJAX request
+- reworked the ajax-form jQuery plugin so that it is possible to execute callbacks after a successful AJAX request
 
 ### Changed
 - Removed the user specific short and long date formats, time zone and language because of low usage
