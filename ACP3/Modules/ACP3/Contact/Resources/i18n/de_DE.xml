@@ -12,7 +12,7 @@
         <item key="contact">Kontakt</item>
         <item key="contact_body">%name% (%mail%) hat folgende Nachricht hinterlassen:
 
-            %message%
+%message%
         </item>
         <item key="contact_information">Kontakt Daten</item>
         <item key="contact_subject">Kontaktformular "%title%".</item>
@@ -29,9 +29,13 @@
         <item key="send_copy_to_sender">Kopie der Nachricht an mich senden.</item>
         <item key="send_mail_error">Beim Versenden der E-Mail ist ein Fehler aufgetreten.</item>
         <item key="send_mail_success">Die E-Mail wurde erfolgreich versendet.</item>
-        <item key="sender_body">Sie haben folgende Nachricht auf der Website "%title%" hinterlassen:
+        <item key="sender_body">Vielen Dank für Ihre Nachricht!
 
-            %message%
+Wir haben diese erhalten und werden uns so schnell wie möglich mit Ihnen in Verbindung setzen.
+
+Sie haben folgende Nachricht hinterlassen:
+
+%message%
         </item>
         <item key="sender_subject">Ihre Nachricht an "%title%".</item>
         <item key="telephone">Telefonnummer</item>
