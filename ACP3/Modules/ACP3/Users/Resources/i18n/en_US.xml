@@ -17,7 +17,6 @@
         <item key="admin_index_edit">Edit user</item>
         <item key="admin_index_settings">Settings</item>
         <item key="admin_user_undeletable">The administrator can't be deleted.</item>
-        <item key="allow_language_override">Allow users to override the default language</item>
         <item key="birthday">Birthday</item>
         <item key="birthday_hide">Hide birthday</item>
         <item key="birthday_display_completely">Display birthday completely</item>
@@ -94,7 +93,6 @@
         <item key="select_country_display">Please select whether you want to display your country in the public profile or not.</item>
         <item key="select_enable_registration">Please select whether users should be allowed to register on this website.</item>
         <item key="select_language">Please select the language in which you want to see the website.</item>
-        <item key="select_language_override">Please select whether users should be allowed to override the default language.</item>
         <item key="select_mail_display">Please select whether you want to display your E-mail address in the public profile or not.</item>
         <item key="select_super_user">Please select whether the user should be a super user or not.</item>
         <item key="send_email">Send E-mail</item>

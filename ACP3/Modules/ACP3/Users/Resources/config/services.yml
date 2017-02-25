@@ -18,8 +18,8 @@ services:
     class: ACP3\Modules\ACP3\Users\Helpers\Forms
     arguments:
       - '@core.lang'
+      - '@core.i18n.country_list'
       - '@core.http.request'
-      - '@core.helpers.date'
       - '@core.helpers.forms'
 
   users.helpers.data_grid.column_renderer.user_roles_column_renderer:

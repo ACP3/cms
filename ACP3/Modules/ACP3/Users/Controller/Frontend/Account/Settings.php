@@ -74,13 +74,10 @@ class Settings extends AbstractAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
         $user = $this->usersModel->getOneById($this->user->getUserId());
 
         $this->view->assign(
             $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
-                $user['language'],
-                $user['time_zone'],
                 $user['address_display'],
                 $user['birthday_display'],
                 $user['country_display'],
@@ -89,7 +86,6 @@ class Settings extends AbstractAction
         );
 
         return [
-            'language_override' => $settings['language_override'],
             'form' => array_merge($user, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];
@@ -104,17 +100,7 @@ class Settings extends AbstractAction
             function () {
                 $formData = $this->request->getPost()->all();
 
-                $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
-
-                $this->accountSettingsFormValidation
-                    ->setSettings($settings)
-                    ->validate($formData);
-
-                $formData['time_zone'] = $formData['date_time_zone'];
-
-                if ($settings['language_override'] == 0) {
-                    unset($formData['language']);
-                }
+                $this->accountSettingsFormValidation->validate($formData);
 
                 if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
                     $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);

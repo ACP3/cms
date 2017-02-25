@@ -8,7 +8,6 @@ use ACP3\Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer;
 use ACP3\Core\Helpers\Formatter\DateRange;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 class DateColumnRendererTest extends AbstractColumnRendererTest
 {
@@ -16,10 +15,6 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
      * @var Translator|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $langMock;
-    /**
-     * @var UserModel|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $userMock;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
@@ -44,24 +39,20 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
             ->setMethods(['t'])
             ->getMock();
         $this->dateTranslator = new DateTranslator($this->langMock);
-        $this->userMock = $this->getMockBuilder(UserModel::class)
-            ->disableOriginalConstructor()
-            ->getMock();
         $this->configMock = $this->getMockBuilder(SettingsInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
-        $this->userMock->expects($this->once())
-            ->method('getUserInfo')
+        $this->configMock->expects($this->once())
+            ->method('getSettings')
             ->willReturn([
                 'date_format_long' => 'Y-m-d H:i',
                 'date_format_short' => 'Y-m-d',
-                'time_zone' => 'Europe/Berlin',
+                'date_time_zone' => 'Europe/Berlin',
             ]);
 
         $this->date = new Date(
-            $this->userMock,
             $this->dateTranslator,
             $this->configMock
         );

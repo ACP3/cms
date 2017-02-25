@@ -1,4 +1,4 @@
-{extends file="asset:System/Partials/form_group.base.tpl"}
+{extends file="asset:System/Partials/form_group.input_base.tpl"}
 
 {block FORM_GROUP_LABEL_ID}for="{$name|replace:'_':'-'}"{/block}
 {block FORM_GROUP_FORM_FIELD}
@@ -11,6 +11,11 @@
             {if !empty($data_attributes) && is_array($data_attributes)}
                 {foreach $data_attributes as $attrName => $attrValue}
                     data-{$attrName}="{$attrValue}"
+                {/foreach}
+            {/if}
+            {if !empty($attributes) && is_array($attributes)}
+                {foreach $attributes as $attrName => $attrValue}
+                    {$attrName}="{$attrValue}"
                 {/foreach}
             {/if}
             {if (isset($required) && $required === true)} required{/if}

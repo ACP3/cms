@@ -5,18 +5,9 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\I18n\DictionaryCache as LanguageCache;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-/**
- * Class Translator
- * @package ACP3\Core\I18n
- */
 class Translator
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
-     */
-    protected $user;
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
@@ -50,18 +41,15 @@ class Translator
 
     /**
      * Translator constructor.
-     * @param UserModel $user
      * @param ApplicationPath $appPath
      * @param DictionaryCache $dictionaryCache
      * @param SettingsInterface $config
      */
     public function __construct(
-        UserModel $user,
         ApplicationPath $appPath,
         LanguageCache $dictionaryCache,
         SettingsInterface $config
     ) {
-        $this->user = $user;
         $this->appPath = $appPath;
         $this->dictionaryCache = $dictionaryCache;
         $this->config = $config;
@@ -86,10 +74,7 @@ class Translator
     public function getLocale()
     {
         if ($this->locale === '') {
-            $locale = $this->user->getLanguage();
-            $this->locale = $this->languagePackExists($locale) === true
-                ? $locale
-                : $this->config->getSettings(Schema::MODULE_NAME)['lang'];
+            $this->locale = $this->config->getSettings(Schema::MODULE_NAME)['lang'];
         }
 
         return $this->locale;

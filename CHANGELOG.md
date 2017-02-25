@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.6.0] - 2017-02-25
+### Added
+- added the umpirsky/country-list lib, so that we have a localized list of the world countries
+- added the possibility to add additional HTML attributes to the form_group.input_*.tpl partials
+- added the possibility to use input-groups for the form_group.input_*.tpl based partials 
+- added the following two new template events to the users account index template
+    - `users.account.index.header_bar`
+    - `user.account.index.dashboard`
+- reworked the ajax-form jQuery plugin so that it is possible to execute callbacks after a successful AJAX request
+
+### Changed
+- Removed the user specific short and long date formats, time zone and language because of low usage
+- do not hide the loading layer when getting redirected to another URL after performing an AJAX request
+- made the session settings a little bit more secure
+- run the session garbage collection with a probability of 1% instead of 10%
+
+### Fixed
+- Fixed the SMTP mailer validation in the system settings
+
 ## [4.5.0] - 2017-01-15
 ### Security
 - Updated the PHPMailer library to version 5.2.22 to fix various security issues
@@ -232,7 +251,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.5.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.6.0...HEAD
+[4.6.0]: https://github.com/ACP3/cms/compare/v4.5.0...v4.6.0
 [4.5.0]: https://github.com/ACP3/cms/compare/v4.4.4...v4.5.0
 [4.4.4]: https://github.com/ACP3/cms/compare/v4.4.3...v4.4.4
 [4.4.3]: https://github.com/ACP3/cms/compare/v4.4.2...v4.4.3

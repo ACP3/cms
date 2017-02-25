@@ -114,41 +114,10 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
 
     /**
      * @param array $formData
-     * @param int $languageOverride
      */
-    protected function validateUserSettings(array $formData, $languageOverride = 1)
+    protected function validateUserSettings(array $formData)
     {
-        if ($languageOverride == 1) {
-            $this->validator->addConstraint(
-                Core\Validation\ValidationRules\LanguagePackExistsValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'language',
-                    'message' => $this->translator->t('users', 'select_language')
-                ]);
-        }
         $this->validator
-            ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'date_format_long',
-                    'message' => $this->translator->t('system', 'type_in_long_date_format')
-                ])
-            ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'date_format_short',
-                    'message' => $this->translator->t('system', 'type_in_short_date_format')
-                ])
-            ->addConstraint(
-                Core\Validation\ValidationRules\TimeZoneExistsValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'date_time_zone',
-                    'messgae' => $this->translator->t('system', 'select_time_zone')
-                ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [

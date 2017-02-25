@@ -52,7 +52,7 @@ class AdminFormValidation extends AbstractUserFormValidation
                 ]);
 
         $this->validateAccountCoreData($formData, $this->userId);
-        $this->validateUserSettings($formData, 1);
+        $this->validateUserSettings($formData);
 
         if (isset($formData['new_pwd'])) {
             $this->validateNewPassword($formData, 'new_pwd', 'new_pwd_repeat');

@@ -12,9 +12,6 @@ use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @package ACP3\Core
- */
 class SessionHandler extends AbstractSessionHandler
 {
     /**
@@ -55,7 +52,7 @@ class SessionHandler extends AbstractSessionHandler
         $this->request = $request;
         $this->response = $response;
 
-        $this->configureSession();
+        $this->configureSession($this->request->getSymfonyRequest()->isSecure());
     }
 
     /**
@@ -105,7 +102,7 @@ class SessionHandler extends AbstractSessionHandler
 
             $this->gcCalled = false;
             $this->db->getConnection()->executeUpdate(
-                "DELETE FROM `{$this->db->getPrefix()}sessions` WHERE `session_starttime` + ? < ?",
+                "DELETE FROM `{$this->db->getPrefix()}sessions` WHERE `session_starttime` + ? < ?;",
                 [$this->expireTime, time()]
             );
         }
@@ -127,7 +124,7 @@ class SessionHandler extends AbstractSessionHandler
     public function read($sessionId)
     {
         $session = $this->db->fetchColumn(
-            "SELECT `session_data` FROM `{$this->db->getPrefix()}sessions` WHERE `session_id` = ?",
+            "SELECT `session_data` FROM `{$this->db->getPrefix()}sessions` WHERE `session_id` = ?;",
             [$sessionId]
         );
 
@@ -140,7 +137,7 @@ class SessionHandler extends AbstractSessionHandler
     public function write($sessionId, $data)
     {
         $this->db->getConnection()->executeUpdate(
-            "INSERT INTO `{$this->db->getPrefix()}sessions` (`session_id`, `session_starttime`, `session_data`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `session_data` = ?",
+            "INSERT INTO `{$this->db->getPrefix()}sessions` (`session_id`, `session_starttime`, `session_data`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `session_data` = ?;",
             [$sessionId, time(), $data, $data]
         );
 

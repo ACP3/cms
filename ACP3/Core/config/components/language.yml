@@ -2,7 +2,6 @@ services:
   core.lang:
     class: ACP3\Core\I18n\Translator
     arguments:
-      - '@users.model.user_model'
       - '@core.environment.application_path'
       - '@core.lang.dictionary_cache'
       - '@core.config'
@@ -13,3 +12,8 @@ services:
       - '@core.cache.system'
       - '@core.environment.application_path'
       - '@core.modules.vendors'
+
+  core.i18n.country_list:
+    class: ACP3\Core\I18n\CountryList
+    arguments:
+      - '@core.lang'

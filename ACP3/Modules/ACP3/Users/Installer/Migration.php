@@ -99,6 +99,13 @@ class Migration extends Modules\Installer\AbstractMigration
             46 => [
                 "ALTER TABLE `{pre}users` DROP COLUMN `entries`;",
                 "DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND `name` = 'entries_override';"
+            ],
+            47 => [
+                "ALTER TABLE `{pre}users` DROP COLUMN `date_format_long`;",
+                "ALTER TABLE `{pre}users` DROP COLUMN `date_format_short`;",
+                "ALTER TABLE `{pre}users` DROP COLUMN `time_zone`;",
+                "ALTER TABLE `{pre}users` DROP COLUMN `language`;",
+                "DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND `name` = 'language_override';"
             ]
         ];
     }

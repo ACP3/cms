@@ -57,10 +57,6 @@ class Settings extends Core\Controller\AbstractAdminAction
         $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
 
         return [
-            'languages' => $this->formsHelpers->yesNoCheckboxGenerator(
-                'language_override',
-                $settings['language_override']
-            ),
             'registration' => $this->formsHelpers->yesNoCheckboxGenerator(
                 'enable_registration',
                 $settings['enable_registration']
@@ -82,7 +78,6 @@ class Settings extends Core\Controller\AbstractAdminAction
 
             $data = [
                 'enable_registration' => $formData['enable_registration'],
-                'language_override' => $formData['language_override'],
                 'mail' => $formData['mail']
             ];
 

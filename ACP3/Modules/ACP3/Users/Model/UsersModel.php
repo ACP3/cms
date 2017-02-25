@@ -41,10 +41,6 @@ class UsersModel extends AbstractModel
             'address_display' => ColumnTypes::COLUMN_TYPE_BOOLEAN,
             'country' => ColumnTypes::COLUMN_TYPE_TEXT,
             'country_display' => ColumnTypes::COLUMN_TYPE_BOOLEAN,
-            'date_format_long' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'date_format_short' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'time_zone' => ColumnTypes::COLUMN_TYPE_RAW,
-            'language' => ColumnTypes::COLUMN_TYPE_RAW,
             'registration_date' => ColumnTypes::COLUMN_TYPE_DATETIME
         ];
     }

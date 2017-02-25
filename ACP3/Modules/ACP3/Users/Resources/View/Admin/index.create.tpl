@@ -6,7 +6,6 @@
             <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general"}</a></li>
             <li><a href="#tab-2" data-toggle="tab">{lang t="users|contact"}</a></li>
             <li><a href="#tab-3" data-toggle="tab">{lang t="users|address"}</a></li>
-            <li><a href="#tab-localization" data-toggle="tab">{lang t="users|localization"}</a></li>
             <li><a href="#tab-5" data-toggle="tab">{lang t="users|privacy"}</a></li>
             <li><a href="#tab-6" data-toggle="tab">{lang t="users|pwd"}</a></li>
         </ul>
@@ -30,36 +29,6 @@
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="zip" value=$form.zip maxlength=5 label={lang t="users|address_zip"}}
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="city" value=$form.city maxlength=80 label={lang t="users|address_city"}}
                 {include file="asset:System/Partials/form_group.select.tpl" options=$countries label={lang t="users|country"}}
-            </div>
-            <div id="tab-localization" class="tab-pane fade">
-                <div class="form-group">
-                    <label for="language" class="col-sm-2 control-label required">{lang t="users|language"}</label>
-
-                    <div class="col-sm-10">
-                        <select class="form-control" name="language" id="language" size="{count($languages)}" required>
-                            {foreach $languages as $row}
-                                <option value="{$row.iso}"{if $row.selected} selected="selected"{/if}>{$row.name}</option>
-                            {/foreach}
-                        </select>
-                    </div>
-                </div>
-                {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_long" value=$form.date_format_long required=true maxlength=20 label={lang t="system|date_format_long"} help={lang t="system|php_date_function"}}
-                {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_short" value=$form.date_format_short required=true maxlength=20 label={lang t="system|date_format_short"} help={lang t="system|php_date_function"}}
-                <div class="form-group">
-                    <label for="date-time-zone" class="col-sm-2 control-label required">{lang t="system|time_zone"}</label>
-
-                    <div class="col-sm-10">
-                        <select class="form-control" name="date_time_zone" id="date-time-zone">
-                            {foreach $time_zones as $continent => $countries}
-                                <optgroup label="{$continent}">
-                                    {foreach $countries as $country => $data}
-                                        <option value="{$country}"{$data.selected}>{$country}</option>
-                                    {/foreach}
-                                </optgroup>
-                            {/foreach}
-                        </select>
-                    </div>
-                </div>
             </div>
             <div id="tab-5" class="tab-pane fade">
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$mail_display required=true label={lang t="users|display_mail"}}

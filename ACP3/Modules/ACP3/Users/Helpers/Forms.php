@@ -1,15 +1,10 @@
 <?php
 namespace ACP3\Modules\ACP3\Users\Helpers;
 
-use ACP3\Core\Helpers\Country;
-use ACP3\Core\Helpers\Date;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\I18n\CountryList;
 use ACP3\Core\I18n\Translator;
 
-/**
- * Class Forms
- * @package ACP3\Modules\ACP3\Users\Helpers
- */
 class Forms
 {
     /**
@@ -21,30 +16,30 @@ class Forms
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Helpers\Date
-     */
-    protected $dateHelpers;
-    /**
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelpers;
+    /**
+     * @var CountryList
+     */
+    private $country;
 
     /**
-     * @param \ACP3\Core\I18n\Translator       $translator
+     * @param \ACP3\Core\I18n\Translator $translator
+     * @param CountryList $countryList
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Helpers\Date          $dateHelpers
-     * @param \ACP3\Core\Helpers\Forms         $formsHelpers
+     * @param \ACP3\Core\Helpers\Forms $formsHelpers
      */
     public function __construct(
         Translator $translator,
+        CountryList $countryList,
         RequestInterface $request,
-        Date $dateHelpers,
         \ACP3\Core\Helpers\Forms $formsHelpers
     ) {
         $this->translator = $translator;
         $this->request = $request;
-        $this->dateHelpers = $dateHelpers;
         $this->formsHelpers = $formsHelpers;
+        $this->country = $countryList;
     }
 
     /**
@@ -96,12 +91,14 @@ class Forms
      */
     public function generateWorldCountriesSelect($defaultValue = '')
     {
-        return $this->formsHelpers->choicesGenerator('country', Country::worldCountries(), $defaultValue);
+        return $this->formsHelpers->choicesGenerator(
+            'country',
+            $this->country->worldCountries(),
+            $defaultValue
+        );
     }
 
     /**
-     * @param string $language
-     * @param string $timeZone
      * @param int $displayAddress
      * @param int $displayBirthday
      * @param int $displayCountry
@@ -109,16 +106,12 @@ class Forms
      * @return array
      */
     public function fetchUserSettingsFormFields(
-        $language,
-        $timeZone,
         $displayAddress = 0,
         $displayBirthday = 0,
         $displayCountry = 0,
         $displayMail = 0
     ) {
         return [
-            'languages' => $this->translator->getLanguagePack($this->request->getPost()->get('language', $language)),
-            'time_zones' => $this->dateHelpers->getTimeZones($timeZone),
             'address_display' => $this->displayAddress($displayAddress),
             'birthday_display' => $this->displayBirthday($displayBirthday),
             'country_display' => $this->displayCountry($displayCountry),

@@ -7,7 +7,6 @@ use ACP3\Core\Date\DateTranslator;
 use ACP3\Core\Helpers\Formatter\DateRange;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 class DateRangeTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,11 +27,6 @@ class DateRangeTest extends \PHPUnit_Framework_TestCase
      */
     private $langMock;
     /**
-     * @var UserModel|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $userMock;
-
-    /**
      * @var DateRange
      */
     private $dateRange;
@@ -43,26 +37,22 @@ class DateRangeTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['t'])
             ->getMock();
-        $this->userMock = $this->getMockBuilder(UserModel::class)
-            ->disableOriginalConstructor()
-            ->getMock();
         $this->configMock = $this->getMockBuilder(SettingsInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
-        $this->userMock->expects($this->once())
-            ->method('getUserInfo')
+        $this->configMock->expects($this->once())
+            ->method('getSettings')
             ->willReturn([
                 'date_format_long' => 'Y-m-d H:i',
                 'date_format_short' => 'Y-m-d',
-                'time_zone' => 'Europe/Berlin',
+                'date_time_zone' => 'Europe/Berlin',
             ]);
 
         $this->dateTranslator = new DateTranslator($this->langMock);
 
         $this->date = new Date(
-            $this->userMock,
             $this->dateTranslator,
             $this->configMock
         );

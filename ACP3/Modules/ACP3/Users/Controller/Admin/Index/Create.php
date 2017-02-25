@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
 /**
@@ -72,14 +71,7 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
-
-        $this->view->assign(
-            $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
-                $systemSettings['lang'],
-                $systemSettings['date_time_zone']
-            )
-        );
+        $this->view->assign($this->get('users.helpers.forms')->fetchUserSettingsFormFields());
         $this->view->assign($this->get('users.helpers.forms')->fetchUserProfileFormFields());
 
         $defaults = [
@@ -91,8 +83,6 @@ class Create extends AbstractFormAction
             'house_number' => '',
             'zip' => '',
             'city' => '',
-            'date_format_long' => $systemSettings['date_format_long'],
-            'date_format_short' => $systemSettings['date_format_short']
         ];
 
         return [
@@ -119,7 +109,6 @@ class Create extends AbstractFormAction
             $formData = array_merge($formData, [
                 'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd'], 'sha512'),
                 'pwd_salt' => $salt,
-                'time_zone' => $formData['date_time_zone'],
                 'registration_date' => 'now',
             ]);
 

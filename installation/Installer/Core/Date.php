@@ -8,10 +8,6 @@ namespace ACP3\Installer\Core;
 
 use ACP3\Core\Date\DateTranslator;
 
-/**
- * Class Date
- * @package ACP3\Installer\Core
- */
 class Date extends \ACP3\Core\Date
 {
     /**
@@ -24,13 +20,17 @@ class Date extends \ACP3\Core\Date
     ) {
         $this->dateTranslator = $dateTranslator;
 
+        $this->setFormatAndTimeZone();
+    }
+
+    protected function setFormatAndTimeZone()
+    {
         $defaultTimeZone = date_default_timezone_get();
 
-        $settings = [
-            'date_format_long' => 'd.m.y, H:i',
-            'date_format_short' => 'd.m.y',
-            'time_zone' => !empty($defaultTimeZone) ? $defaultTimeZone : 'UTC',
-        ];
-        $this->setFormatAndTimeZone($settings);
+        $this->dateFormatLong = 'd.m.y, H:i';
+        $this->dateFormatShort = 'd.m.y';
+        $timeZone = !empty($defaultTimeZone) ? $defaultTimeZone : 'UTC';
+        $this->dateTimeZone = new \DateTimeZone($timeZone);
     }
+
 }

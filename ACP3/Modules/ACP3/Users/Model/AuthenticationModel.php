@@ -93,13 +93,7 @@ class AuthenticationModel
             $this->userModel
                 ->setIsAuthenticated(true)
                 ->setUserId($userData['id'])
-                ->setIsSuperUser($userData['super_user'])
-                ->setLanguage($userData['language'])
-                ->setEntriesPerPage();
-        } else {
-            $this->userModel
-                ->setEntriesPerPage()
-                ->setLanguage('');
+                ->setIsSuperUser($userData['super_user']);
         }
     }
 
@@ -200,7 +194,6 @@ class AuthenticationModel
         $this->sessionHandler->set(self::AUTH_NAME, [
             'id' => $this->userModel->getUserId(),
             'super_user' => $this->userModel->isSuperUser(),
-            'language' => $this->userModel->getLanguage()
         ]);
     }
 
