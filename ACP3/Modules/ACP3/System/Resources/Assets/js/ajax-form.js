@@ -168,13 +168,15 @@
                                 location.hash = hash;
                             }
                         }
+
+                        self.hideLoadingLayer();
                     }
                 } catch (err) {
                     console.log(err.message);
-                } finally {
+
                     self.hideLoadingLayer();
                 }
-            }).fail(function (jqXHR, textStatus, errorThrown) {
+            }).fail(function (jqXHR) {
                 self.hideLoadingLayer();
 
                 if (jqXHR.responseText.length > 0) {
