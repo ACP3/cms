@@ -54,6 +54,9 @@ class Migration implements Modules\Installer\MigrationInterface
             ],
             36 => [
                 "ALTER TABLE `{pre}menu_items` ADD INDEX `left_id` (`left_id`);"
+            ],
+            37 => [
+                "ALTER TABLE `{pre}menus` ADD UNIQUE KEY `index_name` (`index_name`);"
             ]
         ];
     }

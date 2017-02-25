@@ -33,7 +33,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 36;
+        return 37;
     }
 
     /**
@@ -46,7 +46,8 @@ class Schema implements Modules\Installer\SchemaInterface
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `index_name` VARCHAR(10) NOT NULL,
                 `title` VARCHAR(120) NOT NULL,
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `index_name` (`index_name`)
             ) {ENGINE} {CHARSET};",
             "CREATE TABLE `{pre}menu_items` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,

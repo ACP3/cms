@@ -68,8 +68,8 @@ class Schema implements Modules\Installer\SchemaInterface
                 `country_display` TINYINT(1) UNSIGNED NOT NULL,
                 `registration_date` DATETIME NOT NULL,
                 PRIMARY KEY (`id`),
-                KEY `nickname` (`nickname`),
-                KEY `mail` (`mail`)
+                UNIQUE KEY `nickname` (`nickname`),
+                UNIQUE KEY `mail` (`mail`)
             ) {ENGINE} {CHARSET};"
         ];
     }

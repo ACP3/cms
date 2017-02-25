@@ -108,8 +108,8 @@ class Migration extends Modules\Installer\AbstractMigration
                 "DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND `name` = 'language_override';"
             ],
             48 => [
-                "ALTER TABLE `{pre}users` ADD KEY `nickname` (`nickname`);",
-                "ALTER TABLE `{pre}users` ADD KEY `mail` (`mail`);",
+                "ALTER TABLE `{pre}users` ADD UNIQUE KEY `nickname` (`nickname`);",
+                "ALTER TABLE `{pre}users` ADD UNIQUE KEY `mail` (`mail`);",
             ]
         ];
     }
