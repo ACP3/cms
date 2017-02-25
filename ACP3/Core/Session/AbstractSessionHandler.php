@@ -6,10 +6,6 @@
 
 namespace ACP3\Core\Session;
 
-/**
- * Class AbstractSessionHandler
- * @package ACP3\Core\Session
- */
 abstract class AbstractSessionHandler implements SessionHandlerInterface
 {
     /**
@@ -19,25 +15,32 @@ abstract class AbstractSessionHandler implements SessionHandlerInterface
     /**
      * @var integer
      */
-    protected $gcProbability = 10;
+    protected $gcProbability = 1;
+    /**
+     * @var int
+     */
+    protected $gcDivisor = 100;
 
     /**
      * Configures the session
+     * @param bool $isSecure
      */
-    protected function configureSession()
+    protected function configureSession($isSecure = false)
     {
         if (session_status() == PHP_SESSION_NONE) {
             // Configure the php.ini session settings
             ini_set('session.name', self::SESSION_NAME);
             ini_set('session.use_trans_sid', 0);
-            ini_set('session.use_cookies', 1);
-            ini_set('session.use_only_cookies', 1);
-            ini_set('session.cookie_httponly', 1);
+            ini_set('session.use_cookies', 'on');
+            ini_set('session.use_only_cookies', 'on');
+            ini_set('session.cookie_httponly', 'on');
+            ini_set('session.use_strict_mode', 'on');
+            ini_set('session.cookie_secure', $isSecure ? 'on' : 'off');
 
             // Session GC
             ini_set('session.gc_maxlifetime', $this->expireTime);
             ini_set('session.gc_probability', $this->gcProbability);
-            ini_set('session.gc_divisor', 100);
+            ini_set('session.gc_divisor', $this->gcDivisor);
 
             // Set our own session handling methods
             ini_set('session.save_handler', 'user');

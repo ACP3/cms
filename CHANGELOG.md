@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Removed the user specific short and long date formats, time zone and language because of low usage
 - do not hide the loading layer when getting redirected to another URL after performing an AJAX request
+- made the session settings a little bit more secure
+- run the session garbage collection with a probability of 1% instead of 10%
 
 ### Fixed
 - Fixed the SMTP mailer validation in the system settings
