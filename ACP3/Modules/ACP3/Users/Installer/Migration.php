@@ -106,6 +106,10 @@ class Migration extends Modules\Installer\AbstractMigration
                 "ALTER TABLE `{pre}users` DROP COLUMN `time_zone`;",
                 "ALTER TABLE `{pre}users` DROP COLUMN `language`;",
                 "DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND `name` = 'language_override';"
+            ],
+            48 => [
+                "ALTER TABLE `{pre}users` ADD KEY `nickname` (`nickname`);",
+                "ALTER TABLE `{pre}users` ADD KEY `mail` (`mail`);",
             ]
         ];
     }
