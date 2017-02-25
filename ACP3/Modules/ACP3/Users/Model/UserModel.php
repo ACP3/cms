@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Users\Model;
 
-use ACP3\Core\Helpers\Country;
+use ACP3\Core\I18n\CountryList;
 use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Users;
 
@@ -38,19 +38,26 @@ class UserModel
      * @var Translator
      */
     private $translator;
+    /**
+     * @var CountryList
+     */
+    private $countryList;
 
     /**
      * UserModel constructor.
      *
      * @param Translator $translator
+     * @param CountryList $countryList
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      */
     public function __construct(
         Translator $translator,
+        CountryList $countryList,
         Users\Model\Repository\UserRepository $userRepository
     ) {
         $this->userRepository = $userRepository;
         $this->translator = $translator;
+        $this->countryList = $countryList;
     }
 
     /**
@@ -69,10 +76,10 @@ class UserModel
         $userId = (int)$userId;
 
         if (empty($this->userInfo[$userId])) {
-            $countries = Country::worldCountries($this->translator->getLocale());
+            $countries = $this->countryList->worldCountries();
             $info = $this->userRepository->getOneById($userId);
             if (!empty($info)) {
-                $info['country_formatted'] = !empty($info['country']) && isset($countries[$info['country']]) ? $countries[$info['country']] : '';
+                $info['country_formatted'] = isset($countries[$info['country']]) ? $countries[$info['country']] : '';
                 $this->userInfo[$userId] = $info;
             }
         }

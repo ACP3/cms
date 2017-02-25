@@ -18,6 +18,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Helpers\Forms
     arguments:
       - '@core.lang'
+      - '@core.i18n.country_list'
       - '@core.http.request'
       - '@core.helpers.forms'
 

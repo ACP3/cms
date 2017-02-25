@@ -14,6 +14,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Model\UserModel
     arguments:
       - '@core.lang'
+      - '@core.i18n.country_list'
       - '@users.model.userrepository'
 
   users.model.users_model:

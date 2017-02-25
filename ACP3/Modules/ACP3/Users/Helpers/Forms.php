@@ -1,8 +1,8 @@
 <?php
 namespace ACP3\Modules\ACP3\Users\Helpers;
 
-use ACP3\Core\Helpers\Country;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\I18n\CountryList;
 use ACP3\Core\I18n\Translator;
 
 class Forms
@@ -19,20 +19,27 @@ class Forms
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelpers;
+    /**
+     * @var CountryList
+     */
+    private $country;
 
     /**
-     * @param \ACP3\Core\I18n\Translator       $translator
+     * @param \ACP3\Core\I18n\Translator $translator
+     * @param CountryList $countryList
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Helpers\Forms         $formsHelpers
+     * @param \ACP3\Core\Helpers\Forms $formsHelpers
      */
     public function __construct(
         Translator $translator,
+        CountryList $countryList,
         RequestInterface $request,
         \ACP3\Core\Helpers\Forms $formsHelpers
     ) {
         $this->translator = $translator;
         $this->request = $request;
         $this->formsHelpers = $formsHelpers;
+        $this->country = $countryList;
     }
 
     /**
@@ -86,7 +93,7 @@ class Forms
     {
         return $this->formsHelpers->choicesGenerator(
             'country',
-            Country::worldCountries($this->translator->getLocale()),
+            $this->country->worldCountries(),
             $defaultValue
         );
     }
