@@ -143,34 +143,32 @@
                 }
             }).done(function (responseData) {
                 try {
-                    if (responseData.redirect_url) {
-                        window.location.href = responseData.redirect_url;
+                    var $content = $(self.settings.targetElement);
+
+                    self.scrollIntoView($content);
+
+                    if (responseData.success === false) {
+                        self.handleFormErrorMessages($form, responseData.content);
                     } else {
-                        var $content = $(self.settings.targetElement),
-                            offsetTop = $content.offset().top;
+                        var callback = $form.data('ajax-form-complete-callback');
 
-                        // Scroll to the beginning of the content area, if the current viewport is near the bottom
-                        if ($(document).scrollTop() > offsetTop) {
-                            $('html, body').animate(
-                                {
-                                    scrollTop: offsetTop
-                                },
-                                'fast'
-                            );
-                        }
-
-                        if (responseData.success === false) {
-                            self.handleFormErrorMessages($form, responseData.content);
+                        if (typeof window[callback] === 'function') {
+                            window[callback](responseData);
                         } else {
+                            if (responseData.redirect_url) {
+                                window.location.href = responseData.redirect_url;
+                                return;
+                            }
+
                             $content.html(responseData);
 
                             if (typeof hash !== "undefined") {
                                 location.hash = hash;
                             }
                         }
-
-                        self.hideLoadingLayer();
                     }
+
+                    self.hideLoadingLayer();
                 } catch (err) {
                     console.log(err.message);
 
@@ -210,6 +208,24 @@
                 $loadingLayer.hide().fadeIn();
             } else {
                 $loadingLayer.fadeIn();
+            }
+        },
+        /**
+         * Scroll to the beginning of the content area, if the current viewport is near the bottom
+         *
+         * @param $content
+         */
+        scrollIntoView: function ($content) {
+            var offsetTop = $content.offset().top;
+
+            // Scroll to the beginning of the content area, if the current viewport is near the bottom
+            if ($(document).scrollTop() > offsetTop) {
+                $('html, body').animate(
+                    {
+                        scrollTop: offsetTop
+                    },
+                    'fast'
+                );
             }
         },
         hideLoadingLayer: function () {
