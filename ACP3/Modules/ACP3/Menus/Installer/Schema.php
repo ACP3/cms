@@ -33,7 +33,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 35;
+        return 36;
     }
 
     /**
@@ -62,6 +62,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 `target` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`),
                 INDEX `foreign_block_id` (`block_id`),
+                INDEX `left_id` (`left_id`),
                 FOREIGN KEY (`block_id`) REFERENCES `{pre}menus` (`id`) ON DELETE CASCADE
             ) {ENGINE} {CHARSET};"
         ];
