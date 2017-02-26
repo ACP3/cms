@@ -23,7 +23,7 @@ class ContactsModel extends AbstractModel
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     protected function getAllowedColumns()
     {
