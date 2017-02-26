@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2017-xx-xx
+### Added
+- added several table indexes to improve the performance with large databases
+
+### Changed
+- reworked the form error handling when performing AJAX requests
+- the submit button, which has triggered the AJAX request, gets disabled now to prevent from submitting the form twice
+
 ## [4.6.2] - 2017-02-25
 ### Fixed
 - Added the umpirsky/country-list library to the acp3/core package
