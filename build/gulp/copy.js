@@ -20,7 +20,8 @@ module.exports = function (gulp, plugins) {
                         nodeBasePath + '/bootstrap/dist/js/bootstrap.min.js',
                         nodeBasePath + '/fancybox/source/jquery.fancybox.pack.js',
                         nodeBasePath + '/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-                        nodeBasePath + '/html5shiv/dist/html5shiv.min.js'
+                        nodeBasePath + '/html5shiv/dist/html5shiv.min.js',
+                        nodeBasePath + '/js-cookie/src/js.cookie.js'
                     ],
                     'dest': systemBasePath + '/js'
                 },

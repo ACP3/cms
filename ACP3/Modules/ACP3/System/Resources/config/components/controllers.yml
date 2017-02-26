@@ -24,6 +24,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
+      - '@core.helpers.secure'
       - '@system.validator.settings'
 
   system.controller.admin.index.index:

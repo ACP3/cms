@@ -48,7 +48,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 65;
+        return 66;
     }
 
     /**
@@ -100,6 +100,8 @@ class Schema implements Modules\Installer\SchemaInterface
             'cache_lifetime' => 3600,
             'cache_images' => true,
             'cache_vary_user' => 0,
+            'cookie_consent_is_enabled' => 0,
+            'cookie_consent_text' => '',
             'date_format_long' => '',
             'date_format_short' => '',
             'date_time_zone' => '',

@@ -24,6 +24,10 @@ class Libraries
             'enabled' => true,
             'js' => 'jquery.min.js'
         ],
+        'js-cookie' => [
+            'enabled' => true,
+            'js' => 'js.cookie.js',
+        ],
         'fancybox' => [
             'enabled' => false,
             'dependencies' => ['jquery'],

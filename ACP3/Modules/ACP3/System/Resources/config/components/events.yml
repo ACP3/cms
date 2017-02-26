@@ -28,3 +28,11 @@ services:
       - '@core.view'
     tags:
       - { name: core.eventListener, event: layout.content_before, method: renderInvalidPageCacheAlert }
+
+  system.event.listener.render_cookie_consent_listener:
+    class: ACP3\Modules\ACP3\System\Event\Listener\RenderCookieConsentListener
+    arguments:
+      - '@core.config'
+      - '@core.view'
+    tags:
+      - { name: core.eventListener, event: layout.content_before, method: renderCookieConsent }

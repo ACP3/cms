@@ -12,6 +12,7 @@
         <item key="acp3_up_to_date">You're already using the latest version of ACP3.</item>
         <item key="action">Action</item>
         <item key="activate_module"><![CDATA[The module &quot;%s&quot; is disabled, whereby certain features can be limited.<br />Please enable the module, to resolve this problem.]]></item>
+        <item key="accept">Accept</item>
         <item key="additional_javascript_files">Additional JavaScript files</item>
         <item key="additional_javascript_files_description">The javascript files have to be located in the &quot;js&quot; directory. Please separate each file with a comma.</item>
         <item key="additional_stylesheets">Additional stylesheets</item>
@@ -54,6 +55,7 @@
         <item key="confirm_delete">Do you really want to delete the marked entries?</item>
         <item key="confirm_delete_multiple">Do you really want to delete the {items} selected entries?</item>
         <item key="confirm_delete_single">Do you really want to delete the selected entry?</item>
+        <item key="cookie_consent_text">Cookie consent text</item>
         <item key="could_not_complete_request">Because of an error the request could not complete.</item>
         <item key="create_error">While creating the entry an error has occurred.</item>
         <item key="create_success">The entry has been successfully created.</item>
@@ -109,6 +111,7 @@
         <item key="email">E-mail</item>
         <item key="email_address">E-mail address</item>
         <item key="enable">Enable</item>
+        <item key="enable_cookie_consent">Enable cookie consent</item>
         <item key="enable_following_modules_first">To install the module you have to enable the following modules first:
             %modules%
         </item>
@@ -260,6 +263,7 @@
         <item key="select_date">Please complete the details of the release date and end date.</item>
         <item key="select_date_format">Please select whether the long or the short date format to be used.</item>
         <item key="select_editor">Please select whether you want to use a WYSIWYG editor or a simple textarea.</item>
+        <item key="select_enable_cookie_consent">Please select whether you want to display the cookie consent or not.</item>
         <item key="select_enable_page_cache">Please select whether you want to enabled the page cache or not.</item>
         <item key="select_language">Please select the language in which you want to see the website.</item>
         <item key="select_mailer_type">Please select the mailer type.</item>

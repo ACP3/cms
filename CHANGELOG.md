@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-xx
 ### Added
+- added the cookie consent to the system configuration
 - added several table indexes to improve the performance with large databases
 - extended the capabilities of the contact module with the ability of persisting the contact form messages into a database table
 
