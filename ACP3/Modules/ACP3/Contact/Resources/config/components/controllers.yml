@@ -1,7 +1,9 @@
 services:
   contact.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Index
-    parent: core.controller.admin
+    arguments:
+      - '@core.context.frontend'
+      - '@contact.model.repository.data_grid_repository'
 
   contact.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Settings
@@ -22,6 +24,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@contact.validator'
+      - '@contact.model.contacts_model'
       - '@contact.model.contact_form_model'
 
   contact.controller.widget.index.index:

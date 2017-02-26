@@ -1,9 +1,8 @@
-{extends file="asset:System/layout.header-bar.tpl"}
+{extends file="asset:System/layout.admin-grid.tpl"}
 
 {block HEADER_BAR_OPTIONS}
     {check_access mode="link" path="acp/contact/index/settings" class="glyphicon glyphicon-cog"}
 {/block}
-{block CONTENT_AFTER_HEADER_BAR}
-    {redirect_message}
-    {include file="asset:System/Partials/no_results.tpl" no_results_text={lang t="system|select_menu_item"}}
+{block ADMIN_GRID_CONTENT}
+    {include file="asset:System/Partials/datagrid.tpl" dataTable=$grid}
 {/block}

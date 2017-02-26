@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - 2017-xx-xx
 ### Added
 - added several table indexes to improve the performance with large databases
+- extended the capabilities of the contact module with the ability of persisting the contact form messages into a database table
 
 ### Changed
 - reworked the form error handling when performing AJAX requests
