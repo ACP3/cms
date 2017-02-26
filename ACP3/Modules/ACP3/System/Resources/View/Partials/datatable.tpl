@@ -9,6 +9,7 @@
                 ],
                 iDisplayLength: {$dt.records_per_page},
                 stateSave: true,
+                autoWidth: false,
                 {if isset($dt.sort_col, $dt.sort_dir)}
                 sorting: [
                     [ {$dt.sort_col}, "{$dt.sort_dir}" ]
