@@ -208,7 +208,9 @@
                 $loadingLayer.fadeIn();
             }
 
-            $submitButton.prop('disabled', true);
+            if (typeof $submitButton !== "undefined") {
+                $submitButton.prop('disabled', true);
+            }
         },
         /**
          * Scroll to the beginning of the content area, if the current viewport is near the bottom
@@ -231,7 +233,9 @@
         hideLoadingLayer: function ($submitButton) {
             $('#loading-layer').stop().fadeOut();
 
-            $submitButton.prop('disabled', false);
+            if (typeof $submitButton !== "undefined") {
+                $submitButton.prop('disabled', false);
+            }
         },
         handleFormErrorMessages: function ($form, errorMessagesHtml) {
             var $errorBox = $('#error-box'),
