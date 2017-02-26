@@ -143,10 +143,6 @@
                 }
             }).done(function (responseData) {
                 try {
-                    var $content = $(self.settings.targetElement);
-
-                    self.scrollIntoView($content);
-
                     var callback = $form.data('ajax-form-complete-callback');
 
                     if (typeof window[callback] === 'function') {
@@ -157,7 +153,9 @@
                             return;
                         }
 
-                        $content.html(responseData);
+                        self.scrollIntoView();
+
+                        $(self.settings.targetElement).html(responseData);
 
                         if (typeof hash !== "undefined") {
                             location.hash = hash;
@@ -175,6 +173,7 @@
 
                 if (jqXHR.status === 400) {
                     self.handleFormErrorMessages($form, jqXHR.responseText);
+                    self.scrollIntoView();
                 } else if (jqXHR.responseText.length > 0) {
                     document.open();
                     document.write(jqXHR.responseText);
@@ -214,13 +213,10 @@
         },
         /**
          * Scroll to the beginning of the content area, if the current viewport is near the bottom
-         *
-         * @param $content
          */
-        scrollIntoView: function ($content) {
-            var offsetTop = $content.offset().top;
+        scrollIntoView: function () {
+            var offsetTop = $(self.settings.targetElement).offset().top;
 
-            // Scroll to the beginning of the content area, if the current viewport is near the bottom
             if ($(document).scrollTop() > offsetTop) {
                 $('html, body').animate(
                     {
