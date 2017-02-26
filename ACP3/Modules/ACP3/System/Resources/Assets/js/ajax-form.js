@@ -187,24 +187,17 @@
             if ($loadingLayer.length === 0) {
                 var $body = $('body'),
                     loadingText = $(this.element).data('ajax-form-loading-text') || '',
-                    windowHeight = $(window).outerHeight(true),
-                    html = '<div id="loading-layer" style="height: ' + windowHeight + 'px"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>';
+                    html = '<div id="loading-layer" class="loading-layer"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>';
 
                 $(html).appendTo($body);
 
-                $loadingLayer = $($loadingLayer.selector);
+                setTimeout(function() {
+                    $loadingLayer = $($loadingLayer.selector);
 
-                $loadingLayer.show();
-                var $heading = $loadingLayer.find('h1'),
-                    headingHeight = $heading.height();
-
-                $heading.css({
-                    marginTop: (Math.round(windowHeight / 2) - headingHeight) + 'px'
-                });
-
-                $loadingLayer.hide().fadeIn();
+                    $loadingLayer.addClass('loading-layer__active');
+                }, 1);
             } else {
-                $loadingLayer.fadeIn();
+                $loadingLayer.addClass('loading-layer__active');
             }
 
             if (typeof $submitButton !== "undefined") {
@@ -227,7 +220,7 @@
             }
         },
         hideLoadingLayer: function ($submitButton) {
-            $('#loading-layer').stop().fadeOut();
+            $('#loading-layer').removeClass('loading-layer__active');
 
             if (typeof $submitButton !== "undefined") {
                 $submitButton.prop('disabled', false);
