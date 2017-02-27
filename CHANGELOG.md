@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - added the cookie consent to the system configuration
 - added several table indexes to improve the performance with large databases
 - extended the capabilities of the contact module with the ability of persisting the contact form messages into a database table
+- the `Upload::moveFile()` method now attempts to create the desired upload folder by itself if it does not already exist
+- the `RewriteInternalUri()` class can now rewrite inline URIs too
 
 ### Changed
 - reworked the form error handling when performing AJAX requests
