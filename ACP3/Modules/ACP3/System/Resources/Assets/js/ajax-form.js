@@ -208,7 +208,7 @@
          * Scroll to the beginning of the content area, if the current viewport is near the bottom
          */
         scrollIntoView: function () {
-            var offsetTop = $(self.settings.targetElement).offset().top;
+            var offsetTop = $(this.settings.targetElement).offset().top;
 
             if ($(document).scrollTop() > offsetTop) {
                 $('html, body').animate(
