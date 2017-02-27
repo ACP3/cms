@@ -16,6 +16,7 @@ use ACP3\Installer\Modules\Install\Controller\AbstractAction;
 use ACP3\Installer\Modules\Install\Model\InstallModel;
 use ACP3\Installer\Modules\Install\Validation\FormValidation;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class Index
@@ -146,13 +147,13 @@ class Index extends AbstractAction
 
     /**
      * @param \Exception $exception
-     * @return array|JsonResponse
+     * @return array|Response
      */
     private function renderErrorBoxOnFailedFormValidation(\Exception $exception)
     {
         $errors = $this->get('core.helpers.alerts')->errorBox($exception->getMessage());
         if ($this->request->isXmlHttpRequest()) {
-            return new JsonResponse(['success' => false, 'content' => $errors]);
+            return new Response($errors, 400);
         }
 
         return ['error_msg' => $errors];

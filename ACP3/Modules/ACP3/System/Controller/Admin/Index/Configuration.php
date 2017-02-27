@@ -27,19 +27,25 @@ class Configuration extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation
      */
     protected $systemValidator;
+    /**
+     * @var Core\Helpers\Secure
+     */
+    protected $secure;
 
     /**
      * Configuration constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
-     * @param \ACP3\Core\Helpers\Forms                                         $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\Helpers\Secure $secure
      * @param \ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation $systemValidator
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
+        Core\Helpers\Secure $secure,
         System\Validation\AdminSettingsFormValidation $systemValidator
     ) {
         parent::__construct($context);
@@ -47,6 +53,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->systemValidator = $systemValidator;
+        $this->secure = $secure;
     }
 
     /**
@@ -73,6 +80,10 @@ class Configuration extends Core\Controller\AbstractAdminAction
         ];
 
         return [
+            'cookie_consent' => $this->formsHelper->yesNoCheckboxGenerator(
+                'cookie_consent_is_enabled',
+                $systemSettings['cookie_consent_is_enabled']
+            ),
             'entries' => $this->formsHelper->recordsPerPage($systemSettings['entries']),
             'wysiwyg' => $this->fetchWysiwygEditors($systemSettings),
             'languages' => $this->translator->getLanguagePack($systemSettings['lang']),
@@ -126,10 +137,12 @@ class Configuration extends Core\Controller\AbstractAdminAction
                 $this->systemValidator->validate($formData);
 
                 $data = [
+                    'cookie_consent_is_enabled' => (int)$formData['cookie_consent_is_enabled'],
+                    'cookie_consent_text' => $this->secure->strEncode($formData['cookie_consent_text'], true),
                     'cache_images' => (int)$formData['cache_images'],
                     'cache_lifetime' => (int)$formData['cache_lifetime'],
-                    'date_format_long' => $this->get('core.helpers.secure')->strEncode($formData['date_format_long']),
-                    'date_format_short' => $this->get('core.helpers.secure')->strEncode($formData['date_format_short']),
+                    'date_format_long' => $this->secure->strEncode($formData['date_format_long']),
+                    'date_format_short' => $this->secure->strEncode($formData['date_format_short']),
                     'date_time_zone' => $formData['date_time_zone'],
                     'entries' => (int)$formData['entries'],
                     'flood' => (int)$formData['flood'],
@@ -147,7 +160,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
                     'maintenance_mode' => (int)$formData['maintenance_mode'],
                     'page_cache_is_enabled' => (int)$formData['page_cache_is_enabled'],
                     'page_cache_purge_mode' => (int)$formData['page_cache_purge_mode'],
-                    'site_title' => $this->get('core.helpers.secure')->strEncode($formData['site_title']),
+                    'site_title' => $this->secure->strEncode($formData['site_title']),
                     'wysiwyg' => $formData['wysiwyg']
                 ];
 

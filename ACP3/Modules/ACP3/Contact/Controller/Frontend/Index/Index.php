@@ -31,12 +31,17 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var Contact\Model\ContactFormModel
      */
     protected $contactFormModel;
+    /**
+     * @var Contact\Model\ContactsModel
+     */
+    protected $contactsModel;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Contact\Validation\FormValidation $formValidation
+     * @param Contact\Model\ContactsModel $contactsModel
      * @param Contact\Model\ContactFormModel $contactFormModel
      */
     public function __construct(
@@ -44,6 +49,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Contact\Validation\FormValidation $formValidation,
+        Contact\Model\ContactsModel $contactsModel,
         Contact\Model\ContactFormModel $contactFormModel
     ) {
         parent::__construct($context);
@@ -52,6 +58,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->formTokenHelper = $formTokenHelper;
         $this->formValidation = $formValidation;
         $this->contactFormModel = $contactFormModel;
+        $this->contactsModel = $contactsModel;
     }
 
     /**
@@ -80,6 +87,8 @@ class Index extends Core\Controller\AbstractFrontendAction
             function () {
                 $formData = $this->request->getPost()->all();
                 $this->formValidation->validate($formData);
+
+                $this->contactsModel->save($formData);
 
                 $bool = $this->contactFormModel->sendContactFormEmail($formData);
 

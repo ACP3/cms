@@ -25,23 +25,33 @@
   }
 }
 
-/* AJAX loading layer */
-#loading-layer {
-  width: 100%;
+.loading-layer {
+  align-items: center;
   background: rgba(255, 255, 255, 0.5);
-  display: none;
-  z-index: 999999;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  height: 100%;
+  opacity: 0;
+  overflow: hidden;
   position: fixed;
   top: 0;
-  left: 0;
+  transition: opacity 0.5s, visibility 0.5s;
+  -webkit-transition: opacity 0.5s, visibility 0.5s;
+  -moz-transition: opacity 0.5s, visibility 0.5s;
+  visibility: hidden;
+  width: 100%;
+  z-index: 999999;
+
+  &.loading-layer__active {
+    opacity: 1;
+    visibility: visible;
+  }
 
   h1 {
     width: 100%;
     margin: 0;
     font-size: 26px;
-    position: fixed;
-    top: 0;
-    left: 0;
     text-align: center;
   }
 

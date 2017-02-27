@@ -85,6 +85,16 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
+                ])
+            ->addConstraint(
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'cookie_consent_is_enabled',
+                    'message' => $this->translator->t('system', 'select_enable_cookie_consent'),
+                    'extra' => [
+                        'haystack' => [0, 1]
+                    ]
                 ]);
     }
 

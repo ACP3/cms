@@ -25,7 +25,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 40;
+        return 41;
     }
 
     /**
@@ -33,7 +33,16 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function createTables()
     {
-        return [];
+        return [
+            "CREATE TABLE `{pre}contacts` (
+                `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `date` DATETIME NOT NULL,
+                `mail` VARCHAR(120) NOT NULL,
+                `name` VARCHAR(80) NOT NULL,
+                `message` TEXT NOT NULL,
+                PRIMARY KEY (`id`)
+            ) {ENGINE} {CHARSET};"
+        ];
     }
 
     /**

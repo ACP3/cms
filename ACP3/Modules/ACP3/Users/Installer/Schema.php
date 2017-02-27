@@ -33,7 +33,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 47;
+        return 48;
     }
 
     /**
@@ -67,7 +67,9 @@ class Schema implements Modules\Installer\SchemaInterface
                 `country` CHAR(2) NOT NULL,
                 `country_display` TINYINT(1) UNSIGNED NOT NULL,
                 `registration_date` DATETIME NOT NULL,
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `nickname` (`nickname`),
+                UNIQUE KEY `mail` (`mail`)
             ) {ENGINE} {CHARSET};"
         ];
     }

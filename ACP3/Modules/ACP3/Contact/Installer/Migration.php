@@ -50,6 +50,16 @@ class Migration extends Modules\Installer\AbstractMigration
             40 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'mobile_phone', '');",
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'picture_credits', '');"
+            ],
+            41 => [
+                "CREATE TABLE `{pre}contacts` (
+                    `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                    `date` DATETIME NOT NULL,
+                    `mail` VARCHAR(120) NOT NULL,
+                    `name` VARCHAR(80) NOT NULL,
+                    `message` TEXT NOT NULL,
+                    PRIMARY KEY (`id`)
+                ) {ENGINE} {CHARSET};"
             ]
         ];
     }

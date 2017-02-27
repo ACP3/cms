@@ -139,86 +139,77 @@
                 processData: processData,
                 contentType: processData ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,
                 beforeSend: function () {
-                    self.showLoadingLayer();
+                    self.showLoadingLayer($submitButton);
                 }
             }).done(function (responseData) {
                 try {
-                    var $content = $(self.settings.targetElement);
+                    var callback = $form.data('ajax-form-complete-callback');
 
-                    self.scrollIntoView($content);
-
-                    if (responseData.success === false) {
-                        self.handleFormErrorMessages($form, responseData.content);
+                    if (typeof window[callback] === 'function') {
+                        window[callback](responseData);
                     } else {
-                        var callback = $form.data('ajax-form-complete-callback');
+                        if (responseData.redirect_url) {
+                            window.location.href = responseData.redirect_url;
+                            return;
+                        }
 
-                        if (typeof window[callback] === 'function') {
-                            window[callback](responseData);
-                        } else {
-                            if (responseData.redirect_url) {
-                                window.location.href = responseData.redirect_url;
-                                return;
-                            }
+                        self.scrollIntoView();
 
-                            $content.html(responseData);
+                        $(self.settings.targetElement).html(responseData);
 
-                            if (typeof hash !== "undefined") {
-                                location.hash = hash;
-                            }
+                        if (typeof hash !== "undefined") {
+                            location.hash = hash;
                         }
                     }
 
-                    self.hideLoadingLayer();
+                    self.hideLoadingLayer($submitButton);
                 } catch (err) {
                     console.log(err.message);
 
-                    self.hideLoadingLayer();
+                    self.hideLoadingLayer($submitButton);
                 }
             }).fail(function (jqXHR) {
-                self.hideLoadingLayer();
+                self.hideLoadingLayer($submitButton);
 
-                if (jqXHR.responseText.length > 0) {
+                if (jqXHR.status === 400) {
+                    self.handleFormErrorMessages($form, jqXHR.responseText);
+                    self.scrollIntoView();
+                } else if (jqXHR.responseText.length > 0) {
                     document.open();
                     document.write(jqXHR.responseText);
                     document.close();
                 }
             });
         },
-        showLoadingLayer: function () {
+        showLoadingLayer: function ($submitButton) {
             var $loadingLayer = $('#loading-layer');
 
             if ($loadingLayer.length === 0) {
                 var $body = $('body'),
                     loadingText = $(this.element).data('ajax-form-loading-text') || '',
-                    windowHeight = $(window).outerHeight(true),
-                    html = '<div id="loading-layer" style="height: ' + windowHeight + 'px"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>';
+                    html = '<div id="loading-layer" class="loading-layer"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>';
 
                 $(html).appendTo($body);
 
-                $loadingLayer = $($loadingLayer.selector);
+                setTimeout(function() {
+                    $loadingLayer = $($loadingLayer.selector);
 
-                $loadingLayer.show();
-                var $heading = $loadingLayer.find('h1'),
-                    headingHeight = $heading.height();
-
-                $heading.css({
-                    marginTop: (Math.round(windowHeight / 2) - headingHeight) + 'px'
-                });
-
-                $loadingLayer.hide().fadeIn();
+                    $loadingLayer.addClass('loading-layer__active');
+                }, 1);
             } else {
-                $loadingLayer.fadeIn();
+                $loadingLayer.addClass('loading-layer__active');
+            }
+
+            if (typeof $submitButton !== "undefined") {
+                $submitButton.prop('disabled', true);
             }
         },
         /**
          * Scroll to the beginning of the content area, if the current viewport is near the bottom
-         *
-         * @param $content
          */
-        scrollIntoView: function ($content) {
-            var offsetTop = $content.offset().top;
+        scrollIntoView: function () {
+            var offsetTop = $(self.settings.targetElement).offset().top;
 
-            // Scroll to the beginning of the content area, if the current viewport is near the bottom
             if ($(document).scrollTop() > offsetTop) {
                 $('html, body').animate(
                     {
@@ -228,8 +219,12 @@
                 );
             }
         },
-        hideLoadingLayer: function () {
-            $('#loading-layer').stop().fadeOut();
+        hideLoadingLayer: function ($submitButton) {
+            $('#loading-layer').removeClass('loading-layer__active');
+
+            if (typeof $submitButton !== "undefined") {
+                $submitButton.prop('disabled', false);
+            }
         },
         handleFormErrorMessages: function ($form, errorMessagesHtml) {
             var $errorBox = $('#error-box'),

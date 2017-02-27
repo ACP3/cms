@@ -2,6 +2,7 @@
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 
 /**
  * Class Upload
@@ -37,13 +38,23 @@ class Upload
      *  Temporäre Datei
      * @param string $filename
      *  Dateiname
-     * @param bool   $retainFilename
-     *
+     * @param bool $retainFilename
      * @return array
+     * @throws ValidationFailedException
      */
     public function moveFile($tmpFilename, $filename, $retainFilename = false)
     {
         $path = $this->appPath->getUploadsDir() . $this->directory . '/';
+
+        if (!is_dir($path)) {
+            $result = @mkdir($path);
+
+            if (!$result) {
+                throw new ValidationFailedException(
+                    [sprintf('Could not create folder "%s"', $this->directory)]
+                );
+            }
+        }
 
         if ($retainFilename === true) {
             $newFilename = $filename;

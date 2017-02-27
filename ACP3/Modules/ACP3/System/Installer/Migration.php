@@ -150,6 +150,10 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             65 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'page_cache_purge_mode', 1);",
+            ],
+            66 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'cookie_consent_is_enabled', 0);",
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'cookie_consent_text', '');",
             ]
         ];
     }

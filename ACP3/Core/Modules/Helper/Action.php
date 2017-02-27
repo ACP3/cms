@@ -9,6 +9,7 @@ namespace ACP3\Core\Modules\Helper;
 use ACP3\Core;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class Action
@@ -83,13 +84,13 @@ class Action
 
     /**
      * @param \Exception $exception
-     * @return array|JsonResponse
+     * @return array|Response
      */
     public function renderErrorBoxOnFailedFormValidation(\Exception $exception)
     {
         $errors = $this->alerts->errorBox($exception->getMessage());
         if ($this->request->isXmlHttpRequest()) {
-            return new JsonResponse(['success' => false, 'content' => $errors]);
+            return new Response($errors, 400);
         }
 
         return ['error_msg' => $errors];

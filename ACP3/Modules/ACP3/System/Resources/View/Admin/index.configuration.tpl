@@ -31,6 +31,10 @@
                     </div>
                 </div>
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$mod_rewrite required=true label={lang t="system|mod_rewrite"} help={lang t="system|mod_rewrite_description"}}
+                {include file="asset:System/Partials/form_group.button_group.tpl" options=$cookie_consent required=true label={lang t="system|enable_cookie_consent"}}
+                <div id="cookie-consent-container">
+                    {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="cookie_consent_text" value=$form.cookie_consent_text toolbar="simple" label={lang t="system|cookie_consent_text"}}
+                </div>
             </div>
             <div id="tab-2" class="tab-pane fade">
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_long" value=$form.date_format_long required=true maxlength=20 label={lang t="system|date_format_long"} help={lang t="system|php_date_function"}}
@@ -53,13 +57,15 @@
             </div>
             <div id="tab-3" class="tab-pane fade">
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$maintenance required=true label={lang t="system|maintenance_mode"}}
-                {include file="asset:System/Partials/form_group.textarea.tpl" name="maintenance_message" value=$form.maintenance_message required=true label={lang t="system|maintenance_msg"}}
+                <div id="maintenance-message-container">
+                    {include file="asset:System/Partials/form_group.textarea.tpl" name="maintenance_message" value=$form.maintenance_message required=true label={lang t="system|maintenance_msg"}}
+                </div>
             </div>
             <div id="tab-5" class="tab-pane fade">
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$page_cache required=true label={lang t="system|enable_page_cache"}}
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$page_cache_purge_mode required=true label={lang t="system|page_cache_purge_mode"}}
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$cache_images required=true label={lang t="system|cache_images"}}
-                {include file="asset:System/Partials/form_group.input_number.tpl" name="cache_lifetime" value=$form.cache_lifetime required=true label={lang t="system|cache_lifetime"}}
+                {include file="asset:System/Partials/form_group.input_number.tpl" name="cache_lifetime" value=$form.cache_lifetime required=true label={lang t="system|cache_lifetime"} input_group_after={lang t="system|seconds"}}
             </div>
             <div id="tab-6" class="tab-pane fade">
                 {include file="asset:System/Partials/form_group.select.tpl" options=$mailer_type required=true label={lang t="system|mailer_type"}}
