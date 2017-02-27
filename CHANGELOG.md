@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.7.1] - 2017-02-27
+### Fixed
+- fixed the AJAX forms
+
 ## [4.7.0] - 2017-02-27
 ### Added
 - added the cookie consent to the system configuration
@@ -271,7 +275,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.7.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.7.1...HEAD
+[4.7.1]: https://github.com/ACP3/cms/compare/v4.7.0...v4.7.1
 [4.7.0]: https://github.com/ACP3/cms/compare/v4.6.2...v4.7.0
 [4.6.2]: https://github.com/ACP3/cms/compare/v4.6.1...v4.6.2
 [4.6.1]: https://github.com/ACP3/cms/compare/v4.6.0...v4.6.1
