@@ -62,7 +62,7 @@ class RewriteInternalUri
     {
         $rootDir = str_replace('/', '\/', $this->appPath->getWebRoot());
         $host = $this->request->getServer()->get('HTTP_HOST');
-        $pattern = '/<a([^>]+)href="(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/i';
+        $pattern = '/(<a([^>]+)href=")?(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})(")?/i';
 
         return preg_replace_callback(
             $pattern,
@@ -78,11 +78,15 @@ class RewriteInternalUri
      */
     private function rewriteInternalUriCallback(array $matches)
     {
-        if ($this->internalUriValidationRule->isValid($matches[7]) === true) {
-            $resourceParts = explode('/', $matches[7]);
+        if ($this->internalUriValidationRule->isValid($matches[8]) === true) {
+            $resourceParts = explode('/', $matches[8]);
             $path = $this->getResourcePath($resourceParts);
             if ($this->controllerActionExists->controllerActionExists($path) === true) {
-                return '<a' . $matches[1] . 'href="' . $this->router->route($matches[7]) . '"';
+                if (!empty($matches[1])) {
+                    return '<a' . $matches[2] . 'href="' . $this->router->route($matches[8]) . '"';
+                }
+
+                return $this->router->route($matches[8]);
             }
         }
 

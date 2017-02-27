@@ -184,4 +184,39 @@ HTML;
             ->with($route)
             ->willReturn($alias);
     }
+
+    public function testRewriteInternalUriWithMatchingInlineUri()
+    {
+        $this->setUpAppPathExpectations();
+        $this->setUpRequestMockExpectations();
+        $this->setUpValidationRuleMockExpectations(1, 'foo/bar/baz/', true);
+        $this->setUpControllerActionExistsMockExpectations(1, 'frontend/foo/bar/baz', false);
+        $this->setUpRouterMockExpectations(0, '', '');
+
+        $content = <<<HTML
+http://example.com/foo/bar/baz/
+HTML;
+
+        $this->assertEquals($content, $this->rewriteInternalUri->rewriteInternalUri($content));
+    }
+
+    public function testRewriteInternalUriWithMatchingInlineUriAndExistingAlias()
+    {
+        $this->setUpAppPathExpectations();
+        $this->setUpRequestMockExpectations();
+        $this->setUpValidationRuleMockExpectations(1, 'foo/bar/baz/', true);
+        $this->setUpControllerActionExistsMockExpectations(1, 'frontend/foo/bar/baz', true);
+        $this->setUpRouterMockExpectations(1, 'foo/bar/baz/', '/foo-bar/');
+
+        $content = <<<HTML
+http://example.com/foo/bar/baz/
+HTML;
+
+        $expected = <<<HTML
+/foo-bar/
+HTML;
+
+        $this->assertEquals($expected, $this->rewriteInternalUri->rewriteInternalUri($content));
+    }
+
 }
