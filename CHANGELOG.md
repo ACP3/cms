@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2017-xx-xx
+###
+- Refactored the URI alias generation for gallery pictures into an event
+
+### Fixed
+- fixed the picture number generation when adding a new gallery picture 
+
 ## [4.7.1] - 2017-02-27
 ### Fixed
 - fixed the AJAX forms
