@@ -8,14 +8,14 @@
                     <img src="{uri args="gallery/index/image/id_`$picture.id`/action_normal"}"
                          width="{$picture.width}"
                          height="{$picture.height}"
-                         alt=""
+                         alt="{$picture.description|strip_tags|trim}"
                          class="img-thumbnail">
                 </a>
             {else}
                 <img src="{uri args="gallery/index/image/id_`$picture.id`/action_normal"}"
                      width="{$picture.width}"
                      height="{$picture.height}"
-                     alt=""
+                     alt="{$picture.description|strip_tags|trim}"
                      class="img-thumbnail">
             {/if}
             <div class="description">
