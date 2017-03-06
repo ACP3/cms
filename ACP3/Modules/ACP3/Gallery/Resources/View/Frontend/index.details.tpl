@@ -3,7 +3,7 @@
 {block CONTENT}
     <article>
         <section class="picture">
-            {if isset($picture_next)}
+            {if !empty($picture_next)}
                 <a href="{uri args="gallery/index/details/id_`$picture_next`"}">
                     <img src="{uri args="gallery/index/image/id_`$picture.id`/action_normal"}"
                          width="{$picture.width}"
