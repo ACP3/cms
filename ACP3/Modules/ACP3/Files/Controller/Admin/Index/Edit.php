@@ -78,7 +78,7 @@ class Edit extends AbstractFormAction
         $file = $this->filesModel->getOneById($id);
 
         if (empty($file) === false) {
-            $this->title->setPageTitlePostfix($file['title']);
+            $this->title->setPageTitlePrefix($file['title']);
 
             $file['filesize'] = '';
             $file['file_external'] = '';

@@ -83,7 +83,7 @@ class Edit extends AbstractFormAction
         $user = $this->user->getUserInfo($id);
 
         if (!empty($user)) {
-            $this->title->setPageTitlePostfix($user['nickname']);
+            $this->title->setPageTitlePrefix($user['nickname']);
 
             $userRoles = $this->acl->getUserRoleIds($id);
             $this->view->assign(

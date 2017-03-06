@@ -68,7 +68,7 @@ class Edit extends Core\Controller\AbstractAdminAction
         if (empty($guestbook) === false) {
             $settings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
 
-            $this->title->setPageTitlePostfix($guestbook['name']);
+            $this->title->setPageTitlePrefix($guestbook['name']);
 
             return [
                 'form' => array_merge($guestbook, $this->request->getPost()->all()),

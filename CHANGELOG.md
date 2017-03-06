@@ -5,8 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-xx
-###
+### Changed
 - Refactored the URI alias generation for gallery pictures into an event
+- improved the page titles when editing entries via the admin panel to make them more easily identifiable
 
 ### Fixed
 - fixed the picture number generation when adding a new gallery picture 

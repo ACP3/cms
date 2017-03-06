@@ -60,7 +60,7 @@ class Edit extends Core\Controller\AbstractAdminAction
         $menu = $this->menusModel->getOneById($id);
 
         if (empty($menu) === false) {
-            $this->title->setPageTitlePostfix($menu['title']);
+            $this->title->setPageTitlePrefix($menu['title']);
 
             return [
                 'form' => array_merge($menu, $this->request->getPost()->all()),

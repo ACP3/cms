@@ -67,7 +67,7 @@ class Edit extends Core\Controller\AbstractAdminAction
         $seo = $this->seoModel->getOneById($id);
 
         if (empty($seo) === false) {
-            $this->title->setPageTitlePostfix($seo['alias']);
+            $this->title->setPageTitlePrefix($seo['alias']);
 
             return [
                 'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper->formFields($seo['uri']),

@@ -58,7 +58,7 @@ class Edit extends Core\Controller\AbstractAdminAction
         $category = $this->categoriesModel->getOneById($id);
 
         if (empty($category) === false) {
-            $this->title->setPageTitlePostfix($category['title']);
+            $this->title->setPageTitlePrefix($category['title']);
 
             return [
                 'form' => array_merge($category, $this->request->getPost()->all()),

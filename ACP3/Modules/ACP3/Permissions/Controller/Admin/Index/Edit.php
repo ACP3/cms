@@ -72,7 +72,7 @@ class Edit extends AbstractFormAction
         $role = $this->rolesModel->getOneById($id);
 
         if (!empty($role)) {
-            $this->title->setPageTitlePostfix($role['name']);
+            $this->title->setPageTitlePrefix($role['name']);
 
             return [
                 'parent' => $id != 1

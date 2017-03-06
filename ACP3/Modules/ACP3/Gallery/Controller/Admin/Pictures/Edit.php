@@ -75,7 +75,7 @@ class Edit extends AbstractFormAction
                 ->append($this->translator->t('gallery', 'admin_pictures_edit'));
 
             $this->title
-                ->setPageTitlePostfix(
+                ->setPageTitlePrefix(
                     $picture['title']
                     . $this->title->getPageTitleSeparator()
                     . $this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']])

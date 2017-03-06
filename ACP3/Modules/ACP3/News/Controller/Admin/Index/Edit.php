@@ -67,7 +67,7 @@ class Edit extends AbstractFormAction
         $news = $this->newsModel->getOneById($id);
 
         if (empty($news) === false) {
-            $this->title->setPageTitlePostfix($news['title']);
+            $this->title->setPageTitlePrefix($news['title']);
 
             return [
                 'categories' => $this->categoriesHelpers->categoriesList(
