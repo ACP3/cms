@@ -48,13 +48,8 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.model.galleryrepository'
-      - '@gallery.model.picturerepository'
       - '@gallery.model.picture_model'
       - '@gallery.validator.picture'
-    calls:
-      - ['setAliases', ['@?seo.core.router.aliases']]
-      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
   gallery.controller.admin.pictures.delete:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Delete

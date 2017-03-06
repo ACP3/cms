@@ -59,7 +59,7 @@ class PictureModel extends AbstractModel
         ]);
 
         if ($entryId === null) {
-            $picNum = $this->repository->getLastPictureByGalleryId($entryId);
+            $picNum = $this->repository->getLastPictureByGalleryId($data['gallery_id']);
             $data['pic'] = !is_null($picNum) ? $picNum + 1 : 1;
         }
 
