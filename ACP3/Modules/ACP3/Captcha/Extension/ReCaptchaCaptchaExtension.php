@@ -7,9 +7,13 @@
 namespace ACP3\Modules\ACP3\Captcha\Extension;
 
 
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
+use ACP3\Modules\ACP3\Captcha\Installer\Schema;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
+use ReCaptcha\ReCaptcha;
 
 class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
 {
@@ -25,18 +29,35 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
      * @var UserModel
      */
     private $user;
+    /**
+     * @var SettingsInterface
+     */
+    private $settings;
+    /**
+     * @var RequestInterface
+     */
+    private $request;
 
     /**
      * ReCaptchaCaptchaExtension constructor.
      * @param Translator $translator
+     * @param RequestInterface $request
+     * @param SettingsInterface $settings
      * @param View $view
      * @param UserModel $user
      */
-    public function __construct(Translator $translator, View $view, UserModel $user)
+    public function __construct(
+        Translator $translator,
+        RequestInterface $request,
+        SettingsInterface $settings,
+        View $view,
+        UserModel $user)
     {
         $this->translator = $translator;
         $this->view = $view;
         $this->user = $user;
+        $this->settings = $settings;
+        $this->request = $request;
     }
 
     /**
@@ -57,10 +78,12 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
         $path = ''
     ) {
         if (!$this->user->isAuthenticated()) {
+            $settings = $this->settings->getSettings(Schema::MODULE_NAME);
+
             $this->view->assign('captcha', [
                 'id' => $formFieldId,
                 'input_only' => $inputOnly,
-                'sitekey' => '',
+                'sitekey' => $settings['recaptcha_sitekey'],
                 'language' => $this->translator->getShortIsoCode()
             ]);
 
@@ -75,6 +98,14 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
      */
     public function isCaptchaValid($formData, $formFieldName, array $extra = [])
     {
-        return true;
+        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
+
+        $recaptcha = new ReCaptcha($settings['recaptcha_secret']);
+        $response = $recaptcha->verify(
+            $formData['g-recaptcha-response'],
+            $this->request->getSymfonyRequest()->getClientIp()
+        );
+
+        return $response->isSuccess();
     }
 }

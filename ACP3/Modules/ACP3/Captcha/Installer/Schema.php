@@ -29,7 +29,9 @@ class Schema implements Modules\Installer\SchemaInterface
     public function settings()
     {
         return [
-            'captcha' => 'captcha.extension.native_captcha_extension'
+            'captcha' => 'captcha.extension.native_captcha_extension',
+            'recaptcha_sitekey' => '',
+            'recaptcha_secret' => ''
         ];
     }
 
@@ -54,6 +56,6 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 33;
+        return 34;
     }
 }
