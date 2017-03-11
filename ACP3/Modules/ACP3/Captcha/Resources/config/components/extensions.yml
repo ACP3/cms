@@ -1,0 +1,13 @@
+services:
+  captcha.extension.native_captcha_extension:
+    class: ACP3\Modules\ACP3\Captcha\Extension\NativeCaptchaExtension
+    arguments:
+      - '@core.lang'
+      - '@core.http.request'
+      - '@core.router'
+      - '@core.session'
+      - '@core.view'
+      - '@core.helpers.secure'
+      - '@users.model.user_model'
+    tags:
+      - { name: 'captcha.extension.captcha' }

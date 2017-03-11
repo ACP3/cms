@@ -4,80 +4,82 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Captcha;
+namespace ACP3\Modules\ACP3\Captcha\Extension;
 
 use ACP3\Core;
+use ACP3\Core\I18n\Translator;
 
-/**
- * @deprecated Since 4.8.0, to be removed with version 5.0.0
- */
-class Helpers
+class NativeCaptchaExtension implements CaptchaExtensionInterface
 {
-    const CAPTCHA_DEFAULT_LENGTH = 5;
-    const CAPTCHA_DEFAULT_INPUT_ID = 'captcha';
-
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
+     * @var Translator
      */
-    protected $user;
+    private $translator;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
-    protected $secureHelper;
+    private $secureHelper;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
     /**
      * @var \ACP3\Core\Session\SessionHandlerInterface
      */
-    protected $sessionHandler;
+    private $sessionHandler;
     /**
      * @var \ACP3\Core\View
      */
-    protected $view;
+    private $view;
+    /**
+     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
+     */
+    private $user;
 
     /**
-     * Helpers constructor.
-     *
+     * NativeCaptchaExtension constructor.
+     * @param Translator $translator
      * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
-     * @param \ACP3\Core\View $view
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param Core\Http\RequestInterface $request
+     * @param Core\Router\RouterInterface $router
+     * @param Core\Session\SessionHandlerInterface $sessionHandler
+     * @param Core\View $view
+     * @param Core\Helpers\Secure $secureHelper
      */
     public function __construct(
-        \ACP3\Modules\ACP3\Users\Model\UserModel $user,
+        Translator $translator,
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
         Core\Session\SessionHandlerInterface $sessionHandler,
         Core\View $view,
-        Core\Helpers\Secure $secureHelper
+        Core\Helpers\Secure $secureHelper,
+        \ACP3\Modules\ACP3\Users\Model\UserModel $user
     ) {
-        $this->user = $user;
+        $this->translator = $translator;
         $this->request = $request;
         $this->router = $router;
         $this->sessionHandler = $sessionHandler;
         $this->view = $view;
         $this->secureHelper = $secureHelper;
+        $this->user = $user;
     }
 
     /**
-     * Erzeugt das Captchafeld für das Template
-     *
-     * @param integer $captchaLength
-     * @param string $formFieldId
-     * @param bool $inputOnly
-     * @param string $path
-     *
      * @return string
      */
-    public function captcha(
+    public function getCaptchaName()
+    {
+        return $this->translator->t('captcha', 'native');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCaptcha(
         $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
         $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
         $inputOnly = false,
@@ -97,6 +99,14 @@ class Helpers
             ]);
             return $this->view->fetchTemplate('Captcha/Partials/captcha_native.tpl');
         }
+        return '';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getValidationRule()
+    {
         return '';
     }
 }

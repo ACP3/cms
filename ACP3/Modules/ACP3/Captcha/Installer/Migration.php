@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Captcha\Installer;
 
 use ACP3\Core\Modules\Installer\MigrationInterface;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\Captcha\Installer
- */
 class Migration implements MigrationInterface
 {
     /**
@@ -24,6 +20,9 @@ class Migration implements MigrationInterface
         return [
             31 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `page` = 'functions';",
+            ],
+            32 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'captcha', 'captcha.extension.native_captcha_extension');",
             ]
         ];
     }
