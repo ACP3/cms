@@ -23,6 +23,7 @@
     "doctrine/cache": "^1.6",
     "doctrine/dbal": "^2.5",
     "friendsofsymfony/http-cache": "~1.0",
+    "google/recaptcha": "^1.1.0",
     "inlinestyle/inlinestyle": "^1.2",
     "mibe/feedwriter": "^1.0",
     "monolog/monolog": "^1.21",
