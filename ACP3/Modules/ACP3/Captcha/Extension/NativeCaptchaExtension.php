@@ -39,18 +39,24 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
      * @var \ACP3\Modules\ACP3\Users\Model\UserModel
      */
     private $user;
+    /**
+     * @var Core\ACL
+     */
+    private $acl;
 
     /**
      * NativeCaptchaExtension constructor.
+     * @param Core\ACL $acl
      * @param Translator $translator
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
      * @param Core\Http\RequestInterface $request
      * @param Core\Router\RouterInterface $router
      * @param Core\Session\SessionHandlerInterface $sessionHandler
      * @param Core\View $view
      * @param Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
      */
     public function __construct(
+        Core\ACL $acl,
         Translator $translator,
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
@@ -66,6 +72,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
         $this->view = $view;
         $this->secureHelper = $secureHelper;
         $this->user = $user;
+        $this->acl = $acl;
     }
 
     /**
@@ -85,7 +92,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
         $inputOnly = false,
         $path = ''
     ) {
-        if ($this->user->isAuthenticated() === false) {
+        if (!$this->user->isAuthenticated() && $this->hasCaptchaAccess()) {
             $path = sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
 
             $this->sessionHandler->set('captcha_' . $path, $this->secureHelper->salt($captchaLength));
@@ -103,10 +110,31 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
     }
 
     /**
+     * @return bool
+     */
+    private function hasCaptchaAccess()
+    {
+        return $this->acl->hasPermission('frontend/captcha/index/image') === true;
+    }
+
+    /**
      * @inheritdoc
      */
-    public function getValidationRule()
+    public function isCaptchaValid($formData, $formFieldName, array $extra = [])
     {
-        return '';
+        if (!$this->hasCaptchaAccess()) {
+            return true;
+        }
+
+        if (!isset($formData[$formFieldName])) {
+            return false;
+        }
+
+        $value = $formData[$formFieldName];
+        $routePath = empty($extra['path']) === true ? $this->request->getQuery() : $extra['path'];
+        $indexName = 'captcha_' . sha1($this->router->route($routePath));
+
+        return preg_match('/^[a-zA-Z0-9]+$/', $value)
+            && strtolower($value) === strtolower($this->sessionHandler->get($indexName, ''));
     }
 }

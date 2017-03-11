@@ -35,9 +35,12 @@ interface CaptchaExtensionInterface
     );
 
     /**
-     * Returns the name of the to be used validation rule
+     * Checks, whether the typed in captcha is valid
      *
-     * @return string
+     * @param mixed $formData
+     * @param string $formFieldName
+     * @param array $extra
+     * @return bool
      */
-    public function getValidationRule();
+    public function isCaptchaValid($formData, $formFieldName, array $extra = []);
 }

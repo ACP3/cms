@@ -2,6 +2,7 @@ services:
   captcha.extension.native_captcha_extension:
     class: ACP3\Modules\ACP3\Captcha\Extension\NativeCaptchaExtension
     arguments:
+      - '@core.acl'
       - '@core.lang'
       - '@core.http.request'
       - '@core.router'
