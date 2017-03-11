@@ -5,9 +5,12 @@
         <direction>ltr</direction>
     </info>
     <keys>
+        <item key="admin_index_settings">Einstellungen</item>
         <item key="captcha">Captcha</item>
-        <item key="invalid_captcha_entered">Entweder wurde das Captcha falsch eingegeben oder es ist nicht mehr gültig.
-        </item>
+        <item key="captcha_type">Captcha-Typ</item>
+        <item key="invalid_captcha_entered">Entweder wurde das Captcha falsch eingegeben oder es ist nicht mehr gültig.</item>
         <item key="mod_description">Captchas bieten wirkungsvollen Schutz gegen Spambots.</item>
+        <item key="native">ACP3-Nativ</item>
+        <item key="select_captcha_type">Bitte wählen Sie den zu verwendenten Captcha-Typen aus.</item>
     </keys>
 </language>

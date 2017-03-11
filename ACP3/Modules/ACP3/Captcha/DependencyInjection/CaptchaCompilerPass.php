@@ -24,7 +24,7 @@ class CaptchaCompilerPass implements CompilerPassInterface
         foreach ($plugins as $serviceId => $tags) {
             $definition->addMethodCall(
                 'registerCaptcha',
-                [new Reference($serviceId)]
+                [$serviceId, new Reference($serviceId)]
             );
         }
     }

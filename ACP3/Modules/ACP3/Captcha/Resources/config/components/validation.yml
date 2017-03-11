@@ -9,3 +9,14 @@ services:
       - '@users.model.user_model'
     tags:
       - { name: core.validation.validation_rule }
+
+  captcha.validation.validation_rules.captcha_type_validation_rule:
+    class: ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaTypeValidationRule
+    arguments:
+      - '@captcha.utility.captcha_registrar'
+    tags:
+      - { name: core.validation.validation_rule }
+
+  cpatcha.validation.admin_settings_form_validation:
+    class: ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation
+    parent: core.validator.abstract

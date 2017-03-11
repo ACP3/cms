@@ -52,19 +52,6 @@ class Validator
     }
 
     /**
-     * @return array
-     */
-    protected function getDefaultConstraintParams()
-    {
-        return [
-            'data' => null,
-            'field' => '',
-            'message' => '',
-            'extra' => []
-        ];
-    }
-
-    /**
      * @param string $validationRule
      * @param array  $params
      *
@@ -78,6 +65,19 @@ class Validator
         ];
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultConstraintParams()
+    {
+        return [
+            'data' => null,
+            'field' => '',
+            'message' => '',
+            'extra' => []
+        ];
     }
 
     /**
@@ -148,15 +148,29 @@ class Validator
                     $params['extra']
                 );
             } else {
-                throw new ValidationRuleNotFoundException(
-                    'Can not find the validation rule with the name ' . $constraint['rule'] . '.'
-                );
+                throw new ValidationRuleNotFoundException(sprintf($this->getExceptionMessage(), $constraint['rule']));
             }
         }
 
         if ($this->hasErrors()) {
             throw new ValidationFailedException($this->errors);
         }
+    }
+
+    /**
+     * @return string
+     */
+    private function getExceptionMessage()
+    {
+        return 'Can not find the validation rule with the name "%s".';
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasErrors()
+    {
+        return !empty($this->errors);
     }
 
     /**
@@ -172,14 +186,6 @@ class Validator
             return $this->validationRules[$validationRule]->isValid($field);
         }
 
-        throw new ValidationRuleNotFoundException('Can not find the validation rule with the name ' . $validationRule . '.');
-    }
-
-    /**
-     * @return bool
-     */
-    protected function hasErrors()
-    {
-        return !empty($this->errors);
+        throw new ValidationRuleNotFoundException(sprintf($this->getExceptionMessage(), $validationRule));
     }
 }

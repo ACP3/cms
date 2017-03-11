@@ -17,11 +17,12 @@ class CaptchaRegistrar
     protected $availableCaptchas = [];
 
     /**
+     * @param string $serviceId
      * @param CaptchaExtensionInterface $captchaExtension
      */
-    public function registerCaptcha(CaptchaExtensionInterface $captchaExtension)
+    public function registerCaptcha($serviceId, CaptchaExtensionInterface $captchaExtension)
     {
-        $this->availableCaptchas[$captchaExtension->getCaptchaName()] = $captchaExtension;
+        $this->availableCaptchas[$serviceId] = $captchaExtension;
     }
 
     /**
@@ -30,5 +31,14 @@ class CaptchaRegistrar
     public function getAvailableCaptchas()
     {
         return $this->availableCaptchas;
+    }
+
+    /**
+     * @param string $serviceId
+     * @return bool
+     */
+    public function hasCaptcha($serviceId)
+    {
+        return isset($this->availableCaptchas[$serviceId]);
     }
 }

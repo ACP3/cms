@@ -12,8 +12,6 @@ class Migration implements MigrationInterface
 {
     /**
      * @inheritdoc
-     *
-     * @return array
      */
     public function schemaUpdates()
     {
@@ -23,14 +21,16 @@ class Migration implements MigrationInterface
             ],
             32 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'captcha', 'captcha.extension.native_captcha_extension');",
+            ],
+            33 => [
+                "INSERT INTO `{pre}acl_resources` (`module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES ('{moduleId}', 'admin', 'index', 'index', '', 3);",
+                "INSERT INTO `{pre}acl_resources` (`module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES ('{moduleId}', 'admin', 'index', 'settings', '', 7);",
             ]
         ];
     }
 
     /**
      * @inheritdoc
-     *
-     * @return array
      */
     public function renameModule()
     {
