@@ -12,8 +12,12 @@ services:
     tags:
       - { name: 'captcha.extension.captcha' }
 
-  cpatcha.extension.captcha_factory:
+  captcha.extension.captcha_factory:
     class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaFactory
     arguments:
       - '@core.config'
       - '@service_container'
+
+  captcha.extension.captcha:
+    class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface
+    factory: 'captcha.extension.captcha_factory:create'

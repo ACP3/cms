@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Captcha\Event\Listener\OnDisplayCaptchaListener
     arguments:
       - '@core.acl'
-      - '@cpatcha.extension.captcha_factory'
+      - '@captcha.extension.captcha'
     tags:
       - { name: core.eventListener, event: captcha.event.display_captcha, method: onDisplayCaptcha }
 
