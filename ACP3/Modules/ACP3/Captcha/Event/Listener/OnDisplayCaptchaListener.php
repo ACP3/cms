@@ -8,12 +8,9 @@ namespace ACP3\Modules\ACP3\Captcha\Event\Listener;
 
 use ACP3\Core\ACL;
 use ACP3\Core\View\Event\TemplateEvent;
-use ACP3\Modules\ACP3\Captcha\Helpers;
+use ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface;
+use ACP3\Modules\ACP3\Captcha\Extension\CaptchaFactory;
 
-/**
- * Class OnFormAfterListener
- * @package ACP3\Modules\ACP3\Captcha\Event\Listener
- */
 class OnDisplayCaptchaListener
 {
     /**
@@ -21,20 +18,20 @@ class OnDisplayCaptchaListener
      */
     protected $acl;
     /**
-     * @var \ACP3\Modules\ACP3\Captcha\Helpers
+     * @var CaptchaFactory
      */
-    protected $captchaHelper;
+    private $captchaFactory;
 
     /**
      * OnAfterFormListener constructor.
      *
-     * @param \ACP3\Core\ACL                     $acl
-     * @param \ACP3\Modules\ACP3\Captcha\Helpers $captchaHelper
+     * @param \ACP3\Core\ACL $acl
+     * @param CaptchaFactory $captchaFactory
      */
-    public function __construct(ACL $acl, Helpers $captchaHelper)
+    public function __construct(ACL $acl, CaptchaFactory $captchaFactory)
     {
         $this->acl = $acl;
-        $this->captchaHelper = $captchaHelper;
+        $this->captchaFactory = $captchaFactory;
     }
 
     /**
@@ -44,9 +41,11 @@ class OnDisplayCaptchaListener
     {
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $arguments = $templateEvent->getParameters();
-            echo $this->captchaHelper->captcha(
-                isset($arguments['length']) ? $arguments['length'] : Helpers::CAPTCHA_DEFAULT_LENGTH,
-                isset($arguments['input_id']) ? $arguments['input_id'] : Helpers::CAPTCHA_DEFAULT_INPUT_ID,
+
+            $captcha = $this->captchaFactory->create();
+            echo $captcha->getCaptcha(
+                isset($arguments['length']) ? $arguments['length'] : CaptchaExtensionInterface::CAPTCHA_DEFAULT_LENGTH,
+                isset($arguments['input_id']) ? $arguments['input_id'] : CaptchaExtensionInterface::CAPTCHA_DEFAULT_INPUT_ID,
                 isset($arguments['input_only']) ? $arguments['input_only'] : false,
                 isset($arguments['path']) ? $arguments['path'] : ''
             );

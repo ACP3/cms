@@ -11,3 +11,9 @@ services:
       - '@users.model.user_model'
     tags:
       - { name: 'captcha.extension.captcha' }
+
+  cpatcha.extension.captcha_factory:
+    class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaFactory
+    arguments:
+      - '@core.config'
+      - '@service_container'
