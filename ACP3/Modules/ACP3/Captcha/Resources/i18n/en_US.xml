@@ -5,8 +5,13 @@
         <direction>ltr</direction>
     </info>
     <keys>
+        <item key="admin_index_settings">Settings</item>
         <item key="captcha">Captcha</item>
+        <item key="captcha_type">Captcha type</item>
         <item key="invalid_captcha_entered">Either the captcha is incorrect, or it is no longer valid.</item>
         <item key="mod_description">Captchas provide effective protection against spambots.</item>
+        <item key="native">ACP3 native</item>
+        <item key="recaptcha">reCAPTCHA</item>
+        <item key="select_captcha_type">Please select the captcha type which should be used.</item>
     </keys>
 </language>

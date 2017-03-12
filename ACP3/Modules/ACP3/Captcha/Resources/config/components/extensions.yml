@@ -1,0 +1,36 @@
+services:
+  captcha.extension.captcha:
+    class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface
+    factory: 'captcha.extension.captcha_factory:create'
+
+  captcha.extension.captcha_factory:
+    class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaFactory
+    arguments:
+      - '@core.config'
+      - '@service_container'
+
+  captcha.extension.native_captcha_extension:
+    class: ACP3\Modules\ACP3\Captcha\Extension\NativeCaptchaExtension
+    arguments:
+      - '@core.acl'
+      - '@core.lang'
+      - '@core.http.request'
+      - '@core.router'
+      - '@core.session'
+      - '@core.view'
+      - '@core.helpers.secure'
+      - '@users.model.user_model'
+    tags:
+      - { name: 'captcha.extension.captcha' }
+
+  captcha.extension.recaptcha_captcha_extension:
+    class: ACP3\Modules\ACP3\Captcha\Extension\ReCaptchaCaptchaExtension
+    arguments:
+      - '@core.lang'
+      - '@core.http.request'
+      - '@core.config'
+      - '@core.view'
+      - '@users.model.user_model'
+    tags:
+      - { name: 'captcha.extension.captcha' }
+
