@@ -12,6 +12,8 @@
         <item key="mod_description">Captchas bieten wirkungsvollen Schutz gegen Spambots.</item>
         <item key="native">ACP3-Nativ</item>
         <item key="recaptcha">reCAPTCHA</item>
+        <item key="recaptcha_secret">reCAPTCHA Secret</item>
+        <item key="recaptcha_sitekey">reCAPTCHA Sitekey</item>
         <item key="select_captcha_type">Bitte wählen Sie den zu verwendenten Captcha-Typen aus.</item>
     </keys>
 </language>
