@@ -29,6 +29,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 'message' => $this->translator->t('captcha', 'select_captcha_type')
             ]);
 
+        $this->validator->dispatchValidationEvent('captcha.validation.admin_settings.custom_fields', $formData);
+
         $this->validator->validate();
     }
 }
