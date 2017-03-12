@@ -16,6 +16,7 @@ use ReCaptcha\ReCaptcha;
 
 class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
 {
+    const TEMPLATE = 'Captcha/Partials/captcha_recaptcha.tpl';
     /**
      * @var Translator
      */
@@ -83,7 +84,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
                 'length' => $captchaLength
             ]);
 
-            return $this->view->fetchTemplate('Captcha/Partials/captcha_recaptcha.tpl');
+            return $this->view->fetchTemplate(static::TEMPLATE);
         }
 
         return '';

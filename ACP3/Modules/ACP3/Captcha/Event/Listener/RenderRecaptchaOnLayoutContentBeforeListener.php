@@ -59,8 +59,19 @@ class RenderRecaptchaOnLayoutContentBeforeListener
                 'sitekey' => $settings['recaptcha_sitekey'],
                 'lang' => $this->translator->getShortIsoCode()
             ]);
-            $this->view->displayTemplate('Captcha/Partials/captcha_recaptcha.onload.tpl');
+            $this->view->displayTemplate($this->getServiceIdTemplateMap()[$settings['captcha']]);
         }
+    }
+
+    /**
+     * @return array
+     */
+    private function getServiceIdTemplateMap()
+    {
+        return [
+            'captcha.extension.recaptcha_captcha_extension' => 'Captcha/Partials/captcha_recaptcha.onload.tpl',
+            'captcha.extension.nocaptcha_captcha_extension' => 'Captcha/Partials/captcha_nocaptcha.onload.tpl'
+        ];
     }
 
     /**
@@ -69,7 +80,7 @@ class RenderRecaptchaOnLayoutContentBeforeListener
      */
     private function isRecaptcha(array $settings)
     {
-        return $settings['captcha'] === 'captcha.extension.recaptcha_captcha_extension'
+        return array_key_exists($settings['captcha'], $this->getServiceIdTemplateMap())
             && !empty($settings['recaptcha_sitekey'])
             && !empty($settings['recaptcha_secret']);
     }
