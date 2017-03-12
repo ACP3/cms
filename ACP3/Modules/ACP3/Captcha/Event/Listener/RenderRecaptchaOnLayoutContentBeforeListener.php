@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\Captcha\Event\Listener;
 
 
+use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
@@ -26,18 +27,28 @@ class RenderRecaptchaOnLayoutContentBeforeListener
      * @var UserModel
      */
     private $userModel;
+    /**
+     * @var Translator
+     */
+    private $translator;
 
     /**
      * RenderRecaptchaOnLayoutContentBeforeListener constructor.
+     * @param Translator $translator
      * @param SettingsInterface $settings
      * @param View $view
      * @param UserModel $userModel
      */
-    public function __construct(SettingsInterface $settings, View $view, UserModel $userModel)
+    public function __construct(
+        Translator $translator,
+        SettingsInterface $settings,
+        View $view,
+        UserModel $userModel)
     {
         $this->settings = $settings;
         $this->view = $view;
         $this->userModel = $userModel;
+        $this->translator = $translator;
     }
 
     public function renderRecaptcha()
@@ -46,7 +57,8 @@ class RenderRecaptchaOnLayoutContentBeforeListener
 
         if ($this->isRecaptcha($settings)) {
             $this->view->assign('recaptcha', [
-                'sitekey' => $settings['recaptcha_sitekey']
+                'sitekey' => $settings['recaptcha_sitekey'],
+                'lang' => $this->translator->getShortIsoCode()
             ]);
             $this->view->displayTemplate('Captcha/Partials/captcha_recaptcha.onload.tpl');
         }

@@ -9,5 +9,5 @@
 
 {block FORM_GROUP_LABEL_ID}for="{$captcha.id}"{/block}
 {block FORM_GROUP_FORM_FIELD}
-    <div id="{$captcha.id}" class="recaptcha-placeholder" data-sitekey="{$captcha.sitekey}"></div>
+    <div id="{$captcha.id}" class="recaptcha-placeholder"></div>
 {/block}

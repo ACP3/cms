@@ -17,6 +17,7 @@ services:
   captcha.event.render_recaptcha_on_layout_content_before_listener:
     class: ACP3\Modules\ACP3\Captcha\Event\Listener\RenderRecaptchaOnLayoutContentBeforeListener
     arguments:
+      - '@core.lang'
       - '@core.config'
       - '@core.view'
       - '@users.model.user_model'
