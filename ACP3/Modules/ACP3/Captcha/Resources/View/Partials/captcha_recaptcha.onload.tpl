@@ -3,7 +3,8 @@
         var onloadCallback = function() {
             jQuery('.recaptcha-placeholder').each(function() {
                 grecaptcha.render(this.id, {
-                    'sitekey': "{$recaptcha.sitekey}"
+                    'sitekey': '{$recaptcha.sitekey}',
+                    'size': this.dataset.size
                 });
             });
         };

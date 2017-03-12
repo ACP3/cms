@@ -80,7 +80,8 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
         if (!$this->user->isAuthenticated()) {
             $this->view->assign('captcha', [
                 'id' => $formFieldId,
-                'input_only' => $inputOnly
+                'input_only' => $inputOnly,
+                'length' => $captchaLength
             ]);
 
             return $this->view->fetchTemplate('Captcha/Partials/captcha_recaptcha.tpl');
