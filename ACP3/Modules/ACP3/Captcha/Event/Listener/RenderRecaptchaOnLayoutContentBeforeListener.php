@@ -1,0 +1,65 @@
+<?php
+/**
+ * Copyright (c) 2017 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Modules\ACP3\Captcha\Event\Listener;
+
+
+use ACP3\Core\Settings\SettingsInterface;
+use ACP3\Core\View;
+use ACP3\Modules\ACP3\Captcha\Installer\Schema;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
+
+class RenderRecaptchaOnLayoutContentBeforeListener
+{
+    /**
+     * @var SettingsInterface
+     */
+    private $settings;
+    /**
+     * @var View
+     */
+    private $view;
+    /**
+     * @var UserModel
+     */
+    private $userModel;
+
+    /**
+     * RenderRecaptchaOnLayoutContentBeforeListener constructor.
+     * @param SettingsInterface $settings
+     * @param View $view
+     * @param UserModel $userModel
+     */
+    public function __construct(SettingsInterface $settings, View $view, UserModel $userModel)
+    {
+        $this->settings = $settings;
+        $this->view = $view;
+        $this->userModel = $userModel;
+    }
+
+    public function renderRecaptcha()
+    {
+        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
+
+        if ($this->isRecaptcha($settings)) {
+            $this->view->assign('recaptcha', [
+                'sitekey' => $settings['recaptcha_sitekey']
+            ]);
+            $this->view->displayTemplate('Captcha/Partials/captcha_recaptcha.onload.tpl');
+        }
+    }
+
+    /**
+     * @param array $settings
+     * @return bool
+     */
+    private function isRecaptcha(array $settings)
+    {
+        return $settings['captcha'] === 'captcha.extension.recaptcha_captcha_extension'
+            && !empty($settings['recaptcha_sitekey'])
+            && !empty($settings['recaptcha_secret']);
+    }
+}

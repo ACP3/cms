@@ -98,6 +98,10 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
      */
     public function isCaptchaValid($formData, $formFieldName, array $extra = [])
     {
+        if (empty($formData['g-recaptcha-response'])) {
+            return false;
+        }
+
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
         $recaptcha = new ReCaptcha($settings['recaptcha_secret']);
