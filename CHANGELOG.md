@@ -5,7 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-xx
+### Added
+- Added reCAPATCHA as a new captcha type 
+
 ### Changed
+- Refactored the captcha system so that it can be extended with different captcha types
 - Refactored the URI alias generation for gallery pictures into an event
 - improved the page titles when editing entries via the admin panel to make them more easily identifiable
 
