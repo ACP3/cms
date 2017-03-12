@@ -6,10 +6,17 @@
         </label>
     {/if}
 
-    <div class="{if isset($cssSelector)}{$cssSelector}{else}{if empty($label)}col-sm-offset-2 {/if}{if !empty($columnSelector)}{$columnSelector}{else}col-sm-10{/if}{/if}">
+    {if isset($cssSelector) && empty($cssSelector)}
         {block FORM_GROUP_FORM_FIELD}{/block}
         {if !empty($help)}
             <p class="help-block">{$help}</p>
         {/if}
-    </div>
+    {else}
+        <div class="{if isset($cssSelector)}{$cssSelector}{else}{if empty($label)}col-sm-offset-2 {/if}{if !empty($columnSelector)}{$columnSelector}{else}col-sm-10{/if}{/if}">
+            {block FORM_GROUP_FORM_FIELD}{/block}
+            {if !empty($help)}
+                <p class="help-block">{$help}</p>
+            {/if}
+        </div>
+    {/if}
 </div>
