@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Breadcrumb;
 
-
 use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Breadcrumb\Title;
 use Symfony\Component\EventDispatcher\EventDispatcher;

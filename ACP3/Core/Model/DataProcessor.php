@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Model;
 
-
 use ACP3\Core\Model\DataProcessor\ColumnTypeStrategyFactory;
 
 class DataProcessor

@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Model\DataProcessor\ColumnType;
 
-
 use ACP3\Core\Model\DataProcessor\ColumnType\TextWysiwygColumnType;
 
 class TextWysiwygColumnTypeTest extends TextColumnTypeTest

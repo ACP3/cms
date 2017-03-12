@@ -5,7 +5,6 @@ use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 
 class IntegerValidationRuleTest extends AbstractValidationRuleTest
 {
-
     protected function setUp()
     {
         $this->validationRule = new IntegerValidationRule();

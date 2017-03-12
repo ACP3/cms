@@ -6,7 +6,6 @@
 
 namespace ACP3\Installer\Modules\Install\Model;
 
-
 use ACP3\Core\Filesystem;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;

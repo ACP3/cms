@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Seo;
 
-
 use ACP3\Modules\ACP3\Seo\DependencyInjection\SitemapAvailabilityCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

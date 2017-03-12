@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Feeds\Utility;
 
-
 use ACP3\Modules\ACP3\Feeds\Extension\FeedAvailabilityExtensionInterface;
 
 class FeedAvailabilityRegistrar

@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
-
 use ACP3\Core\Helpers\Secure;
 
 class TextColumnType implements ColumnTypeStrategyInterface

@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Model\DataProcessor;
 
-
 interface ColumnTypes
 {
     const COLUMN_TYPE_DATETIME = 'datetime';

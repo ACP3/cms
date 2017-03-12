@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Cache;
 
-
 use ACP3\Core\Cache\CacheDriverFactory;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;

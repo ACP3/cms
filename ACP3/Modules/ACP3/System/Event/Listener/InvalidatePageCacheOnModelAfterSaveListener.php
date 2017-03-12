@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\System\Event\Listener;
 
-
 use ACP3\Core\Cache\Purge;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Settings\SettingsInterface;

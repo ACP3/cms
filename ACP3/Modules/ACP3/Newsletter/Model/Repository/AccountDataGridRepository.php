@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\Model\Repository;
 
-
 use ACP3\Core\Model\Repository\DataGridRepository;
 use ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus;
 use Doctrine\DBAL\Query\QueryBuilder;

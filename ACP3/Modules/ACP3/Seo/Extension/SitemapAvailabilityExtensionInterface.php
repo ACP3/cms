@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Extension;
 
-
 use Thepixeldeveloper\Sitemap\Url;
 
 interface SitemapAvailabilityExtensionInterface

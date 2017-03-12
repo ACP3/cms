@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Categories\Event\Listener;
 
-
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Upload;
 use ACP3\Core\Model\Event\ModelSaveEvent;

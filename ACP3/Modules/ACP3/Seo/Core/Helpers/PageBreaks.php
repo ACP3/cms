@@ -52,5 +52,4 @@ class PageBreaks extends \ACP3\Core\Helpers\PageBreaks
 
         return $pages;
     }
-
 }

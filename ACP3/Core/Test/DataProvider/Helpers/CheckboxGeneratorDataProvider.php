@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\DataProvider\Helpers;
 
-
 use ACP3\Core\Test\DataProvider\DataProviderInterface;
 
 /**

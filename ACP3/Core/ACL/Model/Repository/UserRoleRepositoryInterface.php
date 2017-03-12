@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\ACL\Model\Repository;
 
-
 interface UserRoleRepositoryInterface
 {
     /**

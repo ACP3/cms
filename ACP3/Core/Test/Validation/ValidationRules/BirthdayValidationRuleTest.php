@@ -5,7 +5,6 @@ use ACP3\Core\Validation\ValidationRules\BirthdayValidationRule;
 
 class BirthdayValidationRuleTest extends AbstractValidationRuleTest
 {
-
     protected function setUp()
     {
         $this->validationRule = new BirthdayValidationRule();

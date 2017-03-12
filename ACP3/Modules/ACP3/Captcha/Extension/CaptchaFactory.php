@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Captcha\Extension;
 
-
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
 use Symfony\Component\DependencyInjection\ContainerInterface;

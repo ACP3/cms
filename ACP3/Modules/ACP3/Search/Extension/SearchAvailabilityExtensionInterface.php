@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Search\Extension;
 
-
 interface SearchAvailabilityExtensionInterface
 {
     /**

@@ -5,7 +5,6 @@ use ACP3\Core\Validation\ValidationRules\PasswordValidationRule;
 
 class PasswordValidationRuleTest extends AbstractValidationRuleTest
 {
-
     protected function setUp()
     {
         $this->validationRule = new PasswordValidationRule();

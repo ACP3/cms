@@ -6,10 +6,8 @@
 
 namespace ACP3\Modules\ACP3\Users\Exception;
 
-
 use ACP3\Core\Authentication\Exception\AuthenticationException;
 
 class LoginFailedException extends AuthenticationException
 {
-
 }

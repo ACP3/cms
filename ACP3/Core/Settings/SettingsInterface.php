@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Settings;
 
-
 interface SettingsInterface
 {
     /**

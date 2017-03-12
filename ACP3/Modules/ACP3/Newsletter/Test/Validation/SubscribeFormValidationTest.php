@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\Test\Validation;
 
-
 use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\Test\Validation\AbstractFormValidationTest;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;

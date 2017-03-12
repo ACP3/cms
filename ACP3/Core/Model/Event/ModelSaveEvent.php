@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Model\Event;
 
-
 use Symfony\Component\EventDispatcher\Event;
 
 class ModelSaveEvent extends Event

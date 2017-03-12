@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Articles\Test\ValidationRules;
 
-
 use ACP3\Core\Test\Validation\ValidationRules\AbstractValidationRuleTest;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
 use ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule;

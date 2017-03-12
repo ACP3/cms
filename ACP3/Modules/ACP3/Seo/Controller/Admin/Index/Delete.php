@@ -52,13 +52,12 @@ class Delete extends Core\Controller\AbstractAdminAction
     {
         return $this->actionHelper->handleDeleteAction(
             $action, function (array $items) {
+                $result = $this->seoModel->delete($items);
 
-            $result = $this->seoModel->delete($items);
+                $this->seoCache->saveCache();
 
-            $this->seoCache->saveCache();
-
-            return $result;
-        }
+                return $result;
+            }
         );
     }
 }

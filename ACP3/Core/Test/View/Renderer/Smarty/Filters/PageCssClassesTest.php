@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\View\Renderer\Smarty\Filters;
 
-
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\Request;
 use ACP3\Core\Test\View\Renderer\Smarty\AbstractPluginTest;

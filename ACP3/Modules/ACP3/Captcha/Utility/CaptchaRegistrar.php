@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Captcha\Utility;
 
-
 use ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface;
 
 class CaptchaRegistrar

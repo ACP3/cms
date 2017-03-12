@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Search;
 
-
 use ACP3\Modules\ACP3\Search\DependencyInjection\SearchAvailabilityCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

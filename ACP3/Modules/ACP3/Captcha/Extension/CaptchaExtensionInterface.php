@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Captcha\Extension;
 
-
 interface CaptchaExtensionInterface
 {
     const CAPTCHA_DEFAULT_LENGTH = 5;

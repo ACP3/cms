@@ -6,8 +6,6 @@
 
 namespace ACP3\Modules\ACP3\System\Exception;
 
-
 class ModuleInstallerException extends \Exception
 {
-
 }

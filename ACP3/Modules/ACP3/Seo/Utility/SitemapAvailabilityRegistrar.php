@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Utility;
 
-
 use ACP3\Modules\ACP3\Seo\Extension\SitemapAvailabilityExtensionInterface;
 
 class SitemapAvailabilityRegistrar

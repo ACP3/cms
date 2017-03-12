@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test;
 
-
 use ACP3\Core\ACL;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Permissions\Cache;

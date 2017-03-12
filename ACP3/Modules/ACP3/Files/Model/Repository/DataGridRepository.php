@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Files\Model\Repository;
 
-
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 use Doctrine\DBAL\Query\QueryBuilder;

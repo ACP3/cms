@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\System\Event\Listener;
 
-
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\System\Installer\Schema;

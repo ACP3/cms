@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Contact\Model;
 
-
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor\ColumnTypes;
 

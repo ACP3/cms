@@ -5,7 +5,6 @@ use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 
 class EmailValidationRuleTest extends AbstractValidationRuleTest
 {
-
     protected function setUp()
     {
         $this->validationRule = new EmailValidationRule();

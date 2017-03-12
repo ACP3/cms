@@ -127,7 +127,7 @@ class UserContextSubscriber implements EventSubscriberInterface
             $hashLookupRequest->cookies->set(AuthenticationModel::AUTH_NAME, $authCookie);
         }
 
-        $sessionIds = array();
+        $sessionIds = [];
         foreach ($originalRequest->cookies as $name => $value) {
             if ($this->isSessionName($name)) {
                 $sessionIds[$name] = $value;

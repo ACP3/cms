@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Articles\Model;
 
-
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Articles\Installer\Schema;

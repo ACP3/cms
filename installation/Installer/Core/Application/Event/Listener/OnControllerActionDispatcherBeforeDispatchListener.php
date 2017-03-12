@@ -6,7 +6,6 @@
 
 namespace ACP3\Installer\Core\Application\Event\Listener;
 
-
 use ACP3\Core\Http\RedirectResponse;
 use ACP3\Core\Http\RequestInterface;
 

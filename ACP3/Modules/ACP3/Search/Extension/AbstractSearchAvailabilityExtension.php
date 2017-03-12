@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Search\Extension;
 
-
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Search\Model\Repository\SearchResultsAwareRepositoryInterface;
 

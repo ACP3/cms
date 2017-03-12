@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 
-
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;

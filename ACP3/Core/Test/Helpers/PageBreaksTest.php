@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\Test\Helpers;
 
-
 use ACP3\Core\Helpers\PageBreaks;
 use ACP3\Core\Helpers\TableOfContents;
 use ACP3\Core\Http\Request;

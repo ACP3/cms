@@ -5,7 +5,6 @@ use ACP3\Core\Validation\ValidationRules\NumberGreaterThanValidationRule;
 
 class NumberGreaterThanValidationRuleTest extends AbstractValidationRuleTest
 {
-
     protected function setUp()
     {
         $this->validationRule = new NumberGreaterThanValidationRule();

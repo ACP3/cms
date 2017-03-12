@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Contact\Model;
 
-
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Helpers\SendEmail;
 use ACP3\Core\I18n\Translator;

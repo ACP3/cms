@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Captcha;
 
-
 use ACP3\Modules\ACP3\Captcha\DependencyInjection\CaptchaCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

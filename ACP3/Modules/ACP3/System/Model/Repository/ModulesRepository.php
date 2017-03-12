@@ -13,7 +13,7 @@ use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
  * Class ModulesRepository
  * @package ACP3\Modules\ACP3\System\Model\Repository
  */
-class ModulesRepository extends AbstractRepository  implements ModuleAwareRepositoryInterface
+class ModulesRepository extends AbstractRepository implements ModuleAwareRepositoryInterface
 {
     const TABLE_NAME = 'modules';
 

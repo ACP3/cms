@@ -69,7 +69,6 @@ class Index extends Core\Controller\AbstractFrontendAction
                 $this->setContentType('text/xml');
                 return $this->response->setContent($this->feedGenerator->generateFeed());
             } catch (\InvalidArgumentException $e) {
-
             }
         }
 

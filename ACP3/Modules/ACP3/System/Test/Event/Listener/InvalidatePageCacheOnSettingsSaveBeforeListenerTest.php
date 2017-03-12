@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\System\Test\Event\Listener;
 
-
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;

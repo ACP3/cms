@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\System\Test\Core\Breadcrumb;
 
-
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Core\Breadcrumb\Title;
 

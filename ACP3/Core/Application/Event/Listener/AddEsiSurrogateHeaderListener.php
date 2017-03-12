@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Application\Event\Listener;
 
-
 use ACP3\Core\Application\Event\ControllerActionAfterDispatchEvent;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\Request;

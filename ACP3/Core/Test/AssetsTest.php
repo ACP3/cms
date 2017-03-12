@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\Test;
 
-
 use ACP3\Core\Assets;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;

@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\News\Extension;
 
-
 use ACP3\Modules\ACP3\News\Helpers;
 use ACP3\Modules\ACP3\News\Installer\Schema;
 use ACP3\Modules\ACP3\Search\Extension\AbstractSearchAvailabilityExtension;

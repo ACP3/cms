@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Controller;
 
-
 use ACP3\Core\View;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;

@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Contact\Model\Repository;
 
-
 class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
 {
     const TABLE_NAME = ContactsRepository::TABLE_NAME;
