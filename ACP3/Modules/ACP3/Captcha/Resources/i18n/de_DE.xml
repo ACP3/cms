@@ -15,5 +15,7 @@
         <item key="recaptcha_secret">reCAPTCHA Secret</item>
         <item key="recaptcha_sitekey">reCAPTCHA Sitekey</item>
         <item key="select_captcha_type">Bitte wählen Sie den zu verwendenten Captcha-Typen aus.</item>
+        <item key="type_in_recaptcha_secret">Bitte geben Sie das reCAPTCHA Secret ein.</item>
+        <item key="type_in_recaptcha_sitekey">Bitte geben Sie den reCAPTCHA Sitekey ein.</item>
     </keys>
 </language>
