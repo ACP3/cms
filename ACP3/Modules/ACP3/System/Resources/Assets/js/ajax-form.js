@@ -14,6 +14,7 @@
 
     function Plugin(element, options) {
         this.element = element;
+        this.isFormValid = true;
 
         this.settings = $.extend({}, defaults, options);
         this._defaults = defaults;
@@ -31,9 +32,9 @@
             $(this.element).on('submit', function (e) {
                 e.preventDefault();
 
-                $(document).trigger('acp3.ajaxFrom.submit.before');
+                $(document).trigger('acp3.ajaxFrom.submit.before', [ that ]);
 
-                if (that.preValidateForm(that.element)) {
+                if (that.isFormValid && that.preValidateForm(that.element)) {
                     that.processAjaxRequest();
                 }
             }).on('click', function (e) {
@@ -51,8 +52,7 @@
             });
         },
         preValidateForm: function (form) {
-            var field,
-                isValid = true;
+            var field;
 
             this.removeAllPreviousErrors();
 
@@ -67,13 +67,13 @@
                     this.addErrorDecorationToFormGroup($(field));
                     this.addErrorMessageToFormField($(field), field.validationMessage);
 
-                    isValid = false;
+                    this.isFormValid = false;
                 }
             }
 
             this.focusTabWithFirstErrorMessage();
 
-            return isValid;
+            return this.isFormValid;
         },
         removeAllPreviousErrors: function () {
             $('form .form-group.has-error')

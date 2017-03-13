@@ -16,6 +16,7 @@ use ReCaptcha\ReCaptcha;
 
 class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
 {
+    const TEMPLATE = 'Captcha/Partials/captcha_recaptcha.tpl';
     /**
      * @var Translator
      */
@@ -77,13 +78,16 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
         $path = ''
     ) {
         if (!$this->user->isAuthenticated()) {
+            $settings = $this->settings->getSettings(Schema::MODULE_NAME);
+
             $this->view->assign('captcha', [
                 'id' => $formFieldId,
                 'input_only' => $inputOnly,
-                'length' => $captchaLength
+                'length' => $captchaLength,
+                'sitekey' => $settings['recaptcha_sitekey']
             ]);
 
-            return $this->view->fetchTemplate('Captcha/Partials/captcha_recaptcha.tpl');
+            return $this->view->fetchTemplate(static::TEMPLATE);
         }
 
         return '';

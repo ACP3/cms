@@ -12,6 +12,10 @@
         <item key="mod_description">Captchas provide effective protection against spambots.</item>
         <item key="native">ACP3 native</item>
         <item key="recaptcha">reCAPTCHA</item>
+        <item key="recaptcha_secret">reCAPTCHA secret</item>
+        <item key="recaptcha_sitekey">reCAPTCHA sitekey</item>
         <item key="select_captcha_type">Please select the captcha type which should be used.</item>
+        <item key="type_in_recaptcha_secret">Please type in the reCAPTCHA secret.</item>
+        <item key="type_in_recaptcha_sitekey">Please type in the reCAPTCHA sitekey.</item>
     </keys>
 </language>

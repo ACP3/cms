@@ -4,9 +4,12 @@
  */
 
 jQuery(document).ready(function ($) {
-    var $recaptchaWrapper = $('#recaptcha-wrapper');
+    var $recaptchaWrapper = $('#recaptcha-wrapper'),
+        serviceIds = [
+            'captcha.extension.recaptcha_captcha_extension'
+        ];
 
     $('#captcha').on('change', function() {
-        $recaptchaWrapper.toggle(this.value === 'captcha.extension.recaptcha_captcha_extension');
+        $recaptchaWrapper.toggle(serviceIds.indexOf(this.value) !== -1);
     }).filter(':selected').triggerHandler('change');
 });
