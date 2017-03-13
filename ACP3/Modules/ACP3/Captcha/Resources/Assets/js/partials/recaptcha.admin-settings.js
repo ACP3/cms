@@ -6,7 +6,6 @@
 jQuery(document).ready(function ($) {
     var $recaptchaWrapper = $('#recaptcha-wrapper'),
         serviceIds = [
-            'captcha.extension.nocaptcha_captcha_extension',
             'captcha.extension.recaptcha_captcha_extension'
         ];
 

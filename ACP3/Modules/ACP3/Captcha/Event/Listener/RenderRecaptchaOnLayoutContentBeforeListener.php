@@ -70,7 +70,6 @@ class RenderRecaptchaOnLayoutContentBeforeListener
     {
         return [
             'captcha.extension.recaptcha_captcha_extension' => 'Captcha/Partials/captcha_recaptcha.onload.tpl',
-            'captcha.extension.nocaptcha_captcha_extension' => 'Captcha/Partials/captcha_nocaptcha.onload.tpl'
         ];
     }
 

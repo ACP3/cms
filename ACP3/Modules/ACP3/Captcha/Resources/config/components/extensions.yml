@@ -23,12 +23,6 @@ services:
     tags:
       - { name: 'captcha.extension.captcha' }
 
-  captcha.extension.nocaptcha_captcha_extension:
-    class: ACP3\Modules\ACP3\Captcha\Extension\NoCaptchaCaptchaExtension
-    parent: captcha.extension.recaptcha_captcha_extension
-    tags:
-      - { name: 'captcha.extension.captcha' }
-
   captcha.extension.recaptcha_captcha_extension:
     class: ACP3\Modules\ACP3\Captcha\Extension\ReCaptchaCaptchaExtension
     arguments:
