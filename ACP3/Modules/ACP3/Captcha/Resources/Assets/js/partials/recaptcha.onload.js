@@ -5,6 +5,8 @@
 
 var onloadCallback = function() {
     jQuery('.recaptcha-placeholder').each(function() {
+        this.innerHtml = '';
+
         grecaptcha.render(this.id, {
             'sitekey': this.dataset.sitekey,
             'size': this.dataset.size
