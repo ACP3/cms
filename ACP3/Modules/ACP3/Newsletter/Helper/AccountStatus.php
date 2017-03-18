@@ -29,8 +29,8 @@ class AccountStatus
     protected $accountHistoryRepository;
 
     /**
-     * @param \ACP3\Core\Date                                              $date
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository        $accountRepository
+     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository $accountRepository
      * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository $accountHistoryRepository
      */
     public function __construct(
@@ -44,26 +44,24 @@ class AccountStatus
     }
 
     /**
-     * @param int       $status
-     * @param int|array $id
+     * @param int $status
+     * @param int|array $entryId
      *
      * @return bool|int
      */
-    public function changeAccountStatus($status, $id)
+    public function changeAccountStatus($status, $entryId)
     {
-        $bool = $this->accountRepository->update(
-            ['status' => $status], $id
-        );
+        $result = $this->accountRepository->update(['status' => $status], $entryId);
 
-        if (is_array($id)) {
-            $accountId = $this->retrieveAccountId($id);
+        if (is_array($entryId)) {
+            $accountId = $this->retrieveAccountId($entryId);
 
             $this->addAccountHistory($status, $accountId);
         } else {
-            $this->addAccountHistory($status, $id);
+            $this->addAccountHistory($status, $entryId);
         }
 
-        return $bool;
+        return $result;
     }
 
     /**
@@ -83,18 +81,18 @@ class AccountStatus
     }
 
     /**
-     * @param array $id
+     * @param array $entry
      *
      * @return int
      */
-    protected function retrieveAccountId(array $id)
+    protected function retrieveAccountId(array $entry)
     {
-        switch (key($id)) {
+        switch (key($entry)) {
             case 'mail':
-                $account = $this->accountRepository->getOneByEmail($id['mail']);
+                $account = $this->accountRepository->getOneByEmail($entry['mail']);
                 break;
             case 'hash':
-                $account = $this->accountRepository->getOneByHash($id['hash']);
+                $account = $this->accountRepository->getOneByHash($entry['hash']);
         }
 
         return (!empty($account)) ? $account['id'] : 0;
