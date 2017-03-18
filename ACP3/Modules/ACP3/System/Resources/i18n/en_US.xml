@@ -310,6 +310,7 @@
         <item key="uninstall_module">Uninstall module</item>
         <item key="unmark_all">Unmark all</item>
         <item key="upload_error">While moving the file %s an error has occurred.</item>
+        <item key="use_web_view">Having problems displaying this e-mail? Click here to open it in your Browser.</item>
         <item key="version">Version</item>
         <item key="website">Website</item>
         <item key="window_blank">New window (_blank)</item>

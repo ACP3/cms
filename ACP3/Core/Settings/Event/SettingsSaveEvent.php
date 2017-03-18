@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Settings\Event;
 
-
 use Symfony\Component\EventDispatcher\Event;
 
 class SettingsSaveEvent extends Event

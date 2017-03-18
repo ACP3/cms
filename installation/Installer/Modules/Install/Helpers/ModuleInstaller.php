@@ -6,7 +6,6 @@
 
 namespace ACP3\Installer\Modules\Install\Helpers;
 
-
 use ACP3\Core\Filesystem;
 use ACP3\Core\Modules\ModuleDependenciesTrait;
 use ACP3\Core\Modules\Vendor;

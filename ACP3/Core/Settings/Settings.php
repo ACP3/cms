@@ -69,7 +69,7 @@ class Settings implements SettingsInterface
      *
      * @return bool
      */
-    public function saveSettings($data, $module)
+    public function saveSettings(array $data, $module)
     {
         $bool = $bool2 = false;
         $moduleId = $this->systemModuleRepository->getModuleId($module);

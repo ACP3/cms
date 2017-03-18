@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Articles\Model\Repository;
 
-
 use ACP3\Core\Database\Connection;
 use ACP3\Core\Date;
 use ACP3\Core\Model\Repository\AbstractRepository;

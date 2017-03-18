@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Application;
 
-
 use ACP3\Core\Application\BootstrapCache\Event\Listener\UserContextSubscriber;
 use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\View\Renderer\Smarty\Filters\MoveToBottom;
@@ -35,7 +34,7 @@ class BootstrapCache extends EventDispatchingHttpCache
         HttpKernelInterface $kernel,
         StoreInterface $store,
         SurrogateInterface $surrogate = null,
-        array $options = array())
+        array $options = [])
     {
         parent::__construct($kernel, $store, $surrogate, $options);
 

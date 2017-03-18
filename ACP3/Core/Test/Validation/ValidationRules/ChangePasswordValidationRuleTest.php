@@ -5,7 +5,6 @@ use ACP3\Core\Validation\ValidationRules\ChangePasswordValidationRule;
 
 class ChangePasswordValidationRuleTest extends AbstractValidationRuleTest
 {
-
     protected function setUp()
     {
         $this->validationRule = new ChangePasswordValidationRule();
@@ -28,5 +27,4 @@ class ChangePasswordValidationRuleTest extends AbstractValidationRuleTest
             'invalid-no-data' => [null, null, [], false]
         ];
     }
-
 }

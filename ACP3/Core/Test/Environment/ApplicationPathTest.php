@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Environment;
 
-
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 

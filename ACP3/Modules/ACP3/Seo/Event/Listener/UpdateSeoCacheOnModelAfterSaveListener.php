@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 
-
 use ACP3\Modules\ACP3\Seo\Cache;
 
 class UpdateSeoCacheOnModelAfterSaveListener

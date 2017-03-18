@@ -60,7 +60,7 @@ class Edit extends AbstractFormAction
         $article = $this->articlesModel->getOneById($id);
 
         if (empty($article) === false) {
-            $this->title->setPageTitlePostfix($article['title']);
+            $this->title->setPageTitlePrefix($article['title']);
 
             return [
                 'form' => array_merge($article, $this->request->getPost()->all()),

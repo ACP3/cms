@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
-
 use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 

@@ -5,6 +5,7 @@
         <direction>ltr</direction>
     </info>
     <keys>
+        <item key="advanced_search">Advanced search</item>
         <item key="asc">Ascending</item>
         <item key="content_only">Content only</item>
         <item key="desc">Descending</item>

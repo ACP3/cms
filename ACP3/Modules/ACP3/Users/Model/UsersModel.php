@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Users\Model;
 
-
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor\ColumnTypes;
 use ACP3\Modules\ACP3\Users\Installer\Schema;

@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 
-
 use ACP3\Core\Controller\AbstractAdminAction;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Core\Helpers\StringFormatter;

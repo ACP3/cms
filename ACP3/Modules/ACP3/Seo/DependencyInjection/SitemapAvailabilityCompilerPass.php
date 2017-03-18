@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\DependencyInjection;
 
-
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -14,9 +13,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class SitemapAvailabilityCompilerPass implements CompilerPassInterface
 {
     /**
-     * You can modify the container here before it is dumped to PHP code.
-     *
-     * @param ContainerBuilder $container
+     * @inheritdoc
      */
     public function process(ContainerBuilder $container)
     {

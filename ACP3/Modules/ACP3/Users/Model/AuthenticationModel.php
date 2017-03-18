@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Users\Model;
 
-
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;

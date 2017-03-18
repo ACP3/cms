@@ -5,7 +5,6 @@ use ACP3\Core\Validation\ValidationRules\DateValidationRule;
 
 class DateValidationRuleTest extends AbstractValidationRuleTest
 {
-
     protected function setUp()
     {
         $this->validationRule = new DateValidationRule();

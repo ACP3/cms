@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Modules;
 
-
 use ACP3\Core\XML;
 
 trait ModuleDependenciesTrait

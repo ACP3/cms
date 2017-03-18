@@ -6,12 +6,10 @@
 
 namespace ACP3\Core\Test\Model\DataProcessor\ColumnType;
 
-
 use ACP3\Core\Model\DataProcessor\ColumnType\DoubleColumnType;
 
 class DoubleColumnTypeTest extends AbstractColumnTypeTest
 {
-
     protected function instantiateClassToTest()
     {
         $this->columnType = new DoubleColumnType();

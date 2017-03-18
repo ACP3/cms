@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Acp\Event\Listener;
 
-
 use ACP3\Core\Breadcrumb\Event\GetSiteAndPageTitleBeforeEvent;
 use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Controller\AreaEnum;

@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Files\Extension;
 
-
 use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Search\Extension\AbstractSearchAvailabilityExtension;

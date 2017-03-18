@@ -5,7 +5,6 @@ use ACP3\Core\Validation\ValidationRules\UriSafeValidationRule;
 
 class UriSafeValidationRuleTest extends AbstractValidationRuleTest
 {
-
     protected function setUp()
     {
         $this->validationRule = new UriSafeValidationRule();

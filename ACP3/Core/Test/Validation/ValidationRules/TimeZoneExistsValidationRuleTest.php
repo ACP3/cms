@@ -5,7 +5,6 @@ use ACP3\Core\Validation\ValidationRules\TimeZoneExistsValidationRule;
 
 class TimeZoneExistsValidationRuleTest extends AbstractValidationRuleTest
 {
-
     protected function setUp()
     {
         $this->validationRule = new TimeZoneExistsValidationRule();

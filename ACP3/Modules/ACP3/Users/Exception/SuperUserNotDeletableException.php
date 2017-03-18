@@ -6,8 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Users\Exception;
 
-
 class SuperUserNotDeletableException extends \Exception
 {
-
 }

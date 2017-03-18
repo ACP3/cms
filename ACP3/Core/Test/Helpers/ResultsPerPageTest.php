@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Helpers;
 
-
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Settings\SettingsInterface;
 

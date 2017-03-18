@@ -68,7 +68,7 @@ class Edit extends Core\Controller\AbstractAdminAction
         $gallery = $this->galleryModel->getOneById($id);
 
         if (!empty($gallery)) {
-            $this->title->setPageTitlePostfix($gallery['title']);
+            $this->title->setPageTitlePrefix($gallery['title']);
 
             return array_merge(
                 [

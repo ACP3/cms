@@ -32,5 +32,4 @@ class Date extends \ACP3\Core\Date
         $timeZone = !empty($defaultTimeZone) ? $defaultTimeZone : 'UTC';
         $this->dateTimeZone = new \DateTimeZone($timeZone);
     }
-
 }

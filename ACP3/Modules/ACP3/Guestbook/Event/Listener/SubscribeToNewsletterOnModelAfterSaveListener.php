@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Guestbook\Event\Listener;
 
-
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Router\RouterInterface;

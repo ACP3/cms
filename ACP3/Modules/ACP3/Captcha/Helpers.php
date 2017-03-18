@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) 2017 by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -9,8 +9,7 @@ namespace ACP3\Modules\ACP3\Captcha;
 use ACP3\Core;
 
 /**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Captcha
+ * @deprecated Since 4.8.0, to be removed with version 5.0.0
  */
 class Helpers
 {
@@ -45,12 +44,12 @@ class Helpers
     /**
      * Helpers constructor.
      *
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                            $user
-     * @param \ACP3\Core\Http\RequestInterface           $request
-     * @param \ACP3\Core\Router\RouterInterface                 $router
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Router\RouterInterface $router
      * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
-     * @param \ACP3\Core\View                            $view
-     * @param \ACP3\Core\Helpers\Secure                  $secureHelper
+     * @param \ACP3\Core\View $view
+     * @param \ACP3\Core\Helpers\Secure $secureHelper
      */
     public function __construct(
         \ACP3\Modules\ACP3\Users\Model\UserModel $user,
@@ -72,9 +71,9 @@ class Helpers
      * Erzeugt das Captchafeld für das Template
      *
      * @param integer $captchaLength
-     * @param string  $formFieldId
-     * @param bool    $inputOnly
-     * @param string  $path
+     * @param string $formFieldId
+     * @param bool $inputOnly
+     * @param string $path
      *
      * @return string
      */
@@ -96,7 +95,7 @@ class Helpers
                 'input_only' => $inputOnly,
                 'path' => $path
             ]);
-            return $this->view->fetchTemplate('Captcha/Partials/captcha.tpl');
+            return $this->view->fetchTemplate('Captcha/Partials/captcha_native.tpl');
         }
         return '';
     }

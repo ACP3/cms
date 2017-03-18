@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Http;
 
-
 use ACP3\Core\Http\RedirectResponse;
 use ACP3\Core\Http\Request;
 use ACP3\Core\Router\RouterInterface;

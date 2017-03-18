@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Search\Utility;
 
-
 use ACP3\Modules\ACP3\Search\Extension\SearchAvailabilityExtensionInterface;
 
 class SearchAvailabilityRegistrar

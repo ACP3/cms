@@ -69,7 +69,7 @@ class Edit extends AbstractFormAction
         $poll = $this->pollsModel->getOneById($id);
 
         if (empty($poll) === false) {
-            $this->title->setPageTitlePostfix($poll['title']);
+            $this->title->setPageTitlePrefix($poll['title']);
 
             return [
                 'answers' => $this->getAnswers($id),

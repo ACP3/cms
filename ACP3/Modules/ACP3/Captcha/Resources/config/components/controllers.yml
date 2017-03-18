@@ -1,6 +1,20 @@
 services:
+  captcha.controller.admin.index.index:
+    class: ACP3\Modules\ACP3\Captcha\Controller\Admin\Index\Index
+    arguments:
+      - '@core.context.frontend'
+
+  captcha.controller.admin.index.settings:
+    class: ACP3\Modules\ACP3\Captcha\Controller\Admin\Index\Settings
+    arguments:
+      - '@core.context.frontend'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@captcha.utility.captcha_registrar'
+      - '@cpatcha.validation.admin_settings_form_validation'
+
   captcha.controller.frontend.index.image:
-    class: ACP3\Modules\ACP3\Captcha\Controller\Index\Image
+    class: ACP3\Modules\ACP3\Captcha\Controller\Frontend\Index\Image
     arguments:
       - '@core.context.frontend'
       - '@core.session'

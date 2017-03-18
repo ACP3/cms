@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
-
 class DoubleColumnType implements ColumnTypeStrategyInterface
 {
     /**

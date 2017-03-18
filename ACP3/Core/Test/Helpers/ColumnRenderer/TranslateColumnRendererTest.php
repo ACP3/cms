@@ -9,7 +9,7 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
     /**
      * @var Translator|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected  $langMock;
+    protected $langMock;
 
     protected function setUp()
     {
@@ -33,7 +33,6 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
             ->method('t')
             ->with($langKey, $langKey)
             ->willReturn($langValue);
-
     }
 
     public function testValidField()

@@ -25,7 +25,7 @@ class SendEmail
     /**
      * Generates and sends an E-mail
      *
-     * @param string $recipientName
+     * @param string|Core\Mailer\MailerMessage $recipientName
      * @param string $recipientEmail
      * @param string $from
      * @param string $subject
@@ -33,9 +33,23 @@ class SendEmail
      * @param string $mailSignature
      *
      * @return bool
+     * @deprecated since version 4.8.0, to be removed with version 5.0.0. Use the 'core.mailer' service directly instead
      */
-    public function execute($recipientName, $recipientEmail, $from, $subject, $body, $mailSignature = '')
-    {
+    public function execute(
+        $recipientName,
+        $recipientEmail = '',
+        $from = '',
+        $subject = '',
+        $body = '',
+        $mailSignature = ''
+    ) {
+        if ($recipientName instanceof Core\Mailer\MailerMessage) {
+            return $this->mailer
+                ->reset()
+                ->setData($recipientName)
+                ->send();
+        }
+
         if (!empty($recipientName)) {
             $to = [
                 'name' => $recipientName,

@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Menus\Model;
 
-
 use ACP3\Core\Model\AbstractNestedSetModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Menus\Installer\Schema;

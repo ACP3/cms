@@ -6,8 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\Event\Listener;
 
-
-use ACP3\Core\ACL;
 use ACP3\Core\Modules;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Emoticons\Helpers;

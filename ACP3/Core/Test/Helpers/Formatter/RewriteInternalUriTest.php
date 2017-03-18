@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Helpers\Formatter;
 
-
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Formatter\RewriteInternalUri;
 use ACP3\Core\Http\Request;
@@ -218,5 +217,4 @@ HTML;
 
         $this->assertEquals($expected, $this->rewriteInternalUri->rewriteInternalUri($content));
     }
-
 }

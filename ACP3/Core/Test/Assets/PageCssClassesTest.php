@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Assets;
 
-
 use ACP3\Core\Assets\PageCssClasses;
 use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Helpers\StringFormatter;

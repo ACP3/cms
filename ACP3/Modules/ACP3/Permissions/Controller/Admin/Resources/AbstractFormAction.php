@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 
-
 use ACP3\Core\Controller\AbstractAdminAction;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Controller\Context\FrontendContext;

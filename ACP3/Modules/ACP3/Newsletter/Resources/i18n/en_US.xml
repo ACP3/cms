@@ -59,12 +59,11 @@
         <item key="subscribe_success">The newsletter account has been successfully created.</item>
         <item key="subscribe_unsubscribe_the_newsletter">Subscribe/Unsubscribe the newsletter</item>
         <item key="test_newsletter">Send Test newsletter</item>
-        <item key="test_newsletter_description">Will be send to the E-mail adress which is configured in the newsletter settings.</item>
+        <item key="test_newsletter_description">Will be send to the E-mail address which is configured in the newsletter settings.</item>
         <item key="text">Text</item>
         <item key="text_to_short">The text should not be empty.</item>
         <item key="unsubscribe">Unsubscribe</item>
         <item key="unsubscribe_error">While deleting the newsletter account an error has occurred.</item>
         <item key="unsubscribe_success">The newsletter account has been successfully deleted.</item>
-        <item key="use_web_view">Having problems displaying this newsletter? Click to open it in your Browser.</item>
     </keys>
 </language>

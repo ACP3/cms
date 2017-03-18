@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Event\Listener;
 
-
 use ACP3\Modules\ACP3\Permissions\Cache;
 
 class UpdateResourcesCacheOnModelAfterSaveListener

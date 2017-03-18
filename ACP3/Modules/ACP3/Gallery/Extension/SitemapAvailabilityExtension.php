@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Extension;
 
-
 use ACP3\Core\Date;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Gallery\Helpers;

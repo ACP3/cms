@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Assets;
 
-
 use ACP3\Core\Assets\Cache;
 use ACP3\Core\Assets\FileResolver;
 use ACP3\Core\Environment\ApplicationMode;

@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Polls\Validation;
 
-
 use ACP3\Core\Validation\AbstractFormValidation;
 use ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule;
 use ACP3\Modules\ACP3\Polls\Validation\ValidationRules\AlreadyVotedValidationRule;

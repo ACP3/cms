@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
-
 use ACP3\Core\Date;
 
 class DateTimeColumnType implements ColumnTypeStrategyInterface

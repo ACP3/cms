@@ -121,5 +121,4 @@ class DateRangeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $this->dateRange->formatTimeRange($dateStart, $dateEnd, 'short'));
     }
-
 }

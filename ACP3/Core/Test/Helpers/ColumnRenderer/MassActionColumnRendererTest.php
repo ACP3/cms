@@ -28,6 +28,4 @@ class MassActionColumnRendererTest extends AbstractColumnRendererTest
         $expected = '<td><input type="checkbox" name="entries[]" value="1234"></td>';
         $this->compareResults($expected);
     }
-
-
 }

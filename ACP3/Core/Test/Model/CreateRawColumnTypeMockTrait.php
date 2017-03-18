@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Model;
 
-
 use ACP3\Core\Model\DataProcessor\ColumnType\ColumnTypeStrategyInterface;
 
 trait CreateRawColumnTypeMockTrait

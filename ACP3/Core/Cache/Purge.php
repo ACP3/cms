@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Cache;
 
-
 use ACP3\Core\Filesystem;
 
 /**

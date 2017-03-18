@@ -5,7 +5,6 @@ use ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule;
 
 class NotEmptyValidationRuleTest extends AbstractValidationRuleTest
 {
-
     protected function setUp()
     {
         $this->validationRule = new NotEmptyValidationRule();

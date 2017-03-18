@@ -1,17 +1,13 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) 2017 by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Captcha\Controller\Index;
+namespace ACP3\Modules\ACP3\Captcha\Controller\Frontend\Index;
 
 use ACP3\Core;
 
-/**
- * Class Image
- * @package ACP3\Modules\ACP3\Captcha\Controller\Index
- */
 class Image extends Core\Controller\AbstractFrontendAction
 {
     /**

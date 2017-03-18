@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Polls\Model;
 
-
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;

@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Breadcrumb;
 
-
 use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\Request;
@@ -139,7 +138,7 @@ class StepsTest extends \PHPUnit_Framework_TestCase
     {
         $this->routerMock->expects($this->atLeastOnce())
             ->method('route')
-            ->willReturnCallback(function($path) {
+            ->willReturnCallback(function ($path) {
                 return '/' . $path;
             });
     }
@@ -148,8 +147,8 @@ class StepsTest extends \PHPUnit_Framework_TestCase
     {
         $this->translatorMock->expects($this->atLeast($callCount))
             ->method('t')
-            ->willReturnCallback(function($module, $phrase) {
-                return strtoupper ('{' . $module . '_' . $phrase . '}');
+            ->willReturnCallback(function ($module, $phrase) {
+                return strtoupper('{' . $module . '_' . $phrase . '}');
             });
     }
 

@@ -12,7 +12,7 @@ class Migration implements Modules\Installer\MigrationInterface
 {
     /**
      * @inheritdoc
-     * 
+     *
      * @return array
      */
     public function renameModule()
@@ -24,7 +24,7 @@ class Migration implements Modules\Installer\MigrationInterface
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return array
      */
     public function schemaUpdates()

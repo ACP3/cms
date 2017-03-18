@@ -6,7 +6,6 @@
 
 namespace ACP3\Installer\Modules\Install\Controller\Install;
 
-
 use ACP3\Installer\Core\Controller\AbstractInstallerAction;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\JsonResponse;

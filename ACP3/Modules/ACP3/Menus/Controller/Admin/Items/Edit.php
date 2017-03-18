@@ -69,7 +69,7 @@ class Edit extends AbstractFormAction
         $menuItem = $this->menuItemsModel->getOneById($id);
 
         if (empty($menuItem) === false) {
-            $this->title->setPageTitlePostfix($menuItem['title']);
+            $this->title->setPageTitlePrefix($menuItem['title']);
 
             if ($this->articlesHelpers) {
                 $matches = [];

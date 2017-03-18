@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\WYSIWYG\DependencyInjection;
 
-
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;

@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\News\Extension;
 
-
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\StringFormatter;
 use ACP3\Core\Router\RouterInterface;

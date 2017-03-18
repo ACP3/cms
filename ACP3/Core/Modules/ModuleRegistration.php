@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Modules;
 
-
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ModuleRegistration
@@ -16,6 +15,5 @@ class ModuleRegistration
      */
     public function build(ContainerBuilder $containerBuilder)
     {
-
     }
 }

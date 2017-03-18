@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Helpers;
 
-
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Http\Request;
 use ACP3\Core\I18n\Translator;

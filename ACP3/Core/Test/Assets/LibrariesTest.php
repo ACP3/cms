@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Assets;
 
-
 use ACP3\Core\Assets\Libraries;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 

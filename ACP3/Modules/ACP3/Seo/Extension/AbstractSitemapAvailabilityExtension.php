@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Extension;
 
-
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use Thepixeldeveloper\Sitemap\Url;

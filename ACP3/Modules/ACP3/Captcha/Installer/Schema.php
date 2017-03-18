@@ -3,14 +3,10 @@ namespace ACP3\Modules\ACP3\Captcha\Installer;
 
 use ACP3\Core\Modules;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\Captcha\Installer
- */
 class Schema implements Modules\Installer\SchemaInterface
 {
     const MODULE_NAME = 'captcha';
-    
+
     /**
      * @return array
      */
@@ -32,7 +28,11 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function settings()
     {
-        return [];
+        return [
+            'captcha' => 'captcha.extension.native_captcha_extension',
+            'recaptcha_sitekey' => '',
+            'recaptcha_secret' => ''
+        ];
     }
 
     /**
@@ -56,6 +56,6 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 31;
+        return 34;
     }
 }

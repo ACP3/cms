@@ -6,8 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Exception;
 
-
 class SitemapGenerationException extends \Exception
 {
-
 }

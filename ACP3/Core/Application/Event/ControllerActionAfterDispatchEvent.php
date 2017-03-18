@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Application\Event;
 
-
 use Symfony\Component\HttpFoundation\Response;
 
 class ControllerActionAfterDispatchEvent extends ControllerActionBeforeDispatchEvent

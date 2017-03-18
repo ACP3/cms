@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test;
 
-
 use ACP3\Core\Cache;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\CacheProvider;

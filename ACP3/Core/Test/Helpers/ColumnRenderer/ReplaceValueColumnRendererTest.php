@@ -72,5 +72,4 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
         $expected = '<td>Foo Bar</td>';
         $this->compareResults($expected);
     }
-
 }

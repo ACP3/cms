@@ -6,7 +6,6 @@
 
 namespace ACP3\Installer\Modules\Update\Model;
 
-
 use ACP3\Core\Filesystem;
 use ACP3\Core\Modules;
 use ACP3\Core\Modules\Installer\MigrationInterface;

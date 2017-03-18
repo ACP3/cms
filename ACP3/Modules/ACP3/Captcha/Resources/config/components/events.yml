@@ -3,9 +3,23 @@ services:
     class: ACP3\Modules\ACP3\Captcha\Event\Listener\OnDisplayCaptchaListener
     arguments:
       - '@core.acl'
-      - '@captcha.helpers'
+      - '@captcha.extension.captcha'
     tags:
       - { name: core.eventListener, event: captcha.event.display_captcha, method: onDisplayCaptcha }
+
+  captcha.event.on_captcha_admin_settings_custom_fields_listener:
+    class: ACP3\Modules\ACP3\Captcha\Event\Listener\OnCaptchaAdminSettingsCustomFieldsListener
+    arguments:
+      - '@core.view'
+    tags:
+      - { name: core.eventListener, event: captcha.admin_settings.custom_fields, method: renderRecaptchaSettings }
+
+  captcha.event.on_captcha_validation_admin_settings_custom_fields_listener:
+    class: ACP3\Modules\ACP3\Captcha\Event\Listener\OnCaptchaValidationAdminSettingsCustomFieldsListener
+    arguments:
+      - '@core.lang'
+    tags:
+      - { name: core.eventListener, event: captcha.validation.admin_settings.custom_fields, method: validateRecaptchaSettings }
 
   captcha.event.on_captcha_validation_validate_captcha_listener:
     class: ACP3\Modules\ACP3\Captcha\Event\Listener\OnCaptchaValidationValidateCaptchaListener
@@ -13,3 +27,13 @@ services:
       - '@core.lang'
     tags:
       - { name: core.eventListener, event: captcha.validation.validate_captcha, method: validateCaptcha }
+
+  captcha.event.render_recaptcha_on_layout_content_before_listener:
+    class: ACP3\Modules\ACP3\Captcha\Event\Listener\RenderRecaptchaOnLayoutContentBeforeListener
+    arguments:
+      - '@core.lang'
+      - '@core.config'
+      - '@core.view'
+      - '@users.model.user_model'
+    tags:
+      - { name: core.eventListener, event: layout.content_before, method: renderRecaptcha }

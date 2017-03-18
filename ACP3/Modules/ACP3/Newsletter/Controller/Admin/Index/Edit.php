@@ -68,7 +68,7 @@ class Edit extends AbstractFormAction
         $newsletter = $this->newsletterModel->getOneById($id);
 
         if (empty($newsletter) === false) {
-            $this->title->setPageTitlePostfix($newsletter['title']);
+            $this->title->setPageTitlePrefix($newsletter['title']);
 
             $settings = $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME);
 

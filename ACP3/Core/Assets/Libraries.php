@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Assets;
 
-
 use ACP3\Core\Assets\Event\AddLibraryEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

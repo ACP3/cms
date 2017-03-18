@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Model;
 
-
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Seo\Exception\SitemapGenerationException;
 use ACP3\Modules\ACP3\Seo\Utility\SitemapAvailabilityRegistrar;

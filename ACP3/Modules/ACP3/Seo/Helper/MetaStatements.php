@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Helper;
 
-
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Settings\SettingsInterface;

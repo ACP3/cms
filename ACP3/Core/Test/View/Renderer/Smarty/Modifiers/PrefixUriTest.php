@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\View\Renderer\Smarty\Modifiers;
 
-
 use ACP3\Core\Test\View\Renderer\Smarty\AbstractPluginTest;
 use ACP3\Core\View\Renderer\Smarty\Modifiers\PrefixUri;
 

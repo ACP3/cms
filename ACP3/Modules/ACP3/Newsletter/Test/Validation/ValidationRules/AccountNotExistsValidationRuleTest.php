@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\Test\Validation\ValidationRules;
 
-
 class AccountNotExistsValidationRuleTest extends AccountExistsValidationRuleTest
 {
     /**

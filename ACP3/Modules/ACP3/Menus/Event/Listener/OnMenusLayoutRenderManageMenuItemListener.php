@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Menus\Event\Listener;
 
-
 use ACP3\Core\ACL;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\I18n\Translator;

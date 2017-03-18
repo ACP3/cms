@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Application\BootstrapCache;
 
-
 class Esi extends \Symfony\Component\HttpKernel\HttpCache\Esi
 {
 }

@@ -6,10 +6,8 @@
 
 namespace ACP3\Core\Test\I18n;
 
-
 use ACP3\Core\I18n\CountryList;
 use ACP3\Core\I18n\Translator;
-
 
 class CountryListTest extends \PHPUnit_Framework_TestCase
 {

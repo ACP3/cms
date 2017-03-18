@@ -69,7 +69,7 @@ class Edit extends Core\Controller\AbstractAdminAction
                 )
                 ->append($this->translator->t('comments', 'admin_details_edit'));
 
-            $this->title->setPageTitlePostfix($comment['name']);
+            $this->title->setPageTitlePrefix($comment['name']);
 
             return [
                 'form' => array_merge($comment, $this->request->getPost()->all()),

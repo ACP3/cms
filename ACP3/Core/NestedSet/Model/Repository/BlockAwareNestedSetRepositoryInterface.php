@@ -6,8 +6,6 @@
 
 namespace ACP3\Core\NestedSet\Model\Repository;
 
-
 interface BlockAwareNestedSetRepositoryInterface
 {
-
 }

@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\Test\Validation\ValidationRules;
 
-
 use ACP3\Core\Test\Validation\ValidationRules\AbstractValidationRuleTest;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
 use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidationRule;

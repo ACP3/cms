@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Validation\Event;
 
-
 use ACP3\Core\Validation\Validator;
 use Symfony\Component\EventDispatcher\Event;
 

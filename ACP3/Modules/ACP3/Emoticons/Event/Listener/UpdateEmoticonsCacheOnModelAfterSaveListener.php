@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\Event\Listener;
 
-
 use ACP3\Modules\ACP3\Emoticons\Cache;
 
 class UpdateEmoticonsCacheOnModelAfterSaveListener
