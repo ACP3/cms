@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Contact\Model;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Helpers\SendEmail;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Mailer\MailerMessage;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Contact\Installer\Schema;
 
@@ -75,13 +76,14 @@ class ContactFormModel
         $subject = $this->buildSubject('contact_subject', $systemSettings['site_title']);
         $body = $this->buildEmailBody($formData, 'contact_body');
 
-        return $this->sendEmail->execute(
-            '',
-            $settings['mail'],
-            $formData['mail'],
-            $subject,
-            $body
-        );
+        $data = (new MailerMessage())
+            ->setSubject($subject)
+            ->setBody($body)
+            ->setTemplate('Contact/layout.email.tpl')
+            ->setRecipients($settings['mail'])
+            ->setFrom($formData['mail']);
+
+        return $this->sendEmail->execute($data);
     }
 
     /**
@@ -140,13 +142,17 @@ class ContactFormModel
         $subject = $this->buildSubject('sender_subject', $systemSettings['site_title']);
         $body = $this->buildEmailBody($formData, 'sender_body');
 
-        return $this->sendEmail->execute(
-            $formData['name'],
-            $formData['mail'],
-            $settings['mail'],
-            $subject,
-            $body
-        );
+        $data = (new MailerMessage())
+            ->setSubject($subject)
+            ->setBody($body)
+            ->setTemplate('Contact/layout.email.tpl')
+            ->setRecipients([
+                'name' => $formData['name'],
+                'email' => $formData['mail'],
+            ])
+            ->setFrom($settings['mail']);
+
+        return $this->sendEmail->execute($data);
     }
 
     /**

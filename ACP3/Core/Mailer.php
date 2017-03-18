@@ -3,6 +3,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Helpers\StringFormatter;
+use ACP3\Core\Mailer\MailerMessage;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use InlineStyle\InlineStyle;
@@ -97,6 +98,7 @@ class Mailer
      * @param string|array $from
      *
      * @return $this
+     * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setFrom($from)
     {
@@ -109,6 +111,7 @@ class Mailer
      * @param string $mailSignature
      *
      * @return $this
+     * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setMailSignature($mailSignature)
     {
@@ -121,6 +124,7 @@ class Mailer
      * @param string $htmlText
      *
      * @return $this
+     * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setHtmlBody($htmlText)
     {
@@ -133,6 +137,7 @@ class Mailer
      * @param string $urlWeb
      *
      * @return $this
+     * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setUrlWeb($urlWeb)
     {
@@ -145,6 +150,7 @@ class Mailer
      * @param bool $bcc
      *
      * @return $this
+     * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setBcc($bcc)
     {
@@ -157,6 +163,7 @@ class Mailer
      * @param string $subject
      *
      * @return $this
+     * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setSubject($subject)
     {
@@ -169,6 +176,7 @@ class Mailer
      * @param string $body
      *
      * @return $this
+     * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setBody($body)
     {
@@ -181,6 +189,7 @@ class Mailer
      * @param array|string $recipients
      *
      * @return $this
+     * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setRecipients($recipients)
     {
@@ -193,6 +202,7 @@ class Mailer
      * @param string $attachment
      *
      * @return $this
+     * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setAttachments($attachment)
     {
@@ -205,10 +215,31 @@ class Mailer
      * @param string $template
      *
      * @return $this
+     * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setTemplate($template)
     {
         $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * @param MailerMessage $data
+     * @return $this
+     */
+    public function setData(MailerMessage $data)
+    {
+        $this
+            ->setAttachments($data->getAttachments())
+            ->setBody($data->getBody())
+            ->setFrom($data->getFrom())
+            ->setHtmlBody($data->getHtmlBody())
+            ->setMailSignature($data->getMailSignature())
+            ->setRecipients($data->getRecipients())
+            ->setSubject($data->getSubject())
+            ->setTemplate($data->getTemplate())
+            ->setUrlWeb($data->getUrlWeb());
 
         return $this;
     }
@@ -269,11 +300,11 @@ class Mailer
      */
     private function generateBody()
     {
-        if (!empty($this->htmlBody) && !empty($this->template)) {
+        if (!empty($this->template)) {
             $mail = [
                 'charset' => 'UTF-8',
                 'title' => $this->subject,
-                'body' => $this->htmlBody,
+                'body' => !empty($this->htmlBody) ? $this->htmlBody : $this->stringFormatter->nl2p($this->body),
                 'signature' => $this->getHtmlSignature(),
                 'url_web_view' => $this->urlWeb
             ];
@@ -288,8 +319,10 @@ class Mailer
             if (!empty($this->body)) {
                 $this->phpMailer->AltBody = $this->decodeHtmlEntities($this->body . $this->getTextSignature());
             } else {
-                $this->phpMailer->AltBody = $this->phpMailer->html2text($this->htmlBody . $this->getHtmlSignature(),
-                    true);
+                $this->phpMailer->AltBody = $this->phpMailer->html2text(
+                    $this->htmlBody . $this->getHtmlSignature(),
+                    true
+                );
             }
         } else {
             $this->phpMailer->Body = $this->decodeHtmlEntities($this->body . $this->getTextSignature());
