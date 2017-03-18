@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.8.1] - 2017-03-18
+### Fixed
+- Fixed the captcha module's composer.json schema
+
 ## [4.8.0] - 2017-03-18
 ### Added
 - Updated the IncludeJs Smarty function to append a query string with the current version of the ACP3 for HTTP cache busting
@@ -291,7 +295,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.8.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.8.1...HEAD
+[4.8.1]: https://github.com/ACP3/cms/compare/v4.8.0...v4.8.1
 [4.8.0]: https://github.com/ACP3/cms/compare/v4.7.1...v4.8.0
 [4.7.1]: https://github.com/ACP3/cms/compare/v4.7.0...v4.7.1
 [4.7.0]: https://github.com/ACP3/cms/compare/v4.6.2...v4.7.0
