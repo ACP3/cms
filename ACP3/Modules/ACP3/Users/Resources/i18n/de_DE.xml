@@ -41,7 +41,7 @@
             E-Mail-Adresse: {mail}
             Passwort: {password}
 
-            Bitte ändern Sie, nachdem Sie sich mit obrigem Passwort angemeldet haben, das Passwort zu einem Ihrer Wahl ab.
+            Bitte ändern Sie, nachdem Sie sich mit obigem Passwort angemeldet haben, das Passwort zu einem Ihrer Wahl ab.
         </item>
         <item key="forgot_pwd_success">Das neue Passwort wurde erfolgreich an Ihre E-Mail-Adresse versendet.</item>
         <item key="frontend_account_edit">Profil bearbeiten</item>

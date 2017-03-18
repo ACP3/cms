@@ -3,8 +3,8 @@ namespace ACP3\Modules\ACP3\Users\Validation;
 
 use ACP3\Core;
 use ACP3\Core\Validation\AbstractFormValidation;
-use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByEmailValidationRule;
-use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameValidationRule;
+use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountExistsByEmailValidationRule;
+use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountExistsByNameValidationRule;
 
 /**
  * Class AccountForgotPasswordFormValidation
@@ -18,9 +18,9 @@ class AccountForgotPasswordFormValidation extends AbstractFormValidation
     public function validate(array $formData)
     {
         if ($this->validator->is(Core\Validation\ValidationRules\EmailValidationRule::class, $formData['nick_mail'])) {
-            $ruleName = AccountNotExistsByEmailValidationRule::class;
+            $ruleName = AccountExistsByEmailValidationRule::class;
         } else {
-            $ruleName = AccountNotExistsByNameValidationRule::class;
+            $ruleName = AccountExistsByNameValidationRule::class;
         }
 
         $this->validator

@@ -141,7 +141,6 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      */
     protected function sendPasswordChangeEmail(array $user, $newPassword)
     {
-        $host = $this->request->getHost();
         $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
 
         $subject = $this->translator->t(
@@ -149,7 +148,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
             'forgot_pwd_mail_subject',
             [
                 '{title}' => $systemSettings['site_title'],
-                '{host}' => $host
+                '{host}' => $this->request->getHost()
             ]
         );
         $body = $this->translator->t(
@@ -159,17 +158,22 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
                 '{mail}' => $user['mail'],
                 '{password}' => $newPassword,
                 '{title}' => $systemSettings['site_title'],
-                '{host}' => $host
+                '{host}' => $this->request->getHost()
             ]
         );
 
         $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
-        return $this->sendEmail->execute(
-            substr($user['realname'], 0, -2),
-            $user['mail'],
-            $settings['mail'],
-            $subject,
-            $body
-        );
+
+        $data = (new Core\Mailer\MailerMessage())
+            ->setRecipients([
+                'name' => $user['realname'],
+                'email' => $user['mail']
+            ])
+            ->setFrom($settings['mail'])
+            ->setSubject($subject)
+            ->setTemplate('Users/layout.email.forgot_pwd.tpl')
+            ->setBody($body);
+
+        return $this->sendEmail->execute($data);
     }
 }

@@ -398,7 +398,7 @@ class Mailer
     private function addRecipients($recipients, $bcc = false)
     {
         if (is_array($recipients) === true) {
-            if (empty($recipients['email']) === false && empty($recipients['name']) === false) {
+            if (isset($recipients['email'], $recipients['name']) === true) {
                 $this->addRecipient($recipients['email'], $recipients['name'], $bcc);
             } else {
                 foreach ($recipients as $recipient) {
