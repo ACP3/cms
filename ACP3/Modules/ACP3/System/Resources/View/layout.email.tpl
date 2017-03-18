@@ -38,7 +38,7 @@
             }
             p {
                 color: #333;
-                font-size: 12px;
+                font-size: 13px;
             }
             .email-content-wrapper {
                 width: 600px;
