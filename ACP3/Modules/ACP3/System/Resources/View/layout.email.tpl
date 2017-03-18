@@ -64,7 +64,7 @@
     {block EMAIL_CONTENT_BEFORE}
         {if !empty($mail.url_web_view)}
             <p class="text-center">
-                <a href="{$mail.url_web_view}">{lang t="newsletter|use_web_view"}</a>
+                <a href="{$mail.url_web_view}">{lang t="system|use_web_view"}</a>
             </p>
         {/if}
     {/block}
