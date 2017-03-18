@@ -310,6 +310,7 @@
         <item key="uninstall_module">Modul deinstallieren</item>
         <item key="unmark_all">Markierung aufheben</item>
         <item key="upload_error">Die Datei %s konnte leider nicht verschoben werden.</item>
+        <item key="use_web_view">Wird die E-Mail nicht korrekt dargestellt? Hier klicken um diese im Browser zu öffnen.</item>
         <item key="version">Version</item>
         <item key="website">Website</item>
         <item key="window_blank">Neues Fenster (_blank)</item>

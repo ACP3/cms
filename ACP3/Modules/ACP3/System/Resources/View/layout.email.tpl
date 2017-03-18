@@ -1,9 +1,10 @@
 <html>
 <head>
-    {block EMAIL_HEAD}{/block}
+    <title>{$mail.title}</title>
     <meta name="viewport" content="width=device-width"/>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset={$mail.charset}">
     <meta name=”x-apple-disable-message-reformatting”>
+    {block EMAIL_HEAD}{/block}
     {block EMAIL_STYLESHEET}
         <style type="text/css">
             html, body {
@@ -60,12 +61,24 @@
     {/block}
 </head>
 <body>
-    {block EMAIL_CONTENT_BEFORE}{/block}
+    {block EMAIL_CONTENT_BEFORE}
+        {if !empty($mail.url_web_view)}
+            <p class="text-center">
+                <a href="{$mail.url_web_view}">{lang t="newsletter|use_web_view"}</a>
+            </p>
+        {/if}
+    {/block}
     <center>
         <table class="email-content-wrapper">
             <tr>
                 <td>
-                    {block EMAIL_CONTENT}{/block}
+                    {block EMAIL_CONTENT}
+                        {$mail.body}
+                        {if !empty($mail.signature)}
+                            <hr>
+                            {$mail.signature}
+                        {/if}
+                    {/block}
                 </td>
             </tr>
         </table>

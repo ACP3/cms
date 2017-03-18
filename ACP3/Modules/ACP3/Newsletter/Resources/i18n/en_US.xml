@@ -65,6 +65,5 @@
         <item key="unsubscribe">Unsubscribe</item>
         <item key="unsubscribe_error">While deleting the newsletter account an error has occurred.</item>
         <item key="unsubscribe_success">The newsletter account has been successfully deleted.</item>
-        <item key="use_web_view">Having problems displaying this newsletter? Click here to open it in your Browser.</item>
     </keys>
 </language>
