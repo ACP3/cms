@@ -43,7 +43,10 @@ services:
 
   smarty.plugin.image:
       class: ACP3\Core\View\Renderer\Smarty\Functions\Image
-      arguments: ['@core.assets.file_resolver', '@core.environment.application_path']
+      arguments:
+        - '@core.http.request'
+        - '@core.assets.file_resolver'
+        - '@core.environment.application_path'
       tags:
         - { name: core.view.extension }
 

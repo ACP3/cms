@@ -45,6 +45,9 @@
                 width: 600px;
                 margin: 0 auto;
             }
+            .logo {
+                height: 89px;
+            }
             .text-left {
                 text-align: left;
             }
@@ -69,7 +72,14 @@
         {/if}
     {/block}
     <center>
-        <table class="email-content-wrapper">
+        <table border="0" cellpadding="0" cellspacing="0" class="email-content-wrapper">
+            <tr>
+                <td class="text-center">
+                    {block EMAIL_HEADER}
+                        <img src="{image file="logo.png" absolute=true}" alt="{site_title}" class="logo">
+                    {/block}
+                </td>
+            </tr>
             <tr>
                 <td>
                     {block EMAIL_CONTENT}
