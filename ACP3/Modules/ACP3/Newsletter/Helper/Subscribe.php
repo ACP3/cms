@@ -144,34 +144,40 @@ class Subscribe
         $systemSettings = $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME);
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-        $subject = $this->translator->t('newsletter', 'subscribe_mail_subject', ['%title%' => $systemSettings['site_title']]);
-        $body = $this->translator->t('newsletter', 'subscribe_mail_body',
-                ['{host}' => $this->request->getHost()]) . "\n\n";
+        $body = $this->translator->t(
+            'newsletter',
+            'subscribe_mail_body',
+            ['{host}' => $this->request->getHost()]
+        );
+        $body .= "\n\n";
 
-        $from = [
-            'email' => $settings['mail'],
-            'name' => $systemSettings['site_title']
-        ];
-
-        $this->mailer
-            ->reset()
-            ->setFrom($from)
-            ->setSubject($subject)
-            ->setMailSignature($settings['mailsig']);
+        $data = (new Core\Mailer\MailerMessage())
+            ->setFrom([
+                'email' => $settings['mail'],
+                'name' => $systemSettings['site_title']
+            ])
+            ->setSubject($this->translator->t(
+                'newsletter',
+                'subscribe_mail_subject',
+                ['%title%' => $systemSettings['site_title']]
+            ))
+            ->setMailSignature($settings['mailsig'])
+            ->setRecipients($emailAddress);
 
         if ($settings['html'] == 1) {
-            $this->mailer->setTemplate('newsletter/layout.email.tpl');
+            $data->setTemplate('newsletter/layout.email.subscribe.tpl');
 
             $body .= '<a href="' . $url . '">' . $url . '<a>';
-            $this->mailer->setHtmlBody($this->stringFormatter->nl2p($body));
+            $data->setHtmlBody($this->stringFormatter->nl2p($body));
         } else {
             $body .= $url;
-            $this->mailer->setBody($body);
+            $data->setBody($body);
         }
 
-        $this->mailer->setRecipients($emailAddress);
-
-        return $this->mailer->send();
+        return $this->mailer
+            ->reset()
+            ->setData($data)
+            ->send();
     }
 
     /**

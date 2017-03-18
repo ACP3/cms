@@ -9,7 +9,7 @@ jQuery(document).ready(function ($) {
             'captcha.extension.recaptcha_captcha_extension'
         ];
 
-    $('#captcha').on('change', function() {
+    $(':input[name="captcha"]').on('change', function() {
         $recaptchaWrapper.toggle(serviceIds.indexOf(this.value) !== -1);
-    }).filter(':selected').triggerHandler('change');
+    }).triggerHandler('change');
 });

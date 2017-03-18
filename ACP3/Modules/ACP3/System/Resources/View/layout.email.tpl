@@ -46,7 +46,7 @@
                 margin: 0 auto;
             }
             .logo {
-                height: 89px;
+                padding: 15px 0;
             }
             .text-left {
                 text-align: left;
@@ -74,9 +74,9 @@
     <center>
         <table border="0" cellpadding="0" cellspacing="0" class="email-content-wrapper">
             <tr>
-                <td class="text-center">
+                <td class="text-center logo">
                     {block EMAIL_HEADER}
-                        <img src="{image file="logo.png" absolute=true}" alt="{site_title}" class="logo">
+                        <img src="{image file="logo.png" absolute=true}" alt="{site_title}">
                     {/block}
                 </td>
             </tr>
