@@ -116,28 +116,7 @@ class Register extends Core\Controller\AbstractFrontendAction
 
                 $this->registrationFormValidation->validate($formData);
 
-                $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
-                $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
-
-                $subject = $this->translator->t(
-                    'users',
-                    'register_mail_subject',
-                    [
-                        '{title}' => $systemSettings['site_title'],
-                        '{host}' => $this->request->getHost(),
-                    ]);
-                $body = $this->translator->t(
-                    'users',
-                    'register_mail_message',
-                    [
-                        '{name}' => $formData['nickname'],
-                        '{mail}' => $formData['mail'],
-                        '{password}' => $formData['pwd'],
-                        '{title}' => $systemSettings['site_title'],
-                        '{host}' => $this->request->getHost()
-                    ]
-                );
-                $mailIsSent = $this->sendEmail->execute('', $formData['mail'], $settings['mail'], $subject, $body);
+                $mailIsSent = $this->sendRegistrationEmail($formData);
 
                 $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
                 $insertValues = [
@@ -154,11 +133,50 @@ class Register extends Core\Controller\AbstractFrontendAction
 
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
                     $this->translator->t('users',
-                        $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'),
+                        $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'
+                    ),
                     $this->appPath->getWebRoot()
                 ));
             },
             $this->request->getFullPath()
         );
+    }
+
+    /**
+     * @param array $formData
+     * @return bool
+     */
+    protected function sendRegistrationEmail(array $formData)
+    {
+        $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
+        $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
+
+        $subject = $this->translator->t(
+            'users',
+            'register_mail_subject',
+            [
+                '{title}' => $systemSettings['site_title'],
+                '{host}' => $this->request->getHost(),
+            ]);
+        $body = $this->translator->t(
+            'users',
+            'register_mail_message',
+            [
+                '{name}' => $formData['nickname'],
+                '{mail}' => $formData['mail'],
+                '{password}' => $formData['pwd'],
+                '{title}' => $systemSettings['site_title'],
+                '{host}' => $this->request->getHost()
+            ]
+        );
+
+        $data = (new Core\Mailer\MailerMessage())
+            ->setRecipients($formData['mail'])
+            ->setFrom($settings['mail'])
+            ->setSubject($subject)
+            ->setBody($body)
+            ->setTemplate('Users/layout.email.register.tpl');
+
+        return $this->sendEmail->execute($data);
     }
 }
