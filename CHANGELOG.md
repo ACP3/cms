@@ -6,16 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-xx
 ### Added
-- updated the IncludeJs Smarty function to append a query string with the current version of the ACP3 for HTTP cache busting
+- Updated the IncludeJs Smarty function to append a query string with the current version of the ACP3 for HTTP cache busting
 - Added reCAPATCHA as a new captcha type
+- Added the new Smarty function "image" which makes it possible to include an image from the Assets/img folder of a design
 
 ### Changed
 - Refactored the captcha system so that it can be extended with different captcha types
 - Refactored the URI alias generation for gallery pictures into an event
-- improved the page titles when editing entries via the admin panel to make them more easily identifiable
+- Improved the page titles when editing entries via the admin panel to make them more easily identifiable
 
 ### Fixed
-- fixed the picture number generation when adding a new gallery picture 
+- Fixed the picture number generation when adding a new gallery picture 
 
 ## [4.7.1] - 2017-02-27
 ### Fixed

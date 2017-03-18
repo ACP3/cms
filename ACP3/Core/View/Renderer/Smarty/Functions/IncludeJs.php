@@ -28,16 +28,16 @@ class IncludeJs extends AbstractFunction
 
     /**
      * @param \ACP3\Core\Assets                      $assets
-     * @param \ACP3\Core\Assets\FileResolver         $fileResolved
+     * @param \ACP3\Core\Assets\FileResolver         $fileResolver
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
         Core\Assets $assets,
-        Core\Assets\FileResolver $fileResolved,
+        Core\Assets\FileResolver $fileResolver,
         Core\Environment\ApplicationPath $appPath
     ) {
         $this->assets = $assets;
-        $this->fileResolver = $fileResolved;
+        $this->fileResolver = $fileResolver;
         $this->appPath = $appPath;
     }
 

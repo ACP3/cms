@@ -10,13 +10,13 @@
 <div id="wrapper" class="container">
     <h1 id="logo" class="hidden-xs">
         {if $IS_HOMEPAGE}
-            <img src="{$DESIGN_PATH}Assets/img/logo.png"
-                 srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
+            <img src="{image file="logo.png"}"
+                 srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
                  alt="{site_title}">
         {else}
             <a href="{uri args=""}">
-                <img src="{$DESIGN_PATH}Assets/img/logo.png"
-                     srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
+                <img src="{image file="logo.png"}"
+                     srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
                      alt="{site_title}">
             </a>
         {/if}
@@ -31,8 +31,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="{$ROOT_DIR}" class="navbar-brand hidden-sm hidden-md hidden-lg">
-                    <img src="{$DESIGN_PATH}Assets/img/logo.png"
-                         srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
+                    <img src="{image file="logo.png"}"
+                         srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
                          alt="{site_title}">
                 </a>
             </div>
