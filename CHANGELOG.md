@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-xx
 ### Added
-- Added reCAPATCHA as a new captcha type 
+- updated the IncludeJs Smarty function to append a query string with the current version of the ACP3 for HTTP cache busting
+- Added reCAPATCHA as a new captcha type
 
 ### Changed
 - Refactored the captcha system so that it can be extended with different captcha types

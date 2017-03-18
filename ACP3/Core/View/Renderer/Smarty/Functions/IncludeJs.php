@@ -78,7 +78,7 @@ class IncludeJs extends AbstractFunction
                 } else {
                     $path = $this->appPath->getWebRoot() . substr($path, strlen(ACP3_ROOT_DIR));
                 }
-                return sprintf($script, $path);
+                return sprintf($script, $path . '?v=' . Core\Application\BootstrapInterface::VERSION);
             }
             return '';
         }
