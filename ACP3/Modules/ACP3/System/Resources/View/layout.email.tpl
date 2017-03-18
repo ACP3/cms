@@ -15,7 +15,7 @@
                 background-color: #fff;
             }
             h1, h2, h3, h4, h5, h6, p {
-                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             }
             h1, h2, h3, h4, h5, h6 {
                 margin: 0;
