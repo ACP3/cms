@@ -32,6 +32,8 @@
             $(this.element).on('submit', function (e) {
                 e.preventDefault();
 
+                that.isFormValid = true;
+
                 $(document).trigger('acp3.ajaxFrom.submit.before', [ that ]);
 
                 if (that.isFormValid && that.preValidateForm(that.element)) {
