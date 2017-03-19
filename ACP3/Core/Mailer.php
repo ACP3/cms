@@ -199,14 +199,18 @@ class Mailer
     }
 
     /**
-     * @param string $attachment
+     * @param string|array $attachments
      *
      * @return $this
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
-    public function setAttachments($attachment)
+    public function setAttachments($attachments)
     {
-        $this->attachments[] = $attachment;
+        if (is_array($attachments)) {
+            $this->attachments = $attachments;
+        } else {
+            $this->attachments[] = $attachments;
+        }
 
         return $this;
     }

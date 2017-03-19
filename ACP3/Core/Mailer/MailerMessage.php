@@ -206,9 +206,19 @@ class MailerMessage
      * @param array $attachments
      * @return $this
      */
-    public function setAttachments($attachments)
+    public function setAttachments(array $attachments)
     {
         $this->attachments = $attachments;
+        return $this;
+    }
+
+    /**
+     * @param string $attachment
+     * @return $this
+     */
+    public function addAttachment($attachment)
+    {
+        $this->attachments[] = $attachment;
         return $this;
     }
 

@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.8.4] - 2017-03-19
+## [4.8.5] - 2017-03-19
 ### Fixed
 - Fixed the attachment handling of the `Mailer` when using the new `MailerMessage` class
 
@@ -307,8 +307,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.8.4...HEAD
-[4.8.4]: https://github.com/ACP3/cms/compare/v4.8.3...v4.8.4
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.8.5...HEAD
+[4.8.5]: https://github.com/ACP3/cms/compare/v4.8.3...v4.8.5
 [4.8.3]: https://github.com/ACP3/cms/compare/v4.8.2...v4.8.3
 [4.8.2]: https://github.com/ACP3/cms/compare/v4.8.1...v4.8.2
 [4.8.1]: https://github.com/ACP3/cms/compare/v4.8.0...v4.8.1
