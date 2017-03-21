@@ -3,6 +3,7 @@ namespace ACP3\Core\Modules;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\System;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
@@ -25,14 +26,20 @@ class SchemaHelper
      * @var Core\Model\Repository\SettingsAwareRepositoryInterface
      */
     protected $systemSettingsRepository;
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
 
     /**
      * SchemaHelper constructor.
+     * @param LoggerInterface $logger
      * @param Core\Database\Connection $db
      * @param Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
      * @param Core\Model\Repository\SettingsAwareRepositoryInterface $systemSettingsRepository
      */
     public function __construct(
+        LoggerInterface $logger,
         Core\Database\Connection $db,
         Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository,
         Core\Model\Repository\SettingsAwareRepositoryInterface $systemSettingsRepository
@@ -40,6 +47,7 @@ class SchemaHelper
         $this->db = $db;
         $this->systemModuleRepository = $systemModuleRepository;
         $this->systemSettingsRepository = $systemSettingsRepository;
+        $this->logger = $logger;
     }
 
     /**
@@ -99,7 +107,7 @@ class SchemaHelper
             } catch (\Exception $e) {
                 $this->db->getConnection()->rollBack();
 
-                $this->container->get('core.logger')->warning('installer', $e);
+                $this->logger->warning($e);
                 return false;
             }
         }

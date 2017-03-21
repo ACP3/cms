@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\System\Helper;
 
 use ACP3\Core;
 use ACP3\Core\XML;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -42,16 +43,22 @@ class Installer
      * @var string
      */
     protected $environment;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     /**
+     * @param LoggerInterface $logger
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules                     $modules
-     * @param \ACP3\Core\Modules\Vendor              $vendors
-     * @param \ACP3\Core\Modules\SchemaInstaller     $schemaInstaller
-     * @param \ACP3\Core\XML                         $xml
-     * @param string                                 $environment
+     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\Modules\Vendor $vendors
+     * @param \ACP3\Core\Modules\SchemaInstaller $schemaInstaller
+     * @param \ACP3\Core\XML $xml
+     * @param string $environment
      */
     public function __construct(
+        LoggerInterface $logger,
         Core\Environment\ApplicationPath $appPath,
         Core\Modules $modules,
         Core\Modules\Vendor $vendors,
@@ -65,6 +72,7 @@ class Installer
         $this->schemaInstaller = $schemaInstaller;
         $this->xml = $xml;
         $this->environment = $environment;
+        $this->logger = $logger;
     }
 
     /**
@@ -147,6 +155,7 @@ class Installer
     public function updateServiceContainer(Core\Http\RequestInterface $request, $allModules = false)
     {
         return Core\DependencyInjection\ServiceContainerBuilder::create(
+            $this->logger,
             $this->appPath,
             $request->getSymfonyRequest(),
             $this->environment,

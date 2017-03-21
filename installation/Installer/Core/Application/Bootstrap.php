@@ -78,7 +78,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         } catch (Core\Controller\Exception\ControllerActionNotFoundException $e) {
             $response = $redirect->temporary('errors/index/not_found');
         } catch (\Exception $e) {
-            $this->container->get('core.logger')->critical('installer', $e->getMessage());
+            $this->logger->critical($e);
             $response = $redirect->temporary('errors/index/server_error');
         }
 

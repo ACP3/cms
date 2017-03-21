@@ -55,6 +55,7 @@ class Bootstrap extends AbstractBootstrap
         $this->container = new \ACP3ServiceContainer();
         $this->container->set('core.environment.application_path', $this->appPath);
         $this->container->set('core.http.symfony_request', $symfonyRequest);
+        $this->container->set('core.logger.system_logger', $this->logger);
     }
 
     /**
@@ -66,7 +67,12 @@ class Bootstrap extends AbstractBootstrap
         $containerConfigCache = new ConfigCache($filePath, ($this->appMode === ApplicationMode::DEVELOPMENT));
 
         if (!$containerConfigCache->isFresh()) {
-            $containerBuilder = ServiceContainerBuilder::create($this->appPath, $symfonyRequest, $this->appMode);
+            $containerBuilder = ServiceContainerBuilder::create(
+                $this->logger,
+                $this->appPath,
+                $symfonyRequest,
+                $this->appMode
+            );
 
             $dumper = new PhpDumper($containerBuilder);
             $containerConfigCache->write(
@@ -107,7 +113,7 @@ class Bootstrap extends AbstractBootstrap
         } catch (\ACP3\Core\Controller\Exception\ControllerActionNotFoundException $e) {
             $response = $this->handleException($e, $redirect, 'errors/index/not_found');
         } catch (\Exception $e) {
-            $this->getContainer()->get('core.logger')->error('exception', $e);
+            $this->logger->critical($e);
 
             $response = $this->handleException($e, $redirect, 'errors/index/server_error');
         }
@@ -142,8 +148,8 @@ class Bootstrap extends AbstractBootstrap
     private function isMaintenanceModeEnabled(RequestInterface $request)
     {
         return (bool)$this->systemSettings['maintenance_mode'] === true &&
-        $request->getArea() !== AreaEnum::AREA_ADMIN &&
-        strpos($request->getQuery(), 'users/index/login/') !== 0;
+            $request->getArea() !== AreaEnum::AREA_ADMIN &&
+            strpos($request->getQuery(), 'users/index/login/') !== 0;
     }
 
     /**

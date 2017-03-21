@@ -28,7 +28,7 @@ services:
   seo.event.generate_sitemap_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\GenerateSitemapOnModelAfterSaveListener
     arguments:
-      - '@core.logger'
+      - '@seo.sitemap_logger'
       - '@core.config'
       - '@seo.utility.sitemap_availability_registrar'
       - '@seo.model.sitemap_generation_model'

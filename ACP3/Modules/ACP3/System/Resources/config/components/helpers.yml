@@ -2,6 +2,7 @@ services:
   system.helpers.installer:
     class: ACP3\Modules\ACP3\System\Helper\Installer
     arguments:
+      - '@core.logger.system_logger'
       - '@core.environment.application_path'
       - '@core.modules'
       - '@core.modules.vendors'

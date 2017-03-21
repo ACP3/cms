@@ -46,11 +46,19 @@ services:
   core.modules.schemaHelper:
     class: ACP3\Core\Modules\SchemaHelper
     arguments:
+      - '@core.modules.installer_logger'
       - '@core.db'
       - '@system.model.modulerepository'
       - '@system.model.settingsrepository'
     calls:
       - ['setContainer', ['@service_container']]
+
+  core.modules.installer_logger:
+    class: Psr\Log\LoggerInterface
+    factory: 'core.logger.logger_factory:create'
+    arguments:
+      - 'installer'
+    public: false
 
   core.modules.installer.abstractMigration:
     abstract: true

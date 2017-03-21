@@ -1,6 +1,8 @@
 <?php
 namespace ACP3\Core;
 
+use Psr\Log\LoggerInterface;
+
 /**
  * Monolog error handler
  *
@@ -14,7 +16,7 @@ namespace ACP3\Core;
 class ErrorHandler
 {
     /**
-     * @var \ACP3\Core\Logger
+     * @var LoggerInterface
      */
     private $logger;
     /**
@@ -24,10 +26,9 @@ class ErrorHandler
 
     /**
      * ErrorHandler constructor.
-     *
-     * @param \ACP3\Core\Logger $logger
+     * @param LoggerInterface $logger
      */
-    public function __construct(Logger $logger)
+    public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
@@ -36,12 +37,11 @@ class ErrorHandler
      * Registers a new ErrorHandler for a given Logger
      *
      * By default it will handle errors, exceptions and fatal errors
-     *
-     * @param \ACP3\Core\Logger $logger
-     *
-     * @return $this
+
+     * @param LoggerInterface $logger
+     * @return static
      */
-    public static function register(Logger $logger)
+    public static function register(LoggerInterface $logger)
     {
         $handler = new static($logger);
         $handler->registerErrorHandler();
@@ -71,7 +71,7 @@ class ErrorHandler
      */
     public function handleException($e)
     {
-        $this->logger->error('exception', $e);
+        $this->logger->error($e);
 
         exit(255);
     }
@@ -101,7 +101,6 @@ class ErrorHandler
         $lastError = error_get_last();
         if ($lastError !== null && in_array($lastError['type'], self::$fatalErrors, true)) {
             $this->logger->alert(
-                'system',
                 'Fatal Error (' . self::errorCodeToString($lastError['type']) . '): ' . $lastError['message'],
                 [
                     'code' => $lastError['type'],

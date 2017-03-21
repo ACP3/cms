@@ -139,8 +139,7 @@ class Index extends AbstractAction
         } catch (ValidationFailedException $e) {
             return $this->renderErrorBoxOnFailedFormValidation($e);
         } catch (\Exception $e) {
-            $this->get('core.logger')->error('installer', $e->getMessage());
-            $this->get('core.logger')->error('installer', $e->getTraceAsString());
+            $this->get('core.logger.system_logger')->error($e);
             $this->setTemplate('install/install.error.tpl');
         }
     }

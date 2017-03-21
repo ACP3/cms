@@ -5,6 +5,7 @@ imports:
   - { resource: components/assets.yml }
   - { resource: components/authentication.yml }
   - { resource: components/breadcrumb.yml }
+  - { resource: components/cache.yml }
   - { resource: components/controller.yml }
   - { resource: components/database.yml }
   - { resource: components/datagrid.yml }
@@ -12,6 +13,8 @@ imports:
   - { resource: components/helpers.yml }
   - { resource: components/http.yml }
   - { resource: components/language.yml }
+  - { resource: components/logger.yml }
+  - { resource: components/mailer.yml }
   - { resource: components/model.yml }
   - { resource: components/modules.yml }
   - { resource: components/validation.yml }
@@ -29,18 +32,6 @@ services:
       - '@core.modules'
       - '@permissions.model.userrolerepository'
       - '@permissions.cache'
-
-  core.cache.system:
-    class: ACP3\Core\Cache
-    arguments:
-      - '@core.cache.cache_driver_factory'
-      - 'system'
-
-  core.cache.cache_driver_factory:
-    class: ACP3\Core\Cache\CacheDriverFactory
-    arguments:
-      - '@service_container'
-      - '@core.environment.application_path'
 
   core.config:
     class: ACP3\Core\Settings\Settings
@@ -60,19 +51,6 @@ services:
       - '@core.environment.application_path'
       - '%core.environment%'
     shared: false
-
-  core.logger:
-    class: ACP3\Core\Logger
-    arguments:
-      - '@core.environment.application_path'
-
-  core.mailer:
-    class: ACP3\Core\Mailer
-    arguments:
-      - '@core.logger'
-      - '@core.view'
-      - '@core.config'
-      - '@core.helpers.string_formatter'
 
   core.pagination:
     class: ACP3\Core\Pagination

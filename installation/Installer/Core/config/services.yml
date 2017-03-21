@@ -2,6 +2,7 @@ parameters:
   default_request: 'install'
 
 imports:
+  - { resource: ../../../../ACP3/Core/config/components/logger.yml }
   - { resource: components/application.yml }
   - { resource: components/controller.yml }
   - { resource: components/date.yml }
