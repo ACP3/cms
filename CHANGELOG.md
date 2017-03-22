@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2017-xx-xx
+### Added
+- Extended the router so that it's possible to force the generation of HTTP URIs
+
 ## [4.8.5] - 2017-03-19
 ### Fixed
 - Fixed the attachment handling of the `Mailer` when using the new `MailerMessage` class
