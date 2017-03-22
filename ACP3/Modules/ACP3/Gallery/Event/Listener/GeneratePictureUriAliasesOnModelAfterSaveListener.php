@@ -69,22 +69,50 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
      */
     public function generatePictureAliases(ModelSaveEvent $event)
     {
-        if ($this->aliases && $this->metaStatements && $this->uriAliasManager) {
+        if ($event->isIsNewEntry() || $event->getModuleName() !== Gallery\Installer\Schema::MODULE_NAME) {
+            return;
+        }
+
+        if ($this->hasAllRequiredDependencies() && $this->isGallery($event)) {
             $galleryId = $event->getEntryId();
             $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
 
-            $alias = $this->aliases->getUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId), true);
-            $seoKeywords = $this->metaStatements->getKeywords(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId));
-            $seoDescription = $this->metaStatements->getDescription(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId));
+            $rawData = $event->getRawData();
 
             foreach ($pictures as $picture) {
                 $this->uriAliasManager->insertUriAlias(
                     sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
-                    !empty($alias) ? $alias . '/img-' . $picture['id'] : '',
-                    $seoKeywords,
-                    $seoDescription
+                    !empty($rawData['alias']) ? $rawData['alias'] . '/img-' . $picture['id'] : '',
+                    $rawData['seo_keywords'],
+                    $rawData['seo_description'],
+                    $rawData['seo_robots']
                 );
             }
         }
+    }
+
+    /**
+     * @return bool
+     */
+    private function hasAllRequiredDependencies()
+    {
+        return $this->aliases && $this->metaStatements && $this->uriAliasManager;
+    }
+
+    /**
+     * @param ModelSaveEvent $event
+     * @return bool
+     */
+    private function isGallery(ModelSaveEvent $event)
+    {
+        $rawData = $event->getRawData();
+
+        return isset(
+            $rawData['alias'],
+            $rawData['seo_keywords'],
+            $rawData['seo_description'],
+            $rawData['seo_robots'],
+            $rawData['seo_uri_pattern']
+        ) && $rawData['seo_uri_pattern'] === Gallery\Helpers::URL_KEY_PATTERN_GALLERY;
     }
 }
