@@ -38,7 +38,7 @@ class Router implements Core\Router\RouterInterface
     /**
      * @inheritdoc
      */
-    public function route($path, $absolute = false, $forceSecure = false)
+    public function route($path, $isAbsolute = false, $isSecure = null)
     {
         $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
         $pathArray = preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
@@ -52,12 +52,27 @@ class Router implements Core\Router\RouterInterface
 
         $prefix = '';
         // Append the current hostname to the URL
-        if ($absolute === true) {
-            $prefix .= ($forceSecure === true) ? 'https://' : $this->request->getScheme() . '://';
+        if ($isAbsolute === true || $isSecure !== null) {
+            $prefix .= $this->getScheme($isSecure);
             $prefix .= $this->request->getHost();
         }
 
         $prefix .= $this->appPath->getPhpSelf() . '/';
         return $prefix . $path;
+    }
+
+    /**
+     * @param bool|null $isSecure
+     * @return string
+     */
+    private function getScheme($isSecure)
+    {
+        if ($isSecure === null) {
+            return $this->request->getScheme() . '://';
+        } elseif ($isSecure === true) {
+            return 'https://';
+        }
+
+        return 'http://';
     }
 }

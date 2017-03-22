@@ -58,7 +58,7 @@ class Router implements RouterInterface
     /**
      * @inheritdoc
      */
-    public function route($path, $isAbsolute = false, $forceSecure = false)
+    public function route($path, $isAbsolute = false, $isSecure = null)
     {
         if ($path !== '') {
             $path = $this->preparePath($path);
@@ -68,7 +68,7 @@ class Router implements RouterInterface
             }
         }
 
-        return $this->addUriPrefix($path, $isAbsolute, $forceSecure) . $path;
+        return $this->addUriPrefix($path, $isAbsolute, $isSecure) . $path;
     }
 
     /**
@@ -123,21 +123,36 @@ class Router implements RouterInterface
     /**
      * @param string $path
      * @param bool   $isAbsolute
-     * @param bool   $forceSecure
+     * @param bool   $isSecure
      *
      * @return string
      */
-    protected function addUriPrefix($path, $isAbsolute, $forceSecure)
+    protected function addUriPrefix($path, $isAbsolute, $isSecure)
     {
         $prefix = '';
-        if ($isAbsolute === true || $forceSecure === true) {
-            $prefix .= ($forceSecure === true) ? 'https://' : $this->request->getScheme() . '://';
+        if ($isAbsolute === true || $isSecure !== null) {
+            $prefix .= $this->getScheme($isSecure);
             $prefix .= $this->request->getHost();
         }
 
         $prefix .= $this->useModRewrite($path) ? $this->appPath->getWebRoot() : $this->appPath->getPhpSelf() . '/';
 
         return $prefix;
+    }
+
+    /**
+     * @param bool|null $isSecure
+     * @return string
+     */
+    private function getScheme($isSecure)
+    {
+        if ($isSecure === null) {
+            return $this->request->getScheme() . '://';
+        } elseif ($isSecure === true) {
+            return 'https://';
+        }
+
+        return 'http://';
     }
 
     /**
