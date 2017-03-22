@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - 2017-xx-xx
 ### Added
 - Extended the router so that it's possible to force the generation of HTTP URIs
+- Added the possibility to generate separate XML-sitemaps for HTTP and HTTPS
 
 ## [4.8.5] - 2017-03-19
 ### Fixed

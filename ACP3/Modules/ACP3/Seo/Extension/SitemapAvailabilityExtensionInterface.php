@@ -16,7 +16,8 @@ interface SitemapAvailabilityExtensionInterface
     public function getModuleName();
 
     /**
+     * @param bool|null $isSecure
      * @return Url[]
      */
-    public function getUrls();
+    public function getUrls($isSecure = null);
 }

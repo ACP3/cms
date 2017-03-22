@@ -12,6 +12,20 @@
 
     RewriteEngine On
 
+# Uncomment the following lines of code if you want to use separate sitemaps for HTTP and HTTPS
+#    RewriteCond %{HTTPS} =on
+#    RewriteRule ^ - [env=proto:https]
+#    RewriteCond %{HTTPS} !=on
+#    RewriteRule ^ - [env=proto:http]
+
+#    RewriteCond %{HTTPS} !=on
+#    RewriteCond %{REQUEST_FILENAME} !-f
+#    RewriteRule ^sitemap\.xml$ sitemap_http.xml [L,QSA]
+
+#    RewriteCond %{HTTPS} =on
+#    RewriteCond %{REQUEST_FILENAME} !-f
+#    RewriteRule ^sitemap\.xml$ sitemap_https.xml [L,QSA]
+
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php/$1 [L,QSA]

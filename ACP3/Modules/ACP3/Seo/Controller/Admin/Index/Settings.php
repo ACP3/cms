@@ -74,6 +74,10 @@ class Settings extends Core\Controller\AbstractAdminAction
                 'sitemap_is_enabled',
                 $seoSettings['sitemap_is_enabled']
             ),
+            'sitemap_separate' => $this->formsHelper->yesNoCheckboxGenerator(
+                'sitemap_separate',
+                $seoSettings['sitemap_separate']
+            ),
             'sitemap_save_mode' => $this->formsHelper->checkboxGenerator(
                 'sitemap_save_mode',
                 $sitemapSaveMode,
@@ -99,7 +103,8 @@ class Settings extends Core\Controller\AbstractAdminAction
                 'meta_keywords' => $this->get('core.helpers.secure')->strEncode($formData['meta_keywords']),
                 'robots' => (int)$formData['robots'],
                 'sitemap_is_enabled' => (int)$formData['sitemap_is_enabled'],
-                'sitemap_save_mode' => (int)$formData['sitemap_save_mode']
+                'sitemap_save_mode' => (int)$formData['sitemap_save_mode'],
+                'sitemap_separate' => (int)$formData['sitemap_separate']
             ];
 
             return $this->config->saveSettings($data, Seo\Installer\Schema::MODULE_NAME);

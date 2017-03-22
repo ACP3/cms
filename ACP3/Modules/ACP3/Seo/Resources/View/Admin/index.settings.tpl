@@ -16,6 +16,7 @@
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$sitemap_is_enabled required=true label={lang t="seo|sitemap_enable"}}
                 <div id="seo-sitemap-wrapper">
                     {include file="asset:System/Partials/form_group.button_group.tpl" options=$sitemap_save_mode required=true label={lang t="seo|sitemap_save_mode"}}
+                    {include file="asset:System/Partials/form_group.button_group.tpl" options=$sitemap_separate required=true label={lang t="seo|sitemap_separate"}}
                     {if {has_permission path="admin/seo/index/sitemap"}}
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">

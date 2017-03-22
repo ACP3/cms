@@ -19,7 +19,10 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         return Schema::MODULE_NAME;
     }
 
-    public function fetchSitemapUrls()
+    /**
+     * @inheritdoc
+     */
+    public function fetchSitemapUrls($isSecure = null)
     {
         $routeNames = [
             'contact/index/index',
@@ -27,7 +30,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         ];
 
         foreach ($routeNames as $routeName) {
-            $this->addUrl($routeName);
+            $this->addUrl($routeName, null, $isSecure);
         }
     }
 }
