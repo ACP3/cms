@@ -42,3 +42,4 @@ services:
       - '@core.router'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
+    public: false

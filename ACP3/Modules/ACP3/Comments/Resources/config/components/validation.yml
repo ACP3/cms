@@ -15,6 +15,7 @@ services:
       - '@core.i18n.translator'
       - '@core.validator'
       - '@core.modules'
+    public: false
 
   comments.validation.validation_rules.flood_barrier_validation_rule:
     class: ACP3\Modules\ACP3\Comments\Validation\ValidationRules\FloodBarrierValidationRule

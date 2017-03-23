@@ -38,7 +38,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Order
     arguments:
       - '@core.context.frontend'
-      - '@permission.nested_set.operation.sort'
+      - '@permissions.nested_set.operation.sort'
       - '@permissions.model.rolerepository'
       - '@permissions.cache'
 
