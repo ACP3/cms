@@ -1,6 +1,10 @@
 services:
   permissions.installer.schema:
     class: ACP3\Modules\ACP3\Permissions\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
 
   permissions.installer.migration:
     class: ACP3\Modules\ACP3\Permissions\Installer\Migration
+    tags:
+      - { name: core.installer.migration }

@@ -12,6 +12,7 @@ imports:
   - { resource: components/date.yml }
   - { resource: components/helpers.yml }
   - { resource: components/http.yml }
+  - { resource: components/installer.yml }
   - { resource: components/language.yml }
   - { resource: components/logger.yml }
   - { resource: components/mailer.yml }

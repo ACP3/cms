@@ -1,6 +1,10 @@
 services:
   seo.installer.schema:
     class: ACP3\Modules\ACP3\Seo\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
 
   seo.installer.migration:
     class: ACP3\Modules\ACP3\Seo\Installer\Migration
+    tags:
+      - { name: core.installer.migration }

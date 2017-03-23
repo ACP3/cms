@@ -1,7 +1,11 @@
 services:
   system.installer.schema:
     class: ACP3\Modules\ACP3\System\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
 
   system.installer.migration:
     class: ACP3\Modules\ACP3\System\Installer\Migration
     parent: core.modules.installer.abstractMigration
+    tags:
+      - { name: core.installer.migration }

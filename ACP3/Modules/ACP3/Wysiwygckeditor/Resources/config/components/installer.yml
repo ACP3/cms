@@ -1,6 +1,10 @@
 services:
   wysiwygckeditor.installer.schema:
     class: ACP3\Modules\ACP3\Wysiwygckeditor\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
 
   wysiwygckeditor.installer.migration:
     class: ACP3\Modules\ACP3\Wysiwygckeditor\Installer\Migration
+    tags:
+      - { name: core.installer.migration }

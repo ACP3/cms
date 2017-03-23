@@ -1,6 +1,10 @@
 services:
   comments.installer.schema:
     class: ACP3\Modules\ACP3\Comments\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
 
   comments.installer.migration:
     class: ACP3\Modules\ACP3\Comments\Installer\Migration
+    tags:
+      - { name: core.installer.migration }

@@ -1,6 +1,10 @@
 services:
   categories.installer.schema:
     class: ACP3\Modules\ACP3\Categories\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
 
   categories.installer.migration:
     class: ACP3\Modules\ACP3\Categories\Installer\Migration
+    tags:
+      - { name: core.installer.migration }

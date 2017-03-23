@@ -18,6 +18,7 @@ services:
       - '@system.model.modulerepository'
       - '@system.helpers.installer'
       - '@permissions.cache'
+      - '@core.installer.schema_registrar'
 
   system.controller.admin.index.configuration:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Configuration

@@ -149,17 +149,12 @@ class Installer
 
     /**
      * @param Core\Http\RequestInterface $request
-     * @param bool $allModules
      * @return \Symfony\Component\DependencyInjection\ContainerBuilder
      */
-    public function updateServiceContainer(Core\Http\RequestInterface $request, $allModules = false)
+    public function updateServiceContainer(Core\Http\RequestInterface $request)
     {
         return Core\DependencyInjection\ServiceContainerBuilder::create(
-            $this->logger,
-            $this->appPath,
-            $request->getSymfonyRequest(),
-            $this->environment,
-            $allModules
+            $this->logger, $this->appPath, $request->getSymfonyRequest(), $this->environment
         );
     }
 
