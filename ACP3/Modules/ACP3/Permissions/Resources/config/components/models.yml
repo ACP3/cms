@@ -3,26 +3,31 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
     arguments:
       - '@core.db'
+    public: false
 
   permissions.model.rulerepository:
     class: ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository
     arguments:
       - '@core.db'
+    public: false
 
   permissions.model.resourcerepository:
     class: ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
     arguments:
       - '@core.db'
+    public: false
 
   permissions.model.privilegerepository:
     class: ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
     arguments:
       - '@core.db'
+    public: false
 
   permissions.model.userrolerepository:
     class: ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository
     arguments:
       - '@core.db'
+    public: false
 
   permissions.model.resources_model:
     class: ACP3\Modules\ACP3\Permissions\Model\ResourcesModel
@@ -30,6 +35,7 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@permissions.model.resourcerepository'
+    public: false
 
   permissions.model.roles_model:
     class: ACP3\Modules\ACP3\Permissions\Model\RolesModel
@@ -40,6 +46,7 @@ services:
       - '@permissions.nested_set.operation.insert'
       - '@permissions.nested_set.operation.edit'
       - '@permissions.nested_set.operation.delete'
+    public: false
 
   permissions.model.rules_model:
     class: ACP3\Modules\ACP3\Permissions\Model\RulesModel
@@ -48,3 +55,4 @@ services:
       - '@core.model.data_processor'
       - '@permissions.model.rulerepository'
       - '@permissions.cache'
+    public: false

@@ -3,11 +3,13 @@ services:
     class: ACP3\Modules\ACP3\Contact\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
+    public: false
 
   contact.model.repository.contacts_repository:
     class: ACP3\Modules\ACP3\Contact\Model\Repository\ContactsRepository
     arguments:
       - '@core.db'
+    public: false
 
   contact.model.contacts_model:
     class: ACP3\Modules\ACP3\Contact\Model\ContactsModel
@@ -15,6 +17,7 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@contact.model.repository.contacts_repository'
+    public: false
 
   contact.model.contact_form_model:
     class: ACP3\Modules\ACP3\Contact\Model\ContactFormModel
@@ -23,3 +26,4 @@ services:
       - '@core.i18n.translator'
       - '@core.helpers.secure'
       - '@core.helpers.sendEmail'
+    public: false

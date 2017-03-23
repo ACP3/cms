@@ -3,16 +3,19 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
     arguments:
       - '@core.db'
+    public: false
 
   gallery.model.gallery_data_grid_repository:
     class: ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryDataGridRepository
     arguments:
       - '@core.db'
+    public: false
 
   gallery.model.picturerepository:
     class: ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
     arguments:
       - '@core.db'
+    public: false
 
   gallery.model.gallery_model:
     class: ACP3\Modules\ACP3\Gallery\Model\GalleryModel
@@ -20,6 +23,7 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@gallery.model.galleryrepository'
+    public: false
 
   gallery.model.picture_model:
     class: ACP3\Modules\ACP3\Gallery\Model\PictureModel
@@ -28,3 +32,4 @@ services:
       - '@core.model.data_processor'
       - '@core.config'
       - '@gallery.model.picturerepository'
+    public: false

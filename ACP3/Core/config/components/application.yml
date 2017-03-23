@@ -9,6 +9,7 @@ services:
 
   core.application.argument_resolver:
     class: Symfony\Component\HttpKernel\Controller\ArgumentResolver
+    public: false
 
   core.application.event.add_esi_surrogate_header_listener:
     class: ACP3\Core\Application\Event\Listener\AddEsiSurrogateHeaderListener

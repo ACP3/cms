@@ -9,3 +9,4 @@ services:
       - '@core.i18n.translator'
       - '@install.helpers.install'
       - '@install.helpers.module_installer'
+    public: false

@@ -4,13 +4,15 @@ services:
     arguments:
       - '@core.environment.application_path'
       - '@core.assets.libraries'
+    public: false
 
   core.assets.cache:
     class: ACP3\Core\Assets\Cache
     arguments:
       - '@core.cache.system'
+    public: false
 
-  core.assets.abstractMinifier:
+  core.assets.abstract_minifier:
     arguments:
       - '@core.assets'
       - '@core.environment.application_path'
@@ -23,11 +25,13 @@ services:
 
   core.assets.minifier.css:
     class: ACP3\Core\Assets\Minifier\CSS
-    parent: core.assets.abstractMinifier
+    parent: core.assets.abstract_minifier
+    public: false
 
   core.assets.minifier.javascript:
     class: ACP3\Core\Assets\Minifier\JavaScript
-    parent: core.assets.abstractMinifier
+    parent: core.assets.abstract_minifier
+    public: false
 
   core.assets.file_resolver:
     class: ACP3\Core\Assets\FileResolver
@@ -36,11 +40,13 @@ services:
       - '@core.assets.cache'
       - '@core.environment.application_path'
       - '@core.modules.vendors'
+    public: false
 
   core.assets.libraries:
     class: ACP3\Core\Assets\Libraries
     arguments:
       - '@core.event_dispatcher'
+    public: false
 
   core.assets.page_css_classes:
     class: ACP3\Core\Assets\PageCssClasses
@@ -48,3 +54,4 @@ services:
       - '@core.helpers.string_formatter'
       - '@core.breadcrumb.title'
       - '@core.http.request'
+    public: false

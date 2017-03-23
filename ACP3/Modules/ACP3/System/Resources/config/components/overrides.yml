@@ -5,3 +5,4 @@ services:
       - '@core.breadcrumb'
       - '@core.event_dispatcher'
       - '@core.config'
+    public: false
