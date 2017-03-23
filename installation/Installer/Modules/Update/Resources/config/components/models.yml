@@ -4,6 +4,8 @@ services:
     arguments:
       - '@core.environment.application_path'
       - '@core.xml'
+      - '@core.installer.schema_registrar'
+      - '@core.installer.migration_registrar'
       - '@core.modules.vendors'
       - '@core.modules'
       - '@core.modules.schemaUpdater'

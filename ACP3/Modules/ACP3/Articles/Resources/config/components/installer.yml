@@ -9,3 +9,4 @@ services:
     parent: core.modules.installer.abstractMigration
     tags:
       - { name: core.installer.migration }
+    public: false

@@ -8,3 +8,4 @@ services:
     class: ACP3\Modules\ACP3\Categories\Installer\Migration
     tags:
       - { name: core.installer.migration }
+    public: false

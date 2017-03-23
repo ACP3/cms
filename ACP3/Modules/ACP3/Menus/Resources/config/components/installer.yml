@@ -8,6 +8,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Installer\Migration
     tags:
       - { name: core.installer.migration }
+    public: false
 
   menus.installer.sampleData:
     class: ACP3\Modules\ACP3\Menus\Installer\SampleData

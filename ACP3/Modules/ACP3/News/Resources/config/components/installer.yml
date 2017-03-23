@@ -9,6 +9,7 @@ services:
     parent: core.modules.installer.abstractMigration
     tags:
       - { name: core.installer.migration }
+    public: false
 
   news.installer.sampleData:
     class: ACP3\Modules\ACP3\News\Installer\SampleData
