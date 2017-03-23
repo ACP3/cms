@@ -2,10 +2,12 @@ services:
   permissions.validator.role:
     class: ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation
     parent: core.validator.abstract
+    public: false
 
   permissions.validator.resource:
     class: ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
     parent: core.validator.abstract
+    public: false
 
   permissions.validation.validation_rules.privilege_exists_validation_rule:
     class: ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegeExistsValidationRule

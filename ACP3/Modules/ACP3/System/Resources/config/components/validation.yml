@@ -2,6 +2,7 @@ services:
   system.validator.settings:
     class: ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation
     parent: core.validator.abstract
+    public: false
 
   system.validation.validation_rules.is_wysiwyg_editor_validation_rule:
     class: ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidationRule

@@ -19,3 +19,4 @@ services:
   cpatcha.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation
     parent: core.validator.abstract
+    public: false

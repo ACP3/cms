@@ -2,10 +2,12 @@ services:
   comments.validator:
     class: ACP3\Modules\ACP3\Comments\Validation\FormValidation
     parent: core.validator.abstract
+    public: false
 
   comments.validation.admin_form_validation:
     class:  ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation
     parent: core.validator.abstract
+    public: false
 
   comments.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation

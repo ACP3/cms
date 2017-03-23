@@ -2,10 +2,12 @@ services:
   gallery.validator.gallery:
     class: ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation
     parent: core.validator.abstract
+    public: false
 
   gallery.validator.picture:
     class: ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation
     parent: core.validator.abstract
+    public: false
 
   gallery.validator.settings:
     class: ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation
@@ -13,3 +15,4 @@ services:
       - '@core.i18n.translator'
       - '@core.validator'
       - '@core.modules'
+    public: false

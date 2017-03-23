@@ -2,26 +2,32 @@ services:
   users.validator.account:
     class: ACP3\Modules\ACP3\Users\Validation\AccountFormValidation
     parent: core.validator.abstract
+    public: false
 
   users.validation.account_forgot_password_form_validation:
     class: ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation
     parent: core.validator.abstract
+    public: false
 
   users.validation.account_settings_form_validation:
     class: ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation
     parent: core.validator.abstract
+    public: false
 
   users.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Users\Validation\AdminSettingsFormValidation
     parent: core.validator.abstract
+    public: false
 
   users.validator.admin:
     class: ACP3\Modules\ACP3\Users\Validation\AdminFormValidation
     parent: core.validator.abstract
+    public: false
 
   users.validator.register:
     class: ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation
     parent: core.validator.abstract
+    public: false
 
   users.validation.validation_rules.account_exists_by_email_validation_rule:
     class: ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountExistsByEmailValidationRule

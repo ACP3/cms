@@ -2,6 +2,7 @@ services:
   files.validator:
     class: ACP3\Modules\ACP3\Files\Validation\AdminFormValidation
     parent: core.validator.abstract
+    public: false
 
   files.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation
@@ -9,6 +10,7 @@ services:
       - '@core.i18n.translator'
       - '@core.validator'
       - '@core.modules'
+    public: false
 
   files.validation.validation_rules.is_external_file_validation_rule:
     class: ACP3\Modules\ACP3\Files\Validation\ValidationRules\IsExternalFileValidationRule

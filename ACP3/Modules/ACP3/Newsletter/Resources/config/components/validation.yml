@@ -2,22 +2,27 @@ services:
   newsletter.validator:
     class: ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
     parent: core.validator.abstract
+    public: false
 
   newsletter.validation.activate_account_form_validation:
     class: ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation
     parent: core.validator.abstract
+    public: false
 
   newsletter.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation
     parent: core.validator.abstract
+    public: false
 
   newsletter.validation.subscribe_form_validation:
     class: ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation
     parent: core.validator.abstract
+    public: false
 
   newsletter.validation.unsubscribe_form_validation:
     class: ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation
     parent: core.validator.abstract
+    public: false
 
   newsletter.validation.validation_rules.account_exists_validation_rule:
     class: ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidationRule
@@ -25,6 +30,7 @@ services:
       - '@newsletter.model.accountrepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   newsletter.validation.validation_rules.account_exists_by_hash_validation_rule:
     class: ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsByHashValidationRule
@@ -32,6 +38,7 @@ services:
       - '@newsletter.model.accountrepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   newsletter.validation.validation_rules.account_not_exists_validation_rule:
     class: ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountNotExistsValidationRule
@@ -39,3 +46,4 @@ services:
       - '@newsletter.model.accountrepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false

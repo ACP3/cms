@@ -2,6 +2,7 @@ services:
   news.validator:
     class: ACP3\Modules\ACP3\News\Validation\AdminFormValidation
     parent: core.validator.abstract
+    public: false
 
   news.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\News\Validation\AdminSettingsFormValidation
@@ -9,3 +10,4 @@ services:
       - '@core.i18n.translator'
       - '@core.validator'
       - '@core.modules'
+    public: false
