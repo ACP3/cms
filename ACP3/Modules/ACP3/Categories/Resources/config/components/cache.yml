@@ -4,9 +4,11 @@ services:
     arguments:
       - '@categories.cache.core'
       - '@categories.model.categories_repository'
+    public: false
 
   categories.cache.core:
     class: ACP3\Core\Cache
     arguments:
       - '@core.cache.cache_driver_factory'
       - 'categories'
+    public: false

@@ -5,9 +5,11 @@ services:
       - '@emoticons.cache.core'
       - '@core.environment.application_path'
       - '@emoticons.model.emoticonrepository'
+    public: false
 
   emoticons.cache.core:
     class: ACP3\Core\Cache
     arguments:
       - '@core.cache.cache_driver_factory'
       - 'emoticons'
+    public: false

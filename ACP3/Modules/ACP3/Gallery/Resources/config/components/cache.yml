@@ -6,9 +6,11 @@ services:
       - '@core.environment.application_path'
       - '@gallery.model.picturerepository'
       - '@core.config'
+    public: false
 
   gallery.cache.core:
     class: ACP3\Core\Cache
     arguments:
       - '@core.cache.cache_driver_factory'
       - 'gallery'
+    public: false

@@ -4,9 +4,11 @@ services:
     arguments:
       - '@articles.cache.core'
       - '@articles.model.articlerepository'
+    public: false
 
   articles.cache.core:
     class: ACP3\Core\Cache
     arguments:
       - '@core.cache.cache_driver_factory'
       - 'articles'
+    public: false
