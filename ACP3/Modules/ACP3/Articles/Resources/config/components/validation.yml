@@ -9,4 +9,4 @@ services:
        - '@articles.model.articlerepository'
     tags:
       - { name: core.validation.validation_rule }
-
+    public: false

@@ -21,3 +21,4 @@ services:
       - '@guestbook.model.guestbookrepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false

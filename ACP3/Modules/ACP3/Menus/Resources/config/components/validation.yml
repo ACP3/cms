@@ -13,6 +13,7 @@ services:
       - '@menus.model.menuitemrepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   menus.validation.validation_rules.link_mode_validation_rule:
     class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\LinkModeValidationRule
@@ -23,6 +24,7 @@ services:
       - ['setArticleExistsValidationRule', ['@?articles.validation.validation_rules.article_exists_validation_rule']]
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   menus.validation.validation_rules.menu_already_exists_validation_rule:
     class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuAlreadyExistsValidationRule
@@ -30,11 +32,13 @@ services:
       - '@menus.model.menurepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   menus.validation.validation_rules.menu_name_validation_rule:
     class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuNameValidationRule
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   menus.validation.validation_rules.parent_id_validation_rule:
     class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\ParentIdValidationRule
@@ -42,3 +46,4 @@ services:
       - '@menus.model.menuitemrepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
