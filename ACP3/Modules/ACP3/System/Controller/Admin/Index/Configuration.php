@@ -31,6 +31,10 @@ class Configuration extends Core\Controller\AbstractAdminAction
      * @var Core\Helpers\Secure
      */
     protected $secure;
+    /**
+     * @var Core\WYSIWYG\WysiwygEditorRegistrar
+     */
+    private $editorRegistrar;
 
     /**
      * Configuration constructor.
@@ -39,6 +43,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param Core\Helpers\Secure $secure
+     * @param Core\WYSIWYG\WysiwygEditorRegistrar $editorRegistrar
      * @param \ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation $systemValidator
      */
     public function __construct(
@@ -46,6 +51,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secure,
+        Core\WYSIWYG\WysiwygEditorRegistrar $editorRegistrar,
         System\Validation\AdminSettingsFormValidation $systemValidator
     ) {
         parent::__construct($context);
@@ -54,6 +60,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
         $this->formTokenHelper = $formTokenHelper;
         $this->systemValidator = $systemValidator;
         $this->secure = $secure;
+        $this->editorRegistrar = $editorRegistrar;
     }
 
     /**
@@ -85,7 +92,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
                 $systemSettings['cookie_consent_is_enabled']
             ),
             'entries' => $this->formsHelper->recordsPerPage($systemSettings['entries']),
-            'wysiwyg' => $this->fetchWysiwygEditors($systemSettings),
+            'wysiwyg' => $this->fetchWysiwygEditors($systemSettings['wysiwyg']),
             'languages' => $this->translator->getLanguagePack($systemSettings['lang']),
             'mod_rewrite' => $this->formsHelper->yesNoCheckboxGenerator('mod_rewrite', $systemSettings['mod_rewrite']),
             'time_zones' => $this->get('core.helpers.date')->getTimeZones($systemSettings['date_time_zone']),
@@ -177,17 +184,16 @@ class Configuration extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param $systemSettings
+     * @param string $currentWysiwygEditor
      * @return array
      */
-    protected function fetchWysiwygEditors($systemSettings)
+    protected function fetchWysiwygEditors($currentWysiwygEditor)
     {
-        $services = $this->get('core.wysiwyg.wysiwyg_factory')->getWysiwygEditors();
         $wysiwyg = [];
-        foreach ($services as $serviceId => $editorInstance) {
-            /** @var \ACP3\Core\WYSIWYG\AbstractWYSIWYG $editorInstance */
-            $wysiwyg[$serviceId] =  $editorInstance->getFriendlyName();
+        foreach ($this->editorRegistrar->all() as $serviceId => $editorInstance) {
+            /** @var \ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG $editorInstance */
+            $wysiwyg[$serviceId] = $editorInstance->getFriendlyName();
         }
-        return $this->formsHelper->choicesGenerator('wysiwyg', $wysiwyg, $systemSettings['wysiwyg']);
+        return $this->formsHelper->choicesGenerator('wysiwyg', $wysiwyg, $currentWysiwygEditor);
     }
 }

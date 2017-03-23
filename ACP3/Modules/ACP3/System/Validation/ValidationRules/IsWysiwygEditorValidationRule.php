@@ -2,8 +2,7 @@
 namespace ACP3\Modules\ACP3\System\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Core\WYSIWYG\AbstractWYSIWYG;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use ACP3\Core\WYSIWYG\WysiwygEditorRegistrar;
 
 /**
  * Class IsWysiwygEditorValidationRule
@@ -12,18 +11,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class IsWysiwygEditorValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var WysiwygEditorRegistrar
      */
-    protected $container;
+    private $editorRegistrar;
 
     /**
      * IsWysiwygEditorValidationRule constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param WysiwygEditorRegistrar $editorRegistrar
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(WysiwygEditorRegistrar $editorRegistrar)
     {
-        $this->container = $container;
+        $this->editorRegistrar = $editorRegistrar;
     }
 
     /**
@@ -45,6 +44,6 @@ class IsWysiwygEditorValidationRule extends AbstractValidationRule
      */
     protected function isValidWysiwygEditor($data)
     {
-        return !empty($data) && $this->container->has($data) && $this->container->get($data) instanceof AbstractWYSIWYG;
+        return !empty($data) && $this->editorRegistrar->has($data);
     }
 }

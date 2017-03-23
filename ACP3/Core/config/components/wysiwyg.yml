@@ -1,8 +1,16 @@
 services:
+  core.wysiwyg.wysiwyg_editor_registrar:
+    class: ACP3\Core\WYSIWYG\WysiwygEditorRegistrar
+    public: false
+
   core.wysiwyg.wysiwyg_factory:
     class: ACP3\Core\WYSIWYG\WysiwygFactory
+    arguments:
+      - '@core.wysiwyg.wysiwyg_editor_registrar'
+    public: false
 
   core.wysiwyg.textarea:
-    class: ACP3\Core\WYSIWYG\Textarea
+    class: ACP3\Core\WYSIWYG\Editor\Textarea
     tags:
       - { name: core.wysiwyg.editor }
+    public: false

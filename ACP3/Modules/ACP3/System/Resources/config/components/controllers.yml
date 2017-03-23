@@ -26,6 +26,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
+      - '@core.wysiwyg.wysiwyg_editor_registrar'
       - '@system.validator.settings'
 
   system.controller.admin.index.index:

@@ -7,7 +7,7 @@ services:
   system.validation.validation_rules.is_wysiwyg_editor_validation_rule:
     class: ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidationRule
     arguments:
-      - '@service_container'
+      - '@core.wysiwyg.wysiwyg_editor_registrar'
     tags:
       - { name: core.validation.validation_rule }
     public: false

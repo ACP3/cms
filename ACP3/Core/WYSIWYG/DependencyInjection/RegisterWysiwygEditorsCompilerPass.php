@@ -24,13 +24,13 @@ class RegisterWysiwygEditorsCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('core.wysiwyg.wysiwyg_factory');
+        $definition = $container->findDefinition('core.wysiwyg.wysiwyg_editor_registrar');
         $plugins = $container->findTaggedServiceIds('core.wysiwyg.editor');
 
         foreach ($plugins as $serviceId => $tags) {
             $definition->addMethodCall(
                 'registerWysiwygEditor',
-                [new Reference($serviceId), $serviceId]
+                [$serviceId, new Reference($serviceId)]
             );
         }
     }

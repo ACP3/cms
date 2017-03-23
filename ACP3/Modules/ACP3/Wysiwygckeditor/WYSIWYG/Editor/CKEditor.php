@@ -1,13 +1,17 @@
 <?php
+/**
+ * Copyright (c) 2017 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG;
+namespace ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor;
 
 use ACP3\Core;
-use ACP3\Core\WYSIWYG\Textarea;
+use ACP3\Core\WYSIWYG\Editor\Textarea;
 
 /**
- * Class CKEditor
- * @package ACP3\Modules\ACP3\Wysiwygckeditor
+ * Implementation of the AbstractWYSIWYG class for CKEditor
+ * @package ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor
  */
 class CKEditor extends Textarea
 {

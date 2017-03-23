@@ -1,9 +1,14 @@
 <?php
-namespace ACP3\Core\WYSIWYG;
+/**
+ * Copyright (c) 2017 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\WYSIWYG\Editor;
 
 /**
  * Abstract Class for the various WYSIWYG editors
- * @package ACP3\Core\WYSIWYG
+ * @package ACP3\Core\WYSIWYG\Editor
  */
 abstract class AbstractWYSIWYG
 {

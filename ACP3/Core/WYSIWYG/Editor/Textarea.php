@@ -1,12 +1,14 @@
 <?php
+/**
+ * Copyright (c) 2017 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Core\WYSIWYG;
-
-use ACP3\Core;
+namespace ACP3\Core\WYSIWYG\Editor;
 
 /**
  * Implementation of the AbstractWYSIWYG class for a simple textarea
- * @package ACP3\Core\WYSIWYG
+ * @package ACP3\Core\WYSIWYG\Editor
  */
 class Textarea extends AbstractWYSIWYG
 {
