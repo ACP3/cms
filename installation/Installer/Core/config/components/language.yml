@@ -1,12 +1,18 @@
 services:
-  core.lang:
+  core.i18n.translator:
     class: ACP3\Installer\Core\I18n\Translator
     arguments:
       - '@core.environment.application_path'
-      - '@core.lang.dictionary_cache'
+      - '@core.i18n.dictionary_cache'
       - 'en_US'
+    public: false
 
-  core.lang.dictionary_cache:
+  core.lang:
+    alias: core.i18n.translator
+    deprecated: 'The "%service_id%" service is deprecated. Use "core.i18n.translator" instead'
+
+  core.i18n.dictionary_cache:
     class: ACP3\Installer\Core\I18n\DictionaryCache
     arguments:
       - '@core.environment.application_path'
+    public: false

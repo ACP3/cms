@@ -6,6 +6,6 @@ services:
   news.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\News\Validation\AdminSettingsFormValidation
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.validator'
       - '@core.modules'

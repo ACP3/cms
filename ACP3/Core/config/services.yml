@@ -56,7 +56,7 @@ services:
     class: ACP3\Core\Pagination
     arguments:
       - '@core.breadcrumb.title'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.http.request'
       - '@core.router'
 

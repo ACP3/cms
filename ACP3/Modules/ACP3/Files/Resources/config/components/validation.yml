@@ -6,7 +6,7 @@ services:
   files.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.validator'
       - '@core.modules'
 

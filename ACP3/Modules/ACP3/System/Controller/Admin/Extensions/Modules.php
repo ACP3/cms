@@ -33,18 +33,24 @@ class Modules extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
     protected $permissionsCache;
+    /**
+     * @var Core\I18n\DictionaryCache
+     */
+    private $dictionaryCache;
 
     /**
      * Modules constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
-     * @param \ACP3\Core\Modules\ModuleInfoCache               $moduleInfoCache
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\I18n\DictionaryCache $dictionaryCache
+     * @param \ACP3\Core\Modules\ModuleInfoCache $moduleInfoCache
      * @param \ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository $systemModuleRepository
-     * @param \ACP3\Modules\ACP3\System\Helper\Installer       $installerHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache             $permissionsCache
+     * @param \ACP3\Modules\ACP3\System\Helper\Installer $installerHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\I18n\DictionaryCache $dictionaryCache,
         Core\Modules\ModuleInfoCache $moduleInfoCache,
         System\Model\Repository\ModulesRepository $systemModuleRepository,
         System\Helper\Installer $installerHelper,
@@ -56,6 +62,7 @@ class Modules extends Core\Controller\AbstractAdminAction
         $this->systemModuleRepository = $systemModuleRepository;
         $this->installerHelper = $installerHelper;
         $this->permissionsCache = $permissionsCache;
+        $this->dictionaryCache = $dictionaryCache;
     }
 
     /**
@@ -159,7 +166,7 @@ class Modules extends Core\Controller\AbstractAdminAction
 
     protected function renewCaches()
     {
-        $this->get('core.lang.dictionary_cache')->saveLanguageCache($this->translator->getLocale());
+        $this->dictionaryCache->saveLanguageCache($this->translator->getLocale());
         $this->moduleInfoCache->saveModulesInfoCache();
         $this->permissionsCache->saveResourcesCache();
     }

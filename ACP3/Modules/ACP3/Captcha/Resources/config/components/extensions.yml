@@ -13,7 +13,7 @@ services:
     class: ACP3\Modules\ACP3\Captcha\Extension\NativeCaptchaExtension
     arguments:
       - '@core.acl'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.http.request'
       - '@core.router'
       - '@core.session'
@@ -26,7 +26,7 @@ services:
   captcha.extension.recaptcha_captcha_extension:
     class: ACP3\Modules\ACP3\Captcha\Extension\ReCaptchaCaptchaExtension
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.http.request'
       - '@core.config'
       - '@core.view'

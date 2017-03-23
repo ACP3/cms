@@ -50,5 +50,5 @@ services:
   core.validator.abstract:
     abstract: true
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.validator'

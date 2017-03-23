@@ -3,7 +3,7 @@ services:
     class: ACP3\Installer\Core\Controller\Context\InstallerContext
     arguments:
       - '@service_container'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.http.request'
       - '@core.router'
       - '@core.view'

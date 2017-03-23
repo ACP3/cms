@@ -6,7 +6,7 @@ services:
     class: ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG\TinyMCE
     arguments:
       - '@core.assets.minifier.css'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.environment.application_path'
     calls:
       - ['setFilemanagerHelpers', ['@?filemanager.helpers']]

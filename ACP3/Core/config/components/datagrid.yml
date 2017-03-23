@@ -3,7 +3,7 @@ services:
     class: ACP3\Core\Helpers\DataGrid
     arguments:
       - '@core.acl'
-      - '@core.lang'
+      - '@core.i18n.translator'
     shared: false
 
   core.helpers.data_grid.column_renderer.date_column_renderer:
@@ -41,7 +41,7 @@ services:
   core.helpers.data_grid.column_renderer.option_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.helpers.data_grid.column_renderer.option_column_renderer.option_renderer'
       - '@core.event_dispatcher'
     tags:
@@ -67,7 +67,7 @@ services:
   core.helpers.data_grid.column_renderer.sort_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\SortColumnRenderer
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.router'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
@@ -80,6 +80,6 @@ services:
   core.helpers.data_grid.column_renderer.translate_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
     tags:
       - { name: core.helpers.data_grid.column_renderer }

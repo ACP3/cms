@@ -10,6 +10,6 @@ services:
   gallery.validator.settings:
     class: ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.validator'
       - '@core.modules'

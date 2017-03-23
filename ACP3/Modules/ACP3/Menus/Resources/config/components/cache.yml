@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Cache
     arguments:
       - '@menus.cache.core'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@menus.model.menurepository'
       - '@menus.model.menuitemrepository'
 

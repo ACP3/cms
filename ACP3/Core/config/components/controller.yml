@@ -6,7 +6,7 @@ services:
       - '@core.event_dispatcher'
       - '@core.acl'
       - '@users.model.user_model'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.modules'
       - '@core.http.request'
       - '@core.router'
@@ -47,4 +47,5 @@ services:
   core.controller.admin:
     abstract: true
     arguments:
-      - '@core.context.admin'
+      - '@core.context.frontend'
+    deprecated: 'The "%service_id%" service is deprecated. Use "core.controller.frontend" instead'
