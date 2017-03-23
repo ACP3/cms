@@ -1,6 +1,3 @@
-imports:
-  - { resource: componenets/installer.yml }
-
 services:
   core.wysiwyg.tinymce:
     class: ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG\Editor\TinyMCE

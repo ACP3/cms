@@ -44,6 +44,6 @@ class IsWysiwygEditorValidationRule extends AbstractValidationRule
      */
     protected function isValidWysiwygEditor($data)
     {
-        return !empty($data) && $this->editorRegistrar->has($data);
+        return !empty($data) && $this->editorRegistrar->has($data) && $this->editorRegistrar->get($data)->isValid();
     }
 }

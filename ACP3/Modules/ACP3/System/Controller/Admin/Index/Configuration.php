@@ -191,8 +191,9 @@ class Configuration extends Core\Controller\AbstractAdminAction
     {
         $wysiwyg = [];
         foreach ($this->editorRegistrar->all() as $serviceId => $editorInstance) {
-            /** @var \ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG $editorInstance */
-            $wysiwyg[$serviceId] = $editorInstance->getFriendlyName();
+            if ($editorInstance->isValid()) {
+                $wysiwyg[$serviceId] = $editorInstance->getFriendlyName();
+            }
         }
         return $this->formsHelper->choicesGenerator('wysiwyg', $wysiwyg, $currentWysiwygEditor);
     }

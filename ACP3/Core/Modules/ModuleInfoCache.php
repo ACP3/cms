@@ -161,6 +161,7 @@ class ModuleInfoCache
                         'name' => $this->getModuleName($moduleInfo, $moduleName),
                         'categories' => isset($moduleInfo['categories']),
                         'protected' => isset($moduleInfo['protected']),
+                        'installable' => !isset($moduleInfo['no_install']),
                         'dependencies' => $this->getModuleDependencies($path),
                     ];
                 }

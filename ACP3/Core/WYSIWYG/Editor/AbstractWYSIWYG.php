@@ -56,4 +56,10 @@ abstract class AbstractWYSIWYG
      * @return string
      */
     abstract public function getFriendlyName();
+
+    /**
+     * Returns whether the WYSIWYG-Editor can be used (eg. if it a installed and active)
+     * @return boolean
+     */
+    abstract public function isValid();
 }

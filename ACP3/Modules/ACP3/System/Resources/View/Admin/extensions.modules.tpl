@@ -29,7 +29,7 @@
                             <td>
                                 {if $row.protected === true}
                                     <i class="glyphicon glyphicon-remove-circle text-danger" title="{lang t="system|protected_module_description"}"></i>
-                                {else}
+                                {elseif $row.installable === true}
                                     {if $row.active === true}
                                         <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_deactivate"}"
                                            class="btn btn-block btn-default btn-xs"

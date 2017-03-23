@@ -1,6 +1,3 @@
-imports:
-  - { resource: components/installer.yml }
-
 services:
   core.wysiwyg.ckeditor:
     class: ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor\CKEditor

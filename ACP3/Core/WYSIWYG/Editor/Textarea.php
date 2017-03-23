@@ -47,4 +47,12 @@ class Textarea extends AbstractWYSIWYG
             ]
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function isValid()
+    {
+        return true;
+    }
 }
