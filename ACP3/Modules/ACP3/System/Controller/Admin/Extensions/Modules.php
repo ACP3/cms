@@ -337,7 +337,7 @@ class Modules extends Core\Controller\AbstractAdminAction
 
         foreach ($modules as $key => $values) {
             $values['dir'] = strtolower($values['dir']);
-            if ($this->modules->isInstalled($values['dir']) === true) {
+            if ($this->modules->isInstalled($values['dir']) === true || $values['installable'] === false) {
                 $installedModules[$key] = $values;
             } else {
                 $newModules[$key] = $values;
