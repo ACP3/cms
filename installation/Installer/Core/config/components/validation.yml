@@ -3,7 +3,6 @@ services:
     class: ACP3\Core\Validation\Validator
     arguments:
       - '@core.event_dispatcher'
-    public: false
 
   core.validation.validation_rules.birthday_validation_rule:
     class: ACP3\Core\Validation\ValidationRules\BirthdayValidationRule

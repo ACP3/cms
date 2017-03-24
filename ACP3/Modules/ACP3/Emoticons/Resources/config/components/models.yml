@@ -3,13 +3,11 @@ services:
     class: ACP3\Modules\ACP3\Emoticons\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
-    public: false
 
   emoticons.model.emoticonrepository:
     class: ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository
     arguments:
       - '@core.db'
-    public: false
 
   emoticons.model:
     class: ACP3\Modules\ACP3\Emoticons\Model\EmoticonsModel

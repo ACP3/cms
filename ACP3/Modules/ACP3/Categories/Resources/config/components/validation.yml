@@ -5,12 +5,10 @@ services:
       - '@core.i18n.translator'
       - '@core.validator'
       - '@categories.model.categories_repository'
-    public: false
 
   categories.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Categories\Validation\AdminSettingsFormValidation
     parent: core.validator.abstract
-    public: false
 
   categories.validation.validation_rules.category_exists_validation_rule:
     class: ACP3\Modules\ACP3\Categories\Validation\ValidationRules\CategoryExistsValidationRule

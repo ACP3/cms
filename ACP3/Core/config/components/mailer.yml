@@ -12,4 +12,3 @@ services:
     factory: 'core.logger.logger_factory:create'
     arguments:
       - 'mailer'
-    public: false

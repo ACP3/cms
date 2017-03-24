@@ -4,11 +4,9 @@ services:
     arguments:
       - '@files.cache.core'
       - '@files.model.filesrepository'
-    public: false
 
   files.cache.core:
     class: ACP3\Core\Cache
     arguments:
       - '@core.cache.cache_driver_factory'
       - 'files'
-    public: false

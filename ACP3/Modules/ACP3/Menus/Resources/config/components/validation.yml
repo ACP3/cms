@@ -2,12 +2,10 @@ services:
   menus.validator.menu:
     class: ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation
     parent: core.validator.abstract
-    public: false
 
   menus.validator.menuitem:
     class: ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation
     parent: core.validator.abstract
-    public: false
 
   menus.validation.validation_rules.allowed_menu_validation_rule:
     class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\AllowedMenuValidationRule

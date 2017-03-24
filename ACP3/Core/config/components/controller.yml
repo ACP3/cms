@@ -16,12 +16,10 @@ services:
       - '@core.environment.application_path'
       - '@core.http.response'
       - '@core.helpers.results_per_page'
-    public: false
 
   core.context.admin:
     class: ACP3\Core\Controller\Context\AdminContext
     parent: core.context.frontend
-    public: false
     deprecated: 'The "%service_id%" service is deprecated. Use "core.context.frontend" instead'
 
   core.context.frontend:
@@ -32,7 +30,6 @@ services:
       - '@core.breadcrumb'
       - '@core.breadcrumb.title'
       - '@core.modules.helper.action'
-    public: false
 
   core.controller.widget:
     abstract: true

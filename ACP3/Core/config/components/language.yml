@@ -5,7 +5,6 @@ services:
       - '@core.environment.application_path'
       - '@core.i18n.dictionary_cache'
       - '@core.config'
-    public: false
 
   core.lang:
     alias: core.i18n.translator
@@ -17,10 +16,8 @@ services:
       - '@core.cache.system'
       - '@core.environment.application_path'
       - '@core.modules.vendors'
-    public: false
 
   core.i18n.country_list:
     class: ACP3\Core\I18n\CountryList
     arguments:
       - '@core.i18n.translator'
-    public: false

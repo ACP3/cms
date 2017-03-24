@@ -5,7 +5,6 @@ services:
       - '@core.environment.application_path'
       - '@core.i18n.dictionary_cache'
       - 'en_US'
-    public: false
 
   core.lang:
     alias: core.i18n.translator

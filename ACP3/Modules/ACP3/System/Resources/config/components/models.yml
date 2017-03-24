@@ -3,10 +3,8 @@ services:
     class: ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository
     arguments:
       - '@core.db'
-    public: false
 
   system.model.settingsrepository:
     class: ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository
     arguments:
       - '@core.db'
-    public: false

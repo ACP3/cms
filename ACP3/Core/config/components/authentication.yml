@@ -4,7 +4,6 @@ parameters:
 services:
   core.authentication.authentication_registrar:
     class: ACP3\Core\Authentication\AuthenticationRegistrar
-    public: false
 
   core.authentication.factory:
     class: ACP3\Core\Authentication\AuthenticationFactory

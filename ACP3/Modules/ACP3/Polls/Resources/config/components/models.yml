@@ -3,25 +3,21 @@ services:
     class: ACP3\Modules\ACP3\Polls\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
-    public: false
 
   polls.model.answerrepository:
     class: ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository
     arguments:
       - '@core.db'
-    public: false
 
   polls.model.pollrepository:
     class: ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
     arguments:
       - '@core.db'
-    public: false
 
   polls.model.voterepository:
     class: ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository
     arguments:
       - '@core.db'
-    public: false
 
   polls.model.polls_model:
     class: ACP3\Modules\ACP3\Polls\Model\PollsModel
@@ -32,7 +28,6 @@ services:
       - '@polls.model.pollrepository'
       - '@polls.model.answerrepository'
       - '@polls.model.voterepository'
-    public: false
 
   polls.model.vote_model:
     class: ACP3\Modules\ACP3\Polls\Model\VoteModel
@@ -40,4 +35,3 @@ services:
       - '@core.validator'
       - '@users.model.user_model'
       - '@polls.model.voterepository'
-    public: false

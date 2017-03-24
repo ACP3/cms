@@ -9,7 +9,6 @@ services:
       - '@core.view'
       - '@core.http.response'
       - '@core.environment.application_path'
-    public: false
 
   core.controller.install:
     abstract: true

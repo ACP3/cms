@@ -9,7 +9,6 @@ services:
       - '@core.helpers.secure'
       - '@users.model.user_model'
       - '@users.model.userrepository'
-    public: false
 
   users.model.user_model:
     class: ACP3\Modules\ACP3\Users\Model\UserModel
@@ -24,16 +23,13 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@users.model.userrepository'
-    public: false
 
   users.model.data_grid_repository:
     class: ACP3\Modules\ACP3\Users\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
-    public: false
 
   users.model.userrepository:
     class: ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
     arguments:
       - '@core.db'
-    public: false

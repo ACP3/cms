@@ -2,7 +2,6 @@ services:
   install.validator:
     class: ACP3\Installer\Modules\Install\Validation\FormValidation
     parent: core.validator.abstract
-    public: false
 
   install.validation.validation_rules.config_file_validation_rule:
     class: ACP3\Installer\Modules\Install\Validation\ValidationRules\ConfigFileValidationRule

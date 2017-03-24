@@ -57,8 +57,6 @@ services:
     class: ACP3\Core\Model\DataProcessor
     arguments:
       - '@core.model.column_type_strategy_factory'
-    public: false
 
   core.model.column_type_strategy_factory:
     class: ACP3\Core\Model\DataProcessor\ColumnTypeStrategyFactory
-    public: false

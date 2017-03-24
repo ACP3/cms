@@ -2,12 +2,10 @@ services:
   guestbook.validator:
     class: ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
     parent: core.validator.abstract
-    public: false
 
   guestbook.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation
     parent: core.validator.abstract
-    public: false
 
   guestbook.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation
@@ -15,7 +13,6 @@ services:
       - '@core.i18n.translator'
       - '@core.validator'
       - '@core.modules'
-    public: false
 
   guestbook.validation.validation_rules.flood_barrier_validation_rule:
     class: ACP3\Modules\ACP3\Guestbook\Validation\ValidationRules\FloodBarrierValidationRule

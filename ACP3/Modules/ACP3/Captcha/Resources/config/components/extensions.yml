@@ -2,14 +2,12 @@ services:
   captcha.extension.captcha:
     class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface
     factory: 'captcha.extension.captcha_factory:create'
-    public: false
 
   captcha.extension.captcha_factory:
     class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaFactory
     arguments:
       - '@core.config'
       - '@captcha.utility.captcha_registrar'
-    public: false
 
   captcha.extension.native_captcha_extension:
     class: ACP3\Modules\ACP3\Captcha\Extension\NativeCaptchaExtension

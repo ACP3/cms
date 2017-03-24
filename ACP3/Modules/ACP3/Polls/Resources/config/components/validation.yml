@@ -2,12 +2,10 @@ services:
   polls.validator:
     class: ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation
     parent: core.validator.abstract
-    public: false
 
   polls.validator.vote_validation:
     class: ACP3\Modules\ACP3\Polls\Validation\VoteValidation
     parent: core.validator.abstract
-    public: false
 
   polls.validation.validation_rules.at_least_two_answers_validation_rule:
     class: ACP3\Modules\ACP3\Polls\Validation\ValidationRules\AtLeastTwoAnswersValidationRule

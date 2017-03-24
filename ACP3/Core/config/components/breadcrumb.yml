@@ -7,11 +7,9 @@ services:
       - '@core.http.request'
       - '@core.router'
       - '@core.event_dispatcher'
-    public: false
 
   core.breadcrumb.title:
     class: ACP3\Core\Breadcrumb\Title
     arguments:
       - '@core.breadcrumb'
       - '@core.event_dispatcher'
-    public: false

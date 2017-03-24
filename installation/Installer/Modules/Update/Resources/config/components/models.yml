@@ -9,4 +9,3 @@ services:
       - '@core.modules.vendors'
       - '@core.modules'
       - '@core.modules.schemaUpdater'
-    public: false

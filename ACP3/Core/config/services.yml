@@ -33,7 +33,6 @@ services:
       - '@core.modules'
       - '@permissions.model.userrolerepository'
       - '@permissions.cache'
-    public: false;
 
   core.config:
     class: ACP3\Core\Settings\Settings
@@ -61,7 +60,6 @@ services:
       - '@core.i18n.translator'
       - '@core.http.request'
       - '@core.router'
-    public: false
 
   core.router:
     class: ACP3\Core\Router\Router
@@ -70,7 +68,6 @@ services:
       - '@core.environment.application_path'
       - '@core.config'
       - '%core.environment%'
-    public: false
 
   core.session:
     class: ACP3\Core\Session\SessionHandler
@@ -79,14 +76,11 @@ services:
       - '@core.environment.application_path'
       - '@core.http.request'
       - '@core.http.response'
-    public: false
 
   core.xml:
     class: ACP3\Core\XML
-    public: false
 
   core.event_dispatcher:
     class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
     arguments:
       - '@service_container'
-    public: false

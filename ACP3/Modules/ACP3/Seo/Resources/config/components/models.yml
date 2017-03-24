@@ -3,13 +3,11 @@ services:
     class: ACP3\Modules\ACP3\Seo\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
-    public: false
 
   seo.model.seorepository:
     class: ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
     arguments:
       - '@core.db'
-    public: false
 
   seo.model.seo_model:
     class: ACP3\Modules\ACP3\Seo\Model\SeoModel
@@ -17,7 +15,6 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@seo.model.seorepository'
-    public: false
 
   seo.model.sitemap_generation_model:
     class: ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel
@@ -25,4 +22,3 @@ services:
       - '@core.environment.application_path'
       - '@core.config'
       - '@seo.utility.sitemap_availability_registrar'
-    public: false

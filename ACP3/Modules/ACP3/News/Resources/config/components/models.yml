@@ -3,20 +3,17 @@ services:
     class: ACP3\Modules\ACP3\News\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
-    public: false
 
   news.model.newsrepository:
     class: ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
     arguments:
       - '@core.db'
-    public: false
 
   news.model.search_results_aware_repository:
     class: ACP3\Modules\ACP3\News\Model\Repository\SearchResultsAwareRepository
     arguments:
       - '@core.db'
       - '@core.date'
-    public: false
 
   news.model:
     class: ACP3\Modules\ACP3\News\Model\NewsModel

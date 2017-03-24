@@ -3,20 +3,17 @@ services:
     class: ACP3\Modules\ACP3\Files\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
-    public: false
 
   files.model.filesrepository:
     class: ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
     arguments:
       - '@core.db'
-    public: false
 
   files.model.search_results_aware_repository:
     class: ACP3\Modules\ACP3\Files\Model\Repository\SearchResultsAwareRepository
     arguments:
       - '@core.db'
       - '@core.date'
-    public: false
 
   files.model.files_model:
     class: ACP3\Modules\ACP3\Files\Model\FilesModel
@@ -24,4 +21,3 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@files.model.filesrepository'
-    public: false

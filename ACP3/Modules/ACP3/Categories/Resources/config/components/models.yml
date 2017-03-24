@@ -3,13 +3,11 @@ services:
     class: ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
     arguments:
       - '@core.db'
-    public: false
 
   categories.model.data_grid_repository:
     class: ACP3\Modules\ACP3\Categories\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
-    public: false
 
   categories.model.categories_model:
     class: ACP3\Modules\ACP3\Categories\Model\CategoriesModel
@@ -17,4 +15,3 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@categories.model.categories_repository'
-    public: false

@@ -3,31 +3,26 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
     arguments:
       - '@core.db'
-    public: false
 
   newsletter.model.newsletter_data_grid_repository:
     class: ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterDataGridRepository
     arguments:
       - '@core.db'
-    public: false
 
   newsletter.model.accountrepository:
     class: ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
     arguments:
       - '@core.db'
-    public: false
 
   newsletter.model.account_data_grid_repository:
     class: ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountDataGridRepository
     arguments:
       - '@core.db'
-    public: false
 
   newsletter.model.accounthistoryrepository:
     class: ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository
     arguments:
       - '@core.db'
-    public: false
 
   newsletter.model:
     class: ACP3\Modules\ACP3\Newsletter\Model\NewsletterModel

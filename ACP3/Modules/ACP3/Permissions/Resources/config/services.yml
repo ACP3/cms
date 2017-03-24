@@ -1,4 +1,5 @@
 imports:
+  - { resource: components/cache.yml }
   - { resource: components/controllers.yml }
   - { resource: components/events.yml }
   - { resource: components/installer.yml }
@@ -7,22 +8,6 @@ imports:
   - { resource: components/validation.yml }
 
 services:
-  permissions.cache:
-    class: ACP3\Modules\ACP3\Permissions\Cache
-    arguments:
-      - '@permissions.cache.core'
-      - '@permissions.model.rolerepository'
-      - '@permissions.model.resourcerepository'
-      - '@permissions.model.rulerepository'
-    public: false
-
-  permissions.cache.core:
-    class: ACP3\Core\Cache
-    arguments:
-      - '@core.cache.cache_driver_factory'
-      - 'permissions'
-    public: false
-
   permissions.helpers:
     class: ACP3\Modules\ACP3\Permissions\Helpers
     arguments:
