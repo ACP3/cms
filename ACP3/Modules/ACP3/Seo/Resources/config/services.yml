@@ -26,9 +26,11 @@ services:
     class: ACP3\Modules\ACP3\Seo\Core\Router\Aliases
     arguments:
       - '@seo.cache'
+    public: false
 
   seo.utility.sitemap_availability_registrar:
     class: ACP3\Modules\ACP3\Seo\Utility\SitemapAvailabilityRegistrar
+    public: false
 
   seo.sitemap_logger:
     class: Psr\Log\LoggerInterface

@@ -27,6 +27,7 @@ services:
       - '@core.router'
       - '@core.helpers.alerts'
       - '@core.helpers.redirect'
+    public: false
 
   core.modules.helper.controllerActionExists:
     class: ACP3\Core\Modules\Helper\ControllerActionExists
@@ -42,6 +43,7 @@ services:
       - '@core.modules.vendors'
       - '@core.xml'
       - '@system.model.modulerepository'
+    public: false
 
   core.modules.schemaHelper:
     class: ACP3\Core\Modules\SchemaHelper

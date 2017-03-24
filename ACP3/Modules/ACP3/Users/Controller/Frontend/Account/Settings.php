@@ -77,7 +77,7 @@ class Settings extends AbstractAction
         $user = $this->usersModel->getOneById($this->user->getUserId());
 
         $this->view->assign(
-            $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
+            $this->userFormsHelper->fetchUserSettingsFormFields(
                 $user['address_display'],
                 $user['birthday_display'],
                 $user['country_display'],

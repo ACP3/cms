@@ -6,6 +6,7 @@
 
 namespace ACP3\Core\DependencyInjection;
 
+use ACP3\Core\Authentication\DependencyInjection\RegisterAuthenticationsCompilerPass;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\DataGrid\DependencyInjection\RegisterColumnRendererPass;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
@@ -74,15 +75,19 @@ class ServiceContainerBuilder extends ContainerBuilder
         $this->set('core.environment.application_path', $this->applicationPath);
         $this->setParameter('core.environment', $this->applicationMode);
 
-        $this->addCompilerPass(
-            new RegisterListenersPass('core.event_dispatcher', 'core.eventListener', 'core.eventSubscriber')
-        );
-        $this->addCompilerPass(new RegisterSmartyPluginsPass());
-        $this->addCompilerPass(new RegisterColumnRendererPass());
-        $this->addCompilerPass(new RegisterValidationRulesPass());
-        $this->addCompilerPass(new RegisterWysiwygEditorsCompilerPass());
-        $this->addCompilerPass(new RegisterInstallersCompilerPass());
-        $this->addCompilerPass(new RegisterColumnTypesCompilerPass());
+        $this
+            ->addCompilerPass(new RegisterListenersPass(
+                    'core.event_dispatcher',
+                    'core.eventListener',
+                    'core.eventSubscriber')
+            )
+            ->addCompilerPass(new RegisterAuthenticationsCompilerPass())
+            ->addCompilerPass(new RegisterSmartyPluginsPass())
+            ->addCompilerPass(new RegisterColumnRendererPass())
+            ->addCompilerPass(new RegisterValidationRulesPass())
+            ->addCompilerPass(new RegisterWysiwygEditorsCompilerPass())
+            ->addCompilerPass(new RegisterInstallersCompilerPass())
+            ->addCompilerPass(new RegisterColumnTypesCompilerPass());
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
         $loader->load($this->applicationPath->getClassesDir() . 'config/services.yml');

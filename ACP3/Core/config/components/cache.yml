@@ -4,10 +4,11 @@ services:
     arguments:
       - '@core.cache.cache_driver_factory'
       - 'system'
+    public: false
 
   core.cache.cache_driver_factory:
     class: ACP3\Core\Cache\CacheDriverFactory
     arguments:
       - '@service_container'
       - '@core.environment.application_path'
-
+    public: false
