@@ -10,7 +10,7 @@ services:
       - '@core.helpers.secure'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@feeds.validator'
+      - '@feeds.validation.admin_form_validation'
 
   feeds.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Feeds\Controller\Frontend\Index\Index

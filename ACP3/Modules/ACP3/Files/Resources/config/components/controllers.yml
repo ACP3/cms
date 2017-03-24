@@ -7,7 +7,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@files.model.files_model'
-      - '@files.validator'
+      - '@files.validation.admin_form_validation'
       - '@categories.helpers'
 
   files.controller.admin.index.delete:
@@ -24,7 +24,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@files.model.files_model'
-      - '@files.validator'
+      - '@files.validation.admin_form_validation'
       - '@categories.helpers'
 
   files.controller.admin.index.index:

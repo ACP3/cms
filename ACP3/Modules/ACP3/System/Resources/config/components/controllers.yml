@@ -28,7 +28,7 @@ services:
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
       - '@core.wysiwyg.wysiwyg_editor_registrar'
-      - '@system.validator.settings'
+      - '@system.validation.admin_settings_form_validation'
 
   system.controller.admin.index.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Index

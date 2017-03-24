@@ -7,7 +7,7 @@ services:
       - '@seo.helper.meta_form_fields'
       - '@seo.helper.uri_alias_manager'
       - '@seo.model.seo_model'
-      - '@seo.validator'
+      - '@seo.validation.admin_form_validation'
 
   seo.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Delete
@@ -23,7 +23,7 @@ services:
       - '@core.helpers.formToken'
       - '@seo.helper.meta_form_fields'
       - '@seo.model.seo_model'
-      - '@seo.validator'
+      - '@seo.validation.admin_form_validation'
 
   seo.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Index

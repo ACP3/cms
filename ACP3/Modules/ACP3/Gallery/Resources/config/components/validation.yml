@@ -1,13 +1,13 @@
 services:
-  gallery.validator.gallery:
+  gallery.validation.gallery_form_validation:
     class: ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation
     parent: core.validator.abstract
 
-  gallery.validator.picture:
+  gallery.validation.picture_form_validation:
     class: ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation
     parent: core.validator.abstract
 
-  gallery.validator.settings:
+  gallery.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation
     arguments:
       - '@core.i18n.translator'

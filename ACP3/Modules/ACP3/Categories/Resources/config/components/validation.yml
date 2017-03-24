@@ -1,5 +1,5 @@
 services:
-  categories.validator:
+  categories.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation
     arguments:
       - '@core.i18n.translator'

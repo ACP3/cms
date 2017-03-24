@@ -1,5 +1,5 @@
 services:
-  users.validator.account:
+  users.validation.account_form_validation:
     class: ACP3\Modules\ACP3\Users\Validation\AccountFormValidation
     parent: core.validator.abstract
 
@@ -15,11 +15,11 @@ services:
     class: ACP3\Modules\ACP3\Users\Validation\AdminSettingsFormValidation
     parent: core.validator.abstract
 
-  users.validator.admin:
+  users.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Users\Validation\AdminFormValidation
     parent: core.validator.abstract
 
-  users.validator.register:
+  users.validation.registration_form_validation:
     class: ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation
     parent: core.validator.abstract
 

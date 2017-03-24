@@ -1,5 +1,5 @@
 services:
-  news.validator:
+  news.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\News\Validation\AdminFormValidation
     parent: core.validator.abstract
 

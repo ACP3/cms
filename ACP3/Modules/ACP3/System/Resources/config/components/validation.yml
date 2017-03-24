@@ -1,5 +1,5 @@
 services:
-  system.validator.settings:
+  system.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation
     parent: core.validator.abstract
 

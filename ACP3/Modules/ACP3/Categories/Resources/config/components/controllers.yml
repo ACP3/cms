@@ -5,7 +5,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@categories.model.categories_model'
-      - '@categories.validator'
+      - '@categories.validation.admin_form_validation'
       - '@core.helpers.formToken'
 
   categories.controller.admin.index.delete:
@@ -20,7 +20,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@categories.model.categories_model'
-      - '@categories.validator'
+      - '@categories.validation.admin_form_validation'
       - '@core.helpers.formToken'
 
   categories.controller.admin.index.index:

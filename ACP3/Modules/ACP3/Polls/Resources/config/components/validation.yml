@@ -1,9 +1,9 @@
 services:
-  polls.validator:
+  polls.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation
     parent: core.validator.abstract
 
-  polls.validator.vote_validation:
+  polls.validation.vote_validation:
     class: ACP3\Modules\ACP3\Polls\Validation\VoteValidation
     parent: core.validator.abstract
 

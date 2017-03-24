@@ -1,9 +1,9 @@
 services:
-  permissions.validator.role:
+  permissions.validation.role_form_validation:
     class: ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation
     parent: core.validator.abstract
 
-  permissions.validator.resource:
+  permissions.validation.resource_form_validation:
     class: ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
     parent: core.validator.abstract
 

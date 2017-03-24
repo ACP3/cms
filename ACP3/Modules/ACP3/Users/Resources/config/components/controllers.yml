@@ -8,7 +8,7 @@ services:
       - '@core.helpers.forms'
       - '@users.helpers.forms'
       - '@users.model.users_model'
-      - '@users.validator.admin'
+      - '@users.validation.admin_form_validation'
       - '@permissions.helpers'
 
   users.controller.admin.index.delete:
@@ -27,7 +27,7 @@ services:
       - '@users.helpers.forms'
       - '@users.model.authentication_model'
       - '@users.model.users_model'
-      - '@users.validator.admin'
+      - '@users.validation.admin_form_validation'
       - '@permissions.helpers'
 
   users.controller.admin.index.index:
@@ -51,7 +51,7 @@ services:
       - '@core.helpers.formToken'
       - '@users.helpers.forms'
       - '@users.model.users_model'
-      - '@users.validator.account'
+      - '@users.validation.account_form_validation'
 
   users.controller.frontend.account.index:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Index
@@ -106,7 +106,7 @@ services:
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
       - '@users.model.userrepository'
-      - '@users.validator.register'
+      - '@users.validation.registration_form_validation'
       - '@permissions.helpers'
       - '@core.helpers.sendEmail'
 

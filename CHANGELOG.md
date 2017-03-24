@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Extended the router so that it's possible to force the generation of HTTP URIs
 - Added the possibility to generate separate XML-sitemaps for HTTP and HTTPS
+- Made it possible to use modules without the need for an installation
+
+### Changed
+- marked all services which are used as part of a bigger component as `public: false`
+- renamed some services to that a better aligned with their counterparts
 
 ## [4.8.5] - 2017-03-19
 ### Fixed

@@ -1,9 +1,9 @@
 services:
-  menus.validator.menu:
+  menus.validation.menu_form_validation:
     class: ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation
     parent: core.validator.abstract
 
-  menus.validator.menuitem:
+  menus.validation.menu_item_form_validation:
     class: ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation
     parent: core.validator.abstract
 

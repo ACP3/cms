@@ -1,5 +1,5 @@
 services:
-  newsletter.validator:
+  newsletter.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
     parent: core.validator.abstract
 

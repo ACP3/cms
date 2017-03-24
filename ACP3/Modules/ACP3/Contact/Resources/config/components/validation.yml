@@ -1,5 +1,5 @@
 services:
-  contact.validator:
+  contact.validation.form_validation:
     class: ACP3\Modules\ACP3\Contact\Validation\FormValidation
     parent: core.validator.abstract
 

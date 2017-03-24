@@ -1,4 +1,4 @@
 services:
-  feeds.validator:
+  feeds.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation
     parent: core.validator.abstract

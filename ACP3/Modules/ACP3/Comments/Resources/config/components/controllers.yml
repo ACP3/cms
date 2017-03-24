@@ -46,7 +46,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@comments.model.comments_model'
-      - '@comments.validator'
+      - '@comments.validation.form_validation'
       - '@core.helpers.formToken'
 
   comments.controller.frontend.index.index:
