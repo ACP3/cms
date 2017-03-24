@@ -58,6 +58,6 @@ Please refer to our [Contribution guidelines](https://github.com/ACP3/cms/blob/m
 ### PHP
 We are using the [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) Coding Style for all PHP files.
 
-##License
+## License
 
 This project is licensed under the terms of the [GPL 2.0+](https://github.com/ACP3/cms/blob/master/LICENCE).
