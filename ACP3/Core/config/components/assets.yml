@@ -9,8 +9,9 @@ services:
     class: ACP3\Core\Assets\Cache
     arguments:
       - '@core.cache.system'
+    public: false
 
-  core.assets.abstractMinifier:
+  core.assets.abstract_minifier:
     arguments:
       - '@core.assets'
       - '@core.environment.application_path'
@@ -23,11 +24,11 @@ services:
 
   core.assets.minifier.css:
     class: ACP3\Core\Assets\Minifier\CSS
-    parent: core.assets.abstractMinifier
+    parent: core.assets.abstract_minifier
 
   core.assets.minifier.javascript:
     class: ACP3\Core\Assets\Minifier\JavaScript
-    parent: core.assets.abstractMinifier
+    parent: core.assets.abstract_minifier
 
   core.assets.file_resolver:
     class: ACP3\Core\Assets\FileResolver

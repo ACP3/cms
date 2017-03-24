@@ -50,7 +50,7 @@ class Index extends Core\Controller\AbstractInstallerAction
      */
     protected function executePost()
     {
-        $results = $this->schemaUpdateModel->updateModules($this->container);
+        $results = $this->schemaUpdateModel->updateModules();
         ksort($results);
 
         $this->setTemplate('Update/index.result.tpl');

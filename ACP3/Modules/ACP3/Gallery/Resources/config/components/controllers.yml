@@ -5,7 +5,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
       - '@gallery.model.gallery_model'
-      - '@gallery.validator.gallery'
+      - '@gallery.validation.gallery_form_validation'
 
   gallery.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Delete
@@ -25,7 +25,7 @@ services:
       - '@core.helpers.formToken'
       - '@gallery.model.picturerepository'
       - '@gallery.model.gallery_model'
-      - '@gallery.validator.gallery'
+      - '@gallery.validation.gallery_form_validation'
 
   gallery.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Index
@@ -37,9 +37,10 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@gallery.cache.core'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@gallery.validator.settings'
+      - '@gallery.validation.admin_settings_form_validation'
 
   gallery.controller.admin.pictures.create:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Create
@@ -49,7 +50,7 @@ services:
       - '@core.helpers.formToken'
       - '@gallery.model.galleryrepository'
       - '@gallery.model.picture_model'
-      - '@gallery.validator.picture'
+      - '@gallery.validation.picture_form_validation'
 
   gallery.controller.admin.pictures.delete:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Delete
@@ -69,7 +70,7 @@ services:
       - '@core.helpers.formToken'
       - '@gallery.helpers'
       - '@gallery.model.picture_model'
-      - '@gallery.validator.picture'
+      - '@gallery.validation.picture_form_validation'
 
   gallery.controller.admin.pictures.order:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Order

@@ -6,6 +6,7 @@ services:
       - '@articles.model.search_results_aware_repository'
     tags:
       - { name: search.extension.search_availability }
+    public: false
 
   articles.extension.sitemap_availability_extension:
     class: ACP3\Modules\ACP3\Articles\Extension\SitemapAvailabilityExtension
@@ -16,4 +17,4 @@ services:
       - '@?seo.helper.meta_statements'
     tags:
       - { name: seo.extension.sitemap_availability }
-
+    public: false

@@ -7,12 +7,11 @@
 namespace ACP3\Installer\Modules\Update\Model;
 
 use ACP3\Core\Filesystem;
+use ACP3\Core\Installer\MigrationRegistrar;
+use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Core\Modules;
-use ACP3\Core\Modules\Installer\MigrationInterface;
-use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\XML;
 use ACP3\Installer\Core\Environment\ApplicationPath;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SchemaUpdateModel
 {
@@ -39,6 +38,14 @@ class SchemaUpdateModel
      */
     protected $xml;
     /**
+     * @var SchemaRegistrar
+     */
+    private $schemaRegistrar;
+    /**
+     * @var MigrationRegistrar
+     */
+    private $migrationRegistrar;
+    /**
      * @var array
      */
     protected $results = [];
@@ -47,6 +54,8 @@ class SchemaUpdateModel
      * ModuleUpdateModel constructor.
      * @param ApplicationPath $applicationPath
      * @param XML $xml
+     * @param SchemaRegistrar $schemaRegistrar
+     * @param MigrationRegistrar $migrationRegistrar
      * @param Modules\Vendor $vendor
      * @param Modules $modules
      * @param Modules\SchemaUpdater $schemaUpdater
@@ -54,6 +63,8 @@ class SchemaUpdateModel
     public function __construct(
         ApplicationPath $applicationPath,
         XML $xml,
+        SchemaRegistrar $schemaRegistrar,
+        MigrationRegistrar $migrationRegistrar,
         Modules\Vendor $vendor,
         Modules $modules,
         Modules\SchemaUpdater $schemaUpdater)
@@ -63,15 +74,15 @@ class SchemaUpdateModel
         $this->vendor = $vendor;
         $this->modules = $modules;
         $this->schemaUpdater = $schemaUpdater;
+        $this->schemaRegistrar = $schemaRegistrar;
+        $this->migrationRegistrar = $migrationRegistrar;
     }
 
     /**
-     * @param ContainerInterface $container
      * @param array $modules
      * @return array
-     * @throws \Exception
      */
-    public function updateModules(ContainerInterface $container, array $modules = [])
+    public function updateModules(array $modules = [])
     {
         foreach ($this->vendor->getVendors() as $vendor) {
             $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
@@ -91,10 +102,10 @@ class SchemaUpdateModel
                     $dependencies = $this->getModuleDependencies($moduleConfigPath);
 
                     if (count($dependencies) > 0) {
-                        $this->updateModules($container, $dependencies);
+                        $this->updateModules($dependencies);
                     }
 
-                    $this->results[$module] = $this->updateModule($container, $module);
+                    $this->results[$module] = $this->updateModule($module);
                 }
             }
         }
@@ -105,23 +116,20 @@ class SchemaUpdateModel
     /**
      * Führt die Updateanweisungen eines Moduls aus
      *
-     * @param ContainerInterface $container
      * @param string $module
      * @return int
      */
-    public function updateModule(ContainerInterface $container, $module)
+    public function updateModule($module)
     {
         $result = false;
 
         $serviceIdSchema = $module . '.installer.schema';
         $serviceIdMigration = $module . '.installer.migration';
-        if ($container->has($serviceIdSchema) === true &&
-            $container->has($serviceIdMigration) === true
+        if ($this->schemaRegistrar->has($serviceIdSchema) === true &&
+            $this->migrationRegistrar->has($serviceIdMigration) === true
         ) {
-            /** @var SchemaInterface $moduleSchema */
-            $moduleSchema = $container->get($serviceIdSchema);
-            /** @var MigrationInterface $moduleMigration */
-            $moduleMigration = $container->get($serviceIdMigration);
+            $moduleSchema = $this->schemaRegistrar->get($serviceIdSchema);
+            $moduleMigration = $this->migrationRegistrar->get($serviceIdMigration);
             if ($this->modules->isInstalled($module) || count($moduleMigration->renameModule()) > 0) {
                 $result = $this->schemaUpdater->updateSchema($moduleSchema, $moduleMigration);
             }

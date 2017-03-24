@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class Modules
@@ -33,22 +32,34 @@ class Modules extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
     protected $permissionsCache;
+    /**
+     * @var Core\I18n\DictionaryCache
+     */
+    private $dictionaryCache;
+    /**
+     * @var Core\Installer\SchemaRegistrar
+     */
+    private $schemaRegistrar;
 
     /**
      * Modules constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
-     * @param \ACP3\Core\Modules\ModuleInfoCache               $moduleInfoCache
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\I18n\DictionaryCache $dictionaryCache
+     * @param \ACP3\Core\Modules\ModuleInfoCache $moduleInfoCache
      * @param \ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository $systemModuleRepository
-     * @param \ACP3\Modules\ACP3\System\Helper\Installer       $installerHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache             $permissionsCache
+     * @param \ACP3\Modules\ACP3\System\Helper\Installer $installerHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param Core\Installer\SchemaRegistrar $schemaRegistrar
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\I18n\DictionaryCache $dictionaryCache,
         Core\Modules\ModuleInfoCache $moduleInfoCache,
         System\Model\Repository\ModulesRepository $systemModuleRepository,
         System\Helper\Installer $installerHelper,
-        Permissions\Cache $permissionsCache
+        Permissions\Cache $permissionsCache,
+        Core\Installer\SchemaRegistrar $schemaRegistrar
     ) {
         parent::__construct($context);
 
@@ -56,6 +67,8 @@ class Modules extends Core\Controller\AbstractAdminAction
         $this->systemModuleRepository = $systemModuleRepository;
         $this->installerHelper = $installerHelper;
         $this->permissionsCache = $permissionsCache;
+        $this->dictionaryCache = $dictionaryCache;
+        $this->schemaRegistrar = $schemaRegistrar;
     }
 
     /**
@@ -99,11 +112,9 @@ class Modules extends Core\Controller\AbstractAdminAction
             }
 
             $serviceId = strtolower($moduleDirectory . '.installer.schema');
-            $container = $this->installerHelper->updateServiceContainer($this->request, true);
-            $this->moduleInstallerExists($container, $serviceId);
+            $this->moduleInstallerExists($serviceId);
 
-            /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
-            $moduleSchema = $container->get($serviceId);
+            $moduleSchema = $this->schemaRegistrar->get($serviceId);
 
             $dependencies = $this->installerHelper->checkInstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'enable_following_modules_first');
@@ -124,14 +135,13 @@ class Modules extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param string                                                    $serviceId
+     * @param string $serviceId
      *
-     * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
+     * @throws System\Exception\ModuleInstallerException
      */
-    protected function moduleInstallerExists(ContainerInterface $container, $serviceId)
+    protected function moduleInstallerExists($serviceId)
     {
-        if ($container->has($serviceId) === false) {
+        if ($this->schemaRegistrar->has($serviceId) === false) {
             throw new System\Exception\ModuleInstallerException(
                 $this->translator->t('system', 'module_installer_not_found')
             );
@@ -157,11 +167,15 @@ class Modules extends Core\Controller\AbstractAdminAction
         }
     }
 
-    protected function renewCaches()
+    /**
+     * @param string $moduleDirectory
+     * @param int    $active
+     *
+     * @return bool|int
+     */
+    protected function saveModuleState($moduleDirectory, $active)
     {
-        $this->get('core.lang.dictionary_cache')->saveLanguageCache($this->translator->getLocale());
-        $this->moduleInfoCache->saveModulesInfoCache();
-        $this->permissionsCache->saveResourcesCache();
+        return $this->systemModuleRepository->update(['active' => $active], ['name' => $moduleDirectory]);
     }
 
     protected function purgeCaches()
@@ -174,6 +188,13 @@ class Modules extends Core\Controller\AbstractAdminAction
             $this->appPath->getCacheDir() . 'container.php',
             $this->appPath->getCacheDir() . 'container.php.meta',
         ]);
+    }
+
+    protected function renewCaches()
+    {
+        $this->dictionaryCache->saveLanguageCache($this->translator->getLocale());
+        $this->moduleInfoCache->saveModulesInfoCache();
+        $this->permissionsCache->saveResourcesCache();
     }
 
     /**
@@ -195,10 +216,9 @@ class Modules extends Core\Controller\AbstractAdminAction
             }
 
             $serviceId = strtolower($moduleDirectory . '.installer.schema');
-            $this->moduleInstallerExists($this->container, $serviceId);
+            $this->moduleInstallerExists($serviceId);
 
-            /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
-            $moduleSchema = $this->container->get($serviceId);
+            $moduleSchema = $this->schemaRegistrar->get($serviceId);
 
             $dependencies = $this->installerHelper->checkUninstallDependencies(
                 $moduleSchema->getModuleName(),
@@ -238,17 +258,15 @@ class Modules extends Core\Controller\AbstractAdminAction
             }
 
             $serviceId = strtolower($moduleDirectory . '.installer.schema');
-            $container = $this->installerHelper->updateServiceContainer($this->request, true);
-            $this->moduleInstallerExists($container, $serviceId);
+            $this->moduleInstallerExists($serviceId);
 
-            /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
-            $moduleSchema = $container->get($serviceId);
+            $moduleSchema = $this->schemaRegistrar->get($serviceId);
 
             $dependencies = $this->installerHelper->checkInstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'enable_following_modules_first');
 
-            $bool = $container->get('core.modules.schemaInstaller')->install($moduleSchema);
-            $bool2 = $container->get('core.modules.aclInstaller')->install($moduleSchema);
+            $bool = $this->container->get('core.modules.schemaInstaller')->install($moduleSchema);
+            $bool2 = $this->container->get('core.modules.aclInstaller')->install($moduleSchema);
 
             $this->purgeCaches();
 
@@ -281,15 +299,13 @@ class Modules extends Core\Controller\AbstractAdminAction
             }
 
             $serviceId = strtolower($moduleDirectory . '.installer.schema');
-            $container = $this->installerHelper->updateServiceContainer($this->request, true);
-            $this->moduleInstallerExists($container, $serviceId);
+            $this->moduleInstallerExists($serviceId);
 
-            /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
-            $moduleSchema = $container->get($serviceId);
+            $moduleSchema = $this->schemaRegistrar->get($serviceId);
 
             $dependencies = $this->installerHelper->checkUninstallDependencies(
                 $moduleSchema->getModuleName(),
-                $container
+                $this->container
             );
             $this->checkForFailedModuleDependencies($dependencies, 'uninstall_following_modules_first');
 
@@ -321,7 +337,7 @@ class Modules extends Core\Controller\AbstractAdminAction
 
         foreach ($modules as $key => $values) {
             $values['dir'] = strtolower($values['dir']);
-            if ($this->modules->isInstalled($values['dir']) === true) {
+            if ($this->modules->isInstalled($values['dir']) === true || $values['installable'] === false) {
                 $installedModules[$key] = $values;
             } else {
                 $newModules[$key] = $values;
@@ -332,16 +348,5 @@ class Modules extends Core\Controller\AbstractAdminAction
             'installed_modules' => $installedModules,
             'new_modules' => $newModules
         ];
-    }
-
-    /**
-     * @param string $moduleDirectory
-     * @param int    $active
-     *
-     * @return bool|int
-     */
-    protected function saveModuleState($moduleDirectory, $active)
-    {
-        return $this->systemModuleRepository->update(['active' => $active], ['name' => $moduleDirectory]);
     }
 }

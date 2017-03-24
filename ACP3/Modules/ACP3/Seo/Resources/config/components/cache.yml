@@ -1,0 +1,12 @@
+services:
+  seo.cache:
+    class: ACP3\Modules\ACP3\Seo\Cache
+    arguments:
+      - '@seo.cache.core'
+      - '@seo.model.seorepository'
+
+  seo.cache.core:
+    class: ACP3\Core\Cache
+    arguments:
+      - '@core.cache.cache_driver_factory'
+      - 'seo'

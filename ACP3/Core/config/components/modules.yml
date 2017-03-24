@@ -22,7 +22,7 @@ services:
   core.modules.helper.action:
     class: ACP3\Core\Modules\Helper\Action
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.http.request'
       - '@core.router'
       - '@core.helpers.alerts'
@@ -38,7 +38,7 @@ services:
     arguments:
       - '@core.cache.system'
       - '@core.environment.application_path'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.modules.vendors'
       - '@core.xml'
       - '@system.model.modulerepository'
@@ -58,7 +58,6 @@ services:
     factory: 'core.logger.logger_factory:create'
     arguments:
       - 'installer'
-    public: false
 
   core.modules.installer.abstractMigration:
     abstract: true

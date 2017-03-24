@@ -1,5 +1,5 @@
 services:
-  seo.validator:
+  seo.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
     parent: core.validator.abstract
 
@@ -16,3 +16,4 @@ services:
       - '@seo.model.seorepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false

@@ -5,7 +5,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@search.helpers'
-      - '@search.validator'
+      - '@search.validation.form_validation'
       - '@search.utility.search_availability_registrar'
 
   search.controller.widget.index.index:

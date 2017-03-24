@@ -1,0 +1,9 @@
+services:
+  core.installer.migration_registrar:
+    class: ACP3\Core\Installer\MigrationRegistrar
+
+  core.installer.sample_data_registrar:
+    class: ACP3\Core\Installer\SampleDataRegistrar
+
+  core.installer.schema_registrar:
+    class: ACP3\Core\Installer\SchemaRegistrar

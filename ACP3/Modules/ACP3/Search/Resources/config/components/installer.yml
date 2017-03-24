@@ -1,7 +1,12 @@
 services:
   search.installer.schema:
     class: ACP3\Modules\ACP3\Search\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
 
   search.installer.migration:
     class: ACP3\Modules\ACP3\Search\Installer\Migration
     parent: core.modules.installer.abstractMigration
+    tags:
+      - { name: core.installer.migration }
+    public: false

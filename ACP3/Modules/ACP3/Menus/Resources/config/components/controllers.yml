@@ -5,7 +5,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
       - '@menus.model.menus_model'
-      - '@menus.validator.menu'
+      - '@menus.validation.menu_form_validation'
 
   menus.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Delete
@@ -19,7 +19,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
       - '@menus.model.menus_model'
-      - '@menus.validator.menu'
+      - '@menus.validation.menu_form_validation'
 
   menus.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Index
@@ -37,7 +37,7 @@ services:
       - '@menus.model.menurepository'
       - '@menus.model.menu_items_model'
       - '@menus.helpers.menuitemformfields'
-      - '@menus.validator.menuitem'
+      - '@menus.validation.menu_item_form_validation'
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
 
@@ -55,7 +55,7 @@ services:
       - '@core.helpers.formToken'
       - '@menus.model.menu_items_model'
       - '@menus.helpers.menuitemformfields'
-      - '@menus.validator.menuitem'
+      - '@menus.validation.menu_item_form_validation'
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
 

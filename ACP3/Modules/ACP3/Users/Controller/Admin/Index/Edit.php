@@ -39,6 +39,10 @@ class Edit extends AbstractFormAction
      * @var Users\Model\UsersModel
      */
     protected $usersModel;
+    /**
+     * @var Users\Helpers\Forms
+     */
+    private $userFormsHelpers;
 
     /**
      * Edit constructor.
@@ -47,6 +51,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param \ACP3\Core\Helpers\Forms $formsHelpers
+     * @param Users\Helpers\Forms $userFormsHelpers
      * @param \ACP3\Modules\ACP3\Users\Model\AuthenticationModel $authenticationModel
      * @param Users\Model\UsersModel $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation $adminFormValidation
@@ -57,6 +62,7 @@ class Edit extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Forms $formsHelpers,
+        Users\Helpers\Forms $userFormsHelpers,
         Users\Model\AuthenticationModel $authenticationModel,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AdminFormValidation $adminFormValidation,
@@ -70,6 +76,7 @@ class Edit extends AbstractFormAction
         $this->adminFormValidation = $adminFormValidation;
         $this->permissionsHelpers = $permissionsHelpers;
         $this->usersModel = $usersModel;
+        $this->userFormsHelpers = $userFormsHelpers;
     }
 
     /**
@@ -87,7 +94,7 @@ class Edit extends AbstractFormAction
 
             $userRoles = $this->acl->getUserRoleIds($id);
             $this->view->assign(
-                $this->get('users.helpers.forms')->fetchUserSettingsFormFields(
+                $this->userFormsHelpers->fetchUserSettingsFormFields(
                     $user['address_display'],
                     $user['birthday_display'],
                     $user['country_display'],
@@ -95,7 +102,7 @@ class Edit extends AbstractFormAction
                 )
             );
             $this->view->assign(
-                $this->get('users.helpers.forms')->fetchUserProfileFormFields(
+                $this->userFormsHelpers->fetchUserProfileFormFields(
                     $user['birthday'],
                     $user['country'],
                     $user['gender']
@@ -105,7 +112,7 @@ class Edit extends AbstractFormAction
             return [
                 'roles' => $this->fetchUserRoles($userRoles),
                 'super_user' => $this->fetchIsSuperUser($user['super_user']),
-                'contact' => $this->get('users.helpers.forms')->fetchContactDetails(
+                'contact' => $this->userFormsHelpers->fetchContactDetails(
                     $user['mail'],
                     $user['website'],
                     $user['icq'],

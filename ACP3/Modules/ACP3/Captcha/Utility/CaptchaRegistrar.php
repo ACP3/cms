@@ -40,4 +40,20 @@ class CaptchaRegistrar
     {
         return isset($this->availableCaptchas[$serviceId]);
     }
+
+    /**
+     * @param string $serviceId
+     * @return CaptchaExtensionInterface
+     * @throws \InvalidArgumentException
+     */
+    public function getCaptcha($serviceId)
+    {
+        if ($this->hasCaptcha($serviceId)) {
+            return $this->availableCaptchas[$serviceId];
+        }
+
+        throw new \InvalidArgumentException(
+            sprintf('Can not find the captcha extension with the name "%s".', $serviceId)
+        );
+    }
 }

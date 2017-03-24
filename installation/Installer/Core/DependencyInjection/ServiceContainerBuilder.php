@@ -7,6 +7,7 @@
 namespace ACP3\Installer\Core\DependencyInjection;
 
 use ACP3\Core\Environment\ApplicationMode;
+use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
 use ACP3\Installer\Core\Environment\ApplicationPath;
@@ -77,6 +78,8 @@ class ServiceContainerBuilder extends ContainerBuilder
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
 
         if ($this->canIncludeModules() === true) {
+            $this->addCompilerPass(new RegisterInstallersCompilerPass());
+
             $loader->load($this->applicationPath->getClassesDir() . 'config/services.yml');
         }
 

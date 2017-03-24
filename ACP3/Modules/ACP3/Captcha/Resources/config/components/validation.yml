@@ -6,6 +6,7 @@ services:
       - '@captcha.extension.captcha'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   captcha.validation.validation_rules.captcha_type_validation_rule:
     class: ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaTypeValidationRule
@@ -13,6 +14,7 @@ services:
       - '@captcha.utility.captcha_registrar'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   cpatcha.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation

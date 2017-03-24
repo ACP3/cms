@@ -6,7 +6,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@news.model'
-      - '@news.validator'
+      - '@news.validation.admin_form_validation'
       - '@categories.helpers'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
@@ -24,7 +24,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@news.model'
-      - '@news.validator'
+      - '@news.validation.admin_form_validation'
       - '@categories.helpers'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]

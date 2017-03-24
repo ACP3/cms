@@ -2,13 +2,16 @@ parameters:
   core.authentication.method: native
 
 services:
+  core.authentication.authentication_registrar:
+    class: ACP3\Core\Authentication\AuthenticationRegistrar
+
   core.authentication.factory:
     class: ACP3\Core\Authentication\AuthenticationFactory
     arguments:
-      - '@service_container'
+      - '@core.authentication.authentication_registrar'
 
   core.authentication:
     class: ACP3\Core\Authentication\AuthenticationInterface
-    factory: ['@core.authentication.factory', get]
+    factory: 'core.authentication.factory:get'
     arguments:
       - '%core.authentication.method%'

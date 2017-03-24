@@ -1,5 +1,5 @@
 services:
-  emoticons.validator:
+  emoticons.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation
     parent: core.validator.abstract
 

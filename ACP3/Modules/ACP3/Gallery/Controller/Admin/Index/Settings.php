@@ -27,17 +27,23 @@ class Settings extends Core\Controller\AbstractAdminAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var Core\Cache
+     */
+    private $galleryCoreCache;
 
     /**
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\Cache $galleryCoreCache
      * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Cache $galleryCoreCache,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
@@ -47,6 +53,7 @@ class Settings extends Core\Controller\AbstractAdminAction
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
+        $this->galleryCoreCache = $galleryCoreCache;
     }
 
     /**
@@ -99,7 +106,7 @@ class Settings extends Core\Controller\AbstractAdminAction
             if ($this->hasImageDimensionChanges($formData)) {
                 Core\Cache\Purge::doPurge($this->appPath->getUploadsDir() . 'gallery/cache', 'gallery');
 
-                $this->get('gallery.cache.core')->getDriver()->deleteAll();
+                $this->galleryCoreCache->getDriver()->deleteAll();
             }
 
             return $bool;

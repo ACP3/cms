@@ -6,6 +6,6 @@ services:
       - '@core.environment.application_path'
       - '@core.modules.vendors'
       - '@core.helpers.secure'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@install.helpers.install'
       - '@install.helpers.module_installer'

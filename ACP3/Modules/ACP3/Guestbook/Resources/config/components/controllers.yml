@@ -35,7 +35,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@guestbook.model.guestbook_model'
-      - '@guestbook.validator'
+      - '@guestbook.validation.form_validation'
     calls:
       - ['setNewsletterSubscribeHelper', ['@?newsletter.helper.subscribe']]
 

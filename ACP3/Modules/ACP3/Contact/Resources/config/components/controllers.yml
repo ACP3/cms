@@ -23,7 +23,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@contact.validator'
+      - '@contact.validation.form_validation'
       - '@contact.model.contacts_model'
       - '@contact.model.contact_form_model'
 

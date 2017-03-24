@@ -9,7 +9,7 @@ services:
       - '@polls.model.pollrepository'
       - '@polls.model.polls_model'
       - '@polls.model.answerrepository'
-      - '@polls.validator'
+      - '@polls.validation.admin_form_validation'
 
   polls.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Delete
@@ -26,7 +26,7 @@ services:
       - '@core.helpers.formToken'
       - '@polls.model.polls_model'
       - '@polls.model.answerrepository'
-      - '@polls.validator'
+      - '@polls.validation.admin_form_validation'
 
   polls.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Index
@@ -55,7 +55,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.date'
-      - '@polls.validator.vote_validation'
+      - '@polls.validation.vote_validation'
       - '@polls.model.vote_model'
       - '@polls.model.pollrepository'
       - '@polls.model.answerrepository'

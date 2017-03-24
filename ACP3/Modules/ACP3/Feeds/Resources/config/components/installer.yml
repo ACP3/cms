@@ -1,6 +1,11 @@
 services:
   feeds.installer.schema:
     class: ACP3\Modules\ACP3\Feeds\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
 
   feeds.installer.migration:
     class: ACP3\Modules\ACP3\Feeds\Installer\Migration
+    tags:
+      - { name: core.installer.migration }
+    public: false

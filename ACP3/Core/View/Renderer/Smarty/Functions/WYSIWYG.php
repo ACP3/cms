@@ -16,10 +16,6 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class WYSIWYG extends AbstractFunction
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\Container
-     */
-    protected $container;
-    /**
      * @var \ACP3\Core\WYSIWYG\WysiwygFactory
      */
     protected $wysiwygFactory;

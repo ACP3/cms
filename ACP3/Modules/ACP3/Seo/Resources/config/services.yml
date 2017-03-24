@@ -1,4 +1,5 @@
 imports:
+  - { resource: components/cache.yml }
   - { resource: components/controllers.yml }
   - { resource: components/events.yml }
   - { resource: components/helpers.yml }
@@ -8,12 +9,6 @@ imports:
   - { resource: components/validation.yml }
 
 services:
-  seo.cache:
-    class: ACP3\Modules\ACP3\Seo\Cache
-    arguments:
-      - '@core.cache.system'
-      - '@seo.model.seorepository'
-
   seo.core.router.aliases:
     class: ACP3\Modules\ACP3\Seo\Core\Router\Aliases
     arguments:
@@ -27,4 +22,3 @@ services:
     factory: 'core.logger.logger_factory:create'
     arguments:
       - 'seo-sitemap'
-    public: false

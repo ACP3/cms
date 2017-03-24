@@ -11,7 +11,7 @@ services:
     class: ACP3\Modules\ACP3\Categories\Helpers
     arguments:
       - '@core.acl'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.modules'
       - '@core.http.request'
       - '@core.helpers.forms'

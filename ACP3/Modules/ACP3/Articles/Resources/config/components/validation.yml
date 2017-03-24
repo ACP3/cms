@@ -1,5 +1,5 @@
 services:
-  articles.validator:
+  articles.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
     parent: core.validator.abstract
 
@@ -9,4 +9,4 @@ services:
        - '@articles.model.articlerepository'
     tags:
       - { name: core.validation.validation_rule }
-
+    public: false

@@ -14,4 +14,3 @@ services:
     factory: 'core.logger.logger_factory:create'
     arguments:
       - 'database'
-    public: false

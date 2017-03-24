@@ -3,7 +3,7 @@ services:
     class: ACP3\Core\Helpers\View\CheckAccess
     arguments:
       - '@core.acl'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.router'
 
   core.helpers.alerts:
@@ -16,7 +16,7 @@ services:
     class: ACP3\Core\Helpers\Date
     arguments:
       - '@core.date'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.http.request'
       - '@core.helpers.forms'
       - '@core.validation.validation_rules.date_validation_rule'
@@ -24,7 +24,7 @@ services:
   core.helpers.forms:
     class: ACP3\Core\Helpers\Forms
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.http.request'
 
   core.helpers.sendEmail:
@@ -69,7 +69,7 @@ services:
     class: ACP3\Core\Helpers\TableOfContents
     arguments:
       - '@core.breadcrumb.title'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.http.request'
       - '@core.router'
       - '@core.validation.validation_rules.integer_validation_rule'
@@ -84,12 +84,12 @@ services:
     class: ACP3\Core\Helpers\Formatter\DateRange
     arguments:
       - '@core.date'
-      - '@core.lang'
+      - '@core.i18n.translator'
 
   core.helpers.formatter.mark_entries:
     class: ACP3\Core\Helpers\Formatter\MarkEntries
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
 
   core.helpers.formatter.rewrite_internal_uri:
     class: ACP3\Core\Helpers\Formatter\RewriteInternalUri

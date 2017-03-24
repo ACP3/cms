@@ -20,6 +20,6 @@ services:
     class: ACP3\Modules\ACP3\Contact\Model\ContactFormModel
     arguments:
       - '@core.config'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.helpers.secure'
       - '@core.helpers.sendEmail'

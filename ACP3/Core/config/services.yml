@@ -12,6 +12,7 @@ imports:
   - { resource: components/date.yml }
   - { resource: components/helpers.yml }
   - { resource: components/http.yml }
+  - { resource: components/installer.yml }
   - { resource: components/language.yml }
   - { resource: components/logger.yml }
   - { resource: components/mailer.yml }
@@ -56,7 +57,7 @@ services:
     class: ACP3\Core\Pagination
     arguments:
       - '@core.breadcrumb.title'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.http.request'
       - '@core.router'
 

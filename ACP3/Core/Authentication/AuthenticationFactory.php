@@ -6,26 +6,19 @@
 
 namespace ACP3\Core\Authentication;
 
-use ACP3\Core\Authentication\Exception\InvalidAuthenticationMethodException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
-/**
- * Class AuthenticationFactory
- * @package ACP3\Core\Authentication
- */
 class AuthenticationFactory
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var AuthenticationRegistrar
      */
-    protected $container;
+    private $authenticationRegistrar;
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param AuthenticationRegistrar $authenticationRegistrar
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(AuthenticationRegistrar $authenticationRegistrar)
     {
-        $this->container = $container;
+        $this->authenticationRegistrar = $authenticationRegistrar;
     }
 
     /**
@@ -37,10 +30,7 @@ class AuthenticationFactory
     public function get($authenticationMethod)
     {
         $serviceId = 'core.authentication.' . $authenticationMethod;
-        if ($this->container->has($serviceId)) {
-            return $this->container->get($serviceId);
-        }
 
-        throw new InvalidAuthenticationMethodException();
+        return $this->authenticationRegistrar->get($serviceId);
     }
 }
