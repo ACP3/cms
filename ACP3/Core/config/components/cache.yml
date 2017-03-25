@@ -8,5 +8,6 @@ services:
   core.cache.cache_driver_factory:
     class: ACP3\Core\Cache\CacheDriverFactory
     arguments:
-      - '@service_container'
       - '@core.environment.application_path'
+      - '%cache_driver%'
+      - '%core.environment%'

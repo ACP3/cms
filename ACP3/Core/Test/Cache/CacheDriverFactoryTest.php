@@ -34,8 +34,7 @@ class CacheDriverFactoryTest extends \PHPUnit_Framework_TestCase
         $this->initializeMockObjects();
 
         $this->cacheDriverFactory = new CacheDriverFactory(
-            $this->containerMock,
-            $this->appPathMock
+            $this->appPathMock,
         );
     }
 

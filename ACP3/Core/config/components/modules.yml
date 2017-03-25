@@ -2,7 +2,6 @@ services:
   core.modules:
     class: ACP3\Core\Modules
     arguments:
-      - '@service_container'
       - '@core.environment.application_path'
       - '@core.modules.helper.controllerActionExists'
       - '@core.modules.moduleInfoCache'

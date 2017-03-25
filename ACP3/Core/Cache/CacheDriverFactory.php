@@ -8,7 +8,8 @@ namespace ACP3\Core\Cache;
 
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\Common\Cache\PhpFileCache;
 
 /**
  * Class CacheDriverFactory
@@ -17,24 +18,30 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class CacheDriverFactory
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected $container;
-    /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
+    /**
+     * @var string
+     */
+    private $cacheDriver;
+    /**
+     * @var string
+     */
+    private $environment;
 
     /**
      * CacheDriverFactory constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Core\Environment\ApplicationPath                    $appPath
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param string $cacheDriver
+     * @param string $environment
      */
-    public function __construct(ContainerInterface $container, ApplicationPath $appPath)
+    public function __construct(ApplicationPath $appPath, $cacheDriver, $environment)
     {
-        $this->container = $container;
         $this->appPath = $appPath;
+        $this->cacheDriver = $cacheDriver;
+        $this->environment = $environment;
     }
 
     /**
@@ -44,53 +51,38 @@ class CacheDriverFactory
      */
     public function create($namespace)
     {
-        $driverName = $this->getCacheDriverName();
+        $driver = $this->initializeCacheDriver($this->getCacheDriverName());
+        $driver->setNamespace($namespace);
 
-        $cacheDriverPath = "\\Doctrine\\Common\\Cache\\" . $driverName . 'Cache';
-        if (class_exists($cacheDriverPath)) {
-            $driver = $this->initializeCacheDriver($driverName, $cacheDriverPath);
-            $driver->setNamespace($namespace);
-
-            return $driver;
-        }
-
-        throw new \InvalidArgumentException(
-            sprintf('Could not find the requested cache driver "%s"!', $cacheDriverPath)
-        );
+        return $driver;
     }
 
     /**
-     * @return mixed|string
+     * @return string
      */
     protected function getCacheDriverName()
     {
-        return $this->containerHasCacheDriver() ? $this->container->getParameter('cache_driver') : 'Array';
-    }
-
-    /**
-     * @return bool
-     */
-    protected function containerHasCacheDriver()
-    {
-        return $this->container->hasParameter('cache_driver')
-        && $this->container->getParameter('core.environment') !== ApplicationMode::DEVELOPMENT;
+        return $this->environment !== ApplicationMode::DEVELOPMENT ? $this->cacheDriver : 'Array';
     }
 
     /**
      * @param string $driverName
-     * @param string $driverNameFqn
      *
      * @return \Doctrine\Common\Cache\CacheProvider
+     * @throws \InvalidArgumentException
      */
-    protected function initializeCacheDriver($driverName, $driverNameFqn)
+    protected function initializeCacheDriver($driverName)
     {
         /** @var \Doctrine\Common\Cache\CacheProvider $driver */
         switch (strtolower($driverName)) {
             case 'phpfile':
-                $cacheDir = $this->appPath->getCacheDir() . 'sql/';
-                return new $driverNameFqn($cacheDir);
+                return new PhpFileCache($this->appPath->getCacheDir() . 'sql/');
+            case 'array':
+                return new ArrayCache();
             default:
-                return new $driverNameFqn();
+                throw new \InvalidArgumentException(
+                    sprintf('Could not find the requested cache driver "%s"!', $driverName)
+                );
         }
     }
 }

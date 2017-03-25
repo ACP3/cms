@@ -220,10 +220,7 @@ class Modules extends Core\Controller\AbstractAdminAction
 
             $moduleSchema = $this->schemaRegistrar->get($serviceId);
 
-            $dependencies = $this->installerHelper->checkUninstallDependencies(
-                $moduleSchema->getModuleName(),
-                $this->container
-            );
+            $dependencies = $this->installerHelper->checkUninstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'module_disable_not_possible');
 
             $bool = $this->saveModuleState($moduleDirectory, 0);
@@ -303,10 +300,7 @@ class Modules extends Core\Controller\AbstractAdminAction
 
             $moduleSchema = $this->schemaRegistrar->get($serviceId);
 
-            $dependencies = $this->installerHelper->checkUninstallDependencies(
-                $moduleSchema->getModuleName(),
-                $this->container
-            );
+            $dependencies = $this->installerHelper->checkUninstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'uninstall_following_modules_first');
 
             $bool = $this->container->get('core.modules.schemaInstaller')->uninstall($moduleSchema);
