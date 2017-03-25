@@ -115,7 +115,9 @@ class ModuleInstaller
      */
     private function isValidModule($modulePath, $moduleConfigPath)
     {
-        return is_dir($modulePath) && is_file($moduleConfigPath);
+        $config = $this->xml->parseXmlFile($moduleConfigPath, '/module/info');
+
+        return is_dir($modulePath) && is_file($moduleConfigPath) && !isset($config['no_install']);
     }
 
     /**

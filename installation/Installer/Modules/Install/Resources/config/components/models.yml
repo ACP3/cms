@@ -2,6 +2,7 @@ services:
   install.model.install_model:
     class: ACP3\Installer\Modules\Install\Model\InstallModel
     arguments:
+      - '@core.logger.system_logger'
       - '@service_container'
       - '@core.environment.application_path'
       - '@core.modules.vendors'

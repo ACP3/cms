@@ -54,7 +54,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
      */
     public function initializeClasses(SymfonyRequest $symfonyRequest)
     {
-        $this->container = ServiceContainerBuilder::create($this->appPath, $symfonyRequest, $this->appMode);
+        $this->container = ServiceContainerBuilder::create($this->logger, $this->appPath, $symfonyRequest, $this->appMode);
     }
 
     private function applyThemePaths()
