@@ -71,7 +71,7 @@ class CacheDriverFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->initializeCacheDriverFactory('LoremIpsum', 'test');
 
-        echo get_class($this->cacheDriverFactory->create('test'));
+        $this->cacheDriverFactory->create('test');
     }
 
     public function testCreateForceArrayCacheForDeveloperMode()
