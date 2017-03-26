@@ -4,23 +4,23 @@
  */
 
 jQuery(document).ready(function ($) {
-    $('#languages').find('.btn').addClass('hidden');
+    var $doc = $(document),
+        $languages = $('#languages');
 
-    var $doc = $(document);
     $doc.data('has-changes', false);
-
     $('#content').find(':input').change(function () {
         $doc.data('has-changes', true);
     });
 
+    $languages.find('.btn').addClass('hidden');
     $('#lang').change(function () {
-        var allowPageReload = true;
+        var submitForm = true;
         if ($doc.length > 0 && $doc.data('has-changes') === true) {
-            allowPageReload = confirm($('#lang').data('change-language-warning'));
+            submitForm = confirm($(this).data('change-language-warning'));
         }
 
-        if (allowPageReload === true) {
-            $('#languages').submit();
+        if (submitForm === true) {
+            $languages.submit();
         }
     });
 });
