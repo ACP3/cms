@@ -19,11 +19,11 @@
 #
 #    RewriteCond %{HTTPS} !=on
 #    RewriteCond %{REQUEST_FILENAME} !-f
-#    RewriteRule ^sitemap\.xml$ sitemap_http.xml [L]
+#    RewriteRule ^sitemap\.xml$ sitemap_http.xml [L,PT]
 #
 #    RewriteCond %{HTTPS} =on
 #    RewriteCond %{REQUEST_FILENAME} !-f
-#    RewriteRule ^sitemap\.xml$ sitemap_https.xml [L]
+#    RewriteRule ^sitemap\.xml$ sitemap_https.xml [L,PT]
 #</IfModule>
 
 <IfModule mod_rewrite.c>
