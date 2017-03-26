@@ -50,7 +50,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 35;
+        return 36;
     }
 
     /**
@@ -85,7 +85,9 @@ class Schema implements Modules\Installer\SchemaInterface
                 `privilege_id` int(10) unsigned NOT NULL,
                 PRIMARY KEY (`id`),
                 INDEX (`privilege_id`),
-                FOREIGN KEY (`privilege_id`) REFERENCES `{pre}acl_privileges` (`id`) ON DELETE CASCADE
+                INDEX (`module_id`),
+                FOREIGN KEY (`privilege_id`) REFERENCES `{pre}acl_privileges` (`id`) ON DELETE CASCADE,
+                FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE
             ) {engine} {charset};",
             "CREATE TABLE `{pre}acl_rules` (
                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
