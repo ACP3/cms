@@ -12,6 +12,7 @@ services:
   seo.core.router.aliases:
     class: ACP3\Modules\ACP3\Seo\Core\Router\Aliases
     arguments:
+      - '@core.modules'
       - '@seo.cache'
 
   seo.utility.sitemap_availability_registrar:

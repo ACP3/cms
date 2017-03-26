@@ -32,7 +32,7 @@
                                         <i class="glyphicon glyphicon-remove-circle text-danger"
                                            title="{lang t="system|protected_module_description"}"></i>
                                     {elseif $row.installable === false}
-                                        <i class="glyphicon glyphicon-remove-circle text-danger"
+                                        <i class="glyphicon glyphicon-info-sign text-info"
                                            title="{lang t="system|not_installable_module_description"}"></i>
                                     {else}
                                         {if $row.active === true}
@@ -90,12 +90,13 @@
                                     <td>{$row.description}</td>
                                     <td>{$row.version}</td>
                                     <td>{$row.author}</td>
-                                    <td>
+                                    <td class="text-center">
                                         <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_install"}"
                                            class="btn btn-block btn-success btn-xs"
                                            title="{lang t="system|install_module"}"
                                            data-ajax-form="true"
-                                           data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
+                                           data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"
+                                           data-hash-change="#tab-2">
                                             <i class="glyphicon glyphicon-off"></i>
                                             {lang t="system|install"}
                                         </a>
@@ -113,5 +114,6 @@
     </div>
     {javascripts}
         {include_js module="system" file="ajax-form"}
+        {include_js module="system" file="hash-change"}
     {/javascripts}
 {/block}

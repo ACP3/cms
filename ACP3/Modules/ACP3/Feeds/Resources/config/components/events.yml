@@ -3,6 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Feeds\Event\Listener\OnLayoutHeadListener
     arguments:
       - '@core.view'
+      - '@core.modules'
       - '@feeds.utility.feed_availability_registrar'
     tags:
       - { name: core.eventListener, event: core.layout.head, method: renderFeedLinks }

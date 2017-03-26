@@ -79,7 +79,8 @@ class RenderRecaptchaOnLayoutContentBeforeListener
      */
     private function isRecaptcha(array $settings)
     {
-        return array_key_exists($settings['captcha'], $this->getServiceIdTemplateMap())
+        return !empty($settings)
+            && array_key_exists($settings['captcha'], $this->getServiceIdTemplateMap())
             && !empty($settings['recaptcha_sitekey'])
             && !empty($settings['recaptcha_secret']);
     }

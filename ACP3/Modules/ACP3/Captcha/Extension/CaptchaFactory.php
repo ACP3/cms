@@ -39,6 +39,6 @@ class CaptchaFactory
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
-        return $this->captchaRegistrar->getCaptcha($settings['captcha']);
+        return isset($settings['captcha']) ? $this->captchaRegistrar->getCaptcha($settings['captcha']) : null;
     }
 }

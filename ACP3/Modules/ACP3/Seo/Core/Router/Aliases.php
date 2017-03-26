@@ -23,13 +23,21 @@ class Aliases
      * @var array
      */
     protected $aliasesCache = [];
+    /**
+     * @var bool
+     */
+    private $isActive;
 
     /**
+     * @param Core\Modules $modules
      * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
      */
-    public function __construct(Seo\Cache $seoCache)
+    public function __construct(
+        Core\Modules $modules,
+        Seo\Cache $seoCache)
     {
         $this->seoCache = $seoCache;
+        $this->isActive = $modules->isActive(Seo\Installer\Schema::MODULE_NAME);
     }
 
     /**
@@ -42,6 +50,10 @@ class Aliases
      */
     public function getUriAlias($path, $emptyOnNoResult = false)
     {
+        if ($this->isActive === false) {
+            return $path;
+        }
+
         if ($this->aliasesCache === []) {
             $this->aliasesCache = $this->seoCache->getCache();
         }

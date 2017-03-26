@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Seo\Helper;
 
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Cache as SeoCache;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
@@ -56,17 +57,20 @@ class MetaStatements
      * MetaStatements constructor.
      *
      * @param \ACP3\Core\Http\RequestInterface $request
+     * @param Modules $modules
      * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
      * @param \ACP3\Core\Settings\SettingsInterface $config
      */
     public function __construct(
         RequestInterface $request,
+        Modules $modules,
         SeoCache $seoCache,
         SettingsInterface $config
     ) {
         $this->request = $request;
         $this->seoCache = $seoCache;
         $this->config = $config;
+        $this->isActive = $modules->isActive(Schema::MODULE_NAME);
     }
 
     /**
@@ -76,14 +80,18 @@ class MetaStatements
      */
     public function getMetaTags()
     {
-        return [
-            'description' => $this->isInAdmin() ? '' : $this->getPageDescription(),
-            'keywords' => $this->isInAdmin() ? '' : $this->getPageKeywords(),
-            'robots' => $this->isInAdmin() ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
-            'previous_page' => $this->previousPage,
-            'next_page' => $this->nextPage,
-            'canonical' => $this->canonicalUrl,
-        ];
+        if ($this->isActive) {
+            return [
+                'description' => $this->isInAdmin() ? '' : $this->getPageDescription(),
+                'keywords' => $this->isInAdmin() ? '' : $this->getPageKeywords(),
+                'robots' => $this->isInAdmin() ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
+                'previous_page' => $this->previousPage,
+                'next_page' => $this->nextPage,
+                'canonical' => $this->canonicalUrl,
+            ];
+        }
+
+        return [];
     }
 
     /**
@@ -179,6 +187,10 @@ class MetaStatements
      */
     public function getSeoInformation($path, $key, $defaultValue = '')
     {
+        if (!$this->isActive) {
+            return '';
+        }
+
         // Lazy load the cache
         if ($this->aliasesCache === null) {
             $this->aliasesCache = $this->seoCache->getCache();

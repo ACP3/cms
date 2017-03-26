@@ -108,9 +108,7 @@ class Installer
         foreach ($modules as $module) {
             $moduleName = strtolower($module['dir']);
             if ($moduleName !== $schema->getModuleName()) {
-                $serviceId = $moduleName . '.installer.schema';
-
-                if ($this->schemaRegistrar->has($serviceId) === true) {
+                if ($this->schemaRegistrar->has($moduleName) === true) {
                     $dependencies = $this->getDependencies($moduleName);
 
                     if (in_array($schema->getModuleName(), $dependencies) === true) {

@@ -51,7 +51,9 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function removeTables()
     {
-        return [];
+        return [
+            'DROP TABLE IF EXISTS `{pre}contacts`;'
+        ];
     }
 
     /**
