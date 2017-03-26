@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2017-xx-xx
+### Added
+- Added the new trait `AvailableDesignsTrait` which makes it possible to share the design retrieval logic between the installer and the rest of the system
+- Made it possible to use the AJAX form hash change logic for redirects to
+
+### Changed
+- Added some guards to various modules to make them more robust 
+
 ## [4.9.2] - 2017-03-26
 ### Fixed
 - Fixed the `uri` Smarty function
