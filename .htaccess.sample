@@ -10,11 +10,6 @@
 #<IfModule mod_rewrite.c>
 #    RewriteEngine On
 #
-#    RewriteCond %{HTTPS} =on
-#    RewriteRule ^ - [env=proto:https]
-#    RewriteCond %{HTTPS} !=on
-#    RewriteRule ^ - [env=proto:http]
-#
 #    RewriteCond %{HTTPS} !=on
 #    RewriteCond %{REQUEST_FILENAME} !-f
 #    RewriteRule ^sitemap\.xml$ sitemap_http.xml [L,QSA]
