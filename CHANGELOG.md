@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - marked all services which are used as part of a bigger component as `public: false`
 - renamed some services to that a better aligned with their counterparts
+- refactored the installation of modules
 
 ## [4.8.5] - 2017-03-19
 ### Fixed
