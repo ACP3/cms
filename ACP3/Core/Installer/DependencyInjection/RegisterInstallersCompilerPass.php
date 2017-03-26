@@ -24,7 +24,7 @@ class RegisterInstallersCompilerPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('core.installer.schema') as $serviceId => $tags) {
             $schemaDefinition->addMethodCall(
                 'set',
-                [$serviceId, new Reference($serviceId)]
+                [new Reference($serviceId)]
             );
         }
 

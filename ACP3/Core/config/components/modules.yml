@@ -10,7 +10,6 @@ services:
   core.modules.aclInstaller:
     class: ACP3\Core\Modules\AclInstaller
     arguments:
-      - '@service_container'
       - '@core.cache.system'
       - '@core.modules.schemaHelper'
       - '@permissions.model.rolerepository'

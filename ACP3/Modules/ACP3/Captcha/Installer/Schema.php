@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Modules\ACP3\Captcha\Installer;
 
+use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
 class Schema implements Modules\Installer\SchemaInterface
@@ -40,7 +41,19 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function specialResources()
     {
-        return [];
+        return [
+            'admin' => [
+                'index' => [
+                    'index' => PrivilegeEnum::ADMIN_VIEW,
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
+                ]
+            ],
+            'frontend' => [
+                'index' => [
+                    'image' => PrivilegeEnum::FRONTEND_VIEW,
+                ]
+            ],
+        ];
     }
 
     /**

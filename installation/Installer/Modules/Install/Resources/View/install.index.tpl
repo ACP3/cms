@@ -1,6 +1,6 @@
 {extends file="asset:`$LAYOUT`"}
 
-{block CONTENT prepend}
+{block CONTENT}
     {if !empty($error_msg)}
         {$error_msg}
     {else}

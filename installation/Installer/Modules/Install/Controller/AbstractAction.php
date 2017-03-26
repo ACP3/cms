@@ -7,6 +7,7 @@
 namespace ACP3\Installer\Modules\Install\Controller;
 
 use ACP3\Installer\Core;
+use ACP3\Installer\Modules\Install\Helpers\Navigation;
 
 /**
  * Class AbstractController
@@ -14,47 +15,39 @@ use ACP3\Installer\Core;
  */
 abstract class AbstractAction extends Core\Controller\AbstractInstallerAction
 {
-    protected $navbar = [];
+    /**
+     * @var Navigation
+     */
+    protected $navigation;
+
+    /**
+     * AbstractAction constructor.
+     * @param Core\Controller\Context\InstallerContext $context
+     * @param Navigation $navigation
+     */
+    public function __construct(Core\Controller\Context\InstallerContext $context, Navigation $navigation)
+    {
+        parent::__construct($context);
+
+        $this->navigation = $navigation;
+    }
 
     public function preDispatch()
     {
         parent::preDispatch();
 
-        $this->navbar = [
-            'index_index' => [
-                'lang' => $this->translator->t('install', 'index_index'),
-                'active' => false,
-                'complete' => false,
-            ],
-            'index_licence' => [
-                'lang' => $this->translator->t('install', 'index_licence'),
-                'active' => false,
-                'complete' => false,
-            ],
-            'index_requirements' => [
-                'lang' => $this->translator->t('install', 'index_requirements'),
-                'active' => false,
-                'complete' => false,
-            ],
-            'install_index' => [
-                'lang' => $this->translator->t('install', 'install_index'),
-                'active' => false,
-                'complete' => false,
-            ]
-        ];
-
         $key = $this->request->getController() . '_' . $this->request->getAction();
         $completedSteps = 0;
-        if (isset($this->navbar[$key]) === true) {
-            $this->navbar[$key]['active'] = true;
-            $completedSteps = array_search($key, array_keys($this->navbar));
+        if ($this->navigation->has($key) === true) {
+            $this->navigation->markStepActive($key);
+            $completedSteps = array_search($key, array_keys($this->navigation->all()));
         }
 
         if ($completedSteps > 0) {
             $i = 0;
-            foreach ($this->navbar as $key => $value) {
+            foreach ($this->navigation->all() as $key => $value) {
                 if ($i < $completedSteps) {
-                    $this->navbar[$key]['complete'] = true;
+                    $this->navigation->markStepComplete($key);
                     ++$i;
                 }
             }
@@ -65,6 +58,6 @@ abstract class AbstractAction extends Core\Controller\AbstractInstallerAction
     {
         parent::addCustomTemplateVarsBeforeOutput();
 
-        $this->view->assign('navbar', $this->navbar);
+        $this->view->assign('navbar', $this->navigation->all());
     }
 }

@@ -27,7 +27,7 @@
                                 <td>{$row.description}</td>
                                 <td>{$row.version}</td>
                                 <td>{$row.author}</td>
-                                <td>
+                                <td class="text-center">
                                     {if $row.protected === true}
                                         <i class="glyphicon glyphicon-remove-circle text-danger"
                                            title="{lang t="system|protected_module_description"}"></i>

@@ -3,6 +3,7 @@ services:
     class: ACP3\Modules\ACP3\System\Installer\Schema
     tags:
       - { name: core.installer.schema }
+    public: false
 
   system.installer.migration:
     class: ACP3\Modules\ACP3\System\Installer\Migration

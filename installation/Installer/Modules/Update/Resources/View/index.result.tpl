@@ -1,6 +1,6 @@
 {extends file="asset:`$LAYOUT`"}
 
-{block CONTENT prepend}
+{block CONTENT}
     <ul>
         {foreach $results as $module => $result}
             <li>

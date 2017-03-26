@@ -3,6 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Captcha\Installer\Schema
     tags:
       - { name: core.installer.schema }
+    public: false
 
   captcha.installer.migration:
     class: ACP3\Modules\ACP3\Captcha\Installer\Migration

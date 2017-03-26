@@ -1,16 +1,21 @@
 services:
   install.controller.install.index.index:
     class: ACP3\Installer\Modules\Install\Controller\Index\Index
-    parent: core.controller.install
+    arguments:
+      - '@core.context.install'
+      - '@install.helpers.navigation'
 
   install.controller.install.index.licence:
     class: ACP3\Installer\Modules\Install\Controller\Index\Licence
-    parent: core.controller.install
+    arguments:
+      - '@core.context.install'
+      - '@install.helpers.navigation'
 
   install.controller.install.index.requirements:
     class: ACP3\Installer\Modules\Install\Controller\Index\Requirements
     arguments:
       - '@core.context.install'
+      - '@install.helpers.navigation'
       - '@install.helpers.requirements'
 
   install.controller.install.install.available_databases:
@@ -21,6 +26,7 @@ services:
     class: ACP3\Installer\Modules\Install\Controller\Install\Index
     arguments:
       - '@core.context.install'
+      - '@install.helpers.navigation'
       - '@core.date'
       - '@core.xml'
       - '@core.helpers.date'

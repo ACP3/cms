@@ -67,7 +67,9 @@
                             <option value="{$row.language}"{$row.selected}>{$row.name}</option>
                         {/foreach}
                     </select>
-                    <input type="submit" name="languages" value="{lang t="install|submit"}" class="btn btn-primary btn-sm">
+                    <button type="submit" name="languages" class="btn btn-primary btn-sm">
+                        {lang t="install|submit"}
+                    </button>
                 </form>
             </div>
         </div>

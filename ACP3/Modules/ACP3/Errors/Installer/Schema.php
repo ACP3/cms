@@ -2,6 +2,7 @@
 
 namespace ACP3\Modules\ACP3\Errors\Installer;
 
+use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
 /**
@@ -41,7 +42,15 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function specialResources()
     {
-        return [];
+        return [
+            'frontend' => [
+                'index' => [
+                    'access_forbidden' => PrivilegeEnum::FRONTEND_VIEW,
+                    'not_found' => PrivilegeEnum::FRONTEND_VIEW,
+                    'server_error' => PrivilegeEnum::FRONTEND_VIEW
+                ]
+            ],
+        ];
     }
 
     /**

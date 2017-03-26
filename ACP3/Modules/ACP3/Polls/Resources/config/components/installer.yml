@@ -3,6 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Polls\Installer\Schema
     tags:
       - { name: core.installer.schema }
+    public: false
 
   polls.installer.migration:
     class: ACP3\Modules\ACP3\Polls\Installer\Migration

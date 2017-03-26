@@ -1,6 +1,6 @@
 {extends file="asset:`$LAYOUT`"}
 
-{block CONTENT prepend}
+{block CONTENT}
     {stylesheets}
         <link rel="stylesheet" type="text/css" href="{$INSTALLER_ROOT_DIR}Installer/Modules/Install/Resources/Assets/css/style.css">
     {/stylesheets}
