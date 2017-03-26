@@ -2,6 +2,7 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\Installer;
 
+use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
 /**
@@ -18,9 +19,35 @@ class Schema implements Modules\Installer\SchemaInterface
     public function specialResources()
     {
         return [
-            'Admin' => [
-                'Index' => [
-                    'send' => 4
+            'admin' => [
+                'accounts' => [
+                    'activate' => PrivilegeEnum::ADMIN_VIEW,
+                    'delete' => PrivilegeEnum::ADMIN_DELETE,
+                    'index' => PrivilegeEnum::ADMIN_VIEW
+                ],
+                'index' => [
+                    'index' => PrivilegeEnum::ADMIN_VIEW,
+                    'create' => PrivilegeEnum::ADMIN_CREATE,
+                    'edit' => PrivilegeEnum::ADMIN_EDIT,
+                    'delete' => PrivilegeEnum::ADMIN_DELETE,
+                    'send' => PrivilegeEnum::ADMIN_CREATE,
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
+                ]
+            ],
+            'frontend' => [
+                'archive' => [
+                    'details' => PrivilegeEnum::FRONTEND_VIEW,
+                    'index' => PrivilegeEnum::FRONTEND_VIEW
+                ],
+                'index' => [
+                    'activate' => PrivilegeEnum::FRONTEND_VIEW,
+                    'index' => PrivilegeEnum::FRONTEND_VIEW,
+                    'unsubscribe' => PrivilegeEnum::FRONTEND_VIEW
+                ]
+            ],
+            'widget' => [
+                'index' => [
+                    'index' => PrivilegeEnum::FRONTEND_VIEW,
                 ]
             ]
         ];

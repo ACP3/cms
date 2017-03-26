@@ -18,7 +18,23 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function specialResources()
     {
-        return [];
+        return [
+            'admin' => [
+                'index' => [
+                    'index' => PrivilegeEnum::ADMIN_VIEW,
+                    'create' => PrivilegeEnum::ADMIN_CREATE,
+                    'edit' => PrivilegeEnum::ADMIN_EDIT,
+                    'delete' => PrivilegeEnum::ADMIN_DELETE,
+                    'order' => PrivilegeEnum::ADMIN_CREATE
+                ],
+                'resources' => [
+                    'create' => PrivilegeEnum::ADMIN_CREATE,
+                    'delete' => PrivilegeEnum::ADMIN_DELETE,
+                    'edit' => PrivilegeEnum::ADMIN_EDIT,
+                    'index' => PrivilegeEnum::ADMIN_VIEW
+                ]
+            ],
+        ];
     }
 
     /**
