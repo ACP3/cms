@@ -17,7 +17,7 @@ services:
       - '@core.db'
       - '@permissions.model.rolerepository'
 
-  permission.nested_set.operation.sort:
+  permissions.nested_set.operation.sort:
     class: ACP3\Core\NestedSet\Operation\Sort
     arguments:
       - '@core.db'

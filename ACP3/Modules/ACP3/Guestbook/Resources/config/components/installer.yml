@@ -1,7 +1,13 @@
 services:
   guestbook.installer.schema:
     class: ACP3\Modules\ACP3\Guestbook\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
+    public: false
 
   guestbook.installer.migration:
     class: ACP3\Modules\ACP3\Guestbook\Installer\Migration
     parent: core.modules.installer.abstractMigration
+    tags:
+      - { name: core.installer.migration }
+    public: false

@@ -60,18 +60,22 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         return Schema::MODULE_NAME;
     }
 
-    public function fetchSitemapUrls()
+    /**
+     * @inheritdoc
+     */
+    public function fetchSitemapUrls($isSecure = null)
     {
-        $this->addUrl('files/index/index');
+        $this->addUrl('files/index/index', null, $isSecure);
 
         foreach ($this->categoryRepository->getAllByModuleName(Schema::MODULE_NAME) as $category) {
-            $this->addUrl('files/index/files/cat_' . $category['id']);
+            $this->addUrl('files/index/files/cat_' . $category['id'], null, $isSecure);
         }
 
         foreach ($this->filesRepository->getAll($this->date->getCurrentDateTime()) as $result) {
             $this->addUrl(
                 sprintf(Helpers::URL_KEY_PATTERN, $result['id']),
-                $this->date->format($result['updated_at'], 'Y-m-d')
+                $this->date->format($result['updated_at'], 'Y-m-d'),
+                $isSecure
             );
         }
     }

@@ -6,7 +6,8 @@
 
 namespace ACP3\Installer\Modules\Install\Helpers;
 
-use ACP3\Core\Filesystem;
+use ACP3\Core\Installer\SchemaRegistrar;
+use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\Modules\ModuleDependenciesTrait;
 use ACP3\Core\Modules\Vendor;
 use ACP3\Core\XML;
@@ -36,7 +37,7 @@ class ModuleInstaller
     /**
      * @var array
      */
-    protected $alreadyInstalledModules = [];
+    protected $installedModules = [];
 
     /**
      * ModuleInstaller constructor.
@@ -59,63 +60,73 @@ class ModuleInstaller
 
     /**
      * @param ContainerInterface $container
-     * @param array $modules
+     * @param SchemaInterface[] $schemas
      * @return array
      * @throws \Exception
      */
-    public function installModules(ContainerInterface $container, array $modules = [])
+    public function installModules(ContainerInterface $container, array $schemas)
     {
-        foreach ($this->vendor->getVendors() as $vendor) {
-            $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
-            $vendorModules = $this->fetchModuleByVendor($modules, $vendorPath);
+        foreach ($schemas as $schema) {
+            foreach ($this->vendor->getVendors() as $vendor) {
+                $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
+                $module = $schema->getModuleName();
 
-            foreach ($vendorModules as $module) {
-                $module = strtolower($module);
+                $moduleConfigPath = $vendorPath . ucfirst($module) . '/Resources/config/module.xml';
 
-                if (isset($this->alreadyInstalledModules[$module])) {
-                    continue;
-                }
-
-                $modulePath = $vendorPath . ucfirst($module) . '/';
-                $moduleConfigPath = $modulePath . 'Resources/config/module.xml';
-
-                if ($this->isValidModule($modulePath, $moduleConfigPath)) {
+                if ($this->isValidModule($moduleConfigPath)) {
                     $dependencies = $this->getModuleDependencies($moduleConfigPath);
 
                     if (count($dependencies) > 0) {
-                        $this->installModules($container, $dependencies);
+                        $this->installModules($container, $this->collectDependentSchemas($container, $dependencies));
                     }
 
-                    if ($this->installHelper->installModule($module, $container) === false) {
+                    if ($this->installHelper->installModule($schema, $container) === false) {
                         throw new \Exception("Error while installing module {$module}.");
                     }
 
-                    $this->alreadyInstalledModules[$module] = true;
+                    $this->installedModules[$module] = true;
+
+                    break;
                 }
             }
         }
 
-        return $this->alreadyInstalledModules;
+        return $this->installedModules;
     }
 
     /**
-     * @param array $modules
-     * @param string $vendorPath
-     * @return array
-     */
-    private function fetchModuleByVendor(array $modules, $vendorPath)
-    {
-        return count($modules) > 0 ? $modules : Filesystem::scandir($vendorPath);
-    }
-
-    /**
-     * @param string $modulePath
      * @param string $moduleConfigPath
      * @return bool
      */
-    private function isValidModule($modulePath, $moduleConfigPath)
+    private function isValidModule($moduleConfigPath)
     {
-        return is_dir($modulePath) && is_file($moduleConfigPath);
+        if (is_file($moduleConfigPath)) {
+            $config = $this->xml->parseXmlFile($moduleConfigPath, '/module/info');
+
+            return !isset($config['no_install']);
+        }
+
+        return false;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param array $modules
+     * @return SchemaInterface[]
+     */
+    private function collectDependentSchemas(ContainerInterface $container, array $modules)
+    {
+        /** @var SchemaRegistrar $schemaRegistrar */
+        $schemaRegistrar = $container->get('core.installer.schema_registrar');
+
+        $schemas = [];
+        foreach ($modules as $module) {
+            if ($schemaRegistrar->has($module)) {
+                $schemas[] = $schemaRegistrar->get($module);
+            }
+        }
+
+        return $schemas;
     }
 
     /**

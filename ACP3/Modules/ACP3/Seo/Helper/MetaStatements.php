@@ -77,13 +77,21 @@ class MetaStatements
     public function getMetaTags()
     {
         return [
-            'description' => $this->request->getArea() === AreaEnum::AREA_ADMIN ? '' : $this->getPageDescription(),
-            'keywords' => $this->request->getArea() === AreaEnum::AREA_ADMIN ? '' : $this->getPageKeywords(),
-            'robots' => $this->request->getArea() === AreaEnum::AREA_ADMIN ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
+            'description' => $this->isInAdmin() ? '' : $this->getPageDescription(),
+            'keywords' => $this->isInAdmin() ? '' : $this->getPageKeywords(),
+            'robots' => $this->isInAdmin() ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
             'previous_page' => $this->previousPage,
             'next_page' => $this->nextPage,
             'canonical' => $this->canonicalUrl,
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    private function isInAdmin()
+    {
+        return $this->request->getArea() === AreaEnum::AREA_ADMIN;
     }
 
     /**

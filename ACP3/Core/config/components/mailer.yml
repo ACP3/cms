@@ -1,0 +1,14 @@
+services:
+  core.mailer:
+    class: ACP3\Core\Mailer
+    arguments:
+      - '@core.mailer.logger'
+      - '@core.view'
+      - '@core.config'
+      - '@core.helpers.string_formatter'
+
+  core.mailer.logger:
+    class: Psr\Log\LoggerInterface
+    factory: 'core.logger.logger_factory:create'
+    arguments:
+      - 'mailer'

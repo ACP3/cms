@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\Database;
 
-use ACP3\Core\Logger;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class SQLLogger
@@ -15,31 +15,23 @@ use ACP3\Core\Logger;
 class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
 {
     /**
-     * @var \ACP3\Core\Logger
+     * @var LoggerInterface
      */
-    protected $logger;
-
+    private $logger;
     /**
      * Executed SQL queries.
      *
      * @var array
      */
-    public $queries = [];
-
+    private $queries = [];
     /**
      * @var float|null
      */
-    public $start = null;
-
+    private $start = null;
     /**
      * @var integer
      */
-    public $currentQuery = 0;
-
-    /**
-     * @var string
-     */
-    private $logFilename = 'db-queries';
+    private $currentQuery = 0;
     /**
      * @var string
      */
@@ -47,10 +39,9 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
 
     /**
      * SQLLogger constructor.
-     *
-     * @param \ACP3\Core\Logger $logger
+     * @param LoggerInterface $logger
      */
-    public function __construct(Logger $logger)
+    public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
         $this->requestPath = $_SERVER['REQUEST_URI'];
@@ -62,7 +53,12 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
     public function startQuery($sql, array $params = null, array $types = null)
     {
         $this->start = microtime(true);
-        $this->queries[$this->requestPath][++$this->currentQuery] = ['sql' => $sql, 'params' => $params, 'types' => $types, 'executionMS' => 0];
+        $this->queries[$this->requestPath][++$this->currentQuery] = [
+            'sql' => $sql,
+            'params' => $params,
+            'types' => $types,
+            'executionMS' => 0
+        ];
     }
 
     /**
@@ -84,7 +80,7 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
             $this->queries[$this->requestPath]['queryCount'] = count($this->queries[$this->requestPath]);
             $this->queries[$this->requestPath]['totalTime'] = $totalTime;
 
-            $this->logger->debug($this->logFilename, $this->queries);
+            $this->logger->debug('Executed queries for: ' . $this->requestPath, $this->queries);
         }
     }
 }

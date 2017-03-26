@@ -4,15 +4,18 @@ services:
     arguments: ['@core.assets.minifier.javascript', '@core.http.request']
     tags:
       - { name: core.view.extension }
+    public: false
 
   smarty.filter.move_to_head:
     class: ACP3\Core\View\Renderer\Smarty\Filters\MoveToHead
     arguments: ['@core.assets.minifier.css']
     tags:
       - { name: core.view.extension }
+    public: false
 
   smarty.filter.page_css_classes:
     class: ACP3\Core\View\Renderer\Smarty\Filters\PageCssClasses
     arguments: ['@core.assets.page_css_classes', '@core.http.request']
     tags:
       - { name: core.view.extension }
+    public: false

@@ -1,6 +1,6 @@
 {extends file="asset:`$LAYOUT`"}
 
-{block CONTENT prepend}
+{block CONTENT}
     <div class="row">
         <div class="col-sm-7">
             <fieldset>

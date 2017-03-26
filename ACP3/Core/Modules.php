@@ -11,7 +11,6 @@ use ACP3\Core\Modules\Helper\ControllerActionExists;
 use ACP3\Core\Modules\ModuleInfoCache;
 use ACP3\Core\Modules\Vendor;
 use ACP3\Modules\ACP3\System;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class Modules
@@ -19,10 +18,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class Modules
 {
-    /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected $container;
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
@@ -49,20 +44,17 @@ class Modules
     private $allModules = [];
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param \ACP3\Core\Environment\ApplicationPath                    $appPath
      * @param \ACP3\Core\Modules\Helper\ControllerActionExists          $controllerActionExists
      * @param \ACP3\Core\Modules\ModuleInfoCache                        $moduleInfoCache
      * @param \ACP3\Core\Modules\Vendor                                 $vendors
      */
     public function __construct(
-        ContainerInterface $container,
         ApplicationPath $appPath,
         ControllerActionExists $controllerActionExists,
         ModuleInfoCache $moduleInfoCache,
         Vendor $vendors
     ) {
-        $this->container = $container;
         $this->appPath = $appPath;
         $this->controllerActionExists = $controllerActionExists;
         $this->moduleInfoCache = $moduleInfoCache;

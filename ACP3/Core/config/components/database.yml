@@ -2,9 +2,15 @@ services:
   core.db:
     class: ACP3\Core\Database\Connection
     arguments:
-      - '@core.logger'
+      - '@core.db.logger'
       - '@core.environment.application_path'
       - '@core.cache.cache_driver_factory'
       - '%core.environment%'
       - { dbname: '%db_name%', user: '%db_user%', password: '%db_password%', host: '%db_host%', driver: '%db_driver%', charset: '%db_charset%'}
       - '%db_table_prefix%'
+
+  core.db.logger:
+    class: Psr\Log\LoggerInterface
+    factory: 'core.logger.logger_factory:create'
+    arguments:
+      - 'database'

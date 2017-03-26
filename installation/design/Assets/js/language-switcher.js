@@ -4,25 +4,23 @@
  */
 
 jQuery(document).ready(function ($) {
-    var $doc = $(document);
-    $doc.data('has-changes', false);
+    var $doc = $(document),
+        $languages = $('#languages');
 
-    $('input, select').change(function () {
-        if ($(this).attr('id') !== 'lang') {
-            $doc.data('has-changes', true);
-        }
+    $doc.data('has-changes', false);
+    $('#content').find(':input').change(function () {
+        $doc.data('has-changes', true);
     });
 
-    // Sprachdropdown
-    $('#languages').find(':submit').hide();
+    $languages.find('.btn').addClass('hidden');
     $('#lang').change(function () {
-        var allowPageReload = true;
-        if ($doc.length > 0 && $doc.data('has-changes') == true) {
-            allowPageReload = confirm($('#lang').data('change-language-warning'));
+        var submitForm = true;
+        if ($doc.length > 0 && $doc.data('has-changes') === true) {
+            submitForm = confirm($(this).data('change-language-warning'));
         }
 
-        if (allowPageReload === true) {
-            $('#languages').submit();
+        if (submitForm === true) {
+            $languages.submit();
         }
     });
 });

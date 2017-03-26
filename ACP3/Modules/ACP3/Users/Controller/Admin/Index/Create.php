@@ -36,6 +36,10 @@ class Create extends AbstractFormAction
      * @var Users\Model\UsersModel
      */
     protected $usersModel;
+    /**
+     * @var Users\Helpers\Forms
+     */
+    private $userFormsHelpers;
 
     /**
      * Create constructor.
@@ -44,6 +48,7 @@ class Create extends AbstractFormAction
      * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param \ACP3\Core\Helpers\Forms $formsHelpers
+     * @param Users\Helpers\Forms $userFormsHelpers
      * @param Users\Model\UsersModel $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Permissions\Helpers $permissionsHelpers
@@ -53,6 +58,7 @@ class Create extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Forms $formsHelpers,
+        Users\Helpers\Forms $userFormsHelpers,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AdminFormValidation $adminFormValidation,
         Permissions\Helpers $permissionsHelpers)
@@ -64,6 +70,7 @@ class Create extends AbstractFormAction
         $this->adminFormValidation = $adminFormValidation;
         $this->permissionsHelpers = $permissionsHelpers;
         $this->usersModel = $usersModel;
+        $this->userFormsHelpers = $userFormsHelpers;
     }
 
     /**
@@ -71,8 +78,8 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        $this->view->assign($this->get('users.helpers.forms')->fetchUserSettingsFormFields());
-        $this->view->assign($this->get('users.helpers.forms')->fetchUserProfileFormFields());
+        $this->view->assign($this->userFormsHelpers->fetchUserSettingsFormFields());
+        $this->view->assign($this->userFormsHelpers->fetchUserProfileFormFields());
 
         $defaults = [
             'nickname' => '',
@@ -88,7 +95,7 @@ class Create extends AbstractFormAction
         return [
             'roles' => $this->fetchUserRoles(),
             'super_user' => $this->fetchIsSuperUser(),
-            'contact' => $this->get('users.helpers.forms')->fetchContactDetails(),
+            'contact' => $this->userFormsHelpers->fetchContactDetails(),
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken()
         ];

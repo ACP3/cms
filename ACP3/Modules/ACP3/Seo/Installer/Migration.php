@@ -46,6 +46,9 @@ class Migration implements Modules\Installer\MigrationInterface
             ],
             10 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'sitemap', '', 7);",
+            ],
+            11 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'sitemap_separate', '0');",
             ]
         ];
     }

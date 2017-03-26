@@ -9,42 +9,34 @@ namespace ACP3\Core\WYSIWYG;
 class WysiwygFactory
 {
     /**
-     * @var AbstractWYSIWYG[]
+     * @var WysiwygEditorRegistrar
      */
-    protected $wysiwygEditors = [];
+    private $editorRegistrar;
 
     /**
-     * @param \ACP3\Core\WYSIWYG\AbstractWYSIWYG $wysiwygEditor
-     * @param string                             $wysiwygEditorName
-     *
-     * @return $this
+     * WysiwygFactory constructor.
+     * @param WysiwygEditorRegistrar $editorRegistrar
      */
-    public function registerWysiwygEditor(AbstractWYSIWYG $wysiwygEditor, $wysiwygEditorName)
+    public function __construct(WysiwygEditorRegistrar $editorRegistrar)
     {
-        $this->wysiwygEditors[$wysiwygEditorName] = $wysiwygEditor;
-
-        return $this;
+        $this->editorRegistrar = $editorRegistrar;
     }
 
     /**
-     * @return \ACP3\Core\WYSIWYG\AbstractWYSIWYG[]
+     * @return \ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG[]
      */
     public function getWysiwygEditors()
     {
-        return $this->wysiwygEditors;
+        return $this->editorRegistrar->all();
     }
 
     /**
      * @param string $wysiwygEditorName
      *
-     * @return \ACP3\Core\WYSIWYG\AbstractWYSIWYG
+     * @return \ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG
      */
     public function create($wysiwygEditorName)
     {
-        if (isset($this->wysiwygEditors[$wysiwygEditorName])) {
-            return $this->wysiwygEditors[$wysiwygEditorName];
-        }
-
-        throw new \InvalidArgumentException('Can not find the WYSIWYG-Editor with the name: ' . $wysiwygEditorName);
+        return $this->editorRegistrar->get($wysiwygEditorName);
     }
 }

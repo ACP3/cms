@@ -5,7 +5,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
       - '@emoticons.model'
-      - '@emoticons.validator'
+      - '@emoticons.validation.admin_form_validation'
       - '@emoticons.cache'
 
   emoticons.controller.admin.index.delete:
@@ -20,7 +20,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
       - '@emoticons.model'
-      - '@emoticons.validator'
+      - '@emoticons.validation.admin_form_validation'
       - '@emoticons.cache'
 
   emoticons.controller.admin.index.index:

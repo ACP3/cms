@@ -52,14 +52,18 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         return Schema::MODULE_NAME;
     }
 
-    public function fetchSitemapUrls()
+    /**
+     * @inheritdoc
+     */
+    public function fetchSitemapUrls($isSecure = null)
     {
-        $this->addUrl('articles/index/index');
+        $this->addUrl('articles/index/index', null, $isSecure);
 
         foreach ($this->articleRepository->getAll($this->date->getCurrentDateTime()) as $result) {
             $this->addUrl(
                 sprintf(Helpers::URL_KEY_PATTERN, $result['id']),
-                $this->date->format($result['updated_at'], 'Y-m-d')
+                $this->date->format($result['updated_at'], 'Y-m-d'),
+                $isSecure
             );
         }
     }

@@ -2,6 +2,7 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Installer;
 
+use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\System;
 
@@ -18,7 +19,36 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function specialResources()
     {
-        return [];
+        return [
+            'admin' => [
+                'index' => [
+                    'index' => PrivilegeEnum::ADMIN_VIEW,
+                    'create' => PrivilegeEnum::ADMIN_CREATE,
+                    'edit' => PrivilegeEnum::ADMIN_EDIT,
+                    'delete' => PrivilegeEnum::ADMIN_DELETE,
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
+                ],
+                'pictures' => [
+                    'create' => PrivilegeEnum::ADMIN_CREATE,
+                    'delete' => PrivilegeEnum::ADMIN_DELETE,
+                    'edit' => PrivilegeEnum::ADMIN_EDIT,
+                    'order' => PrivilegeEnum::ADMIN_CREATE
+                ]
+            ],
+            'frontend' => [
+                'index' => [
+                    'image' => PrivilegeEnum::FRONTEND_VIEW,
+                    'index' => PrivilegeEnum::FRONTEND_VIEW,
+                    'details' => PrivilegeEnum::FRONTEND_VIEW,
+                    'pics' => PrivilegeEnum::FRONTEND_VIEW
+                ]
+            ],
+            'widget' => [
+                'index' => [
+                    'index' => PrivilegeEnum::FRONTEND_VIEW,
+                ]
+            ]
+        ];
     }
 
     /**

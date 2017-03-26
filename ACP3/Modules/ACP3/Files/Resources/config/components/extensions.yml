@@ -8,6 +8,7 @@ services:
       - '@files.model.filesrepository'
     tags:
       - { name: feeds.extension.feed_availability }
+    public: false
 
   files.extension.search_availability_extension:
     class: ACP3\Modules\ACP3\Files\Extension\SearchAvailabilityExtension
@@ -16,6 +17,7 @@ services:
       - '@files.model.search_results_aware_repository'
     tags:
       - { name: search.extension.search_availability }
+    public: false
 
   files.extension.sitemap_availability_extension:
     class: ACP3\Modules\ACP3\Files\Extension\SitemapAvailabilityExtension
@@ -27,3 +29,4 @@ services:
       - '@?seo.helper.meta_statements'
     tags:
       - { name: seo.extension.sitemap_availability }
+    public: false

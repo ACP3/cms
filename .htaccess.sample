@@ -6,11 +6,27 @@
 
 #SetEnv ACP3_APPLICATION_MODE dev
 
+# Uncomment the following lines of code if you want to use separate sitemaps for HTTP and HTTPS
+#<IfModule mod_rewrite.c>
+#    RewriteEngine On
+#
+#    RewriteCond %{HTTPS} =on
+#    RewriteRule ^ - [env=proto:https]
+#    RewriteCond %{HTTPS} !=on
+#    RewriteRule ^ - [env=proto:http]
+#
+#    RewriteCond %{HTTPS} !=on
+#    RewriteCond %{REQUEST_FILENAME} !-f
+#    RewriteRule ^sitemap\.xml$ sitemap_http.xml [L,QSA]
+#
+#    RewriteCond %{HTTPS} =on
+#    RewriteCond %{REQUEST_FILENAME} !-f
+#    RewriteRule ^sitemap\.xml$ sitemap_https.xml [L,QSA]
+#</IfModule>
+
 <IfModule mod_rewrite.c>
     Options +FollowSymlinks
     DirectoryIndex index.php
-
-    RewriteEngine On
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

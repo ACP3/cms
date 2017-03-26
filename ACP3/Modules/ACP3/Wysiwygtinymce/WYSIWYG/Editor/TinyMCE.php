@@ -1,14 +1,18 @@
 <?php
+/**
+ * Copyright (c) 2017 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG;
+namespace ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG\Editor;
 
 use ACP3\Core;
 
 /**
  * Implementation of the AbstractWYSIWYG class for TinyMCE
- * @package ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG
+ * @package ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG\Editor
  */
-class TinyMCE extends Core\WYSIWYG\Textarea
+class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 {
     /**
      * @var \ACP3\Core\Assets\Minifier\MinifierInterface

@@ -7,6 +7,7 @@ namespace ACP3\Installer\Modules\Install\Controller\Index;
 
 use ACP3\Installer\Core;
 use ACP3\Installer\Modules\Install\Controller\AbstractAction;
+use ACP3\Installer\Modules\Install\Helpers\Navigation;
 use ACP3\Installer\Modules\Install\Helpers\Requirements as RequirementsHelper;
 
 /**
@@ -24,13 +25,15 @@ class Requirements extends AbstractAction
      * Requirements constructor.
      *
      * @param \ACP3\Installer\Core\Controller\Context\InstallerContext $context
-     * @param \ACP3\Installer\Modules\Install\Helpers\Requirements     $requirementsHelpers
+     * @param Navigation $navigation
+     * @param \ACP3\Installer\Modules\Install\Helpers\Requirements $requirementsHelpers
      */
     public function __construct(
         Core\Controller\Context\InstallerContext $context,
+        Navigation $navigation,
         RequirementsHelper $requirementsHelpers)
     {
-        parent::__construct($context);
+        parent::__construct($context, $navigation);
 
         $this->requirementsHelpers = $requirementsHelpers;
     }

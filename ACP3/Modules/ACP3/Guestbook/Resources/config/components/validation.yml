@@ -1,5 +1,5 @@
 services:
-  guestbook.validator:
+  guestbook.validation.form_validation:
     class: ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
     parent: core.validator.abstract
 
@@ -10,7 +10,7 @@ services:
   guestbook.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.validator'
       - '@core.modules'
 
@@ -21,3 +21,4 @@ services:
       - '@guestbook.model.guestbookrepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false

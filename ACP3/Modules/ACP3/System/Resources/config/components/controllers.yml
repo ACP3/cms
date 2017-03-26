@@ -13,10 +13,12 @@ services:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Modules
     arguments:
       - '@core.context.frontend'
+      - '@core.i18n.dictionary_cache'
       - '@core.modules.moduleInfoCache'
       - '@system.model.modulerepository'
       - '@system.helpers.installer'
       - '@permissions.cache'
+      - '@core.installer.schema_registrar'
 
   system.controller.admin.index.configuration:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Configuration
@@ -25,7 +27,8 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
-      - '@system.validator.settings'
+      - '@core.wysiwyg.wysiwyg_editor_registrar'
+      - '@system.validation.admin_settings_form_validation'
 
   system.controller.admin.index.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Index

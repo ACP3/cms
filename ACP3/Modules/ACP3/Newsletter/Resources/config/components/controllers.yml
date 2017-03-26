@@ -24,7 +24,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@newsletter.model'
-      - '@newsletter.validator'
+      - '@newsletter.validation.admin_form_validation'
       - '@newsletter.helper.sendnewsletter'
 
   newsletter.controller.admin.index.delete:
@@ -40,7 +40,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@newsletter.model'
-      - '@newsletter.validator'
+      - '@newsletter.validation.admin_form_validation'
       - '@newsletter.helper.sendnewsletter'
 
   newsletter.controller.admin.index.index:

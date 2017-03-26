@@ -2,6 +2,7 @@
 
 namespace ACP3\Modules\ACP3\Seo\Installer;
 
+use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
 /**
@@ -18,12 +19,17 @@ class Schema implements Modules\Installer\SchemaInterface
     public function specialResources()
     {
         return [
-            'Admin' => [
-                'Index' => [
-                    'sitemap' => 7,
-                    'suggest' => 4,
-                ],
-            ]
+            'admin' => [
+                'index' => [
+                    'index' => PrivilegeEnum::ADMIN_VIEW,
+                    'create' => PrivilegeEnum::ADMIN_CREATE,
+                    'edit' => PrivilegeEnum::ADMIN_EDIT,
+                    'delete' => PrivilegeEnum::ADMIN_DELETE,
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
+                    'sitemap' => PrivilegeEnum::ADMIN_SETTINGS,
+                    'suggest' => PrivilegeEnum::ADMIN_VIEW
+                ]
+            ],
         ];
     }
 
@@ -40,7 +46,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 10;
+        return 11;
     }
 
     /**
@@ -81,7 +87,8 @@ class Schema implements Modules\Installer\SchemaInterface
             'meta_keywords' => '',
             'robots' => 1,
             'sitemap_is_enabled' => 0,
-            'sitemap_save_mode' => 2
+            'sitemap_save_mode' => 2,
+            'sitemap_separate' => 0
         ];
     }
 }

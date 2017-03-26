@@ -6,6 +6,7 @@
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/481/badge)](https://bestpractices.coreinfrastructure.org/projects/481)
 
 # ACP3 CMS
+
 The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP and MySQL. 
 
 ## Features
@@ -45,7 +46,7 @@ If so, execute the following command from the projects root directory, to instal
 $ npm install
 ```
 
-##Contribute
+## Contribute
 
 Contributions to the ACP3 CMS are always welcome. Here is how you can contribute to ACP3:
 
@@ -55,9 +56,11 @@ Contributions to the ACP3 CMS are always welcome. Here is how you can contribute
 Please refer to our [Contribution guidelines](https://github.com/ACP3/cms/blob/master/CONTRIBUTING.md) for more details.
 
 ## Coding Style Guidelines
+
 ### PHP
+
 We are using the [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) Coding Style for all PHP files.
 
-##License
+## License
 
 This project is licensed under the terms of the [GPL 2.0+](https://github.com/ACP3/cms/blob/master/LICENCE).

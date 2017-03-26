@@ -4,7 +4,7 @@ services:
     arguments:
       - '@core.config'
       - '@core.router'
-      - '@core.lang'
+      - '@core.i18n.translator'
     calls:
       - ['setNewsletterSubscribe', ['@?newsletter.helper.subscribe']]
     tags:

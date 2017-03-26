@@ -1,8 +1,8 @@
 services:
-  categories.validator:
+  categories.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.validator'
       - '@categories.model.categories_repository'
 
@@ -16,6 +16,7 @@ services:
       - '@categories.model.categories_repository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   categories.validation.validation_rules.duplicate_category_validation_rule:
     class: ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule
@@ -23,3 +24,4 @@ services:
       - '@categories.model.categories_repository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false

@@ -6,18 +6,18 @@
 
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 
-use ACP3\Core\Logger;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Exception\SitemapGenerationException;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel;
 use ACP3\Modules\ACP3\Seo\Utility\SitemapAvailabilityRegistrar;
+use Psr\Log\LoggerInterface;
 
 class GenerateSitemapOnModelAfterSaveListener
 {
     /**
-     * @var Logger
+     * @var LoggerInterface
      */
     private $logger;
     /**
@@ -34,14 +34,14 @@ class GenerateSitemapOnModelAfterSaveListener
     private $sitemapGenerationModel;
 
     /**
-     * OnModelSaveAfterListener constructor.
-     * @param Logger $logger
+     * GenerateSitemapOnModelAfterSaveListener constructor.
+     * @param LoggerInterface $logger
      * @param SettingsInterface $settings
      * @param SitemapAvailabilityRegistrar $sitemapRegistrar
      * @param SitemapGenerationModel $sitemapGenerationModel
      */
     public function __construct(
-        Logger $logger,
+        LoggerInterface $logger,
         SettingsInterface $settings,
         SitemapAvailabilityRegistrar $sitemapRegistrar,
         SitemapGenerationModel $sitemapGenerationModel
@@ -61,7 +61,7 @@ class GenerateSitemapOnModelAfterSaveListener
             try {
                 $this->sitemapGenerationModel->save();
             } catch (SitemapGenerationException $e) {
-                $this->logger->info('seo-sitemap', $e->getMessage());
+                $this->logger->info($e->getMessage());
             }
         }
     }

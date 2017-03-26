@@ -2,7 +2,6 @@
 
 namespace ACP3\Core\Modules;
 
-use ACP3\Core;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Modules\ACP3\System;
 
@@ -90,7 +89,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
             } catch (\Exception $e) {
                 $this->db->getConnection()->rollBack();
 
-                $this->container->get('core.logger')->warning('installer', $e);
+                $this->logger->warning($e);
                 return false;
             }
         }

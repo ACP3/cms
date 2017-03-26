@@ -5,6 +5,7 @@
         <description lang="true"/>
         <author>Tino Goratsch</author>
         <version core="true"/>
+        <no_install/>
         <dependencies>
             <module>permissions</module>
             <module>system</module>

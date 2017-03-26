@@ -1,9 +1,14 @@
 <?php
-namespace ACP3\Core\WYSIWYG;
+/**
+ * Copyright (c) 2017 by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\WYSIWYG\Editor;
 
 /**
  * Abstract Class for the various WYSIWYG editors
- * @package ACP3\Core\WYSIWYG
+ * @package ACP3\Core\WYSIWYG\Editor
  */
 abstract class AbstractWYSIWYG
 {
@@ -51,4 +56,10 @@ abstract class AbstractWYSIWYG
      * @return string
      */
     abstract public function getFriendlyName();
+
+    /**
+     * Returns whether the WYSIWYG-Editor can be used (eg. if it a installed and active)
+     * @return boolean
+     */
+    abstract public function isValid();
 }

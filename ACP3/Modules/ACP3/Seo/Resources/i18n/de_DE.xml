@@ -25,6 +25,7 @@
         <item key="select_robots">Bitte wählen Sie aus, wie die Website von Suchmaschinen-Crawlern indexiert werden soll.</item>
         <item key="select_sitemap_is_enabled">Bitte wählen Sie aus, ob eine Sitemap generiert werden soll oder nicht.</item>
         <item key="select_sitemap_save_mode">Bitte wählen Sie aus, ob die Sitemap automatisch generiert werden soll oder manuell.</item>
+        <item key="select_sitemap_separate">Bitte wählen Sie aus, ob für jedes Protokoll eine separate Sitemap generiert werden soll.</item>
         <item key="seo">SEO</item>
         <item key="sitemap">Sitemap</item>
         <item key="sitemap_enable">Sitemap-Generierung aktivieren</item>
@@ -33,6 +34,7 @@
         <item key="sitemap_save_mode">Modus der Sitemap-Generierung</item>
         <item key="sitemap_save_mode_automatically">Automatisch</item>
         <item key="sitemap_save_mode_manually">Manuell</item>
+        <item key="sitemap_separate">Separate Sitemaps für HTTP und HTTPS generieren</item>
         <item key="sitemap_success">Die Sitemap wurde erfolgreich aktualisiert.</item>
         <item key="suggest_alias">Alias vorschlagen</item>
         <item key="type_in_valid_resource">Bitte geben Sie einen validen Pfad zu einer ACP3 internen Ressource an.</item>

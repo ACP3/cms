@@ -9,9 +9,9 @@ namespace ACP3\Core\Database;
 use ACP3\Core\Cache\CacheDriverFactory;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Logger;
 use Doctrine\DBAL;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class Connection
@@ -20,7 +20,7 @@ use Doctrine\DBAL\Cache\QueryCacheProfile;
 class Connection
 {
     /**
-     * @var \ACP3\Core\Logger
+     * @var LoggerInterface
      */
     protected $logger;
     /**
@@ -49,15 +49,16 @@ class Connection
     protected $prefix = '';
 
     /**
-     * @param \ACP3\Core\Logger $logger
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Cache\CacheDriverFactory $cacheDriverFactory
-     * @param string $appMode
+     * Connection constructor.
+     * @param LoggerInterface $logger
+     * @param ApplicationPath $appPath
+     * @param CacheDriverFactory $cacheDriverFactory
+     * @param $appMode
      * @param array $connectionParams
-     * @param string $tablePrefix
+     * @param $tablePrefix
      */
     public function __construct(
-        Logger $logger,
+        LoggerInterface $logger,
         ApplicationPath $appPath,
         CacheDriverFactory $cacheDriverFactory,
         $appMode,
@@ -214,7 +215,7 @@ class Connection
             $this->connection->commit();
         } catch (\Exception $e) {
             $this->connection->rollBack();
-            $this->logger->error('database', $e);
+            $this->logger->error($e);
             $result = false;
         }
 

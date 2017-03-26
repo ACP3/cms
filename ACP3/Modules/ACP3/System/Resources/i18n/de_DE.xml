@@ -232,6 +232,7 @@
         <item key="no_entries_selected">Bitte wählen Sie die zu löschenden Einträge aus.</item>
         <item key="no_entries_short">Keine Einträge vorhanden.</item>
         <item key="no_modules_available_for_installation">Es sind bereits alle lokal verfügbaren Module installiert!</item>
+        <item key="not_installable_module_description">Dieses Modul benötigt keine Installation.</item>
         <item key="order">Reihenfolge</item>
         <item key="order_error">Beim Bearbeiten der Reihenfolge ist ein Fehler aufgetreten.</item>
         <item key="order_success">Die Reihenfolge wurde erfolgreich bearbeitet.</item>

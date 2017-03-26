@@ -6,3 +6,4 @@ services:
       - '@?seo.helper.meta_statements'
     tags:
       - { name: seo.extension.sitemap_availability }
+    public: false

@@ -26,4 +26,4 @@ services:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
       - ['setMetaStatements', ['@?seo.helper.meta_statements']]
     tags:
-      - { name: core.eventListener, event: gallery.model.gallery.after_save, method: generatePictureAliases, priority: -250 }
+      - { name: core.eventListener, event: core.model.after_save, method: generatePictureAliases, priority: -250 }

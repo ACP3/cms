@@ -41,12 +41,14 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
     /**
      * @param $routeName
      * @param null|string $lastModificationDate
+     * @param bool|null $isSecure
      * @return $this
      */
-    protected function addUrl($routeName, $lastModificationDate = null)
+    protected function addUrl($routeName, $lastModificationDate = null, $isSecure = null)
     {
         if ($this->pageIsIndexable($routeName)) {
-            $this->urls[] = (new Url($this->router->route($routeName, true)))->setLastMod($lastModificationDate);
+            $this->urls[] = (new Url($this->router->route($routeName, true, $isSecure)))
+                ->setLastMod($lastModificationDate);
         }
 
         return $this;
@@ -62,17 +64,20 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
     }
 
     /**
-     * @return \Thepixeldeveloper\Sitemap\Url[]
+     * @inheritdoc
      */
-    public function getUrls()
+    public function getUrls($isSecure = null)
     {
-        $this->fetchSitemapUrls();
+        $this->urls = [];
+
+        $this->fetchSitemapUrls($isSecure);
 
         return $this->urls;
     }
 
     /**
+     * @param bool|null $isSecure
      * @return void
      */
-    abstract protected function fetchSitemapUrls();
+    abstract protected function fetchSitemapUrls($isSecure = null);
 }

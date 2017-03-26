@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\System\Helper;
 
 use ACP3\Core;
 use ACP3\Core\XML;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class Installer
@@ -39,32 +39,39 @@ class Installer
      */
     protected $xml;
     /**
-     * @var string
+     * @var LoggerInterface
      */
-    protected $environment;
+    private $logger;
+    /**
+     * @var Core\Installer\SchemaRegistrar
+     */
+    private $schemaRegistrar;
 
     /**
+     * @param LoggerInterface $logger
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules                     $modules
-     * @param \ACP3\Core\Modules\Vendor              $vendors
-     * @param \ACP3\Core\Modules\SchemaInstaller     $schemaInstaller
-     * @param \ACP3\Core\XML                         $xml
-     * @param string                                 $environment
+     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\Modules\Vendor $vendors
+     * @param Core\Installer\SchemaRegistrar $schemaRegistrar
+     * @param \ACP3\Core\Modules\SchemaInstaller $schemaInstaller
+     * @param \ACP3\Core\XML $xml
      */
     public function __construct(
+        LoggerInterface $logger,
         Core\Environment\ApplicationPath $appPath,
         Core\Modules $modules,
         Core\Modules\Vendor $vendors,
+        Core\Installer\SchemaRegistrar $schemaRegistrar,
         Core\Modules\SchemaInstaller $schemaInstaller,
-        Core\XML $xml,
-        $environment
+        Core\XML $xml
     ) {
         $this->appPath = $appPath;
         $this->modules = $modules;
         $this->vendors = $vendors;
         $this->schemaInstaller = $schemaInstaller;
         $this->xml = $xml;
-        $this->environment = $environment;
+        $this->logger = $logger;
+        $this->schemaRegistrar = $schemaRegistrar;
     }
 
     /**
@@ -90,25 +97,23 @@ class Installer
     }
 
     /**
-     * @param string                                                    $moduleToBeUninstalled
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     *
+     * @param Core\Modules\Installer\SchemaInterface $schema
      * @return array
      */
-    public function checkUninstallDependencies($moduleToBeUninstalled, ContainerInterface $container)
+    public function checkUninstallDependencies(Core\Modules\Installer\SchemaInterface $schema)
     {
         $modules = $this->modules->getInstalledModules();
         $moduleDependencies = [];
 
         foreach ($modules as $module) {
             $moduleName = strtolower($module['dir']);
-            if ($moduleName !== $moduleToBeUninstalled) {
+            if ($moduleName !== $schema->getModuleName()) {
                 $serviceId = $moduleName . '.installer.schema';
 
-                if ($container->has($serviceId) === true) {
+                if ($this->schemaRegistrar->has($serviceId) === true) {
                     $dependencies = $this->getDependencies($moduleName);
 
-                    if (in_array($moduleToBeUninstalled, $dependencies) === true) {
+                    if (in_array($schema->getModuleName(), $dependencies) === true) {
                         $moduleDependencies[] = $module['name'];
                     }
                 }
@@ -137,21 +142,6 @@ class Installer
         }
 
         return [];
-    }
-
-    /**
-     * @param Core\Http\RequestInterface $request
-     * @param bool $allModules
-     * @return \Symfony\Component\DependencyInjection\ContainerBuilder
-     */
-    public function updateServiceContainer(Core\Http\RequestInterface $request, $allModules = false)
-    {
-        return Core\DependencyInjection\ServiceContainerBuilder::create(
-            $this->appPath,
-            $request->getSymfonyRequest(),
-            $this->environment,
-            $allModules
-        );
     }
 
     /**

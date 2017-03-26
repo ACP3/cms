@@ -60,20 +60,25 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         return Schema::MODULE_NAME;
     }
 
-    protected function fetchSitemapUrls()
+    /**
+     * @inheritdoc
+     */
+    protected function fetchSitemapUrls($isSecure = null)
     {
-        $this->addUrl('gallery/index/index');
+        $this->addUrl('gallery/index/index', null, $isSecure);
 
         foreach ($this->galleryRepository->getAll($this->date->getCurrentDateTime()) as $result) {
             $this->addUrl(
                 sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $result['id']),
-                $this->date->format($result['updated_at'], 'Y-m-d')
+                $this->date->format($result['updated_at'], 'Y-m-d'),
+                $isSecure
             );
 
             foreach ($this->pictureRepository->getPicturesByGalleryId($result['id']) as $picture) {
                 $this->addUrl(
                     sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
-                    $this->date->format($result['updated_at'], 'Y-m-d')
+                    $this->date->format($result['updated_at'], 'Y-m-d'),
+                    $isSecure
                 );
             }
         }

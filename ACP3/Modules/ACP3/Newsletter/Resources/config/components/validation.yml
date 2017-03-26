@@ -1,5 +1,5 @@
 services:
-  newsletter.validator:
+  newsletter.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
     parent: core.validator.abstract
 
@@ -25,6 +25,7 @@ services:
       - '@newsletter.model.accountrepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   newsletter.validation.validation_rules.account_exists_by_hash_validation_rule:
     class: ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsByHashValidationRule
@@ -32,6 +33,7 @@ services:
       - '@newsletter.model.accountrepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   newsletter.validation.validation_rules.account_not_exists_validation_rule:
     class: ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountNotExistsValidationRule
@@ -39,3 +41,4 @@ services:
       - '@newsletter.model.accountrepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false

@@ -5,7 +5,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@articles.model'
-      - '@articles.validator'
+      - '@articles.validation.admin_form_validation'
       - '@core.helpers.formToken'
     calls:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
@@ -22,7 +22,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@articles.model'
-      - '@articles.validator'
+      - '@articles.validation.admin_form_validation'
       - '@core.helpers.formToken'
     calls:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]

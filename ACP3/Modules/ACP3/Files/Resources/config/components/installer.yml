@@ -1,7 +1,13 @@
 services:
   files.installer.schema:
     class: ACP3\Modules\ACP3\Files\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
+    public: false
 
   files.installer.migration:
     class: ACP3\Modules\ACP3\Files\Installer\Migration
     parent: core.modules.installer.abstractMigration
+    tags:
+      - { name: core.installer.migration }
+    public: false

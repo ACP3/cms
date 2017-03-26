@@ -13,11 +13,14 @@ services:
       - '@core.session'
       - '@users.model.authentication_model'
       - '@users.model.userrepository'
+    tags:
+      - { name: core.authentication }
+    public: false
 
   users.helpers.forms:
     class: ACP3\Modules\ACP3\Users\Helpers\Forms
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.i18n.country_list'
       - '@core.http.request'
       - '@core.helpers.forms'
@@ -28,3 +31,4 @@ services:
       - '@core.acl'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
+    public: false

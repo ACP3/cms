@@ -1,12 +1,16 @@
 services:
-  core.lang:
+  core.i18n.translator:
     class: ACP3\Core\I18n\Translator
     arguments:
       - '@core.environment.application_path'
-      - '@core.lang.dictionary_cache'
+      - '@core.i18n.dictionary_cache'
       - '@core.config'
 
-  core.lang.dictionary_cache:
+  core.lang:
+    alias: core.i18n.translator
+    deprecated: 'The "%service_id%" service is deprecated. Use "core.i18n.translator" instead'
+
+  core.i18n.dictionary_cache:
     class: ACP3\Core\I18n\DictionaryCache
     arguments:
       - '@core.cache.system'
@@ -16,4 +20,4 @@ services:
   core.i18n.country_list:
     class: ACP3\Core\I18n\CountryList
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'

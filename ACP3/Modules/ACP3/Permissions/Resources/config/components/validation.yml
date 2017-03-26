@@ -1,9 +1,9 @@
 services:
-  permissions.validator.role:
+  permissions.validation.role_form_validation:
     class: ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation
     parent: core.validator.abstract
 
-  permissions.validator.resource:
+  permissions.validation.resource_form_validation:
     class: ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
     parent: core.validator.abstract
 
@@ -13,6 +13,7 @@ services:
       - '@permissions.model.privilegerepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   permissions.validation.validation_rules.privileges_exist_validation_rule:
     class: ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegesExistValidationRule
@@ -20,6 +21,7 @@ services:
       - '@permissions.model.privilegerepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   permissions.validation.validation_rules.role_not_exists_validation_rule:
     class: ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RoleNotExistsValidationRule
@@ -27,6 +29,7 @@ services:
       - '@permissions.model.rolerepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   permissions.validation.validation_rules.roles_exist_validation_rule:
     class: ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RolesExistValidationRule
@@ -34,3 +37,4 @@ services:
       - '@core.acl'
     tags:
       - { name: core.validation.validation_rule }
+    public: false

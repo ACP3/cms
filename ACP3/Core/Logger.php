@@ -11,6 +11,7 @@ use Psr\Log\LogLevel;
  * Class for logging warnings, errors, etc.
  *
  * @package ACP3\Core
+ * @deprecated since version 4.9.0, to be removed with version 5.0.0. Please use the \ACP3\Core\Logger\LoggerFactory instead
  */
 class Logger
 {
@@ -39,8 +40,8 @@ class Logger
      *
      * @param string $channel
      * @param string $level
-     * @param mixed  $message
-     * @param array  $context
+     * @param mixed $message
+     * @param array $context
      */
     private function log($channel, $level, $message, array $context = [])
     {
@@ -88,8 +89,8 @@ class Logger
      * Debug log
      *
      * @param string $channel
-     * @param mixed  $message
-     * @param array  $context
+     * @param mixed $message
+     * @param array $context
      */
     public function debug($channel, $message, array $context = [])
     {
@@ -100,8 +101,8 @@ class Logger
      * Info log
      *
      * @param string $channel
-     * @param mixed  $message
-     * @param array  $context
+     * @param mixed $message
+     * @param array $context
      */
     public function info($channel, $message, array $context = [])
     {
@@ -112,8 +113,8 @@ class Logger
      * Notice log
      *
      * @param string $channel
-     * @param mixed  $message
-     * @param array  $context
+     * @param mixed $message
+     * @param array $context
      */
     public function notice($channel, $message, array $context = [])
     {
@@ -124,8 +125,8 @@ class Logger
      * Warning log
      *
      * @param string $channel
-     * @param mixed  $message
-     * @param array  $context
+     * @param mixed $message
+     * @param array $context
      */
     public function warning($channel, $message, array $context = [])
     {
@@ -136,8 +137,8 @@ class Logger
      * Error log
      *
      * @param string $channel
-     * @param mixed  $message
-     * @param array  $context
+     * @param mixed $message
+     * @param array $context
      */
     public function error($channel, $message, array $context = [])
     {
@@ -148,8 +149,8 @@ class Logger
      * Critical log
      *
      * @param string $channel
-     * @param mixed  $message
-     * @param array  $context
+     * @param mixed $message
+     * @param array $context
      */
     public function critical($channel, $message, array $context = [])
     {
@@ -160,8 +161,8 @@ class Logger
      * Alert log
      *
      * @param string $channel
-     * @param mixed  $message
-     * @param array  $context
+     * @param mixed $message
+     * @param array $context
      */
     public function alert($channel, $message, array $context = [])
     {
@@ -172,8 +173,8 @@ class Logger
      * Emergency log
      *
      * @param string $channel
-     * @param mixed  $message
-     * @param array  $context
+     * @param mixed $message
+     * @param array $context
      */
     public function emergency($channel, $message, array $context = [])
     {

@@ -1,9 +1,9 @@
 services:
-  polls.validator:
+  polls.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation
     parent: core.validator.abstract
 
-  polls.validator.vote_validation:
+  polls.validation.vote_validation:
     class: ACP3\Modules\ACP3\Polls\Validation\VoteValidation
     parent: core.validator.abstract
 
@@ -13,6 +13,7 @@ services:
       - '@core.validation.validation_rules.not_empty_validation_rule'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   polls.validation.validation_rules.delete_all_answers_validation_rule:
     class: ACP3\Modules\ACP3\Polls\Validation\ValidationRules\DeleteAllAnswersValidationRule
@@ -20,6 +21,7 @@ services:
       - '@core.validation.validation_rules.not_empty_validation_rule'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   polls.validation.validation_rules.already_voted_validation_rule:
     class: ACP3\Modules\ACP3\Polls\Validation\ValidationRules\AlreadyVotedValidationRule
@@ -28,3 +30,4 @@ services:
       - '@polls.model.voterepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false

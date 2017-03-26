@@ -1,5 +1,5 @@
 services:
-  comments.validator:
+  comments.validation.form_validation:
     class: ACP3\Modules\ACP3\Comments\Validation\FormValidation
     parent: core.validator.abstract
 
@@ -10,7 +10,7 @@ services:
   comments.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.validator'
       - '@core.modules'
 
@@ -21,6 +21,7 @@ services:
       - '@comments.model.commentrepository'
     tags:
       - { name: core.validation.validation_rule }
+    public: false
 
   comments.validation.validation_rules.user_name_validation_rule:
     class: ACP3\Modules\ACP3\Comments\Validation\ValidationRules\UserNameValidationRule
@@ -28,3 +29,4 @@ services:
       - '@core.validation.validation_rules.integer_validation_rule'
     tags:
       - { name: core.validation.validation_rule }
+    public: false

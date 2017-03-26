@@ -7,6 +7,7 @@ use ACP3\Core\Mailer\MailerMessage;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use InlineStyle\InlineStyle;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class Email
@@ -15,7 +16,7 @@ use InlineStyle\InlineStyle;
 class Mailer
 {
     /**
-     * @var \ACP3\Core\Logger
+     * @var LoggerInterface
      */
     protected $logger;
     /**
@@ -77,13 +78,13 @@ class Mailer
 
     /**
      * Mailer constructor.
-     * @param Logger $logger
+     * @param LoggerInterface $logger
      * @param View $view
      * @param SettingsInterface $config
      * @param StringFormatter $stringFormatter
      */
     public function __construct(
-        Logger $logger,
+        LoggerInterface $logger,
         View $view,
         SettingsInterface $config,
         StringFormatter $stringFormatter
@@ -281,9 +282,9 @@ class Mailer
                 return $this->bcc === true ? $this->sendBcc() : $this->sendTo();
             }
         } catch (\phpmailerException $e) {
-            $this->logger->error('mailer', $e);
+            $this->logger->error($e);
         } catch (\Exception $e) {
-            $this->logger->error('mailer', $e);
+            $this->logger->error($e);
         }
 
         return false;

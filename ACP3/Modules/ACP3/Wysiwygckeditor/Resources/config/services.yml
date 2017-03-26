@@ -1,15 +1,13 @@
-imports:
-  - { resource: components/installer.yml }
-
 services:
   core.wysiwyg.ckeditor:
-    class: ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\CKEditor
+    class: ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor\CKEditor
     arguments:
       - '@core.modules'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.environment.application_path'
     calls:
       - ['setEmoticonRepository', ['@?emoticons.model.emoticonrepository']]
       - ['setFilemanagerHelpers', ['@?filemanager.helpers']]
     tags:
       - { name: core.wysiwyg.editor }
+    public: false

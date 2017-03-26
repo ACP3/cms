@@ -8,4 +8,4 @@ services:
   core.date.date_translator:
     class: ACP3\Core\Date\DateTranslator
     arguments:
-      - '@core.lang'
+      - '@core.i18n.translator'

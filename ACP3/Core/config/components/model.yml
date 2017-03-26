@@ -3,6 +3,7 @@ services:
     class: ACP3\Core\Model\DataProcessor\ColumnType\BooleanColumnType
     tags:
       - { name: core.model.column_type, columnType: 'boolean' }
+    public: false
 
   core.model.column_type.date_time_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\DateTimeColumnType
@@ -10,26 +11,31 @@ services:
       - '@core.date'
     tags:
       - { name: core.model.column_type, columnType: 'datetime' }
+    public: false
 
   core.model.column_type.double_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\DoubleColumnType
     tags:
       - { name: core.model.column_type, columnType: 'double' }
+    public: false
 
   core.model.column_type.integer_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType
     tags:
       - { name: core.model.column_type, columnType: 'integer' }
+    public: false
 
   core.model.column_type.integer_nullable_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\IntegerNullableColumnType
     tags:
       - { name: core.model.column_type, columnType: 'integer_nullable' }
+    public: false
 
   core.model.column_type.raw_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType
     tags:
       - { name: core.model.column_type, columnType: 'raw' }
+    public: false
 
   core.model.column_type.text_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType
@@ -37,6 +43,7 @@ services:
       - '@core.helpers.secure'
     tags:
       - { name: core.model.column_type, columnType: 'text' }
+    public: false
 
   core.model.column_type.text_wysiwyg_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\TextWysiwygColumnType
@@ -44,6 +51,7 @@ services:
       - '@core.helpers.secure'
     tags:
       - { name: core.model.column_type, columnType: 'text_wysiwyg' }
+    public: false
 
   core.model.data_processor:
     class: ACP3\Core\Model\DataProcessor

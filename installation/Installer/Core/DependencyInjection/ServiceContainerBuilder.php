@@ -7,9 +7,11 @@
 namespace ACP3\Installer\Core\DependencyInjection;
 
 use ACP3\Core\Environment\ApplicationMode;
+use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
 use ACP3\Installer\Core\Environment\ApplicationPath;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -22,6 +24,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ServiceContainerBuilder extends ContainerBuilder
 {
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
     /**
      * @var ApplicationPath
      */
@@ -38,28 +44,38 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @var bool
      */
     private $includeModules;
+    /**
+     * @var bool
+     */
+    private $migrationsOnly;
 
     /**
      * ServiceContainerBuilder constructor.
+     * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
      * @param Request $symfonyRequest
      * @param string $applicationMode
      * @param bool $includeModules
+     * @param bool $migrationsOnly
      */
     public function __construct(
+        LoggerInterface $logger,
         ApplicationPath $applicationPath,
         Request $symfonyRequest,
         $applicationMode,
-        $includeModules = false
+        $includeModules = false,
+        $migrationsOnly = false
     ) {
         parent::__construct();
 
+        $this->logger = $logger;
         $this->applicationPath = $applicationPath;
         $this->symfonyRequest = $symfonyRequest;
         $this->applicationMode = $applicationMode;
         $this->includeModules = $includeModules;
 
         $this->setUpContainer();
+        $this->migrationsOnly = $migrationsOnly;
     }
 
     private function setUpContainer()
@@ -68,6 +84,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         $this->setParameter('core.environment', $this->applicationMode);
         $this->set('core.http.symfony_request', $this->symfonyRequest);
         $this->set('core.environment.application_path', $this->applicationPath);
+        $this->set('core.logger.system_logger', $this->logger);
         $this->addCompilerPass(
             new RegisterListenersPass('core.event_dispatcher', 'core.eventListener', 'core.eventSubscriber')
         );
@@ -77,6 +94,8 @@ class ServiceContainerBuilder extends ContainerBuilder
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
 
         if ($this->canIncludeModules() === true) {
+            $this->addCompilerPass(new RegisterInstallersCompilerPass());
+
             $loader->load($this->applicationPath->getClassesDir() . 'config/services.yml');
         }
 
@@ -109,9 +128,8 @@ class ServiceContainerBuilder extends ContainerBuilder
 
             $vendors = $this->get('core.modules.vendors')->getVendors();
             foreach ($vendors as $vendor) {
-                $namespaceModules = glob($this->applicationPath->getModulesDir() . $vendor . '/*/Resources/config/services.yml');
-                foreach ($namespaceModules as $module) {
-                    $loader->load($module);
+                foreach ($this->getServicesPath($vendor) as $file) {
+                    $loader->load($file);
                 }
             }
 
@@ -121,18 +139,34 @@ class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
+     * @param string $vendor
+     * @return array
+     */
+    private function getServicesPath($vendor)
+    {
+        $basePath = $this->applicationPath->getModulesDir() . $vendor . '/*/Resources/config/';
+        $basePath .= $this->migrationsOnly === true ? 'components/installer.yml' : 'services.yml';
+
+        return glob($basePath);
+    }
+
+    /**
+     * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
      * @param Request $symfonyRequest
      * @param string $applicationMode
      * @param bool $includeModules
+     * @param bool $migrationsOnly
      * @return ContainerBuilder
      */
     public static function create(
+        LoggerInterface $logger,
         ApplicationPath $applicationPath,
         Request $symfonyRequest,
         $applicationMode,
-        $includeModules = false)
+        $includeModules = false,
+        $migrationsOnly = false)
     {
-        return new static($applicationPath, $symfonyRequest, $applicationMode, $includeModules);
+        return new static($logger, $applicationPath, $symfonyRequest, $applicationMode, $includeModules, $migrationsOnly);
     }
 }

@@ -20,4 +20,5 @@ services:
     class: ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel
     arguments:
       - '@core.environment.application_path'
+      - '@core.config'
       - '@seo.utility.sitemap_availability_registrar'

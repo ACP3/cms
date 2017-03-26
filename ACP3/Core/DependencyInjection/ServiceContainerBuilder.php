@@ -6,13 +6,16 @@
 
 namespace ACP3\Core\DependencyInjection;
 
+use ACP3\Core\Authentication\DependencyInjection\RegisterAuthenticationsCompilerPass;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\DataGrid\DependencyInjection\RegisterColumnRendererPass;
+use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
 use ACP3\Core\Model\DataProcessor\DependencyInjection\RegisterColumnTypesCompilerPass;
 use ACP3\Core\Modules;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
 use ACP3\Core\WYSIWYG\DependencyInjection\RegisterWysiwygEditorsCompilerPass;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -26,6 +29,10 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 class ServiceContainerBuilder extends ContainerBuilder
 {
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+    /**
      * @var ApplicationPath
      */
     private $applicationPath;
@@ -37,48 +44,50 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @var string
      */
     private $applicationMode;
-    /**
-     * @var bool
-     */
-    private $allModules;
 
     /**
      * ServiceContainerBuilder constructor.
+     * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
      * @param SymfonyRequest $symfonyRequest
      * @param string $applicationMode
-     * @param bool $allModules
      */
     public function __construct(
+        LoggerInterface $logger,
         ApplicationPath $applicationPath,
         SymfonyRequest $symfonyRequest,
-        $applicationMode,
-        $allModules = false
+        $applicationMode
     ) {
         parent::__construct();
 
+        $this->logger = $logger;
         $this->applicationPath = $applicationPath;
         $this->symfonyRequest = $symfonyRequest;
         $this->applicationMode = $applicationMode;
-        $this->allModules = $allModules;
 
         $this->setUpContainer();
     }
 
     private function setUpContainer()
     {
+        $this->set('core.logger.system_logger', $this->logger);
         $this->set('core.http.symfony_request', $this->symfonyRequest);
         $this->set('core.environment.application_path', $this->applicationPath);
         $this->setParameter('core.environment', $this->applicationMode);
 
-        $this->addCompilerPass(
-            new RegisterListenersPass('core.event_dispatcher', 'core.eventListener', 'core.eventSubscriber')
-        );
-        $this->addCompilerPass(new RegisterSmartyPluginsPass());
-        $this->addCompilerPass(new RegisterColumnRendererPass());
-        $this->addCompilerPass(new RegisterValidationRulesPass());
-        $this->addCompilerPass(new RegisterWysiwygEditorsCompilerPass());
-        $this->addCompilerPass(new RegisterColumnTypesCompilerPass());
+        $this
+            ->addCompilerPass(new RegisterListenersPass(
+                    'core.event_dispatcher',
+                    'core.eventListener',
+                    'core.eventSubscriber')
+            )
+            ->addCompilerPass(new RegisterAuthenticationsCompilerPass())
+            ->addCompilerPass(new RegisterSmartyPluginsPass())
+            ->addCompilerPass(new RegisterColumnRendererPass())
+            ->addCompilerPass(new RegisterValidationRulesPass())
+            ->addCompilerPass(new RegisterWysiwygEditorsCompilerPass())
+            ->addCompilerPass(new RegisterInstallersCompilerPass())
+            ->addCompilerPass(new RegisterColumnTypesCompilerPass());
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
         $loader->load($this->applicationPath->getClassesDir() . 'config/services.yml');
@@ -87,10 +96,9 @@ class ServiceContainerBuilder extends ContainerBuilder
         // Try to get all available services
         /** @var Modules $modules */
         $modules = $this->get('core.modules');
-        $availableModules = ($this->allModules === true) ? $modules->getAllModules() : $modules->getActiveModules();
         $vendors = $this->get('core.modules.vendors')->getVendors();
 
-        foreach ($availableModules as $module) {
+        foreach ($modules->getAllModules() as $module) {
             foreach ($vendors as $vendor) {
                 $modulePath = $this->applicationPath->getModulesDir() . $vendor . '/' . $module['dir'];
                 $path = $modulePath . '/Resources/config/services.yml';
@@ -107,19 +115,19 @@ class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
+     * @param LoggerInterface $logger
      * @param \ACP3\Core\Environment\ApplicationPath $applicationPath
      * @param SymfonyRequest $symfonyRequest
      * @param string $applicationMode
-     * @param bool $allModules
      * @return ContainerBuilder
      */
     public static function create(
+        LoggerInterface $logger,
         ApplicationPath $applicationPath,
         SymfonyRequest $symfonyRequest,
-        $applicationMode,
-        $allModules = false
+        $applicationMode
     ) {
-        return new static($applicationPath, $symfonyRequest, $applicationMode, $allModules);
+        return new static($logger, $applicationPath, $symfonyRequest, $applicationMode);
     }
 
     /**

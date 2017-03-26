@@ -22,7 +22,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Event\Listener\OnMenusLayoutRenderManageMenuItemListener
     arguments:
       - '@core.acl'
-      - '@core.lang'
+      - '@core.i18n.translator'
       - '@core.view'
       - '@core.helpers.forms'
       - '@menus.helpers.menuitemformfields'
@@ -34,6 +34,6 @@ services:
     class: ACP3\Modules\ACP3\Menus\Event\Listener\OnMenusValidationValidateManageMenuItem
     arguments:
       - '@core.acl'
-      - '@core.lang'
+      - '@core.i18n.translator'
     tags:
       - { name: core.eventListener, event: menus.validation.validate_manage_menu_item, method: validateManageMenuItem }
