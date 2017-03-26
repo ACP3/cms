@@ -6,6 +6,13 @@
 
 #SetEnv ACP3_APPLICATION_MODE dev
 
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    Options +FollowSymlinks
+    DirectoryIndex index.php
+</IfModule>
+
 # Uncomment the following lines of code if you want to use separate sitemaps for HTTP and HTTPS
 #<IfModule mod_rewrite.c>
 #    RewriteEngine On
@@ -20,8 +27,7 @@
 #</IfModule>
 
 <IfModule mod_rewrite.c>
-    Options +FollowSymlinks
-    DirectoryIndex index.php
+    RewriteEngine On
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
