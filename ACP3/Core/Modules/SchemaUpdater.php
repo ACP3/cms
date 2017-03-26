@@ -2,10 +2,8 @@
 
 namespace ACP3\Core\Modules;
 
-use ACP3\Core;
 use ACP3\Core\Modules\Installer\MigrationInterface;
 use ACP3\Core\Modules\Installer\SchemaInterface;
-use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
 
 /**
@@ -65,7 +63,11 @@ class SchemaUpdater extends SchemaHelper
      *
      * @return int
      */
-    protected function iterateOverSchemaUpdates($moduleName, $schemaVersion, array $schemaUpdates, $installedSchemaVersion)
+    protected function iterateOverSchemaUpdates(
+        $moduleName,
+        $schemaVersion,
+        array $schemaUpdates,
+        $installedSchemaVersion)
     {
         $result = -1;
         foreach ($schemaUpdates as $schemaUpdateVersion => $queries) {

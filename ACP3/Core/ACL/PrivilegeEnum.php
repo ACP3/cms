@@ -1,11 +1,13 @@
 <?php
 namespace ACP3\Core\ACL;
 
+use ACP3\Core\Enum\BaseEnum;
+
 /**
  * Class PrivilegeEnum
  * @package ACP3\Core\ACL
  */
-class PrivilegeEnum
+class PrivilegeEnum extends BaseEnum
 {
     const ADMIN_SETTINGS = 7;
     const ADMIN_DELETE = 6;

@@ -11,7 +11,7 @@ use ReflectionClass;
 class BaseEnum
 {
     /**
-     * @var null
+     * @var array|null
      */
     private static $constCacheArray = null;
 
