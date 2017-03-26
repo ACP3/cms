@@ -39,8 +39,8 @@ class Uri extends AbstractFunction
     {
         return $this->router->route(
             !empty($params['args']) ? $params['args'] : '',
-            isset($params['absolute']) ? (bool)$params['absolute'] : null,
-            isset($params['secure']) ? (bool)$params['secure'] : false
+            isset($params['absolute']) ? (bool)$params['absolute'] : false,
+            isset($params['secure']) ? (bool)$params['secure'] : null
         );
     }
 }
