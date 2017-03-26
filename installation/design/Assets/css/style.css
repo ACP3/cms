@@ -102,6 +102,9 @@ p {
 #logo {
   margin: 10px 0;
 }
+#main-navigation {
+  overflow: hidden;
+}
 #main-navigation .navbar-brand {
   padding-top: 5px;
   padding-bottom: 5px;

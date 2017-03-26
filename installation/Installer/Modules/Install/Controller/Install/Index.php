@@ -13,6 +13,7 @@ use ACP3\Core\XML;
 use ACP3\Installer\Core;
 use ACP3\Installer\Core\Date;
 use ACP3\Installer\Modules\Install\Controller\AbstractAction;
+use ACP3\Installer\Modules\Install\Helpers\Navigation;
 use ACP3\Installer\Modules\Install\Model\InstallModel;
 use ACP3\Installer\Modules\Install\Validation\FormValidation;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -56,6 +57,7 @@ class Index extends AbstractAction
 
     /**
      * @param \ACP3\Installer\Core\Controller\Context\InstallerContext $context
+     * @param Navigation $navigation
      * @param \ACP3\Installer\Core\Date $date
      * @param XML $xml
      * @param \ACP3\Core\Helpers\Date $dateHelper
@@ -65,6 +67,7 @@ class Index extends AbstractAction
      */
     public function __construct(
         Core\Controller\Context\InstallerContext $context,
+        Navigation $navigation,
         Date $date,
         XML $xml,
         \ACP3\Core\Helpers\Date $dateHelper,
@@ -72,7 +75,7 @@ class Index extends AbstractAction
         InstallModel $installModel,
         FormValidation $formValidation
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $navigation);
 
         $this->date = $date;
         $this->xml = $xml;
@@ -133,7 +136,7 @@ class Index extends AbstractAction
 
             $this->installModel->configureModules($formData);
 
-            $this->navbar['install_index']['complete'] = true;
+            $this->navigation->markStepComplete('install_index');
 
             $this->setTemplate('install/install.result.tpl');
         } catch (ValidationFailedException $e) {
