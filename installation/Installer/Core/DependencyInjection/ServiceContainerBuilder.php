@@ -25,6 +25,10 @@ use Symfony\Component\HttpFoundation\Request;
 class ServiceContainerBuilder extends ContainerBuilder
 {
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+    /**
      * @var ApplicationPath
      */
     private $applicationPath;
@@ -41,9 +45,9 @@ class ServiceContainerBuilder extends ContainerBuilder
      */
     private $includeModules;
     /**
-     * @var LoggerInterface
+     * @var bool
      */
-    private $logger;
+    private $migrationsOnly;
 
     /**
      * ServiceContainerBuilder constructor.
@@ -52,13 +56,15 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param Request $symfonyRequest
      * @param string $applicationMode
      * @param bool $includeModules
+     * @param bool $migrationsOnly
      */
     public function __construct(
         LoggerInterface $logger,
         ApplicationPath $applicationPath,
         Request $symfonyRequest,
         $applicationMode,
-        $includeModules = false
+        $includeModules = false,
+        $migrationsOnly = false
     ) {
         parent::__construct();
 
@@ -69,6 +75,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         $this->includeModules = $includeModules;
 
         $this->setUpContainer();
+        $this->migrationsOnly = $migrationsOnly;
     }
 
     private function setUpContainer()
@@ -121,9 +128,8 @@ class ServiceContainerBuilder extends ContainerBuilder
 
             $vendors = $this->get('core.modules.vendors')->getVendors();
             foreach ($vendors as $vendor) {
-                $namespaceModules = glob($this->applicationPath->getModulesDir() . $vendor . '/*/Resources/config/services.yml');
-                foreach ($namespaceModules as $module) {
-                    $loader->load($module);
+                foreach ($this->getServicesPath($vendor) as $file) {
+                    $loader->load($file);
                 }
             }
 
@@ -133,11 +139,24 @@ class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
+     * @param string $vendor
+     * @return array
+     */
+    private function getServicesPath($vendor)
+    {
+        $basePath = $this->applicationPath->getModulesDir() . $vendor . '/*/Resources/config/';
+        $basePath .= $this->migrationsOnly === true ? 'components/installer.yml' : 'services.yml';
+
+        return glob($basePath);
+    }
+
+    /**
      * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
      * @param Request $symfonyRequest
      * @param string $applicationMode
      * @param bool $includeModules
+     * @param bool $migrationsOnly
      * @return ContainerBuilder
      */
     public static function create(
@@ -145,8 +164,9 @@ class ServiceContainerBuilder extends ContainerBuilder
         ApplicationPath $applicationPath,
         Request $symfonyRequest,
         $applicationMode,
-        $includeModules = false)
+        $includeModules = false,
+        $migrationsOnly = false)
     {
-        return new static($logger, $applicationPath, $symfonyRequest, $applicationMode, $includeModules);
+        return new static($logger, $applicationPath, $symfonyRequest, $applicationMode, $includeModules, $migrationsOnly);
     }
 }

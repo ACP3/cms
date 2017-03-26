@@ -36,68 +36,48 @@ class Install
     }
 
     /**
-     * @param string                                                    $module
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     *
+     * @param Core\Modules\Installer\SchemaInterface $schema
+     * @param ContainerInterface $container
      * @return bool
      */
-    public function installModule($module, ContainerInterface $container)
+    public function installModule(Core\Modules\Installer\SchemaInterface $schema, ContainerInterface $container)
     {
-        return $this->install($module, $container, 'core.modules.schemaInstaller');
+        return $this->install($schema, $container, 'core.modules.schemaInstaller');
     }
 
     /**
-     * @param string                                                    $module
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     *
+     * @param Core\Modules\Installer\SchemaInterface $schema
+     * @param ContainerInterface $container
      * @return bool
      */
-    public function installResources($module, ContainerInterface $container)
+    public function installResources(Core\Modules\Installer\SchemaInterface $schema, ContainerInterface $container)
     {
-        return $this->install($module, $container, 'core.modules.aclInstaller');
+        return $this->install($schema, $container, 'core.modules.aclInstaller');
     }
 
     /**
-     * @param string                                                    $module
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param string                                                    $installerServiceId
-     *
+     * @param Core\Modules\Installer\SchemaInterface $schema
+     * @param ContainerInterface $container
+     * @param string $installerServiceId
      * @return bool
      */
-    private function install($module, ContainerInterface $container, $installerServiceId)
-    {
-        $bool = false;
-        $serviceId = $module . '.installer.schema';
-
-        if ($container->has($serviceId)) {
-            /** @var Core\Modules\Installer\SchemaInterface $moduleSchema */
-            $moduleSchema = $container->get($serviceId);
-
-            $bool = $container->get($installerServiceId)->install($moduleSchema);
-        }
-
-        return $bool;
+    private function install(
+        Core\Modules\Installer\SchemaInterface $schema,
+        ContainerInterface $container,
+        $installerServiceId
+    ) {
+        return $container->get($installerServiceId)->install($schema);
     }
 
     /**
-     * @param string                                                    $module
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Core\Modules\SchemaHelper                           $schemaHelper
-     *
+     * @param Core\Modules\Installer\SampleDataInterface $sampleData
+     * @param SchemaHelper $schemaHelper
      * @return bool
      */
-    public function installSampleData($module, ContainerInterface $container, SchemaHelper $schemaHelper)
-    {
-        $bool = true;
-        $serviceId = $module . '.installer.sampleData';
-
-        if ($container->has($serviceId)) {
-            /** @var Core\Modules\Installer\SampleDataInterface $moduleSampleData */
-            $moduleSampleData = $container->get($serviceId);
-
-            $bool = $schemaHelper->executeSqlQueries($moduleSampleData->sampleData());
-        }
-
-        return $bool;
+    public function installSampleData(
+        Core\Modules\Installer\SampleDataInterface $sampleData,
+        SchemaHelper $schemaHelper
+    ) {
+        return $schemaHelper->executeSqlQueries($sampleData->sampleData());
     }
 }

@@ -123,12 +123,11 @@ class SchemaUpdateModel
     {
         $result = false;
 
-        $serviceIdSchema = $module . '.installer.schema';
         $serviceIdMigration = $module . '.installer.migration';
-        if ($this->schemaRegistrar->has($serviceIdSchema) === true &&
+        if ($this->schemaRegistrar->has($module) === true &&
             $this->migrationRegistrar->has($serviceIdMigration) === true
         ) {
-            $moduleSchema = $this->schemaRegistrar->get($serviceIdSchema);
+            $moduleSchema = $this->schemaRegistrar->get($module);
             $moduleMigration = $this->migrationRegistrar->get($serviceIdMigration);
             if ($this->modules->isInstalled($module) || count($moduleMigration->renameModule()) > 0) {
                 $result = $this->schemaUpdater->updateSchema($moduleSchema, $moduleMigration);

@@ -111,10 +111,9 @@ class Modules extends Core\Controller\AbstractAdminAction
                 );
             }
 
-            $serviceId = strtolower($moduleDirectory . '.installer.schema');
-            $this->moduleInstallerExists($serviceId);
+            $this->moduleInstallerExists($moduleDirectory);
 
-            $moduleSchema = $this->schemaRegistrar->get($serviceId);
+            $moduleSchema = $this->schemaRegistrar->get($moduleDirectory);
 
             $dependencies = $this->installerHelper->checkInstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'enable_following_modules_first');
@@ -215,10 +214,9 @@ class Modules extends Core\Controller\AbstractAdminAction
                 );
             }
 
-            $serviceId = strtolower($moduleDirectory . '.installer.schema');
-            $this->moduleInstallerExists($serviceId);
+            $this->moduleInstallerExists($moduleDirectory);
 
-            $moduleSchema = $this->schemaRegistrar->get($serviceId);
+            $moduleSchema = $this->schemaRegistrar->get($moduleDirectory);
 
             $dependencies = $this->installerHelper->checkUninstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'module_disable_not_possible');
@@ -254,10 +252,9 @@ class Modules extends Core\Controller\AbstractAdminAction
                 );
             }
 
-            $serviceId = strtolower($moduleDirectory . '.installer.schema');
-            $this->moduleInstallerExists($serviceId);
+            $this->moduleInstallerExists($moduleDirectory);
 
-            $moduleSchema = $this->schemaRegistrar->get($serviceId);
+            $moduleSchema = $this->schemaRegistrar->get($moduleDirectory);
 
             $dependencies = $this->installerHelper->checkInstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'enable_following_modules_first');
@@ -295,10 +292,9 @@ class Modules extends Core\Controller\AbstractAdminAction
                 );
             }
 
-            $serviceId = strtolower($moduleDirectory . '.installer.schema');
-            $this->moduleInstallerExists($serviceId);
+            $this->moduleInstallerExists($moduleDirectory);
 
-            $moduleSchema = $this->schemaRegistrar->get($serviceId);
+            $moduleSchema = $this->schemaRegistrar->get($moduleDirectory);
 
             $dependencies = $this->installerHelper->checkUninstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'uninstall_following_modules_first');

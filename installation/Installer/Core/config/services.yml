@@ -10,6 +10,7 @@ imports:
   - { resource: components/http.yml }
   - { resource: components/language.yml }
   - { resource: components/validation.yml }
+  - { resource: ../../../../ACP3/Core/config/components/installer.yml }
   - { resource: ../View/Renderer/Smarty/config/services.yml }
   - { resource: ../../Modules/Errors/Resources/config/services.yml }
   - { resource: ../../Modules/Install/Resources/config/services.yml }

@@ -6,7 +6,6 @@
 
 namespace ACP3\Installer\Modules\Install\Model;
 
-use ACP3\Core\Filesystem;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules\Vendor;
@@ -117,6 +116,7 @@ class InstallModel
             $this->appPath,
             $request->getSymfonyRequest(),
             $this->container->getParameter('core.environment'),
+            true,
             true
         );
     }
@@ -126,7 +126,10 @@ class InstallModel
      */
     public function installModules()
     {
-        $this->moduleInstaller->installModules($this->container);
+        $this->moduleInstaller->installModules(
+            $this->container,
+            $this->container->get('core.installer.schema_registrar')->all()
+        );
     }
 
     /**
@@ -134,11 +137,11 @@ class InstallModel
      */
     public function installAclResources()
     {
-        foreach ($this->vendor->getVendors() as $vendor) {
-            foreach (Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/') as $module) {
-                if ($this->installHelper->installResources($module, $this->container) === false) {
-                    throw new \Exception("Error while installing ACL resources for the module {$module}.");
-                }
+        foreach ($this->container->get('core.installer.schema_registrar')->all() as $schema) {
+            if ($this->installHelper->installResources($schema, $this->container) === false) {
+                throw new \Exception(
+                    sprintf("Error while installing ACL resources for the module %s.", $schema->getModuleName())
+                );
             }
         }
     }
@@ -200,18 +203,14 @@ class InstallModel
      */
     public function installSampleData()
     {
-        foreach ($this->vendor->getVendors() as $vendor) {
-            foreach (Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/') as $module) {
-                $module = strtolower($module);
-                $sampleDataInstallResult = $this->installHelper->installSampleData(
-                    $module,
-                    $this->container,
-                    $this->container->get('core.modules.schemaHelper')
-                );
+        foreach ($this->container->get('core.installer.sample_data_registrar')->all() as $sampleData) {
+            $sampleDataInstallResult = $this->installHelper->installSampleData(
+                $sampleData,
+                $this->container->get('core.modules.schemaHelper')
+            );
 
-                if ($sampleDataInstallResult === false) {
-                    throw new \Exception("Error while installing module sample data.");
-                }
+            if ($sampleDataInstallResult === false) {
+                throw new \Exception("Error while installing module sample data.");
             }
         }
     }
