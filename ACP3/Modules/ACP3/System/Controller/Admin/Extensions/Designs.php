@@ -16,6 +16,8 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
  */
 class Designs extends Core\Controller\AbstractAdminAction
 {
+    use System\Helper\AvailableDesignsTrait;
+
     /**
      * @var \ACP3\Core\XML
      */
@@ -25,7 +27,7 @@ class Designs extends Core\Controller\AbstractAdminAction
      * Designs constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\XML                             $xml
+     * @param \ACP3\Core\XML $xml
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -79,26 +81,18 @@ class Designs extends Core\Controller\AbstractAdminAction
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
-    protected function getAvailableDesigns()
+    protected function getXml()
     {
-        $designs = [];
-        $path = $this->appPath->getDesignRootPathInternal();
-        $directories = Core\Filesystem::scandir($path);
-        foreach ($directories as $directory) {
-            $designInfo = $this->xml->parseXmlFile($path . $directory . '/info.xml', '/design');
-            if (!empty($designInfo)) {
-                $designs[] = array_merge(
-                    $designInfo,
-                    [
-                        'selected' => $this->config->getSettings(Schema::MODULE_NAME)['design'] === $directory ? 1 : 0,
-                        'dir' => $directory
-                    ]
-                );
-            }
-        }
+        return $this->xml;
+    }
 
-        return $designs;
+    /**
+     * @inheritdoc
+     */
+    protected function selectEntry($directory)
+    {
+        return $this->config->getSettings(Schema::MODULE_NAME)['design'] === $directory ? 1 : 0;
     }
 }
