@@ -1,6 +1,12 @@
 #!/bin/bash
 
 ACP3_CI_USER_GH_TOKEN=$1;
+TRAVIS_PHP_VERSION=$2;
+
+if [[ ${TRAVIS_PHP_VERSION} = "7.0" || ${TRAVIS_PHP_VERSION} != "7.1" ]]
+then
+    phpenv config-rm xdebug.ini
+fi
 
 if [[ -n ${ACP3_CI_USER_GH_TOKEN} ]]
 then
