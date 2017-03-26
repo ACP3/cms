@@ -27,7 +27,7 @@ class Schema implements Modules\Installer\SchemaInterface
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'settings' => PrivilegeEnum::ADMIN_SETTINGS,
                     'sitemap' => PrivilegeEnum::ADMIN_SETTINGS,
-                    'suggest' => PrivilegeEnum::ADMIN_CREATE
+                    'suggest' => PrivilegeEnum::ADMIN_VIEW
                 ]
             ],
         ];
