@@ -86,14 +86,11 @@ class Index extends AbstractAction
         $this->configFilePath = $this->appPath->getAppDir() . 'config.yml';
     }
 
+    /**
+     * @return array
+     */
     public function execute()
     {
-        if ($this->request->getPost()->count() > 0
-            && !$this->request->getPost()->get('lang')
-        ) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         $defaults = [
             'db_host' => 'localhost',
             'db_pre' => '',
@@ -114,12 +111,13 @@ class Index extends AbstractAction
     }
 
     /**
-     * @param array $formData
      * @return array|JsonResponse
      */
-    private function executePost(array $formData)
+    public function executePost()
     {
         try {
+            $formData = $this->request->getPost()->all();
+
             $this->formValidation
                 ->setConfigFilePath($this->configFilePath)
                 ->validate($formData);

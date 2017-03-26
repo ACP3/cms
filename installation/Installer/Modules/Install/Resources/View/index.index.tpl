@@ -1,6 +1,6 @@
 {extends file="asset:`$LAYOUT`"}
 
-{block CONTENT prepend}
+{block CONTENT}
     <p>
         {lang t="install|step_1_paragraph_1"}
     </p>
