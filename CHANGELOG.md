@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - 2017-xx-xx
 ### Added
 - Added the new trait `AvailableDesignsTrait` which makes it possible to share the design retrieval logic between the installer and the rest of the system
-- Made it possible to use the AJAX form hash change logic for redirects to
+- Made it possible to use the AJAX-form hash change logic for redirects, too
 
 ### Changed
 - Added some guards to various modules to make them more robust 
