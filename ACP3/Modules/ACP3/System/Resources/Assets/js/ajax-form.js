@@ -206,7 +206,7 @@
                     $loadingLayer = $($loadingLayer.selector);
 
                     $loadingLayer.addClass('loading-layer__active');
-                }, 1);
+                }, 10);
             } else {
                 $loadingLayer.addClass('loading-layer__active');
             }
