@@ -6,8 +6,9 @@
 
 namespace ACP3\Installer\Core\I18n;
 
-use ACP3\Core\Filesystem;
+use ACP3\Core\I18n\ExtractFromPathTrait;
 use ACP3\Installer\Core\Environment\ApplicationPath;
+use Fisharebest\Localization\Locale;
 
 /**
  * Class DictionaryCache
@@ -15,6 +16,8 @@ use ACP3\Installer\Core\Environment\ApplicationPath;
  */
 class DictionaryCache
 {
+    use ExtractFromPathTrait;
+
     /**
      * @var \ACP3\Installer\Core\Environment\ApplicationPath
      */
@@ -61,19 +64,20 @@ class DictionaryCache
     {
         $data = [];
 
-        foreach (Filesystem::scandir($this->appPath->getInstallerModulesDir()) as $module) {
-            $path = $this->appPath->getInstallerModulesDir() . $module . '/Resources/i18n/' . $language . '.xml';
-            if (is_file($path) === true) {
-                $xml = simplexml_load_file($path);
+        $languageFiles = glob($this->appPath->getInstallerModulesDir() . '*/Resources/i18n/' . $language . '.xml');
+        foreach ($languageFiles as $file) {
                 if (isset($data['info']['direction']) === false) {
-                    $data['info']['direction'] = (string)$xml->info->direction;
+                    $locale = Locale::create($this->getLanguagePackIsoCode($file));
+                    $data['info']['direction'] = $locale->script()->direction();
                 }
 
+                $module = $this->getModuleFromPath($file);
+
                 // Über die einzelnen Sprachstrings iterieren
+                $xml = simplexml_load_file($file);
                 foreach ($xml->keys->item as $item) {
                     $data['keys'][strtolower($module . (string)$item['key'])] = trim((string)$item);
                 }
-            }
         }
 
         return $data;

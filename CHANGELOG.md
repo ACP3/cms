@@ -6,11 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-xx
 ### Added
+- Added the library `fisharebest/localization` which handles to retrieval of the output of the localzized name of a language pack and the script direction
 - Added the new trait `AvailableDesignsTrait` which makes it possible to share the design retrieval logic between the installer and the rest of the system
 - Made it possible to use the AJAX-form hash change logic for redirects, too
 
 ### Changed
 - Added some guards to various modules to make them more robust 
+- Replaced the library `umpirsky/country-list` with `giggsey/locale` because of its significantly reduced storage footprint 
 
 ## [4.9.2] - 2017-03-26
 ### Fixed

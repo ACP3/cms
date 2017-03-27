@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <info>
-        <name>Deutsch (Deutschland)</name>
-        <direction>ltr</direction>
-    </info>
     <keys>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="captcha">Captcha</item>

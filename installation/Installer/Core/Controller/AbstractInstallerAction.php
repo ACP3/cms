@@ -8,8 +8,9 @@ namespace ACP3\Installer\Core\Controller;
 
 use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Controller\DisplayActionTrait;
-use ACP3\Core\Filesystem;
 use ACP3\Core\Http\RedirectResponse;
+use ACP3\Core\I18n\ExtractFromPathTrait;
+use Fisharebest\Localization\Locale;
 
 /**
  * Module Controller of the installer modules
@@ -17,6 +18,7 @@ use ACP3\Core\Http\RedirectResponse;
  */
 abstract class AbstractInstallerAction implements ActionInterface
 {
+    use ExtractFromPathTrait;
     use DisplayActionTrait;
 
     /**
@@ -134,7 +136,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * Generiert das Dropdown-Menü mit der zur Verfügung stehenden Installersprachen
+     * Generiert das Dropdown-Menü mit den zur Verfügung stehenden Installersprachen
      *
      * @param string $selectedLanguage
      *
@@ -143,16 +145,20 @@ abstract class AbstractInstallerAction implements ActionInterface
     private function languagesDropdown($selectedLanguage)
     {
         $languages = [];
-        $path = $this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/';
+        $paths = glob($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/*.xml');
 
-        foreach (Filesystem::scandir($path) as $row) {
-            $langInfo = simplexml_load_file($path . $row);
-            if (!empty($langInfo)) {
+        foreach ($paths as $file) {
+            try {
+                $isoCode = $this->getLanguagePackIsoCode($file);
+                $locale = Locale::create($isoCode);
+
                 $languages[] = [
-                    'language' => substr($row, 0, -4),
-                    'selected' => $selectedLanguage === substr($row, 0, -4) ? ' selected="selected"' : '',
-                    'name' => $langInfo->info->name
+                    'language' => $isoCode,
+                    'selected' => $selectedLanguage === $isoCode ? ' selected="selected"' : '',
+                    'name' => $locale->endonym()
                 ];
+            } catch (\DomainException $e) {
+
             }
         }
         return $languages;
@@ -201,8 +207,8 @@ abstract class AbstractInstallerAction implements ActionInterface
     private function setLanguage()
     {
         $cookieLocale = $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '');
-        if (!preg_match('=/=', $cookieLocale) &&
-            is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $cookieLocale . '.xml') === true
+        if (!preg_match('=/=', $cookieLocale)
+            && is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $cookieLocale . '.xml') === true
         ) {
             $language = $cookieLocale;
         } else {

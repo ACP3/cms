@@ -18,6 +18,8 @@
     "acp3/composer-installer": "*",
     "doctrine/dbal": "^2.5",
     "doctrine/cache": "^1.6",
+    "fisharebest/localization": "^1.10",
+    "giggsey/locale": "^1.2",
     "inlinestyle/inlinestyle": "^1.2",
     "monolog/monolog": "^1.21",
     "mrclay/minify": "^2.3",
@@ -31,8 +33,7 @@
     "symfony/http-kernel": "^3.1",
     "symfony/yaml": "^3.1",
     "symfony/event-dispatcher": "^3.1",
-    "friendsofsymfony/http-cache": "~1.0",
-    "giggsey/locale": "^1.2"
+    "friendsofsymfony/http-cache": "~1.0"
   },
   "autoload": {
     "psr-4": {

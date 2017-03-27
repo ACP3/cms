@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <info>
-        <name>English (United States)</name>
-        <direction>ltr</direction>
-    </info>
     <keys>
         <item key="account_activation_credentials_wrong">Can not find any associated newsletter account.</item>
         <item key="account_exists">There is already an newsletter account with the same E-Mail address registered.</item>
