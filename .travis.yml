@@ -28,8 +28,9 @@ before_script:
 script:
   - ./build/travis/run_unit_tests.sh ${TRAVIS_PHP_VERSION}
 
-after_script:
-  - ./build/travis/push_code_coverage.sh ${TRAVIS_PHP_VERSION}
+after_success:
+  - travis_retry vendor/bin/coveralls -v
+#  - ./build/travis/push_code_coverage.sh ${TRAVIS_PHP_VERSION}
 
 before_deploy:
   - ./build/travis/generate_artifact.sh ${TRAVIS_PHP_VERSION}
