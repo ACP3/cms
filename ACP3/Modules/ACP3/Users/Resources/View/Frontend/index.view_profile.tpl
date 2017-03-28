@@ -55,7 +55,10 @@
                 {if !empty($user.website)}
                     <dt>{lang t="system|website"}</dt>
                     <dd>
-                        <a href="{$user.website|prefix_uri}" rel="nofollow" target="_blank" title="{lang t="users|visit_website"}">{$user.website}</a>
+                        <a href="{$user.website|prefix_uri}"
+                           rel="noopener nofollow"
+                           target="_blank"
+                           title="{lang t="users|visit_website"}">{$user.website}</a>
                     </dd>
                 {/if}
             </dl>
