@@ -2,7 +2,7 @@
 
 TRAVIS_PHP_VERSION=$1
 
-if [[ ${TRAVIS_PHP_VERSION} = "7.0" ]]
+if [[ ${TRAVIS_PHP_VERSION} = 7.0* ]]
 then
     if [ ! -f release.zip ]
     then

@@ -30,7 +30,6 @@ script:
 
 after_success:
   - travis_retry vendor/bin/coveralls -v
-#  - ./build/travis/push_code_coverage.sh ${TRAVIS_PHP_VERSION}
 
 before_deploy:
   - ./build/travis/generate_artifact.sh ${TRAVIS_PHP_VERSION}
@@ -42,19 +41,19 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
-      condition: "$TRAVIS_PHP_VERSION = '7.0'"
+      condition: "$TRAVIS_PHP_VERSION = 7.0*"
   - provider: script
     script: ./build/travis/update_module_repositories.sh ${TRAVIS_TAG}
     skip_cleanup: true
     on:
       tags: true
-      condition: "$TRAVIS_PHP_VERSION = '7.0'"
+      condition: "$TRAVIS_PHP_VERSION = 7.0*"
   - provider: script
     script: ./build/travis/update_version_check.sh ${TRAVIS_TAG}
     skip_cleanup: true
     on:
       tags: true
-      condition: "$TRAVIS_PHP_VERSION = '7.0'"
+      condition: "$TRAVIS_PHP_VERSION = 7.0*"
 
 cache:
   directories:
