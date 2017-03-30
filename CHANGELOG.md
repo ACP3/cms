@@ -6,9 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-xx
 ### Added
-- Added the library `fisharebest/localization` which handles to retrieval of the output of the localzized name of a language pack and the script direction
+- Added the library `fisharebest/localization` which handles the retrieval of the output of the localized name of a language pack and the script direction
 - Added the new trait `AvailableDesignsTrait` which makes it possible to share the design retrieval logic between the installer and the rest of the system
 - Made it possible to use the AJAX-form hash change logic for redirects, too
+- Added the possibility to set a reply-to address or sender address to the `Mailer` class
 
 ### Changed
 - Added some guards to various modules to make them more robust 

@@ -80,8 +80,15 @@ class ContactFormModel
             ->setSubject($subject)
             ->setBody($body)
             ->setTemplate('Contact/layout.email.tpl')
-            ->setRecipients($settings['mail'])
-            ->setFrom($formData['mail']);
+            ->setRecipients([
+                'name' => $systemSettings['site_title'],
+                'email' => $settings['mail']
+            ])
+            ->setFrom([
+                'name' => $formData['name'],
+                'email' => $formData['mail']
+            ])
+            ->setSender($settings['mail']);
 
         return $this->sendEmail->execute($data);
     }
@@ -150,7 +157,10 @@ class ContactFormModel
                 'name' => $formData['name'],
                 'email' => $formData['mail'],
             ])
-            ->setFrom($settings['mail']);
+            ->setFrom([
+                'name' => $systemSettings['site_title'],
+                'email' => $settings['mail']
+            ]);
 
         return $this->sendEmail->execute($data);
     }
