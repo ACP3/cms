@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 2017-xx-xx
+## [4.10.0] - 2017-03-30
 ### Added
 - Added the library `fisharebest/localization` which handles the retrieval of the output of the localized name of a language pack and the script direction
 - Added the new trait `AvailableDesignsTrait` which makes it possible to share the design retrieval logic between the installer and the rest of the system
@@ -337,7 +337,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.9.2...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.10.0...HEAD
+[4.10.0]: https://github.com/ACP3/cms/compare/v4.9.2...v4.10.0
 [4.9.2]: https://github.com/ACP3/cms/compare/v4.9.1...v4.9.2
 [4.9.1]: https://github.com/ACP3/cms/compare/v4.9.0...v4.9.1
 [4.9.0]: https://github.com/ACP3/cms/compare/v4.8.5...v4.9.0
