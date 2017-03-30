@@ -31,7 +31,7 @@ class Imprint extends Core\Controller\AbstractFrontendAction
                 'contact',
                 'powered_by',
                 [
-                    '%ACP3%' => '<a href="https://www.acp3-cms.net" target="_blank">ACP3</a>'
+                    '%ACP3%' => '<a href="https://www.acp3-cms.net" target="_blank">ACP3 CMS</a>'
                 ]
             )
         ];

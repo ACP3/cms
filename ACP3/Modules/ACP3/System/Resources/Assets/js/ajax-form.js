@@ -107,15 +107,17 @@
             }
         },
         processAjaxRequest: function () {
-            var self = this,
+            var hash,
+                self = this,
                 $form = $(this.element),
                 hasCustomData = !$.isEmptyObject(this.settings.customFormData),
                 processData = true,
                 data = this.settings.customFormData || {};
 
             if ($form.attr('method')) {
-                var $submitButton = $(':submit[data-clicked="true"]', $form),
-                    hash = $submitButton.data('hashChange');
+                var $submitButton = $(':submit[data-clicked="true"]', $form);
+
+                hash = $submitButton.data('hashChange');
 
                 data = new FormData($form[0]);
 
@@ -132,6 +134,8 @@
                 }
 
                 processData = false;
+            } else {
+                hash = $form.data('hashChange');
             }
 
             $.ajax({
@@ -151,7 +155,12 @@
                         window[callback](responseData);
                     } else {
                         if (responseData.redirect_url) {
-                            window.location.href = responseData.redirect_url;
+                            if (typeof hash !== "undefined") {
+                                window.location.href = responseData.redirect_url + hash;
+                                window.location.reload();
+                            } else {
+                                window.location.href = responseData.redirect_url;
+                            }
                             return;
                         }
 
@@ -160,7 +169,7 @@
                         $(self.settings.targetElement).html(responseData);
 
                         if (typeof hash !== "undefined") {
-                            location.hash = hash;
+                            window.location.hash = hash;
                         }
                     }
 
@@ -197,7 +206,7 @@
                     $loadingLayer = $($loadingLayer.selector);
 
                     $loadingLayer.addClass('loading-layer__active');
-                }, 1);
+                }, 10);
             } else {
                 $loadingLayer.addClass('loading-layer__active');
             }

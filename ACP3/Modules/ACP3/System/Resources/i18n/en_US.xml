@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <info>
-        <name>English (United States)</name>
-        <direction>ltr</direction>
-    </info>
     <keys>
         <item key="access_to_following_modules">You have access to the following %d modules.</item>
         <item key="acp3_not_up_to_date">A newer version of ACP3 is available. Click %link_start%here%link_end% to

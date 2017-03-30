@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\Emoticons;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Emoticons\Installer\Schema;
 
 /**
  * Class Helpers
@@ -22,15 +23,24 @@ class Helpers
      * @var \ACP3\Core\View
      */
     protected $view;
+    /**
+     * @var bool
+     */
+    private $isActive = false;
 
     /**
-     * @param \ACP3\Core\View                    $view
+     * @param \ACP3\Core\View $view
+     * @param Core\Modules $modules
      * @param \ACP3\Modules\ACP3\Emoticons\Cache $emoticonsCache
      */
-    public function __construct(Core\View $view, Cache $emoticonsCache)
-    {
+    public function __construct(
+        Core\View $view,
+        Core\Modules $modules,
+        Cache $emoticonsCache
+    ) {
         $this->view = $view;
         $this->emoticonsCache = $emoticonsCache;
+        $this->isActive = $modules->isActive(Schema::MODULE_NAME);
     }
 
     /**
@@ -43,9 +53,13 @@ class Helpers
      */
     public function emoticonsList($formFieldId = '')
     {
-        $this->view->assign('emoticons_field_id', empty($formFieldId) ? 'message' : $formFieldId);
-        $this->view->assign('emoticons', $this->emoticonsCache->getCache());
-        return $this->view->fetchTemplate('emoticons/emoticons.tpl');
+        if ($this->isActive) {
+            $this->view->assign('emoticons_field_id', empty($formFieldId) ? 'message' : $formFieldId);
+            $this->view->assign('emoticons', $this->emoticonsCache->getCache());
+            return $this->view->fetchTemplate('emoticons/emoticons.tpl');
+        }
+
+        return '';
     }
 
     /**
@@ -58,6 +72,10 @@ class Helpers
      */
     public function emoticonsReplace($string)
     {
-        return strtr($string, $this->emoticonsCache->getCache());
+        if ($this->isActive) {
+            return strtr($string, $this->emoticonsCache->getCache());
+        }
+
+        return $string;
     }
 }

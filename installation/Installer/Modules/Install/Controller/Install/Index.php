@@ -6,7 +6,6 @@
 
 namespace ACP3\Installer\Modules\Install\Controller\Install;
 
-use ACP3\Core\Filesystem;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Core\XML;
@@ -16,6 +15,7 @@ use ACP3\Installer\Modules\Install\Controller\AbstractAction;
 use ACP3\Installer\Modules\Install\Helpers\Navigation;
 use ACP3\Installer\Modules\Install\Model\InstallModel;
 use ACP3\Installer\Modules\Install\Validation\FormValidation;
+use ACP3\Modules\ACP3\System\Helper\AvailableDesignsTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,10 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class Index extends AbstractAction
 {
-    /**
-     * @var string
-     */
-    protected $configFilePath = '';
+    use AvailableDesignsTrait;
 
     /**
      * @var \ACP3\Installer\Core\Date
@@ -83,7 +80,6 @@ class Index extends AbstractAction
         $this->dateHelper = $dateHelper;
         $this->forms = $forms;
         $this->formValidation = $formValidation;
-        $this->configFilePath = $this->appPath->getAppDir() . 'config.yml';
     }
 
     /**
@@ -91,7 +87,19 @@ class Index extends AbstractAction
      */
     public function execute()
     {
-        $defaults = [
+        return [
+            'time_zones' => $this->dateHelper->getTimeZones(date_default_timezone_get()),
+            'form' => array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
+            'designs' => $this->getAvailableDesigns()
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getFormDefaults()
+    {
+        return [
             'db_host' => 'localhost',
             'db_pre' => '',
             'db_user' => '',
@@ -101,12 +109,6 @@ class Index extends AbstractAction
             'date_format_long' => $this->date->getDateFormatLong(),
             'date_format_short' => $this->date->getDateFormatShort(),
             'title' => 'ACP3',
-        ];
-
-        return [
-            'time_zones' => $this->dateHelper->getTimeZones(date_default_timezone_get()),
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'designs' => $this->getAvailableDesigns()
         ];
     }
 
@@ -118,11 +120,13 @@ class Index extends AbstractAction
         try {
             $formData = $this->request->getPost()->all();
 
+            $configFilePath = $this->appPath->getAppDir() . 'config.yml';
+
             $this->formValidation
-                ->setConfigFilePath($this->configFilePath)
+                ->setConfigFilePath($configFilePath)
                 ->validate($formData);
 
-            $this->installModel->writeConfigFile($this->configFilePath, $formData);
+            $this->installModel->writeConfigFile($configFilePath, $formData);
             $this->installModel->updateContainer($this->request);
             $this->installModel->installModules();
             $this->installModel->installAclResources();
@@ -160,26 +164,18 @@ class Index extends AbstractAction
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
-    private function getAvailableDesigns()
+    protected function getXml()
     {
-        $designs = [];
-        $path = ACP3_ROOT_DIR . 'designs/';
-        $directories = Filesystem::scandir($path);
-        foreach ($directories as $directory) {
-            $designInfo = $this->xml->parseXmlFile($path . $directory . '/info.xml', '/design');
-            if (!empty($designInfo)) {
-                $designs[] = array_merge(
-                    $designInfo,
-                    [
-                        'selected' => $this->forms->selectEntry('design', $directory),
-                        'dir' => $directory
-                    ]
-                );
-            }
-        }
+        return $this->xml;
+    }
 
-        return $designs;
+    /**
+     * @inheritdoc
+     */
+    protected function selectEntry($directory)
+    {
+        return $this->forms->selectEntry('design', $directory);
     }
 }

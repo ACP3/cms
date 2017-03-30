@@ -9,6 +9,7 @@ namespace ACP3\Core\I18n;
 use ACP3\Core\Cache;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules\Vendor;
+use Fisharebest\Localization\Locale;
 
 /**
  * Class Cache
@@ -16,6 +17,8 @@ use ACP3\Core\Modules\Vendor;
  */
 class DictionaryCache
 {
+    use ExtractFromPathTrait;
+
     /**
      * @var Cache
      */
@@ -32,9 +35,9 @@ class DictionaryCache
     /**
      * DictionaryCache constructor.
      *
-     * @param \ACP3\Core\Cache                       $cache
+     * @param \ACP3\Core\Cache $cache
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules\Vendor              $vendors
+     * @param \ACP3\Core\Modules\Vendor $vendors
      */
     public function __construct(
         Cache $cache,
@@ -78,14 +81,15 @@ class DictionaryCache
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
-                    $xml = simplexml_load_file($file);
                     if (isset($data['info']['direction']) === false) {
-                        $data['info']['direction'] = (string)$xml->info->direction;
+                        $locale = Locale::create($this->getLanguagePackIsoCode($file));
+                        $data['info']['direction'] = $locale->script()->direction();
                     }
 
                     $module = $this->getModuleFromPath($file);
 
                     // Iterate over all language keys
+                    $xml = simplexml_load_file($file);
                     foreach ($xml->keys->item as $item) {
                         $data['keys'][strtolower($module . (string)$item['key'])] = trim((string)$item);
                     }
@@ -94,18 +98,6 @@ class DictionaryCache
         }
 
         return $this->cache->save($language, $data);
-    }
-
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
-    protected function getModuleFromPath($path)
-    {
-        $pathArray = explode('/', $path);
-
-        return $pathArray[count($pathArray) - 4];
     }
 
     /**
@@ -155,29 +147,19 @@ class DictionaryCache
      */
     protected function registerLanguagePack($file)
     {
-        $xml = simplexml_load_file($file);
+        $languageIso = $this->getLanguagePackIsoCode($file);
 
-        if (!empty($xml)) {
-            $languageIso = $this->getLanguagePackIsoCode($file);
+        try {
+            $locale = Locale::create($languageIso);
 
             return [
                 $languageIso => [
                     'iso' => $languageIso,
-                    'name' => (string)$xml->info->name
+                    'name' => $locale->endonym()
                 ]
             ];
+        } catch (\DomainException $e) {
+            return [];
         }
-
-        return [];
-    }
-
-    /**
-     * @param string $file
-     *
-     * @return string
-     */
-    protected function getLanguagePackIsoCode($file)
-    {
-        return substr($file, strrpos($file, '/') + 1, -4);
     }
 }

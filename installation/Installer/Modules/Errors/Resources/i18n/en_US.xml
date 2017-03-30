@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <info>
-        <name>English (United States)</name>
-        <direction>ltr</direction>
-    </info>
     <keys>
         <item key="index_not_found">Page not found</item>
         <item key="index_server_error">Internal server error</item>

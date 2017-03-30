@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <info>
-        <name>English (United States)</name>
-        <direction>ltr</direction>
-    </info>
     <keys>
         <item key="address">Address</item>
         <item key="address_to_short">The address should not be empty.</item>

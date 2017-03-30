@@ -22,7 +22,9 @@
     "composer/semver": "^1.4",
     "doctrine/cache": "^1.6",
     "doctrine/dbal": "^2.5",
+    "fisharebest/localization": "^1.10",
     "friendsofsymfony/http-cache": "~1.0",
+    "giggsey/locale": "^1.2",
     "google/recaptcha": "^1.1.0",
     "inlinestyle/inlinestyle": "^1.2",
     "mibe/feedwriter": "^1.0",
@@ -38,8 +40,7 @@
     "symfony/http-kernel": "^3.1",
     "symfony/yaml": "^3.1",
     "thepixeldeveloper/sitemap": "^4.4.2",
-    "tinymce/tinymce": "^4.4",
-    "umpirsky/country-list": "^2.0"
+    "tinymce/tinymce": "^4.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.5",

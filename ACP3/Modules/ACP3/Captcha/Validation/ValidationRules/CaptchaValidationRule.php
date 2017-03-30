@@ -29,7 +29,7 @@ class CaptchaValidationRule extends AbstractValidationRule
      */
     public function __construct(
         UserModel $user,
-        CaptchaExtensionInterface $captcha
+        CaptchaExtensionInterface $captcha = null
     ) {
         $this->user = $user;
         $this->captcha = $captcha;

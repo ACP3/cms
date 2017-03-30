@@ -36,6 +36,14 @@ class MailerMessage
     /**
      * @var string|array
      */
+    private $replyTo;
+    /**
+     * @var string
+     */
+    private $sender;
+    /**
+     * @var string|array
+     */
     private $recipients;
     /**
      * @var bool
@@ -155,6 +163,42 @@ class MailerMessage
     public function setFrom($from)
     {
         $this->from = $from;
+        return $this;
+    }
+
+    /**
+     * @return array|string
+     */
+    public function getReplyTo()
+    {
+        return $this->replyTo;
+    }
+
+    /**
+     * @param array|string $replyTo
+     * @return $this
+     */
+    public function setReplyTo($replyTo)
+    {
+        $this->replyTo = $replyTo;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSender()
+    {
+        return $this->sender;
+    }
+
+    /**
+     * @param string $sender
+     * @return $this
+     */
+    public function setSender($sender)
+    {
+        $this->sender = $sender;
         return $this;
     }
 

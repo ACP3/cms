@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <info>
-        <name>English (United States)</name>
-        <direction>ltr</direction>
-    </info>
     <keys>
         <item key="admin_index_settings">Settings</item>
         <item key="feed_image">Feed image</item>

@@ -4,7 +4,7 @@ dist: trusty
 group: edge
 php:
   - 5.6
-  - 7.0
+  - 7.0.8
   - 7.1
   - nightly
   - hhvm
@@ -23,13 +23,14 @@ before_install:
   - echo -e "machine github.com\n\tlogin ${ACP3_CI_USER_GH_TOKEN}" >> ~/.netrc
 
 before_script:
-  - ./build/travis/before_script.sh ${ACP3_CI_USER_GH_TOKEN}
+  - ./build/travis/before_script.sh ${ACP3_CI_USER_GH_TOKEN} ${TRAVIS_PHP_VERSION}
 
 script:
   - ./build/travis/run_unit_tests.sh ${TRAVIS_PHP_VERSION}
 
 after_success:
-  - ./build/travis/push_code_coverage.sh ${TRAVIS_PHP_VERSION}
+  - travis_retry vendor/bin/coveralls -v
+#  - ./build/travis/push_code_coverage.sh ${TRAVIS_PHP_VERSION}
 
 before_deploy:
   - ./build/travis/generate_artifact.sh ${TRAVIS_PHP_VERSION}

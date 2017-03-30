@@ -40,6 +40,14 @@ class Modules extends Core\Controller\AbstractAdminAction
      * @var Core\Installer\SchemaRegistrar
      */
     private $schemaRegistrar;
+    /**
+     * @var Core\Modules\SchemaInstaller
+     */
+    private $schemaInstaller;
+    /**
+     * @var Core\Modules\AclInstaller
+     */
+    private $aclInstaller;
 
     /**
      * Modules constructor.
@@ -51,6 +59,8 @@ class Modules extends Core\Controller\AbstractAdminAction
      * @param \ACP3\Modules\ACP3\System\Helper\Installer $installerHelper
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      * @param Core\Installer\SchemaRegistrar $schemaRegistrar
+     * @param Core\Modules\SchemaInstaller $schemaInstaller
+     * @param Core\Modules\AclInstaller $aclInstaller
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -59,7 +69,9 @@ class Modules extends Core\Controller\AbstractAdminAction
         System\Model\Repository\ModulesRepository $systemModuleRepository,
         System\Helper\Installer $installerHelper,
         Permissions\Cache $permissionsCache,
-        Core\Installer\SchemaRegistrar $schemaRegistrar
+        Core\Installer\SchemaRegistrar $schemaRegistrar,
+        Core\Modules\SchemaInstaller $schemaInstaller,
+        Core\Modules\AclInstaller $aclInstaller
     ) {
         parent::__construct($context);
 
@@ -69,6 +81,8 @@ class Modules extends Core\Controller\AbstractAdminAction
         $this->permissionsCache = $permissionsCache;
         $this->dictionaryCache = $dictionaryCache;
         $this->schemaRegistrar = $schemaRegistrar;
+        $this->schemaInstaller = $schemaInstaller;
+        $this->aclInstaller = $aclInstaller;
     }
 
     /**
@@ -101,15 +115,10 @@ class Modules extends Core\Controller\AbstractAdminAction
      */
     protected function enableModule($moduleDirectory)
     {
-        $bool = false;
+        $result = false;
 
         try {
-            $info = $this->modules->getModuleInfo($moduleDirectory);
-            if (empty($info) || $info['protected'] === true) {
-                throw new System\Exception\ModuleInstallerException(
-                    $this->translator->t('system', 'could_not_complete_request')
-                );
-            }
+            $this->checkPreconditions($moduleDirectory);
 
             $this->moduleInstallerExists($moduleDirectory);
 
@@ -118,19 +127,33 @@ class Modules extends Core\Controller\AbstractAdminAction
             $dependencies = $this->installerHelper->checkInstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'enable_following_modules_first');
 
-            $bool = $this->saveModuleState($moduleDirectory, 1);
+            $result = $this->saveModuleState($moduleDirectory, 1);
 
             $this->purgeCaches();
 
             $text = $this->translator->t(
                 'system',
-                'mod_activate_' . ($bool !== false ? 'success' : 'error')
+                'mod_activate_' . ($result !== false ? 'success' : 'error')
             );
         } catch (System\Exception\ModuleInstallerException $e) {
             $text = $e->getMessage();
         }
 
-        return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
+        return $this->redirectMessages()->setMessage($result, $text, $this->request->getFullPath());
+    }
+
+    /**
+     * @param string $moduleDirectory
+     * @throws System\Exception\ModuleInstallerException
+     */
+    private function checkPreconditions($moduleDirectory)
+    {
+        $info = $this->modules->getModuleInfo($moduleDirectory);
+        if (empty($info) || $info['protected'] === true || $info['installable'] === false) {
+            throw new System\Exception\ModuleInstallerException(
+                $this->translator->t('system', 'could_not_complete_request')
+            );
+        }
     }
 
     /**
@@ -204,15 +227,10 @@ class Modules extends Core\Controller\AbstractAdminAction
      */
     protected function disableModule($moduleDirectory)
     {
-        $bool = false;
+        $result = false;
 
         try {
-            $info = $this->modules->getModuleInfo($moduleDirectory);
-            if (empty($info) || $info['protected'] === true) {
-                throw new System\Exception\ModuleInstallerException(
-                    $text = $this->translator->t('system', 'could_not_complete_request')
-                );
-            }
+            $this->checkPreconditions($moduleDirectory);
 
             $this->moduleInstallerExists($moduleDirectory);
 
@@ -221,19 +239,19 @@ class Modules extends Core\Controller\AbstractAdminAction
             $dependencies = $this->installerHelper->checkUninstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'module_disable_not_possible');
 
-            $bool = $this->saveModuleState($moduleDirectory, 0);
+            $result = $this->saveModuleState($moduleDirectory, 0);
 
             $this->purgeCaches();
 
             $text = $this->translator->t(
                 'system',
-                'mod_deactivate_' . ($bool !== false ? 'success' : 'error')
+                'mod_deactivate_' . ($result !== false ? 'success' : 'error')
             );
         } catch (System\Exception\ModuleInstallerException $e) {
             $text = $e->getMessage();
         }
 
-        return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
+        return $this->redirectMessages()->setMessage($result, $text, $this->request->getFullPath());
     }
 
     /**
@@ -243,7 +261,7 @@ class Modules extends Core\Controller\AbstractAdminAction
      */
     protected function installModule($moduleDirectory)
     {
-        $bool = false;
+        $result = false;
 
         try {
             if ($this->modules->isInstalled($moduleDirectory) === true) {
@@ -259,20 +277,20 @@ class Modules extends Core\Controller\AbstractAdminAction
             $dependencies = $this->installerHelper->checkInstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'enable_following_modules_first');
 
-            $bool = $this->container->get('core.modules.schemaInstaller')->install($moduleSchema);
-            $bool2 = $this->container->get('core.modules.aclInstaller')->install($moduleSchema);
+            $result = $this->schemaInstaller->install($moduleSchema);
+            $resultAcl = $this->aclInstaller->install($moduleSchema);
 
             $this->purgeCaches();
 
             $text = $this->translator->t(
                 'system',
-                'mod_installation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error')
+                'mod_installation_' . ($result !== false && $resultAcl !== false ? 'success' : 'error')
             );
         } catch (System\Exception\ModuleInstallerException $e) {
             $text = $e->getMessage();
         }
 
-        return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
+        return $this->redirectMessages()->setMessage($result, $text, $this->request->getFullPath());
     }
 
     /**
@@ -282,7 +300,7 @@ class Modules extends Core\Controller\AbstractAdminAction
      */
     protected function uninstallModule($moduleDirectory)
     {
-        $bool = false;
+        $result = false;
 
         try {
             $info = $this->modules->getModuleInfo($moduleDirectory);
@@ -299,20 +317,20 @@ class Modules extends Core\Controller\AbstractAdminAction
             $dependencies = $this->installerHelper->checkUninstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'uninstall_following_modules_first');
 
-            $bool = $this->container->get('core.modules.schemaInstaller')->uninstall($moduleSchema);
-            $bool2 = $this->container->get('core.modules.aclInstaller')->uninstall($moduleSchema);
+            $result = $this->schemaInstaller->uninstall($moduleSchema);
+            $resultAcl = $this->aclInstaller->uninstall($moduleSchema);
 
             $this->purgeCaches();
 
             $text = $this->translator->t(
                 'system',
-                'mod_uninstallation_' . ($bool !== false && $bool2 !== false ? 'success' : 'error')
+                'mod_uninstallation_' . ($result !== false && $resultAcl !== false ? 'success' : 'error')
             );
         } catch (System\Exception\ModuleInstallerException $e) {
             $text = $e->getMessage();
         }
 
-        return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
+        return $this->redirectMessages()->setMessage($result, $text, $this->request->getFullPath());
     }
 
     /**

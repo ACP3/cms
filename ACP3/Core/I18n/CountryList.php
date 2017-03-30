@@ -12,6 +12,10 @@ class CountryList
      * @var Translator
      */
     private $translator;
+    /**
+     * @var null|array
+     */
+    private $countries = null;
 
     /**
      * Country constructor.
@@ -29,14 +33,52 @@ class CountryList
      */
     public function worldCountries()
     {
-        $path = ACP3_ROOT_DIR . 'vendor/umpirsky/country-list/data/' . $this->translator->getLocale() . '/country.json';
-
-        if (preg_match('/^[a-z]{2}_[A-Z]{2}/', $this->translator->getLocale()) && is_file($path)) {
-            $countries = file_get_contents($path);
-
-            return json_decode($countries, true);
+        if ($this->countries === null) {
+            $this->cacheWorldCountries();
         }
 
-        return [];
+        return $this->countries;
+    }
+
+    private function cacheWorldCountries()
+    {
+        $basePath = ACP3_ROOT_DIR . 'vendor/giggsey/locale/data/';
+        $supportedLocales = include $basePath . '_list.php';
+
+        $this->countries = [];
+        if ($this->isSupportedLocale($supportedLocales)) {
+            $paths = [
+                $basePath . $this->getTransformedLocale() . '.php',
+                $basePath . $this->translator->getShortIsoCode() . '.php'
+            ];
+            foreach ($paths as $path) {
+                if (is_file($path)) {
+                    $this->countries = include $path;
+                    break;
+                }
+            }
+
+            asort($this->countries, SORT_STRING);
+        }
+    }
+
+    /**
+     * @param array $supportedLocales
+     * @return bool
+     */
+    private function isSupportedLocale(array $supportedLocales)
+    {
+        $localeAndRegion = $this->getTransformedLocale();
+
+        return array_key_exists($localeAndRegion, $supportedLocales)
+            || array_key_exists($this->translator->getShortIsoCode(), $supportedLocales);
+    }
+
+    /**
+     * @return string
+     */
+    private function getTransformedLocale()
+    {
+        return strtolower(str_replace('_', '-', $this->translator->getLocale()));
     }
 }

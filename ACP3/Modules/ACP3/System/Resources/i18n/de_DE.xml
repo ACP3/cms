@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <info>
-        <name>Deutsch (Deutschland)</name>
-        <direction>ltr</direction>
-    </info>
     <keys>
         <item key="access_to_following_modules">Sie haben Zugriff auf folgende %d Module.</item>
         <item key="acp3_not_up_to_date">Es ist eine neue Version des ACP3 verfügbar. Sie kann %link_start%hier%link_end%

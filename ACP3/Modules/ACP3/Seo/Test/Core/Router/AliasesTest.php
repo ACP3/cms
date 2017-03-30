@@ -6,6 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Seo\Test\Core\Router;
 
+use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Seo\Cache;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
@@ -23,6 +24,10 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $seoCacheMock;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $modulesMock;
 
     protected function setUp()
     {
@@ -30,8 +35,12 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['getCache'])
             ->getMock();
+        $this->modulesMock = $this->getMockBuilder(Modules::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['isActive'])
+            ->getMock();
 
-        $this->aliases = new Aliases($this->seoCacheMock);
+        $this->aliases = new Aliases($this->modulesMock, $this->seoCacheMock);
     }
 
     public function testGetUriAliasNoAliasFound()

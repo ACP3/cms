@@ -27,7 +27,7 @@ class OnDisplayCaptchaListener
      * @param ACL $acl
      * @param CaptchaExtensionInterface $captchaExtension
      */
-    public function __construct(ACL $acl, CaptchaExtensionInterface $captchaExtension)
+    public function __construct(ACL $acl, CaptchaExtensionInterface $captchaExtension = null)
     {
         $this->acl = $acl;
         $this->captchaExtension = $captchaExtension;
@@ -38,7 +38,9 @@ class OnDisplayCaptchaListener
      */
     public function onDisplayCaptcha(TemplateEvent $templateEvent)
     {
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true) {
+        if ($this->acl->hasPermission('frontend/captcha/index/image') === true
+            && $this->captchaExtension instanceof CaptchaExtensionInterface
+        ) {
             $arguments = $templateEvent->getParameters();
 
             echo $this->captchaExtension->getCaptcha(

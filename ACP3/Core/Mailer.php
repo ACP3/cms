@@ -72,6 +72,10 @@ class Mailer
      */
     private $template = '';
     /**
+     * @var MailerMessage|null
+     */
+    private $mailerMessage;
+    /**
      * @var \PHPMailer
      */
     private $phpMailer;
@@ -246,6 +250,8 @@ class Mailer
             ->setTemplate($data->getTemplate())
             ->setUrlWeb($data->getUrlWeb());
 
+        $this->mailerMessage = $data;
+
         return $this;
     }
 
@@ -261,12 +267,9 @@ class Mailer
 
             $this->phpMailer->Subject = $this->generateSubject();
 
-            if (is_array($this->from) === true) {
-                $this->phpMailer->setFrom($this->from['email'], $this->from['name']);
-            } else {
-                $this->phpMailer->setFrom($this->from);
-            }
-
+            $this->addReplyTo();
+            $this->addFrom();
+            $this->addSender();
             $this->generateBody();
 
             // Add attachments to the E-mail
@@ -296,6 +299,33 @@ class Mailer
     protected function generateSubject()
     {
         return "=?utf-8?b?" . base64_encode($this->decodeHtmlEntities($this->subject)) . "?=";
+    }
+
+    private function addReplyTo()
+    {
+        $replyTo = $this->mailerMessage->getReplyTo();
+
+        if (is_array($replyTo) === true) {
+            $this->phpMailer->addReplyTo($replyTo['email'], $replyTo['name']);
+        } elseif (!empty($replyTo)) {
+            $this->phpMailer->addReplyTo($replyTo);
+        }
+    }
+
+    private function addFrom()
+    {
+        if (is_array($this->from) === true) {
+            $this->phpMailer->setFrom($this->from['email'], $this->from['name']);
+        } else {
+            $this->phpMailer->setFrom($this->from);
+        }
+    }
+
+    private function addSender()
+    {
+        if (!empty($this->mailerMessage->getSender())) {
+            $this->phpMailer->Sender = $this->mailerMessage->getSender();
+        }
     }
 
     /**

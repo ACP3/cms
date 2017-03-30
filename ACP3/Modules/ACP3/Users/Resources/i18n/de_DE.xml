@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <info>
-        <name>Deutsch (Deutschland)</name>
-        <direction>ltr</direction>
-    </info>
     <keys>
         <item key="account_locked">Ihr Benutzerkonto wurde gesperrt. Um es wieder zu aktivieren, verwenden Sie bitte die &quot;Passwort vergessen&quot; Funktion, welche Ihnen dann ein neues Passwort zusenden wird.</item>
         <item key="address">Adresse</item>

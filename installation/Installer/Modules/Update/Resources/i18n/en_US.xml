@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <info>
-        <name>English (United States)</name>
-        <direction>ltr</direction>
-    </info>
     <keys>
         <item key="db_update_description">To start the database update, please click on the button below.</item>
         <item key="db_update_error">While updating the database an error has occurred!</item>

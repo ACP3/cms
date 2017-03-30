@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <info>
-        <name>Deutsch (Deutschland)</name>
-        <direction>ltr</direction>
-    </info>
     <keys>
         <item key="access_denied">Es ist ihnen nicht gestattet auf diese Seite zuzugreifen, da Sie die dafür benötigtenZugriffsrechte nicht besitzen.</item>
         <item key="errors">Fehlermeldungen</item>

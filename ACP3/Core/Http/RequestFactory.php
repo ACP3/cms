@@ -49,7 +49,7 @@ class RequestFactory
     }
 
     /**
-     * @return \ACP3\Core\Http\Request
+     * @return \ACP3\Core\Http\RequestInterface
      */
     protected function getRequest()
     {

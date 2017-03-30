@@ -123,7 +123,7 @@ class Modules
     public function isInstalled($moduleName)
     {
         $info = $this->getModuleInfo($moduleName);
-        return !empty($info) && $info['installed'] === true;
+        return !empty($info) && $info['installed'] === true || $info['installable'] === false;
     }
 
     /**

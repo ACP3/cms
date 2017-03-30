@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <info>
-        <name>Deutsch (Deutschland)</name>
-        <direction>ltr</direction>
-    </info>
     <keys>
         <item key="db_update_description">Um die Aktualisierung der Datenbank zu beginnen, klicken Sie bitte auf die unten stehende Schaltfläche.</item>
         <item key="db_update_error">Beim Aktualisieren der Datenbank ist ein Fehler aufgetreten!</item>
