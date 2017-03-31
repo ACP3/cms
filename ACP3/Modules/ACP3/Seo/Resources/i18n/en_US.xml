@@ -9,6 +9,9 @@
         <item key="alias_description">Please use only lower case letters, numbers and the hyphen.</item>
         <item key="alias_unallowed_characters_or_exists">Either you have typed in unallowed characters or there is already an URI-Alias with the given name.</item>
         <item key="description">Description</item>
+        <item key="index_all_pages">Index all pages</item>
+        <item key="index_first_page_only">First page only</item>
+        <item key="index_paginated_content">Index paginated content</item>
         <item key="keywords">Keywords</item>
         <item key="keywords_separate_with_commas">Please seperate with commas.</item>
         <item key="mod_description">This module is responsible for managing the url rewrites, keywords, descriptions and the robots settings.</item>
@@ -18,6 +21,7 @@
         <item key="robots_index_nofollow">index, nofollow</item>
         <item key="robots_noindex_follow">noindex, follow</item>
         <item key="robots_noindex_nofollow">noindex, nofollow</item>
+        <item key="select_index_paginated_content">Please select how you want paginated content to be indexed.</item>
         <item key="select_robots">Please select how your website should be indexed by the search engine crawlers.</item>
         <item key="select_sitemap_is_enabled">Please select whether you want to generate a sitemap.</item>
         <item key="select_sitemap_save_mode">Please select whether you want to generate the sitemap automatically or manually.</item>

@@ -33,6 +33,10 @@ class MetaStatements
     protected $seoCache;
 
     /**
+     * @var null|array
+     */
+    protected $aliasesCache;
+    /**
      * @var string
      */
     protected $nextPage = '';
@@ -45,13 +49,13 @@ class MetaStatements
      */
     protected $canonicalUrl = '';
     /**
-     * @var null|array
-     */
-    protected $aliasesCache;
-    /**
      * @var string
      */
     protected $metaDescriptionPostfix = '';
+    /**
+     * @var string
+     */
+    private $metaRobots = '';
 
     /**
      * MetaStatements constructor.
@@ -71,6 +75,17 @@ class MetaStatements
         $this->seoCache = $seoCache;
         $this->config = $config;
         $this->isActive = $modules->isActive(Schema::MODULE_NAME);
+    }
+
+    /**
+     * @param string $metaRobots
+     * @return $this
+     */
+    public function setPageRobotsSettings($metaRobots)
+    {
+        $this->metaRobots = $metaRobots;
+
+        return $this;
     }
 
     /**
@@ -208,6 +223,10 @@ class MetaStatements
      */
     public function getPageRobotsSetting()
     {
+        if (!empty($this->metaRobots)) {
+            return $this->metaRobots;
+        }
+
         $robots = $this->getRobotsSetting($this->request->getUriWithoutPages());
         if (empty($robots)) {
             $robots = $this->getRobotsSetting($this->request->getFullPath());

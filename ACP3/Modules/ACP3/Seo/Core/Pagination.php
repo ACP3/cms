@@ -11,7 +11,10 @@ use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
+use ACP3\Core\Settings\SettingsInterface;
+use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
+use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
 /**
  * Class Pagination
@@ -23,6 +26,10 @@ class Pagination extends \ACP3\Core\Pagination
      * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
      */
     protected $metaStatements;
+    /**
+     * @var SettingsInterface
+     */
+    private $settings;
 
     /**
      * Pagination constructor.
@@ -31,17 +38,20 @@ class Pagination extends \ACP3\Core\Pagination
      * @param RequestInterface $request
      * @param RouterInterface $router
      * @param MetaStatements $metaStatements
+     * @param SettingsInterface $settings
      */
     public function __construct(
         Title $title,
         Translator $translator,
         RequestInterface $request,
         RouterInterface $router,
-        MetaStatements $metaStatements
+        MetaStatements $metaStatements,
+        SettingsInterface $settings
     ) {
         parent::__construct($title, $translator, $request, $router);
 
         $this->metaStatements = $metaStatements;
+        $this->settings = $settings;
     }
 
     /**
@@ -65,6 +75,12 @@ class Pagination extends \ACP3\Core\Pagination
                     )
                 );
                 $this->metaStatements->setPreviousPage($link . 'page_' . ($this->currentPage - 1) . '/');
+
+                $seoSettings = $this->settings->getSettings(Schema::MODULE_NAME);
+
+                if ($seoSettings['index_paginated_content'] === IndexPaginatedContentEnum::INDEX_FIST_PAGE_ONLY) {
+                    $this->metaStatements->setPageRobotsSettings('noindex,follow');
+                }
             }
             if ($this->currentPage + 1 <= $this->totalPages) {
                 $this->metaStatements->setNextPage($link . 'page_' . ($this->currentPage + 1) . '/');

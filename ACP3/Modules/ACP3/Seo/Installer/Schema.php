@@ -46,7 +46,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 11;
+        return 12;
     }
 
     /**
@@ -86,6 +86,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'meta_description' => '',
             'meta_keywords' => '',
             'robots' => 1,
+            'index_paginated_content' => 'first',
             'sitemap_is_enabled' => 0,
             'sitemap_save_mode' => 2,
             'sitemap_separate' => 0
