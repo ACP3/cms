@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.10.1] - 2017-03-30
 ### Fixed
-- Fixed the deployment 
+- Fixed the deployment
 
 ## [4.10.0] - 2017-03-30
 ### Added
