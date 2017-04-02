@@ -3,7 +3,7 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-module.exports = function (gulp, plugins) {
+module.exports = function (gulp) {
     "use strict";
 
     return function () {
@@ -12,13 +12,13 @@ module.exports = function (gulp, plugins) {
             paths = [
                 {
                     'src': [
+                        nodeBasePath + '/@fancyapps/fancybox/dist/jquery.fancybox.min.js',
                         nodeBasePath + '/jquery/dist/jquery.min.js',
                         nodeBasePath + '/bootbox/bootbox.js',
                         nodeBasePath + '/moment/min/moment.min.js',
                         nodeBasePath + '/datatables.net/js/jquery.dataTables.js',
                         nodeBasePath + '/datatables.net-bs/js/dataTables.bootstrap.js',
                         nodeBasePath + '/bootstrap/dist/js/bootstrap.min.js',
-                        nodeBasePath + '/fancybox/source/jquery.fancybox.pack.js',
                         nodeBasePath + '/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
                         nodeBasePath + '/html5shiv/dist/html5shiv.min.js',
                         nodeBasePath + '/js-cookie/src/js.cookie.js'
@@ -31,13 +31,7 @@ module.exports = function (gulp, plugins) {
                 },
                 {
                     'src': [
-                        nodeBasePath + '/fancybox/source/*.gif',
-                        nodeBasePath + '/fancybox/source/*.png'
-                    ],
-                    'dest': systemBasePath + '/images/fancybox'
-                },
-                {
-                    'src': [
+                        nodeBasePath + '/@fancyapps/fancybox/dist/jquery.fancybox.css',
                         nodeBasePath + '/bootstrap/dist/css/bootstrap.min.css',
                         nodeBasePath + '/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
                         nodeBasePath + '/datatables.net-bs/css/dataTables.bootstrap.css'
@@ -52,10 +46,6 @@ module.exports = function (gulp, plugins) {
                 .pipe(gulp.dest(paths[i].dest));
         }
 
-        return gulp.src(nodeBasePath + '/fancybox/source/jquery.fancybox.css')
-            .pipe(plugins.modifyCssUrls({
-                prepend: '../images/fancybox/'
-            }))
-            .pipe(gulp.dest(systemBasePath + '/css'));
+        return 0;
     }
 };

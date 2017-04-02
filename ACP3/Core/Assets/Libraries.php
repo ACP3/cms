@@ -31,7 +31,7 @@ class Libraries
             'enabled' => false,
             'dependencies' => ['jquery'],
             'css' => 'jquery.fancybox.css',
-            'js' => 'jquery.fancybox.pack.js'
+            'js' => 'jquery.fancybox.min.js'
         ],
         'bootstrap' => [
             'enabled' => false,

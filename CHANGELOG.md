@@ -6,7 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-xx
 ### Added
-- Added the possibility to the SEO module to index all pages or only the first page of paginated content 
+- Added the possibility to the SEO module to index all pages or only the first page of paginated content
+ 
+### Changed
+- Updated fancybox to version 3.0.47
+- Updated moment.js to version 2.18.1
+
+### Fixed
+- Fixed the gallery picture upload when the SEO module is active 
 
 ## [4.10.1] - 2017-03-30
 ### Fixed
