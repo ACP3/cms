@@ -15,7 +15,7 @@ class StringFormatterTest extends \PHPUnit_Framework_TestCase
      * @var string
      */
     private $shortenEntryText = <<<HTML
-<p>It looks like that the installation of the ACP3 4.0 was successful.<br>
+<p>It looks like that the installation of the ACP3 CMS was successful.<br>
 This is just a test news, you can now edit or delete in the administration area.</p>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -116,21 +116,21 @@ HTML;
                 $this->shortenEntryText,
                 0,
                 '',
-                'It looks like that the installation of the ACP3 4.0 was successful.
+                'It looks like that the installation of the ACP3 CMS was successful.
 This is just a test news, you ca'
             ],
             'shorten_text_with_offset' => [
                 $this->shortenEntryText,
                 10,
                 '',
-                'It looks like that the installation of the ACP3 4.0 was successful.
+                'It looks like that the installation of the ACP3 CMS was successful.
 This is just a test ne'
             ],
             'append_text' => [
                 $this->shortenEntryText,
                 0,
                 '...',
-                'It looks like that the installation of the ACP3 4.0 was successful.
+                'It looks like that the installation of the ACP3 CMS was successful.
 This is just a test news, you ca...'
             ]
         ];

@@ -55,7 +55,7 @@
         <item key="navigation">Navigation</item>
         <item key="news_headline">Installation erfolgreich beendet!</item>
         <item key="news_text">
-            <![CDATA[So wie es aussieht, hat bei der Installation des ACP3 4.0 alles geklappt.<br />Dies ist nur eine Testnews, die Sie nun im Administrationsbereich bearbeiten oder löschen können.]]></item>
+            <![CDATA[So wie es aussieht, hat bei der Installation des ACP3 CMS alles geklappt.<br />Dies ist nur eine Testnews, die Sie nun im Administrationsbereich bearbeiten oder löschen können.]]></item>
         <item key="newsletter_mailsig">das Newsletterteam</item>
         <item key="nickname">Benutzername</item>
         <item key="not_found">Nicht gefunden!</item>
@@ -94,13 +94,13 @@
         <item key="select_valid_design">Bitte wählen Sie ein gültiges Design aus.</item>
         <item key="step_1_legend">Im Detail wird Sie die Installationsroutine durch folgende Schritte führen:</item>
         <item key="step_1_list_item_1">Einsicht in die Lizenz.</item>
-        <item key="step_1_list_item_2">Überprüfung der Serverkonfiguration, ob alle Anforderungen, die das ACP3 4.0
+        <item key="step_1_list_item_2">Überprüfung der Serverkonfiguration, ob alle Anforderungen, die das ACP3 CMS
             stellt, erfüllt werden.
         </item>
         <item key="step_1_list_item_3">Eingabe der grundlegenden Parameter der Seite.</item>
         <item key="step_1_list_item_4">Anlegen der Datenbank-Tabellen.</item>
-        <item key="step_1_paragraph_1">Herzlich willkommen zur Installation des ACP3 4.0. Dieser Installationsassistent
-            wird Ihnen dabei helfen, das ACP3 4.0 zu installieren und grundlegend zu konfigurieren.
+        <item key="step_1_paragraph_1">Herzlich willkommen zur Installation des ACP3 CMS. Dieser Installationsassistent
+            wird Ihnen dabei helfen, das ACP3 CMS zu installieren und grundlegend zu konfigurieren.
         </item>
         <item key="step_3_legend_1"><![CDATA[Allgemeine Systemvoraussetzungen &amp; Ordner-Rechte]]></item>
         <item key="step_3_legend_2">PHP Einstellungen</item>
