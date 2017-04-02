@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - 2017-xx-xx
 ### Added
 - Added the possibility to the SEO module to index all pages or only the first page of paginated content
+- When the AJAX form validation has previously failed and the user alters an affected form element, the validation is triggered automatically again 
  
 ### Changed
 - Updated fancybox to version 3.0.47
