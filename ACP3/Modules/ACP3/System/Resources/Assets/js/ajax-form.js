@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -34,7 +34,7 @@
 
                 that.isFormValid = true;
 
-                $(document).trigger('acp3.ajaxFrom.submit.before', [ that ]);
+                $(document).trigger('acp3.ajaxFrom.submit.before', [that]);
 
                 if (that.isFormValid && that.preValidateForm(that.element)) {
                     that.processAjaxRequest();
@@ -45,9 +45,7 @@
 
                     that.processAjaxRequest();
                 }
-            });
-
-            $(this.element).change(function() {
+            }).on('change', function () {
                 if (that.isFormValid === false) {
                     that.removeAllPreviousErrors();
                     that.checkFormElementsForErrors(that.element);
@@ -72,7 +70,7 @@
                 .removeClass('has-error')
                 .find('.validation-failed').remove();
         },
-        checkFormElementsForErrors: function(form) {
+        checkFormElementsForErrors: function (form) {
             var field;
             for (var i = 0; i < form.elements.length; i++) {
                 field = form.elements[i];
@@ -209,7 +207,7 @@
 
                 $(html).appendTo($body);
 
-                setTimeout(function() {
+                setTimeout(function () {
                     $loadingLayer = $($loadingLayer.selector);
 
                     $loadingLayer.addClass('loading-layer__active');
