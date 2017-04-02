@@ -61,33 +61,65 @@ class Pagination extends \ACP3\Core\Pagination
     {
         parent::setMetaStatements();
 
-        // Vorherige und nächste Seite für Suchmaschinen und Prefetching propagieren
         if ($this->request->getArea() !== AreaEnum::AREA_ADMIN) {
-            $path = ($this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $this->request->getUriWithoutPages();
-            $link = $this->router->route($path);
             if ($this->currentPage - 1 > 0) {
-                // Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
-                $this->metaStatements->setDescriptionPostfix(
-                    $this->translator->t(
-                        'system',
-                        'page_x',
-                        ['%page%' => $this->currentPage]
-                    )
-                );
-                $this->metaStatements->setPreviousPage($link . 'page_' . ($this->currentPage - 1) . '/');
+                $this->modifyMetaDescription();
+                $this->setMetaPreviousPage();
+                $this->preventIndexing();
+            }
+            $this->setMetaNextPage();
+            $this->setMetaCanonicalUri();
+        }
+    }
 
-                $seoSettings = $this->settings->getSettings(Schema::MODULE_NAME);
+    /**
+     * @return string
+     */
+    private function getRoute()
+    {
+        $path = ($this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $this->request->getUriWithoutPages();
+        return $this->router->route($path);
+    }
 
-                if ($seoSettings['index_paginated_content'] === IndexPaginatedContentEnum::INDEX_FIST_PAGE_ONLY) {
-                    $this->metaStatements->setPageRobotsSettings('noindex,follow');
-                }
-            }
-            if ($this->currentPage + 1 <= $this->totalPages) {
-                $this->metaStatements->setNextPage($link . 'page_' . ($this->currentPage + 1) . '/');
-            }
-            if ($this->request->getParameters()->get('page', 0) === 1) {
-                $this->metaStatements->setCanonicalUri($link);
-            }
+    /**
+     * Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
+     */
+    private function modifyMetaDescription()
+    {
+        $this->metaStatements->setDescriptionPostfix(
+            $this->translator->t(
+                'system',
+                'page_x',
+                ['%page%' => $this->currentPage]
+            )
+        );
+    }
+
+    private function setMetaPreviousPage()
+    {
+        $this->metaStatements->setPreviousPage($this->getRoute() . 'page_' . ($this->currentPage - 1) . '/');
+    }
+
+    private function preventIndexing()
+    {
+        $seoSettings = $this->settings->getSettings(Schema::MODULE_NAME);
+
+        if ($seoSettings['index_paginated_content'] === IndexPaginatedContentEnum::INDEX_FIST_PAGE_ONLY) {
+            $this->metaStatements->setPageRobotsSettings('noindex,follow');
+        }
+    }
+
+    private function setMetaNextPage()
+    {
+        if ($this->currentPage + 1 <= $this->totalPages) {
+            $this->metaStatements->setNextPage($this->getRoute() . 'page_' . ($this->currentPage + 1) . '/');
+        }
+    }
+
+    private function setMetaCanonicalUri()
+    {
+        if ($this->request->getParameters()->get('page', 0) === 1) {
+            $this->metaStatements->setCanonicalUri($this->getRoute());
         }
     }
 }
