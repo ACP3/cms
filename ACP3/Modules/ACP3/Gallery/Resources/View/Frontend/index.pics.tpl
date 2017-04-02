@@ -5,18 +5,25 @@
         {if $overlay == 1}
             {foreach $pictures as $row}
                 <a href="{uri args="gallery/index/image/id_`$row.id`/action_normal"}"
-                   data-fancybox-group="gallery"
-                   {if !empty($row.description)}title="{$row.description|strip_tags}"{/if}>
-                    <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="" class="img-thumbnail">
+                   class="gallery-picture-thumb"
+                   data-fancybox="gallery"
+                   data-type="image"
+                   {if !empty($row.description)}data-caption="{$row.description|strip_tags|trim}"{/if}>
+                    <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}"
+                         alt="{$row.description|strip_tags|trim}"
+                         class="img-thumbnail">
                 </a>
             {/foreach}
             {javascripts}
-                {include_js module="gallery" file="frontend/index.pics" depends="fancybox"}
+                {include_js depends="fancybox"}
             {/javascripts}
         {else}
             {foreach $pictures as $row}
-                <a href="{uri args="gallery/index/details/id_`$row.id`"}">
-                    <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="" class="img-thumbnail">
+                <a href="{uri args="gallery/index/details/id_`$row.id`"}"
+                   class="gallery-picture-thumb">
+                    <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}"
+                         alt="{$row.description|strip_tags|trim}"
+                         class="img-thumbnail">
                 </a>
             {/foreach}
         {/if}

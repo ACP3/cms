@@ -87,7 +87,7 @@ class GeneratePictureUriAliasOnModelAfterSaveListener
             $seoDescription = $this->metaStatements->getDescription(
                 sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
             );
-            $seoRobots = $this->metaStatements->getRobots(
+            $seoRobots = $this->metaStatements->getRobotsSetting(
                 sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
             );
 
