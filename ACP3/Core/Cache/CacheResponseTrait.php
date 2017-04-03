@@ -33,7 +33,7 @@ trait CacheResponseTrait
     abstract protected function getSettings();
 
     /**
-     * @param int $lifetime
+     * @param int $lifetime Cache TTL in seconds
      */
     public function setCacheResponseCacheable($lifetime = 60)
     {

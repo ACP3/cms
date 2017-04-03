@@ -16,7 +16,7 @@
         <item key="admin_extensions_designs">Designs</item>
         <item key="admin_extensions_index">Erweiterungen</item>
         <item key="admin_extensions_modules">Module</item>
-        <item key="admin_index_configuration">Konfiguration</item>
+        <item key="admin_index_settings">Einstellungen</item>
         <item key="admin_maintenance_cache">Cacheverwaltung</item>
         <item key="admin_maintenance_index">Wartung</item>
         <item key="admin_maintenance_update_check">Versionsüberprüfung</item>
@@ -46,7 +46,6 @@
         <item key="cancel">Abbrechen</item>
         <item key="close">Schließen</item>
         <item key="close_window">Fenster schließen</item>
-        <item key="configuration">Konfiguration</item>
         <item key="config_edit_error">Beim Bearbeiten der Konfiguration ist ein Fehler aufgetreten.</item>
         <item key="config_edit_success">Die Konfiguration wurde erfolgreich bearbeitet.</item>
         <item key="confirm_delete">Sollen die ausgewählten Einträge wirklich gelöscht werden?</item>

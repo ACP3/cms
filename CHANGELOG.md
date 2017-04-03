@@ -11,9 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added new options to the systems settings for managing the site title
 
 ### Changed
-- Updated fancybox to version 3.0.47
-- Updated moment.js to version 2.18.1
 - Rearranged some systems settings into new tabs
+- Renamed the system configuration to system settings so that it aligns with all other module settings actions
+- Updated fancybox to version 3.0.47
 
 ### Fixed
 - Fixed the gallery picture upload when the SEO module is active 

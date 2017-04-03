@@ -93,6 +93,6 @@
     </div>
     {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token}
     {javascripts}
-        {include_js module="system" file="admin/index.configuration"}
+        {include_js module="system" file="admin/index.settings"}
     {/javascripts}
 {/block}

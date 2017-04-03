@@ -10,10 +10,10 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\System;
 
 /**
- * Class Configuration
+ * Class Settings
  * @package ACP3\Modules\ACP3\System\Controller\Admin\Index
  */
-class Configuration extends Core\Controller\AbstractAdminAction
+class Settings extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\Forms
@@ -37,7 +37,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
     private $editorRegistrar;
 
     /**
-     * Configuration constructor.
+     * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\Forms $formsHelper
