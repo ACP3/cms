@@ -157,6 +157,10 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             67 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'site_subtitle', '');",
+            ],
+            68 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'site_subtitle_homepage_mode', '0');",
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'site_subtitle_mode', '1');",
             ]
         ];
     }

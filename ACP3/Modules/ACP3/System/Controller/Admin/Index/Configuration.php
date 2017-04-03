@@ -70,6 +70,11 @@ class Configuration extends Core\Controller\AbstractAdminAction
     {
         $systemSettings = $this->config->getSettings(System\Installer\Schema::MODULE_NAME);
 
+        $siteSubtitleMode = [
+            1 => $this->translator->t('system', 'site_subtitle_mode_all_pages'),
+            2 => $this->translator->t('system', 'site_subtitle_mode_homepage_only'),
+        ];
+
         $pageCachePurgeMode = [
             1 => $this->translator->t('system', 'page_cache_purge_mode_automatically'),
             2 => $this->translator->t('system', 'page_cache_purge_mode_manually'),
@@ -87,6 +92,15 @@ class Configuration extends Core\Controller\AbstractAdminAction
         ];
 
         return [
+            'site_subtitle_mode' => $this->formsHelper->checkboxGenerator(
+                'site_subtitle_mode',
+                    $siteSubtitleMode,
+                    $systemSettings['site_subtitle_mode']
+            ),
+            'site_subtitle_homepage_mode' => $this->formsHelper->yesNoCheckboxGenerator(
+                'site_subtitle_homepage_mode',
+                $systemSettings['site_subtitle_homepage_mode']
+            ),
             'cookie_consent' => $this->formsHelper->yesNoCheckboxGenerator(
                 'cookie_consent_is_enabled',
                 $systemSettings['cookie_consent_is_enabled']
@@ -169,6 +183,8 @@ class Configuration extends Core\Controller\AbstractAdminAction
                     'page_cache_purge_mode' => (int)$formData['page_cache_purge_mode'],
                     'site_title' => $this->secure->strEncode($formData['site_title']),
                     'site_subtitle' => $this->secure->strEncode($formData['site_subtitle']),
+                    'site_subtitle_homepage_mode' => (int)$formData['site_subtitle_homepage_mode'],
+                    'site_subtitle_mode' => (int)$formData['site_subtitle_mode'],
                     'wysiwyg' => $formData['wysiwyg']
                 ];
 
