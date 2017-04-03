@@ -52,6 +52,7 @@
         <item key="confirm_delete">Sollen die ausgewählten Einträge wirklich gelöscht werden?</item>
         <item key="confirm_delete_multiple">Sollen die {items} ausgewählten Einträge wirklich gelöscht werden?</item>
         <item key="confirm_delete_single">Soll der ausgewählte Eintrag wirklich gelöscht werden?</item>
+        <item key="cookie_consent">Cookie-Richtlinie</item>
         <item key="cookie_consent_text">Cookie-Richtlinien-Hinweistext</item>
         <item key="could_not_complete_request">Die Anfrage konnte durch einen Fehler nicht bearbeitet werden.</item>
         <item key="create_error">Beim Erstellen des Eintrages ist ein Fehler aufgetreten.</item>
@@ -148,6 +149,7 @@
         <item key="languages_edit_success">Die Sprache wurde erfolgreich ausgewählt und kann nun verwendet werden.</item>
         <item key="last_page">Letzte Seite</item>
         <item key="loading_please_wait">Lädt - bitte warten...</item>
+        <item key="localization">Lokalisierung</item>
         <item key="mailer_smtp_auth">SMTP-Authentifizierung</item>
         <item key="mailer_smtp_hostname">SMTP Hostname</item>
         <item key="mailer_smtp_port">SMTP Port</item>
