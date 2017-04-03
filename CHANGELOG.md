@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - 2017-xx-xx
 ### Added
 - Added the possibility to the SEO module to index all pages or only the first page of paginated content
-- When the AJAX form validation has previously failed and the user alters an affected form element, the validation is triggered automatically again 
- 
+- When the AJAX form validation has previously failed and the user alters an affected form element, the validation is triggered automatically again
+- Added new options to the systems settings for managing the site title
+
 ### Changed
 - Updated fancybox to version 3.0.47
 - Updated moment.js to version 2.18.1
+- Rearranged some systems settings into new tabs
 
 ### Fixed
 - Fixed the gallery picture upload when the SEO module is active 
