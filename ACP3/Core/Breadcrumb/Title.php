@@ -45,9 +45,9 @@ class Title
      */
     protected $siteTitle = '';
     /**
-     * @var string
+     * @var string|null
      */
-    private $siteSubtitle = '';
+    private $siteSubtitle;
 
     /**
      * Title constructor.

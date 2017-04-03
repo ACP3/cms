@@ -6,6 +6,7 @@
 
 namespace ACP3\Modules\ACP3\System\Test\Core\Breadcrumb;
 
+use ACP3\Core\Http\Request;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Core\Breadcrumb\Title;
 
@@ -19,12 +20,17 @@ class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $configMock;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $requestMock;
 
     protected function setUp()
     {
         $this->initializeMockObjects();
 
         $this->title = new Title(
+            $this->requestMock,
             $this->stepsMock,
             $this->eventDispatcherMock,
             $this->configMock
@@ -34,6 +40,10 @@ class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
     protected function initializeMockObjects()
     {
         parent::initializeMockObjects();
+
+        $this->requestMock = $this->getMockBuilder(Request::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->configMock = $this->getMockBuilder(SettingsInterface::class)
             ->disableOriginalConstructor()
@@ -45,28 +55,62 @@ class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
     {
         $this->setUpStepsExpectations(1);
 
-        $this->configMock->expects($this->exactly(2))
+        $this->setUpConfigMockExpectations('SEO Title', '', 1, 0);
+
+        $this->assertEquals('Foo | SEO Title', $this->title->getSiteAndPageTitle());
+    }
+
+    /**
+     * @param string $siteTitle
+     * @param string $siteSubtitle
+     * @param int $subtitleMode
+     * @param int $subtitleHomepageMode
+     */
+    private function setUpConfigMockExpectations($siteTitle, $siteSubtitle, $subtitleMode, $subtitleHomepageMode)
+    {
+        $this->configMock->expects($this->once())
             ->method('getSettings')
             ->with('system')
             ->willReturn([
-                'site_title' => 'SEO Title',
+                'site_title' => $siteTitle,
+                'site_subtitle' => $siteSubtitle,
+                'site_subtitle_homepage_mode' => $subtitleHomepageMode,
+                'site_subtitle_mode' => $subtitleMode
             ]);
-
-        $this->assertEquals('Foo | SEO Title', $this->title->getSiteAndPageTitle());
     }
 
     public function testGetSiteAndPageTitleWithSubtitle()
     {
         $this->setUpStepsExpectations(1);
 
-        $this->configMock->expects($this->exactly(2))
-            ->method('getSettings')
-            ->with('system')
-            ->willReturn([
-                'site_title' => 'SEO Title',
-                'site_subtitle' => 'Subtitle'
-            ]);
+        $this->setUpConfigMockExpectations('SEO Title', 'Subtitle', 1, 0);
 
         $this->assertEquals('Foo | SEO Title - Subtitle', $this->title->getSiteAndPageTitle());
+    }
+
+    public function testGetSiteAndPageTitleForHomepageWithOverride()
+    {
+        $this->setUpStepsExpectations(0);
+
+        $this->requestMock->expects($this->once())
+            ->method('isHomepage')
+            ->willReturn(true);
+
+        $this->setUpConfigMockExpectations('SEO Title', 'Subtitle', 1, 1);
+
+        $this->assertEquals('Subtitle | SEO Title', $this->title->getSiteAndPageTitle());
+    }
+
+    public function testGetSiteAndPageTitleForNotHomepage()
+    {
+        $this->setUpStepsExpectations(1);
+
+        $this->requestMock->expects($this->once())
+            ->method('isHomepage')
+            ->willReturn(false);
+
+        $this->setUpConfigMockExpectations('SEO Title', 'Subtitle', 2, 1);
+
+        $this->assertEquals('Foo | SEO Title', $this->title->getSiteAndPageTitle());
     }
 }
