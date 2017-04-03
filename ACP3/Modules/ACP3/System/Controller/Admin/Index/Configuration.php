@@ -137,7 +137,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
      */
     public function executePost()
     {
-        return $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handleSettingsPostAction(
             function () {
                 $formData = $this->request->getPost()->all();
 
@@ -168,16 +168,11 @@ class Configuration extends Core\Controller\AbstractAdminAction
                     'page_cache_is_enabled' => (int)$formData['page_cache_is_enabled'],
                     'page_cache_purge_mode' => (int)$formData['page_cache_purge_mode'],
                     'site_title' => $this->secure->strEncode($formData['site_title']),
+                    'site_subtitle' => $this->secure->strEncode($formData['site_subtitle']),
                     'wysiwyg' => $formData['wysiwyg']
                 ];
 
-                $bool = $this->config->saveSettings($data, System\Installer\Schema::MODULE_NAME);
-
-                return $this->redirectMessages()->setMessage(
-                    $bool,
-                    $this->translator->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'),
-                    $this->request->getFullPath()
-                );
+                return $this->config->saveSettings($data, System\Installer\Schema::MODULE_NAME);
             },
             $this->request->getFullPath()
         );

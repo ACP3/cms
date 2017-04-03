@@ -280,6 +280,8 @@
         <item key="settings">Settings</item>
         <item key="settings_error">While editing the settings an error has occurred.</item>
         <item key="settings_success">The settings have been successfully edited.</item>
+        <item key="site_subtitle">Website subtitle</item>
+        <item key="site_title">Website title</item>
         <item key="sidebar_entries_to_display">Sidebar entries to display</item>
         <item key="start_date">Release date</item>
         <item key="statements_in_byte">Statements in Byte.</item>

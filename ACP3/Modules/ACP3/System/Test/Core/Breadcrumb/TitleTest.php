@@ -12,6 +12,10 @@ use ACP3\Modules\ACP3\System\Core\Breadcrumb\Title;
 class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
 {
     /**
+     * @var Title
+     */
+    protected $title;
+    /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $configMock;
@@ -35,19 +39,34 @@ class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
             ->disableOriginalConstructor()
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
-
-        $this->configMock->expects($this->once())
-            ->method('getSettings')
-            ->with('system')
-            ->willReturn([
-                'site_title' => 'SEO Title'
-            ]);
     }
 
     public function testGetSiteAndPageTitleWithNoCustomSiteTitle()
     {
         $this->setUpStepsExpectations(1);
 
+        $this->configMock->expects($this->exactly(2))
+            ->method('getSettings')
+            ->with('system')
+            ->willReturn([
+                'site_title' => 'SEO Title',
+            ]);
+
         $this->assertEquals('Foo | SEO Title', $this->title->getSiteAndPageTitle());
+    }
+
+    public function testGetSiteAndPageTitleWithSubtitle()
+    {
+        $this->setUpStepsExpectations(1);
+
+        $this->configMock->expects($this->exactly(2))
+            ->method('getSettings')
+            ->with('system')
+            ->willReturn([
+                'site_title' => 'SEO Title',
+                'site_subtitle' => 'Subtitle'
+            ]);
+
+        $this->assertEquals('Foo | SEO Title - Subtitle', $this->title->getSiteAndPageTitle());
     }
 }

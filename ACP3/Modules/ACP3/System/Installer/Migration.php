@@ -154,6 +154,9 @@ class Migration extends Modules\Installer\AbstractMigration
             66 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'cookie_consent_is_enabled', 0);",
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'cookie_consent_text', '');",
+            ],
+            67 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'site_subtitle', '');",
             ]
         ];
     }

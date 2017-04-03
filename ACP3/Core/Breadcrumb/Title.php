@@ -44,6 +44,10 @@ class Title
      * @var string
      */
     protected $siteTitle = '';
+    /**
+     * @var string
+     */
+    private $siteSubtitle = '';
 
     /**
      * Title constructor.
@@ -73,6 +77,25 @@ class Title
     public function setSiteTitle($title)
     {
         $this->siteTitle = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSiteSubtitle()
+    {
+        return $this->siteSubtitle;
+    }
+
+    /**
+     * @param string $siteSubtitle
+     * @return $this
+     */
+    public function setSiteSubtitle($siteSubtitle)
+    {
+        $this->siteSubtitle = $siteSubtitle;
 
         return $this;
     }
@@ -179,6 +202,9 @@ class Title
         }
         if (!empty($this->getSiteTitle())) {
             $title .= ' | ' . $this->getSiteTitle();
+        }
+        if (!empty($this->getSiteSubtitle())) {
+            $title .= $separator . $this->getSiteSubtitle();
         }
 
         return $title;
