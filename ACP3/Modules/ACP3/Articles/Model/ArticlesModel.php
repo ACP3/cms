@@ -30,6 +30,7 @@ class ArticlesModel extends AbstractModel
     protected function getAllowedColumns()
     {
         return [
+            'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
             'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,

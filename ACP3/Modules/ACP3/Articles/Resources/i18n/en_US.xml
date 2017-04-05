@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
     <keys>
+        <item key="active">Active</item>
         <item key="admin_index_create">Create new article</item>
         <item key="admin_index_delete">Delete article</item>
         <item key="admin_index_edit">Edit article</item>
@@ -8,6 +9,7 @@
         <item key="latest_articles">Latest articles</item>
         <item key="mod_description">This module manages the articles.</item>
         <item key="page_statements">Page statements</item>
+        <item key="select_active">Please select, whether the article should be active or not.</item>
         <item key="select_create_menu_item">Please select, whether you want to create am menu item for this article or not.</item>
         <item key="text">Text</item>
         <item key="text_to_short">The text should not be empty.</item>

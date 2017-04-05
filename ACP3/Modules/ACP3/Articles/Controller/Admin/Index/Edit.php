@@ -63,6 +63,7 @@ class Edit extends AbstractFormAction
             $this->title->setPageTitlePrefix($article['title']);
 
             return [
+                'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $article['active']),
                 'form' => array_merge($article, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
                 'SEO_URI_PATTERN' => Articles\Helpers::URL_KEY_PATTERN,

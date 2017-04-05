@@ -36,6 +36,7 @@ class Duplicate extends AbstractAdminAction
         ArticlesModel $articlesModel
     ) {
         parent::__construct($context);
+
         $this->articleRepository = $articleRepository;
         $this->articlesModel = $articlesModel;
     }
@@ -50,6 +51,7 @@ class Duplicate extends AbstractAdminAction
         $article = $this->articleRepository->getOneById($id);
 
         if (!empty($article)) {
+            $article['active'] = 0;
             $result = $this->articlesModel->save($article);
 
             return $this->redirectMessages()->setMessage(

@@ -45,7 +45,7 @@ class SearchResultsAwareRepository extends AbstractRepository implements SearchR
     public function getAllSearchResults($fields, $searchTerm, $sortDirection)
     {
         return $this->db->fetchAll(
-            "SELECT `id`, `title`, `text` FROM {$this->getTableName()} WHERE MATCH ({$fields}) AGAINST ({$this->db->getConnection()->quote($searchTerm)} IN BOOLEAN MODE) AND {$this->getPublicationPeriod()} ORDER BY `start` {$sortDirection}, `end` {$sortDirection}, `title` {$sortDirection}",
+            "SELECT `id`, `title`, `text` FROM {$this->getTableName()} WHERE MATCH ({$fields}) AGAINST ({$this->db->getConnection()->quote($searchTerm)} IN BOOLEAN MODE) AND {$this->getPublicationPeriod()} AND `active` = 1 ORDER BY `start` {$sortDirection}, `end` {$sortDirection}, `title` {$sortDirection}",
             ['time' => $this->date->getCurrentDateTime()]
         );
     }

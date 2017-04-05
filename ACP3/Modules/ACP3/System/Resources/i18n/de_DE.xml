@@ -253,6 +253,7 @@
         <item key="previous_page">Vorherige Seite</item>
         <item key="protected_module">Geschütztes Modul</item>
         <item key="protected_module_description">Geschützte Module können nicht deaktiviert oder deinstalliert werden.</item>
+        <item key="publication">Veröffentlichung</item>
         <item key="publication_period">Veröffentlichungszeitraum</item>
         <item key="records_per_page">Datensätze pro Seite</item>
         <item key="refresh">Aktualisieren</item>

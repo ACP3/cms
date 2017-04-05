@@ -26,7 +26,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 41;
+        return 42;
     }
 
     /**
@@ -67,6 +67,7 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             "CREATE TABLE `{pre}articles` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `active` TINYINT(1) UNSIGNED NOT NULL,
                 `start` DATETIME NOT NULL,
                 `end` DATETIME NOT NULL,
                 `updated_at` DATETIME NOT NULL,
@@ -75,6 +76,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 `user_id` INT(10) UNSIGNED,
                 PRIMARY KEY (`id`),
                 FULLTEXT KEY `index` (`title`, `text`),
+                INDEX (`active`),
                 INDEX (`user_id`),
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
             ) {ENGINE} {CHARSET};"
