@@ -98,6 +98,9 @@
         <item key="designs_edit_success">The design has been successfully selected and may now be used.</item>
         <item key="disable">Disable</item>
         <item key="disable_module">Disable module</item>
+        <item key="duplicate_entry">Duplicate entry</item>
+        <item key="duplicate_error">While duplicating the entry an error has occurred.</item>
+        <item key="duplicate_success">The entry has been successfully duplicated.</item>
         <item key="edit">Edit</item>
         <item key="edit_error">While editing the entry an error has occurred.</item>
         <item key="edit_order">Edit order</item>

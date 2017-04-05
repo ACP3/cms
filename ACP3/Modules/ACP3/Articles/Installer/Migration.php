@@ -65,6 +65,9 @@ class Migration extends AbstractMigration
             40 => [
                 "ALTER TABLE `{pre}articles` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `end`;",
                 "UPDATE `{pre}articles` SET `updated_at` = `start`;"
+            ],
+            41 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'duplicate', '', 4);",
             ]
         ];
     }
