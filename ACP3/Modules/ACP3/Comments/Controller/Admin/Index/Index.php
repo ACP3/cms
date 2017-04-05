@@ -46,7 +46,7 @@ class Index extends Core\Controller\AbstractAdminAction
         $dataGrid
             ->setResults($this->commentRepository->getCommentsGroupedByModule())
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
-            ->setIdentifier('#acp-table')
+            ->setIdentifier('#comments-data-grid')
             ->setResourcePathDelete('admin/comments/index/delete')
             ->setResourcePathEdit('admin/comments/details/index');
 

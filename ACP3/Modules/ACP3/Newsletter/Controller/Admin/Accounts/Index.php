@@ -46,7 +46,7 @@ class Index extends Core\Controller\AbstractAdminAction
         $dataGrid
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
-            ->setIdentifier('#acp-table')
+            ->setIdentifier('#newsletter-accounts-data-grid')
             ->setResourcePathDelete('admin/newsletter/accounts/delete');
 
         $this->addDataGridColumns($dataGrid);

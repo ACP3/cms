@@ -46,7 +46,7 @@ class Index extends Core\Controller\AbstractAdminAction
         $dataGrid
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
-            ->setIdentifier('#acp-table')
+            ->setIdentifier('#categories-data-grid')
             ->setResourcePathDelete('admin/categories/index/delete')
             ->setResourcePathEdit('admin/categories/index/edit');
 

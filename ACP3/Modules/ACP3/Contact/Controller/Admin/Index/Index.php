@@ -38,7 +38,7 @@ class Index extends Core\Controller\AbstractAdminAction
         $dataGrid
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
-            ->setIdentifier('#acp-table')
+            ->setIdentifier('#contact-data-grid')
             ->setEnableOptions(false);
 
         $this->addDataGridColumns($dataGrid);
