@@ -9,6 +9,7 @@
                     <li{if $values@first} class="active"{/if}>
                         <a href="#tab-{$module}" data-toggle="tab">
                             {lang t="`$module`|`$module`"}
+                            <span class="badge">{count($values)}</span>
                         </a>
                     </li>
                 {/foreach}
