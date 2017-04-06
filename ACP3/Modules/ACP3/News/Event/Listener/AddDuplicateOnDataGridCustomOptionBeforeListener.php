@@ -6,56 +6,35 @@
 
 namespace ACP3\Modules\ACP3\News\Event\Listener;
 
-use ACP3\Core\ACL;
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\Model\Event\Listener\AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener;
 
 /**
  * Class AddDuplicateOnDataGridCustomOptionBeforeListener
  * @package ACP3\Modules\ACP3\News\Event\Listener
  */
-class AddDuplicateOnDataGridCustomOptionBeforeListener
+class AddDuplicateOnDataGridCustomOptionBeforeListener extends AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @inheritdoc
      */
-    protected $acl;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    protected $translator;
-
-    /**
-     * OnDataGridCustomOptionBeforeListener constructor.
-     *
-     * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Core\I18n\Translator $translator
-     */
-    public function __construct(
-        ACL $acl,
-        Translator $translator
-    ) {
-        $this->acl = $acl;
-        $this->translator = $translator;
+    protected function getDataGridIdentifier()
+    {
+        return '#news-data-grid';
     }
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent $customOptionEvent
+     * @inheritdoc
      */
-    public function addDuplicateEntryButton(CustomOptionEvent $customOptionEvent)
+    protected function getResource()
     {
-        if ($customOptionEvent->getIdentifier() === '#news-data-grid' &&
-            $this->acl->hasPermission('admin/news/index/duplicate') === true
-        ) {
-            $dbResultRow = $customOptionEvent->getDbResultRow();
+        return 'admin/news/index/duplicate';
+    }
 
-            $customOptionEvent->getOptionRenderer()->addOption(
-                'acp/news/index/duplicate/id_' . $dbResultRow['id'],
-                $this->translator->t('system', 'duplicate_entry'),
-                'glyphicon-repeat',
-                'btn-default',
-                true
-            );
-        }
+    /**
+     * @inheritdoc
+     */
+    protected function getRoute(array $dbResultRow)
+    {
+        return 'acp/news/index/duplicate/id_' . $dbResultRow['id'];
     }
 }
