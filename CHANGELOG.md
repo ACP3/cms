@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Rearranged some systems settings into new tabs
 - Renamed the system configuration to system settings so that it aligns with all other module settings actions
 - Updated fancybox to version 3.0.47
+- Updated minify to version 3.0
 
 ### Fixed
 - Fixed the gallery picture upload when the SEO module is active 
