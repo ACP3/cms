@@ -13,6 +13,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use JSMin\JSMin;
 
 abstract class AbstractMinifier implements MinifierInterface
 {
@@ -157,15 +158,20 @@ abstract class AbstractMinifier implements MinifierInterface
     }
 
     /**
-     * @param array  $files
+     * @param array $files
      * @param string $path
      */
     protected function saveMinifiedAsset(array $files, $path)
     {
-        $options = [];
-        $options['minifiers']['text/css'] = ['Minify_CSSmin', 'minify'];
+        $options = [
+            'options' => [
+                \Minify::TYPE_CSS => [\Minify_CSSmin::class, 'minify'],
+                \Minify::TYPE_JS => [JSMin::class, 'minify'],
+            ]
+        ];
 
-        $content = \Minify::combine($files, $options);
+        $minify = new \Minify(new \Minify_Cache_Null());
+        $content = $minify->combine($files, $options);
 
         if (!is_dir($this->appPath->getUploadsDir() . 'assets')) {
             @mkdir($this->appPath->getUploadsDir() . 'assets', 0755);
@@ -176,10 +182,10 @@ abstract class AbstractMinifier implements MinifierInterface
     }
 
     /**
-     * @param bool   $debug
+     * @param bool $debug
      * @param string $group
      * @param string $filenameHash
-     * @param int    $lastGenerated
+     * @param int $lastGenerated
      *
      * @return string
      */

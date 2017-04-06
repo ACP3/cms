@@ -29,7 +29,7 @@
     "inlinestyle/inlinestyle": "^1.2",
     "mibe/feedwriter": "^1.0",
     "monolog/monolog": "^1.21",
-    "mrclay/minify": "^2.3",
+    "mrclay/minify": "^3.0",
     "patchwork/utf8": "^1.3",
     "phpmailer/phpmailer": "^5.2",
     "smarty/smarty": "^3.1",
