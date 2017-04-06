@@ -26,10 +26,10 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
      */
     public function resultExists($newsId, $time = '')
     {
-        $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
+        $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         return ((int)$this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id' . $period,
-                ['id' => $newsId, 'time' => $time]
+                ['id' => $newsId, 'time' => $time, 'active' => 1]
             ) > 0);
     }
 
@@ -55,18 +55,18 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     public function countAll($time = '', $categoryId = '')
     {
         if (!empty($categoryId)) {
-            $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
+            $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
             return $this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE category_id = :categoryId' . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC',
-                ['time' => $time, 'categoryId' => $categoryId]
+                ['time' => $time, 'categoryId' => $categoryId, 'active' => 1]
             );
         }
 
-        $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() : '';
+        $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         return $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC',
-            ['time' => $time]
+            ['time' => $time, 'active' => 1]
         );
     }
 
@@ -80,11 +80,11 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getAllByCategoryId($categoryId, $time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
+        $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()} WHERE category_id = :categoryId{$where} ORDER BY `start` DESC, `end` DESC, `id` DESC {$limitStmt}",
-            ['time' => $time, 'categoryId' => $categoryId]
+            ['time' => $time, 'categoryId' => $categoryId, 'active' => 1]
         );
     }
 
@@ -97,12 +97,12 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() : '';
+        $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
 
         return $this->db->fetchAll(
-            'SELECT * FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC' . $limitStmt,
-            ['time' => $time]
+            "SELECT * FROM {$this->getTableName()}{$where} ORDER BY `start` DESC, `end` DESC, `id` DESC" . $limitStmt,
+            ['time' => $time, 'active' => 1]
         );
     }
 
@@ -114,11 +114,11 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getLatestByCategoryId($categoryId, $time)
     {
-        $period = ' AND ' . $this->getPublicationPeriod();
+        $period = " AND {$this->getPublicationPeriod()} AND `active` = :active";
 
         return $this->db->fetchAssoc(
-            'SELECT * FROM ' . $this->getTableName() . ' WHERE category_id = :category_id ' . $period . ' ORDER BY `start` DESC LIMIT 1',
-            ['category_id' => $categoryId, 'time' => $time]
+            "SELECT * FROM {$this->getTableName()} WHERE `category_id` = :category_id {$period} ORDER BY `start` DESC LIMIT 1",
+            ['category_id' => $categoryId, 'time' => $time, 'active' => 1]
         );
     }
 
@@ -130,8 +130,8 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     public function getLatest($time)
     {
         return $this->db->fetchAssoc(
-            'SELECT * FROM ' . $this->getTableName() . ' WHERE ' . $this->getPublicationPeriod() . ' ORDER BY `start` DESC LIMIT 1',
-            ['time' => $time]
+            "SELECT * FROM {$this->getTableName()} WHERE {$this->getPublicationPeriod()} AND `active` = :active ORDER BY `start` DESC LIMIT 1",
+            ['time' => $time, 'active' => 1]
         );
     }
 }

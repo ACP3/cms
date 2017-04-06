@@ -58,6 +58,11 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             41 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'duplicate', '', 4);",
+            ],
+            42 => [
+                "ALTER TABLE `{pre}news` ADD COLUMN `active` TINYINT(1) UNSIGNED NOT NULL AFTER `id`;",
+                "ALTER TABLE `{pre}news` ADD INDEX (`active`)",
+                "UPDATE `{pre}news` SET `active` = 1;"
             ]
         ];
     }

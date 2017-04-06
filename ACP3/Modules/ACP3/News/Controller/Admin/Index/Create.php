@@ -71,6 +71,7 @@ class Create extends AbstractFormAction
         ];
 
         return [
+            'active' => $this->formsHelper->yesNoCheckboxGenerator('active', 1),
             'categories' => $this->categoriesHelpers->categoriesList(
                 News\Installer\Schema::MODULE_NAME,
                 '',

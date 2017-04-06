@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
     <keys>
+        <item key="activate_readmore">Activate &quot;read more...&quot;</item>
+        <item key="active">Aktiv</item>
         <item key="admin_index_create">Create new news</item>
         <item key="admin_index_delete">Delete news</item>
         <item key="admin_index_edit">Edit news</item>
         <item key="admin_index_settings">Settings</item>
-        <item key="activate_readmore">Activate &quot;read more...&quot;</item>
         <item key="hyperlink">Link</item>
         <item key="complete_hyperlink_statements">Please complete the information of the hyperlink.</item>
         <item key="details">News</item>
@@ -19,6 +20,7 @@
         <item key="readmore_chars"><![CDATA[Characters required, to enable the &quot;read more...&quot;-function]]></item>
         <item key="select_activate_readmore">
             <![CDATA[Please select whether you want to enable or disable the &quot;read more...&quot;-function.]]></item>
+        <item key="select_active">Please select, whether the news should be active or not.</item>
         <item key="select_allow_comments">Please select whether you want to allow comments under news or not.</item>
         <item key="select_category">Please select the category where do you want to find the news.</item>
         <item key="select_display_category_in_breadcrumb">Please select whether you want to display the category name of a

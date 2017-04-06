@@ -65,6 +65,15 @@ class Index extends Core\Controller\AbstractAdminAction
     {
         $dataGrid
             ->addColumn([
+                'label' => $this->translator->t('news', 'active'),
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::class,
+                'fields' => ['active'],
+                'custom' => [
+                    'search' => [0, 1],
+                    'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')]
+                ]
+            ], 40)
+            ->addColumn([
                 'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['start', 'end'],

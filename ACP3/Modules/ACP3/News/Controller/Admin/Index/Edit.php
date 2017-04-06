@@ -70,6 +70,7 @@ class Edit extends AbstractFormAction
             $this->title->setPageTitlePrefix($news['title']);
 
             return [
+                'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $news['active']),
                 'categories' => $this->categoriesHelpers->categoriesList(
                     News\Installer\Schema::MODULE_NAME,
                     $news['category_id'],

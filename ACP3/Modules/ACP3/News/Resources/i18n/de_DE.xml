@@ -2,6 +2,7 @@
 <language>
     <keys>
         <item key="activate_readmore">&quot;Weiterlesen...&quot; aktivieren</item>
+        <item key="active">Aktiv</item>
         <item key="admin_index_create">Neue News erstellen</item>
         <item key="admin_index_delete">News löschen</item>
         <item key="admin_index_edit">News bearbeiten</item>
@@ -19,6 +20,7 @@
         <item key="readmore_chars"><![CDATA[Benötigte Anzahl an Zeichen für &quot;weiterlesen...&quot;-Funktion]]></item>
         <item key="select_activate_readmore">
             <![CDATA[Bitte wählen Sie aus, ob die &quot;weiterlesen...&quot;-Funktion aktiviert werden soll oder nicht.]]></item>
+        <item key="select_active">Bitte wählen Sie aus, ob die News veröffentlicht werden soll oder nicht.</item>
         <item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter News zugelassen werden sollen oder
             nicht.
         </item>
