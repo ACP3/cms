@@ -10,14 +10,9 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 use ACP3\Core\Controller\AbstractAdminAction;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Modules\ACP3\Articles\Model\ArticlesModel;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
 
 class Duplicate extends AbstractAdminAction
 {
-    /**
-     * @var ArticleRepository
-     */
-    private $articleRepository;
     /**
      * @var ArticlesModel
      */
@@ -26,17 +21,14 @@ class Duplicate extends AbstractAdminAction
     /**
      * Duplicate constructor.
      * @param FrontendContext $context
-     * @param ArticleRepository $articleRepository
      * @param ArticlesModel $articlesModel
      */
     public function __construct(
         FrontendContext $context,
-        ArticleRepository $articleRepository,
         ArticlesModel $articlesModel
     ) {
         parent::__construct($context);
 
-        $this->articleRepository = $articleRepository;
         $this->articlesModel = $articlesModel;
     }
 
