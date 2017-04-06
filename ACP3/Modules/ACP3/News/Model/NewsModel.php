@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\News\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DuplicationAwareTrait;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\News\Installer\Schema;
 use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
@@ -15,6 +16,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class NewsModel extends AbstractModel
 {
+    use DuplicationAwareTrait;
+
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
@@ -51,7 +54,7 @@ class NewsModel extends AbstractModel
             'updated_at' => 'now',
             'readmore' => $this->useReadMore($data, $settings),
             'comments' => $this->useComments($data, $settings),
-            'category_id' => $data['cat'],
+            'category_id' => isset($data['cat']) ? $data['cat'] : $data['category_id'],
         ]);
 
         return parent::save($data, $newsId);
@@ -97,6 +100,17 @@ class NewsModel extends AbstractModel
             'target' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'link_title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getDefaultDataForDuplication()
+    {
+        return [
+            'start' => 'now',
+            'end' => 'now'
         ];
     }
 }

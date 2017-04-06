@@ -32,7 +32,11 @@ class ArticlesModel extends AbstractModel
      */
     protected function getDefaultDataForDuplication()
     {
-        return ['active' => 0];
+        return [
+            'active' => 0,
+            'start' => 'now',
+            'end' => 'now'
+        ];
     }
 
     /**
