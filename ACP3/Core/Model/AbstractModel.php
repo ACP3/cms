@@ -189,4 +189,12 @@ abstract class AbstractModel
     {
         return $this->repository->getOneById($entryId);
     }
+
+    /**
+     * @return AbstractRepository
+     */
+    protected function getRepository()
+    {
+        return $this->repository;
+    }
 }

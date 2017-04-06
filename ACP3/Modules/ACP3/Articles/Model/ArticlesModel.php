@@ -8,10 +8,13 @@ namespace ACP3\Modules\ACP3\Articles\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DuplicationAwareTrait;
 use ACP3\Modules\ACP3\Articles\Installer\Schema;
 
 class ArticlesModel extends AbstractModel
 {
+    use DuplicationAwareTrait;
+
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
@@ -22,6 +25,14 @@ class ArticlesModel extends AbstractModel
         $rawData['updated_at'] = 'now';
 
         return parent::save($rawData, $entryId);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultDataForDuplication()
+    {
+        return ['active' => 0];
     }
 
     /**

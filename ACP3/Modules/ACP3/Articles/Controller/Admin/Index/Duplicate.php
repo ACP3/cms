@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractAdminAction;
 use ACP3\Core\Controller\Context\FrontendContext;
-use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Modules\ACP3\Articles\Model\ArticlesModel;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
 
@@ -44,22 +43,14 @@ class Duplicate extends AbstractAdminAction
     /**
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws ResultNotExistsException
      */
     public function execute($id)
     {
-        $article = $this->articleRepository->getOneById($id);
+        $result = $this->articlesModel->duplicate($id);
 
-        if (!empty($article)) {
-            $article['active'] = 0;
-            $result = $this->articlesModel->save($article);
-
-            return $this->redirectMessages()->setMessage(
-                $result,
-                $this->translator->t('system', $result !== false ? 'duplicate_success' : 'duplicate_error')
-            );
-        }
-
-        throw new ResultNotExistsException();
+        return $this->redirectMessages()->setMessage(
+            $result,
+            $this->translator->t('system', $result !== false ? 'duplicate_success' : 'duplicate_error')
+        );
     }
 }
