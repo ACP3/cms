@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.11.0] - 2017-04-07
+### Added
+- Added the possibility to duplicate articles via the admin data grid
+- Added the possibility to duplicate news via the admin data grid
+- Added the possibility to quickly enable/disable articles
+- Added the possibility to quickly enable/disable news
+- Added the possibility to the SEO module to index all pages or only the first page of paginated content
+- When the AJAX form validation has previously failed and the user alters an affected form element, the validation is triggered automatically again
+- Added new options to the systems settings for managing the site title
+
+### Changed
+- Rearranged some systems settings into new tabs
+- Renamed the system configuration to system settings so that it aligns with all other module settings actions
+- Updated fancybox to version 3.0.47
+- Updated minify to version 3.0
+
+### Fixed
+- Fixed the gallery picture upload when the SEO module is active 
+
+## [4.10.1] - 2017-03-30
+### Fixed
+- Fixed the deployment
+
 ## [4.10.0] - 2017-03-30
 ### Added
 - Added the library `fisharebest/localization` which handles the retrieval of the output of the localized name of a language pack and the script direction
@@ -337,7 +360,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.10.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.11.0...HEAD
+[4.11.0]: https://github.com/ACP3/cms/compare/v4.10.1...v4.11.0
+[4.10.1]: https://github.com/ACP3/cms/compare/v4.10.0...v4.10.1
 [4.10.0]: https://github.com/ACP3/cms/compare/v4.9.2...v4.10.0
 [4.9.2]: https://github.com/ACP3/cms/compare/v4.9.1...v4.9.2
 [4.9.1]: https://github.com/ACP3/cms/compare/v4.9.0...v4.9.1

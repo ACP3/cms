@@ -7,7 +7,7 @@ namespace ACP3\Core;
  */
 class Registry
 {
-    protected static $registry = [];
+    private static $registry = [];
 
     /**
      * Inject an object to the registry
@@ -15,7 +15,7 @@ class Registry
      * @param string $key
      * @param mixed $value
      */
-    public static function set($key, $value)
+    public function set($key, $value)
     {
         if (isset(self::$registry[$key]) === false) {
             self::$registry[$key] = $value;
@@ -23,15 +23,24 @@ class Registry
     }
 
     /**
+     * @param string $key
+     * @return bool
+     */
+    public function has($key)
+    {
+        return isset(self::$registry[$key]);
+    }
+
+    /**
      * Get an object from the registry
      *
      * @param string $key
-     *
+     * @param null $default
      * @return mixed
      */
-    public static function get($key)
+    public function get($key, $default = null)
     {
-        return self::$registry[$key];
+        return $this->has($key) ? self::$registry[$key] : $default;
     }
 
     /**
@@ -39,20 +48,10 @@ class Registry
      *
      * @param string $key
      */
-    public static function remove($key)
+    public function remove($key)
     {
         if (isset(self::$registry[$key])) {
             unset(self::$registry[$key]);
         }
-    }
-
-    /**
-     * Get all registered object inside the registry
-     *
-     * @return array
-     */
-    public static function getAll()
-    {
-        return self::$registry;
     }
 }

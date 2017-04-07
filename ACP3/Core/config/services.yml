@@ -61,6 +61,9 @@ services:
       - '@core.http.request'
       - '@core.router'
 
+  core.registry:
+    class: ACP3\Core\Registry
+
   core.router:
     class: ACP3\Core\Router\Router
     arguments:

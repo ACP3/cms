@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -31,7 +31,7 @@ class Libraries
             'enabled' => false,
             'dependencies' => ['jquery'],
             'css' => 'jquery.fancybox.css',
-            'js' => 'jquery.fancybox.pack.js'
+            'js' => 'jquery.fancybox.min.js'
         ],
         'bootstrap' => [
             'enabled' => false,

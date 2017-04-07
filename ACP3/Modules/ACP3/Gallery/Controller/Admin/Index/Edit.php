@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -120,7 +120,7 @@ class Edit extends Core\Controller\AbstractAdminAction
         $dataGrid
             ->setResults($pictures)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
-            ->setIdentifier('#acp-table')
+            ->setIdentifier('#gallery-edit-data-grid')
             ->setResourcePathDelete('admin/gallery/pictures/delete/id_' . $id)
             ->setResourcePathEdit('admin/gallery/pictures/edit');
 

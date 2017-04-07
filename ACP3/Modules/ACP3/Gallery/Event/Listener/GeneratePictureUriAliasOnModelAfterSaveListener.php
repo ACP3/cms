@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -87,7 +87,7 @@ class GeneratePictureUriAliasOnModelAfterSaveListener
             $seoDescription = $this->metaStatements->getDescription(
                 sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
             );
-            $seoRobots = $this->metaStatements->getRobots(
+            $seoRobots = $this->metaStatements->getRobotsSetting(
                 sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
             );
 

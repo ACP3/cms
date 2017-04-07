@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -10,10 +10,10 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\System;
 
 /**
- * Class Configuration
+ * Class Settings
  * @package ACP3\Modules\ACP3\System\Controller\Admin\Index
  */
-class Configuration extends Core\Controller\AbstractAdminAction
+class Settings extends Core\Controller\AbstractAdminAction
 {
     /**
      * @var \ACP3\Core\Helpers\Forms
@@ -37,7 +37,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
     private $editorRegistrar;
 
     /**
-     * Configuration constructor.
+     * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\Forms $formsHelper
@@ -70,6 +70,11 @@ class Configuration extends Core\Controller\AbstractAdminAction
     {
         $systemSettings = $this->config->getSettings(System\Installer\Schema::MODULE_NAME);
 
+        $siteSubtitleMode = [
+            1 => $this->translator->t('system', 'site_subtitle_mode_all_pages'),
+            2 => $this->translator->t('system', 'site_subtitle_mode_homepage_only'),
+        ];
+
         $pageCachePurgeMode = [
             1 => $this->translator->t('system', 'page_cache_purge_mode_automatically'),
             2 => $this->translator->t('system', 'page_cache_purge_mode_manually'),
@@ -87,6 +92,15 @@ class Configuration extends Core\Controller\AbstractAdminAction
         ];
 
         return [
+            'site_subtitle_mode' => $this->formsHelper->checkboxGenerator(
+                'site_subtitle_mode',
+                    $siteSubtitleMode,
+                    $systemSettings['site_subtitle_mode']
+            ),
+            'site_subtitle_homepage_mode' => $this->formsHelper->yesNoCheckboxGenerator(
+                'site_subtitle_homepage_mode',
+                $systemSettings['site_subtitle_homepage_mode']
+            ),
             'cookie_consent' => $this->formsHelper->yesNoCheckboxGenerator(
                 'cookie_consent_is_enabled',
                 $systemSettings['cookie_consent_is_enabled']
@@ -137,7 +151,7 @@ class Configuration extends Core\Controller\AbstractAdminAction
      */
     public function executePost()
     {
-        return $this->actionHelper->handlePostAction(
+        return $this->actionHelper->handleSettingsPostAction(
             function () {
                 $formData = $this->request->getPost()->all();
 
@@ -168,16 +182,13 @@ class Configuration extends Core\Controller\AbstractAdminAction
                     'page_cache_is_enabled' => (int)$formData['page_cache_is_enabled'],
                     'page_cache_purge_mode' => (int)$formData['page_cache_purge_mode'],
                     'site_title' => $this->secure->strEncode($formData['site_title']),
+                    'site_subtitle' => $this->secure->strEncode($formData['site_subtitle']),
+                    'site_subtitle_homepage_mode' => (int)$formData['site_subtitle_homepage_mode'],
+                    'site_subtitle_mode' => (int)$formData['site_subtitle_mode'],
                     'wysiwyg' => $formData['wysiwyg']
                 ];
 
-                $bool = $this->config->saveSettings($data, System\Installer\Schema::MODULE_NAME);
-
-                return $this->redirectMessages()->setMessage(
-                    $bool,
-                    $this->translator->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'),
-                    $this->request->getFullPath()
-                );
+                return $this->config->saveSettings($data, System\Installer\Schema::MODULE_NAME);
             },
             $this->request->getFullPath()
         );

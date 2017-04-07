@@ -16,6 +16,12 @@ services:
       - '@core.context.frontend'
       - '@articles.model'
 
+  articles.controller.admin.index.duplicate:
+    class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Duplicate
+    arguments:
+      - '@core.context.frontend'
+      - '@articles.model'
+
   articles.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit
     arguments:

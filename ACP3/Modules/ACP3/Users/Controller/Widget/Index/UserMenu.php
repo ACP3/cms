@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -23,8 +23,8 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
     protected $systemActions = [
         [
             'controller' => 'index',
-            'action' => 'configuration',
-            'phrase' => 'configuration'
+            'action' => 'settings',
+            'phrase' => 'settings'
         ],
         [
             'controller' => 'extensions',
@@ -41,7 +41,7 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
     /**
      * Displays the user menu, if the user is logged in
      *
-     * @return array|void
+     * @return array
      */
     public function execute()
     {
@@ -62,6 +62,8 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
         }
 
         $this->setContent(false);
+
+        return [];
     }
 
     /**

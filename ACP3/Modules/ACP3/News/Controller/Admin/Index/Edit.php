@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing
+ * Copyright (c) by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing
  * details.
  */
 
@@ -70,6 +70,7 @@ class Edit extends AbstractFormAction
             $this->title->setPageTitlePrefix($news['title']);
 
             return [
+                'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $news['active']),
                 'categories' => $this->categoriesHelpers->categoriesList(
                     News\Installer\Schema::MODULE_NAME,
                     $news['category_id'],

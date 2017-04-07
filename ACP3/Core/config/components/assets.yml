@@ -11,8 +11,15 @@ services:
       - '@core.cache.system'
     public: false
 
+  core.assets.logger:
+    class: Psr\Log\LoggerInterface
+    factory: 'core.logger.logger_factory:create'
+    arguments:
+      - 'assets'
+
   core.assets.abstract_minifier:
     arguments:
+      - '@core.assets.logger'
       - '@core.assets'
       - '@core.environment.application_path'
       - '@core.cache.system'

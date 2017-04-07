@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -65,6 +65,14 @@ class Migration extends AbstractMigration
             40 => [
                 "ALTER TABLE `{pre}articles` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `end`;",
                 "UPDATE `{pre}articles` SET `updated_at` = `start`;"
+            ],
+            41 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'duplicate', '', 4);",
+            ],
+            42 => [
+                "ALTER TABLE `{pre}articles` ADD COLUMN `active` TINYINT(1) UNSIGNED NOT NULL AFTER `id`;",
+                "ALTER TABLE `{pre}articles` ADD INDEX (`active`)",
+                "UPDATE `{pre}articles` SET `active` = 1;"
             ]
         ];
     }

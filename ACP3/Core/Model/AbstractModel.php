@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -188,5 +188,13 @@ abstract class AbstractModel
     public function getOneById($entryId)
     {
         return $this->repository->getOneById($entryId);
+    }
+
+    /**
+     * @return AbstractRepository
+     */
+    protected function getRepository()
+    {
+        return $this->repository;
     }
 }

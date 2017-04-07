@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Seo;
+use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
 
 /**
  * Class Index
@@ -63,6 +64,11 @@ class Settings extends Core\Controller\AbstractAdminAction
             4 => $this->translator->t('seo', 'robots_noindex_nofollow')
         ];
 
+        $indexPaginatedContent = [
+            IndexPaginatedContentEnum::INDEX_FIST_PAGE_ONLY => $this->translator->t('seo', 'index_first_page_only'),
+            IndexPaginatedContentEnum::INDEX_ALL_PAGES => $this->translator->t('seo', 'index_all_pages')
+        ];
+
         $sitemapSaveMode = [
             1 => $this->translator->t('seo', 'sitemap_save_mode_automatically'),
             2 => $this->translator->t('seo', 'sitemap_save_mode_manually'),
@@ -70,6 +76,11 @@ class Settings extends Core\Controller\AbstractAdminAction
 
         return [
             'robots' => $this->formsHelper->choicesGenerator('robots', $robots, $seoSettings['robots']),
+            'index_paginated_content' => $this->formsHelper->checkboxGenerator(
+                'index_paginated_content',
+                $indexPaginatedContent,
+                $seoSettings['index_paginated_content']
+            ),
             'sitemap_is_enabled' => $this->formsHelper->yesNoCheckboxGenerator(
                 'sitemap_is_enabled',
                 $seoSettings['sitemap_is_enabled']

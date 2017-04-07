@@ -7,18 +7,28 @@
     <div class="tabbable">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general"}</a></li>
-            <li><a href="#tab-2" data-toggle="tab">{lang t="system|date"}</a></li>
+            <li><a href="#tab-site-title" data-toggle="tab">{lang t="system|site_title"}</a></li>
+            <li><a href="#tab-2" data-toggle="tab">{lang t="system|localization"}</a></li>
+            <li><a href="#tab-cookie-consent" data-toggle="tab">{lang t="system|cookie_consent"}</a></li>
             <li><a href="#tab-3" data-toggle="tab">{lang t="system|maintenance"}</a></li>
             <li><a href="#tab-5" data-toggle="tab">{lang t="system|performance"}</a></li>
             <li><a href="#tab-6" data-toggle="tab">{lang t="system|email"}</a></li>
         </ul>
         <div class="tab-content">
             <div id="tab-1" class="tab-pane fade in active">
-                {include file="asset:System/Partials/form_group.input_text.tpl" name="site_title" value=$form.site_title required=true label={lang t="system|title"}}
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="homepage" value=$form.homepage required=true label={lang t="system|homepage"} help={lang t="system|homepage_description"}}
                 {include file="asset:System/Partials/form_group.select.tpl" options=$entries required=true label={lang t="system|records_per_page"}}
                 {include file="asset:System/Partials/form_group.input_number.tpl" name="flood" value=$form.flood required=true label={lang t="system|flood_barrier"} help={lang t="system|flood_barrier_description"}}
                 {include file="asset:System/Partials/form_group.select.tpl" options=$wysiwyg required=true label={lang t="system|editor"}}
+                {include file="asset:System/Partials/form_group.button_group.tpl" options=$mod_rewrite required=true label={lang t="system|mod_rewrite"} help={lang t="system|mod_rewrite_description"}}
+            </div>
+            <div id="tab-site-title" class="tab-pane fade">
+                {include file="asset:System/Partials/form_group.input_text.tpl" name="site_title" value=$form.site_title required=true label={lang t="system|site_title"}}
+                {include file="asset:System/Partials/form_group.input_text.tpl" name="site_subtitle" value=$form.site_subtitle label={lang t="system|site_subtitle"}}
+                {include file="asset:System/Partials/form_group.button_group.tpl" options=$site_subtitle_mode required=true label={lang t="system|site_subtitle_mode"}}
+                {include file="asset:System/Partials/form_group.button_group.tpl" options=$site_subtitle_homepage_mode required=true label={lang t="system|site_subtitle_homepage_mode"}}
+            </div>
+            <div id="tab-2" class="tab-pane fade">
                 <div class="form-group">
                     <label for="language" class="col-sm-2 control-label required">{lang t="system|language"}</label>
 
@@ -30,13 +40,6 @@
                         </select>
                     </div>
                 </div>
-                {include file="asset:System/Partials/form_group.button_group.tpl" options=$mod_rewrite required=true label={lang t="system|mod_rewrite"} help={lang t="system|mod_rewrite_description"}}
-                {include file="asset:System/Partials/form_group.button_group.tpl" options=$cookie_consent required=true label={lang t="system|enable_cookie_consent"}}
-                <div id="cookie-consent-container">
-                    {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="cookie_consent_text" value=$form.cookie_consent_text toolbar="simple" label={lang t="system|cookie_consent_text"}}
-                </div>
-            </div>
-            <div id="tab-2" class="tab-pane fade">
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_long" value=$form.date_format_long required=true maxlength=20 label={lang t="system|date_format_long"} help={lang t="system|php_date_function"}}
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_short" value=$form.date_format_short required=true maxlength=20 label={lang t="system|date_format_short"} help={lang t="system|php_date_function"}}
                 <div class="form-group">
@@ -53,6 +56,12 @@
                             {/foreach}
                         </select>
                     </div>
+                </div>
+            </div>
+            <div id="tab-cookie-consent" class="tab-pane fade">
+                {include file="asset:System/Partials/form_group.button_group.tpl" options=$cookie_consent required=true label={lang t="system|enable_cookie_consent"}}
+                <div id="cookie-consent-container">
+                    {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="cookie_consent_text" value=$form.cookie_consent_text toolbar="simple" label={lang t="system|cookie_consent_text"}}
                 </div>
             </div>
             <div id="tab-3" class="tab-pane fade">
@@ -84,6 +93,6 @@
     </div>
     {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token}
     {javascripts}
-        {include_js module="system" file="admin/index.configuration"}
+        {include_js module="system" file="admin/index.settings"}
     {/javascripts}
 {/block}

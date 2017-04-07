@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -63,7 +63,7 @@ class Index extends Core\Controller\AbstractAdminAction
             $dataGrid
                 ->setResults($comments)
                 ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
-                ->setIdentifier('#acp-table')
+                ->setIdentifier('#comments-details-data-grid')
                 ->setResourcePathDelete('admin/comments/details/delete/id_' . $id)
                 ->setResourcePathEdit('admin/comments/details/edit');
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -8,10 +8,13 @@ namespace ACP3\Modules\ACP3\Articles\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DuplicationAwareTrait;
 use ACP3\Modules\ACP3\Articles\Installer\Schema;
 
 class ArticlesModel extends AbstractModel
 {
+    use DuplicationAwareTrait;
+
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
@@ -27,9 +30,22 @@ class ArticlesModel extends AbstractModel
     /**
      * @return array
      */
+    protected function getDefaultDataForDuplication()
+    {
+        return [
+            'active' => 0,
+            'start' => 'now',
+            'end' => 'now'
+        ];
+    }
+
+    /**
+     * @return array
+     */
     protected function getAllowedColumns()
     {
         return [
+            'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
             'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,

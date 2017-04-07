@@ -54,7 +54,7 @@
     <footer id="footer">
         <div class="row">
             <div class="col-sm-6">
-                &copy; ACP3
+                &copy; ACP3 CMS
             </div>
             <div class="col-sm-6 text-right">
                 <form action="{$REQUEST_URI}" method="post" id="languages" class="form-inline">

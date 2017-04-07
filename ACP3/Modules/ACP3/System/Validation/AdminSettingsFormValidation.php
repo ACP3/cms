@@ -20,6 +20,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
         $this->validator->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class);
 
         $this->validateGeneralSettings($formData);
+        $this->validateSiteSitleSettings($formData);
         $this->validateDateSettings($formData);
         $this->validateMaintenanceSettings($formData);
         $this->validatePerformanceSettings($formData);
@@ -34,13 +35,6 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
     protected function validateGeneralSettings(array $formData)
     {
         $this->validator
-            ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'site_title',
-                    'message' => $this->translator->t('system', 'title_to_short')
-                ])
             ->addConstraint(
                 Core\Validation\ValidationRules\InternalUriValidationRule::class,
                 [
@@ -94,6 +88,38 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'message' => $this->translator->t('system', 'select_enable_cookie_consent'),
                     'extra' => [
                         'haystack' => [0, 1]
+                    ]
+                ]);
+    }
+
+    protected function validateSiteSitleSettings(array $formData)
+    {
+        $this->validator
+            ->addConstraint(
+                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'site_title',
+                    'message' => $this->translator->t('system', 'title_to_short')
+                ])
+            ->addConstraint(
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'site_subtitle_homepage_mode',
+                    'message' => $this->translator->t('system', 'select_site_subtitle_homepage_mode'),
+                    'extra' => [
+                        'haystack' => [0, 1]
+                    ]
+                ])
+            ->addConstraint(
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'site_subtitle_mode',
+                    'message' => $this->translator->t('system', 'select_site_subtitle_mode'),
+                    'extra' => [
+                        'haystack' => [1, 2]
                     ]
                 ]);
     }

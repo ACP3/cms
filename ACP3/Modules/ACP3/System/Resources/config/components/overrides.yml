@@ -2,6 +2,7 @@ services:
   core.breadcrumb.title:
     class: ACP3\Modules\ACP3\System\Core\Breadcrumb\Title
     arguments:
+      - '@core.http.request'
       - '@core.breadcrumb'
       - '@core.event_dispatcher'
       - '@core.config'

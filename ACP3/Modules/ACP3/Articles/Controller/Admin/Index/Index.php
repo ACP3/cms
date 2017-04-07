@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -46,7 +46,7 @@ class Index extends Core\Controller\AbstractAdminAction
         $dataGrid
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
-            ->setIdentifier('#acp-table')
+            ->setIdentifier('#articles-data-grid')
             ->setResourcePathDelete('admin/articles/index/delete')
             ->setResourcePathEdit('admin/articles/index/edit');
 
@@ -64,6 +64,15 @@ class Index extends Core\Controller\AbstractAdminAction
     protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
     {
         $dataGrid
+            ->addColumn([
+                'label' => $this->translator->t('articles', 'active'),
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::class,
+                'fields' => ['active'],
+                'custom' => [
+                    'search' => [0, 1],
+                    'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')]
+                ]
+            ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,

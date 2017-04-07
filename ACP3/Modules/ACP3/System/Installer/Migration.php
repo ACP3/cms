@@ -154,6 +154,16 @@ class Migration extends Modules\Installer\AbstractMigration
             66 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'cookie_consent_is_enabled', 0);",
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'cookie_consent_text', '');",
+            ],
+            67 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'site_subtitle', '');",
+            ],
+            68 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'site_subtitle_homepage_mode', '0');",
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'site_subtitle_mode', '1');",
+            ],
+            69 => [
+                "UPDATE `{pre}acl_resources` SET `page` = 'settings' WHERE `module_id` = '{moduleId}' AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'configuration';",
             ]
         ];
     }

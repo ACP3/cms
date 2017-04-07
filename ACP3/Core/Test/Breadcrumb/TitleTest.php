@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -69,7 +69,7 @@ class TitleTest extends \PHPUnit_Framework_TestCase
     public function testGetSiteAndPageTitleWithCustomSiteTitle()
     {
         $this->setUpStepsExpectations(1);
-        
+
         $this->title->setSiteTitle('Lorem Ipsum');
 
         $this->assertEquals('Foo | Lorem Ipsum', $this->title->getSiteAndPageTitle());

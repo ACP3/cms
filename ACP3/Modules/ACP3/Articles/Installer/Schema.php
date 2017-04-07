@@ -26,7 +26,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 40;
+        return 42;
     }
 
     /**
@@ -37,10 +37,11 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             'admin' => [
                 'index' => [
-                    'index' => PrivilegeEnum::ADMIN_VIEW,
                     'create' => PrivilegeEnum::ADMIN_CREATE,
+                    'delete' => PrivilegeEnum::ADMIN_DELETE,
+                    'duplicate' => PrivilegeEnum::ADMIN_CREATE,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
-                    'delete' => PrivilegeEnum::ADMIN_DELETE
+                    'index' => PrivilegeEnum::ADMIN_VIEW,
                 ]
             ],
             'frontend' => [
@@ -66,6 +67,7 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             "CREATE TABLE `{pre}articles` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `active` TINYINT(1) UNSIGNED NOT NULL,
                 `start` DATETIME NOT NULL,
                 `end` DATETIME NOT NULL,
                 `updated_at` DATETIME NOT NULL,
@@ -74,6 +76,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 `user_id` INT(10) UNSIGNED,
                 PRIMARY KEY (`id`),
                 FULLTEXT KEY `index` (`title`, `text`),
+                INDEX (`active`),
                 INDEX (`user_id`),
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
             ) {ENGINE} {CHARSET};"

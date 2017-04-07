@@ -22,8 +22,8 @@ services:
       - '@core.modules.schemaInstaller'
       - '@core.modules.aclInstaller'
 
-  system.controller.admin.index.configuration:
-    class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Configuration
+  system.controller.admin.index.settings:
+    class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.forms'

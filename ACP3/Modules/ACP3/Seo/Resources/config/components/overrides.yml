@@ -15,6 +15,7 @@ services:
       - '@core.http.request'
       - '@core.router'
       - '@seo.helper.meta_statements'
+      - '@core.config'
 
   core.http.request_factory:
     class: ACP3\Modules\ACP3\Seo\Core\Http\RequestFactory

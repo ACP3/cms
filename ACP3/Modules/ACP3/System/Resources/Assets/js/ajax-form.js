@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -34,7 +34,7 @@
 
                 that.isFormValid = true;
 
-                $(document).trigger('acp3.ajaxFrom.submit.before', [ that ]);
+                $(document).trigger('acp3.ajaxFrom.submit.before', [that]);
 
                 if (that.isFormValid && that.preValidateForm(that.element)) {
                     that.processAjaxRequest();
@@ -45,6 +45,11 @@
 
                     that.processAjaxRequest();
                 }
+            }).on('change', function () {
+                if (that.isFormValid === false) {
+                    that.removeAllPreviousErrors();
+                    that.checkFormElementsForErrors(that.element);
+                }
             });
         },
         findSubmitButton: function () {
@@ -54,10 +59,19 @@
             });
         },
         preValidateForm: function (form) {
-            var field;
-
             this.removeAllPreviousErrors();
+            this.checkFormElementsForErrors(form);
+            this.focusTabWithFirstErrorMessage();
 
+            return this.isFormValid;
+        },
+        removeAllPreviousErrors: function () {
+            $('form .form-group.has-error')
+                .removeClass('has-error')
+                .find('.validation-failed').remove();
+        },
+        checkFormElementsForErrors: function (form) {
+            var field;
             for (var i = 0; i < form.elements.length; i++) {
                 field = form.elements[i];
 
@@ -72,15 +86,6 @@
                     this.isFormValid = false;
                 }
             }
-
-            this.focusTabWithFirstErrorMessage();
-
-            return this.isFormValid;
-        },
-        removeAllPreviousErrors: function () {
-            $('form .form-group.has-error')
-                .removeClass('has-error')
-                .find('.validation-failed').remove();
         },
         addErrorDecorationToFormGroup: function ($elem) {
             $elem.closest('.form-group').addClass('has-error');
@@ -202,7 +207,7 @@
 
                 $(html).appendTo($body);
 
-                setTimeout(function() {
+                setTimeout(function () {
                     $loadingLayer = $($loadingLayer.selector);
 
                     $loadingLayer.addClass('loading-layer__active');
@@ -267,7 +272,7 @@
 
                         // Move the error message to the responsible input field(s)
                         // and remove the list item from the error box container
-                        if ($elem.length == 1) {
+                        if ($elem.length === 1) {
                             that.addErrorMessageToFormField($elem, $this.html());
                             $this.remove();
                         }
@@ -276,7 +281,7 @@
             });
 
             // if all list items have been removed, remove the error box container too
-            if ($errorBox.find('li').length == 0) {
+            if ($errorBox.find('li').length === 0) {
                 $errorBox.remove();
             }
 

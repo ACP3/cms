@@ -49,6 +49,9 @@ class Migration implements Modules\Installer\MigrationInterface
             ],
             11 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'sitemap_separate', '0');",
+            ],
+            12 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'index_paginated_content', 'first');",
             ]
         ];
     }

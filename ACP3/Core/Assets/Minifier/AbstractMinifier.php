@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -13,6 +13,8 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use JSMin\JSMin;
+use Psr\Log\LoggerInterface;
 
 abstract class AbstractMinifier implements MinifierInterface
 {
@@ -60,8 +62,13 @@ abstract class AbstractMinifier implements MinifierInterface
      * @var string
      */
     protected $assetGroup = '';
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     /**
+     * @param LoggerInterface $logger
      * @param \ACP3\Core\Assets $assets
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Core\Cache $systemCache
@@ -71,6 +78,7 @@ abstract class AbstractMinifier implements MinifierInterface
      * @param string $environment
      */
     public function __construct(
+        LoggerInterface $logger,
         Assets $assets,
         ApplicationPath $appPath,
         Cache $systemCache,
@@ -86,6 +94,7 @@ abstract class AbstractMinifier implements MinifierInterface
         $this->modules = $modules;
         $this->fileResolver = $fileResolver;
         $this->environment = $environment;
+        $this->logger = $logger;
     }
 
     /**
@@ -157,15 +166,20 @@ abstract class AbstractMinifier implements MinifierInterface
     }
 
     /**
-     * @param array  $files
+     * @param array $files
      * @param string $path
      */
     protected function saveMinifiedAsset(array $files, $path)
     {
-        $options = [];
-        $options['minifiers']['text/css'] = ['Minify_CSSmin', 'minify'];
+        $options = [
+            'options' => [
+                \Minify::TYPE_CSS => [\Minify_CSSmin::class, 'minify'],
+                \Minify::TYPE_JS => [JSMin::class, 'minify'],
+            ]
+        ];
 
-        $content = \Minify::combine($files, $options);
+        $minify = new \Minify(new \Minify_Cache_Null(), $this->logger);
+        $content = $minify->combine($files, $options);
 
         if (!is_dir($this->appPath->getUploadsDir() . 'assets')) {
             @mkdir($this->appPath->getUploadsDir() . 'assets', 0755);
@@ -176,10 +190,10 @@ abstract class AbstractMinifier implements MinifierInterface
     }
 
     /**
-     * @param bool   $debug
+     * @param bool $debug
      * @param string $group
      * @param string $filenameHash
-     * @param int    $lastGenerated
+     * @param int $lastGenerated
      *
      * @return string
      */

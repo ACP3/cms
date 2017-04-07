@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2016 by the ACP3 Developers.
+ * Copyright (c) by the ACP3 Developers.
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
@@ -46,7 +46,7 @@ class Index extends Core\Controller\AbstractAdminAction
         $dataGrid
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
-            ->setIdentifier('#acp-table')
+            ->setIdentifier('#users-data-grid')
             ->setResourcePathDelete('admin/users/index/delete')
             ->setResourcePathEdit('admin/users/index/edit');
 
