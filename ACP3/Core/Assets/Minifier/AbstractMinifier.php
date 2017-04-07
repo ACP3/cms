@@ -14,6 +14,7 @@ use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use JSMin\JSMin;
+use Psr\Log\LoggerInterface;
 
 abstract class AbstractMinifier implements MinifierInterface
 {
@@ -61,8 +62,13 @@ abstract class AbstractMinifier implements MinifierInterface
      * @var string
      */
     protected $assetGroup = '';
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     /**
+     * @param LoggerInterface $logger
      * @param \ACP3\Core\Assets $assets
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Core\Cache $systemCache
@@ -72,6 +78,7 @@ abstract class AbstractMinifier implements MinifierInterface
      * @param string $environment
      */
     public function __construct(
+        LoggerInterface $logger,
         Assets $assets,
         ApplicationPath $appPath,
         Cache $systemCache,
@@ -87,6 +94,7 @@ abstract class AbstractMinifier implements MinifierInterface
         $this->modules = $modules;
         $this->fileResolver = $fileResolver;
         $this->environment = $environment;
+        $this->logger = $logger;
     }
 
     /**
@@ -170,7 +178,7 @@ abstract class AbstractMinifier implements MinifierInterface
             ]
         ];
 
-        $minify = new \Minify(new \Minify_Cache_Null());
+        $minify = new \Minify(new \Minify_Cache_Null(), $this->logger);
         $content = $minify->combine($files, $options);
 
         if (!is_dir($this->appPath->getUploadsDir() . 'assets')) {
