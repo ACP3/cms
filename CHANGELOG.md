@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.11.0] - 2017-04-07
+### Fixed
+- Fixed the required version of the minify library of the ACP3 core framework
+
+## [4.11.0] - 2017-04-07
 ### Added
 - Added the possibility to duplicate articles via the admin data grid
 - Added the possibility to duplicate news via the admin data grid
@@ -360,7 +364,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.11.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.11.1...HEAD
+[4.11.1]: https://github.com/ACP3/cms/compare/v4.11.0...v4.11.1
 [4.11.0]: https://github.com/ACP3/cms/compare/v4.10.1...v4.11.0
 [4.10.1]: https://github.com/ACP3/cms/compare/v4.10.0...v4.10.1
 [4.10.0]: https://github.com/ACP3/cms/compare/v4.9.2...v4.10.0
