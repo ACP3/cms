@@ -6,6 +6,8 @@
 
 namespace ACP3\Core\I18n;
 
+use Giggsey\Locale\Locale;
+
 class CountryList
 {
     /**
@@ -16,6 +18,10 @@ class CountryList
      * @var null|array
      */
     private $countries = null;
+    /**
+     * @var null|array
+     */
+    private $supportedLocales = null;
 
     /**
      * Country constructor.
@@ -42,36 +48,33 @@ class CountryList
 
     private function cacheWorldCountries()
     {
-        $basePath = ACP3_ROOT_DIR . 'vendor/giggsey/locale/data/';
-        $supportedLocales = include $basePath . '_list.php';
-
         $this->countries = [];
-        if ($this->isSupportedLocale($supportedLocales)) {
-            $paths = [
-                $basePath . $this->getTransformedLocale() . '.php',
-                $basePath . $this->translator->getShortIsoCode() . '.php'
-            ];
-            foreach ($paths as $path) {
-                if (is_file($path)) {
-                    $this->countries = include $path;
-                    break;
-                }
-            }
 
-            asort($this->countries, SORT_STRING);
+        $locales = [
+            $this->getTransformedLocale(),
+            $this->translator->getShortIsoCode()
+        ];
+
+        foreach ($locales as $locale) {
+            if ($this->isSupportedLocale($locale)) {
+                $this->countries = Locale::getAllCountriesForLocale($locale);
+            }
         }
+
+        asort($this->countries, SORT_STRING);
     }
 
     /**
-     * @param array $supportedLocales
+     * @param string $locale
      * @return bool
      */
-    private function isSupportedLocale(array $supportedLocales)
+    private function isSupportedLocale($locale)
     {
-        $localeAndRegion = $this->getTransformedLocale();
+        if ($this->supportedLocales === null) {
+            $this->supportedLocales = Locale::getSupportedLocales();
+        }
 
-        return array_key_exists($localeAndRegion, $supportedLocales)
-            || array_key_exists($this->translator->getShortIsoCode(), $supportedLocales);
+        return in_array($locale, $this->supportedLocales);
     }
 
     /**

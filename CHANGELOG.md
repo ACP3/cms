@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.11.0] - 2017-04-07
+## [Unreleased] - 2017-xx-xx
+### Changed
+- Updated `giggsey/locale` library to version 1.3 to take advantage of the new functionality for the localized country list
+
+## [4.11.1] - 2017-04-07
 ### Fixed
 - Fixed the required version of the minify library of the ACP3 core framework
 
