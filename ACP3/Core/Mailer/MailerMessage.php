@@ -203,10 +203,14 @@ class MailerMessage
     }
 
     /**
-     * @return array|string
+     * @return array
      */
     public function getRecipients()
     {
+        if (is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
+            return [$this->recipients];
+        }
+
         return $this->recipients;
     }
 

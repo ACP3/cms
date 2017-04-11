@@ -1,4 +1,5 @@
 <?php
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
@@ -25,47 +26,14 @@ class SendEmail
     /**
      * Generates and sends an E-mail
      *
-     * @param string|Core\Mailer\MailerMessage $recipientName
-     * @param string $recipientEmail
-     * @param string $from
-     * @param string $subject
-     * @param string $body
-     * @param string $mailSignature
-     *
+     * @param string|Core\Mailer\MailerMessage $messageData
      * @return bool
-     * @deprecated since version 4.8.0, to be removed with version 5.0.0. Use the 'core.mailer' service directly instead
      */
-    public function execute(
-        $recipientName,
-        $recipientEmail = '',
-        $from = '',
-        $subject = '',
-        $body = '',
-        $mailSignature = ''
-    ) {
-        if ($recipientName instanceof Core\Mailer\MailerMessage) {
-            return $this->mailer
-                ->reset()
-                ->setData($recipientName)
-                ->send();
-        }
-
-        if (!empty($recipientName)) {
-            $to = [
-                'name' => $recipientName,
-                'email' => $recipientEmail
-            ];
-        } else {
-            $to = $recipientEmail;
-        }
-
+    public function execute(Core\Mailer\MailerMessage $messageData)
+    {
         return $this->mailer
             ->reset()
-            ->setSubject($subject)
-            ->setBody($body)
-            ->setMailSignature($mailSignature)
-            ->setFrom($from)
-            ->setRecipients($to)
+            ->setData($messageData)
             ->send();
     }
 }

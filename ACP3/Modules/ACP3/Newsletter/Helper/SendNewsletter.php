@@ -60,31 +60,47 @@ class SendNewsletter
      */
     public function sendNewsletter($newsletterId, $recipients, $bcc = false)
     {
+        $message = $this->collectMailerMessageData($newsletterId);
+
+        $message
+            ->setBcc($bcc)
+            ->setRecipients($recipients);
+
+        $this->mailer
+            ->reset()
+            ->setData($message);
+
+        return $this->mailer->send();
+    }
+
+    /**
+     * @param int $newsletterId
+     * @return Core\Mailer\MailerMessage
+     */
+    protected function collectMailerMessageData($newsletterId)
+    {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
         $newsletter = $this->newsletterRepository->getOneById($newsletterId);
-        $sender = [
+        $from = [
             'email' => $settings['mail'],
             'name' => $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME)['site_title']
         ];
 
-        $this->mailer
-            ->reset()
-            ->setBcc($bcc)
-            ->setFrom($sender)
+        $message = (new Core\Mailer\MailerMessage())
+            ->setFrom($from)
+            ->setFrom($from)
             ->setSubject($newsletter['title'])
             ->setUrlWeb($this->router->route('newsletter/archive/details/id_' . $newsletterId, true))
             ->setMailSignature($settings['mailsig']);
 
         if ($newsletter['html'] == 1) {
-            $this->mailer->setTemplate('newsletter/layout.email.tpl');
-            $this->mailer->setHtmlBody($newsletter['text']);
+            $message->setTemplate('newsletter/layout.email.tpl');
+            $message->setHtmlBody($newsletter['text']);
         } else {
-            $this->mailer->setBody($newsletter['text']);
+            $message->setBody($newsletter['text']);
         }
 
-        $this->mailer->setRecipients($recipients);
-
-        return $this->mailer->send();
+        return $message;
     }
 }

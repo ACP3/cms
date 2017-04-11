@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Next] - 2017-xx-xx
 ### Changed
 - Removed the `ACP3\Core\Logger` class
+- Removed all deprecated methods of the `ACP3\Core\Mailer` class and refactored it
 
 ## [Unreleased] - 2017-xx-xx
 ### Changed
