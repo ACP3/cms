@@ -32,7 +32,7 @@ services:
 
   permissions.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Index
-    parent: core.controller.admin
+    parent: core.controller.frontend
 
   permissions.controller.admin.index.order:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Order

@@ -17,11 +17,6 @@ services:
       - '@core.http.response'
       - '@core.helpers.results_per_page'
 
-  core.context.admin:
-    class: ACP3\Core\Controller\Context\AdminContext
-    parent: core.context.frontend
-    deprecated: 'The "%service_id%" service is deprecated. Use "core.context.frontend" instead'
-
   core.context.frontend:
     class: ACP3\Core\Controller\Context\FrontendContext
     arguments:
@@ -40,9 +35,3 @@ services:
     abstract: true
     arguments:
       - '@core.context.frontend'
-
-  core.controller.admin:
-    abstract: true
-    arguments:
-      - '@core.context.frontend'
-    deprecated: 'The "%service_id%" service is deprecated. Use "core.controller.frontend" instead'

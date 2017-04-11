@@ -1,7 +1,7 @@
 services:
   feeds.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Feeds\Controller\Admin\Index\Index
-    parent: core.controller.admin
+    parent: core.controller.frontend
 
   feeds.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Feeds\Controller\Admin\Index\Settings
