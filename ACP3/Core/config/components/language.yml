@@ -6,10 +6,6 @@ services:
       - '@core.i18n.dictionary_cache'
       - '@core.config'
 
-  core.lang:
-    alias: core.i18n.translator
-    deprecated: 'The "%service_id%" service is deprecated. Use "core.i18n.translator" instead'
-
   core.i18n.dictionary_cache:
     class: ACP3\Core\I18n\DictionaryCache
     arguments:

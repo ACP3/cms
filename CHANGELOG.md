@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed the deprecated `ACP3\Core\Logger` class
 - Removed all deprecated methods of the `ACP3\Core\Mailer` class and refactored it
 - Removed the deprecated `ACP3\Core\Controller\Context\AdminContext` class
+- Removed the deprecated `core.lang` service name. Use the `core.i18n.translator` service instead
+- Removed the deprecated `ACP3\Modules\ACP3\Captcha\Helpers` class
 
 ## [Unreleased] - 2017-xx-xx
 ### Changed

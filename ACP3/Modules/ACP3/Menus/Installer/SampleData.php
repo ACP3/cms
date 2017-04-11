@@ -14,7 +14,7 @@ class SampleData extends AbstractSampleData
      */
     public function sampleData()
     {
-        $translator = $this->schemaHelper->getContainer()->get('core.lang');
+        $translator = $this->schemaHelper->getContainer()->get('core.i18n.translator');
 
         return [
             "INSERT INTO `{pre}menus` VALUES (1, 'main', '{$translator->t('install', 'pages_main')}');",

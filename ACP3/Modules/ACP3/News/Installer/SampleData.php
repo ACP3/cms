@@ -19,7 +19,7 @@ class SampleData extends AbstractSampleData
     {
         $currentDate = gmdate(Date::DEFAULT_DATE_FORMAT_FULL);
         /** @var Translator $translator */
-        $translator = $this->schemaHelper->getContainer()->get('core.lang');
+        $translator = $this->schemaHelper->getContainer()->get('core.i18n.translator');
 
         return [
             "INSERT INTO `{pre}categories` VALUES ('', '{$translator->t('install', 'category_name')}', '', '{$translator->t('install', 'category_description')}', '{$this->schemaHelper->getModuleId(Schema::MODULE_NAME)}');",
