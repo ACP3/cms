@@ -3,11 +3,11 @@ services:
     class: ACP3\Core\Mailer
     arguments:
       - '@core.mailer.logger'
-      - '@core.mailer.message_parser'
+      - '@core.mailer.message_processor'
       - '@core.config'
 
-  core.mailer.message_parser:
-    class: ACP3\Core\Mailer\MessageParser
+  core.mailer.message_processor:
+    class: ACP3\Core\Mailer\MessageProcessor
     arguments:
       - '@inline_style'
       - '@core.helpers.string_formatter'

@@ -11,7 +11,7 @@ use ACP3\Core\Helpers\StringFormatter;
 use ACP3\Core\View;
 use InlineStyle\InlineStyle;
 
-class MessageParser
+class MessageProcessor
 {
     /**
      * @var StringFormatter
@@ -49,7 +49,7 @@ class MessageParser
      * @param MailerMessage $message
      * @return void
      */
-    public function parseMessage(\PHPMailer $phpMailer, MailerMessage $message)
+    public function process(\PHPMailer $phpMailer, MailerMessage $message)
     {
         $phpMailer->Subject = $this->getSubject($message->getSubject());
 

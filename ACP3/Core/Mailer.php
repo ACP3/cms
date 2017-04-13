@@ -3,7 +3,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Mailer\MailerMessage;
-use ACP3\Core\Mailer\MessageParser;
+use ACP3\Core\Mailer\MessageProcessor;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Psr\Log\LoggerInterface;
@@ -23,7 +23,7 @@ class Mailer
      */
     private $config;
     /**
-     * @var MessageParser
+     * @var MessageProcessor
      */
     private $messageParser;
 
@@ -39,12 +39,12 @@ class Mailer
     /**
      * Mailer constructor.
      * @param LoggerInterface $logger
-     * @param MessageParser $messageParser
+     * @param MessageProcessor $messageParser
      * @param SettingsInterface $config
      */
     public function __construct(
         LoggerInterface $logger,
-        MessageParser $messageParser,
+        MessageProcessor $messageParser,
         SettingsInterface $config
     ) {
         $this->logger = $logger;
@@ -81,7 +81,7 @@ class Mailer
             $this->addFrom();
             $this->addSender();
 
-            $this->messageParser->parseMessage($this->phpMailer, $this->message);
+            $this->messageParser->process($this->phpMailer, $this->message);
 
             // Add attachments to the E-mail
             if (count($this->message->getAttachments()) > 0) {
