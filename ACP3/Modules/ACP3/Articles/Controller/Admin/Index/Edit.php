@@ -62,8 +62,6 @@ class Edit extends AbstractFormAction
         $article = $this->articlesModel->getOneById($id);
 
         if (empty($article) === false) {
-            $this->title->setPageTitlePrefix($article['title']);
-
             return $this->block
                 ->setData($article)
                 ->setRequestData($this->request->getPost()->all())

@@ -14,3 +14,17 @@ services:
   core.view.renderer.smarty:
     class: ACP3\Core\View\Renderer\Smarty
     factory: ['@core.view.renderer.smarty_renderer_factory', create]
+
+  core.view.context.template_context:
+    class: ACP3\Core\View\Block\Context\TemplateContext
+    arguments:
+      - '@core.view'
+      - '@core.breadcrumb'
+      - '@core.breadcrumb.title'
+
+  core.view.context.form_template_context:
+    class: ACP3\Core\View\Block\Context\FormTemplateContext
+    arguments:
+      - '@core.view.context.template_context'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'

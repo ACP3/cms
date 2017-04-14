@@ -15,6 +15,14 @@ abstract class AbstractTemplate implements TemplateInterface
      * @var View
      */
     protected $view;
+    /**
+     * @var \ACP3\Core\Breadcrumb\Steps
+     */
+    protected $breadcrumb;
+    /**
+     * @var \ACP3\Core\Breadcrumb\Title
+     */
+    protected $title;
 
     /**
      * @var array
@@ -23,11 +31,13 @@ abstract class AbstractTemplate implements TemplateInterface
 
     /**
      * AbstractTemplate constructor.
-     * @param View $view
+     * @param Context\TemplateContext $context
      */
-    public function __construct(View $view)
+    public function __construct(View\Block\Context\TemplateContext $context)
     {
-        $this->view = $view;
+        $this->view = $context->getView();
+        $this->breadcrumb = $context->getBreadcrumb();
+        $this->title = $context->getTitle();
     }
 
     /**

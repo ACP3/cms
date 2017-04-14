@@ -34,6 +34,8 @@ class ArticleFormTemplate extends AbstractFormTemplate
     {
         $data = $this->getData();
 
+        $this->title->setPageTitlePrefix($data['title']);
+
         return [
             'active' => $this->forms->yesNoCheckboxGenerator('active', $data['active']),
             'form' => array_merge($data, $this->getRequestData()),
