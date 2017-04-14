@@ -58,7 +58,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 43;
+        return 44;
     }
 
     /**
@@ -69,6 +69,7 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             "CREATE TABLE `{pre}files` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `active` TINYINT(1) UNSIGNED NOT NULL,
                 `start` DATETIME NOT NULL,
                 `end` DATETIME NOT NULL,
                 `updated_at` DATETIME NOT NULL,

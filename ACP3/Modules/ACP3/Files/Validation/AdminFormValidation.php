@@ -50,6 +50,16 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'active',
+                    'message' => $this->translator->t('files', 'select_active'),
+                    'extra' => [
+                        'haystack' => [0, 1]
+                    ]
+                ])
+            ->addConstraint(
                 Core\Validation\ValidationRules\DateValidationRule::class,
                 [
                     'data' => $formData,

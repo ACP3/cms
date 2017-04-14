@@ -85,6 +85,7 @@ class Create extends AbstractFormAction
         ];
 
         return [
+            'active' => $this->formsHelper->yesNoCheckboxGenerator('active', 1),
             'options' => $this->getOptions(['comments' => '0']),
             'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(), ''),
             'categories' => $this->categoriesHelpers->categoriesList(Files\Installer\Schema::MODULE_NAME, '', true),

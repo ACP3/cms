@@ -35,11 +35,12 @@ class FilesModel extends AbstractModel
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     protected function getAllowedColumns()
     {
         return [
+            'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
             'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
@@ -59,6 +60,7 @@ class FilesModel extends AbstractModel
     protected function getDefaultDataForDuplication()
     {
         return [
+            'active' => 0,
             'start' => 'now',
             'end' => 'now'
         ];

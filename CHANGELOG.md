@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-xx
+### Added
+- Added the possibility to duplicate downloads via the admin data grid
+- Added the possibility to quickly enable/disable downloads
+
 ### Changed
 - Updated `giggsey/locale` library to version 1.3 to take advantage of the new functionality for the localized country list
 

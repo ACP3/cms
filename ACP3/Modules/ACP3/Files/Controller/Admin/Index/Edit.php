@@ -88,6 +88,7 @@ class Edit extends AbstractFormAction
             ];
 
             return [
+                'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $file['active']),
                 'options' => $this->getOptions($file),
                 'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(),
                     trim(strrchr($file['size'], ' '))),
