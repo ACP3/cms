@@ -21,10 +21,11 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             'admin' => [
                 'index' => [
-                    'index' => PrivilegeEnum::ADMIN_VIEW,
                     'create' => PrivilegeEnum::ADMIN_CREATE,
-                    'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
+                    'duplicate' => PrivilegeEnum::ADMIN_CREATE,
+                    'edit' => PrivilegeEnum::ADMIN_EDIT,
+                    'index' => PrivilegeEnum::ADMIN_VIEW,
                     'settings' => PrivilegeEnum::ADMIN_SETTINGS
                 ]
             ],
@@ -57,7 +58,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 42;
+        return 43;
     }
 
     /**
