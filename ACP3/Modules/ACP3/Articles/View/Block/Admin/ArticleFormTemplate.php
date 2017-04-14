@@ -4,15 +4,14 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Articles\View\Block\Admin\Index;
+namespace ACP3\Modules\ACP3\Articles\View\Block\Admin;
 
 
 use ACP3\Core\View\Block\AbstractFormTemplate;
 use ACP3\Modules\ACP3\Articles\Helpers;
 
-class Create extends AbstractFormTemplate
+class ArticleFormTemplate extends AbstractFormTemplate
 {
-
     /**
      * @inheritdoc
      */

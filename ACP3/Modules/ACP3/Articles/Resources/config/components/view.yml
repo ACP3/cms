@@ -1,6 +1,6 @@
 services:
-  articles.view.block.admin.index.create:
-    class: ACP3\Modules\ACP3\Articles\View\Block\Admin\Index\Create
+  articles.view.block.admin.article_form_template:
+    class: ACP3\Modules\ACP3\Articles\View\Block\Admin\ArticleFormTemplate
     arguments:
       - '@core.view'
       - '@core.helpers.forms'
