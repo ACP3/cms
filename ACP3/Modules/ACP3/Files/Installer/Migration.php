@@ -62,6 +62,14 @@ class Migration extends Modules\Installer\AbstractMigration
             42 => [
                 "ALTER TABLE `{pre}files` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `end`;",
                 "UPDATE `{pre}files` SET `updated_at` = `start`;"
+            ],
+            43 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'duplicate', '', 4);",
+            ],
+            44 => [
+                "ALTER TABLE `{pre}files` ADD COLUMN `active` TINYINT(1) UNSIGNED NOT NULL AFTER `id`;",
+                "ALTER TABLE `{pre}files` ADD INDEX (`active`)",
+                "UPDATE `{pre}files` SET `active` = 1;"
             ]
         ];
     }

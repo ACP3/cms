@@ -8,10 +8,13 @@ namespace ACP3\Modules\ACP3\Files\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DuplicationAwareTrait;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 
 class FilesModel extends AbstractModel
 {
+    use DuplicationAwareTrait;
+
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
@@ -20,7 +23,7 @@ class FilesModel extends AbstractModel
     public function save(array $data, $entryId = null)
     {
         $data = array_merge($data, [
-            'category_id' => (int)$data['cat'],
+            'category_id' => isset($data['cat']) ? $data['cat'] : $data['category_id'],
             'updated_at' => 'now'
         ]);
 
@@ -32,11 +35,12 @@ class FilesModel extends AbstractModel
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     protected function getAllowedColumns()
     {
         return [
+            'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
             'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
@@ -47,6 +51,18 @@ class FilesModel extends AbstractModel
             'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'file' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
             'size' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getDefaultDataForDuplication()
+    {
+        return [
+            'active' => 0,
+            'start' => 'now',
+            'end' => 'now'
         ];
     }
 }

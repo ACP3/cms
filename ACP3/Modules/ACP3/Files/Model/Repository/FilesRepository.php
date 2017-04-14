@@ -26,10 +26,10 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function resultExists($fileId, $time = '')
     {
-        $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
+        $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         return ((int)$this->db->fetchColumn(
-                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period,
-                ['id' => $fileId, 'time' => $time]
+                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id" . $period,
+                ['id' => $fileId, 'time' => $time, 'active' => 1]
             ) > 0);
     }
 
@@ -53,7 +53,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getFileById($fileId)
     {
-        return $this->db->fetchColumn('SELECT `file` FROM ' . $this->getTableName() . ' WHERE id = ?', [$fileId]);
+        return $this->db->fetchColumn("SELECT `file` FROM {$this->getTableName()} WHERE `id` = ?", [$fileId]);
     }
 
     /**
@@ -83,11 +83,11 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getAllByCategoryId($categoryId, $time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
+        $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll(
             'SELECT * FROM ' . $this->getTableName() . ' WHERE category_id = :categoryId' . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC' . $limitStmt,
-            ['time' => $time, 'categoryId' => $categoryId]
+            ['time' => $time, 'active' => 1, 'categoryId' => $categoryId]
         );
     }
 
@@ -100,11 +100,11 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() : '';
+        $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll(
             'SELECT * FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC' . $limitStmt,
-            ['time' => $time]
+            ['time' => $time, 'active' => 1]
         );
     }
 }

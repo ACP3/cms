@@ -13,8 +13,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed the deprecated `ACP3\Modules\ACP3\Captcha\Helpers` class
 
 ## [Unreleased] - 2017-xx-xx
+### Added
+- Added the possibility to duplicate downloads via the admin data grid
+- Added the possibility to quickly enable/disable downloads
+
 ### Changed
 - Updated `giggsey/locale` library to version 1.3 to take advantage of the new functionality for the localized country list
+
+### Fixed
+- Fixed the creation/editing of categories via the admin panel
 
 ## [4.11.1] - 2017-04-07
 ### Fixed

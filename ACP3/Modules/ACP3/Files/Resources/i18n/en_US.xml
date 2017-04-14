@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
     <keys>
+        <item key="active">Active</item>
         <item key="admin_index_create">Create new download</item>
         <item key="admin_index_delete">Delete downloads</item>
         <item key="admin_index_edit">Edit download</item>
@@ -19,6 +20,7 @@
         <item key="latest_files">Latest downloads</item>
         <item key="mod_description">With this module you are able to administer the downloads.</item>
         <item key="new_file">Replace current file</item>
+        <item key="select_active">Please select, whether this file should be active or not.</item>
         <item key="select_allow_comments">Please select whether you want to allow comments under downloads or not.</item>
         <item key="select_category">Please select a category where do you want to find the download.</item>
         <item key="select_internal_resource">Please select the path to the file you want to upload.</item>
