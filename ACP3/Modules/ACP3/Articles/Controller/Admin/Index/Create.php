@@ -20,33 +20,31 @@ class Create extends AbstractFormAction
      */
     protected $adminFormValidation;
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var Articles\Model\ArticlesModel
      */
     protected $articlesModel;
+    /**
+     * @var Core\View\Block\FormTemplateInterface
+     */
+    private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param Core\View\Block\FormTemplateInterface $block
      * @param Articles\Model\ArticlesModel $articlesModel
      * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
+        Core\View\Block\FormTemplateInterface $block,
         Articles\Model\ArticlesModel $articlesModel,
-        Articles\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\FormToken $formTokenHelper
+        Articles\Validation\AdminFormValidation $adminFormValidation
     ) {
-        parent::__construct($context, $formsHelper);
+        parent::__construct($context);
 
         $this->articlesModel = $articlesModel;
         $this->adminFormValidation = $adminFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
+        $this->block = $block;
     }
 
     /**
@@ -54,20 +52,9 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        $defaults = [
-            'title' => '',
-            'text' => '',
-            'start' => '',
-            'end' => ''
-        ];
-
-        return [
-            'active' => $this->formsHelper->yesNoCheckboxGenerator('active', 1),
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-            'SEO_URI_PATTERN' => Articles\Helpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => ''
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**

@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
-use ACP3\Core;
 use ACP3\Core\Controller\AbstractAdminAction;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
@@ -18,27 +17,9 @@ use ACP3\Modules\ACP3\Menus;
 abstract class AbstractFormAction extends AbstractAdminAction
 {
     /**
-     * @var Core\Helpers\Forms
-     */
-    protected $formsHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem
      */
     protected $manageMenuItemHelper;
-
-    /**
-     * AbstractFormAction constructor.
-     * @param Core\Controller\Context\FrontendContext $context
-     * @param Core\Helpers\Forms $formsHelper
-     */
-    public function __construct(
-        Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper
-    ) {
-        parent::__construct($context);
-
-        $this->formsHelper = $formsHelper;
-    }
 
     /**
      * @param \ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem $manageMenuItemHelper

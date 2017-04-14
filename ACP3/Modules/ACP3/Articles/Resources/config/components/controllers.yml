@@ -3,10 +3,9 @@ services:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
+      - '@articles.view.block.admin.index.create'
       - '@articles.model'
       - '@articles.validation.admin_form_validation'
-      - '@core.helpers.formToken'
     calls:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
 
@@ -26,10 +25,9 @@ services:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
+      - '@articles.view.block.admin.index.create'
       - '@articles.model'
       - '@articles.validation.admin_form_validation'
-      - '@core.helpers.formToken'
     calls:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
 

@@ -27,26 +27,28 @@ class Edit extends AbstractFormAction
      * @var Articles\Model\ArticlesModel
      */
     protected $articlesModel;
+    /**
+     * @var Core\View\Block\FormTemplateInterface
+     */
+    private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param Core\View\Block\FormTemplateInterface $block
      * @param Articles\Model\ArticlesModel $articlesModel
      * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
+        Core\View\Block\FormTemplateInterface $block,
         Articles\Model\ArticlesModel $articlesModel,
-        Articles\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\FormToken $formTokenHelper
+        Articles\Validation\AdminFormValidation $adminFormValidation
     ) {
-        parent::__construct($context, $formsHelper);
+        parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
         $this->articlesModel = $articlesModel;
+        $this->block = $block;
     }
 
     /**
@@ -62,13 +64,10 @@ class Edit extends AbstractFormAction
         if (empty($article) === false) {
             $this->title->setPageTitlePrefix($article['title']);
 
-            return [
-                'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $article['active']),
-                'form' => array_merge($article, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-                'SEO_URI_PATTERN' => Articles\Helpers::URL_KEY_PATTERN,
-                'SEO_ROUTE_NAME' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $id)
-            ];
+            return $this->block
+                ->setData($article)
+                ->setRequestData($this->request->getPost()->all())
+                ->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
