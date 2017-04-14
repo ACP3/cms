@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Updated `giggsey/locale` library to version 1.3 to take advantage of the new functionality for the localized country list
 
+### Fixed
+- Fixed the creation/editing of categories via the admin panel
+
 ## [4.11.1] - 2017-04-07
 ### Fixed
 - Fixed the required version of the minify library of the ACP3 core framework
