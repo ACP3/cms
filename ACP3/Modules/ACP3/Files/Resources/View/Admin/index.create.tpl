@@ -5,7 +5,7 @@
 {block CONTENT_AJAX_FORM}
     <div class="tabbable">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication_period"}</a></li>
+            <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication"}</a></li>
             <li><a href="#tab-2" data-toggle="tab">{lang t="files|file_statements"}</a></li>
         </ul>
         <div class="tab-content">
