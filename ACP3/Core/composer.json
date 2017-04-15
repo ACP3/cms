@@ -21,6 +21,7 @@
     "fisharebest/localization": "^1.10",
     "giggsey/locale": "^1.2",
     "inlinestyle/inlinestyle": "^1.2",
+    "marc1706/fast-image-size": "^1.1",
     "monolog/monolog": "^1.21",
     "mrclay/minify": "^3.0",
     "patchwork/utf8": "^1.3",
