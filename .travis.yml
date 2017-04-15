@@ -53,6 +53,12 @@ deploy:
     on:
       tags: true
       condition: "$TRAVIS_PHP_VERSION = 7.0*"
+  - provider: script
+    script: ./build/travis/generate_api_docs.sh
+    skip_cleanup: true
+    on:
+      branch: develop
+      condition: "$TRAVIS_PHP_VERSION = 7.0*"
 
 cache:
   directories:

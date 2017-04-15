@@ -44,9 +44,9 @@
     "tinymce/tinymce": "^4.4"
   },
   "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.0.0",
     "phpunit/phpunit": "^5.5",
-    "satooshi/php-coveralls": "dev-master",
-    "friendsofphp/php-cs-fixer": "^2.0.0"
+    "satooshi/php-coveralls": "^1.0"
   },
   "autoload": {
     "psr-4": {
