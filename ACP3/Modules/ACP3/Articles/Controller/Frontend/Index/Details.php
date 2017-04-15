@@ -23,10 +23,6 @@ class Details extends Core\Controller\AbstractFrontendAction
      */
     protected $date;
     /**
-     * @var \ACP3\Core\Helpers\PageBreaks
-     */
-    protected $pageBreaksHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
     protected $articleRepository;
@@ -34,29 +30,33 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Articles\Cache
      */
     protected $articlesCache;
+    /**
+     * @var Core\View\Block\BlockInterface
+     */
+    private $block;
 
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
-     * @param \ACP3\Core\Date                                     $date
-     * @param \ACP3\Core\Helpers\PageBreaks                       $pageBreaksHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Date $date
+     * @param Core\View\Block\BlockInterface $block
      * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
+     * @param \ACP3\Modules\ACP3\Articles\Cache $articlesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
-        Core\Helpers\PageBreaks $pageBreaksHelper,
+        Core\View\Block\BlockInterface $block,
         Articles\Model\Repository\ArticleRepository $articleRepository,
         Articles\Cache $articlesCache)
     {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->pageBreaksHelper = $pageBreaksHelper;
         $this->articleRepository = $articleRepository;
         $this->articlesCache = $articlesCache;
+        $this->block = $block;
     }
 
     /**
@@ -72,17 +72,7 @@ class Details extends Core\Controller\AbstractFrontendAction
 
             $article = $this->articlesCache->getCache($id);
 
-            $this->breadcrumb->replaceAncestor($article['title'], '', true);
-
-            return [
-                'page' => array_merge(
-                    $article,
-                    $this->pageBreaksHelper->splitTextIntoPages(
-                        $this->view->fetchStringAsTemplate($article['text']),
-                        $this->request->getUriWithoutPages()
-                    )
-                )
-            ];
+            return $this->block->setData($article)->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

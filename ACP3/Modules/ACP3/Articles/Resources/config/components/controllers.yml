@@ -42,7 +42,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.date'
-      - '@core.helpers.pageBreaks'
+      - '@articles.view.block.frontend.article_details_block'
       - '@articles.model.articlerepository'
       - '@articles.cache'
 
