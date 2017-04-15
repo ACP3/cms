@@ -15,6 +15,21 @@ services:
     class: ACP3\Core\View\Renderer\Smarty
     factory: ['@core.view.renderer.smarty_renderer_factory', create]
 
+  core.view.context.block_context:
+    class: ACP3\Core\View\Block\Context\BlockContext
+    arguments:
+      - '@core.view'
+      - '@core.breadcrumb'
+      - '@core.breadcrumb.title'
+
+  core.view.context.data_grid_block_context:
+    class: ACP3\Core\View\Block\Context\DataGridBlockContext
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.i18n.translator'
+      - '@core.helpers.results_per_page'
+      - '@service_container'
+
   core.view.context.form_block_context:
     class: ACP3\Core\View\Block\Context\FormBlockContext
     arguments:
@@ -28,10 +43,3 @@ services:
       - '@core.view.context.block_context'
       - '@core.helpers.results_per_page'
       - '@core.pagination'
-
-  core.view.context.block_context:
-    class: ACP3\Core\View\Block\Context\BlockContext
-    arguments:
-      - '@core.view'
-      - '@core.breadcrumb'
-      - '@core.breadcrumb.title'

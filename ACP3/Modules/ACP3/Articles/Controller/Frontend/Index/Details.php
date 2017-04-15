@@ -70,9 +70,9 @@ class Details extends Core\Controller\AbstractFrontendAction
         if ($this->articleRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            $article = $this->articlesCache->getCache($id);
-
-            return $this->block->setData($article)->render();
+            return $this->block
+                ->setData($this->articlesCache->getCache($id))
+                ->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

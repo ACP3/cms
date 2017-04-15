@@ -35,7 +35,7 @@ services:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@articles.model.data_grid_repository'
+      - '@articles.view.block.admin.articles_data_grid_block'
 
   articles.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Details
