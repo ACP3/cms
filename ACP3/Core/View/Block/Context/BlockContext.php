@@ -11,7 +11,7 @@ use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\View;
 
-class TemplateContext
+class BlockContext
 {
     /**
      * @var View

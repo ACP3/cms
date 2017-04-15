@@ -9,7 +9,7 @@ namespace ACP3\Core\View\Block;
 
 use ACP3\Core\View;
 
-abstract class AbstractTemplate implements TemplateInterface
+abstract class AbstractBlock implements BlockInterface
 {
     /**
      * @var View
@@ -31,9 +31,9 @@ abstract class AbstractTemplate implements TemplateInterface
 
     /**
      * AbstractTemplate constructor.
-     * @param Context\TemplateContext $context
+     * @param Context\BlockContext $context
      */
-    public function __construct(View\Block\Context\TemplateContext $context)
+    public function __construct(View\Block\Context\BlockContext $context)
     {
         $this->view = $context->getView();
         $this->breadcrumb = $context->getBreadcrumb();

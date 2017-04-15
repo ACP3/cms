@@ -10,7 +10,7 @@ namespace ACP3\Core\View\Block\Context;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 
-class FormTemplateContext extends TemplateContext
+class FormBlockContext extends BlockContext
 {
     /**
      * @var Forms
@@ -23,11 +23,11 @@ class FormTemplateContext extends TemplateContext
 
     /**
      * FormTemplateContext constructor.
-     * @param TemplateContext $context
+     * @param BlockContext $context
      * @param Forms $forms
      * @param FormToken $formToken
      */
-    public function __construct(TemplateContext $context, Forms $forms, FormToken $formToken)
+    public function __construct(BlockContext $context, Forms $forms, FormToken $formToken)
     {
         parent::__construct($context->getView(), $context->getBreadcrumb(), $context->getTitle());
 

@@ -7,7 +7,7 @@
 namespace ACP3\Core\View\Block;
 
 
-interface TemplateInterface
+interface BlockInterface
 {
     /**
      * @param array $data

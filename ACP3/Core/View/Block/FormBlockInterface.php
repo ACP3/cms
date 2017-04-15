@@ -7,7 +7,7 @@
 namespace ACP3\Core\View\Block;
 
 
-interface FormTemplateInterface extends TemplateInterface
+interface FormBlockInterface extends BlockInterface
 {
     /**
      * @return array

@@ -9,9 +9,9 @@ namespace ACP3\Core\View\Block;
 
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
-use ACP3\Core\View\Block\Context\FormTemplateContext;
+use ACP3\Core\View\Block\Context\FormBlockContext;
 
-abstract class AbstractFormTemplate extends AbstractTemplate implements FormTemplateInterface
+abstract class AbstractFormBlock extends AbstractBlock implements FormBlockInterface
 {
     /**
      * @var Forms
@@ -29,9 +29,9 @@ abstract class AbstractFormTemplate extends AbstractTemplate implements FormTemp
 
     /**
      * AbstractFormTemplate constructor.
-     * @param Context\FormTemplateContext $context
+     * @param Context\FormBlockContext $context
      */
-    public function __construct(FormTemplateContext $context)
+    public function __construct(FormBlockContext $context)
     {
         parent::__construct($context);
 

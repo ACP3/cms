@@ -15,16 +15,23 @@ services:
     class: ACP3\Core\View\Renderer\Smarty
     factory: ['@core.view.renderer.smarty_renderer_factory', create]
 
-  core.view.context.template_context:
-    class: ACP3\Core\View\Block\Context\TemplateContext
+  core.view.context.form_block_context:
+    class: ACP3\Core\View\Block\Context\FormBlockContext
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+
+  core.view.context.listing_block_context:
+    class: ACP3\Core\View\Block\Context\ListingBlockContext
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.helpers.results_per_page'
+      - '@core.pagination'
+
+  core.view.context.block_context:
+    class: ACP3\Core\View\Block\Context\BlockContext
     arguments:
       - '@core.view'
       - '@core.breadcrumb'
       - '@core.breadcrumb.title'
-
-  core.view.context.form_template_context:
-    class: ACP3\Core\View\Block\Context\FormTemplateContext
-    arguments:
-      - '@core.view.context.template_context'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
