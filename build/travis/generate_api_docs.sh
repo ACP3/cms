@@ -1,11 +1,12 @@
 #!/bin/bash
 
 BRANCH_NAME='sami-update'
+REPO_DIR='apidocs'
 
 curl -O http://get.sensiolabs.org/sami.phar
 
-git clone https://github.com/ACP3/acp3-api.github.io.git ./build/acp3-api.github.io
-cd ./build/acp3-api.github.io
+git clone https://github.com/ACP3/${REPO_DIR}.git ./build/${REPO_DIR}
+cd ./build/${REPO_DIR}
 git checkout -q -b ${BRANCH_NAME}
 git rm -q -r .
 php ../../sami.phar update ../../.sami.php
