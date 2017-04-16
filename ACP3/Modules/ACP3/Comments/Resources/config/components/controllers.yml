@@ -45,9 +45,9 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@comments.view.block.frontend.comment_form_block'
       - '@comments.model.comments_model'
       - '@comments.validation.form_validation'
-      - '@core.helpers.formToken'
 
   comments.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Index

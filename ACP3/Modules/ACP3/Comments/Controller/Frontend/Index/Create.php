@@ -15,10 +15,6 @@ use ACP3\Modules\ACP3\Comments;
 class Create extends AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\FormValidation
      */
     protected $formValidation;
@@ -26,24 +22,28 @@ class Create extends AbstractFrontendAction
      * @var Comments\Model\CommentsModel
      */
     protected $commentsModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Comments\Model\CommentsModel $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $formValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\View\Block\FormBlockInterface $block,
         Comments\Model\CommentsModel $commentsModel,
-        Comments\Validation\FormValidation $formValidation,
-        Core\Helpers\FormToken $formTokenHelper)
+        Comments\Validation\FormValidation $formValidation)
     {
         parent::__construct($context);
 
         $this->formValidation = $formValidation;
-        $this->formTokenHelper = $formTokenHelper;
         $this->commentsModel = $commentsModel;
+        $this->block = $block;
     }
 
     /**
@@ -54,14 +54,14 @@ class Create extends AbstractFrontendAction
      */
     public function execute($module, $entryId, $redirectUrl)
     {
-        return [
-            'form' => array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
-            'module' => $module,
-            'entry_id' => $entryId,
-            'redirect_url' => $redirectUrl,
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-            'can_use_emoticons' => $this->emoticonsActive === true
-        ];
+        return $this->block
+            ->setData([
+                'module' => $module,
+                'entryId' => $entryId,
+                'redirectUrl' => $redirectUrl
+            ])
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
@@ -96,25 +96,5 @@ class Create extends AbstractFrontendAction
                 );
             }
         );
-    }
-
-    /**
-     * @return array
-     */
-    private function fetchFormDefaults()
-    {
-        $defaults = [
-            'name' => '',
-            'name_disabled' => false,
-            'message' => ''
-        ];
-
-        if ($this->user->isAuthenticated() === true) {
-            $user = $this->user->getUserInfo();
-            $defaults['name'] = $user['nickname'];
-            $defaults['name_disabled'] = true;
-            $defaults['message'] = '';
-        }
-        return $defaults;
     }
 }

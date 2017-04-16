@@ -1,0 +1,7 @@
+services:
+  comments.view.block.frontend.comment_form_block:
+    class: ACP3\Modules\ACP3\Comments\View\Block\Frontend\CommentFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+      - '@users.model.user_model'
