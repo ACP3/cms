@@ -26,7 +26,7 @@ services:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@categories.model.data_grid_repository'
+      - '@categories.view.block.admin.categories_data_grid_block'
 
   categories.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Settings

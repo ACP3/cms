@@ -32,7 +32,7 @@ class CategorySettingsFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @return mixed
+     * @inheritdoc
      */
     public function render()
     {
@@ -43,7 +43,7 @@ class CategorySettingsFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getDefaultData(): array
     {

@@ -10,3 +10,10 @@ services:
     arguments:
       - '@core.view.context.form_block_context'
       - '@core.config'
+
+  categories.view.block.admin.categories_data_grid_block:
+    class: ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoriesDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+    calls:
+      - ['setDataGridRepository', ['@categories.model.data_grid_repository']]

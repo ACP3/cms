@@ -94,7 +94,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage($this->getModuleName()))
             ->setIdentifier($dataGridOptions['identifier'])
             ->setResourcePathDelete($dataGridOptions['resource_path_delete'])
-            ->setResourcePathEdit($dataGridOptions['resource_path_delete']);
+            ->setResourcePathEdit($dataGridOptions['resource_path_edit']);
 
         if ($this->getDataGridRepository() instanceof DataGridRepository) {
             $dataGrid->setRepository($this->getDataGridRepository());
