@@ -1,4 +1,6 @@
 services:
   acp.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Acp\Controller\Admin\Index\Index
-    parent: core.controller.frontend
+    arguments:
+      - '@core.context.frontend'
+      - '@acp.view.block.admin.allowed_modules_block'

@@ -8,54 +8,37 @@ namespace ACP3\Modules\ACP3\Captcha\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractAdminAction;
 use ACP3\Core\Controller\Context\FrontendContext;
-use ACP3\Core\Helpers\Forms;
-use ACP3\Core\Helpers\FormToken;
-use ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface;
+use ACP3\Core\View\Block\FormBlockInterface;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
-use ACP3\Modules\ACP3\Captcha\Utility\CaptchaRegistrar;
 use ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation;
 
 class Settings extends AbstractAdminAction
 {
     /**
-     * @var Forms
-     */
-    private $forms;
-    /**
-     * @var FormToken
-     */
-    private $formToken;
-    /**
-     * @var CaptchaRegistrar
-     */
-    private $captchaRegistrar;
-    /**
      * @var AdminSettingsFormValidation
      */
     private $formValidation;
+    /**
+     * @var FormBlockInterface
+     */
+    private $block;
 
     /**
      * Settings constructor.
      *
      * @param FrontendContext $context
-     * @param Forms $forms
-     * @param FormToken $formToken
-     * @param CaptchaRegistrar $captchaRegistrar
+     * @param FormBlockInterface $block
      * @param AdminSettingsFormValidation $formValidation
      */
     public function __construct(
         FrontendContext $context,
-        Forms $forms,
-        FormToken $formToken,
-        CaptchaRegistrar $captchaRegistrar,
+        FormBlockInterface $block,
         AdminSettingsFormValidation $formValidation
     ) {
         parent::__construct($context);
 
-        $this->forms = $forms;
-        $this->formToken = $formToken;
-        $this->captchaRegistrar = $captchaRegistrar;
         $this->formValidation = $formValidation;
+        $this->block = $block;
     }
 
     /**
@@ -63,19 +46,7 @@ class Settings extends AbstractAdminAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings(Schema::MODULE_NAME);
-
-        $captchas = [];
-        foreach ($this->captchaRegistrar->getAvailableCaptchas() as $serviceId => $captcha) {
-            /** @var CaptchaExtensionInterface $captcha */
-            $captchas[$serviceId] = $captcha->getCaptchaName();
-        }
-
-        return [
-            'captchas' => $this->forms->choicesGenerator('captcha', $captchas, $settings['captcha']),
-            'form' => array_merge($settings, $this->request->getPost()->all()),
-            'form_token' => $this->formToken->renderFormToken()
-        ];
+        return $this->block->setRequestData($this->request->getPost()->all())->render();
     }
 
     /**
