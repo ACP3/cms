@@ -3,10 +3,9 @@ services:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
+      - '@categories.view.block.admin.category_form_block'
       - '@categories.model.categories_model'
       - '@categories.validation.admin_form_validation'
-      - '@core.helpers.formToken'
 
   categories.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Delete
@@ -19,9 +18,9 @@ services:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@captcha.view.block.admin.captcha_settings_form_block'
       - '@categories.model.categories_model'
       - '@categories.validation.admin_form_validation'
-      - '@core.helpers.formToken'
 
   categories.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Index

@@ -20,38 +20,31 @@ class Create extends Core\Controller\AbstractAdminAction
      */
     protected $adminFormValidation;
     /**
-     * @var Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
-    /**
      * @var Categories\Model\CategoriesModel
      */
     protected $categoriesModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Categories\Model\CategoriesModel $categoriesModel
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
+        Core\View\Block\FormBlockInterface $block,
         Categories\Model\CategoriesModel $categoriesModel,
-        Categories\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\FormToken $formTokenHelper)
+        Categories\Validation\AdminFormValidation $adminFormValidation)
     {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
         $this->adminFormValidation = $adminFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
         $this->categoriesModel = $categoriesModel;
+        $this->block = $block;
     }
 
     /**
@@ -59,11 +52,9 @@ class Create extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        return [
-            'form' => array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()),
-            'mod_list' => $this->fetchModules(),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
@@ -88,21 +79,5 @@ class Create extends Core\Controller\AbstractAdminAction
 
             return $this->categoriesModel->save($formData);
         });
-    }
-
-    /**
-     * @return array
-     */
-    protected function fetchModules()
-    {
-        $modules = $this->modules->getActiveModules();
-        foreach ($modules as $name => $info) {
-            if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
-                $modules[$name]['selected'] = $this->formsHelper->selectEntry('module', $info['id']);
-            } else {
-                unset($modules[$name]);
-            }
-        }
-        return $modules;
     }
 }

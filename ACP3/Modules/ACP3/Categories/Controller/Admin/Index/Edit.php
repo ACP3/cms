@@ -20,31 +20,31 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected $adminFormValidation;
     /**
-     * @var Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var Categories\Model\CategoriesModel
      */
     protected $categoriesModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Categories\Model\CategoriesModel $categoriesModel
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\View\Block\FormBlockInterface $block,
         Categories\Model\CategoriesModel $categoriesModel,
-        Categories\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\FormToken $formTokenHelper)
+        Categories\Validation\AdminFormValidation $adminFormValidation)
     {
         parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
         $this->categoriesModel = $categoriesModel;
+        $this->block = $block;
     }
 
     /**
@@ -58,12 +58,10 @@ class Edit extends Core\Controller\AbstractAdminAction
         $category = $this->categoriesModel->getOneById($id);
 
         if (empty($category) === false) {
-            $this->title->setPageTitlePrefix($category['title']);
-
-            return [
-                'form' => array_merge($category, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken()
-            ];
+            return $this->block
+                ->setData($category)
+                ->setRequestData($this->request->getPost()->all())
+                ->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
