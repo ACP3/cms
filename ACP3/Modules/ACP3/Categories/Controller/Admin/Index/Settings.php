@@ -20,26 +20,26 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     protected $adminSettingsFormValidation;
     /**
-     * @var Core\Helpers\FormToken
+     * @var Core\View\Block\FormBlockInterface
      */
-    protected $formTokenHelper;
+    private $block;
 
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                           $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\FormBlockInterface $block
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     * @param \ACP3\Core\Helpers\FormToken                                         $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
-        Core\Helpers\FormToken $formTokenHelper)
-    {
+        Core\View\Block\FormBlockInterface $block,
+        Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+    ) {
         parent::__construct($context);
 
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
+        $this->block = $block;
     }
 
     /**
@@ -47,12 +47,9 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings(Categories\Installer\Schema::MODULE_NAME);
-
-        return [
-            'form' => array_merge($settings, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
