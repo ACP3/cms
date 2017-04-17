@@ -55,6 +55,16 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'data' => $formData,
                     'field' => 'sidebar',
                     'message' => $this->translator->t('system', 'select_sidebar_entries')
+                ])
+            ->addConstraint(
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'order_by',
+                    'message' => $this->translator->t('files', 'select_order_by'),
+                    'extra' => [
+                        'haystack' => ['date', 'custom']
+                    ]
                 ]);
 
         if ($this->modules->isActive('comments')) {

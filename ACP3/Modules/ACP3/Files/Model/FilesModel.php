@@ -10,12 +10,18 @@ use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Model\DuplicationAwareTrait;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
+use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
 class FilesModel extends AbstractModel
 {
     use DuplicationAwareTrait;
 
     const EVENT_PREFIX = Schema::MODULE_NAME;
+
+    /**
+     * @var FilesRepository
+     */
+    protected $repository;
 
     /**
      * @inheritdoc
@@ -29,6 +35,10 @@ class FilesModel extends AbstractModel
 
         if (!empty($data['filesize'])) {
             $data['size'] = $data['filesize'];
+        }
+
+        if ($entryId === null) {
+            $data['sort'] = $this->repository->getMaxSort() + 1;
         }
 
         return parent::save($data, $entryId);
@@ -50,7 +60,8 @@ class FilesModel extends AbstractModel
             'comments' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'file' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'size' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW
+            'size' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
+            'sort' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
         ];
     }
 

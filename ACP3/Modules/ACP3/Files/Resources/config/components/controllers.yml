@@ -49,6 +49,13 @@ services:
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
 
+  files.controller.admin.index.sort:
+    class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Sort
+    arguments:
+      - '@core.context.frontend'
+      - '@files.model.filesrepository'
+      - '@core.helpers.sort'
+
   files.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Details
     arguments:
