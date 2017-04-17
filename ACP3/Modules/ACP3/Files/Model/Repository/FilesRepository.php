@@ -107,4 +107,12 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
             ['time' => $time, 'active' => 1]
         );
     }
+
+    /**
+     * @return int
+     */
+    public function getMaxSort()
+    {
+        return (int)$this->db->fetchColumn("SELECT MAX(`sort`) FROM {$this->getTableName()};");
+    }
 }

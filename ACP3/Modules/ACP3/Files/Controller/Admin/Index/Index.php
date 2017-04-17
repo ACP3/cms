@@ -63,6 +63,8 @@ class Index extends Core\Controller\AbstractAdminAction
      */
     protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
     {
+        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
+
         $dataGrid
             ->addColumn([
                 'label' => $this->translator->t('files', 'active'),
@@ -77,7 +79,7 @@ class Index extends Core\Controller\AbstractAdminAction
                 'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['start', 'end'],
-                'default_sort' => true,
+                'default_sort' => $settings['order_by'] === 'date',
                 'default_sort_direction' => 'desc'
             ], 50)
             ->addColumn([
@@ -104,5 +106,19 @@ class Index extends Core\Controller\AbstractAdminAction
                 'fields' => ['id'],
                 'primary' => true
             ], 10);
+
+        if ($this->acl->hasPermission('admin/files/index/sort') && $settings['order_by'] === 'custom') {
+            $dataGrid
+                ->addColumn([
+                    'label' => $this->translator->t('system', 'order'),
+                    'type' => Core\Helpers\DataGrid\ColumnRenderer\SortColumnRenderer::class,
+                    'fields' => ['sort'],
+                    'default_sort' => $settings['order_by'] === 'custom',
+                    'custom' => [
+                        'route_sort_down' => 'acp/files/index/sort/id_%d/action_down',
+                        'route_sort_up' => 'acp/files/index/sort/id_%d/action_up',
+                    ]
+                ], 15);
+        }
     }
 }
