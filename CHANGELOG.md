@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Added the possibility to duplicate downloads via the admin data grid
 - Added the possibility to quickly enable/disable downloads
-- Added the possibility to order download by date and with an custom order
+- Added the possibility to order downloads by date and with an custom order
 
 ### Changed
 - Updated `giggsey/locale` library to version 1.3 to take advantage of the new functionality for the localized country list
