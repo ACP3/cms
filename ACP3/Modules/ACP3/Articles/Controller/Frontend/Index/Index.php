@@ -18,19 +18,18 @@ class Index extends Core\Controller\AbstractFrontendAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var Core\View\Block\BlockInterface
+     * @var Core\View\Block\ListingBlockInterface
      */
     private $block;
 
     /**
      * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\BlockInterface $block
+     * @param Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\ListingBlockInterface $block
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\BlockInterface $block
+        Core\View\Block\ListingBlockInterface $block
     ) {
         parent::__construct($context);
 

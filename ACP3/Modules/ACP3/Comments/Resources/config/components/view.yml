@@ -5,3 +5,13 @@ services:
       - '@core.view.context.form_block_context'
       - '@core.config'
       - '@users.model.user_model'
+
+  comments.view.block.frontend.comments_listing_block:
+    class: ACP3\Modules\ACP3\Comments\View\Block\Frontend\CommentsListingBlock
+    arguments:
+      - '@core.view.context.listing_block_context'
+      - '@core.config'
+      - '@core.i18n.translator'
+      - '@comments.model.commentrepository'
+    calls:
+      - ['setEmoticonsHelper', ['@?emoticons.helpers']]

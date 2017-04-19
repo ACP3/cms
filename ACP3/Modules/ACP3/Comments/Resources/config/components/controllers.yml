@@ -53,7 +53,6 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.pagination'
-      - '@comments.model.commentrepository'
+      - '@comments.view.block.frontend.comments_listing_block'
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
