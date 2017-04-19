@@ -18,8 +18,8 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Index
     arguments:
       - '@core.context.frontend'
+      - '@comments.view.block.admin.comments_data_grid_block'
       - '@comments.model.commentrepository'
-      - '@system.model.modulerepository'
 
   comments.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Delete
@@ -31,6 +31,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@comments.view.block.admin.comments_by_module_data_grid_block'
       - '@comments.model.commentrepository'
 
   comments.controller.admin.index.settings:

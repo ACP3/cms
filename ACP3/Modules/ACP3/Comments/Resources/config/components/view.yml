@@ -5,6 +5,17 @@ services:
       - '@core.view.context.form_block_context'
       - '@core.i18n.translator'
 
+  comments.view.block.admin.comments_by_module_data_grid_block:
+    class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsByModuleDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+
+  comments.view.block.admin.comments_data_grid_block:
+    class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+      - '@system.model.modulerepository'
+
   comments.view.block.admin.comments_settings_form_block:
     class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsSettingsFormBlock
     arguments:

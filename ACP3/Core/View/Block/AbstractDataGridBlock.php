@@ -49,7 +49,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
     /**
      * @inheritdoc
      */
-    public function getDataGridRepository(): DataGridRepository
+    public function getDataGridRepository()
     {
         return $this->dataGridRepository;
     }
@@ -99,7 +99,8 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
         if ($this->getDataGridRepository() instanceof DataGridRepository) {
             $dataGrid->setRepository($this->getDataGridRepository());
         } else {
-            $dataGrid->setResults($this->getData());
+            $data = $this->getData();
+            $dataGrid->setResults(isset($data['results']) ? $data['results'] : $data);
         }
 
         $this->addDataGridColumns($dataGrid);

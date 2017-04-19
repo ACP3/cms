@@ -21,7 +21,7 @@ interface BlockInterface
     public function getData(): array;
 
     /**
-     * @return mixed
+     * @return array
      */
     public function render();
 }

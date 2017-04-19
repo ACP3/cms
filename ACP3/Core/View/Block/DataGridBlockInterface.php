@@ -23,7 +23,7 @@ interface DataGridBlockInterface extends BlockInterface
     public function setDataGridRepository(DataGridRepository $dataGridRepository);
 
     /**
-     * @return DataGridRepository
+     * @return DataGridRepository|null
      */
-    public function getDataGridRepository(): DataGridRepository;
+    public function getDataGridRepository();
 }
