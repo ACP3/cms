@@ -20,33 +20,26 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     protected $adminSettingsFormValidation;
     /**
-     * @var \ACP3\Core\Helpers\FormToken
+     * @var Core\View\Block\FormBlockInterface
      */
-    protected $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
+    private $block;
 
     /**
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
-        Core\Helpers\FormToken $formTokenHelper
+        Core\View\Block\FormBlockInterface $block,
+        Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
+        $this->block = $block;
     }
 
     /**
@@ -54,19 +47,7 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings(Comments\Installer\Schema::MODULE_NAME);
-
-        if ($this->modules->isActive('emoticons') === true) {
-            $this->view->assign(
-                'allow_emoticons',
-                $this->formsHelper->yesNoCheckboxGenerator('emoticons', $settings['emoticons'])
-            );
-        }
-
-        return [
-            'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block->setRequestData($this->request->getPost()->all())->render();
     }
 
     /**

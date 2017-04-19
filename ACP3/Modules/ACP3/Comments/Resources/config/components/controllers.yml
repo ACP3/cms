@@ -37,9 +37,8 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
+      - '@comments.view.block.admin.comments_settings_form_block'
       - '@comments.validation.admin_settings_form_validation'
-      - '@core.helpers.formToken'
 
   comments.controller.frontend.index.create:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Create

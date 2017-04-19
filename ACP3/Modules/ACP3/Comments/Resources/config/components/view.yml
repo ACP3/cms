@@ -1,4 +1,12 @@
 services:
+  comments.view.block.admin.comments_settings_form_block:
+    class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.modules'
+      - '@core.config'
+      - '@core.helpers.date'
+
   comments.view.block.frontend.comment_form_block:
     class: ACP3\Modules\ACP3\Comments\View\Block\Frontend\CommentFormBlock
     arguments:

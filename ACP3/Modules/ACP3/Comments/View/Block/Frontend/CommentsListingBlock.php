@@ -66,7 +66,7 @@ class CommentsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     protected function getModuleName(): string
     {
@@ -74,7 +74,7 @@ class CommentsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @return int
+     * @inheritdoc
      */
     protected function getTotalResults(): int
     {
@@ -82,8 +82,7 @@ class CommentsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @param int $resultsPerPage
-     * @return array
+     * @inheritdoc
      */
     protected function getResults(int $resultsPerPage): array
     {
@@ -112,7 +111,7 @@ class CommentsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @return mixed
+     * @inheritdoc
      */
     public function render()
     {

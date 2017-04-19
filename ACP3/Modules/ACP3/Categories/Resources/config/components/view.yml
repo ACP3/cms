@@ -5,8 +5,8 @@ services:
       - '@core.view.context.form_block_context'
       - '@core.modules'
 
-  categories.view.block.admin.category_settings_form_block:
-    class: ACP3\Modules\ACP3\Categories\View\Block\Admin\CategorySettingsFormBlock
+  categories.view.block.admin.categories_settings_form_block:
+    class: ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoriesSettingsFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@core.config'

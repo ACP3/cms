@@ -32,5 +32,5 @@ services:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@categories.view.block.admin.category_settings_form_block'
+      - '@categories.view.block.admin.categories_settings_form_block'
       - '@categories.validation.admin_settings_form_validation'
