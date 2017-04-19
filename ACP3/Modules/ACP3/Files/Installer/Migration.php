@@ -12,8 +12,6 @@ class Migration extends Modules\Installer\AbstractMigration
 {
     /**
      * @inheritdoc
-     *
-     * @return array
      */
     public function schemaUpdates()
     {
@@ -70,14 +68,31 @@ class Migration extends Modules\Installer\AbstractMigration
                 "ALTER TABLE `{pre}files` ADD COLUMN `active` TINYINT(1) UNSIGNED NOT NULL AFTER `id`;",
                 "ALTER TABLE `{pre}files` ADD INDEX (`active`)",
                 "UPDATE `{pre}files` SET `active` = 1;"
+            ],
+            45 => [
+                "ALTER TABLE `{pre}files` ADD COLUMN `sort` INT(10) UNSIGNED NOT NULL AFTER `text`;",
+                "ALTER TABLE `{pre}files` ADD INDEX (`sort`)",
+                function() {
+                    $repository = $this->schemaHelper->getContainer()->get('files.model.filesrepository');
+                    $files = $repository->getAll();
+
+                    $i = 1;
+                    foreach ($files as $file) {
+                        $repository->update(['sort' => $i], $file['id']);
+
+                        ++$i;
+                    }
+                }
+            ],
+            46 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'order_by', 'date');",
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'sort', '', 4);",
             ]
         ];
     }
 
     /**
      * @inheritdoc
-     *
-     * @return array
      */
     public function renameModule()
     {
