@@ -22,33 +22,33 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected $adminFormValidation;
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var Comments\Model\CommentsModel
      */
     protected $commentsModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * Details constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Comments\Model\CommentsModel $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\View\Block\FormBlockInterface $block,
         Comments\Model\CommentsModel $commentsModel,
-        Comments\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\FormToken $formTokenHelper)
+        Comments\Validation\AdminFormValidation $adminFormValidation)
     {
         parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
         $this->commentsModel = $commentsModel;
+        $this->block = $block;
     }
 
     /**
@@ -62,21 +62,10 @@ class Edit extends Core\Controller\AbstractAdminAction
         $comment = $this->commentsModel->getOneById($id);
 
         if (empty($comment) === false) {
-            $this->breadcrumb
-                ->append(
-                    $this->translator->t($comment['module'], $comment['module']),
-                    'acp/comments/details/index/id_' . $comment['module_id']
-                )
-                ->append($this->translator->t('comments', 'admin_details_edit'));
-
-            $this->title->setPageTitlePrefix($comment['name']);
-
-            return [
-                'form' => array_merge($comment, $this->request->getPost()->all()),
-                'module_id' => (int)$comment['module_id'],
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-                'can_use_emoticons' => true
-            ];
+            return $this->block
+                ->setData($comment)
+                ->setRequestData($this->request->getPost()->all())
+                ->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

@@ -1,4 +1,10 @@
 services:
+  comments.view.block.admin.comment_form_block:
+    class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.i18n.translator'
+
   comments.view.block.admin.comments_settings_form_block:
     class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsSettingsFormBlock
     arguments:
