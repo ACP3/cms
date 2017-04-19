@@ -54,5 +54,3 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@comments.view.block.frontend.comments_listing_block'
-    calls:
-      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
