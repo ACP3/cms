@@ -24,3 +24,9 @@ services:
       - '@core.view.context.block_context'
       - '@core.config'
       - '@core.i18n.translator'
+
+  contact.view.block.widget.contact_sidebar_block:
+    class: ACP3\Modules\ACP3\Contact\View\Widget\ContactSidebarBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.config'

@@ -7,26 +7,38 @@
 namespace ACP3\Modules\ACP3\Contact\Controller\Widget\Index;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\Contact;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Contact\Controller\Widget\Index
- */
 class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
     /**
+     * @var Core\View\Block\BlockInterface
+     */
+    private $block;
+
+    /**
+     * Index constructor.
+     * @param WidgetContext $context
+     * @param Core\View\Block\BlockInterface $block
+     */
+    public function __construct(WidgetContext $context, Core\View\Block\BlockInterface $block)
+    {
+        parent::__construct($context);
+
+        $this->block = $block;
+    }
+
+    /**
      * @return array
      */
-    public function execute()
+    public function execute(): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        return [
-            'sidebar_contact' => $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME)
-        ];
+        return $this->block->render();
     }
 }
