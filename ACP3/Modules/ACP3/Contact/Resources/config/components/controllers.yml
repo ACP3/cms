@@ -16,14 +16,15 @@ services:
 
   contact.controller.frontend.index.imprint:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Imprint
-    parent: core.controller.frontend
+    arguments:
+      - '@core.context.frontend'
+      - '@contact.view.block.frontend.imprint_block'
 
   contact.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@contact.view.block.frontend.contact_form_block'
       - '@contact.validation.form_validation'
       - '@contact.model.contacts_model'
       - '@contact.model.contact_form_model'

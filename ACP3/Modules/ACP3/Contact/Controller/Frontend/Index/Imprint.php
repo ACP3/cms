@@ -7,33 +7,38 @@
 namespace ACP3\Modules\ACP3\Contact\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Context;
 use ACP3\Modules\ACP3\Contact;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Imprint
- * @package ACP3\Modules\ACP3\Contact\Controller\Frontend\Index
- */
 class Imprint extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 
     /**
+     * @var Core\View\Block\BlockInterface
+     */
+    private $block;
+
+    /**
+     * Imprint constructor.
+     * @param Context\FrontendContext $context
+     * @param Core\View\Block\BlockInterface $block
+     */
+    public function __construct(Context\FrontendContext $context, Core\View\Block\BlockInterface $block)
+    {
+        parent::__construct($context);
+
+        $this->block = $block;
+    }
+
+    /**
      * @return array
      */
-    public function execute()
+    public function execute(): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        return [
-            'imprint' => $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME),
-            'powered_by' => $this->translator->t(
-                'contact',
-                'powered_by',
-                [
-                    '%ACP3%' => '<a href="https://www.acp3-cms.net" target="_blank">ACP3 CMS</a>'
-                ]
-            )
-        ];
+        return $this->block->render();
     }
 }

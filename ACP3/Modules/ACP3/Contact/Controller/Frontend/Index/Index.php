@@ -9,24 +9,12 @@ namespace ACP3\Modules\ACP3\Contact\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Contact;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Contact\Controller\Frontend\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Contact\Validation\FormValidation
      */
     protected $formValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
     /**
      * @var Contact\Model\ContactFormModel
      */
@@ -35,30 +23,31 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var Contact\Model\ContactsModel
      */
     protected $contactsModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param \ACP3\Modules\ACP3\Contact\Validation\FormValidation $formValidation
      * @param Contact\Model\ContactsModel $contactsModel
      * @param Contact\Model\ContactFormModel $contactFormModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\FormBlockInterface $block,
         Contact\Validation\FormValidation $formValidation,
         Contact\Model\ContactsModel $contactsModel,
         Contact\Model\ContactFormModel $contactFormModel
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->formValidation = $formValidation;
         $this->contactFormModel = $contactFormModel;
         $this->contactsModel = $contactsModel;
+        $this->block = $block;
     }
 
     /**
@@ -66,16 +55,9 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        $copy = [
-            1 => $this->translator->t('contact', 'send_copy_to_sender')
-        ];
-
-        return [
-            'form' => array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
-            'copy' => $this->formsHelper->checkboxGenerator('copy', $copy, 0),
-            'contact' => $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
@@ -102,29 +84,5 @@ class Index extends Core\Controller\AbstractFrontendAction
                 ));
             }
         );
-    }
-
-    /**
-     * @return array
-     */
-    protected function getFormDefaults()
-    {
-        $defaults = [
-            'name' => '',
-            'name_disabled' => false,
-            'mail' => '',
-            'mail_disabled' => false,
-            'message' => '',
-        ];
-
-        if ($this->user->isAuthenticated() === true) {
-            $user = $this->user->getUserInfo();
-            $defaults['name'] = !empty($user['realname']) ? $user['realname'] : $user['nickname'];
-            $defaults['name_disabled'] = true;
-            $defaults['mail'] = $user['mail'];
-            $defaults['mail_disabled'] = true;
-        }
-
-        return $defaults;
     }
 }

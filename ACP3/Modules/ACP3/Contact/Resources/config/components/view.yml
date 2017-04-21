@@ -9,3 +9,18 @@ services:
     class: ACP3\Modules\ACP3\Contact\View\Admin\ContactsDataGridBlock
     arguments:
       - '@core.view.context.data_grid_block_context'
+
+  contact.view.block.frontend.contact_form_block:
+    class: ACP3\Modules\ACP3\Contact\View\Frontend\ContactFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+      - '@core.i18n.translator'
+      - '@users.model.user_model'
+
+  contact.view.block.frontend.imprint_block:
+    class: ACP3\Modules\ACP3\Contact\View\Frontend\ImprintBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.config'
+      - '@core.i18n.translator'

@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Contact\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Contact;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Index extends Core\Controller\AbstractAdminAction
 {
