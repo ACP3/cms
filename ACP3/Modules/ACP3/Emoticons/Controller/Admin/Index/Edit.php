@@ -9,16 +9,8 @@ namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Emoticons;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index
- */
 class Edit extends Core\Controller\AbstractAdminAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation
      */
@@ -27,26 +19,30 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @var Emoticons\Model\EmoticonsModel
      */
     protected $emoticonsModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Emoticons\Model\EmoticonsModel $emoticonsModel
      * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\FormBlockInterface $block,
         Emoticons\Model\EmoticonsModel $emoticonsModel,
-        Emoticons\Validation\AdminFormValidation $adminFormValidation)
-    {
+        Emoticons\Validation\AdminFormValidation $adminFormValidation
+    ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminFormValidation = $adminFormValidation;
         $this->emoticonsModel = $emoticonsModel;
+        $this->block = $block;
     }
 
     /**
@@ -60,17 +56,17 @@ class Edit extends Core\Controller\AbstractAdminAction
         $emoticon = $this->emoticonsModel->getOneById($id);
 
         if (empty($emoticon) === false) {
-            return [
-                'form' => array_merge($emoticon, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken()
-            ];
+            return $this->block
+                ->setData($emoticon)
+                ->setRequestData($this->request->getPost()->all())
+                ->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @param int   $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
