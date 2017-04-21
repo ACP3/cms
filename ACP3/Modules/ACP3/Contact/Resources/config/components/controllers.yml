@@ -3,14 +3,15 @@ services:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@contact.view.block.admin.contacts_data_grid_block'
       - '@contact.model.repository.data_grid_repository'
 
   contact.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@contact.view.block.admin.contact_settings_form_block'
       - '@core.helpers.secure'
-      - '@core.helpers.formToken'
       - '@contact.validation.admin_settings_form_validation'
 
   contact.controller.frontend.index.imprint:

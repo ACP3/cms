@@ -1,0 +1,11 @@
+services:
+  contact.view.block.admin.contact_settings_form_block:
+    class: ACP3\Modules\ACP3\Contact\View\Admin\ContactSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+
+  contact.view.block.admin.contacts_data_grid_block:
+    class: ACP3\Modules\ACP3\Contact\View\Admin\ContactsDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'

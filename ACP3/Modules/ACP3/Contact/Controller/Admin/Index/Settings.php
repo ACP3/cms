@@ -9,16 +9,8 @@ namespace ACP3\Modules\ACP3\Contact\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Contact;
 
-/**
- * Class Settings
- * @package ACP3\Modules\ACP3\Contact\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractAdminAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Contact\Validation\AdminSettingsFormValidation
      */
@@ -27,26 +19,30 @@ class Settings extends Core\Controller\AbstractAdminAction
      * @var Core\Helpers\Secure
      */
     protected $secureHelper;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Contact\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\View\Block\FormBlockInterface $block,
         Core\Helpers\Secure $secureHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Contact\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->secureHelper = $secureHelper;
+        $this->block = $block;
     }
 
     /**
@@ -54,12 +50,9 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME);
-
-        return [
-            'form' => array_merge($settings, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
