@@ -12,20 +12,8 @@ use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\Files\Helpers;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Files\Controller\Admin\Index
- */
 class Edit extends AbstractFormAction
 {
-    /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation
      */
@@ -38,33 +26,32 @@ class Edit extends AbstractFormAction
      * @var Files\Model\FilesModel
      */
     protected $filesModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Files\Model\FilesModel $filesModel
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Date $date,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\FormBlockInterface $block,
         Files\Model\FilesModel $filesModel,
         Files\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
     ) {
-        parent::__construct($context, $formsHelper, $categoriesHelpers);
+        parent::__construct($context, $categoriesHelpers);
 
-        $this->date = $date;
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminFormValidation = $adminFormValidation;
         $this->filesModel = $filesModel;
+        $this->block = $block;
     }
 
     /**
@@ -78,32 +65,14 @@ class Edit extends AbstractFormAction
         $file = $this->filesModel->getOneById($id);
 
         if (empty($file) === false) {
-            $this->title->setPageTitlePrefix($file['title']);
-
             $file['filesize'] = '';
             $file['file_external'] = '';
 
-            $external = [
-                1 => $this->translator->t('files', 'external_resource')
-            ];
+            return $this->block
+                ->setRequestData($this->request->getPost()->all())
+                ->setData($file)
+                ->render();
 
-            return [
-                'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $file['active']),
-                'options' => $this->getOptions($file),
-                'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(),
-                    trim(strrchr($file['size'], ' '))),
-                'categories' => $this->categoriesHelpers->categoriesList(
-                    Files\Installer\Schema::MODULE_NAME,
-                    $file['category_id'],
-                    true
-                ),
-                'external' => $this->formsHelper->checkboxGenerator('external', $external),
-                'current_file' => $file['file'],
-                'form' => array_merge($file, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-                'SEO_URI_PATTERN' => Files\Helpers::URL_KEY_PATTERN,
-                'SEO_ROUTE_NAME' => sprintf(Files\Helpers::URL_KEY_PATTERN, $id)
-            ];
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

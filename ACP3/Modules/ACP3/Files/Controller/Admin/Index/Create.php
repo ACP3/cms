@@ -10,20 +10,8 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Files\Controller\Admin\Index
- */
 class Create extends AbstractFormAction
 {
-    /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation
      */
@@ -36,33 +24,32 @@ class Create extends AbstractFormAction
      * @var Files\Model\FilesModel
      */
     protected $filesModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Files\Model\FilesModel $filesModel
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Date $date,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\FormBlockInterface $block,
         Files\Model\FilesModel $filesModel,
         Files\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
     ) {
-        parent::__construct($context, $formsHelper, $categoriesHelpers);
+        parent::__construct($context, $categoriesHelpers);
 
-        $this->date = $date;
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminFormValidation = $adminFormValidation;
         $this->filesModel = $filesModel;
+        $this->block = $block;
     }
 
     /**
@@ -70,31 +57,9 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        $defaults = [
-            'title' => '',
-            'file_internal' => '',
-            'file_external' => '',
-            'filesize' => '',
-            'text' => '',
-            'start' => '',
-            'end' => ''
-        ];
-
-        $external = [
-            1 => $this->translator->t('files', 'external_resource')
-        ];
-
-        return [
-            'active' => $this->formsHelper->yesNoCheckboxGenerator('active', 1),
-            'options' => $this->getOptions(['comments' => '0']),
-            'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(), ''),
-            'categories' => $this->categoriesHelpers->categoriesList(Files\Installer\Schema::MODULE_NAME, '', true),
-            'external' => $this->formsHelper->checkboxGenerator('external', $external),
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-            'SEO_URI_PATTERN' => Files\Helpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => ''
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
