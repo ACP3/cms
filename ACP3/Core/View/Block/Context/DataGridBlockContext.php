@@ -8,7 +8,6 @@ namespace ACP3\Core\View\Block\Context;
 
 
 use ACP3\Core\Helpers\ResultsPerPage;
-use ACP3\Core\I18n\Translator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DataGridBlockContext extends BlockContext
@@ -21,29 +20,27 @@ class DataGridBlockContext extends BlockContext
      * @var ContainerInterface
      */
     private $container;
-    /**
-     * @var Translator
-     */
-    private $translator;
 
     /**
      * DataGridBlockContext constructor.
      * @param BlockContext $context
-     * @param Translator $translator
      * @param ResultsPerPage $resultsPerPage
      * @param ContainerInterface $container
      */
     public function __construct(
         BlockContext $context,
-        Translator $translator,
         ResultsPerPage $resultsPerPage,
         ContainerInterface $container
     ) {
-        parent::__construct($context->getView(), $context->getBreadcrumb(), $context->getTitle());
+        parent::__construct(
+            $context->getView(),
+            $context->getBreadcrumb(),
+            $context->getTitle(),
+            $context->getTranslator()
+        );
 
         $this->resultsPerPage = $resultsPerPage;
         $this->container = $container;
-        $this->translator = $translator;
     }
 
     /**
@@ -60,13 +57,5 @@ class DataGridBlockContext extends BlockContext
     public function getContainer(): ContainerInterface
     {
         return $this->container;
-    }
-
-    /**
-     * @return Translator
-     */
-    public function getTranslator(): Translator
-    {
-        return $this->translator;
     }
 }

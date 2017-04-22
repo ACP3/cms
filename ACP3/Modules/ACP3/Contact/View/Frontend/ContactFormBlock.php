@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Contact\View\Frontend;
 
 
-use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
@@ -21,10 +20,6 @@ class ContactFormBlock extends AbstractFormBlock
      */
     private $settings;
     /**
-     * @var Translator
-     */
-    private $translator;
-    /**
      * @var UserModel
      */
     private $user;
@@ -33,19 +28,16 @@ class ContactFormBlock extends AbstractFormBlock
      * ContactFormBlock constructor.
      * @param FormBlockContext $context
      * @param SettingsInterface $settings
-     * @param Translator $translator
      * @param UserModel $user
      */
     public function __construct(
         FormBlockContext $context,
         SettingsInterface $settings,
-        Translator $translator,
         UserModel $user
     ) {
         parent::__construct($context);
 
         $this->settings = $settings;
-        $this->translator = $translator;
         $this->user = $user;
     }
 

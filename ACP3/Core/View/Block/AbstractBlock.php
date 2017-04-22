@@ -23,6 +23,10 @@ abstract class AbstractBlock implements BlockInterface
      * @var \ACP3\Core\Breadcrumb\Title
      */
     protected $title;
+    /**
+     * @var \ACP3\Core\I18n\Translator
+     */
+    protected $translator;
 
     /**
      * @var array
@@ -38,6 +42,7 @@ abstract class AbstractBlock implements BlockInterface
         $this->view = $context->getView();
         $this->breadcrumb = $context->getBreadcrumb();
         $this->title = $context->getTitle();
+        $this->translator = $context->getTranslator();
     }
 
     /**

@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Articles\Controller\Widget\Index
- */
 class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -23,10 +19,6 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Cache
-     */
-    protected $articlesCache;
-    /**
      * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
     protected $articleRepository;
@@ -35,19 +27,16 @@ class Index extends Core\Controller\AbstractWidgetAction
      * @param \ACP3\Core\Controller\Context\WidgetContext         $context
      * @param \ACP3\Core\Date                                     $date
      * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
-        Articles\Model\Repository\ArticleRepository $articleRepository,
-        Articles\Cache $articlesCache)
+        Articles\Model\Repository\ArticleRepository $articleRepository)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->articleRepository = $articleRepository;
-        $this->articlesCache = $articlesCache;
     }
 
     /**

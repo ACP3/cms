@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Comments\View\Block\Frontend;
 
 
-use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractListingBlock;
 use ACP3\Core\View\Block\Context\ListingBlockContext;
@@ -26,10 +25,6 @@ class CommentsListingBlock extends AbstractListingBlock
      */
     private $settings;
     /**
-     * @var Translator
-     */
-    private $translator;
-    /**
      * @var Helpers
      */
     private $emoticonsHelpers;
@@ -38,20 +33,17 @@ class CommentsListingBlock extends AbstractListingBlock
      * CommentsListingBlock constructor.
      * @param ListingBlockContext $context
      * @param SettingsInterface $settings
-     * @param Translator $translator
      * @param CommentRepository $commentRepository
      */
     public function __construct(
         ListingBlockContext $context,
         SettingsInterface $settings,
-        Translator $translator,
         CommentRepository $commentRepository)
     {
         parent::__construct($context);
 
         $this->commentRepository = $commentRepository;
         $this->settings = $settings;
-        $this->translator = $translator;
     }
 
     /**

@@ -29,7 +29,12 @@ class ListingBlockContext extends BlockContext
      */
     public function __construct(BlockContext $context, ResultsPerPage $resultsPerPage, Pagination $pagination)
     {
-        parent::__construct($context->getView(), $context->getBreadcrumb(), $context->getTitle());
+        parent::__construct(
+            $context->getView(),
+            $context->getBreadcrumb(),
+            $context->getTitle(),
+            $context->getTranslator()
+        );
 
         $this->resultsPerPage = $resultsPerPage;
         $this->pagination = $pagination;

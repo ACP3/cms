@@ -29,7 +29,12 @@ class FormBlockContext extends BlockContext
      */
     public function __construct(BlockContext $context, Forms $forms, FormToken $formToken)
     {
-        parent::__construct($context->getView(), $context->getBreadcrumb(), $context->getTitle());
+        parent::__construct(
+            $context->getView(),
+            $context->getBreadcrumb(),
+            $context->getTitle(),
+            $context->getTranslator()
+        );
 
         $this->forms = $forms;
         $this->formToken = $formToken;

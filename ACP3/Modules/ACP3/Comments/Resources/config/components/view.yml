@@ -3,7 +3,6 @@ services:
     class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentFormBlock
     arguments:
       - '@core.view.context.form_block_context'
-      - '@core.i18n.translator'
 
   comments.view.block.admin.comments_by_module_data_grid_block:
     class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsByModuleDataGridBlock
@@ -36,7 +35,6 @@ services:
     arguments:
       - '@core.view.context.listing_block_context'
       - '@core.config'
-      - '@core.i18n.translator'
       - '@comments.model.commentrepository'
     calls:
       - ['setEmoticonsHelper', ['@?emoticons.helpers']]

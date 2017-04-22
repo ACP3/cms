@@ -21,12 +21,12 @@ services:
       - '@core.view'
       - '@core.breadcrumb'
       - '@core.breadcrumb.title'
+      - '@core.i18n.translator'
 
   core.view.context.data_grid_block_context:
     class: ACP3\Core\View\Block\Context\DataGridBlockContext
     arguments:
       - '@core.view.context.block_context'
-      - '@core.i18n.translator'
       - '@core.helpers.results_per_page'
       - '@service_container'
 

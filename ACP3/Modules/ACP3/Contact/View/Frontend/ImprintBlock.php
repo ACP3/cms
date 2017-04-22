@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Contact\View\Frontend;
 
 
-use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
@@ -19,23 +18,17 @@ class ImprintBlock extends AbstractBlock
      * @var SettingsInterface
      */
     private $settings;
-    /**
-     * @var Translator
-     */
-    private $translator;
 
     /**
      * ImprintBlock constructor.
      * @param BlockContext $context
      * @param SettingsInterface $settings
-     * @param Translator $translator
      */
-    public function __construct(BlockContext $context, SettingsInterface $settings, Translator $translator)
+    public function __construct(BlockContext $context, SettingsInterface $settings)
     {
         parent::__construct($context);
 
         $this->settings = $settings;
-        $this->translator = $translator;
     }
 
     /**

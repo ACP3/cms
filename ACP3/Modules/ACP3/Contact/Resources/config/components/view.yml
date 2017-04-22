@@ -15,7 +15,6 @@ services:
     arguments:
       - '@core.view.context.form_block_context'
       - '@core.config'
-      - '@core.i18n.translator'
       - '@users.model.user_model'
 
   contact.view.block.frontend.imprint_block:
@@ -23,7 +22,6 @@ services:
     arguments:
       - '@core.view.context.block_context'
       - '@core.config'
-      - '@core.i18n.translator'
 
   contact.view.block.widget.contact_sidebar_block:
     class: ACP3\Modules\ACP3\Contact\View\Widget\ContactSidebarBlock

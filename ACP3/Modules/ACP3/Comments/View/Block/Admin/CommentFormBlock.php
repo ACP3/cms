@@ -7,29 +7,10 @@
 namespace ACP3\Modules\ACP3\Comments\View\Block\Admin;
 
 
-use ACP3\Core\I18n\Translator;
 use ACP3\Core\View\Block\AbstractFormBlock;
-use ACP3\Core\View\Block\Context\FormBlockContext;
 
 class CommentFormBlock extends AbstractFormBlock
 {
-    /**
-     * @var Translator
-     */
-    private $translator;
-
-    /**
-     * CommentFormBlock constructor.
-     * @param FormBlockContext $context
-     * @param Translator $translator
-     */
-    public function __construct(FormBlockContext $context, Translator $translator)
-    {
-        parent::__construct($context);
-
-        $this->translator = $translator;
-    }
-
     /**
      * @inheritdoc
      */

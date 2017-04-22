@@ -58,7 +58,6 @@ services:
       - '@core.context.widget'
       - '@core.date'
       - '@articles.model.articlerepository'
-      - '@articles.cache'
 
   articles.controller.widget.index.single:
     class: ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Single
