@@ -33,6 +33,7 @@ services:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@files.view.block.admin.files_data_grid_form_block'
       - '@files.model.data_grid_repository'
 
   files.controller.admin.index.settings:

@@ -7,6 +7,13 @@ services:
       - '@core.modules'
       - '@categories.helpers'
 
+  files.view.block.admin.files_data_grid_form_block:
+    class: ACP3\Modules\ACP3\Files\View\Block\Admin\FilesDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+      - '@core.acl'
+      - '@core.config'
+
   files.view.block.admin.files_settings_form_block:
     class: ACP3\Modules\ACP3\Files\View\Block\Admin\FilesSettingsFormBlock
     arguments:
