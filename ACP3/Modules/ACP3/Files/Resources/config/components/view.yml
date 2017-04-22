@@ -22,3 +22,9 @@ services:
       - '@core.config'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
+
+  files.view.block.frontend.categories_listing_block:
+    class: ACP3\Modules\ACP3\Files\View\Block\Frontend\CategoriesListingBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@categories.cache'

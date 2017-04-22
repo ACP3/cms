@@ -2,6 +2,7 @@
 
 {block CONTENT}
     {if !empty($files)}
+        {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
         {foreach $files as $row}
             <div class="dataset-box">
                 <div class="navbar navbar-default">
@@ -17,7 +18,9 @@
                             </a>
                         </h3>
                     </div>
-                    <time class="navbar-text small pull-right" datetime="{date_format date=$row.start format="c"}">{date_format date=$row.start format=$dateformat}</time>
+                    <time class="navbar-text small pull-right" datetime="{date_format date=$row.start format="c"}">
+                        {date_format date=$row.start format=$dateformat}
+                    </time>
                 </div>
             </div>
         {/foreach}

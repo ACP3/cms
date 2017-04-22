@@ -31,18 +31,24 @@ class Files extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
      */
     protected $categoryRepository;
+    /**
+     * @var Core\Pagination
+     */
+    private $pagination;
 
     /**
      * Files constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
-     * @param \ACP3\Core\Date                                        $date
-     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository         $filesRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Date $date
+     * @param Core\Pagination $pagination
+     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
+        Core\Pagination $pagination,
         FilesModule\Model\Repository\FilesRepository $filesRepository,
         Categories\Model\Repository\CategoryRepository $categoryRepository)
     {
@@ -51,6 +57,7 @@ class Files extends Core\Controller\AbstractFrontendAction
         $this->date = $date;
         $this->filesRepository = $filesRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->pagination = $pagination;
     }
 
     /**
@@ -72,8 +79,13 @@ class Files extends Core\Controller\AbstractFrontendAction
 
             $settings = $this->config->getSettings(FilesModule\Installer\Schema::MODULE_NAME);
 
+            $this->pagination
+                ->setResultsPerPage($this->resultsPerPage->getResultsPerPage(FilesModule\Installer\Schema::MODULE_NAME))
+                ->setTotalResults($this->filesRepository->countAll($this->date->getCurrentDateTime(), $cat));
+
             return [
                 'dateformat' => $settings['dateformat'],
+                'pagination' => $this->pagination->render(),
                 'files' => $this->filesRepository->getAllByCategoryId($cat, $this->date->getCurrentDateTime())
             ];
         }
