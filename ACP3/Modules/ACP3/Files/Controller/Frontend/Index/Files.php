@@ -8,56 +8,37 @@ namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\Files as FilesModule;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Files
- * @package ACP3\Modules\ACP3\Files\Controller\Frontend\Index
- */
 class Files extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
-     */
-    protected $filesRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
      */
     protected $categoryRepository;
     /**
-     * @var Core\Pagination
+     * @var Core\View\Block\ListingBlockInterface
      */
-    private $pagination;
+    private $block;
 
     /**
      * Files constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
-     * @param Core\Pagination $pagination
-     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
+     * @param Core\View\Block\ListingBlockInterface $block
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Date $date,
-        Core\Pagination $pagination,
-        FilesModule\Model\Repository\FilesRepository $filesRepository,
+        Core\View\Block\ListingBlockInterface $block,
         Categories\Model\Repository\CategoryRepository $categoryRepository)
     {
         parent::__construct($context);
 
-        $this->date = $date;
-        $this->filesRepository = $filesRepository;
         $this->categoryRepository = $categoryRepository;
-        $this->pagination = $pagination;
+        $this->block = $block;
     }
 
     /**
@@ -71,23 +52,9 @@ class Files extends Core\Controller\AbstractFrontendAction
         if ($this->categoryRepository->resultExists($cat) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            $category = $this->categoryRepository->getOneById($cat);
-
-            $this->breadcrumb
-                ->append($this->translator->t('files', 'files'), 'files')
-                ->append($category['title']);
-
-            $settings = $this->config->getSettings(FilesModule\Installer\Schema::MODULE_NAME);
-
-            $this->pagination
-                ->setResultsPerPage($this->resultsPerPage->getResultsPerPage(FilesModule\Installer\Schema::MODULE_NAME))
-                ->setTotalResults($this->filesRepository->countAll($this->date->getCurrentDateTime(), $cat));
-
-            return [
-                'dateformat' => $settings['dateformat'],
-                'pagination' => $this->pagination->render(),
-                'files' => $this->filesRepository->getAllByCategoryId($cat, $this->date->getCurrentDateTime())
-            ];
+            return $this->block
+                ->setData(['category_id' => $cat])
+                ->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
