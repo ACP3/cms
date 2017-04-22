@@ -7,9 +7,8 @@ services:
     class: ACP3\Modules\ACP3\Feeds\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@feeds.view.block.admin.feeds_settings_form_block'
       - '@core.helpers.secure'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
       - '@feeds.validation.admin_form_validation'
 
   feeds.controller.frontend.index.index:

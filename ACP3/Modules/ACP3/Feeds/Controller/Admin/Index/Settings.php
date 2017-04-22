@@ -9,49 +9,38 @@ namespace ACP3\Modules\ACP3\Feeds\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Feeds;
 
-/**
- * Class Settings
- * @package ACP3\Modules\ACP3\Feeds\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractAdminAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
     /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
-    /**
      * @var Core\Helpers\Secure
      */
     protected $secureHelper;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\View\Block\FormBlockInterface $block,
         Core\Helpers\Secure $secureHelper,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Feeds\Validation\AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminFormValidation = $adminFormValidation;
         $this->secureHelper = $secureHelper;
+        $this->block = $block;
     }
 
     /**
@@ -59,19 +48,9 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings(Feeds\Installer\Schema::MODULE_NAME);
-
-        $feedTypes = [
-            'RSS 1.0' => 'RSS 1.0',
-            'RSS 2.0' => 'RSS 2.0',
-            'ATOM' => 'ATOM'
-        ];
-
-        return [
-            'feed_types' => $this->formsHelper->choicesGenerator('feed_type', $feedTypes, $settings['feed_type']),
-            'form' => array_merge($settings, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**

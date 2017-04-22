@@ -1,0 +1,6 @@
+services:
+  feeds.view.block.admin.feeds_settings_form_block:
+    class: ACP3\Modules\ACP3\Feeds\View\Block\Admin\FeedsSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
