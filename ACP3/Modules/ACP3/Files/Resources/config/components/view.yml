@@ -29,6 +29,12 @@ services:
       - '@core.view.context.block_context'
       - '@categories.cache'
 
+  files.view.block.frontend.file_details_block:
+    class: ACP3\Modules\ACP3\Files\View\Block\Frontend\FileDetailsBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.config'
+
   files.view.block.frontend.files_listing_block:
     class: ACP3\Modules\ACP3\Files\View\Block\Frontend\FilesListingBlock
     arguments:
