@@ -4,7 +4,7 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Articles\Test\ValidationRules;
+namespace ACP3\Modules\ACP3\Articles\Test\Validation\ValidationRules;
 
 use ACP3\Core\Test\Validation\ValidationRules\AbstractValidationRuleTest;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
