@@ -45,7 +45,6 @@ abstract class AbstractBlockTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->block->render();
 
-        $this->assertNotEmpty($result);
         $this->assertTrue(is_array($result));
     }
 
