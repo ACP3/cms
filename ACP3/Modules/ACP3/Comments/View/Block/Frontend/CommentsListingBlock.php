@@ -70,7 +70,9 @@ class CommentsListingBlock extends AbstractListingBlock
      */
     protected function getTotalResults(): int
     {
-        return $this->commentRepository->countAll();
+        $data = $this->getData();
+
+        return $this->commentRepository->countAll($data['moduleId']);
     }
 
     /**
