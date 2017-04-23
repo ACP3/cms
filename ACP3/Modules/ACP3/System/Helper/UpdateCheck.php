@@ -78,7 +78,7 @@ class UpdateCheck
     /**
      * @return array
      */
-    private function doUpdateCheck(): array
+    private function doUpdateCheck()
     {
         try {
             $data = $this->updateFileParser->parseUpdateFile(static::UPDATE_CHECK_FILE);
