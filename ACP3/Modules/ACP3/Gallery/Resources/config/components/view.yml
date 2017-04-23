@@ -24,7 +24,7 @@ services:
       - '@core.helpers.date'
 
   gallery.view.block.admin.picture_form_block:
-    class: ACP3\Modules\ACP3\Gallery\Test\View\Block\Admin\PictureFormBlock
+    class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\PictureFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@core.config'

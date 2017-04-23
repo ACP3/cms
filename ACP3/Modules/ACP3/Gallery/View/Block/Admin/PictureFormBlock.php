@@ -4,7 +4,7 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Gallery\Test\View\Block\Admin;
+namespace ACP3\Modules\ACP3\Gallery\View\Block\Admin;
 
 
 use ACP3\Core\Modules;
