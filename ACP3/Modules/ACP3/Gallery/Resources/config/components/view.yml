@@ -1,0 +1,13 @@
+services:
+  gallery.view.block.admin.galleries_data_grid_block:
+    class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleriesDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+
+  gallery.view.block.admin.gallery_settings_form_block:
+    class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GallerySettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+      - '@core.modules'
+      - '@core.helpers.date'

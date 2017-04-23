@@ -9,51 +9,40 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 
-/**
- * Class Settings
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractAdminAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation
      */
     protected $adminSettingsFormValidation;
     /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
-    /**
      * @var Core\Cache
      */
     private $galleryCoreCache;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Core\Cache $galleryCoreCache
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\View\Block\FormBlockInterface $block,
         Core\Cache $galleryCoreCache,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->galleryCoreCache = $galleryCoreCache;
+        $this->block = $block;
     }
 
     /**
@@ -61,21 +50,9 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
-
-        if ($this->modules->isActive('comments') === true) {
-            $this->view->assign('comments',
-                $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments'])
-            );
-        }
-
-        return [
-            'overlay' => $this->formsHelper->yesNoCheckboxGenerator('overlay', $settings['overlay']),
-            'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
-            'sidebar_entries' => $this->formsHelper->recordsPerPage((int)$settings['sidebar'], 1, 10, 'sidebar'),
-            'form' => array_merge($settings, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
