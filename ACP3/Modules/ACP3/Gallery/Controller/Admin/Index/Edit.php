@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Edit extends Core\Controller\AbstractAdminAction
 {
@@ -28,12 +27,17 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @var Core\View\Block\FormBlockInterface
      */
     private $block;
+    /**
+     * @var Core\View\Block\DataGridBlockInterface
+     */
+    private $dataGridBlock;
 
     /**
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\DataGridBlockInterface $dataGridBlock
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      * @param Gallery\Model\GalleryModel $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
@@ -41,6 +45,7 @@ class Edit extends Core\Controller\AbstractAdminAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\DataGridBlockInterface $dataGridBlock,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation
@@ -51,6 +56,7 @@ class Edit extends Core\Controller\AbstractAdminAction
         $this->galleryModel = $galleryModel;
         $this->galleryFormValidation = $galleryFormValidation;
         $this->block = $block;
+        $this->dataGridBlock = $dataGridBlock;
     }
 
     /**
@@ -102,64 +108,11 @@ class Edit extends Core\Controller\AbstractAdminAction
      */
     protected function executeListPictures($id)
     {
-        $pictures = $this->pictureRepository->getPicturesByGalleryId($id);
-
-        /** @var Core\Helpers\DataGrid $dataGrid */
-        $dataGrid = $this->get('core.helpers.data_grid');
-        $dataGrid
-            ->setResults($pictures)
-            ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
-            ->setIdentifier('#gallery-edit-data-grid')
-            ->setResourcePathDelete('admin/gallery/pictures/delete/id_' . $id)
-            ->setResourcePathEdit('admin/gallery/pictures/edit');
-
-        $this->addDataGridColumns($dataGrid);
-
-        return [
-            'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
-        ];
-    }
-
-    /**
-     * @param Core\Helpers\DataGrid $dataGrid
-     */
-    protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
-    {
-        $dataGrid
-            ->addColumn([
-                'label' => $this->translator->t('gallery', 'picture'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer::class,
-                'fields' => ['id'],
-                'custom' => [
-                    'pattern' => 'gallery/index/image/id_%s/action_thumb',
-                    'isRoute' => true
-                ]
-            ], 40)
-            ->addColumn([
-                'label' => $this->translator->t('system', 'description'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['description'],
-            ], 30)
-            ->addColumn([
-                'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
-                'fields' => ['id'],
-                'primary' => true
-            ], 10);
-
-        if ($this->acl->hasPermission('admin/gallery/pictures/order')) {
-            $dataGrid
-                ->addColumn([
-                    'label' => $this->translator->t('system', 'order'),
-                    'type' => Core\Helpers\DataGrid\ColumnRenderer\SortColumnRenderer::class,
-                    'fields' => ['pic'],
-                    'default_sort' => true,
-                    'custom' => [
-                        'route_sort_down' => 'acp/gallery/pictures/order/id_%d/action_down',
-                        'route_sort_up' => 'acp/gallery/pictures/order/id_%d/action_up',
-                    ]
-                ], 20);
-        }
+        return $this->dataGridBlock
+            ->setData([
+                'results' => $this->pictureRepository->getPicturesByGalleryId($id),
+                'galleryId' => $id
+            ])
+            ->render();
     }
 }

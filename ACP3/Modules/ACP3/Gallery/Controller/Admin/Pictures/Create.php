@@ -10,12 +10,8 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class Create extends AbstractFormAction
+class Create extends Core\Controller\AbstractAdminAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
      */
@@ -28,31 +24,33 @@ class Create extends AbstractFormAction
      * @var Gallery\Model\PictureModel
      */
     protected $pictureModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
      * @param Gallery\Model\PictureModel $pictureModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\FormBlockInterface $block,
         Gallery\Model\Repository\GalleryRepository $galleryRepository,
         Gallery\Model\PictureModel $pictureModel,
         Gallery\Validation\PictureFormValidation $pictureFormValidation
     ) {
-        parent::__construct($context, $formsHelper);
+        parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->galleryRepository = $galleryRepository;
         $this->pictureFormValidation = $pictureFormValidation;
         $this->pictureModel = $pictureModel;
+        $this->block = $block;
     }
 
     /**
@@ -63,23 +61,10 @@ class Create extends AbstractFormAction
     public function execute($id)
     {
         if ($this->galleryRepository->galleryExists($id) === true) {
-            $gallery = $this->galleryRepository->getGalleryTitle($id);
-
-            $this->breadcrumb
-                ->append($gallery, 'acp/gallery/index/edit/id_' . $id)
-                ->append($this->translator->t('gallery', 'admin_pictures_create'));
-
-            $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
-
-            if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-                $this->view->assign('options', $this->getOptions('0'));
-            }
-
-            return [
-                'form' => array_merge(['description' => ''], $this->request->getPost()->all()),
-                'gallery_id' => $id,
-                'form_token' => $this->formTokenHelper->renderFormToken()
-            ];
+            return $this->block
+                ->setRequestData($this->request->getPost()->all())
+                ->setData(['gallery_id' => $id])
+                ->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

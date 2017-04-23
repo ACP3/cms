@@ -9,6 +9,12 @@ services:
     arguments:
       - '@core.view.context.form_block_context'
 
+  gallery.view.block.admin.gallery_pictures_data_grid_block:
+    class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryPicturesDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+      - '@core.acl'
+
   gallery.view.block.admin.gallery_settings_form_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GallerySettingsFormBlock
     arguments:
@@ -16,3 +22,11 @@ services:
       - '@core.config'
       - '@core.modules'
       - '@core.helpers.date'
+
+  gallery.view.block.admin.picture_form_block:
+    class: ACP3\Modules\ACP3\Gallery\Test\View\Block\Admin\PictureFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+      - '@core.modules'
+      - '@gallery.model.galleryrepository'

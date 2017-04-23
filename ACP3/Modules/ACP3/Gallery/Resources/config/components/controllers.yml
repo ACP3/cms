@@ -23,6 +23,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@gallery.view.block.admin.gallery_form_block'
+      - '@gallery.view.block.admin.gallery_pictures_data_grid_block'
       - '@gallery.model.picturerepository'
       - '@gallery.model.gallery_model'
       - '@gallery.validation.gallery_form_validation'
@@ -46,8 +47,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@gallery.view.block.admin.picture_form_block'
       - '@gallery.model.galleryrepository'
       - '@gallery.model.picture_model'
       - '@gallery.validation.picture_form_validation'
@@ -66,8 +66,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@gallery.view.block.admin.picture_form_block'
       - '@gallery.helpers'
       - '@gallery.model.picture_model'
       - '@gallery.validation.picture_form_validation'
