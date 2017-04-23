@@ -9,16 +9,8 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
- */
 class Create extends Core\Controller\AbstractAdminAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation
      */
@@ -27,26 +19,30 @@ class Create extends Core\Controller\AbstractAdminAction
      * @var Gallery\Model\GalleryModel
      */
     protected $galleryModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Gallery\Model\GalleryModel $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\FormBlockInterface $block,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->galleryModel = $galleryModel;
         $this->galleryFormValidation = $galleryFormValidation;
+        $this->block = $block;
     }
 
     /**
@@ -54,18 +50,9 @@ class Create extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        $defaults = [
-            'title' => '',
-            'start' => '',
-            'end' => ''
-        ];
-
-        return [
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-            'SEO_URI_PATTERN' => Gallery\Helpers::URL_KEY_PATTERN_GALLERY,
-            'SEO_ROUTE_NAME' => ''
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**

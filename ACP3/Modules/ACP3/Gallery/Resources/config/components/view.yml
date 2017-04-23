@@ -4,6 +4,11 @@ services:
     arguments:
       - '@core.view.context.data_grid_block_context'
 
+  gallery.view.block.admin.gallery_form_block:
+    class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+
   gallery.view.block.admin.gallery_settings_form_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GallerySettingsFormBlock
     arguments:

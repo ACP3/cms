@@ -10,16 +10,8 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
- */
 class Edit extends Core\Controller\AbstractAdminAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation
      */
@@ -32,29 +24,33 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @var Gallery\Model\GalleryModel
      */
     protected $galleryModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      * @param Gallery\Model\GalleryModel $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\FormBlockInterface $block,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->pictureRepository = $pictureRepository;
         $this->galleryModel = $galleryModel;
         $this->galleryFormValidation = $galleryFormValidation;
+        $this->block = $block;
     }
 
     /**
@@ -68,26 +64,19 @@ class Edit extends Core\Controller\AbstractAdminAction
         $gallery = $this->galleryModel->getOneById($id);
 
         if (!empty($gallery)) {
-            $this->title->setPageTitlePrefix($gallery['title']);
+            $data = $this->block
+                ->setRequestData($this->request->getPost()->all())
+                ->setData($gallery)
+                ->render();
 
-            return array_merge(
-                [
-                    'gallery_id' => $id,
-                    'form' => array_merge($gallery, $this->request->getPost()->all()),
-                    'form_token' => $this->formTokenHelper->renderFormToken(),
-                    'SEO_URI_PATTERN' => Gallery\Helpers::URL_KEY_PATTERN_GALLERY,
-                    'SEO_ROUTE_NAME' => sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)
-
-                ],
-                $this->executeListPictures($id)
-            );
+            return array_merge($data, $this->executeListPictures($id));
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @param int   $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -135,7 +124,7 @@ class Edit extends Core\Controller\AbstractAdminAction
     /**
      * @param Core\Helpers\DataGrid $dataGrid
      */
-    protected function addDataGridColumns(Core\Helpers\DataGrid$dataGrid)
+    protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
     {
         $dataGrid
             ->addColumn([
