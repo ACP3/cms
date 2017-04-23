@@ -37,13 +37,9 @@ class EmoticonsSettingsFormBlock extends AbstractFormBlock
     public function render()
     {
         return [
-            'form' => array_merge(
-                $this->getData(),
-                $this->getRequestData()
-            ),
+            'form' => array_merge($this->getData(), $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken()
         ];
-
     }
 
     /**
