@@ -46,4 +46,6 @@ services:
 
   system.controller.admin.maintenance.update_check:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\UpdateCheck
-    parent: core.controller.admin
+    arguments:
+      - '@core.context.frontend'
+      - '@system.helpers.update_check'
