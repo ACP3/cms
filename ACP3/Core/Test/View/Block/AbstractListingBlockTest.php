@@ -7,6 +7,7 @@
 namespace ACP3\Core\Test\View\Block;
 
 
+use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Pagination;
 use ACP3\Core\View\Block\Context\ListingBlockContext;
@@ -54,6 +55,18 @@ abstract class AbstractListingBlockTest extends AbstractBlockTest
         $this->context->expects($this->once())
             ->method('getPagination')
             ->willReturn($pagination);
+
+        $breadcrumb = $this->getMockBuilder(Steps::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $breadcrumb->expects($this->any())
+            ->method('append')
+            ->willReturnSelf();
+
+        $this->context->expects($this->once())
+            ->method('getBreadcrumb')
+            ->willReturn($breadcrumb);
     }
 
     /**

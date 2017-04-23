@@ -7,6 +7,7 @@
 namespace ACP3\Core\Test\View\Block;
 
 
+use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\View\Block\BlockInterface;
 use ACP3\Core\View\Block\Context\BlockContext;
 
@@ -34,6 +35,18 @@ abstract class AbstractBlockTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['getView', 'getBreadcrumb', 'getTitle', 'getTranslator'])
             ->getMock();
+
+        $breadcrumb = $this->getMockBuilder(Steps::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $breadcrumb->expects($this->any())
+            ->method('append')
+            ->willReturnSelf();
+
+        $this->context->expects($this->once())
+            ->method('getBreadcrumb')
+            ->willReturn($breadcrumb);
     }
 
     /**

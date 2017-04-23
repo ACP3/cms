@@ -79,7 +79,6 @@ class FilesSettingsFormBlock extends AbstractFormBlock
             'sidebar_entries' => $this->forms->recordsPerPage((int)$data['sidebar'], 1, 10, 'sidebar'),
             'form_token' => $this->formToken->renderFormToken()
         ];
-
     }
 
     /**
