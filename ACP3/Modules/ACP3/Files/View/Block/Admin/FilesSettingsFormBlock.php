@@ -10,16 +10,13 @@ namespace ACP3\Modules\ACP3\Files\View\Block\Admin;
 use ACP3\Core\Helpers\Date;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractSettingsFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Comments\Helpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 
-class FilesSettingsFormBlock extends AbstractFormBlock
+class FilesSettingsFormBlock extends AbstractSettingsFormBlock
 {
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
     /**
      * @var Date
      */
@@ -37,9 +34,8 @@ class FilesSettingsFormBlock extends AbstractFormBlock
      */
     public function __construct(FormBlockContext $context, Date $dateHelper, SettingsInterface $settings)
     {
-        parent::__construct($context);
+        parent::__construct($context, $settings);
 
-        $this->settings = $settings;
         $this->dateHelper = $dateHelper;
     }
 
@@ -84,8 +80,8 @@ class FilesSettingsFormBlock extends AbstractFormBlock
     /**
      * @inheritdoc
      */
-    public function getDefaultData(): array
+    public function getModuleName(): string
     {
-        return $this->settings->getSettings(Schema::MODULE_NAME);
+        return Schema::MODULE_NAME;
     }
 }

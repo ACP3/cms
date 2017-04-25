@@ -10,16 +10,12 @@ namespace ACP3\Modules\ACP3\Gallery\View\Block\Admin;
 use ACP3\Core\Helpers\Date;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractSettingsFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 
-class GallerySettingsFormBlock extends AbstractFormBlock
+class GallerySettingsFormBlock extends AbstractSettingsFormBlock
 {
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
     /**
      * @var Modules
      */
@@ -38,9 +34,8 @@ class GallerySettingsFormBlock extends AbstractFormBlock
      */
     public function __construct(FormBlockContext $context, SettingsInterface $settings, Modules $modules, Date $dateHelper)
     {
-        parent::__construct($context);
+        parent::__construct($context, $settings);
 
-        $this->settings = $settings;
         $this->modules = $modules;
         $this->dateHelper = $dateHelper;
     }
@@ -70,8 +65,8 @@ class GallerySettingsFormBlock extends AbstractFormBlock
     /**
      * @inheritdoc
      */
-    public function getDefaultData(): array
+    public function getModuleName(): string
     {
-        return $this->settings->getSettings(Schema::MODULE_NAME);
+        return Schema::MODULE_NAME;
     }
 }

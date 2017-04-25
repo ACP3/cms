@@ -6,20 +6,15 @@
 
 namespace ACP3\Modules\ACP3\Captcha\View\Block\Admin;
 
-
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractSettingsFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
 use ACP3\Modules\ACP3\Captcha\Utility\CaptchaRegistrar;
 
-class CaptchaSettingsFormBlock extends AbstractFormBlock
+class CaptchaSettingsFormBlock extends AbstractSettingsFormBlock
 {
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
     /**
      * @var CaptchaRegistrar
      */
@@ -36,9 +31,8 @@ class CaptchaSettingsFormBlock extends AbstractFormBlock
         SettingsInterface $settings,
         CaptchaRegistrar $captchaRegistrar
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $settings);
 
-        $this->settings = $settings;
         $this->captchaRegistrar = $captchaRegistrar;
     }
 
@@ -76,8 +70,8 @@ class CaptchaSettingsFormBlock extends AbstractFormBlock
     /**
      * @inheritdoc
      */
-    public function getDefaultData(): array
+    public function getModuleName(): string
     {
-        return $this->settings->getSettings(Schema::MODULE_NAME);
+        return Schema::MODULE_NAME;
     }
 }

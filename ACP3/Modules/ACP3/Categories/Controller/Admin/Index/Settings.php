@@ -20,20 +20,19 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     protected $adminSettingsFormValidation;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\SettingsFormBlockInterface
      */
     private $block;
 
     /**
      * Settings constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
-     * @param \ACP3\Modules\ACP3\Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+     * @param Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\SettingsFormBlockInterface $block
+     * @param Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\SettingsFormBlockInterface $block,
         Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);

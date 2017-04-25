@@ -25,7 +25,7 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     protected $commentsHelpers;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\SettingsFormBlockInterface
      */
     private $block;
 
@@ -33,12 +33,12 @@ class Settings extends Core\Controller\AbstractAdminAction
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\SettingsFormBlockInterface $block
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\SettingsFormBlockInterface $block,
         Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation)
     {
         parent::__construct($context);

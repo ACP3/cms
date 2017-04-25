@@ -10,16 +10,12 @@ namespace ACP3\Modules\ACP3\Comments\View\Block\Admin;
 use ACP3\Core\Helpers\Date;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractSettingsFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Comments\Installer\Schema;
 
-class CommentsSettingsFormBlock extends AbstractFormBlock
+class CommentsSettingsFormBlock extends AbstractSettingsFormBlock
 {
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
     /**
      * @var Date
      */
@@ -42,9 +38,8 @@ class CommentsSettingsFormBlock extends AbstractFormBlock
         SettingsInterface $settings,
         Date $dateHelper
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $settings);
 
-        $this->settings = $settings;
         $this->dateHelper = $dateHelper;
         $this->modules = $modules;
     }
@@ -72,8 +67,8 @@ class CommentsSettingsFormBlock extends AbstractFormBlock
     /**
      * @inheritdoc
      */
-    public function getDefaultData(): array
+    public function getModuleName(): string
     {
-        return $this->settings->getSettings(Schema::MODULE_NAME);
+        return Schema::MODULE_NAME;
     }
 }

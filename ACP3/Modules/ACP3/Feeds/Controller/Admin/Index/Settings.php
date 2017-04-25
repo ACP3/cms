@@ -20,19 +20,19 @@ class Settings extends Core\Controller\AbstractAdminAction
      */
     protected $secureHelper;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\SettingsFormBlockInterface
      */
     private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\SettingsFormBlockInterface $block
      * @param Core\Helpers\Secure $secureHelper
      * @param \ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\SettingsFormBlockInterface $block,
         Core\Helpers\Secure $secureHelper,
         Feeds\Validation\AdminFormValidation $adminFormValidation
     ) {

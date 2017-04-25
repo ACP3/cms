@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Captcha\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractAdminAction;
 use ACP3\Core\Controller\Context\FrontendContext;
-use ACP3\Core\View\Block\FormBlockInterface;
+use ACP3\Core\View\Block\SettingsFormBlockInterface;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
 use ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation;
 
@@ -19,20 +19,19 @@ class Settings extends AbstractAdminAction
      */
     private $formValidation;
     /**
-     * @var FormBlockInterface
+     * @var SettingsFormBlockInterface
      */
     private $block;
 
     /**
      * Settings constructor.
-     *
      * @param FrontendContext $context
-     * @param FormBlockInterface $block
+     * @param SettingsFormBlockInterface $block
      * @param AdminSettingsFormValidation $formValidation
      */
     public function __construct(
         FrontendContext $context,
-        FormBlockInterface $block,
+        SettingsFormBlockInterface $block,
         AdminSettingsFormValidation $formValidation
     ) {
         parent::__construct($context);
