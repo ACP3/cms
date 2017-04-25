@@ -30,3 +30,38 @@ services:
       - '@core.config'
       - '@core.modules'
       - '@gallery.model.galleryrepository'
+
+  gallery.view.block.frontend.galleries_listing_block:
+    class: ACP3\Modules\ACP3\Gallery\View\Block\Frontend\GalleriesListingBlock
+    arguments:
+      - '@core.view.context.listing_block_context'
+      - '@core.date'
+      - '@core.config'
+      - '@gallery.model.galleryrepository'
+
+  gallery.view.block.frontend.gallery_pictures_listing_block:
+    class: ACP3\Modules\ACP3\Gallery\View\Block\Frontend\GalleryPicturesListingBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.config'
+      - '@gallery.model.galleryrepository'
+      - '@gallery.cache'
+
+  gallery.view.block.frontend.gallery_picture_details_block:
+    class: ACP3\Modules\ACP3\Gallery\View\Block\Frontend\GalleryPictureDetailsBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.environment.application_path'
+      - '@core.router'
+      - '@core.config'
+      - '@gallery.model.picturerepository'
+    calls:
+      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
+
+  gallery.view.block.widget.galleries_widget_listing_block:
+    class: ACP3\Modules\ACP3\Gallery\View\Block\Widget\GalleriesWidgetListingBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.date'
+      - '@core.config'
+      - '@gallery.model.galleryrepository'

@@ -10,11 +10,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Pics
- * @package ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index
- */
-class Pics extends AbstractAction
+class Pics extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 
@@ -27,29 +23,29 @@ class Pics extends AbstractAction
      */
     protected $galleryRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Cache
+     * @var Core\View\Block\BlockInterface
      */
-    protected $galleryCache;
+    private $block;
 
     /**
      * Pics constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext      $context
-     * @param \ACP3\Core\Date                                    $date
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\BlockInterface $block
+     * @param \ACP3\Core\Date $date
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\View\Block\BlockInterface $block,
         Core\Date $date,
-        Gallery\Model\Repository\GalleryRepository $galleryRepository,
-        Gallery\Cache $galleryCache)
+        Gallery\Model\Repository\GalleryRepository $galleryRepository)
     {
         parent::__construct($context);
 
         $this->date = $date;
         $this->galleryRepository = $galleryRepository;
-        $this->galleryCache = $galleryCache;
+        $this->block = $block;
     }
 
     /**
@@ -63,14 +59,9 @@ class Pics extends AbstractAction
         if ($this->galleryRepository->galleryExists($id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            $this->breadcrumb
-                ->append($this->translator->t('gallery', 'gallery'), 'gallery')
-                ->append($this->galleryRepository->getGalleryTitle($id));
-
-            return [
-                'pictures' => $this->galleryCache->getCache($id),
-                'overlay' => (int)$this->settings['overlay']
-            ];
+            return $this->block
+                ->setData(['gallery_id' => $id])
+                ->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

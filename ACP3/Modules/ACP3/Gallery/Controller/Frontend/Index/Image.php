@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
  * Class Image
  * @package ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index
  */
-class Image extends AbstractAction
+class Image extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
@@ -45,6 +45,8 @@ class Image extends AbstractAction
      */
     public function execute($id, $action = '')
     {
+        $settings = $this->config->getSettings(Schema::MODULE_NAME);
+
         set_time_limit(20);
         $picture = $this->pictureRepository->getFileById($id);
         $action = $action === 'thumb' ? 'thumb' : '';
@@ -55,8 +57,8 @@ class Image extends AbstractAction
             ->setEnableCache($this->config->getSettings(Schema::MODULE_NAME)['cache_images'] == 1)
             ->setCachePrefix('gallery_' . $action)
             ->setCacheDir($this->appPath->getUploadsDir() . 'gallery/cache/')
-            ->setMaxWidth($this->settings[$action . 'width'])
-            ->setMaxHeight($this->settings[$action . 'height'])
+            ->setMaxWidth($settings[$action . 'width'])
+            ->setMaxHeight($settings[$action . 'height'])
             ->setFile($this->appPath->getUploadsDir() . 'gallery/' . $picture)
             ->setPreferHeight($action === 'thumb');
 

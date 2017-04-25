@@ -83,10 +83,9 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Details
     arguments:
       - '@core.context.frontend'
+      - '@gallery.view.block.frontend.gallery_picture_details_block'
       - '@core.date'
       - '@gallery.model.picturerepository'
-    calls:
-      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
 
   gallery.controller.frontend.index.image:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Image
@@ -98,22 +97,19 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@core.pagination'
-      - '@gallery.model.galleryrepository'
+      - '@gallery.view.block.frontend.galleries_listing_block'
 
   gallery.controller.frontend.index.pics:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Pics
     arguments:
       - '@core.context.frontend'
+      - '@gallery.view.block.frontend.gallery_pictures_listing_block'
       - '@core.date'
       - '@gallery.model.galleryrepository'
-      - '@gallery.cache'
 
   gallery.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
-      - '@core.date'
-      - '@gallery.model.galleryrepository'
+      - '@gallery.view.block.widget.galleries_widget_listing_block'
 
