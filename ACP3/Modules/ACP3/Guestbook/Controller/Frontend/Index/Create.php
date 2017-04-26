@@ -7,19 +7,11 @@ namespace ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Guestbook;
+use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
 use ACP3\Modules\ACP3\Newsletter;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index
- */
-class Create extends AbstractAction
+class Create extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
      */
@@ -29,47 +21,51 @@ class Create extends AbstractAction
      */
     protected $newsletterSubscribeHelper;
     /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
-    /**
      * @var Guestbook\Model\GuestbookModel
      */
     protected $guestbookModel;
     /**
-     * @var bool
+     * @var Core\View\Block\FormBlockInterface
      */
-    protected $newsletterActive = false;
+    private $block;
+    /**
+     * @var Core\Helpers\SendEmail
+     */
+    private $sendEmail;
+    /**
+     * @var array
+     */
+    protected $guestbookSettings = [];
 
     /**
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Guestbook\Model\GuestbookModel $guestbookModel
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $formValidation
+     * @param Core\Helpers\SendEmail $sendEmail
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\FormBlockInterface $block,
         Guestbook\Model\GuestbookModel $guestbookModel,
-        Guestbook\Validation\FormValidation $formValidation
+        Guestbook\Validation\FormValidation $formValidation,
+        Core\Helpers\SendEmail $sendEmail
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->formValidation = $formValidation;
         $this->guestbookModel = $guestbookModel;
+        $this->block = $block;
+        $this->sendEmail = $sendEmail;
     }
 
     public function preDispatch()
     {
         parent::preDispatch();
 
-        $this->newsletterActive = ($this->guestbookSettings['newsletter_integration'] == 1);
+        $this->guestbookSettings = $this->config->getSettings(Schema::MODULE_NAME);
     }
 
     /**
@@ -89,25 +85,9 @@ class Create extends AbstractAction
      */
     public function execute()
     {
-        if ($this->newsletterActive === true && $this->newsletterSubscribeHelper) {
-            $newsletterSubscription = [
-                1 => $this->translator->t(
-                    'guestbook',
-                    'subscribe_to_newsletter',
-                    ['%title%' => $this->config->getSettings(Schema::MODULE_NAME)['site_title']]
-                )
-            ];
-            $this->view->assign(
-                'subscribe_newsletter',
-                $this->formsHelper->checkboxGenerator('subscribe_newsletter', $newsletterSubscription, '1')
-            );
-        }
-
-        return [
-            'form' => array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-            'can_use_emoticons' => $this->guestbookSettings['emoticons'] == 1
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
@@ -122,7 +102,7 @@ class Create extends AbstractAction
 
                 $this->formValidation
                     ->setIpAddress($ipAddress)
-                    ->setNewsletterAccess($this->newsletterActive)
+                    ->setNewsletterAccess($this->guestbookSettings['newsletter_integration'] == 1)
                     ->validate($formData);
 
                 $formData['date'] = 'now';
@@ -157,39 +137,12 @@ class Create extends AbstractAction
             $this->router->route('', true),
             $fullPath
         );
-        $this->get('core.helpers.sendEmail')->execute(
-            '',
-            $this->guestbookSettings['notify_email'],
-            $this->guestbookSettings['notify_email'],
-            $this->translator->t('guestbook', 'notification_email_subject'),
-            $body
-        );
-    }
 
-    /**
-     * @return array
-     */
-    private function fetchFormDefaults()
-    {
-        $defaults = [
-            'name' => '',
-            'name_disabled' => false,
-            'mail' => '',
-            'mail_disabled' => false,
-            'website' => '',
-            'website_disabled' => false,
-            'message' => '',
-        ];
-
-        if ($this->user->isAuthenticated() === true) {
-            $users = $this->user->getUserInfo();
-            $defaults['name'] = $users['nickname'];
-            $defaults['name_disabled'] = true;
-            $defaults['mail'] = $users['mail'];
-            $defaults['mail_disabled'] = true;
-            $defaults['website'] = $users['website'];
-            $defaults['website_disabled'] = !empty($users['website']);
-        }
-        return $defaults;
+        $message = (new Core\Mailer\MailerMessage())
+            ->setSubject($this->translator->t('guestbook', 'notification_email_subject'))
+            ->setBody($body)
+            ->setFrom($this->guestbookSettings['notify_email'])
+            ->setRecipients($this->guestbookSettings['notify_email']);
+        $this->sendEmail->execute($message);
     }
 }

@@ -9,8 +9,7 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@guestbook.view.block.admin.guestbook_form_block'
       - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.admin_form_validation'
 
@@ -18,24 +17,24 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@guestbook.view.block.admin.guestbook_data_grid_block'
       - '@guestbook.model.data_grid_repository'
 
   guestbook.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@guestbook.view.block.admin.guestbook_settings_form_block'
       - '@guestbook.validation.admin_settings_form_validation'
 
   guestbook.controller.frontend.index.create:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@guestbook.view.block.frontend.guestbook_form_block'
       - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.form_validation'
+      - '@core.helpers.sendEmail'
     calls:
       - ['setNewsletterSubscribeHelper', ['@?newsletter.helper.subscribe']]
 
@@ -43,7 +42,4 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.pagination'
-      - '@guestbook.model.guestbookrepository'
-    calls:
-      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
+      - '@guestbook.view.block.frontend.guestbook_listing_block'
