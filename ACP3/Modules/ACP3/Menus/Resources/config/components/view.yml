@@ -3,3 +3,12 @@ services:
     class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+
+  menus.view.block.admin.menu_item_form_block:
+    class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuItemFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.modules'
+      - '@menus.helpers.menuitemformfields'
+    calls:
+      - ['setArticlesHelpers', ['@?articles.helpers']]

@@ -32,14 +32,9 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@menus.model.menurepository'
+      - '@menus.view.block.admin.menu_item_form_block'
       - '@menus.model.menu_items_model'
-      - '@menus.helpers.menuitemformfields'
       - '@menus.validation.menu_item_form_validation'
-    calls:
-      - ['setArticlesHelpers', ['@?articles.helpers']]
 
   menus.controller.admin.items.delete:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Delete
@@ -51,13 +46,9 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@menus.view.block.admin.menu_item_form_block'
       - '@menus.model.menu_items_model'
-      - '@menus.helpers.menuitemformfields'
       - '@menus.validation.menu_item_form_validation'
-    calls:
-      - ['setArticlesHelpers', ['@?articles.helpers']]
 
   menus.controller.admin.items.order:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Order
