@@ -1,0 +1,5 @@
+services:
+  menus.view.block.admin.menu_form_block:
+    class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'

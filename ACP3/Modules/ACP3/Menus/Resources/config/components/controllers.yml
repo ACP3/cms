@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
+      - '@menus.view.block.admin.menu_form_block'
       - '@menus.model.menus_model'
       - '@menus.validation.menu_form_validation'
 
@@ -17,7 +17,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
+      - '@menus.view.block.admin.menu_form_block'
       - '@menus.model.menus_model'
       - '@menus.validation.menu_form_validation'
 

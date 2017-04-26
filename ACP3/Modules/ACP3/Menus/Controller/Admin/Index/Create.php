@@ -9,16 +9,8 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Menus\Controller\Admin\Index
- */
 class Create extends Core\Controller\AbstractAdminAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation
      */
@@ -27,26 +19,30 @@ class Create extends Core\Controller\AbstractAdminAction
      * @var Menus\Model\MenusModel
      */
     protected $menusModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Menus\Model\MenusModel $menusModel
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation $menuFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\FormBlockInterface $block,
         Menus\Model\MenusModel $menusModel,
         Menus\Validation\MenuFormValidation $menuFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->menusModel = $menusModel;
         $this->menuFormValidation = $menuFormValidation;
+        $this->block = $block;
     }
 
     /**
@@ -54,10 +50,9 @@ class Create extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        return [
-            'form' => array_merge(['index_name' => '', 'title' => ''], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
