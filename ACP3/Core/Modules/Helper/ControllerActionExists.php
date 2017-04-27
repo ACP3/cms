@@ -42,6 +42,6 @@ class ControllerActionExists
 
         $serviceId = $pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2] . '.' . $pathArray[3];
 
-        return $this->container->has($serviceId) && method_exists($this->container->get($serviceId), 'execute');
+        return $this->container->has($serviceId);
     }
 }
