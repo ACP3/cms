@@ -3,13 +3,10 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@news.view.block.admin.news_form_block'
       - '@news.model'
       - '@news.validation.admin_form_validation'
       - '@categories.helpers'
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
 
   news.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Delete
@@ -27,26 +24,23 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@news.view.block.admin.news_form_block'
       - '@news.model'
       - '@news.validation.admin_form_validation'
       - '@categories.helpers'
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
 
   news.controller.admin.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@news.view.block.admin.news_data_grid_block'
       - '@news.model.data_grid_repository'
 
   news.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@news.view.block.admin.news_settings_form_block'
       - '@news.validation.admin_settings_form_validation'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]

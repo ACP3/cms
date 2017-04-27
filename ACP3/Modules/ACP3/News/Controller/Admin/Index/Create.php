@@ -10,18 +10,8 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\News\Controller\Admin\Index
- */
 class Create extends AbstractFormAction
 {
-    use CommentsHelperTrait;
-
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\News\Validation\AdminFormValidation
      */
@@ -30,30 +20,32 @@ class Create extends AbstractFormAction
      * @var News\Model\NewsModel
      */
     protected $newsModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param News\Model\NewsModel $newsModel
      * @param \ACP3\Modules\ACP3\News\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\FormBlockInterface $block,
         News\Model\NewsModel $newsModel,
         News\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
     ) {
-        parent::__construct($context, $formsHelper, $categoriesHelpers);
+        parent::__construct($context, $categoriesHelpers);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->newsModel = $newsModel;
         $this->adminFormValidation = $adminFormValidation;
+        $this->block = $block;
     }
 
     /**
@@ -61,29 +53,9 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        $defaults = [
-            'title' => '',
-            'text' => '',
-            'uri' => '',
-            'link_title' => '',
-            'start' => '',
-            'end' => ''
-        ];
-
-        return [
-            'active' => $this->formsHelper->yesNoCheckboxGenerator('active', 1),
-            'categories' => $this->categoriesHelpers->categoriesList(
-                News\Installer\Schema::MODULE_NAME,
-                '',
-                true
-            ),
-            'options' => $this->fetchOptions(0, 0),
-            'target' => $this->formsHelper->linkTargetChoicesGenerator('target'),
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-            'SEO_URI_PATTERN' => News\Helpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => ''
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**

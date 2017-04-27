@@ -1,0 +1,21 @@
+services:
+  news.view.block.admin.news_form_block:
+    class: ACP3\Modules\ACP3\News\View\Block\Admin\NewsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+      - '@core.modules'
+      - '@categories.helpers'
+
+  news.view.block.admin.news_data_grid_block:
+    class: ACP3\Modules\ACP3\News\View\Block\Admin\NewsDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+
+  news.view.block.admin.news_settings_form_block:
+    class: ACP3\Modules\ACP3\News\View\Block\Admin\NewsSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+      - '@core.modules'
+      - '@core.helpers.date'
