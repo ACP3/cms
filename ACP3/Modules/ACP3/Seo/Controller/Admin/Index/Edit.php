@@ -71,7 +71,7 @@ class Edit extends Core\Controller\AbstractAdminAction
 
             return [
                 'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper->formFields($seo['uri']),
-                'form' => array_merge(['uri' => $seo['uri']], $this->request->getPost()->all()),
+                'form' => array_merge($seo, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken()
             ];
         }
