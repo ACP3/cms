@@ -19,3 +19,24 @@ services:
       - '@core.config'
       - '@core.modules'
       - '@core.helpers.date'
+
+  news.view.block.frontend.news_details_block:
+    class: ACP3\Modules\ACP3\News\View\Block\Frontend\NewsDetailsBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.config'
+
+  news.view.block.frontend.news_listing_block:
+    class: ACP3\Modules\ACP3\News\View\Block\Frontend\NewsListingBlock
+    arguments:
+      - '@core.view.context.listing_block_context'
+      - '@core.config'
+      - '@core.date'
+      - '@core.router'
+      - '@core.helpers.string_formatter'
+      - '@news.model.newsrepository'
+      - '@categories.model.categories_repository'
+      - '@categories.helpers'
+    calls:
+      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
+      - ['setCommentsHelpers', ['@?comments.helpers']]

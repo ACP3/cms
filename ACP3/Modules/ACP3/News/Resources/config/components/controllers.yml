@@ -49,6 +49,7 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Details
     arguments:
       - '@core.context.frontend'
+      - '@news.view.block.frontend.news_details_block'
       - '@core.date'
       - '@news.model.newsrepository'
       - '@news.cache'
@@ -57,14 +58,7 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@core.helpers.string_formatter'
-      - '@core.pagination'
-      - '@news.model.newsrepository'
-      - '@categories.helpers'
-      - '@categories.model.categories_repository'
-    calls:
-      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
+      - '@news.view.block.frontend.news_listing_block'
 
   news.controller.widget.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Widget\Index\Index

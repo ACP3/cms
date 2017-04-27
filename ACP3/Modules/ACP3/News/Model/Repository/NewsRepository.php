@@ -57,14 +57,14 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
         if (!empty($categoryId)) {
             $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
-            return $this->db->fetchColumn(
+            return (int)$this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE category_id = :categoryId' . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC',
                 ['time' => $time, 'categoryId' => $categoryId, 'active' => 1]
             );
         }
 
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
-        return $this->db->fetchColumn(
+        return (int)$this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC',
             ['time' => $time, 'active' => 1]
         );
