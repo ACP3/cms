@@ -7,6 +7,7 @@ imports:
   - { resource: components/models.yml }
   - { resource: components/overrides.yml }
   - { resource: components/validation.yml }
+  - { resource: components/view.yml }
 
 services:
   seo.core.router.aliases:

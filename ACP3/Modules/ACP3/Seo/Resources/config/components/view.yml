@@ -1,0 +1,18 @@
+services:
+  seo.view.block.admin.seo_data_grid_block:
+    class: ACP3\Modules\ACP3\Seo\View\Block\Admin\SeoDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+      - '@seo.helper.meta_statements'
+
+  seo.view.block.admin.seo_form_block:
+    class: ACP3\Modules\ACP3\Seo\View\Block\Admin\SeoFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@seo.helper.meta_form_fields'
+
+  seo.view.block.admin.seo_settings_form_block:
+    class: ACP3\Modules\ACP3\Seo\View\Block\Admin\SeoSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
