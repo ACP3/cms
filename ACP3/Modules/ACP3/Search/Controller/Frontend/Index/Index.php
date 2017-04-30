@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Search\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Search;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Search\Controller\Frontend\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -24,34 +20,41 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     protected $searchValidator;
     /**
-     * @var \ACP3\Core\Helpers\Forms
+     * @var Core\View\Block\FormBlockInterface
      */
-    protected $formsHelper;
+    private $formBlock;
     /**
-     * @var Search\Utility\SearchAvailabilityRegistrar
+     * @var Core\Helpers\Secure
      */
-    protected $availableModulesRegistrar;
+    private $secure;
+    /**
+     * @var Core\View\Block\BlockInterface
+     */
+    private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param Core\View\Block\FormBlockInterface $formBlock
+     * @param Core\View\Block\BlockInterface $block
+     * @param Core\Helpers\Secure $secure
      * @param \ACP3\Modules\ACP3\Search\Helpers $searchHelpers
      * @param \ACP3\Modules\ACP3\Search\Validation\FormValidation $searchValidator
-     * @param Search\Utility\SearchAvailabilityRegistrar $availableModulesRegistrar
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
+        Core\View\Block\FormBlockInterface $formBlock,
+        Core\View\Block\BlockInterface $block,
+        Core\Helpers\Secure $secure,
         Search\Helpers $searchHelpers,
-        Search\Validation\FormValidation $searchValidator,
-        Search\Utility\SearchAvailabilityRegistrar $availableModulesRegistrar
+        Search\Validation\FormValidation $searchValidator
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
         $this->searchHelpers = $searchHelpers;
         $this->searchValidator = $searchValidator;
-        $this->availableModulesRegistrar = $availableModulesRegistrar;
+        $this->formBlock = $formBlock;
+        $this->secure = $secure;
+        $this->block = $block;
     }
 
     /**
@@ -61,40 +64,20 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute($q = '')
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        } elseif (!empty($q)) {
+        if (!empty($q)) {
             return $this->executePost(['search_term' => (string)$q]);
         }
 
-        $searchAreas = [
-            'title_content' => $this->translator->t('search', 'title_and_content'),
-            'title' => $this->translator->t('search', 'title_only'),
-            'content' => $this->translator->t('search', 'content_only')
-        ];
-
-        $sortDirections = [
-            'asc' => $this->translator->t('search', 'asc'),
-            'desc' => $this->translator->t('search', 'desc')
-        ];
-
-        return [
-            'form' => array_merge(['search_term' => ''], $this->request->getPost()->all()),
-            'search_mods' => $this->searchHelpers->getModules(),
-            'search_areas' => $this->formsHelper->checkboxGenerator(
-                'area',
-                $searchAreas,
-                'title_content'
-            ),
-            'sort_hits' => $this->formsHelper->checkboxGenerator('sort', $sortDirections, 'asc')
-        ];
+        return $this->formBlock
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
      * @param array $formData
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
-    protected function executePost(array $formData)
+    public function executePost(array $formData = [])
     {
         return $this->actionHelper->handlePostAction(
             function () use ($formData) {
@@ -104,7 +87,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
                 return $this->renderSearchResults(
                     $formData['mods'],
-                    $this->get('core.helpers.secure')->strEncode($formData['search_term']),
+                    $this->secure->strEncode($formData['search_term']),
                     $formData['area'],
                     strtoupper($formData['sort'])
                 );
@@ -133,7 +116,10 @@ class Index extends Core\Controller\AbstractFrontendAction
             if (isset($formData['sort']) === false) {
                 $formData['sort'] = 'asc';
             }
+        } else {
+            $formData = $this->request->getPost()->all();
         }
+
         return $formData;
     }
 
@@ -146,39 +132,15 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     protected function renderSearchResults(array $modules, $searchTerm, $area, $sort)
     {
-        $this->breadcrumb
-            ->append($this->translator->t('search', 'search'), 'search')
-            ->append($this->translator->t('search', 'search_results'));
-
         $this->setTemplate('Search/Frontend/index.results.tpl');
 
-        return [
-            'results_mods' => $this->processSearchResults($modules, $searchTerm, $area, $sort),
-            'search_term' => $searchTerm
-        ];
-    }
-
-    /**
-     * @param array $modules
-     * @param string $searchTerm
-     * @param string $area
-     * @param string $sort
-     * @return array
-     */
-    protected function processSearchResults(array $modules, $searchTerm, $area, $sort)
-    {
-        $searchResults = [];
-        foreach ($this->availableModulesRegistrar->getAvailableModules() as $moduleName => $searchAvailability) {
-            if (in_array($moduleName, $modules) && $this->acl->hasPermission('frontend/' . $moduleName)) {
-                $results = $searchAvailability->fetchSearchResults($searchTerm, $area, $sort);
-
-                if (!empty($results)) {
-                    $searchResults[$moduleName] = $results;
-                }
-            }
-        }
-        ksort($searchResults);
-
-        return $searchResults;
+        return $this->block
+            ->setData([
+                'modules' => $modules,
+                'search_term' => $searchTerm,
+                'area' => $area,
+                'sort' => $sort
+            ])
+            ->render();
     }
 }
