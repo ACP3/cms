@@ -20,3 +20,29 @@ services:
     arguments:
       - '@core.view.context.form_block_context'
       - '@core.config'
+
+  newsletter.view.block.frontend.newsletter_archive_form_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Frontend\NewsletterArchiveListingBlock
+    arguments:
+      - '@core.view.context.listing_block_context'
+      - '@newsletter.model.newsletterrepository'
+
+  newsletter.view.block.frontend.newsletter_details_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Frontend\NewsletterDetailsBlock
+    arguments:
+      - '@core.view.context.block_context'
+
+  newsletter.view.block.frontend.newsletter_subscribe_form_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Frontend\NewsletterSubscribeFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+
+  newsletter.view.block.frontend.newsletter_unsubscribe_form_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterUnsubscribeFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+
+  newsletter.view.block.widget.newsletter_subscribe_widget_form_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Widget\NewsletterSubscribeWidgetFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'

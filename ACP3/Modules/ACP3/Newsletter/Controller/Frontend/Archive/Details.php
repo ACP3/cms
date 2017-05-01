@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Details
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive
- */
 class Details extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -22,20 +18,27 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
      */
     protected $newsletterRepository;
+    /**
+     * @var Core\View\Block\BlockInterface
+     */
+    private $block;
 
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext            $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\BlockInterface $block
      * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\View\Block\BlockInterface $block,
         Newsletter\Model\Repository\NewsletterRepository $newsletterRepository)
     {
         parent::__construct($context);
 
         $this->newsletterRepository = $newsletterRepository;
+        $this->block = $block;
     }
 
     /**
@@ -46,19 +49,11 @@ class Details extends Core\Controller\AbstractFrontendAction
      */
     public function execute($id)
     {
-        $newsletter = $this->newsletterRepository->getOneByIdAndStatus($id, 1);
+        $newsletter = $this->newsletterRepository->getOneByIdAndStatus($id, Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED);
 
         if (!empty($newsletter)) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            $this->breadcrumb
-                ->append($this->translator->t('newsletter', 'index'), 'newsletter')
-                ->append($this->translator->t('newsletter', 'frontend_archive_index'), 'newsletter/archive')
-                ->append($newsletter['title']);
-
-            return [
-                'newsletter' => $newsletter
-            ];
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

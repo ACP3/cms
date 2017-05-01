@@ -8,28 +8,24 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Widget\Index;
 
 use ACP3\Core;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Widget\Index
- */
 class Index extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var Core\Helpers\FormToken
+     * @var Core\View\Block\FormBlockInterface
      */
-    protected $formTokenHelper;
+    private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\WidgetContext $context
-     * @param \ACP3\Core\Helpers\FormToken                $formTokenHelper
+     * @param Core\View\Block\FormBlockInterface $block
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Helpers\FormToken $formTokenHelper)
-    {
+        Core\View\Block\FormBlockInterface $block
+    ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
+        $this->block = $block;
     }
 
     /**
@@ -41,8 +37,6 @@ class Index extends Core\Controller\AbstractWidgetAction
     {
         $this->setTemplate($template);
 
-        return [
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block->render();
     }
 }
