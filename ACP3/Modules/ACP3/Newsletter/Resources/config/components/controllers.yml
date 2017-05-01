@@ -46,7 +46,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@news.view.block.admin.news_data_grid_block'
+      - '@newsletter.view.block.admin.newsletter_data_grid_block'
       - '@newsletter.model.newsletter_data_grid_repository'
 
   newsletter.controller.admin.index.send:
