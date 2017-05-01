@@ -1,0 +1,22 @@
+services:
+  newsletter.view.block.admin.newsletter_accounts_data_grid_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterAccountsDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+
+  newsletter.view.block.admin.newsletter_data_grid_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+
+  newsletter.view.block.admin.newsletter_form_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+
+  newsletter.view.block.admin.newsletter_settings_form_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'

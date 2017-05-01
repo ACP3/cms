@@ -24,7 +24,7 @@ class AbstractFormAction extends AbstractAdminAction
     /**
      * AbstractFormAction constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter $newsletterHelpers
      */
     public function __construct(FrontendContext $context, SendNewsletter $newsletterHelpers)
@@ -35,9 +35,9 @@ class AbstractFormAction extends AbstractAdminAction
     }
 
     /**
-     * @param bool   $isTest
-     * @param int    $id
-     * @param bool   $dbResult
+     * @param bool $isTest
+     * @param int $id
+     * @param bool $dbResult
      * @param string $testEmailAddress
      *
      * @return array

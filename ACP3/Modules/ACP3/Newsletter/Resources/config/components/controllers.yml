@@ -15,14 +15,14 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts\Index
     arguments:
       - '@core.context.frontend'
+      - '@newsletter.view.block.admin.newsletter_accounts_data_grid_block'
       - '@newsletter.model.account_data_grid_repository'
 
   newsletter.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@newsletter.view.block.admin.newsletter_form_block'
       - '@newsletter.model'
       - '@newsletter.validation.admin_form_validation'
       - '@newsletter.helper.sendnewsletter'
@@ -37,8 +37,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@newsletter.view.block.admin.newsletter_form_block'
       - '@newsletter.model'
       - '@newsletter.validation.admin_form_validation'
       - '@newsletter.helper.sendnewsletter'
@@ -47,6 +46,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@news.view.block.admin.news_data_grid_block'
       - '@newsletter.model.newsletter_data_grid_repository'
 
   newsletter.controller.admin.index.send:
@@ -61,8 +61,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@newsletter.view.block.admin.newsletter_settings_form_block'
       - '@core.helpers.secure'
       - '@newsletter.validation.admin_settings_form_validation'
 
