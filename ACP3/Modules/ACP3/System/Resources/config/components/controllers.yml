@@ -37,7 +37,9 @@ services:
 
   system.controller.admin.maintenance.cache:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Cache
-    parent: core.controller.frontend
+    arguments:
+      - '@core.context.frontend'
+      - '@system.view.block.admin.system_cache_block'
 
   system.controller.admin.maintenance.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Index
@@ -45,4 +47,6 @@ services:
 
   system.controller.admin.maintenance.update_check:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\UpdateCheck
-    parent: core.controller.frontend
+    arguments:
+      - '@core.context.frontend'
+      - '@system.view.block.system_update_check_block'

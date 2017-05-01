@@ -9,25 +9,26 @@ namespace ACP3\Modules\ACP3\System\Controller\Admin\Maintenance;
 use ACP3\Core;
 use ACP3\Core\Controller\Context;
 use ACP3\Modules\ACP3\System;
-use Composer\Semver\Comparator;
 
 class UpdateCheck extends Core\Controller\AbstractAdminAction
 {
     /**
-     * @var System\Helper\UpdateCheck
+     * @var Core\View\Block\BlockInterface
      */
-    private $updateCheck;
+    private $block;
 
     /**
      * UpdateCheck constructor.
      * @param Context\FrontendContext $context
-     * @param System\Helper\UpdateCheck $updateCheck
+     * @param Core\View\Block\BlockInterface $block
      */
-    public function __construct(Context\FrontendContext $context, System\Helper\UpdateCheck $updateCheck)
-    {
+    public function __construct(
+        Context\FrontendContext $context,
+        Core\View\Block\BlockInterface $block
+    ) {
         parent::__construct($context);
 
-        $this->updateCheck = $updateCheck;
+        $this->block = $block;
     }
 
     /**
@@ -35,8 +36,6 @@ class UpdateCheck extends Core\Controller\AbstractAdminAction
      */
     public function execute()
     {
-        return [
-            'update' => $this->updateCheck->checkForNewVersion()
-        ];
+        return $this->block->render();
     }
 }

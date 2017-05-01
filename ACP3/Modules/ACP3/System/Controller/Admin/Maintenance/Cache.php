@@ -7,14 +7,28 @@
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Maintenance;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\System\Controller\Admin\Maintenance
- */
 class Cache extends Core\Controller\AbstractAdminAction
 {
+    /**
+     * @var Core\View\Block\BlockInterface
+     */
+    private $block;
+
+    /**
+     * Cache constructor.
+     * @param FrontendContext $context
+     * @param Core\View\Block\BlockInterface $block
+     */
+    public function __construct(FrontendContext $context, Core\View\Block\BlockInterface $block)
+    {
+        parent::__construct($context);
+
+        $this->block = $block;
+    }
+
     /**
      * @param string $action
      *
@@ -26,15 +40,7 @@ class Cache extends Core\Controller\AbstractAdminAction
             return $this->executePurge($action);
         }
 
-        return [
-            'cache_types' => [
-                'general',
-                'images',
-                'minify',
-                'page',
-                'templates'
-            ]
-        ];
+        return $this->block->render();
     }
 
     /**
