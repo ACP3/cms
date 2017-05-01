@@ -2,13 +2,13 @@
     <div class="panel-heading">
         <h3 class="panel-title">{lang t="polls|latest_poll"}</h3>
     </div>
-    {if !empty($sidebar_polls)}
+    {if !empty($poll)}
         <div class="panel-body">
-            <h5>{$sidebar_polls.title}</h5>
+            <h5>{$poll.title}</h5>
 
-            <form action="{uri args="polls/index/vote/id_`$sidebar_polls.id`"}" method="post" accept-charset="UTF-8">
-                {foreach $sidebar_poll_answers as $row}
-                    {if $sidebar_polls.multiple == '1'}
+            <form action="{uri args="polls/index/vote/id_`$poll.id`"}" method="post" accept-charset="UTF-8">
+                {foreach $answers as $row}
+                    {if $poll.multiple == '1'}
                         <div class="checkbox">
                             <label for="answer-{$row.id}-sidebar">
                                 <input type="checkbox" name="answer[]" id="answer-{$row.id}-sidebar" value="{$row.id}">

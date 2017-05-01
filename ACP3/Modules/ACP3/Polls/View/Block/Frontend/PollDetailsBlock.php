@@ -47,9 +47,9 @@ class PollDetailsBlock extends AbstractBlock
     {
         $question = $this->pollRepository->getOneByIdWithTotalVotes($this->getData()['poll_id']);
         $answers = $this->answerRepository->getAnswersWithVotesByPollId($this->getData()['poll_id']);
-        $cAnswers = count($answers);
         $totalVotes = $question['total_votes'];
 
+        $cAnswers = count($answers);
         for ($i = 0; $i < $cAnswers; ++$i) {
             $answers[$i]['percent'] = $totalVotes > 0 ? round(100 * $answers[$i]['votes'] / $totalVotes, 2) : '0';
         }

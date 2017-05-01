@@ -17,11 +17,9 @@ class PollVoteFormBlock extends AbstractFormBlock
     public function render()
     {
         $data = $this->getData();
-        $poll = $data['poll'];
 
         return [
-            'question' => $poll['title'],
-            'multiple' => $poll['multiple'],
+            'poll' => $data['poll'],
             'answers' => $data['answers'],
             'form_token' => $this->formToken->renderFormToken()
         ];

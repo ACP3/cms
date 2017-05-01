@@ -3,8 +3,8 @@
         <h3 class="panel-title">{lang t="polls|latest_poll"}</h3>
     </div>
     <div class="panel-body">
-        <h5>{$sidebar_polls.title}</h5>
-        {foreach $sidebar_poll_answers as $row}
+        <h5>{$question}</h5>
+        {foreach $answers as $row}
             <strong>{$row.text}</strong>
             <span class="pull-right">{$row.votes}</span>
             <div class="progress active">

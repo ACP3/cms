@@ -57,8 +57,9 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
+      - '@polls.view.block.widget.poll_vote_widget_form_block'
+      - '@polls.view.block.widget.poll_details_widget_block'
       - '@core.date'
       - '@polls.model.pollrepository'
       - '@polls.model.answerrepository'
-      - '@polls.model.voterepository'
 

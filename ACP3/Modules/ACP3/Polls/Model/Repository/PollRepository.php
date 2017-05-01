@@ -75,15 +75,16 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
 
     /**
      * @param string $time
-     *
+     * @param int $userId
+     * @param string $ipAddress
      * @return array
      */
-    public function getLatestPoll($time)
+    public function getLatestPoll($time, int $userId = 0, string $ipAddress = '')
     {
         $period = $this->getPublicationPeriod('p.');
         return $this->db->fetchAssoc(
-            'SELECT p.id, p.title, p.multiple, COUNT(pv.poll_id) AS total_votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id) WHERE ' . $period . ' GROUP BY p.id ORDER BY p.start DESC LIMIT 1',
-            ['time' => $time]
+            'SELECT p.id, p.title, p.multiple, COUNT(pv.poll_id) AS total_votes, IF(pv.`user_id` = :user_id OR pv.`ip` = :ip, 1, 0) AS `has_voted` FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id) WHERE ' . $period . ' GROUP BY p.id ORDER BY p.start DESC LIMIT 1',
+            ['time' => $time, 'user_id' => $userId, 'ip' => $ipAddress]
         );
     }
 }

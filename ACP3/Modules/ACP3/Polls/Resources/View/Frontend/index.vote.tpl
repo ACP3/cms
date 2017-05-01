@@ -2,11 +2,11 @@
 
 {block CONTENT_AJAX_FORM}
     <div class="form-group">
-        <label for="answer-{$answers.0.id}" class="col-sm-2 control-label">{$question}</label>
+        <label for="answer-{$answers.0.id}" class="col-sm-2 control-label">{$poll.title}</label>
 
         <div class="col-sm-10">
             {foreach $answers as $row}
-                {if $multiple == '1'}
+                {if $poll.multiple == '1'}
                     <div class="checkbox">
                         <label for="answer-{$row.id}">
                             <input type="checkbox" name="answer[]" id="answer-{$row.id}" value="{$row.id}">

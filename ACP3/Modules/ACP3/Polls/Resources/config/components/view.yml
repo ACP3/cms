@@ -28,3 +28,15 @@ services:
       - '@core.view.context.block_context'
       - '@polls.model.pollrepository'
       - '@polls.model.answerrepository'
+
+  polls.view.block.widget.poll_vote_widget_form_block:
+    class: ACP3\Modules\ACP3\Polls\View\Block\Widget\PollVoteWidgetFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+
+  polls.view.block.widget.poll_details_widget_block:
+    class: ACP3\Modules\ACP3\Polls\View\Block\Widget\PollDetailsWidgetBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@polls.model.pollrepository'
+      - '@polls.model.answerrepository'
