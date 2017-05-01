@@ -2,6 +2,7 @@
 
 namespace ACP3\Modules\ACP3\System\Installer;
 
+use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Modules;
 
 /**
@@ -164,6 +165,11 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             69 => [
                 "UPDATE `{pre}acl_resources` SET `page` = 'settings' WHERE `module_id` = '{moduleId}' AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'configuration';",
+            ],
+            70 => [
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'update_last_check', '0');",
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'update_new_version', '" . BootstrapInterface::VERSION. "');",
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'update_new_version_url', '');",
             ]
         ];
     }

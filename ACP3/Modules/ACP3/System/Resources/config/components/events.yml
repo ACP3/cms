@@ -36,3 +36,13 @@ services:
       - '@core.view'
     tags:
       - { name: core.eventListener, event: layout.content_before, method: renderCookieConsent }
+
+  system.event.listener.render_update_check_alert_on_layout_content_before_listener:
+    class: ACP3\Modules\ACP3\System\Event\Listener\RenderUpdateCheckAlertOnLayoutContentBeforeListener
+    arguments:
+      - '@core.acl'
+      - '@core.http.request'
+      - '@core.view'
+      - '@system.helpers.update_check'
+    tags:
+      - { name: core.eventListener, event: layout.content_before, method: renderUpdateCheckAlert }

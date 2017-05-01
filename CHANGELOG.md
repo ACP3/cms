@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added the possibility to duplicate downloads via the admin data grid
 - Added the possibility to quickly enable/disable downloads
 - Added the possibility to sort downloads by date or with an custom order
+- [#62](https://github.com/ACP3/cms/issues/62) Added an alert message when the currently used ACP3 CMS is outdated
 
 ### Changed
 - Updated `giggsey/locale` library to version 1.3 to take advantage of the new functionality for the localized country list
