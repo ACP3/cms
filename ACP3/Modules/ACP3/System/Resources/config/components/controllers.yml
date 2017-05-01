@@ -26,10 +26,8 @@ services:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@system.view.block.admin.system_settings_form_block'
       - '@core.helpers.secure'
-      - '@core.wysiwyg.wysiwyg_editor_registrar'
       - '@system.validation.admin_settings_form_validation'
 
   system.controller.admin.index.index:

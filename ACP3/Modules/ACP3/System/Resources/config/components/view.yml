@@ -1,0 +1,8 @@
+services:
+  system.view.block.admin.system_settings_form_block:
+    class: ACP3\Modules\ACP3\System\View\Block\Admin\SystemSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+      - '@core.helpers.date'
+      - '@core.wysiwyg.wysiwyg_editor_registrar'
