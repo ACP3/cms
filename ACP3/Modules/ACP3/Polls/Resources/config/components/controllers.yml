@@ -3,12 +3,8 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@polls.model.pollrepository'
+      - '@polls.view.block.admin.poll_form_block'
       - '@polls.model.polls_model'
-      - '@polls.model.answerrepository'
       - '@polls.validation.admin_form_validation'
 
   polls.controller.admin.index.delete:
@@ -21,17 +17,15 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@polls.view.block.admin.poll_form_block'
       - '@polls.model.polls_model'
-      - '@polls.model.answerrepository'
       - '@polls.validation.admin_form_validation'
 
   polls.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@polls.view.block.admin.polls_data_grid_block'
       - '@polls.model.data_grid_repository'
 
   polls.controller.frontend.index.index:

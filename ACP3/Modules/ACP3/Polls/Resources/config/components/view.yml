@@ -1,0 +1,11 @@
+services:
+  polls.view.block.admin.polls_data_grid_block:
+    class: ACP3\Modules\ACP3\Polls\View\Block\Admin\PollsDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+
+  polls.view.block.admin.poll_form_block:
+    class: ACP3\Modules\ACP3\Polls\View\Block\Admin\PollFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@polls.model.answerrepository'
