@@ -35,9 +35,14 @@ class Vote extends Core\Controller\AbstractFrontendAction
      * @var Polls\Validation\VoteValidation
      */
     protected $voteValidation;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Core\Date $date
      * @param Polls\Validation\VoteValidation $voteValidation
      * @param Polls\Model\VoteModel $pollsModel
@@ -46,6 +51,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\View\Block\FormBlockInterface $block,
         Core\Date $date,
         Polls\Validation\VoteValidation $voteValidation,
         Polls\Model\VoteModel $pollsModel,
@@ -59,6 +65,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
         $this->pollsModel = $pollsModel;
         $this->pollRepository = $pollRepository;
         $this->answerRepository = $answerRepository;
+        $this->block = $block;
     }
 
     /**
@@ -69,16 +76,13 @@ class Vote extends Core\Controller\AbstractFrontendAction
      */
     public function execute($id)
     {
-        $answer = $this->request->getPost()->get('answer');
-        $time = $this->date->getCurrentDateTime();
-        if ($this->pollRepository->pollExists($id, $time, is_array($answer)) === true) {
-            $poll = $this->pollRepository->getOneById($id);
-
-            return [
-                'question' => $poll['title'],
-                'multiple' => $poll['multiple'],
-                'answers' => $this->answerRepository->getAnswersByPollId($id)
-            ];
+        if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
+            return $this->block
+                ->setData([
+                    'poll' => $this->pollRepository->getOneById($id),
+                    'answers' => $this->answerRepository->getAnswersByPollId($id)
+                ])
+                ->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

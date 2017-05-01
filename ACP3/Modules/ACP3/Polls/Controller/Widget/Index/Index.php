@@ -95,7 +95,7 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     protected function hasAlreadyVoted($pollId)
     {
-        // Check, whether the logged user has already voted
+        // Check, whether the logged in user has already voted
         if ($this->user->isAuthenticated() === true) {
             $votes = $this->voteRepository->getVotesByUserId(
                 $pollId,

@@ -38,14 +38,15 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Result
     arguments:
       - '@core.context.frontend'
+      - '@polls.view.block.frontend.poll_details_block'
       - '@core.date'
       - '@polls.model.pollrepository'
-      - '@polls.model.answerrepository'
 
   polls.controller.frontend.index.vote:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Vote
     arguments:
       - '@core.context.frontend'
+      - '@polls.view.block.frontend.poll_vote_form_block'
       - '@core.date'
       - '@polls.validation.vote_validation'
       - '@polls.model.vote_model'

@@ -16,3 +16,15 @@ services:
       - '@core.view.context.listing_block_context'
       - '@core.date'
       - '@polls.model.pollrepository'
+
+  polls.view.block.frontend.poll_vote_form_block:
+    class: ACP3\Modules\ACP3\Polls\View\Block\Frontend\PollVoteFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+
+  polls.view.block.frontend.poll_details_block:
+    class: ACP3\Modules\ACP3\Polls\View\Block\Frontend\PollDetailsBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@polls.model.pollrepository'
+      - '@polls.model.answerrepository'
