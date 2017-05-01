@@ -6,3 +6,16 @@ services:
       - '@core.config'
       - '@core.helpers.date'
       - '@core.wysiwyg.wysiwyg_editor_registrar'
+
+  system.view.block.admin.system_designs_block:
+    class: ACP3\Modules\ACP3\System\View\Block\Admin\SystemDesignsBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.config'
+      - '@core.xml'
+
+  system.view.block.admin.system_modules_block:
+    class: ACP3\Modules\ACP3\System\View\Block\Admin\SystemModulesBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.modules'

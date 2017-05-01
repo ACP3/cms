@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class Modules
- * @package ACP3\Modules\ACP3\System\Controller\Admin\Extensions
- */
 class Modules extends Core\Controller\AbstractAdminAction
 {
     /**
@@ -48,11 +44,16 @@ class Modules extends Core\Controller\AbstractAdminAction
      * @var Core\Modules\AclInstaller
      */
     private $aclInstaller;
+    /**
+     * @var Core\View\Block\BlockInterface
+     */
+    private $block;
 
     /**
      * Modules constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\BlockInterface $block
      * @param Core\I18n\DictionaryCache $dictionaryCache
      * @param \ACP3\Core\Modules\ModuleInfoCache $moduleInfoCache
      * @param \ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository $systemModuleRepository
@@ -64,6 +65,7 @@ class Modules extends Core\Controller\AbstractAdminAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\View\Block\BlockInterface $block,
         Core\I18n\DictionaryCache $dictionaryCache,
         Core\Modules\ModuleInfoCache $moduleInfoCache,
         System\Model\Repository\ModulesRepository $systemModuleRepository,
@@ -83,6 +85,7 @@ class Modules extends Core\Controller\AbstractAdminAction
         $this->schemaRegistrar = $schemaRegistrar;
         $this->schemaInstaller = $schemaInstaller;
         $this->aclInstaller = $aclInstaller;
+        $this->block = $block;
     }
 
     /**
@@ -340,21 +343,6 @@ class Modules extends Core\Controller\AbstractAdminAction
     {
         $this->renewCaches();
 
-        $modules = $this->modules->getAllModules();
-        $installedModules = $newModules = [];
-
-        foreach ($modules as $key => $values) {
-            $values['dir'] = strtolower($values['dir']);
-            if ($this->modules->isInstalled($values['dir']) === true || $values['installable'] === false) {
-                $installedModules[$key] = $values;
-            } else {
-                $newModules[$key] = $values;
-            }
-        }
-
-        return [
-            'installed_modules' => $installedModules,
-            'new_modules' => $newModules
-        ];
+        return $this->block->render();
     }
 }

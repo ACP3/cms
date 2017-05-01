@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Designs
     arguments:
       - '@core.context.frontend'
-      - '@core.xml'
+      - '@system.view.block.admin.system_designs_block'
 
   system.controller.admin.extensions.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Index
@@ -13,6 +13,7 @@ services:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Modules
     arguments:
       - '@core.context.frontend'
+      - '@system.view.block.admin.system_modules_block'
       - '@core.i18n.dictionary_cache'
       - '@core.modules.moduleInfoCache'
       - '@system.model.modulerepository'

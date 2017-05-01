@@ -10,32 +10,26 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\System;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Designs
- * @package ACP3\Modules\ACP3\System\Controller\Admin\Extensions
- */
 class Designs extends Core\Controller\AbstractAdminAction
 {
-    use System\Helper\AvailableDesignsTrait;
-
     /**
-     * @var \ACP3\Core\XML
+     * @var Core\View\Block\BlockInterface
      */
-    protected $xml;
+    private $block;
 
     /**
      * Designs constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\XML $xml
+     * @param Core\View\Block\BlockInterface $block
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\XML $xml
+        Core\View\Block\BlockInterface $block
     ) {
         parent::__construct($context);
 
-        $this->xml = $xml;
+        $this->block = $block;
     }
 
     /**
@@ -49,9 +43,7 @@ class Designs extends Core\Controller\AbstractAdminAction
             return $this->executePost($dir);
         }
 
-        return [
-            'designs' => $this->getAvailableDesigns()
-        ];
+        return $this->block->render();
     }
 
     /**
@@ -78,21 +70,5 @@ class Designs extends Core\Controller\AbstractAdminAction
         $text = $this->translator->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
 
         return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getXml()
-    {
-        return $this->xml;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function selectEntry($directory)
-    {
-        return $this->config->getSettings(Schema::MODULE_NAME)['design'] === $directory ? 1 : 0;
     }
 }
