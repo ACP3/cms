@@ -6,6 +6,7 @@ imports:
   - { resource: components/models.yml }
   - { resource: components/nested_set.yml }
   - { resource: components/validation.yml }
+  - { resource: components/view.yml }
 
 services:
   permissions.helpers:

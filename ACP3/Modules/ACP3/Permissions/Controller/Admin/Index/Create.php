@@ -8,16 +8,8 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Index
- */
-class Create extends AbstractFormAction
+class Create extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation
      */
@@ -30,35 +22,33 @@ class Create extends AbstractFormAction
      * @var Permissions\Model\RulesModel
      */
     protected $rulesModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Permissions\Model\RolesModel $rolesModel
      * @param Permissions\Model\RulesModel $rulesModel
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\View\Block\FormBlockInterface $block,
         Permissions\Model\RolesModel $rolesModel,
         Permissions\Model\RulesModel $rulesModel,
-        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
-        Permissions\Cache $permissionsCache,
         Permissions\Validation\RoleFormValidation $roleFormValidation
     ) {
-        parent::__construct($context, $formsHelper, $privilegeRepository, $permissionsCache);
+        parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->roleFormValidation = $roleFormValidation;
         $this->roleModel = $rolesModel;
         $this->rulesModel = $rulesModel;
+        $this->block = $block;
     }
 
     /**
@@ -66,12 +56,9 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        return [
-            'modules' => $this->fetchModulePermissions(0, 2),
-            'parent' => $this->fetchRoles(),
-            'form' => array_merge(['name' => ''], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**

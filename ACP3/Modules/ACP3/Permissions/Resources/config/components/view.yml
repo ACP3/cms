@@ -1,0 +1,15 @@
+services:
+  permissions.view.block.admin.roles_listing_block:
+    class: ACP3\Modules\ACP3\Permissions\View\Block\Admin\RolesListingBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.acl'
+
+  permissions.view.block.admin.role_form_block:
+    class: ACP3\Modules\ACP3\Permissions\View\Block\Admin\RoleFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.acl'
+      - '@core.modules'
+      - '@permissions.model.privilegerepository'
+      - '@permissions.cache'
