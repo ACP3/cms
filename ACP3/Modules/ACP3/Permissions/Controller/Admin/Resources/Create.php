@@ -9,16 +9,8 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources
- */
 class Create extends AbstractFormAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
      */
@@ -27,28 +19,28 @@ class Create extends AbstractFormAction
      * @var Permissions\Model\ResourcesModel
      */
     protected $resourcesModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Permissions\Model\ResourcesModel $resourcesModel
      * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation $resourceFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
-        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
+        Core\View\Block\FormBlockInterface $block,
         Permissions\Model\ResourcesModel $resourcesModel,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
-        parent::__construct($context, $formsHelper, $privilegeRepository);
+        parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->resourceFormValidation = $resourceFormValidation;
         $this->resourcesModel = $resourcesModel;
+        $this->block = $block;
     }
 
     /**
@@ -56,16 +48,9 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        return [
-            'modules' => $this->fetchActiveModules(),
-            'areas' => $this->fetchAreas(),
-            'privileges' => $this->fetchPrivileges(0),
-            'form' => array_merge(
-                ['resource' => '', 'area' => '', 'controller' => ''],
-                $this->request->getPost()->all()
-            ),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**

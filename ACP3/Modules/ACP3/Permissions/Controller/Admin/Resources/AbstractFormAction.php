@@ -15,80 +15,13 @@ use ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository;
 class AbstractFormAction extends AbstractAdminAction
 {
     /**
-     * @var Forms
-     */
-    protected $formsHelper;
-    /**
-     * @var PrivilegeRepository
-     */
-    protected $privilegeRepository;
-
-    public function __construct(
-        FrontendContext $context,
-        Forms $formsHelper,
-        PrivilegeRepository $privilegeRepository
-    ) {
-        parent::__construct($context);
-
-        $this->formsHelper = $formsHelper;
-        $this->privilegeRepository = $privilegeRepository;
-    }
-
-    /**
-     * @param int $privilegeId
-     * @return array
-     */
-    protected function fetchPrivileges($privilegeId)
-    {
-        $privileges = $this->privilegeRepository->getAllPrivileges();
-        $cPrivileges = count($privileges);
-        for ($i = 0; $i < $cPrivileges; ++$i) {
-            $privileges[$i]['selected'] = $this->formsHelper->selectEntry(
-                'privileges',
-                $privileges[$i]['id'],
-                $privilegeId
-            );
-        }
-
-        return $privileges;
-    }
-
-    /**
-     * @param string $currentModule
-     * @return array
-     */
-    protected function fetchActiveModules($currentModule = '')
-    {
-        $modules = $this->modules->getActiveModules();
-        foreach ($modules as $row) {
-            $modules[$row['name']]['selected'] = $this->formsHelper->selectEntry(
-                'modules',
-                $row['dir'],
-                ucfirst(trim($currentModule))
-            );
-        }
-        return $modules;
-    }
-
-    /**
      * @param string $moduleName
      * @return int
      */
-    protected function fetchModuleId($moduleName)
+    protected function fetchModuleId(string $moduleName): int
     {
         $moduleInfo = $this->modules->getModuleInfo($moduleName);
 
-        return isset($moduleInfo['id']) ? $moduleInfo['id'] : 0;
-    }
-
-    /**
-     * @param string $currentArea
-     * @return array
-     */
-    protected function fetchAreas($currentArea = '')
-    {
-        $areas = array_values(AreaEnum::getAreas());
-
-        return $this->formsHelper->choicesGenerator('area', array_combine($areas, $areas), $currentArea);
+        return isset($moduleInfo['id']) ? (int)$moduleInfo['id'] : 0;
     }
 }
