@@ -3,10 +3,8 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
+      - '@users.view.block.admin.user_form_block'
       - '@core.helpers.secure'
-      - '@core.helpers.forms'
-      - '@users.helpers.forms'
       - '@users.model.users_model'
       - '@users.validation.admin_form_validation'
       - '@permissions.helpers'
@@ -21,10 +19,8 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
+      - '@users.view.block.admin.user_form_block'
       - '@core.helpers.secure'
-      - '@core.helpers.forms'
-      - '@users.helpers.forms'
       - '@users.model.authentication_model'
       - '@users.model.users_model'
       - '@users.validation.admin_form_validation'
@@ -34,14 +30,14 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@users.view.block.admin.users_data_grid_block'
       - '@users.model.data_grid_repository'
 
   users.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
-      - '@core.helpers.forms'
+      - '@users.view.block.admin.users_settings_form_block'
       - '@users.validation.admin_settings_form_validation'
 
   users.controller.frontend.account.edit:

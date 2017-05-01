@@ -1,0 +1,18 @@
+services:
+  users.view.block.admin.users_data_grid_block:
+    class: ACP3\Modules\ACP3\Users\View\Block\Admin\UsersDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+
+  users.view.block.admin.users_settings_form_block:
+    class: ACP3\Modules\ACP3\Users\View\Block\Admin\UsersSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+
+  users.view.block.admin.user_form_block:
+    class: ACP3\Modules\ACP3\Users\View\Block\Admin\UserFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.acl'
+      - '@users.helpers.forms'

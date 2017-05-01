@@ -4,6 +4,7 @@ imports:
   - { resource: components/installer.yml }
   - { resource: components/models.yml }
   - { resource: components/validation.yml }
+  - { resource: components/view.yml }
 
 services:
   core.authentication.native:
