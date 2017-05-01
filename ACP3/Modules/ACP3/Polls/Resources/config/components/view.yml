@@ -9,3 +9,10 @@ services:
     arguments:
       - '@core.view.context.form_block_context'
       - '@polls.model.answerrepository'
+
+  polls.view.block.frontend.polls_listing_block:
+    class: ACP3\Modules\ACP3\Polls\View\Block\Frontend\PollsListingBlock
+    arguments:
+      - '@core.view.context.listing_block_context'
+      - '@core.date'
+      - '@polls.model.pollrepository'

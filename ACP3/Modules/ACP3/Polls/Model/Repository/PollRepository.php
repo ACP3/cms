@@ -19,9 +19,9 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'polls';
 
     /**
-     * @param int    $pollId
+     * @param int $pollId
      * @param string $time
-     * @param bool   $multiple
+     * @param bool $multiple
      *
      * @return bool
      */
@@ -46,30 +46,30 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
         );
     }
 
-    /**
-     * @param string $status
-     *
-     * @return array
-     */
-    public function countAll($status = '')
+    public function countAll($time = ''): int
     {
-        return $this->getAll($status);
+        $where = empty($time) === false ? ' WHERE start <= :time' : '';
+        return (int)$this->db->fetchColumn(
+            "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
+            ['time' => $time]
+        );
     }
 
     /**
+     * @param int $userId
+     * @param string $ipAddress
      * @param string $time
      * @param string $limitStart
      * @param string $resultsPerPage
-     *
      * @return array
      */
-    public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
+    public function getAll($userId = 0, $ipAddress = '', $time = '', $limitStart = '', $resultsPerPage = '')
     {
         $where = empty($time) === false ? ' WHERE p.start <= :time' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll(
-            'SELECT p.id, p.start, p.end, p.title, COUNT(pv.poll_id) AS votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id)' . $where . ' GROUP BY p.id ORDER BY p.start DESC, p.end DESC, p.id DESC' . $limitStmt,
-            ['time' => $time]
+            'SELECT p.id, p.start, p.end, p.title, COUNT(pv.poll_id) AS votes, IF(pv.`ip` = :ip OR pv.`user_id` = :user_id, 1, 0) AS `has_voted` FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id)' . $where . ' GROUP BY p.id ORDER BY p.start DESC, p.end DESC, p.id DESC' . $limitStmt,
+            ['time' => $time, 'ip' => $ipAddress, 'user_id' => $userId]
         );
     }
 

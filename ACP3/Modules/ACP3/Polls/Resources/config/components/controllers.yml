@@ -32,9 +32,7 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@polls.model.pollrepository'
-      - '@polls.model.voterepository'
+      - '@polls.view.block.frontend.polls_listing_block'
 
   polls.controller.frontend.index.result:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Result
