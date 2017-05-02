@@ -16,3 +16,16 @@ services:
       - '@core.view.context.form_block_context'
       - '@core.acl'
       - '@users.helpers.forms'
+
+  users.view.block.widget.user_login_widget_form_block:
+    class: ACP3\Modules\ACP3\Users\View\Block\Widget\UserLoginWidgetFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+
+  users.view.block.widget.user_menu_widget_block:
+    class: ACP3\Modules\ACP3\Users\View\Block\Widget\UserMenuWidgetBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.acl'
+      - '@core.modules'

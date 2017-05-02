@@ -12,7 +12,7 @@
             </span>
         </div>
         <div id="nav-user-login-collapse" class="collapse navbar-collapse">
-            <form class="navbar-form navbar-right" action="{uri args="users/index/login/redirect_`$redirect_uri`"}" method="post" accept-charset="UTF-8">
+            <form class="navbar-form navbar-right" action="{uri args="users/index/login"}" method="post" accept-charset="UTF-8">
                 <div class="form-group">
                     <input class="form-control input-sm" type="text" name="nickname" id="nav-nickname" maxlength="30" placeholder="{lang t="users|nickname"}" required>
                 </div>

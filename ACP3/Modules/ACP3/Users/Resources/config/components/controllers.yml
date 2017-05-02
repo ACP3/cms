@@ -118,8 +118,12 @@ services:
 
   users.controller.widget.index.login:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\Login
-    parent: core.controller.widget
+    arguments:
+      - '@core.context.widget'
+      - '@users.view.block.widget.user_login_widget_form_block'
 
   users.controller.widget.index.user_menu:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\UserMenu
-    parent: core.controller.widget
+    arguments:
+      - '@core.context.widget'
+      - '@users.view.block.widget.user_menu_widget_block'
