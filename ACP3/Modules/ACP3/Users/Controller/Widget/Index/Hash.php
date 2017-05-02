@@ -6,15 +6,30 @@
 
 namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
+use ACP3\Core\ACL;
 use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Hash
- * @package ACP3\Modules\ACP3\Users\Controller\Widget\Index
- */
 class Hash extends AbstractWidgetAction
 {
+    /**
+     * @var ACL
+     */
+    private $acl;
+
+    /**
+     * Hash constructor.
+     * @param WidgetContext $context
+     * @param ACL $acl
+     */
+    public function __construct(WidgetContext $context, ACL $acl)
+    {
+        parent::__construct($context);
+
+        $this->acl = $acl;
+    }
+
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */

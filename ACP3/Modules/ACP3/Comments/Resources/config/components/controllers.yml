@@ -11,6 +11,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@comments.view.block.admin.comment_form_block'
+      - '@core.validator'
       - '@comments.model.comments_model'
       - '@comments.validation.admin_form_validation'
 
@@ -39,6 +40,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@comments.view.block.admin.comments_settings_form_block'
+      - '@core.helpers.secure'
       - '@comments.validation.admin_settings_form_validation'
 
   comments.controller.frontend.index.create:

@@ -23,18 +23,24 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
      * @var Core\View\Block\FormBlockInterface
      */
     private $block;
+    /**
+     * @var Core\Helpers\Alerts
+     */
+    private $alerts;
 
     /**
      * Unsubscribe constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\Helpers\Alerts $alerts
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
+        Core\Helpers\Alerts $alerts,
         Newsletter\Helper\AccountStatus $accountStatusHelper,
         Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation
     ) {
@@ -43,6 +49,7 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
         $this->accountStatusHelper = $accountStatusHelper;
         $this->unsubscribeFormValidation = $unsubscribeFormValidation;
         $this->block = $block;
+        $this->alerts = $alerts;
     }
 
     /**
@@ -71,7 +78,7 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
                     ['mail' => $formData['mail']]
                 );
 
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
+                $this->setTemplate($this->alerts->confirmBox(
                     $this->translator->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'),
                     $this->appPath->getWebRoot())
                 );

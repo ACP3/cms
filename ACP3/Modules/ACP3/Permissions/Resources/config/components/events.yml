@@ -6,3 +6,10 @@ services:
     tags:
       - { name: core.eventListener, event: permissions.model.acl_resources.after_save, method: execute }
       - { name: core.eventListener, event: permissions.model.acl_resources.after_delete, method: execute }
+
+  permissions.event.has_permission_on_controller_action_before_dispatch_listener:
+    class: ACP3\Modules\ACP3\Permissions\Event\Listener\HasPermissionOnControllerActionBeforeDispatchListener
+    arguments:
+      - '@core.acl'
+    tags:
+      - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch, method: hasPermission }

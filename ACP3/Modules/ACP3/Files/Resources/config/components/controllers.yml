@@ -41,6 +41,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@files.view.block.admin.files_settings_form_block'
+      - '@core.helpers.secure'
       - '@files.validation.admin_settings_form_validation'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]

@@ -23,18 +23,24 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var Core\View\Block\FormBlockInterface
      */
     private $block;
+    /**
+     * @var Core\Helpers\Alerts
+     */
+    private $alerts;
 
     /**
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\Helpers\Alerts $alerts
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe $subscribeHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation $subscribeFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
+        Core\Helpers\Alerts $alerts,
         Newsletter\Helper\Subscribe $subscribeHelper,
         Newsletter\Validation\SubscribeFormValidation $subscribeFormValidation
     ) {
@@ -43,6 +49,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->subscribeHelper = $subscribeHelper;
         $this->subscribeFormValidation = $subscribeFormValidation;
         $this->block = $block;
+        $this->alerts = $alerts;
     }
 
     /**
@@ -73,7 +80,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                     $formData['last_name']
                 );
 
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
+                $this->setTemplate($this->alerts->confirmBox(
                     $this->translator->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'),
                     $this->appPath->getWebRoot())
                 );

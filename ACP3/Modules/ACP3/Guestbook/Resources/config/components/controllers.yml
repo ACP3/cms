@@ -25,6 +25,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@guestbook.view.block.admin.guestbook_settings_form_block'
+      - '@core.helpers.secure'
       - '@guestbook.validation.admin_settings_form_validation'
 
   guestbook.controller.frontend.index.create:

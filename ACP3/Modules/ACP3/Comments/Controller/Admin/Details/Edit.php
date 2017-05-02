@@ -11,10 +11,6 @@ use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Details
- */
 class Edit extends Core\Controller\AbstractAdminAction
 {
     /**
@@ -29,18 +25,24 @@ class Edit extends Core\Controller\AbstractAdminAction
      * @var Core\View\Block\FormBlockInterface
      */
     private $block;
+    /**
+     * @var Core\Validation\Validator
+     */
+    private $validator;
 
     /**
      * Details constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\Validation\Validator $validator
      * @param Comments\Model\CommentsModel $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
+        Core\Validation\Validator $validator,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\AdminFormValidation $adminFormValidation)
     {
@@ -49,6 +51,7 @@ class Edit extends Core\Controller\AbstractAdminAction
         $this->adminFormValidation = $adminFormValidation;
         $this->commentsModel = $commentsModel;
         $this->block = $block;
+        $this->validator = $validator;
     }
 
     /**

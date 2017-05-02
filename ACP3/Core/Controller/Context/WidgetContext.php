@@ -35,10 +35,6 @@ class WidgetContext
      */
     protected $eventDispatcher;
     /**
-     * @var \ACP3\Core\ACL
-     */
-    protected $acl;
-    /**
      * @var \ACP3\Modules\ACP3\Users\Model\UserModel
      */
     protected $user;
@@ -59,10 +55,6 @@ class WidgetContext
      */
     protected $router;
     /**
-     * @var \ACP3\Core\Validation\Validator
-     */
-    protected $validator;
-    /**
      * @var \ACP3\Core\View
      */
     protected $view;
@@ -78,59 +70,46 @@ class WidgetContext
      * @var \Symfony\Component\HttpFoundation\Response
      */
     private $response;
-    /**
-     * @var ResultsPerPage
-     */
-    private $resultsPerPage;
 
     /**
      * WidgetContext constructor.
      *
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \ACP3\Core\ACL $acl
      * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
      * @param \ACP3\Core\I18n\Translator $translator
      * @param \ACP3\Core\Modules $modules
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \ACP3\Core\Validation\Validator $validator
      * @param \ACP3\Core\View $view
      * @param \ACP3\Core\Settings\SettingsInterface $config
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param Response $response
-     * @param ResultsPerPage $resultsPerPage
      */
     public function __construct(
         ContainerInterface $container,
         EventDispatcherInterface $eventDispatcher,
-        ACL $acl,
         UserModel $user,
         Translator $translator,
         Modules $modules,
         RequestInterface $request,
         RouterInterface $router,
-        Validator $validator,
         View $view,
         SettingsInterface $config,
         ApplicationPath $appPath,
-        Response $response,
-        ResultsPerPage $resultsPerPage
+        Response $response
     ) {
         $this->container = $container;
         $this->eventDispatcher = $eventDispatcher;
-        $this->acl = $acl;
         $this->user = $user;
         $this->translator = $translator;
         $this->modules = $modules;
         $this->request = $request;
         $this->router = $router;
-        $this->validator = $validator;
         $this->view = $view;
         $this->config = $config;
         $this->appPath = $appPath;
         $this->response = $response;
-        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**
@@ -147,14 +126,6 @@ class WidgetContext
     public function getEventDispatcher()
     {
         return $this->eventDispatcher;
-    }
-
-    /**
-     * @return \ACP3\Core\ACL
-     */
-    public function getACL()
-    {
-        return $this->acl;
     }
 
     /**
@@ -198,14 +169,6 @@ class WidgetContext
     }
 
     /**
-     * @return \ACP3\Core\Validation\Validator
-     */
-    public function getValidator()
-    {
-        return $this->validator;
-    }
-
-    /**
      * @return \ACP3\Core\View
      */
     public function getView()
@@ -235,13 +198,5 @@ class WidgetContext
     public function getResponse()
     {
         return $this->response;
-    }
-
-    /**
-     * @return ResultsPerPage
-     */
-    public function getResultsPerPage()
-    {
-        return $this->resultsPerPage;
     }
 }

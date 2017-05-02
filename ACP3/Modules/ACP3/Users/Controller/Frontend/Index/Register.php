@@ -37,6 +37,10 @@ class Register extends Core\Controller\AbstractFrontendAction
      * @var Users\Model\UsersModel
      */
     private $usersModel;
+    /**
+     * @var Core\Helpers\Alerts
+     */
+    private $alerts;
 
     /**
      * Register constructor.
@@ -44,6 +48,7 @@ class Register extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
      * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param Core\Helpers\Alerts $alerts
      * @param Users\Model\UsersModel $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation $registrationFormValidation
      * @param \ACP3\Modules\ACP3\Permissions\Helpers $permissionsHelpers
@@ -53,6 +58,7 @@ class Register extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
         Core\Helpers\Secure $secureHelper,
+        Core\Helpers\Alerts $alerts,
         Users\Model\UsersModel $usersModel,
         Users\Validation\RegistrationFormValidation $registrationFormValidation,
         Permissions\Helpers $permissionsHelpers,
@@ -66,6 +72,7 @@ class Register extends Core\Controller\AbstractFrontendAction
         $this->sendEmail = $sendEmail;
         $this->block = $block;
         $this->usersModel = $usersModel;
+        $this->alerts = $alerts;
     }
 
     /**
@@ -78,7 +85,7 @@ class Register extends Core\Controller\AbstractFrontendAction
         if ($this->user->isAuthenticated() === true) {
             return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         } elseif ($settings['enable_registration'] == 0) {
-            $this->setContent($this->get('core.helpers.alerts')->errorBox(
+            $this->setContent($this->alerts->errorBox(
                 $this->translator->t('users', 'user_registration_disabled'))
             );
         }
@@ -113,7 +120,7 @@ class Register extends Core\Controller\AbstractFrontendAction
                 $lastId = $this->usersModel->save($insertValues);
                 $bool2 = $this->permissionsHelpers->updateUserRoles([2], $lastId);
 
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
+                $this->setTemplate($this->alerts->confirmBox(
                     $this->translator->t('users',
                         $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'
                     ),

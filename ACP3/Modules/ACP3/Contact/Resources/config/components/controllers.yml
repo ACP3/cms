@@ -25,6 +25,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@contact.view.block.frontend.contact_form_block'
+      - '@core.helpers.alerts'
       - '@contact.validation.form_validation'
       - '@contact.model.contacts_model'
       - '@contact.model.contact_form_model'

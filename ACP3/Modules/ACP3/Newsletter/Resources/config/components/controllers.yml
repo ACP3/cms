@@ -91,6 +91,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@newsletter.view.block.frontend.newsletter_subscribe_form_block'
+      - '@core.helpers.alerts'
       - '@newsletter.helper.subscribe'
       - '@newsletter.validation.subscribe_form_validation'
 
@@ -99,6 +100,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@newsletter.view.block.frontend.newsletter_unsubscribe_form_block'
+      - '@core.helpers.alerts'
       - '@newsletter.helper.accountstatus'
       - '@newsletter.validation.unsubscribe_form_validation'
 

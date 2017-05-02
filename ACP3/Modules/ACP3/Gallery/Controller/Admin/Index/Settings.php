@@ -23,18 +23,24 @@ class Settings extends Core\Controller\AbstractAdminAction
      * @var Core\View\Block\SettingsFormBlockInterface
      */
     private $block;
+    /**
+     * @var Core\Helpers\Secure
+     */
+    private $secure;
 
     /**
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\SettingsFormBlockInterface $block
+     * @param Core\Helpers\Secure $secure
      * @param Core\Cache $galleryCoreCache
      * @param \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\SettingsFormBlockInterface $block,
+        Core\Helpers\Secure $secure,
         Core\Cache $galleryCoreCache,
         Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
@@ -43,6 +49,7 @@ class Settings extends Core\Controller\AbstractAdminAction
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->galleryCoreCache = $galleryCoreCache;
         $this->block = $block;
+        $this->secure = $secure;
     }
 
     /**
@@ -71,7 +78,7 @@ class Settings extends Core\Controller\AbstractAdminAction
                 'thumbwidth' => (int)$formData['thumbwidth'],
                 'thumbheight' => (int)$formData['thumbheight'],
                 'overlay' => $formData['overlay'],
-                'dateformat' => $this->get('core.helpers.secure')->strEncode($formData['dateformat']),
+                'dateformat' => $this->secure->strEncode($formData['dateformat']),
                 'sidebar' => (int)$formData['sidebar'],
             ];
             if ($this->modules->isActive('comments') === true) {

@@ -40,6 +40,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@gallery.view.block.admin.gallery_settings_form_block'
+      - '@core.helpers.secure'
       - '@gallery.cache.core'
       - '@gallery.validation.admin_settings_form_validation'
 

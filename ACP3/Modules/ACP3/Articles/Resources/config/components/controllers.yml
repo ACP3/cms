@@ -4,6 +4,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@articles.view.block.admin.article_form_block'
+      - '@core.acl'
       - '@articles.model'
       - '@articles.validation.admin_form_validation'
     calls:
@@ -26,6 +27,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@articles.view.block.admin.article_form_block'
+      - '@core.acl'
       - '@articles.model'
       - '@articles.validation.admin_form_validation'
     calls:

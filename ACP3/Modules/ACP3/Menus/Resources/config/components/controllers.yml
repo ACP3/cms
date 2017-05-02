@@ -25,8 +25,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@menus.helpers.menuitemslist'
-      - '@menus.model.menurepository'
+      - '@menus.view.block.admin.menus_listing_block'
 
   menus.controller.admin.items.create:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Create

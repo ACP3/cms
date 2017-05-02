@@ -32,6 +32,10 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      * @var Core\View\Block\FormBlockInterface
      */
     private $block;
+    /**
+     * @var Core\Helpers\Alerts
+     */
+    private $alerts;
 
     /**
      * ForgotPwd constructor.
@@ -39,6 +43,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
      * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param Core\Helpers\Alerts $alerts
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation
      * @param \ACP3\Core\Helpers\SendEmail $sendEmail
@@ -47,6 +52,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
         Core\Helpers\Secure $secureHelper,
+        Core\Helpers\Alerts $alerts,
         Users\Model\Repository\UserRepository $userRepository,
         Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation,
         Core\Helpers\SendEmail $sendEmail
@@ -58,6 +64,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
         $this->accountForgotPasswordFormValidation = $accountForgotPasswordFormValidation;
         $this->sendEmail = $sendEmail;
         $this->block = $block;
+        $this->alerts = $alerts;
     }
 
     /**
@@ -100,7 +107,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
                     $bool = $this->userRepository->update($updateValues, $user['id']);
                 }
 
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
+                $this->setTemplate($this->alerts->confirmBox(
                     $this->translator->t(
                         'users',
                         $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'

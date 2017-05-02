@@ -4,6 +4,14 @@ services:
     arguments:
       - '@core.view.context.form_block_context'
 
+  menus.view.block.admin.menus_listing_block:
+    class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenusListingBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.acl'
+      - '@menus.model.menurepository'
+      - '@menus.helpers.menuitemslist'
+
   menus.view.block.admin.menu_item_form_block:
     class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuItemFormBlock
     arguments:

@@ -20,22 +20,29 @@ class Login extends Core\Controller\AbstractFrontendAction
      * @var Core\View\Block\FormBlockInterface
      */
     private $block;
+    /**
+     * @var Core\Helpers\Secure
+     */
+    private $secure;
 
     /**
      * Login constructor.
      * @param Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\Helpers\Secure $secure
      * @param Users\Model\AuthenticationModel $authenticationModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
+        Core\Helpers\Secure $secure,
         Users\Model\AuthenticationModel $authenticationModel
     ) {
         parent::__construct($context);
 
         $this->authenticationModel = $authenticationModel;
         $this->block = $block;
+        $this->secure = $secure;
     }
 
     /**
@@ -57,7 +64,7 @@ class Login extends Core\Controller\AbstractFrontendAction
     {
         try {
             $this->authenticationModel->login(
-                $this->get('core.helpers.secure')->strEncode($this->request->getPost()->get('nickname', '')),
+                $this->secure->strEncode($this->request->getPost()->get('nickname', '')),
                 $this->request->getPost()->get('pwd', ''),
                 $this->request->getPost()->has('remember')
             );

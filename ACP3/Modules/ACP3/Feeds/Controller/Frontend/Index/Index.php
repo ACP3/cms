@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Feeds;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Feeds\Controller\Frontend\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -26,14 +22,20 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var Feeds\Utility\FeedAvailabilityRegistrar
      */
     protected $availableFeedsRegistrar;
+    /**
+     * @var Core\ACL
+     */
+    private $acl;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\ACL $acl
      * @param \ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator $feedGenerator
      * @param Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\ACL $acl,
         Feeds\View\Renderer\FeedGenerator $feedGenerator,
         Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
     ) {
@@ -41,6 +43,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->feedGenerator = $feedGenerator;
         $this->availableFeedsRegistrar = $availableFeedsRegistrar;
+        $this->acl = $acl;
     }
 
     /**

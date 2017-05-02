@@ -68,6 +68,7 @@ services:
       - '@core.context.frontend'
       - '@users.view.block.frontend.user_forgot_password_form_block'
       - '@core.helpers.secure'
+      - '@core.helpers.alerts'
       - '@users.model.userrepository'
       - '@users.validation.account_forgot_password_form_validation'
       - '@core.helpers.sendEmail'
@@ -83,6 +84,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@users.view.block.frontend.user_login_form_block'
+      - '@core.helpers.secure'
       - '@users.model.authentication_model'
 
   users.controller.frontend.index.logout:
@@ -97,6 +99,7 @@ services:
       - '@core.context.frontend'
       - '@users.view.block.frontend.user_register_form_block'
       - '@core.helpers.secure'
+      - '@core.helpers.alerts'
       - '@users.model.users_model'
       - '@users.validation.registration_form_validation'
       - '@permissions.helpers'
@@ -110,7 +113,9 @@ services:
 
   users.controller.widget.index.hash:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\Hash
-    parent: core.controller.widget
+    arguments:
+      - '@core.context.widget'
+      - '@core.acl'
 
   users.controller.widget.index.login:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\Login

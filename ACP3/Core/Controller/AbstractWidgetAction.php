@@ -26,10 +26,6 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected $eventDispatcher;
     /**
-     * @var \ACP3\Core\ACL
-     */
-    protected $acl;
-    /**
      * @var \ACP3\Modules\ACP3\Users\Model\UserModel
      */
     protected $user;
@@ -50,10 +46,6 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected $router;
     /**
-     * @var \ACP3\Core\Validation\Validator
-     */
-    protected $validator;
-    /**
      * @var \ACP3\Core\View
      */
     protected $view;
@@ -69,10 +61,6 @@ abstract class AbstractWidgetAction implements ActionInterface
      * @var Response
      */
     protected $response;
-    /**
-     * @var Core\Helpers\ResultsPerPage
-     */
-    protected $resultsPerPage;
 
     /**
      * WidgetController constructor.
@@ -83,18 +71,15 @@ abstract class AbstractWidgetAction implements ActionInterface
     {
         $this->container = $context->getContainer();
         $this->eventDispatcher = $context->getEventDispatcher();
-        $this->acl = $context->getACL();
         $this->user = $context->getUser();
         $this->translator = $context->getTranslator();
         $this->request = $context->getRequest();
         $this->router = $context->getRouter();
-        $this->validator = $context->getValidator();
         $this->view = $context->getView();
         $this->modules = $context->getModules();
         $this->config = $context->getConfig();
         $this->appPath = $context->getAppPath();
         $this->response = $context->getResponse();
-        $this->resultsPerPage = $context->getResultsPerPage();
     }
 
     /**
@@ -103,12 +88,6 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     public function preDispatch()
     {
-        $path = $this->request->getArea() . '/' . $this->request->getFullPathWithoutArea();
-
-        if ($this->acl->hasPermission($path) === false) {
-            throw new Core\ACL\Exception\AccessForbiddenException();
-        }
-
         $this->view->assign([
             'PHP_SELF' => $this->appPath->getPhpSelf(),
             'ROOT_DIR' => $this->appPath->getWebRoot(),

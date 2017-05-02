@@ -43,31 +43,39 @@ class ControllerActionBeforeDispatchEvent extends Event
     /**
      * @return string
      */
-    public function getControllerServiceId()
+    public function getControllerServiceId(): string
     {
         return $this->controllerServiceId;
     }
 
     /**
-     * @return mixed|string
+     * @return string
      */
-    public function getControllerArea()
+    public function getControllerArea(): string
     {
         return isset($this->serviceIdParts[2]) ? $this->serviceIdParts[2] : '';
     }
 
     /**
-     * @return mixed|string
+     * @return string
      */
-    public function getControllerModule()
+    public function getControllerModule(): string
+    {
+        return isset($this->serviceIdParts[0]) ? $this->serviceIdParts[0] : '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getController(): string
     {
         return isset($this->serviceIdParts[3]) ? $this->serviceIdParts[3] : '';
     }
 
     /**
-     * @return mixed|string
+     * @return string
      */
-    public function getControllerAction()
+    public function getControllerAction(): string
     {
         return isset($this->serviceIdParts[4]) ? $this->serviceIdParts[4] : '';
     }

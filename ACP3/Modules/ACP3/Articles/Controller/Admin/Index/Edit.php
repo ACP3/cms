@@ -35,16 +35,18 @@ class Edit extends AbstractFormAction
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\ACL $acl
      * @param Articles\Model\ArticlesModel $articlesModel
      * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
+        Core\ACL $acl,
         Articles\Model\ArticlesModel $articlesModel,
         Articles\Validation\AdminFormValidation $adminFormValidation
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $acl);
 
         $this->adminFormValidation = $adminFormValidation;
         $this->articlesModel = $articlesModel;

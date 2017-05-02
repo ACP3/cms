@@ -48,18 +48,15 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
         parent::__construct(
             $context->getContainer(),
             $context->getEventDispatcher(),
-            $context->getACL(),
             $context->getUser(),
             $context->getTranslator(),
             $context->getModules(),
             $context->getRequest(),
             $context->getRouter(),
-            $context->getValidator(),
             $context->getView(),
             $context->getConfig(),
             $context->getAppPath(),
-            $context->getResponse(),
-            $context->getResultsPerPage()
+            $context->getResponse()
         );
 
         $this->assets = $assets;
