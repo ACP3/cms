@@ -44,8 +44,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
-      - '@users.helpers.forms'
+      - '@users.view.block.frontend.user_account_form_block'
       - '@users.model.users_model'
       - '@users.validation.account_form_validation'
 
@@ -57,9 +56,8 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
+      - '@users.view.block.frontend.user_account_settings_form_block'
       - '@core.helpers.secure'
-      - '@users.helpers.forms'
       - '@users.model.authentication_model'
       - '@users.model.users_model'
       - '@users.validation.account_settings_form_validation'

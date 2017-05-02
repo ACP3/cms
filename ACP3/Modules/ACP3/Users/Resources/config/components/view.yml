@@ -17,6 +17,23 @@ services:
       - '@core.acl'
       - '@users.helpers.forms'
 
+  users.view.block.frontend.user_account_form_block:
+    class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserAccountFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@users.helpers.forms'
+
+  users.view.block.frontend.user_account_settings_form_block:
+    class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserAccountSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@users.helpers.forms'
+
+  users.view.block.frontend.user_details_block:
+    class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserDetailsBlock
+    arguments:
+      - '@core.view.context.block_context'
+
   users.view.block.frontend.user_forgot_password_form_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserForgotPasswordFormBlock
     arguments:
@@ -37,11 +54,6 @@ services:
     class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserRegisterFormBlock
     arguments:
       - '@core.view.context.form_block_context'
-
-  users.view.block.frontend.user_details_block:
-    class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserDetailsBlock
-    arguments:
-      - '@core.view.context.block_context'
 
   users.view.block.widget.user_login_widget_form_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Widget\UserLoginWidgetFormBlock

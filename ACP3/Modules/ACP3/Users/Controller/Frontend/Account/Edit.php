@@ -9,20 +9,8 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Account
- */
 class Edit extends AbstractAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Helpers\Forms
-     */
-    protected $userFormsHelper;
     /**
      * @var \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation
      */
@@ -31,29 +19,30 @@ class Edit extends AbstractAction
      * @var Users\Model\UsersModel
      */
     protected $usersModel;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms $userFormsHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Users\Model\UsersModel $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation $accountFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
-        Users\Helpers\Forms $userFormsHelper,
+        Core\View\Block\FormBlockInterface $block,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AccountFormValidation $accountFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
-        $this->userFormsHelper = $userFormsHelper;
         $this->accountFormValidation = $accountFormValidation;
         $this->usersModel = $usersModel;
+        $this->block = $block;
     }
 
     /**
@@ -63,24 +52,10 @@ class Edit extends AbstractAction
     {
         $user = $this->user->getUserInfo();
 
-        $this->view->assign(
-            $this->userFormsHelper->fetchUserProfileFormFields(
-                $user['birthday'],
-                $user['country'],
-                $user['gender']
-            )
-        );
-
-        return [
-            'contact' => $this->userFormsHelper->fetchContactDetails(
-                $user['mail'],
-                $user['website'],
-                $user['icq'],
-                $user['skype']
-            ),
-            'form' => array_merge($user, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->setData($user)
+            ->render();
     }
 
     /**
