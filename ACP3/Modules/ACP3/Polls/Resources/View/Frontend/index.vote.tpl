@@ -24,5 +24,5 @@
             {/foreach}
         </div>
     </div>
-    {include file="asset:System/Partials/form_group.submit.tpl"}
+    {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token}
 {/block}

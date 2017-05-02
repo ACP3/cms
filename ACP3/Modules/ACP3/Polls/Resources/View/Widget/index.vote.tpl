@@ -25,6 +25,7 @@
                     {/if}
                 {/foreach}
                 <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
+                {$form_token}
             </form>
         </div>
     {else}

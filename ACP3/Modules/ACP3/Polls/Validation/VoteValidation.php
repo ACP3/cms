@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\Polls\Validation;
 
 use ACP3\Core\Validation\AbstractFormValidation;
+use ACP3\Core\Validation\ValidationRules\FormTokenValidationRule;
 use ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule;
 use ACP3\Modules\ACP3\Polls\Validation\ValidationRules\AlreadyVotedValidationRule;
 
@@ -56,6 +57,7 @@ class VoteValidation extends AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
+            ->addConstraint(FormTokenValidationRule::class)
             ->addConstraint(NotEmptyValidationRule::class, [
                 'data' => $formData,
                 'field' => 'answer',
