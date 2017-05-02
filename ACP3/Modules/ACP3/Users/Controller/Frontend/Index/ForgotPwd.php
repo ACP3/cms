@@ -10,16 +10,8 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class ForgotPwd
- * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
- */
 class ForgotPwd extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
@@ -36,12 +28,16 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\SendEmail
      */
     protected $sendEmail;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * ForgotPwd constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation
@@ -49,7 +45,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\FormBlockInterface $block,
         Core\Helpers\Secure $secureHelper,
         Users\Model\Repository\UserRepository $userRepository,
         Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation,
@@ -57,11 +53,11 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
         $this->userRepository = $userRepository;
         $this->accountForgotPasswordFormValidation = $accountForgotPasswordFormValidation;
         $this->sendEmail = $sendEmail;
+        $this->block = $block;
     }
 
     /**
@@ -73,10 +69,9 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
             return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         }
 
-        return [
-            'form' => array_merge(['nick_mail' => ''], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**

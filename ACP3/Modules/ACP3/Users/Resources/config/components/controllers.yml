@@ -68,7 +68,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ForgotPwd
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
+      - '@users.view.block.frontend.user_forgot_password_form_block'
       - '@core.helpers.secure'
       - '@users.model.userrepository'
       - '@users.validation.account_forgot_password_form_validation'
@@ -78,14 +78,13 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.pagination'
-      - '@users.model.userrepository'
+      - '@users.view.block.frontend.users_listing_block'
 
   users.controller.frontend.index.login:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Login
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
+      - '@users.view.block.frontend.user_login_form_block'
       - '@users.model.authentication_model'
 
   users.controller.frontend.index.logout:
@@ -98,10 +97,9 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Register
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@core.helpers.formToken'
+      - '@users.view.block.frontend.user_register_form_block'
       - '@core.helpers.secure'
-      - '@users.model.userrepository'
+      - '@users.model.users_model'
       - '@users.validation.registration_form_validation'
       - '@permissions.helpers'
       - '@core.helpers.sendEmail'
@@ -110,7 +108,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ViewProfile
     arguments:
       - '@core.context.frontend'
-      - '@users.model.userrepository'
+      - '@users.view.block.frontend.user_details_block'
 
   users.controller.widget.index.hash:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\Hash

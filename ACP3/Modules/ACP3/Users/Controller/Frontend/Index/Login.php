@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Users;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-/**
- * Class Login
- * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
- */
 class Login extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -21,25 +17,25 @@ class Login extends Core\Controller\AbstractFrontendAction
      */
     protected $authenticationModel;
     /**
-     * @var Core\Helpers\Forms
+     * @var Core\View\Block\FormBlockInterface
      */
-    protected $forms;
+    private $block;
 
     /**
      * Login constructor.
      * @param Core\Controller\Context\FrontendContext $context
-     * @param Core\Helpers\Forms $forms
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Users\Model\AuthenticationModel $authenticationModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $forms,
+        Core\View\Block\FormBlockInterface $block,
         Users\Model\AuthenticationModel $authenticationModel
     ) {
         parent::__construct($context);
 
         $this->authenticationModel = $authenticationModel;
-        $this->forms = $forms;
+        $this->block = $block;
     }
 
     /**
@@ -51,13 +47,7 @@ class Login extends Core\Controller\AbstractFrontendAction
             return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         }
 
-        $rememberMe = [
-            1 => $this->translator->t('users', 'remember_me')
-        ];
-
-        return [
-            'remember_me' => $this->forms->checkboxGenerator('remember', $rememberMe, 0)
-        ];
+        return $this->block->render();
     }
 
     /**

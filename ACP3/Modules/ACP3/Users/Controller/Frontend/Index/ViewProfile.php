@@ -10,32 +10,28 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class ViewProfile
- * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
- */
 class ViewProfile extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
+     * @var Core\View\Block\BlockInterface
      */
-    protected $userRepository;
+    private $block;
 
     /**
      * ViewProfile constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
+     * @param Core\View\Block\BlockInterface $block
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Users\Model\Repository\UserRepository $userRepository)
-    {
+        Core\View\Block\BlockInterface $block
+    ) {
         parent::__construct($context);
 
-        $this->userRepository = $userRepository;
+        $this->block = $block;
     }
 
     /**
@@ -46,16 +42,14 @@ class ViewProfile extends Core\Controller\AbstractFrontendAction
      */
     public function execute($id)
     {
-        if ($this->userRepository->resultExists($id) === true) {
+        $user = $this->user->getUserInfo($id);
+
+        if (!empty($user)) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            $user = $this->user->getUserInfo($id);
-            $user['gender'] = str_replace([1, 2, 3],
-                ['', $this->translator->t('users', 'female'), $this->translator->t('users', 'male')], $user['gender']);
-
-            return [
-                'user' => $user
-            ];
+            return $this->block
+                ->setData($user)
+                ->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

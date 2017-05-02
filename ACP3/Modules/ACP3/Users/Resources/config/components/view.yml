@@ -17,6 +17,32 @@ services:
       - '@core.acl'
       - '@users.helpers.forms'
 
+  users.view.block.frontend.user_forgot_password_form_block:
+    class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserForgotPasswordFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+
+  users.view.block.frontend.users_listing_block:
+    class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UsersListingBlock
+    arguments:
+      - '@core.view.context.listing_block_context'
+      - '@users.model.userrepository'
+
+  users.view.block.frontend.user_login_form_block:
+    class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserLoginFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+
+  users.view.block.frontend.user_register_form_block:
+    class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserRegisterFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+
+  users.view.block.frontend.user_details_block:
+    class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserDetailsBlock
+    arguments:
+      - '@core.view.context.block_context'
+
   users.view.block.widget.user_login_widget_form_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Widget\UserLoginWidgetFormBlock
     arguments:
