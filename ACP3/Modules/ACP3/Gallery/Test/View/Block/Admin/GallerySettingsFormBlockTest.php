@@ -61,7 +61,8 @@ class GallerySettingsFormBlockTest extends AbstractFormBlockTest
             'dateformat',
             'sidebar_entries',
             'form',
-            'form_token'
+            'form_token',
+            'comments'
         ];
     }
 }

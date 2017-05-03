@@ -48,7 +48,8 @@ class FilesSettingsFormBlockTest extends AbstractFormBlockTest
             'order_by',
             'dateformat',
             'sidebar_entries',
-            'form_token'
+            'form_token',
+            'comments'
         ];
     }
 }
