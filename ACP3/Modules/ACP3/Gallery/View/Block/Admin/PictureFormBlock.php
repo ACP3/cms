@@ -75,42 +75,41 @@ class PictureFormBlock extends AbstractFormBlock
                 ->append($this->translator->t('gallery', 'admin_pictures_create'));
         }
 
-        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
-
-        if ($this->hasAvailableOptions($settings)) {
-            $this->view->assign('options', $this->getOptions($data['comments']));
-        }
-
         return [
             'form' => array_merge($data, $this->getRequestData()),
             'gallery_id' => $data['gallery_id'],
-            'form_token' => $this->formToken->renderFormToken()
+            'form_token' => $this->formToken->renderFormToken(),
+            'options' => $this->fetchOptions($data)
         ];
     }
 
     /**
-     * @param array $settings
+     * @param array $data
+     * @return array
+     */
+    private function fetchOptions(array $data): array
+    {
+        if ($this->hasAvailableOptions()) {
+            $comments = [
+                '1' => $this->translator->t('system', 'allow_comments')
+            ];
+
+            return $this->forms->checkboxGenerator('comments', $comments, $data['comments']);
+        }
+
+        return [];
+    }
+
+    /**
      * @return bool
      */
-    protected function hasAvailableOptions(array $settings): bool
+    protected function hasAvailableOptions(): bool
     {
+        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
+
         return $settings['overlay'] == 0
             && $settings['comments'] == 1
             && $this->modules->isActive('comments') === true;
-    }
-
-    /**
-     * @param string $allowComments
-     *
-     * @return array
-     */
-    private function getOptions($allowComments = '0'): array
-    {
-        $comments = [
-            '1' => $this->translator->t('system', 'allow_comments')
-        ];
-
-        return $this->forms->checkboxGenerator('comments', $comments, $allowComments);
     }
 
     /**

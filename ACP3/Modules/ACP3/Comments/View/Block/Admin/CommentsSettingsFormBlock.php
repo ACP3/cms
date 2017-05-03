@@ -51,16 +51,10 @@ class CommentsSettingsFormBlock extends AbstractSettingsFormBlock
     {
         $data = $this->getData();
 
-        if ($this->modules->isActive('emoticons') === true) {
-            $this->view->assign(
-                'allow_emoticons',
-                $this->forms->yesNoCheckboxGenerator('emoticons', $data['emoticons'])
-            );
-        }
-
         return [
             'dateformat' => $this->dateHelper->dateFormatDropdown($data['dateformat']),
-            'form_token' => $this->formToken->renderFormToken()
+            'form_token' => $this->formToken->renderFormToken(),
+            'allow_emoticons' => $this->fetchAllowEmoticons($data['emoticons'])
         ];
     }
 
@@ -70,5 +64,18 @@ class CommentsSettingsFormBlock extends AbstractSettingsFormBlock
     public function getModuleName(): string
     {
         return Schema::MODULE_NAME;
+    }
+
+    /**
+     * @param int $allowEmoticons
+     * @return array
+     */
+    private function fetchAllowEmoticons(int $allowEmoticons): array
+    {
+        if ($this->modules->isActive('emoticons') === true) {
+            return $this->forms->yesNoCheckboxGenerator('emoticons', $allowEmoticons);
+        }
+
+        return [];
     }
 }

@@ -56,13 +56,6 @@ class NewsSettingsFormBlock extends AbstractSettingsFormBlock
     {
         $settings = $this->getData();
 
-        if ($this->modules->isActive('comments') === true) {
-            $this->view->assign(
-                'allow_comments',
-                $this->forms->yesNoCheckboxGenerator('comments', $settings['comments'])
-            );
-        }
-
         return [
             'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
             'readmore' => $this->forms->yesNoCheckboxGenerator('readmore', $settings['readmore']),
@@ -72,8 +65,22 @@ class NewsSettingsFormBlock extends AbstractSettingsFormBlock
                 'category_in_breadcrumb',
                 $settings['category_in_breadcrumb']
             ),
-            'form_token' => $this->formToken->renderFormToken()
+            'form_token' => $this->formToken->renderFormToken(),
+            'allow_comments' => $this->fetchOptions($settings)
         ];
+    }
+
+    /**
+     * @param array $settings
+     * @return array
+     */
+    private function fetchOptions(array $settings): array
+    {
+        if ($this->modules->isActive('comments') === true) {
+            return $this->forms->yesNoCheckboxGenerator('comments', $settings['comments']);
+        }
+
+        return [];
     }
 
     /**

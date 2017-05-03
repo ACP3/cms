@@ -58,28 +58,38 @@ class GuestbookSettingsFormBlock extends AbstractSettingsFormBlock
             2 => $this->translator->t('guestbook', 'notify_and_enable')
         ];
 
-        if ($this->modules->isActive('emoticons') === true) {
-            $this->view->assign(
-                'allow_emoticons',
-                $this->forms->yesNoCheckboxGenerator('emoticons', $settings['emoticons'])
-            );
-        }
-
-        if ($this->modules->isActive('newsletter') === true) {
-            $this->view->assign(
-                'newsletter_integration',
-                $this->forms->yesNoCheckboxGenerator('newsletter_integration', $settings['newsletter_integration'])
-            );
-        }
-
         return [
             'dateformat' => $this->date->dateFormatDropdown($settings['dateformat']),
             'notify' => $this->forms->choicesGenerator('notify', $notificationTypes, $settings['notify']),
             'overlay' => $this->forms->yesNoCheckboxGenerator('overlay', $settings['overlay']),
             'form' => array_merge($settings, $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form_token' => $this->formToken->renderFormToken(),
+            'options' => $this->fetchOptions($settings)
         ];
+    }
 
+    /**
+     * @param array $settings
+     * @return array
+     */
+    private function fetchOptions(array $settings): array
+    {
+        $options = [];
+        if ($this->modules->isActive('emoticons') === true) {
+            $options['allow_emoticons'] = $this->forms->yesNoCheckboxGenerator(
+                'emoticons',
+                $settings['emoticons']
+            );
+        }
+
+        if ($this->modules->isActive('newsletter') === true) {
+            $options['newsletter_integration'] = $this->forms->yesNoCheckboxGenerator(
+                'newsletter_integration',
+                $settings['newsletter_integration']
+            );
+        }
+
+        return $options;
     }
 
     /**

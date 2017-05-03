@@ -32,8 +32,12 @@ class GallerySettingsFormBlock extends AbstractSettingsFormBlock
      * @param Modules $modules
      * @param Date $dateHelper
      */
-    public function __construct(FormBlockContext $context, SettingsInterface $settings, Modules $modules, Date $dateHelper)
-    {
+    public function __construct(
+        FormBlockContext $context,
+        SettingsInterface $settings,
+        Modules $modules,
+        Date $dateHelper
+    ) {
         parent::__construct($context, $settings);
 
         $this->modules = $modules;
@@ -47,19 +51,27 @@ class GallerySettingsFormBlock extends AbstractSettingsFormBlock
     {
         $settings = $this->getData();
 
-        if ($this->modules->isActive('comments') === true) {
-            $this->view->assign('comments',
-                $this->forms->yesNoCheckboxGenerator('comments', $settings['comments'])
-            );
-        }
-
         return [
             'overlay' => $this->forms->yesNoCheckboxGenerator('overlay', $settings['overlay']),
             'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
             'sidebar_entries' => $this->forms->recordsPerPage((int)$settings['sidebar'], 1, 10, 'sidebar'),
             'form' => array_merge($settings, $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form_token' => $this->formToken->renderFormToken(),
+            'comments' => $this->fetchOptions($settings)
         ];
+    }
+
+    /**
+     * @param array $settings
+     * @return array
+     */
+    private function fetchOptions(array $settings): array
+    {
+        if ($this->modules->isActive('comments') === true) {
+            return $this->forms->yesNoCheckboxGenerator('comments', $settings['comments']);
+        }
+
+        return [];
     }
 
     /**

@@ -16,7 +16,7 @@
                 {$before_textarea=''}
             {/if}
             {include file="asset:System/Partials/form_group.textarea.tpl" name="message" value=$form.message required=true label={lang t="system|message"} before_textarea=$before_textarea}
-            {if isset($subscribe_newsletter)}
+            {if !empty($subscribe_newsletter)}
                 {include file="asset:System/Partials/form_group.checkbox.tpl" options=$subscribe_newsletter}
             {/if}
             {event name="captcha.event.display_captcha"}

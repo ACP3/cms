@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Files\View\Block\Admin;
 
 use ACP3\Core\Helpers\Date;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\AbstractSettingsFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Comments\Helpers;
@@ -57,13 +56,6 @@ class FilesSettingsFormBlock extends AbstractSettingsFormBlock
     {
         $data = $this->getData();
 
-        if ($this->commentsHelpers) {
-            $this->view->assign(
-                'comments',
-                $this->forms->yesNoCheckboxGenerator('comments', $data['comments'])
-            );
-        }
-
         $orderBy = [
             'date' => $this->translator->t('files', 'order_by_date_descending'),
             'custom' => $this->translator->t('files', 'order_by_custom')
@@ -73,8 +65,22 @@ class FilesSettingsFormBlock extends AbstractSettingsFormBlock
             'order_by' => $this->forms->choicesGenerator('order_by', $orderBy, $data['order_by']),
             'dateformat' => $this->dateHelper->dateFormatDropdown($data['dateformat']),
             'sidebar_entries' => $this->forms->recordsPerPage((int)$data['sidebar'], 1, 10, 'sidebar'),
-            'form_token' => $this->formToken->renderFormToken()
+            'form_token' => $this->formToken->renderFormToken(),
+            'comments' => $this->fetchOptions($data)
         ];
+    }
+
+    /**
+     * @param array $settings
+     * @return array
+     */
+    private function fetchOptions(array $settings): array
+    {
+        if ($this->commentsHelpers) {
+            return $this->forms->yesNoCheckboxGenerator('comments', $settings['comments']);
+        }
+
+        return [];
     }
 
     /**

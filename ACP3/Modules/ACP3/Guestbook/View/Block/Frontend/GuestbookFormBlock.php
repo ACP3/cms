@@ -63,6 +63,20 @@ class GuestbookFormBlock extends AbstractFormBlock
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
+        return [
+            'form' => array_merge($this->getData(), $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
+            'can_use_emoticons' => $settings['emoticons'] == 1,
+            'subscribe_newsletter' => $this->fetchSubscribeNewsletter($settings)
+        ];
+    }
+
+    /**
+     * @param array $settings
+     * @return array
+     */
+    private function fetchSubscribeNewsletter(array $settings): array
+    {
         if ($settings['newsletter_integration'] == 1 && $this->newsletterSubscribeHelper) {
             $newsletterSubscription = [
                 1 => $this->translator->t(
@@ -71,17 +85,14 @@ class GuestbookFormBlock extends AbstractFormBlock
                     ['%title%' => $this->settings->getSettings(SystemSchema::MODULE_NAME)['site_title']]
                 )
             ];
-            $this->view->assign(
+            return $this->forms->checkboxGenerator(
                 'subscribe_newsletter',
-                $this->forms->checkboxGenerator('subscribe_newsletter', $newsletterSubscription, '1')
+                $newsletterSubscription,
+                '1'
             );
         }
 
-        return [
-            'form' => array_merge($this->getData(), $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken(),
-            'can_use_emoticons' => $settings['emoticons'] == 1
-        ];
+        return [];
     }
 
     /**
