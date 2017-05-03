@@ -30,7 +30,7 @@ class RedirectResponse
      * Redirect constructor.
      *
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface       $router
+     * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(
         RequestInterface $request,
@@ -70,7 +70,7 @@ class RedirectResponse
      * Redirect to an other URLs
      *
      * @param string $path
-     * @param int    $statusCode
+     * @param int $statusCode
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
