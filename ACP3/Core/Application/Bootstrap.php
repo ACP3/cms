@@ -5,7 +5,6 @@ namespace ACP3\Core\Application;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Core\Http\RedirectResponse;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Patchwork\Utf8;
@@ -83,9 +82,6 @@ class Bootstrap extends AbstractBootstrap
      */
     public function outputPage()
     {
-        /** @var \ACP3\Core\Http\RedirectResponse $redirect */
-        $redirect = $this->container->get('core.http.redirect_response');
-
         try {
             $this->systemSettings = $this->container->get('core.config')->getSettings(Schema::MODULE_NAME);
             $this->setThemePaths();
@@ -97,20 +93,23 @@ class Bootstrap extends AbstractBootstrap
 
             $response = $this->container->get('core.application.controller_action_dispatcher')->dispatch();
         } catch (\ACP3\Core\Controller\Exception\ResultNotExistsException $e) {
-            $response = $redirect->temporary('errors/index/not_found');
+            $response = $this->handleException($e, 'errors/index/not_found');
         } catch (\ACP3\Core\Authentication\Exception\UnauthorizedAccessException $e) {
+            /** @var \ACP3\Core\Http\RedirectResponse $redirect */
+            $redirect = $this->container->get('core.http.redirect_response');
+
             /** @var \ACP3\Core\Http\Request $request */
             $request = $this->container->get('core.http.request');
             $redirectUri = base64_encode($request->getPathInfo());
             $response = $redirect->temporary('users/index/login/redirect_' . $redirectUri);
         } catch (\ACP3\Core\ACL\Exception\AccessForbiddenException $e) {
-            $response = $redirect->temporary('errors/index/access_forbidden');
+            $response = $this->handleException($e, 'errors/index/access_forbidden');
         } catch (\ACP3\Core\Controller\Exception\ControllerActionNotFoundException $e) {
-            $response = $this->handleException($e, $redirect, 'errors/index/not_found');
+            $response = $this->handleException($e, 'errors/index/not_found');
         } catch (\Exception $e) {
             $this->logger->critical($e);
 
-            $response = $this->handleException($e, $redirect, 'errors/index/server_error');
+            $response = $this->handleException($e, 'errors/index/server_error');
         }
 
         return $response;
@@ -170,15 +169,17 @@ class Bootstrap extends AbstractBootstrap
 
     /**
      * @param \Exception $exception
-     * @param \ACP3\Core\Http\RedirectResponse $redirect
      * @param string $route
      * @return Response
      */
-    private function handleException(\Exception $exception, RedirectResponse $redirect, $route)
+    private function handleException(\Exception $exception, $route)
     {
         if ($this->appMode === ApplicationMode::DEVELOPMENT) {
             return $this->renderApplicationException($exception);
         }
+
+        /** @var \ACP3\Core\Http\RedirectResponse $redirect */
+        $redirect = $this->container->get('core.http.redirect_response');
 
         return $redirect->temporary($route);
     }
