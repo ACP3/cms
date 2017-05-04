@@ -5,15 +5,13 @@
 
 namespace ACP3\Core\Controller\Context;
 
-use ACP3\Core\ACL;
+use ACP3\Core\Controller\ResultResponseFactory;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\Validation\Validator;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -70,6 +68,10 @@ class WidgetContext
      * @var \Symfony\Component\HttpFoundation\Response
      */
     private $response;
+    /**
+     * @var ResultResponseFactory
+     */
+    private $responseFactory;
 
     /**
      * WidgetContext constructor.
@@ -85,6 +87,7 @@ class WidgetContext
      * @param \ACP3\Core\Settings\SettingsInterface $config
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param Response $response
+     * @param ResultResponseFactory $responseFactory
      */
     public function __construct(
         ContainerInterface $container,
@@ -97,7 +100,8 @@ class WidgetContext
         View $view,
         SettingsInterface $config,
         ApplicationPath $appPath,
-        Response $response
+        Response $response,
+        ResultResponseFactory $responseFactory
     ) {
         $this->container = $container;
         $this->eventDispatcher = $eventDispatcher;
@@ -110,6 +114,7 @@ class WidgetContext
         $this->config = $config;
         $this->appPath = $appPath;
         $this->response = $response;
+        $this->responseFactory = $responseFactory;
     }
 
     /**
@@ -198,5 +203,13 @@ class WidgetContext
     public function getResponse()
     {
         return $this->response;
+    }
+
+    /**
+     * @return ResultResponseFactory
+     */
+    public function getResponseFactory(): ResultResponseFactory
+    {
+        return $this->responseFactory;
     }
 }

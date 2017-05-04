@@ -13,6 +13,7 @@ services:
       - '@core.config'
       - '@core.environment.application_path'
       - '@core.http.response'
+      - '@core.controller.result_response_factory'
 
   core.context.frontend:
     class: ACP3\Core\Controller\Context\FrontendContext
@@ -32,3 +33,29 @@ services:
     abstract: true
     arguments:
       - '@core.context.frontend'
+
+  core.controller.result_response_factory:
+    class: ACP3\Core\Controller\ResultResponseFactory
+    calls:
+      - ['registerActionResultType', ['@core.controller.result_response.symfony_response_action_result_type']]
+      - ['registerActionResultType', ['@core.controller.result_response.scalar_action_result_type']]
+      - ['registerActionResultType', ['@core.controller.result_response.array_action_result_type']]
+
+  core.controller.result_response.array_action_result_type:
+    class: ACP3\Core\Controller\ResultResponse\ArrayActionResultType
+    arguments:
+      - '@core.view'
+      - '@core.http.request'
+      - '@core.http.response'
+
+  core.controller.result_response.scalar_action_result_type:
+    class: ACP3\Core\Controller\ResultResponse\ScalarActionResultType
+    arguments:
+      - '@core.view'
+      - '@core.http.request'
+      - '@core.http.response'
+
+  core.controller.result_response.symfony_response_action_result_type:
+    class: ACP3\Core\Controller\ResultResponse\SymfonyResponseActionResultType
+    arguments:
+      - '@core.http.response'

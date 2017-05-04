@@ -32,7 +32,7 @@ class Login extends Core\Controller\AbstractWidgetAction
     /**
      * Displays the login mask, if the user is not already logged in
      *
-     * @return array|null
+     * @return array|bool
      */
     public function execute()
     {
@@ -51,8 +51,6 @@ class Login extends Core\Controller\AbstractWidgetAction
                 ->render();
         }
 
-        $this->setContent(false);
-
-        return null;
+        return false;
     }
 }

@@ -51,6 +51,7 @@ class Activate extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param string $hash
+     * @return string
      */
     public function execute($hash)
     {
@@ -62,7 +63,7 @@ class Activate extends Core\Controller\AbstractFrontendAction
                 ['hash' => $hash]
             );
 
-            $this->setTemplate(
+            $this->view->setTemplate(
                 $this->alerts->confirmBox(
                     $this->translator->t('newsletter', $bool !== false
                         ? 'activate_success'
@@ -71,7 +72,7 @@ class Activate extends Core\Controller\AbstractFrontendAction
                 )
             );
         } catch (Core\Validation\Exceptions\ValidationFailedException $e) {
-            $this->setContent($this->alerts->errorBox($e->getMessage()));
+            return $this->alerts->errorBox($e->getMessage());
         }
     }
 }

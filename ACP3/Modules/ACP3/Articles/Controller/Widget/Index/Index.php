@@ -47,7 +47,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        $this->setTemplate($template);
+        $this->view->setTemplate($template);
 
         return [
             'sidebar_articles' => $this->articleRepository->getAll($this->date->getCurrentDateTime(), 5)

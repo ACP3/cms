@@ -80,7 +80,9 @@ class ControllerActionDispatcher
             /** @var \ACP3\Core\Controller\ActionInterface $controller */
             $controller = $this->container->get($serviceId);
             $controller->preDispatch();
-            $response = $controller->display($this->executeControllerAction($controller, $arguments));
+            $result = $this->executeControllerAction($controller, $arguments);
+            $controller->postDispatch();
+            $response = $controller->display($result);
 
             $this->eventDispatcher->dispatch(
                 'core.application.controller_action_dispatcher.after_dispatch',

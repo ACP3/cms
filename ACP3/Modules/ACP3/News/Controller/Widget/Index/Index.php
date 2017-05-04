@@ -55,7 +55,7 @@ class Index extends Core\Controller\AbstractWidgetAction
 
         $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
 
-        $this->setTemplate($template);
+        $this->view->setTemplate($template);
 
         return [
             'sidebar_news' => $this->fetchNews($categoryId, $settings),

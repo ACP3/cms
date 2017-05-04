@@ -20,17 +20,23 @@ interface ActionInterface
     public function preDispatch();
 
     /**
+     * @return $this
+     */
+    public function postDispatch();
+
+    /**
      * Gets a class from the service container
      *
      * @param string $serviceId
-     *
      * @return mixed
      */
     public function get($serviceId);
 
     /**
+     * Outputs the requested module controller action
+     *
      * @param Response|string|array $actionResult
      * @return Response
      */
-    public function display($actionResult);
+    public function display($actionResult): Response;
 }

@@ -38,7 +38,7 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
     /**
      * Displays the user menu, if the user is logged in
      *
-     * @return array
+     * @return array|bool
      */
     public function execute()
     {
@@ -48,8 +48,6 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
             return $this->block->render();
         }
 
-        $this->setContent(false);
-
-        return [];
+        return false;
     }
 }

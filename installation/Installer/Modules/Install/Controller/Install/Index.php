@@ -140,12 +140,12 @@ class Index extends AbstractAction
 
             $this->navigation->markStepComplete('install_index');
 
-            $this->setTemplate('install/install.result.tpl');
+            $this->view->setTemplate('install/install.result.tpl');
         } catch (ValidationFailedException $e) {
             return $this->renderErrorBoxOnFailedFormValidation($e);
         } catch (\Exception $e) {
             $this->get('core.logger.system_logger')->error($e);
-            $this->setTemplate('install/install.error.tpl');
+            $this->view->setTemplate('install/install.error.tpl');
         }
     }
 

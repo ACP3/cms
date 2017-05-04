@@ -10,6 +10,10 @@ class View
      * @var RendererInterface
      */
     protected $renderer;
+    /**
+     * @var string
+     */
+    private $template = '';
 
     /**
      * Gets the renderer
@@ -25,7 +29,7 @@ class View
      * View constructor.
      *
      * @param \ACP3\Core\View\Renderer\RendererInterface $renderer
-     * @param array                                      $params
+     * @param array $params
      */
     public function __construct(RendererInterface $renderer, array $params = [])
     {
@@ -36,7 +40,7 @@ class View
     /**
      * Fetches a template and outputs its contents
      *
-     * @param string      $template
+     * @param string $template
      */
     public function displayTemplate($template)
     {
@@ -46,7 +50,7 @@ class View
     /**
      * Fetches a template and returns its contents
      *
-     * @param string      $template
+     * @param string $template
      *
      * @return string
      */
@@ -82,10 +86,29 @@ class View
     }
 
     /**
+     * @return string
+     */
+    public function getTemplate(): string
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param string $template
+     * @return $this
+     */
+    public function setTemplate(string $template)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
      * Assigns a new template variable
      *
      * @param string|array $name
-     * @param mixed        $value
+     * @param mixed $value
      *
      * @return $this
      */

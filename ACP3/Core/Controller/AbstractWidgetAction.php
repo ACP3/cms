@@ -15,8 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class AbstractWidgetAction implements ActionInterface
 {
-    use Core\Controller\DisplayActionTrait;
-
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
@@ -61,6 +59,10 @@ abstract class AbstractWidgetAction implements ActionInterface
      * @var Response
      */
     protected $response;
+    /**
+     * @var ResultResponseFactory
+     */
+    protected $actionResultFactory;
 
     /**
      * WidgetController constructor.
@@ -80,6 +82,7 @@ abstract class AbstractWidgetAction implements ActionInterface
         $this->config = $context->getConfig();
         $this->appPath = $context->getAppPath();
         $this->response = $context->getResponse();
+        $this->actionResultFactory = $context->getResponseFactory();
     }
 
     /**
@@ -105,6 +108,16 @@ abstract class AbstractWidgetAction implements ActionInterface
     /**
      * @inheritdoc
      */
+    public function postDispatch()
+    {
+        $this->addCustomTemplateVarsBeforeOutput();
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function get($serviceId)
     {
         return $this->container->get($serviceId);
@@ -113,9 +126,9 @@ abstract class AbstractWidgetAction implements ActionInterface
     /**
      * @inheritdoc
      */
-    protected function applyTemplateAutomatically()
+    public function display($actionResult): Response
     {
-        return $this->request->getModule() . '/' . ucfirst($this->request->getArea()) . '/' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl';
+        return $this->actionResultFactory->create($actionResult);
     }
 
     /**
@@ -131,14 +144,6 @@ abstract class AbstractWidgetAction implements ActionInterface
     protected function getResponse()
     {
         return $this->response;
-    }
-
-    /**
-     * @return \ACP3\Core\View
-     */
-    protected function getView()
-    {
-        return $this->view;
     }
 
     /**

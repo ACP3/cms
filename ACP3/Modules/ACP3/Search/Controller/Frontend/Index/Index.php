@@ -132,7 +132,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     protected function renderSearchResults(array $modules, $searchTerm, $area, $sort)
     {
-        $this->setTemplate('Search/Frontend/index.results.tpl');
+        $this->view->setTemplate('Search/Frontend/index.results.tpl');
 
         return $this->block
             ->setData([

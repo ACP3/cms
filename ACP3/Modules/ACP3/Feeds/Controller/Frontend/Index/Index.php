@@ -69,7 +69,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                     ->setDescription($this->translator->t($feed, $feed))
                     ->assign($feedItems);
 
-                $this->setContentType('text/xml');
+                $this->getResponse()->headers->set('Content-type', 'text/xml');
                 return $this->response->setContent($this->feedGenerator->generateFeed());
             } catch (\InvalidArgumentException $e) {
             }

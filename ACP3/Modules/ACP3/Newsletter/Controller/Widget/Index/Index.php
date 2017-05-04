@@ -35,7 +35,7 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     public function execute($template = '')
     {
-        $this->setTemplate($template);
+        $this->view->setTemplate($template);
 
         return $this->block->render();
     }

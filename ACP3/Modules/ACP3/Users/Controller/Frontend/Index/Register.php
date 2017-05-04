@@ -76,7 +76,7 @@ class Register extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function execute()
     {
@@ -85,8 +85,8 @@ class Register extends Core\Controller\AbstractFrontendAction
         if ($this->user->isAuthenticated() === true) {
             return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         } elseif ($settings['enable_registration'] == 0) {
-            $this->setContent($this->alerts->errorBox(
-                $this->translator->t('users', 'user_registration_disabled'))
+            return $this->alerts->errorBox(
+                $this->translator->t('users', 'user_registration_disabled')
             );
         }
 
@@ -120,7 +120,7 @@ class Register extends Core\Controller\AbstractFrontendAction
                 $lastId = $this->usersModel->save($insertValues);
                 $bool2 = $this->permissionsHelpers->updateUserRoles([2], $lastId);
 
-                $this->setTemplate($this->alerts->confirmBox(
+                $this->view->setTemplate($this->alerts->confirmBox(
                     $this->translator->t('users',
                         $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'
                     ),

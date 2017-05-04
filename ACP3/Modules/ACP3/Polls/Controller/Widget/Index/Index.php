@@ -69,13 +69,13 @@ class Index extends Core\Controller\AbstractWidgetAction
         );
         $answers = [];
 
-        $this->setTemplate('Polls/Widget/index.vote.tpl');
+        $this->view->setTemplate('Polls/Widget/index.vote.tpl');
 
         if (!empty($poll)) {
             $answers = $this->answerRepository->getAnswersWithVotesByPollId($poll['id']);
 
             if ($poll['has_voted'] == 1) {
-                $this->setTemplate('Polls/Widget/index.result.tpl');
+                $this->view->setTemplate('Polls/Widget/index.result.tpl');
 
                 return $this->block
                     ->setData(['poll_id' => $poll['id']])
