@@ -41,7 +41,7 @@ class ScalarActionResultType extends ArrayActionResultType
      */
     public function supports($result): bool
     {
-        return is_scalar($result);
+        return is_scalar($result) || $result === null;
     }
 
     /**
@@ -50,9 +50,10 @@ class ScalarActionResultType extends ArrayActionResultType
     public function process($result): Response
     {
         if (empty($result) && $result !== false) {
-            if (is_string($result) && $this->view->templateExists($result)) {
-                $this->view->setTemplate($result);
-            }
+            // @TODO Get the following code to work, so that we can get rid of most $this->view->setTemplate occurrences
+//            if (is_string($result) && $this->view->templateExists($result)) {
+//                $this->view->setTemplate($result);
+//            }
 
             return parent::process($result);
         }

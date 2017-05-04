@@ -41,7 +41,7 @@ class ResultResponseFactory
         }
 
         throw new \InvalidArgumentException(
-            sprintf('The controller action did returned an unsupported action result (%s).', gettype($result))
+            sprintf('The controller action has returned an unsupported action result of type "%s".', gettype($result))
         );
     }
 }

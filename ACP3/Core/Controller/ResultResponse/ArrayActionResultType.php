@@ -63,7 +63,10 @@ class ArrayActionResultType implements ActionResultTypeInterface
         return $this->response;
     }
 
-    private function applyTemplateFromRequest()
+    /**
+     * @return string
+     */
+    private function applyTemplateFromRequest(): string
     {
         return $this->request->getModule() . '/'
             . ucfirst($this->request->getArea()) . '/'
