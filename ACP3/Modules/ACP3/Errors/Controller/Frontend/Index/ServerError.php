@@ -8,10 +8,13 @@ namespace ACP3\Modules\ACP3\Errors\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Context;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Response;
 
 class ServerError extends Core\Controller\AbstractFrontendAction
 {
+    use Core\Cache\CacheResponseTrait;
+
     /**
      * @var Core\View\Block\BlockInterface
      */
@@ -34,6 +37,8 @@ class ServerError extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
+        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+
         $this->response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
 
         return $this->block->render();
