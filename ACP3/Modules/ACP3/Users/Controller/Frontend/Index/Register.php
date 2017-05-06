@@ -120,12 +120,12 @@ class Register extends Core\Controller\AbstractFrontendAction
                 $lastId = $this->usersModel->save($insertValues);
                 $bool2 = $this->permissionsHelpers->updateUserRoles([2], $lastId);
 
-                $this->view->setTemplate($this->alerts->confirmBox(
+                return $this->alerts->confirmBox(
                     $this->translator->t('users',
                         $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'
                     ),
                     $this->appPath->getWebRoot()
-                ));
+                );
             },
             $this->request->getFullPath()
         );

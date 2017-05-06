@@ -85,10 +85,10 @@ class Index extends Core\Controller\AbstractFrontendAction
                     $this->contactFormModel->sendContactFormEmailCopy($formData);
                 }
 
-                $this->view->setTemplate($this->alerts->confirmBox(
+                return $this->alerts->confirmBox(
                     $this->translator->t('contact', $bool === true ? 'send_mail_success' : 'send_mail_error'),
                     $this->router->route('contact')
-                ));
+                );
             }
         );
     }

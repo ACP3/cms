@@ -78,9 +78,9 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
                     ['mail' => $formData['mail']]
                 );
 
-                $this->view->setTemplate($this->alerts->confirmBox(
+                return $this->alerts->confirmBox(
                     $this->translator->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'),
-                    $this->appPath->getWebRoot())
+                    $this->appPath->getWebRoot()
                 );
             }
         );

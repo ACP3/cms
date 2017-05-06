@@ -63,13 +63,11 @@ class Activate extends Core\Controller\AbstractFrontendAction
                 ['hash' => $hash]
             );
 
-            $this->view->setTemplate(
-                $this->alerts->confirmBox(
-                    $this->translator->t('newsletter', $bool !== false
-                        ? 'activate_success'
-                        : 'activate_error'),
-                    $this->appPath->getWebRoot()
-                )
+            return $this->alerts->confirmBox(
+                $this->translator->t('newsletter', $bool !== false
+                    ? 'activate_success'
+                    : 'activate_error'),
+                $this->appPath->getWebRoot()
             );
         } catch (Core\Validation\Exceptions\ValidationFailedException $e) {
             return $this->alerts->errorBox($e->getMessage());

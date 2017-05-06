@@ -107,13 +107,13 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
                     $bool = $this->userRepository->update($updateValues, $user['id']);
                 }
 
-                $this->view->setTemplate($this->alerts->confirmBox(
+                return $this->alerts->confirmBox(
                     $this->translator->t(
                         'users',
                         $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'
                     ),
                     $this->appPath->getWebRoot()
-                ));
+                );
             },
             $this->request->getFullPath()
         );

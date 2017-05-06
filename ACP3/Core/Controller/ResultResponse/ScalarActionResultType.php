@@ -49,17 +49,27 @@ class ScalarActionResultType extends ArrayActionResultType
      */
     public function process($result): Response
     {
-        if (empty($result) && $result !== false) {
-            // @TODO Get the following code to work, so that we can get rid of most $this->view->setTemplate occurrences
-//            if (is_string($result) && $this->view->templateExists($result)) {
-//                $this->view->setTemplate($result);
-//            }
-
+        if (empty($result) && $result !== false || $this->isTemplateString($result)) {
             return parent::process($result);
         }
 
         $this->response->setContent($result === false ? '' : $result);
 
         return $this->response;
+    }
+
+    /**
+     * @param mixed $result
+     * @return bool
+     */
+    private function isTemplateString($result): bool
+    {
+        if (is_string($result) && $this->view->templateExists($result)) {
+            $this->view->setTemplate($result);
+
+            return true;
+        }
+
+        return false;
     }
 }
