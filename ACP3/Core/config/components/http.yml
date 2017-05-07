@@ -2,7 +2,6 @@ services:
   core.http.redirect_response:
     class: ACP3\Core\Http\RedirectResponse
     arguments:
-      - '@core.http.request'
       - '@core.router'
 
   core.http.request:

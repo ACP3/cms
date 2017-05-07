@@ -42,6 +42,7 @@ services:
     class: ACP3\Core\Controller\ResultResponse\SymfonyResponseActionResultType
     arguments:
       - '@core.http.response'
+      - '@core.http.request'
 
   core.controller.result_response.template_action_result_type:
     class: ACP3\Core\Controller\ResultResponse\TemplateActionResultType
