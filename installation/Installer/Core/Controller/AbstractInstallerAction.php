@@ -7,10 +7,10 @@
 namespace ACP3\Installer\Core\Controller;
 
 use ACP3\Core\Controller\ActionInterface;
-use ACP3\Core\Controller\DisplayActionTrait;
 use ACP3\Core\Http\RedirectResponse;
 use ACP3\Core\I18n\ExtractFromPathTrait;
 use Fisharebest\Localization\Locale;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Module Controller of the installer modules
@@ -19,7 +19,6 @@ use Fisharebest\Localization\Locale;
 abstract class AbstractInstallerAction implements ActionInterface
 {
     use ExtractFromPathTrait;
-    use DisplayActionTrait;
 
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
@@ -50,6 +49,10 @@ abstract class AbstractInstallerAction implements ActionInterface
      */
     protected $response;
     /**
+     * @var \ACP3\Core\Controller\ActionResultFactory
+     */
+    private $actionResultFactory;
+    /**
      * @var string
      */
     private $layout = 'layout.tpl';
@@ -66,6 +69,7 @@ abstract class AbstractInstallerAction implements ActionInterface
         $this->view = $context->getView();
         $this->response = $context->getResponse();
         $this->appPath = $context->getAppPath();
+        $this->actionResultFactory = $context->getActionResultFactory();
     }
 
     /**
@@ -93,6 +97,22 @@ abstract class AbstractInstallerAction implements ActionInterface
             isset($languageInfo->info->direction) ? $languageInfo->info->direction : 'ltr'
         );
         $this->view->assign('LANG', $this->translator->getShortIsoCode());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function postDispatch()
+    {
+        $this->addCustomTemplateVarsBeforeOutput();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function display($actionResult): Response
+    {
+        return $this->actionResultFactory->create($actionResult);
     }
 
     /**
@@ -169,7 +189,9 @@ abstract class AbstractInstallerAction implements ActionInterface
      */
     protected function applyTemplateAutomatically()
     {
-        return $this->request->getModule() . '/' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl';
+        return $this->request->getModule() . '/'
+            . $this->request->getController() . '.'
+            . $this->request->getAction() . '.tpl';
     }
 
     /**

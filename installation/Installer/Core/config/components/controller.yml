@@ -9,8 +9,43 @@ services:
       - '@core.view'
       - '@core.http.response'
       - '@core.environment.application_path'
+      - '@core.controller.action_result_factory'
 
   core.controller.install:
     abstract: true
     arguments:
       - '@core.context.install'
+
+  core.controller.action_result_factory:
+    class: ACP3\Core\Controller\ActionResultFactory
+    calls:
+      - ['registerActionResultType', ['@core.controller.result_response.symfony_response_action_result_type']]
+      - ['registerActionResultType', ['@core.controller.result_response.array_action_result_type']]
+      - ['registerActionResultType', ['@core.controller.result_response.template_action_result_type']]
+      - ['registerActionResultType', ['@core.controller.result_response.scalar_action_result_type']]
+
+  core.controller.result_response.array_action_result_type:
+    class: ACP3\Core\Controller\ResultResponse\ArrayActionResultType
+    arguments:
+      - '@core.view'
+      - '@core.http.request'
+      - '@core.http.response'
+
+  core.controller.result_response.scalar_action_result_type:
+    class: ACP3\Core\Controller\ResultResponse\ScalarActionResultType
+    arguments:
+      - '@core.view'
+      - '@core.http.request'
+      - '@core.http.response'
+
+  core.controller.result_response.symfony_response_action_result_type:
+    class: ACP3\Core\Controller\ResultResponse\SymfonyResponseActionResultType
+    arguments:
+      - '@core.http.response'
+
+  core.controller.result_response.template_action_result_type:
+    class: ACP3\Core\Controller\ResultResponse\TemplateActionResultType
+    arguments:
+      - '@core.view'
+      - '@core.http.request'
+      - '@core.http.response'

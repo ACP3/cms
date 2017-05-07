@@ -5,7 +5,7 @@
 
 namespace ACP3\Core\Controller\Context;
 
-use ACP3\Core\Controller\ResultResponseFactory;
+use ACP3\Core\Controller\ActionResultFactory;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
@@ -69,9 +69,9 @@ class WidgetContext
      */
     private $response;
     /**
-     * @var ResultResponseFactory
+     * @var ActionResultFactory
      */
-    private $responseFactory;
+    private $actionResultFactory;
 
     /**
      * WidgetContext constructor.
@@ -87,7 +87,7 @@ class WidgetContext
      * @param \ACP3\Core\Settings\SettingsInterface $config
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param Response $response
-     * @param ResultResponseFactory $responseFactory
+     * @param ActionResultFactory $actionResultFactory
      */
     public function __construct(
         ContainerInterface $container,
@@ -101,7 +101,7 @@ class WidgetContext
         SettingsInterface $config,
         ApplicationPath $appPath,
         Response $response,
-        ResultResponseFactory $responseFactory
+        ActionResultFactory $actionResultFactory
     ) {
         $this->container = $container;
         $this->eventDispatcher = $eventDispatcher;
@@ -114,7 +114,7 @@ class WidgetContext
         $this->config = $config;
         $this->appPath = $appPath;
         $this->response = $response;
-        $this->responseFactory = $responseFactory;
+        $this->actionResultFactory = $actionResultFactory;
     }
 
     /**
@@ -206,10 +206,10 @@ class WidgetContext
     }
 
     /**
-     * @return ResultResponseFactory
+     * @return ActionResultFactory
      */
-    public function getResponseFactory(): ResultResponseFactory
+    public function getActionResultFactory(): ActionResultFactory
     {
-        return $this->responseFactory;
+        return $this->actionResultFactory;
     }
 }

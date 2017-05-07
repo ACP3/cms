@@ -10,7 +10,7 @@ namespace ACP3\Core\Controller;
 use ACP3\Core\Controller\ResultResponse\ActionResultTypeInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class ResultResponseFactory
+class ActionResultFactory
 {
     /**
      * @var ActionResultTypeInterface[]

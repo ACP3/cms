@@ -6,6 +6,7 @@
 
 namespace ACP3\Installer\Core\Controller\Context;
 
+use ACP3\Core\Controller\ActionResultFactory;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Installer\Core\Environment\ApplicationPath;
@@ -13,51 +14,52 @@ use ACP3\Installer\Core\I18n\Translator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class InstallerContext
- * @package ACP3\Installer\Core\Controller\Context
- */
 class InstallerContext
 {
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
-    protected $container;
+    private $container;
     /**
      * @var \ACP3\Installer\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \Symfony\Component\HttpFoundation\Response
      */
-    protected $response;
+    private $response;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
     /**
      * @var \ACP3\Core\View
      */
-    protected $view;
+    private $view;
     /**
      * @var \ACP3\Installer\Core\Environment\ApplicationPath
      */
-    protected $appPath;
+    private $appPath;
+    /**
+     * @var ActionResultFactory
+     */
+    private $actionResultFactory;
 
     /**
      * InstallerContext constructor.
      *
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Installer\Core\I18n\Translator                      $translator
-     * @param \ACP3\Core\Http\RequestInterface                          $request
-     * @param \ACP3\Core\Router\RouterInterface                                $router
-     * @param \ACP3\Core\View                                           $view
-     * @param \Symfony\Component\HttpFoundation\Response                $response
-     * @param \ACP3\Installer\Core\Environment\ApplicationPath          $appPath
+     * @param \ACP3\Installer\Core\I18n\Translator $translator
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Router\RouterInterface $router
+     * @param \ACP3\Core\View $view
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param \ACP3\Installer\Core\Environment\ApplicationPath $appPath
+     * @param ActionResultFactory $actionResultFactory
      */
     public function __construct(
         ContainerInterface $container,
@@ -66,7 +68,8 @@ class InstallerContext
         RouterInterface $router,
         \ACP3\Core\View $view,
         Response $response,
-        ApplicationPath $appPath
+        ApplicationPath $appPath,
+        ActionResultFactory $actionResultFactory
     ) {
         $this->container = $container;
         $this->translator = $translator;
@@ -75,6 +78,7 @@ class InstallerContext
         $this->view = $view;
         $this->response = $response;
         $this->appPath = $appPath;
+        $this->actionResultFactory = $actionResultFactory;
     }
 
     /**
@@ -131,5 +135,13 @@ class InstallerContext
     public function getAppPath()
     {
         return $this->appPath;
+    }
+
+    /**
+     * @return ActionResultFactory
+     */
+    public function getActionResultFactory(): ActionResultFactory
+    {
+        return $this->actionResultFactory;
     }
 }

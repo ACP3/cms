@@ -60,9 +60,9 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected $response;
     /**
-     * @var ResultResponseFactory
+     * @var ActionResultFactory
      */
-    protected $actionResultFactory;
+    private $actionResultFactory;
 
     /**
      * WidgetController constructor.
@@ -82,7 +82,7 @@ abstract class AbstractWidgetAction implements ActionInterface
         $this->config = $context->getConfig();
         $this->appPath = $context->getAppPath();
         $this->response = $context->getResponse();
-        $this->actionResultFactory = $context->getResponseFactory();
+        $this->actionResultFactory = $context->getActionResultFactory();
     }
 
     /**
