@@ -13,6 +13,7 @@
         <item key="admin_index_edit">Edit user</item>
         <item key="admin_index_settings">Settings</item>
         <item key="admin_user_undeletable">The administrator can't be deleted.</item>
+        <item key="authentication_required">To display the requested page you need to log in.</item>
         <item key="birthday">Birthday</item>
         <item key="birthday_hide">Hide birthday</item>
         <item key="birthday_display_completely">Display birthday completely</item>
