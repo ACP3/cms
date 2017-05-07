@@ -96,7 +96,7 @@ class Alerts
      */
     public function errorBox($errors)
     {
-        $this->view->assign('CONTENT_ONLY', $this->request->isXmlHttpRequest() === true);
+        $this->view->assign('CONTENT_ONLY', $this->request->isXmlHttpRequest());
         return $this->view->fetchTemplate($this->errorBoxContent($errors));
     }
 
@@ -109,7 +109,7 @@ class Alerts
     {
         $this->setErrorBoxData($errors);
 
-        return 'system/alerts/error_box.tpl';
+        return 'System/Alerts/error_box.tpl';
     }
 
     /**
