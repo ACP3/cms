@@ -10,7 +10,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\System;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Designs extends Core\Controller\AbstractAdminAction
+class Designs extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var Core\View\Block\BlockInterface

@@ -6,9 +6,9 @@
 
 namespace ACP3\Modules\ACP3\Captcha\Controller\Admin\Index;
 
-use ACP3\Core\Controller\AbstractAdminAction;
+use ACP3\Core\Controller\AbstractFrontendAction;
 
-class Index extends AbstractAdminAction
+class Index extends AbstractFrontendAction
 {
     public function execute()
     {

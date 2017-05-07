@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
 
 use ACP3\Core;
 
-class Index extends Core\Controller\AbstractAdminAction
+class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var Core\View\Block\BlockInterface

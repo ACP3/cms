@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Categories;
  * Class Settings
  * @package ACP3\Modules\ACP3\Categories\Controller\Admin\Index
  */
-class Settings extends Core\Controller\AbstractAdminAction
+class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Validation\AdminSettingsFormValidation

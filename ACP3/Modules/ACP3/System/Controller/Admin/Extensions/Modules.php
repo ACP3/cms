@@ -10,7 +10,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
 
-class Modules extends Core\Controller\AbstractAdminAction
+class Modules extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Modules\ModuleInfoCache

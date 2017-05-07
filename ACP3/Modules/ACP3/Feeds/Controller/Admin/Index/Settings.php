@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Feeds\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Feeds;
 
-class Settings extends Core\Controller\AbstractAdminAction
+class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation

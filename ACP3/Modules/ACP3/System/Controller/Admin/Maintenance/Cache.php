@@ -10,7 +10,7 @@ use ACP3\Core;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Modules\ACP3\System;
 
-class Cache extends Core\Controller\AbstractAdminAction
+class Cache extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var Core\View\Block\BlockInterface

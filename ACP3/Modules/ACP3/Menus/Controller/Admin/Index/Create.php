@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus;
 
-class Create extends Core\Controller\AbstractAdminAction
+class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation

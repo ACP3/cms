@@ -7,11 +7,11 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\AbstractAdminAction;
+use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
 
-abstract class AbstractFormAction extends AbstractAdminAction
+abstract class AbstractFormAction extends AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Helpers

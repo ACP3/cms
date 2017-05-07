@@ -10,7 +10,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Index extends Core\Controller\AbstractAdminAction
+class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Polls\Model\Repository\DataGridRepository

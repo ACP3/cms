@@ -6,12 +6,12 @@
 
 namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 
-use ACP3\Core\Controller\AbstractAdminAction;
+use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel;
 
-class Sitemap extends AbstractAdminAction
+class Sitemap extends AbstractFrontendAction
 {
     /**
      * @var SitemapGenerationModel

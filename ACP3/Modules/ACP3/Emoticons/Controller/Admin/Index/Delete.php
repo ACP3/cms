@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Emoticons;
  * Class Delete
  * @package ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index
  */
-class Delete extends Core\Controller\AbstractAdminAction
+class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var Emoticons\Model\EmoticonsModel

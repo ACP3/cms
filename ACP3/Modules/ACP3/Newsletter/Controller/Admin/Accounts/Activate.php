@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Activate
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts
  */
-class Activate extends Core\Controller\AbstractAdminAction
+class Activate extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus

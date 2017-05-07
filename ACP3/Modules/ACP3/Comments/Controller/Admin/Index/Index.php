@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 
-class Index extends Core\Controller\AbstractAdminAction
+class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository

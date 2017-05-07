@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Permissions;
  * Class Delete
  * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources
  */
-class Delete extends Core\Controller\AbstractAdminAction
+class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var Permissions\Model\ResourcesModel

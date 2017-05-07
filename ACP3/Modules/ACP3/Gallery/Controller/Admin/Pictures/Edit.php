@@ -10,7 +10,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class Edit extends Core\Controller\AbstractAdminAction
+class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Helpers

@@ -13,7 +13,7 @@ use ACP3\Core\Controller\Context;
  * Class Index
  * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Index
  */
-class Index extends Core\Controller\AbstractAdminAction
+class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var Core\View\Block\BlockInterface

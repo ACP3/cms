@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Contact\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Contact;
 
-class Index extends Core\Controller\AbstractAdminAction
+class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var Contact\Model\Repository\DataGridRepository

@@ -10,7 +10,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Files;
 
-class Settings extends Core\Controller\AbstractAdminAction
+class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository

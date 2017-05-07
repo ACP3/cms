@@ -11,7 +11,7 @@ use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System;
 
-class Edit extends Core\Controller\AbstractAdminAction
+class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation

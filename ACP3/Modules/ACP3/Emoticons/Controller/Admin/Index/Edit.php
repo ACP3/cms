@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Emoticons;
 
-class Edit extends Core\Controller\AbstractAdminAction
+class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation
