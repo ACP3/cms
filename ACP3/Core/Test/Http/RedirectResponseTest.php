@@ -48,16 +48,6 @@ class RedirectResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('http://www.google.de', $response->getTargetUrl());
     }
 
-    /**
-     * @param bool $isAjax
-     */
-    private function setUpRequestMockExpectations($isAjax)
-    {
-        $this->requestMock->expects($this->once())
-            ->method('isXmlHttpRequest')
-            ->willReturn($isAjax);
-    }
-
     public function testTemporaryRedirect()
     {
         $this->setUpRouterMockExpectations('foo/bar/baz');
