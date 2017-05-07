@@ -15,18 +15,6 @@ use ACP3\Core;
 abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Core\Assets
-     */
-    protected $assets;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    protected $breadcrumb;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    protected $title;
-    /**
      * @var \ACP3\Core\Modules\Helper\Action
      */
     protected $actionHelper;
@@ -46,9 +34,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     {
         parent::__construct($context);
 
-        $this->assets = $context->getAssets();
-        $this->breadcrumb = $context->getBreadcrumb();
-        $this->title = $context->getTitle();
         $this->actionHelper = $context->getActionHelper();
     }
 
@@ -78,7 +63,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      */
     protected function addCustomTemplateVarsBeforeOutput()
     {
-        $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());
         $this->view->assign('LAYOUT', $this->fetchLayoutViaInheritance());
 
         $this->eventDispatcher->dispatch(

@@ -1,4 +1,12 @@
 services:
+  smarty.plugin.breadcrumb:
+    class: ACP3\Core\View\Renderer\Smarty\Functions\Breadcrumb
+    arguments:
+      - '@core.breadcrumb'
+    tags:
+      - { name: core.view.extension }
+    public: false
+
   smarty.plugin.check_access:
     class: ACP3\Core\View\Renderer\Smarty\Functions\CheckAccess
     arguments: ['@core.helpers.view.checkAccess']

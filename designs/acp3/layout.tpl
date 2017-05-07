@@ -46,7 +46,7 @@
         <main id="content" class="col-sm-12 col-md-9">
             <div id="breadcrumb">
                 {block BREADCRUMB}
-                    {include file="asset:System/Partials/breadcrumb.tpl" breadcrumb=$BREADCRUMB}
+                    {breadcrumb}
                 {/block}
             </div>
             <h2>{page_title}</h2>
