@@ -171,7 +171,10 @@
 
                         self.scrollIntoView();
 
-                        $(self.settings.targetElement).html(responseData);
+                        $(self.settings.targetElement)
+                            .hide()
+                            .html(responseData)
+                            .fadeIn();
 
                         if (typeof hash !== "undefined") {
                             window.location.hash = hash;
