@@ -38,8 +38,9 @@ services:
     class: ACP3\Core\Controller\ResultResponseFactory
     calls:
       - ['registerActionResultType', ['@core.controller.result_response.symfony_response_action_result_type']]
-      - ['registerActionResultType', ['@core.controller.result_response.scalar_action_result_type']]
       - ['registerActionResultType', ['@core.controller.result_response.array_action_result_type']]
+      - ['registerActionResultType', ['@core.controller.result_response.template_action_result_type']]
+      - ['registerActionResultType', ['@core.controller.result_response.scalar_action_result_type']]
 
   core.controller.result_response.array_action_result_type:
     class: ACP3\Core\Controller\ResultResponse\ArrayActionResultType
@@ -59,3 +60,11 @@ services:
     class: ACP3\Core\Controller\ResultResponse\SymfonyResponseActionResultType
     arguments:
       - '@core.http.response'
+
+  core.controller.result_response.template_action_result_type:
+    class: ACP3\Core\Controller\ResultResponse\TemplateActionResultType
+    arguments:
+      - '@core.view'
+      - '@core.http.request'
+      - '@core.http.response'
+
