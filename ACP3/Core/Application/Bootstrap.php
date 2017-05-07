@@ -82,6 +82,9 @@ class Bootstrap extends AbstractBootstrap
      */
     public function outputPage()
     {
+        /** @var \ACP3\Core\Http\RedirectResponse $redirect */
+        $redirect = $this->container->get('core.http.redirect_response');
+
         try {
             $this->systemSettings = $this->container->get('core.config')->getSettings(Schema::MODULE_NAME);
             $this->setThemePaths();
@@ -95,17 +98,14 @@ class Bootstrap extends AbstractBootstrap
         } catch (\ACP3\Core\Controller\Exception\ResultNotExistsException $e) {
             $response = $this->handleException($e, 'errors/index/not_found');
         } catch (\ACP3\Core\Authentication\Exception\UnauthorizedAccessException $e) {
-            /** @var \ACP3\Core\Http\RedirectResponse $redirect */
-            $redirect = $this->container->get('core.http.redirect_response');
-
             /** @var \ACP3\Core\Http\Request $request */
             $request = $this->container->get('core.http.request');
             $redirectUri = base64_encode($request->getPathInfo());
             $response = $redirect->temporary('users/index/login/redirect_' . $redirectUri);
         } catch (\ACP3\Core\ACL\Exception\AccessForbiddenException $e) {
-            $response = $this->handleException($e, 'errors/index/access_forbidden');
+            $response = $redirect->temporary('errors/index/access_forbidden');
         } catch (\ACP3\Core\Controller\Exception\ControllerActionNotFoundException $e) {
-            $response = $this->handleException($e, 'errors/index/not_found');
+            $response = $redirect->temporary('errors/index/not_found');
         } catch (\Exception $e) {
             $this->logger->critical($e);
 
@@ -161,7 +161,7 @@ class Bootstrap extends AbstractBootstrap
             'CONTENT' => $this->systemSettings['maintenance_message']
         ]);
 
-        $response = new Response($view->fetchTemplate('system/maintenance.tpl'));
+        $response = new Response($view->fetchTemplate('System/layout.maintenance.tpl'));
         $response->setStatusCode(Response::HTTP_SERVICE_UNAVAILABLE);
 
         return $response;
@@ -198,10 +198,10 @@ class Bootstrap extends AbstractBootstrap
         $view->assign([
             'PAGE_TITLE' => 'ACP3',
             'ROOT_DIR' => $this->appPath->getWebRoot(),
-            'EXCEPTION' => $exception
+            'EXCEPTION' => $exception,
         ]);
 
-        $response = new Response($view->fetchTemplate('system/exception.tpl'));
+        $response = new Response($view->fetchTemplate('System/layout.exception.tpl'));
         $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
 
         return $response;
