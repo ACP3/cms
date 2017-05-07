@@ -153,6 +153,8 @@ interface RequestInterface
 
     /**
      * Processes the request
+     *
+     * @return void
      */
     public function processQuery();
 

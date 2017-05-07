@@ -171,10 +171,7 @@
 
                         self.scrollIntoView();
 
-                        $(self.settings.targetElement)
-                            .animate({'opacity': 0}, 0)
-                            .html(responseData)
-                            .animate({'opacity': 1});
+                        $(self.settings.targetElement).html(responseData);
 
                         if (typeof hash !== "undefined") {
                             window.location.hash = hash;
