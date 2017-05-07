@@ -3,6 +3,7 @@ parameters:
 
 imports:
   - { resource: ../../../../ACP3/Core/config/components/logger.yml }
+  - { resource: ../../../../ACP3/Core/config/components/action_result_types.yml }
   - { resource: components/application.yml }
   - { resource: components/controller.yml }
   - { resource: components/date.yml }

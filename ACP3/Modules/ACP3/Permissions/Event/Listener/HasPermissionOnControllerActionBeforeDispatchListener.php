@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Permissions\Event\Listener;
 use ACP3\Core\ACL;
 use ACP3\Core\ACL\Exception\AccessForbiddenException;
 use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
+use ACP3\Core\Controller\AreaEnum;
 
 class HasPermissionOnControllerActionBeforeDispatchListener
 {
@@ -33,6 +34,10 @@ class HasPermissionOnControllerActionBeforeDispatchListener
      */
     public function hasPermission(ControllerActionBeforeDispatchEvent $event)
     {
+        if ($event->getControllerArea() === AreaEnum::AREA_INSTALL) {
+            return;
+        }
+
         $path = $event->getControllerArea() . '/';
         $path .= $event->getControllerModule() . '/';
         $path .= $event->getController() . '/';

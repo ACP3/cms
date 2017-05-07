@@ -31,8 +31,8 @@ class Requirements extends AbstractAction
     public function __construct(
         Core\Controller\Context\InstallerContext $context,
         Navigation $navigation,
-        RequirementsHelper $requirementsHelpers)
-    {
+        RequirementsHelper $requirementsHelpers
+    ) {
         parent::__construct($context, $navigation);
 
         $this->requirementsHelpers = $requirementsHelpers;
@@ -43,10 +43,12 @@ class Requirements extends AbstractAction
         list($requirements, $stopInstall) = $this->requirementsHelpers->checkMandatoryRequirements();
         list($requiredFilesAndDirs, $checkAgain) = $this->requirementsHelpers->checkFolderAndFilePermissions();
 
-        $this->view->assign('requirements', $requirements);
-        $this->view->assign('files_dirs', $requiredFilesAndDirs);
-        $this->view->assign('php_settings', $this->requirementsHelpers->checkOptionalRequirements());
-        $this->view->assign('stop_install', $stopInstall);
-        $this->view->assign('check_again', $checkAgain);
+        return [
+            'requirements' => $requirements,
+            'files_dirs' => $requiredFilesAndDirs,
+            'php_settings' => $this->requirementsHelpers->checkOptionalRequirements(),
+            'stop_install' => $stopInstall,
+            'check_again' => $checkAgain,
+        ];
     }
 }

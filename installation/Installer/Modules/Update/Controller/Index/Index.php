@@ -53,7 +53,7 @@ class Index extends Core\Controller\AbstractInstallerAction
         $results = $this->schemaUpdateModel->updateModules();
         ksort($results);
 
-        $this->view->setTemplate('Update/index.result.tpl');
+        $this->view->setTemplate('Update/Install/index.result.tpl');
         $this->clearCaches();
 
         return [
