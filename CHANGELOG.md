@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 2017-xx-xx
+## [4.12.0] - 2017-05-08
 ### Added
 - Added the possibility to duplicate downloads via the admin data grid
 - Added the possibility to quickly enable/disable downloads
@@ -380,7 +380,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.11.1...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.12.0...HEAD
+[4.12.0]: https://github.com/ACP3/cms/compare/v4.11.1...v4.12.0
 [4.11.1]: https://github.com/ACP3/cms/compare/v4.11.0...v4.11.1
 [4.11.0]: https://github.com/ACP3/cms/compare/v4.10.1...v4.11.0
 [4.10.1]: https://github.com/ACP3/cms/compare/v4.10.0...v4.10.1
