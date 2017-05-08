@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Comments;
  * Class Settings
  * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Index
  */
-class Settings extends Core\Controller\AbstractAdminAction
+class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation

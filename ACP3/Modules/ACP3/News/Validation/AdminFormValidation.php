@@ -31,6 +31,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function validate(array $formData)
     {
         $this->validator
+            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -41,7 +42,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                         'haystack' => [0, 1]
                     ]
                 ])
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
                 Core\Validation\ValidationRules\DateValidationRule::class,
                 [

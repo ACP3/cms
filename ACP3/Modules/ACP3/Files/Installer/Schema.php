@@ -21,11 +21,13 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             'admin' => [
                 'index' => [
-                    'index' => PrivilegeEnum::ADMIN_VIEW,
                     'create' => PrivilegeEnum::ADMIN_CREATE,
-                    'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
+                    'duplicate' => PrivilegeEnum::ADMIN_CREATE,
+                    'edit' => PrivilegeEnum::ADMIN_EDIT,
+                    'index' => PrivilegeEnum::ADMIN_VIEW,
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
+                    'sort' => PrivilegeEnum::ADMIN_CREATE,
                 ]
             ],
             'frontend' => [
@@ -57,7 +59,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 42;
+        return 46;
     }
 
     /**
@@ -68,6 +70,7 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             "CREATE TABLE `{pre}files` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `active` TINYINT(1) UNSIGNED NOT NULL,
                 `start` DATETIME NOT NULL,
                 `end` DATETIME NOT NULL,
                 `updated_at` DATETIME NOT NULL,
@@ -76,12 +79,14 @@ class Schema implements Modules\Installer\SchemaInterface
                 `size` VARCHAR(20) NOT NULL,
                 `title` VARCHAR(255) NOT NULL,
                 `text` TEXT NOT NULL,
+                `sort` INT(10) UNSIGNED NOT NULL,
                 `comments` TINYINT(1) UNSIGNED NOT NULL,
                 `user_id` INT UNSIGNED,
                 PRIMARY KEY (`id`),
                 FULLTEXT KEY `fulltext_index` (`title`, `file`, `text`),
                 INDEX `foreign_category_id` (`category_id`),
                 INDEX (`user_id`),
+                INDEX (`sort`),
                 FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE CASCADE,
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
             ) {ENGINE} {CHARSET};"
@@ -107,6 +112,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'comments' => 1,
             'dateformat' => 'long',
             'sidebar' => 5,
+            'order_by' => 'date'
         ];
     }
 }

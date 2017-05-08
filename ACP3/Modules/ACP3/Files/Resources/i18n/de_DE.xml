@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
     <keys>
+        <item key="active">Aktiv</item>
         <item key="admin_index_create">Neuen Download erstellen</item>
         <item key="admin_index_delete">Downloads löschen</item>
         <item key="admin_index_edit">Download bearbeiten</item>
@@ -19,9 +20,14 @@
         <item key="latest_files">Aktuelle Downloads</item>
         <item key="mod_description">Mit diesem Modul können die Downloads verwaltet werden.</item>
         <item key="new_file">Neue Datei angeben</item>
+        <item key="select_active">Bitte wählen Sie aus, ob der Download veröffentlicht werden soll oder nicht.</item>
         <item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter Downloads zugelassen werden sollen oder nicht.</item>
         <item key="select_category">Bitte wählen Sie die Kategorie aus, in der sich der Download befinden soll.</item>
         <item key="select_internal_resource">Bitte geben Sie den Pfad zur hochzuladenden Datei an.</item>
+        <item key="select_order_by">Bitte wählen Sie aus, wie die Downloads sortiert sein sollen.</item>
+        <item key="order_by">Reihenfolge der Datensätze</item>
+        <item key="order_by_date_descending">Nach Datum (absteigend)</item>
+        <item key="order_by_custom">Benutzerdefinierte Reihenfolge</item>
         <item key="title">Titel</item>
         <item key="type_in_external_resource">Bitte geben Sie den Pfad zur Datei und die Dateigröße ein.</item>
         <item key="type_in_title">Der Titel darf nicht leer sein.</item>

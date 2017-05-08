@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Newsletter;
  * Class Delete
  * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts
  */
-class Delete extends Core\Controller\AbstractAdminAction
+class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus

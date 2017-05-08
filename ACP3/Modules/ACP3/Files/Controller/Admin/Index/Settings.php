@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Files;
  * Class Settings
  * @package ACP3\Modules\ACP3\Files\Controller\Admin\Index
  */
-class Settings extends Core\Controller\AbstractAdminAction
+class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -84,7 +84,13 @@ class Settings extends Core\Controller\AbstractAdminAction
             );
         }
 
+        $orderBy = [
+            'date' => $this->translator->t('files', 'order_by_date_descending'),
+            'custom' => $this->translator->t('files', 'order_by_custom')
+        ];
+
         return [
+            'order_by' => $this->formsHelper->choicesGenerator('order_by', $orderBy, $settings['order_by']),
             'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
             'sidebar_entries' => $this->formsHelper->recordsPerPage((int)$settings['sidebar'], 1, 10, 'sidebar'),
             'form_token' => $this->formTokenHelper->renderFormToken()
@@ -103,7 +109,8 @@ class Settings extends Core\Controller\AbstractAdminAction
 
             $data = [
                 'dateformat' => $this->get('core.helpers.secure')->strEncode($formData['dateformat']),
-                'sidebar' => (int)$formData['sidebar']
+                'sidebar' => (int)$formData['sidebar'],
+                'order_by' => $formData['order_by']
             ];
 
             if ($this->commentsHelpers) {

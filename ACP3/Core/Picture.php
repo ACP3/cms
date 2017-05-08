@@ -2,6 +2,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Environment\ApplicationPath;
+use FastImageSize\FastImageSize;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -51,6 +52,10 @@ class Picture
     protected $forceResample = false;
 
     /**
+     * @var FastImageSize
+     */
+    private $fastImageSize;
+    /**
      * @var \Symfony\Component\HttpFoundation\Response
      */
     protected $response;
@@ -69,15 +74,18 @@ class Picture
     protected $image;
 
     /**
+     * @param FastImageSize $fastImageSize
      * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param \ACP3\Core\Environment\ApplicationPath     $appPath
-     * @param string                                     $environment
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param string $environment
      */
     public function __construct(
+        FastImageSize $fastImageSize,
         Response $response,
         ApplicationPath $appPath,
         $environment
     ) {
+        $this->fastImageSize = $fastImageSize;
         $this->response = $response;
         $this->appPath = $appPath;
         $this->environment = $environment;
@@ -216,12 +224,13 @@ class Picture
     {
         if (is_file($this->file) === true) {
             $cacheFile = $this->getCacheFileName();
-            $picInfo = getimagesize($this->file);
-            $width = $picInfo[0];
-            $height = $picInfo[1];
-            $type = $picInfo[2];
 
-            $this->setHeaders($picInfo['mime']);
+            $picInfo = $this->fastImageSize->getImageSize($this->file);
+            $width = $picInfo['width'];
+            $height = $picInfo['height'];
+            $type = $picInfo['type'];
+
+            $this->setHeaders($this->getMimeType($type));
 
             // Direct output of the picture, if it is already cached
             if ($this->enableCache === true && is_file($cacheFile) === true) {
@@ -248,6 +257,24 @@ class Picture
         }
 
         return false;
+    }
+
+    /**
+     * @param int $pictureType
+     * @return string
+     */
+    private function getMimeType($pictureType)
+    {
+        switch($pictureType) {
+            case IMAGETYPE_GIF:
+                return 'image/gif';
+            case IMAGETYPE_JPEG:
+                return 'image/jpeg';
+            case IMAGETYPE_PNG:
+                return 'image/png';
+        }
+
+        return '';
     }
 
     /**
@@ -325,17 +352,17 @@ class Picture
     {
         $this->image = imagecreatetruecolor($newWidth, $newHeight);
         switch ($type) {
-            case 1:
+            case IMAGETYPE_GIF:
                 $origPicture = imagecreatefromgif($this->file);
                 $this->scalePicture($newWidth, $newHeight, $width, $height, $origPicture);
                 imagegif($this->image, $cacheFile);
                 break;
-            case 2:
+            case IMAGETYPE_JPEG:
                 $origPicture = imagecreatefromjpeg($this->file);
                 $this->scalePicture($newWidth, $newHeight, $width, $height, $origPicture);
                 imagejpeg($this->image, $cacheFile, $this->jpgQuality);
                 break;
-            case 3:
+            case IMAGETYPE_PNG:
                 imagealphablending($this->image, false);
                 $origPicture = imagecreatefrompng($this->file);
                 $this->scalePicture($newWidth, $newHeight, $width, $height, $origPicture);
@@ -382,7 +409,8 @@ class Picture
      */
     protected function resamplingIsNecessary($width, $height, $type)
     {
-        return ($this->forceResample === true || ($width > $this->maxWidth || $height > $this->maxHeight)) && ($type === 1 || $type === 2 || $type === 3);
+        return ($this->forceResample === true || ($width > $this->maxWidth || $height > $this->maxHeight))
+            && in_array($type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG]);
     }
 
     /**

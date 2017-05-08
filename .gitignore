@@ -3,6 +3,7 @@
 /.php_cs.cache
 /ACP3/config.yml
 /build/logs/
+/build/sami/
 /cache/*
 /node_modules
 /tests/cache/

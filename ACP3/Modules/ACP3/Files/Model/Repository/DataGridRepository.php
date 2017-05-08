@@ -25,7 +25,9 @@ class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
     {
         return [
             'main.*',
-            'c.title AS cat'
+            'c.title AS cat',
+            "(SELECT MIN(`sort`) FROM {$this->getTableName()}) AS `first`",
+            "(SELECT MAX(`sort`) FROM {$this->getTableName()}) AS `last`"
         ];
     }
 

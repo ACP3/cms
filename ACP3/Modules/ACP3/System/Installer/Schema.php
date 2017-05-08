@@ -3,6 +3,7 @@
 namespace ACP3\Modules\ACP3\System\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
+use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Modules;
 
 /**
@@ -51,7 +52,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 69;
+        return 70;
     }
 
     /**
@@ -131,6 +132,9 @@ class Schema implements Modules\Installer\SchemaInterface
             'site_subtitle' => '',
             'site_subtitle_homepage_mode' => 0,
             'site_subtitle_mode' => 1,
+            'update_last_check' => 0,
+            'update_new_version' => BootstrapInterface::VERSION,
+            'update_new_version_url' => '',
             'wysiwyg' => 'core.wysiwyg.textarea'
         ];
     }

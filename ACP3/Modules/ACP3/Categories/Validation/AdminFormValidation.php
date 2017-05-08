@@ -93,13 +93,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'message' => $this->translator->t('categories', 'title_to_short')
                 ])
             ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'description',
-                    'message' => $this->translator->t('categories', 'description_to_short')
-                ])
-            ->addConstraint(
                 Core\Validation\ValidationRules\PictureValidationRule::class,
                 [
                     'data' => $this->file,
@@ -124,7 +117,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     ]
                 ]);
 
-        if (empty($categoryId)) {
+        if (empty($this->categoryId)) {
             $this->validator->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [

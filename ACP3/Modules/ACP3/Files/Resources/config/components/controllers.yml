@@ -16,6 +16,12 @@ services:
       - '@core.context.frontend'
       - '@files.model.files_model'
 
+  files.controller.admin.index.duplicate:
+    class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Duplicate
+    arguments:
+      - '@core.context.frontend'
+      - '@files.model.files_model'
+
   files.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Edit
     arguments:
@@ -42,6 +48,13 @@ services:
       - '@files.validation.admin_settings_form_validation'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
+
+  files.controller.admin.index.sort:
+    class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Sort
+    arguments:
+      - '@core.context.frontend'
+      - '@files.model.filesrepository'
+      - '@core.helpers.sort'
 
   files.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Details

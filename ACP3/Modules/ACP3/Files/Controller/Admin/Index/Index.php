@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
  * Class Index
  * @package ACP3\Modules\ACP3\Files\Controller\Admin\Index
  */
-class Index extends Core\Controller\AbstractAdminAction
+class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Files\Model\Repository\DataGridRepository
@@ -63,12 +63,23 @@ class Index extends Core\Controller\AbstractAdminAction
      */
     protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
     {
+        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
+
         $dataGrid
+            ->addColumn([
+                'label' => $this->translator->t('files', 'active'),
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::class,
+                'fields' => ['active'],
+                'custom' => [
+                    'search' => [0, 1],
+                    'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')]
+                ]
+            ], 60)
             ->addColumn([
                 'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['start', 'end'],
-                'default_sort' => true,
+                'default_sort' => $settings['order_by'] === 'date',
                 'default_sort_direction' => 'desc'
             ], 50)
             ->addColumn([
@@ -95,5 +106,19 @@ class Index extends Core\Controller\AbstractAdminAction
                 'fields' => ['id'],
                 'primary' => true
             ], 10);
+
+        if ($this->acl->hasPermission('admin/files/index/sort') && $settings['order_by'] === 'custom') {
+            $dataGrid
+                ->addColumn([
+                    'label' => $this->translator->t('system', 'order'),
+                    'type' => Core\Helpers\DataGrid\ColumnRenderer\SortColumnRenderer::class,
+                    'fields' => ['sort'],
+                    'default_sort' => $settings['order_by'] === 'custom',
+                    'custom' => [
+                        'route_sort_down' => 'acp/files/index/sort/id_%d/action_down',
+                        'route_sort_up' => 'acp/files/index/sort/id_%d/action_up',
+                    ]
+                ], 15);
+        }
     }
 }

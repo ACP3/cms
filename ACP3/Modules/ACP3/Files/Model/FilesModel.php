@@ -8,11 +8,20 @@ namespace ACP3\Modules\ACP3\Files\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DuplicationAwareTrait;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
+use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
 class FilesModel extends AbstractModel
 {
+    use DuplicationAwareTrait;
+
     const EVENT_PREFIX = Schema::MODULE_NAME;
+
+    /**
+     * @var FilesRepository
+     */
+    protected $repository;
 
     /**
      * @inheritdoc
@@ -20,7 +29,7 @@ class FilesModel extends AbstractModel
     public function save(array $data, $entryId = null)
     {
         $data = array_merge($data, [
-            'category_id' => (int)$data['cat'],
+            'category_id' => isset($data['cat']) ? $data['cat'] : $data['category_id'],
             'updated_at' => 'now'
         ]);
 
@@ -28,15 +37,20 @@ class FilesModel extends AbstractModel
             $data['size'] = $data['filesize'];
         }
 
+        if ($entryId === null) {
+            $data['sort'] = $this->repository->getMaxSort() + 1;
+        }
+
         return parent::save($data, $entryId);
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     protected function getAllowedColumns()
     {
         return [
+            'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
             'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
@@ -46,7 +60,20 @@ class FilesModel extends AbstractModel
             'comments' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'file' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'size' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW
+            'size' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
+            'sort' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getDefaultDataForDuplication()
+    {
+        return [
+            'active' => 0,
+            'start' => 'now',
+            'end' => 'now'
         ];
     }
 }

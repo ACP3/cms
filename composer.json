@@ -27,6 +27,7 @@
     "giggsey/locale": "^1.2",
     "google/recaptcha": "^1.1.0",
     "inlinestyle/inlinestyle": "^1.2",
+    "marc1706/fast-image-size": "^1.1",
     "mibe/feedwriter": "^1.0",
     "monolog/monolog": "^1.21",
     "mrclay/minify": "^3.0",
@@ -43,9 +44,9 @@
     "tinymce/tinymce": "^4.4"
   },
   "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.0.0",
     "phpunit/phpunit": "^5.5",
-    "satooshi/php-coveralls": "dev-master",
-    "friendsofphp/php-cs-fixer": "^2.0.0"
+    "satooshi/php-coveralls": "^1.0"
   },
   "autoload": {
     "psr-4": {

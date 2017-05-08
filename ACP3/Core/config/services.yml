@@ -45,9 +45,13 @@ services:
   core.environment.application_path:
     synthetic: true
 
+  fast_image_size:
+    class: FastImageSize\FastImageSize
+
   core.image:
     class: ACP3\Core\Picture
     arguments:
+      - '@fast_image_size'
       - '@core.http.response'
       - '@core.environment.application_path'
       - '%core.environment%'

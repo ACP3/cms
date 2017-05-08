@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Articles;
  * Class Delete
  * @package ACP3\Modules\ACP3\Articles\Controller\Admin\Index
  */
-class Delete extends Core\Controller\AbstractAdminAction
+class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var Articles\Model\ArticlesModel

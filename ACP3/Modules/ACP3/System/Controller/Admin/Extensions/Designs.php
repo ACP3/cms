@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
  * Class Designs
  * @package ACP3\Modules\ACP3\System\Controller\Admin\Extensions
  */
-class Designs extends Core\Controller\AbstractAdminAction
+class Designs extends Core\Controller\AbstractFrontendAction
 {
     use System\Helper\AvailableDesignsTrait;
 

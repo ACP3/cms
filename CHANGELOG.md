@@ -4,7 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.11.0] - 2017-04-07
+## [4.12.0] - 2017-05-08
+### Added
+- Added the possibility to duplicate downloads via the admin data grid
+- Added the possibility to quickly enable/disable downloads
+- Added the possibility to sort downloads by date or with an custom order
+- [#62](https://github.com/ACP3/cms/issues/62) Added an alert message when the currently used ACP3 CMS is outdated
+
+### Deprecations
+- Deprecated `\ACP3\Core\Controller\AbstractAdminAction`, use `\ACP3\Core\Controller\AbstractFrontendAction` instead
+
+### Changed
+- Updated `giggsey/locale` library to version 1.3 to take advantage of the new functionality for the localized country list
+
+### Fixed
+- Fixed the creation/editing of categories via the admin panel
+
+## [4.11.1] - 2017-04-07
 ### Fixed
 - Fixed the required version of the minify library of the ACP3 core framework
 
@@ -364,7 +380,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.11.1...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.12.0...HEAD
+[4.12.0]: https://github.com/ACP3/cms/compare/v4.11.1...v4.12.0
 [4.11.1]: https://github.com/ACP3/cms/compare/v4.11.0...v4.11.1
 [4.11.0]: https://github.com/ACP3/cms/compare/v4.10.1...v4.11.0
 [4.10.1]: https://github.com/ACP3/cms/compare/v4.10.0...v4.10.1

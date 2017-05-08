@@ -7,46 +7,36 @@
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Maintenance;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Context;
 use ACP3\Modules\ACP3\System;
 use Composer\Semver\Comparator;
 
-/**
- * Class UpdateCheck
- * @package ACP3\Modules\ACP3\System\Controller\Admin\Maintenance
- */
-class UpdateCheck extends Core\Controller\AbstractAdminAction
+class UpdateCheck extends Core\Controller\AbstractFrontendAction
 {
+    /**
+     * @var System\Helper\UpdateCheck
+     */
+    private $updateCheck;
+
+    /**
+     * UpdateCheck constructor.
+     * @param Context\FrontendContext $context
+     * @param System\Helper\UpdateCheck $updateCheck
+     */
+    public function __construct(Context\FrontendContext $context, System\Helper\UpdateCheck $updateCheck)
+    {
+        parent::__construct($context);
+
+        $this->updateCheck = $updateCheck;
+    }
+
     /**
      * @return array
      */
     public function execute()
     {
-        $update = [];
-        $file = @file_get_contents('https://acp3.github.io/update.txt');
-        if ($file !== false) {
-            list($latestVersion, $url) = explode('||', $file);
-            $update = [
-                'installed_version' => Core\Application\BootstrapInterface::VERSION,
-                'latest_version' => $latestVersion,
-                'is_latest' => $this->isLatestVersion($latestVersion),
-                'url' => $url
-            ];
-        }
-
         return [
-            'update' => $update
+            'update' => $this->updateCheck->checkForNewVersion()
         ];
-    }
-
-    /**
-     * @param string $latestVersion
-     * @return bool
-     */
-    protected function isLatestVersion($latestVersion)
-    {
-        return Comparator::greaterThanOrEqualTo(
-            Core\Application\BootstrapInterface::VERSION,
-            $latestVersion
-        );
     }
 }

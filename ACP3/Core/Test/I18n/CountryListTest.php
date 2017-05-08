@@ -32,7 +32,7 @@ class CountryListTest extends \PHPUnit_Framework_TestCase
 
     public function testValidLocale()
     {
-        $this->translatorMock->expects($this->exactly(6))
+        $this->translatorMock->expects($this->exactly(3))
             ->method('getLocale')
             ->willReturn('en_US');
 

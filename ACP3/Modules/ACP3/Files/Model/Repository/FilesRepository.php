@@ -7,6 +7,8 @@
 namespace ACP3\Modules\ACP3\Files\Model\Repository;
 
 use ACP3\Core;
+use ACP3\Core\Database\Connection;
+use ACP3\Modules\ACP3\Files\Installer\Schema;
 
 /**
  * Class FilesRepository
@@ -17,6 +19,22 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     use Core\Model\Repository\PublicationPeriodAwareTrait;
 
     const TABLE_NAME = 'files';
+    /**
+     * @var Core\Settings\SettingsInterface
+     */
+    private $settings;
+
+    /**
+     * FilesRepository constructor.
+     * @param Connection $db
+     * @param Core\Settings\SettingsInterface $settings
+     */
+    public function __construct(Connection $db, Core\Settings\SettingsInterface $settings)
+    {
+        parent::__construct($db);
+
+        $this->settings = $settings;
+    }
 
     /**
      * @param int    $fileId
@@ -26,10 +44,10 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function resultExists($fileId, $time = '')
     {
-        $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
+        $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         return ((int)$this->db->fetchColumn(
-                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period,
-                ['id' => $fileId, 'time' => $time]
+                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id" . $period,
+                ['id' => $fileId, 'time' => $time, 'active' => 1]
             ) > 0);
     }
 
@@ -53,7 +71,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getFileById($fileId)
     {
-        return $this->db->fetchColumn('SELECT `file` FROM ' . $this->getTableName() . ' WHERE id = ?', [$fileId]);
+        return $this->db->fetchColumn("SELECT `file` FROM {$this->getTableName()} WHERE `id` = ?", [$fileId]);
     }
 
     /**
@@ -83,11 +101,11 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getAllByCategoryId($categoryId, $time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
+        $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll(
-            'SELECT * FROM ' . $this->getTableName() . ' WHERE category_id = :categoryId' . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC' . $limitStmt,
-            ['time' => $time, 'categoryId' => $categoryId]
+            "SELECT * FROM {$this->getTableName()} WHERE `category_id` = :categoryId {$where} ORDER BY {$this->getOrderBy()}{$limitStmt}",
+            ['time' => $time, 'active' => 1, 'categoryId' => $categoryId]
         );
     }
 
@@ -100,11 +118,38 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() : '';
+        $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll(
-            'SELECT * FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC' . $limitStmt,
-            ['time' => $time]
+            "SELECT * FROM {$this->getTableName()}{$where} ORDER BY {$this->getOrderBy()}{$limitStmt}",
+            ['time' => $time, 'active' => 1]
         );
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxSort()
+    {
+        return (int)$this->db->fetchColumn("SELECT MAX(`sort`) FROM {$this->getTableName()};");
+    }
+
+    /**
+     * @return string
+     */
+    private function getOrderBy()
+    {
+        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
+
+        $orderByMap = [
+            'date' => '`start` DESC, `end` DESC, `id` DESC',
+            'custom' => '`sort` ASC'
+        ];
+
+        if (isset($settings['order_by']) && isset($orderByMap[$settings['order_by']])) {
+            return $orderByMap[$settings['order_by']];
+        }
+
+        return $orderByMap['date'];
     }
 }

@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
-use ACP3\Core\Controller\AbstractAdminAction;
+use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Modules\ACP3\Articles;
@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Menus;
  * Class AbstractFormAction
  * @package ACP3\Modules\ACP3\Menus\Controller\Admin\Items
  */
-abstract class AbstractFormAction extends AbstractAdminAction
+abstract class AbstractFormAction extends AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Articles\Helpers
