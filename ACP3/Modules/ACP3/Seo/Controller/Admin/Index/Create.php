@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Seo;
  * Class Create
  * @package ACP3\Modules\ACP3\Seo\Controller\Admin\Index
  */
-class Create extends Core\Controller\AbstractAdminAction
+class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken

@@ -7,11 +7,11 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 
-use ACP3\Core\Controller\AbstractAdminAction;
+use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Modules\ACP3\Articles\Model\ArticlesModel;
 
-class Duplicate extends AbstractAdminAction
+class Duplicate extends AbstractFrontendAction
 {
     /**
      * @var ArticlesModel

@@ -10,7 +10,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Contact;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Index extends Core\Controller\AbstractAdminAction
+class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var Contact\Model\Repository\DataGridRepository

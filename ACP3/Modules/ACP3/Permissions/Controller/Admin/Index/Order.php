@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Permissions;
  * Class Order
  * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Index
  */
-class Order extends Core\Controller\AbstractAdminAction
+class Order extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository

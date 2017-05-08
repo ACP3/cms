@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
-use ACP3\Core\Controller\AbstractAdminAction;
+use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Core\Helpers\Forms;
 
@@ -14,7 +14,7 @@ use ACP3\Core\Helpers\Forms;
  * Class AbstractFormAction
  * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
  */
-class AbstractFormAction extends AbstractAdminAction
+class AbstractFormAction extends AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Helpers\Forms

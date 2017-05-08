@@ -7,14 +7,14 @@
 namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\AbstractAdminAction;
+use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Polls;
 
 /**
  * Class AbstractFormAction
  * @package ACP3\Modules\ACP3\Polls\Controller\Admin\Index
  */
-abstract class AbstractFormAction extends AbstractAdminAction
+abstract class AbstractFormAction extends AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository

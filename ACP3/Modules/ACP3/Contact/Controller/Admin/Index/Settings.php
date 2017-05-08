@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Contact;
  * Class Settings
  * @package ACP3\Modules\ACP3\Contact\Controller\Admin\Index
  */
-class Settings extends Core\Controller\AbstractAdminAction
+class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken

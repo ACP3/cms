@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Permissions;
  * Class Index
  * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources
  */
-class Index extends Core\Controller\AbstractAdminAction
+class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository

@@ -7,11 +7,11 @@
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 
-use ACP3\Core\Controller\AbstractAdminAction;
+use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Modules\ACP3\News\Model\NewsModel;
 
-class Duplicate extends AbstractAdminAction
+class Duplicate extends AbstractFrontendAction
 {
     /**
      * @var NewsModel

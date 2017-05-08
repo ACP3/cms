@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
  * Class Index
  * @package ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index
  */
-class Index extends Core\Controller\AbstractAdminAction
+class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Model\Repository\DataGridRepository

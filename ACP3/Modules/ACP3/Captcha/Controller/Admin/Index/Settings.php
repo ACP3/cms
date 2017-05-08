@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Captcha\Controller\Admin\Index;
 
-use ACP3\Core\Controller\AbstractAdminAction;
+use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Captcha\Installer\Schema;
 use ACP3\Modules\ACP3\Captcha\Utility\CaptchaRegistrar;
 use ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation;
 
-class Settings extends AbstractAdminAction
+class Settings extends AbstractFrontendAction
 {
     /**
      * @var Forms

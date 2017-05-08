@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
  * Class Edit
  * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
  */
-class Edit extends Core\Controller\AbstractAdminAction
+class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken

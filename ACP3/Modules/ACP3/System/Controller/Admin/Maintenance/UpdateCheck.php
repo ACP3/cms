@@ -11,7 +11,7 @@ use ACP3\Core\Controller\Context;
 use ACP3\Modules\ACP3\System;
 use Composer\Semver\Comparator;
 
-class UpdateCheck extends Core\Controller\AbstractAdminAction
+class UpdateCheck extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var System\Helper\UpdateCheck

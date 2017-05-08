@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Polls;
  * Class Delete
  * @package ACP3\Modules\ACP3\Polls\Controller\Admin\Index
  */
-class Delete extends Core\Controller\AbstractAdminAction
+class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var Polls\Model\PollsModel

@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Menus;
  * Class Order
  * @package ACP3\Modules\ACP3\Menus\Controller\Admin\Items
  */
-class Order extends Core\Controller\AbstractAdminAction
+class Order extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
