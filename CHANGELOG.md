@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Next] - 2017-xx-xx
+### Added
+- display an alert when an user tries to access a restricted pages which requires the user to be logged in
+
 ### Changed
 - Dropped the support for PHP 5.6. PHP 7.0 is the minimum supported version now
 - Removed the deprecated `ACP3\Core\Logger` class
@@ -12,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed the deprecated `ACP3\Core\Controller\Context\AdminContext` class
 - Removed the deprecated `core.lang` service name. Use the `core.i18n.translator` service instead
 - Removed the deprecated `ACP3\Modules\ACP3\Captcha\Helpers` class
+- Removed the deprecated `ACP3\Core\Controller\AbstractAdminAction` class
+- Removed the class `ACP3\Core\Controller\DisplayActionTrait` class and replaced it with the new `ActionResultFactory` class
 
 ## [Unreleased] - 2017-xx-xx
 ### Added
