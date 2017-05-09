@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Errors\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Context;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Response;
 
 class NotFound extends Core\Controller\AbstractFrontendAction
@@ -37,7 +36,7 @@ class NotFound extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $this->setCacheResponseCacheable();
 
         $this->response->setStatusCode(Response::HTTP_NOT_FOUND);
 

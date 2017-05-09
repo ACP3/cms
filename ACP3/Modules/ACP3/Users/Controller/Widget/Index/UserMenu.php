@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Context\WidgetContext;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class UserMenu
@@ -42,7 +41,7 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $this->setCacheResponseCacheable();
 
         if ($this->user->isAuthenticated() === true) {
             return $this->block->render();

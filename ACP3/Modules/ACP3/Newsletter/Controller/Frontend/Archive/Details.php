@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Details extends Core\Controller\AbstractFrontendAction
 {
@@ -52,7 +51,7 @@ class Details extends Core\Controller\AbstractFrontendAction
         $newsletter = $this->newsletterRepository->getOneByIdAndStatus($id, Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED);
 
         if (!empty($newsletter)) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+            $this->setCacheResponseCacheable();
 
         }
 

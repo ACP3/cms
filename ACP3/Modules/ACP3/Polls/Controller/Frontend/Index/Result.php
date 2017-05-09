@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Result extends Core\Controller\AbstractFrontendAction
 {
@@ -56,7 +55,7 @@ class Result extends Core\Controller\AbstractFrontendAction
      */
     public function execute($id)
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $this->setCacheResponseCacheable();
 
         if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
             return $this->block

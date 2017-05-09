@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Details
@@ -68,7 +67,7 @@ class Details extends Core\Controller\AbstractFrontendAction
     public function execute($id)
     {
         if ($this->articleRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+            $this->setCacheResponseCacheable();
 
             return $this->block
                 ->setData($this->articlesCache->getCache($id))

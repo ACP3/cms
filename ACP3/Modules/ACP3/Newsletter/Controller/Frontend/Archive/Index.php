@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
@@ -37,7 +36,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $this->setCacheResponseCacheable();
 
         return $this->block->render();
     }

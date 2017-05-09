@@ -7,7 +7,6 @@ namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\News;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Details extends Core\Controller\AbstractFrontendAction
 {
@@ -63,7 +62,7 @@ class Details extends Core\Controller\AbstractFrontendAction
     public function execute($id)
     {
         if ($this->newsRepository->resultExists($id, $this->date->getCurrentDateTime()) == 1) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+            $this->setCacheResponseCacheable();
 
             return $this->block
                 ->setData($this->newsCache->getCache($id))

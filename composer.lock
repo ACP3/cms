@@ -2487,16 +2487,16 @@
         },
         {
             "name": "tinymce/tinymce",
-            "version": "4.5.7",
+            "version": "4.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tinymce/tinymce-dist.git",
-                "reference": "9f00447e1dd5b99d47810c84c66c39950663c129"
+                "reference": "f91c525a7ad72ab2cadf5a2fc7143b2f700d1fc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/9f00447e1dd5b99d47810c84c66c39950663c129",
-                "reference": "9f00447e1dd5b99d47810c84c66c39950663c129",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/f91c525a7ad72ab2cadf5a2fc7143b2f700d1fc0",
+                "reference": "f91c525a7ad72ab2cadf5a2fc7143b2f700d1fc0",
                 "shasum": ""
             },
             "type": "component",
@@ -2529,7 +2529,7 @@
                 "tinymce",
                 "wysiwyg"
             ],
-            "time": "2017-04-25T12:41:19+00:00"
+            "time": "2017-05-04T12:45:07+00:00"
         },
         {
             "name": "tubalmartin/cssmin",

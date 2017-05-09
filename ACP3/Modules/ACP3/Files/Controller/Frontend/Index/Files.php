@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Files extends Core\Controller\AbstractFrontendAction
 {
@@ -50,7 +49,7 @@ class Files extends Core\Controller\AbstractFrontendAction
     public function execute($cat)
     {
         if ($this->categoryRepository->resultExists($cat) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+            $this->setCacheResponseCacheable();
 
             return $this->block
                 ->setData(['category_id' => $cat])

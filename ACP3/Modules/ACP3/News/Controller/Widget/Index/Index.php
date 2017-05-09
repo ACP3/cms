@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\News\Controller\Widget\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\News;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Index
@@ -51,7 +50,7 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     public function execute($categoryId = 0, $template = '')
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $this->setCacheResponseCacheable();
 
         $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
 

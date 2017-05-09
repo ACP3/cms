@@ -6,7 +6,6 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
@@ -39,7 +38,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute($module, $entryId)
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $this->setCacheResponseCacheable();
 
         $blockData = ['moduleId' => $this->modules->getModuleId($module), 'resultId' => $entryId];
 

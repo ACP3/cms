@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Details extends Core\Controller\AbstractFrontendAction
 {
@@ -57,7 +56,7 @@ class Details extends Core\Controller\AbstractFrontendAction
     public function execute($id)
     {
         if ($this->pictureRepository->pictureExists($id, $this->date->getCurrentDateTime()) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+            $this->setCacheResponseCacheable();
 
             return $this->block
                 ->setData(['picture_id' => $id])

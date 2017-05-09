@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Contact\Controller\Widget\Index;
 use ACP3\Core;
 use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\Contact;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
@@ -37,7 +36,7 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     public function execute(): array
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $this->setCacheResponseCacheable();
 
         return $this->block->render();
     }

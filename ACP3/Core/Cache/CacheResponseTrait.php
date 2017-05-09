@@ -33,17 +33,22 @@ trait CacheResponseTrait
     abstract protected function getSettings();
 
     /**
-     * @param int $lifetime Cache TTL in seconds
+     * @param int|null $lifetime Cache TTL in seconds
      */
-    public function setCacheResponseCacheable($lifetime = 60)
+    public function setCacheResponseCacheable($lifetime = null)
     {
         $response = $this->getResponse();
 
-        if ($this->disallowPageCache()) {
+        $systemSettings = $this->getSettings()->getSettings(Schema::MODULE_NAME);
+
+        if ($this->disallowPageCache($systemSettings)) {
             $response->setPrivate();
             $lifetime = null;
         } else {
             $response->setPublic();
+            if ($lifetime === null) {
+                $lifetime = $systemSettings['cache_lifetime'];
+            }
         }
 
         $response
@@ -53,13 +58,11 @@ trait CacheResponseTrait
     }
 
     /**
+     * @param array $systemSettings
      * @return bool
      */
-    protected function disallowPageCache()
+    protected function disallowPageCache(array $systemSettings)
     {
-        $systemSettings = $this->getSettings()->getSettings(Schema::MODULE_NAME);
-
-        return $this->getApplicationMode() === ApplicationMode::DEVELOPMENT
-        || $systemSettings['page_cache_is_enabled'] == 0;
+        return $this->getApplicationMode() === ApplicationMode::DEVELOPMENT || $systemSettings['page_cache_is_enabled'] == 0;
     }
 }

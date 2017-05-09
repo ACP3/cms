@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
  * Class Index
@@ -41,7 +40,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $this->setCacheResponseCacheable();
 
         return $this->block->render();
     }

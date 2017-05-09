@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Search\Controller\Widget\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
@@ -36,7 +35,7 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     public function execute()
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $this->setCacheResponseCacheable();
 
         return $this->block->render();
     }
