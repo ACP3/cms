@@ -17,6 +17,10 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      * @var string
      */
     protected $primaryKey = '';
+    /**
+     * @var bool
+     */
+    protected $isAjax = false;
 
     /**
      * @param string $identifier
@@ -43,6 +47,17 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
+     * @param bool $isAjax
+     * @return $this
+     */
+    public function setIsAjax(bool $isAjax)
+    {
+        $this->isAjax = $isAjax;
+
+        return $this;
+    }
+
+    /**
      * @inheritdoc
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
@@ -62,6 +77,10 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         $attribute = $this->addHtmlAttribute($column['attribute']);
         $class = $this->addHtmlAttribute('class', $column['class']);
         $style = $this->addHtmlAttribute('style', $column['style']);
+
+        if ($this->isAjax) {
+            return $value;
+        }
 
         return "<{$type}{$attribute}{$class}{$style}>{$value}</{$type}>";
     }

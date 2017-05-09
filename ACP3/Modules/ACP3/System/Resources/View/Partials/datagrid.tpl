@@ -5,9 +5,11 @@
             {$dataTable.header}
         </tr>
         </thead>
-        <tbody>
-        {$dataTable.results}
-        </tbody>
+        {if !$dataTable.config.ajax}
+            <tbody>
+            {$dataTable.results}
+            </tbody>
+        {/if}
     </table>
     {if $dataTable.can_delete === true}
         {include file="asset:System/Partials/mark.tpl"}

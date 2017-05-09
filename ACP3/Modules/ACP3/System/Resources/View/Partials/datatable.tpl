@@ -10,6 +10,9 @@
                 iDisplayLength: {$dt.records_per_page},
                 stateSave: true,
                 autoWidth: false,
+                {if $dt.ajax}
+                    ajax: "{uri args="acp/articles/index/index/ajax_true"}",
+                {/if}
                 {if isset($dt.sort_col, $dt.sort_dir)}
                 sorting: [
                     [ {$dt.sort_col}, "{$dt.sort_dir}" ]

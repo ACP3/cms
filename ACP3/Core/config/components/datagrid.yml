@@ -3,6 +3,7 @@ services:
     class: ACP3\Core\Helpers\DataGrid
     arguments:
       - '@core.acl'
+      - '@core.http.request'
       - '@core.i18n.translator'
     shared: false
 

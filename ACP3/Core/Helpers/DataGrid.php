@@ -7,8 +7,10 @@ use ACP3\Core\Helpers\DataGrid\ColumnRenderer\ColumnRendererInterface;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\HeaderColumnRenderer;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\MassActionColumnRenderer;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Model\Repository\DataGridRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class DataGrid
@@ -68,18 +70,25 @@ class DataGrid
      * @var string
      */
     protected $primaryKey = '';
+    /**
+     * @var RequestInterface
+     */
+    private $request;
 
     /**
-     * @param \ACP3\Core\ACL             $acl
+     * @param \ACP3\Core\ACL $acl
+     * @param RequestInterface $request
      * @param \ACP3\Core\I18n\Translator $translator
      */
     public function __construct(
         ACL $acl,
+        RequestInterface $request,
         Translator $translator
     ) {
         $this->acl = $acl;
         $this->translator = $translator;
         $this->columns = new ColumnPriorityQueue();
+        $this->request = $request;
     }
 
     /**
@@ -220,7 +229,7 @@ class DataGrid
     }
 
     /**
-     * @return array
+     * @return array|JsonResponse
      */
     public function render()
     {
@@ -230,13 +239,19 @@ class DataGrid
         $this->addDefaultColumns($canDelete, $canEdit);
         $this->findPrimaryKey();
 
+        if ($this->request->getParameters()->has('ajax')) {
+            return new JsonResponse([
+                'data' => $this->mapTableColumnsToDbFieldsAjax()
+            ]);
+        }
+
         return [
             'can_edit' => $canEdit,
             'can_delete' => $canDelete,
             'identifier' => substr($this->identifier, 1),
             'header' => $this->renderTableHeader(),
             'config' => $this->generateDataTableConfig(),
-            'results' => $this->mapTableColumnsToDbFields()
+            'results' => $this->mapTableColumnsToDbFields(),
         ];
     }
 
@@ -265,18 +280,44 @@ class DataGrid
     protected function mapTableColumnsToDbFields()
     {
         $renderedResults = '';
+        if (!$this->request->getParameters()->has('ajax')) {
+            foreach ($this->fetchDbResults() as $result) {
+                $renderedResults .= '<tr>';
+                foreach (clone $this->columns as $column) {
+                    if (array_key_exists($column['type'], $this->columnRenderer) && !empty($column['label'])) {
+                        $renderedResults .= $this->columnRenderer[$column['type']]
+                            ->setIdentifier($this->identifier)
+                            ->setPrimaryKey($this->primaryKey)
+                            ->fetchDataAndRenderColumn($column, $result);
+                    }
+                }
+
+                $renderedResults .= "</tr>\n";
+            }
+        }
+
+        return $renderedResults;
+    }
+
+    /**
+     * @return array
+     */
+    protected function mapTableColumnsToDbFieldsAjax(): array
+    {
+        $renderedResults = [];
         foreach ($this->fetchDbResults() as $result) {
-            $renderedResults .= '<tr>';
+            $row = [];
             foreach (clone $this->columns as $column) {
                 if (array_key_exists($column['type'], $this->columnRenderer) && !empty($column['label'])) {
-                    $renderedResults .= $this->columnRenderer[$column['type']]
+                    $row[] = $this->columnRenderer[$column['type']]
                         ->setIdentifier($this->identifier)
                         ->setPrimaryKey($this->primaryKey)
+                        ->setIsAjax($this->request->getParameters()->has('ajax'))
                         ->fetchDataAndRenderColumn($column, $result);
                 }
             }
 
-            $renderedResults .= "</tr>\n";
+            $renderedResults[] = $row;
         }
 
         return $renderedResults;
@@ -313,7 +354,8 @@ class DataGrid
             'records_per_page' => $this->recordsPerPage,
             'hide_col_sort' => implode(', ', $columnDefinitions),
             'sort_col' => $defaultSortColumn,
-            'sort_dir' => $defaultSortDirection
+            'sort_dir' => $defaultSortDirection,
+            'ajax' => true
         ];
     }
 

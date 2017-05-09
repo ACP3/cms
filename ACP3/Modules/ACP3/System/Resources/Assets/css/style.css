@@ -158,12 +158,14 @@
 .datagrid .datagrid-column__actions {
   width: 7%;
 }
-.datagrid .datagrid-column__actions .btn-group {
+.datagrid .btn-group {
   display: flex;
-  visibility: hidden;
 }
-.datagrid .datagrid-column__actions .btn-group > .btn {
+.datagrid .btn-group > .btn {
   float: none;
+}
+.datagrid td.datagrid-column__actions .btn-group {
+  visibility: hidden;
 }
 .datagrid tr:hover td.datagrid-column__actions .btn-group,
 .datagrid tr.info td.datagrid-column__actions .btn-group {
