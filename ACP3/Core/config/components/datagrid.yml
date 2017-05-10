@@ -5,7 +5,14 @@ services:
       - '@core.acl'
       - '@core.http.request'
       - '@core.i18n.translator'
+      - '@core.helpers.data_grid.config_processor'
     shared: false
+
+  core.helpers.data_grid.config_processor:
+    class: ACP3\Core\Helpers\DataGrid\ConfigProcessor
+    arguments:
+      - '@core.http.request'
+      - '@core.i18n.translator'
 
   core.helpers.data_grid.column_renderer.date_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer

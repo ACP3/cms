@@ -7,96 +7,78 @@ use ACP3\Core\Helpers\DataGrid\ColumnRenderer\ColumnRendererInterface;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\HeaderColumnRenderer;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\MassActionColumnRenderer;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
+use ACP3\Core\Helpers\DataGrid\ConfigProcessor;
+use ACP3\Core\Helpers\DataGrid\Exception\DataGridException;
+use ACP3\Core\Helpers\DataGrid\Options;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Model\Repository\DataGridRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-/**
- * Class DataGrid
- * @package ACP3\Core\Helpers
- */
 class DataGrid
 {
     /**
      * @var \ACP3\Core\ACL
      */
-    protected $acl;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    protected $translator;
-    /**
-     * @var \ACP3\Core\Model\Repository\DataGridRepository
-     */
-    protected $repository;
-    /**
-     * @var array
-     */
-    protected $results = [];
-    /**
-     * @var string
-     */
-    protected $resourcePathEdit = '';
-    /**
-     * @var string
-     */
-    protected $resourcePathDelete = '';
-    /**
-     * @var string
-     */
-    protected $identifier = '';
-    /**
-     * @var int
-     */
-    protected $recordsPerPage = 10;
-    /**
-     * @var bool
-     */
-    protected $enableMassAction = true;
-    /**
-     * @var bool
-     */
-    protected $enableOptions = true;
-    /**
-     * @var \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue
-     */
-    protected $columns;
-    /**
-     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer[]
-     */
-    protected $columnRenderer = [];
-    /**
-     * @var string
-     */
-    protected $primaryKey = '';
+    private $acl;
     /**
      * @var RequestInterface
      */
     private $request;
     /**
-     * @var bool
+     * @var \ACP3\Core\I18n\Translator
      */
-    private $useAjax = false;
+    private $translator;
+    /**
+     * @var ConfigProcessor
+     */
+    private $configProcessor;
+    /**
+     * @var \ACP3\Core\Model\Repository\DataGridRepository
+     */
+    private $repository;
+    /**
+     * @var array
+     */
+    private $results = [];
+    /**
+     * @var \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue
+     */
+    private $columns;
+    /**
+     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer[]
+     */
+    private $columnRenderer = [];
+    /**
+     * @var string
+     */
+    private $primaryKey = '';
     /**
      * @var array|JsonResponse
      */
     private $rendereredDataGrid;
+    /**
+     * @var Options|null
+     */
+    private $options;
 
     /**
      * @param \ACP3\Core\ACL $acl
      * @param RequestInterface $request
      * @param \ACP3\Core\I18n\Translator $translator
+     * @param ConfigProcessor $configProcessor
      */
     public function __construct(
         ACL $acl,
         RequestInterface $request,
-        Translator $translator
+        Translator $translator,
+        ConfigProcessor $configProcessor
     ) {
         $this->acl = $acl;
         $this->translator = $translator;
         $this->columns = new ColumnPriorityQueue();
         $this->request = $request;
+        $this->configProcessor = $configProcessor;
     }
 
     /**
@@ -136,83 +118,12 @@ class DataGrid
     }
 
     /**
-     * @param string $resourcePathEdit
-     *
+     * @param Options $options
      * @return $this
      */
-    public function setResourcePathEdit($resourcePathEdit)
+    public function setOptions(Options $options)
     {
-        $this->resourcePathEdit = $resourcePathEdit;
-
-        return $this;
-    }
-
-    /**
-     * @param string $resourcePathDelete
-     *
-     * @return $this
-     */
-    public function setResourcePathDelete($resourcePathDelete)
-    {
-        $this->resourcePathDelete = $resourcePathDelete;
-
-        return $this;
-    }
-
-    /**
-     * @param int $recordsPerPage
-     *
-     * @return $this
-     */
-    public function setRecordsPerPage($recordsPerPage)
-    {
-        $this->recordsPerPage = (int)$recordsPerPage;
-
-        return $this;
-    }
-
-    /**
-     * @param boolean $enableMassAction
-     *
-     * @return $this
-     */
-    public function setEnableMassAction($enableMassAction)
-    {
-        $this->enableMassAction = (bool)$enableMassAction;
-
-        return $this;
-    }
-
-    /**
-     * @param boolean $enableOptions
-     *
-     * @return $this
-     */
-    public function setEnableOptions($enableOptions)
-    {
-        $this->enableOptions = (bool)$enableOptions;
-        return $this;
-    }
-
-    /**
-     * @param string $identifier
-     *
-     * @return $this
-     */
-    public function setIdentifier($identifier)
-    {
-        $this->identifier = $identifier;
-
-        return $this;
-    }
-
-    /**
-     * @param bool $useAjax
-     * @return $this
-     */
-    public function setUseAjax(bool $useAjax)
-    {
-        $this->useAjax = $useAjax;
+        $this->options = $options;
 
         return $this;
     }
@@ -249,15 +160,21 @@ class DataGrid
 
     /**
      * @return array|JsonResponse
+     * @throws DataGridException
      */
     public function render()
     {
+        if ($this->options === null) {
+            throw new DataGridException(
+                'Can not render data grid, as no options has been given. Please call the method DataGrid::setOptions() first.'
+            );
+        }
+
         if ($this->rendereredDataGrid === null) {
-            $canDelete = $this->acl->hasPermission($this->resourcePathDelete);
-            $canEdit = $this->acl->hasPermission($this->resourcePathEdit);
+            $canDelete = $this->acl->hasPermission($this->options->getResourcePathDelete());
+            $canEdit = $this->acl->hasPermission($this->options->getResourcePathEdit());
 
             $this->addDefaultColumns($canDelete, $canEdit);
-            $this->findPrimaryKey();
 
             if ($this->isRequiredAjaxRequest()) {
                 $this->rendereredDataGrid = new JsonResponse([
@@ -267,9 +184,9 @@ class DataGrid
                 $this->rendereredDataGrid = [
                     'can_edit' => $canEdit,
                     'can_delete' => $canDelete,
-                    'identifier' => substr($this->identifier, 1),
+                    'identifier' => substr($this->options->getIdentifier(), 1),
                     'header' => $this->renderTableHeader(),
-                    'config' => $this->generateDataTableConfig(),
+                    'config' => $this->configProcessor->generateDataTableConfig($this->columns, $this->options),
                     'results' => $this->mapTableColumnsToDbFields(),
                     'num_results' => $this->countDbResults()
                 ];
@@ -287,20 +204,20 @@ class DataGrid
     private function isRequiredAjaxRequest(): bool
     {
         return $this->request->isXmlHttpRequest()
-            && $this->request->getParameters()->get('ajax', '') === substr($this->identifier, 1);
+            && $this->request->getParameters()->get('ajax', '') === substr($this->options->getIdentifier(), 1);
     }
 
     /**
      * @return string
      */
-    protected function renderTableHeader()
+    private function renderTableHeader(): string
     {
         $header = '';
         foreach (clone $this->columns as $column) {
             if (!empty($column['label'])) {
                 $header .= $this->columnRenderer[HeaderColumnRenderer::class]
-                    ->setIdentifier($this->identifier)
-                    ->setPrimaryKey($this->primaryKey)
+                    ->setIdentifier($this->options->getIdentifier())
+                    ->setPrimaryKey($this->getPrimaryKey())
                     ->fetchDataAndRenderColumn($column, []);
             }
         }
@@ -311,17 +228,29 @@ class DataGrid
     /**
      * @return string
      */
-    protected function mapTableColumnsToDbFields()
+    private function getPrimaryKey(): string
+    {
+        if ($this->primaryKey === '') {
+            $this->findPrimaryKey();
+        }
+
+        return $this->primaryKey;
+    }
+
+    /**
+     * @return string
+     */
+    private function mapTableColumnsToDbFields(): string
     {
         $renderedResults = '';
-        if (!$this->useAjax) {
+        if (!$this->options->isUseAjax()) {
             foreach ($this->fetchDbResults() as $result) {
                 $renderedResults .= '<tr>';
                 foreach (clone $this->columns as $column) {
                     if (array_key_exists($column['type'], $this->columnRenderer) && !empty($column['label'])) {
                         $renderedResults .= $this->columnRenderer[$column['type']]
-                            ->setIdentifier($this->identifier)
-                            ->setPrimaryKey($this->primaryKey)
+                            ->setIdentifier($this->options->getIdentifier())
+                            ->setPrimaryKey($this->getPrimaryKey())
                             ->fetchDataAndRenderColumn($column, $result);
                     }
                 }
@@ -336,7 +265,7 @@ class DataGrid
     /**
      * @return array
      */
-    protected function mapTableColumnsToDbFieldsAjax(): array
+    private function mapTableColumnsToDbFieldsAjax(): array
     {
         $renderedResults = [];
         foreach ($this->fetchDbResults() as $result) {
@@ -344,8 +273,8 @@ class DataGrid
             foreach (clone $this->columns as $column) {
                 if (array_key_exists($column['type'], $this->columnRenderer) && !empty($column['label'])) {
                     $row[] = $this->columnRenderer[$column['type']]
-                        ->setIdentifier($this->identifier)
-                        ->setPrimaryKey($this->primaryKey)
+                        ->setIdentifier($this->options->getIdentifier())
+                        ->setPrimaryKey($this->getPrimaryKey())
                         ->setIsAjax($this->isRequiredAjaxRequest())
                         ->fetchDataAndRenderColumn($column, $result);
                 }
@@ -358,50 +287,14 @@ class DataGrid
     }
 
     /**
-     * @return array
-     */
-    protected function generateDataTableConfig()
-    {
-        $columnDefinitions = [];
-        $i = 0;
-
-        $defaultSortColumn = $defaultSortDirection = null;
-        foreach (clone $this->columns as $column) {
-            if ($column['sortable'] === false) {
-                $columnDefinitions[] = $i;
-            };
-
-            if ($column['default_sort'] === true &&
-                in_array($column['default_sort_direction'], ['asc', 'desc'])
-            ) {
-                $defaultSortColumn = $i;
-                $defaultSortDirection = $column['default_sort_direction'];
-            }
-
-            if (!empty($column['label'])) {
-                ++$i;
-            }
-        }
-
-        return [
-            'element' => $this->identifier,
-            'records_per_page' => $this->recordsPerPage,
-            'hide_col_sort' => implode(', ', $columnDefinitions),
-            'sort_col' => $defaultSortColumn,
-            'sort_dir' => $defaultSortDirection,
-            'ajax' => $this->useAjax ? $this->request->getFullPath() . 'ajax_' . substr($this->identifier, 1) : false
-        ];
-    }
-
-    /**
      * @param bool $canDelete
      * @param bool $canEdit
      */
-    protected function addDefaultColumns(bool $canDelete, bool $canEdit)
+    private function addDefaultColumns(bool $canDelete, bool $canEdit)
     {
-        if ($this->enableMassAction && $canDelete) {
+        if ($this->options->isEnableMassAction() && $canDelete) {
             $this->addColumn([
-                'label' => $this->identifier,
+                'label' => $this->options->getIdentifier(),
                 'type' => MassActionColumnRenderer::class,
                 'class' => 'datagrid-column datagrid-column__mass-action',
                 'sortable' => false,
@@ -411,7 +304,7 @@ class DataGrid
             ], 1000);
         }
 
-        if ($this->enableOptions) {
+        if ($this->options->isEnableOptions()) {
             $this->addColumn([
                 'label' => $this->translator->t('system', 'action'),
                 'type' => OptionColumnRenderer::class,
@@ -420,8 +313,8 @@ class DataGrid
                 'custom' => [
                     'can_delete' => $canDelete,
                     'can_edit' => $canEdit,
-                    'resource_path_delete' => $this->resourcePathDelete,
-                    'resource_path_edit' => $this->resourcePathEdit
+                    'resource_path_delete' => $this->options->getResourcePathDelete(),
+                    'resource_path_edit' => $this->options->getResourcePathEdit()
                 ]
             ], 0);
         }
@@ -430,7 +323,7 @@ class DataGrid
     /**
      * Finds the primary key column
      */
-    protected function findPrimaryKey()
+    private function findPrimaryKey()
     {
         foreach (clone $this->columns as $column) {
             if ($column['primary'] === true && !empty($column['fields'])) {
@@ -443,7 +336,7 @@ class DataGrid
     /**
      * @return array
      */
-    protected function fetchDbResults()
+    private function fetchDbResults(): array
     {
         if (empty($this->results) && $this->repository instanceof DataGridRepository) {
             $this->results = $this->repository->getAll(clone $this->columns);

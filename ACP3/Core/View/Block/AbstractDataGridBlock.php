@@ -92,12 +92,14 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
     {
         $dataGridOptions = array_merge($this->getDefaultDataGridOptions(), $dataGridOptions);
 
-        $dataGrid
+        $options = (new DataGrid\Options())
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage($this->getModuleName()))
             ->setUseAjax($dataGridOptions['ajax'])
             ->setIdentifier($dataGridOptions['identifier'])
             ->setResourcePathDelete($dataGridOptions['resource_path_delete'])
             ->setResourcePathEdit($dataGridOptions['resource_path_edit']);
+
+        $dataGrid->setOptions($options);
 
         if ($this->getDataGridRepository() instanceof DataGridRepository) {
             $dataGrid->setRepository($this->getDataGridRepository());
