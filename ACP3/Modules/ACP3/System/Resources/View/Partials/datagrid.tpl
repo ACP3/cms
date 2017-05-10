@@ -1,11 +1,11 @@
-{if !empty($dataTable.results)}
+{if $dataTable.num_results > 0}
     <table id="{$dataTable.identifier}" class="table table-striped table-hover datagrid">
         <thead>
         <tr>
             {$dataTable.header}
         </tr>
         </thead>
-        {if !$dataTable.config.ajax}
+        {if !empty($dataTable.results)}
             <tbody>
             {$dataTable.results}
             </tbody>

@@ -37,6 +37,24 @@ class DataGridRepository extends AbstractRepository
     }
 
     /**
+     * @return int
+     */
+    public function countAll()
+    {
+        $queryBuilder = $this->db->getConnection()->createQueryBuilder();
+        $queryBuilder
+            ->select('COUNT(*)')
+            ->from($this->getTableName(), 'main')
+            ->setParameters($this->getParameters());
+
+        $this->addJoin($queryBuilder);
+        $this->addWhere($queryBuilder);
+        $this->addGroupBy($queryBuilder);;
+
+        return (int)$queryBuilder->execute()->fetchColumn();
+    }
+
+    /**
      * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $gridColumns
      *
      * @return array

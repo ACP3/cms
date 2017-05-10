@@ -55,6 +55,7 @@ class ArticlesDataGridBlock extends AbstractDataGridBlock
     {
         $dataGrid = $this->getCurrentDataGrid();
         $this->configureDataGrid($dataGrid, [
+            'ajax' => true,
             'identifier' => '#articles-data-grid',
             'resource_path_delete' => 'admin/articles/index/delete',
             'resource_path_edit' => 'admin/articles/index/edit',

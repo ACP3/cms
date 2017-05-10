@@ -94,6 +94,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
 
         $dataGrid
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage($this->getModuleName()))
+            ->setUseAjax($dataGridOptions['ajax'])
             ->setIdentifier($dataGridOptions['identifier'])
             ->setResourcePathDelete($dataGridOptions['resource_path_delete'])
             ->setResourcePathEdit($dataGridOptions['resource_path_edit']);
@@ -115,7 +116,8 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
     {
         return [
             'resource_path_delete' => '',
-            'resource_path_edit' => ''
+            'resource_path_edit' => '',
+            'ajax' => false
         ];
     }
 

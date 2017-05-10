@@ -74,6 +74,10 @@ class DataGrid
      * @var RequestInterface
      */
     private $request;
+    /**
+     * @var bool
+     */
+    private $useAjax = false;
 
     /**
      * @param \ACP3\Core\ACL $acl
@@ -199,6 +203,28 @@ class DataGrid
     }
 
     /**
+     * @param bool $useAjax
+     * @return $this
+     */
+    public function setUseAjax(bool $useAjax)
+    {
+        $this->useAjax = $useAjax;
+
+        return $this;
+    }
+
+    /**
+     * Checks, whether we have the required AJAX request in effect
+     *
+     * @return bool
+     */
+    private function isRequiredAjaxRequest(): bool
+    {
+        return $this->request->isXmlHttpRequest()
+            && $this->request->getParameters()->get('ajax', '') === substr($this->identifier, 1);
+    }
+
+    /**
      * @param array $columnData
      * @param int   $priority
      *
@@ -239,7 +265,7 @@ class DataGrid
         $this->addDefaultColumns($canDelete, $canEdit);
         $this->findPrimaryKey();
 
-        if ($this->request->getParameters()->has('ajax')) {
+        if ($this->isRequiredAjaxRequest()) {
             return new JsonResponse([
                 'data' => $this->mapTableColumnsToDbFieldsAjax()
             ]);
@@ -252,6 +278,7 @@ class DataGrid
             'header' => $this->renderTableHeader(),
             'config' => $this->generateDataTableConfig(),
             'results' => $this->mapTableColumnsToDbFields(),
+            'num_results' => $this->countDbResults()
         ];
     }
 
@@ -280,7 +307,7 @@ class DataGrid
     protected function mapTableColumnsToDbFields()
     {
         $renderedResults = '';
-        if (!$this->request->getParameters()->has('ajax')) {
+        if (!$this->useAjax) {
             foreach ($this->fetchDbResults() as $result) {
                 $renderedResults .= '<tr>';
                 foreach (clone $this->columns as $column) {
@@ -312,7 +339,7 @@ class DataGrid
                     $row[] = $this->columnRenderer[$column['type']]
                         ->setIdentifier($this->identifier)
                         ->setPrimaryKey($this->primaryKey)
-                        ->setIsAjax($this->request->getParameters()->has('ajax'))
+                        ->setIsAjax($this->isRequiredAjaxRequest())
                         ->fetchDataAndRenderColumn($column, $result);
                 }
             }
@@ -355,7 +382,7 @@ class DataGrid
             'hide_col_sort' => implode(', ', $columnDefinitions),
             'sort_col' => $defaultSortColumn,
             'sort_dir' => $defaultSortDirection,
-            'ajax' => true
+            'ajax' => $this->useAjax ? $this->request->getFullPath() . 'ajax_' . substr($this->identifier, 1) : false
         ];
     }
 
@@ -421,8 +448,12 @@ class DataGrid
     /**
      * @return int
      */
-    public function countDbResults()
+    public function countDbResults(): int
     {
+        if ($this->repository instanceof DataGridRepository) {
+            return (int)$this->repository->countAll();
+        }
+
         return count($this->fetchDbResults());
     }
 }
