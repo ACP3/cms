@@ -214,17 +214,6 @@ class DataGrid
     }
 
     /**
-     * Checks, whether we have the required AJAX request in effect
-     *
-     * @return bool
-     */
-    private function isRequiredAjaxRequest(): bool
-    {
-        return $this->request->isXmlHttpRequest()
-            && $this->request->getParameters()->get('ajax', '') === substr($this->identifier, 1);
-    }
-
-    /**
      * @param array $columnData
      * @param int   $priority
      *
@@ -283,6 +272,17 @@ class DataGrid
     }
 
     /**
+     * Checks, whether we have the required AJAX request in effect
+     *
+     * @return bool
+     */
+    private function isRequiredAjaxRequest(): bool
+    {
+        return $this->request->isXmlHttpRequest()
+            && $this->request->getParameters()->get('ajax', '') === substr($this->identifier, 1);
+    }
+
+    /**
      * @return string
      */
     protected function renderTableHeader()
@@ -299,7 +299,6 @@ class DataGrid
 
         return $header;
     }
-
 
     /**
      * @return string

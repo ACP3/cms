@@ -12,6 +12,7 @@ use ACP3\Core\View\Block\AbstractDataGridBlock;
 use ACP3\Core\View\Block\Context;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SeoDataGridBlock extends AbstractDataGridBlock
 {
@@ -93,10 +94,16 @@ class SeoDataGridBlock extends AbstractDataGridBlock
     {
         $dataGrid = $this->getCurrentDataGrid();
         $this->configureDataGrid($dataGrid, [
+            'ajax' => false,
             'identifier' => '#seo-data-grid',
             'resource_path_delete' => 'admin/seo/index/delete',
             'resource_path_edit' => 'admin/seo/index/edit',
         ]);
+
+        $grid = $dataGrid->render();
+        if ($grid instanceof JsonResponse) {
+            return $grid;
+        }
 
         return [
             'grid' => $dataGrid->render(),
