@@ -78,6 +78,10 @@ class DataGrid
      * @var bool
      */
     private $useAjax = false;
+    /**
+     * @var array|JsonResponse
+     */
+    private $rendereredDataGrid;
 
     /**
      * @param \ACP3\Core\ACL $acl
@@ -248,27 +252,31 @@ class DataGrid
      */
     public function render()
     {
-        $canDelete = $this->acl->hasPermission($this->resourcePathDelete);
-        $canEdit = $this->acl->hasPermission($this->resourcePathEdit);
+        if ($this->rendereredDataGrid === null) {
+            $canDelete = $this->acl->hasPermission($this->resourcePathDelete);
+            $canEdit = $this->acl->hasPermission($this->resourcePathEdit);
 
-        $this->addDefaultColumns($canDelete, $canEdit);
-        $this->findPrimaryKey();
+            $this->addDefaultColumns($canDelete, $canEdit);
+            $this->findPrimaryKey();
 
-        if ($this->isRequiredAjaxRequest()) {
-            return new JsonResponse([
-                'data' => $this->mapTableColumnsToDbFieldsAjax()
-            ]);
+            if ($this->isRequiredAjaxRequest()) {
+                $this->rendereredDataGrid = new JsonResponse([
+                    'data' => $this->mapTableColumnsToDbFieldsAjax()
+                ]);
+            } else {
+                $this->rendereredDataGrid = [
+                    'can_edit' => $canEdit,
+                    'can_delete' => $canDelete,
+                    'identifier' => substr($this->identifier, 1),
+                    'header' => $this->renderTableHeader(),
+                    'config' => $this->generateDataTableConfig(),
+                    'results' => $this->mapTableColumnsToDbFields(),
+                    'num_results' => $this->countDbResults()
+                ];
+            }
         }
 
-        return [
-            'can_edit' => $canEdit,
-            'can_delete' => $canDelete,
-            'identifier' => substr($this->identifier, 1),
-            'header' => $this->renderTableHeader(),
-            'config' => $this->generateDataTableConfig(),
-            'results' => $this->mapTableColumnsToDbFields(),
-            'num_results' => $this->countDbResults()
-        ];
+        return $this->rendereredDataGrid;
     }
 
     /**
@@ -389,7 +397,7 @@ class DataGrid
      * @param bool $canDelete
      * @param bool $canEdit
      */
-    protected function addDefaultColumns($canDelete, $canEdit)
+    protected function addDefaultColumns(bool $canDelete, bool $canEdit)
     {
         if ($this->enableMassAction && $canDelete) {
             $this->addColumn([

@@ -94,7 +94,7 @@ class SeoDataGridBlock extends AbstractDataGridBlock
     {
         $dataGrid = $this->getCurrentDataGrid();
         $this->configureDataGrid($dataGrid, [
-            'ajax' => false,
+            'ajax' => true,
             'identifier' => '#seo-data-grid',
             'resource_path_delete' => 'admin/seo/index/delete',
             'resource_path_edit' => 'admin/seo/index/edit',
@@ -106,7 +106,7 @@ class SeoDataGridBlock extends AbstractDataGridBlock
         }
 
         return [
-            'grid' => $dataGrid->render(),
+            'grid' => $grid,
             'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }
