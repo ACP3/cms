@@ -10,6 +10,7 @@ use ACP3\Core;
 use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
 use ACP3\Modules\ACP3\Contact\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ContactsDataGridBlock extends AbstractDataGridBlock
 {
@@ -51,11 +52,17 @@ class ContactsDataGridBlock extends AbstractDataGridBlock
     {
         $dataGrid = $this->getCurrentDataGrid();
         $this->configureDataGrid($dataGrid, [
-            'identifier' => '#contact-data-grid'
+            'ajax' => true,
+            'identifier' => '#contact-data-grid',
         ]);
 
+        $grid = $dataGrid->render();
+        if ($grid instanceof JsonResponse) {
+            return $grid;
+        }
+
         return [
-            'grid' => $dataGrid->render(),
+            'grid' => $grid,
         ];
     }
 

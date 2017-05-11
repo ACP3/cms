@@ -11,6 +11,7 @@ use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
 use ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer\AccountStatusColumnRenderer;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class NewsletterAccountsDataGridBlock extends AbstractDataGridBlock
 {
@@ -70,15 +71,20 @@ class NewsletterAccountsDataGridBlock extends AbstractDataGridBlock
     {
         $dataGrid = $this->getCurrentDataGrid();
         $this->configureDataGrid($dataGrid, [
+            'ajax' => true,
             'identifier' => '#newsletter-accounts-data-grid',
             'resource_path_delete' => 'admin/newsletter/accounts/delete'
         ]);
 
+        $grid = $dataGrid->render();
+        if ($grid instanceof JsonResponse) {
+            return $grid;
+        }
+
         return [
-            'grid' => $dataGrid->render(),
+            'grid' => $grid,
             'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
-
     }
 
     /**

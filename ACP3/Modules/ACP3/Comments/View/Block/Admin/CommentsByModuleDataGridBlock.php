@@ -10,6 +10,7 @@ use ACP3\Core;
 use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
 use ACP3\Modules\ACP3\Comments\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CommentsByModuleDataGridBlock extends AbstractDataGridBlock
 {
@@ -43,13 +44,19 @@ class CommentsByModuleDataGridBlock extends AbstractDataGridBlock
     {
         $dataGrid = $this->getCurrentDataGrid();
         $this->configureDataGrid($dataGrid, [
+            'ajax' => true,
             'identifier' => '#comments-data-grid',
             'resource_path_delete' => 'admin/comments/index/delete',
             'resource_path_edit' => 'admin/comments/details/index',
         ]);
 
+        $grid = $dataGrid->render();
+        if ($grid instanceof JsonResponse) {
+            return $grid;
+        }
+
         return [
-            'grid' => $dataGrid->render(),
+            'grid' => $grid,
             'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }

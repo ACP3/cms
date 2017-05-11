@@ -10,6 +10,7 @@ use ACP3\Core;
 use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
 use ACP3\Modules\ACP3\Polls\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PollsDataGridBlock extends AbstractDataGridBlock
 {
@@ -47,13 +48,19 @@ class PollsDataGridBlock extends AbstractDataGridBlock
     {
         $dataGrid = $this->getCurrentDataGrid();
         $this->configureDataGrid($dataGrid, [
+            'ajax' => true,
             'identifier' => '#polls-data-grid',
             'resource_path_delete' => 'admin/polls/index/delete',
             'resource_path_edit' => 'admin/polls/index/edit',
         ]);
 
+        $grid = $dataGrid->render();
+        if ($grid instanceof JsonResponse) {
+            return $grid;
+        }
+
         return [
-            'grid' => $dataGrid->render(),
+            'grid' => $grid,
             'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }

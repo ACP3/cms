@@ -10,6 +10,7 @@ use ACP3\Core;
 use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
 use ACP3\Modules\ACP3\Categories\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CategoriesDataGridBlock extends AbstractDataGridBlock
 {
@@ -51,15 +52,19 @@ class CategoriesDataGridBlock extends AbstractDataGridBlock
         $dataGrid = $this->getCurrentDataGrid();
 
         $this->configureDataGrid($dataGrid, [
+            'ajax' => true,
             'identifier' => '#categories-data-grid',
             'resource_path_delete' => 'admin/categories/index/delete',
             'resource_path_edit' => 'admin/categories/index/edit'
         ]);
 
-        $this->addDataGridColumns($dataGrid);
+        $grid = $dataGrid->render();
+        if ($grid instanceof JsonResponse) {
+            return $grid;
+        }
 
         return [
-            'grid' => $dataGrid->render(),
+            'grid' => $grid,
             'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }

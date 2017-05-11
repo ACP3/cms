@@ -11,6 +11,7 @@ use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
 use ACP3\Core\View\Block\Context;
 use ACP3\Modules\ACP3\Emoticons\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class EmoticonsDataGridBlock extends AbstractDataGridBlock
 {
@@ -73,13 +74,19 @@ class EmoticonsDataGridBlock extends AbstractDataGridBlock
         $dataGrid = $this->getCurrentDataGrid();
 
         $this->configureDataGrid($dataGrid, [
+            'ajax' => true,
             'identifier' => '#emoticons-data-grid',
             'resource_path_delete' => 'admin/emoticons/index/delete',
             'resource_path_edit' => 'admin/emoticons/index/edit'
         ]);
 
+        $grid = $dataGrid->render();
+        if ($grid instanceof JsonResponse) {
+            return $grid;
+        }
+
         return [
-            'grid' => $dataGrid->render(),
+            'grid' => $grid,
             'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }

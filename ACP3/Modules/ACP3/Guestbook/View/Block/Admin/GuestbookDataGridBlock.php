@@ -10,6 +10,7 @@ use ACP3\Core;
 use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
 use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class GuestbookDataGridBlock extends AbstractDataGridBlock
 {
@@ -56,13 +57,19 @@ class GuestbookDataGridBlock extends AbstractDataGridBlock
     {
         $dataGrid = $this->getCurrentDataGrid();
         $this->configureDataGrid($dataGrid, [
+            'ajax' => true,
             'identifier' => '#guestbook-data-grid',
             'resource_path_delete' => 'admin/guestbook/index/delete',
             'resource_path_edit' => 'admin/guestbook/index/edit'
         ]);
 
+        $grid = $dataGrid->render();
+        if ($grid instanceof JsonResponse) {
+            return $grid;
+        }
+
         return [
-            'grid' => $dataGrid->render(),
+            'grid' => $grid,
             'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }

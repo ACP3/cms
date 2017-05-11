@@ -11,6 +11,7 @@ use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
 use ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer;
 use ACP3\Modules\ACP3\Users\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UsersDataGridBlock extends AbstractDataGridBlock
 {
@@ -51,13 +52,19 @@ class UsersDataGridBlock extends AbstractDataGridBlock
     {
         $dataGrid = $this->getCurrentDataGrid();
         $this->configureDataGrid($dataGrid, [
+            'ajax' => true,
             'identifier' => '#users-data-grid',
             'resource_path_delete' => 'admin/users/index/delete',
             'resource_path_edit' => 'admin/users/index/edit',
         ]);
 
+        $grid = $dataGrid->render();
+        if ($grid instanceof JsonResponse) {
+            return $grid;
+        }
+
         return [
-            'grid' => $dataGrid->render(),
+            'grid' => $grid,
             'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }

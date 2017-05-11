@@ -10,6 +10,7 @@ use ACP3\Core;
 use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class NewsletterDataGridBlock extends AbstractDataGridBlock
 {
@@ -58,13 +59,19 @@ class NewsletterDataGridBlock extends AbstractDataGridBlock
     {
         $dataGrid = $this->getCurrentDataGrid();
         $this->configureDataGrid($dataGrid, [
+            'ajax' => true,
             'identifier' => '#newsletter-data-grid',
             'resource_path_delete' => 'admin/newsletter/index/delete',
             'resource_path_edit' => 'admin/newsletter/index/edit'
         ]);
 
+        $grid = $dataGrid->render();
+        if ($grid instanceof JsonResponse) {
+            return $grid;
+        }
+
         return [
-            'grid' => $dataGrid->render(),
+            'grid' => $grid,
             'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }
