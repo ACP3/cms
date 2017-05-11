@@ -8,6 +8,7 @@ namespace ACP3\Core\Test\View\Block;
 
 
 use ACP3\Core\Helpers\DataGrid;
+use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\View\Block\Context\DataGridBlockContext;
 use ACP3\Core\View\Block\DataGridBlockInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -22,6 +23,10 @@ abstract class AbstractDataGridBlockTest extends AbstractBlockTest
      * @var ContainerInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $container;
+    /**
+     * @var ResultsPerPage|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $resultsPerPage;
     /**
      * @var DataGrid|\PHPUnit_Framework_MockObject_MockObject
      */
@@ -38,13 +43,22 @@ abstract class AbstractDataGridBlockTest extends AbstractBlockTest
             ->setMethods(['get', 'set', 'has', 'initialized', 'getParameter', 'setParameter', 'hasParameter'])
             ->getMock();
 
+        $this->resultsPerPage = $this->getMockBuilder(ResultsPerPage::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getResultsPerPage'])
+            ->getMock();
+
+        $this->resultsPerPage->expects($this->atLeastOnce())
+            ->method('getResultsPerPage')
+            ->willReturn(10);
+
         $this->dataGrid = $this->getMockBuilder(DataGrid::class)
             ->disableOriginalConstructor()
-            ->setMethods(['setIdentifier', 'addColumn', 'render'])
+            ->setMethods(['setOptions', 'addColumn', 'render'])
             ->getMock();
 
         $this->dataGrid->expects($this->once())
-            ->method('setIdentifier')
+            ->method('setOptions')
             ->willReturnSelf();
 
         $this->dataGrid->expects($this->atLeastOnce())
@@ -63,5 +77,9 @@ abstract class AbstractDataGridBlockTest extends AbstractBlockTest
         $this->context->expects($this->atLeastOnce())
             ->method('getContainer')
             ->willReturn($this->container);
+
+        $this->context->expects($this->atLeastOnce())
+            ->method('getResultsPerPage')
+            ->willReturn($this->resultsPerPage);
     }
 }

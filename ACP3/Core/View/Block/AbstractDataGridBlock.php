@@ -67,14 +67,6 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
     /**
      * @return DataGrid
      */
-    protected function getNewDataGridInstance(): DataGrid
-    {
-        return $this->container->get('core.helpers.data_grid');
-    }
-
-    /**
-     * @return DataGrid
-     */
     protected function getCurrentDataGrid(): DataGrid
     {
         if (!$this->dataGrid) {
@@ -82,6 +74,14 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
         }
 
         return $this->dataGrid;
+    }
+
+    /**
+     * @return DataGrid
+     */
+    protected function getNewDataGridInstance(): DataGrid
+    {
+        return $this->container->get('core.helpers.data_grid');
     }
 
     /**
