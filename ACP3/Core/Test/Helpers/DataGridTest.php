@@ -4,6 +4,7 @@ namespace ACP3\Core\Test\Helpers;
 use ACP3\Core\ACL;
 use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\Helpers\Formatter\MarkEntries;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 
 class DataGridTest extends \PHPUnit_Framework_TestCase
@@ -20,6 +21,14 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
      * @var Translator|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $langMock;
+    /**
+     * @var RequestInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $requestMock;
+    /**
+     * @var DataGrid\ConfigProcessor|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $configProcessorMock;
 
     protected function setUp()
     {
@@ -28,16 +37,30 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['hasPermission'])
             ->getMock();
 
+        $this->requestMock = $this->getMockBuilder(RequestInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->langMock = $this->getMockBuilder(Translator::class)
             ->disableOriginalConstructor()
             ->setMethods(['t'])
             ->getMock();
 
+        $this->configProcessorMock = $this->getMockBuilder(DataGrid\ConfigProcessor::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->dataGrid = new DataGrid(
             $this->aclMock,
-            $this->langMock
+            $this->requestMock,
+            $this->langMock,
+            $this->configProcessorMock
         );
-        $this->dataGrid->setIdentifier('#data-grid');
+
+        $options = (new DataGrid\Options())
+            ->setIdentifier('#data-grid');
+
+        $this->dataGrid->setOptions($options);
 
         parent::setUp();
     }
@@ -52,14 +75,9 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
             'can_delete' => false,
             'identifier' => 'data-grid',
             'header' => '',
-            'config' => [
-                'element' => '#data-grid',
-                'records_per_page' => 10,
-                'hide_col_sort' => "0",
-                'sort_col' => null,
-                'sort_dir' => null
-            ],
-            'results' => ''
+            'config' => [],
+            'results' => '',
+            'num_results' => 0
         ];
     }
 
@@ -100,13 +118,7 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
             $this->getDefaultExpected(),
             [
                 'header' => '<th>Foo</th>',
-                'config' => [
-                    'element' => '#data-grid',
-                    'records_per_page' => 10,
-                    'hide_col_sort' => "1",
-                    'sort_col' => null,
-                    'sort_dir' => null
-                ],
+                'config' => [],
             ]
         );
 
@@ -147,14 +159,9 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
             $this->getDefaultExpected(),
             [
                 'header' => '<th>Foo</th>',
-                'config' => [
-                    'element' => '#data-grid',
-                    'records_per_page' => 10,
-                    'hide_col_sort' => "1",
-                    'sort_col' => null,
-                    'sort_dir' => null
-                ],
-                'results' => "<tr><td>Lorem Ipsum</td></tr>\n<tr><td>Lorem Ipsum Dolor</td></tr>\n"
+                'config' => [],
+                'results' => "<tr><td>Lorem Ipsum</td></tr>\n<tr><td>Lorem Ipsum Dolor</td></tr>\n",
+                'num_results' => 2
             ]
         );
 
