@@ -76,13 +76,12 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         $type = static::CELL_TYPE;
         $attribute = $this->addHtmlAttribute($column['attribute']);
         $class = $this->addHtmlAttribute('class', $column['class']);
-        $style = $this->addHtmlAttribute('style', $column['style']);
 
         if ($this->isAjax) {
             return $value;
         }
 
-        return "<{$type}{$attribute}{$class}{$style}>{$value}</{$type}>";
+        return "<{$type}{$attribute}{$class}>{$value}</{$type}>";
     }
 
     /**

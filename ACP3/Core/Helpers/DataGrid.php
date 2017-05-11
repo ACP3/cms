@@ -142,7 +142,6 @@ class DataGrid
                 'type' => '',
                 'fields' => [],
                 'class' => '',
-                'style' => '',
                 'sortable' => true,
                 'default_sort' => false,
                 'default_sort_direction' => 'asc',
