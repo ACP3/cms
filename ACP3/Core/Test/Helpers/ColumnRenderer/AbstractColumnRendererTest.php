@@ -54,11 +54,11 @@ abstract class AbstractColumnRendererTest extends \PHPUnit_Framework_TestCase
     {
         $this->columnData = array_merge($this->columnData, [
             'attribute' => [
-                'data-foo' => 'bar'
+                'order' => 'bar'
             ]
         ]);
 
-        $expected = '<td data-foo="bar"></td>';
+        $expected = '<td data-order="bar"></td>';
         $this->compareResults($expected);
     }
 
@@ -66,22 +66,12 @@ abstract class AbstractColumnRendererTest extends \PHPUnit_Framework_TestCase
     {
         $this->columnData = array_merge($this->columnData, [
             'attribute' => [
-                'data-foo' => 'bar',
-                'data-lorem' => 'ipsum',
+                'foo' => 'bar',
+                'lorem' => 'ipsum',
             ]
         ]);
 
         $expected = '<td data-foo="bar" data-lorem="ipsum"></td>';
-        $this->compareResults($expected);
-    }
-
-    public function testAddStyle()
-    {
-        $this->columnData = array_merge($this->columnData, [
-            'style' => 'width:50%'
-        ]);
-
-        $expected = '<td style="width:50%"></td>';
         $this->compareResults($expected);
     }
 

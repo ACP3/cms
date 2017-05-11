@@ -23,11 +23,9 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     protected $isAjax = false;
 
     /**
-     * @param string $identifier
-     *
-     * @return $this
+     * @inheritdoc
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier(string $identifier)
     {
         $this->identifier = $identifier;
 
@@ -35,11 +33,9 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param string $primaryKey
-     *
-     * @return $this
+     * @inheritdoc
      */
-    public function setPrimaryKey($primaryKey)
+    public function setPrimaryKey(string $primaryKey)
     {
         $this->primaryKey = $primaryKey;
 
@@ -47,8 +43,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param bool $isAjax
-     * @return $this
+     * @inheritdoc
      */
     public function setIsAjax(bool $isAjax)
     {
@@ -73,15 +68,31 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     protected function render(array $column, $value = '')
     {
+        if ($this->isAjax) {
+            return $this->renderAjax($column, $value);
+        }
+
         $type = static::CELL_TYPE;
         $attribute = $this->addHtmlAttribute($column['attribute']);
         $class = $this->addHtmlAttribute('class', $column['class']);
 
-        if ($this->isAjax) {
-            return $value;
+        return "<{$type}{$attribute}{$class}>{$value}</{$type}>";
+    }
+
+    /**
+     * @param array $column
+     * @param string $value
+     * @return string|array
+     */
+    private function renderAjax(array $column, string $value = '')
+    {
+        if (is_array($column['attribute']) && count($column['attribute'])) {
+            $column['attribute']['_'] = $value;
+
+            return $column['attribute'];
         }
 
-        return "<{$type}{$attribute}{$class}>{$value}</{$type}>";
+        return $value;
     }
 
     /**
@@ -90,12 +101,12 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      *
      * @return string
      */
-    protected function addHtmlAttribute($attributeName, $attributeData = null)
+    private function addHtmlAttribute($attributeName, $attributeData = null)
     {
         if (is_array($attributeName)) {
             $data = '';
             foreach ($attributeName as $key => $value) {
-                $data .= $this->addHtmlAttribute($key, $value);
+                $data .= $this->addHtmlAttribute('data-' . $key, $value);
             }
 
             return $data;

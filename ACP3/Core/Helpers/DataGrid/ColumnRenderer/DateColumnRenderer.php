@@ -41,13 +41,11 @@ class DateColumnRenderer extends AbstractColumnRenderer
         if ($value !== null && $value !== $this->getDefaultValue($column)) {
             $field = $this->getFirstDbField($column);
             $column['attribute'] += [
-                'data-order' => $this->date->format($dbResultRow[$field], 'U')
+                'sort' => $this->date->format($dbResultRow[$field], 'U')
             ];
         }
 
-        return $this->render(
-            $column, $value
-        );
+        return $this->render($column, $value);
     }
 
     /**
@@ -66,5 +64,13 @@ class DateColumnRenderer extends AbstractColumnRenderer
         }
 
         return $value;
+    }
+
+    /**
+     * @return array
+     */
+    public static function mandatoryAttributes(): array
+    {
+        return ['sort', '_'];
     }
 }

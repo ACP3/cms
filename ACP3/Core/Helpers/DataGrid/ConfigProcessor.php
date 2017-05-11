@@ -45,7 +45,7 @@ class ConfigProcessor
             'autoWidth' => false,
             'language' => $this->getLanguage(),
             'sorting' => $this->getDefaultSorting($columns),
-            'columns' => $this->getColumnDefinitions($columns)
+            'columns' => $this->getColumnDefinitions($columns, $options->isUseAjax())
         ];
 
         if ($options->isUseAjax()) {
@@ -120,9 +120,10 @@ class ConfigProcessor
 
     /**
      * @param ColumnPriorityQueue $columns
+     * @param bool $useAjax
      * @return array
      */
-    private function getColumnDefinitions(ColumnPriorityQueue $columns): array
+    private function getColumnDefinitions(ColumnPriorityQueue $columns, bool $useAjax): array
     {
         $columnDefinitions = [];
         $i = 0;
@@ -130,11 +131,20 @@ class ConfigProcessor
         foreach (clone $columns as $column) {
             if ($column['sortable'] === false) {
                 $columnDefinitions[$i]['orderable'] = false;
-            };
+            }
             if (!empty($column['class'])) {
                 $columnDefinitions[$i]['className'] = $column['class'];
-            };
-
+            }
+            if ($useAjax && is_callable($column['type'] . '::mandatoryAttributes')) {
+                $attributes = call_user_func($column['type'] . '::mandatoryAttributes');
+                if (is_array($attributes) && !empty($attributes)) {
+                    $mapper = [];
+                    foreach ($attributes as $attribute) {
+                        $mapper[$attribute] = $attribute;
+                    }
+                    $columnDefinitions[$i]['render'] = $mapper;
+                }
+            }
             if (empty($columnDefinitions[$i])) {
                 $columnDefinitions[$i] = null;
             }

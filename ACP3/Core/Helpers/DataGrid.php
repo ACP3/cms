@@ -1,4 +1,5 @@
 <?php
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\ACL;
@@ -46,7 +47,7 @@ class DataGrid
      */
     private $columns;
     /**
-     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer[]
+     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\ColumnRendererInterface[]
      */
     private $columnRenderer = [];
     /**
@@ -130,7 +131,7 @@ class DataGrid
 
     /**
      * @param array $columnData
-     * @param int   $priority
+     * @param int $priority
      *
      * @return $this
      */
@@ -165,7 +166,8 @@ class DataGrid
     {
         if ($this->options === null) {
             throw new DataGridException(
-                'Can not render data grid, as no options has been given. Please call the method DataGrid::setOptions() first.'
+                'An error has occurred while rendering the data grid, as no options has been given.' .
+                'Please call the method DataGrid::setOptions() first.'
             );
         }
 
