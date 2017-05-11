@@ -132,7 +132,7 @@ class ConfigProcessor
             if ($column['sortable'] === false) {
                 $columnDefinitions[$i]['orderable'] = false;
             }
-            if (!empty($column['class'])) {
+            if ($useAjax && !empty($column['class'])) {
                 $columnDefinitions[$i]['className'] = $column['class'];
             }
             if ($useAjax && is_callable($column['type'] . '::mandatoryAttributes')) {
