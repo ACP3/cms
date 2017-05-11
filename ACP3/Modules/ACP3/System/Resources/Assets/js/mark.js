@@ -27,10 +27,10 @@ function markEntries($markAllElem, name, action) {
  * @returns {*|jQuery|HTMLElement}
  */
 jQuery.fn.highlightTableRow = function (checkboxName) {
-    var $this = $(this);
+    var $markAllCheckbox = $(this);
 
-    $this.parents('thead')
-        .next('tbody').find('tr:has(:checkbox)').click(function (e) {
+    $markAllCheckbox.closest('table')
+        .on('click', 'tr:has(td :checkbox)', function (e) {
             var $tableRow = $(this),
                 $tbody = $tableRow.closest('tbody');
 
@@ -46,11 +46,14 @@ jQuery.fn.highlightTableRow = function (checkboxName) {
             $tableRow.toggleClass(cssClassName);
 
             // Alle Datensätze auf einer Seite wurden markiert
-            $this.prop('checked', ($tbody.find('input[name="' + checkboxName + '[]"]:visible').length === $tbody.find('tr.' + cssClassName + ':visible').length));
+            $markAllCheckbox.prop(
+                'checked',
+                ($tbody.find('input[name="' + checkboxName + '[]"]:visible').length === $tbody.find('tr.' + cssClassName + ':visible').length)
+            );
         }
     );
 
-    return $this;
+    return $markAllCheckbox;
 };
 
 /**
@@ -80,7 +83,7 @@ jQuery.fn.deleteMarkedResults = function (options) {
                 action: 'confirmed'
             };
 
-            var confirmationText = $entries.length == 1 ? settings.language.confirmationTextSingle : (settings.language.confirmationTextMultiple.replace('{items}', $entries.length));
+            var confirmationText = $entries.length === 1 ? settings.language.confirmationTextSingle : (settings.language.confirmationTextMultiple.replace('{items}', $entries.length));
 
             bootbox.confirm(confirmationText, function (result) {
                 if (result) {
