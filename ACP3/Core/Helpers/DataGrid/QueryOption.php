@@ -28,16 +28,20 @@ class QueryOption
 
     /**
      * QueryOption constructor.
-     * @param string $tableAlias
      * @param string $columnName
      * @param string $value
+     * @param string $tableAlias
      * @param string $operator
      */
-    public function __construct(string $tableAlias, string $columnName, string $value, string $operator)
-    {
+    public function __construct(
+        string $columnName,
+        string $value,
+        string $tableAlias = 'main',
+        string $operator = '='
+    ) {
         $this->tableAlias = $tableAlias;
-        $this->columnName = $columnName;
         $this->value = $value;
+        $this->columnName = $columnName;
         $this->operator = $operator;
     }
 
