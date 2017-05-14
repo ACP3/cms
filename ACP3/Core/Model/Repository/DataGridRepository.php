@@ -14,7 +14,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
  * Class DataGridRepository
  * @package ACP3\Core\Model\Repository
  */
-class DataGridRepository extends AbstractRepository
+abstract class DataGridRepository extends AbstractRepository
 {
     /**
      * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns
