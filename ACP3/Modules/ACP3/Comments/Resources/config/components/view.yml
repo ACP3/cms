@@ -8,6 +8,8 @@ services:
     class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsByModuleDataGridBlock
     arguments:
       - '@core.view.context.data_grid_block_context'
+    calls:
+      - ['setDataGridRepository', ['@comments.model.repository.comments_by_module_data_grid_repository']]
 
   comments.view.block.admin.comments_data_grid_block:
     class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsDataGridBlock

@@ -11,6 +11,7 @@ use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
 use ACP3\Core\Helpers\DataGrid\ConfigProcessor;
 use ACP3\Core\Helpers\DataGrid\Exception\DataGridException;
 use ACP3\Core\Helpers\DataGrid\Options;
+use ACP3\Core\Helpers\DataGrid\QueryOption;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Model\Repository\DataGridRepository;
@@ -57,7 +58,11 @@ class DataGrid
     /**
      * @var array|JsonResponse
      */
-    private $rendereredDataGrid;
+    private $renderedDataGrid;
+    /**
+     * @var QueryOption[]
+     */
+    private $queryOptions = [];
     /**
      * @var Options|null
      */
@@ -119,6 +124,17 @@ class DataGrid
     }
 
     /**
+     * @param QueryOption[] ...$queryOptions
+     * @return $this
+     */
+    public function setQueryOptions(QueryOption ...$queryOptions)
+    {
+        $this->queryOptions = $queryOptions;
+
+        return $this;
+    }
+
+    /**
      * @param Options $options
      * @return $this
      */
@@ -171,18 +187,18 @@ class DataGrid
             );
         }
 
-        if ($this->rendereredDataGrid === null) {
+        if ($this->renderedDataGrid === null) {
             $canDelete = $this->acl->hasPermission($this->options->getResourcePathDelete());
             $canEdit = $this->acl->hasPermission($this->options->getResourcePathEdit());
 
             $this->addDefaultColumns($canDelete, $canEdit);
 
             if ($this->isRequiredAjaxRequest()) {
-                $this->rendereredDataGrid = new JsonResponse([
+                $this->renderedDataGrid = new JsonResponse([
                     'data' => $this->mapTableColumnsToDbFieldsAjax()
                 ]);
             } else {
-                $this->rendereredDataGrid = [
+                $this->renderedDataGrid = [
                     'can_edit' => $canEdit,
                     'can_delete' => $canDelete,
                     'identifier' => substr($this->options->getIdentifier(), 1),
@@ -194,7 +210,7 @@ class DataGrid
             }
         }
 
-        return $this->rendereredDataGrid;
+        return $this->renderedDataGrid;
     }
 
     /**
@@ -340,7 +356,7 @@ class DataGrid
     private function fetchDbResults(): array
     {
         if (empty($this->results) && $this->repository instanceof DataGridRepository) {
-            $this->results = $this->repository->getAll(clone $this->columns);
+            $this->results = $this->repository->getAll(clone $this->columns, ...$this->queryOptions);
         }
 
         return $this->results;
@@ -352,7 +368,7 @@ class DataGrid
     public function countDbResults(): int
     {
         if ($this->repository instanceof DataGridRepository) {
-            return (int)$this->repository->countAll();
+            return (int)$this->repository->countAll(...$this->queryOptions);
         }
 
         return count($this->fetchDbResults());
