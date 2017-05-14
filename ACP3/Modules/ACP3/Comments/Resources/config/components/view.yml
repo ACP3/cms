@@ -16,6 +16,8 @@ services:
     arguments:
       - '@core.view.context.data_grid_block_context'
       - '@system.model.modulerepository'
+    calls:
+      - ['setDataGridRepository', ['@comments.model.repository.comments_data_grid_repository']]
 
   comments.view.block.admin.comments_settings_form_block:
     class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsSettingsFormBlock

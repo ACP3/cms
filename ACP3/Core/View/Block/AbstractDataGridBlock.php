@@ -102,7 +102,9 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
         $dataGrid->setOptions($options);
 
         if ($this->getDataGridRepository() instanceof DataGridRepository) {
-            $dataGrid->setRepository($this->getDataGridRepository());
+            $dataGrid
+                ->setRepository($this->getDataGridRepository())
+                ->setQueryOptions(...$dataGridOptions['query_options']);
         } else {
             $data = $this->getData();
             $dataGrid->setResults(isset($data['results']) ? $data['results'] : $data);
@@ -119,7 +121,8 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
         return [
             'resource_path_delete' => '',
             'resource_path_edit' => '',
-            'ajax' => false
+            'ajax' => false,
+            'query_options' => []
         ];
     }
 

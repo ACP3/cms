@@ -11,6 +11,7 @@ use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
 use ACP3\Core\View\Block\Context;
 use ACP3\Modules\ACP3\Comments\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CommentsDataGridBlock extends AbstractDataGridBlock
 {
@@ -43,7 +44,8 @@ class CommentsDataGridBlock extends AbstractDataGridBlock
                 'label' => $this->translator->t('system', 'date'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['date'],
-                'default_sort' => true
+                'default_sort' => true,
+                'default_sort_direction' => 'desc'
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('system', 'name'),
@@ -81,13 +83,22 @@ class CommentsDataGridBlock extends AbstractDataGridBlock
 
         $dataGrid = $this->getCurrentDataGrid();
         $this->configureDataGrid($dataGrid, [
+            'ajax' => true,
             'identifier' => '#comments-details-data-grid',
             'resource_path_delete' => 'admin/comments/details/delete/id_' . $data['moduleId'],
             'resource_path_edit' => 'admin/comments/details/edit',
+            'query_options' => [
+                new DataGrid\QueryOption('module_id', $data['moduleId'])
+            ]
         ]);
 
+        $grid = $dataGrid->render();
+        if ($grid instanceof JsonResponse) {
+            return $grid;
+        }
+
         return [
-            'grid' => $dataGrid->render(),
+            'grid' => $grid,
             'module_id' => $data['moduleId'],
             'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
