@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\System;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
@@ -23,8 +24,8 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\DataGridBlockInterface $block)
-    {
+        Core\View\Block\DataGridBlockInterface $block
+    ) {
         parent::__construct($context);
 
         $this->block = $block;
@@ -33,7 +34,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * @param int $id
      *
-     * @return array
+     * @return array|JsonResponse
      */
     public function execute($id)
     {

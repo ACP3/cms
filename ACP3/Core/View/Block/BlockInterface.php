@@ -7,6 +7,8 @@
 namespace ACP3\Core\View\Block;
 
 
+use Symfony\Component\HttpFoundation\Response;
+
 interface BlockInterface
 {
     /**
@@ -21,7 +23,7 @@ interface BlockInterface
     public function getData(): array;
 
     /**
-     * @return array
+     * @return array|Response
      */
     public function render();
 }
