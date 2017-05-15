@@ -14,7 +14,7 @@ use ACP3\Core\Helpers\DataGrid\Options;
 use ACP3\Core\Helpers\DataGrid\QueryOption;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Model\Repository\DataGridRepository;
+use ACP3\Core\Model\Repository\AbstractDataGridRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGrid
@@ -36,7 +36,7 @@ class DataGrid
      */
     private $configProcessor;
     /**
-     * @var \ACP3\Core\Model\Repository\DataGridRepository
+     * @var \ACP3\Core\Model\Repository\AbstractDataGridRepository
      */
     private $repository;
     /**
@@ -100,11 +100,11 @@ class DataGrid
     }
 
     /**
-     * @param \ACP3\Core\Model\Repository\DataGridRepository $repository
+     * @param \ACP3\Core\Model\Repository\AbstractDataGridRepository $repository
      *
      * @return $this
      */
-    public function setRepository(DataGridRepository $repository)
+    public function setRepository(AbstractDataGridRepository $repository)
     {
         $this->repository = $repository;
 
@@ -355,7 +355,7 @@ class DataGrid
      */
     private function fetchDbResults(): array
     {
-        if (empty($this->results) && $this->repository instanceof DataGridRepository) {
+        if (empty($this->results) && $this->repository instanceof AbstractDataGridRepository) {
             $this->results = $this->repository->getAll(clone $this->columns, ...$this->queryOptions);
         }
 
@@ -367,7 +367,7 @@ class DataGrid
      */
     public function countDbResults(): int
     {
-        if ($this->repository instanceof DataGridRepository) {
+        if ($this->repository instanceof AbstractDataGridRepository) {
             return (int)$this->repository->countAll(...$this->queryOptions);
         }
 

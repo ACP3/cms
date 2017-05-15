@@ -6,13 +6,13 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\Model\Repository;
 
-use ACP3\Core\Model\Repository\DataGridRepository;
+use ACP3\Core\Model\Repository\AbstractDataGridRepository;
 
 /**
  * Class NewsletterDataGridRepository
  * @package ACP3\Modules\ACP3\Newsletter\Model\Repository
  */
-class NewsletterDataGridRepository extends DataGridRepository
+class NewsletterDataGridRepository extends AbstractDataGridRepository
 {
     const TABLE_NAME = NewsletterRepository::TABLE_NAME;
 }

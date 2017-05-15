@@ -10,11 +10,7 @@ use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\Helpers\DataGrid\QueryOption;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-/**
- * Class DataGridRepository
- * @package ACP3\Core\Model\Repository
- */
-abstract class DataGridRepository extends AbstractRepository
+abstract class AbstractDataGridRepository extends AbstractRepository
 {
     /**
      * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns

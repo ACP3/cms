@@ -14,7 +14,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
  * Class DataGridRepository
  * @package ACP3\Modules\ACP3\Files\Model\Repository
  */
-class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
+class DataGridRepository extends \ACP3\Core\Model\Repository\AbstractDataGridRepository
 {
     const TABLE_NAME = FilesRepository::TABLE_NAME;
 

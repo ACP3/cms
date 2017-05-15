@@ -8,11 +8,11 @@ namespace ACP3\Modules\ACP3\Comments\Model\Repository;
 
 
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
-use ACP3\Core\Model\Repository\DataGridRepository;
+use ACP3\Core\Model\Repository\AbstractDataGridRepository;
 use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-class CommentsDataGridRepository extends DataGridRepository
+class CommentsDataGridRepository extends AbstractDataGridRepository
 {
     const TABLE_NAME = CommentRepository::TABLE_NAME;
 

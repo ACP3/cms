@@ -8,7 +8,7 @@ namespace ACP3\Core\View\Block;
 
 
 use ACP3\Core\Helpers\DataGrid;
-use ACP3\Core\Model\Repository\DataGridRepository;
+use ACP3\Core\Model\Repository\AbstractDataGridRepository;
 
 abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBlockInterface
 {
@@ -29,7 +29,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
      */
     private $dataGrid;
     /**
-     * @var DataGridRepository
+     * @var AbstractDataGridRepository
      */
     private $dataGridRepository;
 
@@ -57,7 +57,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
     /**
      * @inheritdoc
      */
-    public function setDataGridRepository(DataGridRepository $dataGridRepository)
+    public function setDataGridRepository(AbstractDataGridRepository $dataGridRepository)
     {
         $this->dataGridRepository = $dataGridRepository;
 
@@ -101,7 +101,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
 
         $dataGrid->setOptions($options);
 
-        if ($this->getDataGridRepository() instanceof DataGridRepository) {
+        if ($this->getDataGridRepository() instanceof AbstractDataGridRepository) {
             $dataGrid
                 ->setRepository($this->getDataGridRepository())
                 ->setQueryOptions(...$dataGridOptions['query_options']);

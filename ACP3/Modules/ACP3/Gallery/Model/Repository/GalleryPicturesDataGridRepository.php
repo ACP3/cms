@@ -8,9 +8,9 @@ namespace ACP3\Modules\ACP3\Gallery\Model\Repository;
 
 
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
-use ACP3\Core\Model\Repository\DataGridRepository;
+use ACP3\Core\Model\Repository\AbstractDataGridRepository;
 
-class GalleryPicturesDataGridRepository extends DataGridRepository
+class GalleryPicturesDataGridRepository extends AbstractDataGridRepository
 {
     const TABLE_NAME = PictureRepository::TABLE_NAME;
 

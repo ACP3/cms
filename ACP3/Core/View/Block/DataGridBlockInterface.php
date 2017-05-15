@@ -7,7 +7,7 @@
 namespace ACP3\Core\View\Block;
 
 
-use ACP3\Core\Model\Repository\DataGridRepository;
+use ACP3\Core\Model\Repository\AbstractDataGridRepository;
 
 interface DataGridBlockInterface extends BlockInterface
 {
@@ -17,13 +17,13 @@ interface DataGridBlockInterface extends BlockInterface
     public function getModuleName(): string;
 
     /**
-     * @param DataGridRepository $dataGridRepository
+     * @param AbstractDataGridRepository $dataGridRepository
      * @return $this
      */
-    public function setDataGridRepository(DataGridRepository $dataGridRepository);
+    public function setDataGridRepository(AbstractDataGridRepository $dataGridRepository);
 
     /**
-     * @return DataGridRepository|null
+     * @return AbstractDataGridRepository|null
      */
     public function getDataGridRepository();
 }

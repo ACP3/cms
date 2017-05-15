@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Seo\Model\Repository;
  * Class DataGridRepository
  * @package ACP3\Modules\ACP3\Seo\Model\Repository
  */
-class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
+class DataGridRepository extends \ACP3\Core\Model\Repository\AbstractDataGridRepository
 {
     const TABLE_NAME = SeoRepository::TABLE_NAME;
 }
