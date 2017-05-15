@@ -13,6 +13,8 @@ services:
       - '@core.view.context.data_grid_block_context'
       - '@core.acl'
       - '@core.config'
+    calls:
+      - ['setDataGridRepository', ['@files.model.data_grid_repository']]
 
   files.view.block.admin.files_settings_form_block:
     class: ACP3\Modules\ACP3\Files\View\Block\Admin\FilesSettingsFormBlock

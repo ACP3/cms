@@ -9,6 +9,8 @@ services:
     arguments:
       - '@core.view.context.data_grid_block_context'
       - '@core.environment.application_path'
+    calls:
+      - ['setDataGridRepository', ['@emoticons.model.data_grid_repository']]
 
   emoticons.view.block.admin.emoticons_settings_form_block:
     class: ACP3\Modules\ACP3\Emoticons\View\Block\Admin\EmoticonsSettingsFormBlock

@@ -31,7 +31,6 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@users.view.block.admin.users_data_grid_block'
-      - '@users.model.data_grid_repository'
 
   users.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Settings

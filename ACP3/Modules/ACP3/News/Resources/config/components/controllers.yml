@@ -34,7 +34,6 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@news.view.block.admin.news_data_grid_block'
-      - '@news.model.data_grid_repository'
 
   news.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Settings

@@ -3,6 +3,8 @@ services:
     class: ACP3\Modules\ACP3\Users\View\Block\Admin\UsersDataGridBlock
     arguments:
       - '@core.view.context.data_grid_block_context'
+    calls:
+      - ['setDataGridRepository', ['@users.model.data_grid_repository']]
 
   users.view.block.admin.users_settings_form_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Admin\UsersSettingsFormBlock

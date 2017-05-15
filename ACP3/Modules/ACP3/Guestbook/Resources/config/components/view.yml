@@ -3,6 +3,8 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\View\Block\Admin\GuestbookDataGridBlock
     arguments:
       - '@core.view.context.data_grid_block_context'
+    calls:
+      - ['setDataGridRepository', ['@guestbook.model.data_grid_repository']]
 
   guestbook.view.block.admin.guestbook_form_block:
     class: ACP3\Modules\ACP3\Guestbook\View\Block\Admin\GuestbookFormBlock

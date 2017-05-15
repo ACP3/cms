@@ -12,10 +12,6 @@ use ACP3\Modules\ACP3\Contact;
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var Contact\Model\Repository\DataGridRepository
-     */
-    private $dataGridRepository;
-    /**
      * @var Core\View\Block\DataGridBlockInterface
      */
     private $block;
@@ -24,26 +20,21 @@ class Index extends Core\Controller\AbstractFrontendAction
      * Index constructor.
      * @param Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\DataGridBlockInterface $block
-     * @param Contact\Model\Repository\DataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\DataGridBlockInterface $block,
-        Contact\Model\Repository\DataGridRepository $dataGridRepository
+        Core\View\Block\DataGridBlockInterface $block
     ) {
         parent::__construct($context);
 
-        $this->dataGridRepository = $dataGridRepository;
         $this->block = $block;
     }
 
     /**
      * @return array
      */
-    public function execute(): array
+    public function execute()
     {
-        return $this->block
-            ->setDataGridRepository($this->dataGridRepository)
-            ->render();
+        return $this->block->render();
     }
 }

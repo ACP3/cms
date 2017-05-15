@@ -27,7 +27,6 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@seo.view.block.admin.seo_data_grid_block'
-      - '@seo.model.data_grid_repository'
 
   seo.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Settings

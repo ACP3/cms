@@ -26,7 +26,6 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@polls.view.block.admin.polls_data_grid_block'
-      - '@polls.model.data_grid_repository'
 
   polls.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Index

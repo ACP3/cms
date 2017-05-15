@@ -9,6 +9,8 @@ services:
     class: ACP3\Modules\ACP3\Contact\View\Admin\ContactsDataGridBlock
     arguments:
       - '@core.view.context.data_grid_block_context'
+    calls:
+      - ['setDataGridRepository', ['@contact.model.repository.data_grid_repository']]
 
   contact.view.block.frontend.contact_form_block:
     class: ACP3\Modules\ACP3\Contact\View\Frontend\ContactFormBlock

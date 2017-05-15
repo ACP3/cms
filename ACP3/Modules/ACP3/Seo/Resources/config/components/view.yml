@@ -4,6 +4,8 @@ services:
     arguments:
       - '@core.view.context.data_grid_block_context'
       - '@seo.helper.meta_statements'
+    calls:
+      - ['setDataGridRepository', ['@seo.model.data_grid_repository']]
 
   seo.view.block.admin.seo_form_block:
     class: ACP3\Modules\ACP3\Seo\View\Block\Admin\SeoFormBlock

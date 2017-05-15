@@ -3,6 +3,8 @@ services:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleriesDataGridBlock
     arguments:
       - '@core.view.context.data_grid_block_context'
+    calls:
+      - ['setDataGridRepository', ['@gallery.model.gallery_data_grid_repository']]
 
   gallery.view.block.admin.gallery_form_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryFormBlock

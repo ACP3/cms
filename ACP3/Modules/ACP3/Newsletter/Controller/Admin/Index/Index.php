@@ -7,14 +7,9 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Newsletter;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterDataGridRepository
-     */
-    protected $dataGridRepository;
     /**
      * @var Core\View\Block\DataGridBlockInterface
      */
@@ -25,16 +20,13 @@ class Index extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\DataGridBlockInterface $block
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterDataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\DataGridBlockInterface $block,
-        Newsletter\Model\Repository\NewsletterDataGridRepository $dataGridRepository
+        Core\View\Block\DataGridBlockInterface $block
     ) {
         parent::__construct($context);
 
-        $this->dataGridRepository = $dataGridRepository;
         $this->block = $block;
     }
 
@@ -43,8 +35,6 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        return $this->block
-            ->setDataGridRepository($this->dataGridRepository)
-            ->render();
+        return $this->block->render();
     }
 }

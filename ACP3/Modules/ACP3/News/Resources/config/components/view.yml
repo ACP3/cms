@@ -11,6 +11,8 @@ services:
     class: ACP3\Modules\ACP3\News\View\Block\Admin\NewsDataGridBlock
     arguments:
       - '@core.view.context.data_grid_block_context'
+    calls:
+      - ['setDataGridRepository', ['@news.model.data_grid_repository']]
 
   news.view.block.admin.news_settings_form_block:
     class: ACP3\Modules\ACP3\News\View\Block\Admin\NewsSettingsFormBlock

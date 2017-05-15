@@ -3,11 +3,15 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterAccountsDataGridBlock
     arguments:
       - '@core.view.context.data_grid_block_context'
+    calls:
+      - ['setDataGridRepository', ['@newsletter.model.account_data_grid_repository']]
 
   newsletter.view.block.admin.newsletter_data_grid_block:
     class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterDataGridBlock
     arguments:
       - '@core.view.context.data_grid_block_context'
+    calls:
+      - ['setDataGridRepository', ['@newsletter.model.newsletter_data_grid_repository']]
 
   newsletter.view.block.admin.newsletter_form_block:
     class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterFormBlock
