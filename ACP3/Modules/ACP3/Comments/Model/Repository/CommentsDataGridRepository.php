@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Comments\Model\Repository;
 
 
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
-use ACP3\Core\Model\Repository\AbstractDataGridRepository;
+use ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository;
 use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 

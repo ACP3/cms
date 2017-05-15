@@ -8,7 +8,7 @@ namespace ACP3\Core\View\Block;
 
 
 use ACP3\Core\Helpers\DataGrid;
-use ACP3\Core\Model\Repository\AbstractDataGridRepository;
+use ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository;
 
 abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBlockInterface
 {

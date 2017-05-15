@@ -7,7 +7,7 @@
 namespace ACP3\Core\View\Block;
 
 
-use ACP3\Core\Model\Repository\AbstractDataGridRepository;
+use ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository;
 
 interface DataGridBlockInterface extends BlockInterface
 {

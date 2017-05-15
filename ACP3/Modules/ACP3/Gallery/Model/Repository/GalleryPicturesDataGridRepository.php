@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Gallery\Model\Repository;
 
 
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
-use ACP3\Core\Model\Repository\AbstractDataGridRepository;
+use ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository;
 
 class GalleryPicturesDataGridRepository extends AbstractDataGridRepository
 {
