@@ -9,6 +9,11 @@ services:
     arguments:
       - '@core.db'
 
+  gallery.model.repository.gallery_pictures_data_grid_repository:
+    class: ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesDataGridRepository
+    arguments:
+      - '@core.db'
+
   gallery.model.picturerepository:
     class: ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
     arguments:

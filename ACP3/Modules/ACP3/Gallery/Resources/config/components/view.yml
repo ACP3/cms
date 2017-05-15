@@ -14,6 +14,8 @@ services:
     arguments:
       - '@core.view.context.data_grid_block_context'
       - '@core.acl'
+    calls:
+      - ['setDataGridRepository', ['@gallery.model.repository.gallery_pictures_data_grid_repository']]
 
   gallery.view.block.admin.gallery_settings_form_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GallerySettingsFormBlock

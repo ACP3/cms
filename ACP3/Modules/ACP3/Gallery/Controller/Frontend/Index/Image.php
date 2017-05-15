@@ -45,7 +45,7 @@ class Image extends Core\Controller\AbstractFrontendAction
      */
     public function execute($id, $action = '')
     {
-        $settings = $this->config->getSettings(Schema::MODULE_NAME);
+        $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
 
         set_time_limit(20);
         $picture = $this->pictureRepository->getFileById($id);

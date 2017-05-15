@@ -11,6 +11,7 @@ use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
 use ACP3\Core\View\Block\Context;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
 {
@@ -82,13 +83,22 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
 
         $dataGrid = $this->getCurrentDataGrid();
         $this->configureDataGrid($dataGrid, [
+            'ajax' => true,
             'identifier' => '#gallery-edit-data-grid',
             'resource_path_delete' => 'admin/gallery/pictures/delete/id_' . $data['galleryId'],
-            'resource_path_edit' => 'admin/gallery/pictures/edit'
+            'resource_path_edit' => 'admin/gallery/pictures/edit',
+            'query_options' => [
+                new DataGrid\QueryOption('gallery_id', $data['galleryId'])
+            ]
         ]);
 
+        $grid = $dataGrid->render();
+        if ($grid instanceof JsonResponse) {
+            return $grid;
+        }
+
         return [
-            'grid' => $dataGrid->render(),
+            'grid' => $grid,
             'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
     }

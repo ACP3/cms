@@ -75,10 +75,28 @@ class Edit extends Core\Controller\AbstractFrontendAction
                 ->setData($gallery)
                 ->render();
 
-            return array_merge($data, $this->executeListPictures($id));
+            $result = $this->executeListPictures($id);
+
+            if (is_array($result)) {
+                return array_merge($data, $result);
+            }
+
+            return $result;
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return array
+     */
+    protected function executeListPictures($id)
+    {
+        return $this->dataGridBlock
+            ->setData(['galleryId' => $id])
+            ->render();
     }
 
     /**
@@ -99,20 +117,5 @@ class Edit extends Core\Controller\AbstractFrontendAction
 
             return $this->galleryModel->save($formData, $id);
         });
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return array
-     */
-    protected function executeListPictures($id)
-    {
-        return $this->dataGridBlock
-            ->setData([
-                'results' => $this->pictureRepository->getPicturesByGalleryId($id),
-                'galleryId' => $id
-            ])
-            ->render();
     }
 }
