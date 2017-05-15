@@ -39,7 +39,7 @@ services:
       - '@core.context.frontend'
       - '@polls.view.block.frontend.poll_details_block'
       - '@core.date'
-      - '@polls.model.pollrepository'
+      - '@polls.model.repository.polls_repository'
 
   polls.controller.frontend.index.vote:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Vote
@@ -49,8 +49,8 @@ services:
       - '@core.date'
       - '@polls.validation.vote_validation'
       - '@polls.model.vote_model'
-      - '@polls.model.pollrepository'
-      - '@polls.model.answerrepository'
+      - '@polls.model.repository.polls_repository'
+      - '@polls.model.repository.poll_answers_repository'
 
   polls.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Widget\Index\Index
@@ -59,6 +59,6 @@ services:
       - '@polls.view.block.widget.poll_vote_widget_form_block'
       - '@polls.view.block.widget.poll_details_widget_block'
       - '@core.date'
-      - '@polls.model.pollrepository'
-      - '@polls.model.answerrepository'
+      - '@polls.model.repository.polls_repository'
+      - '@polls.model.repository.poll_answers_repository'
 

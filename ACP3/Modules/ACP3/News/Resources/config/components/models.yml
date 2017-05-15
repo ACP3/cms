@@ -1,15 +1,15 @@
 services:
-  news.model.data_grid_repository:
+  news.model.repository.news_data_grid_repository:
     class: ACP3\Modules\ACP3\News\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
 
-  news.model.newsrepository:
+  news.model.repository.news_repository:
     class: ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
     arguments:
       - '@core.db'
 
-  news.model.search_results_aware_repository:
+  news.model.repository.search_results_aware_repository:
     class: ACP3\Modules\ACP3\News\Model\Repository\SearchResultsAwareRepository
     arguments:
       - '@core.db'
@@ -21,4 +21,4 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@core.config'
-      - '@news.model.newsrepository'
+      - '@news.model.repository.news_repository'

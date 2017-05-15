@@ -51,8 +51,8 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Send
     arguments:
       - '@core.context.frontend'
-      - '@newsletter.model.newsletterrepository'
-      - '@newsletter.model.accountrepository'
+      - '@newsletter.model.repository.newsletters_repository'
+      - '@newsletter.model.repository.newsletter_accounts_repository'
       - '@newsletter.helper.sendnewsletter'
 
   newsletter.controller.admin.index.settings:
@@ -68,7 +68,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@newsletter.view.block.frontend.newsletter_details_block'
-      - '@newsletter.model.newsletterrepository'
+      - '@newsletter.model.repository.newsletters_repository'
 
   newsletter.controller.frontend.archive.index:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive\Index

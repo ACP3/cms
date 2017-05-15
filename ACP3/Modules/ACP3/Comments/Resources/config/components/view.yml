@@ -15,7 +15,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsDataGridBlock
     arguments:
       - '@core.view.context.data_grid_block_context'
-      - '@system.model.modulerepository'
+      - '@system.model.repository.modules_repository'
     calls:
       - ['setDataGridRepository', ['@comments.model.repository.comments_data_grid_repository']]
 
@@ -39,6 +39,6 @@ services:
     arguments:
       - '@core.view.context.listing_block_context'
       - '@core.config'
-      - '@comments.model.commentrepository'
+      - '@comments.model.repository.comments_repository'
     calls:
       - ['setEmoticonsHelper', ['@?emoticons.helpers']]

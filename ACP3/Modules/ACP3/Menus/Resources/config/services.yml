@@ -16,7 +16,7 @@ services:
     arguments:
       - '@core.http.request'
       - '@core.router'
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.repository.menu_items_repository'
       - '@menus.cache'
     tags:
       - { name: core.view.extension }

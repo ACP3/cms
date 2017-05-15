@@ -32,7 +32,7 @@ services:
     arguments:
       - '@users.model.user_model'
       - '@core.modules'
-      - '@permissions.model.userrolerepository'
+      - '@permissions.model.repository.acl_user_roles_repository'
       - '@permissions.cache'
 
   core.config:
@@ -40,8 +40,8 @@ services:
     arguments:
       - '@core.event_dispatcher'
       - '@core.cache.system'
-      - '@system.model.modulerepository'
-      - '@system.model.settingsrepository'
+      - '@system.model.repository.modules_repository'
+      - '@system.model.repository.settings_repository'
 
   core.environment.application_path:
     synthetic: true

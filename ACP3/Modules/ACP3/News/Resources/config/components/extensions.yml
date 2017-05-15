@@ -5,7 +5,7 @@ services:
       - '@core.date'
       - '@core.router'
       - '@core.helpers.string_formatter'
-      - '@news.model.newsrepository'
+      - '@news.model.repository.news_repository'
     tags:
       - { name: feeds.extension.feed_availability }
     public: false
@@ -14,7 +14,7 @@ services:
     class: ACP3\Modules\ACP3\News\Extension\SearchAvailabilityExtension
     arguments:
       - '@core.router'
-      - '@news.model.search_results_aware_repository'
+      - '@news.model.repository.search_results_aware_repository'
     tags:
       - { name: search.extension.search_availability }
     public: false
@@ -24,7 +24,7 @@ services:
     arguments:
       - '@core.date'
       - '@core.router'
-      - '@news.model.newsrepository'
+      - '@news.model.repository.news_repository'
       - '@?seo.helper.meta_statements'
     tags:
       - { name: seo.extension.sitemap_availability }

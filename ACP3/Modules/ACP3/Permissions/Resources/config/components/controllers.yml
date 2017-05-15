@@ -35,7 +35,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@permissions.nested_set.operation.sort'
-      - '@permissions.model.rolerepository'
+      - '@permissions.model.repsitory.acl_roles_repository'
       - '@permissions.cache'
 
   permissions.controller.admin.resources.create:

@@ -14,7 +14,7 @@ services:
       - '@gallery.cache'
       - '@gallery.helpers'
       - '@gallery.model.gallery_model'
-      - '@gallery.model.picturerepository'
+      - '@gallery.model.repository.gallery_pictures_repository'
     calls:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
@@ -24,7 +24,7 @@ services:
       - '@core.context.frontend'
       - '@gallery.view.block.admin.gallery_form_block'
       - '@gallery.view.block.admin.gallery_pictures_data_grid_block'
-      - '@gallery.model.picturerepository'
+      - '@gallery.model.repository.gallery_pictures_repository'
       - '@gallery.model.gallery_model'
       - '@gallery.validation.gallery_form_validation'
 
@@ -48,7 +48,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@gallery.view.block.admin.picture_form_block'
-      - '@gallery.model.galleryrepository'
+      - '@gallery.model.repository.galleries_repository'
       - '@gallery.model.picture_model'
       - '@gallery.validation.picture_form_validation'
 
@@ -57,7 +57,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@gallery.helpers'
-      - '@gallery.model.picturerepository'
+      - '@gallery.model.repository.gallery_pictures_repository'
       - '@gallery.cache'
     calls:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
@@ -76,7 +76,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.sort'
-      - '@gallery.model.picturerepository'
+      - '@gallery.model.repository.gallery_pictures_repository'
       - '@gallery.cache'
 
   gallery.controller.frontend.index.details:
@@ -85,13 +85,13 @@ services:
       - '@core.context.frontend'
       - '@gallery.view.block.frontend.gallery_picture_details_block'
       - '@core.date'
-      - '@gallery.model.picturerepository'
+      - '@gallery.model.repository.gallery_pictures_repository'
 
   gallery.controller.frontend.index.image:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Image
     arguments:
       - '@core.context.frontend'
-      - '@gallery.model.picturerepository'
+      - '@gallery.model.repository.gallery_pictures_repository'
 
   gallery.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Index
@@ -105,7 +105,7 @@ services:
       - '@core.context.frontend'
       - '@gallery.view.block.frontend.gallery_pictures_listing_block'
       - '@core.date'
-      - '@gallery.model.galleryrepository'
+      - '@gallery.model.repository.galleries_repository'
 
   gallery.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Widget\Index\Index

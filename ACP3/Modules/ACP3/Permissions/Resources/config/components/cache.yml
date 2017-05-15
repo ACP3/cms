@@ -3,9 +3,9 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Cache
     arguments:
       - '@permissions.cache.core'
-      - '@permissions.model.rolerepository'
-      - '@permissions.model.resourcerepository'
-      - '@permissions.model.rulerepository'
+      - '@permissions.model.repsitory.acl_roles_repository'
+      - '@permissions.model.repository.acl_resources_repository'
+      - '@permissions.model.repository.acl_rules_repository'
 
   permissions.cache.core:
     class: ACP3\Core\Cache

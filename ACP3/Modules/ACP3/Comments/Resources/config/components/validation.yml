@@ -18,7 +18,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Validation\ValidationRules\FloodBarrierValidationRule
     arguments:
       - '@core.date'
-      - '@comments.model.commentrepository'
+      - '@comments.model.repository.comments_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false

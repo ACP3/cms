@@ -4,7 +4,7 @@ services:
     arguments:
       - '@gallery.cache.core'
       - '@core.environment.application_path'
-      - '@gallery.model.picturerepository'
+      - '@gallery.model.repository.gallery_pictures_repository'
       - '@core.config'
 
   gallery.cache.core:

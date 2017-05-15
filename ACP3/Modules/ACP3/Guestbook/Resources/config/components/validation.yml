@@ -18,7 +18,7 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Validation\ValidationRules\FloodBarrierValidationRule
     arguments:
       - '@core.date'
-      - '@guestbook.model.guestbookrepository'
+      - '@guestbook.model.repository.guestbook_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false

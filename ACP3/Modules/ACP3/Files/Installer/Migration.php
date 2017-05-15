@@ -73,7 +73,7 @@ class Migration extends Modules\Installer\AbstractMigration
                 "ALTER TABLE `{pre}files` ADD COLUMN `sort` INT(10) UNSIGNED NOT NULL AFTER `text`;",
                 "ALTER TABLE `{pre}files` ADD INDEX (`sort`)",
                 function() {
-                    $repository = $this->schemaHelper->getContainer()->get('files.model.filesrepository');
+                    $repository = $this->schemaHelper->getContainer()->get('files.model.repository.files_repository');
                     $files = $repository->getAll();
 
                     $i = 1;

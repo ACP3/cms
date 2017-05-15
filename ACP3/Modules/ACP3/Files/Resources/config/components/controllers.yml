@@ -49,7 +49,7 @@ services:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Sort
     arguments:
       - '@core.context.frontend'
-      - '@files.model.filesrepository'
+      - '@files.model.repository.files_repository'
       - '@core.helpers.sort'
 
   files.controller.frontend.index.details:
@@ -58,9 +58,9 @@ services:
       - '@core.context.frontend'
       - '@files.view.block.frontend.file_details_block'
       - '@core.date'
-      - '@files.model.filesrepository'
+      - '@files.model.repository.files_repository'
       - '@files.cache'
-      - '@categories.model.categories_repository'
+      - '@categories.model.repository.categories_repository'
 
   files.controller.frontend.index.download:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Download
@@ -68,16 +68,16 @@ services:
       - '@core.context.frontend'
       - '@core.date'
       - '@core.helpers.string_formatter'
-      - '@files.model.filesrepository'
+      - '@files.model.repository.files_repository'
       - '@files.cache'
-      - '@categories.model.categories_repository'
+      - '@categories.model.repository.categories_repository'
 
   files.controller.frontend.index.files:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Files
     arguments:
       - '@core.context.frontend'
       - '@files.view.block.frontend.files_listing_block'
-      - '@categories.model.categories_repository'
+      - '@categories.model.repository.categories_repository'
 
   files.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Index
@@ -90,4 +90,4 @@ services:
     arguments:
       - '@core.context.widget'
       - '@core.date'
-      - '@files.model.filesrepository'
+      - '@files.model.repository.files_repository'

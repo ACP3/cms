@@ -13,7 +13,7 @@ services:
       - '@core.http.request'
       - '@core.session'
       - '@users.model.authentication_model'
-      - '@users.model.userrepository'
+      - '@users.model.repository.users_repository'
     tags:
       - { name: core.authentication }
     public: false

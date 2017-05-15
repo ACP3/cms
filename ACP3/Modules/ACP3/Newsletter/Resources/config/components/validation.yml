@@ -22,7 +22,7 @@ services:
   newsletter.validation.validation_rules.account_exists_validation_rule:
     class: ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidationRule
     arguments:
-      - '@newsletter.model.accountrepository'
+      - '@newsletter.model.repository.newsletter_accounts_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false
@@ -30,7 +30,7 @@ services:
   newsletter.validation.validation_rules.account_exists_by_hash_validation_rule:
     class: ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsByHashValidationRule
     arguments:
-      - '@newsletter.model.accountrepository'
+      - '@newsletter.model.repository.newsletter_accounts_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false
@@ -38,7 +38,7 @@ services:
   newsletter.validation.validation_rules.account_not_exists_validation_rule:
     class: ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountNotExistsValidationRule
     arguments:
-      - '@newsletter.model.accountrepository'
+      - '@newsletter.model.repository.newsletter_accounts_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false

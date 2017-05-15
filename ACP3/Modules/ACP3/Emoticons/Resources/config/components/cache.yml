@@ -4,7 +4,7 @@ services:
     arguments:
       - '@emoticons.cache.core'
       - '@core.environment.application_path'
-      - '@emoticons.model.emoticonrepository'
+      - '@emoticons.model.repository.emoticons_repository'
 
   emoticons.cache.core:
     class: ACP3\Core\Cache

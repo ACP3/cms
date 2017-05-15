@@ -54,5 +54,5 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@menus.nested_set.operation.sort'
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.repository.menu_items_repository'
       - '@menus.cache'

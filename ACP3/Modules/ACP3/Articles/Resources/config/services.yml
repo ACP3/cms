@@ -13,4 +13,4 @@ services:
     class: ACP3\Modules\ACP3\Articles\Helpers
     arguments:
       - '@core.helpers.forms'
-      - '@articles.model.articlerepository'
+      - '@articles.model.repository.articles_repository'

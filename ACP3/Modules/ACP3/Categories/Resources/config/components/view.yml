@@ -16,4 +16,4 @@ services:
     arguments:
       - '@core.view.context.data_grid_block_context'
     calls:
-      - ['setDataGridRepository', ['@categories.model.data_grid_repository']]
+      - ['setDataGridRepository', ['@categories.model.repository.categories_data_grid_repository']]

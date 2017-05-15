@@ -6,7 +6,7 @@ services:
       - '@core.i18n.translator'
       - '@core.environment.application_path'
     calls:
-      - ['setEmoticonRepository', ['@?emoticons.model.emoticonrepository']]
+      - ['setEmoticonRepository', ['@?emoticons.model.repository.emoticons_repository']]
       - ['setFilemanagerHelpers', ['@?filemanager.helpers']]
     tags:
       - { name: core.wysiwyg.editor }

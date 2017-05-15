@@ -9,7 +9,7 @@ services:
     arguments:
       - '@core.view.context.block_context'
       - '@core.acl'
-      - '@menus.model.menurepository'
+      - '@menus.model.repository.menus_repository'
       - '@menus.helpers.menuitemslist'
 
   menus.view.block.admin.menu_item_form_block:

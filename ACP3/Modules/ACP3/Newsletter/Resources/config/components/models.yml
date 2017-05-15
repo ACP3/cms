@@ -1,25 +1,25 @@
 services:
-  newsletter.model.newsletterrepository:
+  newsletter.model.repository.newsletters_repository:
     class: ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
     arguments:
       - '@core.db'
 
-  newsletter.model.newsletter_data_grid_repository:
+  newsletter.model.repository.newsletters_data_grid_repository:
     class: ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterDataGridRepository
     arguments:
       - '@core.db'
 
-  newsletter.model.accountrepository:
+  newsletter.model.repository.newsletter_accounts_repository:
     class: ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
     arguments:
       - '@core.db'
 
-  newsletter.model.account_data_grid_repository:
+  newsletter.model.repository.newsletter_accounts_data_grid_repository:
     class: ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountDataGridRepository
     arguments:
       - '@core.db'
 
-  newsletter.model.accounthistoryrepository:
+  newsletter.model.repository.newsletter_account_history_repository:
     class: ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository
     arguments:
       - '@core.db'
@@ -30,4 +30,4 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@core.config'
-      - '@newsletter.model.newsletterrepository'
+      - '@newsletter.model.repository.newsletters_repository'

@@ -4,8 +4,8 @@ services:
     arguments:
       - '@menus.cache.core'
       - '@core.i18n.translator'
-      - '@menus.model.menurepository'
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.repository.menus_repository'
+      - '@menus.model.repository.menu_items_repository'
 
   menus.cache.core:
     class: ACP3\Core\Cache

@@ -7,4 +7,4 @@ services:
       - '@core.http.request'
       - '@core.router'
       - '@core.event_dispatcher'
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.repository.menu_items_repository'

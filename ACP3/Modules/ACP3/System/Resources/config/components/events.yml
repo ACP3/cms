@@ -15,7 +15,7 @@ services:
       - '@core.environment.application_path'
       - '@core.config'
       - '@core.modules'
-      - '@system.model.settingsrepository'
+      - '@system.model.repository.settings_repository'
       - '@system.helpers.can_use_page_cache'
     tags:
       - { name: core.eventListener, event: core.settings.save_before, method: invalidatePageCache }

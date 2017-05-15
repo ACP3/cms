@@ -4,7 +4,7 @@ services:
     arguments:
       - '@core.view.context.data_grid_block_context'
     calls:
-      - ['setDataGridRepository', ['@gallery.model.gallery_data_grid_repository']]
+      - ['setDataGridRepository', ['@gallery.model.repository.galleries_data_grid_repository']]
 
   gallery.view.block.admin.gallery_form_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryFormBlock
@@ -33,7 +33,7 @@ services:
       - '@core.view.context.form_block_context'
       - '@core.config'
       - '@core.modules'
-      - '@gallery.model.galleryrepository'
+      - '@gallery.model.repository.galleries_repository'
 
   gallery.view.block.frontend.galleries_listing_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Frontend\GalleriesListingBlock
@@ -41,14 +41,14 @@ services:
       - '@core.view.context.listing_block_context'
       - '@core.date'
       - '@core.config'
-      - '@gallery.model.galleryrepository'
+      - '@gallery.model.repository.galleries_repository'
 
   gallery.view.block.frontend.gallery_pictures_listing_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Frontend\GalleryPicturesListingBlock
     arguments:
       - '@core.view.context.block_context'
       - '@core.config'
-      - '@gallery.model.galleryrepository'
+      - '@gallery.model.repository.galleries_repository'
       - '@gallery.cache'
 
   gallery.view.block.frontend.gallery_picture_details_block:
@@ -58,7 +58,7 @@ services:
       - '@core.environment.application_path'
       - '@core.router'
       - '@core.config'
-      - '@gallery.model.picturerepository'
+      - '@gallery.model.repository.gallery_pictures_repository'
     calls:
       - ['setMetaStatements', ['@?seo.helper.meta_statements']]
 
@@ -68,4 +68,4 @@ services:
       - '@core.view.context.block_context'
       - '@core.date'
       - '@core.config'
-      - '@gallery.model.galleryrepository'
+      - '@gallery.model.repository.galleries_repository'

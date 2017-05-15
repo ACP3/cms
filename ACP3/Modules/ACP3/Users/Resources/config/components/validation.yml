@@ -26,7 +26,7 @@ services:
   users.validation.validation_rules.account_exists_by_email_validation_rule:
     class: ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountExistsByEmailValidationRule
     arguments:
-      - '@users.model.userrepository'
+      - '@users.model.repository.users_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false
@@ -34,7 +34,7 @@ services:
   users.validation.validation_rules.account_not_exists_by_email_validation_rule:
     class: ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByEmailValidationRule
     arguments:
-      - '@users.model.userrepository'
+      - '@users.model.repository.users_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false
@@ -42,7 +42,7 @@ services:
   users.validation.validation_rules.account_exists_by_name_validation_rule:
     class: ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountExistsByNameValidationRule
     arguments:
-      - '@users.model.userrepository'
+      - '@users.model.repository.users_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false
@@ -50,7 +50,7 @@ services:
   users.validation.validation_rules.account_not_exists_by_name_validation_rule:
     class: ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameValidationRule
     arguments:
-      - '@users.model.userrepository'
+      - '@users.model.repository.users_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false

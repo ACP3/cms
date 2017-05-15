@@ -10,7 +10,7 @@ services:
     class: ACP3\Modules\ACP3\Emoticons\Event\Listener\OnEmoticonsModelBeforeDeleteListener
     arguments:
       - '@core.environment.application_path'
-      - '@emoticons.model.emoticonrepository'
+      - '@emoticons.model.repository.emoticons_repository'
     tags:
       - { name: core.eventListener, event: emoticons.model.emoticons.before_delete, method: execute }
 

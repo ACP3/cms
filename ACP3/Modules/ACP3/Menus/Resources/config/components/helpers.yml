@@ -9,11 +9,11 @@ services:
     class: ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem
     arguments:
       - '@menus.model.menu_items_model'
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.repository.menu_items_repository'
 
   menus.helpers.menuitemformfields:
     class: ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields
     arguments:
       - '@core.helpers.forms'
       - '@menus.helpers.menuitemslist'
-      - '@menus.model.menurepository'
+      - '@menus.model.repository.menus_repository'

@@ -1,10 +1,10 @@
 services:
-  emoticons.model.data_grid_repository:
+  emoticons.model.repository.emoticons_data_grid_repository:
     class: ACP3\Modules\ACP3\Emoticons\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
 
-  emoticons.model.emoticonrepository:
+  emoticons.model.repository.emoticons_repository:
     class: ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository
     arguments:
       - '@core.db'
@@ -14,4 +14,4 @@ services:
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
-      - '@emoticons.model.emoticonrepository'
+      - '@emoticons.model.repository.emoticons_repository'

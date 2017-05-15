@@ -68,7 +68,7 @@ services:
       - '@users.view.block.frontend.user_forgot_password_form_block'
       - '@core.helpers.secure'
       - '@core.helpers.alerts'
-      - '@users.model.userrepository'
+      - '@users.model.repository.users_repository'
       - '@users.validation.account_forgot_password_form_validation'
       - '@core.helpers.sendEmail'
 

@@ -16,7 +16,7 @@ services:
       - '@system.view.block.admin.system_modules_block'
       - '@core.i18n.dictionary_cache'
       - '@core.modules.moduleInfoCache'
-      - '@system.model.modulerepository'
+      - '@system.model.repository.modules_repository'
       - '@system.helpers.installer'
       - '@permissions.cache'
       - '@core.installer.schema_registrar'

@@ -4,7 +4,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@comments.model.comments_model'
-      - '@comments.model.commentrepository'
+      - '@comments.model.repository.comments_repository'
 
   comments.controller.admin.details.edit:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Edit
@@ -25,7 +25,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
-      - '@comments.model.commentrepository'
+      - '@comments.model.repository.comments_repository'
 
   comments.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Index

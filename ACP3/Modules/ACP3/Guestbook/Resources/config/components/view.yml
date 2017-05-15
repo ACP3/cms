@@ -4,7 +4,7 @@ services:
     arguments:
       - '@core.view.context.data_grid_block_context'
     calls:
-      - ['setDataGridRepository', ['@guestbook.model.data_grid_repository']]
+      - ['setDataGridRepository', ['@guestbook.model.repository.guestbook_data_grid_repository']]
 
   guestbook.view.block.admin.guestbook_form_block:
     class: ACP3\Modules\ACP3\Guestbook\View\Block\Admin\GuestbookFormBlock
@@ -25,7 +25,7 @@ services:
     arguments:
       - '@core.view.context.listing_block_context'
       - '@core.config'
-      - '@guestbook.model.guestbookrepository'
+      - '@guestbook.model.repository.guestbook_repository'
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
 

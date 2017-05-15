@@ -51,7 +51,7 @@ services:
       - '@core.context.frontend'
       - '@news.view.block.frontend.news_details_block'
       - '@core.date'
-      - '@news.model.newsrepository'
+      - '@news.model.repository.news_repository'
       - '@news.cache'
 
   news.controller.frontend.index.index:
@@ -65,11 +65,11 @@ services:
     arguments:
       - '@core.context.widget'
       - '@core.date'
-      - '@news.model.newsrepository'
+      - '@news.model.repository.news_repository'
 
   news.controller.widget.index.latest:
     class: ACP3\Modules\ACP3\News\Controller\Widget\Index\Latest
     arguments:
       - '@core.context.widget'
       - '@core.date'
-      - '@news.model.newsrepository'
+      - '@news.model.repository.news_repository'

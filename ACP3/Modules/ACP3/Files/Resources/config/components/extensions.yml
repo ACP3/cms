@@ -5,7 +5,7 @@ services:
       - '@core.date'
       - '@core.router'
       - '@core.helpers.string_formatter'
-      - '@files.model.filesrepository'
+      - '@files.model.repository.files_repository'
     tags:
       - { name: feeds.extension.feed_availability }
     public: false
@@ -14,7 +14,7 @@ services:
     class: ACP3\Modules\ACP3\Files\Extension\SearchAvailabilityExtension
     arguments:
       - '@core.router'
-      - '@files.model.search_results_aware_repository'
+      - '@files.model.repository.search_results_aware_repository'
     tags:
       - { name: search.extension.search_availability }
     public: false
@@ -24,8 +24,8 @@ services:
     arguments:
       - '@core.date'
       - '@core.router'
-      - '@files.model.filesrepository'
-      - '@categories.model.categories_repository'
+      - '@files.model.repository.files_repository'
+      - '@categories.model.repository.categories_repository'
       - '@?seo.helper.meta_statements'
     tags:
       - { name: seo.extension.sitemap_availability }

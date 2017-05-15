@@ -11,8 +11,8 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
     arguments:
       - '@core.date'
-      - '@newsletter.model.accountrepository'
-      - '@newsletter.model.accounthistoryrepository'
+      - '@newsletter.model.repository.newsletter_accounts_repository'
+      - '@newsletter.model.repository.newsletter_account_history_repository'
 
   newsletter.helper.sendnewsletter:
     class: ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter
@@ -20,7 +20,7 @@ services:
       - '@core.mailer'
       - '@core.router'
       - '@core.config'
-      - '@newsletter.model.newsletterrepository'
+      - '@newsletter.model.repository.newsletters_repository'
 
   newsletter.helper.subscribe:
     class: ACP3\Modules\ACP3\Newsletter\Helper\Subscribe
@@ -34,7 +34,7 @@ services:
       - '@core.helpers.secure'
       - '@core.config'
       - '@newsletter.helper.accountstatus'
-      - '@newsletter.model.accountrepository'
+      - '@newsletter.model.repository.newsletter_accounts_repository'
 
   newsletter.helper.data_grid.column_renderer.account_status_column_renderer:
     class: ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer\AccountStatusColumnRenderer

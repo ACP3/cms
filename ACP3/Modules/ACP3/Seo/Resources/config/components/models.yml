@@ -1,10 +1,10 @@
 services:
-  seo.model.data_grid_repository:
+  seo.model.repository.seo_data_grid_repository:
     class: ACP3\Modules\ACP3\Seo\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
 
-  seo.model.seorepository:
+  seo.model.repository.seo_repository:
     class: ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
     arguments:
       - '@core.db'
@@ -14,7 +14,7 @@ services:
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
-      - '@seo.model.seorepository'
+      - '@seo.model.repository.seo_repository'
 
   seo.model.sitemap_generation_model:
     class: ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel

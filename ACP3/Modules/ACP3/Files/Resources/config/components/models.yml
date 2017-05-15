@@ -1,16 +1,16 @@
 services:
-  files.model.data_grid_repository:
+  files.model.repository.files_data_grid_repository:
     class: ACP3\Modules\ACP3\Files\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
 
-  files.model.filesrepository:
+  files.model.repository.files_repository:
     class: ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
     arguments:
       - '@core.db'
       - '@core.config'
 
-  files.model.search_results_aware_repository:
+  files.model.repository.search_results_aware_repository:
     class: ACP3\Modules\ACP3\Files\Model\Repository\SearchResultsAwareRepository
     arguments:
       - '@core.db'
@@ -21,4 +21,4 @@ services:
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
-      - '@files.model.filesrepository'
+      - '@files.model.repository.files_repository'
