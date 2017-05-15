@@ -19,14 +19,14 @@ services:
     arguments:
       - '@core.db'
 
-  gallery.model.gallery_model:
+  gallery.model.galleries_model:
     class: ACP3\Modules\ACP3\Gallery\Model\GalleryModel
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@gallery.model.repository.galleries_repository'
 
-  gallery.model.picture_model:
+  gallery.model.gallery_pictures_model:
     class: ACP3\Modules\ACP3\Gallery\Model\PictureModel
     arguments:
       - '@core.event_dispatcher'

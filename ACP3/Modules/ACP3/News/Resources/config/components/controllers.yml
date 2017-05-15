@@ -4,7 +4,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@news.view.block.admin.news_form_block'
-      - '@news.model'
+      - '@news.model.news_model'
       - '@news.validation.admin_form_validation'
       - '@categories.helpers'
 
@@ -12,20 +12,20 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
-      - '@news.model'
+      - '@news.model.news_model'
 
   news.controller.admin.index.duplicate:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Duplicate
     arguments:
       - '@core.context.frontend'
-      - '@news.model'
+      - '@news.model.news_model'
 
   news.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
       - '@news.view.block.admin.news_form_block'
-      - '@news.model'
+      - '@news.model.news_model'
       - '@news.validation.admin_form_validation'
       - '@categories.helpers'
 

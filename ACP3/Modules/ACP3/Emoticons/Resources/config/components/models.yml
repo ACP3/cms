@@ -9,7 +9,7 @@ services:
     arguments:
       - '@core.db'
 
-  emoticons.model:
+  emoticons.model.emoticons_model:
     class: ACP3\Modules\ACP3\Emoticons\Model\EmoticonsModel
     arguments:
       - '@core.event_dispatcher'

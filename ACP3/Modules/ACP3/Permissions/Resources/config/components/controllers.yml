@@ -4,15 +4,15 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@permissions.view.block.admin.role_form_block'
-      - '@permissions.model.roles_model'
-      - '@permissions.model.rules_model'
+      - '@permissions.model.acl_roles_model'
+      - '@permissions.model.acl_rules_model'
       - '@permissions.validation.role_form_validation'
 
   permissions.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
-      - '@permissions.model.roles_model'
+      - '@permissions.model.acl_roles_model'
       - '@permissions.cache'
 
   permissions.controller.admin.index.edit:
@@ -20,8 +20,8 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@permissions.view.block.admin.role_form_block'
-      - '@permissions.model.roles_model'
-      - '@permissions.model.rules_model'
+      - '@permissions.model.acl_roles_model'
+      - '@permissions.model.acl_rules_model'
       - '@permissions.validation.role_form_validation'
 
   permissions.controller.admin.index.index:
@@ -43,21 +43,21 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@permissions.view.block.admin.resource_form_block'
-      - '@permissions.model.resources_model'
+      - '@permissions.model.acl_resources_model'
       - '@permissions.validation.resource_form_validation'
 
   permissions.controller.admin.resources.delete:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Delete
     arguments:
       - '@core.context.frontend'
-      - '@permissions.model.resources_model'
+      - '@permissions.model.acl_resources_model'
 
   permissions.controller.admin.resources.edit:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Edit
     arguments:
       - '@core.context.frontend'
       - '@permissions.view.block.admin.resource_form_block'
-      - '@permissions.model.resources_model'
+      - '@permissions.model.acl_resources_model'
       - '@permissions.validation.resource_form_validation'
 
   permissions.controller.admin.resources.index:

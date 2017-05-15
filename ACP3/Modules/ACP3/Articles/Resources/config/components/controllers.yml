@@ -5,7 +5,7 @@ services:
       - '@core.context.frontend'
       - '@articles.view.block.admin.article_form_block'
       - '@core.acl'
-      - '@articles.model'
+      - '@articles.model.articles_model'
       - '@articles.validation.admin_form_validation'
     calls:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
@@ -14,13 +14,13 @@ services:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
-      - '@articles.model'
+      - '@articles.model.articles_model'
 
   articles.controller.admin.index.duplicate:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Duplicate
     arguments:
       - '@core.context.frontend'
-      - '@articles.model'
+      - '@articles.model.articles_model'
 
   articles.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit
@@ -28,7 +28,7 @@ services:
       - '@core.context.frontend'
       - '@articles.view.block.admin.article_form_block'
       - '@core.acl'
-      - '@articles.model'
+      - '@articles.model.articles_model'
       - '@articles.validation.admin_form_validation'
     calls:
       - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]

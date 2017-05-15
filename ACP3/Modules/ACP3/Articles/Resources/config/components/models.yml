@@ -15,7 +15,7 @@ services:
       - '@core.db'
       - '@core.date'
 
-  articles.model:
+  articles.model.articles_model:
     class: ACP3\Modules\ACP3\Articles\Model\ArticlesModel
     arguments:
       - '@core.event_dispatcher'

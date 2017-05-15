@@ -48,7 +48,7 @@ services:
       - '@polls.view.block.frontend.poll_vote_form_block'
       - '@core.date'
       - '@polls.validation.vote_validation'
-      - '@polls.model.vote_model'
+      - '@polls.model.poll_votes_model'
       - '@polls.model.repository.polls_repository'
       - '@polls.model.repository.poll_answers_repository'
 

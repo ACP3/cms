@@ -4,7 +4,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@gallery.view.block.admin.gallery_form_block'
-      - '@gallery.model.gallery_model'
+      - '@gallery.model.galleries_model'
       - '@gallery.validation.gallery_form_validation'
 
   gallery.controller.admin.index.delete:
@@ -13,7 +13,7 @@ services:
       - '@core.context.frontend'
       - '@gallery.cache'
       - '@gallery.helpers'
-      - '@gallery.model.gallery_model'
+      - '@gallery.model.galleries_model'
       - '@gallery.model.repository.gallery_pictures_repository'
     calls:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
@@ -25,7 +25,7 @@ services:
       - '@gallery.view.block.admin.gallery_form_block'
       - '@gallery.view.block.admin.gallery_pictures_data_grid_block'
       - '@gallery.model.repository.gallery_pictures_repository'
-      - '@gallery.model.gallery_model'
+      - '@gallery.model.galleries_model'
       - '@gallery.validation.gallery_form_validation'
 
   gallery.controller.admin.index.index:
@@ -49,7 +49,7 @@ services:
       - '@core.context.frontend'
       - '@gallery.view.block.admin.picture_form_block'
       - '@gallery.model.repository.galleries_repository'
-      - '@gallery.model.picture_model'
+      - '@gallery.model.gallery_pictures_model'
       - '@gallery.validation.picture_form_validation'
 
   gallery.controller.admin.pictures.delete:
@@ -68,7 +68,7 @@ services:
       - '@core.context.frontend'
       - '@gallery.view.block.admin.picture_form_block'
       - '@gallery.helpers'
-      - '@gallery.model.picture_model'
+      - '@gallery.model.gallery_pictures_model'
       - '@gallery.validation.picture_form_validation'
 
   gallery.controller.admin.pictures.order:

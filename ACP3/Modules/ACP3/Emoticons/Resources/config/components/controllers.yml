@@ -4,21 +4,21 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@emoticons.view.block.admin.emoticon_form_block'
-      - '@emoticons.model'
+      - '@emoticons.model.emoticons_model'
       - '@emoticons.validation.admin_form_validation'
 
   emoticons.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
-      - '@emoticons.model'
+      - '@emoticons.model.emoticons_model'
 
   emoticons.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
       - '@emoticons.view.block.admin.emoticon_form_block'
-      - '@emoticons.model'
+      - '@emoticons.model.emoticons_model'
       - '@emoticons.validation.admin_form_validation'
 
   emoticons.controller.admin.index.index:

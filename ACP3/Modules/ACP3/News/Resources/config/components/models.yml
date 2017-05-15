@@ -15,7 +15,7 @@ services:
       - '@core.db'
       - '@core.date'
 
-  news.model:
+  news.model.news_model:
     class: ACP3\Modules\ACP3\News\Model\NewsModel
     arguments:
       - '@core.event_dispatcher'

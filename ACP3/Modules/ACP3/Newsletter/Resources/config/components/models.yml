@@ -24,7 +24,7 @@ services:
     arguments:
       - '@core.db'
 
-  newsletter.model:
+  newsletter.model.newsletters_model:
     class: ACP3\Modules\ACP3\Newsletter\Model\NewsletterModel
     arguments:
       - '@core.event_dispatcher'
