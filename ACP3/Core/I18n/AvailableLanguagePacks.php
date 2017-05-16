@@ -15,15 +15,14 @@ class AvailableLanguagePacks
      * @var DictionaryCache
      */
     private $dictionaryCache;
-
-    /**
-     * @var array
-     */
-    private $languagePacks = [];
     /**
      * @var ApplicationPath
      */
     private $appPath;
+    /**
+     * @var array
+     */
+    private $languagePacks = [];
 
     /**
      * AvailableLanguagePacks constructor.
@@ -37,7 +36,7 @@ class AvailableLanguagePacks
     }
 
     /**
-     * Überprüft, ob das angegebene Sprachpaket existiert
+     * Checks, whether the given locale exists as a language pack
      *
      * @param string $locale
      *
@@ -52,11 +51,10 @@ class AvailableLanguagePacks
     /**
      * Gets all currently available languages
      *
-     * @param string $currentLanguage
-     *
+     * @param string $currentLocale
      * @return array
      */
-    public function getLanguagePacks(string $currentLanguage): array
+    public function getLanguagePacks(string $currentLocale): array
     {
         if (empty($this->languagePacks)) {
             $this->languagePacks = $this->dictionaryCache->getLanguagePacksCache();
@@ -64,7 +62,7 @@ class AvailableLanguagePacks
 
         $languages = $this->languagePacks;
         foreach ($languages as $key => $value) {
-            $languages[$key]['selected'] = $languages[$key]['iso'] === $currentLanguage;
+            $languages[$key]['selected'] = $languages[$key]['iso'] === $currentLocale;
         }
 
         return $languages;

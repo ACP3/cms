@@ -9,11 +9,7 @@ namespace ACP3\Installer\Core\Application\Event\Listener;
 use ACP3\Core\Http\RedirectResponse;
 use ACP3\Core\Http\RequestInterface;
 
-/**
- * Class OnControllerActionDispatcherBeforeDispatchListener
- * @package ACP3\Installer\Core\Application\Event\Listener
- */
-class OnControllerActionDispatcherBeforeDispatchListener
+class SetLanguageCookieOnControllerActionDispatcherBeforeDispatchListener
 {
     /**
      * @var RequestInterface

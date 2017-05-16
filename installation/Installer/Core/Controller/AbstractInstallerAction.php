@@ -82,8 +82,6 @@ abstract class AbstractInstallerAction implements ActionInterface
      */
     public function preDispatch()
     {
-        //$this->setLanguage();
-
         // Einige Template Variablen setzen
         $this->view->assign('LANGUAGES', $this->languagesDropdown($this->locale->getLocale()));
         $this->view->assign('PHP_SELF', $this->appPath->getPhpSelf());
@@ -222,27 +220,5 @@ abstract class AbstractInstallerAction implements ActionInterface
         $this->layout = $layout;
 
         return $this;
-    }
-
-    private function setLanguage()
-    {
-        $cookieLocale = $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '');
-        if (!preg_match('=/=', $cookieLocale)
-            && is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $cookieLocale . '.xml') === true
-        ) {
-            $language = $cookieLocale;
-        } else {
-            $language = 'en_US'; // Fallback language
-
-            foreach ($this->request->getUserAgent()->parseAcceptLanguage() as $locale => $val) {
-                $locale = str_replace('-', '_', $locale);
-                if ($this->translator->languagePackExists($locale) === true) {
-                    $language = $locale;
-                    break;
-                }
-            }
-        }
-
-        $this->translator->setLocale($language);
     }
 }

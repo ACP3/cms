@@ -13,5 +13,12 @@ services:
   core.i18n.locale:
     class: ACP3\Installer\Core\I18n\Locale
     arguments:
+      - '@core.environment.application_path'
+      - '@core.http.request'
       - '@core.i18n.dictionary_cache'
-      - 'en_US'
+      - '@core.i18n.available_language_packs'
+
+  core.i18n.available_language_packs:
+    class: ACP3\Installer\Core\I18n\AvailableLanguagePacks
+    arguments:
+      - '@core.environment.application_path'
