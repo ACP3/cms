@@ -8,9 +8,10 @@ namespace ACP3\Installer\Core\Controller\Context;
 
 use ACP3\Core\Controller\ActionResultFactory;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\I18n\LocaleInterface;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Installer\Core\Environment\ApplicationPath;
-use ACP3\Installer\Core\I18n\Translator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +22,7 @@ class InstallerContext
      */
     private $container;
     /**
-     * @var \ACP3\Installer\Core\I18n\Translator
+     * @var TranslatorInterface
      */
     private $translator;
     /**
@@ -48,22 +49,27 @@ class InstallerContext
      * @var ActionResultFactory
      */
     private $actionResultFactory;
+    /**
+     * @var LocaleInterface
+     */
+    private $locale;
 
     /**
      * InstallerContext constructor.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Installer\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
+     * @param ContainerInterface $container
+     * @param TranslatorInterface $translator
+     * @param LocaleInterface $locale
+     * @param RequestInterface $request
+     * @param RouterInterface $router
      * @param \ACP3\Core\View $view
-     * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param \ACP3\Installer\Core\Environment\ApplicationPath $appPath
+     * @param Response $response
+     * @param ApplicationPath $appPath
      * @param ActionResultFactory $actionResultFactory
      */
     public function __construct(
         ContainerInterface $container,
-        Translator $translator,
+        TranslatorInterface $translator,
+        LocaleInterface $locale,
         RequestInterface $request,
         RouterInterface $router,
         \ACP3\Core\View $view,
@@ -79,6 +85,7 @@ class InstallerContext
         $this->response = $response;
         $this->appPath = $appPath;
         $this->actionResultFactory = $actionResultFactory;
+        $this->locale = $locale;
     }
 
     /**
@@ -90,7 +97,7 @@ class InstallerContext
     }
 
     /**
-     * @return \ACP3\Installer\Core\I18n\Translator
+     * @return TranslatorInterface
      */
     public function getTranslator()
     {
@@ -143,5 +150,13 @@ class InstallerContext
     public function getActionResultFactory(): ActionResultFactory
     {
         return $this->actionResultFactory;
+    }
+
+    /**
+     * @return LocaleInterface
+     */
+    public function getLocale(): LocaleInterface
+    {
+        return $this->locale;
     }
 }

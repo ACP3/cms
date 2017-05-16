@@ -12,17 +12,27 @@ use ACP3\Core\I18n\LocaleInterface;
 class Locale implements LocaleInterface
 {
     /**
+     * @var DictionaryCache
+     */
+    private $dictionaryCache;
+    /**
      * @var string
      */
     private $locale = '';
+    /**
+     * @var string
+     */
+    private $direction = '';
 
     /**
      * Locale constructor.
+     * @param DictionaryCache $dictionaryCache
      * @param string $locale
      */
-    public function __construct(string $locale)
+    public function __construct(DictionaryCache $dictionaryCache, string $locale = 'en_US')
     {
         $this->locale = $locale;
+        $this->dictionaryCache = $dictionaryCache;
     }
 
     /**
@@ -52,6 +62,10 @@ class Locale implements LocaleInterface
      */
     public function getDirection(): string
     {
-        // TODO: Implement getDirection() method.
+        if ($this->direction === '') {
+            $this->direction = $this->dictionaryCache->getLanguageCache($this->getLocale())['info']['direction'];
+        }
+
+        return $this->direction;
     }
 }

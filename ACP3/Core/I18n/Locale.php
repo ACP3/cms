@@ -27,7 +27,7 @@ class Locale implements LocaleInterface
     /**
      * @var string
      */
-    private $direction = 'ltr';
+    private $direction = '';
 
     /**
      * Locale constructor.

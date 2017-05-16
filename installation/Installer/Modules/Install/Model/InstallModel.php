@@ -8,10 +8,11 @@ namespace ACP3\Installer\Modules\Install\Model;
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\I18n\LocaleInterface;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Modules\Vendor;
 use ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Installer\Core\Environment\ApplicationPath;
-use ACP3\Installer\Core\I18n\Translator;
 use ACP3\Installer\Modules\Install\Helpers\Install;
 use ACP3\Installer\Modules\Install\Helpers\ModuleInstaller;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -34,7 +35,7 @@ class InstallModel
      */
     protected $appPath;
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     protected $translator;
     /**
@@ -53,6 +54,10 @@ class InstallModel
      * @var LoggerInterface
      */
     private $logger;
+    /**
+     * @var LocaleInterface
+     */
+    private $locale;
 
     /**
      * InstallModel constructor.
@@ -61,7 +66,8 @@ class InstallModel
      * @param ApplicationPath $appPath
      * @param Vendor $vendor
      * @param Secure $secure
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
+     * @param LocaleInterface $locale
      * @param Install $installHelper
      * @param ModuleInstaller $moduleInstaller
      */
@@ -71,7 +77,8 @@ class InstallModel
         ApplicationPath $appPath,
         Vendor $vendor,
         Secure $secure,
-        Translator $translator,
+        TranslatorInterface $translator,
+        LocaleInterface $locale,
         Install $installHelper,
         ModuleInstaller $moduleInstaller)
     {
@@ -83,6 +90,7 @@ class InstallModel
         $this->installHelper = $installHelper;
         $this->moduleInstaller = $moduleInstaller;
         $this->logger = $logger;
+        $this->locale = $locale;
     }
 
     /**
@@ -159,7 +167,7 @@ class InstallModel
                 'date_format_short' => $this->secure->strEncode($formData['date_format_short']),
                 'date_time_zone' => $formData['date_time_zone'],
                 'maintenance_message' => $this->translator->t('install', 'offline_message'),
-                'lang' => $this->translator->getLocale(),
+                'lang' => $this->locale->getLocale(),
                 'design' => $formData['design'],
                 'site_title' => !empty($formData['title']) ? $formData['title'] : 'ACP3'
             ],

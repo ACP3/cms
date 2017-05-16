@@ -32,11 +32,7 @@ class Translator implements TranslatorInterface
     }
 
     /**
-     * @param string $module
-     * @param string $phrase
-     * @param array  $arguments
-     *
-     * @return string
+     * @inheritdoc
      */
     public function t(string $module, string $phrase, array $arguments = []): string
     {

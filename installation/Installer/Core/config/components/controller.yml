@@ -4,6 +4,7 @@ services:
     arguments:
       - '@service_container'
       - '@core.i18n.translator'
+      - '@core.i18n.locale'
       - '@core.http.request'
       - '@core.router'
       - '@core.view'
