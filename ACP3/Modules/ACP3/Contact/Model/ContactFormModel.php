@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Contact\Model;
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Helpers\SendEmail;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Mailer\MailerMessage;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Contact\Installer\Schema;
@@ -24,7 +24,7 @@ class ContactFormModel
      */
     protected $secure;
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     protected $translator;
     /**
@@ -39,13 +39,13 @@ class ContactFormModel
     /**
      * ContactFormModel constructor.
      * @param SettingsInterface $config
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      * @param Secure $secure
      * @param SendEmail $sendEmail
      */
     public function __construct(
         SettingsInterface $config,
-        Translator $translator,
+        TranslatorInterface $translator,
         Secure $secure,
         SendEmail $sendEmail
     ) {

@@ -9,7 +9,8 @@ namespace ACP3\Core\Modules;
 use ACP3\Core\Cache;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\Locale;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\XML;
 
@@ -30,7 +31,7 @@ class ModuleInfoCache
      */
     protected $appPath;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -45,12 +46,17 @@ class ModuleInfoCache
      * @var ModuleAwareRepositoryInterface
      */
     protected $systemModuleRepository;
+    /**
+     * @var Locale
+     */
+    private $locale;
 
     /**
      * ModuleInfoCache constructor.
      * @param Cache $cache
      * @param ApplicationPath $appPath
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
+     * @param Locale $locale
      * @param Vendor $vendors
      * @param XML $xml
      * @param ModuleAwareRepositoryInterface $systemModuleRepository
@@ -58,7 +64,8 @@ class ModuleInfoCache
     public function __construct(
         Cache $cache,
         ApplicationPath $appPath,
-        Translator $translator,
+        TranslatorInterface $translator,
+        Locale $locale,
         Vendor $vendors,
         XML $xml,
         ModuleAwareRepositoryInterface $systemModuleRepository
@@ -69,6 +76,7 @@ class ModuleInfoCache
         $this->vendors = $vendors;
         $this->xml = $xml;
         $this->systemModuleRepository = $systemModuleRepository;
+        $this->locale = $locale;
     }
 
     /**
@@ -76,7 +84,7 @@ class ModuleInfoCache
      */
     public function getCacheKey()
     {
-        return 'infos_' . $this->translator->getLocale();
+        return 'infos_' . $this->locale->getLocale();
     }
 
     /**

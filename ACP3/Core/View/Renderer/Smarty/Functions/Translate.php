@@ -1,4 +1,5 @@
 <?php
+
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
@@ -10,14 +11,14 @@ use ACP3\Core;
 class Translate extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
 
     /**
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
-    public function __construct(Core\I18n\Translator $translator)
+    public function __construct(Core\I18n\TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }

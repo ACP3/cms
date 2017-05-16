@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Seo\Core;
 use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
@@ -34,7 +34,7 @@ class Pagination extends \ACP3\Core\Pagination
     /**
      * Pagination constructor.
      * @param Title $title
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      * @param RequestInterface $request
      * @param RouterInterface $router
      * @param MetaStatements $metaStatements
@@ -42,7 +42,7 @@ class Pagination extends \ACP3\Core\Pagination
      */
     public function __construct(
         Title $title,
-        Translator $translator,
+        TranslatorInterface $translator,
         RequestInterface $request,
         RouterInterface $router,
         MetaStatements $metaStatements,

@@ -13,10 +13,6 @@ use ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository;
 abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBlockInterface
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    protected $translator;
-    /**
      * @var \ACP3\Core\Helpers\ResultsPerPage
      */
     private $resultsPerPage;

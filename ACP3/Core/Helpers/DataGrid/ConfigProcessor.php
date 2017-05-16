@@ -8,7 +8,7 @@ namespace ACP3\Core\Helpers\DataGrid;
 
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 
 class ConfigProcessor
 {
@@ -17,16 +17,16 @@ class ConfigProcessor
      */
     private $request;
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
 
     /**
      * DataGridConfigProcessor constructor.
      * @param RequestInterface $request
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      */
-    public function __construct(RequestInterface $request, Translator $translator)
+    public function __construct(RequestInterface $request, TranslatorInterface $translator)
     {
         $this->request = $request;
         $this->translator = $translator;

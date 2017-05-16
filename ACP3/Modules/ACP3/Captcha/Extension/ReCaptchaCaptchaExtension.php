@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Captcha\Extension;
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
@@ -18,7 +18,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
 {
     const TEMPLATE = 'Captcha/Partials/captcha_recaptcha.tpl';
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
     /**
@@ -40,14 +40,14 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
 
     /**
      * ReCaptchaCaptchaExtension constructor.
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      * @param RequestInterface $request
      * @param SettingsInterface $settings
      * @param View $view
      * @param UserModel $user
      */
     public function __construct(
-        Translator $translator,
+        TranslatorInterface $translator,
         RequestInterface $request,
         SettingsInterface $settings,
         View $view,

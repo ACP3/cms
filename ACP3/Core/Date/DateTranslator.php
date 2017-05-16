@@ -6,16 +6,12 @@
 
 namespace ACP3\Core\Date;
 
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 
-/**
- * Class DateTranslator
- * @package ACP3\Core\Date
- */
 class DateTranslator
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -55,9 +51,9 @@ class DateTranslator
     /**
      * DateTranslator constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }

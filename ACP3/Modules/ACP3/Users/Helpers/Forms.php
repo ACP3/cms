@@ -3,12 +3,12 @@ namespace ACP3\Modules\ACP3\Users\Helpers;
 
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\CountryList;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 
 class Forms
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -25,13 +25,13 @@ class Forms
     private $country;
 
     /**
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param CountryList $countryList
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Helpers\Forms $formsHelpers
      */
     public function __construct(
-        Translator $translator,
+        TranslatorInterface $translator,
         CountryList $countryList,
         RequestInterface $request,
         \ACP3\Core\Helpers\Forms $formsHelpers

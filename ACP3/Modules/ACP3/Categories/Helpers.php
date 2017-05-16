@@ -20,7 +20,7 @@ class Helpers
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -50,7 +50,7 @@ class Helpers
 
     /**
      * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Modules $modules
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Helpers\Forms $formsHelper
@@ -60,7 +60,7 @@ class Helpers
      */
     public function __construct(
         Core\ACL $acl,
-        Core\I18n\Translator $translator,
+        Core\I18n\TranslatorInterface $translator,
         Core\Modules $modules,
         Core\Http\RequestInterface $request,
         Core\Helpers\Forms $formsHelper,

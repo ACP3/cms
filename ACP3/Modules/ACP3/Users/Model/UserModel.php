@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Users\Model;
 
 use ACP3\Core\I18n\CountryList;
-use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Users;
 
 class UserModel
@@ -35,10 +34,6 @@ class UserModel
      */
     protected $userRepository;
     /**
-     * @var Translator
-     */
-    private $translator;
-    /**
      * @var CountryList
      */
     private $countryList;
@@ -46,17 +41,14 @@ class UserModel
     /**
      * UserModel constructor.
      *
-     * @param Translator $translator
      * @param CountryList $countryList
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository $userRepository
      */
     public function __construct(
-        Translator $translator,
         CountryList $countryList,
         Users\Model\Repository\UsersRepository $userRepository
     ) {
         $this->userRepository = $userRepository;
-        $this->translator = $translator;
         $this->countryList = $countryList;
     }
 

@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Menus\Event\Listener;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Helpers\Forms;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\View;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields;
@@ -33,7 +33,7 @@ class OnMenusLayoutRenderManageMenuItemListener
      */
     private $menuItemFormFields;
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
     /**
@@ -44,7 +44,7 @@ class OnMenusLayoutRenderManageMenuItemListener
     /**
      * OnMenusLayoutRenderManageMenuItemListener constructor.
      * @param ACL $acl
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      * @param View $view
      * @param Forms $forms
      * @param MenuItemFormFields $menuItemFormFields
@@ -52,7 +52,7 @@ class OnMenusLayoutRenderManageMenuItemListener
      */
     public function __construct(
         ACL $acl,
-        Translator $translator,
+        TranslatorInterface $translator,
         View $view,
         Forms $forms,
         MenuItemFormFields $menuItemFormFields,

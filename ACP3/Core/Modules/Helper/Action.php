@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class Action
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -41,14 +41,14 @@ class Action
     /**
      * Action constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Router\RouterInterface $router
      * @param \ACP3\Core\Helpers\Alerts $alerts
      * @param \ACP3\Core\Helpers\RedirectMessages $redirectMessages
      */
     public function __construct(
-        Core\I18n\Translator $translator,
+        Core\I18n\TranslatorInterface $translator,
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
         Core\Helpers\Alerts $alerts,

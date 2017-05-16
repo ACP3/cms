@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor\CKEditor
     arguments:
       - '@core.modules'
-      - '@core.i18n.translator'
+      - '@core.i18n.locale'
       - '@core.environment.application_path'
     calls:
       - ['setEmoticonRepository', ['@?emoticons.model.repository.emoticons_repository']]

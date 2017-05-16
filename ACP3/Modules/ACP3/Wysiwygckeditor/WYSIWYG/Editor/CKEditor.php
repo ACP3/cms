@@ -20,9 +20,9 @@ class CKEditor extends Textarea
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var Core\I18n\Locale
      */
-    protected $translator;
+    private $locale;
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
@@ -44,18 +44,18 @@ class CKEditor extends Textarea
     /**
      * CKEditor constructor.
      *
-     * @param \ACP3\Core\Modules                     $modules
-     * @param \ACP3\Core\I18n\Translator             $translator
+     * @param \ACP3\Core\Modules $modules
+     * @param Core\I18n\Locale $locale
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
         Core\Modules $modules,
-        Core\I18n\Translator $translator,
+        Core\I18n\Locale $locale,
         Core\Environment\ApplicationPath $appPath
     ) {
         $this->modules = $modules;
-        $this->translator = $translator;
         $this->appPath = $appPath;
+        $this->locale = $locale;
     }
 
     /**
@@ -132,7 +132,7 @@ class CKEditor extends Textarea
         $this->config['entities'] = false;
         $this->config['extraPlugins'] = 'divarea,oembed,codemirror';
         $this->config['allowedContent'] = true;
-        $this->config['language'] = $this->translator->getShortIsoCode();
+        $this->config['language'] = $this->locale->getShortIsoCode();
         $this->config['codemirror'] = [
             'theme' => 'default',
             'lineNumbers' => true,

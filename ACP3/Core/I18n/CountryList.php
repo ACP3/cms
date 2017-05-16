@@ -6,14 +6,14 @@
 
 namespace ACP3\Core\I18n;
 
-use Giggsey\Locale\Locale;
+use Giggsey\Locale\Locale as LocaleLib;
 
 class CountryList
 {
     /**
-     * @var Translator
+     * @var \ACP3\Core\I18n\Locale
      */
-    private $translator;
+    private $locale;
     /**
      * @var null|array
      */
@@ -25,11 +25,11 @@ class CountryList
 
     /**
      * Country constructor.
-     * @param Translator $translator
+     * @param \ACP3\Core\I18n\Locale $locale
      */
-    public function __construct(Translator $translator)
+    public function __construct(\ACP3\Core\I18n\Locale $locale)
     {
-        $this->translator = $translator;
+        $this->locale = $locale;
     }
 
     /**
@@ -52,12 +52,12 @@ class CountryList
 
         $locales = [
             $this->getTransformedLocale(),
-            $this->translator->getShortIsoCode()
+            $this->locale->getShortIsoCode()
         ];
 
         foreach ($locales as $locale) {
             if ($this->isSupportedLocale($locale)) {
-                $this->countries = Locale::getAllCountriesForLocale($locale);
+                $this->countries = LocaleLib::getAllCountriesForLocale($locale);
             }
         }
 
@@ -71,7 +71,7 @@ class CountryList
     private function isSupportedLocale($locale)
     {
         if ($this->supportedLocales === null) {
-            $this->supportedLocales = Locale::getSupportedLocales();
+            $this->supportedLocales = LocaleLib::getSupportedLocales();
         }
 
         return in_array($locale, $this->supportedLocales);
@@ -82,6 +82,6 @@ class CountryList
      */
     private function getTransformedLocale()
     {
-        return strtolower(str_replace('_', '-', $this->translator->getLocale()));
+        return strtolower(str_replace('_', '-', $this->locale->getLocale()));
     }
 }

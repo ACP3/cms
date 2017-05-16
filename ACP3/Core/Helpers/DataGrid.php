@@ -14,7 +14,7 @@ use ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository;
 use ACP3\Core\Helpers\DataGrid\Options;
 use ACP3\Core\Helpers\DataGrid\QueryOption;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGrid
@@ -28,7 +28,7 @@ class DataGrid
      */
     private $request;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     private $translator;
     /**
@@ -71,13 +71,13 @@ class DataGrid
     /**
      * @param \ACP3\Core\ACL $acl
      * @param RequestInterface $request
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param ConfigProcessor $configProcessor
      */
     public function __construct(
         ACL $acl,
         RequestInterface $request,
-        Translator $translator,
+        TranslatorInterface $translator,
         ConfigProcessor $configProcessor
     ) {
         $this->acl = $acl;

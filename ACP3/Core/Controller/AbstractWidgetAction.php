@@ -28,7 +28,7 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected $user;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**

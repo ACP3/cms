@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Seo\Helper;
 
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
 /**
@@ -26,7 +26,7 @@ class MetaFormFields
      */
     protected $aliases;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -42,14 +42,14 @@ class MetaFormFields
      * MetaFormFields constructor.
      *
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
-     * @param \ACP3\Core\I18n\Translator                   $translator
-     * @param \ACP3\Core\Http\RequestInterface             $request
-     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases   $aliases
-     * @param \ACP3\Core\Helpers\Forms                     $formsHelper
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
      */
     public function __construct(
         MetaStatements $metaStatements,
-        Translator $translator,
+        TranslatorInterface $translator,
         RequestInterface $request,
         Aliases $aliases,
         Forms $formsHelper

@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\System\View\Block\Admin;
 
 
 use ACP3\Core\Helpers\Date;
+use ACP3\Core\I18n\AvailableLanguagePacks;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractSettingsFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
@@ -24,17 +25,23 @@ class SystemSettingsFormBlock extends AbstractSettingsFormBlock
      * @var WysiwygEditorRegistrar
      */
     private $editorRegistrar;
+    /**
+     * @var AvailableLanguagePacks
+     */
+    private $availableLanguagePacks;
 
     /**
      * SystemSettingsFormBlock constructor.
      * @param FormBlockContext $context
      * @param SettingsInterface $settings
+     * @param AvailableLanguagePacks $availableLanguagePacks
      * @param Date $dateHelper
      * @param WysiwygEditorRegistrar $editorRegistrar
      */
     public function __construct(
         FormBlockContext $context,
         SettingsInterface $settings,
+        AvailableLanguagePacks $availableLanguagePacks,
         Date $dateHelper,
         WysiwygEditorRegistrar $editorRegistrar
     ) {
@@ -42,6 +49,7 @@ class SystemSettingsFormBlock extends AbstractSettingsFormBlock
 
         $this->dateHelper = $dateHelper;
         $this->editorRegistrar = $editorRegistrar;
+        $this->availableLanguagePacks = $availableLanguagePacks;
     }
 
     /**
@@ -88,7 +96,7 @@ class SystemSettingsFormBlock extends AbstractSettingsFormBlock
             ),
             'entries' => $this->forms->recordsPerPage($systemSettings['entries']),
             'wysiwyg' => $this->fetchWysiwygEditors($systemSettings['wysiwyg']),
-            'languages' => $this->translator->getLanguagePack($systemSettings['lang']),
+            'languages' => $this->availableLanguagePacks->getLanguagePacks($systemSettings['lang']),
             'mod_rewrite' => $this->forms->yesNoCheckboxGenerator('mod_rewrite', $systemSettings['mod_rewrite']),
             'time_zones' => $this->dateHelper->getTimeZones($systemSettings['date_time_zone']),
             'maintenance' => $this->forms->yesNoCheckboxGenerator(

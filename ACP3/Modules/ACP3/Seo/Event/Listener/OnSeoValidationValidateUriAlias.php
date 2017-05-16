@@ -7,14 +7,14 @@
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 
 use ACP3\Core\ACL;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 
 class OnSeoValidationValidateUriAlias
 {
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
     /**
@@ -25,11 +25,11 @@ class OnSeoValidationValidateUriAlias
     /**
      * OnSeoValidationValidateUriAlias constructor.
      * @param ACL $acl
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      */
     public function __construct(
         ACL $acl,
-        Translator $translator)
+        TranslatorInterface $translator)
     {
         $this->translator = $translator;
         $this->acl = $acl;

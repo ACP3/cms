@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 
 /**
  * Class LanguagePackExistsValidationRule
@@ -10,16 +10,16 @@ use ACP3\Core\I18n\Translator;
 class LanguagePackExistsValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
 
     /**
      * LanguagePackExistsValidationRule constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }

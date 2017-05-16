@@ -1,8 +1,9 @@
 <?php
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 
 /**
  * Class Forms
@@ -11,7 +12,7 @@ use ACP3\Core\I18n\Translator;
 class Forms
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -20,11 +21,11 @@ class Forms
     protected $request;
 
     /**
-     * @param \ACP3\Core\I18n\Translator       $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Http\RequestInterface $request
      */
     public function __construct(
-        Translator $translator,
+        TranslatorInterface $translator,
         RequestInterface $request
     ) {
         $this->translator = $translator;
@@ -53,10 +54,10 @@ class Forms
     /**
      * Selektion eines Eintrages in einem Dropdown-Menü
      *
-     * @param string               $formFieldName
-     * @param mixed                $defaultValue
+     * @param string $formFieldName
+     * @param mixed $defaultValue
      * @param string|integer|array $currentValue
-     * @param string               $htmlAttribute
+     * @param string $htmlAttribute
      *
      * @return string
      */
@@ -90,10 +91,10 @@ class Forms
 
     /**
      *
-     * @param string               $formFieldName
-     * @param array                $values
+     * @param string $formFieldName
+     * @param array $values
      * @param string|integer|array $currentValue
-     * @param string               $htmlAttribute
+     * @param string $htmlAttribute
      *
      * @return array
      */
@@ -148,8 +149,8 @@ class Forms
     }
 
     /**
-     * @param string               $formFieldName
-     * @param array                $values
+     * @param string $formFieldName
+     * @param array $values
      * @param string|integer|array $currentValue
      *
      * @return array

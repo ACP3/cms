@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\News\Installer;
 
 use ACP3\Core\Date;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Modules\Installer\AbstractSampleData;
 
 /**
@@ -18,7 +18,7 @@ class SampleData extends AbstractSampleData
     public function sampleData()
     {
         $currentDate = gmdate(Date::DEFAULT_DATE_FORMAT_FULL);
-        /** @var Translator $translator */
+        /** @var TranslatorInterface $translator */
         $translator = $this->schemaHelper->getContainer()->get('core.i18n.translator');
 
         return [

@@ -4,7 +4,7 @@ namespace ACP3\Core;
 use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Router\RouterInterface;
 
 /**
@@ -18,7 +18,7 @@ class Pagination
      */
     protected $title;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -69,13 +69,13 @@ class Pagination
     /**
      * Pagination constructor.
      * @param Title $title
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      * @param RequestInterface $request
      * @param RouterInterface $router
      */
     public function __construct(
         Title $title,
-        Translator $translator,
+        TranslatorInterface $translator,
         RequestInterface $request,
         RouterInterface $router
     ) {

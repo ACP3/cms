@@ -24,7 +24,7 @@ abstract class AbstractBlock implements BlockInterface
      */
     protected $title;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
 

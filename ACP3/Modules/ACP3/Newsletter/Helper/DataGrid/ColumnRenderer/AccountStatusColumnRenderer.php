@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Router\RouterInterface;
 
 /**
@@ -12,7 +12,7 @@ use ACP3\Core\Router\RouterInterface;
 class AccountStatusColumnRenderer extends AbstractColumnRenderer
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -23,11 +23,11 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     /**
      * AccountStatusColumnRenderer constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(
-        Translator $translator,
+        TranslatorInterface $translator,
         RouterInterface $router
     ) {
         $this->translator = $translator;

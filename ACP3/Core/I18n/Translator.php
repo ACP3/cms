@@ -1,39 +1,22 @@
 <?php
 namespace ACP3\Core\I18n;
 
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\I18n\DictionaryCache as LanguageCache;
-use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Translator
+class Translator implements TranslatorInterface
 {
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
     /**
      * @var \ACP3\Core\I18n\DictionaryCache
      */
     protected $dictionaryCache;
     /**
-     * @var SettingsInterface
+     * @var Locale
      */
-    protected $config;
+    private $locale;
     /**
-     * Die zur Zeit eingestellte Sprache
-     *
-     * @var string
+     * @var AvailableLanguagePacks
      */
-    protected $locale = '';
-    /**
-     * @var string
-     */
-    protected $lang2Characters = '';
-    /**
-     * @var array
-     */
-    protected $languagePacks = [];
+    private $availableLanguagePacks;
     /**
      * @var array
      */
@@ -41,18 +24,18 @@ class Translator
 
     /**
      * Translator constructor.
-     * @param ApplicationPath $appPath
      * @param DictionaryCache $dictionaryCache
-     * @param SettingsInterface $config
+     * @param AvailableLanguagePacks $availableLanguagePacks
+     * @param Locale $locale
      */
     public function __construct(
-        ApplicationPath $appPath,
         LanguageCache $dictionaryCache,
-        SettingsInterface $config
+        AvailableLanguagePacks $availableLanguagePacks,
+        Locale $locale
     ) {
-        $this->appPath = $appPath;
         $this->dictionaryCache = $dictionaryCache;
-        $this->config = $config;
+        $this->locale = $locale;
+        $this->availableLanguagePacks = $availableLanguagePacks;
     }
 
     /**
@@ -61,31 +44,29 @@ class Translator
      * @param string $locale
      *
      * @return boolean
+     * @deprecated
      */
-    public function languagePackExists($locale)
+    public function languagePackExists(string $locale): bool
     {
-        return !preg_match('=/=', $locale)
-        && is_file($this->appPath->getModulesDir() . 'ACP3/System/Resources/i18n/' . $locale . '.xml') === true;
+        return $this->availableLanguagePacks->languagePackExists($locale);
     }
 
     /**
      * @return string
+     * @deprecated
      */
-    public function getLocale()
+    public function getLocale(): string
     {
-        if ($this->locale === '') {
-            $this->locale = $this->config->getSettings(Schema::MODULE_NAME)['lang'];
-        }
-
-        return $this->locale;
+        return $this->locale->getLocale();
     }
 
     /**
      * @return string
+     * @deprecated
      */
-    public function getShortIsoCode()
+    public function getShortIsoCode(): string
     {
-        return substr($this->getLocale(), 0, strpos($this->getLocale(), '_'));
+        return $this->locale->getShortIsoCode();
     }
 
     /**
@@ -106,14 +87,11 @@ class Translator
      * Gets the writing direction of the language
      *
      * @return string
+     * @deprecated
      */
-    public function getDirection()
+    public function getDirection(): string
     {
-        if (isset($this->buffer[$this->getLocale()]) === false) {
-            $this->buffer[$this->getLocale()] = $this->dictionaryCache->getLanguageCache($this->getLocale());
-        }
-
-        return isset($this->buffer[$this->getLocale()]['info']['direction']) ? $this->buffer[$this->getLocale()]['info']['direction'] : 'ltr';
+        return $this->locale->getDirection();
     }
 
     /**
@@ -123,38 +101,16 @@ class Translator
      *
      * @return string
      */
-    public function t($module, $phrase, array $arguments = [])
+    public function t(string $module, string $phrase, array $arguments = []): string
     {
-        if (isset($this->buffer[$this->getLocale()]) === false) {
-            $this->buffer[$this->getLocale()] = $this->dictionaryCache->getLanguageCache($this->getLocale());
+        if (isset($this->buffer[$this->locale->getLocale()]) === false) {
+            $this->buffer[$this->locale->getLocale()] = $this->dictionaryCache->getLanguageCache($this->locale->getLocale());
         }
 
-        if (isset($this->buffer[$this->getLocale()]['keys'][$module . $phrase])) {
-            return strtr($this->buffer[$this->getLocale()]['keys'][$module . $phrase], $arguments);
+        if (isset($this->buffer[$this->locale->getLocale()]['keys'][$module . $phrase])) {
+            return strtr($this->buffer[$this->locale->getLocale()]['keys'][$module . $phrase], $arguments);
         }
 
         return strtoupper('{' . $module . '_' . $phrase . '}');
-    }
-
-    /**
-     * Gets all currently available languages
-     *
-     * @param string $currentLanguage
-     *
-     * @return array
-     */
-    public function getLanguagePack($currentLanguage)
-    {
-        if (empty($this->languagePacks)) {
-            $this->languagePacks = $this->dictionaryCache->getLanguagePacksCache();
-        }
-
-        $languages = $this->languagePacks;
-
-        foreach ($languages as $key => $value) {
-            $languages[$key]['selected'] = $languages[$key]['iso'] === $currentLanguage;
-        }
-
-        return $languages;
     }
 }

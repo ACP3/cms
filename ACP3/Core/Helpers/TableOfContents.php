@@ -1,4 +1,5 @@
 <?php
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
@@ -14,7 +15,7 @@ class TableOfContents
      */
     protected $title;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -37,16 +38,16 @@ class TableOfContents
     /**
      * TableOfContents constructor.
      *
-     * @param \ACP3\Core\Breadcrumb\Title                                 $title
-     * @param \ACP3\Core\I18n\Translator                                  $translator
-     * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \ACP3\Core\Router\RouterInterface                                  $router
+     * @param \ACP3\Core\Breadcrumb\Title $title
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Router\RouterInterface $router
      * @param \ACP3\Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule
-     * @param \ACP3\Core\View                                             $view
+     * @param \ACP3\Core\View $view
      */
     public function __construct(
         Core\Breadcrumb\Title $title,
-        Core\I18n\Translator $translator,
+        Core\I18n\TranslatorInterface $translator,
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
         Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule,
@@ -63,8 +64,8 @@ class TableOfContents
     /**
      * Generates the table of contents
      *
-     * @param array   $pages
-     * @param string  $baseUrlPath
+     * @param array $pages
+     * @param string $baseUrlPath
      * @param boolean $titlesFromDb
      * @param boolean $customUris
      *
@@ -118,10 +119,10 @@ class TableOfContents
     }
 
     /**
-     * @param bool         $customUris
+     * @param bool $customUris
      * @param array|string $page
-     * @param int          $pageNumber
-     * @param int          $currentIndex
+     * @param int $pageNumber
+     * @param int $currentIndex
      *
      * @return bool
      */
@@ -144,8 +145,8 @@ class TableOfContents
 
     /**
      * @param array|string $page
-     * @param int          $pageNumber
-     * @param bool         $titlesFromDb
+     * @param int $pageNumber
+     * @param bool $titlesFromDb
      *
      * @return string
      */
@@ -160,10 +161,10 @@ class TableOfContents
     }
 
     /**
-     * @param bool         $customUris
+     * @param bool $customUris
      * @param array|string $page
-     * @param int          $pageNumber
-     * @param string       $requestQuery
+     * @param int $pageNumber
+     * @param string $requestQuery
      *
      * @return string
      */

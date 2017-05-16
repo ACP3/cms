@@ -14,7 +14,7 @@ class CheckAccess
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -26,12 +26,12 @@ class CheckAccess
      * CheckAccess constructor.
      *
      * @param \ACP3\Core\ACL             $acl
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(
         Core\ACL $acl,
-        Core\I18n\Translator $translator,
+        Core\I18n\TranslatorInterface $translator,
         Core\Router\RouterInterface $router
     ) {
         $this->translator = $translator;

@@ -9,7 +9,7 @@ namespace ACP3\Core\View\Block\Context;
 
 use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Breadcrumb\Title;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\View;
 
 class BlockContext
@@ -27,7 +27,7 @@ class BlockContext
      */
     private $title;
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
 
@@ -36,9 +36,9 @@ class BlockContext
      * @param View $view
      * @param Steps $steps
      * @param Title $title
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      */
-    public function __construct(View $view, Steps $steps, Title $title, Translator $translator)
+    public function __construct(View $view, Steps $steps, Title $title, TranslatorInterface $translator)
     {
         $this->view = $view;
         $this->breadcrumb = $steps;
@@ -71,9 +71,9 @@ class BlockContext
     }
 
     /**
-     * @return Translator
+     * @return TranslatorInterface
      */
-    public function getTranslator(): Translator
+    public function getTranslator(): TranslatorInterface
     {
         return $this->translator;
     }

@@ -23,12 +23,12 @@ class AdminSettingsFormValidation extends AbstractFormValidation
     /**
      * Validator constructor.
      *
-     * @param \ACP3\Core\I18n\Translator      $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Validation\Validator $validator
-     * @param \ACP3\Core\Modules              $modules
+     * @param \ACP3\Core\Modules $modules
      */
     public function __construct(
-        Core\I18n\Translator $translator,
+        Core\I18n\TranslatorInterface $translator,
         Core\Validation\Validator $validator,
         Core\Modules $modules
     ) {

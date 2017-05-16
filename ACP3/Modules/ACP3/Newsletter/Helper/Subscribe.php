@@ -16,7 +16,7 @@ class Subscribe
      */
     protected $date;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -56,7 +56,7 @@ class Subscribe
      * Subscribe constructor.
      *
      * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Mailer $mailer
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Router\RouterInterface $router
@@ -68,7 +68,7 @@ class Subscribe
      */
     public function __construct(
         Core\Date $date,
-        Core\I18n\Translator $translator,
+        Core\I18n\TranslatorInterface $translator,
         Core\Mailer $mailer,
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,

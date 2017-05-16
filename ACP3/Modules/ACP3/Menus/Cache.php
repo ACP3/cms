@@ -1,4 +1,5 @@
 <?php
+
 namespace ACP3\Modules\ACP3\Menus;
 
 use ACP3\Core;
@@ -15,7 +16,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     const CACHE_ID_VISIBLE = 'visible_items_';
 
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -28,14 +29,14 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $menuItemRepository;
 
     /**
-     * @param Core\Cache                                        $cache
-     * @param \ACP3\Core\I18n\Translator                        $translator
-     * @param MenusRepository                                    $menuRepository
+     * @param Core\Cache $cache
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
+     * @param MenusRepository $menuRepository
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository $menuItemRepository
      */
     public function __construct(
         Core\Cache $cache,
-        Core\I18n\Translator $translator,
+        Core\I18n\TranslatorInterface $translator,
         MenusRepository $menuRepository,
         MenuItemsRepository $menuItemRepository
     ) {
@@ -136,7 +137,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * @param int   $index
+     * @param int $index
      * @param array $menuItems
      *
      * @return bool
@@ -157,7 +158,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * @param int   $index
+     * @param int $index
      * @param array $menuItems
      *
      * @return bool

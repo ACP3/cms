@@ -1,8 +1,9 @@
 <?php
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Validation\ValidationRules\DateValidationRule;
 
 /**
@@ -16,7 +17,7 @@ class Date
      */
     protected $date;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -35,15 +36,15 @@ class Date
     /**
      * Date constructor.
      *
-     * @param \ACP3\Core\Date                                          $date
-     * @param \ACP3\Core\I18n\Translator                               $translator
-     * @param \ACP3\Core\Http\RequestInterface                         $request
-     * @param \ACP3\Core\Helpers\Forms                                 $formsHelper
+     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Validation\ValidationRules\DateValidationRule $dateValidationRule
      */
     public function __construct(
         \ACP3\Core\Date $date,
-        Translator $translator,
+        TranslatorInterface $translator,
         RequestInterface $request,
         Forms $formsHelper,
         DateValidationRule $dateValidationRule
@@ -115,8 +116,8 @@ class Date
      *
      * @param string|array $name
      * @param string|array $value
-     * @param bool         $showTime
-     * @param bool         $inputFieldOnly
+     * @param bool $showTime
+     * @param bool $inputFieldOnly
      *
      * @return array
      */
@@ -176,7 +177,7 @@ class Date
     /**
      * @param array $name
      * @param array $value
-     * @param bool  $showTime
+     * @param bool $showTime
      *
      * @return array
      */
@@ -210,7 +211,7 @@ class Date
     /**
      * @param string $name
      * @param string $value
-     * @param bool   $showTime
+     * @param bool $showTime
      *
      * @return string
      */

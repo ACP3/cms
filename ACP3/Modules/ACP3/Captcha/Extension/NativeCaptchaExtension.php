@@ -7,12 +7,11 @@
 namespace ACP3\Modules\ACP3\Captcha\Extension;
 
 use ACP3\Core;
-use ACP3\Core\I18n\Translator;
 
 class NativeCaptchaExtension implements CaptchaExtensionInterface
 {
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
     /**
@@ -47,7 +46,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
     /**
      * NativeCaptchaExtension constructor.
      * @param Core\ACL $acl
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      * @param Core\Http\RequestInterface $request
      * @param Core\Router\RouterInterface $router
      * @param Core\Session\SessionHandlerInterface $sessionHandler
@@ -57,7 +56,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
      */
     public function __construct(
         Core\ACL $acl,
-        Translator $translator,
+        Core\I18n\TranslatorInterface $translator,
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
         Core\Session\SessionHandlerInterface $sessionHandler,

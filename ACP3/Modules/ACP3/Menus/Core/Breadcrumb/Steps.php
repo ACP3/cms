@@ -30,16 +30,16 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * Breadcrumb constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
-     * @param \ACP3\Core\I18n\Translator                                  $translator
-     * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \ACP3\Core\Router\RouterInterface                                  $router
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Router\RouterInterface $router
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository           $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository $menuItemRepository
      */
     public function __construct(
         ContainerInterface $container,
-        Core\I18n\Translator $translator,
+        Core\I18n\TranslatorInterface $translator,
         RequestInterface $request,
         Core\Router\RouterInterface $router,
         EventDispatcherInterface $eventDispatcher,

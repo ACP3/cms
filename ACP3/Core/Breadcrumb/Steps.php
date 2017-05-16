@@ -9,15 +9,11 @@ namespace ACP3\Core\Breadcrumb;
 use ACP3\Core\Breadcrumb\Event\StepsBuildCacheEvent;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Router\RouterInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Steps
- * @package ACP3\Core\Breadcrumb
- */
 class Steps
 {
     /**
@@ -25,7 +21,7 @@ class Steps
      */
     protected $container;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var TranslatorInterface
      */
     protected $translator;
     /**
@@ -50,17 +46,16 @@ class Steps
     protected $breadcrumbCache = [];
 
     /**
-     * Breadcrumb constructor.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * Steps constructor.
+     * @param ContainerInterface $container
+     * @param TranslatorInterface $translator
+     * @param RequestInterface $request
+     * @param RouterInterface $router
+     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         ContainerInterface $container,
-        Translator $translator,
+        TranslatorInterface $translator,
         RequestInterface $request,
         RouterInterface $router,
         EventDispatcherInterface $eventDispatcher

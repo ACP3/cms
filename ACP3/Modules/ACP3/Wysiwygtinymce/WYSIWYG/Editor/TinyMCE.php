@@ -19,10 +19,6 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
      */
     protected $minifier;
     /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    protected $translator;
-    /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
@@ -38,16 +34,13 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 
     /**
      * @param \ACP3\Core\Assets\Minifier\MinifierInterface    $minifier
-     * @param \ACP3\Core\I18n\Translator             $translator
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
         Core\Assets\Minifier\MinifierInterface $minifier,
-        Core\I18n\Translator $translator,
         Core\Environment\ApplicationPath $appPath
     ) {
         $this->minifier = $minifier;
-        $this->translator = $translator;
         $this->appPath = $appPath;
     }
 

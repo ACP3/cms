@@ -37,6 +37,7 @@ services:
       - '@core.cache.system'
       - '@core.environment.application_path'
       - '@core.i18n.translator'
+      - '@core.i18n.locale'
       - '@core.modules.vendors'
       - '@core.xml'
       - '@system.model.repository.modules_repository'

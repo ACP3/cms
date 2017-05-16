@@ -1,8 +1,9 @@
 <?php
+
 namespace ACP3\Core\Helpers\Formatter;
 
 use ACP3\Core\Date;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 
 /**
  * Class DateRange
@@ -15,17 +16,17 @@ class DateRange
      */
     protected $date;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
 
     /**
-     * @param \ACP3\Core\Date            $date
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
     public function __construct(
         Date $date,
-        Translator $translator
+        TranslatorInterface $translator
     ) {
         $this->date = $date;
         $this->translator = $translator;
