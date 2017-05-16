@@ -989,16 +989,16 @@
         },
         {
             "name": "inlinestyle/inlinestyle",
-            "version": "1.2.6",
+            "version": "1.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/christiaan/InlineStyle.git",
-                "reference": "ed9e0a7bf38e6c1e11ce4c6d3d73b857d4fef7d2"
+                "reference": "66ad09318c9f120cc3246d4f1c728848258154b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/christiaan/InlineStyle/zipball/ed9e0a7bf38e6c1e11ce4c6d3d73b857d4fef7d2",
-                "reference": "ed9e0a7bf38e6c1e11ce4c6d3d73b857d4fef7d2",
+                "url": "https://api.github.com/repos/christiaan/InlineStyle/zipball/66ad09318c9f120cc3246d4f1c728848258154b5",
+                "reference": "66ad09318c9f120cc3246d4f1c728848258154b5",
                 "shasum": ""
             },
             "require": {
@@ -1032,7 +1032,7 @@
                 "email",
                 "inline"
             ],
-            "time": "2015-12-11T12:04:11+00:00"
+            "time": "2015-12-13T20:30:25+00:00"
         },
         {
             "name": "intervention/httpauth",
@@ -2487,16 +2487,16 @@
         },
         {
             "name": "tinymce/tinymce",
-            "version": "4.6.0",
+            "version": "4.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tinymce/tinymce-dist.git",
-                "reference": "f91c525a7ad72ab2cadf5a2fc7143b2f700d1fc0"
+                "reference": "a4129cbcaea6d4e9c26b103f11e2215dd85b8cb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/f91c525a7ad72ab2cadf5a2fc7143b2f700d1fc0",
-                "reference": "f91c525a7ad72ab2cadf5a2fc7143b2f700d1fc0",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/a4129cbcaea6d4e9c26b103f11e2215dd85b8cb7",
+                "reference": "a4129cbcaea6d4e9c26b103f11e2215dd85b8cb7",
                 "shasum": ""
             },
             "type": "component",
@@ -2529,7 +2529,7 @@
                 "tinymce",
                 "wysiwyg"
             ],
-            "time": "2017-05-04T12:45:07+00:00"
+            "time": "2017-05-10T13:42:57+00:00"
         },
         {
             "name": "tubalmartin/cssmin",
