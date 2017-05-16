@@ -1,3 +1,11 @@
+.gallery-pictures {
+  text-align: center;
+  font-size: 0;
+}
+.gallery-pictures a {
+  margin: 3px;
+  display: inline-block;
+}
 .picture {
   margin: 10px 0;
   text-align: center;
