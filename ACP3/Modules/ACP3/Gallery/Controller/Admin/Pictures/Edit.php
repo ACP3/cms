@@ -21,7 +21,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $pictureFormValidation;
     /**
-     * @var Gallery\Model\PictureModel
+     * @var Gallery\Model\GalleryPicturesModel
      */
     protected $pictureModel;
     /**
@@ -35,14 +35,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
      * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
-     * @param Gallery\Model\PictureModel $pictureModel
+     * @param Gallery\Model\GalleryPicturesModel $pictureModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
         Gallery\Helpers $galleryHelpers,
-        Gallery\Model\PictureModel $pictureModel,
+        Gallery\Model\GalleryPicturesModel $pictureModel,
         Gallery\Validation\PictureFormValidation $pictureFormValidation
     ) {
         parent::__construct($context);

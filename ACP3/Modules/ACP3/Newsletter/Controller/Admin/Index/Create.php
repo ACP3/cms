@@ -15,7 +15,7 @@ class Create extends AbstractFormAction
      */
     protected $adminFormValidation;
     /**
-     * @var Newsletter\Model\NewsletterModel
+     * @var Newsletter\Model\NewslettersModel
      */
     protected $newsletterModel;
     /**
@@ -28,14 +28,14 @@ class Create extends AbstractFormAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
-     * @param Newsletter\Model\NewsletterModel $newsletterModel
+     * @param Newsletter\Model\NewslettersModel $newsletterModel
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter $newsletterHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
-        Newsletter\Model\NewsletterModel $newsletterModel,
+        Newsletter\Model\NewslettersModel $newsletterModel,
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
         Newsletter\Helper\SendNewsletter $newsletterHelpers)
     {

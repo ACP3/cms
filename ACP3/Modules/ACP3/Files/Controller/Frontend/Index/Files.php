@@ -14,7 +14,7 @@ class Files extends Core\Controller\AbstractFrontendAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository
      */
     protected $categoryRepository;
     /**
@@ -27,12 +27,12 @@ class Files extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\ListingBlockInterface $block
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository $categoryRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\ListingBlockInterface $block,
-        Categories\Model\Repository\CategoryRepository $categoryRepository)
+        Categories\Model\Repository\CategoriesRepository $categoryRepository)
     {
         parent::__construct($context);
 

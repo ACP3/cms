@@ -12,7 +12,7 @@ use ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository;
 
 class GalleryPicturesDataGridRepository extends AbstractDataGridRepository
 {
-    const TABLE_NAME = PictureRepository::TABLE_NAME;
+    const TABLE_NAME = GalleryPicturesRepository::TABLE_NAME;
 
     /**
      * @inheritdoc

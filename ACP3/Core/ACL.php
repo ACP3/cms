@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core;
 
-use ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface;
+use ACP3\Core\ACL\Model\Repository\AclUserRolesRepositoryInterface;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
@@ -24,7 +24,7 @@ class ACL
      */
     protected $permissionsCache;
     /**
-     * @var \ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface
+     * @var \ACP3\Core\ACL\Model\Repository\AclUserRolesRepositoryInterface
      */
     protected $userRoleRepository;
     /**
@@ -50,13 +50,13 @@ class ACL
      * ACL constructor.
      * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
      * @param \ACP3\Core\Modules $modules
-     * @param \ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface $userRoleRepository
+     * @param \ACP3\Core\ACL\Model\Repository\AclUserRolesRepositoryInterface $userRoleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */
     public function __construct(
         UserModel $user,
         Modules $modules,
-        UserRoleRepositoryInterface $userRoleRepository,
+        AclUserRolesRepositoryInterface $userRoleRepository,
         Permissions\Cache $permissionsCache
     ) {
         $this->user = $user;

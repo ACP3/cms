@@ -10,21 +10,21 @@ namespace ACP3\Modules\ACP3\Users\View\Block\Frontend;
 use ACP3\Core\View\Block\AbstractListingBlock;
 use ACP3\Core\View\Block\Context\ListingBlockContext;
 use ACP3\Modules\ACP3\Users\Installer\Schema;
-use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
+use ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository;
 
 class UsersListingBlock extends AbstractListingBlock
 {
     /**
-     * @var UserRepository
+     * @var UsersRepository
      */
     private $userRepository;
 
     /**
      * UsersListingBlock constructor.
      * @param ListingBlockContext $context
-     * @param UserRepository $userRepository
+     * @param UsersRepository $userRepository
      */
-    public function __construct(ListingBlockContext $context, UserRepository $userRepository)
+    public function __construct(ListingBlockContext $context, UsersRepository $userRepository)
     {
         parent::__construct($context);
 

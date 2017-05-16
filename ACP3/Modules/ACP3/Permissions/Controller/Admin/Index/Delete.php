@@ -20,7 +20,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
      */
     protected $permissionsCache;
     /**
-     * @var Permissions\Model\RolesModel
+     * @var Permissions\Model\AclRolesModel
      */
     protected $rolesModel;
 
@@ -28,12 +28,12 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Permissions\Model\RolesModel $rolesModel
+     * @param Permissions\Model\AclRolesModel $rolesModel
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Permissions\Model\RolesModel $rolesModel,
+        Permissions\Model\AclRolesModel $rolesModel,
         Permissions\Cache $permissionsCache
     ) {
         parent::__construct($context);

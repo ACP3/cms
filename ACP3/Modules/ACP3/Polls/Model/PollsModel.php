@@ -10,9 +10,9 @@ use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Polls\Installer\Schema;
-use ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository;
-use ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository;
-use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
+use ACP3\Modules\ACP3\Polls\Model\Repository\PollAnswersRepository;
+use ACP3\Modules\ACP3\Polls\Model\Repository\PollsRepository;
+use ACP3\Modules\ACP3\Polls\Model\Repository\PollVotesRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -28,11 +28,11 @@ class PollsModel extends AbstractModel
      */
     protected $secure;
     /**
-     * @var AnswerRepository
+     * @var PollAnswersRepository
      */
     protected $answerRepository;
     /**
-     * @var VoteRepository
+     * @var PollVotesRepository
      */
     protected $voteRepository;
 
@@ -41,17 +41,17 @@ class PollsModel extends AbstractModel
      * @param EventDispatcherInterface $eventDispatcher
      * @param DataProcessor $dataProcessor
      * @param Secure $secure
-     * @param PollRepository $pollRepository
-     * @param AnswerRepository $answerRepository
-     * @param VoteRepository $voteRepository
+     * @param PollsRepository $pollRepository
+     * @param PollAnswersRepository $answerRepository
+     * @param PollVotesRepository $voteRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
         Secure $secure,
-        PollRepository $pollRepository,
-        AnswerRepository $answerRepository,
-        VoteRepository $voteRepository
+        PollsRepository $pollRepository,
+        PollAnswersRepository $answerRepository,
+        PollVotesRepository $voteRepository
     ) {
         parent::__construct($eventDispatcher, $dataProcessor, $pollRepository);
 

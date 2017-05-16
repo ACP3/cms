@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Categories;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 
 /**
  * Class Cache
@@ -16,17 +16,17 @@ use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     /**
-     * @var CategoryRepository
+     * @var CategoriesRepository
      */
     protected $categoryRepository;
 
     /**
      * @param Core\Cache         $cache
-     * @param CategoryRepository $categoryRepository
+     * @param CategoriesRepository $categoryRepository
      */
     public function __construct(
         Core\Cache $cache,
-        CategoryRepository $categoryRepository
+        CategoriesRepository $categoryRepository
     ) {
         parent::__construct($cache);
 

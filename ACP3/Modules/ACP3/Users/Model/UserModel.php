@@ -31,7 +31,7 @@ class UserModel
      */
     protected $userInfo = [];
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository
      */
     protected $userRepository;
     /**
@@ -48,12 +48,12 @@ class UserModel
      *
      * @param Translator $translator
      * @param CountryList $countryList
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository $userRepository
      */
     public function __construct(
         Translator $translator,
         CountryList $countryList,
-        Users\Model\Repository\UserRepository $userRepository
+        Users\Model\Repository\UsersRepository $userRepository
     ) {
         $this->userRepository = $userRepository;
         $this->translator = $translator;

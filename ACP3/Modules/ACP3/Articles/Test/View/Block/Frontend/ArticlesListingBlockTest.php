@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Articles\Test\View\Block\Frontend;
 use ACP3\Core\Date;
 use ACP3\Core\Test\View\Block\AbstractListingBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository;
 use ACP3\Modules\ACP3\Articles\View\Block\Frontend\ArticlesListingBlock;
 
 class ArticlesListingBlockTest extends AbstractListingBlockTest
@@ -24,7 +24,7 @@ class ArticlesListingBlockTest extends AbstractListingBlockTest
             ->disableOriginalConstructor()
             ->getMock();
 
-        $articleRepository = $this->getMockBuilder(ArticleRepository::class)
+        $articleRepository = $this->getMockBuilder(ArticlesRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 

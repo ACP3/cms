@@ -11,7 +11,7 @@ use ACP3\Core\ACL;
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
 use ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository;
 
 class MenusListingBlock extends AbstractBlock
 {
@@ -20,7 +20,7 @@ class MenusListingBlock extends AbstractBlock
      */
     private $acl;
     /**
-     * @var MenuRepository
+     * @var MenusRepository
      */
     private $menuRepository;
     /**
@@ -32,13 +32,13 @@ class MenusListingBlock extends AbstractBlock
      * MenusListingBlock constructor.
      * @param BlockContext $context
      * @param ACL $acl
-     * @param MenuRepository $menuRepository
+     * @param MenusRepository $menuRepository
      * @param MenuItemsList $menusHelpers
      */
     public function __construct(
         BlockContext $context,
         ACL $acl,
-        MenuRepository $menuRepository,
+        MenusRepository $menuRepository,
         MenuItemsList $menusHelpers
     ) {
         parent::__construct($context);

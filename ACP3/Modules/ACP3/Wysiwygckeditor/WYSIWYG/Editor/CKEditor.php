@@ -28,7 +28,7 @@ class CKEditor extends Textarea
      */
     protected $appPath;
     /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository
+     * @var \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonsRepository
      */
     protected $emoticonRepository;
     /**
@@ -67,11 +67,11 @@ class CKEditor extends Textarea
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository $emoticonRepository
+     * @param \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonsRepository $emoticonRepository
      *
      * @return $this
      */
-    public function setEmoticonRepository(\ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository $emoticonRepository)
+    public function setEmoticonRepository(\ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonsRepository $emoticonRepository)
     {
         $this->emoticonRepository = $emoticonRepository;
 

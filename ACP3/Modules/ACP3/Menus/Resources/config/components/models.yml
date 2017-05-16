@@ -1,11 +1,11 @@
 services:
   menus.model.repository.menus_repository:
-    class: ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
+    class: ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository
     arguments:
       - '@core.db'
 
   menus.model.repository.menu_items_repository:
-    class: ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
+    class: ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository
     arguments:
       - '@core.db'
 

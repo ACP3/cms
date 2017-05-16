@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Articles;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository;
 
 /**
  * Class Helpers
@@ -21,17 +21,17 @@ class Helpers
      */
     protected $formsHelper;
     /**
-     * @var ArticleRepository
+     * @var ArticlesRepository
      */
     protected $articleRepository;
 
     /**
      * @param Core\Helpers\Forms $formsHelper
-     * @param ArticleRepository  $articleRepository
+     * @param ArticlesRepository  $articleRepository
      */
     public function __construct(
         Core\Helpers\Forms $formsHelper,
-        ArticleRepository $articleRepository
+        ArticlesRepository $articleRepository
     ) {
         $this->formsHelper = $formsHelper;
         $this->articleRepository = $articleRepository;

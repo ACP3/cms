@@ -15,11 +15,11 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     protected $roleFormValidation;
     /**
-     * @var Permissions\Model\RolesModel
+     * @var Permissions\Model\AclRolesModel
      */
     protected $roleModel;
     /**
-     * @var Permissions\Model\RulesModel
+     * @var Permissions\Model\AclRulesModel
      */
     protected $rulesModel;
     /**
@@ -32,15 +32,15 @@ class Create extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
-     * @param Permissions\Model\RolesModel $rolesModel
-     * @param Permissions\Model\RulesModel $rulesModel
+     * @param Permissions\Model\AclRolesModel $rolesModel
+     * @param Permissions\Model\AclRulesModel $rulesModel
      * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
-        Permissions\Model\RolesModel $rolesModel,
-        Permissions\Model\RulesModel $rulesModel,
+        Permissions\Model\AclRolesModel $rolesModel,
+        Permissions\Model\AclRulesModel $rulesModel,
         Permissions\Validation\RoleFormValidation $roleFormValidation
     ) {
         parent::__construct($context);

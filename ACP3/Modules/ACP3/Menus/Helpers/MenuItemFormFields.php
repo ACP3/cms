@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository;
 
 /**
  * Class MenuItemFormFields
@@ -15,7 +15,7 @@ class MenuItemFormFields
      */
     protected $formsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository
      */
     protected $menusModel;
     /**
@@ -26,12 +26,12 @@ class MenuItemFormFields
     /**
      * @param \ACP3\Core\Helpers\Forms                      $formsHelper
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList              $menusHelper
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository $menusModel
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository $menusModel
      */
     public function __construct(
         Core\Helpers\Forms $formsHelper,
         MenuItemsList $menusHelper,
-        MenuRepository $menusModel
+        MenusRepository $menusModel
     ) {
         $this->formsHelper = $formsHelper;
         $this->menusHelper = $menusHelper;

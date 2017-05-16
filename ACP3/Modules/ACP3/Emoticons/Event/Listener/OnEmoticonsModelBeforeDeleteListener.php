@@ -10,7 +10,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Upload;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Emoticons\Installer\Schema;
-use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository;
+use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonsRepository;
 
 class OnEmoticonsModelBeforeDeleteListener
 {
@@ -19,18 +19,18 @@ class OnEmoticonsModelBeforeDeleteListener
      */
     protected $applicationPath;
     /**
-     * @var EmoticonRepository
+     * @var EmoticonsRepository
      */
     protected $emoticonRepository;
 
     /**
      * OnEmoticonsModelBeforeDeleteListener constructor.
      * @param ApplicationPath $applicationPath
-     * @param EmoticonRepository $emoticonRepository
+     * @param EmoticonsRepository $emoticonRepository
      */
     public function __construct(
         ApplicationPath $applicationPath,
-        EmoticonRepository $emoticonRepository
+        EmoticonsRepository $emoticonRepository
     ) {
         $this->applicationPath = $applicationPath;
         $this->emoticonRepository = $emoticonRepository;

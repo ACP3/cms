@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Comments\Test\View\Block\Frontend;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\Test\View\Block\AbstractListingBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
-use ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository;
+use ACP3\Modules\ACP3\Comments\Model\Repository\CommentsRepository;
 use ACP3\Modules\ACP3\Comments\View\Block\Frontend\CommentsListingBlock;
 
 class CommentsListingBlockTest extends AbstractListingBlockTest
@@ -24,7 +24,7 @@ class CommentsListingBlockTest extends AbstractListingBlockTest
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
-        $commentRepository = $this->getMockBuilder(CommentRepository::class)
+        $commentRepository = $this->getMockBuilder(CommentsRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 

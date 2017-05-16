@@ -3,7 +3,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository;
 
 /**
  * Class Subscribe
@@ -40,7 +40,7 @@ class Subscribe
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository
      */
     protected $accountRepository;
     /**
@@ -64,7 +64,7 @@ class Subscribe
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param \ACP3\Core\Settings\SettingsInterface $config
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository $accountRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository $accountRepository
      */
     public function __construct(
         Core\Date $date,
@@ -76,7 +76,7 @@ class Subscribe
         Core\Helpers\Secure $secureHelper,
         Core\Settings\SettingsInterface $config,
         AccountStatus $accountStatusHelper,
-        AccountRepository $accountRepository
+        NewsletterAccountsRepository $accountRepository
     ) {
         $this->date = $date;
         $this->translator = $translator;

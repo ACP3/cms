@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Categories\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 
 /**
  * Class DuplicateCategoryValidationRule
@@ -16,16 +16,16 @@ use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 class DuplicateCategoryValidationRule extends AbstractValidationRule
 {
     /**
-     * @var CategoryRepository
+     * @var CategoriesRepository
      */
     protected $categoryRepository;
 
     /**
      * CategoryExistsValidationRule constructor.
      *
-     * @param CategoryRepository $categoryRepository
+     * @param CategoriesRepository $categoryRepository
      */
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(CategoriesRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
     }

@@ -10,10 +10,6 @@ use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-/**
- * Class GalleryDataGridRepository
- * @package ACP3\Modules\ACP3\Gallery\Model\Repository
- */
 class GalleryDataGridRepository extends AbstractDataGridRepository
 {
     const TABLE_NAME = GalleryRepository::TABLE_NAME;
@@ -39,7 +35,7 @@ class GalleryDataGridRepository extends AbstractDataGridRepository
     {
         $queryBuilder->leftJoin(
             'main',
-            $this->getTableName(PictureRepository::TABLE_NAME),
+            $this->getTableName(GalleryPicturesRepository::TABLE_NAME),
             'p',
             'main.id = p.gallery_id'
         );

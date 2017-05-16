@@ -11,7 +11,7 @@ use ACP3\Core\ACL;
 use ACP3\Core\Modules;
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\AclResourcesRepository;
 
 class ResourcesListingBlock extends AbstractBlock
 {
@@ -24,7 +24,7 @@ class ResourcesListingBlock extends AbstractBlock
      */
     private $modules;
     /**
-     * @var ResourceRepository
+     * @var AclResourcesRepository
      */
     private $resourceRepository;
 
@@ -33,13 +33,13 @@ class ResourcesListingBlock extends AbstractBlock
      * @param BlockContext $context
      * @param ACL $acl
      * @param Modules $modules
-     * @param ResourceRepository $resourceRepository
+     * @param AclResourcesRepository $resourceRepository
      */
     public function __construct(
         BlockContext $context,
         ACL $acl,
         Modules $modules,
-        ResourceRepository $resourceRepository
+        AclResourcesRepository $resourceRepository
     ) {
         parent::__construct($context);
 

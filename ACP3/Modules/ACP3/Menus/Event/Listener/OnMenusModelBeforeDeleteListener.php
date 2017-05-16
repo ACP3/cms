@@ -9,8 +9,8 @@ namespace ACP3\Modules\ACP3\Menus\Event\Listener;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Menus\Cache;
 use ACP3\Modules\ACP3\Menus\Model\MenuItemsModel;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository;
 
 class OnMenusModelBeforeDeleteListener
 {
@@ -19,11 +19,11 @@ class OnMenusModelBeforeDeleteListener
      */
     protected $cache;
     /**
-     * @var MenuRepository
+     * @var MenusRepository
      */
     protected $menuRepository;
     /**
-     * @var MenuItemRepository
+     * @var MenuItemsRepository
      */
     protected $menuItemRepository;
     /**
@@ -34,14 +34,14 @@ class OnMenusModelBeforeDeleteListener
     /**
      * OnMenusModelBeforeDeleteListener constructor.
      * @param Cache $cache
-     * @param MenuRepository $menuRepository
-     * @param MenuItemRepository $menuItemRepository
+     * @param MenusRepository $menuRepository
+     * @param MenuItemsRepository $menuItemRepository
      * @param MenuItemsModel $menuItemsModel
      */
     public function __construct(
         Cache $cache,
-        MenuRepository $menuRepository,
-        MenuItemRepository $menuItemRepository,
+        MenusRepository $menuRepository,
+        MenuItemsRepository $menuItemRepository,
         MenuItemsModel $menuItemsModel
     ) {
         $this->cache = $cache;

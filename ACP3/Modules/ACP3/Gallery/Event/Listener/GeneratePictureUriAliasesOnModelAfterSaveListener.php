@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 class GeneratePictureUriAliasesOnModelAfterSaveListener
 {
     /**
-     * @var Gallery\Model\Repository\PictureRepository
+     * @var Gallery\Model\Repository\GalleryPicturesRepository
      */
     private $pictureRepository;
     /**
@@ -33,9 +33,9 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
 
     /**
      * UpdateUriAliasesOnModelAfterSaveListener constructor.
-     * @param Gallery\Model\Repository\PictureRepository $pictureRepository
+     * @param Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
      */
-    public function __construct(Gallery\Model\Repository\PictureRepository $pictureRepository)
+    public function __construct(Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository)
     {
         $this->pictureRepository = $pictureRepository;
     }

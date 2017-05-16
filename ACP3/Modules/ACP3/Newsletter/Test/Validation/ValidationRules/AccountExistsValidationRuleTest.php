@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Test\Validation\ValidationRules;
 
 use ACP3\Core\Test\Validation\ValidationRules\AbstractValidationRuleTest;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository;
 use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidationRule;
 
 class AccountExistsValidationRuleTest extends AbstractValidationRuleTest
@@ -19,7 +19,7 @@ class AccountExistsValidationRuleTest extends AbstractValidationRuleTest
 
     protected function setUp()
     {
-        $this->accountRepositoryMock = $this->getMockBuilder(AccountRepository::class)
+        $this->accountRepositoryMock = $this->getMockBuilder(NewsletterAccountsRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -12,7 +12,7 @@ use ACP3\Core\Modules;
 use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Permissions\Cache;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository;
 
 class RoleFormBlock extends AbstractFormBlock
 {
@@ -25,7 +25,7 @@ class RoleFormBlock extends AbstractFormBlock
      */
     private $modules;
     /**
-     * @var PrivilegeRepository
+     * @var AclPrivilegesRepository
      */
     private $privilegeRepository;
     /**
@@ -38,14 +38,14 @@ class RoleFormBlock extends AbstractFormBlock
      * @param FormBlockContext $context
      * @param ACL $acl
      * @param Modules $modules
-     * @param PrivilegeRepository $privilegeRepository
+     * @param AclPrivilegesRepository $privilegeRepository
      * @param Cache $permissionsCache
      */
     public function __construct(
         FormBlockContext $context,
         ACL $acl,
         Modules $modules,
-        PrivilegeRepository $privilegeRepository,
+        AclPrivilegesRepository $privilegeRepository,
         Cache $permissionsCache
     ) {
         parent::__construct($context);

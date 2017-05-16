@@ -3,7 +3,7 @@ namespace ACP3\Modules\ACP3\Permissions\Validation\ValidationRules;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository;
 
 /**
  * Class PrivilegesExistValidationRule
@@ -12,16 +12,16 @@ use ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository;
 class PrivilegesExistValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository
      */
     protected $privilegeRepository;
 
     /**
      * PrivilegesExistValidationRule constructor.
      *
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository $privilegeRepository
      */
-    public function __construct(PrivilegeRepository $privilegeRepository)
+    public function __construct(AclPrivilegesRepository $privilegeRepository)
     {
         $this->privilegeRepository = $privilegeRepository;
     }

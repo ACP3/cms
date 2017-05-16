@@ -1,6 +1,6 @@
 services:
   news.model.repository.news_data_grid_repository:
-    class: ACP3\Modules\ACP3\News\Model\Repository\DataGridRepository
+    class: ACP3\Modules\ACP3\News\Model\Repository\NewsDataGridRepository
     arguments:
       - '@core.db'
 

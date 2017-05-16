@@ -33,7 +33,7 @@ class AuthenticationModel
      */
     protected $sessionHandler;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository
      */
     protected $userRepository;
     /**
@@ -62,7 +62,7 @@ class AuthenticationModel
      * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param UserModel $userModel
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository $userRepository
      */
     public function __construct(
         RequestInterface $request,
@@ -71,7 +71,7 @@ class AuthenticationModel
         SessionHandlerInterface $sessionHandler,
         Secure $secureHelper,
         UserModel $userModel,
-        Users\Model\Repository\UserRepository $userRepository
+        Users\Model\Repository\UsersRepository $userRepository
     ) {
         $this->request = $request;
         $this->response = $response;

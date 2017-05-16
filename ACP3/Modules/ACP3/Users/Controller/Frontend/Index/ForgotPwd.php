@@ -17,7 +17,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository
      */
     protected $userRepository;
     /**
@@ -44,7 +44,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      * @param Core\View\Block\FormBlockInterface $block
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param Core\Helpers\Alerts $alerts
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation
      * @param \ACP3\Core\Helpers\SendEmail $sendEmail
      */
@@ -53,7 +53,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
         Core\View\Block\FormBlockInterface $block,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Alerts $alerts,
-        Users\Model\Repository\UserRepository $userRepository,
+        Users\Model\Repository\UsersRepository $userRepository,
         Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation,
         Core\Helpers\SendEmail $sendEmail
     ) {

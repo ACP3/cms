@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\System;
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
+     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentsRepository
      */
     protected $commentRepository;
     /**
@@ -30,12 +30,12 @@ class Delete extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Comments\Model\CommentsModel $commentsModel
-     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
+     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentsRepository $commentRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Comments\Model\CommentsModel $commentsModel,
-        Comments\Model\Repository\CommentRepository $commentRepository
+        Comments\Model\Repository\CommentsRepository $commentRepository
     ) {
         parent::__construct($context);
 

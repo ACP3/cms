@@ -11,7 +11,7 @@ use ACP3\Core\Authentication\Exception\AuthenticationException;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
-use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
+use ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository;
 
 /**
  * Class Native
@@ -32,7 +32,7 @@ class Native implements AuthenticationInterface
      */
     protected $authenticationModel;
     /**
-     * @var UserRepository
+     * @var UsersRepository
      */
     protected $userRepository;
 
@@ -42,13 +42,13 @@ class Native implements AuthenticationInterface
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
      * @param AuthenticationModel $authenticationModel
-     * @param UserRepository $userRepository
+     * @param UsersRepository $userRepository
      */
     public function __construct(
         RequestInterface $request,
         SessionHandlerInterface $sessionHandler,
         AuthenticationModel $authenticationModel,
-        UserRepository $userRepository)
+        UsersRepository $userRepository)
     {
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;

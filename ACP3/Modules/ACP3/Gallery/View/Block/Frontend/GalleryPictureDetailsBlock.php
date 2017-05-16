@@ -14,7 +14,7 @@ use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
 use ACP3\Modules\ACP3\Gallery\Helpers;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
+use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
 class GalleryPictureDetailsBlock extends AbstractBlock
@@ -28,7 +28,7 @@ class GalleryPictureDetailsBlock extends AbstractBlock
      */
     private $settings;
     /**
-     * @var PictureRepository
+     * @var GalleryPicturesRepository
      */
     private $pictureRepository;
     /**
@@ -46,14 +46,14 @@ class GalleryPictureDetailsBlock extends AbstractBlock
      * @param ApplicationPath $appPath
      * @param RouterInterface $router
      * @param SettingsInterface $settings
-     * @param PictureRepository $pictureRepository
+     * @param GalleryPicturesRepository $pictureRepository
      */
     public function __construct(
         BlockContext $context,
         ApplicationPath $appPath,
         RouterInterface $router,
         SettingsInterface $settings,
-        PictureRepository $pictureRepository
+        GalleryPicturesRepository $pictureRepository
     ) {
         parent::__construct($context);
 

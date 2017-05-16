@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Menus\Test\Core\Breadcrumb;
 
 use ACP3\Modules\ACP3\Menus\Core\Breadcrumb\Steps;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository;
 
 class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
 {
@@ -36,7 +36,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
     {
         parent::initializeMockObjects();
 
-        $this->menuItemRepositoryMock = $this->getMockBuilder(MenuItemRepository::class)
+        $this->menuItemRepositoryMock = $this->getMockBuilder(MenuItemsRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
     }

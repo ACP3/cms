@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Articles\Test\Validation\ValidationRules;
 
 use ACP3\Core\Test\Validation\ValidationRules\AbstractValidationRuleTest;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository;
 use ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule;
 
 class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
@@ -19,7 +19,7 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
 
     protected function setUp()
     {
-        $this->articlesRepositoryMock = $this->getMockBuilder(ArticleRepository::class)
+        $this->articlesRepositoryMock = $this->getMockBuilder(ArticlesRepository::class)
             ->disableOriginalConstructor()
             ->setMethods(['resultExists'])
             ->getMock();

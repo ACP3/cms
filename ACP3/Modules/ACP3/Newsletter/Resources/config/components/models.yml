@@ -1,31 +1,31 @@
 services:
   newsletter.model.repository.newsletters_repository:
-    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
+    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository
     arguments:
       - '@core.db'
 
   newsletter.model.repository.newsletters_data_grid_repository:
-    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterDataGridRepository
+    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersDataGridRepository
     arguments:
       - '@core.db'
 
   newsletter.model.repository.newsletter_accounts_repository:
-    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
+    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository
     arguments:
       - '@core.db'
 
   newsletter.model.repository.newsletter_accounts_data_grid_repository:
-    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountDataGridRepository
+    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsDataGridRepository
     arguments:
       - '@core.db'
 
   newsletter.model.repository.newsletter_account_history_repository:
-    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository
+    class: ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountHistoryRepository
     arguments:
       - '@core.db'
 
   newsletter.model.newsletters_model:
-    class: ACP3\Modules\ACP3\Newsletter\Model\NewsletterModel
+    class: ACP3\Modules\ACP3\Newsletter\Model\NewslettersModel
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'

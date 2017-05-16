@@ -59,7 +59,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     public function getOneById($fileId)
     {
         return $this->db->fetchAssoc(
-            'SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?',
+            'SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?',
             [$fileId]
         );
     }

@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Permissions;
 class Order extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository
      */
     protected $roleRepository;
     /**
@@ -33,13 +33,13 @@ class Order extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\NestedSet\Operation\Sort $sortOperation
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository $roleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\NestedSet\Operation\Sort $sortOperation,
-        Permissions\Model\Repository\RoleRepository $roleRepository,
+        Permissions\Model\Repository\AclRolesRepository $roleRepository,
         Permissions\Cache $permissionsCache
     ) {
         parent::__construct($context);

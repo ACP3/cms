@@ -16,7 +16,7 @@ class Create extends AbstractFormAction
      */
     protected $resourceFormValidation;
     /**
-     * @var Permissions\Model\ResourcesModel
+     * @var Permissions\Model\AclResourcesModel
      */
     protected $resourcesModel;
     /**
@@ -27,13 +27,13 @@ class Create extends AbstractFormAction
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
-     * @param Permissions\Model\ResourcesModel $resourcesModel
+     * @param Permissions\Model\AclResourcesModel $resourcesModel
      * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation $resourceFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
-        Permissions\Model\ResourcesModel $resourcesModel,
+        Permissions\Model\AclResourcesModel $resourcesModel,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
         parent::__construct($context);

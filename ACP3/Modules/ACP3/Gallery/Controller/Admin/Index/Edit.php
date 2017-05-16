@@ -16,7 +16,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $galleryFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository
      */
     protected $pictureRepository;
     /**
@@ -38,7 +38,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
      * @param Core\View\Block\DataGridBlockInterface $dataGridBlock
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
      * @param Gallery\Model\GalleryModel $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
      */
@@ -46,7 +46,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
         Core\View\Block\DataGridBlockInterface $dataGridBlock,
-        Gallery\Model\Repository\PictureRepository $pictureRepository,
+        Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation
     ) {

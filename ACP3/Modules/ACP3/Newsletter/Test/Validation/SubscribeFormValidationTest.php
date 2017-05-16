@@ -10,7 +10,7 @@ use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\Test\Validation\AbstractFormValidationTest;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository;
 use ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation;
 use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountNotExistsValidationRule;
 
@@ -45,7 +45,7 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
         $emailRule = new EmailValidationRule();
         $this->validator->registerValidationRule($emailRule);
 
-        $this->accountRepositoryMock = $this->getMockBuilder(AccountRepository::class)
+        $this->accountRepositoryMock = $this->getMockBuilder(NewsletterAccountsRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
         $accountNotExistsRule = new AccountNotExistsValidationRule($this->accountRepositoryMock);

@@ -14,7 +14,7 @@ class Details extends Core\Controller\AbstractFrontendAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository
      */
     protected $newsletterRepository;
     /**
@@ -27,12 +27,12 @@ class Details extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\BlockInterface $block
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository $newsletterRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\BlockInterface $block,
-        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository)
+        Newsletter\Model\Repository\NewslettersRepository $newsletterRepository)
     {
         parent::__construct($context);
 

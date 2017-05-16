@@ -4,7 +4,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository;
 
 /**
  * Class SendNewsletter
@@ -21,7 +21,7 @@ class SendNewsletter
      */
     protected $router;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository
      */
     protected $newsletterRepository;
     /**
@@ -35,13 +35,13 @@ class SendNewsletter
      * @param \ACP3\Core\Mailer $mailer
      * @param \ACP3\Core\Router\RouterInterface $router
      * @param \ACP3\Core\Settings\SettingsInterface $config
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository $newsletterRepository
      */
     public function __construct(
         Core\Mailer $mailer,
         Core\Router\RouterInterface $router,
         Core\Settings\SettingsInterface $config,
-        NewsletterRepository $newsletterRepository
+        NewslettersRepository $newsletterRepository
     ) {
         $this->mailer = $mailer;
         $this->router = $router;

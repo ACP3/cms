@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class Image extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository
      */
     protected $pictureRepository;
 
@@ -25,11 +25,11 @@ class Image extends Core\Controller\AbstractFrontendAction
      * Image constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext      $context
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Gallery\Model\Repository\PictureRepository $pictureRepository)
+        Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository)
     {
         parent::__construct($context);
 

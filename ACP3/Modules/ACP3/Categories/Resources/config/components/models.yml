@@ -1,11 +1,11 @@
 services:
   categories.model.repository.categories_repository:
-    class: ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+    class: ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository
     arguments:
       - '@core.db'
 
   categories.model.repository.categories_data_grid_repository:
-    class: ACP3\Modules\ACP3\Categories\Model\Repository\DataGridRepository
+    class: ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesDataGridRepository
     arguments:
       - '@core.db'
 

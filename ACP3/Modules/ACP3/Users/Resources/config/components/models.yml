@@ -25,11 +25,11 @@ services:
       - '@users.model.repository.users_repository'
 
   users.model.repository.users_data_grid_repository:
-    class: ACP3\Modules\ACP3\Users\Model\Repository\DataGridRepository
+    class: ACP3\Modules\ACP3\Users\Model\Repository\UsersDataGridRepository
     arguments:
       - '@core.db'
 
   users.model.repository.users_repository:
-    class: ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
+    class: ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository
     arguments:
       - '@core.db'

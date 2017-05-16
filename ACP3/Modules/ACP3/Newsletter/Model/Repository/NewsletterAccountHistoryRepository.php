@@ -1,0 +1,14 @@
+<?php
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Modules\ACP3\Newsletter\Model\Repository;
+
+use ACP3\Core;
+
+class NewsletterAccountHistoryRepository extends Core\Model\Repository\AbstractRepository
+{
+    const TABLE_NAME = 'newsletter_account_history';
+}

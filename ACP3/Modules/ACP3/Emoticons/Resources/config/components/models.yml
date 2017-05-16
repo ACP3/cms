@@ -1,11 +1,11 @@
 services:
   emoticons.model.repository.emoticons_data_grid_repository:
-    class: ACP3\Modules\ACP3\Emoticons\Model\Repository\DataGridRepository
+    class: ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonsDataGridRepository
     arguments:
       - '@core.db'
 
   emoticons.model.repository.emoticons_repository:
-    class: ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository
+    class: ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonsRepository
     arguments:
       - '@core.db'
 

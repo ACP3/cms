@@ -14,7 +14,7 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractListingBlock;
 use ACP3\Core\View\Block\Context\ListingBlockContext;
 use ACP3\Modules\ACP3\Categories\Helpers;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 use ACP3\Modules\ACP3\News\Controller\Admin\Index\CommentsHelperTrait;
 use ACP3\Modules\ACP3\News\Installer\Schema;
 use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
@@ -37,7 +37,7 @@ class NewsListingBlock extends AbstractListingBlock
      */
     private $router;
     /**
-     * @var CategoryRepository
+     * @var CategoriesRepository
      */
     private $categoryRepository;
     /**
@@ -65,7 +65,7 @@ class NewsListingBlock extends AbstractListingBlock
      * @param RouterInterface $router
      * @param StringFormatter $stringFormatter
      * @param NewsRepository $newsRepository
-     * @param CategoryRepository $categoryRepository
+     * @param CategoriesRepository $categoryRepository
      * @param Helpers $categoriesHelpers
      */
     public function __construct(
@@ -75,7 +75,7 @@ class NewsListingBlock extends AbstractListingBlock
         RouterInterface $router,
         StringFormatter $stringFormatter,
         NewsRepository $newsRepository,
-        CategoryRepository $categoryRepository,
+        CategoriesRepository $categoryRepository,
         Helpers $categoriesHelpers
     ) {
         parent::__construct($context);

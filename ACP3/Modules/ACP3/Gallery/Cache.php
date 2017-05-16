@@ -3,7 +3,7 @@ namespace ACP3\Modules\ACP3\Gallery;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
+use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository;
 
 /**
  * Class Cache
@@ -21,7 +21,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     protected $appPath;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository
      */
     protected $pictureRepository;
     /**
@@ -32,13 +32,13 @@ class Cache extends Core\Modules\AbstractCacheStorage
     /**
      * @param \ACP3\Core\Cache $cache
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
      * @param \ACP3\Core\Settings\SettingsInterface $config
      */
     public function __construct(
         Core\Cache $cache,
         Core\Environment\ApplicationPath $appPath,
-        PictureRepository $pictureRepository,
+        GalleryPicturesRepository $pictureRepository,
         Core\Settings\SettingsInterface $config
     ) {
         parent::__construct($cache);

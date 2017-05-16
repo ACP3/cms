@@ -1,6 +1,6 @@
 services:
   guestbook.model.repository.guestbook_data_grid_repository:
-    class: ACP3\Modules\ACP3\Guestbook\Model\Repository\DataGridRepository
+    class: ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookDataGridRepository
     arguments:
       - '@core.db'
 

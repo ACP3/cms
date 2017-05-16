@@ -9,21 +9,21 @@ namespace ACP3\Modules\ACP3\Polls\View\Block\Admin;
 
 use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
-use ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository;
+use ACP3\Modules\ACP3\Polls\Model\Repository\PollAnswersRepository;
 
 class PollFormBlock extends AbstractFormBlock
 {
     /**
-     * @var AnswerRepository
+     * @var PollAnswersRepository
      */
     private $answerRepository;
 
     /**
      * PollFormBlock constructor.
      * @param FormBlockContext $context
-     * @param AnswerRepository $answerRepository
+     * @param PollAnswersRepository $answerRepository
      */
-    public function __construct(FormBlockContext $context, AnswerRepository $answerRepository)
+    public function __construct(FormBlockContext $context, PollAnswersRepository $answerRepository)
     {
         parent::__construct($context);
 

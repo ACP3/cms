@@ -60,7 +60,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['controllerActionExists', 'isActive'])
             ->getMock();
-        $this->userRoleRepositoryMock = $this->getMockBuilder(ACL\Model\Repository\UserRoleRepositoryInterface::class)
+        $this->userRoleRepositoryMock = $this->getMockBuilder(ACL\Model\Repository\AclUserRolesRepositoryInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(['getRolesByUserId'])
             ->getMock();

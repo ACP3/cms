@@ -9,30 +9,30 @@ namespace ACP3\Modules\ACP3\Polls\View\Block\Frontend;
 
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
-use ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository;
-use ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository;
+use ACP3\Modules\ACP3\Polls\Model\Repository\PollAnswersRepository;
+use ACP3\Modules\ACP3\Polls\Model\Repository\PollsRepository;
 
 class PollDetailsBlock extends AbstractBlock
 {
     /**
-     * @var PollRepository
+     * @var PollsRepository
      */
     private $pollRepository;
     /**
-     * @var AnswerRepository
+     * @var PollAnswersRepository
      */
     private $answerRepository;
 
     /**
      * PollResultBlock constructor.
      * @param BlockContext $context
-     * @param PollRepository $pollRepository
-     * @param AnswerRepository $answerRepository
+     * @param PollsRepository $pollRepository
+     * @param PollAnswersRepository $answerRepository
      */
     public function __construct(
         BlockContext $context,
-        PollRepository $pollRepository,
-        AnswerRepository $answerRepository
+        PollsRepository $pollRepository,
+        PollAnswersRepository $answerRepository
     ) {
         parent::__construct($context);
 

@@ -10,8 +10,8 @@ use ACP3\Core\Date;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Gallery\Helpers;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
+use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
@@ -26,7 +26,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
      */
     protected $galleryRepository;
     /**
-     * @var PictureRepository
+     * @var GalleryPicturesRepository
      */
     protected $pictureRepository;
 
@@ -35,14 +35,14 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
      * @param Date $date
      * @param RouterInterface $router
      * @param GalleryRepository $galleryRepository
-     * @param PictureRepository $pictureRepository
+     * @param GalleryPicturesRepository $pictureRepository
      * @param MetaStatements $metaStatements
      */
     public function __construct(
         Date $date,
         RouterInterface $router,
         GalleryRepository $galleryRepository,
-        PictureRepository $pictureRepository,
+        GalleryPicturesRepository $pictureRepository,
         MetaStatements $metaStatements
     ) {
         parent::__construct($router, $metaStatements);

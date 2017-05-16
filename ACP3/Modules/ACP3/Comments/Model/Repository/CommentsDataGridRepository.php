@@ -9,12 +9,12 @@ namespace ACP3\Modules\ACP3\Comments\Model\Repository;
 
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository;
-use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
+use ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
 class CommentsDataGridRepository extends AbstractDataGridRepository
 {
-    const TABLE_NAME = CommentRepository::TABLE_NAME;
+    const TABLE_NAME = CommentsRepository::TABLE_NAME;
 
     /**
      * @param int $moduleId
@@ -24,7 +24,7 @@ class CommentsDataGridRepository extends AbstractDataGridRepository
     public function getAllByModuleInAcp($moduleId)
     {
         return $this->db->fetchAll(
-            'SELECT IF(c.user_id IS NULL, c.name, u.nickname) AS `name`, c.id, c.ip, c.user_id, c.date, c.message FROM ' . $this->getTableName() . ' AS c LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Users\Model\Repository\UserRepository::TABLE_NAME) . ' AS u ON (u.id = c.user_id) WHERE c.module_id = ? ORDER BY c.entry_id ASC, c.date ASC',
+            'SELECT IF(c.user_id IS NULL, c.name, u.nickname) AS `name`, c.id, c.ip, c.user_id, c.date, c.message FROM ' . $this->getTableName() . ' AS c LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository::TABLE_NAME) . ' AS u ON (u.id = c.user_id) WHERE c.module_id = ? ORDER BY c.entry_id ASC, c.date ASC',
             [$moduleId]
         );
     }
@@ -51,7 +51,7 @@ class CommentsDataGridRepository extends AbstractDataGridRepository
     {
         $queryBuilder->leftJoin(
             'main',
-            $this->getTableName(UserRepository::TABLE_NAME),
+            $this->getTableName(UsersRepository::TABLE_NAME),
             'u',
             'main.user_id = u.id');
     }

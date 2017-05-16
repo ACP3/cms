@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Menus;
 class Order extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository
      */
     protected $menuItemRepository;
     /**
@@ -33,13 +33,13 @@ class Order extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\NestedSet\Operation\Sort $sortOperation
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository $menuItemRepository
      * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\NestedSet\Operation\Sort $sortOperation,
-        Menus\Model\Repository\MenuItemRepository $menuItemRepository,
+        Menus\Model\Repository\MenuItemsRepository $menuItemRepository,
         Menus\Cache $menusCache
     ) {
         parent::__construct($context);

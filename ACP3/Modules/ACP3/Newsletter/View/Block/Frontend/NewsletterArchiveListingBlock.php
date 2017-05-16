@@ -11,21 +11,21 @@ use ACP3\Core\View\Block\AbstractListingBlock;
 use ACP3\Core\View\Block\Context\ListingBlockContext;
 use ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository;
 
 class NewsletterArchiveListingBlock extends AbstractListingBlock
 {
     /**
-     * @var NewsletterRepository
+     * @var NewslettersRepository
      */
     private $newsletterRepository;
 
     /**
      * NewsletterArchiveListingBlock constructor.
      * @param ListingBlockContext $context
-     * @param NewsletterRepository $newsletterRepository
+     * @param NewslettersRepository $newsletterRepository
      */
-    public function __construct(ListingBlockContext $context, NewsletterRepository $newsletterRepository)
+    public function __construct(ListingBlockContext $context, NewslettersRepository $newsletterRepository)
     {
         parent::__construct($context);
 

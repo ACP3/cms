@@ -16,11 +16,11 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
+     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollsRepository
      */
     protected $pollRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository
+     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollAnswersRepository
      */
     protected $answerRepository;
     /**
@@ -37,16 +37,16 @@ class Index extends Core\Controller\AbstractWidgetAction
      * @param Core\View\Block\FormBlockInterface $formBlock
      * @param Core\View\Block\BlockInterface $block
      * @param Core\Date $date
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollsRepository $pollRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollAnswersRepository $answerRepository
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\View\Block\FormBlockInterface $formBlock,
         Core\View\Block\BlockInterface $block,
         Core\Date $date,
-        Polls\Model\Repository\PollRepository $pollRepository,
-        Polls\Model\Repository\AnswerRepository $answerRepository
+        Polls\Model\Repository\PollsRepository $pollRepository,
+        Polls\Model\Repository\PollAnswersRepository $answerRepository
     ) {
         parent::__construct($context);
 

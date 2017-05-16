@@ -11,13 +11,13 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractListingBlock;
 use ACP3\Core\View\Block\Context\ListingBlockContext;
 use ACP3\Modules\ACP3\Comments\Installer\Schema;
-use ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository;
+use ACP3\Modules\ACP3\Comments\Model\Repository\CommentsRepository;
 use ACP3\Modules\ACP3\Emoticons\Helpers;
 
 class CommentsListingBlock extends AbstractListingBlock
 {
     /**
-     * @var CommentRepository
+     * @var CommentsRepository
      */
     private $commentRepository;
     /**
@@ -33,12 +33,12 @@ class CommentsListingBlock extends AbstractListingBlock
      * CommentsListingBlock constructor.
      * @param ListingBlockContext $context
      * @param SettingsInterface $settings
-     * @param CommentRepository $commentRepository
+     * @param CommentsRepository $commentRepository
      */
     public function __construct(
         ListingBlockContext $context,
         SettingsInterface $settings,
-        CommentRepository $commentRepository)
+        CommentsRepository $commentRepository)
     {
         parent::__construct($context);
 

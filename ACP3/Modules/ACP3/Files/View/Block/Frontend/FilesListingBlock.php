@@ -11,7 +11,7 @@ use ACP3\Core\Date;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractListingBlock;
 use ACP3\Core\View\Block\Context\ListingBlockContext;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
@@ -26,7 +26,7 @@ class FilesListingBlock extends AbstractListingBlock
      */
     private $filesRepository;
     /**
-     * @var CategoryRepository
+     * @var CategoriesRepository
      */
     private $categoryRepository;
     /**
@@ -40,14 +40,14 @@ class FilesListingBlock extends AbstractListingBlock
      * @param Date $date
      * @param SettingsInterface $settings
      * @param FilesRepository $filesRepository
-     * @param CategoryRepository $categoryRepository
+     * @param CategoriesRepository $categoryRepository
      */
     public function __construct(
         ListingBlockContext $context,
         Date $date,
         SettingsInterface $settings,
         FilesRepository $filesRepository,
-        CategoryRepository $categoryRepository
+        CategoriesRepository $categoryRepository
     ) {
         parent::__construct($context);
 

@@ -14,7 +14,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 class CommentsByModuleDataGridRepository extends AbstractDataGridRepository
 {
-    const TABLE_NAME = CommentRepository::TABLE_NAME;
+    const TABLE_NAME = CommentsRepository::TABLE_NAME;
 
 //    /**
 //     * @return array

@@ -11,7 +11,7 @@ use ACP3\Core\Date;
 use ACP3\Core\View\Block\AbstractListingBlock;
 use ACP3\Core\View\Block\Context\ListingBlockContext;
 use ACP3\Modules\ACP3\Articles\Installer\Schema;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository;
 
 class ArticlesListingBlock extends AbstractListingBlock
 {
@@ -20,7 +20,7 @@ class ArticlesListingBlock extends AbstractListingBlock
      */
     private $date;
     /**
-     * @var ArticleRepository
+     * @var ArticlesRepository
      */
     private $articleRepository;
 
@@ -28,9 +28,9 @@ class ArticlesListingBlock extends AbstractListingBlock
      * Listing constructor.
      * @param ListingBlockContext $context
      * @param Date $date
-     * @param ArticleRepository $articleRepository
+     * @param ArticlesRepository $articleRepository
      */
-    public function __construct(ListingBlockContext $context, Date $date, ArticleRepository $articleRepository)
+    public function __construct(ListingBlockContext $context, Date $date, ArticlesRepository $articleRepository)
     {
         parent::__construct($context);
 

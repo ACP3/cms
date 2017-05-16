@@ -7,7 +7,7 @@ services:
       - '@comments.model.repository.comments_repository'
 
   comments.model.repository.comments_repository:
-    class: ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
+    class: ACP3\Modules\ACP3\Comments\Model\Repository\CommentsRepository
     arguments:
       - '@core.db'
 

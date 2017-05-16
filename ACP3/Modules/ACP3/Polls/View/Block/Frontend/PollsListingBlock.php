@@ -11,7 +11,7 @@ use ACP3\Core\Date;
 use ACP3\Core\View\Block\AbstractListingBlock;
 use ACP3\Core\View\Block\Context\ListingBlockContext;
 use ACP3\Modules\ACP3\Polls\Installer\Schema;
-use ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository;
+use ACP3\Modules\ACP3\Polls\Model\Repository\PollsRepository;
 
 class PollsListingBlock extends AbstractListingBlock
 {
@@ -20,7 +20,7 @@ class PollsListingBlock extends AbstractListingBlock
      */
     private $date;
     /**
-     * @var PollRepository
+     * @var PollsRepository
      */
     private $pollRepository;
 
@@ -28,9 +28,9 @@ class PollsListingBlock extends AbstractListingBlock
      * PollsListingBlock constructor.
      * @param ListingBlockContext $context
      * @param Date $date
-     * @param PollRepository $pollRepository
+     * @param PollsRepository $pollRepository
      */
-    public function __construct(ListingBlockContext $context, Date $date, PollRepository $pollRepository)
+    public function __construct(ListingBlockContext $context, Date $date, PollsRepository $pollRepository)
     {
         parent::__construct($context);
 

@@ -12,7 +12,7 @@ use ACP3\Core\I18n\Translator;
 use ACP3\Core\View;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository;
 
 class OnMenusLayoutRenderManageMenuItemListener
 {
@@ -25,7 +25,7 @@ class OnMenusLayoutRenderManageMenuItemListener
      */
     private $view;
     /**
-     * @var MenuItemRepository
+     * @var MenuItemsRepository
      */
     private $menuItemRepository;
     /**
@@ -48,7 +48,7 @@ class OnMenusLayoutRenderManageMenuItemListener
      * @param View $view
      * @param Forms $forms
      * @param MenuItemFormFields $menuItemFormFields
-     * @param MenuItemRepository $menuItemRepository
+     * @param MenuItemsRepository $menuItemRepository
      */
     public function __construct(
         ACL $acl,
@@ -56,7 +56,7 @@ class OnMenusLayoutRenderManageMenuItemListener
         View $view,
         Forms $forms,
         MenuItemFormFields $menuItemFormFields,
-        MenuItemRepository $menuItemRepository
+        MenuItemsRepository $menuItemRepository
     ) {
         $this->acl = $acl;
         $this->view = $view;

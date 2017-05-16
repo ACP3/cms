@@ -15,7 +15,7 @@ services:
       - '@core.db'
 
   gallery.model.repository.gallery_pictures_repository:
-    class: ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+    class: ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository
     arguments:
       - '@core.db'
 
@@ -27,7 +27,7 @@ services:
       - '@gallery.model.repository.galleries_repository'
 
   gallery.model.gallery_pictures_model:
-    class: ACP3\Modules\ACP3\Gallery\Model\PictureModel
+    class: ACP3\Modules\ACP3\Gallery\Model\GalleryPicturesModel
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'

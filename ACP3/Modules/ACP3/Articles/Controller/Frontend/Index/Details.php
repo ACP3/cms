@@ -22,7 +22,7 @@ class Details extends Core\Controller\AbstractFrontendAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
+     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository
      */
     protected $articleRepository;
     /**
@@ -40,14 +40,14 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Date $date
      * @param Core\View\Block\BlockInterface $block
-     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
+     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository $articleRepository
      * @param \ACP3\Modules\ACP3\Articles\Cache $articlesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Core\View\Block\BlockInterface $block,
-        Articles\Model\Repository\ArticleRepository $articleRepository,
+        Articles\Model\Repository\ArticlesRepository $articleRepository,
         Articles\Cache $articlesCache)
     {
         parent::__construct($context);

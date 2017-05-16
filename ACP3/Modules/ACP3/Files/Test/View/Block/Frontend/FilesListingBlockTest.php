@@ -10,7 +10,7 @@ use ACP3\Core\Date;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\Test\View\Block\AbstractListingBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 use ACP3\Modules\ACP3\Files\View\Block\Frontend\FilesListingBlock;
 
@@ -49,7 +49,7 @@ class FilesListingBlockTest extends AbstractListingBlockTest
             ->method('getAllByCategoryId')
             ->willReturn([]);
 
-        $categoryRepository = $this->getMockBuilder(CategoryRepository::class)
+        $categoryRepository = $this->getMockBuilder(CategoriesRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 

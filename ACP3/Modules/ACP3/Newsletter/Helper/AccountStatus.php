@@ -2,8 +2,8 @@
 namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core\Date;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountHistoryRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository;
 
 /**
  * Class AccountStatus
@@ -20,23 +20,23 @@ class AccountStatus
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository
      */
     protected $accountRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountHistoryRepository
      */
     protected $accountHistoryRepository;
 
     /**
      * @param \ACP3\Core\Date $date
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository $accountRepository
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository $accountHistoryRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository $accountRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountHistoryRepository $accountHistoryRepository
      */
     public function __construct(
         Date $date,
-        AccountRepository $accountRepository,
-        AccountHistoryRepository $accountHistoryRepository
+        NewsletterAccountsRepository $accountRepository,
+        NewsletterAccountHistoryRepository $accountHistoryRepository
     ) {
         $this->date = $date;
         $this->accountRepository = $accountRepository;

@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Articles;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository;
 
 /**
  * Class Cache
@@ -18,17 +18,17 @@ class Cache extends Core\Modules\AbstractCacheStorage
     const CACHE_ID = 'list_id_';
 
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
+     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository
      */
     protected $articleRepository;
 
     /**
      * @param Core\Cache $cache
-     * @param ArticleRepository $articleRepository
+     * @param ArticlesRepository $articleRepository
      */
     public function __construct(
         Core\Cache $cache,
-        ArticleRepository $articleRepository
+        ArticlesRepository $articleRepository
     ) {
         parent::__construct($cache);
 

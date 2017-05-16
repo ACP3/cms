@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Categories\Validation;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule;
 
 /**
@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryVal
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository
      */
     protected $categoryRepository;
     /**
@@ -33,12 +33,12 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
      *
      * @param \ACP3\Core\I18n\Translator                             $translator
      * @param \ACP3\Core\Validation\Validator                        $validator
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository $categoryRepository
      */
     public function __construct(
         Core\I18n\Translator $translator,
         Core\Validation\Validator $validator,
-        CategoryRepository $categoryRepository
+        CategoriesRepository $categoryRepository
     ) {
         parent::__construct($translator, $validator);
 

@@ -27,37 +27,37 @@ class AclInstaller implements InstallerInterface
      */
     private $schemaHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository
      */
     private $roleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository
      */
     private $privilegeRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\AclResourcesRepository
      */
     private $resourceRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRulesRepository
      */
     private $ruleRepository;
 
     /**
      * @param \ACP3\Core\Cache $aclCache
      * @param \ACP3\Core\Modules\SchemaHelper $schemaHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository $ruleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRulesRepository $ruleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclResourcesRepository $resourceRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository $privilegeRepository
      */
     public function __construct(
         Cache $aclCache,
         SchemaHelper $schemaHelper,
-        Permissions\Model\Repository\RoleRepository $roleRepository,
-        Permissions\Model\Repository\RuleRepository $ruleRepository,
-        Permissions\Model\Repository\ResourceRepository $resourceRepository,
-        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
+        Permissions\Model\Repository\AclRolesRepository $roleRepository,
+        Permissions\Model\Repository\AclRulesRepository $ruleRepository,
+        Permissions\Model\Repository\AclResourcesRepository $resourceRepository,
+        Permissions\Model\Repository\AclPrivilegesRepository $privilegeRepository
     ) {
         $this->aclCache = $aclCache;
         $this->schemaHelper = $schemaHelper;
