@@ -70,9 +70,9 @@ class Asset extends AbstractResource
             $fragments = explode('/', $template);
 
             if (count($fragments) === 3) {
-                $path = $fragments[0] . '/Resources/View/' . $fragments[1] . '/' . $fragments[2];
+                $path = $fragments[0] . '/Resources/templates/' . $fragments[1] . '/' . $fragments[2];
             } else {
-                $path = $fragments[0] . '/Resources/View/' . $fragments[1];
+                $path = $fragments[0] . '/Resources/templates/' . $fragments[1];
             }
 
             return $this->appPath->getInstallerModulesDir() . $path;

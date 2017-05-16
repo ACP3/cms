@@ -183,7 +183,7 @@ class FileResolver
                 $template .= '/' . $fragments[2];
             }
 
-            return $this->getStaticAssetPath($modulesPath, $designPath, 'View', $template);
+            return $this->getStaticAssetPath($modulesPath, $designPath, 'templates', $template);
         }
     }
 }
