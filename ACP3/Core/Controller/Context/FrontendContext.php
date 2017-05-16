@@ -28,6 +28,7 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
             $context->getEventDispatcher(),
             $context->getUser(),
             $context->getTranslator(),
+            $context->getLocale(),
             $context->getModules(),
             $context->getRequest(),
             $context->getRouter(),

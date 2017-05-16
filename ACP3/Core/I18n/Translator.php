@@ -14,10 +14,6 @@ class Translator implements TranslatorInterface
      */
     private $locale;
     /**
-     * @var AvailableLanguagePacks
-     */
-    private $availableLanguagePacks;
-    /**
      * @var array
      */
     protected $buffer = [];
@@ -25,73 +21,14 @@ class Translator implements TranslatorInterface
     /**
      * Translator constructor.
      * @param DictionaryCache $dictionaryCache
-     * @param AvailableLanguagePacks $availableLanguagePacks
      * @param Locale $locale
      */
     public function __construct(
         LanguageCache $dictionaryCache,
-        AvailableLanguagePacks $availableLanguagePacks,
         Locale $locale
     ) {
         $this->dictionaryCache = $dictionaryCache;
         $this->locale = $locale;
-        $this->availableLanguagePacks = $availableLanguagePacks;
-    }
-
-    /**
-     * Überprüft, ob das angegebene Sprachpaket existiert
-     *
-     * @param string $locale
-     *
-     * @return boolean
-     * @deprecated
-     */
-    public function languagePackExists(string $locale): bool
-    {
-        return $this->availableLanguagePacks->languagePackExists($locale);
-    }
-
-    /**
-     * @return string
-     * @deprecated
-     */
-    public function getLocale(): string
-    {
-        return $this->locale->getLocale();
-    }
-
-    /**
-     * @return string
-     * @deprecated
-     */
-    public function getShortIsoCode(): string
-    {
-        return $this->locale->getShortIsoCode();
-    }
-
-    /**
-     * @param string $locale
-     *
-     * @return $this
-     */
-    public function setLocale($locale)
-    {
-        if ($this->languagePackExists($locale) === true) {
-            $this->locale = $locale;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Gets the writing direction of the language
-     *
-     * @return string
-     * @deprecated
-     */
-    public function getDirection(): string
-    {
-        return $this->locale->getDirection();
     }
 
     /**

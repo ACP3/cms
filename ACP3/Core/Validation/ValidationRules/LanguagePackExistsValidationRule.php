@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-use ACP3\Core\I18n\TranslatorInterface;
+use ACP3\Core\I18n\AvailableLanguagePacks;
 
 /**
  * Class LanguagePackExistsValidationRule
@@ -10,18 +10,19 @@ use ACP3\Core\I18n\TranslatorInterface;
 class LanguagePackExistsValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Core\I18n\TranslatorInterface
+     * @var AvailableLanguagePacks
      */
-    protected $translator;
+    private $availableLanguagePacks;
 
     /**
      * LanguagePackExistsValidationRule constructor.
      *
+     * @param AvailableLanguagePacks $availableLanguagePacks
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(AvailableLanguagePacks $availableLanguagePacks)
     {
-        $this->translator = $translator;
+        $this->availableLanguagePacks = $availableLanguagePacks;
     }
 
     /**
@@ -33,6 +34,6 @@ class LanguagePackExistsValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->translator->languagePackExists($data);
+        return $this->availableLanguagePacks->languagePackExists($data);
     }
 }

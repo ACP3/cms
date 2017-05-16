@@ -8,6 +8,7 @@ namespace ACP3\Core\Controller\Context;
 use ACP3\Core\Controller\ActionResultFactory;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\I18n\Locale;
 use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\Router\RouterInterface;
@@ -18,10 +19,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class WidgetContext
- * @package ACP3\Core\Controller\Context
- */
 class WidgetContext
 {
     /**
@@ -72,6 +69,10 @@ class WidgetContext
      * @var ActionResultFactory
      */
     private $actionResultFactory;
+    /**
+     * @var Locale
+     */
+    private $locale;
 
     /**
      * WidgetContext constructor.
@@ -80,6 +81,7 @@ class WidgetContext
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
+     * @param Locale $locale
      * @param \ACP3\Core\Modules $modules
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Router\RouterInterface $router
@@ -94,6 +96,7 @@ class WidgetContext
         EventDispatcherInterface $eventDispatcher,
         UserModel $user,
         TranslatorInterface $translator,
+        Locale $locale,
         Modules $modules,
         RequestInterface $request,
         RouterInterface $router,
@@ -115,6 +118,7 @@ class WidgetContext
         $this->appPath = $appPath;
         $this->response = $response;
         $this->actionResultFactory = $actionResultFactory;
+        $this->locale = $locale;
     }
 
     /**
@@ -211,5 +215,13 @@ class WidgetContext
     public function getActionResultFactory(): ActionResultFactory
     {
         return $this->actionResultFactory;
+    }
+
+    /**
+     * @return Locale
+     */
+    public function getLocale(): Locale
+    {
+        return $this->locale;
     }
 }

@@ -217,7 +217,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
     protected function renewCaches()
     {
-        $this->dictionaryCache->saveLanguageCache($this->translator->getLocale());
+        $this->dictionaryCache->saveLanguageCache($this->locale->getLocale());
         $this->moduleInfoCache->saveModulesInfoCache();
         $this->permissionsCache->saveResourcesCache();
     }

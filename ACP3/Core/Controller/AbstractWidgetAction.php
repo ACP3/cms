@@ -63,6 +63,10 @@ abstract class AbstractWidgetAction implements ActionInterface
      * @var ActionResultFactory
      */
     private $actionResultFactory;
+    /**
+     * @var Core\I18n\Locale
+     */
+    protected $locale;
 
     /**
      * WidgetController constructor.
@@ -75,6 +79,7 @@ abstract class AbstractWidgetAction implements ActionInterface
         $this->eventDispatcher = $context->getEventDispatcher();
         $this->user = $context->getUser();
         $this->translator = $context->getTranslator();
+        $this->locale = $context->getLocale();
         $this->request = $context->getRequest();
         $this->router = $context->getRouter();
         $this->view = $context->getView();
@@ -98,8 +103,8 @@ abstract class AbstractWidgetAction implements ActionInterface
             'ROOT_DIR_ABSOLUTE' => $this->request->getScheme() . '://' . $this->request->getHttpHost() . $this->appPath->getWebRoot(),
             'DESIGN_PATH' => $this->appPath->getDesignPathWeb(),
             'DESIGN_PATH_ABSOLUTE' => $this->appPath->getDesignPathAbsolute(),
-            'LANG_DIRECTION' => $this->translator->getDirection(),
-            'LANG' => $this->translator->getShortIsoCode(),
+            'LANG_DIRECTION' => $this->locale->getDirection(),
+            'LANG' => $this->locale->getShortIsoCode(),
         ]);
 
         return $this;

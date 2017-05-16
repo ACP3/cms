@@ -3,7 +3,6 @@ services:
     class: ACP3\Core\I18n\Translator
     arguments:
       - '@core.i18n.dictionary_cache'
-      - '@core.i18n.available_language_packs'
       - '@core.i18n.locale'
 
   core.i18n.dictionary_cache:
