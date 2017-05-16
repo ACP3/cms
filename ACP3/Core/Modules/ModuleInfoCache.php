@@ -9,7 +9,7 @@ namespace ACP3\Core\Modules;
 use ACP3\Core\Cache;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
-use ACP3\Core\I18n\Locale;
+use ACP3\Core\I18n\LocaleInterface;
 use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\XML;
@@ -47,7 +47,7 @@ class ModuleInfoCache
      */
     protected $systemModuleRepository;
     /**
-     * @var Locale
+     * @var LocaleInterface
      */
     private $locale;
 
@@ -56,7 +56,7 @@ class ModuleInfoCache
      * @param Cache $cache
      * @param ApplicationPath $appPath
      * @param TranslatorInterface $translator
-     * @param Locale $locale
+     * @param LocaleInterface $locale
      * @param Vendor $vendors
      * @param XML $xml
      * @param ModuleAwareRepositoryInterface $systemModuleRepository
@@ -65,7 +65,7 @@ class ModuleInfoCache
         Cache $cache,
         ApplicationPath $appPath,
         TranslatorInterface $translator,
-        Locale $locale,
+        LocaleInterface $locale,
         Vendor $vendors,
         XML $xml,
         ModuleAwareRepositoryInterface $systemModuleRepository

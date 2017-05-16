@@ -8,24 +8,24 @@ class Translator implements TranslatorInterface
     /**
      * @var \ACP3\Core\I18n\DictionaryCache
      */
-    protected $dictionaryCache;
+    private $dictionaryCache;
     /**
-     * @var Locale
+     * @var LocaleInterface
      */
     private $locale;
     /**
      * @var array
      */
-    protected $buffer = [];
+    private $buffer = [];
 
     /**
      * Translator constructor.
      * @param DictionaryCache $dictionaryCache
-     * @param Locale $locale
+     * @param LocaleInterface $locale
      */
     public function __construct(
         LanguageCache $dictionaryCache,
-        Locale $locale
+        LocaleInterface $locale
     ) {
         $this->dictionaryCache = $dictionaryCache;
         $this->locale = $locale;

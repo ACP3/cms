@@ -20,7 +20,7 @@ class CKEditor extends Textarea
      */
     protected $modules;
     /**
-     * @var Core\I18n\Locale
+     * @var Core\I18n\LocaleInterface
      */
     private $locale;
     /**
@@ -45,12 +45,12 @@ class CKEditor extends Textarea
      * CKEditor constructor.
      *
      * @param \ACP3\Core\Modules $modules
-     * @param Core\I18n\Locale $locale
+     * @param Core\I18n\LocaleInterface $locale
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
         Core\Modules $modules,
-        Core\I18n\Locale $locale,
+        Core\I18n\LocaleInterface $locale,
         Core\Environment\ApplicationPath $appPath
     ) {
         $this->modules = $modules;

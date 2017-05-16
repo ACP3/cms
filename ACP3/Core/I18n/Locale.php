@@ -10,7 +10,7 @@ namespace ACP3\Core\I18n;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Locale
+class Locale implements LocaleInterface
 {
     /**
      * @var SettingsInterface
@@ -41,7 +41,7 @@ class Locale
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getLocale(): string
     {
@@ -53,7 +53,7 @@ class Locale
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getShortIsoCode(): string
     {
@@ -61,9 +61,7 @@ class Locale
     }
 
     /**
-     * Gets the writing direction of the language
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getDirection(): string
     {

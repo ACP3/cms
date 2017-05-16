@@ -11,7 +11,7 @@ use Giggsey\Locale\Locale as LocaleLib;
 class CountryList
 {
     /**
-     * @var \ACP3\Core\I18n\Locale
+     * @var LocaleInterface
      */
     private $locale;
     /**
@@ -25,9 +25,9 @@ class CountryList
 
     /**
      * Country constructor.
-     * @param \ACP3\Core\I18n\Locale $locale
+     * @param LocaleInterface $locale
      */
-    public function __construct(\ACP3\Core\I18n\Locale $locale)
+    public function __construct(LocaleInterface $locale)
     {
         $this->locale = $locale;
     }

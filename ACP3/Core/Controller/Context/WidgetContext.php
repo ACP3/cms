@@ -8,7 +8,7 @@ namespace ACP3\Core\Controller\Context;
 use ACP3\Core\Controller\ActionResultFactory;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Locale;
+use ACP3\Core\I18n\LocaleInterface;
 use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\Router\RouterInterface;
@@ -70,7 +70,7 @@ class WidgetContext
      */
     private $actionResultFactory;
     /**
-     * @var Locale
+     * @var LocaleInterface
      */
     private $locale;
 
@@ -81,7 +81,7 @@ class WidgetContext
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
-     * @param Locale $locale
+     * @param LocaleInterface $locale
      * @param \ACP3\Core\Modules $modules
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Router\RouterInterface $router
@@ -96,7 +96,7 @@ class WidgetContext
         EventDispatcherInterface $eventDispatcher,
         UserModel $user,
         TranslatorInterface $translator,
-        Locale $locale,
+        LocaleInterface $locale,
         Modules $modules,
         RequestInterface $request,
         RouterInterface $router,
@@ -218,9 +218,9 @@ class WidgetContext
     }
 
     /**
-     * @return Locale
+     * @return LocaleInterface
      */
-    public function getLocale(): Locale
+    public function getLocale(): LocaleInterface
     {
         return $this->locale;
     }

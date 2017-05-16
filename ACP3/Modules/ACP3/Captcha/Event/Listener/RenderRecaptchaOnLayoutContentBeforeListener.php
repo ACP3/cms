@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Captcha\Event\Listener;
 
-use ACP3\Core\I18n\Locale;
+use ACP3\Core\I18n\LocaleInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
@@ -27,19 +27,19 @@ class RenderRecaptchaOnLayoutContentBeforeListener
      */
     private $userModel;
     /**
-     * @var Locale
+     * @var LocaleInterface
      */
     private $locale;
 
     /**
      * RenderRecaptchaOnLayoutContentBeforeListener constructor.
-     * @param Locale $locale
+     * @param LocaleInterface $locale
      * @param SettingsInterface $settings
      * @param View $view
      * @param UserModel $userModel
      */
     public function __construct(
-        Locale $locale,
+        LocaleInterface $locale,
         SettingsInterface $settings,
         View $view,
         UserModel $userModel)
