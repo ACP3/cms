@@ -34,9 +34,7 @@ abstract class AbstractDataGridBlockTest extends AbstractBlockTest
 
     protected function setUpMockObjects()
     {
-        $this->context = $this->getMockBuilder(DataGridBlockContext::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        parent::setUpMockObjects();
 
         $this->container = $this->getMockBuilder(ContainerInterface::class)
             ->disableOriginalConstructor()
@@ -81,5 +79,21 @@ abstract class AbstractDataGridBlockTest extends AbstractBlockTest
         $this->context->expects($this->atLeastOnce())
             ->method('getResultsPerPage')
             ->willReturn($this->resultsPerPage);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getContextMockFQCN(): string
+    {
+        return DataGridBlockContext::class;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getContextMockMethods(): array
+    {
+        return ['getView', 'getBreadcrumb', 'getTitle', 'getTranslator', 'getContainer', 'getResultsPerPage'];
     }
 }

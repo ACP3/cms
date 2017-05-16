@@ -7,7 +7,6 @@
 namespace ACP3\Core\Test\View\Block;
 
 
-use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Core\View\Block\FormBlockInterface;
 
@@ -20,21 +19,22 @@ abstract class AbstractFormBlockTest extends AbstractBlockTest
 
     protected function setUpMockObjects()
     {
-        $this->context = $this->getMockBuilder(FormBlockContext::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getView', 'getBreadcrumb', 'getTitle', 'getTranslator', 'getForms', 'getFormToken'])
-            ->getMock();
+        parent::setUpMockObjects();
+    }
 
-        $breadcrumb = $this->getMockBuilder(Steps::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+    /**
+     * @inheritdoc
+     */
+    protected function getContextMockFQCN(): string
+    {
+        return FormBlockContext::class;
+    }
 
-        $breadcrumb->expects($this->any())
-            ->method('append')
-            ->willReturnSelf();
-
-        $this->context->expects($this->once())
-            ->method('getBreadcrumb')
-            ->willReturn($breadcrumb);
+    /**
+     * @inheritdoc
+     */
+    protected function getContextMockMethods(): array
+    {
+        return ['getView', 'getBreadcrumb', 'getTitle', 'getTranslator', 'getForms', 'getFormToken'];
     }
 }

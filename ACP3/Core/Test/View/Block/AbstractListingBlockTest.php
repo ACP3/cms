@@ -7,7 +7,6 @@
 namespace ACP3\Core\Test\View\Block;
 
 
-use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Pagination;
 use ACP3\Core\View\Block\Context\ListingBlockContext;
@@ -22,10 +21,7 @@ abstract class AbstractListingBlockTest extends AbstractBlockTest
 
     protected function setUpMockObjects()
     {
-        $this->context = $this->getMockBuilder(ListingBlockContext::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getView', 'getBreadcrumb', 'getTitle', 'getTranslator', 'getResultsPerPage', 'getPagination'])
-            ->getMock();
+        parent::setUpMockObjects();
 
         $resultsPerPage = $this->getMockBuilder(ResultsPerPage::class)
             ->disableOriginalConstructor()
@@ -55,18 +51,22 @@ abstract class AbstractListingBlockTest extends AbstractBlockTest
         $this->context->expects($this->once())
             ->method('getPagination')
             ->willReturn($pagination);
+    }
 
-        $breadcrumb = $this->getMockBuilder(Steps::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+    /**
+     * @inheritdoc
+     */
+    protected function getContextMockFQCN(): string
+    {
+        return ListingBlockContext::class;
+    }
 
-        $breadcrumb->expects($this->any())
-            ->method('append')
-            ->willReturnSelf();
-
-        $this->context->expects($this->once())
-            ->method('getBreadcrumb')
-            ->willReturn($breadcrumb);
+    /**
+     * @inheritdoc
+     */
+    protected function getContextMockMethods(): array
+    {
+        return ['getView', 'getBreadcrumb', 'getTitle', 'getTranslator', 'getResultsPerPage', 'getPagination'];
     }
 
     /**

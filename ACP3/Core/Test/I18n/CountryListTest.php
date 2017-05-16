@@ -7,7 +7,7 @@
 namespace ACP3\Core\Test\I18n;
 
 use ACP3\Core\I18n\CountryList;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\Locale;
 
 class CountryListTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,23 +16,23 @@ class CountryListTest extends \PHPUnit_Framework_TestCase
      */
     private $countryList;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var Locale|\PHPUnit_Framework_MockObject_MockObject
      */
-    private $translatorMock;
+    private $localeMock;
 
     protected function setUp()
     {
-        $this->translatorMock = $this->getMockBuilder(Translator::class)
+        $this->localeMock = $this->getMockBuilder(Locale::class)
             ->disableOriginalConstructor()
             ->setMethods(['getLocale'])
             ->getMock();
 
-        $this->countryList = new CountryList($this->translatorMock);
+        $this->countryList = new CountryList($this->localeMock);
     }
 
     public function testValidLocale()
     {
-        $this->translatorMock->expects($this->exactly(3))
+        $this->localeMock->expects($this->exactly(3))
             ->method('getLocale')
             ->willReturn('en_US');
 
@@ -44,7 +44,7 @@ class CountryListTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidLocaleByPath()
     {
-        $this->translatorMock->expects($this->exactly(3))
+        $this->localeMock->expects($this->exactly(3))
             ->method('getLocale')
             ->willReturn('xx_ZZ');
 
@@ -56,7 +56,7 @@ class CountryListTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidLocaleByCharacters()
     {
-        $this->translatorMock->expects($this->exactly(3))
+        $this->localeMock->expects($this->exactly(3))
             ->method('getLocale')
             ->willReturn('2390');
 
