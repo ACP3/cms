@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Next] - 2017-xx-xx
 ### Added
 - display an alert when an user tries to access a restricted pages which requires the user to be logged in
+- [#51](https://github.com/ACP3/cms/issues/51) [#63](https://github.com/ACP3/cms/issues/63) The results of the data grids will now be retrieved via AJAX, so that they better provide a better performance for large ACP3 installs
 
-### Changed
+### BC Breaks
 - Dropped the support for PHP 5.6. PHP 7.0 is the minimum supported version now
 - Removed the deprecated `ACP3\Core\Logger` class
 - Removed all deprecated methods of the `ACP3\Core\Mailer` class and refactored it
@@ -17,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed the deprecated `ACP3\Modules\ACP3\Captcha\Helpers` class
 - Removed the deprecated `ACP3\Core\Controller\AbstractAdminAction` class
 - Removed the class `ACP3\Core\Controller\DisplayActionTrait` class and replaced it with the new `ActionResultFactory` class
+- Renamed the class `ACP3\Core\Model\DataGridRepository` to `AbstractDataGridRepository` and moved it to the namespace `ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository`
+- [#65](https://github.com/ACP3/cms/issues/65) Renamed all DI service names for the `*Repository`, `*DataGridRepository` and `*Model` classes to follow a strict spec (see the ticket for details) 
+- [#66](https://github.com/ACP3/cms/issues/66) Renamed all `*Repository`, `*DataGridRepository` and `*Model` classes to follow a strict spec (see the ticket for details) 
+- [#67](https://github.com/ACP3/cms/issues/67) Renamed the folder `View` inside the `Resources` folder of each module to `templates`
 
 ## [4.12.0] - 2017-05-08
 ### Added
