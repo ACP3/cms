@@ -34,6 +34,10 @@ class CommentsDataGridBlockTest extends AbstractDataGridBlockTest
             ])
             ->getMock();
 
+        $systemRepository->expects($this->once())
+            ->method('getModuleNameById')
+            ->willReturn('foo');
+
         return new CommentsDataGridBlock($this->context, $systemRepository);
     }
 
