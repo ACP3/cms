@@ -55,8 +55,6 @@ class Locale implements LocaleInterface
         $this->request = $request;
         $this->dictionaryCache = $dictionaryCache;
         $this->availableLanguagePacks = $availableLanguagePacks;
-
-        $this->modifyLocale();
     }
 
     /**
@@ -66,7 +64,31 @@ class Locale implements LocaleInterface
      */
     public function getLocale(): string
     {
+        if ($this->locale === '') {
+            $this->setLocale();
+        }
+        
         return $this->locale;
+    }
+
+    private function setLocale()
+    {
+        $cookieLocale = $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '');
+        if (!preg_match('=/=', $cookieLocale)
+            && is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $cookieLocale . '.xml') === true
+        ) {
+            $this->locale = $cookieLocale;
+        } else {
+            $this->locale = 'en_US'; // Fallback language
+
+            foreach ($this->request->getUserAgent()->parseAcceptLanguage() as $locale => $val) {
+                $locale = str_replace('-', '_', $locale);
+                if ($this->availableLanguagePacks->languagePackExists($locale) === true) {
+                    $this->locale = $locale;
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -91,25 +113,5 @@ class Locale implements LocaleInterface
         }
 
         return $this->direction;
-    }
-
-    private function modifyLocale()
-    {
-        $cookieLocale = $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '');
-        if (!preg_match('=/=', $cookieLocale)
-            && is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $cookieLocale . '.xml') === true
-        ) {
-            $this->locale = $cookieLocale;
-        } else {
-            $this->locale = 'en_US'; // Fallback language
-
-            foreach ($this->request->getUserAgent()->parseAcceptLanguage() as $locale => $val) {
-                $locale = str_replace('-', '_', $locale);
-                if ($this->availableLanguagePacks->languagePackExists($locale) === true) {
-                    $this->locale = $locale;
-                    break;
-                }
-            }
-        }
     }
 }
