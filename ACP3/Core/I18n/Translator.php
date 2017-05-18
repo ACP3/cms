@@ -1,12 +1,10 @@
 <?php
 namespace ACP3\Core\I18n;
 
-use ACP3\Core\I18n\DictionaryCache as LanguageCache;
-
 class Translator implements TranslatorInterface
 {
     /**
-     * @var \ACP3\Core\I18n\DictionaryCache
+     * @var DictionaryCacheInterface
      */
     private $dictionaryCache;
     /**
@@ -20,11 +18,11 @@ class Translator implements TranslatorInterface
 
     /**
      * Translator constructor.
-     * @param DictionaryCache $dictionaryCache
+     * @param DictionaryCacheInterface $dictionaryCache
      * @param LocaleInterface $locale
      */
     public function __construct(
-        LanguageCache $dictionaryCache,
+        DictionaryCacheInterface $dictionaryCache,
         LocaleInterface $locale
     ) {
         $this->dictionaryCache = $dictionaryCache;

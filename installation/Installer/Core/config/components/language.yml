@@ -1,6 +1,6 @@
 services:
   core.i18n.translator:
-    class: ACP3\Installer\Core\I18n\Translator
+    class: ACP3\Core\I18n\Translator
     arguments:
       - '@core.i18n.dictionary_cache'
       - '@core.i18n.locale'

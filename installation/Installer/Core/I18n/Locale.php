@@ -8,6 +8,7 @@ namespace ACP3\Installer\Core\I18n;
 
 
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\I18n\DictionaryCacheInterface;
 use ACP3\Core\I18n\LocaleInterface;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 
@@ -22,7 +23,7 @@ class Locale implements LocaleInterface
      */
     private $request;
     /**
-     * @var DictionaryCache
+     * @var DictionaryCacheInterface
      */
     private $dictionaryCache;
     /**
@@ -42,13 +43,13 @@ class Locale implements LocaleInterface
      * Locale constructor.
      * @param ApplicationPath $appPath
      * @param RequestInterface $request
-     * @param DictionaryCache $dictionaryCache
+     * @param DictionaryCacheInterface $dictionaryCache
      * @param AvailableLanguagePacks $availableLanguagePacks
      */
     public function __construct(
         ApplicationPath $appPath,
         RequestInterface $request,
-        DictionaryCache $dictionaryCache,
+        DictionaryCacheInterface $dictionaryCache,
         AvailableLanguagePacks $availableLanguagePacks
     ) {
         $this->appPath = $appPath;
@@ -67,7 +68,7 @@ class Locale implements LocaleInterface
         if ($this->locale === '') {
             $this->setLocale();
         }
-        
+
         return $this->locale;
     }
 

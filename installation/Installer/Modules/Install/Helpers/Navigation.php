@@ -7,7 +7,7 @@
 namespace ACP3\Installer\Modules\Install\Helpers;
 
 
-use ACP3\Installer\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 
 class Navigation
 {
@@ -16,15 +16,15 @@ class Navigation
      */
     private $navbar = [];
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
 
     /**
-     * Navbar constructor.
-     * @param Translator $translator
+     * Navigation constructor.
+     * @param TranslatorInterface $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
 

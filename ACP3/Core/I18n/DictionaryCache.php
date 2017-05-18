@@ -15,7 +15,7 @@ use Fisharebest\Localization\Locale;
  * Class Cache
  * @package ACP3\Core\I18n
  */
-class DictionaryCache
+class DictionaryCache implements DictionaryCacheInterface
 {
     use ExtractFromPathTrait;
 
@@ -50,40 +50,36 @@ class DictionaryCache
     }
 
     /**
-     * Returns the cached language strings
-     *
-     * @param string $language
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function getLanguageCache($language)
+    public function getLanguageCache(string $locale): array
     {
-        if ($this->cache->contains($language) === false) {
-            $this->saveLanguageCache($language);
+        if ($this->cache->contains($locale) === false) {
+            $this->saveLanguageCache($locale);
         }
 
-        return $this->cache->fetch($language);
+        return $this->cache->fetch($locale);
     }
 
     /**
      * Saves the language cache
      *
-     * @param string $language
+     * @param string $locale
      *
      * @return bool
      */
-    public function saveLanguageCache($language)
+    public function saveLanguageCache(string $locale): bool
     {
         $data = [];
 
         foreach ($this->vendors->getVendors() as $vendor) {
-            $languageFiles = glob($this->appPath->getModulesDir() . $vendor . '/*/Resources/i18n/' . $language . '.xml');
+            $languageFiles = glob($this->appPath->getModulesDir() . $vendor . '/*/Resources/i18n/' . $locale . '.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
                     if (isset($data['info']['direction']) === false) {
-                        $locale = Locale::create($this->getLanguagePackIsoCode($file));
-                        $data['info']['direction'] = $locale->script()->direction();
+                        $localeInfo = Locale::create($locale);
+                        $data['info']['direction'] = $localeInfo->script()->direction();
                     }
 
                     $module = $this->getModuleFromPath($file);
@@ -97,7 +93,7 @@ class DictionaryCache
             }
         }
 
-        return $this->cache->save($language, $data);
+        return $this->cache->save($locale, $data);
     }
 
     /**
@@ -105,7 +101,7 @@ class DictionaryCache
      *
      * @return array
      */
-    public function getLanguagePacksCache()
+    public function getLanguagePacksCache(): array
     {
         if ($this->cache->contains('language_packs') === false) {
             $this->saveLanguagePacksCache();
@@ -119,7 +115,7 @@ class DictionaryCache
      *
      * @return bool
      */
-    protected function saveLanguagePacksCache()
+    private function saveLanguagePacksCache(): bool
     {
         $languagePacks = [];
 
@@ -145,7 +141,7 @@ class DictionaryCache
      *
      * @return array
      */
-    protected function registerLanguagePack($file)
+    private function registerLanguagePack(string $file): array
     {
         $languageIso = $this->getLanguagePackIsoCode($file);
 

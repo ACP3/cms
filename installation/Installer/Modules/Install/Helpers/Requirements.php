@@ -8,12 +8,8 @@ namespace ACP3\Installer\Modules\Install\Helpers;
 
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
-use ACP3\Installer\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 
-/**
- * Class Requirements
- * @package ACP3\Installer\Modules\Install\Helpers
- */
 class Requirements
 {
     const REQUIRED_PHP_VERSION = '7.0.0';
@@ -28,19 +24,18 @@ class Requirements
      */
     protected $appPath;
     /**
-     * @var \ACP3\Installer\Core\I18n\Translator
+     * @var TranslatorInterface
      */
     protected $translator;
 
     /**
      * Requirements constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Installer\Core\I18n\Translator   $translator
+     * @param ApplicationPath $appPath
+     * @param TranslatorInterface $translator
      */
     public function __construct(
         ApplicationPath $appPath,
-        Translator $translator
+        TranslatorInterface $translator
     ) {
         $this->appPath = $appPath;
         $this->translator = $translator;
