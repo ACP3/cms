@@ -59,9 +59,7 @@ class Locale implements LocaleInterface
     }
 
     /**
-     * Gets the full locale name (e.g. en_US)
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getLocale(): string
     {
@@ -93,9 +91,7 @@ class Locale implements LocaleInterface
     }
 
     /**
-     * Gets the short ISO language code (e.g en)
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getShortIsoCode(): string
     {
@@ -103,9 +99,7 @@ class Locale implements LocaleInterface
     }
 
     /**
-     * Gets the writing direction of the language
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getDirection(): string
     {
