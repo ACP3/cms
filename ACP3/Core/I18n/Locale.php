@@ -66,7 +66,7 @@ class Locale implements LocaleInterface
     public function getDirection(): string
     {
         if ($this->direction === '') {
-            $this->direction = $this->dictionaryCache->getLanguageCache($this->getLocale())['info']['direction'];
+            $this->direction = $this->dictionaryCache->getDictionary($this->getLocale())['info']['direction'];
         }
 
         return $this->direction;

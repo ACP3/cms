@@ -41,7 +41,7 @@ class DictionaryCache implements DictionaryCacheInterface
     /**
      * @inheritdoc
      */
-    public function getLanguageCache(string $locale): array
+    public function getDictionary(string $locale): array
     {
         if (isset($this->buffer[$locale]) === false) {
             $this->buffer[$locale] = $this->setLanguageCache($locale);

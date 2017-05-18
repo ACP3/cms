@@ -35,7 +35,7 @@ class Translator implements TranslatorInterface
     public function t(string $module, string $phrase, array $arguments = []): string
     {
         if (isset($this->buffer[$this->locale->getLocale()]) === false) {
-            $this->buffer[$this->locale->getLocale()] = $this->dictionaryCache->getLanguageCache($this->locale->getLocale());
+            $this->buffer[$this->locale->getLocale()] = $this->dictionaryCache->getDictionary($this->locale->getLocale());
         }
 
         if (isset($this->buffer[$this->locale->getLocale()]['keys'][$module . $phrase])) {
