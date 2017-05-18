@@ -17,13 +17,13 @@ class Locale implements LocaleInterface
      */
     private $settings;
     /**
-     * @var DictionaryCache
+     * @var DictionaryCacheInterface
      */
     private $dictionaryCache;
     /**
      * @var string
      */
-    private $locale = 'en_US';
+    private $locale = '';
     /**
      * @var string
      */
@@ -32,9 +32,9 @@ class Locale implements LocaleInterface
     /**
      * Locale constructor.
      * @param SettingsInterface $settings
-     * @param DictionaryCache $dictionaryCache
+     * @param DictionaryCacheInterface $dictionaryCache
      */
-    public function __construct(SettingsInterface $settings, DictionaryCache $dictionaryCache)
+    public function __construct(SettingsInterface $settings, DictionaryCacheInterface $dictionaryCache)
     {
         $this->settings = $settings;
         $this->dictionaryCache = $dictionaryCache;
