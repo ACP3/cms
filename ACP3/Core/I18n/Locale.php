@@ -20,14 +20,6 @@ class Locale implements LocaleInterface
      * @var DictionaryInterface
      */
     private $dictionary;
-    /**
-     * @var string
-     */
-    private $locale = '';
-    /**
-     * @var string
-     */
-    private $direction = '';
 
     /**
      * Locale constructor.
@@ -45,11 +37,7 @@ class Locale implements LocaleInterface
      */
     public function getLocale(): string
     {
-        if ($this->locale === '') {
-            $this->locale = $this->settings->getSettings(Schema::MODULE_NAME)['lang'];
-        }
-
-        return $this->locale;
+        return $this->settings->getSettings(Schema::MODULE_NAME)['lang'];
     }
 
     /**
@@ -65,10 +53,6 @@ class Locale implements LocaleInterface
      */
     public function getDirection(): string
     {
-        if ($this->direction === '') {
-            $this->direction = $this->dictionary->getDictionary($this->getLocale())['info']['direction'];
-        }
-
-        return $this->direction;
+        return $this->dictionary->getDictionary($this->getLocale())['info']['direction'];
     }
 }
