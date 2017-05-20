@@ -7,8 +7,11 @@
 namespace ACP3\Installer\Core\Controller;
 
 use ACP3\Core\Controller\ActionInterface;
+use ACP3\Core\Controller\LayoutAwareControllerTrait;
 use ACP3\Core\Http\RedirectResponse;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\ExtractFromPathTrait;
+use ACP3\Core\View;
 use Fisharebest\Localization\Locale;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,6 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class AbstractInstallerAction implements ActionInterface
 {
     use ExtractFromPathTrait;
+    use LayoutAwareControllerTrait;
 
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
@@ -56,10 +60,6 @@ abstract class AbstractInstallerAction implements ActionInterface
      * @var \ACP3\Core\Controller\ActionResultFactory
      */
     private $actionResultFactory;
-    /**
-     * @var string
-     */
-    private $layout = 'layout.tpl';
 
     /**
      * @param \ACP3\Installer\Core\Controller\Context\InstallerContext $context
@@ -129,6 +129,22 @@ abstract class AbstractInstallerAction implements ActionInterface
     /**
      * @inheritdoc
      */
+    protected function getRequest(): RequestInterface
+    {
+        return $this->request;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getView(): View
+    {
+        return $this->view;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function get($serviceId)
     {
         return $this->container->get($serviceId);
@@ -166,16 +182,6 @@ abstract class AbstractInstallerAction implements ActionInterface
     /**
      * @inheritdoc
      */
-    protected function applyTemplateAutomatically()
-    {
-        return $this->request->getModule() . '/'
-            . $this->request->getController() . '.'
-            . $this->request->getAction() . '.tpl';
-    }
-
-    /**
-     * @inheritdoc
-     */
     protected function addCustomTemplateVarsBeforeOutput()
     {
         $this->view->assign('PAGE_TITLE', $this->translator->t('install', 'acp3_installation'));
@@ -183,25 +189,6 @@ abstract class AbstractInstallerAction implements ActionInterface
             $this->request->getModule(),
             $this->request->getController() . '_' . $this->request->getAction())
         );
-        $this->view->assign('LAYOUT', $this->request->isXmlHttpRequest() ? 'layout.ajax.tpl' : $this->getLayout());
-    }
-
-    /**
-     * @return string
-     */
-    public function getLayout()
-    {
-        return $this->layout;
-    }
-
-    /**
-     * @param string $layout
-     * @return $this
-     */
-    public function setLayout($layout)
-    {
-        $this->layout = $layout;
-
-        return $this;
+        $this->view->assign('LAYOUT', $this->fetchLayoutViaInheritance('layout.ajax.tpl'));
     }
 }

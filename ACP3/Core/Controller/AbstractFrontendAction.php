@@ -7,13 +7,13 @@
 namespace ACP3\Core\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\View;
 
-/**
- * Class AbstractFrontendAction
- * @package ACP3\Core\Controller
- */
 abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetAction
 {
+    use LayoutAwareControllerTrait;
+
     /**
      * @var \ACP3\Core\Modules\Helper\Action
      */
@@ -22,10 +22,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      * @var Core\Helpers\RedirectMessages
      */
     private $redirectMessages;
-    /**
-     * @var string
-     */
-    private $layout = 'layout.tpl';
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
@@ -72,74 +68,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     }
 
     /**
-     * @return string
-     */
-    protected function fetchLayoutViaInheritance()
-    {
-        if ($this->request->isXmlHttpRequest()) {
-            $paths = $this->fetchLayoutPaths('layout.ajax', 'System/layout.ajax.tpl');
-        } else {
-            $paths = $this->fetchLayoutPaths('layout', 'layout.tpl');
-        }
-
-        $this->iterateOverLayoutPaths($paths);
-
-        return $this->getLayout();
-    }
-
-    /**
-     * @param string $layoutFileName
-     * @param string $defaultLayoutName
-     * @return array
-     */
-    private function fetchLayoutPaths($layoutFileName, $defaultLayoutName)
-    {
-        return [
-            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl',
-            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.' . $this->request->getController() . '.tpl',
-            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.tpl',
-            $this->request->getModule() . '/' . $layoutFileName . '.tpl',
-            $defaultLayoutName
-        ];
-    }
-
-    /**
-     * @param $paths
-     */
-    private function iterateOverLayoutPaths($paths)
-    {
-        if ($this->getLayout() !== 'layout.tpl') {
-            return;
-        }
-
-        foreach ($paths as $path) {
-            if ($this->view->templateExists($path)) {
-                $this->setLayout($path);
-                break;
-            }
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getLayout(): string
-    {
-        return $this->layout;
-    }
-
-    /**
-     * @param string $layout
-     * @return $this
-     */
-    public function setLayout(string $layout)
-    {
-        $this->layout = $layout;
-
-        return $this;
-    }
-
-    /**
      * @return Core\Helpers\RedirectMessages
      */
     public function redirectMessages()
@@ -157,5 +85,21 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     public function redirect()
     {
         return $this->get('core.http.redirect_response');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getRequest(): RequestInterface
+    {
+        return $this->request;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getView(): View
+    {
+        return $this->view;
     }
 }

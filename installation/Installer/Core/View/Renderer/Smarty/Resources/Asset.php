@@ -46,7 +46,7 @@ class Asset extends AbstractResource
     {
         $asset = $this->resolveTemplatePath($name);
 
-        if ($asset !== '') {
+        if ($asset !== '' && is_file($asset)) {
             $source = file_get_contents($asset);
             $mtime = filemtime($asset);
         } else {
@@ -130,11 +130,11 @@ class Asset extends AbstractResource
         $compiled->exists = false;
     }
 
-    /*
-       * Disable timestamp checks for recompiled resource.
-       *
-       * @return bool
-       */
+    /**
+     * Disable timestamp checks for recompiled resource.
+     *
+     * @return bool
+     */
     public function checkTimestamps()
     {
         return false;
