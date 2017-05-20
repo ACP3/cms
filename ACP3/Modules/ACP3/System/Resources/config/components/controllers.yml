@@ -14,7 +14,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@system.view.block.admin.system_modules_block'
-      - '@core.i18n.dictionary_cache'
+      - '@core.i18n.dictionary'
       - '@core.modules.moduleInfoCache'
       - '@system.model.repository.modules_repository'
       - '@system.helpers.installer'

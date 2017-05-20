@@ -11,26 +11,22 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules\Vendor;
 use Fisharebest\Localization\Locale;
 
-/**
- * Class Cache
- * @package ACP3\Core\I18n
- */
-class DictionaryCache implements DictionaryCacheInterface
+class LanguagePacksCollector
 {
     use ExtractFromPathTrait;
 
     /**
      * @var Cache
      */
-    protected $cache;
+    private $cache;
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
-    protected $appPath;
+    private $appPath;
     /**
      * @var \ACP3\Core\Modules\Vendor
      */
-    protected $vendors;
+    private $vendors;
 
     /**
      * DictionaryCache constructor.
@@ -47,53 +43,6 @@ class DictionaryCache implements DictionaryCacheInterface
         $this->cache = $cache;
         $this->appPath = $appPath;
         $this->vendors = $vendors;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getDictionary(string $locale): array
-    {
-        if ($this->cache->contains($locale) === false) {
-            $this->saveLanguageCache($locale);
-        }
-
-        return $this->cache->fetch($locale);
-    }
-
-    /**
-     * Saves the language cache
-     *
-     * @param string $locale
-     *
-     * @return bool
-     */
-    public function saveLanguageCache(string $locale): bool
-    {
-        $data = [];
-
-        foreach ($this->vendors->getVendors() as $vendor) {
-            $languageFiles = glob($this->appPath->getModulesDir() . $vendor . '/*/Resources/i18n/' . $locale . '.xml');
-
-            if ($languageFiles !== false) {
-                foreach ($languageFiles as $file) {
-                    if (isset($data['info']['direction']) === false) {
-                        $localeInfo = Locale::create($locale);
-                        $data['info']['direction'] = $localeInfo->script()->direction();
-                    }
-
-                    $module = $this->getModuleFromPath($file);
-
-                    // Iterate over all language keys
-                    $xml = simplexml_load_file($file);
-                    foreach ($xml->keys->item as $item) {
-                        $data['keys'][strtolower($module . (string)$item['key'])] = trim((string)$item);
-                    }
-                }
-            }
-        }
-
-        return $this->cache->save($locale, $data);
     }
 
     /**

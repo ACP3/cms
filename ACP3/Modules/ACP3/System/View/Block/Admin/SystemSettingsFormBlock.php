@@ -96,7 +96,7 @@ class SystemSettingsFormBlock extends AbstractSettingsFormBlock
             ),
             'entries' => $this->forms->recordsPerPage($systemSettings['entries']),
             'wysiwyg' => $this->fetchWysiwygEditors($systemSettings['wysiwyg']),
-            'languages' => $this->availableLanguagePacks->getLanguagePacks($systemSettings['lang']),
+            'languages' => $this->availableLanguagePacks->getAvailableLanguagePacks($systemSettings['lang']),
             'mod_rewrite' => $this->forms->yesNoCheckboxGenerator('mod_rewrite', $systemSettings['mod_rewrite']),
             'time_zones' => $this->dateHelper->getTimeZones($systemSettings['date_time_zone']),
             'maintenance' => $this->forms->yesNoCheckboxGenerator(

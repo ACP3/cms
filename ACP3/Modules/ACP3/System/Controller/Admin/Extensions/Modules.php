@@ -29,9 +29,9 @@ class Modules extends Core\Controller\AbstractFrontendAction
      */
     protected $permissionsCache;
     /**
-     * @var Core\I18n\DictionaryCache
+     * @var Core\I18n\DictionaryInterface
      */
-    private $dictionaryCache;
+    private $dictionary;
     /**
      * @var Core\Installer\SchemaRegistrar
      */
@@ -54,7 +54,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\BlockInterface $block
-     * @param Core\I18n\DictionaryCache $dictionaryCache
+     * @param Core\I18n\DictionaryInterface $dictionary
      * @param \ACP3\Core\Modules\ModuleInfoCache $moduleInfoCache
      * @param \ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository $systemModuleRepository
      * @param \ACP3\Modules\ACP3\System\Helper\Installer $installerHelper
@@ -66,7 +66,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\BlockInterface $block,
-        Core\I18n\DictionaryCache $dictionaryCache,
+        Core\I18n\DictionaryInterface $dictionary,
         Core\Modules\ModuleInfoCache $moduleInfoCache,
         System\Model\Repository\ModulesRepository $systemModuleRepository,
         System\Helper\Installer $installerHelper,
@@ -81,7 +81,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
         $this->systemModuleRepository = $systemModuleRepository;
         $this->installerHelper = $installerHelper;
         $this->permissionsCache = $permissionsCache;
-        $this->dictionaryCache = $dictionaryCache;
+        $this->dictionary = $dictionary;
         $this->schemaRegistrar = $schemaRegistrar;
         $this->schemaInstaller = $schemaInstaller;
         $this->aclInstaller = $aclInstaller;
@@ -217,7 +217,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
     protected function renewCaches()
     {
-        $this->dictionaryCache->saveLanguageCache($this->locale->getLocale());
+        $this->dictionary->saveDictionary($this->locale->getLocale());
         $this->moduleInfoCache->saveModulesInfoCache();
         $this->permissionsCache->saveResourcesCache();
     }

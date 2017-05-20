@@ -17,9 +17,9 @@ class Locale implements LocaleInterface
      */
     private $settings;
     /**
-     * @var DictionaryCacheInterface
+     * @var DictionaryInterface
      */
-    private $dictionaryCache;
+    private $dictionary;
     /**
      * @var string
      */
@@ -32,12 +32,12 @@ class Locale implements LocaleInterface
     /**
      * Locale constructor.
      * @param SettingsInterface $settings
-     * @param DictionaryCacheInterface $dictionaryCache
+     * @param DictionaryInterface $dictionary
      */
-    public function __construct(SettingsInterface $settings, DictionaryCacheInterface $dictionaryCache)
+    public function __construct(SettingsInterface $settings, DictionaryInterface $dictionary)
     {
         $this->settings = $settings;
-        $this->dictionaryCache = $dictionaryCache;
+        $this->dictionary = $dictionary;
     }
 
     /**
@@ -66,7 +66,7 @@ class Locale implements LocaleInterface
     public function getDirection(): string
     {
         if ($this->direction === '') {
-            $this->direction = $this->dictionaryCache->getDictionary($this->getLocale())['info']['direction'];
+            $this->direction = $this->dictionary->getDictionary($this->getLocale())['info']['direction'];
         }
 
         return $this->direction;

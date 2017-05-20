@@ -4,9 +4,9 @@ namespace ACP3\Core\I18n;
 class Translator implements TranslatorInterface
 {
     /**
-     * @var DictionaryCacheInterface
+     * @var DictionaryInterface
      */
-    private $dictionaryCache;
+    private $dictionary;
     /**
      * @var LocaleInterface
      */
@@ -18,14 +18,14 @@ class Translator implements TranslatorInterface
 
     /**
      * Translator constructor.
-     * @param DictionaryCacheInterface $dictionaryCache
+     * @param DictionaryInterface $dictionary
      * @param LocaleInterface $locale
      */
     public function __construct(
-        DictionaryCacheInterface $dictionaryCache,
+        DictionaryInterface $dictionary,
         LocaleInterface $locale
     ) {
-        $this->dictionaryCache = $dictionaryCache;
+        $this->dictionary = $dictionary;
         $this->locale = $locale;
     }
 
@@ -35,7 +35,7 @@ class Translator implements TranslatorInterface
     public function t(string $module, string $phrase, array $arguments = []): string
     {
         if (isset($this->buffer[$this->locale->getLocale()]) === false) {
-            $this->buffer[$this->locale->getLocale()] = $this->dictionaryCache->getDictionary($this->locale->getLocale());
+            $this->buffer[$this->locale->getLocale()] = $this->dictionary->getDictionary($this->locale->getLocale());
         }
 
         if (isset($this->buffer[$this->locale->getLocale()]['keys'][$module . $phrase])) {

@@ -7,7 +7,7 @@
 namespace ACP3\Core\I18n;
 
 
-interface DictionaryCacheInterface
+interface DictionaryInterface
 {
     /**
      * Returns the cached language phrases
@@ -16,4 +16,13 @@ interface DictionaryCacheInterface
      * @return array
      */
     public function getDictionary(string $locale): array;
+
+    /**
+     * Saves the found language phrases of the given locale to some cache
+     *
+     * @param string $locale
+     *
+     * @return bool
+     */
+    public function saveDictionary(string $locale): bool;
 }

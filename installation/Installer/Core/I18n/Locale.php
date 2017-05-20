@@ -8,7 +8,7 @@ namespace ACP3\Installer\Core\I18n;
 
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\DictionaryCacheInterface;
+use ACP3\Core\I18n\DictionaryInterface;
 use ACP3\Core\I18n\LocaleInterface;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 
@@ -23,9 +23,9 @@ class Locale implements LocaleInterface
      */
     private $request;
     /**
-     * @var DictionaryCacheInterface
+     * @var DictionaryInterface
      */
-    private $dictionaryCache;
+    private $dictionary;
     /**
      * @var AvailableLanguagePacks
      */
@@ -43,18 +43,18 @@ class Locale implements LocaleInterface
      * Locale constructor.
      * @param ApplicationPath $appPath
      * @param RequestInterface $request
-     * @param DictionaryCacheInterface $dictionaryCache
+     * @param DictionaryInterface $dictionary
      * @param AvailableLanguagePacks $availableLanguagePacks
      */
     public function __construct(
         ApplicationPath $appPath,
         RequestInterface $request,
-        DictionaryCacheInterface $dictionaryCache,
+        DictionaryInterface $dictionary,
         AvailableLanguagePacks $availableLanguagePacks
     ) {
         $this->appPath = $appPath;
         $this->request = $request;
-        $this->dictionaryCache = $dictionaryCache;
+        $this->dictionary = $dictionary;
         $this->availableLanguagePacks = $availableLanguagePacks;
     }
 
@@ -104,7 +104,7 @@ class Locale implements LocaleInterface
     public function getDirection(): string
     {
         if ($this->direction === '') {
-            $this->direction = $this->dictionaryCache->getDictionary($this->getLocale())['info']['direction'];
+            $this->direction = $this->dictionary->getDictionary($this->getLocale())['info']['direction'];
         }
 
         return $this->direction;

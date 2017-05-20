@@ -6,16 +6,12 @@
 
 namespace ACP3\Installer\Core\I18n;
 
-use ACP3\Core\I18n\DictionaryCacheInterface;
+use ACP3\Core\I18n\DictionaryInterface;
 use ACP3\Core\I18n\ExtractFromPathTrait;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 use Fisharebest\Localization\Locale;
 
-/**
- * Class DictionaryCache
- * @package ACP3\Installer\Core\I18n
- */
-class DictionaryCache implements DictionaryCacheInterface
+class Dictionary implements DictionaryInterface
 {
     use ExtractFromPathTrait;
 
@@ -44,28 +40,24 @@ class DictionaryCache implements DictionaryCacheInterface
     public function getDictionary(string $locale): array
     {
         if (isset($this->buffer[$locale]) === false) {
-            $this->buffer[$locale] = $this->setLanguageCache($locale);
+            $this->saveDictionary($locale);
         }
 
         return $this->buffer[$locale];
     }
 
     /**
-     * Cacht die Sprachfiles, um diese schneller verarbeiten zu können
-     *
-     * @param string $language
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function setLanguageCache($language)
+    public function saveDictionary(string $locale): bool
     {
         $data = [];
 
-        $languageFiles = glob($this->appPath->getInstallerModulesDir() . '*/Resources/i18n/' . $language . '.xml');
+        $languageFiles = glob($this->appPath->getInstallerModulesDir() . '*/Resources/i18n/' . $locale . '.xml');
         foreach ($languageFiles as $file) {
                 if (isset($data['info']['direction']) === false) {
-                    $locale = Locale::create($this->getLanguagePackIsoCode($file));
-                    $data['info']['direction'] = $locale->script()->direction();
+                    $localeInfo = Locale::create($locale);
+                    $data['info']['direction'] = $localeInfo->script()->direction();
                 }
 
                 $module = $this->getModuleFromPath($file);
@@ -77,6 +69,8 @@ class DictionaryCache implements DictionaryCacheInterface
                 }
         }
 
-        return $data;
+        $this->buffer[$locale] = $data;
+
+        return true;
     }
 }

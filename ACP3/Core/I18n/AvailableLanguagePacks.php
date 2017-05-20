@@ -12,13 +12,13 @@ use ACP3\Core\Environment\ApplicationPath;
 class AvailableLanguagePacks
 {
     /**
-     * @var DictionaryCache
-     */
-    private $dictionaryCache;
-    /**
      * @var ApplicationPath
      */
     private $appPath;
+    /**
+     * @var LanguagePacksCollector
+     */
+    private $languagePacksCollector;
     /**
      * @var array
      */
@@ -27,12 +27,14 @@ class AvailableLanguagePacks
     /**
      * AvailableLanguagePacks constructor.
      * @param ApplicationPath $appPath
-     * @param DictionaryCache $dictionaryCache
+     * @param LanguagePacksCollector $languagePacksCollector
      */
-    public function __construct(ApplicationPath $appPath, DictionaryCache $dictionaryCache)
-    {
-        $this->dictionaryCache = $dictionaryCache;
+    public function __construct(
+        ApplicationPath $appPath,
+        LanguagePacksCollector $languagePacksCollector
+    ) {
         $this->appPath = $appPath;
+        $this->languagePacksCollector = $languagePacksCollector;
     }
 
     /**
@@ -54,10 +56,10 @@ class AvailableLanguagePacks
      * @param string $currentLocale
      * @return array
      */
-    public function getLanguagePacks(string $currentLocale): array
+    public function getAvailableLanguagePacks(string $currentLocale): array
     {
         if (empty($this->languagePacks)) {
-            $this->languagePacks = $this->dictionaryCache->getLanguagePacksCache();
+            $this->languagePacks = $this->languagePacksCollector->getLanguagePacksCache();
         }
 
         $languages = $this->languagePacks;

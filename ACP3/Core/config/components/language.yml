@@ -2,11 +2,18 @@ services:
   core.i18n.translator:
     class: ACP3\Core\I18n\Translator
     arguments:
-      - '@core.i18n.dictionary_cache'
+      - '@core.i18n.dictionary'
       - '@core.i18n.locale'
 
-  core.i18n.dictionary_cache:
-    class: ACP3\Core\I18n\DictionaryCache
+  core.i18n.dictionary:
+    class: ACP3\Core\I18n\Dictionary
+    arguments:
+      - '@core.cache.system'
+      - '@core.environment.application_path'
+      - '@core.modules.vendors'
+
+  core.i18n.language_packs_collector:
+    class: ACP3\Core\I18n\LanguagePacksCollector
     arguments:
       - '@core.cache.system'
       - '@core.environment.application_path'
@@ -21,10 +28,10 @@ services:
     class: ACP3\Core\I18n\Locale
     arguments:
       - '@core.config'
-      - '@core.i18n.dictionary_cache'
+      - '@core.i18n.dictionary'
 
   core.i18n.available_language_packs:
     class: ACP3\Core\I18n\AvailableLanguagePacks
     arguments:
       - '@core.environment.application_path'
-      - '@core.i18n.dictionary_cache'
+      - '@core.i18n.language_packs_collector'
