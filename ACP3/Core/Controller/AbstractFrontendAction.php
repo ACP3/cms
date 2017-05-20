@@ -123,7 +123,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     /**
      * @return string
      */
-    public function getLayout()
+    public function getLayout(): string
     {
         return $this->layout;
     }
@@ -132,7 +132,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      * @param string $layout
      * @return $this
      */
-    public function setLayout($layout)
+    public function setLayout(string $layout)
     {
         $this->layout = $layout;
 

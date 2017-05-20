@@ -82,7 +82,6 @@ abstract class AbstractInstallerAction implements ActionInterface
      */
     public function preDispatch()
     {
-        // Einige Template Variablen setzen
         $this->view->assign('LANGUAGES', $this->languagesDropdown($this->locale->getLocale()));
         $this->view->assign('PHP_SELF', $this->appPath->getPhpSelf());
         $this->view->assign('REQUEST_URI', $this->request->getServer()->get('REQUEST_URI'));
@@ -128,22 +127,6 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @return \ACP3\Core\View
-     */
-    protected function getView()
-    {
-        return $this->view;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function getNoOutput()
-    {
-        return false;
-    }
-
-    /**
      * @inheritdoc
      */
     public function get($serviceId)
@@ -158,7 +141,7 @@ abstract class AbstractInstallerAction implements ActionInterface
      *
      * @return array
      */
-    private function languagesDropdown($selectedLanguage)
+    private function languagesDropdown(string $selectedLanguage): array
     {
         $languages = [];
         $paths = glob($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/*.xml');
