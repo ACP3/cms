@@ -9,7 +9,7 @@ namespace ACP3\Core\I18n;
 use ACP3\Core\Cache;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules\Vendor;
-use Fisharebest\Localization\Locale;
+use Fisharebest\Localization\Locale as LocaleLib;
 
 class LanguagePacksCollector
 {
@@ -95,7 +95,7 @@ class LanguagePacksCollector
         $languageIso = $this->getLanguagePackIsoCode($file);
 
         try {
-            $locale = Locale::create($languageIso);
+            $locale = LocaleLib::create($languageIso);
 
             return [
                 $languageIso => [
