@@ -15,7 +15,7 @@
   },
   "require": {
     "php": ">=7.0.0",
-    "acp3/composer-installer": "*",
+    "acp3/composer-installer": "^1.0",
     "phpunit/phpunit": "^5.5"
   },
   "extra": {
