@@ -15,7 +15,7 @@
   },
   "require": {
     "php": ">=5.6.0",
-    "acp3/composer-installer": "*",
+    "acp3/composer-installer": "^1.0",
     "doctrine/dbal": "^2.5",
     "doctrine/cache": "^1.6",
     "fisharebest/localization": "^1.10",
