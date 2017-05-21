@@ -1,5 +1,5 @@
 services:
-  permissions.model.repsitory.acl_roles_repository:
+  permissions.model.repository.acl_roles_repository:
     class: ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository
     arguments:
       - '@core.db'
@@ -36,7 +36,7 @@ services:
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
-      - '@permissions.model.repsitory.acl_roles_repository'
+      - '@permissions.model.repository.acl_roles_repository'
       - '@permissions.nested_set.operation.insert'
       - '@permissions.nested_set.operation.edit'
       - '@permissions.nested_set.operation.delete'

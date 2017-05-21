@@ -31,7 +31,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
     /**
      * @param string $appMode
      */
-    public function __construct($appMode)
+    public function __construct(string $appMode)
     {
         $this->appMode = $appMode;
         $this->initializeApplicationPath();

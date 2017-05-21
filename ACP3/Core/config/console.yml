@@ -1,0 +1,8 @@
+imports:
+  - { resource: services.yml }
+
+services:
+  symfony_console:
+    class: Symfony\Component\Console\Application
+    calls:
+      - ['setDispatcher', ['@core.event_dispatcher']]

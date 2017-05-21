@@ -4,28 +4,18 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Core\DependencyInjection;
+namespace ACP3\Core\Console\DependencyInjection;
 
-use ACP3\Core\Authentication\DependencyInjection\RegisterAuthenticationsCompilerPass;
+
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Helpers\DataGrid\DependencyInjection\RegisterColumnRendererPass;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
-use ACP3\Core\Model\DataProcessor\DependencyInjection\RegisterColumnTypesCompilerPass;
 use ACP3\Core\Modules;
-use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
-use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
-use ACP3\Core\WYSIWYG\DependencyInjection\RegisterWysiwygEditorsCompilerPass;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
-/**
- * Class ServiceContainerBuilder
- * @package ACP3\Core\DependencyInjection
- */
 class ServiceContainerBuilder extends ContainerBuilder
 {
     /**
@@ -37,10 +27,6 @@ class ServiceContainerBuilder extends ContainerBuilder
      */
     private $applicationPath;
     /**
-     * @var SymfonyRequest
-     */
-    private $symfonyRequest;
-    /**
      * @var string
      */
     private $applicationMode;
@@ -49,20 +35,18 @@ class ServiceContainerBuilder extends ContainerBuilder
      * ServiceContainerBuilder constructor.
      * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
-     * @param SymfonyRequest $symfonyRequest
      * @param string $applicationMode
      */
     public function __construct(
         LoggerInterface $logger,
         ApplicationPath $applicationPath,
-        SymfonyRequest $symfonyRequest,
+
         $applicationMode
     ) {
         parent::__construct();
 
         $this->logger = $logger;
         $this->applicationPath = $applicationPath;
-        $this->symfonyRequest = $symfonyRequest;
         $this->applicationMode = $applicationMode;
 
         $this->setUpContainer();
@@ -71,7 +55,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     private function setUpContainer()
     {
         $this->set('core.logger.system_logger', $this->logger);
-        $this->set('core.http.symfony_request', $this->symfonyRequest);
         $this->set('core.environment.application_path', $this->applicationPath);
         $this->setParameter('core.environment', $this->applicationMode);
 
@@ -81,17 +64,11 @@ class ServiceContainerBuilder extends ContainerBuilder
                     'core.eventListener',
                     'core.eventSubscriber')
             )
-            ->addCompilerPass(new RegisterAuthenticationsCompilerPass())
-            ->addCompilerPass(new RegisterSmartyPluginsPass())
-            ->addCompilerPass(new RegisterColumnRendererPass())
-            ->addCompilerPass(new RegisterValidationRulesPass())
-            ->addCompilerPass(new RegisterWysiwygEditorsCompilerPass())
             ->addCompilerPass(new RegisterInstallersCompilerPass())
-            ->addCompilerPass(new RegisterColumnTypesCompilerPass());
+            ->addCompilerPass(new RegisterCommandsCompilerPass());
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
-        $loader->load($this->applicationPath->getClassesDir() . 'config/services.yml');
-        $loader->load($this->applicationPath->getClassesDir() . 'View/Renderer/Smarty/config/services.yml');
+        $loader->load($this->applicationPath->getClassesDir() . 'config/console.yml');
 
         // Try to get all available services
         /** @var Modules $modules */
@@ -101,13 +78,11 @@ class ServiceContainerBuilder extends ContainerBuilder
         foreach ($modules->getAllModules() as $module) {
             foreach ($vendors as $vendor) {
                 $modulePath = $this->applicationPath->getModulesDir() . $vendor . '/' . $module['dir'];
-                $path = $modulePath . '/Resources/config/services.yml';
+                $path = $modulePath . '/Resources/config/commands.yml';
 
                 if (is_file($path)) {
                     $loader->load($path);
                 }
-
-                $this->registerCompilerPass($vendor, $module['dir']);
             }
         }
 
@@ -117,33 +92,14 @@ class ServiceContainerBuilder extends ContainerBuilder
     /**
      * @param LoggerInterface $logger
      * @param \ACP3\Core\Environment\ApplicationPath $applicationPath
-     * @param SymfonyRequest $symfonyRequest
      * @param string $applicationMode
      * @return ContainerBuilder
      */
     public static function create(
         LoggerInterface $logger,
         ApplicationPath $applicationPath,
-        SymfonyRequest $symfonyRequest,
         $applicationMode
     ) {
-        return new static($logger, $applicationPath, $symfonyRequest, $applicationMode);
-    }
-
-    /**
-     * @param string $vendor
-     * @param string $moduleName
-     */
-    private function registerCompilerPass($vendor, $moduleName)
-    {
-        $fqcn = "\\ACP3\\Modules\\" . $vendor . "\\" . $moduleName . "\\ModuleRegistration";
-
-        if (class_exists($fqcn)) {
-            $instance = new $fqcn;
-
-            if ($instance instanceof Modules\ModuleRegistration) {
-                $instance->build($this);
-            }
-        }
+        return new static($logger, $applicationPath, $applicationMode);
     }
 }

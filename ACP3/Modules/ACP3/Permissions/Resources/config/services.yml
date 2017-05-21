@@ -12,5 +12,5 @@ services:
   permissions.helpers:
     class: ACP3\Modules\ACP3\Permissions\Helpers
     arguments:
-      - '@permissions.model.repsitory.acl_roles_repository'
+      - '@permissions.model.repository.acl_roles_repository'
       - '@permissions.model.repository.acl_user_roles_repository'
