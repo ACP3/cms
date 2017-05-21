@@ -5,46 +5,42 @@ use ACP3\Core\ACL\Model\Repository\AclUserRolesRepositoryInterface;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-/**
- * Class ACL
- * @package ACP3\Core
- */
 class ACL
 {
     /**
      * @var \ACP3\Modules\ACP3\Users\Model\UserModel
      */
-    protected $user;
+    private $user;
     /**
      * @var \ACP3\Core\Modules
      */
-    protected $modules;
+    private $modules;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
-    protected $permissionsCache;
+    private $permissionsCache;
     /**
      * @var \ACP3\Core\ACL\Model\Repository\AclUserRolesRepositoryInterface
      */
-    protected $userRoleRepository;
+    private $userRoleRepository;
     /**
-     * Array mit den jeweiligen Rollen zugewiesenen Berechtigungen
+     * Array mit den den jeweiligen Rollen zugewiesenen Berechtigungen
      *
      * @var array
      */
-    protected $privileges = [];
+    private $privileges = [];
     /**
      * Array mit den dem Benutzer zugewiesenen Rollen
      *
      * @var array
      */
-    protected $userRoles = [];
+    private $userRoles = [];
     /**
      * Array mit allen registrierten Ressourcen
      *
      * @var array
      */
-    protected $resources = [];
+    private $resources = [];
 
     /**
      * ACL constructor.
@@ -66,16 +62,26 @@ class ACL
     }
 
     /**
+     * @param integer $roleId
+     *
+     * @return boolean
+     */
+    public function userHasRole(int $roleId): bool
+    {
+        return in_array($roleId, $this->getUserRoleIds($this->user->getUserId()));
+    }
+
+    /**
      * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
      *
      * @param integer $userId
      *
      * @return array
      */
-    public function getUserRoleIds($userId)
+    public function getUserRoleIds(int $userId): array
     {
         if (isset($this->userRoles[$userId]) === false) {
-            // Special case for guest user
+            // Special case for guest users
             if ($userId == 0) {
                 $this->userRoles[$userId][] = 1; // @TODO: Add config option for this
             } else {
@@ -94,7 +100,7 @@ class ACL
      *
      * @return array
      */
-    public function getUserRoleNames($userId)
+    public function getUserRoleNames(int $userId): array
     {
         $roles = [];
         foreach ($this->userRoleRepository->getRolesByUserId($userId) as $userRole) {
@@ -106,31 +112,9 @@ class ACL
     /**
      * @return array
      */
-    public function getAllRoles()
+    public function getAllRoles(): array
     {
         return $this->permissionsCache->getRolesCache();
-    }
-
-    /**
-     * @param integer $roleId
-     *
-     * @return boolean
-     */
-    public function userHasRole($roleId)
-    {
-        return in_array($roleId, $this->getUserRoleIds($this->user->getUserId()));
-    }
-
-    /**
-     * Initializes the available user privileges
-     */
-    protected function getPrivileges()
-    {
-        if ($this->privileges === []) {
-            $this->privileges = $this->getRules($this->getUserRoleIds($this->user->getUserId()));
-        }
-
-        return $this->privileges;
     }
 
     /**
@@ -140,7 +124,7 @@ class ACL
      *
      * @return array
      */
-    protected function getRules(array $roleIds)
+    private function getRules(array $roleIds): array
     {
         return $this->permissionsCache->getRulesCache($roleIds);
     }
@@ -152,7 +136,7 @@ class ACL
      *
      * @return boolean
      */
-    public function hasPermission($resource)
+    public function hasPermission(string $resource): bool
     {
         if (!empty($resource) && $this->modules->controllerActionExists($resource) === true) {
             $resourceParts = explode('/', $resource);
@@ -170,7 +154,7 @@ class ACL
      *
      * @return boolean
      */
-    protected function canAccessResource($resource)
+    private function canAccessResource(string $resource): bool
     {
         $resourceParts = $this->convertResourcePathToArray($resource);
 
@@ -192,7 +176,7 @@ class ACL
      *
      * @return array
      */
-    protected function convertResourcePathToArray($resource)
+    private function convertResourcePathToArray(string $resource): array
     {
         $resourceArray = explode('/', $resource);
 
@@ -210,7 +194,7 @@ class ACL
      *
      * @return array
      */
-    protected function getResources()
+    private function getResources(): array
     {
         if ($this->resources === []) {
             $this->resources = $this->permissionsCache->getResourcesCache();
@@ -227,12 +211,24 @@ class ACL
      *
      * @return boolean
      */
-    protected function userHasPrivilege($module, $privilegeKey)
+    private function userHasPrivilege(string $module, string $privilegeKey): bool
     {
         $privilegeKey = strtolower($privilegeKey);
-        if (isset($this->getPrivileges()[$module][$privilegeKey])) {
-            return $this->getPrivileges()[$module][$privilegeKey]['access'];
+
+        return $this->getPrivileges()[$module][$privilegeKey]['access'] ?? false;
+    }
+
+    /**
+     * Initializes the available user privileges
+     *
+     * @return array
+     */
+    private function getPrivileges(): array
+    {
+        if ($this->privileges === []) {
+            $this->privileges = $this->getRules($this->getUserRoleIds($this->user->getUserId()));
         }
-        return false;
+
+        return $this->privileges;
     }
 }
