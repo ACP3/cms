@@ -8,7 +8,7 @@ use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
  * Class Cache
  * @package ACP3\Modules\ACP3\Seo
  */
-class Cache extends Core\Modules\AbstractCacheStorage
+class Cache extends Core\Cache\AbstractCacheStorage
 {
     /**
      * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository

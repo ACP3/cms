@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonsRepository;
  * Class Cache
  * @package ACP3\Modules\ACP3\Emoticons
  */
-class Cache extends Core\Modules\AbstractCacheStorage
+class Cache extends Core\Cache\AbstractCacheStorage
 {
     const CACHE_ID = 'list';
     /**

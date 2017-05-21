@@ -1,22 +1,21 @@
 <?php
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Core\Modules;
+namespace ACP3\Core\Installer;
 
-use ACP3\Core\Modules\Installer\MigrationInterface;
-use ACP3\Core\Modules\Installer\SchemaInterface;
+use ACP3\Core\Installer\Helper\SchemaHelper;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class SchemaUpdater
- * @package ACP3\Core\Modules
- */
 class SchemaUpdater extends SchemaHelper
 {
     /**
      * Führt die in der Methode schemaUpdates() enthaltenen Tabellenänderungen aus
      *
-     * @param \ACP3\Core\Modules\Installer\SchemaInterface    $schema
-     * @param \ACP3\Core\Modules\Installer\MigrationInterface $migration
+     * @param \ACP3\Core\Installer\SchemaInterface    $schema
+     * @param \ACP3\Core\Installer\MigrationInterface $migration
      *
      * @return int
      */

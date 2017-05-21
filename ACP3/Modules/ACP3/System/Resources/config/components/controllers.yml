@@ -20,8 +20,8 @@ services:
       - '@system.helpers.installer'
       - '@permissions.cache'
       - '@core.installer.schema_registrar'
-      - '@core.modules.schemaInstaller'
-      - '@core.modules.aclInstaller'
+      - '@core.installer.schema_installer'
+      - '@core.installer.acl_installer'
 
   system.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Settings

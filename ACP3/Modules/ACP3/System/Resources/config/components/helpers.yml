@@ -7,7 +7,7 @@ services:
       - '@core.modules'
       - '@core.modules.vendors'
       - '@core.installer.schema_registrar'
-      - '@core.modules.schemaInstaller'
+      - '@core.installer.schema_installer'
       - '@core.xml'
 
   system.helpers.can_use_page_cache:

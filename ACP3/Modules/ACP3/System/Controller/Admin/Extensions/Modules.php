@@ -37,11 +37,11 @@ class Modules extends Core\Controller\AbstractFrontendAction
      */
     private $schemaRegistrar;
     /**
-     * @var Core\Modules\SchemaInstaller
+     * @var \ACP3\Core\Installer\SchemaInstaller
      */
     private $schemaInstaller;
     /**
-     * @var Core\Modules\AclInstaller
+     * @var \ACP3\Core\Installer\AclInstaller
      */
     private $aclInstaller;
     /**
@@ -60,8 +60,8 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Modules\ACP3\System\Helper\Installer $installerHelper
      * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
      * @param Core\Installer\SchemaRegistrar $schemaRegistrar
-     * @param Core\Modules\SchemaInstaller $schemaInstaller
-     * @param Core\Modules\AclInstaller $aclInstaller
+     * @param \ACP3\Core\Installer\SchemaInstaller $schemaInstaller
+     * @param \ACP3\Core\Installer\AclInstaller $aclInstaller
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -72,8 +72,8 @@ class Modules extends Core\Controller\AbstractFrontendAction
         System\Helper\Installer $installerHelper,
         Permissions\Cache $permissionsCache,
         Core\Installer\SchemaRegistrar $schemaRegistrar,
-        Core\Modules\SchemaInstaller $schemaInstaller,
-        Core\Modules\AclInstaller $aclInstaller
+        Core\Installer\SchemaInstaller $schemaInstaller,
+        Core\Installer\AclInstaller $aclInstaller
     ) {
         parent::__construct($context);
 

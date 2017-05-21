@@ -2,14 +2,13 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Installer;
 
-use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\System;
 
 /**
  * Class Migration
  * @package ACP3\Modules\ACP3\Gallery\Installer
  */
-class Migration extends Modules\Installer\AbstractMigration
+class Migration extends \ACP3\Core\Installer\AbstractMigration
 {
     /**
      * @inheritdoc

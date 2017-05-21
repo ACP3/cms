@@ -22,7 +22,7 @@ class SchemaUpdateModel
      */
     protected $modules;
     /**
-     * @var Modules\SchemaUpdater
+     * @var \ACP3\Core\Installer\SchemaUpdater
      */
     protected $schemaUpdater;
     /**
@@ -58,7 +58,7 @@ class SchemaUpdateModel
      * @param MigrationRegistrar $migrationRegistrar
      * @param Modules\Vendor $vendor
      * @param Modules $modules
-     * @param Modules\SchemaUpdater $schemaUpdater
+     * @param \ACP3\Core\Installer\SchemaUpdater $schemaUpdater
      */
     public function __construct(
         ApplicationPath $applicationPath,
@@ -67,7 +67,7 @@ class SchemaUpdateModel
         MigrationRegistrar $migrationRegistrar,
         Modules\Vendor $vendor,
         Modules $modules,
-        Modules\SchemaUpdater $schemaUpdater)
+        \ACP3\Core\Installer\SchemaUpdater $schemaUpdater)
     {
         $this->applicationPath = $applicationPath;
         $this->xml = $xml;

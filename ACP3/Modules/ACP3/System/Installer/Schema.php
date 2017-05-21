@@ -4,13 +4,12 @@ namespace ACP3\Modules\ACP3\System\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Application\BootstrapInterface;
-use ACP3\Core\Modules;
 
 /**
  * Class Schema
  * @package ACP3\Modules\ACP3\System\Installer
  */
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     const MODULE_NAME = 'system';
 

@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Articles\Installer;
 
-use ACP3\Core\Modules\Installer\AbstractMigration;
+use ACP3\Core\Installer\AbstractMigration;
 
 /**
  * Class Migration

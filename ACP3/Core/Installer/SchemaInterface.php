@@ -1,10 +1,6 @@
 <?php
-namespace ACP3\Core\Modules\Installer;
+namespace ACP3\Core\Installer;
 
-/**
- * Interface SchemaInterface
- * @package ACP3\Core\Modules\Installer
- */
 interface SchemaInterface
 {
     /**

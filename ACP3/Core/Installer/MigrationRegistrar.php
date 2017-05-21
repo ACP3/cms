@@ -7,8 +7,6 @@
 namespace ACP3\Core\Installer;
 
 
-use ACP3\Core\Modules\Installer\MigrationInterface;
-
 class MigrationRegistrar
 {
     /**

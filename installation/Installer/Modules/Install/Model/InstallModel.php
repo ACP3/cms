@@ -201,7 +201,7 @@ class InstallModel
             "INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (1, 4);"
         ];
 
-        if ($this->container->get('core.modules.schemaHelper')->executeSqlQueries($queries) === false) {
+        if ($this->container->get('core.installer.helper.schema_helper')->executeSqlQueries($queries) === false) {
             throw new \Exception("Error while creating the super user.");
         }
     }
@@ -214,7 +214,7 @@ class InstallModel
         foreach ($this->container->get('core.installer.sample_data_registrar')->all() as $sampleData) {
             $sampleDataInstallResult = $this->installHelper->installSampleData(
                 $sampleData,
-                $this->container->get('core.modules.schemaHelper')
+                $this->container->get('core.installer.helper.schema_helper')
             );
 
             if ($sampleDataInstallResult === false) {

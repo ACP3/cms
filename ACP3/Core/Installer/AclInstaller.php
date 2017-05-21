@@ -1,18 +1,18 @@
 <?php
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Core\Modules;
+namespace ACP3\Core\Installer;
 
 use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Cache;
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Core\Modules\Installer\SchemaInterface;
+use ACP3\Core\Installer\Helper\SchemaHelper;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class AclInstaller
- * @package ACP3\Core\Modules
- */
 class AclInstaller implements InstallerInterface
 {
     const INSTALL_RESOURCES_AND_RULES = 1;
@@ -23,7 +23,7 @@ class AclInstaller implements InstallerInterface
      */
     private $aclCache;
     /**
-     * @var \ACP3\Core\Modules\SchemaHelper
+     * @var \ACP3\Core\Installer\Helper\SchemaHelper
      */
     private $schemaHelper;
     /**
@@ -45,7 +45,7 @@ class AclInstaller implements InstallerInterface
 
     /**
      * @param \ACP3\Core\Cache $aclCache
-     * @param \ACP3\Core\Modules\SchemaHelper $schemaHelper
+     * @param \ACP3\Core\Installer\Helper\SchemaHelper $schemaHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository $roleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRulesRepository $ruleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclResourcesRepository $resourceRepository
@@ -70,7 +70,7 @@ class AclInstaller implements InstallerInterface
     /**
      * Fügt die zu einen Modul zugehörigen Ressourcen ein
      *
-     * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
+     * @param \ACP3\Core\Installer\SchemaInterface $schema
      * @param int $mode
      *
      * @return bool
@@ -177,7 +177,7 @@ class AclInstaller implements InstallerInterface
     /**
      * Löscht die zu einem Modul zugehörigen Ressourcen
      *
-     * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
+     * @param \ACP3\Core\Installer\SchemaInterface $schema
      *
      * @return bool
      */

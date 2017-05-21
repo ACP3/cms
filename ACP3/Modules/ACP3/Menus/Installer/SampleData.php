@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Modules\ACP3\Menus\Installer;
 
-use ACP3\Core\Modules\Installer\AbstractSampleData;
+use ACP3\Core\Installer\AbstractSampleData;
 
 /**
  * Class SampleData

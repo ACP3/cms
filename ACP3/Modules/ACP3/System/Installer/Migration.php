@@ -3,13 +3,12 @@
 namespace ACP3\Modules\ACP3\System\Installer;
 
 use ACP3\Core\Application\BootstrapInterface;
-use ACP3\Core\Modules;
 
 /**
  * Class Migration
  * @package ACP3\Modules\ACP3\System\Installer
  */
-class Migration extends Modules\Installer\AbstractMigration
+class Migration extends \ACP3\Core\Installer\AbstractMigration
 {
     /**
      * @inheritdoc
@@ -194,10 +193,10 @@ class Migration extends Modules\Installer\AbstractMigration
             if ($this->schemaHelper->getContainer()->has('seo.installer.schema') &&
                 $this->schemaHelper->getSystemModuleRepository()->moduleExists('seo') === false
             ) {
-                $installer = $this->schemaHelper->getContainer()->get('core.modules.schemaInstaller');
+                $installer = $this->schemaHelper->getContainer()->get('core.installer.schema_installer');
                 $moduleSchema = $this->schemaHelper->getContainer()->get('seo.installer.schema');
                 $result = $installer->install($moduleSchema);
-                $aclResult = $this->schemaHelper->getContainer()->get('core.modules.aclInstaller')->install($moduleSchema);
+                $aclResult = $this->schemaHelper->getContainer()->get('core.installer.acl_installer')->install($moduleSchema);
 
                 if ($result === true && $aclResult === true) {
                     $seoModuleId = $this->schemaHelper->getDb()->fetchColumn(
@@ -224,11 +223,11 @@ class Migration extends Modules\Installer\AbstractMigration
             if ($this->schemaHelper->getContainer()->has('minify.installer.schema') &&
                 $this->schemaHelper->getSystemModuleRepository()->moduleExists('minify') === false
             ) {
-                $installer = $this->schemaHelper->getContainer()->get('core.modules.schemaInstaller');
-                /** @var Modules\Installer\SchemaInterface $moduleSchema */
+                $installer = $this->schemaHelper->getContainer()->get('core.installer.schema_installer');
+                /** @var \ACP3\Core\Installer\SchemaInterface $moduleSchema */
                 $moduleSchema = $this->schemaHelper->getContainer()->get('minify.installer.schema');
                 $result = $installer->install($moduleSchema);
-                $aclResult = $this->schemaHelper->getContainer()->get('core.modules.aclInstaller')->install($moduleSchema);
+                $aclResult = $this->schemaHelper->getContainer()->get('core.installer.acl_installer')->install($moduleSchema);
             }
 
             return $result && $aclResult;

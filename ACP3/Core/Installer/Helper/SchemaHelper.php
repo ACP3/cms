@@ -1,15 +1,11 @@
 <?php
-namespace ACP3\Core\Modules;
+namespace ACP3\Core\Installer\Helper;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\System;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-/**
- * Class SchemaHelper
- * @package ACP3\Core\Modules
- */
 class SchemaHelper
 {
     use ContainerAwareTrait;

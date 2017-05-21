@@ -7,16 +7,6 @@ services:
       - '@core.modules.moduleInfoCache'
       - '@core.modules.vendors'
 
-  core.modules.aclInstaller:
-    class: ACP3\Core\Modules\AclInstaller
-    arguments:
-      - '@core.cache.system'
-      - '@core.modules.schemaHelper'
-      - '@permissions.model.repository.acl_roles_repository'
-      - '@permissions.model.repository.acl_rules_repository'
-      - '@permissions.model.repository.acl_resources_repository'
-      - '@permissions.model.repository.acl_privileges_repository'
-
   core.modules.helper.action:
     class: ACP3\Core\Modules\Helper\Action
     arguments:
@@ -41,40 +31,6 @@ services:
       - '@core.modules.vendors'
       - '@core.xml'
       - '@system.model.repository.modules_repository'
-
-  core.modules.schemaHelper:
-    class: ACP3\Core\Modules\SchemaHelper
-    arguments:
-      - '@core.modules.installer_logger'
-      - '@core.db'
-      - '@system.model.repository.modules_repository'
-      - '@system.model.repository.settings_repository'
-    calls:
-      - ['setContainer', ['@service_container']]
-
-  core.modules.installer_logger:
-    class: Psr\Log\LoggerInterface
-    factory: 'core.logger.logger_factory:create'
-    arguments:
-      - 'installer'
-
-  core.modules.installer.abstractMigration:
-    abstract: true
-    arguments:
-      - '@core.modules.schemaHelper'
-
-  core.modules.installer.abstractSampleData:
-    abstract: true
-    arguments:
-      - '@core.modules.schemaHelper'
-
-  core.modules.schemaInstaller:
-    class: ACP3\Core\Modules\SchemaInstaller
-    parent: core.modules.schemaHelper
-
-  core.modules.schemaUpdater:
-    class: ACP3\Core\Modules\SchemaUpdater
-    parent: core.modules.schemaHelper
 
   core.modules.vendors:
     class: ACP3\Core\Modules\Vendor

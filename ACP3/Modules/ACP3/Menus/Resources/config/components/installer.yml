@@ -13,7 +13,7 @@ services:
 
   menus.installer.sample_data:
     class: ACP3\Modules\ACP3\Menus\Installer\SampleData
-    parent: core.modules.installer.abstractSampleData
+    parent: core.installer.abstract_sample_data
     tags:
       - { name: core.installer.sample_data }
     public: false

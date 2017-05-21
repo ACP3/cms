@@ -8,7 +8,7 @@ use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
  * Class Cache
  * @package ACP3\Modules\ACP3\News
  */
-class Cache extends Core\Modules\AbstractCacheStorage
+class Cache extends Core\Cache\AbstractCacheStorage
 {
     const CACHE_ID = 'details_id_';
     /**

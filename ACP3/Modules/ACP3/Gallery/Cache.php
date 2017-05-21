@@ -9,7 +9,7 @@ use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository;
  * Class Cache
  * @package ACP3\Modules\ACP3\Gallery
  */
-class Cache extends Core\Modules\AbstractCacheStorage
+class Cache extends Core\Cache\AbstractCacheStorage
 {
     /**
      * @var string

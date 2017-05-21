@@ -3,13 +3,12 @@
 namespace ACP3\Modules\ACP3\Contact\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\Modules;
 
 /**
  * Class Installer
  * @package ACP3\Modules\ACP3\Contact
  */
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     const MODULE_NAME = 'contact';
 

@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\Installer;
 
-use ACP3\Core\Modules\Installer\AbstractSampleData;
+use ACP3\Core\Installer\AbstractSampleData;
 
 /**
  * Class SampleData

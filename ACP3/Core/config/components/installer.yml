@@ -7,3 +7,47 @@ services:
 
   core.installer.schema_registrar:
     class: ACP3\Core\Installer\SchemaRegistrar
+
+  core.installer.helper.schema_helper:
+    class: ACP3\Core\Installer\Helper\SchemaHelper
+    arguments:
+      - '@core.installer.logger'
+      - '@core.db'
+      - '@system.model.repository.modules_repository'
+      - '@system.model.repository.settings_repository'
+    calls:
+      - ['setContainer', ['@service_container']]
+
+  core.installer.acl_installer:
+    class: ACP3\Core\Installer\AclInstaller
+    arguments:
+      - '@core.cache.system'
+      - '@core.installer.helper.schema_helper'
+      - '@permissions.model.repository.acl_roles_repository'
+      - '@permissions.model.repository.acl_rules_repository'
+      - '@permissions.model.repository.acl_resources_repository'
+      - '@permissions.model.repository.acl_privileges_repository'
+
+  core.installer.logger:
+    class: Psr\Log\LoggerInterface
+    factory: 'core.logger.logger_factory:create'
+    arguments:
+      - 'installer'
+
+  core.installer.abstract_migration:
+    abstract: true
+    arguments:
+      - '@core.installer.helper.schema_helper'
+
+  core.installer.abstract_sample_data:
+    abstract: true
+    arguments:
+      - '@core.installer.helper.schema_helper'
+
+  core.installer.schema_installer:
+    class: ACP3\Core\Installer\SchemaInstaller
+    parent: core.installer.helper.schema_helper
+
+  core.installer.schema_updater:
+    class: ACP3\Core\Installer\SchemaUpdater
+    parent: core.installer.helper.schema_helper

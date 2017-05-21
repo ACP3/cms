@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
  * Class Cache
  * @package ACP3\Modules\ACP3\Categories
  */
-class Cache extends Core\Modules\AbstractCacheStorage
+class Cache extends Core\Cache\AbstractCacheStorage
 {
     /**
      * @var CategoriesRepository

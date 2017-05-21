@@ -27,7 +27,7 @@ class Installer
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\Modules\SchemaInstaller
+     * @var \ACP3\Core\Installer\SchemaInstaller
      */
     protected $schemaInstaller;
     /**
@@ -53,7 +53,7 @@ class Installer
      * @param \ACP3\Core\Modules $modules
      * @param \ACP3\Core\Modules\Vendor $vendors
      * @param Core\Installer\SchemaRegistrar $schemaRegistrar
-     * @param \ACP3\Core\Modules\SchemaInstaller $schemaInstaller
+     * @param \ACP3\Core\Installer\SchemaInstaller $schemaInstaller
      * @param \ACP3\Core\XML $xml
      */
     public function __construct(
@@ -62,7 +62,7 @@ class Installer
         Core\Modules $modules,
         Core\Modules\Vendor $vendors,
         Core\Installer\SchemaRegistrar $schemaRegistrar,
-        Core\Modules\SchemaInstaller $schemaInstaller,
+        Core\Installer\SchemaInstaller $schemaInstaller,
         Core\XML $xml
     ) {
         $this->appPath = $appPath;
@@ -77,11 +77,11 @@ class Installer
     /**
      * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls
      *
-     * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
+     * @param \ACP3\Core\Installer\SchemaInterface $schema
      *
      * @return array
      */
-    public function checkInstallDependencies(Core\Modules\Installer\SchemaInterface $schema)
+    public function checkInstallDependencies(Core\Installer\SchemaInterface $schema)
     {
         $dependencies = $this->getDependencies($schema->getModuleName());
         $modulesToEnable = [];
@@ -97,10 +97,10 @@ class Installer
     }
 
     /**
-     * @param Core\Modules\Installer\SchemaInterface $schema
+     * @param \ACP3\Core\Installer\SchemaInterface $schema
      * @return array
      */
-    public function checkUninstallDependencies(Core\Modules\Installer\SchemaInterface $schema)
+    public function checkUninstallDependencies(Core\Installer\SchemaInterface $schema)
     {
         $modules = $this->modules->getInstalledModules();
         $moduleDependencies = [];

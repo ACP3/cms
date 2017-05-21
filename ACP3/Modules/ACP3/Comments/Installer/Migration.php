@@ -2,13 +2,11 @@
 
 namespace ACP3\Modules\ACP3\Comments\Installer;
 
-use ACP3\Core\Modules;
-
 /**
  * Class Migration
  * @package ACP3\Modules\ACP3\Comments\Installer
  */
-class Migration implements Modules\Installer\MigrationInterface
+class Migration implements \ACP3\Core\Installer\MigrationInterface
 {
     /**
      * @inheritdoc

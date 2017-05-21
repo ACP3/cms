@@ -3,7 +3,7 @@ namespace ACP3\Modules\ACP3\News\Installer;
 
 use ACP3\Core\Date;
 use ACP3\Core\I18n\TranslatorInterface;
-use ACP3\Core\Modules\Installer\AbstractSampleData;
+use ACP3\Core\Installer\AbstractSampleData;
 
 /**
  * Class SampleData

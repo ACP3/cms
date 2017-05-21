@@ -10,7 +10,7 @@ use ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository;
  * Class Cache
  * @package ACP3\Modules\ACP3\Menus
  */
-class Cache extends Core\Modules\AbstractCacheStorage
+class Cache extends Core\Cache\AbstractCacheStorage
 {
     const CACHE_ID = 'items';
     const CACHE_ID_VISIBLE = 'visible_items_';

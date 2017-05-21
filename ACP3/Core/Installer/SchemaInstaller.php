@@ -1,20 +1,20 @@
 <?php
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Core\Modules;
+namespace ACP3\Core\Installer;
 
-use ACP3\Core\Modules\Installer\SchemaInterface;
+use ACP3\Core\Installer\Helper\SchemaHelper;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class SchemaInstaller
- * @package ACP3\Core\Modules
- */
 class SchemaInstaller extends SchemaHelper implements InstallerInterface
 {
     /**
      * Installs a module
      *
-     * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
+     * @param \ACP3\Core\Installer\SchemaInterface $schema
      *
      * @return bool
      */
@@ -99,7 +99,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     /**
      * Method for uninstalling a module
      *
-     * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
+     * @param \ACP3\Core\Installer\SchemaInterface $schema
      *
      * @return bool
      */

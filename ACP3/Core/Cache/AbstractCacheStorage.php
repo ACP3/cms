@@ -1,13 +1,14 @@
 <?php
-namespace ACP3\Core\Modules;
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\Cache;
 
 use ACP3\Core;
 
-/**
- * Class AbstractCacheStorage
- * @package ACP3\Core\Modules
- */
-class AbstractCacheStorage
+abstract class AbstractCacheStorage
 {
     /**
      * @var \ACP3\Core\Cache
@@ -17,7 +18,7 @@ class AbstractCacheStorage
     /**
      * @param \ACP3\Core\Cache $cache
      */
-    protected function __construct(Core\Cache $cache)
+    public function __construct(Core\Cache $cache)
     {
         $this->cache = $cache;
     }

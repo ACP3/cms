@@ -6,8 +6,8 @@
 
 namespace ACP3\Installer\Modules\Install\Helpers;
 
+use ACP3\Core\Installer\SchemaInterface;
 use ACP3\Core\Installer\SchemaRegistrar;
-use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\Modules\ModuleDependenciesTrait;
 use ACP3\Core\Modules\Vendor;
 use ACP3\Core\XML;

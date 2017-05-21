@@ -8,4 +8,4 @@ services:
       - '@core.installer.migration_registrar'
       - '@core.modules.vendors'
       - '@core.modules'
-      - '@core.modules.schemaUpdater'
+      - '@core.installer.schema_updater'
