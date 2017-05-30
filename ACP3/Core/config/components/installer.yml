@@ -51,3 +51,14 @@ services:
   core.installer.schema_updater:
     class: ACP3\Core\Installer\SchemaUpdater
     parent: core.installer.helper.schema_helper
+
+  core.installer.model.schema_update_model:
+    class: ACP3\Core\Installer\Model\SchemaUpdateModel
+    arguments:
+      - '@core.environment.application_path'
+      - '@core.xml'
+      - '@core.installer.schema_registrar'
+      - '@core.installer.migration_registrar'
+      - '@core.modules.vendors'
+      - '@core.modules'
+      - '@core.installer.schema_updater'

@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Environment;
 
-/**
- * Class ApplicationPath
- * @package ACP3\Core\Environment
- */
 class ApplicationPath
 {
     /**

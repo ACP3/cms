@@ -1,27 +1,7 @@
 imports:
   - { resource: cache.yml }
   - { resource: ../../config.yml }
-  - { resource: components/action_result_types.yml }
-  - { resource: components/application.yml }
-  - { resource: components/assets.yml }
-  - { resource: components/authentication.yml }
-  - { resource: components/breadcrumb.yml }
-  - { resource: components/cache.yml }
-  - { resource: components/controller.yml }
-  - { resource: components/database.yml }
-  - { resource: components/datagrid.yml }
-  - { resource: components/date.yml }
-  - { resource: components/helpers.yml }
-  - { resource: components/http.yml }
-  - { resource: components/installer.yml }
-  - { resource: components/language.yml }
-  - { resource: components/logger.yml }
-  - { resource: components/mailer.yml }
-  - { resource: components/model.yml }
-  - { resource: components/modules.yml }
-  - { resource: components/validation.yml }
-  - { resource: components/view.yml }
-  - { resource: components/wysiwyg.yml }
+  - { resource: components/*.yml }
   - { resource: ../../Modules/ACP3/Permissions/Resources/config/services.yml }
   - { resource: ../../Modules/ACP3/System/Resources/config/services.yml }
   - { resource: ../../Modules/ACP3/Users/Resources/config/services.yml }

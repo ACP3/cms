@@ -14,12 +14,12 @@ class SchemaUpdater extends SchemaHelper
     /**
      * Führt die in der Methode schemaUpdates() enthaltenen Tabellenänderungen aus
      *
-     * @param \ACP3\Core\Installer\SchemaInterface    $schema
+     * @param \ACP3\Core\Installer\SchemaInterface $schema
      * @param \ACP3\Core\Installer\MigrationInterface $migration
      *
      * @return int
      */
-    public function updateSchema(SchemaInterface $schema, MigrationInterface $migration)
+    public function updateSchema(SchemaInterface $schema, MigrationInterface $migration): int
     {
         $module = $this->systemModuleRepository->getModuleSchemaVersion($schema->getModuleName());
         $installedSchemaVersion = !empty($module) ? (int)$module : 0;
@@ -55,19 +55,19 @@ class SchemaUpdater extends SchemaHelper
 
     /**
      *
-     * @param string  $moduleName
-     * @param int     $schemaVersion
-     * @param array   $schemaUpdates
+     * @param string $moduleName
+     * @param int $schemaVersion
+     * @param array $schemaUpdates
      * @param integer $installedSchemaVersion
      *
      * @return int
      */
-    protected function iterateOverSchemaUpdates(
-        $moduleName,
-        $schemaVersion,
+    private function iterateOverSchemaUpdates(
+        string $moduleName,
+        int $schemaVersion,
         array $schemaUpdates,
-        $installedSchemaVersion)
-    {
+        int $installedSchemaVersion
+    ) {
         $result = -1;
         foreach ($schemaUpdates as $schemaUpdateVersion => $queries) {
             // Do schema updates only, if the current schema version is older then the new one
@@ -75,7 +75,8 @@ class SchemaUpdater extends SchemaHelper
                 $schemaUpdateVersion <= $schemaVersion &&
                 !empty($queries)
             ) {
-                $result = $this->executeSqlQueries($this->forceSqlQueriesToArray($queries), $moduleName) === true ? 1 : 0;
+                $result = $this->executeSqlQueries($this->forceSqlQueriesToArray($queries),
+                    $moduleName) === true ? 1 : 0;
 
                 if ($result !== 0) {
                     $this->updateSchemaVersion($moduleName, $schemaUpdateVersion);
@@ -86,25 +87,28 @@ class SchemaUpdater extends SchemaHelper
     }
 
     /**
-     * Setzt die DB-Schema-Version auf die neue Versionsnummer
-     *
-     * @param string  $moduleName
-     * @param integer $schemaVersion
-     *
-     * @return bool
-     */
-    public function updateSchemaVersion($moduleName, $schemaVersion)
-    {
-        return $this->systemModuleRepository->update(['version' => (int)$schemaVersion], ['name' => $moduleName]) !== false;
-    }
-
-    /**
      * @param string|array|callable $queries
      *
      * @return array
      */
-    protected function forceSqlQueriesToArray($queries)
+    private function forceSqlQueriesToArray($queries): array
     {
         return (is_array($queries) === false) ? (array)$queries : $queries;
+    }
+
+    /**
+     * Setzt die DB-Schema-Version auf die neue Versionsnummer
+     *
+     * @param string $moduleName
+     * @param integer $schemaVersion
+     *
+     * @return bool
+     */
+    public function updateSchemaVersion(string $moduleName, int $schemaVersion): bool
+    {
+        return $this->systemModuleRepository->update(
+                ['version' => $schemaVersion],
+                ['name' => $moduleName]
+            ) !== false;
     }
 }

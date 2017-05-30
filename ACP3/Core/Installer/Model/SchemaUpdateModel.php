@@ -4,14 +4,15 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Installer\Modules\Update\Model;
+namespace ACP3\Core\Installer\Model;
 
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
 use ACP3\Core\Installer\MigrationRegistrar;
 use ACP3\Core\Installer\SchemaRegistrar;
+use ACP3\Core\Installer\SchemaUpdater;
 use ACP3\Core\Modules;
 use ACP3\Core\XML;
-use ACP3\Installer\Core\Environment\ApplicationPath;
 
 class SchemaUpdateModel
 {
@@ -20,23 +21,23 @@ class SchemaUpdateModel
     /**
      * @var Modules
      */
-    protected $modules;
+    private $modules;
     /**
-     * @var \ACP3\Core\Installer\SchemaUpdater
+     * @var SchemaUpdater
      */
-    protected $schemaUpdater;
+    private $schemaUpdater;
     /**
      * @var Modules\Vendor
      */
-    protected $vendor;
+    private $vendor;
     /**
      * @var ApplicationPath
      */
-    protected $applicationPath;
+    private $applicationPath;
     /**
      * @var XML
      */
-    protected $xml;
+    private $xml;
     /**
      * @var SchemaRegistrar
      */
@@ -48,7 +49,7 @@ class SchemaUpdateModel
     /**
      * @var array
      */
-    protected $results = [];
+    private $results = [];
 
     /**
      * ModuleUpdateModel constructor.
@@ -58,7 +59,7 @@ class SchemaUpdateModel
      * @param MigrationRegistrar $migrationRegistrar
      * @param Modules\Vendor $vendor
      * @param Modules $modules
-     * @param \ACP3\Core\Installer\SchemaUpdater $schemaUpdater
+     * @param SchemaUpdater $schemaUpdater
      */
     public function __construct(
         ApplicationPath $applicationPath,
@@ -67,7 +68,7 @@ class SchemaUpdateModel
         MigrationRegistrar $migrationRegistrar,
         Modules\Vendor $vendor,
         Modules $modules,
-        \ACP3\Core\Installer\SchemaUpdater $schemaUpdater)
+        SchemaUpdater $schemaUpdater)
     {
         $this->applicationPath = $applicationPath;
         $this->xml = $xml;
@@ -82,7 +83,7 @@ class SchemaUpdateModel
      * @param array $modules
      * @return array
      */
-    public function updateModules(array $modules = [])
+    public function updateModules(array $modules = []): array
     {
         foreach ($this->vendor->getVendors() as $vendor) {
             $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
@@ -116,20 +117,20 @@ class SchemaUpdateModel
     /**
      * Führt die Updateanweisungen eines Moduls aus
      *
-     * @param string $module
+     * @param string $moduleName
      * @return int
      */
-    public function updateModule($module)
+    private function updateModule(string $moduleName)
     {
         $result = false;
 
-        $serviceIdMigration = $module . '.installer.migration';
-        if ($this->schemaRegistrar->has($module) === true &&
+        $serviceIdMigration = $moduleName . '.installer.migration';
+        if ($this->schemaRegistrar->has($moduleName) === true &&
             $this->migrationRegistrar->has($serviceIdMigration) === true
         ) {
-            $moduleSchema = $this->schemaRegistrar->get($module);
+            $moduleSchema = $this->schemaRegistrar->get($moduleName);
             $moduleMigration = $this->migrationRegistrar->get($serviceIdMigration);
-            if ($this->modules->isInstalled($module) || count($moduleMigration->renameModule()) > 0) {
+            if ($this->modules->isInstalled($moduleName) || count($moduleMigration->renameModule()) > 0) {
                 $result = $this->schemaUpdater->updateSchema($moduleSchema, $moduleMigration);
             }
         }

@@ -7,8 +7,8 @@
 namespace ACP3\Installer\Modules\Update\Controller\Index;
 
 use ACP3\Core\Cache;
+use ACP3\Core\Installer\Model\SchemaUpdateModel;
 use ACP3\Installer\Core;
-use ACP3\Installer\Modules\Update\Model\SchemaUpdateModel;
 
 /**
  * Class Index
