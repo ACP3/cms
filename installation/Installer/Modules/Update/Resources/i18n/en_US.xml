@@ -9,5 +9,6 @@
         <item key="db_update_success">The database has been successfully updated!</item>
         <item key="do_db_update">Begin update process</item>
         <item key="index_index">Database update</item>
+        <item key="show_update_details">Show updated modules</item>
     </keys>
 </language>
