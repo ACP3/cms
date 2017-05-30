@@ -19,7 +19,7 @@ class Index extends Core\Controller\AbstractInstallerAction
     /**
      * @var SchemaUpdateModel
      */
-    protected $schemaUpdateModel;
+    private $schemaUpdateModel;
 
     /**
      * @param \ACP3\Installer\Core\Controller\Context\InstallerContext $context
@@ -35,20 +35,17 @@ class Index extends Core\Controller\AbstractInstallerAction
     }
 
     /**
-     * @param string $action
      * @return array
      */
-    public function execute($action = '')
+    public function execute()
     {
-        if ($action === 'confirmed') {
-            return $this->executePost();
-        }
+        return [];
     }
 
     /**
      * @return array
      */
-    protected function executePost()
+    public function executePost()
     {
         $results = $this->schemaUpdateModel->updateModules();
         ksort($results);
@@ -61,7 +58,7 @@ class Index extends Core\Controller\AbstractInstallerAction
         ];
     }
 
-    protected function clearCaches()
+    private function clearCaches()
     {
         Cache\Purge::doPurge([
             ACP3_ROOT_DIR . 'cache/',

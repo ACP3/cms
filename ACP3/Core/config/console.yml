@@ -6,3 +6,10 @@ services:
     class: Symfony\Component\Console\Application
     calls:
       - ['setDispatcher', ['@core.event_dispatcher']]
+
+  acp3.core.console.command.clear_cache_command:
+    class: ACP3\Core\Console\Command\ClearCacheCommand
+    arguments:
+      - '@core.environment.application_path'
+    tags:
+      - { name: acp3.console.command }
