@@ -1,11 +1,17 @@
 <?php
-namespace ACP3\Core;
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Core\ACL;
 
 use ACP3\Core\ACL\Model\Repository\AclUserRolesRepositoryInterface;
+use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-class ACL
+class ACL implements ACLInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Users\Model\UserModel
@@ -62,9 +68,7 @@ class ACL
     }
 
     /**
-     * @param integer $roleId
-     *
-     * @return boolean
+     * @inheritdoc
      */
     public function userHasRole(int $roleId): bool
     {
@@ -72,11 +76,7 @@ class ACL
     }
 
     /**
-     * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
-     *
-     * @param integer $userId
-     *
-     * @return array
+     * @inheritdoc
      */
     public function getUserRoleIds(int $userId): array
     {
@@ -94,11 +94,7 @@ class ACL
     }
 
     /**
-     * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
-     *
-     * @param integer $userId
-     *
-     * @return array
+     * @inheritdoc
      */
     public function getUserRoleNames(int $userId): array
     {
@@ -110,7 +106,7 @@ class ACL
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getAllRoles(): array
     {
@@ -130,11 +126,7 @@ class ACL
     }
 
     /**
-     * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat
-     *
-     * @param string $resource
-     *
-     * @return boolean
+     * @inheritdoc
      */
     public function hasPermission(string $resource): bool
     {

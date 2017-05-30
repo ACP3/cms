@@ -6,16 +6,16 @@
 
 namespace ACP3\Modules\ACP3\Captcha\Event\Listener;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface;
 
 class OnDisplayCaptchaListener
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var ACLInterface
      */
-    protected $acl;
+    private $acl;
     /**
      * @var CaptchaExtensionInterface
      */
@@ -23,11 +23,10 @@ class OnDisplayCaptchaListener
 
     /**
      * OnDisplayCaptchaListener constructor.
-     *
-     * @param ACL $acl
-     * @param CaptchaExtensionInterface $captchaExtension
+     * @param ACLInterface $acl
+     * @param CaptchaExtensionInterface|null $captchaExtension
      */
-    public function __construct(ACL $acl, CaptchaExtensionInterface $captchaExtension = null)
+    public function __construct(ACLInterface $acl, CaptchaExtensionInterface $captchaExtension = null)
     {
         $this->acl = $acl;
         $this->captchaExtension = $captchaExtension;

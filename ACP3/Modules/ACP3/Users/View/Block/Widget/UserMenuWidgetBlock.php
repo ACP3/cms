@@ -7,10 +7,8 @@
 namespace ACP3\Modules\ACP3\Users\View\Block\Widget;
 
 
-use ACP3\Core\ACL;
-use ACP3\Core\Controller\AreaEnum;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Modules;
-use ACP3\Core\View;
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
 
@@ -37,7 +35,7 @@ class UserMenuWidgetBlock extends AbstractBlock
         ],
     ];
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
     /**
@@ -48,10 +46,10 @@ class UserMenuWidgetBlock extends AbstractBlock
     /**
      * UserMenuWidgetBlock constructor.
      * @param BlockContext $context
-     * @param ACL $acl
+     * @param ACLInterface $acl
      * @param Modules $modules
      */
-    public function __construct(BlockContext $context, ACL $acl, Modules $modules)
+    public function __construct(BlockContext $context, ACLInterface $acl, Modules $modules)
     {
         parent::__construct($context);
 

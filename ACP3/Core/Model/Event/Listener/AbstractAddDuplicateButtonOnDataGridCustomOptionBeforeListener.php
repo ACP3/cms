@@ -7,14 +7,14 @@
 namespace ACP3\Core\Model\Event\Listener;
 
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
 use ACP3\Core\I18n\TranslatorInterface;
 
 abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var \ACP3\Core\ACL\ACLInterface
      */
     private $acl;
     /**
@@ -25,11 +25,11 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
     /**
      * OnDataGridCustomOptionBeforeListener constructor.
      *
-     * @param \ACP3\Core\ACL $acl
+     * @param \ACP3\Core\ACL\ACLInterface $acl
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
     public function __construct(
-        ACL $acl,
+        ACLInterface $acl,
         TranslatorInterface $translator
     ) {
         $this->acl = $acl;

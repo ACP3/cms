@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Permissions\View\Block\Admin;
 
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Permissions\Model\Repository\AclResourcesRepository;
 class ResourcesListingBlock extends AbstractBlock
 {
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
     /**
@@ -31,13 +31,13 @@ class ResourcesListingBlock extends AbstractBlock
     /**
      * ResourcesListingBlock constructor.
      * @param BlockContext $context
-     * @param ACL $acl
+     * @param ACLInterface $acl
      * @param Modules $modules
      * @param AclResourcesRepository $resourceRepository
      */
     public function __construct(
         BlockContext $context,
-        ACL $acl,
+        ACLInterface $acl,
         Modules $modules,
         AclResourcesRepository $resourceRepository
     ) {

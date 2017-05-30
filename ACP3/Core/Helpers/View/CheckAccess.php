@@ -1,4 +1,5 @@
 <?php
+
 namespace ACP3\Core\Helpers\View;
 
 use ACP3\Core;
@@ -10,7 +11,7 @@ use ACP3\Core;
 class CheckAccess
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var \ACP3\Core\ACL\ACLInterface
      */
     protected $acl;
     /**
@@ -25,12 +26,12 @@ class CheckAccess
     /**
      * CheckAccess constructor.
      *
-     * @param \ACP3\Core\ACL             $acl
+     * @param \ACP3\Core\ACL\ACLInterface $acl
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(
-        Core\ACL $acl,
+        Core\ACL\ACLInterface $acl,
         Core\I18n\TranslatorInterface $translator,
         Core\Router\RouterInterface $router
     ) {
@@ -79,7 +80,7 @@ class CheckAccess
     }
 
     /**
-     * @param array  $params
+     * @param array $params
      * @param string $action
      * @param string $area
      *

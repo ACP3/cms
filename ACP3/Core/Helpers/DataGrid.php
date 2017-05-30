@@ -2,7 +2,7 @@
 
 namespace ACP3\Core\Helpers;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\ColumnRendererInterface;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\HeaderColumnRenderer;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class DataGrid
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var \ACP3\Core\ACL\ACLInterface
      */
     private $acl;
     /**
@@ -69,13 +69,13 @@ class DataGrid
     private $options;
 
     /**
-     * @param \ACP3\Core\ACL $acl
+     * @param \ACP3\Core\ACL\ACLInterface $acl
      * @param RequestInterface $request
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param ConfigProcessor $configProcessor
      */
     public function __construct(
-        ACL $acl,
+        ACLInterface $acl,
         RequestInterface $request,
         TranslatorInterface $translator,
         ConfigProcessor $configProcessor

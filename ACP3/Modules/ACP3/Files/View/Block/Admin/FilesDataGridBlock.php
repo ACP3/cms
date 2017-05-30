@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class FilesDataGridBlock extends AbstractDataGridBlock
 {
     /**
-     * @var Core\ACL
+     * @var Core\ACL\ACLInterface
      */
     private $acl;
     /**
@@ -27,12 +27,12 @@ class FilesDataGridBlock extends AbstractDataGridBlock
     /**
      * FilesDataGridBlock constructor.
      * @param Context\DataGridBlockContext $context
-     * @param Core\ACL $acl
+     * @param Core\ACL\ACLInterface $acl
      * @param Core\Settings\SettingsInterface $settings
      */
     public function __construct(
         Context\DataGridBlockContext $context,
-        Core\ACL $acl,
+        Core\ACL\ACLInterface $acl,
         Core\Settings\SettingsInterface $settings
     ) {
         parent::__construct($context);

@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Test\Helpers;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACL;
 use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\Helpers\Formatter\MarkEntries;
 use ACP3\Core\Http\RequestInterface;

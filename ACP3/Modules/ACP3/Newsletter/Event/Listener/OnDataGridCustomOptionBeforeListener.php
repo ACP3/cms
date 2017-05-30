@@ -2,7 +2,7 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\Event\Listener;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
 use ACP3\Core\I18n\TranslatorInterface;
 
@@ -13,7 +13,7 @@ use ACP3\Core\I18n\TranslatorInterface;
 class OnDataGridCustomOptionBeforeListener
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var ACLInterface
      */
     private $acl;
     /**
@@ -23,12 +23,11 @@ class OnDataGridCustomOptionBeforeListener
 
     /**
      * OnDataGridCustomOptionBeforeListener constructor.
-     *
-     * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Core\I18n\TranslatorInterface $translator
+     * @param ACLInterface $acl
+     * @param TranslatorInterface $translator
      */
     public function __construct(
-        ACL $acl,
+        ACLInterface $acl,
         TranslatorInterface $translator
     ) {
         $this->acl = $acl;

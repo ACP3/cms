@@ -7,23 +7,23 @@
 namespace ACP3\Modules\ACP3\Permissions\View\Block\Admin;
 
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
 
 class RolesListingBlock extends AbstractBlock
 {
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
 
     /**
      * RolesListingBlock constructor.
      * @param BlockContext $context
-     * @param ACL $acl
+     * @param ACLInterface $acl
      */
-    public function __construct(BlockContext $context, ACL $acl)
+    public function __construct(BlockContext $context, ACLInterface $acl)
     {
         parent::__construct($context);
 

@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Modules\ACP3\Permissions\Validation\ValidationRules;
 
-use ACP3\Core\ACL;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository;
 

@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -14,16 +14,16 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class Hash extends AbstractWidgetAction
 {
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
 
     /**
      * Hash constructor.
      * @param WidgetContext $context
-     * @param ACL $acl
+     * @param ACLInterface $acl
      */
-    public function __construct(WidgetContext $context, ACL $acl)
+    public function __construct(WidgetContext $context, ACLInterface $acl)
     {
         parent::__construct($context);
 

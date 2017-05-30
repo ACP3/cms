@@ -23,19 +23,20 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     protected $availableFeedsRegistrar;
     /**
-     * @var Core\ACL
+     * @var Core\ACL\ACLInterface
      */
     private $acl;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\ACL $acl
-     * @param \ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator $feedGenerator
+     * Index constructor.
+     * @param Core\Controller\Context\FrontendContext $context
+     * @param Core\ACL\ACLInterface $acl
+     * @param Feeds\View\Renderer\FeedGenerator $feedGenerator
      * @param Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\ACL $acl,
+        Core\ACL\ACLInterface $acl,
         Feeds\View\Renderer\FeedGenerator $feedGenerator,
         Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
     ) {

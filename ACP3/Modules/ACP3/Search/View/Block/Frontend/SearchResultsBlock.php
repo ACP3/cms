@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Search\View\Block\Frontend;
 
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
 use ACP3\Modules\ACP3\Search\Utility\SearchAvailabilityRegistrar;
@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Search\Utility\SearchAvailabilityRegistrar;
 class SearchResultsBlock extends AbstractBlock
 {
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
     /**
@@ -26,12 +26,12 @@ class SearchResultsBlock extends AbstractBlock
     /**
      * SearchResultsBlock constructor.
      * @param BlockContext $context
-     * @param ACL $acl
+     * @param ACLInterface $acl
      * @param SearchAvailabilityRegistrar $availabilityRegistrar
      */
     public function __construct(
         BlockContext $context,
-        ACL $acl,
+        ACLInterface $acl,
         SearchAvailabilityRegistrar $availabilityRegistrar
     ) {
         parent::__construct($context);

@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Menus\Event\Listener;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
@@ -18,7 +18,7 @@ use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\ParentIdValidationRule;
 class OnMenusValidationValidateManageMenuItem
 {
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
     /**
@@ -28,10 +28,10 @@ class OnMenusValidationValidateManageMenuItem
 
     /**
      * OnMenusValidationValidateManageMenuItem constructor.
-     * @param ACL $acl
+     * @param ACLInterface $acl
      * @param TranslatorInterface $translator
      */
-    public function __construct(ACL $acl, TranslatorInterface $translator)
+    public function __construct(ACLInterface $acl, TranslatorInterface $translator)
     {
         $this->acl = $acl;
         $this->translator = $translator;

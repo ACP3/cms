@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Permissions\View\Block\Admin;
 
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository;
 class RoleFormBlock extends AbstractFormBlock
 {
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
     /**
@@ -36,14 +36,14 @@ class RoleFormBlock extends AbstractFormBlock
     /**
      * RoleFormBlock constructor.
      * @param FormBlockContext $context
-     * @param ACL $acl
+     * @param ACLInterface $acl
      * @param Modules $modules
      * @param AclPrivilegesRepository $privilegeRepository
      * @param Cache $permissionsCache
      */
     public function __construct(
         FormBlockContext $context,
-        ACL $acl,
+        ACLInterface $acl,
         Modules $modules,
         AclPrivilegesRepository $privilegeRepository,
         Cache $permissionsCache

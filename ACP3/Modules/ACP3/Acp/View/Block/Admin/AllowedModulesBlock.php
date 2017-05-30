@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Acp\View\Block\Admin;
 
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
@@ -19,17 +19,17 @@ class AllowedModulesBlock extends AbstractBlock
      */
     private $modules;
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
 
     /**
      * AllowedModulesBlock constructor.
      * @param BlockContext $context
-     * @param ACL $acl
+     * @param ACLInterface $acl
      * @param Modules $modules
      */
-    public function __construct(BlockContext $context, ACL $acl, Modules $modules)
+    public function __construct(BlockContext $context, ACLInterface $acl, Modules $modules)
     {
         parent::__construct($context);
 

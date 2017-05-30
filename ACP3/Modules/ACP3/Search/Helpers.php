@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Search\Utility\SearchAvailabilityRegistrar;
 class Helpers
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var Core\ACL\ACLInterface
      */
     protected $acl;
     /**
@@ -29,13 +29,14 @@ class Helpers
     protected $availableModulesRegistrar;
 
     /**
-     * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Core\Modules $modules
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * Helpers constructor.
+     * @param Core\ACL\ACLInterface $acl
+     * @param Core\Modules $modules
+     * @param Core\Helpers\Forms $formsHelper
      * @param SearchAvailabilityRegistrar $availableModulesRegistrar
      */
     public function __construct(
-        Core\ACL $acl,
+        Core\ACL\ACLInterface $acl,
         Core\Modules $modules,
         Core\Helpers\Forms $formsHelper,
         SearchAvailabilityRegistrar $availableModulesRegistrar

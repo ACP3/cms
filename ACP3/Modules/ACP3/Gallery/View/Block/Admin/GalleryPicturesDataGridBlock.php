@@ -16,16 +16,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
 {
     /**
-     * @var Core\ACL
+     * @var Core\ACL\ACLInterface
      */
     private $acl;
 
     /**
      * GalleryPicturesDataGridBlock constructor.
      * @param Context\DataGridBlockContext $context
-     * @param Core\ACL $acl
+     * @param Core\ACL\ACLInterface $acl
      */
-    public function __construct(Context\DataGridBlockContext $context, Core\ACL $acl)
+    public function __construct(Context\DataGridBlockContext $context, Core\ACL\ACLInterface $acl)
     {
         parent::__construct($context);
 

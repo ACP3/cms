@@ -14,7 +14,7 @@
 namespace ACP3\Modules\ACP3\Users\View\Block\Admin;
 
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Users\Helpers\Forms;
@@ -22,7 +22,7 @@ use ACP3\Modules\ACP3\Users\Helpers\Forms;
 class UserFormBlock extends AbstractFormBlock
 {
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
     /**
@@ -33,10 +33,10 @@ class UserFormBlock extends AbstractFormBlock
     /**
      * UserFormBlock constructor.
      * @param FormBlockContext $context
-     * @param ACL $acl
+     * @param ACLInterface $acl
      * @param Forms $userFormsHelpers
      */
-    public function __construct(FormBlockContext $context, ACL $acl, Forms $userFormsHelpers)
+    public function __construct(FormBlockContext $context, ACLInterface $acl, Forms $userFormsHelpers)
     {
         parent::__construct($context);
 

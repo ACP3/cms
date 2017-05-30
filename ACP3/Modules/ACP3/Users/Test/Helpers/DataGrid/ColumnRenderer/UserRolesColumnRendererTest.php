@@ -2,7 +2,7 @@
 
 namespace ACP3\Modules\ACP3\Users\Test\Helpers\DataGrid\ColumnRenderer;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACL;
 use ACP3\Core\Test\Helpers\ColumnRenderer\AbstractColumnRendererTest;
 use ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer;
 

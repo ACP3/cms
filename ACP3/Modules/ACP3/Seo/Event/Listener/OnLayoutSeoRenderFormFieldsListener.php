@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\View;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
@@ -22,18 +22,18 @@ class OnLayoutSeoRenderFormFieldsListener
      */
     private $metaFormFields;
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
 
     /**
-     * OnLayoutSeoFormFieldsListener constructor.
-     * @param ACL $acl
+     * OnLayoutSeoRenderFormFieldsListener constructor.
+     * @param ACLInterface $acl
      * @param View $view
      * @param MetaFormFields $metaFormFields
      */
     public function __construct(
-        ACL $acl,
+        ACLInterface $acl,
         View $view,
         MetaFormFields $metaFormFields
     ) {

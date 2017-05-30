@@ -25,16 +25,17 @@ class Create extends AbstractFormAction
     private $block;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * Create constructor.
+     * @param Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
-     * @param Core\ACL $acl
+     * @param Core\ACL\ACLInterface $acl
      * @param Articles\Model\ArticlesModel $articlesModel
-     * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
+     * @param Articles\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
-        Core\ACL $acl,
+        Core\ACL\ACLInterface $acl,
         Articles\Model\ArticlesModel $articlesModel,
         Articles\Validation\AdminFormValidation $adminFormValidation
     ) {

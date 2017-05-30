@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
@@ -18,17 +18,17 @@ class InsertUriAliasOnModelAfterSaveListener
      */
     private $uriAliasManager;
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
 
     /**
      * InsertUriAliasOnModelAfterSaveListener constructor.
-     * @param ACL $acl
+     * @param ACLInterface $acl
      * @param UriAliasManager $uriAliasManager
      */
     public function __construct(
-        ACL $acl,
+        ACLInterface $acl,
         UriAliasManager $uriAliasManager)
     {
         $this->uriAliasManager = $uriAliasManager;

@@ -10,14 +10,15 @@ use ACP3\Core;
 class HasPermission extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var Core\ACL\ACLInterface
      */
-    protected $acl;
+    private $acl;
 
     /**
-     * @param \ACP3\Core\ACL $acl
+     * HasPermission constructor.
+     * @param Core\ACL\ACLInterface $acl
      */
-    public function __construct(Core\ACL $acl)
+    public function __construct(Core\ACL\ACLInterface $acl)
     {
         $this->acl = $acl;
     }

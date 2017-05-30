@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 class Helpers
 {
     /**
-     * @var Core\ACL
+     * @var Core\ACL\ACLInterface
      */
     protected $acl;
     /**
@@ -49,17 +49,18 @@ class Helpers
     protected $secureHelper;
 
     /**
-     * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Core\I18n\TranslatorInterface $translator
-     * @param \ACP3\Core\Modules $modules
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository $categoryRepository
+     * Helpers constructor.
+     * @param Core\ACL\ACLInterface $acl
+     * @param Core\I18n\TranslatorInterface $translator
+     * @param Core\Modules $modules
+     * @param Core\Http\RequestInterface $request
+     * @param Core\Helpers\Forms $formsHelper
+     * @param Core\Helpers\Secure $secureHelper
+     * @param Cache $categoriesCache
+     * @param CategoriesRepository $categoryRepository
      */
     public function __construct(
-        Core\ACL $acl,
+        Core\ACL\ACLInterface $acl,
         Core\I18n\TranslatorInterface $translator,
         Core\Modules $modules,
         Core\Http\RequestInterface $request,

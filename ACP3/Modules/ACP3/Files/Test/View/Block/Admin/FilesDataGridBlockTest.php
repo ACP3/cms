@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Files\Test\View\Block\Admin;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACL;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\Test\View\Block\AbstractDataGridBlockTest;
 use ACP3\Core\View\Block\BlockInterface;

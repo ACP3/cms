@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context;
 use ACP3\Modules\ACP3\Articles;
@@ -19,16 +19,16 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     protected $manageMenuItemHelper;
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
 
     /**
      * AbstractFormAction constructor.
      * @param Context\FrontendContext $context
-     * @param ACL $acl
+     * @param ACLInterface $acl
      */
-    public function __construct(Context\FrontendContext $context, ACL $acl)
+    public function __construct(Context\FrontendContext $context, ACLInterface $acl)
     {
         parent::__construct($context);
 

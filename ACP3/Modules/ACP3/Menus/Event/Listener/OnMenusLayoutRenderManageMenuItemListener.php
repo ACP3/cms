@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Menus\Event\Listener;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\View;
@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository;
 class OnMenusLayoutRenderManageMenuItemListener
 {
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
     /**
@@ -43,7 +43,7 @@ class OnMenusLayoutRenderManageMenuItemListener
 
     /**
      * OnMenusLayoutRenderManageMenuItemListener constructor.
-     * @param ACL $acl
+     * @param ACLInterface $acl
      * @param TranslatorInterface $translator
      * @param View $view
      * @param Forms $forms
@@ -51,7 +51,7 @@ class OnMenusLayoutRenderManageMenuItemListener
      * @param MenuItemsRepository $menuItemRepository
      */
     public function __construct(
-        ACL $acl,
+        ACLInterface $acl,
         TranslatorInterface $translator,
         View $view,
         Forms $forms,

@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Permissions\Event\Listener;
 
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\ACL\Exception\AccessForbiddenException;
 use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
 use ACP3\Core\Controller\AreaEnum;
@@ -15,15 +15,15 @@ use ACP3\Core\Controller\AreaEnum;
 class HasPermissionOnControllerActionBeforeDispatchListener
 {
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
 
     /**
      * HasPermissionOnControllerActionBeforeDispatchListener constructor.
-     * @param ACL $acl
+     * @param ACLInterface $acl
      */
-    public function __construct(ACL $acl)
+    public function __construct(ACLInterface $acl)
     {
         $this->acl = $acl;
     }

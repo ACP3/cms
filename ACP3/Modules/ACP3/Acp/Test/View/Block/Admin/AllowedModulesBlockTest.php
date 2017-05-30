@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Acp\Test\View\Block\Admin;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACL;
 use ACP3\Core\Modules;
 use ACP3\Core\Test\View\Block\AbstractBlockTest;
 use ACP3\Core\View\Block\BlockInterface;

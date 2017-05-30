@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Test\View\Block\Admin;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACL;
 use ACP3\Core\Test\View\Block\AbstractDataGridBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
 use ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryPicturesDataGridBlock;
