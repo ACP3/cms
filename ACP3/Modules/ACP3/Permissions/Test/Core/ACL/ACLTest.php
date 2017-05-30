@@ -4,17 +4,13 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Core\Test\ACL;
+namespace ACP3\Modules\ACP3\Permissions\Test\Core\ACL;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Permissions\Cache;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-/**
- * Class ACLTest
- * @package ACP3\Core\Test
- */
 class ACLTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -42,7 +38,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
     {
         $this->initializeMockObjects();
 
-        $this->acl = new ACL\ACL(
+        $this->acl = new \ACP3\Modules\ACP3\Permissions\Core\ACL\ACL(
             $this->userMock,
             $this->modulesMock,
             $this->userRoleRepositoryMock,

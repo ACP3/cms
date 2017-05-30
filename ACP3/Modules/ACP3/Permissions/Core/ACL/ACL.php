@@ -4,8 +4,9 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Core\ACL;
+namespace ACP3\Modules\ACP3\Permissions\Core\ACL;
 
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\ACL\Model\Repository\AclUserRolesRepositoryInterface;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Permissions;
