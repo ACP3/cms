@@ -7,8 +7,15 @@ services:
     calls:
       - ['setDispatcher', ['@core.event_dispatcher']]
 
-  acp3.core.console.command.clear_cache_command:
-    class: ACP3\Core\Console\Command\ClearCacheCommand
+  acp3.core.console.command.cache_clear_command:
+    class: ACP3\Core\Console\Command\CacheClearCommand
+    arguments:
+      - '@core.environment.application_path'
+    tags:
+      - { name: acp3.console.command }
+
+  acp3.core.console.command.assets_clear_command:
+    class: ACP3\Core\Console\Command\AssetsClearCommand
     arguments:
       - '@core.environment.application_path'
     tags:

@@ -14,7 +14,7 @@ use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ClearCacheCommand extends Command
+class CacheClearCommand extends Command
 {
     /**
      * @var ApplicationPath
