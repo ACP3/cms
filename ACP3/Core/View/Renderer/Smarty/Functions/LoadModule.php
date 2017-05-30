@@ -28,12 +28,12 @@ class LoadModule extends AbstractFunction
      * LoadModule constructor.
      * @param ACLInterface $acl
      * @param RouterInterface $router
-     * @param $applicationMode
+     * @param string $applicationMode
      */
     public function __construct(
         ACLInterface $acl,
         RouterInterface $router,
-        $applicationMode)
+        string $applicationMode)
     {
         $this->acl = $acl;
         $this->router = $router;
