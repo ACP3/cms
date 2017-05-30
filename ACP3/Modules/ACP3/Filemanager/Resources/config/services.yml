@@ -1,5 +1,5 @@
 imports:
-  - { resource: components/installer.yml }
+  - { resource: components/*.yml }
 
 services:
   filemanager.helpers:

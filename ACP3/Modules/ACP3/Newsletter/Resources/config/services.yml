@@ -1,10 +1,5 @@
 imports:
-  - { resource: components/controllers.yml }
-  - { resource: components/events.yml }
-  - { resource: components/installer.yml }
-  - { resource: components/models.yml }
-  - { resource: components/validation.yml }
-  - { resource: components/view.yml }
+  - { resource: components/*.yml }
 
 services:
   newsletter.helper.accountstatus:

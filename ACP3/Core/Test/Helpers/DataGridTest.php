@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Test\Helpers;
 
-use ACP3\Core\ACL\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\Helpers\Formatter\MarkEntries;
 use ACP3\Core\Http\RequestInterface;
@@ -14,7 +14,7 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
      */
     protected $dataGrid;
     /**
-     * @var ACL|\PHPUnit_Framework_MockObject_MockObject
+     * @var ACLInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $aclMock;
     /**
@@ -32,10 +32,10 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->aclMock = $this->getMockBuilder(ACL::class)
+        $this->aclMock = $this->getMockBuilder(ACLInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(['hasPermission'])
-            ->getMock();
+            ->getMockForAbstractClass();
 
         $this->requestMock = $this->getMockBuilder(RequestInterface::class)
             ->disableOriginalConstructor()

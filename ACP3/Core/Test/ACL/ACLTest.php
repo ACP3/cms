@@ -18,7 +18,7 @@ use ACP3\Modules\ACP3\Users\Model\UserModel;
 class ACLTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \ACP3\Core\ACL\ACL
+     * @var \ACP3\Core\ACL\ACLInterface
      */
     private $acl;
     /**

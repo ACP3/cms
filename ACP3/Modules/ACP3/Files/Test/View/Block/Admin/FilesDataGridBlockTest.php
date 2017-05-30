@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Files\Test\View\Block\Admin;
 
-use ACP3\Core\ACL\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\Test\View\Block\AbstractDataGridBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
@@ -19,9 +19,9 @@ class FilesDataGridBlockTest extends AbstractDataGridBlockTest
      */
     protected function instantiateBlock(): BlockInterface
     {
-        $acl = $this->getMockBuilder(ACL::class)
+        $acl = $this->getMockBuilder(ACLInterface::class)
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMockForAbstractClass();
 
         $settings = $this->getMockBuilder(SettingsInterface::class)
             ->setMethods(['getSettings', 'saveSettings'])

@@ -2,23 +2,23 @@
 
 namespace ACP3\Modules\ACP3\Users\Test\Helpers\DataGrid\ColumnRenderer;
 
-use ACP3\Core\ACL\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Test\Helpers\ColumnRenderer\AbstractColumnRendererTest;
 use ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer;
 
 class UserRolesColumnRendererTest extends AbstractColumnRendererTest
 {
     /**
-     * @var ACL|\PHPUnit_Framework_MockObject_MockObject
+     * @var ACLInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $aclMock;
 
     protected function setUp()
     {
-        $this->aclMock = $this->getMockBuilder(ACL::class)
+        $this->aclMock = $this->getMockBuilder(ACLInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(['getUserRoleNames'])
-            ->getMock();
+            ->getMockForAbstractClass();
 
         $this->columnRenderer = new UserRolesColumnRenderer($this->aclMock);
 

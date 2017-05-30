@@ -1,5 +1,2 @@
 imports:
-  - { resource: components/controllers.yml }
-  - { resource: components/events.yml }
-  - { resource: components/installer.yml }
-  - { resource: components/view.yml }
+  - { resource: components/*.yml }

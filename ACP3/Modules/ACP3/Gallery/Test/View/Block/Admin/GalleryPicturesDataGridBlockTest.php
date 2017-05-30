@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Test\View\Block\Admin;
 
-use ACP3\Core\ACL\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Test\View\Block\AbstractDataGridBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
 use ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryPicturesDataGridBlock;
@@ -18,9 +18,9 @@ class GalleryPicturesDataGridBlockTest extends AbstractDataGridBlockTest
      */
     protected function instantiateBlock(): BlockInterface
     {
-        $acl = $this->getMockBuilder(ACL::class)
+        $acl = $this->getMockBuilder(ACLInterface::class)
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMockForAbstractClass();
 
         return new GalleryPicturesDataGridBlock($this->context, $acl);
     }
