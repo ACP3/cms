@@ -6,13 +6,11 @@ php:
   - 7.0.8
   - 7.1
   - nightly
-  - hhvm
 
 matrix:
   fast_finish: true
   allow_failures:
     - php: nightly
-    - php: hhvm
 
 addons:
   code_climate:
