@@ -12,21 +12,21 @@ services:
     class: ACP3\Core\Installer\Helper\SchemaHelper
     arguments:
       - '@core.installer.logger'
-      - '@core.db'
-      - '@system.model.repository.modules_repository'
-      - '@system.model.repository.settings_repository'
+      - '@?core.db'
+      - '@?system.model.repository.modules_repository'
+      - '@?system.model.repository.settings_repository'
     calls:
       - ['setContainer', ['@service_container']]
 
   core.installer.acl_installer:
     class: ACP3\Core\Installer\AclInstaller
     arguments:
-      - '@core.cache.system'
+      - '@?core.cache.system'
       - '@core.installer.helper.schema_helper'
-      - '@permissions.model.repository.acl_roles_repository'
-      - '@permissions.model.repository.acl_rules_repository'
-      - '@permissions.model.repository.acl_resources_repository'
-      - '@permissions.model.repository.acl_privileges_repository'
+      - '@?permissions.model.repository.acl_roles_repository'
+      - '@?permissions.model.repository.acl_rules_repository'
+      - '@?permissions.model.repository.acl_resources_repository'
+      - '@?permissions.model.repository.acl_privileges_repository'
 
   core.installer.logger:
     class: Psr\Log\LoggerInterface
@@ -60,5 +60,5 @@ services:
       - '@core.installer.schema_registrar'
       - '@core.installer.migration_registrar'
       - '@core.modules.vendors'
-      - '@core.modules'
+      - '@?core.modules'
       - '@core.installer.schema_updater'
