@@ -43,9 +43,7 @@ services:
       - '%core.environment%'
 
   core.event_dispatcher:
-    class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
-    arguments:
-      - '@service_container'
+    class: Symfony\Component\EventDispatcher\EventDispatcher
 
   core.xml:
     class: ACP3\Core\XML
