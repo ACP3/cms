@@ -37,7 +37,7 @@ class CacheDriverFactory
      * @param string $cacheDriver
      * @param string $environment
      */
-    public function __construct(ApplicationPath $appPath, $cacheDriver, $environment)
+    public function __construct(ApplicationPath $appPath, string $cacheDriver, string $environment)
     {
         $this->appPath = $appPath;
         $this->cacheDriver = $cacheDriver;
@@ -49,7 +49,7 @@ class CacheDriverFactory
      *
      * @return \Doctrine\Common\Cache\CacheProvider
      */
-    public function create($namespace)
+    public function create(string $namespace)
     {
         $driver = $this->initializeCacheDriver($this->getCacheDriverName());
         $driver->setNamespace($namespace);
@@ -60,7 +60,7 @@ class CacheDriverFactory
     /**
      * @return string
      */
-    protected function getCacheDriverName()
+    private function getCacheDriverName(): string
     {
         return $this->environment !== ApplicationMode::DEVELOPMENT ? $this->cacheDriver : 'Array';
     }
@@ -71,7 +71,7 @@ class CacheDriverFactory
      * @return \Doctrine\Common\Cache\CacheProvider
      * @throws \InvalidArgumentException
      */
-    protected function initializeCacheDriver($driverName)
+    private function initializeCacheDriver(string $driverName)
     {
         /** @var \Doctrine\Common\Cache\CacheProvider $driver */
         switch (strtolower($driverName)) {

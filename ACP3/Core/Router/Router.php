@@ -47,7 +47,7 @@ class Router implements RouterInterface
         RequestInterface $request,
         ApplicationPath $appPath,
         SettingsInterface $config,
-        $environment
+        string $environment
     ) {
         $this->request = $request;
         $this->appPath = $appPath;
