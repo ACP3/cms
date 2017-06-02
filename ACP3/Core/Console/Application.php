@@ -9,14 +9,11 @@ namespace ACP3\Core\Console;
 
 use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Console\DependencyInjection\ServiceContainerBuilder;
-use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\ErrorHandler;
 use ACP3\Core\Logger\LoggerFactory;
 use Patchwork\Utf8\Bootup;
-use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 
 class Application
 {
@@ -81,34 +78,8 @@ class Application
         Bootup::filterRequestUri(); // Redirects to an UTF-8 encoded URL if it's not already the case
         Bootup::filterRequestInputs(); // Normalizes HTTP inputs to UTF-8 NFC
 
-        $file = $this->appPath->getCacheDir() . 'container.php';
-
-        $this->dumpContainer($file);
-
-        require_once $file;
-
-        $this->container = new \ACP3ServiceContainer();
-        $this->container->set('core.environment.application_path', $this->appPath);
-        $this->container->set('core.logger.system_logger', $this->logger);
-    }
-
-    /**
-     * @param string $filePath
-     */
-    private function dumpContainer(string $filePath)
-    {
-        $containerConfigCache = new ConfigCache($filePath, ($this->environment === ApplicationMode::DEVELOPMENT));
-
-        if (!$containerConfigCache->isFresh()) {
-            $containerBuilder = ServiceContainerBuilder::create(
-                $this->logger, $this->appPath, $this->environment
-            );
-
-            $dumper = new PhpDumper($containerBuilder);
-            $containerConfigCache->write(
-                $dumper->dump(['class' => 'ACP3ServiceContainer']),
-                $containerBuilder->getResources()
-            );
-        }
+        $this->container = ServiceContainerBuilder::create(
+            $this->logger, $this->appPath, $this->environment
+        );
     }
 }
