@@ -78,7 +78,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         foreach ($modules->getAllModules() as $module) {
             foreach ($vendors as $vendor) {
                 $modulePath = $this->applicationPath->getModulesDir() . $vendor . '/' . $module['dir'];
-                $path = $modulePath . '/Resources/config/commands.yml';
+                $path = $modulePath . '/Resources/config/services.yml';
 
                 if (is_file($path)) {
                     $loader->load($path);
