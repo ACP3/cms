@@ -62,7 +62,7 @@ class CacheDriverFactory
      */
     private function getCacheDriverName(): string
     {
-        return $this->environment !== ApplicationMode::DEVELOPMENT ? $this->cacheDriver : 'Array';
+        return $this->environment === ApplicationMode::PRODUCTION ? $this->cacheDriver : 'Array';
     }
 
     /**
