@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Next] - 2017-xx-xx
 ### Added
 - display an alert when an user tries to access a restricted pages which requires the user to be logged in
-- [#51](https://github.com/ACP3/cms/issues/51) [#63](https://github.com/ACP3/cms/issues/63) The results of the data grids will now be retrieved via AJAX, so that they better provide a better performance for large ACP3 installs
+- [#51](https://github.com/ACP3/cms/issues/51) [#63](https://github.com/ACP3/cms/issues/63) The results of the data grids will now be retrieved via AJAX, so that they provide a better performance for large ACP3 installs
+- [#43](https://github.com/ACP3/cms/issues/43) Added the possibility to run CLI commands.
+  Added the following CLI commands: 
+  - `acp3:assets:clear`         Clears all locally stored assets.
+  - `acp3:cache:clear`          Clears all locally stored caches.
+  - `acp3:http-cache:warmup`    Warms up the HTTP cache.
+  - `acp3:maintenance:disable`  Disables the maintenance mode of the ACP3.
+  - `acp3:maintenance:enable`   Enables the maintenance mode of the ACP3.
+  - `acp3:modules:update`       Updates the database schema of all currently installed modules.
+
 
 ### BC Breaks
 - Dropped the support for PHP 5.6. PHP 7.0 is the minimum supported version now
