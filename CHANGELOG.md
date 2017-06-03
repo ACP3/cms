@@ -28,9 +28,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed the deprecated `ACP3\Core\Controller\AbstractAdminAction` class
 - Removed the class `ACP3\Core\Controller\DisplayActionTrait` class and replaced it with the new `ActionResultFactory` class
 - Renamed the class `ACP3\Core\Model\DataGridRepository` to `AbstractDataGridRepository` and moved it to the namespace `ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository`
+- Added the new interface `ACP3\Core\ACL\ACLInterface` and type hinted against it
+- Moved the `ACP3\Core\ACL` class to the `Permissions` module
 - [#65](https://github.com/ACP3/cms/issues/65) Renamed all DI service names for the `*Repository`, `*DataGridRepository` and `*Model` classes to follow a strict spec (see the ticket for details) 
 - [#66](https://github.com/ACP3/cms/issues/66) Renamed all `*Repository`, `*DataGridRepository` and `*Model` classes to follow a strict spec (see the ticket for details) 
 - [#67](https://github.com/ACP3/cms/issues/67) Renamed the folder `View` inside the `Resources` folder of each module to `templates`
+
+### Changed
+- Updated minimal required Symfony version to 3.3 and take advantage of some features of it
 
 ## [4.12.0] - 2017-05-08
 ### Added
