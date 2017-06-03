@@ -89,7 +89,7 @@
                                     <td>{$row.name}</td>
                                     <td>{$row.description}</td>
                                     <td>{$row.version}</td>
-                                    <td>{$row.author}</td>
+                                    <td>{$row.author|implode:', '}</td>
                                     <td class="text-center">
                                         <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_install"}"
                                            class="btn btn-block btn-success btn-xs"
