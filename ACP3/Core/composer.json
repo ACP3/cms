@@ -16,6 +16,7 @@
   "require": {
     "php": ">=7.0.0",
     "acp3/composer-installer": "^1.0",
+    "composer/composer": "^1.4",
     "doctrine/dbal": "^2.5",
     "doctrine/cache": "^1.6",
     "fisharebest/localization": "^1.10",

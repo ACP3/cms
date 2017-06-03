@@ -13,6 +13,7 @@ use ACP3\Core\I18n\LocaleInterface;
 use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\XML;
+use Composer\Json\JsonFile;
 
 /**
  * Class ModuleInfoCache
@@ -149,13 +150,17 @@ class ModuleInfoCache
     {
         $vendors = array_reverse($this->vendors->getVendors()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
         foreach ($vendors as $vendor) {
-            $path = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/Resources/config/module.xml';
-            if (is_file($path) === true) {
-                $moduleInfo = $this->xml->parseXmlFile($path, 'info');
+            $moduleXml = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/Resources/config/module.xml';
+            $moduleComposerJson = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/composer.json';
+
+            if (is_file($moduleXml) && is_file($moduleComposerJson)) {
+                $moduleInfo = $this->xml->parseXmlFile($moduleXml, 'info');
 
                 if (!empty($moduleInfo)) {
                     $moduleName = strtolower($moduleDirectory);
                     $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
+
+                    $composer = (new JsonFile($moduleComposerJson))->read();
 
                     return [
                         'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
@@ -163,14 +168,14 @@ class ModuleInfoCache
                         'installed' => (!empty($moduleInfoDb)),
                         'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
                         'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
-                        'description' => $this->getModuleDescription($moduleInfo, $moduleName),
-                        'author' => $moduleInfo['author'],
-                        'version' => $moduleInfo['version'],
+                        'description' => $composer['description'] ?? $this->getModuleDescription($moduleInfo, $moduleName),
+                        'author' => $this->getAuthor($composer, $moduleInfo),
+                        'version' => $this->getModuleVersion($composer, $moduleInfo),
                         'name' => $this->getModuleName($moduleInfo, $moduleName),
                         'categories' => isset($moduleInfo['categories']),
                         'protected' => isset($moduleInfo['protected']),
                         'installable' => !isset($moduleInfo['no_install']),
-                        'dependencies' => $this->getModuleDependencies($path),
+                        'dependencies' => $this->getModuleDependencies($moduleXml),
                     ];
                 }
             }
@@ -192,6 +197,38 @@ class ModuleInfoCache
         }
 
         return $moduleInfo['description'];
+    }
+
+    /**
+     * Returns the author of an ACP3 module
+     *
+     * @param array $composerInfo
+     * @param array $moduleXmlInfo
+     * @return array
+     */
+    private function getAuthor(array $composerInfo, array $moduleXmlInfo): array
+    {
+        $authors = [];
+        if (isset($composerInfo['authors'])) {
+            foreach ($composerInfo['authors'] as $author) {
+                $authors[] = $author['name'];
+            }
+        } else {
+            $authors[] = $moduleXmlInfo['author'];
+        }
+
+        return $authors;
+    }
+
+    /**
+     * Returns the version of an ACP3 module
+     * @param array $composerInfo
+     * @param array $moduleXmlInfo
+     * @return string
+     */
+    private function getModuleVersion(array $composerInfo, array $moduleXmlInfo): string
+    {
+        return $composerInfo['version'] ?? $moduleXmlInfo['version'];
     }
 
     /**
