@@ -24,7 +24,6 @@
         <item key="menu_bar_title">Name der Navigationsleiste</item>
         <item key="menu_bar_title_to_short">Der Name der Navigationsleiste darf nicht leer sein.</item>
         <item key="menu_items">Menüpunkte</item>
-        <item key="mod_description">Dieses Modul verwaltet die Navigationsleisten.</item>
         <item key="module">Modul</item>
         <item key="no_superior_page">Keine übergeordnete Seite</item>
         <item key="page_type">Seitentyp</item>

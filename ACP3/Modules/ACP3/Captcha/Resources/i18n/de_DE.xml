@@ -5,7 +5,6 @@
         <item key="captcha">Captcha</item>
         <item key="captcha_type">Captcha-Typ</item>
         <item key="invalid_captcha_entered">Entweder wurde das Captcha falsch eingegeben oder es ist nicht mehr gültig.</item>
-        <item key="mod_description">Captchas bieten wirkungsvollen Schutz gegen Spambots.</item>
         <item key="native">ACP3-Nativ</item>
         <item key="recaptcha">reCAPTCHA</item>
         <item key="recaptcha_secret">reCAPTCHA Secret</item>

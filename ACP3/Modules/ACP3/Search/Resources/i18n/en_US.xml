@@ -5,7 +5,6 @@
         <item key="asc">Ascending</item>
         <item key="content_only">Content only</item>
         <item key="desc">Descending</item>
-        <item key="mod_description">With this module it is possible to search thorugh other modules.</item>
         <item key="no_area_selected">Please specify which areas of the entries are to be searched.</item>
         <item key="no_sorting_selected">Please sepcify the order of search results.</item>
         <item key="no_module_selected">Please select at least one module, which is to be searched.</item>

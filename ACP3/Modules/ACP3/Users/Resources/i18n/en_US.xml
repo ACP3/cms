@@ -61,7 +61,6 @@
         <item key="log_in">Log in</item>
         <item key="login">Login</item>
         <item key="logout">Logout</item>
-        <item key="mod_description">With this module you can administer the users.</item>
         <item key="new_pwd">New password</item>
         <item key="new_pwd_repeat">Repeat new password</item>
         <item key="nickname_or_email">User name or E-mail address</item>

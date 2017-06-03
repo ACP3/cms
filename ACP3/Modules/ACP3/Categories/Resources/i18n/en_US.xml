@@ -22,7 +22,6 @@
             large.
         </item>
         <item key="invalid_image_width_entered">Please type in the maximum image width in pixels.</item>
-        <item key="mod_description">With this module you can create categories for other modules.</item>
         <item key="module">Module</item>
         <item key="picture">Picture</item>
         <item key="select_module">Please select a module</item>

@@ -16,7 +16,6 @@
             large.
         </item>
         <item key="invalid_image_width_entered">Please type in the maximum image width in pixels</item>
-        <item key="mod_description">With this module it is possible to add emoticons for example to comments.</item>
         <item key="picture">Picture</item>
         <item key="replace_picture">Replace picture</item>
         <item key="type_in_code">Please type in a code, which should be replaced with a picture</item>

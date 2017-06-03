@@ -12,7 +12,6 @@
         <item key="guestbook">Guestbook</item>
         <item key="guestbook_entries">Guestbook entries</item>
         <item key="ip">IP Address</item>
-        <item key="mod_description">With this module you can administer the guestbook.</item>
         <item key="newsletter_integration">Integrate into the newsletter</item>
         <item key="no_notification">No notification</item>
         <item key="notification">Notification</item>

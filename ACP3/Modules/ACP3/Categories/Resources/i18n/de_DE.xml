@@ -22,7 +22,6 @@
             breit, zu hoch oder zu groß.
         </item>
         <item key="invalid_image_width_entered">Bitte geben Sie die maximale Bildbreite in Pixel an.</item>
-        <item key="mod_description">Mit diesem Modul können Kategorien für andere Module erstellt werden.</item>
         <item key="module">Modul</item>
         <item key="picture">Bild</item>
         <item key="select_module">Bitte wählen Sie ein Modul aus.</item>

@@ -5,7 +5,6 @@
         <item key="asc">Aufsteigend</item>
         <item key="content_only">Nur Inhalt</item>
         <item key="desc">Absteigend</item>
-        <item key="mod_description">Mit diesem Modul können andere Module durchsucht werden.</item>
         <item key="no_area_selected">Bitte geben Sie an, welche Bereiche der Einträge durchsucht werden sollen.</item>
         <item key="no_sorting_selected">Bitte wählen Sie aus, in welcher Reihenfolge die Treffer sortiert werden
             sollen.
