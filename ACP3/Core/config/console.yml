@@ -13,6 +13,7 @@ services:
       - '@core.environment.application_path'
     tags:
       - { name: acp3.console.command }
+    public: false
 
   acp3.core.console.command.cache_clear_command:
     class: ACP3\Core\Console\Command\CacheClearCommand
@@ -20,6 +21,7 @@ services:
       - '@core.environment.application_path'
     tags:
       - { name: acp3.console.command }
+    public: false
 
   acp3.core.console.command.modules_update_command:
     class: ACP3\Core\Console\Command\ModulesUpdateCommand
@@ -27,3 +29,4 @@ services:
       - '@core.installer.model.schema_update_model'
     tags:
       - { name: acp3.console.command }
+    public: false

@@ -13,6 +13,7 @@ use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class HttpCacheWarmupCommand extends Command
 {
@@ -32,7 +33,8 @@ class HttpCacheWarmupCommand extends Command
      * ClearCacheCommand constructor.
      * @param ApplicationPath $applicationPath
      */
-    public function __construct(ApplicationPath $applicationPath) {
+    public function __construct(ApplicationPath $applicationPath)
+    {
         parent::__construct();
 
         $this->applicationPath = $applicationPath;
@@ -70,8 +72,8 @@ class HttpCacheWarmupCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Warming up the HTTP cache...');
-        $output->writeln('==================');
+        $io = new SymfonyStyle($input, $output);
+        $io->title('Warming up the HTTP cache...');
 
         if (is_file($this->defaultSitemapName)) {
             $this->processSitemap($this->defaultSitemapName, $input, $output);

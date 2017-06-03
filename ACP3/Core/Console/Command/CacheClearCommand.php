@@ -13,6 +13,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CacheClearCommand extends Command
 {
@@ -48,8 +49,8 @@ class CacheClearCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Clearing paths...');
-        $output->write('=================');
+        $io = new SymfonyStyle($input, $output);
+        $io->title('Clearing paths...');
 
         $paths = glob(ACP3_ROOT_DIR . 'cache/*/*');
         $length = array_push($paths, $this->applicationPath->getUploadsDir() . 'assets');

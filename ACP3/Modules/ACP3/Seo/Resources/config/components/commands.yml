@@ -5,3 +5,4 @@ services:
       - '@core.environment.application_path'
     tags:
       - { name: 'acp3.console.command' }
+    public: false

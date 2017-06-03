@@ -11,6 +11,7 @@ use ACP3\Core\Installer\Model\SchemaUpdateModel;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ModulesUpdateCommand extends Command
 {
@@ -46,8 +47,8 @@ class ModulesUpdateCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Updating installed modules...');
-        $output->writeln('=============================');
+        $io = new SymfonyStyle($input, $output);
+        $io->title('Updating installed modules...');
 
         foreach ($this->schemaUpdateModel->updateModules() as $module => $result) {
             $output->writeln($result === 1 ? "<info>{$module}</info>" : "<error>{$module}</error>");

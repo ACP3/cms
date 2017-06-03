@@ -12,6 +12,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class AssetsClearCommand extends Command
 {
@@ -47,8 +48,8 @@ class AssetsClearCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Clearing assets...');
-        $output->writeln('==================');
+        $io = new SymfonyStyle($input, $output);
+        $io->title('Clearing assets...');
 
         Purge::doPurge($this->applicationPath->getUploadsDir() . 'assets');
 
