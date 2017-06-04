@@ -39,7 +39,7 @@ class OptionRenderer
     {
         $ajax = $useAjax === true ? ' data-ajax-form="true"' : '';
         $value = ' <a href="' . $this->router->route($route) . '" class="btn btn-xs ' . $buttonClass . '"' . $ajax . ' title="' . $translationPhrase . '">';
-        $value .= '<i class="glyphicon ' . $iconClass . '"></i>';
+        $value .= '<i class="fa ' . $iconClass . '"></i>';
         $value .= '<span class="sr-only">' . $translationPhrase . '</span>';
         $value .= '</a>';
 

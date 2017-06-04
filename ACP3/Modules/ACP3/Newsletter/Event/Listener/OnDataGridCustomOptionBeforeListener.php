@@ -48,7 +48,7 @@ class OnDataGridCustomOptionBeforeListener
                 $customOptionEvent->getOptionRenderer()->addOption(
                     'acp/newsletter/index/send/id_' . $dbResultRow['id'],
                     $this->translator->t('newsletter', 'send'),
-                    'glyphicon-envelope',
+                    'fa-envelope',
                     'btn-primary',
                     true
                 );

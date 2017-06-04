@@ -44,10 +44,10 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
                 $route = $this->router->route('acp/newsletter/accounts/activate/id_' . $dbResultRow[$this->primaryKey]);
                 $title = $this->translator->t('newsletter', 'activate_account');
                 $value = '<a href="' . $route . '" title="' . $title . '">';
-                $value .= '<i class="glyphicon glyphicon-remove text-danger"></i>';
+                $value .= '<i class="fa fa-times text-danger"></i>';
                 $value .= '</a>';
             } else {
-                $value = '<i class="glyphicon glyphicon-ok text-success"></i>';
+                $value = '<i class="fa fa-check text-success"></i>';
             }
 
             return $value;

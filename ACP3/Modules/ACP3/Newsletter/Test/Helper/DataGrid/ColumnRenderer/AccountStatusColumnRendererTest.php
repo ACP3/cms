@@ -49,7 +49,7 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 
         $this->primaryKey = 'id';
 
-        $expected = '<td><i class="glyphicon glyphicon-ok text-success"></i></td>';
+        $expected = '<td><i class="fa fa-check text-success"></i></td>';
         $this->compareResults($expected);
     }
 
@@ -75,7 +75,7 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 
         $this->primaryKey = 'id';
 
-        $expected = '<td><a href="/index.php/acp/newsletter/accounts/activate/id_123/" title="{NEWSLETTER_ACTIVATE_ACCOUNT}"><i class="glyphicon glyphicon-remove text-danger"></i></a></td>';
+        $expected = '<td><a href="/index.php/acp/newsletter/accounts/activate/id_123/" title="{NEWSLETTER_ACTIVATE_ACCOUNT}"><i class="fa fa-times text-danger"></i></a></td>';
         $this->compareResults($expected);
     }
 }

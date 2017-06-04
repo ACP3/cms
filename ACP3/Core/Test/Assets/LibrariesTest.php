@@ -48,6 +48,6 @@ class LibrariesTest extends \PHPUnit_Framework_TestCase
 
         $this->libraries->enableLibraries(['foobar']);
 
-        $this->assertEquals(['jquery', 'js-cookie', 'foobar'], $this->libraries->getEnabledLibraries());
+        $this->assertEquals(['jquery', 'js-cookie', 'font-awesome', 'foobar'], $this->libraries->getEnabledLibraries());
     }
 }
