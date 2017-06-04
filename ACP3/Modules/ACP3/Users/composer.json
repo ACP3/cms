@@ -34,6 +34,9 @@
   },
   "extra": {
     "installer-name": "ACP3/Users",
-    "protected": true
+    "protected": true,
+    "dependencies": [
+      "system"
+    ]
   }
 }

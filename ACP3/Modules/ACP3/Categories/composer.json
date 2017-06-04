@@ -31,6 +31,10 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Categories"
+    "installer-name": "ACP3/Categories",
+    "dependencies": [
+      "permissions",
+      "system"
+    ]
   }
 }

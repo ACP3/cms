@@ -33,6 +33,9 @@
   },
   "extra": {
     "installer-name": "ACP3/Wysiwygckeditor",
-    "installable": false
+    "installable": false,
+    "dependencies": [
+      "system"
+    ]
   }
 }

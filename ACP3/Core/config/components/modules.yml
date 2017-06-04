@@ -29,7 +29,6 @@ services:
       - '@core.i18n.translator'
       - '@core.i18n.locale'
       - '@core.modules.vendors'
-      - '@core.xml'
       - '@system.model.repository.modules_repository'
 
   core.modules.vendors:

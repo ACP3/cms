@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\System\Helper;
 
 use ACP3\Core;
-use ACP3\Core\XML;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -35,10 +34,6 @@ class Installer
      */
     protected $vendors;
     /**
-     * @var \ACP3\Core\XML
-     */
-    protected $xml;
-    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -54,7 +49,6 @@ class Installer
      * @param \ACP3\Core\Modules\Vendor $vendors
      * @param Core\Installer\SchemaRegistrar $schemaRegistrar
      * @param \ACP3\Core\Installer\SchemaInstaller $schemaInstaller
-     * @param \ACP3\Core\XML $xml
      */
     public function __construct(
         LoggerInterface $logger,
@@ -62,14 +56,12 @@ class Installer
         Core\Modules $modules,
         Core\Modules\Vendor $vendors,
         Core\Installer\SchemaRegistrar $schemaRegistrar,
-        Core\Installer\SchemaInstaller $schemaInstaller,
-        Core\XML $xml
+        Core\Installer\SchemaInstaller $schemaInstaller
     ) {
         $this->appPath = $appPath;
         $this->modules = $modules;
         $this->vendors = $vendors;
         $this->schemaInstaller = $schemaInstaller;
-        $this->xml = $xml;
         $this->logger = $logger;
         $this->schemaRegistrar = $schemaRegistrar;
     }
@@ -127,11 +119,11 @@ class Installer
      *
      * @return array
      */
-    protected function getDependencies($moduleName)
+    protected function getDependencies(string $moduleName): array
     {
         if ((bool)preg_match('=/=', $moduleName) === false) {
             foreach ($this->vendors->getVendors() as $vendor) {
-                $path = $this->appPath->getModulesDir() . $vendor . '/' . ucfirst($moduleName) . '/Resources/config/module.xml';
+                $path = $this->appPath->getModulesDir() . $vendor . '/' . ucfirst($moduleName) . '/composer.json';
 
                 if (is_file($path) === true) {
                     return $this->getModuleDependencies($path);
@@ -140,13 +132,5 @@ class Installer
         }
 
         return [];
-    }
-
-    /**
-     * @return XML
-     */
-    protected function getXml()
-    {
-        return $this->xml;
     }
 }

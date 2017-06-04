@@ -34,6 +34,10 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Gallery"
+    "installer-name": "ACP3/Gallery",
+    "dependencies": [
+      "permissions",
+      "system"
+    ]
   }
 }

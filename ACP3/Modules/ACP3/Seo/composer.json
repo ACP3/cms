@@ -32,6 +32,10 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Seo"
+    "installer-name": "ACP3/Seo",
+    "dependencies": [
+      "permissions",
+      "system"
+    ]
   }
 }

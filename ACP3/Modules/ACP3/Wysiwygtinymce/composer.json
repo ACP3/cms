@@ -33,6 +33,9 @@
   },
   "extra": {
     "installer-name": "ACP3/Wysiwygtinymce",
-    "installable": false
+    "installable": false,
+    "dependencies": [
+      "system"
+    ]
   }
 }

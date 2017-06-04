@@ -32,6 +32,10 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Feeds"
+    "installer-name": "ACP3/Feeds",
+    "dependencies": [
+      "permissions",
+      "system"
+    ]
   }
 }

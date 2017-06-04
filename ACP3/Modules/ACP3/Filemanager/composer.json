@@ -31,6 +31,10 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Filemanager"
+    "installer-name": "ACP3/Filemanager",
+    "dependencies": [
+      "permissions",
+      "system"
+    ]
   }
 }

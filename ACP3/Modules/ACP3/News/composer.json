@@ -35,6 +35,11 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/News"
+    "installer-name": "ACP3/News",
+    "dependencies": [
+      "permissions",
+      "system",
+      "categories"
+    ]
   }
 }

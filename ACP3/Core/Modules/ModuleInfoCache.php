@@ -12,7 +12,6 @@ use ACP3\Core\Filesystem;
 use ACP3\Core\I18n\LocaleInterface;
 use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
-use ACP3\Core\XML;
 use Composer\Json\JsonFile;
 
 /**
@@ -40,10 +39,6 @@ class ModuleInfoCache
      */
     protected $vendors;
     /**
-     * @var \ACP3\Core\XML
-     */
-    protected $xml;
-    /**
      * @var ModuleAwareRepositoryInterface
      */
     protected $systemModuleRepository;
@@ -59,7 +54,6 @@ class ModuleInfoCache
      * @param TranslatorInterface $translator
      * @param LocaleInterface $locale
      * @param Vendor $vendors
-     * @param XML $xml
      * @param ModuleAwareRepositoryInterface $systemModuleRepository
      */
     public function __construct(
@@ -68,14 +62,12 @@ class ModuleInfoCache
         TranslatorInterface $translator,
         LocaleInterface $locale,
         Vendor $vendors,
-        XML $xml,
         ModuleAwareRepositoryInterface $systemModuleRepository
     ) {
         $this->cache = $cache;
         $this->appPath = $appPath;
         $this->translator = $translator;
         $this->vendors = $vendors;
-        $this->xml = $xml;
         $this->systemModuleRepository = $systemModuleRepository;
         $this->locale = $locale;
     }
@@ -153,10 +145,9 @@ class ModuleInfoCache
         // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
         $vendors = array_reverse($this->vendors->getVendors());
         foreach ($vendors as $vendor) {
-            $moduleXml = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/Resources/config/module.xml';
             $moduleComposerJson = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/composer.json';
 
-            if (is_file($moduleXml) && is_file($moduleComposerJson)) {
+            if (is_file($moduleComposerJson)) {
                 $moduleName = strtolower($moduleDirectory);
                 $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
 
@@ -174,7 +165,7 @@ class ModuleInfoCache
                     'name' => $this->getModuleName($moduleName),
                     'protected' => $composer['extra']['protected'] ?? false,
                     'installable' => $composer['extra']['installable'] ?? true,
-                    'dependencies' => $this->getModuleDependencies($moduleXml),
+                    'dependencies' => $this->getModuleDependencies($moduleComposerJson),
                 ];
             }
         }
@@ -231,13 +222,5 @@ class ModuleInfoCache
     private function getModuleName(string $moduleName)
     {
         return $this->translator->t($moduleName, $moduleName);
-    }
-
-    /**
-     * @return XML
-     */
-    protected function getXml()
-    {
-        return $this->xml;
     }
 }

@@ -34,6 +34,10 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Contact"
+    "installer-name": "ACP3/Contact",
+    "dependencies": [
+      "permissions",
+      "system"
+    ]
   }
 }

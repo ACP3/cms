@@ -13,7 +13,6 @@ services:
     arguments:
       - '@core.environment.application_path'
       - '@core.modules.vendors'
-      - '@core.xml'
       - '@install.helpers.install'
 
   install.helpers.navigation:

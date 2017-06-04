@@ -32,6 +32,10 @@
   },
   "extra": {
     "installer-name": "ACP3/Acp",
-    "protected": true
+    "protected": true,
+    "dependencies": [
+      "permissions",
+      "system"
+    ]
   }
 }

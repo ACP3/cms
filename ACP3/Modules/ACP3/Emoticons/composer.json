@@ -31,6 +31,10 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Emoticons"
+    "installer-name": "ACP3/Emoticons",
+    "dependencies": [
+      "permissions",
+      "system"
+    ]
   }
 }

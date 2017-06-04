@@ -32,6 +32,10 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Captcha"
+    "installer-name": "ACP3/Captcha",
+    "dependencies": [
+      "permissions",
+      "system"
+    ]
   }
 }

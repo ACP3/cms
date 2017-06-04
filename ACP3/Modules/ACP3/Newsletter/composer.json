@@ -34,6 +34,10 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Newsletter"
+    "installer-name": "ACP3/Newsletter",
+    "dependencies": [
+      "permissions",
+      "system"
+    ]
   }
 }

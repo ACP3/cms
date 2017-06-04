@@ -12,7 +12,6 @@ use ACP3\Core\Installer\MigrationRegistrar;
 use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Core\Installer\SchemaUpdater;
 use ACP3\Core\Modules;
-use ACP3\Core\XML;
 
 class SchemaUpdateModel
 {
@@ -35,10 +34,6 @@ class SchemaUpdateModel
      */
     private $applicationPath;
     /**
-     * @var XML
-     */
-    private $xml;
-    /**
      * @var SchemaRegistrar
      */
     private $schemaRegistrar;
@@ -54,7 +49,6 @@ class SchemaUpdateModel
     /**
      * ModuleUpdateModel constructor.
      * @param ApplicationPath $applicationPath
-     * @param XML $xml
      * @param SchemaRegistrar $schemaRegistrar
      * @param MigrationRegistrar $migrationRegistrar
      * @param Modules\Vendor $vendor
@@ -63,7 +57,6 @@ class SchemaUpdateModel
      */
     public function __construct(
         ApplicationPath $applicationPath,
-        XML $xml,
         SchemaRegistrar $schemaRegistrar,
         MigrationRegistrar $migrationRegistrar,
         Modules\Vendor $vendor,
@@ -71,7 +64,6 @@ class SchemaUpdateModel
         SchemaUpdater $schemaUpdater)
     {
         $this->applicationPath = $applicationPath;
-        $this->xml = $xml;
         $this->vendor = $vendor;
         $this->modules = $modules;
         $this->schemaUpdater = $schemaUpdater;
@@ -97,7 +89,7 @@ class SchemaUpdateModel
                 }
 
                 $modulePath = $vendorPath . ucfirst($module) . '/';
-                $moduleConfigPath = $modulePath . 'Resources/config/module.xml';
+                $moduleConfigPath = $modulePath . 'composer.json';
 
                 if (is_dir($modulePath) && is_file($moduleConfigPath)) {
                     $dependencies = $this->getModuleDependencies($moduleConfigPath);
@@ -136,13 +128,5 @@ class SchemaUpdateModel
         }
 
         return $result;
-    }
-
-    /**
-     * @return XML
-     */
-    protected function getXml()
-    {
-        return $this->xml;
     }
 }

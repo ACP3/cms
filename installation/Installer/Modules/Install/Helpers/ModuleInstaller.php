@@ -10,8 +10,8 @@ use ACP3\Core\Installer\SchemaInterface;
 use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Core\Modules\ModuleDependenciesTrait;
 use ACP3\Core\Modules\Vendor;
-use ACP3\Core\XML;
 use ACP3\Installer\Core\Environment\ApplicationPath;
+use Composer\Json\JsonFile;
 use Psr\Container\ContainerInterface;
 
 class ModuleInstaller
@@ -27,10 +27,6 @@ class ModuleInstaller
      */
     protected $vendor;
     /**
-     * @var XML
-     */
-    protected $xml;
-    /**
      * @var Install
      */
     protected $installHelper;
@@ -43,18 +39,15 @@ class ModuleInstaller
      * ModuleInstaller constructor.
      * @param ApplicationPath $applicationPath
      * @param Vendor $vendor
-     * @param XML $xml
      * @param Install $installHelper
      */
     public function __construct(
         ApplicationPath $applicationPath,
         Vendor $vendor,
-        XML $xml,
         Install $installHelper
     ) {
         $this->applicationPath = $applicationPath;
         $this->vendor = $vendor;
-        $this->xml = $xml;
         $this->installHelper = $installHelper;
     }
 
@@ -71,7 +64,7 @@ class ModuleInstaller
                 $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
                 $module = $schema->getModuleName();
 
-                $moduleConfigPath = $vendorPath . ucfirst($module) . '/Resources/config/module.xml';
+                $moduleConfigPath = $vendorPath . ucfirst($module) . '/composer.json';
 
                 if ($this->isValidModule($moduleConfigPath)) {
                     $dependencies = $this->getModuleDependencies($moduleConfigPath);
@@ -98,12 +91,12 @@ class ModuleInstaller
      * @param string $moduleConfigPath
      * @return bool
      */
-    private function isValidModule($moduleConfigPath)
+    private function isValidModule(string $moduleConfigPath): bool
     {
         if (is_file($moduleConfigPath)) {
-            $config = $this->xml->parseXmlFile($moduleConfigPath, '/module/info');
+            $config = (new JsonFile($moduleConfigPath))->read();
 
-            return !isset($config['no_install']);
+            return !isset($config['extra']['installable']);
         }
 
         return false;
@@ -127,13 +120,5 @@ class ModuleInstaller
         }
 
         return $schemas;
-    }
-
-    /**
-     * @return XML
-     */
-    protected function getXml()
-    {
-        return $this->xml;
     }
 }

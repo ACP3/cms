@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\Modules;
 
-use ACP3\Core\XML;
+use Composer\Json\JsonFile;
 
 trait ModuleDependenciesTrait
 {
@@ -16,17 +16,12 @@ trait ModuleDependenciesTrait
      */
     protected function getModuleDependencies(string $path): array
     {
-        $dependencies = $this->getXml()->parseXmlFile($path, '/module/info/dependencies');
+        $composer = (new JsonFile($path))->read();
 
-        if (isset($dependencies['module'])) {
-            return is_array($dependencies['module']) ? $dependencies['module'] : [$dependencies['module']];
+        if (isset($composer['extra']['dependencies']) && is_array($composer['extra']['dependencies'])) {
+            return $composer['extra']['dependencies'];
         }
 
         return [];
     }
-
-    /**
-     * @return XML
-     */
-    abstract protected function getXml();
 }

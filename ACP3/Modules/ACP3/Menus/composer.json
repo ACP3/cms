@@ -31,6 +31,10 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Menus"
+    "installer-name": "ACP3/Menus",
+    "dependencies": [
+      "permissions",
+      "system"
+    ]
   }
 }
