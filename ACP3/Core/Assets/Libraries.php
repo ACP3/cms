@@ -56,6 +56,10 @@ class Libraries
             'css' => 'bootstrap-datetimepicker.css',
             'js' => 'bootstrap-datetimepicker.min.js'
         ],
+        'font-awesome' => [
+            'enabled' => true,
+            'css' => 'font-awesome.css',
+        ]
     ];
     /**
      * @var EventDispatcherInterface
