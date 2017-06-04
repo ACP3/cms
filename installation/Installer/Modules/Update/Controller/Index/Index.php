@@ -6,6 +6,7 @@
 
 namespace ACP3\Installer\Modules\Update\Controller\Index;
 
+use ACP3\Core\Cache\Purge;
 use ACP3\Core\Installer\Model\SchemaUpdateModel;
 use ACP3\Installer\Core;
 
@@ -57,9 +58,9 @@ class Index extends Core\Controller\AbstractInstallerAction
         ];
     }
 
-    private function clearCaches()
+    private function clearCaches(): bool
     {
-        Cache\Purge::doPurge([
+        return Purge::doPurge([
             ACP3_ROOT_DIR . 'cache/',
             $this->appPath->getUploadsDir() . 'assets'
         ]);

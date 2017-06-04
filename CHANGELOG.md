@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Updated minimal required Symfony version to 3.3 and take advantage of some features of it
+- When deleting a category, the associated news or downloads won't be deleted anymore
 
 ## [4.12.0] - 2017-05-08
 ### Added

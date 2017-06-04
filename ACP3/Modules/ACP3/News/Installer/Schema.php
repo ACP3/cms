@@ -56,7 +56,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 42;
+        return 43;
     }
 
     /**
@@ -75,7 +75,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 `text` TEXT NOT NULL,
                 `readmore` TINYINT(1) UNSIGNED NOT NULL,
                 `comments` TINYINT(1) UNSIGNED NOT NULL,
-                `category_id` INT(10) UNSIGNED NOT NULL,
+                `category_id` INT(10) UNSIGNED,
                 `uri` VARCHAR(120) NOT NULL,
                 `target` TINYINT(1) UNSIGNED NOT NULL,
                 `link_title` VARCHAR(120) NOT NULL,
@@ -85,7 +85,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 INDEX (`active`),
                 INDEX `foreign_category_id` (`category_id`),
                 INDEX (`user_id`),
-                FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE CASCADE,
+                FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE SET NULL,
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
             ) {ENGINE} {CHARSET};"
         ];
