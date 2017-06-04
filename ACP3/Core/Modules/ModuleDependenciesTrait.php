@@ -14,7 +14,7 @@ trait ModuleDependenciesTrait
      * @param string $path
      * @return array
      */
-    protected function getModuleDependencies($path)
+    protected function getModuleDependencies(string $path): array
     {
         $dependencies = $this->getXml()->parseXmlFile($path, '/module/info/dependencies');
 

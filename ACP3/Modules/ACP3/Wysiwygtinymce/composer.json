@@ -32,6 +32,7 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Wysiwygtinymce"
+    "installer-name": "ACP3/Wysiwygtinymce",
+    "installable": false
   }
 }

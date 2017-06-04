@@ -33,6 +33,7 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Users"
+    "installer-name": "ACP3/Users",
+    "protected": true
   }
 }

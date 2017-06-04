@@ -57,7 +57,7 @@ class XML
                         }
                     }
                 }
-                return $this->info[$path][$xpath];
+                return $this->info[$path][$xpath] ?? [];
             }
         }
         return [];

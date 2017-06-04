@@ -32,6 +32,7 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Wysiwygckeditor"
+    "installer-name": "ACP3/Wysiwygckeditor",
+    "installable": false
   }
 }

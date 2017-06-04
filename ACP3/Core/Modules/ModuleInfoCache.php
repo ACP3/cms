@@ -154,30 +154,25 @@ class ModuleInfoCache
             $moduleComposerJson = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/composer.json';
 
             if (is_file($moduleXml) && is_file($moduleComposerJson)) {
-                $moduleInfo = $this->xml->parseXmlFile($moduleXml, 'info');
+                $moduleName = strtolower($moduleDirectory);
+                $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
 
-                if (!empty($moduleInfo)) {
-                    $moduleName = strtolower($moduleDirectory);
-                    $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
+                $composer = (new JsonFile($moduleComposerJson))->read();
 
-                    $composer = (new JsonFile($moduleComposerJson))->read();
-
-                    return [
-                        'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
-                        'dir' => $moduleDirectory,
-                        'installed' => (!empty($moduleInfoDb)),
-                        'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
-                        'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
-                        'description' => $composer['description'] ?? $this->getModuleDescription($moduleInfo, $moduleName),
-                        'author' => $this->getAuthor($composer),
-                        'version' => $this->getModuleVersion($composer),
-                        'name' => $this->getModuleName($moduleName),
-                        'categories' => isset($moduleInfo['categories']),
-                        'protected' => isset($moduleInfo['protected']),
-                        'installable' => !isset($moduleInfo['no_install']),
-                        'dependencies' => $this->getModuleDependencies($moduleXml),
-                    ];
-                }
+                return [
+                    'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
+                    'dir' => $moduleDirectory,
+                    'installed' => (!empty($moduleInfoDb)),
+                    'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
+                    'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
+                    'description' => $this->getModuleDescription($composer),
+                    'author' => $this->getAuthor($composer),
+                    'version' => $this->getModuleVersion($composer),
+                    'name' => $this->getModuleName($moduleName),
+                    'protected' => $composer['extra']['protected'] ?? false,
+                    'installable' => $composer['extra']['installable'] ?? true,
+                    'dependencies' => $this->getModuleDependencies($moduleXml),
+                ];
             }
         }
 
@@ -185,18 +180,12 @@ class ModuleInfoCache
     }
 
     /**
-     * @param array  $moduleInfo
-     * @param string $moduleName
-     *
+     * @param array $composer
      * @return string
      */
-    protected function getModuleDescription(array $moduleInfo, $moduleName)
+    private function getModuleDescription(array $composer): string
     {
-        if (isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true') {
-            return $this->translator->t($moduleName, 'mod_description');
-        }
-
-        return $moduleInfo['description'];
+        return $composer['description'];
     }
 
     /**

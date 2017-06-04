@@ -30,6 +30,7 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Errors"
+    "installer-name": "ACP3/Errors",
+    "protected": true
   }
 }

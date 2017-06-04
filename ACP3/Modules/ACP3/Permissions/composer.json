@@ -30,6 +30,7 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Permissions"
+    "installer-name": "ACP3/Permissions",
+    "protected": true
   }
 }
