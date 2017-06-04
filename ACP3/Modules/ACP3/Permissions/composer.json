@@ -33,8 +33,8 @@
     "installer-name": "ACP3/Permissions",
     "protected": true,
     "dependencies": [
-      "permissions",
-      "system"
+      "system",
+      "users"
     ]
   }
 }

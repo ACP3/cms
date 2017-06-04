@@ -39,7 +39,6 @@ class SchemaUpdater extends SchemaHelper
 
         $queries = $migration->schemaUpdates();
         if (is_array($queries) && count($queries) > 0) {
-            // Nur für den Fall der Fälle... ;)
             ksort($queries);
 
             $result = $this->iterateOverSchemaUpdates(
@@ -75,8 +74,10 @@ class SchemaUpdater extends SchemaHelper
                 $schemaUpdateVersion <= $schemaVersion &&
                 !empty($queries)
             ) {
-                $result = $this->executeSqlQueries($this->forceSqlQueriesToArray($queries),
-                    $moduleName) === true ? 1 : 0;
+                $result = $this->executeSqlQueries(
+                    $this->forceSqlQueriesToArray($queries),
+                    $moduleName
+                ) === true ? 1 : 0;
 
                 if ($result !== 0) {
                     $this->updateSchemaVersion($moduleName, $schemaUpdateVersion);

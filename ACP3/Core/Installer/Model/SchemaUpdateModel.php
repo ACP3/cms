@@ -88,10 +88,8 @@ class SchemaUpdateModel
                     continue;
                 }
 
-                $modulePath = $vendorPath . ucfirst($module) . '/';
-                $moduleConfigPath = $modulePath . 'composer.json';
-
-                if (is_dir($modulePath) && is_file($moduleConfigPath)) {
+                $moduleConfigPath = $vendorPath . ucfirst($module) . '/composer.json';
+                if (is_file($moduleConfigPath)) {
                     $dependencies = $this->getModuleDependencies($moduleConfigPath);
 
                     if (count($dependencies) > 0) {
