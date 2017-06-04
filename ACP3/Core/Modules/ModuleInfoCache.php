@@ -169,8 +169,8 @@ class ModuleInfoCache
                         'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
                         'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
                         'description' => $composer['description'] ?? $this->getModuleDescription($moduleInfo, $moduleName),
-                        'author' => $this->getAuthor($composer, $moduleInfo),
-                        'version' => $this->getModuleVersion($composer, $moduleInfo),
+                        'author' => $this->getAuthor($composer),
+                        'version' => $this->getModuleVersion($composer),
                         'name' => $this->getModuleName($moduleName),
                         'categories' => isset($moduleInfo['categories']),
                         'protected' => isset($moduleInfo['protected']),
@@ -202,19 +202,16 @@ class ModuleInfoCache
     /**
      * Returns the author of an ACP3 module
      *
-     * @param array $composerInfo
-     * @param array $moduleXmlInfo
+     * @param array $composer
      * @return array
      */
-    private function getAuthor(array $composerInfo, array $moduleXmlInfo): array
+    private function getAuthor(array $composer): array
     {
         $authors = [];
-        if (isset($composerInfo['authors'])) {
-            foreach ($composerInfo['authors'] as $author) {
+        if (isset($composer['authors'])) {
+            foreach ($composer['authors'] as $author) {
                 $authors[] = $author['name'];
             }
-        } else {
-            $authors[] = $moduleXmlInfo['author'];
         }
 
         return $authors;
@@ -222,13 +219,12 @@ class ModuleInfoCache
 
     /**
      * Returns the version of an ACP3 module
-     * @param array $composerInfo
-     * @param array $moduleXmlInfo
+     * @param array $composer
      * @return string
      */
-    private function getModuleVersion(array $composerInfo, array $moduleXmlInfo): string
+    private function getModuleVersion(array $composer): string
     {
-        return $composerInfo['version'] ?? $moduleXmlInfo['version'];
+        return $composer['version'] ?? 'N/A';
     }
 
     /**

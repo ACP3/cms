@@ -1,6 +1,7 @@
 {
   "name": "acp3/module-errors",
   "description": "Provides the errors module for the ACP3 CMS.",
+  "version": "4.12.0",
   "type": "acp3-module",
   "license": "GPL-2.0+",
   "authors": [
