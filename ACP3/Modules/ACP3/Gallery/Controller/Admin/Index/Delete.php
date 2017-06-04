@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Cache
+     * @var \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage
      */
     protected $galleryCache;
     /**
@@ -41,14 +41,14 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Gallery\Cache $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage $galleryCache
      * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
      * @param Gallery\Model\GalleryModel $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Gallery\Cache $galleryCache,
+        Gallery\Cache\GalleryCacheStorage $galleryCache,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
@@ -85,7 +85,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
                         $this->galleryHelpers->removePicture($row['file']);
                     }
 
-                    $this->galleryCache->getCacheDriver()->delete(Gallery\Cache::CACHE_ID . $item);
+                    $this->galleryCache->getCacheDriver()->delete(Gallery\Cache\GalleryCacheStorage::CACHE_ID . $item);
 
                     if ($this->uriAliasManager) {
                         $this->uriAliasManager->deleteUriAlias(

@@ -7,9 +7,8 @@
 namespace ACP3\Modules\ACP3\Files\Test\View\Block\Frontend;
 
 use ACP3\Core\Test\View\Block\AbstractBlockTest;
-use ACP3\Core\Test\View\Block\AbstractListingBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
-use ACP3\Modules\ACP3\Categories\Cache;
+use ACP3\Modules\ACP3\Categories\Cache\CategoriesCacheStorage;
 use ACP3\Modules\ACP3\Files\View\Block\Frontend\CategoriesListingBlock;
 
 class CategoriesListingBlockTest extends AbstractBlockTest
@@ -20,7 +19,7 @@ class CategoriesListingBlockTest extends AbstractBlockTest
      */
     protected function instantiateBlock(): BlockInterface
     {
-        $categoriesCache = $this->getMockBuilder(Cache::class)
+        $categoriesCache = $this->getMockBuilder(CategoriesCacheStorage::class)
             ->disableOriginalConstructor()
             ->getMock();
 

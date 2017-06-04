@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\I18n;
 
-use ACP3\Core\Cache;
+use ACP3\Core\Cache\Cache;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules\Vendor;
 use Fisharebest\Localization\Locale;
@@ -31,7 +31,7 @@ class Dictionary implements DictionaryInterface
     /**
      * DictionaryCache constructor.
      *
-     * @param \ACP3\Core\Cache $cache
+     * @param \ACP3\Core\Cache\Cache $cache
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Core\Modules\Vendor $vendors
      */

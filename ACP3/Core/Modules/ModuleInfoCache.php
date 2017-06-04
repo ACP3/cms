@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\Modules;
 
-use ACP3\Core\Cache;
+use ACP3\Core\Cache\Cache;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
 use ACP3\Core\I18n\LocaleInterface;
@@ -23,7 +23,7 @@ class ModuleInfoCache
     use ModuleDependenciesTrait;
 
     /**
-     * @var \ACP3\Core\Cache
+     * @var \ACP3\Core\Cache\Cache
      */
     protected $cache;
     /**

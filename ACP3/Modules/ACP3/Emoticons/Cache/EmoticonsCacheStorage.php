@@ -4,16 +4,12 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Emoticons;
+namespace ACP3\Modules\ACP3\Emoticons\Cache;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonsRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Emoticons
- */
-class Cache extends Core\Cache\AbstractCacheStorage
+class EmoticonsCacheStorage extends Core\Cache\AbstractCacheStorage
 {
     const CACHE_ID = 'list';
     /**
@@ -26,12 +22,12 @@ class Cache extends Core\Cache\AbstractCacheStorage
     protected $emoticonRepository;
 
     /**
-     * @param \ACP3\Core\Cache                                      $cache
+     * @param \ACP3\Core\Cache\Cache                                      $cache
      * @param \ACP3\Core\Environment\ApplicationPath                $appPath
      * @param \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonsRepository $emoticonRepository
      */
     public function __construct(
-        Core\Cache $cache,
+        Core\Cache\Cache $cache,
         Core\Environment\ApplicationPath $appPath,
         EmoticonsRepository $emoticonRepository
     ) {

@@ -1,27 +1,28 @@
 <?php
-namespace ACP3\Modules\ACP3\News;
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Modules\ACP3\News\Cache;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\News
- */
-class Cache extends Core\Cache\AbstractCacheStorage
+class NewsCacheStorage extends Core\Cache\AbstractCacheStorage
 {
     const CACHE_ID = 'details_id_';
     /**
      * @var NewsRepository
      */
-    protected $newsRepository;
+    private $newsRepository;
 
     /**
-     * @param \ACP3\Core\Cache                             $cache
+     * @param \ACP3\Core\Cache\Cache                             $cache
      * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
      */
     public function __construct(
-        Core\Cache $cache,
+        Core\Cache\Cache $cache,
         NewsRepository $newsRepository
     ) {
         parent::__construct($cache);

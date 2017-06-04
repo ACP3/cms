@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\Categories;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Cache\CategoriesCacheStorage;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 
 /**
@@ -32,7 +33,7 @@ class Helpers
      */
     protected $request;
     /**
-     * @var Cache
+     * @var CategoriesCacheStorage
      */
     protected $categoriesCache;
     /**
@@ -56,7 +57,7 @@ class Helpers
      * @param Core\Http\RequestInterface $request
      * @param Core\Helpers\Forms $formsHelper
      * @param Core\Helpers\Secure $secureHelper
-     * @param Cache $categoriesCache
+     * @param CategoriesCacheStorage $categoriesCache
      * @param CategoriesRepository $categoryRepository
      */
     public function __construct(
@@ -66,7 +67,7 @@ class Helpers
         Core\Http\RequestInterface $request,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\Secure $secureHelper,
-        Cache $categoriesCache,
+        CategoriesCacheStorage $categoriesCache,
         CategoriesRepository $categoryRepository
     ) {
         $this->acl = $acl;

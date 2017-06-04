@@ -7,25 +7,24 @@
 namespace ACP3\Modules\ACP3\Files\View\Block\Frontend;
 
 
-use ACP3\Core\View;
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
-use ACP3\Modules\ACP3\Categories\Cache;
+use ACP3\Modules\ACP3\Categories\Cache\CategoriesCacheStorage;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 
 class CategoriesListingBlock extends AbstractBlock
 {
     /**
-     * @var Cache
+     * @var CategoriesCacheStorage
      */
     private $categoriesCache;
 
     /**
      * CategoriesListingBlock constructor.
      * @param BlockContext $context
-     * @param Cache $categoriesCache
+     * @param CategoriesCacheStorage $categoriesCache
      */
-    public function __construct(BlockContext $context, Cache $categoriesCache)
+    public function __construct(BlockContext $context, CategoriesCacheStorage $categoriesCache)
     {
         parent::__construct($context);
 

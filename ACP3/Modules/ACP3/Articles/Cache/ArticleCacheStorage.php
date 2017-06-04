@@ -4,30 +4,26 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Articles;
+namespace ACP3\Modules\ACP3\Articles\Cache;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Articles
- */
-class Cache extends Core\Cache\AbstractCacheStorage
+class ArticleCacheStorage extends Core\Cache\AbstractCacheStorage
 {
     const CACHE_ID = 'list_id_';
 
     /**
      * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository
      */
-    protected $articleRepository;
+    private $articleRepository;
 
     /**
-     * @param Core\Cache $cache
+     * @param \ACP3\Core\Cache\Cache $cache
      * @param ArticlesRepository $articleRepository
      */
     public function __construct(
-        Core\Cache $cache,
+        Core\Cache\Cache $cache,
         ArticlesRepository $articleRepository
     ) {
         parent::__construct($cache);

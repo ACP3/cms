@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Permissions;
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache
+     * @var \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage
      */
     protected $permissionsCache;
     /**
@@ -29,12 +29,12 @@ class Delete extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Permissions\Model\AclRolesModel $rolesModel
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Permissions\Model\AclRolesModel $rolesModel,
-        Permissions\Cache $permissionsCache
+        Permissions\Cache\PermissionsCacheStorage $permissionsCache
     ) {
         parent::__construct($context);
 

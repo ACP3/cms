@@ -1,16 +1,16 @@
 <?php
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
 
-namespace ACP3\Modules\ACP3\Menus;
+namespace ACP3\Modules\ACP3\Menus\Cache;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Menus
- */
-class Cache extends Core\Cache\AbstractCacheStorage
+class MenusCacheStorage extends Core\Cache\AbstractCacheStorage
 {
     const CACHE_ID = 'items';
     const CACHE_ID_VISIBLE = 'visible_items_';
@@ -29,13 +29,13 @@ class Cache extends Core\Cache\AbstractCacheStorage
     protected $menuItemRepository;
 
     /**
-     * @param Core\Cache $cache
+     * @param \ACP3\Core\Cache\Cache $cache
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param MenusRepository $menuRepository
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository $menuItemRepository
      */
     public function __construct(
-        Core\Cache $cache,
+        Core\Cache\Cache $cache,
         Core\I18n\TranslatorInterface $translator,
         MenusRepository $menuRepository,
         MenuItemsRepository $menuItemRepository

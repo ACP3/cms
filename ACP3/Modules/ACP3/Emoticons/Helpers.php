@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\Emoticons;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Emoticons\Cache\EmoticonsCacheStorage;
 use ACP3\Modules\ACP3\Emoticons\Installer\Schema;
 
 /**
@@ -16,7 +17,7 @@ use ACP3\Modules\ACP3\Emoticons\Installer\Schema;
 class Helpers
 {
     /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Cache
+     * @var \ACP3\Modules\ACP3\Emoticons\Cache\EmoticonsCacheStorage
      */
     protected $emoticonsCache;
     /**
@@ -31,12 +32,12 @@ class Helpers
     /**
      * @param \ACP3\Core\View $view
      * @param Core\Modules $modules
-     * @param \ACP3\Modules\ACP3\Emoticons\Cache $emoticonsCache
+     * @param \ACP3\Modules\ACP3\Emoticons\Cache\EmoticonsCacheStorage $emoticonsCache
      */
     public function __construct(
         Core\View $view,
         Core\Modules $modules,
-        Cache $emoticonsCache
+        EmoticonsCacheStorage $emoticonsCache
     ) {
         $this->view = $view;
         $this->emoticonsCache = $emoticonsCache;

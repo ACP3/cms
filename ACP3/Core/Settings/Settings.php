@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\Settings;
 
-use ACP3\Core\Cache;
+use ACP3\Core\Cache\Cache;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
 use ACP3\Core\Settings\Event\SettingsSaveEvent;
@@ -34,7 +34,7 @@ class Settings implements SettingsInterface
      */
     protected $systemSettingsRepository;
     /**
-     * @var \ACP3\Core\Cache
+     * @var \ACP3\Core\Cache\Cache
      */
     protected $coreCache;
     /**

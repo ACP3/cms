@@ -6,14 +6,14 @@
 
 namespace ACP3\Core\Test;
 
-use ACP3\Core\Cache;
+use ACP3\Core\Cache\Cache;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\CacheProvider;
 
 class CacheTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \ACP3\Core\Cache
+     * @var \ACP3\Core\Cache\Cache
      */
     private $cache;
     /**

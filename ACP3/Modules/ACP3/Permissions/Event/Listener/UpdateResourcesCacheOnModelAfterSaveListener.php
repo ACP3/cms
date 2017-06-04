@@ -6,20 +6,20 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Event\Listener;
 
-use ACP3\Modules\ACP3\Permissions\Cache;
+use ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage;
 
 class UpdateResourcesCacheOnModelAfterSaveListener
 {
     /**
-     * @var Cache
+     * @var PermissionsCacheStorage
      */
     protected $cache;
 
     /**
      * UpdateResourcesCacheOnModelAfterSaveListener constructor.
-     * @param Cache $cache
+     * @param PermissionsCacheStorage $cache
      */
-    public function __construct(Cache $cache)
+    public function __construct(PermissionsCacheStorage $cache)
     {
         $this->cache = $cache;
     }

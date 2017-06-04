@@ -1,12 +1,11 @@
 <?php
-namespace ACP3\Core;
-
-use ACP3\Core\Cache\CacheDriverFactory;
-
 /**
- * Class Cache
- * @package ACP3\Core
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
  */
+
+namespace ACP3\Core\Cache;
+
 class Cache
 {
     /**

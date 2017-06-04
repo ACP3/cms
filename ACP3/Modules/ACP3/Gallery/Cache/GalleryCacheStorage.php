@@ -1,15 +1,16 @@
 <?php
-namespace ACP3\Modules\ACP3\Gallery;
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Modules\ACP3\Gallery\Cache;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Gallery
- */
-class Cache extends Core\Cache\AbstractCacheStorage
+class GalleryCacheStorage extends Core\Cache\AbstractCacheStorage
 {
     /**
      * @var string
@@ -30,13 +31,13 @@ class Cache extends Core\Cache\AbstractCacheStorage
     protected $config;
 
     /**
-     * @param \ACP3\Core\Cache $cache
+     * @param \ACP3\Core\Cache\Cache $cache
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
      * @param \ACP3\Core\Settings\SettingsInterface $config
      */
     public function __construct(
-        Core\Cache $cache,
+        Core\Cache\Cache $cache,
         Core\Environment\ApplicationPath $appPath,
         GalleryPicturesRepository $pictureRepository,
         Core\Settings\SettingsInterface $config

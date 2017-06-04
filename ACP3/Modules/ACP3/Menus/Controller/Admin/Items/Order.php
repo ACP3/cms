@@ -20,7 +20,7 @@ class Order extends Core\Controller\AbstractFrontendAction
      */
     protected $menuItemRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Cache
+     * @var \ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage
      */
     protected $menusCache;
     /**
@@ -34,13 +34,13 @@ class Order extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\NestedSet\Operation\Sort $sortOperation
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository $menuItemRepository
-     * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
+     * @param \ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage $menusCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\NestedSet\Operation\Sort $sortOperation,
         Menus\Model\Repository\MenuItemsRepository $menuItemRepository,
-        Menus\Cache $menusCache
+        Menus\Cache\MenusCacheStorage $menusCache
     ) {
         parent::__construct($context);
 

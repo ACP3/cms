@@ -32,7 +32,7 @@ class Navbar extends AbstractFunction
      */
     protected $menuItemRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Cache
+     * @var \ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage
      */
     protected $menusCache;
 
@@ -42,13 +42,13 @@ class Navbar extends AbstractFunction
      * @param \ACP3\Core\Http\RequestInterface                  $request
      * @param \ACP3\Core\Router\RouterInterface                        $router
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository $menuItemRepository
-     * @param \ACP3\Modules\ACP3\Menus\Cache                    $menusCache
+     * @param \ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage                    $menusCache
      */
     public function __construct(
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
         Menus\Model\Repository\MenuItemsRepository $menuItemRepository,
-        Menus\Cache $menusCache
+        Menus\Cache\MenusCacheStorage $menusCache
     ) {
         $this->request = $request;
         $this->router = $router;

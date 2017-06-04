@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Gallery\View\Block\Frontend;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
-use ACP3\Modules\ACP3\Gallery\Cache;
+use ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
 
@@ -25,7 +25,7 @@ class GalleryPicturesListingBlock extends AbstractBlock
      */
     private $galleryRepository;
     /**
-     * @var Cache
+     * @var GalleryCacheStorage
      */
     private $galleryCache;
 
@@ -34,13 +34,13 @@ class GalleryPicturesListingBlock extends AbstractBlock
      * @param BlockContext $context
      * @param SettingsInterface $settings
      * @param GalleryRepository $galleryRepository
-     * @param Cache $galleryCache
+     * @param GalleryCacheStorage $galleryCache
      */
     public function __construct(
         BlockContext $context,
         SettingsInterface $settings,
         GalleryRepository $galleryRepository,
-        Cache $galleryCache
+        GalleryCacheStorage $galleryCache
     ) {
         parent::__construct($context);
 

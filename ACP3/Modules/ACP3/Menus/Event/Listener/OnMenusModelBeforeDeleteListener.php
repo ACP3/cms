@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Menus\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Modules\ACP3\Menus\Cache;
+use ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage;
 use ACP3\Modules\ACP3\Menus\Model\MenuItemsModel;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository;
@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository;
 class OnMenusModelBeforeDeleteListener
 {
     /**
-     * @var Cache
+     * @var MenusCacheStorage
      */
     protected $cache;
     /**
@@ -33,13 +33,13 @@ class OnMenusModelBeforeDeleteListener
 
     /**
      * OnMenusModelBeforeDeleteListener constructor.
-     * @param Cache $cache
+     * @param MenusCacheStorage $cache
      * @param MenusRepository $menuRepository
      * @param MenuItemsRepository $menuItemRepository
      * @param MenuItemsModel $menuItemsModel
      */
     public function __construct(
-        Cache $cache,
+        MenusCacheStorage $cache,
         MenusRepository $menuRepository,
         MenuItemsRepository $menuItemRepository,
         MenuItemsModel $menuItemsModel
@@ -68,7 +68,7 @@ class OnMenusModelBeforeDeleteListener
                 }
 
                 $menuName = $this->menuRepository->getMenuNameById($item);
-                $this->cache->getCacheDriver()->delete(Cache::CACHE_ID_VISIBLE . $menuName);
+                $this->cache->getCacheDriver()->delete(MenusCacheStorage::CACHE_ID_VISIBLE . $menuName);
             }
         }
     }

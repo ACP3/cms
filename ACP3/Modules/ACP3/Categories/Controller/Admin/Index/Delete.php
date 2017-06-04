@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Categories;
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Cache
+     * @var \ACP3\Modules\ACP3\Categories\Cache\CategoriesCacheStorage
      */
     protected $categoriesCache;
     /**
@@ -29,12 +29,12 @@ class Delete extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Categories\Model\CategoriesModel $categoriesModel
-     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
+     * @param \ACP3\Modules\ACP3\Categories\Cache\CategoriesCacheStorage $categoriesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Categories\Model\CategoriesModel $categoriesModel,
-        Categories\Cache $categoriesCache
+        Categories\Cache\CategoriesCacheStorage $categoriesCache
     ) {
         parent::__construct($context);
 

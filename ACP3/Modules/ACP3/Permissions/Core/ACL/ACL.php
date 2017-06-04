@@ -23,7 +23,7 @@ class ACL implements ACLInterface
      */
     private $modules;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache
+     * @var \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage
      */
     private $permissionsCache;
     /**
@@ -54,13 +54,13 @@ class ACL implements ACLInterface
      * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
      * @param \ACP3\Core\Modules $modules
      * @param \ACP3\Core\ACL\Model\Repository\AclUserRolesRepositoryInterface $userRoleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage $permissionsCache
      */
     public function __construct(
         UserModel $user,
         Modules $modules,
         AclUserRolesRepositoryInterface $userRoleRepository,
-        Permissions\Cache $permissionsCache
+        Permissions\Cache\PermissionsCacheStorage $permissionsCache
     ) {
         $this->user = $user;
         $this->modules = $modules;

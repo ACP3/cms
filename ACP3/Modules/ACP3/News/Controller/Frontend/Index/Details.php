@@ -21,7 +21,7 @@ class Details extends Core\Controller\AbstractFrontendAction
      */
     protected $newsRepository;
     /**
-     * @var News\Cache
+     * @var \ACP3\Modules\ACP3\News\Cache\NewsCacheStorage
      */
     protected $newsCache;
     /**
@@ -36,14 +36,14 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @param Core\View\Block\BlockInterface $block
      * @param \ACP3\Core\Date $date
      * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
-     * @param \ACP3\Modules\ACP3\News\Cache $newsCache
+     * @param \ACP3\Modules\ACP3\News\Cache\NewsCacheStorage $newsCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\BlockInterface $block,
         Core\Date $date,
         News\Model\Repository\NewsRepository $newsRepository,
-        News\Cache $newsCache)
+        News\Cache\NewsCacheStorage $newsCache)
     {
         parent::__construct($context);
 

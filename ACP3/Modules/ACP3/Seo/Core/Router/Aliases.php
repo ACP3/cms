@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Seo;
 class Aliases
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Cache
+     * @var \ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage
      */
     protected $seoCache;
     /**
@@ -30,11 +30,11 @@ class Aliases
 
     /**
      * @param Core\Modules $modules
-     * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
+     * @param \ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage $seoCache
      */
     public function __construct(
         Core\Modules $modules,
-        Seo\Cache $seoCache)
+        Seo\Cache\SeoCacheStorage $seoCache)
     {
         $this->seoCache = $seoCache;
         $this->isActive = $modules->isActive(Seo\Installer\Schema::MODULE_NAME);

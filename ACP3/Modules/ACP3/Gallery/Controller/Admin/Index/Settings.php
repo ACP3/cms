@@ -16,7 +16,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
      */
     protected $adminSettingsFormValidation;
     /**
-     * @var Core\Cache
+     * @var \ACP3\Core\Cache\Cache
      */
     private $galleryCoreCache;
     /**
@@ -34,14 +34,14 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\SettingsFormBlockInterface $block
      * @param Core\Helpers\Secure $secure
-     * @param Core\Cache $galleryCoreCache
+     * @param \ACP3\Core\Cache\Cache $galleryCoreCache
      * @param \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\SettingsFormBlockInterface $block,
         Core\Helpers\Secure $secure,
-        Core\Cache $galleryCoreCache,
+        Core\Cache\Cache $galleryCoreCache,
         Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);

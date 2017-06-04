@@ -6,20 +6,20 @@
 
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 
-use ACP3\Modules\ACP3\Seo\Cache;
+use ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage;
 
 class UpdateSeoCacheOnModelAfterSaveListener
 {
     /**
-     * @var Cache
+     * @var SeoCacheStorage
      */
     protected $cache;
 
     /**
      * UpdateSeoCacheOnModelAfterSaveListener constructor.
-     * @param Cache $cache
+     * @param SeoCacheStorage $cache
      */
-    public function __construct(Cache $cache)
+    public function __construct(SeoCacheStorage $cache)
     {
         $this->cache = $cache;
     }

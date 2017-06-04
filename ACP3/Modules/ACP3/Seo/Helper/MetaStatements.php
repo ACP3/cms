@@ -10,7 +10,7 @@ use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\Seo\Cache as SeoCache;
+use ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage as SeoCache;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
 /**
@@ -28,7 +28,7 @@ class MetaStatements
      */
     protected $config;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Cache
+     * @var \ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage
      */
     protected $seoCache;
 
@@ -62,7 +62,7 @@ class MetaStatements
      *
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param Modules $modules
-     * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
+     * @param \ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage $seoCache
      * @param \ACP3\Core\Settings\SettingsInterface $config
      */
     public function __construct(

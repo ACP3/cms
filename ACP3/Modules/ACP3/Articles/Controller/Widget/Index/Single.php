@@ -22,7 +22,7 @@ class Single extends Core\Controller\AbstractWidgetAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Cache
+     * @var \ACP3\Modules\ACP3\Articles\Cache\ArticleCacheStorage
      */
     protected $articlesCache;
     /**
@@ -31,17 +31,17 @@ class Single extends Core\Controller\AbstractWidgetAction
     protected $articleRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext         $context
-     * @param \ACP3\Core\Date                                     $date
+     * @param \ACP3\Core\Controller\Context\WidgetContext $context
+     * @param \ACP3\Core\Date $date
      * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
+     * @param \ACP3\Modules\ACP3\Articles\Cache\ArticleCacheStorage $articlesCache
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
         Articles\Model\Repository\ArticlesRepository $articleRepository,
-        Articles\Cache $articlesCache)
-    {
+        Articles\Cache\ArticleCacheStorage $articlesCache
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

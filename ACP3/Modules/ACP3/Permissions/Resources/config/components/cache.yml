@@ -1,6 +1,6 @@
 services:
   permissions.cache:
-    class: ACP3\Modules\ACP3\Permissions\Cache
+    class: ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage
     arguments:
       - '@permissions.cache.core'
       - '@permissions.model.repository.acl_roles_repository'
@@ -8,7 +8,7 @@ services:
       - '@permissions.model.repository.acl_rules_repository'
 
   permissions.cache.core:
-    class: ACP3\Core\Cache
+    class: ACP3\Core\Cache\Cache
     arguments:
       - '@core.cache.cache_driver_factory'
       - 'permissions'

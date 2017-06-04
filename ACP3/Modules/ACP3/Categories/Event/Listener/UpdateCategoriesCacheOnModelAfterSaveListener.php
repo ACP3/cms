@@ -7,13 +7,13 @@
 namespace ACP3\Modules\ACP3\Categories\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Modules\ACP3\Categories\Cache;
+use ACP3\Modules\ACP3\Categories\Cache\CategoriesCacheStorage;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 
 class UpdateCategoriesCacheOnModelAfterSaveListener
 {
     /**
-     * @var Cache
+     * @var CategoriesCacheStorage
      */
     protected $cache;
     /**
@@ -23,10 +23,10 @@ class UpdateCategoriesCacheOnModelAfterSaveListener
 
     /**
      * UpdateCategoriesCacheOnModelAfterSaveListener constructor.
-     * @param Cache $cache
+     * @param CategoriesCacheStorage $cache
      * @param CategoriesRepository $categoryRepository
      */
-    public function __construct(Cache $cache, CategoriesRepository $categoryRepository)
+    public function __construct(CategoriesCacheStorage $cache, CategoriesRepository $categoryRepository)
     {
         $this->cache = $cache;
         $this->categoryRepository = $categoryRepository;

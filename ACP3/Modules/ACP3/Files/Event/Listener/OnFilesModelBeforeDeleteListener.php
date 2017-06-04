@@ -11,7 +11,7 @@ use ACP3\Core\Helpers\Upload;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Comments\Helpers as CommentsHelpers;
-use ACP3\Modules\ACP3\Files\Cache;
+use ACP3\Modules\ACP3\Files\Cache\FileCacheStorage;
 use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
@@ -32,7 +32,7 @@ class OnFilesModelBeforeDeleteListener
      */
     protected $filesRepository;
     /**
-     * @var Cache
+     * @var FileCacheStorage
      */
     protected $cache;
     /**
@@ -49,13 +49,13 @@ class OnFilesModelBeforeDeleteListener
      * @param ApplicationPath $applicationPath
      * @param Modules $modules
      * @param FilesRepository $filesRepository
-     * @param Cache $cache
+     * @param FileCacheStorage $cache
      */
     public function __construct(
         ApplicationPath $applicationPath,
         Modules $modules,
         FilesRepository $filesRepository,
-        Cache $cache
+        FileCacheStorage $cache
     ) {
         $this->applicationPath = $applicationPath;
         $this->modules = $modules;
@@ -103,7 +103,7 @@ class OnFilesModelBeforeDeleteListener
                 );
             }
 
-            $this->cache->getCacheDriver()->delete(Cache::CACHE_ID . $item);
+            $this->cache->getCacheDriver()->delete(FileCacheStorage::CACHE_ID . $item);
 
             if ($this->uriAliasManager) {
                 $this->uriAliasManager->deleteUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $item));

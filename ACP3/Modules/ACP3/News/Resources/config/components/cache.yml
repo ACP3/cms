@@ -1,12 +1,12 @@
 services:
   news.cache:
-    class: ACP3\Modules\ACP3\News\Cache
+    class: ACP3\Modules\ACP3\News\Cache\NewsCacheStorage
     arguments:
       - '@news.cache.core'
       - '@news.model.repository.news_repository'
 
   news.cache.core:
-    class: ACP3\Core\Cache
+    class: ACP3\Core\Cache\Cache
     arguments:
       - '@core.cache.cache_driver_factory'
       - 'news'

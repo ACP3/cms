@@ -6,20 +6,20 @@
 
 namespace ACP3\Modules\ACP3\Menus\Event\Listener;
 
-use ACP3\Modules\ACP3\Menus\Cache;
+use ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage;
 
 class UpdateMenusCacheOnModelAfterSaveListener
 {
     /**
-     * @var Cache
+     * @var MenusCacheStorage
      */
     protected $cache;
 
     /**
      * UpdateMenusCacheOnModelAfterSaveListener constructor.
-     * @param Cache $cache
+     * @param MenusCacheStorage $cache
      */
-    public function __construct(Cache $cache)
+    public function __construct(MenusCacheStorage $cache)
     {
         $this->cache = $cache;
     }

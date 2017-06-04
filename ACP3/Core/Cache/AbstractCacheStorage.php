@@ -11,14 +11,14 @@ use ACP3\Core;
 abstract class AbstractCacheStorage
 {
     /**
-     * @var \ACP3\Core\Cache
+     * @var \ACP3\Core\Cache\Cache
      */
     protected $cache;
 
     /**
-     * @param \ACP3\Core\Cache $cache
+     * @param \ACP3\Core\Cache\Cache $cache
      */
-    public function __construct(Core\Cache $cache)
+    public function __construct(Core\Cache\Cache $cache)
     {
         $this->cache = $cache;
     }

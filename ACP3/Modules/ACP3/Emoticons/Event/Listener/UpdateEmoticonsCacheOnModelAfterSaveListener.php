@@ -6,20 +6,20 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\Event\Listener;
 
-use ACP3\Modules\ACP3\Emoticons\Cache;
+use ACP3\Modules\ACP3\Emoticons\Cache\EmoticonsCacheStorage;
 
 class UpdateEmoticonsCacheOnModelAfterSaveListener
 {
     /**
-     * @var Cache
+     * @var EmoticonsCacheStorage
      */
     protected $cache;
 
     /**
      * UpdateEmoticonsCacheOnModelAfterSaveListener constructor.
-     * @param Cache $cache
+     * @param EmoticonsCacheStorage $cache
      */
-    public function __construct(Cache $cache)
+    public function __construct(EmoticonsCacheStorage $cache)
     {
         $this->cache = $cache;
     }

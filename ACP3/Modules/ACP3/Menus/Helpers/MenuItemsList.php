@@ -2,7 +2,7 @@
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Menus\Cache;
+use ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage;
 
 /**
  * Class MenuItemsList
@@ -21,17 +21,17 @@ class MenuItemsList
      */
     protected $formsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Cache
+     * @var \ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage
      */
     protected $menusCache;
 
     /**
      * @param \ACP3\Core\Helpers\Forms       $formsHelper
-     * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
+     * @param \ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage $menusCache
      */
     public function __construct(
         Core\Helpers\Forms $formsHelper,
-        Cache $menusCache
+        MenusCacheStorage $menusCache
     ) {
         $this->formsHelper = $formsHelper;
         $this->menusCache = $menusCache;

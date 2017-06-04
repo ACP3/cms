@@ -23,15 +23,15 @@ class Index extends Core\Controller\AbstractWidgetAction
     protected $articleRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext         $context
-     * @param \ACP3\Core\Date                                     $date
+     * @param \ACP3\Core\Controller\Context\WidgetContext $context
+     * @param \ACP3\Core\Date $date
      * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository $articleRepository
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
-        Articles\Model\Repository\ArticlesRepository $articleRepository)
-    {
+        Articles\Model\Repository\ArticlesRepository $articleRepository
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

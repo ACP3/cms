@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Seo;
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Cache
+     * @var \ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage
      */
     protected $seoCache;
     /**
@@ -28,12 +28,12 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
+     * @param \ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage $seoCache
      * @param Seo\Model\SeoModel $seoModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Seo\Cache $seoCache,
+        Seo\Cache\SeoCacheStorage $seoCache,
         Seo\Model\SeoModel $seoModel
     ) {
         parent::__construct($context);

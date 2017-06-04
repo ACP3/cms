@@ -21,7 +21,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
      */
     protected $galleryHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Cache
+     * @var \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage
      */
     protected $galleryCache;
     /**
@@ -39,13 +39,13 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage $galleryCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository,
-        Gallery\Cache $galleryCache
+        Gallery\Cache\GalleryCacheStorage $galleryCache
     ) {
         parent::__construct($context);
 

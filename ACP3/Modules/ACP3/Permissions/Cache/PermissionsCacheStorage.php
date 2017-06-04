@@ -1,16 +1,17 @@
 <?php
-namespace ACP3\Modules\ACP3\Permissions;
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+namespace ACP3\Modules\ACP3\Permissions\Cache;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclResourcesRepository;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclRulesRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Permissions
- */
-class Cache extends Core\Cache\AbstractCacheStorage
+class PermissionsCacheStorage extends Core\Cache\AbstractCacheStorage
 {
     const CACHE_ID_RESOURCES = 'acl_resources';
     const CACHE_ID_ROLES = 'acl_roles';
@@ -30,13 +31,13 @@ class Cache extends Core\Cache\AbstractCacheStorage
     protected $ruleRepository;
 
     /**
-     * @param \ACP3\Core\Cache                                        $cache
+     * @param \ACP3\Core\Cache\Cache                                        $cache
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository     $roleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclResourcesRepository $resourceRepository
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRulesRepository     $ruleRepository
      */
     public function __construct(
-        Core\Cache $cache,
+        Core\Cache\Cache $cache,
         AclRolesRepository $roleRepository,
         AclResourcesRepository $resourceRepository,
         AclRulesRepository $ruleRepository

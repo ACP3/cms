@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Permissions\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
-use ACP3\Modules\ACP3\Permissions\Cache;
+use ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclRulesRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -18,7 +18,7 @@ class AclRulesModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @var Cache
+     * @var PermissionsCacheStorage
      */
     protected $cache;
 
@@ -27,13 +27,13 @@ class AclRulesModel extends AbstractModel
      * @param EventDispatcherInterface $eventDispatcher
      * @param DataProcessor $dataProcessor
      * @param AclRulesRepository $repository
-     * @param Cache $cache
+     * @param PermissionsCacheStorage $cache
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
         AclRulesRepository $repository,
-        Cache $cache)
+        PermissionsCacheStorage $cache)
     {
         parent::__construct($eventDispatcher, $dataProcessor, $repository);
 

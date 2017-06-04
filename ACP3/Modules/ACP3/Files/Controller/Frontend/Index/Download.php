@@ -30,7 +30,7 @@ class Download extends Core\Controller\AbstractFrontendAction
      */
     protected $filesRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Cache
+     * @var \ACP3\Modules\ACP3\Files\Cache\FileCacheStorage
      */
     protected $filesCache;
 
@@ -39,14 +39,14 @@ class Download extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Date                                $date
      * @param \ACP3\Core\Helpers\StringFormatter             $stringFormatter
      * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache                 $filesCache
+     * @param \ACP3\Modules\ACP3\Files\Cache\FileCacheStorage                 $filesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Core\Helpers\StringFormatter $stringFormatter,
         Files\Model\Repository\FilesRepository $filesRepository,
-        Files\Cache $filesCache)
+        Files\Cache\FileCacheStorage $filesCache)
     {
         parent::__construct($context);
 

@@ -8,7 +8,7 @@ namespace ACP3\Core\Installer;
 
 use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\Cache;
+use ACP3\Core\Cache\Cache;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Installer\Helper\SchemaHelper;
 use ACP3\Modules\ACP3\Permissions;
@@ -19,7 +19,7 @@ class AclInstaller implements InstallerInterface
     const INSTALL_RESOURCES = 2;
 
     /**
-     * @var \ACP3\Core\Cache
+     * @var \ACP3\Core\Cache\Cache
      */
     private $aclCache;
     /**
@@ -44,7 +44,7 @@ class AclInstaller implements InstallerInterface
     private $ruleRepository;
 
     /**
-     * @param \ACP3\Core\Cache $aclCache
+     * @param \ACP3\Core\Cache\Cache $aclCache
      * @param \ACP3\Core\Installer\Helper\SchemaHelper $schemaHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository $roleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRulesRepository $ruleRepository

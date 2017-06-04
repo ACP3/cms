@@ -4,16 +4,12 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Categories;
+namespace ACP3\Modules\ACP3\Categories\Cache;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Categories
- */
-class Cache extends Core\Cache\AbstractCacheStorage
+class CategoriesCacheStorage extends Core\Cache\AbstractCacheStorage
 {
     /**
      * @var CategoriesRepository
@@ -21,11 +17,11 @@ class Cache extends Core\Cache\AbstractCacheStorage
     protected $categoryRepository;
 
     /**
-     * @param Core\Cache         $cache
+     * @param \ACP3\Core\Cache\Cache         $cache
      * @param CategoriesRepository $categoryRepository
      */
     public function __construct(
-        Core\Cache $cache,
+        Core\Cache\Cache $cache,
         CategoriesRepository $categoryRepository
     ) {
         parent::__construct($cache);

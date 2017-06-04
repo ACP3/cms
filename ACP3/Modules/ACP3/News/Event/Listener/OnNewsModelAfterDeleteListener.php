@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\News\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\News\Cache;
+use ACP3\Modules\ACP3\News\Cache\NewsCacheStorage;
 use ACP3\Modules\ACP3\News\Controller\Admin\Index\CommentsHelperTrait;
 use ACP3\Modules\ACP3\News\Helpers;
 use ACP3\Modules\ACP3\News\Installer\Schema;
@@ -27,18 +27,18 @@ class OnNewsModelAfterDeleteListener
      */
     protected $uriAliasManager;
     /**
-     * @var Cache
+     * @var NewsCacheStorage
      */
     protected $cache;
 
     /**
      * OnNewsModelAfterDeleteListener constructor.
      * @param Modules $modules
-     * @param Cache $cache
+     * @param NewsCacheStorage $cache
      */
     public function __construct(
         Modules $modules,
-        Cache $cache)
+        NewsCacheStorage $cache)
     {
         $this->modules = $modules;
         $this->cache = $cache;
@@ -69,7 +69,7 @@ class OnNewsModelAfterDeleteListener
                 );
             }
 
-            $this->cache->getCacheDriver()->delete(Cache::CACHE_ID . $item);
+            $this->cache->getCacheDriver()->delete(NewsCacheStorage::CACHE_ID . $item);
 
             if ($this->uriAliasManager) {
                 $this->uriAliasManager->deleteUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $item));

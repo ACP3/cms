@@ -25,7 +25,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      */
     protected $installerHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache
+     * @var \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage
      */
     protected $permissionsCache;
     /**
@@ -58,7 +58,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Modules\ModuleInfoCache $moduleInfoCache
      * @param \ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository $systemModuleRepository
      * @param \ACP3\Modules\ACP3\System\Helper\Installer $installerHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage $permissionsCache
      * @param Core\Installer\SchemaRegistrar $schemaRegistrar
      * @param \ACP3\Core\Installer\SchemaInstaller $schemaInstaller
      * @param \ACP3\Core\Installer\AclInstaller $aclInstaller
@@ -70,7 +70,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
         Core\Modules\ModuleInfoCache $moduleInfoCache,
         System\Model\Repository\ModulesRepository $systemModuleRepository,
         System\Helper\Installer $installerHelper,
-        Permissions\Cache $permissionsCache,
+        Permissions\Cache\PermissionsCacheStorage $permissionsCache,
         Core\Installer\SchemaRegistrar $schemaRegistrar,
         Core\Installer\SchemaInstaller $schemaInstaller,
         Core\Installer\AclInstaller $aclInstaller

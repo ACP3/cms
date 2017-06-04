@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Permissions\Test\Core\ACL;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Permissions\Cache;
+use ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 class ACLTest extends \PHPUnit_Framework_TestCase
@@ -60,7 +60,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['getRolesByUserId'])
             ->getMock();
-        $this->permissionsCacheMock = $this->getMockBuilder(Cache::class)
+        $this->permissionsCacheMock = $this->getMockBuilder(PermissionsCacheStorage::class)
             ->disableOriginalConstructor()
             ->setMethods(['getResourcesCache', 'getRolesCache', 'getRulesCache'])
             ->getMock();

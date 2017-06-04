@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Seo\Test\Core\Router;
 
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Seo\Cache;
+use ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
 /**
@@ -31,7 +31,7 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->seoCacheMock = $this->getMockBuilder(Cache::class)
+        $this->seoCacheMock = $this->getMockBuilder(SeoCacheStorage::class)
             ->disableOriginalConstructor()
             ->setMethods(['getCache'])
             ->getMock();

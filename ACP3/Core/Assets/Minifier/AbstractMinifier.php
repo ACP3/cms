@@ -8,7 +8,7 @@ namespace ACP3\Core\Assets\Minifier;
 
 use ACP3\Core\Assets;
 use ACP3\Core\Assets\FileResolver;
-use ACP3\Core\Cache;
+use ACP3\Core\Cache\Cache;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
@@ -30,7 +30,7 @@ abstract class AbstractMinifier implements MinifierInterface
      */
     protected $appPath;
     /**
-     * @var \ACP3\Core\Cache
+     * @var \ACP3\Core\Cache\Cache
      */
     protected $systemCache;
     /**
@@ -71,7 +71,7 @@ abstract class AbstractMinifier implements MinifierInterface
      * @param LoggerInterface $logger
      * @param \ACP3\Core\Assets $assets
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Cache $systemCache
+     * @param \ACP3\Core\Cache\Cache $systemCache
      * @param SettingsInterface $config
      * @param \ACP3\Core\Modules $modules
      * @param \ACP3\Core\Assets\FileResolver $fileResolver
