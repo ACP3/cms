@@ -11,7 +11,7 @@
                        id="seo-alias-suggestion"
                        class="btn btn-default"
                        title="{lang t="seo|suggest_alias"}">
-                        <i class="glyphicon glyphicon-refresh"></i>
+                        <i class="fa fa-refresh"></i>
                         <span class="hidden-xs">{lang t="seo|suggest_alias"}</span>
                     </a>
                 </span>

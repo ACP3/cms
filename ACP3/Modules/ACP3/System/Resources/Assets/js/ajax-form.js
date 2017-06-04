@@ -99,7 +99,7 @@
             $formField
                 .closest('div:not(.input-group):not(.btn-group)')
                 .append(
-                    '<small class="help-block validation-failed"><i class="glyphicon glyphicon-remove"></i> ' + errorMessage + '</small>'
+                    '<small class="help-block validation-failed"><i class="fa fa-exclamation-triangle"></i> ' + errorMessage + '</small>'
                 );
         },
         focusTabWithFirstErrorMessage: function () {
@@ -203,7 +203,7 @@
             if ($loadingLayer.length === 0) {
                 var $body = $('body'),
                     loadingText = $(this.element).data('ajax-form-loading-text') || '',
-                    html = '<div id="loading-layer" class="loading-layer"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>';
+                    html = '<div id="loading-layer" class="loading-layer"><h1><span class="fa fa-cog"></span>' + loadingText + '</h1></div>';
 
                 $(html).appendTo($body);
 

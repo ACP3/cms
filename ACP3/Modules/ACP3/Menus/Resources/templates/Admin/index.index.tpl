@@ -3,10 +3,10 @@
 {$DELETE_ROUTE={uri args="acp/menus/items/delete"}}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/menus/items/create" class="glyphicon glyphicon-plus text-success"}
-    {check_access mode="link" path="acp/menus/index/create" class="glyphicon glyphicon-th-list text-info"}
+    {check_access mode="link" path="acp/menus/items/create" class="fa fa-plus text-success"}
+    {check_access mode="link" path="acp/menus/index/create" class="fa fa-th text-info"}
     {if isset($pages_list)}
-        {check_access mode="button" path="acp/menus/items/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+        {check_access mode="button" path="acp/menus/items/delete" class="fa fa-trash text-danger" lang="system|delete_marked"}
     {/if}
 {/block}
 {block ADMIN_GRID_CONTENT}
@@ -40,12 +40,12 @@
                                 <div class="btn-group pull-right">
                                     {if $can_edit}
                                         <a href="{uri args="acp/menus/index/edit/id_`$values.menu_id`"}" class="btn btn-default btn-sm" title="{lang t="menus|admin_index_edit"}">
-                                            <i class="glyphicon glyphicon-edit"></i>
+                                            <i class="fa fa-pencil"></i>
                                         </a>
                                     {/if}
                                     {if $can_delete}
                                         <a href="{uri args="acp/menus/index/delete/entries_`$values.menu_id`"}" class="btn btn-danger btn-sm" title="{lang t="menus|admin_index_delete"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                            <i class="glyphicon glyphicon-remove"></i>
+                                            <i class="fa fa-trash"></i>
                                         </a>
                                     {/if}
                                 </div>
@@ -67,16 +67,16 @@
                                         <a href="{uri args="acp/menus/items/order/id_`$row.id`/action_down"}"
                                            title="{lang t="system|move_down"}"
                                            data-ajax-form="true"
-                                           data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"><i class="glyphicon glyphicon-arrow-down" aria-hidden="true"></i></a>
+                                           data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
                                     {/if}
                                     {if !$row.first}
                                         <a href="{uri args="acp/menus/items/order/id_`$row.id`/action_up"}"
                                            title="{lang t="system|move_up"}"
                                            data-ajax-form="true"
-                                           data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"><i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i></a>
+                                           data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
                                     {/if}
                                     {if $row.first && $row.last}
-                                        <i class="glyphicon glyphicon-remove-circle text-danger" aria-hidden="true" title="{lang t="system|move_impossible"}"></i>
+                                        <i class="fa fa-minus-circle text-danger" aria-hidden="true" title="{lang t="system|move_impossible"}"></i>
                                     {/if}
                                 </td>
                             {/if}
@@ -86,12 +86,12 @@
                                     <div class="btn-group pull-right">
                                         {if $can_edit_item === true}
                                             <a href="{uri args="acp/menus/items/edit/id_`$row.id`"}" class="btn btn-default btn-xs" title="{lang t="menus|admin_items_edit"}">
-                                                <i class="glyphicon glyphicon-edit"></i>
+                                                <i class="fa fa-pencil"></i>
                                             </a>
                                         {/if}
                                         {if $can_delete_item === true}
                                             <a href="{uri args="acp/menus/items/delete/entries_`$row.id`"}" class="btn btn-danger btn-xs" title="{lang t="menus|admin_items_delete"}">
-                                                <i class="glyphicon glyphicon-remove"></i>
+                                                <i class="fa fa-trash"></i>
                                             </a>
                                         {/if}
                                     </div>

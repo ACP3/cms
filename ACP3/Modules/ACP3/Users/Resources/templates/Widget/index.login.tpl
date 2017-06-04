@@ -17,17 +17,19 @@
                 </label>
             </div>
             <button type="submit" name="submit" class="btn btn-primary">
-                <i class="glyphicon glyphicon-lock"></i> {lang t="users|log_in"}</button>
+                <i class="fa fa-sign-in"></i>
+                {lang t="users|log_in"}
+            </button>
         </form>
     </div>
     <div class="list-group">
         <a href="{uri args="users/index/forgot_pwd"}" class="list-group-item">
-            <i class="glyphicon glyphicon-question-sign"></i>
+            <i class="fa fa-question"></i>
             {lang t="users|forgot_pwd"}
         </a>
         {if $enable_registration == 1}
             <a href="{uri args="users/index/register"}" class="list-group-item">
-                <i class="glyphicon glyphicon-star"></i>
+                <i class="fa fa-star"></i>
                 {lang t="users|register"}
             </a>
         {/if}

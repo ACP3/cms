@@ -14,9 +14,9 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex2-collapse">
                 <div class="navbar-text pull-right">
-                    {check_access mode="link" path="acp/gallery/pictures/create/id_`$gallery_id`" class="glyphicon glyphicon-plus text-success"}
+                    {check_access mode="link" path="acp/gallery/pictures/create/id_`$gallery_id`" class="fa fa-plus text-success"}
                     {if $show_mass_delete_button}
-                        {check_access mode="button" path="acp/gallery/pictures/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+                        {check_access mode="button" path="acp/gallery/pictures/delete" class="fa fa-trash text-danger" lang="system|delete_marked"}
                     {/if}
                 </div>
             </div>

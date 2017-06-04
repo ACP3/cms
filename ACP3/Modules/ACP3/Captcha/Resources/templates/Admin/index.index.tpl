@@ -1,7 +1,7 @@
 {extends file="asset:System/layout.header-bar.tpl"}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/captcha/index/settings" class="glyphicon glyphicon-cog"}
+    {check_access mode="link" path="acp/captcha/index/settings" class="fa fa-cog"}
 {/block}
 {block CONTENT_AFTER_HEADER_BAR}
     {redirect_message}

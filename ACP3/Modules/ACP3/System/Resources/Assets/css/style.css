@@ -50,7 +50,7 @@
   font-size: 26px;
   text-align: center;
 }
-.loading-layer .glyphicon {
+.loading-layer .fa {
   margin-bottom: 10px;
   display: block;
   -webkit-animation: rotate 2s linear infinite;
@@ -94,7 +94,7 @@
 .dataset-box .hyperlink a.download-file:focus {
   text-decoration: none;
 }
-.dataset-box .hyperlink .glyphicon-download-alt {
+.dataset-box .hyperlink .fa-download {
   color: #333;
 }
 /* Table of contents */
@@ -134,12 +134,17 @@
   padding-left: 0;
   padding-right: 0;
 }
+#adm-list .navbar-text .fa,
 #adm-list .navbar-text .glyphicon {
   font-size: 32px;
 }
 #adm-list .navbar-text .glyphicon-plus:before {
   position: relative;
   top: -2px;
+}
+#adm-list .navbar-text .fa-plus:before {
+  position: relative;
+  top: 1px;
 }
 #adm-list a,
 #adm-list input {

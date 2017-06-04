@@ -18,7 +18,7 @@
                data-date-format="{$datepicker.params.format}"
                data-date-picktime="{$datepicker.with_time}">
         <span class="input-group-addon">
-            <i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>
+            <i class="fa fa-calendar" aria-hidden="true"></i>
         </span>
     </div>
 {/block}

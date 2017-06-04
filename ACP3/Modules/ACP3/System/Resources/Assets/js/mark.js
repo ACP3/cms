@@ -114,7 +114,7 @@ jQuery(document).ready(function($) {
             .highlightTableRow($this.data('checkbox-name'));
     });
 
-    $('form #adm-list .glyphicon-remove')
+    $('form #adm-list .fa-trash')
         .closest('.btn')
         .deleteMarkedResults($markAll.data('delete-options'));
 });

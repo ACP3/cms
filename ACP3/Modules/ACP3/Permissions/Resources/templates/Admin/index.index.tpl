@@ -3,10 +3,10 @@
 {$DELETE_ROUTE={uri args="acp/permissions/index/delete"}}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/permissions/index/create" class="glyphicon glyphicon-plus text-success"}
-    {check_access mode="link" path="acp/permissions/resources" class="glyphicon glyphicon-file text-info"}
+    {check_access mode="link" path="acp/permissions/index/create" class="fa fa-plus text-success"}
+    {check_access mode="link" path="acp/permissions/resources" class="fa fa-file text-info"}
     {if isset($roles)}
-        {check_access mode="button" path="acp/permissions/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+        {check_access mode="button" path="acp/permissions/index/delete" class="fa fa-trash text-danger" lang="system|delete_marked"}
     {/if}
 {/block}
 {block ADMIN_GRID_CONTENT}
@@ -40,14 +40,14 @@
                         <td>
                             {if !$row.last}
                                 <a href="{uri args="acp/permissions/index/order/id_`$row.id`/action_down"}"
-                                   title="{lang t="system|move_down"}"><i class="glyphicon glyphicon-arrow-down" aria-hidden="true"></i></a>
+                                   title="{lang t="system|move_down"}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
                             {/if}
                             {if !$row.first}
                                 <a href="{uri args="acp/permissions/index/order/id_`$row.id`/action_up"}"
-                                   title="{lang t="system|move_up"}"><i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i></a>
+                                   title="{lang t="system|move_up"}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
                             {/if}
                             {if $row.first && $row.last}
-                                <i class="glyphicon glyphicon-remove-circle text-danger text-danger" aria-hidden="true" title="{lang t="system|move_impossible"}"></i>
+                                <i class="fa fa-minus-circle text-danger text-danger" aria-hidden="true" title="{lang t="system|move_impossible"}"></i>
                             {/if}
                         </td>
                     {/if}
@@ -58,14 +58,14 @@
                                 <a href="{uri args="acp/permissions/index/edit/id_`$row.id`"}"
                                    class="btn btn-default btn-xs"
                                    title="{lang t="permissions|admin_index_edit"}">
-                                    <i class="glyphicon glyphicon-edit"></i>
+                                    <i class="fa fa-pencil"></i>
                                 </a>
                             {/if}
                             {if $can_delete === true}
                                 <a href="{uri args="acp/permissions/index/delete/entries_`$row.id`"}"
                                    class="btn btn-danger btn-xs"
                                    title="{lang t="permissions|admin_index_delete"}">
-                                    <i class="glyphicon glyphicon-remove"></i>
+                                    <i class="fa fa-trash"></i>
                                 </a>
                             {/if}
                         </div>
