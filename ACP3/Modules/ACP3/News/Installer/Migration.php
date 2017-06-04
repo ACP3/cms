@@ -63,6 +63,11 @@ class Migration extends Modules\Installer\AbstractMigration
                 "ALTER TABLE `{pre}news` ADD COLUMN `active` TINYINT(1) UNSIGNED NOT NULL AFTER `id`;",
                 "ALTER TABLE `{pre}news` ADD INDEX (`active`)",
                 "UPDATE `{pre}news` SET `active` = 1;"
+            ],
+            43 => [
+                "ALTER TABLE `{pre}news` CHANGE `category_id` `category_id` INT(10) UNSIGNED;",
+                "ALTER TABLE `{pre}news` DROP FOREIGN KEY `acp3_news_ibfk_1`;",
+                "ALTER TABLE `{pre}news` ADD FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE SET NULL",
             ]
         ];
     }

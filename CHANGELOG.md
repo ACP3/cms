@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added the new Smarty function `site_subtitle` which exposes the site's subtitle to the frontend 
 - When inside the administration and creating/editing a resultset, you can now choose between `save and close` and `save and continue`
 
+### Changed
+- When deleting a category, the associated news or downloads won't be deleted anymore
+
 ## [4.14.0] - 2017-10-22
 ### Changed
 - Added an explicit breadcrumb to the imprint controller action of the contact module, as the imprint is not directly associated with the contact form
