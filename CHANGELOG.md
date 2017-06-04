@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - [#65](https://github.com/ACP3/cms/issues/65) Renamed all DI service names for the `*Repository`, `*DataGridRepository` and `*Model` classes to follow a strict spec (see the ticket for details) 
 - [#66](https://github.com/ACP3/cms/issues/66) Renamed all `*Repository`, `*DataGridRepository` and `*Model` classes to follow a strict spec (see the ticket for details) 
 - [#67](https://github.com/ACP3/cms/issues/67) Renamed the folder `View` inside the `Resources` folder of each module to `templates`
+- [#68](https://github.com/ACP3/cms/issues/68) Replace Glyphicons with FontAwesome
 - Moved all info from the `module.xml` to the module `composer.json`'s `extra`-node.
   Mapping of the new keys:
   - `no_install` -> `installable` (bool)
