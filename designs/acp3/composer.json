@@ -1,0 +1,25 @@
+{
+  "name": "acp3/theme-default",
+  "description": "This is the default design of the ACP3 CMS.",
+  "type": "acp3-theme",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "Tino Goratsch",
+      "email": "mail@acp3-cms.net"
+    }
+  ],
+  "support": {
+    "email": "mail@acp3-cms.net",
+    "issues": "https://github.com/ACP3/cms/issues"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "acp3/composer-installer": "^1.0",
+    "acp3/core": "^4.12.0"
+  },
+  "extra": {
+    "installer-name": "acp3"
+  }
+}
