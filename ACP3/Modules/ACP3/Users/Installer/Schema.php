@@ -65,7 +65,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 48;
+        return 49;
     }
 
     /**
@@ -75,7 +75,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     {
         return [
             "CREATE TABLE `{pre}users` (
-                `id` INT(10) UNSIGNED AUTO_INCREMENT,
+                `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `super_user` TINYINT(1) UNSIGNED NOT NULL,
                 `nickname` VARCHAR(30) NOT NULL,
                 `pwd` VARCHAR(128) NOT NULL,
