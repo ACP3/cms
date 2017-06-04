@@ -47,6 +47,10 @@ class ApplicationPath
      * @var string
      */
     protected $designPathAbsolute;
+    /**
+     * @var string
+     */
+    private $environment;
 
     /**
      * ApplicationPath constructor.
@@ -55,6 +59,7 @@ class ApplicationPath
      */
     public function __construct($applicationMode)
     {
+        $this->environment = $applicationMode;
         $this->phpSelf = htmlentities($_SERVER['SCRIPT_NAME']);
         $this->webRoot = substr($this->phpSelf, 0, strrpos($this->phpSelf, '/') + 1);
         $this->appDir = ACP3_ROOT_DIR . 'ACP3/';
@@ -63,6 +68,14 @@ class ApplicationPath
         $this->uploadsDir = ACP3_ROOT_DIR . 'uploads/';
         $this->cacheDir = ACP3_ROOT_DIR . 'cache/' . $applicationMode . '/';
         $this->designRootPathInternal = ACP3_ROOT_DIR . 'designs/';
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnvironment(): string
+    {
+        return $this->environment;
     }
 
     /**

@@ -30,7 +30,7 @@ interface ActionInterface
      * @param string $serviceId
      * @return mixed
      */
-    public function get($serviceId);
+    public function get(string $serviceId);
 
     /**
      * Outputs the requested module controller action

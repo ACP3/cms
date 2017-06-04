@@ -11,7 +11,7 @@ use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
 use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Controller\Exception\ControllerActionNotFoundException;
 use ACP3\Core\Http\RequestInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
@@ -25,24 +25,25 @@ class ControllerActionDispatcher
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
-    protected $eventDispatcher;
+    private $eventDispatcher;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var ContainerInterface
      */
-    protected $container;
+    private $container;
     /**
      * @var ArgumentResolverInterface
      */
-    protected $argumentResolver;
+    private $argumentResolver;
 
     /**
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * ControllerActionDispatcher constructor.
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param RequestInterface $request
+     * @param ContainerInterface $container
      * @param ArgumentResolverInterface $argumentResolver
      */
     public function __construct(

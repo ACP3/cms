@@ -12,7 +12,7 @@ use ACP3\Core\Modules\ModuleDependenciesTrait;
 use ACP3\Core\Modules\Vendor;
 use ACP3\Core\XML;
 use ACP3\Installer\Core\Environment\ApplicationPath;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class ModuleInstaller
 {

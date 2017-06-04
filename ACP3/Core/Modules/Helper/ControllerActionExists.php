@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Modules\Helper;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class ControllerActionExists
@@ -10,12 +10,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ControllerActionExists
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var ContainerInterface
      */
     protected $container;
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * ControllerActionExists constructor.
+     * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {

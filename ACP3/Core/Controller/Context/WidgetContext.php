@@ -15,14 +15,14 @@ use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class WidgetContext
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var ContainerInterface
      */
     protected $container;
     /**
@@ -76,18 +76,17 @@ class WidgetContext
 
     /**
      * WidgetContext constructor.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
-     * @param \ACP3\Core\I18n\TranslatorInterface $translator
+     * @param ContainerInterface $container
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param UserModel $user
+     * @param TranslatorInterface $translator
      * @param LocaleInterface $locale
-     * @param \ACP3\Core\Modules $modules
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \ACP3\Core\View $view
-     * @param \ACP3\Core\Settings\SettingsInterface $config
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param Modules $modules
+     * @param RequestInterface $request
+     * @param RouterInterface $router
+     * @param View $view
+     * @param SettingsInterface $config
+     * @param ApplicationPath $appPath
      * @param Response $response
      * @param ActionResultFactory $actionResultFactory
      */

@@ -4,7 +4,7 @@ namespace ACP3\Installer\Modules\Install\Helpers;
 
 use ACP3\Core;
 use ACP3\Core\Installer\Helper\SchemaHelper;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Yaml\Dumper;
 
 /**

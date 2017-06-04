@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Menus\Core\Breadcrumb;
 use ACP3\Core;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Modules\ACP3\Menus;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -28,14 +28,13 @@ class Steps extends Core\Breadcrumb\Steps
     protected $stepsFromDb = [];
 
     /**
-     * Breadcrumb constructor.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Core\I18n\TranslatorInterface $translator
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository $menuItemRepository
+     * Steps constructor.
+     * @param ContainerInterface $container
+     * @param Core\I18n\TranslatorInterface $translator
+     * @param RequestInterface $request
+     * @param Core\Router\RouterInterface $router
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param Menus\Model\Repository\MenuItemsRepository $menuItemRepository
      */
     public function __construct(
         ContainerInterface $container,

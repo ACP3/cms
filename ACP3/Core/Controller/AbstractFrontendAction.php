@@ -18,10 +18,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      * @var \ACP3\Core\Modules\Helper\Action
      */
     protected $actionHelper;
-    /**
-     * @var Core\Helpers\RedirectMessages
-     */
-    private $redirectMessages;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
@@ -72,11 +68,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      */
     public function redirectMessages()
     {
-        if (!$this->redirectMessages) {
-            $this->redirectMessages = $this->get('core.helpers.redirect');
-        }
-
-        return $this->redirectMessages;
+        return $this->get('core.helpers.redirect');
     }
 
     /**

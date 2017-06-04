@@ -17,7 +17,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
      */
     private $resultsPerPage;
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var \Psr\Container\ContainerInterface
      */
     private $container;
     /**

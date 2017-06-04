@@ -25,7 +25,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     use LayoutAwareControllerTrait;
 
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var \Psr\Container\ContainerInterface
      */
     protected $container;
     /**
@@ -145,7 +145,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     /**
      * @inheritdoc
      */
-    public function get($serviceId)
+    public function get(string $serviceId)
     {
         return $this->container->get($serviceId);
     }

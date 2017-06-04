@@ -11,7 +11,7 @@ use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\View\Block\Context\DataGridBlockContext;
 use ACP3\Core\View\Block\DataGridBlockInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 abstract class AbstractDataGridBlockTest extends AbstractBlockTest
 {
@@ -38,8 +38,8 @@ abstract class AbstractDataGridBlockTest extends AbstractBlockTest
 
         $this->container = $this->getMockBuilder(ContainerInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['get', 'set', 'has', 'initialized', 'getParameter', 'setParameter', 'hasParameter'])
-            ->getMock();
+            ->setMethods(['get', 'has'])
+            ->getMockForAbstractClass();
 
         $this->resultsPerPage = $this->getMockBuilder(ResultsPerPage::class)
             ->disableOriginalConstructor()

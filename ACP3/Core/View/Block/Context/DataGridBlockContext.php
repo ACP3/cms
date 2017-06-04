@@ -8,7 +8,7 @@ namespace ACP3\Core\View\Block\Context;
 
 
 use ACP3\Core\Helpers\ResultsPerPage;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class DataGridBlockContext extends BlockContext
 {

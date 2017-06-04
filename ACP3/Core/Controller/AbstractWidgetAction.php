@@ -7,6 +7,7 @@
 namespace ACP3\Core\Controller;
 
 use ACP3\Core;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -16,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class AbstractWidgetAction implements ActionInterface
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var ContainerInterface
      */
     protected $container;
     /**
@@ -123,7 +124,7 @@ abstract class AbstractWidgetAction implements ActionInterface
     /**
      * @inheritdoc
      */
-    public function get($serviceId)
+    public function get(string $serviceId)
     {
         return $this->container->get($serviceId);
     }
@@ -164,6 +165,6 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected function getApplicationMode()
     {
-        return $this->container->getParameter('core.environment');
+        return $this->appPath->getEnvironment();
     }
 }
