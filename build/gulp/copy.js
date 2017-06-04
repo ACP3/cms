@@ -26,7 +26,10 @@ module.exports = function (gulp) {
                     'dest': systemBasePath + '/js'
                 },
                 {
-                    'src': nodeBasePath + '/bootstrap/dist/fonts/*',
+                    'src': [
+                        nodeBasePath + '/bootstrap/dist/fonts/*',
+                        nodeBasePath + '/font-awesome/fonts/*'
+                    ],
                     'dest': systemBasePath + '/fonts'
                 },
                 {
@@ -34,6 +37,7 @@ module.exports = function (gulp) {
                         nodeBasePath + '/@fancyapps/fancybox/dist/jquery.fancybox.css',
                         nodeBasePath + '/bootstrap/dist/css/bootstrap.min.css',
                         nodeBasePath + '/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
+                        nodeBasePath + '/font-awesome/css/font-awesome.css',
                         nodeBasePath + '/datatables.net-bs/css/dataTables.bootstrap.css'
 
                     ],
