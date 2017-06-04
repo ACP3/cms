@@ -81,17 +81,9 @@ class ModuleInfoCache
     }
 
     /**
-     * @return string
-     */
-    public function getCacheKey()
-    {
-        return 'infos_' . $this->locale->getLocale();
-    }
-
-    /**
      * @return array
      */
-    public function getModulesInfoCache()
+    public function getModulesInfoCache(): array
     {
         if ($this->cache->contains($this->getCacheKey()) === false) {
             $this->saveModulesInfoCache();
@@ -101,9 +93,19 @@ class ModuleInfoCache
     }
 
     /**
-     * Saves the modules info cache
+     * @return string
      */
-    public function saveModulesInfoCache()
+    private function getCacheKey(): string
+    {
+        return 'infos_' . $this->locale->getLocale();
+    }
+
+    /**
+     * Saves the modules info cache
+     *
+     * @return bool
+     */
+    public function saveModulesInfoCache(): bool
     {
         $infos = [];
 
@@ -114,7 +116,7 @@ class ModuleInfoCache
             $infos += $this->fetchVendorModules($vendor);
         }
 
-        $this->cache->save($this->getCacheKey(), $infos);
+        return $this->cache->save($this->getCacheKey(), $infos);
     }
 
     /**
@@ -122,7 +124,7 @@ class ModuleInfoCache
      *
      * @return array
      */
-    protected function fetchVendorModules($vendor)
+    private function fetchVendorModules(string $vendor): array
     {
         $infos = [];
 
@@ -146,9 +148,10 @@ class ModuleInfoCache
      *
      * @return array
      */
-    protected function fetchModuleInfo($moduleDirectory)
+    private function fetchModuleInfo(string $moduleDirectory): array
     {
-        $vendors = array_reverse($this->vendors->getVendors()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
+        // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
+        $vendors = array_reverse($this->vendors->getVendors());
         foreach ($vendors as $vendor) {
             $moduleXml = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/Resources/config/module.xml';
             $moduleComposerJson = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/composer.json';
@@ -180,6 +183,8 @@ class ModuleInfoCache
     }
 
     /**
+     * Returns the description of an ACP3 module
+     *
      * @param array $composer
      * @return string
      */
@@ -208,6 +213,7 @@ class ModuleInfoCache
 
     /**
      * Returns the version of an ACP3 module
+     *
      * @param array $composer
      * @return string
      */
@@ -217,6 +223,8 @@ class ModuleInfoCache
     }
 
     /**
+     * Returns the localized name of an ACP3 module
+     *
      * @param string $moduleName
      * @return string
      */
