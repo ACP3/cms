@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\Test;
 
-use ACP3\Core\Cache\Cache;
+use ACP3\Core\Cache;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\CacheProvider;
 
@@ -25,7 +25,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $this->initializeMockObjects();
 
-        $this->cache = new Cache(
+        $this->cache = new Cache\Cache(
             $this->cacheDriverFactoryMock,
             'test'
         );

@@ -192,6 +192,7 @@
         </item>
         <item key="module_installer_not_found">Unfortunately, this module does not have an installer!</item>
         <item key="module_name">Module name</item>
+        <item key="module_name_formatted"><![CDATA[%name% <code>%package_name%</code>]]></item>
         <item key="modules">Modules</item>
         <item key="month">Month</item>
         <item key="month_abbr_apr">Apr</item>

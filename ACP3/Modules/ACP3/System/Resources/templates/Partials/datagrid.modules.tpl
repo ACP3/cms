@@ -12,7 +12,7 @@
         <tbody>
         {foreach $modules as $row}
             <tr>
-                <td>{$row.name}</td>
+                <td>{lang t="system|module_name_formatted" args=['%package_name%' => $row.package_name, '%name%' => $row.name]}</td>
                 <td>{$row.description}</td>
                 <td>{$row.version}</td>
                 <td>{$row.author|implode:', '}</td>

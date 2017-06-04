@@ -163,6 +163,7 @@ class ModuleInfoCache
                     'author' => $this->getAuthor($composer),
                     'version' => $this->getModuleVersion($composer),
                     'name' => $this->getModuleName($moduleName),
+                    'package_name' => $composer['name'],
                     'protected' => $composer['extra']['protected'] ?? false,
                     'installable' => $composer['extra']['installable'] ?? true,
                     'dependencies' => $this->getModuleDependencies($moduleComposerJson),

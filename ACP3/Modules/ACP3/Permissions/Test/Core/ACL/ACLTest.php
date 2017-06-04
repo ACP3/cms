@@ -26,6 +26,10 @@ class ACLTest extends \PHPUnit_Framework_TestCase
      */
     private $modulesMock;
     /**
+     * @var Modules\Helper\ControllerActionExists|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $controllerActionExistsMock;
+    /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $userRoleRepositoryMock;
@@ -41,6 +45,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
         $this->acl = new \ACP3\Modules\ACP3\Permissions\Core\ACL\ACL(
             $this->userMock,
             $this->modulesMock,
+            $this->controllerActionExistsMock,
             $this->userRoleRepositoryMock,
             $this->permissionsCacheMock
         );
@@ -54,8 +59,9 @@ class ACLTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $this->modulesMock = $this->getMockBuilder(Modules::class)
             ->disableOriginalConstructor()
-            ->setMethods(['controllerActionExists', 'isActive'])
+            ->setMethods(['isActive'])
             ->getMock();
+        $this->controllerActionExistsMock = $this->createMock(Modules\Helper\ControllerActionExists::class);
         $this->userRoleRepositoryMock = $this->getMockBuilder(ACL\Model\Repository\AclUserRolesRepositoryInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(['getRolesByUserId'])
@@ -155,7 +161,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
         $returnValueIsActive,
         $callCountIsActive = 1
     ) {
-        $this->modulesMock->expects($this->once())
+        $this->controllerActionExistsMock->expects($this->once())
             ->method('controllerActionExists')
             ->with($resource)
             ->willReturn($returnValueActionExists);

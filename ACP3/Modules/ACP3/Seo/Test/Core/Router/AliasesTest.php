@@ -39,6 +39,9 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['isActive'])
             ->getMock();
+        $this->modulesMock->expects($this->once())
+            ->method('isActive')
+            ->willReturn(true);
 
         $this->aliases = new Aliases($this->modulesMock, $this->seoCacheMock);
     }

@@ -192,6 +192,7 @@
         </item>
         <item key="module_installer_not_found">Es konnte für dieses Module leider keine Installationsroutine gefunden werden!</item>
         <item key="module_name">Modul Name</item>
+        <item key="module_name_formatted"><![CDATA[%name% <code>%package_name%</code>]]></item>
         <item key="modules">Module</item>
         <item key="month">Monat</item>
         <item key="month_abbr_apr">Apr</item>

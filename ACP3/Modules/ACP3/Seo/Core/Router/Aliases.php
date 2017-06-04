@@ -50,6 +50,8 @@ class Aliases
      */
     public function getUriAlias($path, $emptyOnNoResult = false)
     {
+        $path .= !preg_match('/\/$/', $path) ? '/' : '';
+
         if ($this->isActive === false) {
             return $path;
         }
@@ -57,8 +59,6 @@ class Aliases
         if ($this->aliasesCache === []) {
             $this->aliasesCache = $this->seoCache->getCache();
         }
-
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
         return !empty($this->aliasesCache[$path]['alias'])
             ? $this->aliasesCache[$path]['alias']

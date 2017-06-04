@@ -15,22 +15,6 @@ use ACP3\Modules\ACP3\Users\Model\UserModel;
 class ACL implements ACLInterface
 {
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
-     */
-    private $user;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage
-     */
-    private $permissionsCache;
-    /**
-     * @var \ACP3\Core\ACL\Model\Repository\AclUserRolesRepositoryInterface
-     */
-    private $userRoleRepository;
-    /**
      * Array mit den den jeweiligen Rollen zugewiesenen Berechtigungen
      *
      * @var array
@@ -50,15 +34,38 @@ class ACL implements ACLInterface
     private $resources = [];
 
     /**
+     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
+     */
+    private $user;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage
+     */
+    private $permissionsCache;
+    /**
+     * @var \ACP3\Core\ACL\Model\Repository\AclUserRolesRepositoryInterface
+     */
+    private $userRoleRepository;
+    /**
+     * @var Modules\Helper\ControllerActionExists
+     */
+    private $controllerActionExists;
+
+    /**
      * ACL constructor.
      * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
      * @param \ACP3\Core\Modules $modules
+     * @param Modules\Helper\ControllerActionExists $controllerActionExists
      * @param \ACP3\Core\ACL\Model\Repository\AclUserRolesRepositoryInterface $userRoleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage $permissionsCache
      */
     public function __construct(
         UserModel $user,
         Modules $modules,
+        Modules\Helper\ControllerActionExists $controllerActionExists,
         AclUserRolesRepositoryInterface $userRoleRepository,
         Permissions\Cache\PermissionsCacheStorage $permissionsCache
     ) {
@@ -66,6 +73,7 @@ class ACL implements ACLInterface
         $this->modules = $modules;
         $this->userRoleRepository = $userRoleRepository;
         $this->permissionsCache = $permissionsCache;
+        $this->controllerActionExists = $controllerActionExists;
     }
 
     /**
@@ -131,7 +139,7 @@ class ACL implements ACLInterface
      */
     public function hasPermission(string $resource): bool
     {
-        if (!empty($resource) && $this->modules->controllerActionExists($resource) === true) {
+        if (!empty($resource) && $this->controllerActionExists->controllerActionExists($resource) === true) {
             $resourceParts = explode('/', $resource);
 
             if ($this->modules->isActive($resourceParts[1]) === true) {

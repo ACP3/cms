@@ -7,7 +7,6 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Modules\Helper\ControllerActionExists;
 use ACP3\Core\Modules\ModuleInfoCache;
 use ACP3\Core\Modules\Vendor;
 use ACP3\Modules\ACP3\System;
@@ -22,10 +21,6 @@ class Modules
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
-    /**
-     * @var \ACP3\Core\Modules\Helper\ControllerActionExists
-     */
-    protected $controllerActionExists;
     /**
      * @var \ACP3\Core\Modules\ModuleInfoCache
      */
@@ -45,71 +40,56 @@ class Modules
 
     /**
      * @param \ACP3\Core\Environment\ApplicationPath                    $appPath
-     * @param \ACP3\Core\Modules\Helper\ControllerActionExists          $controllerActionExists
      * @param \ACP3\Core\Modules\ModuleInfoCache                        $moduleInfoCache
      * @param \ACP3\Core\Modules\Vendor                                 $vendors
      */
     public function __construct(
         ApplicationPath $appPath,
-        ControllerActionExists $controllerActionExists,
         ModuleInfoCache $moduleInfoCache,
         Vendor $vendors
     ) {
         $this->appPath = $appPath;
-        $this->controllerActionExists = $controllerActionExists;
         $this->moduleInfoCache = $moduleInfoCache;
         $this->vendors = $vendors;
     }
 
     /**
-     * Returns, whether the given module controller action exists
-     *
-     * @param string $path
-     *
-     * @return boolean
-     */
-    public function controllerActionExists($path)
-    {
-        return $this->controllerActionExists->controllerActionExists($path);
-    }
-
-    /**
      * Returns, whether a module is active or not
      *
-     * @param string $module
+     * @param string $moduleName
      *
      * @return boolean
      */
-    public function isActive($module)
+    public function isActive(string $moduleName): bool
     {
-        $info = $this->getModuleInfo($module);
+        $info = $this->getModuleInfo($moduleName);
         return !empty($info) && $info['active'] === true;
     }
 
     /**
      * Returns the available information about the given module
      *
-     * @param string $module
+     * @param string $moduleName
      *
      * @return array
      */
-    public function getModuleInfo($module)
+    public function getModuleInfo(string $moduleName): array
     {
-        $module = strtolower($module);
+        $moduleName = strtolower($moduleName);
         if (empty($this->modulesInfo)) {
             $this->modulesInfo = $this->moduleInfoCache->getModulesInfoCache();
         }
-        return !empty($this->modulesInfo[$module]) ? $this->modulesInfo[$module] : [];
+        return !empty($this->modulesInfo[$moduleName]) ? $this->modulesInfo[$moduleName] : [];
     }
 
     /**
-     * @param string $module
+     * @param string $moduleName
      *
      * @return integer
      */
-    public function getModuleId($module)
+    public function getModuleId(string $moduleName): int
     {
-        $info = $this->getModuleInfo($module);
+        $info = $this->getModuleInfo($moduleName);
         return !empty($info) ? $info['id'] : 0;
     }
 
@@ -120,7 +100,7 @@ class Modules
      *
      * @return boolean
      */
-    public function isInstalled($moduleName)
+    public function isInstalled(string $moduleName): bool
     {
         $info = $this->getModuleInfo($moduleName);
         return !empty($info) && $info['installed'] === true || $info['installable'] === false;
@@ -131,7 +111,7 @@ class Modules
      *
      * @return array
      */
-    public function getActiveModules()
+    public function getActiveModules(): array
     {
         $modules = $this->getAllModules();
 
@@ -149,7 +129,7 @@ class Modules
      *
      * @return array
      */
-    public function getInstalledModules()
+    public function getInstalledModules(): array
     {
         $modules = $this->getAllModules();
 
@@ -167,7 +147,7 @@ class Modules
      *
      * @return array
      */
-    public function getAllModules()
+    public function getAllModules(): array
     {
         if (empty($this->allModules)) {
             foreach ($this->vendors->getVendors() as $vendor) {
