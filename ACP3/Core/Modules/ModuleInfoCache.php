@@ -171,7 +171,7 @@ class ModuleInfoCache
                         'description' => $composer['description'] ?? $this->getModuleDescription($moduleInfo, $moduleName),
                         'author' => $this->getAuthor($composer, $moduleInfo),
                         'version' => $this->getModuleVersion($composer, $moduleInfo),
-                        'name' => $this->getModuleName($moduleInfo, $moduleName),
+                        'name' => $this->getModuleName($moduleName),
                         'categories' => isset($moduleInfo['categories']),
                         'protected' => isset($moduleInfo['protected']),
                         'installable' => !isset($moduleInfo['no_install']),
@@ -232,18 +232,12 @@ class ModuleInfoCache
     }
 
     /**
-     * @param array  $moduleInfo
      * @param string $moduleName
-     *
      * @return string
      */
-    protected function getModuleName(array $moduleInfo, $moduleName)
+    private function getModuleName(string $moduleName)
     {
-        if (isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] === 'true') {
-            return $this->translator->t($moduleName, $moduleName);
-        }
-
-        return $moduleInfo['name'];
+        return $this->translator->t($moduleName, $moduleName);
     }
 
     /**
