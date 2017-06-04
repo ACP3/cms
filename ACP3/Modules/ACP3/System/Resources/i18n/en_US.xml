@@ -27,7 +27,9 @@
         <item key="cache_images">Cache pictures</item>
         <item key="cache_lifetime">Page-Cache lifetime</item>
         <item key="cache_lifetime_description">Statements in seconds.</item>
-        <item key="cache_type_general">General Modules-Cache (Modules, Database queries, paths to static ressources)</item>
+        <item key="cache_refresh_success">While refreshing the caches an error has occurred.</item>
+        <item key="cache_refresh_success">The caches has been successfully refreshed.</item>
+        <item key="cache_type_general">General Modules-Cache (Modules, Database queries, paths to static resources)</item>
         <item key="cache_type_general_delete_error">While emptying the Modules-Cache an error has occurred.</item>
         <item key="cache_type_general_delete_success">The Modules-Cache has been successfully emptied.</item>
         <item key="cache_type_images">Cached images</item>
@@ -256,6 +258,7 @@
         <item key="publication_period">Publication period</item>
         <item key="records_per_page">Records per page</item>
         <item key="refresh">Refresh</item>
+        <item key="refresh_caches">Refresh the caches to register new modules.</item>
         <item key="reset">Reset</item>
         <item key="result">Result</item>
         <item key="save_error">While saving the entry an error has occurred.</item>

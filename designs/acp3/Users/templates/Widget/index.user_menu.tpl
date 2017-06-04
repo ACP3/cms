@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <span class="navbar-brand hidden-md hidden-lg">
+            <span class="navbar-brand visible-xs">
                 {lang t="users|user_menu"}
             </span>
         </div>

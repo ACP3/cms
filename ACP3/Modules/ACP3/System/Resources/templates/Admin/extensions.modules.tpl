@@ -2,6 +2,22 @@
 
 {block CONTENT}
     {redirect_message}
+    <div class="well well-sm">
+        <div class="row">
+            <div class="col-sm-9 cache-type">
+                {lang t="system|refresh_caches"}
+            </div>
+            <div class="col-sm-3">
+                <a href="{uri args="acp/system/extensions/modules/action_refresh"}"
+                   class="btn btn-block btn-default"
+                   data-ajax-form="true"
+                   data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
+                    <i class="glyphicon glyphicon-refresh"></i>
+                    {lang t="system|refresh"}
+                </a>
+            </div>
+        </div>
+    </div>
     <div class="tabbable">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|installed_modules"}</a></li>

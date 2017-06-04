@@ -106,6 +106,8 @@ class Modules extends Core\Controller\AbstractFrontendAction
                 return $this->installModule($dir);
             case 'uninstall':
                 return $this->uninstallModule($dir);
+            case 'refresh':
+                return $this->refreshCaches();
             default:
                 return $this->outputPage();
         }
@@ -203,23 +205,9 @@ class Modules extends Core\Controller\AbstractFrontendAction
         return $this->systemModuleRepository->update(['active' => $active], ['name' => $moduleDirectory]);
     }
 
-    protected function purgeCaches()
+    private function purgeCaches(): bool
     {
-        Core\Cache\Purge::doPurge([
-            $this->appPath->getCacheDir() . 'http',
-            $this->appPath->getCacheDir() . 'sql',
-            $this->appPath->getCacheDir() . 'tpl_compiled',
-            $this->appPath->getCacheDir() . 'tpl_cached',
-            $this->appPath->getCacheDir() . 'container.php',
-            $this->appPath->getCacheDir() . 'container.php.meta',
-        ]);
-    }
-
-    protected function renewCaches()
-    {
-        $this->dictionary->saveDictionary($this->locale->getLocale());
-        $this->moduleInfoCache->saveModulesInfoCache();
-        $this->permissionsCache->saveResourcesCache();
+        return Core\Cache\Purge::doPurge($this->appPath->getCacheDir());
     }
 
     /**
@@ -336,13 +324,22 @@ class Modules extends Core\Controller\AbstractFrontendAction
         return $this->redirectMessages()->setMessage($result, $text, $this->request->getFullPath());
     }
 
+    private function refreshCaches()
+    {
+        $result = $this->purgeCaches();
+
+        return $this->redirectMessages()->setMessage(
+            $result,
+            $this->translator->t('system', $result ? 'cache_refresh_success' : 'cache_refresh_error'),
+            $this->request->getFullPath()
+        );
+    }
+
     /**
      * @return array
      */
     protected function outputPage()
     {
-        $this->renewCaches();
-
         return $this->block->render();
     }
 }
