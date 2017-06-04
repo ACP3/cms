@@ -259,7 +259,7 @@
         <item key="publication_period">Veröffentlichungszeitraum</item>
         <item key="records_per_page">Datensätze pro Seite</item>
         <item key="refresh">Aktualisieren</item>
-        <item key="refresh_caches">Caches aktualisieren um neue Module zu registrieren.</item>
+        <item key="refresh_caches">Caches aktualisieren, um neue Module zu registrieren.</item>
         <item key="reset">Zurücksetzen</item>
         <item key="result">Ergebnis</item>
         <item key="save_error">Beim Speichern des Eintrages ist ein Fehler aufgetreten.</item>
