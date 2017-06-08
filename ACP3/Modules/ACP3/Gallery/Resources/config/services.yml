@@ -1,8 +1,2 @@
 imports:
   - { resource: components/*.yml }
-
-services:
-  gallery.helpers:
-    class: ACP3\Modules\ACP3\Gallery\Helpers
-    arguments:
-      - '@core.environment.application_path'

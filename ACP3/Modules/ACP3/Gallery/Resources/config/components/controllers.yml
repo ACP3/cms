@@ -91,6 +91,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Image
     arguments:
       - '@core.context.frontend'
+      - '@gallery.helper.thumbnail_generator'
       - '@gallery.model.repository.gallery_pictures_repository'
 
   gallery.controller.frontend.index.index:
