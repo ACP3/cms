@@ -67,7 +67,7 @@ class IncludeJs extends AbstractFunction
                 $this->alreadyIncluded[$key] = true;
 
                 return sprintf(
-                    '<script type="text/javascript" src="%s"></script>',
+                    '<script defer src="%s"></script>',
                     $this->resolvePath($params) . '?v=' . Core\Application\BootstrapInterface::VERSION
                 );
             }

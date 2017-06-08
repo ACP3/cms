@@ -1,7 +1,7 @@
 {if !$config.is_initialized}
-    <script type="text/javascript" src="{$ROOT_DIR}vendor/tinymce/tinymce/tinymce.min.js"></script>
+    <script defer src="{$ROOT_DIR}vendor/tinymce/tinymce/tinymce.min.js"></script>
 {/if}
-<script type="text/javascript">
+<script defer>
     tinymce.init({
         selector: '{$config.selector}',
         theme: '{$config.theme}',
@@ -14,7 +14,7 @@
             ,
             file_browser_callback: function(field, url, type, win) {
                 tinyMCE.activeEditor.windowManager.open({
-                    file: '{$config.filemanager_path}browse.php?opener=tinymce4&field=' + field + '&cms=acp3&type=' + (type == "image" ? "gallery" : "files"),
+                    file: '{$config.filemanager_path}browse.php?opener=tinymce4&field=' + field + '&cms=acp3&type=' + (type === "image" ? "gallery" : "files"),
                     title: '{lang t="filemanager|filemanager"}',
                     width: 700,
                     height: 500,

@@ -9,6 +9,6 @@
         </div>
     </form>
     {javascripts}
-        <script type="text/javascript" src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/ajax-form.js"></script>
+        <script defer src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/ajax-form.js"></script>
     {/javascripts}
 {/block}

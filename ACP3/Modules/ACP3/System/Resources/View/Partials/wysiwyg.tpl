@@ -28,7 +28,7 @@
         </a>
     </div>
     {javascripts}
-        <script type="text/javascript">
+        <script>
             var wysiwygCallback = function(text) {
                 {$wysiwyg.advanced_replace_content}
             };
