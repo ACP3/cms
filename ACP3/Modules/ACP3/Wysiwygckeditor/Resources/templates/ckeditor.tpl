@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script defer>
     jQuery(document).ready(function ($) {
         $(document).on('acp3.ajaxFrom.submit.before', function () {
             if (typeof CKEDITOR !== "undefined") {
