@@ -40,12 +40,12 @@
                                 <div class="btn-group pull-right">
                                     {if $can_edit}
                                         <a href="{uri args="acp/menus/index/edit/id_`$values.menu_id`"}" class="btn btn-default btn-sm" title="{lang t="menus|admin_index_edit"}">
-                                            <i class="fa fa-pencil"></i>
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
                                     {/if}
                                     {if $can_delete}
                                         <a href="{uri args="acp/menus/index/delete/entries_`$values.menu_id`"}" class="btn btn-danger btn-sm" title="{lang t="menus|admin_index_delete"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                            <i class="fa fa-trash"></i>
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
                                         </a>
                                     {/if}
                                 </div>
@@ -86,12 +86,12 @@
                                     <div class="btn-group pull-right">
                                         {if $can_edit_item === true}
                                             <a href="{uri args="acp/menus/items/edit/id_`$row.id`"}" class="btn btn-default btn-xs" title="{lang t="menus|admin_items_edit"}">
-                                                <i class="fa fa-pencil"></i>
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
                                             </a>
                                         {/if}
                                         {if $can_delete_item === true}
                                             <a href="{uri args="acp/menus/items/delete/entries_`$row.id`"}" class="btn btn-danger btn-xs" title="{lang t="menus|admin_items_delete"}">
-                                                <i class="fa fa-trash"></i>
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
                                             </a>
                                         {/if}
                                     </div>

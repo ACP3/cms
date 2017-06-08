@@ -10,7 +10,7 @@
                required>
     </div>
     <button type="submit" name="submit" class="btn btn-primary" title="{lang t="search|submit_search"}">
-        <i class="fa fa-search"></i>
+        <i class="fa fa-search" aria-hidden="true"></i>
     </button>
     {foreach $search_mods as $row}
         <input type="hidden" name="mods[]" value="{$row.dir}">

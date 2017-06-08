@@ -24,7 +24,7 @@
                            data-ajax-form="true"
                            data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"
                            data-hash-change="#tab-2">
-                            <i class="fa fa-plus"></i>
+                            <i class="fa fa-plus" aria-hidden="true"></i>
                             {lang t="system|install"}
                         </a>
                     {elseif $row.protected === true}
@@ -40,7 +40,7 @@
                                title="{lang t="system|disable_module"}"
                                data-ajax-form="true"
                                data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                <i class="fa fa-power-off"></i>
+                                <i class="fa fa-power-off" aria-hidden="true"></i>
                                 {lang t="system|disable"}
                             </a>
                         {else}
@@ -49,7 +49,7 @@
                                title="{lang t="system|enable_module"}"
                                data-ajax-form="true"
                                data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                <i class="fa fa-check"></i>
+                                <i class="fa fa-check" aria-hidden="true"></i>
                                 {lang t="system|enable"}
                             </a>
                         {/if}
@@ -58,7 +58,7 @@
                            title="{lang t="system|uninstall_module"}"
                            data-ajax-form="true"
                            data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                            <i class="fa fa-trash"></i>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
                             {lang t="system|uninstall"}
                         </a>
                     {/if}

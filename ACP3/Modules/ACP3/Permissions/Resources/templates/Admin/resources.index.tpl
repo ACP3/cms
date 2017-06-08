@@ -46,14 +46,14 @@
                                             <a href="{uri args="acp/permissions/resources/edit/id_`$row.resource_id`"}"
                                                class="btn btn-default btn-xs"
                                                title="{lang t="permissions|admin_resources_edit"}">
-                                                <i class="fa fa-pencil"></i>
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
                                             </a>
                                         {/if}
                                         {if $can_delete_resource === true}
                                             <a href="{uri args="acp/permissions/resources/delete/entries_`$row.resource_id`"}"
                                                class="btn btn-danger btn-xs"
                                                title="{lang t="permissions|admin_resources_delete"}">
-                                                <i class="fa fa-trash"></i>
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
                                             </a>
                                         {/if}
                                     </div>

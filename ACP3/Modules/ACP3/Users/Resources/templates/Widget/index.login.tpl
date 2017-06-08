@@ -17,19 +17,19 @@
                 </label>
             </div>
             <button type="submit" name="submit" class="btn btn-primary">
-                <i class="fa fa-sign-in"></i>
+                <i class="fa fa-sign-in" aria-hidden="true"></i>
                 {lang t="users|log_in"}
             </button>
         </form>
     </div>
     <div class="list-group">
         <a href="{uri args="users/index/forgot_pwd"}" class="list-group-item">
-            <i class="fa fa-question"></i>
+            <i class="fa fa-question" aria-hidden="true"></i>
             {lang t="users|forgot_pwd"}
         </a>
         {if $enable_registration == 1}
             <a href="{uri args="users/index/register"}" class="list-group-item">
-                <i class="fa fa-star"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
                 {lang t="users|register"}
             </a>
         {/if}

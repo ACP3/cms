@@ -12,7 +12,7 @@
                    class="btn btn-block btn-default"
                    data-ajax-form="true"
                    data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                    <i class="fa fa-refresh"></i>
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
                     {lang t="system|refresh"}
                 </a>
             </div>

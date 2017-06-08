@@ -40,12 +40,12 @@
                                target="_blank"
                                rel="noopener nofollow"
                                title="{lang t="guestbook|visit_website"}">
-                                <i class="fa fa-link"></i>
+                                <i class="fa fa-link" aria-hidden="true"></i>
                             </a>
                             <br>
                         {/if}
                         {if $row.mail != ''}
-                            {mailto address=$row.mail encode="javascript" text='<i class="fa fa-envelope"></i>'}
+                            {mailto address=$row.mail encode="javascript" text='<i class="fa fa-envelope" aria-hidden="true"></i>'}
                         {/if}
                     </div>
                     {$row.message|nl2p}

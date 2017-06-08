@@ -17,7 +17,7 @@
                     {if isset($modules)}
                         <li class="dropdown">
                             <a href="{uri args="acp/acp"}" id="menu-admin-label" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu-administration">
-                                <i class="fa fa-file"></i>
+                                <i class="fa fa-file" aria-hidden="true"></i>
                                 {lang t="users|administration"}
                                 <b class="caret"></b>
                             </a>
@@ -31,7 +31,7 @@
                     {if isset($system)}
                         <li class="dropdown">
                             <a href="{uri args="acp/system"}" id="menu-system-label" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu-system">
-                                <i class="fa fa-cog"></i>
+                                <i class="fa fa-cog" aria-hidden="true"></i>
                                 {lang t="system|system"}
                                 <b class="caret"></b>
                             </a>
@@ -47,13 +47,13 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="{uri args="users/account"}">
-                        <i class="fa fa-home"></i>
+                        <i class="fa fa-home" aria-hidden="true"></i>
                         {lang t="users|home"}
                     </a>
                 </li>
                 <li>
                     <a href="{uri args="users/index/logout"}">
-                        <i class="fa fa-sign-out"></i>
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
                         {lang t="users|logout"}
                     </a>
                 </li>

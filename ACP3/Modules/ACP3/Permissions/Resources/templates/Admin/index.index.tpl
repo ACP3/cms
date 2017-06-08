@@ -58,14 +58,14 @@
                                 <a href="{uri args="acp/permissions/index/edit/id_`$row.id`"}"
                                    class="btn btn-default btn-xs"
                                    title="{lang t="permissions|admin_index_edit"}">
-                                    <i class="fa fa-pencil"></i>
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </a>
                             {/if}
                             {if $can_delete === true}
                                 <a href="{uri args="acp/permissions/index/delete/entries_`$row.id`"}"
                                    class="btn btn-danger btn-xs"
                                    title="{lang t="permissions|admin_index_delete"}">
-                                    <i class="fa fa-trash"></i>
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             {/if}
                         </div>
