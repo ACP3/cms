@@ -1,6 +1,6 @@
 services:
-  seo.command.http_cache_warmup_command:
-    class: ACP3\Modules\ACP3\Seo\Command\HttpCacheWarmupCommand
+  seo.console.http_cache_warmup_command:
+    class: ACP3\Modules\ACP3\Seo\Console\HttpCacheWarmupCommand
     arguments:
       - '@core.environment.application_path'
     tags:

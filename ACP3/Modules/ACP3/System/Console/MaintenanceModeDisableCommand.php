@@ -4,7 +4,7 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\System\Command;
+namespace ACP3\Modules\ACP3\System\Console;
 
 
 use ACP3\Core\Settings\SettingsInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class MaintenanceModeEnableCommand extends Command
+class MaintenanceModeDisableCommand extends Command
 {
     /**
      * @var SettingsInterface
@@ -39,8 +39,8 @@ class MaintenanceModeEnableCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('acp3:maintenance:enable')
-            ->setDescription('Enables the maintenance mode of the ACP3.');
+            ->setName('acp3:maintenance:disable')
+            ->setDescription('Disables the maintenance mode of the ACP3.');
     }
 
     /**
@@ -49,14 +49,14 @@ class MaintenanceModeEnableCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $io->title('Enabling maintenance mode...');
+        $io->title('Disabling maintenance mode...');
 
         $result = $this->settings->saveSettings(
-            ['maintenance_mode' => 1],
+            ['maintenance_mode' => 0],
             Schema::MODULE_NAME
         );
 
-        $output->writeln($result ? 'Enabled the maintenance mode!' : 'Error while enabling the maintenance mode!');
+        $output->writeln($result ? 'Disabled the maintenance mode!' : 'Error while diabling the maintenance mode!');
         $output->writeln('');
 
         $this->clearCaches($output);

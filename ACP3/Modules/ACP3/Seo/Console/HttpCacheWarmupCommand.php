@@ -4,7 +4,7 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Modules\ACP3\Seo\Command;
+namespace ACP3\Modules\ACP3\Seo\Console;
 
 
 use ACP3\Core\Environment\ApplicationPath;
