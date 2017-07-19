@@ -114,7 +114,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\Hash
     arguments:
       - '@core.context.widget'
-      - '@core.acl'
+      - '@http_cache.hash_generator'
 
   users.controller.widget.index.login:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\Login

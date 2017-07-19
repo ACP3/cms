@@ -16,11 +16,11 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class UserContextSubscriber
- * @package ACP3\Core\Application\BootstrapCache\Event\Listener
+ * Caching proxy side of the user context handling for the symfony built-in HttpCache.
+ *
  * @see \FOS\HttpCache\SymfonyCache\UserContextSubscriber for the original file as we had to override some logic...
  */
-class UserContextSubscriber implements EventSubscriberInterface
+class UserContextListener implements EventSubscriberInterface
 {
     /**
      * The options configured in the constructor argument or default values.
@@ -37,9 +37,9 @@ class UserContextSubscriber implements EventSubscriberInterface
     private $userHash;
 
     /**
-     * When creating this subscriber, you can configure a number of options.
+     * When creating this listener, you can configure a number of options.
      *
-     * - anonymous_hash:          Hash used for anonymous user.
+     * - anonymous_hash:          Hash used for anonymous user. Hash lookup skipped for anonymous if this is set.
      * - user_hash_accept_header: Accept header value to be used to request the user hash to the
      *                            backend application. Must match the setup of the backend application.
      * - user_hash_header:        Name of the header the user context hash will be stored into. Must
@@ -56,7 +56,7 @@ class UserContextSubscriber implements EventSubscriberInterface
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
-            'anonymous_hash' => '38015b703d82206ebc01d17a39c727e5',
+            'anonymous_hash' => null,
             'user_hash_accept_header' => 'application/vnd.fos.user-context-hash',
             'user_hash_header' => 'X-User-Context-Hash',
             'user_hash_uri' => '/_fos_user_context_hash',
@@ -82,7 +82,7 @@ class UserContextSubscriber implements EventSubscriberInterface
      *
      * Adds the user hash header to the request.
      *
-     * Checks if an external request tries tampering with the user context hash mechanism
+     * Checks if an external request tries tampering with the use context hash mechanism
      * to prevent attacks.
      *
      * @param CacheEvent $event
@@ -100,11 +100,8 @@ class UserContextSubscriber implements EventSubscriberInterface
                 return;
             }
 
-            if ($request->isMethodSafe()) {
-                $request->headers->set(
-                    $this->options['user_hash_header'],
-                    $this->getUserHash($event->getKernel(), $request)
-                );
+            if ($request->isMethodSafe() && $hash = $this->getUserHash($event->getKernel(), $request)) {
+                $request->headers->set($this->options['user_hash_header'], $hash);
             }
         }
 
@@ -114,8 +111,7 @@ class UserContextSubscriber implements EventSubscriberInterface
     /**
      * Remove unneeded things from the request for user hash generation.
      *
-     * Cleans cookies header to only keep the session identifier cookie, so the hash lookup request
-     * can be cached per session.
+     * Cleans cookies header to only keep the session identifier cookie and the ACP3 remember me cookie
      *
      * @param Request $hashLookupRequest
      * @param Request $originalRequest
@@ -156,7 +152,8 @@ class UserContextSubscriber implements EventSubscriberInterface
      * Returns the user context hash for $request.
      *
      * @param HttpKernelInterface $kernel
-     * @param Request $request
+     * @param Request             $request
+     *
      * @return string
      */
     private function getUserHash(HttpKernelInterface $kernel, Request $request)
@@ -165,7 +162,7 @@ class UserContextSubscriber implements EventSubscriberInterface
             return $this->userHash;
         }
 
-        if ($this->isAnonymous($request)) {
+        if ($this->options['anonymous_hash'] && $this->isAnonymous($request)) {
             return $this->userHash = $this->options['anonymous_hash'];
         }
 
@@ -227,18 +224,11 @@ class UserContextSubscriber implements EventSubscriberInterface
      *
      * @param Request $request
      *
-     * @return Request The request that will return the user context hash value.
+     * @return Request The request that will return the user context hash value
      */
     private function generateHashLookupRequest(Request $request)
     {
-        $hashLookupRequest = Request::create(
-            $this->options['user_hash_uri'],
-            $this->options['user_hash_method'],
-            [],
-            [],
-            [],
-            $request->server->all()
-        );
+        $hashLookupRequest = Request::create($this->options['user_hash_uri'], $this->options['user_hash_method'], [], [], [], $request->server->all());
         $hashLookupRequest->attributes->set('internalRequest', true);
         $hashLookupRequest->headers->set('Accept', $this->options['user_hash_accept_header']);
         $this->cleanupHashLookupRequest($hashLookupRequest, $request);
