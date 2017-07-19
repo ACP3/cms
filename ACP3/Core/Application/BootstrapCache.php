@@ -10,6 +10,7 @@ use ACP3\Core\Application\BootstrapCache\Event\Listener\UserContextListener;
 use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\View\Renderer\Smarty\Filters\MoveToBottom;
 use FOS\HttpCache\SymfonyCache\CacheInvalidation;
+use FOS\HttpCache\SymfonyCache\DebugListener;
 use FOS\HttpCache\SymfonyCache\EventDispatchingHttpCache;
 use FOS\HttpCache\SymfonyCache\PurgeListener;
 use FOS\HttpCache\SymfonyCache\RefreshListener;
@@ -38,8 +39,8 @@ class BootstrapCache extends HttpCache implements CacheInvalidation
         HttpKernelInterface $kernel,
         StoreInterface $store,
         SurrogateInterface $surrogate = null,
-        array $options = [])
-    {
+        array $options = []
+    ) {
         parent::__construct($kernel, $store, $surrogate, $options);
 
         $this->addSubscriber(new UserContextListener([
@@ -48,6 +49,9 @@ class BootstrapCache extends HttpCache implements CacheInvalidation
         ]));
         $this->addSubscriber(new PurgeListener());
         $this->addSubscriber(new RefreshListener());
+        if (isset($options['debug']) && $options['debug']) {
+            $this->addSubscriber(new DebugListener());
+        }
     }
 
     /**
