@@ -51,10 +51,7 @@ class IsAuthenticatedProvider implements ContextProvider
 
         $context->addParameter('security_secret', $settings['security_secret']);
         $context->addParameter('authenticated', $this->userModel->isAuthenticated());
+        $context->addParameter('user_id', $this->userModel->getUserId());
         $context->addParameter('roles', $this->acl->getUserRoleIds($this->userModel->getUserId()));
-
-        if (intval($settings['cache_vary_user']) === 1) {
-            $context->addParameter('user_id', $this->userModel->getUserId());
-        }
     }
 }
