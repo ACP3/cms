@@ -41,7 +41,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `dependencies/module` -> `dependencies` (array)
 
 ### Changed
-- Updated minimal required Symfony version to 3.3 and take advantage of some features of it
+- Updated the minimal required Symfony version to 3.3 and took advantage of some features of it
+- Updated the friendsofsymfony/http-cache package to version 2.*
 - When deleting a category, the associated news or downloads won't be deleted anymore
 
 ## [4.12.0] - 2017-05-08
