@@ -14,7 +14,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class StaticAssetsListener implements EventSubscriberInterface
 {
-    const JAVASCRIPTS_REGEX_PATTERN = MoveToBottom::ELEMENT_CATCHER_REGEX_PATTERN;
     const PLACEHOLDER = '</body>';
 
     /**
@@ -49,7 +48,7 @@ class StaticAssetsListener implements EventSubscriberInterface
      */
     private function getCleanedUpTemplateOutput(string $tplOutput): string
     {
-        return preg_replace(static::JAVASCRIPTS_REGEX_PATTERN, '', $tplOutput);
+        return preg_replace(MoveToBottom::ELEMENT_CATCHER_REGEX_PATTERN, '', $tplOutput);
     }
 
     /**
@@ -59,7 +58,7 @@ class StaticAssetsListener implements EventSubscriberInterface
     private function addElementsFromTemplates(string $tplOutput): string
     {
         $matches = [];
-        preg_match_all(static::JAVASCRIPTS_REGEX_PATTERN, $tplOutput, $matches);
+        preg_match_all(MoveToBottom::ELEMENT_CATCHER_REGEX_PATTERN, $tplOutput, $matches);
 
         return implode("\n", array_unique($matches[1])) . "\n";
     }
