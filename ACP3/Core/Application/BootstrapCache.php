@@ -9,7 +9,6 @@ namespace ACP3\Core\Application;
 use ACP3\Core\Application\BootstrapCache\Event\Listener\StaticAssetsListener;
 use ACP3\Core\Application\BootstrapCache\Event\Listener\UserContextListener;
 use ACP3\Core\Session\SessionHandlerInterface;
-use ACP3\Core\View\Renderer\Smarty\Filters\MoveToBottom;
 use FOS\HttpCache\SymfonyCache\CacheInvalidation;
 use FOS\HttpCache\SymfonyCache\DebugListener;
 use FOS\HttpCache\SymfonyCache\EventDispatchingHttpCache;
@@ -28,9 +27,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 class BootstrapCache extends HttpCache implements CacheInvalidation
 {
     use EventDispatchingHttpCache;
-
-    const JAVASCRIPTS_REGEX_PATTERN = MoveToBottom::ELEMENT_CATCHER_REGEX_PATTERN;
-    const PLACEHOLDER = '</body>';
 
     /**
      * @inheritdoc
