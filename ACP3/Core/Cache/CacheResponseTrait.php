@@ -52,7 +52,7 @@ trait CacheResponseTrait
         }
 
         $response
-            ->setVary('Cookie')
+            ->setVary('X-User-Context-Hash')
             ->setMaxAge($lifetime)
             ->setSharedMaxAge($lifetime);
     }
