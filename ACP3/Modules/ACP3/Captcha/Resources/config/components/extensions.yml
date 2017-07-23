@@ -9,6 +9,16 @@ services:
       - '@core.config'
       - '@captcha.utility.captcha_registrar'
 
+  captcha.extension.honeypot_captcha_extension:
+    class: ACP3\Modules\ACP3\Captcha\Extension\HoneypotCaptchaExtension
+    arguments:
+      - '@core.i18n.translator'
+      - '@core.view'
+      - '@users.model.user_model'
+    tags:
+      - { name: 'captcha.extension.captcha' }
+    public: false
+
   captcha.extension.native_captcha_extension:
     class: ACP3\Modules\ACP3\Captcha\Extension\NativeCaptchaExtension
     arguments:

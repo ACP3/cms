@@ -12,6 +12,8 @@ interface CaptchaExtensionInterface
     const CAPTCHA_DEFAULT_INPUT_ID = 'captcha';
 
     /**
+     * Returns the translated name of the captcha
+     *
      * @return string
      */
     public function getCaptchaName();
