@@ -33,7 +33,8 @@ class AvailableLanguagePacks
      */
     public function languagePackExists(string $locale): bool
     {
-        return !preg_match('=/=', $locale)
+        return !empty($locale)
+            && !preg_match('=/=', $locale)
             && is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $locale . '.xml') === true;
     }
 }

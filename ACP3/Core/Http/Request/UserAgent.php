@@ -1,6 +1,8 @@
 <?php
 namespace ACP3\Core\Http\Request;
 
+use Symfony\Component\HttpFoundation\AcceptHeader;
+use Symfony\Component\HttpFoundation\AcceptHeaderItem;
 use Symfony\Component\HttpFoundation\ServerBag;
 
 /**
@@ -23,10 +25,9 @@ class UserAgent
     }
 
     /**
-     * @inheritdoc
      * @see http://detectmobilebrowsers.com/download/php
      */
-    public function isMobileBrowser()
+    public function isMobileBrowser(): bool
     {
         $userAgent = $this->server->get('HTTP_USER_AGENT', '');
 
@@ -38,35 +39,12 @@ class UserAgent
      * Parst den ACCEPT-LANGUAGE Header des Browsers
      * und gibt die präferierten Sprachen zurück
      *
-     * @return array
+     * @return AcceptHeaderItem[]
      */
-    public function parseAcceptLanguage()
+    public function parseAcceptLanguage(): array
     {
-        $locales = [];
+        $accept = AcceptHeader::fromString($this->server->get('HTTP_ACCEPT_LANGUAGE'));
 
-        if ($this->server->has('HTTP_ACCEPT_LANGUAGE')) {
-            $matches = [];
-            preg_match_all(
-                '/([a-z]{1,8}(-[a-z]{1,8})?)\s*(;\s*q\s*=\s*(1|0\.[0-9]+))?/i',
-                $this->server->get('HTTP_ACCEPT_LANGUAGE'),
-                $matches
-            );
-
-            if (!empty($matches[1])) {
-                $locales = array_combine($matches[1], $matches[4]);
-
-                // Für Einträge ohne q-Faktor, Wert auf 1 setzen
-                foreach ($locales as $locale => $val) {
-                    if ($val === '') {
-                        $locales[$locale] = 1;
-                    }
-                }
-
-                // Liste nach Sprachpräferenz sortieren
-                arsort($locales, SORT_NUMERIC);
-            }
-        }
-
-        return $locales;
+        return $accept->all();
     }
 }
