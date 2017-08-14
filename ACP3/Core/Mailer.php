@@ -303,6 +303,10 @@ class Mailer
 
     private function addReplyTo()
     {
+        if (!$this->mailerMessage) {
+            return;
+        }
+
         $replyTo = $this->mailerMessage->getReplyTo();
 
         if (is_array($replyTo) === true) {
@@ -323,6 +327,10 @@ class Mailer
 
     private function addSender()
     {
+        if (!$this->mailerMessage) {
+            return;
+        }
+
         if (!empty($this->mailerMessage->getSender())) {
             $this->phpMailer->Sender = $this->mailerMessage->getSender();
         }

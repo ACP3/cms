@@ -17,12 +17,12 @@
   "prefer-stable": true,
   "require": {
     "acp3/composer-installer": "^1.0",
-    "acp3/core": "^4.12.0",
-    "acp3/setup": "^4.12.0",
-    "acp3/module-errors": "^4.12.0",
-    "acp3/module-permissions": "^4.12.0",
-    "acp3/module-system": "^4.12.0",
-    "acp3/module-users": "^4.12.0"
+    "acp3/core": "^4.12.1",
+    "acp3/setup": "^4.12.1",
+    "acp3/module-errors": "^4.12.1",
+    "acp3/module-permissions": "^4.12.1",
+    "acp3/module-system": "^4.12.1",
+    "acp3/module-users": "^4.12.1"
   },
   "suggest": {
     "acp3/module-seo": "Provides additional SEO capabilities"
