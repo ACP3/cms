@@ -3,7 +3,6 @@ sudo: required
 dist: trusty
 group: edge
 php:
-  - 7.0.8
   - 7.1
   - nightly
 
