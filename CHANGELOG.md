@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.12.2] - 2017-08-16
+### Fixed
+- Correctly escape the special HTML characters, so that the Email sending isn't breaking
+
 ## [4.12.1] - 2017-08-14
 ### Fixed
 - Fixed a BC break inside the `Mailer` class which came with the introduction of the `MailerMessage` class
