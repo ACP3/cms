@@ -46,6 +46,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated the friendsofsymfony/http-cache package to version 2.*
 - When deleting a category, the associated news or downloads won't be deleted anymore
 
+## [4.12.2] - 2017-08-16
+### Fixed
+- Correctly escape the special HTML characters, so that the Email sending isn't breaking
+
+## [4.12.1] - 2017-08-14
+### Fixed
+- Fixed a BC break inside the `Mailer` class which came with the introduction of the `MailerMessage` class
+
 ## [4.12.0] - 2017-05-08
 ### Added
 - Added the possibility to duplicate downloads via the admin data grid
