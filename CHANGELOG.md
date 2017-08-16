@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ### BC Breaks
-- Dropped the support for PHP 5.6. PHP 7.0 is the minimum supported version now
+- Dropped the support for PHP 5.6. PHP 7.1 is the minimum supported version now
 - Removed the deprecated `ACP3\Core\Logger` class
 - Removed all deprecated methods of the `ACP3\Core\Mailer` class and refactored it
 - Removed the deprecated `ACP3\Core\Controller\Context\AdminContext` class
