@@ -347,7 +347,7 @@ class Mailer
             $mail = [
                 'charset' => 'UTF-8',
                 'title' => $this->subject,
-                'body' => !empty($this->htmlBody) ? $this->htmlBody : $this->stringFormatter->nl2p($this->body),
+                'body' => !empty($this->htmlBody) ? $this->htmlBody : $this->stringFormatter->nl2p(htmlspecialchars($this->body)),
                 'signature' => $this->getHtmlSignature(),
                 'url_web_view' => $this->urlWeb
             ];
