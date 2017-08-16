@@ -91,7 +91,7 @@ class MessageProcessor
             'title' => $message->getSubject(),
             'body' => !empty($message->getHtmlBody()) ?
                 $message->getHtmlBody() :
-                $this->stringFormatter->nl2p($message->getBody()),
+                $this->stringFormatter->nl2p(htmlspecialchars($message->getBody())),
             'signature' => $this->getHtmlSignature($message->getMailSignature()),
             'url_web_view' => $message->getUrlWeb()
         ];
