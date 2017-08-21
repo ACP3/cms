@@ -51,8 +51,8 @@ class OnLayoutSeoRenderFormFieldsListener
             $parameters = $event->getParameters();
 
             $formFields = array_merge(
-                $this->metaFormFields->formFields(isset($parameters['path']) ? $parameters['path'] : ''),
-                ['uri_pattern' => isset($parameters['uri_pattern']) ? $parameters['uri_pattern'] : '']
+                $this->metaFormFields->formFields($parameters['path'] ?? ''),
+                ['uri_pattern' => $parameters['uri_pattern'] ?? '']
             );
 
             $this->view

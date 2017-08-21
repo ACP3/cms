@@ -16,7 +16,7 @@ class NumberGreaterThanValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        $comparator = isset($extra['value']) ? $extra['value'] : 0;
+        $comparator = $extra['value'] ?? 0;
 
         return $data > $comparator;
     }

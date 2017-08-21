@@ -54,7 +54,7 @@ class NewsModel extends AbstractModel
             'updated_at' => 'now',
             'readmore' => $this->useReadMore($data, $settings),
             'comments' => $this->useComments($data, $settings),
-            'category_id' => isset($data['cat']) ? $data['cat'] : $data['category_id'],
+            'category_id' => $data['cat'] ?? $data['category_id'],
         ]);
 
         return parent::save($data, $newsId);

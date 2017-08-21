@@ -14,7 +14,7 @@ interface SettingsInterface
      * @param string $module
      * @return array
      */
-    public function getSettings($module);
+    public function getSettings(string $module): array;
 
     /**
      * Saves the module's settings to the database
@@ -24,5 +24,5 @@ interface SettingsInterface
      *
      * @return bool
      */
-    public function saveSettings(array $data, $module);
+    public function saveSettings(array $data, string $module): bool;
 }

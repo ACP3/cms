@@ -33,7 +33,7 @@ class DateRange extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        $format = isset($params['format']) ? $params['format'] : 'long';
+        $format = $params['format'] ?? 'long';
 
         if (isset($params['start']) && isset($params['end'])) {
             return $this->dateRangeFormatter->formatTimeRange($params['start'], $params['end'], $format);

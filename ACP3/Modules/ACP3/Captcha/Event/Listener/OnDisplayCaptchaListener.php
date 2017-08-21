@@ -43,10 +43,10 @@ class OnDisplayCaptchaListener
             $arguments = $templateEvent->getParameters();
 
             echo $this->captchaExtension->getCaptcha(
-                isset($arguments['length']) ? $arguments['length'] : CaptchaExtensionInterface::CAPTCHA_DEFAULT_LENGTH,
-                isset($arguments['input_id']) ? $arguments['input_id'] : CaptchaExtensionInterface::CAPTCHA_DEFAULT_INPUT_ID,
-                isset($arguments['input_only']) ? $arguments['input_only'] : false,
-                isset($arguments['path']) ? $arguments['path'] : ''
+                $arguments['length'] ?? CaptchaExtensionInterface::CAPTCHA_DEFAULT_LENGTH,
+                $arguments['input_id'] ?? CaptchaExtensionInterface::CAPTCHA_DEFAULT_INPUT_ID,
+                $arguments['input_only'] ?? false,
+                $arguments['path'] ?? ''
             );
         }
     }

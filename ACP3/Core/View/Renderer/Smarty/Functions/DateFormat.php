@@ -35,7 +35,7 @@ class DateFormat extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        $format = isset($params['format']) ? $params['format'] : 'long';
+        $format = $params['format'] ?? 'long';
 
         if (isset($params['date'])) {
             return $this->date->format($params['date'], $format);

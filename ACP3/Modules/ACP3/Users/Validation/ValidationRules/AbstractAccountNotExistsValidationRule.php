@@ -38,7 +38,7 @@ abstract class AbstractAccountNotExistsValidationRule extends AbstractValidation
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->accountExists($data, isset($extra['user_id']) ? $extra['user_id'] : 0);
+        return $this->accountExists($data, $extra['user_id'] ?? 0);
     }
 
     /**

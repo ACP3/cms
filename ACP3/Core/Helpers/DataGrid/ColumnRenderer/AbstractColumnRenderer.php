@@ -155,7 +155,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
-        return isset($dbResultRow[$field]) ? $dbResultRow[$field] : null;
+        return $dbResultRow[$field] ?? null;
     }
 
     /**
@@ -165,11 +165,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     protected function getDefaultValue(array $column)
     {
-        if (isset($column['custom']['default_value'])) {
-            return $column['custom']['default_value'];
-        }
-
-        return '';
+        return $column['custom']['default_value'] ?? '';
     }
 
     /**

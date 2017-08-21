@@ -89,8 +89,8 @@ class GalleryCacheStorage extends Core\Cache\AbstractCacheStorage
                     $newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
                 }
 
-                $pictures[$i]['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
-                $pictures[$i]['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
+                $pictures[$i]['width'] = $newWidth ?? $picInfos[0];
+                $pictures[$i]['height'] = $newHeight ?? $picInfos[1];
             }
         }
 

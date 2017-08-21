@@ -76,7 +76,7 @@ class Navbar extends AbstractFunction
                 !empty($params['class']) ? $params['class'] : '',
                 !empty($params['dropdownItemClass']) ? $params['dropdownItemClass'] : '',
                 !empty($params['tag']) ? $params['tag'] : 'ul',
-                isset($params['itemTag']) ? $params['itemTag'] : 'li',
+                $params['itemTag'] ?? 'li',
                 !empty($params['dropdownWrapperTag']) ? $params['dropdownWrapperTag'] : 'li',
                 !empty($params['classLink']) ? $params['classLink'] : '',
                 !empty($params['inlineStyles']) ? $params['inlineStyles'] : ''

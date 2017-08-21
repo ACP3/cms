@@ -126,8 +126,8 @@ class GalleryPictureDetailsBlock extends AbstractBlock
                 }
             }
 
-            $picture['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
-            $picture['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
+            $picture['width'] = $newWidth ?? $picInfos[0];
+            $picture['height'] = $newHeight ?? $picInfos[1];
         }
 
         return $picture;

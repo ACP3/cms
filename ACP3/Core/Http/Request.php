@@ -167,11 +167,11 @@ class Request extends AbstractRequest
 
         $this->symfonyRequest->attributes->set(
             '_controller',
-            isset($query[1]) ? $query[1] : 'index'
+            $query[1] ?? 'index'
         );
         $this->symfonyRequest->attributes->set(
             '_controllerAction',
-            isset($query[2]) ? $query[2] : 'index'
+            $query[2] ?? 'index'
         );
 
         $this->completeQuery($query);

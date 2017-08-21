@@ -29,7 +29,7 @@ class FilesModel extends AbstractModel
     public function save(array $data, $entryId = null)
     {
         $data = array_merge($data, [
-            'category_id' => isset($data['cat']) ? $data['cat'] : $data['category_id'],
+            'category_id' => $data['cat'] ?? $data['category_id'],
             'updated_at' => 'now'
         ]);
 

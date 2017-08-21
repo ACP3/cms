@@ -103,7 +103,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
                 ->setQueryOptions(...$dataGridOptions['query_options']);
         } else {
             $data = $this->getData();
-            $dataGrid->setResults(isset($data['results']) ? $data['results'] : $data);
+            $dataGrid->setResults($data['results'] ?? $data);
         }
 
         $this->addDataGridColumns($dataGrid);

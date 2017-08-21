@@ -34,6 +34,6 @@ class RoleNotExistsValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->roleRepository->roleExistsByName($data, isset($extra['role_id']) ? $extra['role_id'] : 0) === false;
+        return $this->roleRepository->roleExistsByName($data, $extra['role_id'] ?? 0) === false;
     }
 }

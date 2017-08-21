@@ -57,7 +57,7 @@ class UriAliasValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->checkUriAlias($data, isset($extra['path']) ? $extra['path'] : '');
+        return $this->checkUriAlias($data, $extra['path'] ?? '');
     }
 
     /**

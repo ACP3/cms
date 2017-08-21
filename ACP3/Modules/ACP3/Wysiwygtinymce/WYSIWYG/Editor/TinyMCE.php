@@ -71,8 +71,8 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     {
         parent::setParameters($params);
 
-        $this->config['toolbar'] = (isset($params['toolbar'])) ? $params['toolbar'] : '';
-        $this->config['height'] = ((isset($params['height'])) ? $params['height'] : 250) . 'px';
+        $this->config['toolbar'] = $params['toolbar'] ?? '';
+        $this->config['height'] = ($params['height'] ?? 250) . 'px';
     }
 
     /**

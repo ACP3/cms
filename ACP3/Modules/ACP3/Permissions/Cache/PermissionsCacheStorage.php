@@ -198,6 +198,6 @@ class PermissionsCacheStorage extends Core\Cache\AbstractCacheStorage
     protected function getPermissionValue($privilegeKey, $roleId)
     {
         $value = $this->roleRepository->getPermissionByKeyAndRoleId($privilegeKey, $roleId);
-        return isset($value['permission']) ? $value['permission'] : Core\ACL\PermissionEnum::DENY_ACCESS;
+        return $value['permission'] ?? Core\ACL\PermissionEnum::DENY_ACCESS;
     }
 }

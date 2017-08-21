@@ -19,7 +19,7 @@ class IsExternalFileValidationRule extends AbstractValidationRule
             $filesize = next($field);
             $unit = next($field);
 
-            $file = isset($extra['file']) ? $extra['file'] : null;
+            $file = $extra['file'] ?? null;
 
             return !(isset($data[$external]) && (empty($file) || empty($data[$filesize]) || empty($data[$unit])));
         }

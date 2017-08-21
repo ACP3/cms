@@ -98,7 +98,7 @@ class CKEditor extends Textarea
         parent::setParameters($params);
 
         $this->config['toolbar'] = (isset($params['toolbar']) && $params['toolbar'] === 'simple') ? 'Basic' : 'Full';
-        $this->config['height'] = ((isset($params['height']) ? $params['height'] : 250)) . 'px';
+        $this->config['height'] = ($params['height'] ?? 250) . 'px';
     }
 
     /**

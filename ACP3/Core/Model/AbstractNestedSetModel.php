@@ -74,7 +74,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
             $result = $this->editOperation->execute(
                 $entryId,
                 $filteredData['parent_id'],
-                isset($filteredData['block_id']) ? $filteredData['block_id'] : 0,
+                $filteredData['block_id'] ?? 0,
                 $filteredData
             );
         }

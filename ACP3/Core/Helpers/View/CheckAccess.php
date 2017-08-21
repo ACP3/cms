@@ -43,7 +43,7 @@ class CheckAccess
     /**
      * @param array $params
      *
-     * @return string
+     * @return string|array
      */
     public function outputLinkOrButton(array $params)
     {
@@ -52,15 +52,15 @@ class CheckAccess
             $query = explode('/', strtolower($params['path']));
 
             if (isset($query[0]) && $query[0] === 'acp') {
-                $action[0] = (isset($query[1]) ? $query[1] : 'acp');
-                $action[1] = (isset($query[2]) ? $query[2] : 'index');
-                $action[2] = isset($query[3]) ? $query[3] : 'index';
+                $action[0] = $query[1] ?? 'acp';
+                $action[1] = $query[2] ?? 'index';
+                $action[2] = $query[3] ?? 'index';
 
                 $area = Core\Controller\AreaEnum::AREA_ADMIN;
             } else {
                 $action[0] = $query[0];
-                $action[1] = isset($query[1]) ? $query[1] : 'index';
-                $action[2] = isset($query[2]) ? $query[2] : 'index';
+                $action[1] = $query[1] ?? 'index';
+                $action[2] = $query[2] ?? 'index';
 
                 $area = Core\Controller\AreaEnum::AREA_FRONTEND;
             }
@@ -81,12 +81,12 @@ class CheckAccess
 
     /**
      * @param array $params
-     * @param string $action
+     * @param string[] $action
      * @param string $area
      *
      * @return array
      */
-    private function collectData(array $params, $action, $area)
+    private function collectData(array $params, array $action, $area): array
     {
         $accessCheck = [];
         $accessCheck['uri'] = $this->router->route($params['path']);

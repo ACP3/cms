@@ -53,7 +53,7 @@ class ControllerActionBeforeDispatchEvent extends Event
      */
     public function getControllerArea(): string
     {
-        return isset($this->serviceIdParts[2]) ? $this->serviceIdParts[2] : '';
+        return $this->serviceIdParts[2] ?? '';
     }
 
     /**
@@ -61,7 +61,7 @@ class ControllerActionBeforeDispatchEvent extends Event
      */
     public function getControllerModule(): string
     {
-        return isset($this->serviceIdParts[0]) ? $this->serviceIdParts[0] : '';
+        return $this->serviceIdParts[0] ?? '';
     }
 
     /**
@@ -69,7 +69,7 @@ class ControllerActionBeforeDispatchEvent extends Event
      */
     public function getController(): string
     {
-        return isset($this->serviceIdParts[3]) ? $this->serviceIdParts[3] : '';
+        return $this->serviceIdParts[3] ?? '';
     }
 
     /**
@@ -77,6 +77,6 @@ class ControllerActionBeforeDispatchEvent extends Event
      */
     public function getControllerAction(): string
     {
-        return isset($this->serviceIdParts[4]) ? $this->serviceIdParts[4] : '';
+        return $this->serviceIdParts[4] ?? '';
     }
 }
