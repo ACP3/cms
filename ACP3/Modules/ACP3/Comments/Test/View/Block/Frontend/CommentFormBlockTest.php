@@ -20,15 +20,19 @@ class CommentFormBlockTest extends AbstractFormBlockTest
      */
     protected function instantiateBlock(): BlockInterface
     {
-        $settings = $this->getMockBuilder(SettingsInterface::class)
+        $settingsMock = $this->getMockBuilder(SettingsInterface::class)
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
+
+        $settingsMock->expects($this->once())
+            ->method('getSettings')
+            ->willReturn(['emoticons' => 1]);
 
         $user = $this->getMockBuilder(UserModel::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        return new CommentFormBlock($this->context, $settings, $user);
+        return new CommentFormBlock($this->context, $settingsMock, $user);
     }
 
     public function testRenderReturnsArray()

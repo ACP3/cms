@@ -24,6 +24,10 @@ class CommentsListingBlockTest extends AbstractListingBlockTest
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
+        $settings->expects($this->exactly(2))
+            ->method('getSettings')
+            ->willReturn(['dateformat' => 'long', 'emoticons' => 1]);
+
         $commentRepository = $this->getMockBuilder(CommentsRepository::class)
             ->disableOriginalConstructor()
             ->getMock();

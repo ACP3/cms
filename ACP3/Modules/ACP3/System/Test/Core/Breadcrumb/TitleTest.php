@@ -113,4 +113,25 @@ class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
 
         $this->assertEquals('Foo | SEO Title', $this->title->getSiteAndPageTitle());
     }
+
+    public function testGetSiteAndPageTitleWithCustomPageTitle()
+    {
+        $this->setUpConfigMockExpectations('', '', 1, 0);
+
+        parent::testGetSiteAndPageTitleWithCustomPageTitle();
+    }
+
+    public function testGetSiteAndPageTitleWithCustomSiteTitle()
+    {
+        $this->setUpConfigMockExpectations('', '', 1, 0);
+
+        parent::testGetSiteAndPageTitleWithCustomSiteTitle();
+    }
+
+    public function testGetSiteAndPageTitleWithPrefixAndPostfixAndSeparator()
+    {
+        $this->setUpConfigMockExpectations('', '', 1, 0);
+
+        parent::testGetSiteAndPageTitleWithPrefixAndPostfixAndSeparator();
+    }
 }
