@@ -7,7 +7,6 @@
 namespace ACP3\Core\Installer\Model;
 
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Filesystem;
 use ACP3\Core\Installer\MigrationRegistrar;
 use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Core\Installer\SchemaUpdater;
@@ -72,33 +71,13 @@ class SchemaUpdateModel
     }
 
     /**
-     * @param array $modules
      * @return array
      */
-    public function updateModules(array $modules = []): array
+    public function updateModules(): array
     {
-        foreach ($this->vendor->getVendors() as $vendor) {
-            $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
-            $vendorModules = count($modules) > 0 ? $modules : Filesystem::scandir($vendorPath);
-
-            foreach ($vendorModules as $module) {
-                $module = strtolower($module);
-
-                if (isset($this->results[$module])) {
-                    continue;
-                }
-
-                $moduleConfigPath = $vendorPath . ucfirst($module) . '/composer.json';
-                if (is_file($moduleConfigPath)) {
-                    $dependencies = $this->getModuleDependencies($moduleConfigPath);
-
-                    if (count($dependencies) > 0) {
-                        $this->updateModules($dependencies);
-                    }
-
-                    $this->results[$module] = $this->updateModule($module);
-                }
-            }
+        foreach ($this->modules->getAllModulesAlphabeticallySorted() as $moduleInfo) {
+            $module = strtolower($moduleInfo['dir']);
+            $this->results[$module] = $this->updateModule($module);
         }
 
         return $this->results;
