@@ -263,7 +263,7 @@ class Mailer
 
             $this->phpMailer->CharSet = 'UTF-8';
             $this->phpMailer->Encoding = 'quoted-printable';
-            $this->phpMailer->WordWrap = 78;
+            $this->phpMailer->WordWrap = PHPMailer::STD_LINE_LENGTH;
         }
 
         return $this;
