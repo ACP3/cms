@@ -154,6 +154,7 @@ class Modules
                 foreach (Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/') as $module) {
                     $info = $this->getModuleInfo($module);
                     if (!empty($info)) {
+                        $info['vendor'] = $vendor;
                         $this->allModules[$info['name']] = $info;
                     }
                 }

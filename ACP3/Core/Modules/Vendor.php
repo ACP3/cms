@@ -37,7 +37,7 @@ class Vendor
     /**
      * @return array
      */
-    public function getVendors()
+    public function getVendors(): array
     {
         if ($this->vendors === []) {
             $this->cacheVendors();
@@ -53,8 +53,7 @@ class Vendor
     {
         $this->vendors = array_merge(
             ['ACP3'],
-            Filesystem::scandir($this->appPath->getModulesDir(), ['ACP3', 'Custom']),
-            ['Custom']
+            Filesystem::scandir($this->appPath->getModulesDir(), ['ACP3'])
         );
     }
 }
