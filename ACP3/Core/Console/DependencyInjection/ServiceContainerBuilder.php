@@ -70,19 +70,14 @@ class ServiceContainerBuilder extends ContainerBuilder
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
         $loader->load($this->applicationPath->getClassesDir() . 'config/console.yml');
 
-        // Try to get all available services
         /** @var Modules $modules */
         $modules = $this->get('core.modules');
-        $vendors = $this->get('core.modules.vendors')->getVendors();
+        foreach ($modules->getAllModulesTopSorted() as $module) {
+            $modulePath = $this->applicationPath->getModulesDir() . $module['vendor'] . '/' . $module['dir'];
+            $path = $modulePath . '/Resources/config/services.yml';
 
-        foreach ($modules->getAllModules() as $module) {
-            foreach ($vendors as $vendor) {
-                $modulePath = $this->applicationPath->getModulesDir() . $vendor . '/' . $module['dir'];
-                $path = $modulePath . '/Resources/config/services.yml';
-
-                if (is_file($path)) {
-                    $loader->load($path);
-                }
+            if (is_file($path)) {
+                $loader->load($path);
             }
         }
 

@@ -44,7 +44,8 @@
     "symfony/http-kernel": "^3.3",
     "symfony/yaml": "^3.3",
     "thepixeldeveloper/sitemap": "^4.4.2",
-    "tinymce/tinymce": "^4.4"
+    "tinymce/tinymce": "^4.4",
+    "marcj/topsort": "^1.1"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.0.0",

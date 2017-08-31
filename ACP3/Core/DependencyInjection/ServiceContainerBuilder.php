@@ -93,11 +93,9 @@ class ServiceContainerBuilder extends ContainerBuilder
         $loader->load($this->applicationPath->getClassesDir() . 'config/services.yml');
         $loader->load($this->applicationPath->getClassesDir() . 'View/Renderer/Smarty/config/services.yml');
 
-        // Try to get all available services
         /** @var Modules $modules */
         $modules = $this->get('core.modules');
-
-        foreach ($modules->getAllModules() as $module) {
+        foreach ($modules->getAllModulesTopSorted() as $module) {
             $modulePath = $this->applicationPath->getModulesDir() . $module['vendor'] . '/' . $module['dir'];
             $path = $modulePath . '/Resources/config/services.yml';
 

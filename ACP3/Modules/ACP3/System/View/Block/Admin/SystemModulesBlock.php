@@ -35,7 +35,7 @@ class SystemModulesBlock extends AbstractBlock
      */
     public function render()
     {
-        $modules = $this->modules->getAllModules();
+        $modules = $this->modules->getAllModulesAlphabeticallySorted();
         $installedModules = $newModules = [];
 
         foreach ($modules as $key => $values) {
