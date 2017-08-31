@@ -12,6 +12,7 @@ use ACP3\Core\Mailer\MailerMessage;
 use ACP3\Core\Mailer\MessageProcessor;
 use ACP3\Core\View;
 use InlineStyle\InlineStyle;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class MessageProcessorTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,7 +33,7 @@ class MessageProcessorTest extends \PHPUnit_Framework_TestCase
      */
     private $viewMock;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\PHPMailer
+     * @var \PHPUnit_Framework_MockObject_MockObject|PHPMailer
      */
     private $phpMailerMock;
 
@@ -58,7 +59,7 @@ class MessageProcessorTest extends \PHPUnit_Framework_TestCase
         $this->viewMock = $this->getMockBuilder(View::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->phpMailerMock = $this->getMockBuilder(\PHPMailer::class)
+        $this->phpMailerMock = $this->getMockBuilder(PHPMailer::class)
             ->disableOriginalConstructor()
             ->getMock();
     }

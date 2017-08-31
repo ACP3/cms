@@ -6,6 +6,8 @@ use ACP3\Core\Mailer\MailerMessage;
 use ACP3\Core\Mailer\MessageProcessor;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -32,7 +34,7 @@ class Mailer
      */
     private $message;
     /**
-     * @var \PHPMailer
+     * @var PHPMailer
      */
     private $phpMailer;
 
@@ -95,7 +97,7 @@ class Mailer
             if (!empty($this->message->getRecipients())) {
                 return $this->message->isBcc() === true ? $this->sendBcc() : $this->sendTo();
             }
-        } catch (\phpmailerException $e) {
+        } catch (Exception $e) {
             $this->logger->error($e);
         } catch (\Exception $e) {
             $this->logger->error($e);
@@ -239,7 +241,7 @@ class Mailer
     private function configure()
     {
         if ($this->phpMailer === null) {
-            $this->phpMailer = new \PHPMailer(true);
+            $this->phpMailer = new PHPMailer(true);
 
             $settings = $this->config->getSettings(Schema::MODULE_NAME);
 

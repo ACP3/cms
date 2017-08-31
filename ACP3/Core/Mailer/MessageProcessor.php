@@ -10,6 +10,7 @@ namespace ACP3\Core\Mailer;
 use ACP3\Core\Helpers\StringFormatter;
 use ACP3\Core\View;
 use InlineStyle\InlineStyle;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class MessageProcessor
 {
@@ -45,11 +46,11 @@ class MessageProcessor
     /**
      * Parses and generates the E-mail subject and body
      *
-     * @param \PHPMailer $phpMailer
+     * @param PHPMailer $phpMailer
      * @param MailerMessage $message
      * @return void
      */
-    public function process(\PHPMailer $phpMailer, MailerMessage $message)
+    public function process(PHPMailer $phpMailer, MailerMessage $message)
     {
         $phpMailer->Subject = $this->encodeSubject($message->getSubject());
 
@@ -81,10 +82,10 @@ class MessageProcessor
     }
 
     /**
-     * @param \PHPMailer $phpMailer
+     * @param PHPMailer $phpMailer
      * @param MailerMessage $message
      */
-    private function processHtmlEmail(\PHPMailer $phpMailer, MailerMessage $message)
+    private function processHtmlEmail(PHPMailer $phpMailer, MailerMessage $message)
     {
         $mail = [
             'charset' => 'UTF-8',
@@ -131,11 +132,11 @@ class MessageProcessor
     }
 
     /**
-     * @param \PHPMailer $phpMailer
+     * @param PHPMailer $phpMailer
      * @param string $signature
      * @return string
      */
-    private function getTextSignature(\PHPMailer $phpMailer, string $signature): string
+    private function getTextSignature(PHPMailer $phpMailer, string $signature): string
     {
         if (!empty($signature)) {
             return "\n-- \n" . $phpMailer->html2text($signature, true);
