@@ -40,8 +40,7 @@ class ServiceContainerBuilder extends ContainerBuilder
     public function __construct(
         LoggerInterface $logger,
         ApplicationPath $applicationPath,
-
-        $applicationMode
+        string $applicationMode
     ) {
         parent::__construct();
 

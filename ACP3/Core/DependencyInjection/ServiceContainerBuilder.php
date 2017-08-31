@@ -56,7 +56,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         LoggerInterface $logger,
         ApplicationPath $applicationPath,
         SymfonyRequest $symfonyRequest,
-        $applicationMode
+        string $applicationMode
     ) {
         parent::__construct();
 
