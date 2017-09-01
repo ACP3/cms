@@ -33,8 +33,8 @@ class Create extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
         Comments\Model\CommentsModel $commentsModel,
-        Comments\Validation\FormValidation $formValidation)
-    {
+        Comments\Validation\FormValidation $formValidation
+    ) {
         parent::__construct($context);
 
         $this->formValidation = $formValidation;

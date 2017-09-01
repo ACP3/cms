@@ -6,11 +6,10 @@
 
 namespace ACP3\Modules\ACP3\Articles\View\Block\Frontend;
 
-
+use ACP3\Core\Helpers\PageBreaks;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
-use ACP3\Core\Helpers\PageBreaks;
 
 class ArticleDetailsBlock extends AbstractBlock
 {

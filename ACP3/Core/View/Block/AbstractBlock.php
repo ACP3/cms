@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\View\Block;
 
-
 use ACP3\Core\View;
 
 abstract class AbstractBlock implements BlockInterface

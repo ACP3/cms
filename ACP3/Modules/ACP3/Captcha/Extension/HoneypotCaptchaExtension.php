@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Captcha\Extension;
 
-
 use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Users\Model\UserModel;

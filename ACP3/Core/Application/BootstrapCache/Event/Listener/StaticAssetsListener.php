@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Application\BootstrapCache\Event\Listener;
 
-
 use ACP3\Core\View\Renderer\Smarty\Filters\MoveToBottom;
 use FOS\HttpCache\SymfonyCache\CacheEvent;
 use FOS\HttpCache\SymfonyCache\Events;

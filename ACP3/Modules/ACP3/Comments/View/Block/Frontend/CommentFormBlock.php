@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Comments\View\Block\Frontend;
 
-
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;

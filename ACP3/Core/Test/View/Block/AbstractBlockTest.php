@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\View\Block;
 
-
 use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\View\Block\BlockInterface;

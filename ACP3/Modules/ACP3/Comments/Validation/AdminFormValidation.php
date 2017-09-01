@@ -29,14 +29,16 @@ class AdminFormValidation extends AbstractFormValidation
                     'data' => $formData,
                     'field' => ['name', 'user_id'],
                     'message' => $this->translator->t('system', 'name_to_short')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'message',
                     'message' => $this->translator->t('system', 'message_to_short'),
-                ]);
+                ]
+            );
 
         $this->validator->validate();
     }

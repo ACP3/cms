@@ -25,13 +25,15 @@ class Sort extends AbstractOperation
 
             if ($mode === 'up' &&
                 $this->nestedSetRepository->nextNodeExists(
-                    $nodes[0]['left_id'] - 1, $this->getBlockId($nodes[0])
+                    $nodes[0]['left_id'] - 1,
+                    $this->getBlockId($nodes[0])
                 ) === true
             ) {
                 return $this->sortUp($nodes);
             } elseif ($mode === 'down' &&
                 $this->nestedSetRepository->previousNodeExists(
-                    $nodes[0]['right_id'] + 1, $this->getBlockId($nodes[0])
+                    $nodes[0]['right_id'] + 1,
+                    $this->getBlockId($nodes[0])
                 ) === true
             ) {
                 return $this->sortDown($nodes);

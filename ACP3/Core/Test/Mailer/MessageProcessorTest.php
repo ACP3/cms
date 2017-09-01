@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\Mailer;
 
-
 use ACP3\Core\Helpers\StringFormatter;
 use ACP3\Core\Mailer\MailerMessage;
 use ACP3\Core\Mailer\MessageProcessor;

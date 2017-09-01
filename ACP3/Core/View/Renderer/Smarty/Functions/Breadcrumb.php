@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
-
 use ACP3\Core\Breadcrumb\Steps;
 
 class Breadcrumb extends AbstractFunction

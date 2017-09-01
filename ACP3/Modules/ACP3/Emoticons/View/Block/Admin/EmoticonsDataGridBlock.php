@@ -63,7 +63,6 @@ class EmoticonsDataGridBlock extends AbstractDataGridBlock
                 'fields' => ['id'],
                 'primary' => true
             ], 10);
-
     }
 
     /**

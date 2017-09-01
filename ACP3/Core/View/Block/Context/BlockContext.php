@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\View\Block\Context;
 
-
 use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\I18n\TranslatorInterface;

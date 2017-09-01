@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Comments\View\Block\Frontend;
 
-
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractListingBlock;
 use ACP3\Core\View\Block\Context\ListingBlockContext;
@@ -38,8 +37,8 @@ class CommentsListingBlock extends AbstractListingBlock
     public function __construct(
         ListingBlockContext $context,
         SettingsInterface $settings,
-        CommentsRepository $commentRepository)
-    {
+        CommentsRepository $commentRepository
+    ) {
         parent::__construct($context);
 
         $this->commentRepository = $commentRepository;

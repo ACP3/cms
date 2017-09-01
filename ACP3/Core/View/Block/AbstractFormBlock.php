@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\View\Block;
 
-
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\View\Block\Context\FormBlockContext;

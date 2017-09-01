@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Console\DependencyInjection;
 
-
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
 use ACP3\Core\Modules;
@@ -61,7 +60,8 @@ class ServiceContainerBuilder extends ContainerBuilder
             ->addCompilerPass(new RegisterListenersPass(
                     'core.event_dispatcher',
                     'core.eventListener',
-                    'core.eventSubscriber')
+                    'core.eventSubscriber'
+            )
             )
             ->addCompilerPass(new RegisterInstallersCompilerPass())
             ->addCompilerPass(new RegisterCommandsCompilerPass());

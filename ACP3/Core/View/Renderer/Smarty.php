@@ -35,8 +35,8 @@ class Smarty implements RendererInterface
     public function __construct(
         \Smarty $smarty,
         ApplicationPath $appPath,
-        $environment)
-    {
+        $environment
+    ) {
         $this->smarty = $smarty;
         $this->appPath = $appPath;
         $this->environment = $environment;

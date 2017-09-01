@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Comments\Model\Repository;
 
-
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository;
 use ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository;
@@ -53,7 +52,8 @@ class CommentsDataGridRepository extends AbstractDataGridRepository
             'main',
             $this->getTableName(UsersRepository::TABLE_NAME),
             'u',
-            'main.user_id = u.id');
+            'main.user_id = u.id'
+        );
     }
 
     /**

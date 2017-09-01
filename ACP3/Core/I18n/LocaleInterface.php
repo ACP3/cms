@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\I18n;
 
-
 interface LocaleInterface
 {
     /**

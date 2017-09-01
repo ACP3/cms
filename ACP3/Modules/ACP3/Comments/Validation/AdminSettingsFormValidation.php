@@ -53,7 +53,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'extra' => [
                         'haystack' => ['long', 'short']
                     ]
-                ]);
+                ]
+            );
 
         if ($this->modules->isActive('emoticons')) {
             $this->validator
@@ -66,7 +67,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'extra' => [
                             'haystack' => [0, 1]
                         ]
-                    ]);
+                    ]
+                );
         }
 
         $this->validator->validate();

@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Controller;
 
-
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\View;
 
@@ -82,7 +81,6 @@ trait LayoutAwareControllerTrait
         }
 
         foreach ($paths as $path) {
-
             if ($this->getView()->templateExists($path)) {
                 $this->setLayout($path);
                 break;

@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Comments\View\Block\Admin;
 
-
 use ACP3\Core\View\Block\AbstractFormBlock;
 
 class CommentFormBlock extends AbstractFormBlock

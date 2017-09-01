@@ -6,8 +6,6 @@
 
 namespace ACP3\Core\Helpers\DataGrid\Exception;
 
-
 class DataGridException extends \InvalidArgumentException
 {
-
 }

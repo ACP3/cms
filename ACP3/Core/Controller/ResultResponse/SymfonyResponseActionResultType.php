@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Controller\ResultResponse;
 
-
 use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;

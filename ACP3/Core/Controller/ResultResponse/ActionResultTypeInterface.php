@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Controller\ResultResponse;
 
-
 use Symfony\Component\HttpFoundation\Response;
 
 interface ActionResultTypeInterface

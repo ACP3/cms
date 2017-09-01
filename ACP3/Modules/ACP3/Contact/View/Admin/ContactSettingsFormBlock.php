@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Contact\View\Admin;
 
-
 use ACP3\Core\View\Block\AbstractSettingsFormBlock;
 use ACP3\Modules\ACP3\Contact\Installer\Schema;
 

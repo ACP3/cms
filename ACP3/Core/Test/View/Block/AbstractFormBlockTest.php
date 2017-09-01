@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Test\View\Block;
 
-
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Core\View\Block\FormBlockInterface;
 

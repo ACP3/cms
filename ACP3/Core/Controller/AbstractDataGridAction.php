@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Controller;
 
-
 use ACP3\Core\View\Block\DataGridBlockInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 

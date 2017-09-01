@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\View\Block\Admin;
 
-
 use ACP3\Core\View\Block\AbstractFormBlock;
 
 class EmoticonFormBlock extends AbstractFormBlock

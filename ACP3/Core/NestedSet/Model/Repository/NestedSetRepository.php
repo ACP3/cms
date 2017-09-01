@@ -95,8 +95,10 @@ abstract class NestedSetRepository extends AbstractRepository
      */
     public function fetchNodeById($nodeId)
     {
-        return $this->db->fetchAssoc("SELECT `root_id`, `left_id`, `right_id` FROM {$this->getTableName()} WHERE id = ?",
-            [$nodeId]);
+        return $this->db->fetchAssoc(
+            "SELECT `root_id`, `left_id`, `right_id` FROM {$this->getTableName()} WHERE id = ?",
+            [$nodeId]
+        );
     }
 
     /**

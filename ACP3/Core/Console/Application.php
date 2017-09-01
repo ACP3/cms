@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Console;
 
-
 use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Console\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationPath;
@@ -79,7 +78,9 @@ class Application
         Bootup::filterRequestInputs(); // Normalizes HTTP inputs to UTF-8 NFC
 
         $this->container = ServiceContainerBuilder::create(
-            $this->logger, $this->appPath, $this->environment
+            $this->logger,
+            $this->appPath,
+            $this->environment
         );
     }
 }

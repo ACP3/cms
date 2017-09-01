@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\WYSIWYG;
 
-
 use ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG;
 
 class WysiwygEditorRegistrar

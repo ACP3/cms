@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\View\Block;
 
-
 interface SettingsFormBlockInterface extends FormBlockInterface
 {
     /**

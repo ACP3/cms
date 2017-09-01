@@ -25,8 +25,8 @@ class Helpers
      */
     public function __construct(
         Core\Modules $modules,
-        CommentsRepository $commentRepository)
-    {
+        CommentsRepository $commentRepository
+    ) {
         $this->modules = $modules;
         $this->commentRepository = $commentRepository;
     }

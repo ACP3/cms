@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Model\Event\Listener;
 
-
 use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
 use ACP3\Core\I18n\TranslatorInterface;

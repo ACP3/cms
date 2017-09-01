@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Helpers\DataGrid;
 
-
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\TranslatorInterface;
 

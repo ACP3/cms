@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\I18n;
 
-
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 

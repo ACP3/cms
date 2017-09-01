@@ -44,8 +44,8 @@ class Edit extends Core\Controller\AbstractFrontendAction
         Core\View\Block\FormBlockInterface $block,
         Core\Validation\Validator $validator,
         Comments\Model\CommentsModel $commentsModel,
-        Comments\Validation\AdminFormValidation $adminFormValidation)
-    {
+        Comments\Validation\AdminFormValidation $adminFormValidation
+    ) {
         parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;

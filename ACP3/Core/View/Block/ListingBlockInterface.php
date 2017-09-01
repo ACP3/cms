@@ -6,8 +6,6 @@
 
 namespace ACP3\Core\View\Block;
 
-
 interface ListingBlockInterface extends BlockInterface
 {
-
 }

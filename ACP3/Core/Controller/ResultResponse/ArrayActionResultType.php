@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Controller\ResultResponse;
 
-
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\View;
 use Symfony\Component\HttpFoundation\Response;

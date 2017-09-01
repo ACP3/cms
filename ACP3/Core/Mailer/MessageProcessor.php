@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Mailer;
 
-
 use ACP3\Core\Helpers\StringFormatter;
 use ACP3\Core\View;
 use InlineStyle\InlineStyle;

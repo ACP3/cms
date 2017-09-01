@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Console\Command;
 
-
 use ACP3\Core\Cache\Purge;
 use ACP3\Core\Environment\ApplicationPath;
 use Symfony\Component\Console\Command\Command;

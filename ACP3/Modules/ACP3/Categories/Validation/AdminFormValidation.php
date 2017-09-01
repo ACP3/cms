@@ -92,7 +92,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'title',
                     'message' => $this->translator->t('categories', 'title_to_short')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\PictureValidationRule::class,
                 [
@@ -105,7 +106,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                         'filesize' => $this->settings['filesize'],
                         'required' => false
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 DuplicateCategoryValidationRule::class,
                 [
@@ -116,7 +118,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                         'module_id' => empty($this->categoryId) ? $formData['module'] : $this->categoryRepository->getModuleIdByCategoryId($this->categoryId),
                         'category_id' => $this->categoryId
                     ]
-                ]);
+                ]
+            );
 
         if (empty($this->categoryId)) {
             $this->validator->addConstraint(
@@ -125,7 +128,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'module',
                     'message' => $this->translator->t('categories', 'select_module')
-                ]);
+                ]
+            );
         }
 
         $this->validator->validate();

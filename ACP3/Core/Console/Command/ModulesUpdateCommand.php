@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Console\Command;
 
-
 use ACP3\Core\Installer\Model\SchemaUpdateModel;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

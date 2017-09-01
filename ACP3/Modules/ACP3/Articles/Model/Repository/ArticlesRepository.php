@@ -23,8 +23,10 @@ class ArticlesRepository extends Core\Model\Repository\AbstractRepository
     public function resultExists($articleId, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
-        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id{$period}",
-            ['id' => $articleId, 'time' => $time, 'active' => 1]) > 0;
+        return $this->db->fetchColumn(
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id{$period}",
+            ['id' => $articleId, 'time' => $time, 'active' => 1]
+        ) > 0;
     }
 
     /**

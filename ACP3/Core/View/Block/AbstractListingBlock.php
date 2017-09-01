@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\View\Block;
 
-
 use ACP3\Core\View\Block\Context\ListingBlockContext;
 
 abstract class AbstractListingBlock extends AbstractBlock implements ListingBlockInterface

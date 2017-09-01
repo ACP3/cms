@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Categories\View\Block\Admin;
 
-
 use ACP3\Core\Modules;
 use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;

@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\View\Block\Admin;
 
-
 use ACP3\Core\View\Block\AbstractSettingsFormBlock;
 use ACP3\Modules\ACP3\Emoticons\Installer\Schema;
 

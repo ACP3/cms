@@ -79,7 +79,8 @@ class ServiceContainerBuilder extends ContainerBuilder
             ->addCompilerPass(new RegisterListenersPass(
                     'core.event_dispatcher',
                     'core.eventListener',
-                    'core.eventSubscriber')
+                    'core.eventSubscriber'
+            )
             )
             ->addCompilerPass(new RegisterAuthenticationsCompilerPass())
             ->addCompilerPass(new RegisterSmartyPluginsPass())

@@ -27,8 +27,8 @@ abstract class AbstractFloodBarrierValidationRule extends AbstractValidationRule
      */
     public function __construct(
         Date $date,
-        FloodBarrierAwareRepositoryInterface $repository)
-    {
+        FloodBarrierAwareRepositoryInterface $repository
+    ) {
         $this->date = $date;
         $this->repository = $repository;
     }
