@@ -1,7 +1,7 @@
 {
   "name": "acp3/module-contact",
   "description": "Provides the contact module for the ACP3 CMS.",
-  "version": "4.12.0",
+  "version": "4.13.0",
   "type": "acp3-module",
   "license": "GPL-2.0+",
   "authors": [
