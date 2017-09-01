@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2017-09-xx
+### Added
+- Added some CLI scripts to the composer.json
+
+### Changed
+- Adjusted the modules composer.json files so that the version constraint for the `acp3/composer-installer` package is `^1.0` and not `*`
+
 ## [4.12.2] - 2017-08-16
 ### Fixed
 - Correctly escape the special HTML characters, so that the Email sending isn't breaking
@@ -388,7 +395,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.12.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.12.2...HEAD
+[4.12.2]: https://github.com/ACP3/cms/compare/v4.12.1...v4.12.2
+[4.12.1]: https://github.com/ACP3/cms/compare/v4.12.0...v4.12.1
 [4.12.0]: https://github.com/ACP3/cms/compare/v4.11.1...v4.12.0
 [4.11.1]: https://github.com/ACP3/cms/compare/v4.11.0...v4.11.1
 [4.11.0]: https://github.com/ACP3/cms/compare/v4.10.1...v4.11.0
