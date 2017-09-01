@@ -83,8 +83,10 @@
     "acp3/module-wysiwyg-tinymce": "self.version"
   },
   "scripts": {
-    "test": "php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml",
+    "test": "./vendor/bin/phpunit -c ./tests/phpunit.dist.xml",
+    "test-windows": ".\\vendor\\bin\\phpunit.bat -c .\\tests\\phpunit.dist.xml",
     "test-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover ./build/logs/clover.xml",
-    "lint": "php ./vendor/bin/php-cs-fixer"
+    "lint": "./vendor/bin/php-cs-fixer fix",
+    "lint-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix"
   }
 }
