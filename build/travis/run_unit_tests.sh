@@ -7,7 +7,9 @@ then
     php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover ./build/logs/clover.xml
 elif [[ ${TRAVIS_PHP_VERSION} != "nightly" ]]
 then
-    phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover ./build/logs/clover.xml
+    composer run-script test
+    # phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover ./build/logs/clover.xml
 else
-    php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml
+    composer run-script test-without-coverage
+    # php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml
 fi
