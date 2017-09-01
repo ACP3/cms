@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Helper;
 
-
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Picture;
 use ACP3\Core\Settings\SettingsInterface;

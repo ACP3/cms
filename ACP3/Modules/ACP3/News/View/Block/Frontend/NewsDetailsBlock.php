@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\News\View\Block\Frontend;
 
-
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
@@ -53,6 +52,5 @@ class NewsDetailsBlock extends AbstractBlock
             'dateformat' => $settings['dateformat'],
             'comments_allowed' => $settings['comments'] == 1 && $news['comments'] == 1
         ];
-
     }
 }

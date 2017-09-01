@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Console;
 
-
 use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;

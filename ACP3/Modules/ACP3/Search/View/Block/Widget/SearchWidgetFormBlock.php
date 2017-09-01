@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Search\View\Block\Widget;
 
-
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
 use ACP3\Modules\ACP3\Search\Helpers;

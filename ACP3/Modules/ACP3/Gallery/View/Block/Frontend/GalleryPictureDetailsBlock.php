@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Gallery\View\Block\Frontend;
 
-
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;

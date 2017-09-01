@@ -36,8 +36,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\SettingsFormBlockInterface $block,
         Core\Helpers\Secure $secureHelper,
-        Newsletter\Validation\AdminSettingsFormValidation $adminSettingsFormValidation)
-    {
+        Newsletter\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+    ) {
         parent::__construct($context);
 
         $this->secureHelper = $secureHelper;

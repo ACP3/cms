@@ -126,7 +126,9 @@ class MenuItemsRepository extends NestedSetRepository implements BlockAwareNeste
         return (int)$this->db->executeQuery(
             "SELECT m.left_id FROM {$this->getTableName()} AS m JOIN {$this->getTableName(MenusRepository::TABLE_NAME)} AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC",
             [$menuName, array_unique($uris)],
-            [\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY])->fetch(\PDO::FETCH_COLUMN
+            [\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY]
+        )->fetch(
+                \PDO::FETCH_COLUMN
         );
     }
 

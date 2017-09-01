@@ -40,7 +40,8 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'name',
                     'message' => $this->translator->t('system', 'name_to_short')
-                ])
+                ]
+            )
             ->addConstraint(
                 RoleNotExistsValidationRule::class,
                 [
@@ -50,14 +51,16 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'role_id' => $this->roleId
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 PrivilegesExistValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'privileges',
                     'message' => $this->translator->t('permissions', 'invalid_privileges')
-                ]);
+                ]
+            );
 
         $this->validator->validate();
     }

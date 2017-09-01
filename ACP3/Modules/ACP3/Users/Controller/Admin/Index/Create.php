@@ -49,8 +49,8 @@ class Create extends Core\Controller\AbstractFrontendAction
         Core\Helpers\Secure $secureHelper,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AdminFormValidation $adminFormValidation,
-        Permissions\Helpers $permissionsHelpers)
-    {
+        Permissions\Helpers $permissionsHelpers
+    ) {
         parent::__construct($context);
 
         $this->secureHelper = $secureHelper;

@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Gallery\View\Block\Widget;
 
-
 use ACP3\Core\Date;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractBlock;

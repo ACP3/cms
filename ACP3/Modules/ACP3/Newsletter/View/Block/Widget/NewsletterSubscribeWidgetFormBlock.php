@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\View\Block\Widget;
 
-
 use ACP3\Core\View\Block\AbstractFormBlock;
 
 class NewsletterSubscribeWidgetFormBlock extends AbstractFormBlock

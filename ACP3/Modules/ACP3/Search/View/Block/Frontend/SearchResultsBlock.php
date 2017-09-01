@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Search\View\Block\Frontend;
 
-
 use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;

@@ -45,8 +45,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\SettingsFormBlockInterface $block,
         Core\Helpers\Secure $secure,
-        Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation)
-    {
+        Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+    ) {
         parent::__construct($context);
 
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;

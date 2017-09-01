@@ -6,7 +6,6 @@
 
 namespace ACP3\Installer\Core\I18n;
 
-
 use ACP3\Installer\Core\Environment\ApplicationPath;
 
 class AvailableLanguagePacks

@@ -26,7 +26,8 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                 'data' => $formData,
                 'field' => [$passwordField, $passwordConfirmationField],
                 'message' => $this->translator->t('users', 'type_in_pwd')
-            ]);
+            ]
+        );
     }
 
     /**
@@ -42,7 +43,8 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                 'data' => $formData,
                 'field' => [$passwordField, $passwordConfirmationField],
                 'message' => $this->translator->t('users', 'type_in_pwd')
-            ]);
+            ]
+        );
     }
 
     /**
@@ -58,7 +60,8 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     'data' => $formData,
                     'field' => 'nickname',
                     'message' => $this->translator->t('system', 'name_to_short')
-                ])
+                ]
+            )
             ->addConstraint(
                 AccountNotExistsByNameValidationRule::class,
                 [
@@ -68,7 +71,8 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     'extra' => [
                         'user_id' => $userId
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -78,21 +82,24 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     'extra' => [
                         'haystack' => [1, 2, 3]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 BirthdayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'birthday',
                     'message' => $this->translator->t('users', 'invalid_birthday')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\EmailValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('system', 'wrong_email_format')
-                ])
+                ]
+            )
             ->addConstraint(
                 AccountNotExistsByEmailValidationRule::class,
                 [
@@ -102,14 +109,16 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     'extra' => [
                         'user_id' => $userId
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 IcqNumberValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'icq',
                     'message' => $this->translator->t('users', 'invalid_icq_number')
-                ]);
+                ]
+            );
     }
 
     /**
@@ -127,7 +136,8 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -137,7 +147,8 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -147,7 +158,8 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -157,6 +169,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     'extra' => [
                         'haystack' => [0, 1, 2]
                     ]
-                ]);
+                ]
+            );
     }
 }

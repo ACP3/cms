@@ -23,7 +23,8 @@ class ActivateAccountFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData['hash'],
                     'message' => $this->translator->t('newsletter', 'account_not_exists')
-                ]);
+                ]
+            );
 
         $this->validator->validate();
     }

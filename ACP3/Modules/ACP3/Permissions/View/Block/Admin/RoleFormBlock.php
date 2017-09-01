@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Permissions\View\Block\Admin;
 
-
 use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\View\Block\AbstractFormBlock;
@@ -120,8 +119,11 @@ class RoleFormBlock extends AbstractFormBlock
                     isset($rules[$moduleDir][$privileges[$j]['key']]['permission']) ? (int)$rules[$moduleDir][$privileges[$j]['key']]['permission'] : $defaultValue
                 );
                 if ($roleId !== 0) {
-                    $privileges[$j]['calculated'] = $this->calculatePermission($rules, $moduleDir,
-                        $privileges[$j]['key']);
+                    $privileges[$j]['calculated'] = $this->calculatePermission(
+                        $rules,
+                        $moduleDir,
+                        $privileges[$j]['key']
+                    );
                 }
             }
             $modules[$name]['privileges'] = $privileges;

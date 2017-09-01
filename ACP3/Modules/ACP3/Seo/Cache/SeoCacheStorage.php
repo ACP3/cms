@@ -22,8 +22,8 @@ class SeoCacheStorage extends Core\Cache\AbstractCacheStorage
      */
     public function __construct(
         Core\Cache\Cache $cache,
-        SeoRepository $seoRepository)
-    {
+        SeoRepository $seoRepository
+    ) {
         parent::__construct($cache);
 
         $this->seoRepository = $seoRepository;

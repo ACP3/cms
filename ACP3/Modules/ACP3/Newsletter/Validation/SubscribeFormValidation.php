@@ -27,21 +27,24 @@ class SubscribeFormValidation extends AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1, 2]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\EmailValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('system', 'wrong_email_format')
-                ])
+                ]
+            )
             ->addConstraint(
                 AccountNotExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('newsletter', 'account_exists')
-                ]);
+                ]
+            );
 
         $this->validator->dispatchValidationEvent('captcha.validation.validate_captcha', $formData);
 

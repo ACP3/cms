@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Polls\View\Block\Frontend;
 
-
 use ACP3\Core\View\Block\AbstractFormBlock;
 
 class PollVoteFormBlock extends AbstractFormBlock

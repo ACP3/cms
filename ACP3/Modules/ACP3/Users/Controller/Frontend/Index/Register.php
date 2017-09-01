@@ -121,7 +121,8 @@ class Register extends Core\Controller\AbstractFrontendAction
                 $bool2 = $this->permissionsHelpers->updateUserRoles([2], $lastId);
 
                 return $this->alerts->confirmBox(
-                    $this->translator->t('users',
+                    $this->translator->t(
+                        'users',
                         $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'
                     ),
                     $this->appPath->getWebRoot()
@@ -146,7 +147,8 @@ class Register extends Core\Controller\AbstractFrontendAction
             [
                 '{title}' => $systemSettings['site_title'],
                 '{host}' => $this->request->getHost(),
-            ]);
+            ]
+        );
         $body = $this->translator->t(
             'users',
             'register_mail_message',

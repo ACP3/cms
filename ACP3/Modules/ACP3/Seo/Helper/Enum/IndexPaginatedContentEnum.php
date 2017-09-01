@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Helper\Enum;
 
-
 use ACP3\Core\Enum\BaseEnum;
 
 class IndexPaginatedContentEnum extends BaseEnum

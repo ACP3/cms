@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Menus\View\Block\Admin;
 
-
 use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;

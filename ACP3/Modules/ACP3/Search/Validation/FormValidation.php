@@ -24,14 +24,16 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'length' => 4
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mods',
                     'message' => $this->translator->t('search', 'no_module_selected')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -41,7 +43,8 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => ['title_content', 'title', 'content']
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -51,7 +54,8 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => ['asc', 'desc']
                     ]
-                ]);
+                ]
+            );
 
         $this->validator->validate();
     }

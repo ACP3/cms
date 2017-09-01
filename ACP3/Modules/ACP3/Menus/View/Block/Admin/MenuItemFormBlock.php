@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Menus\View\Block\Admin;
 
-
 use ACP3\Core\Modules;
 use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
@@ -65,7 +64,8 @@ class MenuItemFormBlock extends AbstractFormBlock
     {
         $menuItem = $this->getData();
 
-        $this->title->setPageTitlePrefix($menuItem['title']);;
+        $this->title->setPageTitlePrefix($menuItem['title']);
+        ;
 
         return array_merge(
             $this->menuItemFormFields->createMenuItemFormFields(

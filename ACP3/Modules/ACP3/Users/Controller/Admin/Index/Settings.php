@@ -30,8 +30,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\SettingsFormBlockInterface $block,
-        Users\Validation\AdminSettingsFormValidation $adminSettingsFormValidation)
-    {
+        Users\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+    ) {
         parent::__construct($context);
 
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;

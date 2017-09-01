@@ -25,14 +25,16 @@ class UnsubscribeFormValidation extends AbstractFormValidation
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('system', 'wrong_email_format')
-                ])
+                ]
+            )
             ->addConstraint(
                 AccountExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('newsletter', 'account_not_exists')
-                ]);
+                ]
+            );
 
         $this->validator->dispatchValidationEvent('captcha.validation.validate_captcha', $formData);
 

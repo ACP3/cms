@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Event\Listener;
 
-
 use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\ACL\Exception\AccessForbiddenException;
 use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;

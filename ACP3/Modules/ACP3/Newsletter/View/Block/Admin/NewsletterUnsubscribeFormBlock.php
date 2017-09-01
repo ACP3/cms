@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\View\Block\Admin;
 
-
 use ACP3\Core\View\Block\AbstractFormBlock;
 
 class NewsletterUnsubscribeFormBlock extends AbstractFormBlock
@@ -20,7 +19,6 @@ class NewsletterUnsubscribeFormBlock extends AbstractFormBlock
             'form' => array_merge($this->getData(), $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken()
         ];
-
     }
 
     /**

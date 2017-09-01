@@ -26,7 +26,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => ['RSS 1.0', 'RSS 2.0', 'ATOM']
                     ]
-                ]);
+                ]
+            );
 
         $this->validator->validate();
     }

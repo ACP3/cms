@@ -6,7 +6,6 @@
 
 namespace ACP3\Installer\Core\I18n;
 
-
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\DictionaryInterface;
 use ACP3\Core\I18n\LocaleInterface;

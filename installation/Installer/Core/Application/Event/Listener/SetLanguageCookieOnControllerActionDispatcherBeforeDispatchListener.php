@@ -27,8 +27,8 @@ class SetLanguageCookieOnControllerActionDispatcherBeforeDispatchListener
      */
     public function __construct(
         RequestInterface $request,
-        RedirectResponse $redirect)
-    {
+        RedirectResponse $redirect
+    ) {
         $this->request = $request;
         $this->redirect = $redirect;
     }

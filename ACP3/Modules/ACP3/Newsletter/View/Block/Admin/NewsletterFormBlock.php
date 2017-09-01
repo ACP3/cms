@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\View\Block\Admin;
 
-
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
@@ -56,7 +55,6 @@ class NewsletterFormBlock extends AbstractFormBlock
             'form' => array_merge($newsletter, $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken()
         ];
-
     }
 
     /**

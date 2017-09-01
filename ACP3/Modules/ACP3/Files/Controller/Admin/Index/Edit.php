@@ -72,7 +72,6 @@ class Edit extends AbstractFormAction
                 ->setRequestData($this->request->getPost()->all())
                 ->setData($file)
                 ->render();
-
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

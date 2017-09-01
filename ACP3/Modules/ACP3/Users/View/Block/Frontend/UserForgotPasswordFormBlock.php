@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Users\View\Block\Frontend;
 
-
 use ACP3\Core\View\Block\AbstractFormBlock;
 
 class UserForgotPasswordFormBlock extends AbstractFormBlock

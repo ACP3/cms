@@ -33,8 +33,8 @@ class AclRulesModel extends AbstractModel
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
         AclRulesRepository $repository,
-        PermissionsCacheStorage $cache)
-    {
+        PermissionsCacheStorage $cache
+    ) {
         parent::__construct($eventDispatcher, $dataProcessor, $repository);
 
         $this->cache = $cache;

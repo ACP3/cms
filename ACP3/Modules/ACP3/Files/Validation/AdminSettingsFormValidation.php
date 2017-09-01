@@ -49,14 +49,16 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'extra' => [
                         'haystack' => ['long', 'short']
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'sidebar',
                     'message' => $this->translator->t('system', 'select_sidebar_entries')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -66,7 +68,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'extra' => [
                         'haystack' => ['date', 'custom']
                     ]
-                ]);
+                ]
+            );
 
         if ($this->modules->isActive('comments')) {
             $this->validator
@@ -79,7 +82,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'extra' => [
                             'haystack' => [0, 1]
                         ]
-                    ]);
+                    ]
+                );
         }
 
         $this->validator->validate();

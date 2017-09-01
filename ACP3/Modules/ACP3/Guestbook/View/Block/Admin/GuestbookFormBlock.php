@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Guestbook\View\Block\Admin;
 
-
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
@@ -50,7 +49,6 @@ class GuestbookFormBlock extends AbstractFormBlock
                 ? $this->forms->yesNoCheckboxGenerator('active', $data['active'])
                 : []
         ];
-
     }
 
     /**

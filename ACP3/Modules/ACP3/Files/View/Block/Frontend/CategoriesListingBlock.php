@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Files\View\Block\Frontend;
 
-
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
 use ACP3\Modules\ACP3\Categories\Cache\CategoriesCacheStorage;

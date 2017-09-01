@@ -43,8 +43,8 @@ class Details extends Core\Controller\AbstractFrontendAction
         Core\View\Block\BlockInterface $block,
         Core\Date $date,
         News\Model\Repository\NewsRepository $newsRepository,
-        News\Cache\NewsCacheStorage $newsCache)
-    {
+        News\Cache\NewsCacheStorage $newsCache
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

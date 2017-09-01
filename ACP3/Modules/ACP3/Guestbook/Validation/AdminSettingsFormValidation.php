@@ -49,7 +49,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'extra' => [
                         'haystack' => ['long', 'short']
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -59,7 +60,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1, 2]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -69,7 +71,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ]);
+                ]
+            );
 
         if ($formData['notify'] != 0) {
             $this->validator
@@ -79,7 +82,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'data' => $formData,
                         'field' => 'notify_email',
                         'message' => $this->translator->t('system', 'wrong_email_format')
-                    ]);
+                    ]
+                );
         }
 
         if ($this->modules->isActive('emoticons') === true) {
@@ -93,7 +97,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'extra' => [
                             'haystack' => [0, 1]
                         ]
-                    ]);
+                    ]
+                );
         }
 
         if ($this->modules->isActive('newsletter') === true) {
@@ -107,7 +112,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'extra' => [
                             'haystack' => [0, 1]
                         ]
-                    ]);
+                    ]
+                );
         }
 
         $this->validator->validate();

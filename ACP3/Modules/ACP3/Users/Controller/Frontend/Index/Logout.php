@@ -27,8 +27,8 @@ class Logout extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Users\Model\AuthenticationModel $authenticationModel)
-    {
+        Users\Model\AuthenticationModel $authenticationModel
+    ) {
         parent::__construct($context);
 
         $this->authenticationModel = $authenticationModel;

@@ -25,8 +25,8 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\ListingBlockInterface $block)
-    {
+        Core\View\Block\ListingBlockInterface $block
+    ) {
         parent::__construct($context);
 
         $this->block = $block;

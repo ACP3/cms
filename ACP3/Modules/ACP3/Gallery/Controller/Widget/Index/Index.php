@@ -25,8 +25,8 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\View\Block\BlockInterface $block)
-    {
+        Core\View\Block\BlockInterface $block
+    ) {
         parent::__construct($context);
 
         $this->block = $block;

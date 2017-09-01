@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\System\Console;
 
-
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\Console\Command\Command;

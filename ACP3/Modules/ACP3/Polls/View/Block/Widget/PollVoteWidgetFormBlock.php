@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Polls\View\Block\Widget;
 
-
 use ACP3\Modules\ACP3\Polls\View\Block\Frontend\PollVoteFormBlock;
 
 class PollVoteWidgetFormBlock extends PollVoteFormBlock

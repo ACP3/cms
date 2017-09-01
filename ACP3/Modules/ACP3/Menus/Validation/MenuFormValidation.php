@@ -41,7 +41,8 @@ class MenuFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'index_name',
                     'message' => $this->translator->t('menus', 'type_in_index_name')
-                ])
+                ]
+            )
             ->addConstraint(
                 MenuAlreadyExistsValidationRule::class,
                 [
@@ -51,14 +52,16 @@ class MenuFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'menu_id' => $this->menuId
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',
                     'message' => $this->translator->t('menus', 'menu_bar_title_to_short')
-                ]);
+                ]
+            );
 
         $this->validator->validate();
     }

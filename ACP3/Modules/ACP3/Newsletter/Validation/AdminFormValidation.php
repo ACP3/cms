@@ -22,14 +22,16 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'title',
                     'message' => $this->translator->t('newsletter', 'subject_to_short')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'text',
                     'message' => $this->translator->t('newsletter', 'text_to_short')
-                ]);
+                ]
+            );
 
         $this->validator->validate();
     }

@@ -20,7 +20,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('system', 'wrong_email_format')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -30,7 +31,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ]);
+                ]
+            );
 
         $this->validator->validate();
     }

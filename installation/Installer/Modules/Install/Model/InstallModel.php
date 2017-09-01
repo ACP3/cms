@@ -80,8 +80,8 @@ class InstallModel
         TranslatorInterface $translator,
         LocaleInterface $locale,
         Install $installHelper,
-        ModuleInstaller $moduleInstaller)
-    {
+        ModuleInstaller $moduleInstaller
+    ) {
         $this->container = $container;
         $this->appPath = $appPath;
         $this->vendor = $vendor;

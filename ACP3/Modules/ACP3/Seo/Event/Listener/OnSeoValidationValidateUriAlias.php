@@ -29,8 +29,8 @@ class OnSeoValidationValidateUriAlias
      */
     public function __construct(
         ACLInterface $acl,
-        TranslatorInterface $translator)
-    {
+        TranslatorInterface $translator
+    ) {
         $this->translator = $translator;
         $this->acl = $acl;
     }

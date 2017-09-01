@@ -38,8 +38,8 @@ class Pics extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\BlockInterface $block,
         Core\Date $date,
-        Gallery\Model\Repository\GalleryRepository $galleryRepository)
-    {
+        Gallery\Model\Repository\GalleryRepository $galleryRepository
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

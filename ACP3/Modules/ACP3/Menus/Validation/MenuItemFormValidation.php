@@ -28,35 +28,40 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [1, 2, 3, 4]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',
                     'message' => $this->translator->t('menus', 'title_to_short')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'block_id',
                     'message' => $this->translator->t('menus', 'select_menu_bar')
-                ])
+                ]
+            )
             ->addConstraint(
                 ParentIdValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'parent_id',
                     'message' => $this->translator->t('menus', 'select_superior_page')
-                ])
+                ]
+            )
             ->addConstraint(
                 AllowedMenuValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['parent_id', 'block_id'],
                     'message' => $this->translator->t('menus', 'superior_page_not_allowed')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -66,7 +71,8 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -76,14 +82,16 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [1, 2]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 LinkModeValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['mode', 'module', 'uri', 'articles'],
                     'message' => $this->translator->t('menus', 'type_in_uri_and_target')
-                ]);
+                ]
+            );
 
         $this->validator->validate();
     }

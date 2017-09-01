@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\System\View\Block\Admin;
 
-
 use ACP3\Core\Helpers\Date;
 use ACP3\Core\I18n\AvailableLanguagePacks;
 use ACP3\Core\Settings\SettingsInterface;

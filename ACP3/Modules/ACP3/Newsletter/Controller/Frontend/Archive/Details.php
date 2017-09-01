@@ -32,8 +32,8 @@ class Details extends Core\Controller\AbstractFrontendAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\BlockInterface $block,
-        Newsletter\Model\Repository\NewslettersRepository $newsletterRepository)
-    {
+        Newsletter\Model\Repository\NewslettersRepository $newsletterRepository
+    ) {
         parent::__construct($context);
 
         $this->newsletterRepository = $newsletterRepository;
@@ -52,7 +52,6 @@ class Details extends Core\Controller\AbstractFrontendAction
 
         if (!empty($newsletter)) {
             $this->setCacheResponseCacheable();
-
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

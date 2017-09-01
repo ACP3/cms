@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Menus\View\Block\Admin;
 
-
 use ACP3\Core\View\Block\AbstractFormBlock;
 
 class MenuFormBlock extends AbstractFormBlock

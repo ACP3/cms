@@ -32,8 +32,8 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
      */
     public function __construct(
         RouterInterface $router,
-        MetaStatements $metaStatements)
-    {
+        MetaStatements $metaStatements
+    ) {
         $this->router = $router;
         $this->metaStatements = $metaStatements;
     }

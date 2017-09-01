@@ -37,8 +37,8 @@ class Edit extends AbstractFormAction
         Core\View\Block\FormBlockInterface $block,
         Newsletter\Model\NewslettersModel $newsletterModel,
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
-        Newsletter\Helper\SendNewsletter $newsletterHelpers)
-    {
+        Newsletter\Helper\SendNewsletter $newsletterHelpers
+    ) {
         parent::__construct($context, $newsletterHelpers);
 
         $this->newsletterModel = $newsletterModel;

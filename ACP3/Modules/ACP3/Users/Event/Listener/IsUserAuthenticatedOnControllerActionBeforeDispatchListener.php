@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Users\Event\Listener;
 
-
 use ACP3\Core\Authentication\Exception\UnauthorizedAccessException;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Helpers\RedirectMessages;

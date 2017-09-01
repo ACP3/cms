@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\View\Block\Frontend;
 
-
 use ACP3\Core\View\Block\AbstractBlock;
 
 class NewsletterDetailsBlock extends AbstractBlock

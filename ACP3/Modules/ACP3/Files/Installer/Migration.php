@@ -70,7 +70,7 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
             45 => [
                 "ALTER TABLE `{pre}files` ADD COLUMN `sort` INT(10) UNSIGNED NOT NULL AFTER `text`;",
                 "ALTER TABLE `{pre}files` ADD INDEX (`sort`)",
-                function() {
+                function () {
                     $repository = $this->schemaHelper->getContainer()->get('files.model.repository.files_repository');
                     $files = $repository->getAll();
 

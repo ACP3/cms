@@ -30,8 +30,8 @@ class Image extends Core\Controller\AbstractFrontendAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
-        Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository)
-    {
+        Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
+    ) {
         parent::__construct($context);
 
         $this->pictureRepository = $pictureRepository;

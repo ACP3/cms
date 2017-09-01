@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Guestbook\View\Block\Admin;
 
-
 use ACP3\Core\Helpers\Date;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;

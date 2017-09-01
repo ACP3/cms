@@ -32,8 +32,8 @@ class Files extends Core\Controller\AbstractFrontendAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\ListingBlockInterface $block,
-        Categories\Model\Repository\CategoriesRepository $categoryRepository)
-    {
+        Categories\Model\Repository\CategoriesRepository $categoryRepository
+    ) {
         parent::__construct($context);
 
         $this->categoryRepository = $categoryRepository;

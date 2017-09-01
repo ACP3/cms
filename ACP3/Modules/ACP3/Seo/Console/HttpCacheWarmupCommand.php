@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Console;
 
-
 use ACP3\Core\Environment\ApplicationPath;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;

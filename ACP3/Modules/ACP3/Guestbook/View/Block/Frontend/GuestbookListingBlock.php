@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Guestbook\View\Block\Frontend;
 
-
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractListingBlock;
 use ACP3\Core\View\Block\Context\ListingBlockContext;
@@ -115,6 +114,5 @@ class GuestbookListingBlock extends AbstractListingBlock
             'pagination' => $this->pagination->render(),
             'dateformat' => $settings['dateformat']
         ];
-
     }
 }

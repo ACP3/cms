@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Users\View\Block\Widget;
 
-
 use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\View\Block\AbstractBlock;

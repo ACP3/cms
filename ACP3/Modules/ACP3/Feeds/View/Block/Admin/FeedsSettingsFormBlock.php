@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\Feeds\View\Block\Admin;
 
-
 use ACP3\Core\View\Block\AbstractSettingsFormBlock;
 use ACP3\Modules\ACP3\Feeds\Installer\Schema;
 
@@ -30,7 +29,6 @@ class FeedsSettingsFormBlock extends AbstractSettingsFormBlock
             'form' => array_merge($settings, $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken()
         ];
-
     }
 
     /**

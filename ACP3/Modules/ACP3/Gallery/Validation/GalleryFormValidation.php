@@ -39,14 +39,16 @@ class GalleryFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => ['start', 'end'],
                     'message' => $this->translator->t('system', 'select_date')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',
                     'message' => $this->translator->t('gallery', 'type_in_gallery_title')
-                ]);
+                ]
+            );
 
         $this->validator->dispatchValidationEvent(
             'seo.validation.validate_uri_alias',

@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\System\Event\Listener;
 
-
 use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
