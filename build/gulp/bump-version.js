@@ -3,24 +3,44 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-argv = require('yargs').argv;
+const argv = require('yargs').argv;
+const fs = require('fs');
 
 module.exports = (gulp, plugins) => {
     "use strict";
 
-    return function () {
-        if (argv.from === undefined || argv.to === undefined) {
-            plugins.util.log(plugins.util.colors.red('Error: Please specify the arguments "from" and "to".'));
+    function getCurrentVersion() {
+        const content = fs.readFileSync('./package.json');
+
+        return JSON.parse(content).version;
+    }
+
+    function replaceAll(str, find, replace) {
+        return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+    }
+
+    function escapeRegExp(str) {
+        return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+    }
+
+    return () => {
+        let from = getCurrentVersion();
+        let version = from.split('.');
+
+        if (argv.major) {
+            version[0]++;
+            version[1] = version[2] = 0;
+        } else if (argv.minor) {
+            version[1]++;
+            version[2] = 0;
+        } else if (argv.patch) {
+            version[2]++;
+        } else {
+            plugins.util.log(plugins.util.colors.red('Error: Please specify the arguments "major", "minor" or "patch".'));
             return;
         }
 
-        function replaceAll(str, find, replace) {
-            return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
-        }
-
-        function escapeRegExp(str) {
-            return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
-        }
+        const to = version.join('.');
 
         return gulp.src(
             [
@@ -34,8 +54,8 @@ module.exports = (gulp, plugins) => {
                 base: './'
             }
         )
-            .pipe(plugins.change(function (content) {
-                return replaceAll(content, argv.from, argv.to);
+            .pipe(plugins.change((content) => {
+                return replaceAll(content, from, to);
             }))
             .pipe(gulp.dest('./'))
     }
