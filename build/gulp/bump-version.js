@@ -5,7 +5,7 @@
 
 argv = require('yargs').argv;
 
-module.exports = function (gulp, plugins) {
+module.exports = (gulp, plugins) => {
     "use strict";
 
     return function () {
