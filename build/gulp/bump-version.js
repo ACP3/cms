@@ -4,15 +4,15 @@
  */
 
 const argv = require('yargs').argv;
-const fs = require('fs');
 
 module.exports = (gulp, plugins) => {
     "use strict";
 
+    /**
+     * Reads the current version of the ACP3 from the package.json
+     */
     function getCurrentVersion() {
-        const content = fs.readFileSync('./package.json');
-
-        return JSON.parse(content).version;
+        return require('../../package.json').version;
     }
 
     function replaceAll(str, find, replace) {
@@ -23,40 +23,51 @@ module.exports = (gulp, plugins) => {
         return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
     }
 
-    return () => {
-        let from = getCurrentVersion();
-        let version = from.split('.');
+    /**
+     * Bumps a given semantic version number by the given console argument
+     *
+     * @param {string} version The to be bumped semver string
+     * @returns {string} Returns the version bumped version string
+     */
+    function bumpVersion(version) {
+        let versionArray = version.split('.');
 
         if (argv.major) {
-            version[0]++;
-            version[1] = version[2] = 0;
+            versionArray[0]++;
+            versionArray[1] = versionArray[2] = 0;
         } else if (argv.minor) {
-            version[1]++;
-            version[2] = 0;
+            versionArray[1]++;
+            versionArray[2] = 0;
         } else if (argv.patch) {
-            version[2]++;
+            versionArray[2]++;
         } else {
-            plugins.util.log(plugins.util.colors.red('Error: Please specify the arguments "major", "minor" or "patch".'));
-            return;
+            throw new Error('Error: Please specify the arguments "major", "minor" or "patch"!');
         }
 
-        const to = version.join('.');
+        return versionArray.join('.');
+    }
 
-        return gulp.src(
-            [
-                './ACP3/Core/composer.json',
-                './ACP3/Core/Application/BootstrapInterface.php',
-                './ACP3/Modules/ACP3/*/composer.json',
-                './installation/composer.json',
-                './package.json'
-            ],
-            {
-                base: './'
-            }
-        )
-            .pipe(plugins.change((content) => {
-                return replaceAll(content, from, to);
-            }))
-            .pipe(gulp.dest('./'))
+    return () => {
+        try {
+            const from = getCurrentVersion();
+            const bumpedVersion = bumpVersion(from);
+
+            return gulp.src(
+                [
+                    './ACP3/Core/composer.json',
+                    './ACP3/Core/Application/BootstrapInterface.php',
+                    './ACP3/Modules/ACP3/*/composer.json',
+                    './installation/composer.json',
+                    './package.json'
+                ],
+                {
+                    base: './'
+                }
+            ).pipe(plugins.change((content) => {
+                return replaceAll(content, from, bumpedVersion);
+            })).pipe(gulp.dest('./'))
+        } catch (e) {
+            plugins.util.log(plugins.util.colors.red(e.message));
+        }
     }
 };
