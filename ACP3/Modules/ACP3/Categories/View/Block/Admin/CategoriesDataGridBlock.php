@@ -41,7 +41,7 @@ class CategoriesDataGridBlock extends AbstractDataGridBlock
             ->addColumn([
                 'label' => $this->translator->t('categories', 'title'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['title'],
+                'fields' => ['title_nested'],
                 'sortable' => false,
             ], 50)
             ->addColumn([

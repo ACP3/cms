@@ -49,7 +49,6 @@ abstract class AbstractDataGridRepository extends AbstractRepository
 
         $this->addJoin($queryBuilder);
         $this->addWhere($queryBuilder, ...$queryOptions);
-        $this->addGroupBy($queryBuilder);
 
         return (int)$queryBuilder->execute()->fetchColumn();
     }

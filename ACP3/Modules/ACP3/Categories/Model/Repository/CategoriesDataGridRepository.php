@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Categories\Model\Repository;
 
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository;
+use ACP3\Core\Helpers\DataGrid\QueryOption;
 use ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
@@ -21,10 +22,12 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
     protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
         return [
-            'main.*',
+            'c.*',
+            'COUNT(*) - 1 AS level',
+            "CONCAT(REPEAT('&nbsp;&nbsp;', COUNT(*) - 1), c.title) AS title_nested",
             'm.name AS module',
-            '(SELECT MIN(pmin.left_id) FROM ' . $this->getTableName() . ' AS pmin WHERE pmin.module_id = main.module_id) AS `first`',
-            '(SELECT MAX(pmax.left_id) FROM ' . $this->getTableName() . ' AS pmax WHERE pmax.module_id = main.module_id) AS `last`'
+            '(SELECT MIN(cmin.left_id) FROM ' . $this->getTableName() . ' AS cmin WHERE cmin.module_id = c.module_id) AS `first`',
+            '(SELECT MAX(cmax.left_id) FROM ' . $this->getTableName() . ' AS cmax WHERE cmax.module_id = c.module_id) AS `last`'
         ];
     }
 
@@ -33,12 +36,23 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
      */
     protected function addJoin(QueryBuilder $queryBuilder)
     {
+        $queryBuilder->join('main', $this->getTableName(), 'c', true);
         $queryBuilder->leftJoin(
             'main',
             $this->getTableName(ModulesRepository::TABLE_NAME),
             'm',
             'main.module_id = m.id'
         );
+    }
+
+    protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions)
+    {
+        $queryBuilder->where('c.left_id BETWEEN main.left_id AND main.right_id');
+    }
+
+    protected function addGroupBy(QueryBuilder $queryBuilder)
+    {
+        $queryBuilder->addGroupBy('c.left_id');
     }
 
     /**
@@ -48,6 +62,6 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
     {
         $queryBuilder
             ->addOrderBy('module', 'ASC')
-            ->addOrderBy('main.left_id', 'ASC');
+            ->addOrderBy('c.left_id', 'ASC');
     }
 }
