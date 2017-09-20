@@ -35,7 +35,7 @@ class LoggerFactory
      */
     public function create($channel, $level = LogLevel::DEBUG)
     {
-        $fileName = $this->appPath->getCacheDir() . 'logs/' . $channel . '.log';
+        $fileName = $this->appPath->getVarDir() . 'logs/' . $channel . '.log';
 
         $stream = new StreamHandler($fileName, $level);
         $stream->setFormatter(new LineFormatter(null, null, true));

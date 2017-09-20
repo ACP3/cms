@@ -51,6 +51,10 @@ class ApplicationPath
      * @var string
      */
     private $environment;
+    /**
+     * @var string
+     */
+    private $varDir;
 
     /**
      * ApplicationPath constructor.
@@ -66,7 +70,8 @@ class ApplicationPath
         $this->classesDir = $this->appDir . 'Core/';
         $this->modulesDir = $this->appDir . 'Modules/';
         $this->uploadsDir = ACP3_ROOT_DIR . 'uploads/';
-        $this->cacheDir = ACP3_ROOT_DIR . 'cache/' . $applicationMode . '/';
+        $this->varDir = ACP3_ROOT_DIR . 'var/' . $applicationMode . '/';
+        $this->cacheDir = $this->varDir . 'cache/';
         $this->designRootPathInternal = ACP3_ROOT_DIR . 'designs/';
     }
 
@@ -289,5 +294,13 @@ class ApplicationPath
 
         $this->designPathAbsolute = $designPathAbsolute;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVarDir(): string
+    {
+        return $this->varDir;
     }
 }
