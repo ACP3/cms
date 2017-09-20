@@ -24,8 +24,9 @@
                                 <tr>
                                     <td>{$row.name}</td>
                                     <td>{$row.required}</td>
-                                    <td>
-                                        <span style="color:#{$row.color}">{$row.found}{if $row.color == 'f00'} - {lang t="install|installation_impossible"}{/if}</span>
+                                    <td class="{if $row.success}text-success{else}text-danger{/if}">
+                                        {$row.found}
+                                        {if $row.success === false} - {lang t="install|installation_impossible"}{/if}
                                     </td>
                                 </tr>
                             {/foreach}
@@ -33,12 +34,12 @@
                         </table>
                     </div>
                     <div class="col-sm-6">
-                        <ul class="unstyled">
+                        <ul class="list-unstyled">
                             {foreach $files_dirs as $row}
                                 <li>
                                     <strong>{$row.path}</strong>
-                                    <span class="label label-{$row.class_1}">{$row.exists}</span>
-                                    <span class="label label-{$row.class_2}">{$row.writable}</span>
+                                    <span class="label {if $row.exists}label-success{else}label-danger{/if}">{$row.exists_lang}</span>
+                                    <span class="label {if $row.writable}label-success{else}label-danger{/if}">{$row.writable_lang}</span>
                                 </li>
                             {/foreach}
                         </ul>
@@ -55,7 +56,8 @@
                 <ul class="unstyled">
                     {foreach $php_settings as $row}
                         <li>
-                            <strong>{$row.setting}</strong> <span class="label label-{$row.class}">{$row.value}</span>
+                            <strong>{$row.setting}</strong>
+                            <span class="label {if $row.success}label-success{else}label-warning{/if}">{$row.value}</span>
                         </li>
                     {/foreach}
                 </ul>
