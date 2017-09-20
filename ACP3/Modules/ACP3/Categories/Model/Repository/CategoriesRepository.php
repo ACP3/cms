@@ -61,6 +61,18 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
     }
 
     /**
+     * @param int $moduleId
+     * @return array
+     */
+    public function getAllByModuleId(int $moduleId)
+    {
+        return $this->db->fetchAll(
+            'SELECT c.*, COUNT(*)-1 AS `level`, ROUND((c.right_id - c.left_id - 1) / 2) AS children FROM ' . $this->getTableName() . ' AS main, ' . $this->getTableName() . ' AS c WHERE c.module_id = ? AND c.left_id BETWEEN main.left_id AND main.right_id GROUP BY c.left_id ORDER BY c.left_id',
+            [$moduleId]
+        );
+    }
+
+    /**
      * @param int $categoryId
      *
      * @return string

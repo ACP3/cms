@@ -19,5 +19,17 @@
             </div>
         </div>
     {/block}
+    {if !empty($category_tree)}
+        <div class="form-group">
+            <label for="parent-id" class="col-sm-2 control-label required">{lang t="categories|superior_category"}</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="parent_id" id="parent-id" required>
+                    {foreach $category_tree as $row}
+                        <option value="{$row.id}"{$row.selected}>{$row.title}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+    {/if}
     {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/categories"}}
 {/block}

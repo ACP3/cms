@@ -25,6 +25,7 @@
         <item key="module">Modul</item>
         <item key="picture">Bild</item>
         <item key="select_module">Bitte wählen Sie ein Modul aus.</item>
+        <item key="superior_category">Übergeordnete Kategorie</item>
         <item key="title">Titel</item>
         <item key="title_to_short">Der Titel darf nicht leer sein.</item>
     </keys>

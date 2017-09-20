@@ -4,6 +4,7 @@ services:
     arguments:
       - '@core.view.context.form_block_context'
       - '@core.modules'
+      - '@categories.model.repository.categories_repository'
 
   categories.view.block.admin.categories_settings_form_block:
     class: ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoriesSettingsFormBlock
