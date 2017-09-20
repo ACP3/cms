@@ -100,8 +100,9 @@
         <item key="step_1_paragraph_1">Welcome to the installation of ACP3 CMS. This installation wizard will help you
             to install the ACP3 CMS and getting it initially configured.
         </item>
-        <item key="step_3_legend_1"><![CDATA[General requirements &amp; write access]]></item>
-        <item key="step_3_legend_2">PHP Settings</item>
+        <item key="step_3_legend_1">General requirements</item>
+        <item key="step_3_legend_2">File und folder rights</item>
+        <item key="step_3_legend_3">PHP Settings</item>
         <item key="step_3_paragraph_1">These requirements have to be fulfilled, otherwise you can't successfully install
             the ACP3. Furthermore, it is checked whether there are certain files and folders writable.
         </item>

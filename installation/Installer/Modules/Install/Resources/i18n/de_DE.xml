@@ -102,8 +102,9 @@
         <item key="step_1_paragraph_1">Herzlich willkommen zur Installation des ACP3 CMS. Dieser Installationsassistent
             wird Ihnen dabei helfen, das ACP3 CMS zu installieren und grundlegend zu konfigurieren.
         </item>
-        <item key="step_3_legend_1"><![CDATA[Allgemeine Systemvoraussetzungen &amp; Ordner-Rechte]]></item>
-        <item key="step_3_legend_2">PHP Einstellungen</item>
+        <item key="step_3_legend_1">Allgemeine Systemvoraussetzungen</item>
+        <item key="step_3_legend_2">Datei- und Ordner-Rechte</item>
+        <item key="step_3_legend_3">PHP Einstellungen</item>
         <item key="step_3_paragraph_1">Diese Voraussetzungen müssen unbedingt erfüllt sein, da das ACP3 ansonsten nicht
             einwandfrei installiert und ausgeführt werden kann. Des Weiteren wird überprüft, ob für bestimmte Dateien
             und Ordner Schreibrechte existieren.

@@ -2,58 +2,63 @@
 
 {block CONTENT}
     <div class="row">
-        <div class="col-sm-7">
+        <div class="col-md-7">
             <fieldset>
                 <legend>{lang t="install|step_3_legend_1"}</legend>
                 <p>
                     {lang t="install|step_3_paragraph_1"}
                 </p>
-
-                <div class="row">
-                    <div class="col-sm-6">
-                        <table class="table table-condensed">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th style="width:33%">{lang t="install|required"}</th>
-                                <th style="width:33%">{lang t="install|found"}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {foreach $requirements as $row}
-                                <tr>
-                                    <td>{$row.name}</td>
-                                    <td>{$row.required}</td>
-                                    <td class="{if $row.success}text-success{else}text-danger{/if}">
-                                        {$row.found}
-                                        {if $row.success === false} - {lang t="install|installation_impossible"}{/if}
-                                    </td>
-                                </tr>
-                            {/foreach}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-sm-6">
-                        <ul class="list-unstyled">
-                            {foreach $files_dirs as $row}
-                                <li>
-                                    <strong>{$row.path}</strong>
-                                    <span class="label {if $row.exists}label-success{else}label-danger{/if}">{$row.exists_lang}</span>
-                                    <span class="label {if $row.writable}label-success{else}label-danger{/if}">{$row.writable_lang}</span>
-                                </li>
-                            {/foreach}
-                        </ul>
-                    </div>
-                </div>
+                <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th style="width:33%">{lang t="install|required"}</th>
+                        <th style="width:33%">{lang t="install|found"}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $requirements as $row}
+                        <tr>
+                            <td>{$row.name}</td>
+                            <td>{$row.required}</td>
+                            <td>
+                                {$row.found}
+                            </td>
+                            <td class="{if $row.success}text-success{else}text-danger{/if}">
+                                {if $row.success}
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                {else}
+                                    <i class="glyphicon glyphicon-remove" title="{lang t="install|installation_impossible"}"></i>
+                                {/if}
+                            </td>
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
             </fieldset>
-        </div>
-        <div class="col-sm-5">
             <fieldset>
                 <legend>{lang t="install|step_3_legend_2"}</legend>
+                <dl class="dl-horizontal modules-list">
+                    {foreach $files_dirs as $row}
+                        <dt>
+                            {$row.path}
+                        </dt>
+                        <dd>
+                            <span class="label {if $row.exists}label-success{else}label-danger{/if}">{$row.exists_lang}</span>
+                            <span class="label {if $row.writable}label-success{else}label-danger{/if}">{$row.writable_lang}</span>
+                        </dd>
+                    {/foreach}
+                </dl>
+            </fieldset>
+        </div>
+        <div class="col-md-5">
+            <fieldset>
+                <legend>{lang t="install|step_3_legend_3"}</legend>
                 <p>
                     {lang t="install|step_3_paragraph_2"}
                 </p>
-                <ul class="unstyled">
+                <ul class="list-unstyled">
                     {foreach $php_settings as $row}
                         <li>
                             <strong>{$row.setting}</strong>
