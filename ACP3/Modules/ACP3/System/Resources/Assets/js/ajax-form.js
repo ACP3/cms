@@ -9,7 +9,8 @@
     const pluginName = "formSubmit",
         defaults = {
             targetElement: '#content',
-            customFormData: null
+            customFormData: null,
+            loadingLayerActiveClass: 'loading-layer_active'
         };
 
     function Plugin(element, options) {
@@ -205,13 +206,13 @@
 
                 $(html).appendTo($body);
 
-                setTimeout(function () {
+                setTimeout(() => {
                     $loadingLayer = $($loadingLayer.selector);
 
-                    $loadingLayer.addClass('loading-layer_active');
+                    $loadingLayer.addClass(this.settings.loadingLayerActiveClass);
                 }, 10);
             } else {
-                $loadingLayer.addClass('loading-layer_active');
+                $loadingLayer.addClass(this.settings.loadingLayerActiveClass);
             }
 
             if (typeof $submitButton !== "undefined") {
@@ -234,7 +235,7 @@
             }
         },
         hideLoadingLayer: function ($submitButton) {
-            $('#loading-layer').removeClass('loading-layer__active');
+            $('#loading-layer').removeClass(this.settings.loadingLayerActiveClass);
 
             if (typeof $submitButton !== "undefined") {
                 $submitButton.prop('disabled', false);
