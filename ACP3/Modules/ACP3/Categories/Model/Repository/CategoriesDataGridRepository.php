@@ -16,6 +16,67 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
 {
     const TABLE_NAME = CategoriesRepository::TABLE_NAME;
 
+    public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions)
+    {
+        $results = parent::getAll($columns, ...$queryOptions);
+
+        return $this->calculateFirstAndLastPage($results);
+    }
+
+    /**
+     * @param array $results
+     * @return array
+     */
+    private function calculateFirstAndLastPage(array $results)
+    {
+        foreach ($results as $index => &$result) {
+            $result['first'] = $this->isFirstInSet($index, $results);
+            $result['last'] = $this->isLastItemInSet($index, $results);
+        }
+        return $results;
+    }
+
+    /**
+     * @param int $index
+     * @param array $nestedSet
+     *
+     * @return bool
+     */
+    private function isFirstInSet(int $index, array $nestedSet): bool
+    {
+        if ($index > 0) {
+            for ($j = $index - 1; $j >= 0; --$j) {
+                if ($nestedSet[$j]['parent_id'] == $nestedSet[$index]['parent_id']
+                    && $nestedSet[$j]['module_id'] == $nestedSet[$index]['module_id']
+                ) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param int $index
+     * @param array $nestedSet
+     *
+     * @return bool
+     */
+    private function isLastItemInSet(int $index, array $nestedSet): bool
+    {
+        $cItems = count($nestedSet);
+        for ($j = $index + 1; $j < $cItems; ++$j) {
+            if ($nestedSet[$index]['parent_id'] == $nestedSet[$j]['parent_id']
+                && $nestedSet[$j]['module_id'] == $nestedSet[$index]['module_id']
+            ) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     /**
      * @inheritdoc
      */
@@ -26,8 +87,6 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
             'COUNT(*) - 1 AS level',
             "CONCAT(REPEAT('&nbsp;&nbsp;', COUNT(*) - 1), c.title) AS title_nested",
             'm.name AS module',
-            '(SELECT MIN(cmin.left_id) FROM ' . $this->getTableName() . ' AS cmin WHERE cmin.module_id = c.module_id) AS `first`',
-            '(SELECT MAX(cmax.left_id) FROM ' . $this->getTableName() . ' AS cmax WHERE cmax.module_id = c.module_id) AS `last`'
         ];
     }
 
