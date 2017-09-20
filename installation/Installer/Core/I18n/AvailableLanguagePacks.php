@@ -36,4 +36,17 @@ class AvailableLanguagePacks
             && !preg_match('=/=', $locale)
             && is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $locale . '.xml') === true;
     }
+
+    /**
+     * @return string[] An array which contains the iso codes of the available language packs
+     */
+    public function getAll(): array
+    {
+        $languagePacks = [];
+        foreach (glob($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/*.xml') as $languagePack) {
+            $languagePacks[] = substr($languagePack, strrpos($languagePack, '/') + 1, -4);
+        }
+
+        return $languagePacks;
+    }
 }

@@ -73,11 +73,15 @@ class Locale implements LocaleInterface
         } else {
             $this->locale = 'en_US'; // Fallback language
 
+            $availableLanguagePacks = $this->availableLanguagePacks->getAll();
+
             foreach ($this->request->getUserAgent()->parseAcceptLanguage() as $locale => $headerItem) {
                 $locale = str_replace('-', '_', $locale);
-                if ($this->availableLanguagePacks->languagePackExists($locale) === true) {
-                    $this->locale = $locale;
-                    break;
+                foreach ($availableLanguagePacks as $languagePack) {
+                    if ($locale === $languagePack || $locale === substr($languagePack, 0, strpos($languagePack, '_'))) {
+                        $this->locale = $languagePack;
+                        break 2;
+                    }
                 }
             }
         }
