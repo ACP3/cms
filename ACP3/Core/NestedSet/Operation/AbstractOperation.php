@@ -99,4 +99,14 @@ abstract class AbstractOperation
             [$diff, $diff, $leftId]
         );
     }
+
+    /**
+     * Returns the name of the block
+     *
+     * @return string
+     */
+    protected function getBlockColumnName(): string
+    {
+        return $this->nestedSetRepository::BLOCK_COLUMN_NAME;
+    }
 }

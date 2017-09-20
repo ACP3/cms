@@ -67,6 +67,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                     'create' => PrivilegeEnum::ADMIN_CREATE,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
+                    'order' => PrivilegeEnum::ADMIN_CREATE,
                     'settings' => PrivilegeEnum::ADMIN_SETTINGS
                 ]
             ],
@@ -86,6 +87,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 36;
+        return 37;
     }
 }

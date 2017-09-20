@@ -41,6 +41,9 @@ class Migration extends AbstractMigration
 
                     return true;
                 }
+            ],
+            37 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'order', '', 4);",
             ]
         ];
     }

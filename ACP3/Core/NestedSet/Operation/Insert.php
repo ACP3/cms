@@ -25,7 +25,7 @@ class Insert extends AbstractOperation
             // No parent item has been assigned
             if ($this->nestedSetRepository->nodeExists((int)$parentId) === false) {
                 // Select the last result set
-                $maxRightId = $this->fetchMaximumRightId($insertValues['block_id']);
+                $maxRightId = $this->fetchMaximumRightId($insertValues[$this->getBlockColumnName()]);
 
                 $insertValues['left_id'] = $maxRightId + 1;
                 $insertValues['right_id'] = $maxRightId + 2;

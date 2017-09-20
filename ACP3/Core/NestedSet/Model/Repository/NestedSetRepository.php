@@ -14,6 +14,8 @@ use ACP3\Core\Model\Repository\AbstractRepository;
  */
 abstract class NestedSetRepository extends AbstractRepository
 {
+    const BLOCK_COLUMN_NAME = 'block_id';
+
     /**
      * Die aktuelle Seite mit allen untergeordneten Seiten selektieren
      *
@@ -68,11 +70,11 @@ abstract class NestedSetRepository extends AbstractRepository
      */
     public function nextNodeExists(int $rightId, int $blockId = 0)
     {
-        $where = ($blockId !== 0) ? ' AND block_id = ?' : '';
+        $where = ($blockId !== 0) ? " AND " . static::BLOCK_COLUMN_NAME . " = ?" : '';
         return $this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE right_id = ? {$where}",
-            [$rightId, $blockId]
-        ) > 0;
+                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE right_id = ? {$where}",
+                [$rightId, $blockId]
+            ) > 0;
     }
 
     /**
@@ -82,11 +84,11 @@ abstract class NestedSetRepository extends AbstractRepository
      */
     public function previousNodeExists(int $rightId, int $blockId = 0)
     {
-        $where = ($blockId !== 0) ? ' AND block_id = ?' : '';
+        $where = ($blockId !== 0) ? ' AND ' . static::BLOCK_COLUMN_NAME . ' = ?' : '';
         return $this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE left_id = ? {$where}",
-            [$rightId, $blockId]
-        ) > 0;
+                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE left_id = ? {$where}",
+                [$rightId, $blockId]
+            ) > 0;
     }
 
     /**
@@ -109,9 +111,9 @@ abstract class NestedSetRepository extends AbstractRepository
     public function nodeIsRootItem(int $leftId, int $rightId)
     {
         return $this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE left_id < ? AND right_id > ?",
-            [$leftId, $rightId]
-        ) == 0;
+                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE left_id < ? AND right_id > ?",
+                [$leftId, $rightId]
+            ) == 0;
     }
 
     /**
@@ -147,7 +149,7 @@ abstract class NestedSetRepository extends AbstractRepository
     public function fetchMaximumRightIdByBlockId(int $blockId)
     {
         return (int)$this->db->fetchColumn(
-            "SELECT MAX(`right_id`) FROM {$this->getTableName()} WHERE block_id = ?",
+            "SELECT MAX(`right_id`) FROM {$this->getTableName()} WHERE " . static::BLOCK_COLUMN_NAME . " = ?",
             [$blockId]
         );
     }
@@ -167,7 +169,7 @@ abstract class NestedSetRepository extends AbstractRepository
     public function fetchMinimumLeftIdByBlockId(int $blockId)
     {
         return (int)$this->db->fetchColumn(
-            "SELECT MIN(`left_id`) AS left_id FROM {$this->getTableName()} WHERE block_id = ?",
+            "SELECT MIN(`left_id`) AS left_id FROM {$this->getTableName()} WHERE " . static::BLOCK_COLUMN_NAME . " = ?",
             [$blockId]
         );
     }

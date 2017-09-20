@@ -9,11 +9,29 @@ namespace ACP3\Modules\ACP3\Categories\View\Block\Admin;
 use ACP3\Core;
 use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
+use ACP3\Core\View\Block\Context\DataGridBlockContext;
 use ACP3\Modules\ACP3\Categories\Installer\Schema;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CategoriesDataGridBlock extends AbstractDataGridBlock
 {
+    /**
+     * @var Core\ACL\ACLInterface
+     */
+    private $acl;
+
+    /**
+     * CategoriesDataGridBlock constructor.
+     * @param DataGridBlockContext $context
+     * @param Core\ACL\ACLInterface $acl
+     */
+    public function __construct(DataGridBlockContext $context, Core\ACL\ACLInterface $acl)
+    {
+        parent::__construct($context);
+
+        $this->acl = $acl;
+    }
+
     /**
      * @inheritdoc
      */
@@ -24,24 +42,41 @@ class CategoriesDataGridBlock extends AbstractDataGridBlock
                 'label' => $this->translator->t('categories', 'title'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['title'],
-                'default_sort' => true
-            ], 30)
+                'sortable' => false,
+            ], 50)
             ->addColumn([
                 'label' => $this->translator->t('system', 'description'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['description']
-            ], 20)
+                'fields' => ['description'],
+                'sortable' => false,
+            ], 40)
             ->addColumn([
                 'label' => $this->translator->t('categories', 'module'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer::class,
                 'fields' => ['module'],
-            ], 20)
+                'sortable' => false,
+            ], 30)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
+                'sortable' => false,
             ], 10);
+
+        if ($this->acl->hasPermission('admin/categories/index/order')) {
+            $dataGrid
+                ->addColumn([
+                    'label' => $this->translator->t('system', 'order'),
+                    'type' => Core\Helpers\DataGrid\ColumnRenderer\SortColumnRenderer::class,
+                    'fields' => ['left_id'],
+                    'sortable' => false,
+                    'custom' => [
+                        'route_sort_down' => 'acp/categories/index/order/id_%d/action_down',
+                        'route_sort_up' => 'acp/categories/index/order/id_%d/action_up',
+                    ]
+                ], 20);
+        }
     }
 
     /**

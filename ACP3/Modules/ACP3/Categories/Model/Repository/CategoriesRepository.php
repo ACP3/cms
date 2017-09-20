@@ -13,6 +13,7 @@ use ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository;
 class CategoriesRepository extends NestedSetRepository implements BlockAwareNestedSetRepositoryInterface
 {
     const TABLE_NAME = 'categories';
+    const BLOCK_COLUMN_NAME = 'module_id';
 
     /**
      * @param int $categoryId

@@ -15,5 +15,6 @@ services:
     class: ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoriesDataGridBlock
     arguments:
       - '@core.view.context.data_grid_block_context'
+      - '@core.acl'
     calls:
       - ['setDataGridRepository', ['@categories.model.repository.categories_data_grid_repository']]

@@ -22,7 +22,9 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
     {
         return [
             'main.*',
-            'm.name AS module'
+            'm.name AS module',
+            '(SELECT MIN(pmin.left_id) FROM ' . $this->getTableName() . ' AS pmin WHERE pmin.module_id = main.module_id) AS `first`',
+            '(SELECT MAX(pmax.left_id) FROM ' . $this->getTableName() . ' AS pmax WHERE pmax.module_id = main.module_id) AS `last`'
         ];
     }
 
@@ -46,7 +48,6 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
     {
         $queryBuilder
             ->addOrderBy('module', 'ASC')
-            ->addOrderBy('main.title', 'DESC')
-            ->addOrderBy('main.id', 'DESC');
+            ->addOrderBy('main.left_id', 'ASC');
     }
 }
