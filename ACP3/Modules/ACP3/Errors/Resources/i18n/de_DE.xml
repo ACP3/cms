@@ -8,6 +8,7 @@
         <item key="frontend_index_access_forbidden">Zugriff verweigert</item>
         <item key="frontend_index_not_found">Seite nicht gefunden</item>
         <item key="frontend_index_server_error">Interner Serverfehler</item>
+        <item key="go_to_homepage">Zur Startseite</item>
         <item key="server_unavailable">Der Server ist derzeit nicht in der Lage die Anfrage zu bearbeiten. Entweder ist der Server derzeit überlastet oder wegen Wartungsarbeiten nicht verfügbar. Bitte versuchen Sie es in einigen Minuten erneut.</item>
         <item key="tpl_not_found">Das angeforderte Template %s konnte nicht gefunden werden.</item>
     </keys>
