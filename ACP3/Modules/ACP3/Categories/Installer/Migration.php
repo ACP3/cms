@@ -1,11 +1,9 @@
 <?php
 namespace ACP3\Modules\ACP3\Categories\Installer;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\Categories\Installer
- */
-class Migration implements \ACP3\Core\Installer\MigrationInterface
+use ACP3\Core\Installer\AbstractMigration;
+
+class Migration extends AbstractMigration
 {
     /**
      * @inheritdoc
@@ -28,6 +26,16 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
                 "DELETE FROM `{pre}categories` WHERE `module_id` NOT IN (SELECT `id` FROM `{pre}modules`);",
                 "ALTER TABLE `{pre}categories` ADD INDEX (`module_id`)",
                 "ALTER TABLE `{pre}categories` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE"
+            ],
+            35 => [
+                "ALTER TABLE `{pre}categories` ADD COLUMN `root_id` INT(10) UNSIGNED NOT NULL AFTER `id`;",
+                "ALTER TABLE `{pre}categories` ADD COLUMN `parent_id` INT(10) UNSIGNED NOT NULL AFTER `root_id`;",
+                "ALTER TABLE `{pre}categories` ADD COLUMN `left_id` INT(10) UNSIGNED NOT NULL AFTER `parent_id`;",
+                "ALTER TABLE `{pre}categories` ADD COLUMN `right_id` INT(10) UNSIGNED NOT NULL AFTER `left_id`;",
+                "ALTER TABLE `{pre}categories` ADD INDEX `left_id` (`left_id`);",
+                "UPDATE `{pre}categories` SET `root_id` = `id`, `parent_id` = 0;"
+            ],
+            36 => [
             ]
         ];
     }
