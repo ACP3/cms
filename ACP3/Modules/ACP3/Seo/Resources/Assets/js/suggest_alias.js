@@ -6,7 +6,7 @@
 ;(function ($) {
     "use strict";
 
-    var pluginName = "suggestAlias",
+    const pluginName = "suggestAlias",
         defaults = {
             prefix: '',
             slugBaseElement: null,
@@ -24,38 +24,33 @@
 
     $.extend(Plugin.prototype, {
         init: function () {
-            var that = this;
-
-            $(this.element).on('click', function (e) {
+            $(this.element).on('click', (e) => {
                 e.preventDefault();
 
-                that.performAjaxRequest();
+                this.performAjaxRequest();
             });
         },
         performAjaxRequest: function () {
             if (this.canPerformAjaxRequest()) {
-                var that = this;
-
                 $.ajax({
-                    url: that.element.href,
+                    url: this.element.href,
                     type: 'post',
                     data: {
-                        prefix: that.settings.prefix,
-                        title: that.settings.slugBaseElement.val()
+                        prefix: this.settings.prefix,
+                        title: this.settings.slugBaseElement.val()
                     },
-                    beforeSend: function () {
-                        $(that.element).addClass('disabled');
-                    },
-                    success: function (responseData) {
-                        try {
-                            if (typeof responseData.alias !== "undefined" && responseData.alias.length > 0) {
-                                $(that.settings.aliasElement).val(responseData.alias);
-                            }
-                        } catch (err) {
-                            console.log(err.message);
-                        } finally {
-                            $(that.element).removeClass('disabled');
+                    beforeSend: () => {
+                        $(this.element).addClass('disabled');
+                    }
+                }).done((responseData) => {
+                    try {
+                        if (typeof responseData.alias !== "undefined" && responseData.alias.length > 0) {
+                            $(this.settings.aliasElement).val(responseData.alias);
                         }
+                    } catch (err) {
+                        console.log(err.message);
+                    } finally {
+                        $(this.element).removeClass('disabled');
                     }
                 });
             }

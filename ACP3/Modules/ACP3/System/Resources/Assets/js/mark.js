@@ -1,4 +1,4 @@
-var cssClassName = 'info';
+const cssClassName = 'info';
 
 /**
  * Marks all visible results
@@ -8,10 +8,10 @@ var cssClassName = 'info';
  * @param action
  */
 function markEntries($markAllElem, name, action) {
-    var fields = $markAllElem.parents('thead:first').next('tbody').find('input[name="' + name + '[]"]:visible');
+    const fields = $markAllElem.parents('thead:first').next('tbody').find('input[name="' + name + '[]"]:visible');
 
     jQuery.each(fields, function () {
-        var $tableRows = $(this).prop('checked', (action === 'add')).parents('tr:first');
+        const $tableRows = $(this).prop('checked', (action === 'add')).parents('tr:first');
 
         if (action === 'add') {
             $tableRows.addClass(cssClassName);
@@ -27,11 +27,11 @@ function markEntries($markAllElem, name, action) {
  * @returns {*|jQuery|HTMLElement}
  */
 jQuery.fn.highlightTableRow = function (checkboxName) {
-    var $markAllCheckbox = $(this);
+    const $markAllCheckbox = $(this);
 
     $markAllCheckbox.closest('table')
         .on('click', 'tr:has(td :checkbox)', function (e) {
-            var $tableRow = $(this),
+            const $tableRow = $(this),
                 $tbody = $tableRow.closest('tbody');
 
             if (e.target.type !== 'checkbox') {
@@ -39,7 +39,7 @@ jQuery.fn.highlightTableRow = function (checkboxName) {
                     return;
                 }
 
-                var $elem = $('input[name="' + checkboxName + '[]"]', this);
+                const $elem = $('input[name="' + checkboxName + '[]"]', this);
                 $elem.prop('checked', !$elem.is(':checked'));
             }
 
@@ -62,7 +62,7 @@ jQuery.fn.highlightTableRow = function (checkboxName) {
  * @returns {*|jQuery|HTMLElement}
  */
 jQuery.fn.deleteMarkedResults = function (options) {
-    var defaults = {
+    const defaults = {
             checkBoxName: '',
             language: {
                 confirmationTextSingle: '',
@@ -76,18 +76,18 @@ jQuery.fn.deleteMarkedResults = function (options) {
     $this.on('click', function (e) {
         e.preventDefault();
 
-        var $entries = $('form .table input[name="' + settings.checkBoxName + '[]"]:checked');
+        const $entries = $('form .table input[name="' + settings.checkBoxName + '[]"]:checked');
 
         if ($entries.length > 0) {
-            var data = {
+            const data = {
                 action: 'confirmed'
             };
 
-            var confirmationText = $entries.length === 1 ? settings.language.confirmationTextSingle : (settings.language.confirmationTextMultiple.replace('{items}', $entries.length));
+            const confirmationText = $entries.length === 1 ? settings.language.confirmationTextSingle : (settings.language.confirmationTextMultiple.replace('{items}', $entries.length));
 
             bootbox.confirm(confirmationText, function (result) {
                 if (result) {
-                    var $form = $this.closest('form');
+                    const $form = $this.closest('form');
 
                     $form.formSubmit({ customFormData: data });
                     $form.triggerHandler('submit');
@@ -102,10 +102,10 @@ jQuery.fn.deleteMarkedResults = function (options) {
 };
 
 jQuery(document).ready(function($) {
-    var $markAll = $('[data-mark-all-id]');
+    const $markAll = $('[data-mark-all-id]');
 
-    $markAll.each(function () {
-        var $this = $(this);
+    $markAll.each((index, element) => {
+        const $this = $(element);
 
         $this
             .click(function () {

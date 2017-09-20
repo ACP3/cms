@@ -5,7 +5,7 @@
 
 jQuery(document).ready(function ($) {
     $('[data-datatable-init]').each(function() {
-        var $this = $(this),
+        const $this = $(this),
             json = $this.data('datatable-init');
 
         $this.dataTable(json);

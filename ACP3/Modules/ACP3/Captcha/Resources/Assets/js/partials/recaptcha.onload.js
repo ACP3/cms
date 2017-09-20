@@ -3,9 +3,9 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-var onloadCallback = function() {
-    jQuery('.recaptcha-placeholder').each(function() {
-        this.innerHtml = '';
+let onloadCallback = function() {
+    jQuery('.recaptcha-placeholder').each((index, element) => {
+        element.innerHtml = '';
 
         grecaptcha.render(this.id, {
             'sitekey': this.dataset.sitekey,
