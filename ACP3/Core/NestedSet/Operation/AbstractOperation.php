@@ -21,7 +21,7 @@ abstract class AbstractOperation
      */
     protected $db;
     /**
-     * @var \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository
+     * @var \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository|BlockAwareNestedSetRepositoryInterface
      */
     protected $nestedSetRepository;
     /**

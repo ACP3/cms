@@ -86,6 +86,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 35;
+        return 36;
     }
 }

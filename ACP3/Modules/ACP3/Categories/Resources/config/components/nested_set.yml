@@ -17,6 +17,12 @@ services:
       - '@core.db'
       - '@categories.model.repository.categories_repository'
 
+  categories.nested_set.operation.repair:
+    class: ACP3\Core\NestedSet\Operation\Repair
+    arguments:
+      - '@core.db'
+      - '@categories.model.repository.categories_repository'
+
   categories.nested_set.operation.sort:
     class: ACP3\Core\NestedSet\Operation\Sort
     arguments:

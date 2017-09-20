@@ -54,15 +54,13 @@ class CommentsRepository extends Core\Model\Repository\AbstractRepository implem
     }
 
     /**
-     * @param int $commentId
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function getOneById($commentId)
+    public function getOneById(int $entryId)
     {
         return $this->db->fetchAssoc(
             'SELECT c.*, m.name AS module FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.id = ?',
-            [$commentId]
+            [$entryId]
         );
     }
 

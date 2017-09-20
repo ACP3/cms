@@ -27,13 +27,11 @@ class GalleryPicturesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $pictureId
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function getOneById($pictureId)
+    public function getOneById(int $entryId)
     {
-        return $this->db->fetchAssoc('SELECT g.id AS gallery_id, g.title, p.* FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = ? AND p.gallery_id = g.id', [$pictureId]);
+        return $this->db->fetchAssoc('SELECT g.id AS gallery_id, g.title, p.* FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = ? AND p.gallery_id = g.id', [$entryId]);
     }
 
     /**

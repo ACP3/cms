@@ -6,10 +6,11 @@
 
 namespace ACP3\Modules\ACP3\Categories\Model\Repository;
 
-use ACP3\Core;
+use ACP3\Core\NestedSet\Model\Repository\BlockAwareNestedSetRepositoryInterface;
+use ACP3\Core\NestedSet\Model\Repository\NestedSetRepository;
 use ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository;
 
-class CategoriesRepository extends Core\NestedSet\Model\Repository\NestedSetRepository
+class CategoriesRepository extends NestedSetRepository implements BlockAwareNestedSetRepositoryInterface
 {
     const TABLE_NAME = 'categories';
 
@@ -18,7 +19,7 @@ class CategoriesRepository extends Core\NestedSet\Model\Repository\NestedSetRepo
      *
      * @return bool
      */
-    public function resultExists($categoryId)
+    public function resultExists(int $categoryId)
     {
         return (int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = ?", [$categoryId]) > 0;
     }
@@ -30,7 +31,7 @@ class CategoriesRepository extends Core\NestedSet\Model\Repository\NestedSetRepo
      *
      * @return bool
      */
-    public function resultIsDuplicate($title, $moduleId, $categoryId)
+    public function resultIsDuplicate(string $title, int $moduleId, int $categoryId)
     {
         return (int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE title = ? AND module_id = ? AND id != ?", [$title, $moduleId, $categoryId]) > 0;
     }
@@ -38,19 +39,9 @@ class CategoriesRepository extends Core\NestedSet\Model\Repository\NestedSetRepo
     /**
      * @param int $categoryId
      *
-     * @return array
-     */
-    public function getOneById($categoryId)
-    {
-        return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE id = ?", [$categoryId]);
-    }
-
-    /**
-     * @param int $categoryId
-     *
      * @return string
      */
-    public function getTitleById($categoryId)
+    public function getTitleById(int $categoryId)
     {
         return $this->db->fetchColumn("SELECT `title` FROM {$this->getTableName()} WHERE id = ?", [$categoryId]);
     }
@@ -60,7 +51,7 @@ class CategoriesRepository extends Core\NestedSet\Model\Repository\NestedSetRepo
      *
      * @return array
      */
-    public function getAllByModuleName($moduleName)
+    public function getAllByModuleName(string $moduleName)
     {
         return $this->db->fetchAll(
             'SELECT c.* FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE m.name = ? ORDER BY c.title ASC',
@@ -73,7 +64,7 @@ class CategoriesRepository extends Core\NestedSet\Model\Repository\NestedSetRepo
      *
      * @return string
      */
-    public function getModuleNameFromCategoryId($categoryId)
+    public function getModuleNameFromCategoryId(int $categoryId)
     {
         return $this->db->fetchColumn(
             'SELECT m.name FROM ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m JOIN ' . $this->getTableName() . ' AS c ON(m.id = c.module_id) WHERE c.id = ?',
@@ -86,7 +77,7 @@ class CategoriesRepository extends Core\NestedSet\Model\Repository\NestedSetRepo
      *
      * @return int
      */
-    public function getModuleIdByCategoryId($categoryId)
+    public function getModuleIdByCategoryId(int $categoryId)
     {
         return (int)$this->db->fetchColumn("SELECT `module_id` FROM {$this->getTableName()} WHERE `id` = ?", [$categoryId]);
     }
@@ -96,7 +87,7 @@ class CategoriesRepository extends Core\NestedSet\Model\Repository\NestedSetRepo
      *
      * @return array
      */
-    public function getCategoryDeleteInfosById($categoryId)
+    public function getCategoryDeleteInfosById(int $categoryId)
     {
         return $this->db->fetchAssoc(
             'SELECT c.picture, m.name AS module FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.id = ?',
@@ -110,11 +101,19 @@ class CategoriesRepository extends Core\NestedSet\Model\Repository\NestedSetRepo
      *
      * @return array
      */
-    public function getOneByTitleAndModule($title, $moduleName)
+    public function getOneByTitleAndModule(string $title, string $moduleName)
     {
         return $this->db->fetchAssoc(
             'SELECT c.* FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.title = ? AND m.name = ?',
             [$title, $moduleName]
         );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function fetchAllSortedByBlock(): array
+    {
+        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()} ORDER BY `module_id` ASC");
     }
 }

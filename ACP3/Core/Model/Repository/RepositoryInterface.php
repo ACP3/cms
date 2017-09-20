@@ -47,8 +47,7 @@ interface RepositoryInterface
 
     /**
      * @param int $entryId
-     *
      * @return array
      */
-    public function getOneById($entryId);
+    public function getOneById(int $entryId);
 }

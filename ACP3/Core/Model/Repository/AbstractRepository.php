@@ -123,11 +123,9 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * @param int $entryId
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function getOneById($entryId)
+    public function getOneById(int $entryId)
     {
         return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE id = ?", [$entryId]);
     }
