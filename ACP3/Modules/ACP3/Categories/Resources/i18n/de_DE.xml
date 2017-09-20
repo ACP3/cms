@@ -23,9 +23,12 @@
         </item>
         <item key="invalid_image_width_entered">Bitte geben Sie die maximale Bildbreite in Pixel an.</item>
         <item key="module">Modul</item>
+        <item key="no_superior_category">Keine übergeordnete Kategorie</item>
         <item key="picture">Bild</item>
         <item key="select_module">Bitte wählen Sie ein Modul aus.</item>
+        <item key="select_superior_category">Bitte wählen Sie eine übergeordnete Kategorie aus.</item>
         <item key="superior_category">Übergeordnete Kategorie</item>
+        <item key="superior_category_not_allowed">Die ausgewählte Kategorie kann nicht als übergeordnete Kategorie verwendet werden.</item>
         <item key="title">Titel</item>
         <item key="title_to_short">Der Titel darf nicht leer sein.</item>
     </keys>

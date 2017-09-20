@@ -32,7 +32,7 @@
         <item key="select_page_type">Bitte wählen Sie den Seitentyp aus.</item>
         <item key="select_superior_page">Bitte wählen Sie eine übergeordnete Seite aus.</item>
         <item key="superior_page">Übergeordnete Seite</item>
-        <item key="superior_page_not_allowed">Die gerade ausgewählte Seite kann nicht als übergeordnete Seite verwendet werden.</item>
+        <item key="superior_page_not_allowed">Die ausgewählte Seite kann nicht als übergeordnete Seite verwendet werden.</item>
         <item key="target_page">Zielseite</item>
         <item key="title">Name des Menüpunkts</item>
         <item key="title_to_short">Der Name des Menüpunkts darf nicht leer sein.</item>

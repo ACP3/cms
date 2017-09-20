@@ -4,7 +4,9 @@ namespace ACP3\Modules\ACP3\Categories\Validation;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
+use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\AllowedSuperiorCategoryValidationRule;
 use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule;
+use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\ParentIdValidationRule;
 
 /**
  * Class AdminFormValidation
@@ -119,14 +121,31 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                         'category_id' => $this->categoryId
                     ]
                 ]
+            )
+            ->addConstraint(
+                ParentIdValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'parent_id',
+                    'message' => $this->translator->t('menus', 'select_superior_category')
+                ]
+            )
+            ->addConstraint(
+                AllowedSuperiorCategoryValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => ['parent_id', 'module_id'],
+                    'message' => $this->translator->t('menus', 'superior_category_not_allowed')
+                ]
             );
+
 
         if (empty($this->categoryId)) {
             $this->validator->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
-                    'field' => 'module',
+                    'field' => 'module_id',
                     'message' => $this->translator->t('categories', 'select_module')
                 ]
             );
