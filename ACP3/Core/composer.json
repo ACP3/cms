@@ -14,7 +14,7 @@
     "issues": "https://github.com/ACP3/cms/issues"
   },
   "require": {
-    "php": ">=7.0.0",
+    "php": ">=7.1.0",
     "acp3/composer-installer": "^1.0",
     "composer/composer": "^1.4",
     "doctrine/dbal": "^2.5",
