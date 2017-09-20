@@ -6,47 +6,47 @@ class ApplicationPath
     /**
      * @var string
      */
-    protected $phpSelf;
+    private $phpSelf;
     /**
      * @var string
      */
-    protected $webRoot;
+    private $webRoot;
     /**
      * @var string
      */
-    protected $appDir;
+    private $appDir;
     /**
      * @var string
      */
-    protected $classesDir;
+    private $classesDir;
     /**
      * @var string
      */
-    protected $modulesDir;
+    private $modulesDir;
     /**
      * @var string
      */
-    protected $uploadsDir;
+    private $uploadsDir;
     /**
      * @var string
      */
-    protected $cacheDir;
+    private $cacheDir;
     /**
      * @var string
      */
-    protected $designRootPathInternal;
+    private $designRootPathInternal;
     /**
      * @var string
      */
-    protected $designPathInternal;
+    private $designPathInternal;
     /**
      * @var string
      */
-    protected $designPathWeb;
+    private $designPathWeb;
     /**
      * @var string
      */
-    protected $designPathAbsolute;
+    private $designPathAbsolute;
     /**
      * @var string
      */
@@ -57,7 +57,7 @@ class ApplicationPath
      *
      * @param string $applicationMode
      */
-    public function __construct($applicationMode)
+    public function __construct(string $applicationMode)
     {
         $this->environment = $applicationMode;
         $this->phpSelf = htmlentities($_SERVER['SCRIPT_NAME']);

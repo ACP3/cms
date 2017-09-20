@@ -11,39 +11,39 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
     /**
      * @var string
      */
-    protected $installerAppDir;
+    private $installerAppDir;
     /**
      * @var string
      */
-    protected $installerCacheDir;
+    private $installerCacheDir;
     /**
      * @var string
      */
-    protected $installerClassesDir;
+    private $installerClassesDir;
     /**
      * @var string
      */
-    protected $installerModulesDir;
+    private $installerModulesDir;
     /**
      * @var string
      */
-    protected $installerWebRoot;
+    private $installerWebRoot;
 
     /**
      * ApplicationPath constructor.
      *
      * @param string $applicationMode
      */
-    public function __construct($applicationMode)
+    public function __construct(string $applicationMode)
     {
         parent::__construct($applicationMode);
 
-        $this->installerWebRoot = $this->webRoot;
-        $this->webRoot = substr($this->webRoot !== '/' ? $this->webRoot . '/' : '/', 0, -14);
-        $this->installerAppDir = realpath($this->appDir . '../installation') . '/Installer/';
+        $this->installerWebRoot = $this->getWebRoot();
+        $this->setWebRoot(substr($this->getWebRoot() !== '/' ? $this->getWebRoot() . '/' : '/', 0, -14));
+        $this->installerAppDir = realpath($this->getAppDir() . '../installation') . '/Installer/';
         $this->installerModulesDir = $this->installerAppDir . 'Modules/';
         $this->installerClassesDir = $this->installerAppDir . 'Core/';
-        $this->designRootPathInternal = ACP3_ROOT_DIR . 'installation/design/';
+        $this->setDesignRootPathInternal(ACP3_ROOT_DIR . 'installation/design/');
     }
 
     /**
