@@ -1,27 +1,21 @@
 <?php
 namespace ACP3\Core\Assets\Minifier;
 
-/**
- * Class CSS
- * @package ACP3\Core\Assets\Minifier
- */
 class CSS extends AbstractMinifier
 {
-    /**
-     * @var string
-     */
-    protected $assetGroup = 'css';
+    const ASSETS_PATH_CSS = 'Assets/css';
+
     /**
      * @var array
      */
-    protected $stylesheets = [];
+    private $stylesheets = [];
 
     /**
      * @inheritdoc
      */
-    protected function processLibraries($layout)
+    protected function processLibraries(string $layout)
     {
-        $cacheId = $this->buildCacheId($this->assetGroup, $layout);
+        $cacheId = $this->buildCacheId($this->getAssetGroup(), $layout);
 
         if ($this->systemCache->contains($cacheId) === false) {
             $this->fetchLibraries();
@@ -40,12 +34,12 @@ class CSS extends AbstractMinifier
     protected function fetchLibraries()
     {
         foreach ($this->assets->getLibraries() as $library) {
-            if ($library['enabled'] === true && isset($library[$this->assetGroup]) === true) {
+            if ($library['enabled'] === true && isset($library[$this->getAssetGroup()]) === true) {
                 $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
                     !empty($library['module']) ? $library['module'] . '/Resources' : $this->systemAssetsModulePath,
                     !empty($library['module']) ? $library['module'] : $this->systemAssetsDesignPath,
                     static::ASSETS_PATH_CSS,
-                    $library[$this->assetGroup]
+                    $library[$this->getAssetGroup()]
                 );
             }
         }
@@ -87,31 +81,34 @@ class CSS extends AbstractMinifier
      */
     protected function fetchModuleStylesheets()
     {
-        $modules = $this->modules->getActiveModules();
-        foreach ($modules as $module) {
+        $stylesheetNames = ['admin.css', 'widget.css', 'style.css', 'append.css'];
+        foreach ($this->modules->getActiveModules() as $module) {
             $modulePath = $module['dir'] . '/Resources/';
             $designPath = $module['dir'] . '/';
 
-            $stylesheet = $this->fileResolver->getStaticAssetPath(
-                $modulePath,
-                $designPath,
-                static::ASSETS_PATH_CSS,
-                'style.css'
-            );
-            if ('' !== $stylesheet && $module['dir'] !== 'System') {
-                $this->stylesheets[] = $stylesheet;
-            }
+            foreach ($stylesheetNames as $fileName) {
+                if ($fileName === 'style.css' && $module['dir'] === 'System') {
+                    continue;
+                }
 
-            // Append custom styles to the default module styling
-            $appendStylesheet = $this->fileResolver->getStaticAssetPath(
-                $modulePath,
-                $designPath,
-                static::ASSETS_PATH_CSS,
-                'append.css'
-            );
-            if ('' !== $appendStylesheet) {
-                $this->stylesheets[] = $appendStylesheet;
+                $stylesheet = $this->fileResolver->getStaticAssetPath(
+                    $modulePath,
+                    $designPath,
+                    static::ASSETS_PATH_CSS,
+                    $fileName
+                );
+                if ('' !== $stylesheet) {
+                    $this->stylesheets[] = $stylesheet;
+                }
             }
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getAssetGroup(): string
+    {
+        return 'css';
     }
 }

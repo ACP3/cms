@@ -18,9 +18,6 @@ use Psr\Log\LoggerInterface;
 
 abstract class AbstractMinifier implements MinifierInterface
 {
-    const ASSETS_PATH_CSS = 'Assets/css';
-    const ASSETS_PATH_JS = 'Assets/js';
-
     /**
      * @var \ACP3\Core\Assets
      */
@@ -59,10 +56,6 @@ abstract class AbstractMinifier implements MinifierInterface
      */
     protected $systemAssetsDesignPath = 'System/';
     /**
-     * @var string
-     */
-    protected $assetGroup = '';
-    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -98,6 +91,13 @@ abstract class AbstractMinifier implements MinifierInterface
     }
 
     /**
+     * Returns the name of the asset group
+     *
+     * @return string
+     */
+    abstract protected function getAssetGroup(): string;
+
+    /**
      * @param string $type
      * @param string $layout
      *
@@ -126,25 +126,24 @@ abstract class AbstractMinifier implements MinifierInterface
 
     /**
      * @param string $layout
-     *
      * @return array
      */
-    abstract protected function processLibraries($layout);
+    abstract protected function processLibraries(string $layout);
 
     /**
      * @inheritdoc
      */
-    public function getURI($layout = 'layout')
+    public function getURI(string $layout = 'layout')
     {
         $debug = $this->environment === 'dev';
-        $filenameHash = $this->generateFilenameHash($this->assetGroup, $layout);
+        $filenameHash = $this->generateFilenameHash($this->getAssetGroup(), $layout);
         $cacheId = 'assets-last-generated-' . $filenameHash;
 
         if (false === ($lastGenerated = $this->systemCache->fetch($cacheId))) {
             $lastGenerated = time(); // Assets are not cached -> set the current time as the new timestamp
         }
 
-        $path = $this->buildAssetPath($debug, $this->assetGroup, $filenameHash, $lastGenerated);
+        $path = $this->buildAssetPath($debug, $this->getAssetGroup(), $filenameHash, $lastGenerated);
 
         // If the requested minified StyleSheet and/or the JavaScript file doesn't exist, generate it
         if (is_file($this->appPath->getUploadsDir() . $path) === false || $debug === true) {

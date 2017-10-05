@@ -1,27 +1,21 @@
 <?php
 namespace ACP3\Core\Assets\Minifier;
 
-/**
- * Class JavaScript
- * @package ACP3\Core\Assets\Minifier
- */
 class JavaScript extends AbstractMinifier
 {
-    /**
-     * @var string
-     */
-    protected $assetGroup = 'js';
+    const ASSETS_PATH_JS = 'Assets/js';
+
     /**
      * @var array
      */
-    protected $javascript = [];
+    private $javascript = [];
 
     /**
      * @inheritdoc
      */
-    protected function processLibraries($layout)
+    protected function processLibraries(string $layout)
     {
-        $cacheId = $this->buildCacheId($this->assetGroup, $layout);
+        $cacheId = $this->buildCacheId($this->getAssetGroup(), $layout);
 
         if ($this->systemCache->contains($cacheId) === false) {
             $this->fetchLibraries();
@@ -39,12 +33,12 @@ class JavaScript extends AbstractMinifier
     protected function fetchLibraries()
     {
         foreach ($this->assets->getLibraries() as $library) {
-            if ($library['enabled'] === true && isset($library[$this->assetGroup]) === true) {
+            if ($library['enabled'] === true && isset($library[$this->getAssetGroup()]) === true) {
                 $this->javascript[] = $this->fileResolver->getStaticAssetPath(
                     !empty($library['module']) ? $library['module'] . '/Resources' : $this->systemAssetsModulePath,
                     !empty($library['module']) ? $library['module'] : $this->systemAssetsDesignPath,
                     static::ASSETS_PATH_JS,
-                    $library[$this->assetGroup]
+                    $library[$this->getAssetGroup()]
                 );
             }
         }
@@ -55,7 +49,7 @@ class JavaScript extends AbstractMinifier
      *
      * @param string $layout
      */
-    protected function fetchThemeJavaScript($layout)
+    protected function fetchThemeJavaScript(string $layout)
     {
         foreach ($this->assets->fetchAdditionalThemeJsFiles() as $file) {
             $this->javascript[] = $this->fileResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $file);
@@ -63,5 +57,13 @@ class JavaScript extends AbstractMinifier
 
         // Include general js file of the layout
         $this->javascript[] = $this->fileResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $layout . '.js');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getAssetGroup(): string
+    {
+        return 'js';
     }
 }

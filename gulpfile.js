@@ -6,8 +6,8 @@
 (function () {
     "use strict";
 
-    var gulp = require('gulp'),
-        plugins = require('gulp-load-plugins')();
+    const gulp = require('gulp');
+    const plugins = require('gulp-load-plugins')();
 
     function getTask(task) {
         return require('./build/gulp/' + task)(gulp, plugins);

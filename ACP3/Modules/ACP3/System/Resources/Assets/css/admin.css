@@ -1,0 +1,57 @@
+/*
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+.datagrid .datagrid-column__mass-action {
+  width: 5%;
+}
+.datagrid .datagrid-column__date-range {
+  width: 22%;
+}
+.datagrid th.datagrid-column__actions {
+  text-indent: -9999em;
+}
+.datagrid .datagrid-column__actions {
+  width: 7%;
+}
+.datagrid .btn-group {
+  display: flex;
+}
+.datagrid .btn-group > .btn {
+  float: none;
+}
+.datagrid td.datagrid-column__actions .btn-group {
+  visibility: hidden;
+}
+.datagrid tr:hover td.datagrid-column__actions .btn-group,
+.datagrid tr.info td.datagrid-column__actions .btn-group {
+  visibility: visible;
+}
+#adm-list .navbar-text {
+  margin: 0;
+}
+#adm-list .navbar-text a {
+  color: #333;
+}
+#adm-list .navbar-text .btn-link {
+  margin-left: 8px;
+  padding-left: 0;
+  padding-right: 0;
+}
+#adm-list .navbar-text .fa,
+#adm-list .navbar-text .glyphicon {
+  font-size: 32px;
+}
+#adm-list .navbar-text .glyphicon-plus:before {
+  position: relative;
+  top: -2px;
+}
+#adm-list .navbar-text .fa-plus:before {
+  position: relative;
+  top: 1px;
+}
+#adm-list a,
+#adm-list input {
+  margin: 8px 0 0 8px;
+  float: right;
+}
