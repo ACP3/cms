@@ -34,11 +34,13 @@ class Insert extends AbstractOperation
 
                 $this->db->getConnection()->insert($this->nestedSetRepository->getTableName(), $insertValues);
                 $rootId = $this->db->getConnection()->lastInsertId();
-                $result = $this->db->getConnection()->update(
+                $this->db->getConnection()->update(
                     $this->nestedSetRepository->getTableName(),
                     ['root_id' => $rootId],
                     ['id' => $rootId]
                 );
+
+                $result = $rootId;
             } else { // a parent item for the node has been assigned
                 $parent = $this->nestedSetRepository->fetchNodeById((int)$parentId);
 
