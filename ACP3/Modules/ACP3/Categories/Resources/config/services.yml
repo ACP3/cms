@@ -13,3 +13,4 @@ services:
       - '@core.helpers.secure'
       - '@categories.cache'
       - '@categories.model.repository.categories_repository'
+      - '@categories.model.categories_model'

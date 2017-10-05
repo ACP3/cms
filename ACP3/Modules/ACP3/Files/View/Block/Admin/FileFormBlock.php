@@ -135,7 +135,7 @@ class FileFormBlock extends AbstractFormBlock
             'id' => '',
             'active' => 1,
             'title' => '',
-            'category_id' => '',
+            'category_id' => 0,
             'file_internal' => '',
             'file_external' => '',
             'size' => '',

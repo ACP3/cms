@@ -41,7 +41,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     protected function fetchCategoryId(array $formData)
     {
         return !empty($formData['cat_create'])
-            ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], Files\Installer\Schema::MODULE_NAME)
+            ? $this->categoriesHelpers->categoryCreate($formData['cat_create'], Files\Installer\Schema::MODULE_NAME)
             : $formData['cat'];
     }
 

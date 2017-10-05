@@ -38,10 +38,10 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      *
      * @return int
      */
-    protected function fetchCategoryIdForSave(array $formData)
+    protected function fetchCategoryIdForSave(array $formData): int
     {
         return !empty($formData['cat_create'])
-            ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], News\Installer\Schema::MODULE_NAME)
+            ? $this->categoriesHelpers->categoryCreate($formData['cat_create'], News\Installer\Schema::MODULE_NAME)
             : $formData['cat'];
     }
 }

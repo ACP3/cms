@@ -121,7 +121,7 @@ class NewsFormBlock extends AbstractFormBlock
             'id' => '',
             'title' => '',
             'text' => '',
-            'category_id' => '',
+            'category_id' => 0,
             'readmore' => 0,
             'comments' => 0,
             'uri' => '',
