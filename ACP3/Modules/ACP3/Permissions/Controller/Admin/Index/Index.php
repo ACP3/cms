@@ -16,16 +16,16 @@ use ACP3\Core\Controller\Context;
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var Core\View\Block\BlockInterface
+     * @var Core\View\Block\DataGridBlockInterface
      */
     private $block;
 
     /**
      * Index constructor.
      * @param Context\FrontendContext $context
-     * @param Core\View\Block\BlockInterface $block
+     * @param Core\View\Block\DataGridBlockInterface $block
      */
-    public function __construct(Context\FrontendContext $context, Core\View\Block\BlockInterface $block)
+    public function __construct(Context\FrontendContext $context, Core\View\Block\DataGridBlockInterface $block)
     {
         parent::__construct($context);
 

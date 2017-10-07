@@ -28,7 +28,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@permissions.view.block.admin.roles_listing_block'
+      - '@permissions.view.block.admin.roles_data_grid_block'
 
   permissions.controller.admin.index.order:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Order
