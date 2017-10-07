@@ -7,6 +7,7 @@
 namespace ACP3\Modules\ACP3\News\Controller\Widget\Index;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 use ACP3\Modules\ACP3\News;
 
 /**
@@ -25,21 +26,28 @@ class Index extends Core\Controller\AbstractWidgetAction
      * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
      */
     protected $newsRepository;
+    /**
+     * @var CategoriesRepository
+     */
+    private $categoriesRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext  $context
-     * @param \ACP3\Core\Date                              $date
+     * @param \ACP3\Core\Controller\Context\WidgetContext $context
+     * @param \ACP3\Core\Date $date
      * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
+     * @param CategoriesRepository $categoriesRepository
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
-        News\Model\Repository\NewsRepository $newsRepository
+        News\Model\Repository\NewsRepository $newsRepository,
+        CategoriesRepository $categoriesRepository
     ) {
         parent::__construct($context);
 
         $this->date = $date;
         $this->newsRepository = $newsRepository;
+        $this->categoriesRepository = $categoriesRepository;
     }
 
     /**
@@ -71,7 +79,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     {
         if (!empty($categoryId)) {
             $news = $this->newsRepository->getAllByCategoryId(
-                (int)$categoryId,
+                $this->categoriesRepository->getAllSiblingsAsId((int)$categoryId),
                 $this->date->getCurrentDateTime(),
                 $settings['sidebar']
             );

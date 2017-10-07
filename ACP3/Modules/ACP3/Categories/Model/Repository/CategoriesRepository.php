@@ -34,7 +34,8 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      */
     public function resultIsDuplicate(string $title, int $moduleId, int $categoryId)
     {
-        return (int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE title = ? AND module_id = ? AND id != ?", [$title, $moduleId, $categoryId]) > 0;
+        return (int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE title = ? AND module_id = ? AND id != ?",
+                [$title, $moduleId, $categoryId]) > 0;
     }
 
     /**
@@ -92,7 +93,8 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      */
     public function getModuleIdByCategoryId(int $categoryId)
     {
-        return (int)$this->db->fetchColumn("SELECT `module_id` FROM {$this->getTableName()} WHERE `id` = ?", [$categoryId]);
+        return (int)$this->db->fetchColumn("SELECT `module_id` FROM {$this->getTableName()} WHERE `id` = ?",
+            [$categoryId]);
     }
 
     /**
@@ -128,5 +130,19 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
     public function fetchAllSortedByBlock(): array
     {
         return $this->db->fetchAll("SELECT * FROM {$this->getTableName()} ORDER BY `module_id` ASC");
+    }
+
+    /**
+     * @param int $categoryId
+     * @return array
+     */
+    public function getAllSiblingsAsId(int $categoryId)
+    {
+        $categoryIds = [];
+        foreach ($this->fetchNodeWithSiblings($categoryId) as $category) {
+            $categoryIds[] = $category['id'];
+        }
+
+        return $categoryIds;
     }
 }

@@ -19,7 +19,8 @@ class AclPrivilegesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function privilegeExists($privilegeId)
     {
-        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $privilegeId]) > 0;
+        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id',
+                ['id' => $privilegeId]) > 0;
     }
 
     /**

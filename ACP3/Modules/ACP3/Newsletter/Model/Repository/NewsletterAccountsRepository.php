@@ -23,8 +23,8 @@ class NewsletterAccountsRepository extends AbstractRepository
     {
         $where = empty($hash) === false ? ' AND `hash` = :hash' : '';
         return $this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `mail` = :mail" . $where,
-            ['mail' => $emailAddress, 'hash' => $hash]
+                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `mail` = :mail" . $where,
+                ['mail' => $emailAddress, 'hash' => $hash]
         ) > 0;
     }
 
@@ -36,8 +36,7 @@ class NewsletterAccountsRepository extends AbstractRepository
     public function accountExistsByHash($hash)
     {
         return $this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `hash` = :hash",
-            ['hash' => $hash]
+                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `hash` = :hash", ['hash' => $hash]
         ) > 0;
     }
 

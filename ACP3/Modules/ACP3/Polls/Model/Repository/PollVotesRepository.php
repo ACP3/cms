@@ -21,7 +21,8 @@ class PollVotesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getVotesByUserId($pollId, $userId, $ipAddress)
     {
-        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE poll_id = ? AND (user_id = ? OR ip = ?)', [$pollId, $userId, $ipAddress]);
+        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE poll_id = ? AND (user_id = ? OR ip = ?)',
+            [$pollId, $userId, $ipAddress]);
     }
 
     /**
@@ -32,6 +33,7 @@ class PollVotesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getVotesByIpAddress($pollId, $ipAddress)
     {
-        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE poll_id = ? AND ip = ?', [$pollId, $ipAddress]);
+        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE poll_id = ? AND ip = ?',
+            [$pollId, $ipAddress]);
     }
 }

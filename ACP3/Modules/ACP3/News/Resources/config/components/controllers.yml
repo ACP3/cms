@@ -66,6 +66,7 @@ services:
       - '@core.context.widget'
       - '@core.date'
       - '@news.model.repository.news_repository'
+      - '@categories.model.repository.categories_repository'
 
   news.controller.widget.index.latest:
     class: ACP3\Modules\ACP3\News\Controller\Widget\Index\Latest

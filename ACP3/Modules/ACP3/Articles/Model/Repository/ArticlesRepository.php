@@ -38,8 +38,7 @@ class ArticlesRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         return $this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
-            ['time' => $time, 'active' => 1]
+            "SELECT COUNT(*) FROM {$this->getTableName()}{$where}", ['time' => $time, 'active' => 1]
         );
     }
 

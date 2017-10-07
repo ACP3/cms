@@ -50,8 +50,7 @@ class NewslettersRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = empty($time) === false ? ' WHERE status = :status' : '';
         return (int)$this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
-            ['status' => $status]
+            "SELECT COUNT(*) FROM {$this->getTableName()}{$where}", ['status' => $status]
         );
     }
 

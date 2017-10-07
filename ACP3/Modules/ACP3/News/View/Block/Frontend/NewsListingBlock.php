@@ -111,7 +111,10 @@ class NewsListingBlock extends AbstractListingBlock
     {
         $data = $this->getData();
 
-        return $this->newsRepository->countAll($this->date->getCurrentDateTime(), $data['category_id']);
+        return $this->newsRepository->countAll(
+            $this->date->getCurrentDateTime(),
+            $this->categoryRepository->getAllSiblingsAsId($data['category_id'])
+        );
     }
 
     /**
@@ -160,7 +163,7 @@ class NewsListingBlock extends AbstractListingBlock
     {
         if (!empty($categoryId)) {
             return $this->newsRepository->getAllByCategoryId(
-                $categoryId,
+                $this->categoryRepository->getAllSiblingsAsId($categoryId),
                 $time,
                 $this->pagination->getResultsStartOffset(),
                 $resultsPerPage
