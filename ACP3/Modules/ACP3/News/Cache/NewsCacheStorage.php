@@ -37,7 +37,7 @@ class NewsCacheStorage extends Core\Cache\AbstractCacheStorage
      *
      * @return array
      */
-    public function getCache($newsId)
+    public function getCache(int $newsId)
     {
         if ($this->cache->contains(self::CACHE_ID . $newsId) === false) {
             $this->saveCache($newsId);
@@ -53,7 +53,7 @@ class NewsCacheStorage extends Core\Cache\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function saveCache($newsId)
+    public function saveCache(int $newsId)
     {
         return $this->cache->save(self::CACHE_ID . $newsId, $this->newsRepository->getOneById($newsId));
     }

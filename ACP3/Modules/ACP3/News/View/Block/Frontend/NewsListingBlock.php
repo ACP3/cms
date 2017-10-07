@@ -202,7 +202,7 @@ class NewsListingBlock extends AbstractListingBlock
     {
         $data = $this->getData();
 
-        $this->addBreadcrumbStep($data['category_id']);
+        $this->addBreadcrumbSteps($data['category_id']);
 
         $resultsPerPage = $this->getResultsPerPage();
         $this->configurePagination($resultsPerPage);
@@ -218,7 +218,7 @@ class NewsListingBlock extends AbstractListingBlock
     /**
      * @param int $categoryId
      */
-    private function addBreadcrumbStep(int $categoryId)
+    private function addBreadcrumbSteps(int $categoryId)
     {
         if ($categoryId !== 0 && $this->getNewsSettings()['category_in_breadcrumb'] == 1) {
             if ($this->metaStatements) {
@@ -226,9 +226,12 @@ class NewsListingBlock extends AbstractListingBlock
             }
 
             $this->breadcrumb->append($this->translator->t('news', 'news'), 'news');
-            $category = $this->categoryRepository->getTitleById($categoryId);
-            if (!empty($category)) {
-                $this->breadcrumb->append($category);
+
+            foreach ($this->categoryRepository->fetchNodeWithParents($categoryId) as $category) {
+                $this->breadcrumb->append(
+                    $category['title'],
+                    $this->router->route('news/index/index/cat_' . $category['id'])
+                );
             }
         }
     }

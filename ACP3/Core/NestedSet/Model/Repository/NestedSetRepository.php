@@ -17,7 +17,7 @@ abstract class NestedSetRepository extends AbstractRepository
     const BLOCK_COLUMN_NAME = 'block_id';
 
     /**
-     * Die aktuelle Seite mit allen untergeordneten Seiten selektieren
+     * Fetches the given node with all its siblings
      *
      * @param int $nodeId
      * @return array
@@ -26,6 +26,20 @@ abstract class NestedSetRepository extends AbstractRepository
     {
         return $this->db->fetchAll(
             "SELECT n.* FROM {$this->getTableName()} AS p, {$this->getTableName()} AS n WHERE p.id = ? AND n.left_id BETWEEN p.left_id AND p.right_id ORDER BY n.left_id ASC",
+            [$nodeId]
+        );
+    }
+
+    /**
+     * Fetch the given node with all its parent nodes
+     *
+     * @param int $nodeId
+     * @return array
+     */
+    public function fetchNodeWithParents(int $nodeId)
+    {
+        return $this->db->fetchAll(
+            "SELECT n.* FROM {$this->getTableName()} AS p, {$this->getTableName()} AS n WHERE p.id = ? AND n.left_id <= p.left_id AND n.right_id >= p.left_id ORDER BY n.left_id ASC",
             [$nodeId]
         );
     }

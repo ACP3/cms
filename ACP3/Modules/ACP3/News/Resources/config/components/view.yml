@@ -27,6 +27,7 @@ services:
     arguments:
       - '@core.view.context.block_context'
       - '@core.config'
+      - '@categories.model.repository.categories_repository'
 
   news.view.block.frontend.news_listing_block:
     class: ACP3\Modules\ACP3\News\View\Block\Frontend\NewsListingBlock
