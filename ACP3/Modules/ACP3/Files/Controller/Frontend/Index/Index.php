@@ -7,8 +7,6 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\Files\Installer\Schema;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
