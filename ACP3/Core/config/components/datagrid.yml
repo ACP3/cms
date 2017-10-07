@@ -43,6 +43,15 @@ services:
       - { name: core.helpers.data_grid.column_renderer }
     public: false
 
+  core.helpers.data_grid.column_renderer.nested_set_sort_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\NestedSetSortColumnRenderer
+    arguments:
+      - '@core.i18n.translator'
+      - '@core.router'
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+    public: false
+
   core.helpers.data_grid.column_renderer.nl2p_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer
     arguments:

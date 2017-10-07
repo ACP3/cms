@@ -68,7 +68,7 @@ class CategoriesDataGridBlock extends AbstractDataGridBlock
             $dataGrid
                 ->addColumn([
                     'label' => $this->translator->t('system', 'order'),
-                    'type' => Core\Helpers\DataGrid\ColumnRenderer\SortColumnRenderer::class,
+                    'type' => Core\Helpers\DataGrid\ColumnRenderer\NestedSetSortColumnRenderer::class,
                     'fields' => ['left_id'],
                     'sortable' => false,
                     'custom' => [
