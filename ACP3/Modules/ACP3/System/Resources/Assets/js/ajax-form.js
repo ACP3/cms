@@ -28,18 +28,20 @@
             this.findSubmitButton();
             this.element.noValidate = true;
 
-            $(this.element).on('submit', (e) => {
-                e.preventDefault();
+            $(this.element)
+                .off()
+                .on('submit', (e) => {
+                    e.preventDefault();
 
-                this.isFormValid = true;
+                    this.isFormValid = true;
 
-                $(document).trigger('acp3.ajaxFrom.submit.before', [this]);
+                    $(document).trigger('acp3.ajaxFrom.submit.before', [this]);
 
-                if (this.isFormValid && this.preValidateForm(this.element)) {
-                    this.processAjaxRequest();
-                }
-            }).on('click', (e) => {
-                if ($(this).prop('tagName') === 'A') {
+                    if (this.isFormValid && this.preValidateForm()) {
+                        this.processAjaxRequest();
+                    }
+                }).on('click', (e) => {
+                if ($(this.element).prop('tagName') === 'A') {
                     e.preventDefault();
 
                     this.processAjaxRequest();
@@ -57,9 +59,9 @@
                 $(this).attr("data-clicked", "true");
             });
         },
-        preValidateForm: function (form) {
+        preValidateForm: function () {
             this.removeAllPreviousErrors();
-            this.checkFormElementsForErrors(form);
+            this.checkFormElementsForErrors(this.element);
             this.focusTabWithFirstErrorMessage();
 
             return this.isFormValid;
@@ -70,10 +72,7 @@
                 .find('.validation-failed').remove();
         },
         checkFormElementsForErrors: function (form) {
-            let field;
-            for (let i = 0; i < form.elements.length; i++) {
-                field = form.elements[i];
-
+            for (const field of form.elements) {
                 if (field.nodeName !== "INPUT" && field.nodeName !== "TEXTAREA" && field.nodeName !== "SELECT") {
                     continue;
                 }
@@ -297,4 +296,8 @@
 
 jQuery(document).ready(function ($) {
     $('[data-ajax-form="true"]').formSubmit();
+
+    $(document).on('draw.dt', function (e) {
+        $(e.target).find('[data-ajax-form="true"]').formSubmit();
+    })
 });
