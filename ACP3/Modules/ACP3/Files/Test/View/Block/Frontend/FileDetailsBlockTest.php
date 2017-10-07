@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Files\Test\View\Block\Frontend;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\Test\View\Block\AbstractBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 use ACP3\Modules\ACP3\Files\View\Block\Frontend\FileDetailsBlock;
 
 class FileDetailsBlockTest extends AbstractBlockTest
@@ -30,7 +31,16 @@ class FileDetailsBlockTest extends AbstractBlockTest
                 'comments' => 1
             ]);
 
-        return new FileDetailsBlock($this->context, $settings);
+        $categoriesRepository = $this->getMockBuilder(CategoriesRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $categoriesRepository->expects($this->once())
+            ->method('fetchNodeWithParents')
+            ->with(2)
+            ->willReturn([]);
+
+        return new FileDetailsBlock($this->context, $settings, $categoriesRepository);
     }
 
     public function testRenderReturnsArray()

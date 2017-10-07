@@ -96,11 +96,7 @@ class FilesListingBlock extends AbstractListingBlock
     {
         $data = $this->getData();
 
-        $category = $this->categoryRepository->getOneById($data['category_id']);
-
-        $this->breadcrumb
-            ->append($this->translator->t('files', 'files'), 'files')
-            ->append($category['title']);
+        $this->addBreadcrumbSteps($data['category_id']);
 
         $settings = $this->settings->getSettings($this->getModuleName());
 
@@ -112,5 +108,18 @@ class FilesListingBlock extends AbstractListingBlock
             'files' => $this->getResults($resultsPerPage),
             'pagination' => $this->pagination->render()
         ];
+    }
+
+    private function addBreadcrumbSteps(int $categoryId)
+    {
+        $this->breadcrumb
+            ->append($this->translator->t('files', 'files'), 'files');
+
+        foreach ($this->categoryRepository->fetchNodeWithParents($categoryId) as $category) {
+            $this->breadcrumb->append(
+                $category['title'],
+                'files/index/files/cat_' . $category['id']
+            );
+        }
     }
 }

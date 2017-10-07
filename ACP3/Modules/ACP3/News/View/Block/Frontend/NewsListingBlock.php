@@ -230,7 +230,7 @@ class NewsListingBlock extends AbstractListingBlock
             foreach ($this->categoryRepository->fetchNodeWithParents($categoryId) as $category) {
                 $this->breadcrumb->append(
                     $category['title'],
-                    $this->router->route('news/index/index/cat_' . $category['id'])
+                    'news/index/index/cat_' . $category['id']
                 );
             }
         }

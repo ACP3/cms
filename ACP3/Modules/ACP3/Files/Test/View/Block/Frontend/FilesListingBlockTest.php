@@ -53,6 +53,11 @@ class FilesListingBlockTest extends AbstractListingBlockTest
             ->disableOriginalConstructor()
             ->getMock();
 
+        $categoryRepository->expects($this->once())
+            ->method('fetchNodeWithParents')
+            ->with(2)
+            ->willReturn([]);
+
         return new FilesListingBlock($this->context, $date, $settings, $filesRepository, $categoryRepository);
     }
 

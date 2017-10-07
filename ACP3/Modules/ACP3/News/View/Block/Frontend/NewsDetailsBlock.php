@@ -48,11 +48,7 @@ class NewsDetailsBlock extends AbstractBlock
         $news = $this->getData();
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
-        $this->breadcrumb->append($this->translator->t('news', 'news'), 'news');
-        if ($settings['category_in_breadcrumb'] == 1) {
-            $this->addBreadcrumbSteps($news['category_id']);
-        }
-        $this->breadcrumb->append($news['title']);
+        $this->addBreadcrumbSteps($news['category_id'], $settings['category_in_breadcrumb']);
 
         $news['text'] = $this->view->fetchStringAsTemplate($news['text']);
         $news['target'] = $news['target'] == 2 ? ' target="_blank"' : '';
@@ -64,10 +60,16 @@ class NewsDetailsBlock extends AbstractBlock
         ];
     }
 
-    private function addBreadcrumbSteps(int $categoryId)
+    private function addBreadcrumbSteps(int $categoryId, bool $showCategoriesInBreadcrumb)
     {
-        foreach ($this->categoriesRepository->fetchNodeWithParents($categoryId) as $category) {
-            $this->breadcrumb->append($category['title'], 'news/index/index/cat_' . $category['id']);
+        $news = $this->getData();
+
+        $this->breadcrumb->append($this->translator->t('news', 'news'), 'news');
+        if ($showCategoriesInBreadcrumb === true) {
+            foreach ($this->categoriesRepository->fetchNodeWithParents($categoryId) as $category) {
+                $this->breadcrumb->append($category['title'], 'news/index/index/cat_' . $category['id']);
+            }
         }
+        $this->breadcrumb->append($news['title']);
     }
 }

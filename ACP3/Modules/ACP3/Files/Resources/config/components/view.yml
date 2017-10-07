@@ -36,6 +36,7 @@ services:
     arguments:
       - '@core.view.context.block_context'
       - '@core.config'
+      - '@categories.model.repository.categories_repository'
 
   files.view.block.frontend.files_listing_block:
     class: ACP3\Modules\ACP3\Files\View\Block\Frontend\FilesListingBlock

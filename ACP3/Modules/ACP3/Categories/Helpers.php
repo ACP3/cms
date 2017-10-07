@@ -124,10 +124,10 @@ class Helpers
      */
     public function categoriesList(
         string $moduleName,
-        int $categoryId = 0,
+        int $categoryId = null,
         bool $categoryCreate = false,
         string $formFieldName = 'cat',
-        $customText = null
+        string $customText = null
     ) {
         $categories = $this->categoriesCache->getCache($moduleName);
         foreach ($categories as &$category) {
