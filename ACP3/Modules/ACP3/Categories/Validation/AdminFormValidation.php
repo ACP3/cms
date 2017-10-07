@@ -127,7 +127,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'parent_id',
-                    'message' => $this->translator->t('menus', 'select_superior_category')
+                    'message' => $this->translator->t('categories', 'select_superior_category')
                 ]
             )
             ->addConstraint(
@@ -135,10 +135,9 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['parent_id', 'module_id'],
-                    'message' => $this->translator->t('menus', 'superior_category_not_allowed')
+                    'message' => $this->translator->t('categories', 'superior_category_not_allowed')
                 ]
             );
-
 
         if (empty($this->categoryId)) {
             $this->validator->addConstraint(
