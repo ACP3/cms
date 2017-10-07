@@ -71,9 +71,9 @@ class FilesDataGridBlock extends AbstractDataGridBlock
                 'fields' => ['title'],
             ], 40)
             ->addColumn([
-                'label' => $this->translator->t('system', 'description'),
+                'label' => $this->translator->t('categories', 'category'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['description'],
+                'fields' => ['cat']
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('files', 'filesize'),
