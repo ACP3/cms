@@ -54,7 +54,7 @@ abstract class AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function adjustParentNodesAfterSeparation($diff, $leftId, $rightId)
+    protected function adjustParentNodesAfterSeparation(int $diff, int $leftId, int $rightId)
     {
         $this->db->getConnection()->executeUpdate(
             "UPDATE {$this->nestedSetRepository->getTableName()} SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?",
@@ -69,7 +69,7 @@ abstract class AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function adjustParentNodesAfterInsert($diff, $leftId, $rightId)
+    protected function adjustParentNodesAfterInsert(int $diff, int $leftId, int $rightId)
     {
         $this->db->getConnection()->executeUpdate(
             "UPDATE {$this->nestedSetRepository->getTableName()} SET right_id = right_id + ? WHERE left_id <= ? AND right_id >= ?",
@@ -83,7 +83,7 @@ abstract class AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function adjustFollowingNodesAfterSeparation($diff, $leftId)
+    protected function adjustFollowingNodesAfterSeparation(int $diff, int $leftId)
     {
         $this->db->getConnection()->executeUpdate(
             "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?",
@@ -97,7 +97,7 @@ abstract class AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function adjustFollowingNodesAfterInsert($diff, $leftId)
+    protected function adjustFollowingNodesAfterInsert(int $diff, int $leftId)
     {
         $this->db->getConnection()->executeUpdate(
             "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id >= ?",

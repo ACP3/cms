@@ -148,7 +148,7 @@ abstract class NestedSetRepository extends AbstractRepository
     public function fetchRootNode(int $leftId, int $rightId)
     {
         return (int)$this->db->fetchColumn(
-            "SELECT `id` FROM {$this->getTableName()} WHERE left_id < ? AND right_id >= ? AND parent_id = ?",
+            "SELECT `id` FROM {$this->getTableName()} WHERE left_id < ? AND right_id > ? AND parent_id = ?",
             [$leftId, $rightId, 0]
         );
     }
