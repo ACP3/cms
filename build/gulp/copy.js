@@ -7,7 +7,7 @@ module.exports = function (gulp) {
     "use strict";
 
     return function () {
-        var nodeBasePath = './node_modules',
+        const nodeBasePath = './node_modules',
             systemBasePath = './ACP3/Modules/ACP3/System/Resources/Assets',
             paths = [
                 {
@@ -45,9 +45,9 @@ module.exports = function (gulp) {
                 }
             ];
 
-        for (var i = 0; i < paths.length; i++) {
-            gulp.src(paths[i].src)
-                .pipe(gulp.dest(paths[i].dest));
+        for (const path of paths) {
+            gulp.src(path.src)
+                .pipe(gulp.dest(path.dest));
         }
 
         return 0;
