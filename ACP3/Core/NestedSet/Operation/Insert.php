@@ -69,7 +69,7 @@ class Insert extends AbstractOperation
      */
     protected function fetchMaximumRightId($blockId)
     {
-        if ($this->isBlockAware === true) {
+        if ($this->isBlockAware() === true) {
             $maxRightId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($blockId);
         }
         if (empty($maxRightId)) {

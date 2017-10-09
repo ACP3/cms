@@ -22,7 +22,7 @@ class Repair extends AbstractOperation
 
     private function getResults(): array
     {
-        if ($this->isBlockAware) {
+        if ($this->isBlockAware()) {
             return $this->nestedSetRepository->fetchAllSortedByBlock();
         }
 
