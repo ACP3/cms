@@ -145,4 +145,40 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
 
         return $categoryIds;
     }
+
+    /**
+     * @param int $categoryId
+     * @return array
+     */
+    public function getAllDirectSiblings(int $categoryId)
+    {
+        return $this->db->fetchAll(
+            "SELECT * FROM {$this->getTableName()} WHERE `parent_id` = ?",
+            [$categoryId]
+        );
+    }
+
+    /**
+     * @param int $moduleId
+     * @return array
+     */
+    public function getAllRootCategoriesByModuleId(int $moduleId)
+    {
+        return $this->db->fetchAll(
+            "SELECT * FROM {$this->getTableName()} WHERE `module_id` = ? AND `parent_id` = ?",
+            [$moduleId, 0]
+        );
+    }
+
+    /**
+     * @param string $moduleName
+     * @return array
+     */
+    public function getAllRootCategoriesByModuleName(string $moduleName)
+    {
+        return $this->db->fetchAll(
+            "SELECT c.* FROM {$this->getTableName()} AS c JOIN {$this->getTableName(ModulesRepository::TABLE_NAME)} AS m ON(m.id = c.module_id) WHERE m.`name` = ? AND c.`parent_id` = ?",
+            [$moduleName, 0]
+        );
+    }
 }

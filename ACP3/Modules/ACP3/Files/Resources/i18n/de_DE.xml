@@ -17,6 +17,7 @@
         <item key="filename">Dateiname</item>
         <item key="files">Downloads</item>
         <item key="filesize">Dateigröße</item>
+        <item key="further_categories">Weitere Kategorien</item>
         <item key="latest_files">Aktuelle Downloads</item>
         <item key="new_file">Neue Datei angeben</item>
         <item key="select_active">Bitte wählen Sie aus, ob der Download veröffentlicht werden soll oder nicht.</item>

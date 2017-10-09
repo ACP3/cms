@@ -104,6 +104,7 @@ class FilesListingBlock extends AbstractListingBlock
         $this->configurePagination($resultsPerPage);
 
         return [
+            'categories' => $this->categoryRepository->getAllDirectSiblings($data['category_id']),
             'dateformat' => $settings['dateformat'],
             'files' => $this->getResults($resultsPerPage),
             'pagination' => $this->pagination->render()

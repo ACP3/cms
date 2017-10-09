@@ -29,7 +29,7 @@ services:
     class: ACP3\Modules\ACP3\Files\View\Block\Frontend\CategoriesListingBlock
     arguments:
       - '@core.view.context.block_context'
-      - '@categories.cache'
+      - '@categories.model.repository.categories_repository'
 
   files.view.block.frontend.file_details_block:
     class: ACP3\Modules\ACP3\Files\View\Block\Frontend\FileDetailsBlock

@@ -81,6 +81,7 @@ class FilesListingBlockTest extends AbstractListingBlockTest
     protected function getExpectedArrayKeys(): array
     {
         return [
+            'categories',
             'dateformat',
             'files',
             'pagination'

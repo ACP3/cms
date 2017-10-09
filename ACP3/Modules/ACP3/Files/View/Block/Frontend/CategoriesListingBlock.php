@@ -8,26 +8,26 @@ namespace ACP3\Modules\ACP3\Files\View\Block\Frontend;
 
 use ACP3\Core\View\Block\AbstractBlock;
 use ACP3\Core\View\Block\Context\BlockContext;
-use ACP3\Modules\ACP3\Categories\Cache\CategoriesCacheStorage;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 
 class CategoriesListingBlock extends AbstractBlock
 {
     /**
-     * @var CategoriesCacheStorage
+     * @var CategoriesRepository
      */
-    private $categoriesCache;
+    private $categoriesRepository;
 
     /**
      * CategoriesListingBlock constructor.
      * @param BlockContext $context
-     * @param CategoriesCacheStorage $categoriesCache
+     * @param CategoriesRepository $categoriesRepository
      */
-    public function __construct(BlockContext $context, CategoriesCacheStorage $categoriesCache)
+    public function __construct(BlockContext $context, CategoriesRepository $categoriesRepository)
     {
         parent::__construct($context);
 
-        $this->categoriesCache = $categoriesCache;
+        $this->categoriesRepository = $categoriesRepository;
     }
 
     /**
@@ -36,7 +36,7 @@ class CategoriesListingBlock extends AbstractBlock
     public function render()
     {
         return [
-            'categories' => $this->categoriesCache->getCache(Schema::MODULE_NAME)
+            'categories' => $this->categoriesRepository->getAllRootCategoriesByModuleName(Schema::MODULE_NAME)
         ];
     }
 }
