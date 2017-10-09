@@ -46,6 +46,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated the friendsofsymfony/http-cache package to version 2.*
 - When deleting a category, the associated news or downloads won't be deleted anymore
 
+## [Unreleased] - 2017-xx-xx
+### Fixed
+- fixed the bug that the `parent_id`s of the node's siblings were wrong, when the node was a root node after deleting it
+
 ## [4.13.0] - 2017-09-01
 ### Added
 - Added some CLI scripts to the composer.json
