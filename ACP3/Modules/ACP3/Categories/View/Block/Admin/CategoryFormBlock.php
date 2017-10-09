@@ -66,7 +66,7 @@ class CategoryFormBlock extends AbstractFormBlock
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $name => $info) {
             if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
-                $modules[$name]['selected'] = $this->forms->selectEntry('module', $info['id']);
+                $modules[$name]['selected'] = $this->forms->selectEntry('module_id', $info['id']);
             } else {
                 unset($modules[$name]);
             }

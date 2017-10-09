@@ -117,7 +117,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'title',
                     'message' => $this->translator->t('categories', 'category_already_exists'),
                     'extra' => [
-                        'module_id' => empty($this->categoryId) ? $formData['module'] : $this->categoryRepository->getModuleIdByCategoryId($this->categoryId),
+                        'module_id' => empty($this->categoryId) ? $formData['module_id'] : $this->categoryRepository->getModuleIdByCategoryId($this->categoryId),
                         'category_id' => $this->categoryId
                     ]
                 ]
