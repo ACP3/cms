@@ -32,7 +32,7 @@
 <div class="alert alert-danger">
     <h4>{$EXCEPTION->getMessage()}</h4>
     <hr>
-    <h4 class="text-left">Stacktrace:</h4>
+    <h5 class="h4 text-left">Stacktrace:</h5>
     <pre class="alert alert-warning stacktrace text-left">{$EXCEPTION->getTraceAsString()}</pre>
 </div>
 </body>

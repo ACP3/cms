@@ -55,25 +55,22 @@
     margin-right: 15px;
   }
 }
-.dataset-box .content {
+.dataset-box .dataset-box__content {
   margin: -8px 15px 10px;
 }
-.dataset-box .hyperlink a.download-file {
+.dataset-box .dataset-box__content.dataset-box__content_detail-page {
+  margin: 10px 0;
+}
+.dataset-box .dataset-box__hyperlink .fa-download {
+  color: #333;
+}
+.dataset-box .dataset-box__download-file {
   font-weight: bold;
   display: block;
 }
-.dataset-box .hyperlink a.download-file:hover,
-.dataset-box .hyperlink a.download-file:focus {
+.dataset-box .dataset-box__download-file:hover,
+.dataset-box .dataset-box__download-file:focus {
   text-decoration: none;
-}
-.dataset-box .hyperlink .fa-download {
-  color: #333;
-}
-/* Table of contents */
-#toc {
-  width: 20%;
-  margin: 5px 10px 10px 0;
-  float: left;
 }
 #page-break-link {
   margin: 5px 0;
@@ -123,6 +120,15 @@ textarea[placeholder] {
 /* Pagination */
 .pagination {
   margin: 0 0 10px;
+}
+/*
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+.toc {
+  width: 20%;
+  margin: 5px 10px 10px 0;
+  float: left;
 }
 /* Datensätze */
 .table .sub-table-header {

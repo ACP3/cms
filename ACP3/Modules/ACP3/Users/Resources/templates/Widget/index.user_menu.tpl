@@ -1,7 +1,7 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">{lang t="users|user_menu"}</h3>
-    </div>
+<section class="panel panel-default">
+    <header class="panel-heading">
+        <h2 class="panel-title">{lang t="users|user_menu"}</h2>
+    </header>
     <div class="list-group">
         <a href="{uri args="users/account"}" class="list-group-item">
             <i class="fa fa-home" aria-hidden="true"></i>
@@ -40,4 +40,4 @@
             {lang t="users|logout"}
         </a>
     </div>
-</div>
+</section>

@@ -1,5 +1,5 @@
 <section id="comments">
-    <h3 class="text-center">{lang t="comments|comments"}</h3>
+    <h2 class="text-center">{lang t="comments|comments"}</h2>
     {redirect_message}
     {if !empty($comments)}
         {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}

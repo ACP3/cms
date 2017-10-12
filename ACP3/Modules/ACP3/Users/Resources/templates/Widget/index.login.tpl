@@ -1,7 +1,7 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">{lang t="users|login"}</h3>
-    </div>
+<section class="panel panel-default">
+    <header class="panel-heading">
+        <h2 class="panel-title">{lang t="users|login"}</h2>
+    </header>
     <div class="panel-body">
         <form action="{uri args="users/index/login"}" method="post" accept-charset="UTF-8">
             <div class="form-group">
@@ -34,4 +34,4 @@
             </a>
         {/if}
     </div>
-</div>
+</section>

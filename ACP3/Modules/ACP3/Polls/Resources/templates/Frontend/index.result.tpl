@@ -2,7 +2,7 @@
 
 {block CONTENT}
     {redirect_message}
-    <h3>{$question}</h3>
+    <h2>{$question}</h2>
     <table class="table table-striped">
         <thead>
         <tr>

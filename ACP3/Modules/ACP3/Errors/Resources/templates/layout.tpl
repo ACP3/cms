@@ -6,15 +6,17 @@
 
 <body>
 <div class="container text-center">
-    <h1 id="logo">
-        <a href="{uri args=""}">
-            <img src="{image file="logo.png"}"
-                 srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
-                 alt="{site_title}">
-        </a>
-    </h1>
+    <header>
+        <h1 id="logo">
+            <a href="{uri args=""}">
+                <img src="{image file="logo.png"}"
+                     srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
+                     alt="{site_title}">
+            </a>
+        </h1>
+    </header>
     <main id="content">
-        <h2>{page_title}</h2>
+        <h1 class="h2">{page_title}</h1>
         {block CONTENT}{/block}
     </main>
 </div>

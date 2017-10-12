@@ -21,13 +21,13 @@
                             <div class="dataset-box">
                                 <header class="navbar navbar-default">
                                     <div class="navbar-header">
-                                        <h3 class="navbar-brand">
+                                        <h2 class="navbar-brand">
                                             <a href="{$result.hyperlink}">{$result.title}</a>
-                                        </h3>
+                                        </h2>
                                     </div>
                                 </header>
                                 {if !empty($result.text)}
-                                    <div class="content">
+                                    <div class="dataset-box__content">
                                         {$result.text|strip_tags|truncate:200}
                                     </div>
                                 {/if}

@@ -1,6 +1,6 @@
-<nav id="toc" class="panel panel-default">
+<nav id="toc" class="toc panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">{lang t="system|table_of_contents"}</h3>
+        <h2 class="panel-title">{lang t="system|table_of_contents"}</h2>
     </div>
 
     <div class="list-group">

@@ -3,18 +3,13 @@
 {block CONTENT}
     <article>
         <section class="dataset-box">
-            <header class="navbar navbar-default">
-                <div class="navbar-header">
-                    <h3 class="navbar-brand">{$file.title}</h3>
-                </div>
-                <time class="navbar-text small pull-right" datetime="{date_format date=$file.start format="c"}">
-                    {date_format date=$file.start format=$dateformat}
-                </time>
-            </header>
-            <div class="content">
+            <time class="small" datetime="{date_format date=$file.start format="c"}">
+                {date_format date=$file.start format=$dateformat}
+            </time>
+            <div class="dataset-box__content dataset-box__content_detail-page">
                 {$file.text|rewrite_uri}
-                <footer class="well well-sm hyperlink">
-                    <a href="{uri args="files/index/download/id_`$file.id`"}" class="download-file">
+                <footer class="well well-sm dataset-box__hyperlink">
+                    <a href="{uri args="files/index/download/id_`$file.id`"}" class="dataset-box__download-file">
                         <i class="fa fa-download" aria-hidden="true"></i>
                         {lang t="files|download_file"}
                         {if !empty($file.size)}

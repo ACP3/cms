@@ -1,9 +1,9 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">{lang t="polls|latest_poll"}</h3>
-    </div>
+<section class="panel panel-default">
+    <header class="panel-heading">
+        <h2 class="panel-title">{lang t="polls|latest_poll"}</h2>
+    </header>
     <div class="panel-body">
-        <h5>{$question}</h5>
+        <h3 class="h5">{$question}</h3>
         {foreach $answers as $row}
             <strong>{$row.text}</strong>
             <span class="pull-right">{$row.votes}</span>
@@ -15,4 +15,4 @@
             <a href="{uri args="polls"}" class="list-group-item">{lang t="polls|polls_archive"}</a>
         </div>
     </div>
-</div>
+</section>

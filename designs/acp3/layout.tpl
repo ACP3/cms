@@ -8,20 +8,22 @@
 {load_module module="widget/users/index/login"}
 {load_module module="widget/users/index/user_menu"}
 <div id="wrapper" class="container">
-    <h1 id="logo" class="hidden-xs">
-        {if $IS_HOMEPAGE}
-            <img src="{image file="logo.png"}"
-                 srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
-                 alt="{site_title}">
-        {else}
-            <a href="{uri args=""}">
+    <header>
+        <h1 class="logo" class="hidden-xs">
+            {if $IS_HOMEPAGE}
                 <img src="{image file="logo.png"}"
                      srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
                      alt="{site_title}">
-            </a>
-        {/if}
-    </h1>
-    <nav id="main-navigation" class="navbar navbar-default">
+            {else}
+                <a href="{uri args=""}">
+                    <img src="{image file="logo.png"}"
+                         srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
+                         alt="{site_title}">
+                </a>
+            {/if}
+        </h1>
+    </header>
+    <nav class="navbar navbar-default navigation-main-wrapper">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
@@ -49,7 +51,7 @@
                     {breadcrumb}
                 {/block}
             </div>
-            <h2>{page_title}</h2>
+            <h1 class="h2">{page_title}</h1>
             {event name="layout.content_before"}
             {block CONTENT}{/block}
         </main>

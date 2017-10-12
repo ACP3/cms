@@ -1,14 +1,14 @@
 {if !empty($sidebar_news_latest)}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
+    <section class="panel panel-default">
+        <header class="panel-heading">
+            <h2 class="panel-title">
                 <a href="{uri args="news/index/details/id_`$sidebar_news_latest.id`"}">
                     {$sidebar_news_latest.title}
                 </a>
-            </h3>
-        </div>
+            </h2>
+        </header>
         <div class="panel-body">
             {$sidebar_news_latest.text}
         </div>
-    </div>
+    </section>
 {/if}

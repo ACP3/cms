@@ -1,10 +1,10 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">{lang t="polls|latest_poll"}</h3>
-    </div>
+<section class="panel panel-default">
+    <header class="panel-heading">
+        <h2 class="panel-title">{lang t="polls|latest_poll"}</h2>
+    </header>
     {if !empty($poll)}
         <div class="panel-body">
-            <h5>{$poll.title}</h5>
+            <h3 class="h3">{$poll.title}</h3>
 
             <form action="{uri args="polls/index/vote/id_`$poll.id`"}" method="post" accept-charset="UTF-8">
                 {foreach $answers as $row}
@@ -33,4 +33,4 @@
             <span class="list-group-item">{lang t="system|no_entries_short"}</span>
         </div>
     {/if}
-</div>
+</section>

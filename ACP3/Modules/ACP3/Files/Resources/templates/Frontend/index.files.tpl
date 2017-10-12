@@ -11,7 +11,7 @@
             <div class="dataset-box">
                 <div class="navbar navbar-default">
                     <div class="navbar-header">
-                        <h3 class="navbar-brand">
+                        <h2 class="navbar-brand">
                             <a href="{uri args="files/index/details/id_`$row.id`"}">
                                 {$row.title}
                                 {if !empty($row.size)}
@@ -20,7 +20,7 @@
                                     ({lang t="files|unknown_filesize"})
                                 {/if}
                             </a>
-                        </h3>
+                        </h2>
                     </div>
                     <time class="navbar-text small pull-right" datetime="{date_format date=$row.start format="c"}">
                         {date_format date=$row.start format=$dateformat}

@@ -25,32 +25,29 @@
     }
   }
 
-  .content {
+  .dataset-box__content {
     margin: -8px 15px 10px;
+
+    &.dataset-box__content_detail-page {
+      margin: 10px 0;
+    }
   }
 
-  .hyperlink {
-    a.download-file {
-      font-weight: bold;
-      display: block;
-
-      &:hover,
-      &:focus {
-        text-decoration: none;
-      }
-    }
-
+  .dataset-box__hyperlink {
     .fa-download {
       color: #333;
     }
   }
-}
 
-/* Table of contents */
-#toc {
-  width: 20%;
-  margin: 5px 10px 10px 0;
-  float: left;
+  .dataset-box__download-file {
+    font-weight: bold;
+    display: block;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
 }
 
 #page-break-link {

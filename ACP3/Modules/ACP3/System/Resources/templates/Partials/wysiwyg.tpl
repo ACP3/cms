@@ -4,13 +4,13 @@
     {include file="asset:System/Partials/wysiwyg_config.tpl" js=$wysiwyg.js}
 {/javascripts}
 {if $wysiwyg.advanced === true}
-    <div id="page-break-form" class="modal fade" role="dialog">
+    <section id="page-break-form" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <header class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h4 class="modal-title">{lang t="system|insert_page_break"}</h4>
-                </div>
+                    <h2 class="modal-title h4">{lang t="system|insert_page_break"}</h2>
+                </header>
                 <div class="modal-body">
                     <label for="toc-title">{lang t="system|title_for_toc"}</label>
                     <input type="text" id="toc-title" class="form-control">
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
     <div id="page-break-link" class="align-left">
         <a href="#" class="btn btn-default" data-toggle="modal" data-target="#page-break-form">
             {lang t="system|insert_page_break"}
@@ -29,7 +29,7 @@
     </div>
     {javascripts}
         <script>
-            var wysiwygCallback = function(text) {
+            var wysiwygCallback = (text) => {
                 {$wysiwyg.advanced_replace_content}
             };
         </script>

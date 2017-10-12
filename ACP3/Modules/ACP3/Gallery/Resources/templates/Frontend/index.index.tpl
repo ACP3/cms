@@ -11,7 +11,7 @@
                             <img src="{uri args="gallery/index/image/id_`$row.picture_id`/action_thumb"}" alt="">
                         {/if}
                         <div class="caption">
-                            <h3>{$row.title}</h3>
+                            <h2>{$row.title}</h2>
                             <p>
                                 <time datetime="{date_format date=$row.start format="c"}">
                                     {date_format date=$row.start format=$dateformat}

@@ -3,7 +3,7 @@
         {breadcrumb}
     {/block}
 </div>
-<h2>{page_title}</h2>
+<h1 class="h2">{page_title}</h1>
 {event name="layout.content_before"}
 {block CONTENT}{/block}
 <!-- JAVASCRIPTS -->

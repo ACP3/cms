@@ -1,14 +1,14 @@
 {if !empty($sidebar_article)}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
+    <section class="panel panel-default">
+        <header class="panel-heading">
+            <h2 class="panel-title">
                 <a href="{uri args="articles/index/details/id_`$sidebar_article.id`"}">
                     {$sidebar_article.title}
                 </a>
-            </h3>
-        </div>
+            </h2>
+        </header>
         <div class="panel-body">
             {$sidebar_article.text|rewrite_uri}
         </div>
-    </div>
+    </section>
 {/if}

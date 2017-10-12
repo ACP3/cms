@@ -1,12 +1,12 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    <div class="modal static">
+    <section class="modal static">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header text-center">
-                    <h4 class="modal-title">{$confirm.text}</h4>
-                </div>
+                <header class="modal-header text-center">
+                    <h2 class="modal-title h4">{$confirm.text}</h2>
+                </header>
                 <div class="modal-footer">
                     <div class="text-center">
                         {block CONFIRM_BOX_MODAL_FOOTER}
@@ -25,5 +25,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 {/block}

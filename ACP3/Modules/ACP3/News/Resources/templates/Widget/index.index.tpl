@@ -1,7 +1,7 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">{lang t="news|latest_news"}</h3>
-    </div>
+<section class="panel panel-default">
+    <header class="panel-heading">
+        <h2 class="panel-title">{lang t="news|latest_news"}</h2>
+    </header>
     <div class="list-group">
         {if !empty($sidebar_news)}
             {foreach $sidebar_news as $row}
@@ -11,4 +11,4 @@
             <span class="list-group-item">{lang t="system|no_entries_short"}</span>
         {/if}
     </div>
-</div>
+</section>
