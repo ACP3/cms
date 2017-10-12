@@ -45,7 +45,7 @@
         </div>
     </nav>
     <div class="row">
-        <main id="content" class="col-sm-12 col-md-9">
+        <main id="content" class="col-sm-12{if !$IN_ADM} col-md-9{/if}">
             <div id="breadcrumb">
                 {block BREADCRUMB}
                     {breadcrumb}
