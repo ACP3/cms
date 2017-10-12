@@ -2,7 +2,7 @@
 
 {block CONTENT}
     <article>
-        <section class="picture">
+        <section class="gallery-picture">
             {if !empty($picture_next)}
                 <a href="{uri args="gallery/index/details/id_`$picture_next`"}">
                     <img src="{uri args="gallery/index/image/id_`$picture.id`/action_normal"}"
@@ -18,7 +18,7 @@
                      alt="{$picture.description|strip_tags|trim}"
                      class="img-thumbnail">
             {/if}
-            <div class="description">
+            <div class="gallery-picture__description">
                 {$picture.description}
             </div>
             <footer>
