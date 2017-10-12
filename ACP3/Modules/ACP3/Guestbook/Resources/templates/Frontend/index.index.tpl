@@ -31,9 +31,11 @@
                             {/if}
                         </strong>
                     </div>
-                    <time class="navbar-text small pull-right" datetime="{date_format date=$row.date format="c"}">{date_format date=$row.date format=$dateformat}</time>
+                    <time class="navbar-text small pull-right" datetime="{date_format date=$row.date format="c"}">
+                        {date_format date=$row.date format=$dateformat}
+                    </time>
                 </header>
-                <div class="content">
+                <div class="dataset-box__content">
                     <div class="pull-right">
                         {if $row.website != ''}
                             <a href="{$row.website|prefix_uri}"

@@ -15,11 +15,13 @@
 
 <body>
 <div class="container">
-    <h1 id="logo" class="text-center hidden-xs">
-        <img src="{$DESIGN_PATH}Assets/img/logo.png"
-             srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
-             alt="{$PAGE_TITLE}">
-    </h1>
+    <header>
+        <h1 id="logo" class="text-center hidden-xs">
+            <img src="{$DESIGN_PATH}Assets/img/logo.png"
+                 srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
+                 alt="{$PAGE_TITLE}">
+        </h1>
+    </header>
     <nav id="main-navigation" class="navbar navbar-default{if empty($navbar)} visible-xs{/if}">
         <div class="navbar-header">
             {if !empty($navbar)}
@@ -49,7 +51,7 @@
         {/if}
     </nav>
     <main id="content">
-        <h2>{$TITLE}</h2>
+        <h1 class="h2">{$TITLE}</h1>
         {block CONTENT}{/block}
     </main>
     <footer id="footer">

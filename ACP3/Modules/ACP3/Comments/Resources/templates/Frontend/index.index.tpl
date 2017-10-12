@@ -22,7 +22,7 @@
                         {date_format date=$row.date format=$dateformat}
                     </time>
                 </header>
-                <div class="content">
+                <div class="dataset-box__content">
                     {$row.message|nl2p}
                 </div>
             </article>
