@@ -72,7 +72,7 @@ class Details extends Core\Controller\AbstractFrontendAction
 
             $article = $this->articlesCache->getCache($id);
 
-            $this->breadcrumb->replaceAncestor($article['title'], '', true);
+            $this->breadcrumb->append($article['title']);
 
             return [
                 'page' => array_merge(
