@@ -88,7 +88,7 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $expected = [
             [
                 'title' => '{FOO_FOO}',
-                'uri' => '/acp/foo',
+                'uri' => '/acp/foo/',
                 'last' => true
             ]
         ];
@@ -100,8 +100,9 @@ class StepsTest extends \PHPUnit_Framework_TestCase
      * @param string $moduleName
      * @param string $controller
      * @param string $action
+     * @param string $parameters
      */
-    private function setUpRequestMockExpectations($area, $moduleName, $controller, $action)
+    protected function setUpRequestMockExpectations($area, $moduleName, $controller, $action, $parameters = '')
     {
         $this->requestMock->expects($this->atLeastOnce())
             ->method('getArea')
@@ -120,6 +121,17 @@ class StepsTest extends \PHPUnit_Framework_TestCase
             ->willReturn(
                 ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller
             );
+        $this->requestMock->expects($this->any())
+            ->method('getFullPath')
+            ->willReturn(
+                ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller . '/' . $action
+            );
+        $this->requestMock->expects($this->any())
+            ->method('getQuery')
+            ->willReturn($moduleName . '/' . $controller . '/' . $action . '/' . $parameters);
+        $this->requestMock->expects($this->any())
+            ->method('getUriWithoutPages')
+            ->willReturn($moduleName . '/' . $controller . '/' . $action . '/' . $parameters);
     }
 
     /**
@@ -134,16 +146,16 @@ class StepsTest extends \PHPUnit_Framework_TestCase
             ->willReturn($serviceExists);
     }
 
-    private function setUpRouterMockExpectations()
+    protected function setUpRouterMockExpectations()
     {
         $this->routerMock->expects($this->atLeastOnce())
             ->method('route')
             ->willReturnCallback(function ($path) {
-                return '/' . $path;
+                return '/' . $path . (!preg_match('=/$=', $path) ? '/' : '');
             });
     }
 
-    private function setUpTranslatorMockExpectations($callCount = 1)
+    protected function setUpTranslatorMockExpectations($callCount = 1)
     {
         $this->translatorMock->expects($this->atLeast($callCount))
             ->method('t')
@@ -170,11 +182,11 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $expected = [
             [
                 'title' => '{FOO_FOO}',
-                'uri' => '/acp/foo',
+                'uri' => '/acp/foo/',
             ],
             [
                 'title' => '{FOO_ADMIN_DETAILS_INDEX}',
-                'uri' => '/acp/foo/details',
+                'uri' => '/acp/foo/details/',
                 'last' => true
             ]
         ];
@@ -197,11 +209,11 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $expected = [
             [
                 'title' => '{FOO_FOO}',
-                'uri' => '/acp/foo',
+                'uri' => '/acp/foo/',
             ],
             [
                 'title' => 'FooBarBaz',
-                'uri' => '/acp/foo/bar/baz',
+                'uri' => '/acp/foo/bar/baz/',
                 'last' => true
             ]
         ];
@@ -222,7 +234,7 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $expected = [
             [
                 'title' => '{FOO_FOO}',
-                'uri' => '/foo',
+                'uri' => '/foo/',
                 'last' => true
             ]
         ];
@@ -247,11 +259,11 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $expected = [
             [
                 'title' => '{FOO_FOO}',
-                'uri' => '/foo',
+                'uri' => '/foo/',
             ],
             [
                 'title' => '{FOO_FRONTEND_DETAILS_INDEX}',
-                'uri' => '/foo/details',
+                'uri' => '/foo/details/',
                 'last' => true
             ]
         ];
@@ -274,7 +286,7 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $expected = [
             [
                 'title' => 'FooBarBaz',
-                'uri' => '/foo/bar/baz',
+                'uri' => '/foo/bar/baz/',
                 'last' => true
             ]
         ];
@@ -299,7 +311,7 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $expected = [
             [
                 'title' => 'FooBarBaz',
-                'uri' => '/foo/bar/baz',
+                'uri' => '/foo/bar/baz/',
                 'last' => true
             ]
         ];
@@ -326,15 +338,15 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $expected = [
             [
                 'title' => 'FooBarBaz',
-                'uri' => '/foo/bar/baz',
+                'uri' => '/foo/bar/baz/',
             ],
             [
                 'title' => 'FooBarBaz2',
-                'uri' => '/foo/bar/baz2',
+                'uri' => '/foo/bar/baz2/',
             ],
             [
                 'title' => 'Lorem Ipsum',
-                'uri' => '/lorem/ipsum/dolor',
+                'uri' => '/lorem/ipsum/dolor/',
                 'last' => true
             ],
         ];
