@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-xx
 ### Fixed
+- Fixed the inability to create a new menu item which should not be displayed
 - Fixed a bug with the breadcrumbs where the breadcrumbs were sometimes not right when being used in conjunction with the menus module 
 - Fixed the bug that the `parent_id`s of the node's siblings were wrong, when the node was a root node after deleting it
 

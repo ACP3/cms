@@ -9,6 +9,12 @@ jQuery(document).ready(function ($) {
     // Wenn Menüpunkt nicht angezeigt werden soll, Linkziel verstecken
     $('input[name="display"]').change(function () {
         $target.toggle(this.value == 1);
+
+        if (this.value == 0) {
+            // Force the link target to open on the same page programmatically,
+            // as the user can not select it for themself
+            $('#target').val(1);
+        }
     });
 
     var $mode = $('#mode'),
