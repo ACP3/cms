@@ -69,7 +69,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
 
         $expected = [
             [
-                'title' => 'News',
+                'title' => '{NEWS_NEWS}',
                 'uri' => '/news/',
                 'last' => true
             ]
@@ -108,7 +108,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
                 'uri' => '/news/',
             ],
             [
-                'title' => 'Newsletter',
+                'title' => '{NEWSLETTER_NEWSLETTER}',
                 'uri' => '/newsletter/',
                 'last' => true
             ],
@@ -147,7 +147,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
                 'uri' => '/news/',
             ],
             [
-                'title' => 'Newsletter',
+                'title' => '{NEWSLETTER_NEWSLETTER}',
                 'uri' => '/newsletter/',
             ],
             [
@@ -180,7 +180,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
         $this->setUpTranslatorMockExpectations(0);
 
         $this->steps->append('News', 'news');
-        $this->steps->append('Category', 'news/index/index/cat_' . 1);
+        $this->steps->append('Category', 'news/index/index/cat_1');
         $this->steps->append('News-Title');
 
         $expected = [
@@ -190,11 +190,75 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
             ],
             [
                 'title' => 'Category',
-                'uri' => '/news/index/index/cat_' . 1 . '/',
+                'uri' => '/news/index/index/cat_1/',
             ],
             [
                 'title' => 'News-Title',
                 'uri' => '',
+                'last' => true
+            ],
+        ];
+        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+    }
+
+    public function testGetBreadcrumbLastStepTitleShouldTakePrecedence()
+    {
+        $this->setUpMenuItemRepositoryExpectations([
+            [
+                'title' => 'FooBar',
+                'uri' => 'articles/index/details/id_1/',
+                'left_id' => 1,
+                'right_id' => 2
+            ]
+        ]);
+        $this->setUpRequestMockExpectations(
+            AreaEnum::AREA_FRONTEND,
+            'articles',
+            'index',
+            'details',
+            'id_1'
+        );
+        $this->setUpRouterMockExpectations();
+        $this->setUpTranslatorMockExpectations(0);
+
+        $this->steps->append('Lorem Ipsum Dolor', 'articles/index/details/id_1');
+
+        $expected = [
+            [
+                'title' => 'Lorem Ipsum Dolor',
+                'uri' => '/articles/index/details/id_1/',
+                'last' => true
+            ],
+        ];
+        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+    }
+
+    public function testGetBreadcrumbLastStepTitleShouldTakePrecedenceWithEmptyUri()
+    {
+        $this->setUpMenuItemRepositoryExpectations([
+            [
+                'title' => 'FooBar',
+                'uri' => 'articles/index/details/id_1/',
+                'left_id' => 1,
+                'right_id' => 2
+            ]
+        ]);
+        $this->setUpRequestMockExpectations(
+            AreaEnum::AREA_FRONTEND,
+            'articles',
+            'index',
+            'details',
+            'id_1'
+        );
+        $this->setUpRouterMockExpectations();
+        $this->setUpTranslatorMockExpectations(0);
+
+        $this->steps->append('Lorem Ipsum Dolor');
+
+        $expected = [
+            [
+                'title' => 'Lorem Ipsum Dolor',
+                'uri' => '/articles/index/details/id_1/',
                 'last' => true
             ],
         ];

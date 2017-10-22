@@ -75,12 +75,17 @@ class Steps extends Core\Breadcrumb\Steps
         }
 
         if (!empty($this->stepsFromDb)) {
-            $this->breadcrumbCache = $this->stepsFromDb;
+            $lastDbStepUri = $this->stepsFromDb[count($this->stepsFromDb) - 1]['uri'];
 
-            if ($this->breadcrumbCache[count($this->breadcrumbCache) - 1]['uri'] === $this->steps[0]['uri']) {
-                $steps = $this->steps;
-                unset($steps[0]);
-                $this->breadcrumbCache = array_merge($this->breadcrumbCache, $steps);
+            if (count($this->steps) === 1 && empty($this->steps[0]['uri'])) {
+                $this->copyTitleFromFirstStepToLastDbStep();
+                $this->steps[0]['uri'] = $lastDbStepUri;
+            }
+
+            if ($lastDbStepUri === $this->steps[0]['uri']) {
+                $this->copyTitleFromFirstStepToLastDbStep();
+
+                $this->breadcrumbCache = array_merge($this->stepsFromDb, array_slice($this->steps, 1));
             }
         }
     }
@@ -90,7 +95,7 @@ class Steps extends Core\Breadcrumb\Steps
      */
     private function prePopulate()
     {
-        $items = $this->menuItemRepository->getMenuItemsByUri($this->possibleMatchedRoutes());
+        $items = $this->menuItemRepository->getMenuItemsByUri($this->getPossiblyMatchingRoutes());
 
         $matches = $this->findRestrictionInRoutes($items);
         if (!empty($matches)) {
@@ -104,7 +109,7 @@ class Steps extends Core\Breadcrumb\Steps
         }
     }
 
-    private function possibleMatchedRoutes() {
+    private function getPossiblyMatchingRoutes() {
         return [
             $this->request->getQuery(),
             $this->request->getUriWithoutPages(),
@@ -122,7 +127,7 @@ class Steps extends Core\Breadcrumb\Steps
     {
         rsort($items);
         foreach ($items as $index => $item) {
-            if (in_array($item['uri'], $this->possibleMatchedRoutes())) {
+            if (in_array($item['uri'], $this->getPossiblyMatchingRoutes())) {
                 return [
                     $item['left_id'],
                     $item['right_id'],
@@ -146,5 +151,10 @@ class Steps extends Core\Breadcrumb\Steps
         $this->stepsFromDb[] = $this->buildStepItem($title, $path);
 
         return $this;
+    }
+
+    private function copyTitleFromFirstStepToLastDbStep()
+    {
+        $this->stepsFromDb[count($this->stepsFromDb) - 1]['title'] = $this->steps[0]['title'];
     }
 }

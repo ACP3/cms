@@ -119,13 +119,15 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $this->requestMock->expects($this->any())
             ->method('getModuleAndController')
             ->willReturn(
-                ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller
+                ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller . '/'
             );
         $this->requestMock->expects($this->any())
             ->method('getFullPath')
             ->willReturn(
-                ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller . '/' . $action
+                ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller . '/' . $action . '/'
             );
+
+        $parameters .= preg_match('=/$=', $parameters) ? '' : '/';
         $this->requestMock->expects($this->any())
             ->method('getQuery')
             ->willReturn($moduleName . '/' . $controller . '/' . $action . '/' . $parameters);
