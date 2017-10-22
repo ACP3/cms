@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Added an explicit breadcrumb to the imprint controller action of the contact module, as the imprint is not directly associated with the contact form
 - The titles of the programmatically breadcrumb steps now always take precedence over the ones from the database
+- When the homepage is being displayed, set the canonical URL to the website root
 
 ## [4.13.1] - 2017-10-21
 ### Fixed
