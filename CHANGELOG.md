@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.x.y] - 2017-xx-yy
+## [Unreleased] - 2017-xx-yy
 ### Changed
 - Added an explicit breadcrumb to the imprint controller action of the contact module, as the imprint is not directly associated with the contact form
 - The titles of the programmatically breadcrumb steps now always take precedence over the ones from the database
