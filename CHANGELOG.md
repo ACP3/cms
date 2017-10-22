@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 2017-xx-yy
+## [4.14.0] - 2017-10-22
 ### Changed
 - Added an explicit breadcrumb to the imprint controller action of the contact module, as the imprint is not directly associated with the contact form
 - The titles of the programmatically breadcrumb steps now always take precedence over the ones from the database
@@ -407,7 +407,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.13.1...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.14.0...HEAD
+[4.14.0]: https://github.com/ACP3/cms/compare/v4.13.1...v4.14.0
 [4.13.1]: https://github.com/ACP3/cms/compare/v4.13.0...v4.13.1
 [4.13.0]: https://github.com/ACP3/cms/compare/v4.12.2...v4.13.0
 [4.12.2]: https://github.com/ACP3/cms/compare/v4.12.1...v4.12.2
