@@ -56,6 +56,10 @@ class MetaStatements
      * @var string
      */
     private $metaRobots = '';
+    /**
+     * @var bool
+     */
+    private $isActive;
 
     /**
      * MetaStatements constructor.
@@ -91,7 +95,7 @@ class MetaStatements
     /**
      * Returns the meta tags of the current page
      *
-     * @return string
+     * @return array
      */
     public function getMetaTags()
     {
