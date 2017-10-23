@@ -1,7 +1,9 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    {block CONTENT_BEFORE_AJAX_FORM}{/block}
+    {block CONTENT_BEFORE_AJAX_FORM}
+        {redirect_message}
+    {/block}
     {if !empty($error_msg)}
         {$error_msg}
     {else}

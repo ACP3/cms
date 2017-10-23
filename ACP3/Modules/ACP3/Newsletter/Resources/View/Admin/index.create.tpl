@@ -9,5 +9,5 @@
         {include file="asset:System/Partials/form_group.textarea.tpl" name="text" value=$form.text required=true label={lang t="newsletter|text"}}
     {/if}
     {include file="asset:System/Partials/form_group.button_group.tpl" options=$test required=true label={lang t="newsletter|test_newsletter"} help={lang t="newsletter|test_newsletter_description"}}
-    {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/newsletter"}}
+    {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/newsletter"}}
 {/block}

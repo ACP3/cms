@@ -259,6 +259,8 @@
         <item key="refresh">Refresh</item>
         <item key="reset">Reset</item>
         <item key="result">Result</item>
+        <item key="save_and_close">Save and close</item>
+        <item key="save_and_continue">Save and continue</item>
         <item key="save_error">While saving the entry an error has occurred.</item>
         <item key="save_success">The entry has been successfully saved.</item>
         <item key="seconds">Seconds</item>
@@ -303,11 +305,12 @@
         <item key="title_for_toc">Title for table of contents</item>
         <item key="title_to_short">Please type in a title.</item>
         <item key="toc_page">Page %page%</item>
-        <item key="toggle_navigation">Toggle Navigation</item>
+        <item key="toggle_dropdown">Toggle dropdown</item>
+        <item key="toggle_navigation">Toggle navigation</item>
         <item key="type_in_flood_barrier">Please enter the number in seconds a user can not submit posts.</item>
         <item key="type_in_long_date_format">Please type in the long date format.</item>
         <item key="type_in_mailer_smtp_host">Please type in the hostname of the SMTP server.</item>
-        <item key="type_in_mailer_smtp_port">Please type in the portnumber of the SMTP server.</item>
+        <item key="type_in_mailer_smtp_port">Please type in the port number of the SMTP server.</item>
         <item key="type_in_mailer_smtp_username">Please type in the username of the SMTP server.</item>
         <item key="type_in_cache_lifetime">Please type in the page-cache lifetime.</item>
         <item key="type_in_short_date_format">Please type in the short date format.</item>

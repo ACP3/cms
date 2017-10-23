@@ -9,7 +9,7 @@
     {if isset($allow_comments)}
         {include file="asset:System/Partials/form_group.button_group.tpl" options=$allow_comments required=true label={lang t="system|allow_comments"}}
     {/if}
-    {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/news"}}
+    {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/news"}}
     {javascripts}
         {include_js module="news" file="admin/index.settings"}
     {/javascripts}
