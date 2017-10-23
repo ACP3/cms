@@ -18,11 +18,11 @@
   "require": {
     "composer/semver": "^1.4",
     "acp3/composer-installer": "^1.0",
-    "acp3/core": "^4.14.0",
-    "acp3/setup": "^4.14.0",
-    "acp3/module-errors": "^4.14.0",
-    "acp3/module-permissions": "^4.14.0",
-    "acp3/module-users": "^4.14.0"
+    "acp3/core": "^4.15.0",
+    "acp3/setup": "^4.15.0",
+    "acp3/module-errors": "^4.15.0",
+    "acp3/module-permissions": "^4.15.0",
+    "acp3/module-users": "^4.15.0"
   },
   "autoload": {
     "psr-4": {
