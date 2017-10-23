@@ -46,7 +46,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 12;
+        return 13;
     }
 
     /**
@@ -59,6 +59,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `uri` VARCHAR(255) NOT NULL,
                 `alias` VARCHAR(100) NOT NULL,
+                `title` VARCHAR(255) NOT NULL,
                 `keywords` VARCHAR(255) NOT NULL,
                 `description` VARCHAR(255) NOT NULL,
                 `robots` TINYINT(1) UNSIGNED NOT NULL,

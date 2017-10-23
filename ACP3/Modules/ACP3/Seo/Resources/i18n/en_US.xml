@@ -35,6 +35,7 @@
         <item key="sitemap_save_mode_manually">Manually</item>
         <item key="sitemap_success">The sitemap has been successfully refreshed.</item>
         <item key="suggest_alias">Suggest alias</item>
+        <item key="title">Title</item>
         <item key="type_in_valid_resource">Please type in a valid path to an ACP3 internal resource.</item>
         <item key="uri">Path</item>
     </keys>

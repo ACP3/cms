@@ -85,7 +85,8 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
                     !empty($rawData['alias']) ? $rawData['alias'] . '/img-' . $picture['id'] : '',
                     $rawData['seo_keywords'],
                     $rawData['seo_description'],
-                    $rawData['seo_robots']
+                    $rawData['seo_robots'],
+                    $rawData['seo_title']
                 );
             }
         }
@@ -109,6 +110,7 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
 
         return isset(
             $rawData['alias'],
+            $rawData['seo_title'],
             $rawData['seo_keywords'],
             $rawData['seo_description'],
             $rawData['seo_robots'],

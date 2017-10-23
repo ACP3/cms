@@ -49,7 +49,8 @@ class InsertUriAliasOnModelAfterSaveListener
                     $formData['alias'],
                     $formData['seo_keywords'],
                     $formData['seo_description'],
-                    (int)$formData['seo_robots']
+                    (int)$formData['seo_robots'],
+                    $formData['seo_title']
                 );
             }
         }
