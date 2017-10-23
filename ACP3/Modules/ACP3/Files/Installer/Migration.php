@@ -90,7 +90,7 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             47 => [
                 "ALTER TABLE `{pre}files` CHANGE `category_id` `category_id` INT(10) UNSIGNED;",
-                "ALTER TABLE `{pre}files` DROP FOREIGN KEY `acp3_files_ibfk_1`;",
+                "ALTER TABLE `{pre}files` DROP FOREIGN KEY `{pre}files_ibfk_1`;",
                 "ALTER TABLE `{pre}files` ADD FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE SET NULL",
             ]
         ];
