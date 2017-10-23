@@ -120,6 +120,14 @@ services:
       - { name: core.view.extension }
     public: false
 
+  smarty.plugin.site_subtitle:
+    class: ACP3\Core\View\Renderer\Smarty\Functions\SiteSubtitle
+    arguments:
+      - '@core.breadcrumb.title'
+    tags:
+      - { name: core.view.extension }
+    public: false
+
   smarty.plugin.template_path:
     class: ACP3\Core\View\Renderer\Smarty\Functions\TemplatePath
     arguments: ['@core.assets.file_resolver']

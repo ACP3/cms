@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2017-xx-xx
+### Added
+- Added the possibility to add a separate page title via the SEO form fields
+- Added the new Smarty function `site_subtitle` which exposes the site's subtitle to the frontend 
+
 ## [4.14.0] - 2017-10-22
 ### Changed
 - Added an explicit breadcrumb to the imprint controller action of the contact module, as the imprint is not directly associated with the contact form
