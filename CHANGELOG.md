@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added an explicit breadcrumb to the imprint controller action of the contact module, as the imprint is not directly associated with the contact form
 - The titles of the programmatically breadcrumb steps now always take precedence over the ones from the database
 - When the homepage is being displayed, set the canonical URL to the website root
+- Display an alert when an user tries to access a restricted pages which requires the user to be logged in
 
 ## [4.13.1] - 2017-10-21
 ### Fixed
