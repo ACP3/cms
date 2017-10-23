@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added the schema.org `BreadcrumbList` markup to the breadcrumb template file 
 - Added the possibility to add a separate page title via the SEO form fields
 - Added the new Smarty function `site_subtitle` which exposes the site's subtitle to the frontend 
-- When inside the administration and creating/edition a resultset, you can now choose between `save and close` and `save and continue`
+- When inside the administration and creating/editing a resultset, you can now choose between `save and close` and `save and continue`
 
 ## [4.14.0] - 2017-10-22
 ### Changed
