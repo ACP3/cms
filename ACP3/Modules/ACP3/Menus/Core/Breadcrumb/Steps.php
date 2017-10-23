@@ -47,43 +47,6 @@ class Steps extends Core\Breadcrumb\Steps
         parent::__construct($container, $translator, $request, $router, $eventDispatcher);
 
         $this->menuItemRepository = $menuItemRepository;
-
-        $this->prePopulate();
-    }
-
-    /**
-     * Initializes and pre populates the breadcrumb
-     */
-    public function prePopulate()
-    {
-        if ($this->request->getArea() !== Core\Controller\AreaEnum::AREA_ADMIN) {
-            $in = [
-                $this->request->getQuery(),
-                $this->request->getUriWithoutPages(),
-                $this->request->getFullPath(),
-                $this->request->getModuleAndController(),
-                $this->request->getModule()
-            ];
-            $items = $this->menuItemRepository->getMenuItemsByUri($in);
-            foreach ($items as $item) {
-                $this->appendFromDB($item['title'], $item['uri']);
-            }
-        }
-    }
-
-    /**
-     * Zuweisung einer neuen Stufe zur Brotkrümelspur
-     *
-     * @param string $title
-     * @param string $path
-     *
-     * @return $this
-     */
-    protected function appendFromDB($title, $path = '')
-    {
-        $this->stepsFromDb[] = $this->buildStepItem($title, $path);
-
-        return $this;
     }
 
     /**
@@ -100,20 +63,97 @@ class Steps extends Core\Breadcrumb\Steps
     }
 
     /**
-     * Sets the breadcrumb steps cache for frontend action requests
+     * @inheritdoc
      */
     protected function buildBreadcrumbCacheForFrontend()
     {
         parent::buildBreadcrumbCacheForFrontend();
 
-        if (!empty($this->stepsFromDb)) {
-            $this->breadcrumbCache = $this->stepsFromDb;
+        if (empty($this->stepsFromDb)) {
+            $this->prePopulate();
+        }
 
-            if ($this->breadcrumbCache[count($this->breadcrumbCache) - 1]['uri'] === $this->steps[0]['uri']) {
-                $steps = $this->steps;
-                unset($steps[0]);
-                $this->breadcrumbCache = array_merge($this->breadcrumbCache, $steps);
+        if (!empty($this->stepsFromDb)) {
+            $lastDbStepUri = $this->stepsFromDb[count($this->stepsFromDb) - 1]['uri'];
+
+            if (count($this->steps) === 1 && empty($this->steps[0]['uri'])) {
+                $this->copyTitleFromFirstStepToLastDbStep();
+                $this->steps[0]['uri'] = $lastDbStepUri;
+            }
+
+            if ($lastDbStepUri === $this->steps[0]['uri']) {
+                $this->copyTitleFromFirstStepToLastDbStep();
+
+                $this->breadcrumbCache = array_merge($this->stepsFromDb, array_slice($this->steps, 1));
             }
         }
+    }
+
+    /**
+     * Initializes and pre populates the breadcrumb
+     */
+    private function prePopulate()
+    {
+        $items = $this->menuItemRepository->getMenuItemsByUri($this->getPossiblyMatchingRoutes());
+
+        $matches = $this->findRestrictionInRoutes($items);
+        if (!empty($matches)) {
+            list($leftId, $rightId) = $matches;
+
+            foreach ($items as $item) {
+                if ($item['left_id'] <= $leftId && $item['right_id'] >= $rightId) {
+                    $this->appendFromDB($item['title'], $item['uri']);
+                }
+            }
+        }
+    }
+
+    private function getPossiblyMatchingRoutes() {
+        return [
+            $this->request->getQuery(),
+            $this->request->getUriWithoutPages(),
+            $this->request->getFullPath(),
+            $this->request->getModuleAndController(),
+            $this->request->getModule()
+        ];
+    }
+
+    /**
+     * @param array $items
+     * @return array
+     */
+    private function findRestrictionInRoutes(array $items)
+    {
+        rsort($items);
+        foreach ($items as $index => $item) {
+            if (in_array($item['uri'], $this->getPossiblyMatchingRoutes())) {
+                return [
+                    $item['left_id'],
+                    $item['right_id'],
+                ];
+            }
+        }
+
+        return [];
+    }
+
+    /**
+     * Zuweisung einer neuen Stufe zur Brotkrümelspur
+     *
+     * @param string $title
+     * @param string $path
+     *
+     * @return $this
+     */
+    private function appendFromDB($title, $path = '')
+    {
+        $this->stepsFromDb[] = $this->buildStepItem($title, $path);
+
+        return $this;
+    }
+
+    private function copyTitleFromFirstStepToLastDbStep()
+    {
+        $this->stepsFromDb[count($this->stepsFromDb) - 1]['title'] = $this->steps[0]['title'];
     }
 }

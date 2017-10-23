@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/gallery"}}
+    {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/gallery"}}
     {javascripts}
         {include_js module="gallery" file="admin/index.settings"}
     {/javascripts}

@@ -1,7 +1,16 @@
 services:
+  seo.event.on_breadcrumb_title_get_site_and_page_title_before_listener:
+    class: ACP3\Modules\ACP3\Seo\Event\Listener\OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener
+    arguments:
+      - '@core.http.request'
+      - '@seo.helper.meta_statements'
+    tags:
+      - { name: core.eventListener, event: core.breadcrumb.title.get_site_and_page_title_before, method: useMetaTitle, priority: -255 }
+
   seo.event.on_controller_action_before_dispatch_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\OnControllerActionBeforeDispatchListener
     arguments:
+      - '@core.environment.application_path'
       - '@core.http.request'
       - '@core.router'
       - '@seo.core.router.aliases'

@@ -17,7 +17,7 @@ class SeoCacheStorage extends Core\Cache\AbstractCacheStorage
     private $seoRepository;
 
     /**
-     * @param \ACP3\Core\Cache\Cache                           $cache
+     * @param \ACP3\Core\Cache\Cache $cache
      * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
@@ -50,17 +50,12 @@ class SeoCacheStorage extends Core\Cache\AbstractCacheStorage
      */
     public function saveCache()
     {
-        $aliases = $this->seoRepository->getAllMetaTags();
-        $cAliases = count($aliases);
         $data = [];
+        foreach ($this->seoRepository->getAllMetaTags() as $alias) {
+            $tmpAlias = $alias;
+            unset($tmpAlias['uri']);
 
-        for ($i = 0; $i < $cAliases; ++$i) {
-            $data[$aliases[$i]['uri']] = [
-                'alias' => $aliases[$i]['alias'],
-                'keywords' => $aliases[$i]['keywords'],
-                'description' => $aliases[$i]['description'],
-                'robots' => $aliases[$i]['robots']
-            ];
+            $data[$alias['uri']] = $tmpAlias;
         }
 
         return $this->cache->save('seo', $data);

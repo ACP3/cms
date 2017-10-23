@@ -56,6 +56,9 @@ input[placeholder],
 textarea[placeholder] {
   font-style: italic;
 }
+.btn-block.text-left {
+  text-align: left;
+}
 /* Pagination */
 .pagination {
   margin: 0 0 10px;

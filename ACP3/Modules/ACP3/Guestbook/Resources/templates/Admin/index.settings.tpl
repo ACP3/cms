@@ -11,7 +11,7 @@
     {if isset($options.newsletter_integration)}
         {include file="asset:System/Partials/form_group.button_group.tpl" options=$options.newsletter_integration required=true label={lang t="guestbook|newsletter_integration"}}
     {/if}
-    {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/guestbook"}}
+    {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/guestbook"}}
     {javascripts}
         {include_js module="guestbook" file="admin/index.settings"}
     {/javascripts}

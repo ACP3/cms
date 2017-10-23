@@ -69,15 +69,16 @@ class UriAliasManager
      * @param string $alias
      * @param string $keywords
      * @param string $description
-     * @param int    $robots
-     *
-     * @return boolean
+     * @param int $robots
+     * @param string $title
+     * @return bool
      */
-    public function insertUriAlias($path, $alias, $keywords = '', $description = '', $robots = 0)
+    public function insertUriAlias($path, $alias, $keywords = '', $description = '', $robots = 0, $title = '')
     {
         $path .= $this->preparePath($path);
         $data = [
             'alias' => $alias,
+            'seo_title' => $title,
             'seo_keywords' => $keywords,
             'seo_description' => $description,
             'seo_robots' => (int)$robots

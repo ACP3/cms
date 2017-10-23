@@ -56,6 +56,10 @@ class MetaStatements
      * @var string
      */
     private $metaRobots = '';
+    /**
+     * @var bool
+     */
+    private $isActive;
 
     /**
      * MetaStatements constructor.
@@ -91,7 +95,7 @@ class MetaStatements
     /**
      * Returns the meta tags of the current page
      *
-     * @return string
+     * @return array
      */
     public function getMetaTags()
     {
@@ -191,6 +195,18 @@ class MetaStatements
     public function getKeywords($path)
     {
         return $this->getSeoInformation($path, 'keywords');
+    }
+
+    /**
+     * Returns the meta title of the given page
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function getTitle($path)
+    {
+        return $this->getSeoInformation($path, 'title');
     }
 
     /**

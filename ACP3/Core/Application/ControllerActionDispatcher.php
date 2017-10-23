@@ -135,7 +135,8 @@ class ControllerActionDispatcher
     private function getCallable(ActionInterface $controller)
     {
         $callable = [$controller, 'execute'];
-        if ($this->request->getPost()->has('submit') && method_exists($controller, 'executePost')) {
+        if (($this->request->getPost()->has('submit') || $this->request->getPost()->has('continue'))
+            && method_exists($controller, 'executePost')) {
             $reflection = new \ReflectionMethod($controller, 'executePost');
 
             if ($reflection->isPublic()) {

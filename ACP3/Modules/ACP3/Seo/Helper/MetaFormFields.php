@@ -74,6 +74,7 @@ class MetaFormFields
             $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
             $alias = $this->request->getPost()->get('alias', $this->aliases->getUriAlias($path, true));
+            $title = $this->request->getPost()->get('seo_title', $this->metaStatements->getTitle($path));
             $keywords = $this->request->getPost()->get('seo_keywords', $this->metaStatements->getKeywords($path));
             $description = $this->request->getPost()->get(
                 'seo_description',
@@ -81,11 +82,12 @@ class MetaFormFields
             );
             $robots = $this->metaStatements->getSeoInformation($path, 'robots', 0);
         } else {
-            $alias = $keywords = $description = '';
+            $alias = $title = $keywords = $description = '';
             $robots = 0;
         }
 
         return [
+            'title' => $title,
             'alias' => $alias,
             'keywords' => $keywords,
             'description' => $description,

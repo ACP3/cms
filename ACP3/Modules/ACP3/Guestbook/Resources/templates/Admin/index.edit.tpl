@@ -10,5 +10,5 @@
     {if !empty($activate)}
         {include file="asset:System/Partials/form_group.button_group.tpl" options=$activate required=true label={lang t="guestbook|activate_entry"}}
     {/if}
-    {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/guestbook"}}
+    {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/guestbook"}}
 {/block}

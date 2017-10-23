@@ -50,6 +50,9 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
             ],
             12 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'index_paginated_content', 'first');",
+            ],
+            13 => [
+                "ALTER TABLE `{pre}seo` ADD COLUMN `title` VARCHAR(255) NOT NULL AFTER `alias`;"
             ]
         ];
     }
