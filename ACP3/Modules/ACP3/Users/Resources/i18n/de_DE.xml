@@ -13,6 +13,7 @@
         <item key="admin_index_edit">Benutzer bearbeiten</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="admin_user_undeletable">Der Administrator kann nicht gelöscht werden.</item>
+        <item key="authentication_required">Um die angeforderte Seite anzeigen zu können, müssen Sie sich anmelden.</item>
         <item key="birthday">Geburtstag</item>
         <item key="birthday_hide">Geburtstag verstecken</item>
         <item key="birthday_display_completely">Geburtstag vollständig anzeigen</item>
