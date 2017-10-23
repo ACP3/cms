@@ -5,8 +5,6 @@ namespace ACP3\Core\Application;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Core\Http\RedirectResponse;
-use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Patchwork\Utf8;
@@ -111,7 +109,7 @@ class Bootstrap extends AbstractBootstrap
         } catch (\Exception $e) {
             $this->logger->critical($e);
 
-            $response = $this->handleException($e, $redirect, 'errors/index/server_error');
+            $response = $this->handleException($e, 'errors/index/server_error');
         }
 
         return $response;
