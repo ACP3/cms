@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-xx
 ### Added
+- Added the schema.org `BreadcrumbList` markup to the breadcrumb template file 
 - Added the possibility to add a separate page title via the SEO form fields
 - Added the new Smarty function `site_subtitle` which exposes the site's subtitle to the frontend 
 
