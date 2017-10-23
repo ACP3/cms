@@ -5,8 +5,6 @@ namespace ACP3\Core\Application;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Core\Http\RedirectResponse;
-use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Patchwork\Utf8;
@@ -84,9 +82,6 @@ class Bootstrap extends AbstractBootstrap
      */
     public function outputPage()
     {
-        /** @var \ACP3\Core\Http\Request $request */
-        $request = $this->container->get('core.http.request');
-
         /** @var \ACP3\Core\Http\RedirectResponse $redirect */
         $redirect = $this->container->get('core.http.redirect_response');
 
@@ -95,7 +90,7 @@ class Bootstrap extends AbstractBootstrap
             $this->setThemePaths();
             $this->container->get('core.authentication')->authenticate();
 
-            if ($this->isMaintenanceModeEnabled($request)) {
+            if ($this->isMaintenanceModeEnabled()) {
                 return $this->handleMaintenanceMode();
             }
 
@@ -103,16 +98,18 @@ class Bootstrap extends AbstractBootstrap
         } catch (\ACP3\Core\Controller\Exception\ResultNotExistsException $e) {
             $response = $redirect->temporary('errors/index/not_found');
         } catch (\ACP3\Core\Authentication\Exception\UnauthorizedAccessException $e) {
+            /** @var \ACP3\Core\Http\Request $request */
+            $request = $this->container->get('core.http.request');
             $redirectUri = base64_encode($request->getPathInfo());
             $response = $redirect->temporary('users/index/login/redirect_' . $redirectUri);
         } catch (\ACP3\Core\ACL\Exception\AccessForbiddenException $e) {
             $response = $redirect->temporary('errors/index/access_forbidden');
         } catch (\ACP3\Core\Controller\Exception\ControllerActionNotFoundException $e) {
-            $response = $this->handleException($e, $redirect, 'errors/index/not_found');
+            $response = $redirect->temporary('errors/index/not_found');
         } catch (\Exception $e) {
             $this->logger->critical($e);
 
-            $response = $this->handleException($e, $redirect, 'errors/index/server_error');
+            $response = $this->handleException($e, 'errors/index/server_error');
         }
 
         return $response;
@@ -138,12 +135,13 @@ class Bootstrap extends AbstractBootstrap
     /**
      * Checks, whether the maintenance mode is active
      *
-     * @param \ACP3\Core\Http\RequestInterface $request
-     *
      * @return bool
      */
-    private function isMaintenanceModeEnabled(RequestInterface $request)
+    private function isMaintenanceModeEnabled()
     {
+        /** @var \ACP3\Core\Http\Request $request */
+        $request = $this->container->get('core.http.request');
+
         return (bool)$this->systemSettings['maintenance_mode'] === true &&
             $request->getArea() !== AreaEnum::AREA_ADMIN &&
             strpos($request->getQuery(), 'users/index/login/') !== 0;
@@ -163,7 +161,7 @@ class Bootstrap extends AbstractBootstrap
             'CONTENT' => $this->systemSettings['maintenance_message']
         ]);
 
-        $response = new Response($view->fetchTemplate('system/maintenance.tpl'));
+        $response = new Response($view->fetchTemplate('System/layout.maintenance.tpl'));
         $response->setStatusCode(Response::HTTP_SERVICE_UNAVAILABLE);
 
         return $response;
@@ -171,15 +169,17 @@ class Bootstrap extends AbstractBootstrap
 
     /**
      * @param \Exception $exception
-     * @param \ACP3\Core\Http\RedirectResponse $redirect
      * @param string $route
      * @return Response
      */
-    private function handleException(\Exception $exception, RedirectResponse $redirect, $route)
+    private function handleException(\Exception $exception, $route)
     {
         if ($this->appMode === ApplicationMode::DEVELOPMENT) {
             return $this->renderApplicationException($exception);
         }
+
+        /** @var \ACP3\Core\Http\RedirectResponse $redirect */
+        $redirect = $this->container->get('core.http.redirect_response');
 
         return $redirect->temporary($route);
     }
@@ -198,10 +198,10 @@ class Bootstrap extends AbstractBootstrap
         $view->assign([
             'PAGE_TITLE' => 'ACP3',
             'ROOT_DIR' => $this->appPath->getWebRoot(),
-            'EXCEPTION' => $exception
+            'EXCEPTION' => $exception,
         ]);
 
-        $response = new Response($view->fetchTemplate('system/exception.tpl'));
+        $response = new Response($view->fetchTemplate('System/layout.exception.tpl'));
         $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
 
         return $response;

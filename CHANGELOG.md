@@ -4,11 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.15.0] - 2017-10-23
+### Added
+- Added the schema.org `BreadcrumbList` markup to the breadcrumb template file 
+- Added the possibility to add a separate page title via the SEO form fields
+- Added the new Smarty function `site_subtitle` which exposes the site's subtitle to the frontend 
+- When inside the administration and creating/editing a resultset, you can now choose between `save and close` and `save and continue`
+
+### Changed
+- When deleting a category, the associated news or downloads won't be deleted anymore
+
 ## [4.14.0] - 2017-10-22
 ### Changed
 - Added an explicit breadcrumb to the imprint controller action of the contact module, as the imprint is not directly associated with the contact form
 - The titles of the programmatically breadcrumb steps now always take precedence over the ones from the database
 - When the homepage is being displayed, set the canonical URL to the website root
+- Display an alert when an user tries to access a restricted pages which requires the user to be logged in
 
 ## [4.13.1] - 2017-10-21
 ### Fixed
@@ -407,7 +418,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.14.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.15.0...HEAD
+[4.15.0]: https://github.com/ACP3/cms/compare/v4.14.0...v4.15.0
 [4.14.0]: https://github.com/ACP3/cms/compare/v4.13.1...v4.14.0
 [4.13.1]: https://github.com/ACP3/cms/compare/v4.13.0...v4.13.1
 [4.13.0]: https://github.com/ACP3/cms/compare/v4.12.2...v4.13.0

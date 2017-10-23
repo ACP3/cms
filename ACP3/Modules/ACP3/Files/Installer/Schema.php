@@ -59,7 +59,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 46;
+        return 47;
     }
 
     /**
@@ -74,7 +74,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 `start` DATETIME NOT NULL,
                 `end` DATETIME NOT NULL,
                 `updated_at` DATETIME NOT NULL,
-                `category_id` INT(10) UNSIGNED NOT NULL,
+                `category_id` INT(10) UNSIGNED,
                 `file` VARCHAR(120) NOT NULL,
                 `size` VARCHAR(20) NOT NULL,
                 `title` VARCHAR(255) NOT NULL,
@@ -87,7 +87,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 INDEX `foreign_category_id` (`category_id`),
                 INDEX (`user_id`),
                 INDEX (`sort`),
-                FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE CASCADE,
+                FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE SET NULL,
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
             ) {ENGINE} {CHARSET};"
         ];

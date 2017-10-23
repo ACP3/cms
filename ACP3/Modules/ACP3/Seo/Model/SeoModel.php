@@ -20,6 +20,7 @@ class SeoModel extends AbstractModel
     public function save(array $data, $entryId = null)
     {
         $data = array_merge($data, [
+            'title' => $data['seo_title'],
             'keywords' => $data['seo_keywords'],
             'description' => $data['seo_description'],
             'robots' => $data['seo_robots']
@@ -36,6 +37,7 @@ class SeoModel extends AbstractModel
         return [
             'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
             'alias' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
+            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'keywords' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'robots' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT

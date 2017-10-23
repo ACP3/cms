@@ -36,7 +36,7 @@
             {event name="seo.layout.render_form_fields" uri_pattern=$SEO_URI_PATTERN path=$SEO_ROUTE_NAME}
         </div>
     </div>
-    {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/news"}}
+    {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/news"}}
     {javascripts}
         {include_js module="articles" file="admin/index.create"}
     {/javascripts}

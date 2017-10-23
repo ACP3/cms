@@ -90,7 +90,7 @@ class Action
     {
         $errors = $this->alerts->errorBox($exception->getMessage());
         if ($this->request->isXmlHttpRequest()) {
-            return new Response($errors, 400);
+            return new Response($errors, Response::HTTP_BAD_REQUEST);
         }
 
         return ['error_msg' => $errors];
@@ -222,7 +222,7 @@ class Action
         return $this->redirectMessages->setMessage(
             $result,
             $this->translator->t('system', $phrase . ($result !== false ? '_success' : '_error')),
-            $path
+            $this->request->getPost()->has('continue') ? $this->request->getPathInfo() : $path
         );
     }
 

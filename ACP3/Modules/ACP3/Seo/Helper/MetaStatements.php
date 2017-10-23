@@ -198,6 +198,18 @@ class MetaStatements
     }
 
     /**
+     * Returns the meta title of the given page
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function getTitle($path)
+    {
+        return $this->getSeoInformation($path, 'title');
+    }
+
+    /**
      * @param string $path
      * @param string $key
      * @param string $defaultValue

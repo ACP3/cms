@@ -16,5 +16,5 @@
             <textarea class="form-control" name="message" id="message" cols="50" rows="5" required>{$form.message}</textarea>
         </div>
     </div>
-    {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/comments/details/index/id_`$module_id`"}}
+    {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/comments/details/index/id_`$module_id`"}}
 {/block}

@@ -87,6 +87,11 @@ class Migration extends Modules\Installer\AbstractMigration
             46 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'order_by', 'date');",
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'sort', '', 4);",
+            ],
+            47 => [
+                "ALTER TABLE `{pre}files` CHANGE `category_id` `category_id` INT(10) UNSIGNED;",
+                "ALTER TABLE `{pre}files` DROP FOREIGN KEY `{pre}files_ibfk_1`;",
+                "ALTER TABLE `{pre}files` ADD FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE SET NULL",
             ]
         ];
     }
