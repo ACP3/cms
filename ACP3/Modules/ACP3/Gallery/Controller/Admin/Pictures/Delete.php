@@ -98,7 +98,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
                 return $bool;
             },
             'acp/gallery/pictures/delete/id_' . $id,
-            'acp/gallery/index/edit/id_' . $id
+            'acp/gallery/pictures/index/id_' . $id
         );
     }
 }

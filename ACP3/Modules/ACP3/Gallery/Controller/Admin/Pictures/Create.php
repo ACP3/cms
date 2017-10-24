@@ -66,12 +66,10 @@ class Create extends AbstractFormAction
             $gallery = $this->galleryRepository->getGalleryTitle($id);
 
             $this->breadcrumb
-                ->append($gallery, 'acp/gallery/index/edit/id_' . $id)
+                ->append($gallery, 'acp/gallery/pictures/index/id_' . $id)
                 ->append($this->translator->t('gallery', 'admin_pictures_create'));
 
-            $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
-
-            if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
+            if ($this->canUseComments() === true) {
                 $this->view->assign('options', $this->getOptions('0'));
             }
 
@@ -111,7 +109,7 @@ class Create extends AbstractFormAction
                 $formData['gallery_id'] = $id;
                 return $this->pictureModel->save($formData);
             },
-            'acp/gallery/index/edit/id_' . $id
+            'acp/gallery/pictures/index/id_' . $id
         );
     }
 }
