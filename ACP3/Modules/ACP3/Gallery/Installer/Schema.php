@@ -32,6 +32,7 @@ class Schema implements Modules\Installer\SchemaInterface
                     'create' => PrivilegeEnum::ADMIN_CREATE,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
+                    'index' => PrivilegeEnum::ADMIN_VIEW,
                     'order' => PrivilegeEnum::ADMIN_CREATE
                 ]
             ],
@@ -64,7 +65,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 41;
+        return 42;
     }
 
     /**

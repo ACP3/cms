@@ -71,7 +71,7 @@ class Edit extends AbstractFormAction
 
         if (!empty($picture)) {
             $this->breadcrumb
-                ->append($picture['title'], 'acp/gallery/index/edit/id_' . $picture['gallery_id'])
+                ->append($picture['title'], 'acp/gallery/pictures/index/id_' . $picture['gallery_id'])
                 ->append($this->translator->t('gallery', 'admin_pictures_edit'));
 
             $this->title
@@ -81,9 +81,7 @@ class Edit extends AbstractFormAction
                     . $this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']])
                 );
 
-            $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
-
-            if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
+            if ($this->canUseComments() === true) {
                 $this->view->assign('options', $this->getOptions($picture['comments']));
             }
 
@@ -129,7 +127,7 @@ class Edit extends AbstractFormAction
                 $formData['gallery_id'] = $picture['gallery_id'];
                 return $this->pictureModel->save($formData, $id);
             },
-            'acp/gallery/index/edit/id_' . $picture['gallery_id']
+            'acp/gallery/pictures/index/id_' . $picture['gallery_id']
         );
     }
 }

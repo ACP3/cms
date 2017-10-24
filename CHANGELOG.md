@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.16.0] - 2017-10-24
+### Added
+- Added a new option which completely disables the site subtitle program logic 
+
+### Changed
+- extracted the gallery pictures data grid into a separate controller action
+
 ## [4.15.0] - 2017-10-23
 ### Added
 - Added the schema.org `BreadcrumbList` markup to the breadcrumb template file 
@@ -418,7 +425,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.15.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.16.0...HEAD
+[4.16.0]: https://github.com/ACP3/cms/compare/v4.15.0...v4.16.0
 [4.15.0]: https://github.com/ACP3/cms/compare/v4.14.0...v4.15.0
 [4.14.0]: https://github.com/ACP3/cms/compare/v4.13.1...v4.14.0
 [4.13.1]: https://github.com/ACP3/cms/compare/v4.13.0...v4.13.1

@@ -23,7 +23,6 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
-      - '@gallery.model.picturerepository'
       - '@gallery.model.gallery_model'
       - '@gallery.validation.gallery_form_validation'
 
@@ -71,6 +70,13 @@ services:
       - '@gallery.helpers'
       - '@gallery.model.picture_model'
       - '@gallery.validation.picture_form_validation'
+
+  gallery.controller.admin.pictures.index:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Index
+    arguments:
+      - '@core.context.frontend'
+      - '@gallery.model.picturerepository'
+      - '@gallery.model.gallery_model'
 
   gallery.controller.admin.pictures.order:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Order

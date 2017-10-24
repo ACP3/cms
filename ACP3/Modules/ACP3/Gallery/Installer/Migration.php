@@ -62,6 +62,9 @@ class Migration extends Modules\Installer\AbstractMigration
             41 => [
                 "ALTER TABLE `{pre}gallery` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `end`;",
                 "UPDATE `{pre}gallery` SET `updated_at` = `start`;"
+            ],
+            42 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'pictures', 'index', '', 3);",
             ]
         ];
     }

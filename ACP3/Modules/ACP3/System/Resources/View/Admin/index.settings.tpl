@@ -26,7 +26,9 @@
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="site_title" value=$form.site_title required=true label={lang t="system|site_title"}}
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="site_subtitle" value=$form.site_subtitle label={lang t="system|site_subtitle"}}
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$site_subtitle_mode required=true label={lang t="system|site_subtitle_mode"}}
-                {include file="asset:System/Partials/form_group.button_group.tpl" options=$site_subtitle_homepage_mode required=true label={lang t="system|site_subtitle_homepage_mode"}}
+                <div id="site-subtitle-homepage-home-container">
+                    {include file="asset:System/Partials/form_group.button_group.tpl" options=$site_subtitle_homepage_mode required=true label={lang t="system|site_subtitle_homepage_mode"}}
+                </div>
             </div>
             <div id="tab-2" class="tab-pane fade">
                 <div class="form-group">
