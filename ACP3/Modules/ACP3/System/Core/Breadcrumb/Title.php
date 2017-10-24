@@ -99,7 +99,7 @@ class Title extends \ACP3\Core\Breadcrumb\Title
     {
         $settings = $this->getSettings();
 
-        if (!empty($settings['site_subtitle'])) {
+        if ($this->allowSystemSubtitle() && !empty($settings['site_subtitle'])) {
             $this->setSiteSubtitle($settings['site_subtitle']);
         }
     }
@@ -108,17 +108,26 @@ class Title extends \ACP3\Core\Breadcrumb\Title
     {
         $settings = $this->getSettings();
 
-        if ($this->request->isHomepage()) {
-            if ($settings['site_subtitle_homepage_mode'] == 1) {
-                $title = $this->getSiteSubtitle();
-                $title .= ' | ' . $this->getSiteTitle();
+        if ($this->allowSystemSubtitle()) {
+            if ($this->request->isHomepage()) {
+                if ($settings['site_subtitle_homepage_mode'] == 1) {
+                    $title = $this->getSiteSubtitle();
+                    $title .= $this->getSiteTitleSeparator() . $this->getSiteTitle();
 
-                return $title;
+                    return $title;
+                }
+            } elseif ($settings['site_subtitle_mode'] == 2) {
+                $this->setSiteSubtitle('');
             }
-        } elseif ($settings['site_subtitle_mode'] == 2) {
-            $this->setSiteSubtitle('');
         }
 
         return parent::getSiteAndPageTitle();
+    }
+
+    private function allowSystemSubtitle()
+    {
+        $settings = $this->getSettings();
+
+        return $settings['site_subtitle_mode'] != 3;
     }
 }

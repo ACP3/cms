@@ -73,6 +73,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $siteSubtitleMode = [
             1 => $this->translator->t('system', 'site_subtitle_mode_all_pages'),
             2 => $this->translator->t('system', 'site_subtitle_mode_homepage_only'),
+            3 => $this->translator->t('system', 'site_subtitle_mode_never'),
         ];
 
         $pageCachePurgeMode = [
@@ -189,8 +190,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 ];
 
                 return $this->config->saveSettings($data, System\Installer\Schema::MODULE_NAME);
-            },
-            $this->request->getFullPath()
+            }
         );
     }
 

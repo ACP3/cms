@@ -1,4 +1,8 @@
 jQuery(document).ready(function ($) {
+    $(':radio[name="site_subtitle_mode"]').on('click change', function () {
+        $('#site-subtitle-homepage-home-container').toggle(this.value != 3);
+    }).filter(':checked').triggerHandler('click');
+
     $(':radio[name="cookie_consent_is_enabled"]').on('click change', function () {
         $('#cookie-consent-container').toggle(this.value == 1);
     }).filter(':checked').triggerHandler('click');
