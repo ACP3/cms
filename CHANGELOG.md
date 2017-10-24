@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2017-xx-yy
+### Added
+- Added a new option which completely disables the site subtitle program logic 
+
+### Changed
+- extracted the gallery pictures data grid into a separate controller action
+
 ## [4.15.0] - 2017-10-23
 ### Added
 - Added the schema.org `BreadcrumbList` markup to the breadcrumb template file 
