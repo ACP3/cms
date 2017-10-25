@@ -84,7 +84,8 @@ class OnMenusLayoutRenderManageMenuItemListener
                         $this->fetchCreateMenuItemOption(!empty($menuItem) ? 1 : 0)
                     )
                     ->assign('form', $this->modifyFormValues($menuItem))
-                    ->assign($formFields);
+                    ->assign($formFields)
+                    ->assign('uri_pattern', $parameters['uri_pattern']);
 
                 $this->view->displayTemplate('Menus/Partials/manage_menu_item.tpl');
             }

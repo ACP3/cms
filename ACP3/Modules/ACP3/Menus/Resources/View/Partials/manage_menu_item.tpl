@@ -29,6 +29,7 @@
         </div>
     </div>
     {include file="asset:System/Partials/form_group.button_group.tpl" options=$display required=true label={lang t="menus|display_item"}}
+    <input type="hidden" name="menu_item_uri_pattern" value="{$uri_pattern}">
 </div>
 {javascripts}
     {include_js module="menus" file="manage-menu-item"}

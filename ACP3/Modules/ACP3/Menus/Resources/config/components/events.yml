@@ -9,6 +9,14 @@ services:
     tags:
       - { name: core.eventListener, event: menus.model.menus.before_delete, method: execute }
 
+  menus.event.manage_menu_item_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Menus\Event\Listener\ManageMenuItemOnModelSaveAfterListener
+    arguments:
+      - '@core.acl'
+      - '@menus.helpers.managemenuitem'
+    tags:
+      - { name: core.eventListener, event: core.model.after_save, method: createOrUpdateMenuItem }
+
   menus.event.update_menus_cache_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Menus\Event\Listener\UpdateMenusCacheOnModelAfterSaveListener
     arguments:
