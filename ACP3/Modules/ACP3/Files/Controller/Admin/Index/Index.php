@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Files;
+use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
@@ -102,9 +103,12 @@ class Index extends Core\Controller\AbstractFrontendAction
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
+                'custom' => [
+                    'path' => Helpers::URL_KEY_PATTERN
+                ],
             ], 10);
 
         if ($this->acl->hasPermission('admin/files/index/sort') && $settings['order_by'] === 'custom') {

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2017-xx-yy
+### Added
+- Added the new data grid column renderer `RouteColumnRenderer` which makes it possible specify and open routes in new tabs
+
 ## [4.16.0] - 2017-10-24
 ### Added
 - Added a new option which completely disables the site subtitle program logic 
