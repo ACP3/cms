@@ -58,7 +58,8 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     protected function createOrUpdateMenuItem(array $formData, $articleId)
     {
-        if ($this->acl->hasPermission('admin/menus/items/create') === true) {
+        if ($this->acl->hasPermission('admin/menus/items/create') === true
+            && $this->hasNecessaryMenuItemFormFields()) {
             $data = [
                 'mode' => 4,
                 'block_id' => $formData['block_id'],
@@ -74,5 +75,13 @@ abstract class AbstractFormAction extends AbstractFrontendAction
                 $data
             );
         }
+    }
+
+    /**
+     * @return bool
+     */
+    private function hasNecessaryMenuItemFormFields()
+    {
+        return isset($formData['block_id'], $formData['parent_id'], $formData['display'], $formData['menu_item_title']);
     }
 }

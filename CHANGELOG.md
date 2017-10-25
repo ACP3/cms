@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Added the new data grid column renderer `RouteColumnRenderer` which makes it possible specify and open routes in new tabs
 
+### Fixed
+- Fixed the bug that it was not possible to create new articles when the menu items module was installed and active, but there were no menus at all
+
 ## [4.16.0] - 2017-10-24
 ### Added
 - Added a new option which completely disables the site subtitle program logic 
