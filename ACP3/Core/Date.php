@@ -121,11 +121,7 @@ class Date
                 break;
         }
 
-        if (is_numeric($time)) {
-            $time = date('c', $time);
-        }
-
-        $dateTime = new \DateTime($time, $this->dateTimeZone);
+        $dateTime = $this->toDateTime($time);
         if ($toLocalTimeZone === true) {
             if ($isLocalTimeZone === true) {
                 $dateTime->setTimestamp($dateTime->getTimestamp() + $dateTime->getOffset());
@@ -134,6 +130,19 @@ class Date
             }
         }
         return strtr($dateTime->format($format), $this->dateTranslator->localize($format));
+    }
+
+    /**
+     * @param string $time
+     * @return \DateTime
+     */
+    public function toDateTime($time = 'now')
+    {
+        if (is_numeric($time)) {
+            $time = date('c', $time);
+        }
+
+        return new \DateTime($time, $this->dateTimeZone);
     }
 
     /**

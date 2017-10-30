@@ -22,3 +22,7 @@ services:
       - '@core.environment.application_path'
       - '@core.config'
       - '@seo.utility.sitemap_availability_registrar'
+      - '@xml_writer_driver'
+
+  xml_writer_driver:
+    class: Thepixeldeveloper\Sitemap\Drivers\XmlWriterDriver
