@@ -71,7 +71,7 @@ class Order extends Core\Controller\AbstractFrontendAction
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $this->redirect()->temporary('acp/gallery/index/edit/id_' . $galleryId);
+            return $this->redirect()->temporary('acp/gallery/pictures/index/id_' . $galleryId);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

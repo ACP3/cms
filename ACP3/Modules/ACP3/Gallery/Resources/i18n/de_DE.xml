@@ -8,6 +8,7 @@
         <item key="admin_pictures_create">Bild hinzufügen</item>
         <item key="admin_pictures_delete">Bilder löschen</item>
         <item key="admin_pictures_edit">Bild bearbeiten</item>
+        <item key="admin_pictures_index">Bilderübersicht</item>
         <item key="details">Bilddetails</item>
         <item key="filename">Dateiname</item>
         <item key="gallery">Fotogalerien</item>

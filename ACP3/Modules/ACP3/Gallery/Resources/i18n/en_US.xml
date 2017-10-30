@@ -8,6 +8,7 @@
         <item key="admin_pictures_create">Add picture</item>
         <item key="admin_pictures_delete">Delete pictures</item>
         <item key="admin_pictures_edit">Edit picture</item>
+        <item key="admin_pictures_index">Pictures overview</item>
         <item key="details">Picture details</item>
         <item key="filename">Filename</item>
         <item key="gallery">Gallery</item>

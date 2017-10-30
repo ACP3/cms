@@ -98,8 +98,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 ];
 
                 return $this->config->saveSettings($data, System\Installer\Schema::MODULE_NAME);
-            },
-            $this->request->getFullPath()
+            }
         );
     }
 }

@@ -3,7 +3,7 @@ jQuery(document).ready(function ($) {
         $blockId = $('#block-id'),
         defaultBlockIndex = $blockId.find('option:selected').index() || 0;
 
-    $(':checkbox[name="create"]').on('click', function () {
+    $(':checkbox[name="create_menu_item"]').on('click', function () {
         $('#manage-menu-item-container').toggle(this.checked);
     }).triggerHandler('click');
 

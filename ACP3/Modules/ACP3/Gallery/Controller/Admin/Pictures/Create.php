@@ -96,7 +96,7 @@ class Create extends Core\Controller\AbstractFrontendAction
                 $formData['gallery_id'] = $id;
                 return $this->pictureModel->save($formData);
             },
-            'acp/gallery/index/edit/id_' . $id
+            'acp/gallery/pictures/index/id_' . $id
         );
     }
 }

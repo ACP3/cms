@@ -233,6 +233,7 @@
         <item key="no_entries_short">Keine Einträge vorhanden.</item>
         <item key="no_modules_available_for_installation">Es sind bereits alle lokal verfügbaren Module installiert!</item>
         <item key="not_installable_module_description">Dieses Modul benötigt keine Installation.</item>
+        <item key="open_in_new_window">In neuem Fenster öffnen</item>
         <item key="order">Reihenfolge</item>
         <item key="order_error">Beim Bearbeiten der Reihenfolge ist ein Fehler aufgetreten.</item>
         <item key="order_success">Die Reihenfolge wurde erfolgreich bearbeitet.</item>
@@ -281,8 +282,8 @@
         <item key="select_online_maintenance">Bitte wählen Sie aus, ob sich die Seite im Wartungsmodus befinden soll oder nicht.</item>
         <item key="select_page_cache_purge_mode">Bitte wählen Sie aus, ob der Seiten-Cache automatisch neu generiert werden soll oder ob dies manuell geschehen soll.</item>
         <item key="select_records_per_page">Bitte wählen Sie aus, wie viele Datensätze pro Seite angezeigt werden sollen.</item>
-        <item key="select_site_subtitle_homepage_mode">Bitte wählen Sie aus, ob der Website-Untertitel auf allen Unterseiten angezeigt werden soll oder nur auf der Startseite.</item>
-        <item key="select_site_subtitle_mode">Bitte wählen Sie aus, ob der Website-Untertitel den Seitentitel auf der Startseite ersetzen soll oder nicht.</item>
+        <item key="select_site_subtitle_mode">Bitte wählen Sie aus, ob der Website-Untertitel auf allen Unterseiten angezeigt werden soll, nur auf der Startseite oder garnicht angezeigt werden soll.</item>
+        <item key="select_site_subtitle_homepage_mode">Bitte wählen Sie aus, ob der Website-Untertitel den Seitentitel auf der Startseite ersetzen soll oder nicht.</item>
         <item key="select_sidebar_entries">Bitte wählen Sie aus, wie viele Einträge in der Modul-Sidebar angezeigt werden sollen.</item>
         <item key="select_time_zone">Bitte wählen Sie die Zeitzone aus.</item>
         <item key="settings">Einstellungen</item>
@@ -294,6 +295,7 @@
         <item key="site_subtitle_mode">Anzeige des Website-Untertitels</item>
         <item key="site_subtitle_mode_all_pages">Alle Unterseiten</item>
         <item key="site_subtitle_mode_homepage_only">Nur auf der Startseite</item>
+        <item key="site_subtitle_mode_never">Nie anzeigen</item>
         <item key="site_title">Website-Titel</item>
         <item key="start_date">Veröffentlichungsdatum</item>
         <item key="statements_in_byte">Angaben in Byte.</item>

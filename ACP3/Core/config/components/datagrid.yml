@@ -90,6 +90,15 @@ services:
       - { name: core.helpers.data_grid.column_renderer }
     public: false
 
+  core.helpers.data_grid.column_renderer.route_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\RouteColumnRenderer
+    arguments:
+      - '@core.router'
+      - '@core.i18n.translator'
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+    public: false
+
   core.helpers.data_grid.column_renderer.sort_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\SortColumnRenderer
     arguments:

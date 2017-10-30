@@ -43,6 +43,10 @@ class Title
     /**
      * @var string
      */
+    protected $siteTitleSeparator = '|';
+    /**
+     * @var string
+     */
     protected $siteTitle = '';
     /**
      * @var string|null
@@ -180,6 +184,26 @@ class Title
     }
 
     /**
+     * @return string
+     */
+    public function getSiteTitleSeparator()
+    {
+        return ' ' . $this->siteTitleSeparator . ' ';
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function setSiteTitleSeparator($value)
+    {
+        $this->siteTitleSeparator = $value;
+
+        return $this;
+    }
+
+    /**
      * Returns the title of the current page + the site title
      *
      * @return string
@@ -193,18 +217,17 @@ class Title
 
         $title = $this->getPageTitle();
 
-        $separator = $this->getPageTitleSeparator();
         if (!empty($this->pageTitlePrefix)) {
-            $title = $this->pageTitlePrefix . $separator . $title;
+            $title = $this->pageTitlePrefix . $this->getPageTitleSeparator() . $title;
         }
         if (!empty($this->getPageTitlePostfix())) {
-            $title .= $separator . $this->getPageTitlePostfix();
+            $title .= $this->getPageTitleSeparator() . $this->getPageTitlePostfix();
         }
         if (!empty($this->getSiteTitle())) {
-            $title .= ' | ' . $this->getSiteTitle();
+            $title .= $this->getSiteTitleSeparator() . $this->getSiteTitle();
         }
         if (!empty($this->getSiteSubtitle())) {
-            $title .= $separator . $this->getSiteSubtitle();
+            $title .= $this->getPageTitleSeparator() . $this->getSiteSubtitle();
         }
 
         return $title;

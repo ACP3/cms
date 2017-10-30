@@ -7,8 +7,6 @@ services:
       - '@core.acl'
       - '@articles.model.articles_model'
       - '@articles.validation.admin_form_validation'
-    calls:
-      - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
 
   articles.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Delete
@@ -30,8 +28,6 @@ services:
       - '@core.acl'
       - '@articles.model.articles_model'
       - '@articles.validation.admin_form_validation'
-    calls:
-      - ['setManageMenuItemHelper', ['@?menus.helpers.managemenuitem']]
 
   articles.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Index

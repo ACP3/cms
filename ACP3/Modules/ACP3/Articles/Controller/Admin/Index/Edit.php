@@ -7,13 +7,14 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Articles;
 
 /**
  * Class Edit
  * @package ACP3\Modules\ACP3\Articles\Controller\Admin\Index
  */
-class Edit extends AbstractFormAction
+class Edit extends AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
@@ -36,18 +37,16 @@ class Edit extends AbstractFormAction
      * Edit constructor.
      * @param Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
-     * @param Core\ACL\ACLInterface $acl
      * @param Articles\Model\ArticlesModel $articlesModel
      * @param Articles\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
-        Core\ACL\ACLInterface $acl,
         Articles\Model\ArticlesModel $articlesModel,
         Articles\Validation\AdminFormValidation $adminFormValidation
     ) {
-        parent::__construct($context, $acl);
+        parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;
         $this->articlesModel = $articlesModel;
@@ -88,11 +87,8 @@ class Edit extends AbstractFormAction
                 ->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $result = $this->articlesModel->save($formData, $id);
 
-            $this->createOrUpdateMenuItem($formData, $id);
-
-            return $result;
+            return $this->articlesModel->save($formData, $id);
         });
     }
 }

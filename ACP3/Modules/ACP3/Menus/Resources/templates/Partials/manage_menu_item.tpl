@@ -1,4 +1,4 @@
-{include file="asset:System/Partials/form_group.checkbox.tpl" label={lang t="system|options"}}
+{include file="asset:System/Partials/form_group.checkbox.tpl" options=$options label={lang t="system|options"}}
 <div id="manage-menu-item-container">
     {include file="asset:System/Partials/form_group.input_text.tpl" name="menu_item_title" value=$form.menu_item_title labelRequired=true maxlength=120 label={lang t="menus|title"}}
     <div class="form-group">
@@ -29,6 +29,7 @@
         </div>
     </div>
     {include file="asset:System/Partials/form_group.button_group.tpl" options=$display required=true label={lang t="menus|display_item"}}
+    <input type="hidden" name="menu_item_uri_pattern" value="{$uri_pattern}">
 </div>
 {javascripts}
     {include_js module="menus" file="manage-menu-item"}

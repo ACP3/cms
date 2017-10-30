@@ -105,7 +105,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
                 $formData['gallery_id'] = $picture['gallery_id'];
                 return $this->pictureModel->save($formData, $id);
             },
-            'acp/gallery/index/edit/id_' . $picture['gallery_id']
+            'acp/gallery/pictures/index/id_' . $picture['gallery_id']
         );
     }
 }

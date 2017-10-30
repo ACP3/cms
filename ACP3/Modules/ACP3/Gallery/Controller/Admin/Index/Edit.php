@@ -16,10 +16,6 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $galleryFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository
-     */
-    protected $pictureRepository;
-    /**
      * @var Gallery\Model\GalleryModel
      */
     protected $galleryModel;
@@ -27,36 +23,26 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var Core\View\Block\FormBlockInterface
      */
     private $block;
-    /**
-     * @var Core\View\Block\DataGridBlockInterface
-     */
-    private $dataGridBlock;
 
     /**
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
-     * @param Core\View\Block\DataGridBlockInterface $dataGridBlock
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
      * @param Gallery\Model\GalleryModel $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
-        Core\View\Block\DataGridBlockInterface $dataGridBlock,
-        Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation
     ) {
         parent::__construct($context);
 
-        $this->pictureRepository = $pictureRepository;
         $this->galleryModel = $galleryModel;
         $this->galleryFormValidation = $galleryFormValidation;
         $this->block = $block;
-        $this->dataGridBlock = $dataGridBlock;
     }
 
     /**
@@ -70,33 +56,13 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $gallery = $this->galleryModel->getOneById($id);
 
         if (!empty($gallery)) {
-            $data = $this->block
+            return $this->block
                 ->setRequestData($this->request->getPost()->all())
                 ->setData($gallery)
                 ->render();
-
-            $result = $this->executeListPictures($id);
-
-            if (is_array($result)) {
-                return array_merge($data, $result);
-            }
-
-            return $result;
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return array
-     */
-    protected function executeListPictures($id)
-    {
-        return $this->dataGridBlock
-            ->setData(['galleryId' => $id])
-            ->render();
     }
 
     /**
