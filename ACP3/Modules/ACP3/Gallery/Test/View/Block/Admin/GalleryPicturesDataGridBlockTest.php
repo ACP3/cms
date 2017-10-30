@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Gallery\Test\View\Block\Admin;
 use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Test\View\Block\AbstractDataGridBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
+use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
 use ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryPicturesDataGridBlock;
 
 class GalleryPicturesDataGridBlockTest extends AbstractDataGridBlockTest
@@ -22,19 +23,23 @@ class GalleryPicturesDataGridBlockTest extends AbstractDataGridBlockTest
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
-        return new GalleryPicturesDataGridBlock($this->context, $acl);
+        $galleryRepository = $this->getMockBuilder(GalleryRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return new GalleryPicturesDataGridBlock($this->context, $acl, $galleryRepository);
     }
 
     public function testRenderReturnsArray()
     {
-        $this->block->setData(['results' => [], 'galleryId' => 2]);
+        $this->block->setData(['results' => [], 'gallery_id' => 2]);
 
         parent::testRenderReturnsArray();
     }
 
     public function testRenderReturnsArrayWithExpectedKeys()
     {
-        $this->block->setData(['results' => [], 'galleryId' => 2]);
+        $this->block->setData(['results' => [], 'gallery_id' => 2]);
 
         parent::testRenderReturnsArrayWithExpectedKeys();
     }
@@ -45,6 +50,7 @@ class GalleryPicturesDataGridBlockTest extends AbstractDataGridBlockTest
     protected function getExpectedArrayKeys(): array
     {
         return [
+            'gallery_id',
             'grid',
             'show_mass_delete_button'
         ];
