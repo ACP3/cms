@@ -15,7 +15,7 @@ use ACP3\Core\Controller\AbstractFrontendAction;
 class Index extends AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var Gallery\Model\Repository\GalleryPicturesRepository
      */
     protected $pictureRepository;
     /**
@@ -24,15 +24,14 @@ class Index extends AbstractFrontendAction
     protected $galleryModel;
 
     /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
+     * Index constructor.
+     * @param Core\Controller\Context\FrontendContext $context
+     * @param Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
      * @param Gallery\Model\GalleryModel $galleryModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Gallery\Model\Repository\PictureRepository $pictureRepository,
+        Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository,
         Gallery\Model\GalleryModel $galleryModel
     ) {
         parent::__construct($context);

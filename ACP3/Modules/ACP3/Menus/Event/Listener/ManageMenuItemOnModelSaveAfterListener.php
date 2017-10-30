@@ -18,16 +18,16 @@ class ManageMenuItemOnModelSaveAfterListener
      */
     private $menuItemManager;
     /**
-     * @var ACL
+     * @var ACL\ACLInterface
      */
     private $acl;
 
     /**
-     * OnModelSaveAfterListener constructor.
-     * @param ACL $acl
+     * ManageMenuItemOnModelSaveAfterListener constructor.
+     * @param ACL\ACLInterface $acl
      * @param ManageMenuItem $menuItemManager
      */
-    public function __construct(ACL $acl, ManageMenuItem $menuItemManager)
+    public function __construct(ACL\ACLInterface $acl, ManageMenuItem $menuItemManager)
     {
         $this->menuItemManager = $menuItemManager;
         $this->acl = $acl;

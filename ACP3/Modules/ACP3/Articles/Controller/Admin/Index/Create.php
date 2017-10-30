@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
 
-class Create extends AbstractFormAction
+class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
@@ -28,18 +28,16 @@ class Create extends AbstractFormAction
      * Create constructor.
      * @param Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\FormBlockInterface $block
-     * @param Core\ACL\ACLInterface $acl
      * @param Articles\Model\ArticlesModel $articlesModel
      * @param Articles\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\FormBlockInterface $block,
-        Core\ACL\ACLInterface $acl,
         Articles\Model\ArticlesModel $articlesModel,
         Articles\Validation\AdminFormValidation $adminFormValidation
     ) {
-        parent::__construct($context, $acl);
+        parent::__construct($context);
 
         $this->articlesModel = $articlesModel;
         $this->adminFormValidation = $adminFormValidation;
@@ -66,11 +64,8 @@ class Create extends AbstractFormAction
             $this->adminFormValidation->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $articleId = $this->articlesModel->save($formData);
 
-            $this->createOrUpdateMenuItem($formData, $articleId);
-
-            return $articleId;
+            return $this->articlesModel->save($formData);
         });
     }
 }

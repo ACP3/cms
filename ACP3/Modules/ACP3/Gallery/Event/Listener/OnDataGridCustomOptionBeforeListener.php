@@ -17,7 +17,7 @@ use ACP3\Core\I18n\Translator;
 class OnDataGridCustomOptionBeforeListener
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var ACL\ACLInterface
      */
     protected $acl;
     /**
@@ -27,12 +27,11 @@ class OnDataGridCustomOptionBeforeListener
 
     /**
      * OnDataGridCustomOptionBeforeListener constructor.
-     *
-     * @param \ACP3\Core\ACL             $acl
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param ACL\ACLInterface $acl
+     * @param Translator $translator
      */
     public function __construct(
-        ACL $acl,
+        ACL\ACLInterface $acl,
         Translator $translator
     ) {
         $this->acl = $acl;

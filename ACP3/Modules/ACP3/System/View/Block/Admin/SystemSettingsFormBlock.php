@@ -61,6 +61,7 @@ class SystemSettingsFormBlock extends AbstractSettingsFormBlock
         $siteSubtitleMode = [
             1 => $this->translator->t('system', 'site_subtitle_mode_all_pages'),
             2 => $this->translator->t('system', 'site_subtitle_mode_homepage_only'),
+            3 => $this->translator->t('system', 'site_subtitle_mode_never'),
         ];
 
         $pageCachePurgeMode = [
