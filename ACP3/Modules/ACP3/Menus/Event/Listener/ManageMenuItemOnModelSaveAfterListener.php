@@ -36,7 +36,7 @@ class ManageMenuItemOnModelSaveAfterListener
     public function createOrUpdateMenuItem(ModelSaveEvent $event)
     {
         if ($this->acl->hasPermission('admin/menus/items/create') === true
-            && $this->hasNecessaryMenuItemFormFields( $event->getRawData())) {
+            && $this->hasNecessaryMenuItemFormFields($event->getRawData())) {
             $formData = $event->getRawData();
 
             $data = [
@@ -50,7 +50,7 @@ class ManageMenuItemOnModelSaveAfterListener
 
             $this->menuItemManager->manageMenuItem(
                 sprintf($formData['menu_item_uri_pattern'], $event->getEntryId()),
-                isset($formData['create']) === true,
+                isset($formData['create_menu_item']) === true,
                 $data
             );
         }

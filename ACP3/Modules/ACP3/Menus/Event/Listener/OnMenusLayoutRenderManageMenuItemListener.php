@@ -117,7 +117,7 @@ class OnMenusLayoutRenderManageMenuItemListener
             1 => $this->translator->t('menus', 'create_menu_item')
         ];
 
-        return $this->forms->checkboxGenerator('create', $createMenuItem, $currentValue);
+        return $this->forms->checkboxGenerator('create_menu_item', $createMenuItem, $currentValue);
     }
 
     /**
