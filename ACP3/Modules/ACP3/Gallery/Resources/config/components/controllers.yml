@@ -73,8 +73,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Index
     arguments:
       - '@core.context.frontend'
-      - '@gallery.model.repository.gallery_pictures_repository'
-      - '@gallery.model.galleries_model'
+      - '@gallery.view.block.admin.gallery_pictures_data_grid_block'
 
   gallery.controller.admin.pictures.order:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Order

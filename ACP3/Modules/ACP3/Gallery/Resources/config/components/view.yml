@@ -16,6 +16,7 @@ services:
     arguments:
       - '@core.view.context.data_grid_block_context'
       - '@core.acl'
+      - '@gallery.model.repository.galleries_repository'
     calls:
       - ['setDataGridRepository', ['@gallery.model.repository.gallery_pictures_data_grid_repository']]
 

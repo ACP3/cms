@@ -11,6 +11,7 @@ use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
 use ACP3\Core\View\Block\Context;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
+use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
@@ -19,17 +20,26 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
      * @var Core\ACL\ACLInterface
      */
     private $acl;
+    /**
+     * @var GalleryRepository
+     */
+    private $galleryRepository;
 
     /**
      * GalleryPicturesDataGridBlock constructor.
      * @param Context\DataGridBlockContext $context
      * @param Core\ACL\ACLInterface $acl
+     * @param GalleryRepository $galleryRepository
      */
-    public function __construct(Context\DataGridBlockContext $context, Core\ACL\ACLInterface $acl)
+    public function __construct(
+        Context\DataGridBlockContext $context,
+        Core\ACL\ACLInterface $acl,
+        GalleryRepository $galleryRepository)
     {
         parent::__construct($context);
 
         $this->acl = $acl;
+        $this->galleryRepository = $galleryRepository;
     }
 
     /**
@@ -81,14 +91,16 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
     {
         $data = $this->getData();
 
+        $this->addBreadcrumbSteps($data['gallery_id']);
+
         $dataGrid = $this->getCurrentDataGrid();
         $this->configureDataGrid($dataGrid, [
             'ajax' => true,
-            'identifier' => '#gallery-edit-data-grid',
-            'resource_path_delete' => 'admin/gallery/pictures/delete/id_' . $data['galleryId'],
+            'identifier' => '#gallery-pictures-data-grid',
+            'resource_path_delete' => 'admin/gallery/pictures/delete/id_' . $data['gallery_id'],
             'resource_path_edit' => 'admin/gallery/pictures/edit',
             'query_options' => [
-                new DataGrid\QueryOption('gallery_id', $data['galleryId'])
+                new DataGrid\QueryOption('gallery_id', $data['gallery_id'])
             ]
         ]);
 
@@ -98,6 +110,7 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
         }
 
         return [
+            'gallery_id' => $data['gallery_id'],
             'grid' => $grid,
             'show_mass_delete_button' => $dataGrid->countDbResults() > 0
         ];
@@ -109,5 +122,15 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
     public function getModuleName(): string
     {
         return Schema::MODULE_NAME;
+    }
+
+    /**
+     * @param int $galleryId
+     */
+    private function addBreadcrumbSteps(int $galleryId): void
+    {
+        $gallery = $this->galleryRepository->getOneById($galleryId);
+        $this->breadcrumb->append($gallery['title'], 'acp/gallery/pictures/index/id_' . $galleryId);
+        $this->title->setPageTitlePrefix($this->translator->t('gallery', 'admin_pictures_index'));
     }
 }
