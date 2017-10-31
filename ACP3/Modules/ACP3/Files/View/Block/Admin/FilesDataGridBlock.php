@@ -10,6 +10,7 @@ use ACP3\Core;
 use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
 use ACP3\Core\View\Block\Context;
+use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -85,9 +86,12 @@ class FilesDataGridBlock extends AbstractDataGridBlock
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
+                'custom' => [
+                    'path' => Helpers::URL_KEY_PATTERN
+                ]
             ], 10);
 
         if ($this->acl->hasPermission('admin/files/index/sort') && $settings['order_by'] === 'custom') {

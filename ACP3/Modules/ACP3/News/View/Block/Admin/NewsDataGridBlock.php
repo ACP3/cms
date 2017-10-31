@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\News\View\Block\Admin;
 use ACP3\Core;
 use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\View\Block\AbstractDataGridBlock;
+use ACP3\Modules\ACP3\News\Helpers;
 use ACP3\Modules\ACP3\News\Installer\Schema;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -49,9 +50,12 @@ class NewsDataGridBlock extends AbstractDataGridBlock
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
+                'custom' => [
+                    'path' => Helpers::URL_KEY_PATTERN
+                ]
             ], 10);
     }
 
