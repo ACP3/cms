@@ -28,5 +28,5 @@ exclude_paths:
   - "ACP3/Modules/ACP3/System/Resources/Assets/js/jquery.fancybox.pack.js"
   - "ACP3/Modules/ACP3/System/Resources/Assets/js/jquery.min.js"
   - "ACP3/Modules/ACP3/System/Resources/Assets/js/moment.min.js"
-  - "ACP3/Modules/ACP3/WYSIWYGCKEditor/Resources/Assets/js/ckeditor/plugins/**/*"
+  - "ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets/js/ckeditor/plugins/**/*"
   - "vendor/**/*"
