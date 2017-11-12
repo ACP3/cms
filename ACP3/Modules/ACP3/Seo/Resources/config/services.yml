@@ -17,6 +17,8 @@ services:
 
   seo.utility.sitemap_availability_registrar:
     class: ACP3\Modules\ACP3\Seo\Utility\SitemapAvailabilityRegistrar
+    arguments:
+      - '@core.modules'
 
   seo.sitemap_logger:
     class: Psr\Log\LoggerInterface
