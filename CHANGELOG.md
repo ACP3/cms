@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 2017-xx-yy
+## [4.17.0< - 2017-11-12
 ### Added
 - Added the new data grid column renderer `RouteColumnRenderer` which makes it possible specify and open routes in new tabs
 
@@ -436,7 +436,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.16.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.17.0...HEAD
+[4.17.0]: https://github.com/ACP3/cms/compare/v4.16.0...v4.17.0
 [4.16.0]: https://github.com/ACP3/cms/compare/v4.15.0...v4.16.0
 [4.15.0]: https://github.com/ACP3/cms/compare/v4.14.0...v4.15.0
 [4.14.0]: https://github.com/ACP3/cms/compare/v4.13.1...v4.14.0
