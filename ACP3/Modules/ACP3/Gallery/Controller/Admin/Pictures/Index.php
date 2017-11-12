@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
+use ACP3\Modules\ACP3\Gallery\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Core\Controller\AbstractFrontendAction;
 
@@ -98,9 +99,12 @@ class Index extends AbstractFrontendAction
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
+                'custom' => [
+                    'path' => Helpers::URL_KEY_PATTERN_PICTURE
+                ]
             ], 10);
 
         if ($this->acl->hasPermission('admin/gallery/pictures/order')) {

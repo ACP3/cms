@@ -7,13 +7,14 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Articles;
 
 /**
  * Class Create
  * @package ACP3\Modules\ACP3\Articles\Controller\Admin\Index
  */
-class Create extends AbstractFormAction
+class Create extends AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
@@ -27,6 +28,10 @@ class Create extends AbstractFormAction
      * @var Articles\Model\ArticlesModel
      */
     protected $articlesModel;
+    /**
+     * @var Core\Helpers\Forms
+     */
+    protected $formsHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
@@ -42,11 +47,12 @@ class Create extends AbstractFormAction
         Articles\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper
     ) {
-        parent::__construct($context, $formsHelper);
+        parent::__construct($context);
 
         $this->articlesModel = $articlesModel;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
+        $this->formsHelper = $formsHelper;
     }
 
     /**
@@ -80,11 +86,8 @@ class Create extends AbstractFormAction
             $this->adminFormValidation->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $articleId = $this->articlesModel->save($formData);
 
-            $this->createOrUpdateMenuItem($formData, $articleId);
-
-            return $articleId;
+            return $this->articlesModel->save($formData);
         });
     }
 }

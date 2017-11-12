@@ -44,7 +44,7 @@ class OnMenusValidationValidateManageMenuItem
     {
         $formData = $event->getFormData();
 
-        if ($this->acl->hasPermission('admin/menus/items/create') === true && isset($formData['create']) === true) {
+        if ($this->acl->hasPermission('admin/menus/items/create') === true && isset($formData['create_menu_item']) === true) {
             $event
                 ->getValidator()
                 ->addConstraint(

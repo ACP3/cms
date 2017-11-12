@@ -73,9 +73,12 @@ class Index extends Core\Controller\AbstractFrontendAction
         $dataGrid
             ->addColumn([
                 'label' => $this->translator->t('seo', 'uri'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
                 'fields' => ['uri'],
-                'default_sort' => true
+                'default_sort' => true,
+                'custom' => [
+                    'path' => '%s'
+                ],
             ], 60)
             ->addColumn([
                 'label' => $this->translator->t('seo', 'alias'),

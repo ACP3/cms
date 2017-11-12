@@ -231,6 +231,7 @@
         <item key="no_entries_short">No entries available.</item>
         <item key="no_modules_available_for_installation">Currently there are no new modules available for installation!</item>
         <item key="not_installable_module_description">This module does not need any installation.</item>
+        <item key="open_in_new_window">Open in new window</item>
         <item key="order">Order</item>
         <item key="order_error">While editing the order an error has occurred.</item>
         <item key="order_success">The order has been successfully edited.</item>

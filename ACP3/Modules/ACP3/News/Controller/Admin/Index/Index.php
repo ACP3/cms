@@ -8,6 +8,7 @@ namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\News;
+use ACP3\Modules\ACP3\News\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 /**
@@ -92,9 +93,12 @@ class Index extends Core\Controller\AbstractFrontendAction
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
+                'custom' => [
+                    'path' => Helpers::URL_KEY_PATTERN
+                ],
             ], 10);
     }
 }

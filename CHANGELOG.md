@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.17.0< - 2017-11-12
+### Added
+- Added the new data grid column renderer `RouteColumnRenderer` which makes it possible specify and open routes in new tabs
+
+### Changed
+- Decoupled the menu item management from the articles module some more
+
+### Fixed
+- Fixed the bug that it was not possible to create new articles when the menu items module was installed and active, but there were no menus at all
+- [#70](https://github.com/ACP3/cms/issues/70) Fixed the sitemap generation with present, but not installed modules 
+
 ## [4.16.0] - 2017-10-24
 ### Added
 - Added a new option which completely disables the site subtitle program logic 
@@ -425,7 +436,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.16.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.17.0...HEAD
+[4.17.0]: https://github.com/ACP3/cms/compare/v4.16.0...v4.17.0
 [4.16.0]: https://github.com/ACP3/cms/compare/v4.15.0...v4.16.0
 [4.15.0]: https://github.com/ACP3/cms/compare/v4.14.0...v4.15.0
 [4.14.0]: https://github.com/ACP3/cms/compare/v4.13.1...v4.14.0

@@ -74,17 +74,21 @@ class OnMenusLayoutRenderManageMenuItemListener
         $parameters = $event->getParameters();
 
         if ($this->acl->hasPermission('admin/menus/items/create') === true) {
-            $menuItem = $this->fetchMenuItems(!empty($parameters['path']) ? $parameters['path'] : '');
+            $menuItem = $this->fetchMenuItem(!empty($parameters['path']) ? $parameters['path'] : '');
+            $formFields = $this->addFormFields($menuItem);
 
-            $this->view
-                ->assign(
-                    'options',
-                    $this->fetchCreateMenuItemOption(!empty($menuItem) ? 1 : 0)
-                )
-                ->assign('form', $this->modifyFormValues($menuItem))
-                ->assign($this->addFormFields($menuItem));
+            if (!empty($formFields['blocks'])) {
+                $this->view
+                    ->assign(
+                        'options',
+                        $this->fetchCreateMenuItemOption(!empty($menuItem) ? 1 : 0)
+                    )
+                    ->assign('form', $this->modifyFormValues($menuItem))
+                    ->assign($formFields)
+                    ->assign('uri_pattern', $parameters['uri_pattern']);
 
-            $this->view->displayTemplate('Menus/Partials/manage_menu_item.tpl');
+                $this->view->displayTemplate('Menus/Partials/manage_menu_item.tpl');
+            }
         }
     }
 
@@ -92,7 +96,7 @@ class OnMenusLayoutRenderManageMenuItemListener
      * @param string $routeName
      * @return array
      */
-    private function fetchMenuItems($routeName)
+    private function fetchMenuItem($routeName)
     {
         $menuItem = $this->menuItemRepository->getOneMenuItemByUri($routeName);
 
@@ -113,7 +117,7 @@ class OnMenusLayoutRenderManageMenuItemListener
             1 => $this->translator->t('menus', 'create_menu_item')
         ];
 
-        return $this->forms->checkboxGenerator('create', $createMenuItem, $currentValue);
+        return $this->forms->checkboxGenerator('create_menu_item', $createMenuItem, $currentValue);
     }
 
     /**
