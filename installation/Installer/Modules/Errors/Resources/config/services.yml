@@ -1,2 +1,2 @@
 imports:
-  - { resource: components/controllers.yml }
+  - { resource: components/*.yml }

@@ -176,6 +176,7 @@ class CKEditor extends Textarea
         $js .= "CKEDITOR.plugins.addExternal('divarea', '" . $ckeditorPluginsDir . "divarea/');\n";
         $js .= "CKEDITOR.plugins.addExternal('lineutils', '" . $ckeditorPluginsDir . "lineutils/');\n";
         $js .= "CKEDITOR.plugins.addExternal('oembed', '" . $ckeditorPluginsDir . "oembed/');\n";
+        $js .= "CKEDITOR.plugins.addExternal('widgetselection', '" . $ckeditorPluginsDir . "widgetselection/');\n";
         $js .= "CKEDITOR.plugins.addExternal('widget', '" . $ckeditorPluginsDir . "widget/');\n";
 
         $config = $this->configure();

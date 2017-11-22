@@ -3,13 +3,7 @@ parameters:
 
 imports:
   - { resource: ../../../../ACP3/Core/config/components/logger.yml }
-  - { resource: components/application.yml }
-  - { resource: components/controller.yml }
-  - { resource: components/date.yml }
-  - { resource: components/helpers.yml }
-  - { resource: components/http.yml }
-  - { resource: components/language.yml }
-  - { resource: components/validation.yml }
+  - { resource: components/*.yml }
   - { resource: ../../../../ACP3/Core/config/components/installer.yml }
   - { resource: ../View/Renderer/Smarty/config/services.yml }
   - { resource: ../../Modules/Errors/Resources/config/services.yml }

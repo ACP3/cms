@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Seo\Helper;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
+use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Cache as SeoCache;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
@@ -23,6 +24,10 @@ class MetaStatements
      * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
+    /**
+     * @var RouterInterface
+     */
+    private $router;
     /**
      * @var \ACP3\Core\Settings\SettingsInterface
      */
@@ -65,12 +70,14 @@ class MetaStatements
      * MetaStatements constructor.
      *
      * @param \ACP3\Core\Http\RequestInterface $request
+     * @param RouterInterface $router
      * @param Modules $modules
      * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
      * @param \ACP3\Core\Settings\SettingsInterface $config
      */
     public function __construct(
         RequestInterface $request,
+        RouterInterface $router,
         Modules $modules,
         SeoCache $seoCache,
         SettingsInterface $config
@@ -79,6 +86,7 @@ class MetaStatements
         $this->seoCache = $seoCache;
         $this->config = $config;
         $this->isActive = $modules->isActive(Schema::MODULE_NAME);
+        $this->router = $router;
     }
 
     /**
@@ -100,6 +108,10 @@ class MetaStatements
     public function getMetaTags()
     {
         if ($this->isActive) {
+            if (!$this->isInAdmin() && empty($this->canonicalUrl)) {
+                $this->canonicalUrl = $this->router->route($this->request->getQuery());
+            }
+
             return [
                 'description' => $this->isInAdmin() ? '' : $this->getPageDescription(),
                 'keywords' => $this->isInAdmin() ? '' : $this->getPageKeywords(),
