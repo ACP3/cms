@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-yy
+### Added
+- Added self referencing canonical URLs to the SEO module 
+
 ### Changed
 - Dropped the support for PHP 5.6. The minimum required PHP version is 7.1 now
 - Updated Symfony to version 3.3
