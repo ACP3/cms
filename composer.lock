@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b4460b5e9d161b927bb7ffd2064c9f6d",
+    "content-hash": "1ea15239b1a8d178f3d167093fcfe440",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
-            "version": "dev-full/4.6.x",
+            "version": "dev-full/4.7.x",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "2fb9111efe70608ba74dc4892371f785661eac3f"
+                "reference": "5f1564a3d64cd06d8a4f3f21150f57e892a40939"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/2fb9111efe70608ba74dc4892371f785661eac3f",
-                "reference": "2fb9111efe70608ba74dc4892371f785661eac3f",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/5f1564a3d64cd06d8a4f3f21150f57e892a40939",
+                "reference": "5f1564a3d64cd06d8a4f3f21150f57e892a40939",
                 "shasum": ""
             },
             "type": "library",
@@ -45,7 +45,7 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2017-01-12T18:09:18+00:00"
+            "time": "2017-09-13T13:08:14+00:00"
         },
         {
             "name": "cocur/slugify",
