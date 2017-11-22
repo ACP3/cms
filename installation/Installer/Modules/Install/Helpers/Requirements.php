@@ -16,7 +16,7 @@ use ACP3\Installer\Core\I18n\Translator;
  */
 class Requirements
 {
-    const REQUIRED_PHP_VERSION = '5.6.0';
+    const REQUIRED_PHP_VERSION = '7.1.0';
     const COLOR_ERROR = 'f00';
     const COLOR_SUCCESS = '090';
     const CLASS_ERROR = 'danger';
