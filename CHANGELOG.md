@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.17.0< - 2017-11-12
+## [Unreleased] - 2017-xx-yy
+### Changed
+- Dropped the support for PHP 5.6. The minimum required PHP version is 7.1 now
+
+### Fixed
+- Fixed the position of the charset meta tag inside the HTML <head>
+
+## [4.17.0] - 2017-11-12
 ### Added
 - Added the new data grid column renderer `RouteColumnRenderer` which makes it possible specify and open routes in new tabs
 
