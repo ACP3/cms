@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - 2017-xx-yy
 ### Changed
 - Dropped the support for PHP 5.6. The minimum required PHP version is 7.1 now
+- Updated Symfony to version 3.3
+- Updated the bundled JavaScript packages to their current versions
 
 ### Fixed
 - Fixed the position of the charset meta tag inside the HTML <head>
