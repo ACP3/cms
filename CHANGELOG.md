@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Dropped the support for PHP 5.6. The minimum required PHP version is 7.1 now
+- Dropped the support for HHVM
 - Updated Symfony to version 3.3
 - Updated the bundled JavaScript packages to their current versions
 
