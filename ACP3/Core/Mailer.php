@@ -7,6 +7,8 @@ use ACP3\Core\Mailer\MailerMessage;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use InlineStyle\InlineStyle;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
+use PHPMailer\PHPMailer\PHPMailer;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -76,7 +78,7 @@ class Mailer
      */
     private $mailerMessage;
     /**
-     * @var \PHPMailer
+     * @var PHPMailer
      */
     private $phpMailer;
 
@@ -284,7 +286,7 @@ class Mailer
             if (!empty($this->recipients)) {
                 return $this->bcc === true ? $this->sendBcc() : $this->sendTo();
             }
-        } catch (\phpmailerException $e) {
+        } catch (PHPMailerException $e) {
             $this->logger->error($e);
         } catch (\Exception $e) {
             $this->logger->error($e);
@@ -316,6 +318,9 @@ class Mailer
         }
     }
 
+    /**
+     * @throws PHPMailerException
+     */
     private function addFrom()
     {
         if (is_array($this->from) === true) {
@@ -414,6 +419,7 @@ class Mailer
      * Special sending logic for bcc only E-mails
      *
      * @return bool
+     * @throws PHPMailerException
      */
     private function sendBcc()
     {
@@ -483,6 +489,7 @@ class Mailer
      * Special sending logic for E-mails without bcc addresses
      *
      * @return bool
+     * @throws PHPMailerException
      */
     private function sendTo()
     {
@@ -534,7 +541,7 @@ class Mailer
     private function configure()
     {
         if ($this->phpMailer === null) {
-            $this->phpMailer = new \PHPMailer(true);
+            $this->phpMailer = new PHPMailer(true);
 
             $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
@@ -555,7 +562,7 @@ class Mailer
             }
             $this->phpMailer->CharSet = 'UTF-8';
             $this->phpMailer->Encoding = 'quoted-printable';
-            $this->phpMailer->WordWrap = 76;
+            $this->phpMailer->WordWrap = PHPMailer::STD_LINE_LENGTH;
         }
 
         return $this;
