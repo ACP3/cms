@@ -19,6 +19,7 @@
     "doctrine/dbal": "^2.5",
     "doctrine/cache": "^1.6",
     "fisharebest/localization": "^1.10",
+    "friendsofsymfony/http-cache": "~2.0",
     "giggsey/locale": "^1.2",
     "inlinestyle/inlinestyle": "^1.2",
     "marc1706/fast-image-size": "^1.1",
@@ -26,6 +27,7 @@
     "mrclay/minify": "^3.0",
     "patchwork/utf8": "^1.3",
     "phpmailer/phpmailer": "^5.2",
+    "php-http/guzzle6-adapter": "^1.1",
     "smarty/smarty": "^3.1",
     "cocur/slugify": "^3.0",
     "symfony/config": "^3.3",
@@ -33,8 +35,7 @@
     "symfony/event-dispatcher": "^3.3",
     "symfony/http-foundation": "^3.3",
     "symfony/http-kernel": "^3.3",
-    "symfony/yaml": "^3.3",
-    "friendsofsymfony/http-cache": "~1.0"
+    "symfony/yaml": "^3.3"
   },
   "autoload": {
     "psr-4": {
