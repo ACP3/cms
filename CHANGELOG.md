@@ -45,6 +45,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated the friendsofsymfony/http-cache package to version 2.*
 
 ## [Unreleased] - 2017-xx-yy
+### Changed
+- Updated the FOSHttpCache composer package to version 2.*
+- Updated the slugify composer package to version 3.*
+- Updated the PHPMailer composer package to version 6.*
+- Dropped the bower.json
+
+## [4.17.0] - 2017-11-12
 ### Added
 - Added the new data grid column renderer `RouteColumnRenderer` which makes it possible specify and open routes in new tabs
 
@@ -53,6 +60,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Fixed the bug that it was not possible to create new articles when the menu items module was installed and active, but there were no menus at all
+- [#70](https://github.com/ACP3/cms/issues/70) Fixed the sitemap generation with present, but not installed modules 
 
 ## [4.16.0] - 2017-10-24
 ### Added
@@ -429,6 +437,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed the URL of delete controller action when performing a mass removal of comments
 - Fixed the language switcher drop down of the installer
 
+## [4.1.29] - 2016-10-23
+### Added
+- Added the possibility to clear just the page cache
+- Added the new template event `layout.content_before`
+- Added the new event `core.settings.save_before` so that it is possible to modify the module settings before saving then to the database
+
+### Changed
+- When creating/modifying/deleting a result to the database, the page cache isn't cleared immediately anymore (for most operations)
+- Improved the default layout of the ACP3
+
+### Fixed
+- Fixed the users administration
+- Fixed the redirect url when posting a comment
+- Fixed the URL of delete controller action when performing a mass removal of comments
+- Fixed the language switcher drop down of the installer
+
 ## [4.1.28] - 2016-10-05
 ### Fixed
 - Fixed the theme inheritance
@@ -475,7 +499,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.16.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.18.0...HEAD
+[4.18.0]: https://github.com/ACP3/cms/compare/v4.17.0...v4.18.0
+[4.17.0]: https://github.com/ACP3/cms/compare/v4.16.0...v4.17.0
 [4.16.0]: https://github.com/ACP3/cms/compare/v4.15.0...v4.16.0
 [4.15.0]: https://github.com/ACP3/cms/compare/v4.14.0...v4.15.0
 [4.14.0]: https://github.com/ACP3/cms/compare/v4.13.1...v4.14.0

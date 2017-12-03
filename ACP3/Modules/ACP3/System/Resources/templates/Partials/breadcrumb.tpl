@@ -1,7 +1,7 @@
 <ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
     <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-        <a itemprop="item" href="{uri args=""}">
-            <span itemprop="name">{lang t="system|home"}</span>
+        <a itemprop="item" href="{uri args=""}" title="{lang t="system|home"}">
+            <span itemprop="name">{site_title}</span>
         </a>
         <meta itemprop="position" content="1" />
     </li>

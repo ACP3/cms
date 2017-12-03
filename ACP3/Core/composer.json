@@ -14,12 +14,13 @@
     "issues": "https://github.com/ACP3/cms/issues"
   },
   "require": {
-    "php": ">=7.1.0",
+    "php": "^7.1",
     "acp3/composer-installer": "^1.0",
     "composer/composer": "^1.4",
     "doctrine/dbal": "^2.5",
     "doctrine/cache": "^1.6",
     "fisharebest/localization": "^1.10",
+    "friendsofsymfony/http-cache": "~2.0",
     "giggsey/locale": "^1.2",
     "inlinestyle/inlinestyle": "^1.2",
     "marc1706/fast-image-size": "^1.1",
@@ -36,7 +37,6 @@
     "symfony/http-kernel": "^3.3",
     "symfony/yaml": "^3.3",
     "symfony/event-dispatcher": "^3.3",
-    "friendsofsymfony/http-cache": "^2.0",
     "marcj/topsort": "^1.1"
   },
   "autoload": {
