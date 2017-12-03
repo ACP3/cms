@@ -6,15 +6,30 @@
 
 namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Controller\AbstractWidgetAction;
-use ACP3\Modules\ACP3\System\Installer\Schema;
+use ACP3\Core\Controller\Context\WidgetContext;
+use FOS\HttpCache\UserContext\DefaultHashGenerator;
 
-/**
- * Class Hash
- * @package ACP3\Modules\ACP3\Users\Controller\Widget\Index
- */
 class Hash extends AbstractWidgetAction
 {
+    /**
+     * @var DefaultHashGenerator
+     */
+    private $hashGenerator;
+
+    /**
+     * Hash constructor.
+     * @param WidgetContext $context
+     * @param DefaultHashGenerator $hashGenerator
+     */
+    public function __construct(WidgetContext $context, DefaultHashGenerator $hashGenerator)
+    {
+        parent::__construct($context);
+
+        $this->hashGenerator = $hashGenerator;
+    }
+
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -25,28 +40,9 @@ class Hash extends AbstractWidgetAction
         $this->response->setMaxAge(60);
         $this->response->headers->add([
             'Content-type' => 'application/vnd.fos.user-context-hash',
-            'X-User-Context-Hash' => $this->generateUserContextHash()
+            'X-User-Context-Hash' => $this->hashGenerator->generateHash()
         ]);
 
         return $this->response;
-    }
-
-    /**
-     * @return string
-     */
-    private function generateUserContextHash()
-    {
-        $settings = $this->config->getSettings(Schema::MODULE_NAME);
-        $hash = $settings['security_secret'];
-
-        if ($this->user->isAuthenticated()) {
-            $hash .= implode('-', $this->acl->getUserRoleIds($this->user->getUserId()));
-
-            if (intval($settings['cache_vary_user']) === 1) {
-                $hash .= '-' . $this->user->getUserId();
-            }
-        }
-
-        return hash('sha512', $hash);
     }
 }

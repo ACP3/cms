@@ -13,6 +13,20 @@ services:
       - { name: core.authentication }
     public: false
 
+  users.core.application.bootstrap_cache.is_authenticated_provider:
+    class: ACP3\Modules\ACP3\Users\Core\Application\BootstrapCache\IsAuthenticatedProvider
+    arguments:
+      - '@core.config'
+      - '@core.acl'
+      - '@users.model.user_model'
+    public: false
+
+  http_cache.hash_generator:
+    class: FOS\HttpCache\UserContext\DefaultHashGenerator
+    arguments:
+      - ['@users.core.application.bootstrap_cache.is_authenticated_provider']
+    public: false
+
   users.helpers.forms:
     class: ACP3\Modules\ACP3\Users\Helpers\Forms
     arguments:

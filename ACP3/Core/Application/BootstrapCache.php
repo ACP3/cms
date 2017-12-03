@@ -6,14 +6,16 @@
 
 namespace ACP3\Core\Application;
 
-use ACP3\Core\Application\BootstrapCache\Event\Listener\UserContextSubscriber;
+use ACP3\Core\Application\BootstrapCache\Event\Listener\UserContextListener;
 use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\View\Renderer\Smarty\Filters\MoveToBottom;
+use FOS\HttpCache\SymfonyCache\CacheInvalidation;
 use FOS\HttpCache\SymfonyCache\EventDispatchingHttpCache;
-use FOS\HttpCache\SymfonyCache\PurgeSubscriber;
-use FOS\HttpCache\SymfonyCache\RefreshSubscriber;
+use FOS\HttpCache\SymfonyCache\PurgeListener;
+use FOS\HttpCache\SymfonyCache\RefreshListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpCache\HttpCache;
 use Symfony\Component\HttpKernel\HttpCache\StoreInterface;
 use Symfony\Component\HttpKernel\HttpCache\SurrogateInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -22,8 +24,10 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  * Class BootstrapCache
  * @package ACP3\Core\Application
  */
-class BootstrapCache extends EventDispatchingHttpCache
+class BootstrapCache extends HttpCache implements CacheInvalidation
 {
+    use EventDispatchingHttpCache;
+
     const JAVASCRIPTS_REGEX_PATTERN = MoveToBottom::ELEMENT_CATCHER_REGEX_PATTERN;
     const PLACEHOLDER = '</body>';
 
@@ -38,12 +42,22 @@ class BootstrapCache extends EventDispatchingHttpCache
     {
         parent::__construct($kernel, $store, $surrogate, $options);
 
-        $this->addSubscriber(new UserContextSubscriber([
+        $this->addSubscriber(new UserContextListener([
             'user_hash_uri' => '/widget/users/index/hash/',
             'session_name_prefix' => SessionHandlerInterface::SESSION_NAME
         ]));
-        $this->addSubscriber(new PurgeSubscriber());
-        $this->addSubscriber(new RefreshSubscriber());
+        $this->addSubscriber(new PurgeListener());
+        $this->addSubscriber(new RefreshListener());
+    }
+
+    /**
+     * Made public to allow event listeners to do refresh operations.
+     *
+     * {@inheritDoc}
+     */
+    public function fetch(Request $request, $catch = false)
+    {
+        return parent::fetch($request, $catch);
     }
 
     /**
@@ -80,7 +94,7 @@ class BootstrapCache extends EventDispatchingHttpCache
      * @param string $tplOutput
      * @return string
      */
-    private function getCleanedUpTemplateOutput($tplOutput)
+    private function getCleanedUpTemplateOutput(string $tplOutput): string
     {
         return preg_replace(static::JAVASCRIPTS_REGEX_PATTERN, '', $tplOutput);
     }
@@ -89,7 +103,7 @@ class BootstrapCache extends EventDispatchingHttpCache
      * @param string $tplOutput
      * @return string
      */
-    private function addElementsFromTemplates($tplOutput)
+    private function addElementsFromTemplates(string $tplOutput): string
     {
         $matches = [];
         preg_match_all(static::JAVASCRIPTS_REGEX_PATTERN, $tplOutput, $matches);

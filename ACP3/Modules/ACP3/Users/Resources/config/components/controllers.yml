@@ -118,7 +118,9 @@ services:
 
   users.controller.widget.index.hash:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\Hash
-    parent: core.controller.widget
+    arguments:
+      - '@core.context.widget'
+      - '@http_cache.hash_generator'
 
   users.controller.widget.index.login:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\Login
