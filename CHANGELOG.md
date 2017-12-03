@@ -11,6 +11,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated the PHPMailer composer package to version 6.*
 - Dropped the bower.json
 
+## [4.18.0] - 2017-11-22
+### Added
+- Added self referencing canonical URLs to the SEO module 
+
+### Changed
+- Dropped the support for PHP 5.6. The minimum required PHP version is 7.1 now
+- Dropped the support for HHVM
+- Updated Symfony to version 3.3
+- Updated the bundled JavaScript packages to their current versions
+
+### Fixed
+- Fixed the position of the charset meta tag inside the HTML <head>
+
 ## [4.17.0] - 2017-11-12
 ### Added
 - Added the new data grid column renderer `RouteColumnRenderer` which makes it possible specify and open routes in new tabs
