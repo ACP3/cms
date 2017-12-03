@@ -12,13 +12,7 @@ class Filesystem
      */
     protected static $excluded = ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd'];
 
-    /**
-     * @param string $directory
-     * @param array  $excluded
-     *
-     * @return array
-     */
-    public static function scandir($directory, array $excluded = [])
+    public static function scandir(string $directory, array $excluded = []): array
     {
         $directory = @scandir($directory);
 

@@ -8,8 +8,6 @@ namespace ACP3\Core\Modules;
 
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
-use ACP3\Core\Modules\ModuleInfoCache;
-use ACP3\Core\Modules\Vendor;
 use ACP3\Modules\ACP3\System;
 use MJS\TopSort\Implementations\StringSort;
 
@@ -92,7 +90,7 @@ class Modules
     public function getModuleId(string $moduleName): int
     {
         $info = $this->getModuleInfo($moduleName);
-        return !empty($info) ? $info['id'] : 0;
+        return $info['id'] ?? 0;
     }
 
     /**

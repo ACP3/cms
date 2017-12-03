@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-class Edit extends AbstractFormAction
+class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
@@ -75,7 +75,7 @@ class Edit extends AbstractFormAction
 
             $this->resourceFormValidation->validate($formData);
 
-            $formData['module_id'] = $this->fetchModuleId($formData['modules']);
+            $formData['module_id'] = $this->modules->getModuleId($formData['modules']);
             return $this->resourcesModel->save($formData, $id);
         });
     }
