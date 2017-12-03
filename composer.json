@@ -19,6 +19,7 @@
     "php": "^7.1",
     "ckeditor/ckeditor": "dev-full/4.7.x",
     "cocur/slugify": "^3.0",
+    "composer/composer": "^1.4",
     "composer/semver": "^1.4",
     "doctrine/cache": "^1.6",
     "doctrine/dbal": "^2.5",
