@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-yy
 ### Changed
-- Updated the FOSHttpCache composer packageto version 2.*
+- Updated the FOSHttpCache composer package to version 2.*
 - Updated the slugify composer package to version 3.*
 - Updated the PHPMailer composer package to version 6.*
 - Dropped the bower.json
