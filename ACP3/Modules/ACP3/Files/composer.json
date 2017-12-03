@@ -1,7 +1,7 @@
 {
   "name": "acp3/module-files",
   "description": "Provides the files module for the ACP3 CMS.",
-  "version": "4.13.0",
+  "version": "4.18.0",
   "type": "acp3-module",
   "license": "GPL-2.0+",
   "authors": [
