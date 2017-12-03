@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Permissions\Test\Core\ACL;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Modules\Modules;
+use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
@@ -57,7 +57,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['isSuperUser', 'getUserId'])
             ->getMock();
-        $this->modulesMock = $this->getMockBuilder(Modules::class)
+        $this->modulesMock = $this->getMockBuilder(Modules\Modules::class)
             ->disableOriginalConstructor()
             ->setMethods(['isActive'])
             ->getMock();
