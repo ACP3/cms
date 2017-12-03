@@ -61,6 +61,8 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
 
     /**
      * @return DataGrid
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     protected function getCurrentDataGrid(): DataGrid
     {
@@ -73,6 +75,8 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
 
     /**
      * @return DataGrid
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     protected function getNewDataGridInstance(): DataGrid
     {
