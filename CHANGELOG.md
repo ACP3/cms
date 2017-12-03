@@ -4,18 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.18.0] - 2017-11-22
-### Added
-- Added self referencing canonical URLs to the SEO module 
-
+## [Unreleased] - 2017-xx-yy
 ### Changed
-- Dropped the support for PHP 5.6. The minimum required PHP version is 7.1 now
-- Dropped the support for HHVM
-- Updated Symfony to version 3.3
-- Updated the bundled JavaScript packages to their current versions
-
-### Fixed
-- Fixed the position of the charset meta tag inside the HTML <head>
+- Updated the FOSHttpCache composer packageto version 2.*
+- Updated the slugify composer package to version 3.*
+- Dropped the bower.json
 
 ## [4.17.0] - 2017-11-12
 ### Added
@@ -386,6 +379,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Fixed the page cache invalidation notification when in production mode
 - Fixed the newsletter subscription
+
+## [4.1.29] - 2016-10-23
+### Added
+- Added the possibility to clear just the page cache
+- Added the new template event `layout.content_before`
+- Added the new event `core.settings.save_before` so that it is possible to modify the module settings before saving then to the database
+
+### Changed
+- When creating/modifying/deleting a result to the database, the page cache isn't cleared immediately anymore (for most operations)
+- Improved the default layout of the ACP3
+
+### Fixed
+- Fixed the users administration
+- Fixed the redirect url when posting a comment
+- Fixed the URL of delete controller action when performing a mass removal of comments
+- Fixed the language switcher drop down of the installer
 
 ## [4.1.29] - 2016-10-23
 ### Added
