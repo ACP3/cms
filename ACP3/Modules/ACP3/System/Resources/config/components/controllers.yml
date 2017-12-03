@@ -15,7 +15,7 @@ services:
       - '@core.context.frontend'
       - '@system.view.block.admin.system_modules_block'
       - '@core.i18n.dictionary'
-      - '@core.modules.moduleInfoCache'
+      - '@core.modules.module_info_cache'
       - '@system.model.repository.modules_repository'
       - '@system.helpers.installer'
       - '@permissions.cache'

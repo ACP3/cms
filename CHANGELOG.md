@@ -40,9 +40,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `protected` -> `protected` (bool)
   - `dependencies/module` -> `dependencies` (array)
 
-### Changed
-- Updated the minimal required Symfony version to 3.3 and took advantage of some features of it
-- Updated the friendsofsymfony/http-cache package to version 2.*
 
 ## [Unreleased] - 2017-xx-yy
 ### Changed

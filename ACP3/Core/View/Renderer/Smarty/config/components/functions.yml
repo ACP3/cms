@@ -9,7 +9,7 @@ services:
 
   smarty.plugin.check_access:
     class: ACP3\Core\View\Renderer\Smarty\Functions\CheckAccess
-    arguments: ['@core.helpers.view.checkAccess']
+    arguments: ['@core.helpers.view.check_access']
     tags:
       - { name: core.view.extension }
     public: false

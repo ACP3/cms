@@ -16,7 +16,7 @@ services:
     arguments:
       - '@core.view.context.block_context'
       - '@core.http.request'
-      - '@core.helpers.pageBreaks'
+      - '@core.helpers.page_breaks'
 
   articles.view.block.frontend.articles_listing_block:
     class: ACP3\Modules\ACP3\Articles\View\Block\Frontend\ArticlesListingBlock

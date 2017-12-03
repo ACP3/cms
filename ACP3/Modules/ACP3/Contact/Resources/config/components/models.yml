@@ -22,4 +22,4 @@ services:
       - '@core.config'
       - '@core.i18n.translator'
       - '@core.helpers.secure'
-      - '@core.helpers.sendEmail'
+      - '@core.helpers.send_email'

@@ -1,5 +1,5 @@
 services:
-  core.helpers.pageBreaks:
+  core.helpers.page_breaks:
     class: ACP3\Core\Helpers\PageBreaks
     arguments:
       - '@core.http.request'

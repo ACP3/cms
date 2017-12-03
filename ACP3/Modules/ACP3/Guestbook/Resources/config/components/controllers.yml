@@ -34,7 +34,7 @@ services:
       - '@guestbook.view.block.frontend.guestbook_form_block'
       - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.form_validation'
-      - '@core.helpers.sendEmail'
+      - '@core.helpers.send_email'
     calls:
       - ['setNewsletterSubscribeHelper', ['@?newsletter.helper.subscribe']]
 

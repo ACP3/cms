@@ -35,7 +35,7 @@ services:
     arguments:
       - '@core.view.context.block_context'
       - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@core.helpers.form_token'
 
   core.view.context.listing_block_context:
     class: ACP3\Core\View\Block\Context\ListingBlockContext

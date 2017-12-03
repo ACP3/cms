@@ -3,7 +3,7 @@ services:
     class: ACP3\Core\Modules\Modules
     arguments:
       - '@core.environment.application_path'
-      - '@core.modules.moduleInfoCache'
+      - '@core.modules.module_info_cache'
       - '@core.modules.vendors'
 
   core.modules.helper.action:
@@ -15,12 +15,12 @@ services:
       - '@core.helpers.alerts'
       - '@core.helpers.redirect'
 
-  core.modules.helper.controllerActionExists:
+  core.modules.helper.controller_action_exists:
     class: ACP3\Core\Modules\Helper\ControllerActionExists
     arguments:
       - '@service_container'
 
-  core.modules.moduleInfoCache:
+  core.modules.module_info_cache:
     class: ACP3\Core\Modules\ModuleInfoCache
     arguments:
       - '@core.cache.system'

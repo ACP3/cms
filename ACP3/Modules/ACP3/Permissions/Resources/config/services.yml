@@ -13,6 +13,6 @@ services:
     arguments:
       - '@users.model.user_model'
       - '@core.modules'
-      - '@core.modules.helper.controllerActionExists'
+      - '@core.modules.helper.controller_action_exists'
       - '@permissions.model.repository.acl_user_roles_repository'
       - '@permissions.cache'

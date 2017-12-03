@@ -70,7 +70,7 @@ services:
       - '@core.helpers.alerts'
       - '@users.model.repository.users_repository'
       - '@users.validation.account_forgot_password_form_validation'
-      - '@core.helpers.sendEmail'
+      - '@core.helpers.send_email'
 
   users.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Index
@@ -102,7 +102,7 @@ services:
       - '@users.model.users_model'
       - '@users.validation.registration_form_validation'
       - '@permissions.helpers'
-      - '@core.helpers.sendEmail'
+      - '@core.helpers.send_email'
 
   users.controller.frontend.index.view_profile:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ViewProfile
