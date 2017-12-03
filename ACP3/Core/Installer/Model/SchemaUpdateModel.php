@@ -17,7 +17,7 @@ class SchemaUpdateModel
     use Modules\ModuleDependenciesTrait;
 
     /**
-     * @var Modules
+     * @var Modules\Modules
      */
     private $modules;
     /**
@@ -51,7 +51,7 @@ class SchemaUpdateModel
      * @param SchemaRegistrar $schemaRegistrar
      * @param MigrationRegistrar $migrationRegistrar
      * @param Modules\Vendor $vendor
-     * @param Modules $modules
+     * @param Modules\Modules $modules
      * @param SchemaUpdater $schemaUpdater
      */
     public function __construct(
@@ -59,7 +59,7 @@ class SchemaUpdateModel
         SchemaRegistrar $schemaRegistrar,
         MigrationRegistrar $migrationRegistrar,
         Modules\Vendor $vendor,
-        Modules $modules,
+        Modules\Modules $modules,
         SchemaUpdater $schemaUpdater
     ) {
         $this->applicationPath = $applicationPath;

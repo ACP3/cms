@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Permissions\Test\Core\ACL;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Modules;
+use ACP3\Core\Modules\Modules;
 use ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 

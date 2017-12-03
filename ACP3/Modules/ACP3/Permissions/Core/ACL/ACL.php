@@ -38,7 +38,7 @@ class ACL implements ACLInterface
      */
     private $user;
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     private $modules;
     /**
@@ -57,14 +57,14 @@ class ACL implements ACLInterface
     /**
      * ACL constructor.
      * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
-     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\Modules\Modules $modules
      * @param Modules\Helper\ControllerActionExists $controllerActionExists
      * @param \ACP3\Core\ACL\Model\Repository\AclUserRolesRepositoryInterface $userRoleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage $permissionsCache
      */
     public function __construct(
         UserModel $user,
-        Modules $modules,
+        Modules\Modules $modules,
         Modules\Helper\ControllerActionExists $controllerActionExists,
         AclUserRolesRepositoryInterface $userRoleRepository,
         Permissions\Cache\PermissionsCacheStorage $permissionsCache

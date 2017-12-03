@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Modules\ACP3\Menus\Validation\ValidationRules;
 
-use ACP3\Core\Modules;
+use ACP3\Core\Modules\Modules;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Core\Validation\ValidationRules\InternalUriValidationRule;
 use ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule;
@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidatio
 class LinkModeValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     protected $modules;
     /**
@@ -28,7 +28,7 @@ class LinkModeValidationRule extends AbstractValidationRule
     /**
      * LinkModeValidationRule constructor.
      *
-     * @param \ACP3\Core\Modules                                              $modules
+     * @param \ACP3\Core\Modules\Modules                                              $modules
      * @param \ACP3\Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule
      */
     public function __construct(

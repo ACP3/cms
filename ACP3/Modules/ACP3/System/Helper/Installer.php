@@ -22,7 +22,7 @@ class Installer
      */
     protected $appPath;
     /**
-     * @var Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     protected $modules;
     /**
@@ -45,7 +45,7 @@ class Installer
     /**
      * @param LoggerInterface $logger
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\Modules\Modules $modules
      * @param \ACP3\Core\Modules\Vendor $vendors
      * @param Core\Installer\SchemaRegistrar $schemaRegistrar
      * @param \ACP3\Core\Installer\SchemaInstaller $schemaInstaller
@@ -53,7 +53,7 @@ class Installer
     public function __construct(
         LoggerInterface $logger,
         Core\Environment\ApplicationPath $appPath,
-        Core\Modules $modules,
+        Core\Modules\Modules $modules,
         Core\Modules\Vendor $vendors,
         Core\Installer\SchemaRegistrar $schemaRegistrar,
         Core\Installer\SchemaInstaller $schemaInstaller

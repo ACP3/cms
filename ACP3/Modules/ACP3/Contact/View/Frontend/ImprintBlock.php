@@ -35,6 +35,8 @@ class ImprintBlock extends AbstractBlock
      */
     public function render()
     {
+        $this->breadcrumb->append($this->translator->t('contact', 'frontend_index_imprint'));
+
         return [
             'imprint' => $this->settings->getSettings(Schema::MODULE_NAME),
             'powered_by' => $this->translator->t(

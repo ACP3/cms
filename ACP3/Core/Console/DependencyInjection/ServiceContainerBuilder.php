@@ -8,7 +8,7 @@ namespace ACP3\Core\Console\DependencyInjection;
 
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
-use ACP3\Core\Modules;
+use ACP3\Core\Modules\Modules;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

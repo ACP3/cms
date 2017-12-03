@@ -10,7 +10,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\LocaleInterface;
 use ACP3\Core\I18n\TranslatorInterface;
-use ACP3\Core\Modules;
+use ACP3\Core\Modules\Modules;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
@@ -38,7 +38,7 @@ class WidgetContext
      */
     protected $translator;
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     protected $modules;
     /**
@@ -153,7 +153,7 @@ class WidgetContext
     }
 
     /**
-     * @return \ACP3\Core\Modules
+     * @return \ACP3\Core\Modules\Modules
      */
     public function getModules()
     {

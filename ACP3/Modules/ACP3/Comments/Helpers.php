@@ -11,7 +11,7 @@ use ACP3\Modules\ACP3\Comments\Model\Repository\CommentsRepository;
 class Helpers
 {
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     protected $modules;
     /**
@@ -20,11 +20,11 @@ class Helpers
     protected $commentRepository;
 
     /**
-     * @param \ACP3\Core\Modules                                  $modules
+     * @param \ACP3\Core\Modules\Modules                                  $modules
      * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentsRepository $commentRepository
      */
     public function __construct(
-        Core\Modules $modules,
+        Core\Modules\Modules $modules,
         CommentsRepository $commentRepository
     ) {
         $this->modules = $modules;

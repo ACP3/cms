@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Files\Event\Listener;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Upload;
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Core\Modules;
+use ACP3\Core\Modules\Modules;
 use ACP3\Modules\ACP3\Comments\Helpers as CommentsHelpers;
 use ACP3\Modules\ACP3\Files\Cache\FileCacheStorage;
 use ACP3\Modules\ACP3\Files\Helpers;

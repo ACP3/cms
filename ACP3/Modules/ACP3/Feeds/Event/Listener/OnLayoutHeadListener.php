@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Feeds\Event\Listener;
 
-use ACP3\Core\Modules;
+use ACP3\Core\Modules\Modules;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Feeds\Installer\Schema;
 use ACP3\Modules\ACP3\Feeds\Utility\FeedAvailabilityRegistrar;

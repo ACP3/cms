@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Permissions\View\Block\Admin;
 
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Core\Modules;
+use ACP3\Core\Modules\Modules;
 use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository;

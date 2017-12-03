@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\News\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Core\Modules;
+use ACP3\Core\Modules\Modules;
 use ACP3\Modules\ACP3\News\Cache\NewsCacheStorage;
 use ACP3\Modules\ACP3\News\Controller\Admin\Index\CommentsHelperTrait;
 use ACP3\Modules\ACP3\News\Helpers;

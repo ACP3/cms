@@ -29,11 +29,11 @@ class Aliases
     private $isActive;
 
     /**
-     * @param Core\Modules $modules
+     * @param \ACP3\Core\Modules\Modules $modules
      * @param \ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage $seoCache
      */
     public function __construct(
-        Core\Modules $modules,
+        Core\Modules\Modules $modules,
         Seo\Cache\SeoCacheStorage $seoCache
     ) {
         $this->seoCache = $seoCache;

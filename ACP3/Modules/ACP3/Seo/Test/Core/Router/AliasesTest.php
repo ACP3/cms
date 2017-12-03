@@ -6,7 +6,7 @@
 
 namespace ACP3\Modules\ACP3\Seo\Test\Core\Router;
 
-use ACP3\Core\Modules;
+use ACP3\Core\Modules\Modules;
 use ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 

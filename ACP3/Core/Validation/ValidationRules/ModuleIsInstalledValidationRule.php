@@ -1,7 +1,7 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-use ACP3\Core\Modules;
+use ACP3\Core\Modules\Modules;
 
 /**
  * Class ModuleIsInstalledValidationRule
@@ -10,14 +10,14 @@ use ACP3\Core\Modules;
 class ModuleIsInstalledValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     protected $modules;
 
     /**
      * ModuleIsInstalledValidationRule constructor.
      *
-     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\Modules\Modules $modules
      */
     public function __construct(Modules $modules)
     {

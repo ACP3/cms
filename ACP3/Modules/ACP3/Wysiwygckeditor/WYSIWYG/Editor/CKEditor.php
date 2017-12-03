@@ -16,7 +16,7 @@ use ACP3\Core\WYSIWYG\Editor\Textarea;
 class CKEditor extends Textarea
 {
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     protected $modules;
     /**
@@ -44,12 +44,12 @@ class CKEditor extends Textarea
     /**
      * CKEditor constructor.
      *
-     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\Modules\Modules $modules
      * @param Core\I18n\LocaleInterface $locale
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
-        Core\Modules $modules,
+        Core\Modules\Modules $modules,
         Core\I18n\LocaleInterface $locale,
         Core\Environment\ApplicationPath $appPath
     ) {

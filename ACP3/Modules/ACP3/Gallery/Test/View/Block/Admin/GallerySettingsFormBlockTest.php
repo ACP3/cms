@@ -7,7 +7,7 @@
 namespace ACP3\Modules\ACP3\Gallery\Test\View\Block\Admin;
 
 use ACP3\Core\Helpers\Date;
-use ACP3\Core\Modules;
+use ACP3\Core\Modules\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\Test\View\Block\AbstractFormBlockTest;
 use ACP3\Core\View\Block\BlockInterface;

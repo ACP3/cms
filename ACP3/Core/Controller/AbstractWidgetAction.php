@@ -33,7 +33,7 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected $translator;
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     protected $modules;
     /**

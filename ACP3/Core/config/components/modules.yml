@@ -1,6 +1,6 @@
 services:
   core.modules:
-    class: ACP3\Core\Modules
+    class: ACP3\Core\Modules\Modules
     arguments:
       - '@core.environment.application_path'
       - '@core.modules.moduleInfoCache'

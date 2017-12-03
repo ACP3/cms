@@ -10,7 +10,7 @@ use ACP3\Core\Assets;
 use ACP3\Core\Assets\FileResolver;
 use ACP3\Core\Cache\Cache;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Modules;
+use ACP3\Core\Modules\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use JSMin\JSMin;
@@ -35,7 +35,7 @@ abstract class AbstractMinifier implements MinifierInterface
      */
     protected $config;
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     protected $modules;
     /**
@@ -66,7 +66,7 @@ abstract class AbstractMinifier implements MinifierInterface
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Core\Cache\Cache $systemCache
      * @param SettingsInterface $config
-     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\Modules\Modules $modules
      * @param \ACP3\Core\Assets\FileResolver $fileResolver
      * @param string $environment
      */

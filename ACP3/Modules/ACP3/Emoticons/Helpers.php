@@ -31,12 +31,12 @@ class Helpers
 
     /**
      * @param \ACP3\Core\View $view
-     * @param Core\Modules $modules
+     * @param \ACP3\Core\Modules\Modules $modules
      * @param \ACP3\Modules\ACP3\Emoticons\Cache\EmoticonsCacheStorage $emoticonsCache
      */
     public function __construct(
         Core\View $view,
-        Core\Modules $modules,
+        Core\Modules\Modules $modules,
         EmoticonsCacheStorage $emoticonsCache
     ) {
         $this->view = $view;

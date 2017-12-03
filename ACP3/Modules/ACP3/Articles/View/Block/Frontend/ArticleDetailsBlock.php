@@ -43,7 +43,7 @@ class ArticleDetailsBlock extends AbstractBlock
     {
         $article = $this->getData();
 
-        $this->breadcrumb->replaceAncestor($article['title'], '', true);
+        $this->breadcrumb->append($article['title']);
 
         return [
             'page' => array_merge(

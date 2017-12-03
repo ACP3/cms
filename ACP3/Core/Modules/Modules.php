@@ -4,9 +4,10 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-namespace ACP3\Core;
+namespace ACP3\Core\Modules;
 
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Filesystem;
 use ACP3\Core\Modules\ModuleInfoCache;
 use ACP3\Core\Modules\Vendor;
 use ACP3\Modules\ACP3\System;
