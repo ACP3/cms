@@ -12,9 +12,9 @@
             </span>
         </div>
         <div id="nav-user-menu-collapse" class="collapse navbar-collapse">
-            {if isset($user_sidebar.modules) || isset($user_sidebar.system)}
+            {if !empty($user_sidebar.modules) || !empty($user_sidebar.system)}
                 <ul class="nav navbar-nav">
-                    {if isset($user_sidebar.modules)}
+                    {if !empty($user_sidebar.modules)}
                         <li class="dropdown">
                             <a href="{uri args="acp/acp"}" id="menu-admin-label" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu-administration">
                                 <i class="glyphicon glyphicon-file"></i>
@@ -28,7 +28,7 @@
                             </ul>
                         </li>
                     {/if}
-                    {if isset($user_sidebar.system)}
+                    {if !empty($user_sidebar.system)}
                         <li class="dropdown">
                             <a href="{uri args="acp/system"}" id="menu-system-label" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu-system">
                                 <i class="glyphicon glyphicon-cog"></i>
