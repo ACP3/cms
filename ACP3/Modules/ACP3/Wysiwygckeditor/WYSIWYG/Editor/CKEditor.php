@@ -170,7 +170,7 @@ class CKEditor extends Textarea
         $out = $this->init();
 
         // Add custom plugins
-        $ckeditorPluginsDir = $this->appPath->getWebRoot() . 'ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets/js/ckeditor/plugins/';
+        $ckeditorPluginsDir = $this->appPath->getWebRoot() . 'ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets/js/ckeditor-plugins/';
 
         $js = "CKEDITOR.plugins.addExternal('codemirror', '" . $ckeditorPluginsDir . "codemirror/');\n";
         $js .= "CKEDITOR.plugins.addExternal('divarea', '" . $ckeditorPluginsDir . "divarea/');\n";
