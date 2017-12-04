@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "82fcb6ab87611b79294f2e7ea974245a",
+    "content-hash": "bf998accf908e467d1b5e92c344e6a3e",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -3802,52 +3802,6 @@
                 "xml"
             ],
             "time": "2017-11-19T15:39:11+00:00"
-        },
-        {
-            "name": "tinymce/tinymce",
-            "version": "4.7.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tinymce/tinymce-dist.git",
-                "reference": "a2392f870b4c85bd536e5cc77f640e035ce657af"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/a2392f870b4c85bd536e5cc77f640e035ce657af",
-                "reference": "a2392f870b4c85bd536e5cc77f640e035ce657af",
-                "shasum": ""
-            },
-            "type": "component",
-            "extra": {
-                "component": {
-                    "scripts": [
-                        "tinymce.js",
-                        "plugins/*/plugin.js",
-                        "themes/*/theme.js"
-                    ],
-                    "files": [
-                        "tinymce.min.js",
-                        "plugins/*/plugin.min.js",
-                        "themes/*/theme.min.js",
-                        "skins/**"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1"
-            ],
-            "description": "Web based JavaScript HTML WYSIWYG editor control.",
-            "homepage": "http://www.tinymce.com",
-            "keywords": [
-                "editor",
-                "html",
-                "javascript",
-                "richtext",
-                "tinymce",
-                "wysiwyg"
-            ],
-            "time": "2017-11-23T15:30:30+00:00"
         },
         {
             "name": "tubalmartin/cssmin",

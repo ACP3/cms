@@ -1,5 +1,5 @@
 {if !$config.is_initialized}
-    <script defer src="{$ROOT_DIR}vendor/tinymce/tinymce/tinymce.min.js"></script>
+    <script src="{$ROOT_DIR}ACP3/Modules/ACP3/Wysiwygtinymce/Resources/Assets/js/tinymce/tinymce.min.js"></script>
 {/if}
 <script defer>
     tinymce.init({

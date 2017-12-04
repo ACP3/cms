@@ -5,7 +5,8 @@
 
 const nodeBasePath = './node_modules',
     systemBasePath = './ACP3/Modules/ACP3/System/Resources/Assets',
-    ckeditorBasePath = './ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets';
+    ckeditorBasePath = './ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets',
+    tinymceBasePath = './ACP3/Modules/ACP3/Wysiwygtinymce/Resources/Assets';
 
 module.exports = [
     {
@@ -28,6 +29,12 @@ module.exports = [
             nodeBasePath + '/ckeditor/**/*',
         ],
         'dest': ckeditorBasePath + '/js/ckeditor'
+    },
+    {
+        'src': [
+            nodeBasePath + '/tinymce/**/*',
+        ],
+        'dest': tinymceBasePath + '/js/tinymce'
     },
     {
         'src': [

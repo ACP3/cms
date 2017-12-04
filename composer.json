@@ -43,7 +43,6 @@
     "symfony/http-kernel": "^3.3",
     "symfony/yaml": "^3.3",
     "thepixeldeveloper/sitemap": "^5.0",
-    "tinymce/tinymce": "^4.4",
     "marcj/topsort": "^1.1"
   },
   "require-dev": {
