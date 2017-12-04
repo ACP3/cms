@@ -4,49 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2cba8d2c07dc96bfbb7eb4f1aad7cd0e",
+    "content-hash": "82fcb6ab87611b79294f2e7ea974245a",
     "packages": [
-        {
-            "name": "ckeditor/ckeditor",
-            "version": "dev-full/4.7.x",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "5f1564a3d64cd06d8a4f3f21150f57e892a40939"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/5f1564a3d64cd06d8a4f3f21150f57e892a40939",
-                "reference": "5f1564a3d64cd06d8a4f3f21150f57e892a40939",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+",
-                "LGPL-2.1+",
-                "MPL-1.1+"
-            ],
-            "authors": [
-                {
-                    "name": "CKSource",
-                    "homepage": "http://cksource.com"
-                }
-            ],
-            "description": "JavaScript WYSIWYG web text editor.",
-            "homepage": "http://ckeditor.com",
-            "keywords": [
-                "CKEditor",
-                "editor",
-                "fckeditor",
-                "html",
-                "javascript",
-                "richtext",
-                "text",
-                "wysiwyg"
-            ],
-            "time": "2017-09-13T13:08:14+00:00"
-        },
         {
             "name": "clue/stream-filter",
             "version": "v1.4.0",
@@ -5650,9 +5609,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "ckeditor/ckeditor": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

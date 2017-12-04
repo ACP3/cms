@@ -220,7 +220,7 @@ class CKEditor extends Textarea
         }
 
         $this->isInitialized = true;
-        $basePath = $this->appPath->getWebRoot() . 'vendor/ckeditor/ckeditor/';
+        $basePath = $this->appPath->getWebRoot() . 'node_modules/ckeditor/';
         $out = "";
 
         // Skip relative paths...
