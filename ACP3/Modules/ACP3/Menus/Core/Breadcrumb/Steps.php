@@ -75,14 +75,18 @@ class Steps extends Core\Breadcrumb\Steps
         }
 
         if (!empty($this->stepsFromDb)) {
-            $lastDbStepUri = $this->stepsFromDb[count($this->stepsFromDb) - 1]['uri'];
+            $dbStepsCount = count($this->stepsFromDb);
+            $stepsCount = count($this->steps);
+            $lastDbStepUri = $this->stepsFromDb[$dbStepsCount - 1]['uri'];
 
-            if (count($this->steps) === 1 && empty($this->steps[0]['uri'])) {
+            if ($stepsCount === 1 && empty($this->steps[0]['uri'])) {
                 $this->copyTitleFromFirstStepToLastDbStep();
                 $this->steps[0]['uri'] = $lastDbStepUri;
             }
 
-            if ($lastDbStepUri === $this->steps[0]['uri']) {
+            if ($dbStepsCount > 1 && $dbStepsCount >= $stepsCount) {
+                $this->breadcrumbCache = $this->stepsFromDb;
+            } elseif ($lastDbStepUri === $this->steps[0]['uri']) {
                 $this->copyTitleFromFirstStepToLastDbStep();
 
                 $this->breadcrumbCache = array_merge($this->stepsFromDb, array_slice($this->steps, 1));
@@ -109,7 +113,8 @@ class Steps extends Core\Breadcrumb\Steps
         }
     }
 
-    private function getPossiblyMatchingRoutes() {
+    private function getPossiblyMatchingRoutes()
+    {
         return [
             $this->request->getQuery(),
             $this->request->getUriWithoutPages(),
