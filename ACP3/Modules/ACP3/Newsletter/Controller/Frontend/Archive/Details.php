@@ -55,6 +55,7 @@ class Details extends Core\Controller\AbstractFrontendAction
                 ->append($this->translator->t('newsletter', 'index'), 'newsletter')
                 ->append($this->translator->t('newsletter', 'frontend_archive_index'), 'newsletter/archive')
                 ->append($newsletter['title']);
+            $this->title->setPageTitle($newsletter['title']);
 
             return [
                 'newsletter' => $newsletter

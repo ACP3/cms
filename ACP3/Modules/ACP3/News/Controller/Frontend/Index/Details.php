@@ -70,6 +70,7 @@ class Details extends AbstractAction
                 $this->breadcrumb->append($news['category_title'], 'news/index/index/cat_' . $news['category_id']);
             }
             $this->breadcrumb->append($news['title']);
+            $this->title->setPageTitle($news['title']);
 
             $news['text'] = $this->view->fetchStringAsTemplate($news['text']);
             $news['target'] = $news['target'] == 2 ? ' target="_blank"' : '';

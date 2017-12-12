@@ -66,6 +66,7 @@ class Details extends Core\Controller\AbstractFrontendAction
                 ->append($this->translator->t('files', 'files'), 'files')
                 ->append($file['category_title'], 'files/index/files/cat_' . $file['category_id'])
                 ->append($file['title']);
+            $this->title->setPageTitle($file['title']);
 
             $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
             $file['text'] = $this->view->fetchStringAsTemplate($file['text']);
