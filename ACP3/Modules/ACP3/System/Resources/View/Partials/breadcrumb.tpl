@@ -17,7 +17,7 @@
                 <li class="active"
                     itemprop="itemListElement"
                     itemscope
-                    itemtype="http://schema.org/ListItem"><span itemprop="item"><span itemprop="name">{page_title}</span></span>
+                    itemtype="http://schema.org/ListItem"><span itemprop="item"><span itemprop="name">{$row.title}</span></span>
                     <meta itemprop="position" content="{($row@iteration + 1)}" />
                 </li>
             {/if}
