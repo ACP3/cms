@@ -63,9 +63,12 @@ class Pics extends AbstractAction
         if ($this->galleryRepository->galleryExists($id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
+            $galleryTitle = $this->galleryRepository->getGalleryTitle($id);
+
             $this->breadcrumb
                 ->append($this->translator->t('gallery', 'gallery'), 'gallery')
-                ->append($this->galleryRepository->getGalleryTitle($id));
+                ->append($galleryTitle);
+            $this->title->setPageTitle($galleryTitle);
 
             return [
                 'pictures' => $this->galleryCache->getCache($id),
