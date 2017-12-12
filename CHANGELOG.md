@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2017-xx-yy
 ### Changed
+- Changed the defaults of the pagination:
+  - Always show the next/previous buttons
+  - Reduced the to be displayed page from 7 to 3
+- Reworked the breadcrumb so that the structure from the menus take precedence
 - Updated the FOSHttpCache composer package to version 2.*
 - Updated the slugify composer package to version 3.*
 - Updated the PHPMailer composer package to version 6.*
