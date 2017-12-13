@@ -255,9 +255,9 @@ class Pagination
 
     /**
      * @param string $link
-     * @param integer $rangeStart
+     * @param int $rangeStart
      */
-    private function addFirstPageLink(string $link, $rangeStart)
+    private function addFirstPageLink(string $link, int $rangeStart): void
     {
         if ($this->totalPages > $this->showFirstLast && $rangeStart > 1) {
             $this->addPageNumber(
@@ -304,7 +304,7 @@ class Pagination
         string $title = '',
         bool $selected = false,
         string $selector = ''
-    ) {
+    ): array {
         return [
             'page' => $pageNumber,
             'uri' => $uri,
@@ -317,7 +317,7 @@ class Pagination
     /**
      * @param string $link
      */
-    private function addPreviousPageLink(string $link)
+    private function addPreviousPageLink(string $link): void
     {
         if ($this->canShowPreviousPageLink()) {
             $this->addPageNumber(
@@ -341,7 +341,7 @@ class Pagination
     /**
      * @param string $link
      */
-    private function addNextPageLink(string $link)
+    private function addNextPageLink(string $link): void
     {
         if ($this->canShowNextPageLink()) {
             $this->addPageNumber(
@@ -366,7 +366,7 @@ class Pagination
      * @param string $link
      * @param integer $rangeEnd
      */
-    private function addLastPageLink(string $link, int $rangeEnd)
+    private function addLastPageLink(string $link, int $rangeEnd): void
     {
         if ($this->totalPages > $this->showFirstLast && $this->totalPages !== $rangeEnd) {
             $this->addPageNumber(
