@@ -195,12 +195,12 @@ class Pagination
             $this->totalPages = (int)ceil($this->totalResults / $this->resultsPerPage);
 
             $this->setMetaStatements();
-            $range = $this->calculateRange();
+            [$rangeStart, $rangeEnd] = $this->calculateRange();
 
-            $this->addFirstPageLink($link, $range['start']);
+            $this->addFirstPageLink($link, $rangeStart);
             $this->addPreviousPageLink($link);
 
-            for ($pageNumber = (int)$range['start']; $pageNumber <= $range['end']; ++$pageNumber) {
+            for ($pageNumber = $rangeStart; $pageNumber <= $rangeEnd; ++$pageNumber) {
                 $this->addPageNumber(
                     $pageNumber,
                     $link . ($pageNumber > 1 ? 'page_' . $pageNumber . '/' : '') . $this->urlFragment,
@@ -210,7 +210,7 @@ class Pagination
             }
 
             $this->addNextPageLink($link);
-            $this->addLastPageLink($link, $range['end']);
+            $this->addLastPageLink($link, $rangeEnd);
         }
 
         return $this->pagination;
@@ -228,9 +228,9 @@ class Pagination
     }
 
     /**
-     * @return array
+     * @return int[]
      */
-    private function calculateRange()
+    private function calculateRange(): array
     {
         $rangeStart = 1;
         $rangeEnd = $this->totalPages;
@@ -238,24 +238,18 @@ class Pagination
 
         if ($this->totalPages > $pagesToDisplay) {
             $center = floor($pagesToDisplay / 2);
-            // Beginn der anzuzeigenden Seitenzahlen
-            if ($this->currentPage - $center > 0) {
-                $rangeStart = $this->currentPage - $center;
-            }
-            // Ende der anzuzeigenden Seitenzahlen
-            if ($rangeStart + $pagesToDisplay - 1 <= $this->totalPages) {
-                $rangeEnd = $rangeStart + $pagesToDisplay - 1;
-            }
+            $rangeStart = max(1, $this->currentPage - $center);
+            $rangeEnd = min($this->totalPages, $rangeStart + $pagesToDisplay - 1);
 
             // Anzuzeigende Seiten immer auf dem Wert von $pagesToDisplay halten
-            if ($rangeEnd - $rangeStart < $pagesToDisplay && $rangeEnd - $pagesToDisplay > 0) {
-                $rangeStart = $rangeEnd - $pagesToDisplay + 1;
+            if ($rangeEnd === $this->totalPages) {
+                $rangeStart = min($rangeStart, $rangeEnd - $pagesToDisplay + 1);
             }
         }
 
         return [
-            'start' => $rangeStart,
-            'end' => $rangeEnd
+            (int)$rangeStart,
+            (int)$rangeEnd
         ];
     }
 
@@ -263,59 +257,75 @@ class Pagination
      * @param string $link
      * @param integer $rangeStart
      */
-    private function addFirstPageLink($link, $rangeStart)
+    private function addFirstPageLink(string $link, $rangeStart)
     {
         if ($this->totalPages > $this->showFirstLast && $rangeStart > 1) {
             $this->addPageNumber(
                 '&laquo;',
                 $link . $this->urlFragment,
-                $this->translator->t('system', 'first_page')
+                $this->translator->t('system', 'first_page'),
+                false,
+                'pagination__first-page'
             );
         }
     }
 
     /**
-     * @param int $pageNumber
+     * @param int|string $pageNumber
      * @param string $uri
      * @param string $title
      * @param bool $selected
+     * @param string $selector
      * @return $this
      */
-    private function addPageNumber($pageNumber, $uri, $title = '', $selected = false)
-    {
-        $this->pagination[] = $this->buildPageNumber($pageNumber, $uri, $title, $selected);
+    private function addPageNumber(
+        $pageNumber,
+        string $uri,
+        string $title = '',
+        bool $selected = false,
+        string $selector = ''
+    ) {
+        $this->pagination[] = $this->buildPageNumber($pageNumber, $uri, $title, $selected, $selector);
 
         return $this;
     }
 
     /**
-     * @param int $pageNumber
+     * @param int|string $pageNumber
      * @param string $uri
      * @param string $title
      * @param bool $selected
-     *
+     * @param string $selector
      * @return array
      */
-    private function buildPageNumber($pageNumber, $uri, $title = '', $selected = false)
-    {
+    private function buildPageNumber(
+        $pageNumber,
+        string $uri,
+        string $title = '',
+        bool $selected = false,
+        string $selector = ''
+    ) {
         return [
             'page' => $pageNumber,
             'uri' => $uri,
             'title' => $title,
-            'selected' => (bool)$selected
+            'selected' => (bool)$selected,
+            'selector' => $selector
         ];
     }
 
     /**
      * @param string $link
      */
-    private function addPreviousPageLink($link)
+    private function addPreviousPageLink(string $link)
     {
         if ($this->canShowPreviousPageLink()) {
             $this->addPageNumber(
                 '&lsaquo;',
                 $link . ($this->currentPage - 1 > 1 ? 'page_' . ($this->currentPage - 1) . '/' : '') . $this->urlFragment,
-                $this->translator->t('system', 'previous_page')
+                $this->translator->t('system', 'previous_page'),
+                false,
+                'pagination__previous-page'
             );
         }
     }
@@ -331,13 +341,15 @@ class Pagination
     /**
      * @param string $link
      */
-    private function addNextPageLink($link)
+    private function addNextPageLink(string $link)
     {
         if ($this->canShowNextPageLink()) {
             $this->addPageNumber(
                 '&rsaquo;',
                 $link . 'page_' . ($this->currentPage + 1) . '/' . $this->urlFragment,
-                $this->translator->t('system', 'next_page')
+                $this->translator->t('system', 'next_page'),
+                false,
+                'pagination__next-page'
             );
         }
     }
@@ -354,13 +366,15 @@ class Pagination
      * @param string $link
      * @param integer $rangeEnd
      */
-    private function addLastPageLink($link, $rangeEnd)
+    private function addLastPageLink(string $link, int $rangeEnd)
     {
         if ($this->totalPages > $this->showFirstLast && $this->totalPages !== $rangeEnd) {
             $this->addPageNumber(
                 '&raquo;',
                 $link . 'page_' . $this->totalPages . '/' . $this->urlFragment,
-                $this->translator->t('system', 'last_page')
+                $this->translator->t('system', 'last_page'),
+                false,
+                'pagination__last-page'
             );
         }
     }
