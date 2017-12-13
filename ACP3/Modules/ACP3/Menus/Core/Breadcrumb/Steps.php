@@ -75,9 +75,9 @@ class Steps extends Core\Breadcrumb\Steps
         }
 
         if (!empty($this->stepsFromDb)) {
-            $sliceIndex = $this->findMatchingUriIndexInSteps();
+            $offset = $this->findFirstMatchingStep();
 
-            $this->breadcrumbCache = array_merge($this->stepsFromDb, array_slice($this->steps, $sliceIndex));
+            $this->breadcrumbCache = array_merge($this->stepsFromDb, array_slice($this->steps, $offset));
         }
     }
 
@@ -149,7 +149,7 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * @return int
      */
-    private function findMatchingUriIndexInSteps(): int
+    private function findFirstMatchingStep(): int
     {
         $steps = array_reverse($this->steps);
         $lastDbStep = end($this->stepsFromDb);
