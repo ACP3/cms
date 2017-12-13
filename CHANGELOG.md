@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Changed the defaults of the pagination:
   - Always show the next/previous buttons
-  - Reduced the to be displayed page from 7 to 3
+  - Reduced the to be displayed pages from 7 to 3
+- improved the default template of the pagination to be more accessible
 - Reworked the breadcrumb so that the structure from the menus take precedence
 - Updated the FOSHttpCache composer package to version 2.*
 - Updated the slugify composer package to version 3.*
