@@ -4,12 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 2017-xx-yy
+## [4.19.0] - 2017-12-13
 ### Changed
 - Changed the defaults of the pagination:
   - Always show the next/previous buttons
   - Reduced the to be displayed pages from 7 to 3
-- improved the default template of the pagination to be more accessible
+- Improved the default template of the pagination to be more accessible
 - Reworked the breadcrumb so that the structure from the menus take precedence
 - Updated the FOSHttpCache composer package to version 2.*
 - Updated the slugify composer package to version 3.*
@@ -477,7 +477,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.18.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.19.0...HEAD
+[4.19.0]: https://github.com/ACP3/cms/compare/v4.18.0...v4.19.0
 [4.18.0]: https://github.com/ACP3/cms/compare/v4.17.0...v4.18.0
 [4.17.0]: https://github.com/ACP3/cms/compare/v4.16.0...v4.17.0
 [4.16.0]: https://github.com/ACP3/cms/compare/v4.15.0...v4.16.0
