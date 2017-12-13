@@ -77,10 +77,10 @@ class Details extends AbstractAction
 
             $this->breadcrumb
                 ->append($this->translator->t('gallery', 'gallery'), 'gallery')
-                ->append($picture['title'], 'gallery/index/pics/id_' . $picture['gallery_id'])
+                ->append($picture['gallery_title'], 'gallery/index/pics/id_' . $picture['gallery_id'])
                 ->append($this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']]));
 
-            $this->title->setPageTitlePrefix($picture['title']);
+            $this->title->setPageTitlePrefix($picture['gallery_title']);
 
             $picture = $this->calculatePictureDimensions($picture);
 

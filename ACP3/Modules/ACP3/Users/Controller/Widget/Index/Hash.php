@@ -7,46 +7,48 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
 use ACP3\Core\Controller\AbstractWidgetAction;
-use ACP3\Modules\ACP3\System\Installer\Schema;
+use ACP3\Core\Controller\Context\WidgetContext;
+use FOS\HttpCache\UserContext\DefaultHashGenerator;
+use Symfony\Component\HttpFoundation\AcceptHeader;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class Hash
- * @package ACP3\Modules\ACP3\Users\Controller\Widget\Index
- */
 class Hash extends AbstractWidgetAction
 {
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @var DefaultHashGenerator
      */
-    public function execute()
-    {
-        $this->response->setVary('Cookie');
-        $this->response->setPublic();
-        $this->response->setMaxAge(60);
-        $this->response->headers->add([
-            'Content-type' => 'application/vnd.fos.user-context-hash',
-            'X-User-Context-Hash' => $this->generateUserContextHash()
-        ]);
+    private $hashGenerator;
 
-        return $this->response;
+    /**
+     * Hash constructor.
+     * @param WidgetContext $context
+     * @param DefaultHashGenerator $hashGenerator
+     */
+    public function __construct(WidgetContext $context, DefaultHashGenerator $hashGenerator)
+    {
+        parent::__construct($context);
+
+        $this->hashGenerator = $hashGenerator;
     }
 
     /**
-     * @return string
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function generateUserContextHash()
+    public function execute(): Response
     {
-        $settings = $this->config->getSettings(Schema::MODULE_NAME);
-        $hash = $settings['security_secret'];
-
-        if ($this->user->isAuthenticated()) {
-            $hash .= implode('-', $this->acl->getUserRoleIds($this->user->getUserId()));
-
-            if (intval($settings['cache_vary_user']) === 1) {
-                $hash .= '-' . $this->user->getUserId();
-            }
+        $accept = AcceptHeader::fromString($this->request->getSymfonyRequest()->headers->get('Accept'));
+        if ($accept->has('application/vnd.fos.user-context-hash')) {
+            $this->response->setVary('Cookie');
+            $this->response->setPublic();
+            $this->response->setMaxAge(3600);
+            $this->response->headers->add([
+                'Content-type' => 'application/vnd.fos.user-context-hash',
+                'X-User-Context-Hash' => $this->hashGenerator->generateHash()
+            ]);
+        } else {
+            $this->response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
         }
 
-        return hash('sha512', $hash);
+        return $this->response;
     }
 }

@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.19.0] - 2017-12-13
+### Changed
+- Changed the defaults of the pagination:
+  - Always show the next/previous buttons
+  - Reduced the to be displayed pages from 7 to 3
+- Improved the default template of the pagination to be more accessible
+- Reworked the breadcrumb so that the structure from the menus take precedence
+- Updated the FOSHttpCache composer package to version 2.*
+- Updated the slugify composer package to version 3.*
+- Updated the PHPMailer composer package to version 6.*
+- Dropped the bower.json
+
 ## [4.18.0] - 2017-11-22
 ### Added
 - Added self referencing canonical URLs to the SEO module 
@@ -403,6 +415,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed the URL of delete controller action when performing a mass removal of comments
 - Fixed the language switcher drop down of the installer
 
+## [4.1.29] - 2016-10-23
+### Added
+- Added the possibility to clear just the page cache
+- Added the new template event `layout.content_before`
+- Added the new event `core.settings.save_before` so that it is possible to modify the module settings before saving then to the database
+
+### Changed
+- When creating/modifying/deleting a result to the database, the page cache isn't cleared immediately anymore (for most operations)
+- Improved the default layout of the ACP3
+
+### Fixed
+- Fixed the users administration
+- Fixed the redirect url when posting a comment
+- Fixed the URL of delete controller action when performing a mass removal of comments
+- Fixed the language switcher drop down of the installer
+
 ## [4.1.28] - 2016-10-05
 ### Fixed
 - Fixed the theme inheritance
@@ -449,7 +477,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.18.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.19.0...HEAD
+[4.19.0]: https://github.com/ACP3/cms/compare/v4.18.0...v4.19.0
 [4.18.0]: https://github.com/ACP3/cms/compare/v4.17.0...v4.18.0
 [4.17.0]: https://github.com/ACP3/cms/compare/v4.16.0...v4.17.0
 [4.16.0]: https://github.com/ACP3/cms/compare/v4.15.0...v4.16.0

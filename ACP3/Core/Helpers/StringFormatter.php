@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers;
 
-use ACP3\Core;
 use Cocur\Slugify\Slugify;
 
 /**

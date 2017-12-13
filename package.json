@@ -1,6 +1,6 @@
 {
   "name": "acp3-cms",
-  "version": "4.18.0",
+  "version": "4.19.0",
   "description": "The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP and MySQL.",
   "main": "",
   "directories": {},
@@ -14,7 +14,7 @@
   "bugs": {
     "url": "https://github.com/ACP3/cms/issues"
   },
-  "homepage": "http://www.acp3-cms.net",
+  "homepage": "https://www.acp3-cms.net",
   "private": true,
   "devDependencies": {
     "@fancyapps/fancybox": "^3.2.5",
@@ -33,7 +33,7 @@
     "html5shiv": "^3.7.3",
     "jquery": "^2.2.4",
     "js-cookie": "^2.2.0",
-    "moment": "^2.19.2",
-    "yargs": "^7.0.0"
+    "moment": "^2.19.4",
+    "yargs": "^10.0.3"
   }
 }

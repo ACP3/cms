@@ -69,7 +69,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
 
         $expected = [
             [
-                'title' => '{NEWS_NEWS}',
+                'title' => 'News',
                 'uri' => '/news/',
                 'last' => true
             ]
@@ -108,7 +108,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
                 'uri' => '/news/',
             ],
             [
-                'title' => '{NEWSLETTER_NEWSLETTER}',
+                'title' => 'Newsletter',
                 'uri' => '/newsletter/',
                 'last' => true
             ],
@@ -147,7 +147,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
                 'uri' => '/news/',
             ],
             [
-                'title' => '{NEWSLETTER_NEWSLETTER}',
+                'title' => 'Newsletter',
                 'uri' => '/newsletter/',
             ],
             [
@@ -201,7 +201,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    public function testGetBreadcrumbLastStepTitleShouldTakePrecedence()
+    public function testGetBreadcrumbLastDbStepTitleShouldTakePrecedence()
     {
         $this->setUpMenuItemRepositoryExpectations([
             [
@@ -225,7 +225,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
 
         $expected = [
             [
-                'title' => 'Lorem Ipsum Dolor',
+                'title' => 'FooBar',
                 'uri' => '/articles/index/details/id_1/',
                 'last' => true
             ],
@@ -233,7 +233,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    public function testGetBreadcrumbLastStepTitleShouldTakePrecedenceWithEmptyUri()
+    public function testGetBreadcrumbLastDbStepTitleShouldTakePrecedenceWithEmptyUri()
     {
         $this->setUpMenuItemRepositoryExpectations([
             [
@@ -257,7 +257,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
 
         $expected = [
             [
-                'title' => 'Lorem Ipsum Dolor',
+                'title' => 'FooBar',
                 'uri' => '/articles/index/details/id_1/',
                 'last' => true
             ],
