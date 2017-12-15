@@ -59,10 +59,6 @@ abstract class AbstractMinifier implements MinifierInterface
      */
     protected $systemAssetsDesignPath = 'System/';
     /**
-     * @var string
-     */
-    protected $assetGroup = '';
-    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -96,6 +92,8 @@ abstract class AbstractMinifier implements MinifierInterface
         $this->environment = $environment;
         $this->logger = $logger;
     }
+
+    abstract protected function getAssetGroup(): string;
 
     /**
      * @param string $type
@@ -137,14 +135,14 @@ abstract class AbstractMinifier implements MinifierInterface
     public function getURI($layout = 'layout')
     {
         $debug = $this->environment === 'dev';
-        $filenameHash = $this->generateFilenameHash($this->assetGroup, $layout);
+        $filenameHash = $this->generateFilenameHash($this->getAssetGroup(), $layout);
         $cacheId = 'assets-last-generated-' . $filenameHash;
 
         if (false === ($lastGenerated = $this->systemCache->fetch($cacheId))) {
             $lastGenerated = time(); // Assets are not cached -> set the current time as the new timestamp
         }
 
-        $path = $this->buildAssetPath($debug, $this->assetGroup, $filenameHash, $lastGenerated);
+        $path = $this->buildAssetPath($debug, $this->getAssetGroup(), $filenameHash, $lastGenerated);
 
         // If the requested minified StyleSheet and/or the JavaScript file doesn't exist, generate it
         if (is_file($this->appPath->getUploadsDir() . $path) === false || $debug === true) {
