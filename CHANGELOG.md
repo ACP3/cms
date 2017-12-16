@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2017-12-xx
+### Added
+- Added a template file for the logout page
+
+### Changed
+- Correctly vary the HTTP cache by the X-User-Context-Hash and not by Cookie
+
+### Fixed
+- Fixed the custom meta title when being used via the SEO module
+
 ## [4.19.0] - 2017-12-13
 ### Changed
 - Changed the defaults of the pagination:
