@@ -100,4 +100,17 @@ class TitleTest extends \PHPUnit_Framework_TestCase
         $expected = 'FooBar | Lorem Ipsum';
         $this->assertEquals($expected, $this->title->getSiteAndPageTitle());
     }
+
+    public function testGetSiteAndPageTitleMetaTitleTakesPrecedenceOverPageTitle()
+    {
+        $this->setUpStepsExpectations(0);
+
+        $this->title
+            ->setSiteTitle('Lorem Ipsum')
+            ->setMetaTitle('Baz')
+            ->setPageTitle('FooBar');
+
+        $expected = 'Baz | Lorem Ipsum';
+        $this->assertEquals($expected, $this->title->getSiteAndPageTitle());
+    }
 }
