@@ -46,12 +46,15 @@
         <item key="frontend_account_settings">Einstellungen bearbeiten</item>
         <item key="frontend_index_forgot_pwd">Passwort vergessen?</item>
         <item key="frontend_index_login">Login</item>
+        <item key="frontend_index_logout">Abmelden</item>
         <item key="frontend_index_register">Registrieren</item>
         <item key="frontend_index_view_profile">Benutzerprofil ansehen</item>
         <item key="gender">Geschlecht</item>
         <item key="gender_female">Frau</item>
         <item key="gender_male">Mann</item>
         <item key="gender_not_specified">Keine Angabe</item>
+        <item key="go_to_homepage">Zur Startseite</item>
+        <item key="go_to_previous_page">Zur vorherigen Seite</item>
         <item key="home">Kontrollzentrum</item>
         <item key="icq">ICQ-Nummer</item>
         <item key="invalid_birthday">Bitte geben Sie ein gültiges Geburtsdatum an.</item>
@@ -95,6 +98,7 @@
         <item key="send_email">E-Mail senden</item>
         <item key="settings">Einstellungen</item>
         <item key="skype">Skype</item>
+        <item key="successfully_logged_out">Sie haben sich erfolgreich abgemeldet.</item>
         <item key="super_user">Super User</item>
         <item key="type_in_nickname_or_email">Bitte geben Sie entweder den bei der Registrierung verwendeten Benutzernamen oder die E-Mail-Adresse ein.</item>
         <item key="type_in_pwd">Entweder ist das Passwort leer oder in der Wiederholung ist ein Tippfehler.</item>
