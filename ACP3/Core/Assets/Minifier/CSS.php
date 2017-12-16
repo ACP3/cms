@@ -8,20 +8,21 @@ namespace ACP3\Core\Assets\Minifier;
 class CSS extends AbstractMinifier
 {
     /**
-     * @var string
-     */
-    protected $assetGroup = 'css';
-    /**
      * @var array
      */
     protected $stylesheets = [];
+
+    protected function getAssetGroup(): string
+    {
+        return 'css';
+    }
 
     /**
      * @inheritdoc
      */
     protected function processLibraries($layout)
     {
-        $cacheId = $this->buildCacheId($this->assetGroup, $layout);
+        $cacheId = $this->buildCacheId($this->getAssetGroup(), $layout);
 
         if ($this->systemCache->contains($cacheId) === false) {
             $this->fetchLibraries();
@@ -40,12 +41,12 @@ class CSS extends AbstractMinifier
     protected function fetchLibraries()
     {
         foreach ($this->assets->getLibraries() as $library) {
-            if ($library['enabled'] === true && isset($library[$this->assetGroup]) === true) {
+            if ($library['enabled'] === true && isset($library[$this->getAssetGroup()]) === true) {
                 $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
                     !empty($library['module']) ? $library['module'] . '/Resources' : $this->systemAssetsModulePath,
                     !empty($library['module']) ? $library['module'] : $this->systemAssetsDesignPath,
                     static::ASSETS_PATH_CSS,
-                    $library[$this->assetGroup]
+                    $library[$this->getAssetGroup()]
                 );
             }
         }

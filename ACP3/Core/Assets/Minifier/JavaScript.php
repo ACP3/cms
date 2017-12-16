@@ -8,20 +8,21 @@ namespace ACP3\Core\Assets\Minifier;
 class JavaScript extends AbstractMinifier
 {
     /**
-     * @var string
-     */
-    protected $assetGroup = 'js';
-    /**
      * @var array
      */
     protected $javascript = [];
+
+    protected function getAssetGroup(): string
+    {
+        return 'js';
+    }
 
     /**
      * @inheritdoc
      */
     protected function processLibraries($layout)
     {
-        $cacheId = $this->buildCacheId($this->assetGroup, $layout);
+        $cacheId = $this->buildCacheId($this->getAssetGroup(), $layout);
 
         if ($this->systemCache->contains($cacheId) === false) {
             $this->fetchLibraries();
@@ -39,12 +40,12 @@ class JavaScript extends AbstractMinifier
     protected function fetchLibraries()
     {
         foreach ($this->assets->getLibraries() as $library) {
-            if ($library['enabled'] === true && isset($library[$this->assetGroup]) === true) {
+            if ($library['enabled'] === true && isset($library[$this->getAssetGroup()]) === true) {
                 $this->javascript[] = $this->fileResolver->getStaticAssetPath(
                     !empty($library['module']) ? $library['module'] . '/Resources' : $this->systemAssetsModulePath,
                     !empty($library['module']) ? $library['module'] : $this->systemAssetsDesignPath,
                     static::ASSETS_PATH_JS,
-                    $library[$this->assetGroup]
+                    $library[$this->getAssetGroup()]
                 );
             }
         }

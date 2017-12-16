@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{uri args="users/index/logout/last_`$user_sidebar.current_page`"}">
+                    <a href="{uri args="users/index/logout"}">
                         <i class="glyphicon glyphicon-off"></i>
                         {lang t="users|logout"}
                     </a>

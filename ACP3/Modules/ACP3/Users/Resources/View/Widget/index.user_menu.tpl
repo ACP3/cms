@@ -35,7 +35,7 @@
                 </ul>
             </div>
         {/if}
-        <a href="{uri args="users/index/logout/last_`$user_sidebar.current_page`"}" class="list-group-item">
+        <a href="{uri args="users/index/logout"}" class="list-group-item">
             <i class="glyphicon glyphicon-off"></i>
             {lang t="users|logout"}
         </a>
