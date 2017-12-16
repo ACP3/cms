@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 2017-12-xx
+## [4.19.1] - 2017-12-16
 ### Added
 - Added a template file for the logout page
 
@@ -487,7 +487,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.19.0...HEAD
+[Unreleased]: https://github.com/ACP3/cms/compare/v4.19.1...HEAD
+[4.19.1]: https://github.com/ACP3/cms/compare/v4.19.0...v4.19.1
 [4.19.0]: https://github.com/ACP3/cms/compare/v4.18.0...v4.19.0
 [4.18.0]: https://github.com/ACP3/cms/compare/v4.17.0...v4.18.0
 [4.17.0]: https://github.com/ACP3/cms/compare/v4.16.0...v4.17.0
