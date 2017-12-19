@@ -45,7 +45,6 @@ class BootstrapCache extends HttpCache implements CacheInvalidation
             'session_name_prefix' => SessionHandlerInterface::SESSION_NAME
         ]));
         $this->addSubscriber(new PurgeListener());
-        $this->addSubscriber(new PurgeTagsListener());
         $this->addSubscriber(new RefreshListener());
         $this->addSubscriber(new StaticAssetsListener());
         if (isset($options['debug']) && $options['debug']) {

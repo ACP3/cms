@@ -5,8 +5,6 @@
  * @author Tino Goratsch
  */
 
-use Toflar\Psr6HttpCacheStore\Psr6Store;
-
 define('ACP3_ROOT_DIR', realpath(__DIR__) . '/');
 
 require ACP3_ROOT_DIR . 'vendor/autoload.php';
@@ -29,7 +27,7 @@ HTML;
     exit;
 }
 
-$cacheStore = new Psr6Store([
+$cacheStore = new \Toflar\Psr6HttpCacheStore\Psr6Store([
     'cache_directory' => $kernel->getAppPath()->getCacheDir() . 'http/'
 ]);
 
