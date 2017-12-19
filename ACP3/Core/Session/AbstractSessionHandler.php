@@ -44,8 +44,6 @@ abstract class AbstractSessionHandler implements SessionHandlerInterface
 
             session_set_save_handler($this, true);
 
-            session_register_shutdown();
-
             // Start the session and secure it
             $this->startSession();
         }
