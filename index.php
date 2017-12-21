@@ -27,9 +27,9 @@ HTML;
     exit;
 }
 
-$cacheStore = new \Symfony\Component\HttpKernel\HttpCache\Store(
-    $kernel->getAppPath()->getCacheDir() . 'http/'
-);
+$cacheStore = new \Toflar\Psr6HttpCacheStore\Psr6Store([
+    'cache_directory' => $kernel->getAppPath()->getCacheDir() . 'http/'
+]);
 
 $appCache = new \ACP3\Core\Application\BootstrapCache(
     $kernel,
