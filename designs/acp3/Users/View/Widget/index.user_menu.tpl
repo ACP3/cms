@@ -2,7 +2,7 @@
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-user-menu-collapse">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only">{lang t="system|toggle_navigation"}</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
