@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2017-12-xx
+### Changed
+- Updated the friendsofsymfony/http-cache package to version 2.1.0
+- Updated the symfony components to version 3.4.2
+- Updated moment.js to version 2.20.1
+
 ## [4.19.1] - 2017-12-16
 ### Added
 - Added a template file for the logout page
