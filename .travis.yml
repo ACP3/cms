@@ -38,12 +38,12 @@ deploy:
     on:
       tags: true
       condition: "$TRAVIS_PHP_VERSION = 7.1*"
-  - provider: script
-    script: ./build/travis/update_module_repositories.sh ${TRAVIS_TAG}
-    skip_cleanup: true
-    on:
-      tags: true
-      condition: "$TRAVIS_PHP_VERSION = 7.1*"
+#  - provider: script
+#    script: ./build/travis/update_module_repositories.sh ${TRAVIS_TAG}
+#    skip_cleanup: true
+#    on:
+#      tags: true
+#      condition: "$TRAVIS_PHP_VERSION = 7.1*"
   - provider: script
     script: ./build/travis/update_version_check.sh ${TRAVIS_TAG}
     skip_cleanup: true
