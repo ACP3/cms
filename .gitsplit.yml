@@ -7,7 +7,7 @@ project_dir: ./
 # List of splits.
 splits:
   - prefix: "ACP3/Core"
-    target: "https://${GH_TOKEN}@gitlab.com/ACP3/core.git"
+    target: "git@gitlab.com:ACP3/core.git"
 
 # List of references to split (defined as regexp)
 origins:
