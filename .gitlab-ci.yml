@@ -17,7 +17,7 @@ stages:
   - test
   - split
 
-test:
+test:php:
   stage: test
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
