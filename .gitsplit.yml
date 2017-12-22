@@ -1,0 +1,17 @@
+# Used to speed up the split over time by reusing git's objects
+cache_dir: "./.gitsplit-cache"
+
+# Path to the repository to split (default = current path)
+project_dir: ~
+
+# List of splits.
+splits:
+  - prefix: "ACP3/Core"
+    target: "https://${GH_TOKEN}@gitlab.com/ACP3/core.git"
+
+# List of references to split (defined as regexp)
+origins:
+  - ^master$
+  - ^develop$
+  - ^feature/
+  - ^v\d+\.\d+\.\d+$
