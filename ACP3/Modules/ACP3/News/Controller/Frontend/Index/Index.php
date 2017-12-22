@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENCE file at the top-level module directory for licencing
+ * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing
  * details.
  */
 
