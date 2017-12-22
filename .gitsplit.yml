@@ -1,5 +1,5 @@
 # Used to speed up the split over time by reusing git's objects
-cache_dir: "./.gitsplit-cache"
+cache_dir: ".gitsplit-cache"
 
 # Path to the repository to split (default = current path)
 project_dir: ./
