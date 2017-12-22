@@ -11,7 +11,7 @@ cache:
   - vendor
 
 before_script:
-  - ./build/gitlab/before_script.sh
+  - bash ./build/gitlab/before_script.sh > /dev/null
 
 stages:
   - test
@@ -20,7 +20,7 @@ stages:
 test:
   stage: test
   before_script:
-    - ./build/gitlab/before_script.sh
+    - bash ./build/gitlab/before_script.sh > /dev/null
     - curl --silent --show-error https://getcomposer.org/installer | php
     - php composer.phar global require hirak/prestissimo
   script:
