@@ -1,6 +1,31 @@
-# .gitlabci.yml with Docker runners
+image: php:7.1
+
+variables:
+  COMPOSER_HOME: .composerhome
+  COMPOSER_ALLOW_SUPERUSER: 1
+
+cache:
+  key: $CI_COMMIT_REF_NAME
+  paths:
+  - ${COMPOSER_HOME}
+  - vendor
+
+before_script:
+  - ./build/gitlab/before_script.sh
+
 stages:
+  - test
   - split
+
+test:
+  stage: test
+  before_script:
+    - ./build/gitlab/before_script.sh
+    - curl --silent --show-error https://getcomposer.org/installer | php
+    - php composer.phar global require hirak/prestissimo
+  script:
+    - php composer.phar install -n -o
+    - php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml
 
 split:
   image: jderusse/gitsplit
@@ -11,12 +36,6 @@ split:
       - .gitsplit-cache
   variables:
     GIT_STRATEGY: clone
-  before_script:
-    - eval $(ssh-agent -s)
-    - mkdir -p ~/.ssh
-    - 'echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-    - ssh-add <(echo "$SSH_PRIVATE_KEY")
-    - ssh-add -l
   script:
     - git config remote.origin.fetch "+refs/*:refs/*"
     - git config remote.origin.mirror true
