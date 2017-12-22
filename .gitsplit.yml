@@ -8,6 +8,8 @@ project_dir: ./
 splits:
   - prefix: "ACP3/Core"
     target: "git@gitlab.com:ACP3/core.git"
+  - prefix: "ACP3/Modules/ACP3/Acp"
+    target: "git@gitlab.com:ACP3/module-acp.git"
 
 # List of references to split (defined as regexp)
 origins:
