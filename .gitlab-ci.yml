@@ -37,6 +37,12 @@ split:
       - .gitsplit-cache
   variables:
     GIT_STRATEGY: clone
+  before_script:
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - 'echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - ssh-add -l
   script:
     - git config remote.origin.fetch "+refs/*:refs/*"
     - git config remote.origin.mirror true
