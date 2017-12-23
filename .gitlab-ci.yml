@@ -21,6 +21,7 @@ test:php:
   stage: test
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
+    - bash ./build/gitlab/before_script_php.sh > /dev/null
     - curl --silent --show-error https://getcomposer.org/installer | php
     - php composer.phar global require hirak/prestissimo
   script:
