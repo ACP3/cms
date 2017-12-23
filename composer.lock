@@ -3420,7 +3420,7 @@
             "version": "4.5.5",
             "source": {
                 "type": "git",
-                "url": "https://www.devkit.net/thepixeldeveloper/sitemap.git",
+                "url": "https://github.com/ThePixelDeveloper/Sitemap.git",
                 "reference": "65063910023c62cb4e3293c64a75acfe06189866"
             },
             "require": {
