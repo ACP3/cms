@@ -40,8 +40,8 @@ class Create extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Emoticons\Model\EmoticonsModel $emoticonsModel,
-        Emoticons\Validation\AdminFormValidation $adminFormValidation)
-    {
+        Emoticons\Validation\AdminFormValidation $adminFormValidation
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;

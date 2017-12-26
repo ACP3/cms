@@ -34,8 +34,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
-        Core\Helpers\FormToken $formTokenHelper)
-    {
+        Core\Helpers\FormToken $formTokenHelper
+    ) {
         parent::__construct($context);
 
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;

@@ -29,8 +29,8 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Emoticons\Model\Repository\DataGridRepository $dataGridRepository)
-    {
+        Emoticons\Model\Repository\DataGridRepository $dataGridRepository
+    ) {
         parent::__construct($context);
 
         $this->dataGridRepository = $dataGridRepository;

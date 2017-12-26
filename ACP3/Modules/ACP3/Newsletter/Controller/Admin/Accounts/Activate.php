@@ -28,8 +28,8 @@ class Activate extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Newsletter\Helper\AccountStatus $accountStatusHelper)
-    {
+        Newsletter\Helper\AccountStatus $accountStatusHelper
+    ) {
         parent::__construct($context);
 
         $this->accountStatusHelper = $accountStatusHelper;

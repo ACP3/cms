@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
-
 use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Assets\FileResolver;
 use ACP3\Core\Environment\ApplicationPath;

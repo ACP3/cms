@@ -8,7 +8,8 @@ namespace ACP3\Core\Model;
 
 use ACP3\Core\Model\Repository\AbstractRepository;
 
-trait DuplicationAwareTrait {
+trait DuplicationAwareTrait
+{
     /**
      * @param int $entryId
      * @return bool|int

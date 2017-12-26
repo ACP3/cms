@@ -95,8 +95,8 @@ class Navbar extends AbstractFunction
      */
     protected function getMenuByKey(
         $menu,
-        Menus\Helpers\MenuConfiguration $menuConfig)
-    {
+        Menus\Helpers\MenuConfiguration $menuConfig
+    ) {
         $cacheKey = $this->buildMenuCacheKey($menu, $menuConfig);
         if (isset($this->menus[$cacheKey])) {
             return $this->menus[$cacheKey];

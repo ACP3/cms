@@ -76,10 +76,12 @@ class ServiceContainerBuilder extends ContainerBuilder
         $this->setParameter('core.environment', $this->applicationMode);
 
         $this
-            ->addCompilerPass(new RegisterListenersPass(
+            ->addCompilerPass(
+                new RegisterListenersPass(
                     'core.event_dispatcher',
                     'core.eventListener',
-                    'core.eventSubscriber')
+                    'core.eventSubscriber'
+            )
             )
             ->addCompilerPass(new RegisterAuthenticationsCompilerPass())
             ->addCompilerPass(new RegisterSmartyPluginsPass())

@@ -67,8 +67,8 @@ class SchemaUpdateModel
         MigrationRegistrar $migrationRegistrar,
         Modules\Vendor $vendor,
         Modules $modules,
-        Modules\SchemaUpdater $schemaUpdater)
-    {
+        Modules\SchemaUpdater $schemaUpdater
+    ) {
         $this->applicationPath = $applicationPath;
         $this->xml = $xml;
         $this->vendor = $vendor;

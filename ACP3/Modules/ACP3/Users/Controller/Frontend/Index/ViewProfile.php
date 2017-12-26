@@ -31,8 +31,8 @@ class ViewProfile extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Users\Model\Repository\UserRepository $userRepository)
-    {
+        Users\Model\Repository\UserRepository $userRepository
+    ) {
         parent::__construct($context);
 
         $this->userRepository = $userRepository;
@@ -50,8 +50,11 @@ class ViewProfile extends Core\Controller\AbstractFrontendAction
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
             $user = $this->user->getUserInfo($id);
-            $user['gender'] = str_replace([1, 2, 3],
-                ['', $this->translator->t('users', 'female'), $this->translator->t('users', 'male')], $user['gender']);
+            $user['gender'] = str_replace(
+                [1, 2, 3],
+                ['', $this->translator->t('users', 'female'), $this->translator->t('users', 'male')],
+                $user['gender']
+            );
 
             return [
                 'user' => $user

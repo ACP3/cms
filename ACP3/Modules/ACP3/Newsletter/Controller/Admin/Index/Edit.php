@@ -47,8 +47,8 @@ class Edit extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Model\NewsletterModel $newsletterModel,
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
-        Newsletter\Helper\SendNewsletter $newsletterHelpers)
-    {
+        Newsletter\Helper\SendNewsletter $newsletterHelpers
+    ) {
         parent::__construct($context, $newsletterHelpers);
 
         $this->formsHelper = $formsHelper;

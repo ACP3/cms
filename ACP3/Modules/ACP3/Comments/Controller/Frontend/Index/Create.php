@@ -37,8 +37,8 @@ class Create extends AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\FormValidation $formValidation,
-        Core\Helpers\FormToken $formTokenHelper)
-    {
+        Core\Helpers\FormToken $formTokenHelper
+    ) {
         parent::__construct($context);
 
         $this->formValidation = $formValidation;

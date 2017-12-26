@@ -44,8 +44,8 @@ class Files extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         FilesModule\Model\Repository\FilesRepository $filesRepository,
-        Categories\Model\Repository\CategoryRepository $categoryRepository)
-    {
+        Categories\Model\Repository\CategoryRepository $categoryRepository
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

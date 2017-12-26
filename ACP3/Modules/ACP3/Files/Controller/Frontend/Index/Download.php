@@ -46,8 +46,8 @@ class Download extends Core\Controller\AbstractFrontendAction
         Core\Date $date,
         Core\Helpers\StringFormatter $stringFormatter,
         Files\Model\Repository\FilesRepository $filesRepository,
-        Files\Cache $filesCache)
-    {
+        Files\Cache $filesCache
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

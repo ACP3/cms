@@ -38,21 +38,24 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'ip' => $this->ipAddress
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'name',
                     'message' => $this->translator->t('system', 'name_to_short')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'message',
                     'message' => $this->translator->t('system', 'message_to_short')
-                ]);
+                ]
+            );
 
         $this->validator->dispatchValidationEvent('captcha.validation.validate_captcha', $formData);
 

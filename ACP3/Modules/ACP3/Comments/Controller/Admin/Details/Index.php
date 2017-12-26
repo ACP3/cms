@@ -35,8 +35,8 @@ class Index extends Core\Controller\AbstractFrontendAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Comments\Model\Repository\CommentRepository $commentRepository,
-        Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository)
-    {
+        Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
+    ) {
         parent::__construct($context);
 
         $this->commentRepository = $commentRepository;

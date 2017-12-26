@@ -43,8 +43,8 @@ class Result extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Polls\Model\Repository\PollRepository $pollRepository,
-        Polls\Model\Repository\AnswerRepository $answerRepository)
-    {
+        Polls\Model\Repository\AnswerRepository $answerRepository
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

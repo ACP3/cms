@@ -42,8 +42,8 @@ class RenderRecaptchaOnLayoutContentBeforeListener
         Translator $translator,
         SettingsInterface $settings,
         View $view,
-        UserModel $userModel)
-    {
+        UserModel $userModel
+    ) {
         $this->settings = $settings;
         $this->view = $view;
         $this->userModel = $userModel;

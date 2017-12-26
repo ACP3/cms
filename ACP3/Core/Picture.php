@@ -265,7 +265,7 @@ class Picture
      */
     private function getMimeType($pictureType)
     {
-        switch($pictureType) {
+        switch ($pictureType) {
             case IMAGETYPE_GIF:
                 return 'image/gif';
             case IMAGETYPE_JPEG:

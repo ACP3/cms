@@ -32,8 +32,8 @@ class Latest extends Core\Controller\AbstractWidgetAction
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
-        News\Model\Repository\NewsRepository $newsRepository)
-    {
+        News\Model\Repository\NewsRepository $newsRepository
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

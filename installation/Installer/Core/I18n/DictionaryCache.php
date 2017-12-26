@@ -66,18 +66,18 @@ class DictionaryCache
 
         $languageFiles = glob($this->appPath->getInstallerModulesDir() . '*/Resources/i18n/' . $language . '.xml');
         foreach ($languageFiles as $file) {
-                if (isset($data['info']['direction']) === false) {
-                    $locale = Locale::create($this->getLanguagePackIsoCode($file));
-                    $data['info']['direction'] = $locale->script()->direction();
-                }
+            if (isset($data['info']['direction']) === false) {
+                $locale = Locale::create($this->getLanguagePackIsoCode($file));
+                $data['info']['direction'] = $locale->script()->direction();
+            }
 
-                $module = $this->getModuleFromPath($file);
+            $module = $this->getModuleFromPath($file);
 
-                // Über die einzelnen Sprachstrings iterieren
-                $xml = simplexml_load_file($file);
-                foreach ($xml->keys->item as $item) {
-                    $data['keys'][strtolower($module . (string)$item['key'])] = trim((string)$item);
-                }
+            // Über die einzelnen Sprachstrings iterieren
+            $xml = simplexml_load_file($file);
+            foreach ($xml->keys->item as $item) {
+                $data['keys'][strtolower($module . (string)$item['key'])] = trim((string)$item);
+            }
         }
 
         return $data;

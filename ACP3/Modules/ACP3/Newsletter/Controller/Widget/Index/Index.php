@@ -25,8 +25,8 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Helpers\FormToken $formTokenHelper)
-    {
+        Core\Helpers\FormToken $formTokenHelper
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;

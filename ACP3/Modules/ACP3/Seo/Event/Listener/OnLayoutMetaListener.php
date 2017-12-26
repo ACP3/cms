@@ -32,8 +32,8 @@ class OnLayoutMetaListener
      */
     public function __construct(
         View $view,
-        MetaStatements $metaStatements)
-    {
+        MetaStatements $metaStatements
+    ) {
         $this->view = $view;
         $this->metaStatements = $metaStatements;
     }

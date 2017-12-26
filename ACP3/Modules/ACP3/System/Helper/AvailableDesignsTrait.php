@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\System\Helper;
 
-
 use ACP3\Core\XML;
 
 trait AvailableDesignsTrait

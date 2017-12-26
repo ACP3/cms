@@ -29,8 +29,8 @@ class Image extends AbstractAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Gallery\Model\Repository\PictureRepository $pictureRepository)
-    {
+        Gallery\Model\Repository\PictureRepository $pictureRepository
+    ) {
         parent::__construct($context);
 
         $this->pictureRepository = $pictureRepository;

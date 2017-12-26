@@ -34,8 +34,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Emoticons\Validation\AdminSettingsFormValidation $adminSettingsFormValidation)
-    {
+        Emoticons\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;

@@ -33,8 +33,8 @@ class RulesModel extends AbstractModel
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
         RuleRepository $repository,
-        Cache $cache)
-    {
+        Cache $cache
+    ) {
         parent::__construct($eventDispatcher, $dataProcessor, $repository);
 
         $this->cache = $cache;

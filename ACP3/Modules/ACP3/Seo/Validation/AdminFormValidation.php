@@ -39,7 +39,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'uri',
                     'message' => $this->translator->t('seo', 'type_in_valid_resource')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -49,7 +50,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1, 2, 3, 4]
                     ]
-                ]);
+                ]
+            );
 
         $this->validator->dispatchValidationEvent(
             'seo.validation.validate_uri_alias',

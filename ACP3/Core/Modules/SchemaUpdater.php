@@ -67,8 +67,8 @@ class SchemaUpdater extends SchemaHelper
         $moduleName,
         $schemaVersion,
         array $schemaUpdates,
-        $installedSchemaVersion)
-    {
+        $installedSchemaVersion
+    ) {
         $result = -1;
         foreach ($schemaUpdates as $schemaUpdateVersion => $queries) {
             // Do schema updates only, if the current schema version is older then the new one

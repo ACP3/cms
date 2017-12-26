@@ -49,8 +49,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation)
-    {
+        Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+    ) {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;

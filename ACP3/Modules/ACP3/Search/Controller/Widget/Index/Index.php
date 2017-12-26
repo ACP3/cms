@@ -29,8 +29,8 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Search\Helpers $searchHelpers)
-    {
+        Search\Helpers $searchHelpers
+    ) {
         parent::__construct($context);
 
         $this->searchHelpers = $searchHelpers;

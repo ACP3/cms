@@ -61,8 +61,8 @@ class Create extends AbstractFormAction
         Users\Helpers\Forms $userFormsHelpers,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AdminFormValidation $adminFormValidation,
-        Permissions\Helpers $permissionsHelpers)
-    {
+        Permissions\Helpers $permissionsHelpers
+    ) {
         parent::__construct($context, $formsHelpers);
 
         $this->formTokenHelper = $formTokenHelper;

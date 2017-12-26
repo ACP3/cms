@@ -29,8 +29,8 @@ class InsertUriAliasOnModelAfterSaveListener
      */
     public function __construct(
         ACL $acl,
-        UriAliasManager $uriAliasManager)
-    {
+        UriAliasManager $uriAliasManager
+    ) {
         $this->uriAliasManager = $uriAliasManager;
         $this->acl = $acl;
     }

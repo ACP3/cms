@@ -38,8 +38,8 @@ class OnNewsModelAfterDeleteListener
      */
     public function __construct(
         Modules $modules,
-        Cache $cache)
-    {
+        Cache $cache
+    ) {
         $this->modules = $modules;
         $this->cache = $cache;
     }

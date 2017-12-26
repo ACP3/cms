@@ -47,14 +47,16 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => ['long', 'short']
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'sidebar',
                     'message' => $this->translator->t('system', 'select_sidebar_entries')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -64,35 +66,40 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'thumbwidth',
                     'message' => $this->translator->t('gallery', 'invalid_image_width_entered')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'width',
                     'message' => $this->translator->t('gallery', 'invalid_image_width_entered')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'thumbheight',
                     'message' => $this->translator->t('gallery', 'invalid_image_height_entered')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'height',
                     'message' => $this->translator->t('gallery', 'invalid_image_height_entered')
-                ]);
+                ]
+            );
 
         if ($this->modules->isActive('comments') === true) {
             $this->validator
@@ -105,7 +112,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                         'extra' => [
                             'haystack' => [0, 1]
                         ]
-                    ]);
+                    ]
+                );
         }
 
         $this->validator->validate();

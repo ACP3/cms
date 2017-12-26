@@ -42,8 +42,8 @@ class Details extends AbstractAction
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         News\Model\Repository\NewsRepository $newsRepository,
-        News\Cache $newsCache)
-    {
+        News\Cache $newsCache
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

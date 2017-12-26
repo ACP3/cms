@@ -158,7 +158,6 @@ abstract class AbstractInstallerAction implements ActionInterface
                     'name' => $locale->endonym()
                 ];
             } catch (\DomainException $e) {
-
             }
         }
         return $languages;
@@ -178,9 +177,12 @@ abstract class AbstractInstallerAction implements ActionInterface
     protected function addCustomTemplateVarsBeforeOutput()
     {
         $this->view->assign('PAGE_TITLE', $this->translator->t('install', 'acp3_installation'));
-        $this->view->assign('TITLE', $this->translator->t(
+        $this->view->assign(
+            'TITLE',
+            $this->translator->t(
             $this->request->getModule(),
-            $this->request->getController() . '_' . $this->request->getAction())
+            $this->request->getController() . '_' . $this->request->getAction()
+        )
         );
         $this->view->assign('LAYOUT', $this->request->isXmlHttpRequest() ? 'layout.ajax.tpl' : $this->getLayout());
     }

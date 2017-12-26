@@ -56,21 +56,24 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'ip' => $this->ipAddress
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'name',
                     'message' => $this->translator->t('system', 'name_to_short')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'message',
                     'message' => $this->translator->t('system', 'message_to_short')
-                ]);
+                ]
+            );
 
         if (!empty($formData['mail'])) {
             $this->validator
@@ -80,7 +83,8 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                         'data' => $formData,
                         'field' => 'mail',
                         'message' => $this->translator->t('system', 'wrong_email_format')
-                    ]);
+                    ]
+                );
         }
 
         if ($this->newsletterAccess === true && isset($formData['subscribe_newsletter'])) {
@@ -90,9 +94,12 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'mail',
-                        'message' => $this->translator->t('guestbook',
-                            'type_in_email_address_to_subscribe_to_newsletter')
-                    ])
+                        'message' => $this->translator->t(
+                            'guestbook',
+                            'type_in_email_address_to_subscribe_to_newsletter'
+                        )
+                    ]
+                )
                 ->addConstraint(
                     Newsletter\Validation\ValidationRules\AccountExistsValidationRule::class,
                     [

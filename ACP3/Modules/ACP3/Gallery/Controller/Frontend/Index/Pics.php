@@ -43,8 +43,8 @@ class Pics extends AbstractAction
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Gallery\Model\Repository\GalleryRepository $galleryRepository,
-        Gallery\Cache $galleryCache)
-    {
+        Gallery\Cache $galleryCache
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

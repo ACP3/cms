@@ -165,7 +165,9 @@ abstract class AbstractModel
 
         $this->dispatchEvent('core.model.before_delete', $entryId, false);
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete', $entryId, false
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete',
+            $entryId,
+            false
         );
 
         $affectedRows = 0;
@@ -175,7 +177,9 @@ abstract class AbstractModel
 
         $this->dispatchEvent('core.model.before_delete', $entryId, false);
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete', $entryId, false
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete',
+            $entryId,
+            false
         );
 
         return $affectedRows;

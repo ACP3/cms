@@ -49,8 +49,8 @@ class Details extends Core\Controller\AbstractFrontendAction
         Core\Date $date,
         Core\Helpers\PageBreaks $pageBreaksHelper,
         Articles\Model\Repository\ArticleRepository $articleRepository,
-        Articles\Cache $articlesCache)
-    {
+        Articles\Cache $articlesCache
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

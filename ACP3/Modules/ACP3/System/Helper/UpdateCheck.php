@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\System\Helper;
 
-
 use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Date;
 use ACP3\Core\Settings\SettingsInterface;

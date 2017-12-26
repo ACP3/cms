@@ -46,8 +46,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
-        Newsletter\Validation\AdminSettingsFormValidation $adminSettingsFormValidation)
-    {
+        Newsletter\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+    ) {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;

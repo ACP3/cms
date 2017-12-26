@@ -64,7 +64,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
 
         if ($this->modules->isActive('comments') === true) {
-            $this->view->assign('comments',
+            $this->view->assign(
+                'comments',
                 $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments'])
             );
         }

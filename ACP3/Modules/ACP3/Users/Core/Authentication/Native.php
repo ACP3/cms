@@ -48,8 +48,8 @@ class Native implements AuthenticationInterface
         RequestInterface $request,
         SessionHandlerInterface $sessionHandler,
         AuthenticationModel $authenticationModel,
-        UserRepository $userRepository)
-    {
+        UserRepository $userRepository
+    ) {
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;
         $this->authenticationModel = $authenticationModel;

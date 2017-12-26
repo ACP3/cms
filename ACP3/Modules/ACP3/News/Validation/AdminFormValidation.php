@@ -41,42 +41,48 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\DateValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
                     'message' => $this->translator->t('system', 'select_date')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',
                     'message' => $this->translator->t('news', 'title_to_short')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'text',
                     'message' => $this->translator->t('news', 'text_to_short')
-                ])
+                ]
+            )
             ->addConstraint(
                 Categories\Validation\ValidationRules\CategoryExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['cat', 'cat_create'],
                     'message' => $this->translator->t('news', 'select_category')
-                ])
+                ]
+            )
             ->addConstraint(
                 ExternalLinkValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['link_title', 'uri', 'target'],
                     'message' => $this->translator->t('news', 'complete_hyperlink_statements')
-                ]);
+                ]
+            );
 
         $this->validator->dispatchValidationEvent(
             'seo.validation.validate_uri_alias',

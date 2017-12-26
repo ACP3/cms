@@ -29,21 +29,24 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'data' => $formData,
                     'field' => 'width',
                     'message' => $this->translator->t('categories', 'invalid_image_width_entered')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'height',
                     'message' => $this->translator->t('categories', 'invalid_image_height_entered')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'filesize',
                     'message' => $this->translator->t('categories', 'invalid_image_filesize_entered')
-                ]);
+                ]
+            );
 
         $this->validator->validate();
     }

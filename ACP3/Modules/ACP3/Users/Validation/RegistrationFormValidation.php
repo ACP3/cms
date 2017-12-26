@@ -24,28 +24,32 @@ class RegistrationFormValidation extends AbstractUserFormValidation
                     'data' => $formData,
                     'field' => 'nickname',
                     'message' => $this->translator->t('system', 'name_to_short')
-                ])
+                ]
+            )
             ->addConstraint(
                 AccountNotExistsByNameValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'nickname',
                     'message' => $this->translator->t('users', 'user_name_already_exists')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\EmailValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('system', 'wrong_email_format')
-                ])
+                ]
+            )
             ->addConstraint(
                 AccountNotExistsByEmailValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('users', 'user_email_already_exists')
-                ]);
+                ]
+            );
 
         $this->validatePassword($formData, 'pwd', 'pwd_repeat');
 

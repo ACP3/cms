@@ -23,21 +23,24 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'name',
                     'message' => $this->translator->t('system', 'name_to_short')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\EmailValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mail',
                     'message' => $this->translator->t('system', 'wrong_email_format')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'message',
                     'message' => $this->translator->t('system', 'message_to_short')
-                ]);
+                ]
+            );
 
         $this->validator->dispatchValidationEvent('captcha.validation.validate_captcha', $formData);
 

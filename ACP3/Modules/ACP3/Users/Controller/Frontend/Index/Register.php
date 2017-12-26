@@ -89,8 +89,10 @@ class Register extends Core\Controller\AbstractFrontendAction
         if ($this->user->isAuthenticated() === true) {
             return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         } elseif ($settings['enable_registration'] == 0) {
-            $this->setContent($this->get('core.helpers.alerts')->errorBox(
-                $this->translator->t('users', 'user_registration_disabled'))
+            $this->setContent(
+                $this->get('core.helpers.alerts')->errorBox(
+                $this->translator->t('users', 'user_registration_disabled')
+            )
             );
         }
 
@@ -132,7 +134,8 @@ class Register extends Core\Controller\AbstractFrontendAction
                 $bool2 = $this->permissionsHelpers->updateUserRoles([2], $lastId);
 
                 $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
-                    $this->translator->t('users',
+                    $this->translator->t(
+                        'users',
                         $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'
                     ),
                     $this->appPath->getWebRoot()
@@ -157,7 +160,8 @@ class Register extends Core\Controller\AbstractFrontendAction
             [
                 '{title}' => $systemSettings['site_title'],
                 '{host}' => $this->request->getHost(),
-            ]);
+            ]
+        );
         $body = $this->translator->t(
             'users',
             'register_mail_message',

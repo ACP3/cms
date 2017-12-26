@@ -37,8 +37,8 @@ class Index extends Core\Controller\AbstractWidgetAction
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
-        Gallery\Model\Repository\GalleryRepository $galleryModel)
-    {
+        Gallery\Model\Repository\GalleryRepository $galleryModel
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

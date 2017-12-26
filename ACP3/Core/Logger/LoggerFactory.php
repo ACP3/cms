@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Logger;
 
-
 use ACP3\Core\Environment\ApplicationPath;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;

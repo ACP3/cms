@@ -40,8 +40,8 @@ class Send extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
         Newsletter\Model\Repository\AccountRepository $accountRepository,
-        Newsletter\Helper\SendNewsletter $newsletterHelpers)
-    {
+        Newsletter\Helper\SendNewsletter $newsletterHelpers
+    ) {
         parent::__construct($context);
 
         $this->newsletterRepository = $newsletterRepository;

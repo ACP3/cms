@@ -41,8 +41,8 @@ class Index extends Core\Controller\AbstractWidgetAction
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
         Articles\Model\Repository\ArticleRepository $articleRepository,
-        Articles\Cache $articlesCache)
-    {
+        Articles\Cache $articlesCache
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

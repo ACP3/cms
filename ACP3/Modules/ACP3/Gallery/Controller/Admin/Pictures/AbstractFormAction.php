@@ -55,5 +55,4 @@ class AbstractFormAction extends AbstractFrontendAction
 
         return $settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments');
     }
-
 }

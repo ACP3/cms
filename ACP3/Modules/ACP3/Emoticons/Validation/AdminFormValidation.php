@@ -71,14 +71,16 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'code',
                     'message' => $this->translator->t('emoticons', 'type_in_code')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'description',
                     'message' => $this->translator->t('emoticons', 'type_in_description')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\PictureValidationRule::class,
                 [
@@ -91,7 +93,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                         'filesize' => $this->settings['filesize'],
                         'required' => $this->fileRequired
                     ]
-                ]);
+                ]
+            );
 
         $this->validator->validate();
     }

@@ -61,14 +61,16 @@ class OnMenusValidationValidateManageMenuItem
                         'data' => $formData,
                         'field' => 'block_id',
                         'message' => $this->translator->t('menus', 'select_menu_bar')
-                    ])
+                    ]
+                )
                 ->addConstraint(
                     ParentIdValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'parent_id',
                         'message' => $this->translator->t('menus', 'select_superior_page')
-                    ])
+                    ]
+                )
                 ->addConstraint(
                     InArrayValidationRule::class,
                     [
@@ -78,14 +80,16 @@ class OnMenusValidationValidateManageMenuItem
                         'extra' => [
                             'haystack' => [0, 1]
                         ]
-                    ])
+                    ]
+                )
                 ->addConstraint(
                     AllowedMenuValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => ['parent_id', 'block_id'],
                         'message' => $this->translator->t('menus', 'superior_page_not_allowed')
-                    ]);
+                    ]
+                );
         }
     }
 }

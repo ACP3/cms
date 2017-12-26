@@ -153,7 +153,8 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
         );
         $body = $this->translator->t(
             'users',
-            'forgot_pwd_mail_message', [
+            'forgot_pwd_mail_message',
+            [
                 '{name}' => $user['nickname'],
                 '{mail}' => $user['mail'],
                 '{password}' => $newPassword,

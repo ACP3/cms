@@ -31,8 +31,8 @@ class Details extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository)
-    {
+        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
+    ) {
         parent::__construct($context);
 
         $this->newsletterRepository = $newsletterRepository;

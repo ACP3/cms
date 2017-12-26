@@ -34,8 +34,8 @@ class Aliases
      */
     public function __construct(
         Core\Modules $modules,
-        Seo\Cache $seoCache)
-    {
+        Seo\Cache $seoCache
+    ) {
         $this->seoCache = $seoCache;
         $this->isActive = $modules->isActive(Seo\Installer\Schema::MODULE_NAME);
     }

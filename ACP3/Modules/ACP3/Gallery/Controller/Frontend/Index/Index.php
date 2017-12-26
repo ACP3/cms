@@ -43,8 +43,8 @@ class Index extends AbstractAction
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Core\Pagination $pagination,
-        Gallery\Model\Repository\GalleryRepository $galleryRepository)
-    {
+        Gallery\Model\Repository\GalleryRepository $galleryRepository
+    ) {
         parent::__construct($context);
 
         $this->date = $date;

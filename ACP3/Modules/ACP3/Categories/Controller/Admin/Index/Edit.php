@@ -38,8 +38,8 @@ class Edit extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Categories\Model\CategoriesModel $categoriesModel,
         Categories\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\FormToken $formTokenHelper)
-    {
+        Core\Helpers\FormToken $formTokenHelper
+    ) {
         parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;

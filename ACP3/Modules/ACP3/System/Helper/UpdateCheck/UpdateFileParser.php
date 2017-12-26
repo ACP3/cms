@@ -6,7 +6,6 @@
 
 namespace ACP3\Modules\ACP3\System\Helper\UpdateCheck;
 
-
 class UpdateFileParser
 {
     /**

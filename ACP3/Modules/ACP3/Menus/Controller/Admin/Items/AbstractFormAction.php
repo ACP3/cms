@@ -59,8 +59,10 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     protected function fetchMenuItemModeForSave(array $formData)
     {
-        return ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(Menus\Helpers\MenuItemsList::ARTICLES_URL_KEY_REGEX,
-            $formData['uri']) ? '4' : $formData['mode'];
+        return ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(
+            Menus\Helpers\MenuItemsList::ARTICLES_URL_KEY_REGEX,
+            $formData['uri']
+        ) ? '4' : $formData['mode'];
     }
 
     /**
@@ -70,8 +72,10 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     protected function fetchMenuItemUriForSave(array $formData)
     {
-        return $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? sprintf(Articles\Helpers::URL_KEY_PATTERN,
-            $formData['articles']) : $formData['uri']);
+        return $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? sprintf(
+            Articles\Helpers::URL_KEY_PATTERN,
+            $formData['articles']
+        ) : $formData['uri']);
     }
 
     /**

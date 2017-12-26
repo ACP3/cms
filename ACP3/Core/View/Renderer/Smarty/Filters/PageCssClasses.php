@@ -28,8 +28,8 @@ class PageCssClasses extends AbstractFilter
      */
     public function __construct(
         Core\Assets\PageCssClasses $pageCssClasses,
-        Core\Http\RequestInterface $request)
-    {
+        Core\Http\RequestInterface $request
+    ) {
         $this->pageCssClasses = $pageCssClasses;
         $this->request = $request;
     }

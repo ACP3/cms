@@ -51,7 +51,8 @@ class Delete extends Core\Controller\AbstractFrontendAction
     public function execute($action = '')
     {
         return $this->actionHelper->handleDeleteAction(
-            $action, function (array $items) {
+            $action,
+            function (array $items) {
                 $result = $this->seoModel->delete($items);
 
                 $this->seoCache->saveCache();

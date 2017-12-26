@@ -6,7 +6,6 @@
 
 namespace ACP3\Installer\Modules\Install\Helpers;
 
-
 use ACP3\Installer\Core\I18n\Translator;
 
 class Navigation

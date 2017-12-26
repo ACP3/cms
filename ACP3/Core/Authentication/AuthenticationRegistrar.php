@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Authentication;
 
-
 use ACP3\Core\Authentication\Exception\InvalidAuthenticationMethodException;
 
 class AuthenticationRegistrar

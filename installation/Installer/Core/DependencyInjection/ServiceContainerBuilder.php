@@ -165,8 +165,8 @@ class ServiceContainerBuilder extends ContainerBuilder
         Request $symfonyRequest,
         $applicationMode,
         $includeModules = false,
-        $migrationsOnly = false)
-    {
+        $migrationsOnly = false
+    ) {
         return new static($logger, $applicationPath, $symfonyRequest, $applicationMode, $includeModules, $migrationsOnly);
     }
 }

@@ -39,7 +39,8 @@ class AdminFormValidation extends AbstractUserFormValidation
                     'data' => $formData,
                     'field' => 'roles',
                     'message' => $this->translator->t('users', 'select_access_level')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -49,7 +50,8 @@ class AdminFormValidation extends AbstractUserFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ]);
+                ]
+            );
 
         $this->validateAccountCoreData($formData, $this->userId);
         $this->validateUserSettings($formData);

@@ -73,8 +73,8 @@ class InstallModel
         Secure $secure,
         Translator $translator,
         Install $installHelper,
-        ModuleInstaller $moduleInstaller)
-    {
+        ModuleInstaller $moduleInstaller
+    ) {
         $this->container = $container;
         $this->appPath = $appPath;
         $this->vendor = $vendor;

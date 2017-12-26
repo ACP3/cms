@@ -117,8 +117,10 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     {
         return sprintf(
             $this->translator->t('permissions', 'calculated_permission'),
-            $this->translator->t('permissions',
-                isset($rules[$moduleDir][$key]) && $rules[$moduleDir][$key]['access'] === true ? 'allow_access' : 'deny_access')
+            $this->translator->t(
+                'permissions',
+                isset($rules[$moduleDir][$key]) && $rules[$moduleDir][$key]['access'] === true ? 'allow_access' : 'deny_access'
+            )
         );
     }
 

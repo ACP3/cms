@@ -32,8 +32,8 @@ class AlreadyVotedValidationRule extends AbstractValidationRule
      */
     public function __construct(
         UserModel $userModel,
-        VoteRepository $voteRepository)
-    {
+        VoteRepository $voteRepository
+    ) {
         $this->userModel = $userModel;
         $this->voteRepository = $voteRepository;
     }

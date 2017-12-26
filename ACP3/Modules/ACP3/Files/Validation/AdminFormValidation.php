@@ -58,28 +58,32 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\DateValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
                     'message' => $this->translator->t('system', 'select_date')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',
                     'message' => $this->translator->t('files', 'type_in_title')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'text',
                     'message' => $this->translator->t('files', 'description_to_short')
-                ])
+                ]
+            )
             ->addConstraint(
                 IsExternalFileValidationRule::class,
                 [
@@ -89,14 +93,16 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'file' => $this->file
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Categories\Validation\ValidationRules\CategoryExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['cat', 'cat_create'],
                     'message' => $this->translator->t('files', 'select_category')
-                ]);
+                ]
+            );
 
         if (!isset($formData['external'])) {
             $this->validator
@@ -109,7 +115,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                         'extra' => [
                             'required' => empty($this->uriAlias)
                         ]
-                    ]);
+                    ]
+                );
         }
 
         $this->validator->dispatchValidationEvent(

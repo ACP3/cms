@@ -46,7 +46,8 @@ class DateColumnRenderer extends AbstractColumnRenderer
         }
 
         return $this->render(
-            $column, $value
+            $column,
+            $value
         );
     }
 

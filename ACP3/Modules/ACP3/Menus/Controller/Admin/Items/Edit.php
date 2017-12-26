@@ -77,7 +77,8 @@ class Edit extends AbstractFormAction
                     preg_match_all(Menus\Helpers\MenuItemsList::ARTICLES_URL_KEY_REGEX, $menuItem['uri'], $matches);
                 }
 
-                $this->view->assign('articles',
+                $this->view->assign(
+                    'articles',
                     $this->articlesHelpers->articlesList(!empty($matches[2]) ? $matches[2][0] : '')
                 );
             }

@@ -59,13 +59,17 @@ class Requirements
         $requirements[0]['required'] = self::REQUIRED_PHP_VERSION;
         $requirements[1]['name'] = $this->translator->t('install', 'pdo_extension');
         $requirements[1]['color'] = extension_loaded('pdo') && extension_loaded('pdo_mysql') ? self::COLOR_SUCCESS : self::COLOR_ERROR;
-        $requirements[1]['found'] = $this->translator->t('install',
-            $requirements[1]['color'] == self::COLOR_SUCCESS ? 'on' : 'off');
+        $requirements[1]['found'] = $this->translator->t(
+            'install',
+            $requirements[1]['color'] == self::COLOR_SUCCESS ? 'on' : 'off'
+        );
         $requirements[1]['required'] = $this->translator->t('install', 'on');
         $requirements[2]['name'] = $this->translator->t('install', 'gd_library');
         $requirements[2]['color'] = extension_loaded('gd') ? self::COLOR_SUCCESS : self::COLOR_ERROR;
-        $requirements[2]['found'] = $this->translator->t('install',
-            $requirements[2]['color'] == self::COLOR_SUCCESS ? 'on' : 'off');
+        $requirements[2]['found'] = $this->translator->t(
+            'install',
+            $requirements[2]['color'] == self::COLOR_SUCCESS ? 'on' : 'off'
+        );
         $requirements[2]['required'] = $this->translator->t('install', 'on');
 
         $stopInstall = false;
@@ -139,8 +143,10 @@ class Requirements
             $result['exists'] = $this->translator->t('install', 'not_found');
         }
         $result['class_2'] = is_writable(ACP3_ROOT_DIR . $fileOrDirectory) === true ? self::CLASS_SUCCESS : self::CLASS_ERROR;
-        $result['writable'] = $result['class_2'] === self::CLASS_SUCCESS ? $this->translator->t('install',
-            'writable') : $this->translator->t('install', 'not_writable');
+        $result['writable'] = $result['class_2'] === self::CLASS_SUCCESS ? $this->translator->t(
+            'install',
+            'writable'
+        ) : $this->translator->t('install', 'not_writable');
 
         return $result;
     }

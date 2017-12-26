@@ -48,14 +48,16 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'extra' => [
                         'haystack' => ['long', 'short']
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'sidebar',
                     'message' => $this->translator->t('system', 'select_sidebar_entries')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NumberGreaterThanValidationRule::class,
                 [
@@ -65,7 +67,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'extra' => [
                         'value' => 0
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NumberGreaterThanValidationRule::class,
                 [
@@ -75,7 +78,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -85,7 +89,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ]);
+                ]
+            );
 
         if ($this->modules->isActive('comments') === true) {
             $this->validator
@@ -98,7 +103,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'extra' => [
                             'haystack' => [0, 1]
                         ]
-                    ]);
+                    ]
+                );
         }
 
         $this->validator->validate();

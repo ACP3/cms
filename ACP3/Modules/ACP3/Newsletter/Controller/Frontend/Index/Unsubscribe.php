@@ -80,9 +80,11 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
                     ['mail' => $formData['mail']]
                 );
 
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
+                $this->setTemplate(
+                    $this->get('core.helpers.alerts')->confirmBox(
                     $this->translator->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'),
-                    $this->appPath->getWebRoot())
+                    $this->appPath->getWebRoot()
+                )
                 );
             }
         );

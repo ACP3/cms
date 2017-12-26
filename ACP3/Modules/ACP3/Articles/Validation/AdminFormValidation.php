@@ -47,14 +47,16 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\DateValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
                     'message' => $this->translator->t('system', 'select_date')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\MinLengthValidationRule::class,
                 [
@@ -64,7 +66,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'length' => 3
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\MinLengthValidationRule::class,
                 [
@@ -74,7 +77,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'length' => 3
                     ]
-                ]);
+                ]
+            );
 
         $this->validator->dispatchValidationEvent(
             'menus.validation.validate_manage_menu_item',

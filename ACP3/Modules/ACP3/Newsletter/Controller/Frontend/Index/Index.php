@@ -98,9 +98,11 @@ class Index extends Core\Controller\AbstractFrontendAction
                     $formData['last_name']
                 );
 
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
+                $this->setTemplate(
+                    $this->get('core.helpers.alerts')->confirmBox(
                     $this->translator->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'),
-                    $this->appPath->getWebRoot())
+                    $this->appPath->getWebRoot()
+                )
                 );
             }
         );

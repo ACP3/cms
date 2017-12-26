@@ -56,7 +56,8 @@ class PictureFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'required' => $this->fileRequired
                     ]
-                ]);
+                ]
+            );
 
         $this->validator->validate();
     }

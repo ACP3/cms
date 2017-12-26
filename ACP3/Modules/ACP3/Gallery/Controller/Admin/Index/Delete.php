@@ -114,8 +114,10 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
             for ($i = 0; $i < $cPictures; ++$i) {
                 $this->uriAliasManager->deleteUriAlias(
-                    sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE,
-                    $pictures[$i]['id'])
+                    sprintf(
+                        Gallery\Helpers::URL_KEY_PATTERN_PICTURE,
+                    $pictures[$i]['id']
+                    )
                 );
             }
         }

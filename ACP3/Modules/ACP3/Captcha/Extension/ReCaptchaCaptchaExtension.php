@@ -51,8 +51,8 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
         RequestInterface $request,
         SettingsInterface $settings,
         View $view,
-        UserModel $user)
-    {
+        UserModel $user
+    ) {
         $this->translator = $translator;
         $this->view = $view;
         $this->user = $user;

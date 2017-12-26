@@ -36,7 +36,8 @@ class Edit extends AbstractOperation
                 );
             } else {
                 $currentParent = $this->nestedSetRepository->fetchParentNode(
-                    $nodes[0]['left_id'], $nodes[0]['right_id']
+                    $nodes[0]['left_id'],
+                    $nodes[0]['right_id']
                 );
 
                 // Überprüfung, falls Seite kein Root-Element ist und auch keine Veränderung vorgenommen werden soll...
@@ -182,7 +183,8 @@ class Edit extends AbstractOperation
             $node['right_id'] += $diff;
 
             $parentId = $this->nestedSetRepository->fetchParentNode(
-                $node['left_id'], $node['right_id']
+                $node['left_id'],
+                $node['right_id']
             );
             if ($this->isBlockAware === true) {
                 $bool = $this->db->getConnection()->executeUpdate(

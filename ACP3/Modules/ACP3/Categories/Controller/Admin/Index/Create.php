@@ -44,8 +44,8 @@ class Create extends Core\Controller\AbstractFrontendAction
         Core\Helpers\Forms $formsHelper,
         Categories\Model\CategoriesModel $categoriesModel,
         Categories\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\FormToken $formTokenHelper)
-    {
+        Core\Helpers\FormToken $formTokenHelper
+    ) {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;

@@ -40,7 +40,8 @@ class AdminFormValidation extends AbstractFormValidation
                     'data' => $formData,
                     'field' => 'message',
                     'message' => $this->translator->t('system', 'message_to_short')
-                ]);
+                ]
+            );
 
         if ($this->settings['notify'] == 2) {
             $this->validator
@@ -53,7 +54,8 @@ class AdminFormValidation extends AbstractFormValidation
                         'extra' => [
                             'haystack' => [0, 1]
                         ]
-                    ]);
+                    ]
+                );
         }
 
         $this->validator->validate();

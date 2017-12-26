@@ -31,8 +31,8 @@ class Requirements extends AbstractAction
     public function __construct(
         Core\Controller\Context\InstallerContext $context,
         Navigation $navigation,
-        RequirementsHelper $requirementsHelpers)
-    {
+        RequirementsHelper $requirementsHelpers
+    ) {
         parent::__construct($context, $navigation);
 
         $this->requirementsHelpers = $requirementsHelpers;

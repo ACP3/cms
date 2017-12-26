@@ -90,8 +90,11 @@ class Edit extends AbstractFormAction
             return [
                 'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $file['active']),
                 'options' => $this->getOptions($file),
-                'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(),
-                    trim(strrchr($file['size'], ' '))),
+                'units' => $this->formsHelper->choicesGenerator(
+                    'units',
+                    $this->getUnits(),
+                    trim(strrchr($file['size'], ' '))
+                ),
                 'categories' => $this->categoriesHelpers->categoriesList(
                     Files\Installer\Schema::MODULE_NAME,
                     $file['category_id'],

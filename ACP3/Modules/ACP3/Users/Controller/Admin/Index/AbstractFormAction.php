@@ -28,8 +28,8 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelpers)
-    {
+        Core\Helpers\Forms $formsHelpers
+    ) {
         parent::__construct($context);
 
         $this->formsHelpers = $formsHelpers;

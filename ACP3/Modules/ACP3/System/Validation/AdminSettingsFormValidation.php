@@ -41,35 +41,40 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'homepage',
                     'message' => $this->translator->t('system', 'incorrect_homepage')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'entries',
                     'message' => $this->translator->t('system', 'select_records_per_page')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'flood',
                     'message' => $this->translator->t('system', 'type_in_flood_barrier')
-                ])
+                ]
+            )
             ->addConstraint(
                 IsWysiwygEditorValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'wysiwyg',
                     'message' => $this->translator->t('system', 'select_editor')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\LanguagePackExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'language',
                     'message' => $this->translator->t('system', 'select_language')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -79,7 +84,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -89,7 +95,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ]);
+                ]
+            );
     }
 
     protected function validateSiteSitleSettings(array $formData)
@@ -101,7 +108,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'site_title',
                     'message' => $this->translator->t('system', 'title_to_short')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -111,7 +119,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [1, 2, 3]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -121,7 +130,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ]);
+                ]
+            );
     }
 
     /**
@@ -136,21 +146,24 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'date_format_long',
                     'message' => $this->translator->t('system', 'type_in_long_date_format')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'date_format_short',
                     'message' => $this->translator->t('system', 'type_in_short_date_format')
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\TimeZoneExistsValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'date_time_zone',
                     'message' => $this->translator->t('system', 'select_time_zone')
-                ]);
+                ]
+            );
     }
 
     /**
@@ -168,14 +181,16 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'maintenance_message',
                     'message' => $this->translator->t('system', 'maintenance_message_to_short')
-                ]);
+                ]
+            );
     }
 
     /**
@@ -193,7 +208,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -203,7 +219,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [1, 2]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -213,14 +230,16 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1]
                     ]
-                ])
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'cache_lifetime',
                     'message' => $this->translator->t('system', 'type_in_cache_lifetime')
-                ]);
+                ]
+            );
     }
 
     /**
@@ -238,7 +257,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => ['mail', 'smtp']
                     ]
-                ]);
+                ]
+            );
 
         if ($formData['mailer_type'] === 'smtp') {
             $this->validator
@@ -248,14 +268,16 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                         'data' => $formData,
                         'field' => 'mailer_smtp_host',
                         'message' => $this->translator->t('system', 'type_in_mailer_smtp_host')
-                    ])
+                    ]
+                )
                 ->addConstraint(
                     Core\Validation\ValidationRules\IntegerValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'mailer_smtp_port',
                         'message' => $this->translator->t('system', 'type_in_mailer_smtp_port')
-                    ])
+                    ]
+                )
                 ->addConstraint(
                     Core\Validation\ValidationRules\InArrayValidationRule::class,
                     [
@@ -265,7 +287,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                         'extra' => [
                             'haystack' => ['none', 'ssl', 'tls']
                         ]
-                    ]);
+                    ]
+                );
 
             if ($formData['mailer_smtp_auth'] == 1) {
                 $this->validator
@@ -275,7 +298,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                             'data' => $formData,
                             'field' => 'mailer_smtp_user',
                             'message' => $this->translator->t('system', 'type_in_mailer_smtp_username')
-                        ]);
+                        ]
+                    );
             }
         }
     }
