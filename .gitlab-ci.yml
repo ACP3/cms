@@ -32,6 +32,7 @@ test:phpcs:
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
     - bash ./build/gitlab/before_script_php.sh > /dev/null
+    - docker-php-ext-disable xdebug
   script:
     - php composer.phar install -n -o
     - php composer.phar run-script lint
