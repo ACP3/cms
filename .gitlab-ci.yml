@@ -17,7 +17,7 @@ stages:
   - test
   - split
 
-test:php-unit:
+test:php71-unit: &php-unit-base
   stage: test
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
@@ -27,6 +27,11 @@ test:php-unit:
     - php composer.phar install -n -o
     - php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+
+test:php72-unit:
+  <<: *php-unit-base
+  image: php:7.2
+  coverage: ~
 
 test:phpcs:
   stage: test
