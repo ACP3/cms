@@ -9,7 +9,7 @@ which ssh-agent || (apt-get install openssh-client -y )
 eval $(ssh-agent -s)
 
 mkdir -p ~/.ssh
-[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
 ssh-add <(echo "$SSH_PRIVATE_KEY")
 ssh-add -l

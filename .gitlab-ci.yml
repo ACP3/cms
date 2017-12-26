@@ -26,7 +26,8 @@ test:php:
     - php composer.phar global require hirak/prestissimo
   script:
     - php composer.phar install -n -o
-    - php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml
+    - php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
+  coverage: '/^\s*Lines:\s*\d+.\d+\%/'
 
 split:
   image: jderusse/gitsplit
