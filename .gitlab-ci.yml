@@ -34,7 +34,7 @@ test:phpcs:
     - bash ./build/gitlab/before_script_php.sh > /dev/null
   script:
     - php composer.phar install -n -o
-    - php ./vendor/bin/phpcs --dry-run --show-progress=estimating -v
+    - php composer.phar run-script lint
 
 split:
   image: jderusse/gitsplit
