@@ -22,8 +22,7 @@ test:php-unit:
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
     - bash ./build/gitlab/before_script_php.sh > /dev/null
-    - pecl install xdebug
-    - docker-php-ext-enable xdebug
+    - bash ./build/gitlab/before_script_xdebug.sh > /dev/null
   script:
     - php composer.phar install -n -o
     - php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never

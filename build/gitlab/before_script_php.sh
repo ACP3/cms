@@ -12,4 +12,3 @@ docker-php-ext-install zip
 
 # Install composer
 curl --silent --show-error https://getcomposer.org/installer | php
-php composer.phar global require hirak/prestissimo
