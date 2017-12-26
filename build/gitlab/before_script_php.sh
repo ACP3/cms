@@ -7,11 +7,8 @@
 apt-get update -yqq
 apt-get install git zlib1g-dev unzip libicu-dev -yqq
 
-pecl install xdebug
-
 # Install required PHP extensions for the tests etc.
 docker-php-ext-install zip
-docker-php-ext-enable xdebug
 
 # Install composer
 curl --silent --show-error https://getcomposer.org/installer | php
