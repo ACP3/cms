@@ -38,6 +38,19 @@ test:phpcs:
     - php composer.phar install -n -o
     - php composer.phar run-script lint
 
+test:eslint:
+  image: node:slim
+  stage: test
+  cache:
+    key: node-$CI_COMMIT_REF_NAME
+    paths:
+    - node_modules
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+  script:
+    - npm install
+    - npm run-script eslint
+
 split:
   image: jderusse/gitsplit
   stage: split
