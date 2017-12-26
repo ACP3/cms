@@ -23,6 +23,7 @@
     "datatables.net": "^1.10.12",
     "datatables.net-bs": "^1.10.12",
     "eonasdan-bootstrap-datetimepicker": "^4.17.42",
+    "eslint": "^4.14.0",
     "gulp": "^3.9.1",
     "gulp-change": "^1.0.0",
     "gulp-less": "^3.1.0",
@@ -35,5 +36,6 @@
     "js-cookie": "^2.2.0",
     "moment": "^2.20.1",
     "yargs": "^10.0.3"
-  }
+  },
+  "co"
 }
