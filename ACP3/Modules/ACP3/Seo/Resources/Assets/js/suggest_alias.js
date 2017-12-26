@@ -52,7 +52,7 @@
                                 $(that.settings.aliasElement).val(responseData.alias);
                             }
                         } catch (err) {
-                            console.log(err.message);
+                            console.error(err.message);
                         } finally {
                             $(that.element).removeClass('disabled');
                         }

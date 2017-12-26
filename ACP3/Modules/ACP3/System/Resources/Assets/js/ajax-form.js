@@ -180,7 +180,7 @@
 
                     self.hideLoadingLayer($submitButton);
                 } catch (err) {
-                    console.log(err.message);
+                    console.error(err.message);
 
                     self.hideLoadingLayer($submitButton);
                 }

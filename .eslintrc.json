@@ -1,26 +1,46 @@
 {
-    "env": {
-        "browser": true,
-        "jquery": true,
-        "node": true
-    },
-    "extends": "eslint:recommended",
-    "rules": {
-        "indent": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
+  "env": {
+    "browser": true,
+    "jquery": true,
+    "node": true
+  },
+  "extends": "eslint:recommended",
+  "globals": {
+    "grecaptcha": true,
+    "bootbox": true,
+    "Cookies": true
+  },
+  "rules": {
+    "indent": [
+      "error",
+      4
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "local"
+      }
+    ],
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "warn",
+          "error"
         ]
-    }
+      }
+    ]
+  }
 }
