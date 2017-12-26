@@ -17,26 +17,20 @@ stages:
   - test
   - split
 
-test:php71-unit:
+test:php71-unit: &php-unit-base
   stage: test
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
     - bash ./build/gitlab/before_script_php.sh > /dev/null
-    - bash ./build/gitlab/before_script_xdebug.sh > /dev/null
   script:
     - php composer.phar install -n -o
-    - php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
+    - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
 
 test:php72-unit:
-  stage: test
+  <<: *php-unit-base
   image: php:7.2
-  before_script:
-    - bash ./build/gitlab/before_script.sh > /dev/null
-    - bash ./build/gitlab/before_script_php.sh > /dev/null
-  script:
-    - php composer.phar install -n -o
-    - php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml
+  coverage: ~
 
 test:phpcs:
   stage: test
