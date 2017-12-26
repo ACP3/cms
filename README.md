@@ -1,7 +1,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ACP3/cms/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/ACP3/cms/?branch=develop)
 [![Code Climate](https://codeclimate.com/github/ACP3/cms/badges/gpa.svg)](https://codeclimate.com/github/ACP3/cms)
-[![Coverage Status](https://coveralls.io/repos/github/ACP3/cms/badge.svg?branch=develop)](https://coveralls.io/github/ACP3/cms?branch=develop)
-[![Build Status](https://travis-ci.org/ACP3/cms.svg)](https://travis-ci.org/ACP3/cms)
+[![coverage report](https://gitlab.com/ACP3/cms/badges/develop/coverage.svg)](https://gitlab.com/ACP3/cms/commits/develop)
+[![pipeline status](https://gitlab.com/ACP3/cms/badges/develop/pipeline.svg)](https://gitlab.com/ACP3/cms/commits/develop)
 [![Dependency Status](https://gemnasium.com/badges/github.com/ACP3/cms.svg)](https://gemnasium.com/github.com/ACP3/cms)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/481/badge)](https://bestpractices.coreinfrastructure.org/projects/481)
 
