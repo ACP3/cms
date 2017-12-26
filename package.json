@@ -4,7 +4,10 @@
   "description": "The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP and MySQL.",
   "main": "",
   "directories": {},
-  "scripts": {},
+  "scripts": {
+    "eslint": "node_modules/.bin/eslint -c .eslintrc.json ./",
+    "eslint-fix": "node_modules/.bin/eslint -c .eslintrc.json ./ --fix"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ACP3/cms.git"
@@ -36,6 +39,5 @@
     "js-cookie": "^2.2.0",
     "moment": "^2.20.1",
     "yargs": "^10.0.3"
-  },
-  "co"
+  }
 }
