@@ -6,9 +6,9 @@
   },
   "extends": "eslint:recommended",
   "globals": {
-    "grecaptcha": true,
-    "bootbox": true,
-    "Cookies": true
+    "grecaptcha": false,
+    "bootbox": false,
+    "Cookies": false
   },
   "rules": {
     "indent": [

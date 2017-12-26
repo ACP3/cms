@@ -3,7 +3,8 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-var onloadCallback = function() {
+/* global onloadCallback:true */
+onloadCallback = function() {
     jQuery('.recaptcha-placeholder').each(function() {
         this.innerHtml = '';
 
