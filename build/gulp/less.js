@@ -4,7 +4,7 @@
  */
 
 module.exports = function (gulp, plugins) {
-    "use strict";
+    'use strict';
 
     return function () {
         return gulp.src(
@@ -22,8 +22,8 @@ module.exports = function (gulp, plugins) {
             .pipe(plugins.plumber())
             .pipe(plugins.less())
             .pipe(plugins.rename(function (path) {
-                path.dirname = path.dirname.substring(0, path.dirname.length - 4) + 'css'
+                path.dirname = path.dirname.substring(0, path.dirname.length - 4) + 'css';
             }))
             .pipe(gulp.dest('./'));
-    }
+    };
 };

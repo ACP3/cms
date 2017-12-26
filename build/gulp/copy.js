@@ -4,7 +4,7 @@
  */
 
 module.exports = function (gulp) {
-    "use strict";
+    'use strict';
 
     return function () {
         var nodeBasePath = './node_modules',
@@ -47,5 +47,5 @@ module.exports = function (gulp) {
         }
 
         return 0;
-    }
+    };
 };

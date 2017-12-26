@@ -30,25 +30,28 @@ jQuery.fn.highlightTableRow = function (checkboxName) {
     var $this = $(this);
 
     $this.parents('thead')
-        .next('tbody').find('tr:has(:checkbox)').click(function (e) {
-            var $tableRow = $(this),
-                $tbody = $tableRow.closest('tbody');
+        .next('tbody')
+        .find('tr:has(:checkbox)')
+        .click(
+            function (e) {
+                var $tableRow = $(this),
+                    $tbody = $tableRow.closest('tbody');
 
-            if (e.target.type !== 'checkbox') {
-                if (e.target.nodeName === 'A') {
-                    return;
+                if (e.target.type !== 'checkbox') {
+                    if (e.target.nodeName === 'A') {
+                        return;
+                    }
+
+                    var $elem = $('input[name="' + checkboxName + '[]"]', this);
+                    $elem.prop('checked', !$elem.is(':checked'));
                 }
 
-                var $elem = $('input[name="' + checkboxName + '[]"]', this);
-                $elem.prop('checked', !$elem.is(':checked'));
+                $tableRow.toggleClass(cssClassName);
+
+                // Alle Datensätze auf einer Seite wurden markiert
+                $this.prop('checked', ($tbody.find('input[name="' + checkboxName + '[]"]:visible').length === $tbody.find('tr.' + cssClassName + ':visible').length));
             }
-
-            $tableRow.toggleClass(cssClassName);
-
-            // Alle Datensätze auf einer Seite wurden markiert
-            $this.prop('checked', ($tbody.find('input[name="' + checkboxName + '[]"]:visible').length === $tbody.find('tr.' + cssClassName + ':visible').length));
-        }
-    );
+        );
 
     return $this;
 };
@@ -86,7 +89,7 @@ jQuery.fn.deleteMarkedResults = function (options) {
                 if (result) {
                     var $form = $this.closest('form');
 
-                    $form.formSubmit({ customFormData: data });
+                    $form.formSubmit({customFormData: data});
                     $form.triggerHandler('submit');
                 }
             });
@@ -98,7 +101,7 @@ jQuery.fn.deleteMarkedResults = function (options) {
     return $this;
 };
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
     var $markAll = $('[data-mark-all-id]');
 
     $markAll.each(function () {

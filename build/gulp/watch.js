@@ -4,7 +4,7 @@
  */
 
 module.exports = function (gulp) {
-    "use strict";
+    'use strict';
 
     return function () {
         // Watch all the .less files, then run the less task
@@ -18,5 +18,5 @@ module.exports = function (gulp) {
             {cwd: './'},
             ['less']
         );
-    }
+    };
 };

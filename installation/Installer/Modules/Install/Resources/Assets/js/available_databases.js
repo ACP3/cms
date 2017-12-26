@@ -19,9 +19,9 @@ jQuery(document).ready(function ($) {
         $.post(
             ajaxUrl,
             {
-                "db_host": $('#db-host').val(),
-                "db_user": $('#db-user').val(),
-                "db_password": $('#db-password').val()
+                'db_host': $('#db-host').val(),
+                'db_user': $('#db-user').val(),
+                'db_password': $('#db-password').val()
             },
             function (response) {
                 if (response.length > 0) {

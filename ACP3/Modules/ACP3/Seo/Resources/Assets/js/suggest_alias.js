@@ -3,10 +3,10 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-;(function ($) {
-    "use strict";
+(function ($) {
+    'use strict';
 
-    var pluginName = "suggestAlias",
+    var pluginName = 'suggestAlias',
         defaults = {
             prefix: '',
             slugBaseElement: null,
@@ -48,7 +48,7 @@
                     },
                     success: function (responseData) {
                         try {
-                            if (typeof responseData.alias !== "undefined" && responseData.alias.length > 0) {
+                            if (typeof responseData.alias !== 'undefined' && responseData.alias.length > 0) {
                                 $(that.settings.aliasElement).val(responseData.alias);
                             }
                         } catch (err) {
@@ -72,8 +72,8 @@
 
     $.fn[pluginName] = function (options) {
         return this.each(function () {
-            if (!$.data(this, "plugin_" + pluginName)) {
-                $.data(this, "plugin_" + pluginName, new Plugin(this, options));
+            if (!$.data(this, 'plugin_' + pluginName)) {
+                $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
             }
         });
     };
