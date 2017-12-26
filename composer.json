@@ -88,7 +88,9 @@
     "test": "./vendor/bin/phpunit -c ./tests/phpunit.dist.xml",
     "test-windows": ".\\vendor\\bin\\phpunit.bat -c .\\tests\\phpunit.dist.xml",
     "test-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover ./build/logs/clover.xml",
-    "lint": "./vendor/bin/php-cs-fixer fix",
-    "lint-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix"
+    "lint": "./vendor/bin/php-cs-fixer fix --dry-run --show-progress=estimating -v",
+    "lint-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --dry-run --show-progress=estimating -v",
+    "php-cs-fixer": "./vendor/bin/php-cs-fixer fix --show-progress=estimating -v",
+    "php-cs-fixer-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --show-progress=estimating -v"
   }
 }
