@@ -17,17 +17,24 @@ stages:
   - test
   - split
 
-test:php:
+test:php-unit:
   stage: test
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
     - bash ./build/gitlab/before_script_php.sh > /dev/null
-    - curl --silent --show-error https://getcomposer.org/installer | php
-    - php composer.phar global require hirak/prestissimo
   script:
     - php composer.phar install -n -o
     - php ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+
+test:phpcs:
+  stage: test
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+    - bash ./build/gitlab/before_script_php.sh > /dev/null
+  script:
+    - php composer.phar install -n -o
+    - php ./vendor/bin/phpcs --dry-run --show-progress=estimating -v
 
 split:
   image: jderusse/gitsplit

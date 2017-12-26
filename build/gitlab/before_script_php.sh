@@ -12,3 +12,7 @@ pecl install xdebug
 # Install required PHP extensions for the tests etc.
 docker-php-ext-install zip
 docker-php-ext-enable xdebug
+
+# Install composer
+curl --silent --show-error https://getcomposer.org/installer | php
+php composer.phar global require hirak/prestissimo
