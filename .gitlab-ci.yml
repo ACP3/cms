@@ -76,6 +76,8 @@ split:
     - git config remote.origin.mirror true
     - git fetch
     - gitsplit
+  only:
+    - tags
 
 deploy:generate-artifact:
   stage: deploy
