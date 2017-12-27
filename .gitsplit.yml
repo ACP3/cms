@@ -60,6 +60,8 @@ splits:
     target: "git@gitlab.com:ACP3/setup.git"
   - prefix: "tests"
     target: "git@gitlab.com:ACP3/test.git"
+  - prefix: "designs/acp3"
+    target: "git@gitlab.com:ACP3/theme-default.git"
 
 # List of references to split (defined as regexp)
 origins:
