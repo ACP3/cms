@@ -76,8 +76,9 @@ split:
     - git config remote.origin.mirror true
     - git fetch
     - gitsplit
-  only:
-    - tags
+    - bash ./build/gitlab/notify_packagist.sh
+#  only:
+#    - tags
 
 deploy:generate-artifact:
   stage: deploy
