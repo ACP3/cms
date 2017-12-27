@@ -11,7 +11,7 @@
   ],
   "support": {
     "email": "mail@acp3-cms.net",
-    "issues": "https://github.com/ACP3/cms/issues"
+    "issues": "https://gitlab.com/ACP3/cms/issues"
   },
   "autoload": {
     "psr-4": {

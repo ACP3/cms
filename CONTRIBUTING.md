@@ -77,7 +77,7 @@ merged:
    # Navigate to the newly cloned directory
    cd <repo-name>
    # Assign the original repo to a remote called "upstream"
-   git remote add upstream https://github.com/ACP3/cms.git
+   git remote add upstream https://gitlab.com/ACP3/cms.git
    ```
 
 2. If you cloned a while ago, get the latest changes from upstream:
@@ -112,5 +112,5 @@ merged:
    git push origin <topic-branch-name>
    ```
 
-10. [Open a Pull Request](https://help.github.com/articles/using-pull-requests/)
+10. [Open a Merge Request](https://help.github.com/articles/using-pull-requests/)
     with a clear title and description.

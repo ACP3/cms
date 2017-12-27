@@ -10,12 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ACP3/cms.git"
+    "url": "git+https://gitlab.com/ACP3/cms.git"
   },
   "author": "Tino Goratsch <mail@acp3-cms.net>",
   "license": "GPL-2.0+",
   "bugs": {
-    "url": "https://github.com/ACP3/cms/issues"
+    "url": "https://gitlab.com/ACP3/cms/issues"
   },
   "homepage": "https://www.acp3-cms.net",
   "private": true,

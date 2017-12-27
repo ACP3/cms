@@ -28,7 +28,7 @@ To install the current development version directly from github, you have to do 
 
 Clone the repository into a new directory:
 ```sh
-$ git clone https://github.com/ACP3/cms.git <directory>
+$ git clone https://gitlab.com/ACP3/cms.git <directory>
 ```
 
 Make sure that you have composer already installed.
@@ -50,10 +50,10 @@ $ npm install
 
 Contributions to the ACP3 CMS are always welcome. Here is how you can contribute to ACP3:
 
-- [Submit bugs](https://github.com/ACP3/cms/issues) and help us verify fixes
-- [Submit pull requests](https://github.com/ACP3/cms/pulls) for bug fixes, features and discuss existing proposals
+- [Submit bugs](https://gitlab.com/ACP3/cms/issues) and help us verify fixes
+- [Submit pull requests](https://gitlab.com/ACP3/cms/merge_requests) for bug fixes, features and discuss existing proposals
 
-Please refer to our [Contribution guidelines](https://github.com/ACP3/cms/blob/master/CONTRIBUTING.md) for more details.
+Please refer to our [Contribution guidelines](https://gitlab.com/ACP3/cms/blob/master/CONTRIBUTING.md) for more details.
 
 ## Coding Style Guidelines
 
@@ -63,4 +63,4 @@ We are using the [PSR-2](https://github.com/php-fig/fig-standards/blob/master/ac
 
 ## License
 
-This project is licensed under the terms of the [GPL 2.0+](https://github.com/ACP3/cms/blob/master/LICENCE).
+This project is licensed under the terms of the [GPL 2.0+](https://gitlab.com/ACP3/cms/blob/master/LICENSE).
