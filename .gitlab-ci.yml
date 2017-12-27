@@ -105,8 +105,17 @@ deploy:generate-artifact:
       - package.json
       - package-lock.json
       - README.md
-#  only:
-#    - tags
+  only:
+    - tags
+
+post-deploy:update-version-check:
+  stage: post_deploy
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+  script:
+    - bash ./build/gitlab/update_version_check.sh
+  only:
+    - tags
 
 post-deploy:apidocs:
   stage: post_deploy

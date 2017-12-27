@@ -4,6 +4,7 @@
 [[ ! -e /.dockerenv ]] && [[ ! -e /.dockerinit ]] && exit 0
 
 apt-get update -yqq
+apt-get install git
 which ssh-agent || (apt-get install openssh-client -y )
 
 eval $(ssh-agent -s)
