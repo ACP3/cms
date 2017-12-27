@@ -15,9 +15,10 @@ before_script:
 
 stages:
   - test
-  - split
+  - subtree-split
+  - post-subtree-split
   - deploy
-  - post_deploy
+  - post-deploy
 
 test:php71-unit: &php-unit-base
   stage: test
@@ -56,11 +57,11 @@ test:eslint:
     - npm install
     - npm run-script eslint
 
-split:
+subtree-split:
   image: jderusse/gitsplit
-  stage: split
+  stage: subtree-split
   cache:
-    key: "$CI_JOB_NAME/$CI_COMMIT_REF_NAME"
+    key: subtree-split
     paths:
       - .gitsplit-cache
   variables:
@@ -76,6 +77,14 @@ split:
     - git config remote.origin.mirror true
     - git fetch
     - gitsplit
+#  only:
+#    - tags
+
+subtree-split:notify-packagist:
+  stage: post-subtree-split
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+  script:
     - bash ./build/gitlab/notify_packagist.sh
 #  only:
 #    - tags
@@ -112,7 +121,7 @@ deploy:generate-artifact:
     - tags
 
 post-deploy:update-version-check:
-  stage: post_deploy
+  stage: post-deploy
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
   script:
@@ -121,7 +130,7 @@ post-deploy:update-version-check:
     - tags
 
 post-deploy:apidocs:
-  stage: post_deploy
+  stage: post-deploy
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
     - bash ./build/gitlab/before_script_php.sh > /dev/null

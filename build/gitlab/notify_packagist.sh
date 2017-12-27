@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+which curl || (apt-get install curl -y)
+
 declare -a repositories
 
 repositories[0]="https://github.com/ACP3/core.git"
