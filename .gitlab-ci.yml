@@ -16,6 +16,8 @@ before_script:
 stages:
   - test
   - split
+  - deploy
+  - post_deploy
 
 test:php71-unit: &php-unit-base
   stage: test
@@ -74,3 +76,44 @@ split:
     - git config remote.origin.mirror true
     - git fetch
     - gitsplit
+
+deploy:generate-artifact:
+  stage: deploy
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+    - bash ./build/gitlab/before_script_php.sh > /dev/null
+  script:
+    - php composer.phar install --no-dev --prefer-dist -o -n --ignore-platform-reqs
+  artifacts:
+    name: "release-${CI_COMMIT_TAG}"
+    paths:
+      - ACP3
+      - build/gulp
+      - designs
+      - installation
+      - tests
+      - uploads
+      - vendor
+      - .editorconfig
+      - .htaccess.sample
+      - CHANGELOG.md
+      - composer.json
+      - composer.lock
+      - gulpfile.js
+      - index.php
+      - LICENSE
+      - package.json
+      - package-lock.json
+      - README.md
+#  only:
+#    - tags
+
+post-deploy:apidocs:
+  stage: post_deploy
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+    - bash ./build/gitlab/before_script_php.sh > /dev/null
+  script:
+    - bash ./build/gitlab/generate_api_docs.sh
+  only:
+    - tags
