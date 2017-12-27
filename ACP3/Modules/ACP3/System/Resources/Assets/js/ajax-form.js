@@ -171,7 +171,11 @@
 
                         self.scrollIntoView();
 
-                        $(self.settings.targetElement).html(responseData);
+                        if (hash && $(hash).length) {
+                            $(hash).html($(responseData).find(hash).html());
+                        } else {
+                            $(self.settings.targetElement).html(responseData);
+                        }
 
                         if (typeof hash !== 'undefined') {
                             window.location.hash = hash;
