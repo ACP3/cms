@@ -35,8 +35,6 @@ repositories[27]="https://github.com/ACP3/theme-default.git"
 
 for i in "${!repositories[@]}"
 do
-    echo ${repositories[$i]};
-    echo "\n";
+    echo ${repositories[$i]}
     curl -XPOST -H'content-type:application/json' "https://packagist.org/api/update-package?username=${PACKAGIST_USER_NAME}&apiToken=${PACKAGIST_API_TOKEN}" -d"{\"repository\":{\"url\":\"${repositories[$i]}\"}}"
-    echo "\n\n";
 done
