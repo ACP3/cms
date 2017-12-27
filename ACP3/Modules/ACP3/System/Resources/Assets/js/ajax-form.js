@@ -158,24 +158,12 @@
 
                     if (typeof window[callback] === 'function') {
                         window[callback](responseData);
+                    } else if (responseData.redirect_url) {
+                        self.redirectToNewPage(hash, responseData);
+                        return;
                     } else {
-                        if (responseData.redirect_url) {
-                            if (typeof hash !== 'undefined') {
-                                window.location.href = responseData.redirect_url + hash;
-                                window.location.reload();
-                            } else {
-                                window.location.href = responseData.redirect_url;
-                            }
-                            return;
-                        }
-
                         self.scrollIntoView();
-
-                        if (hash && $(hash).length) {
-                            $(hash).html($(responseData).find(hash).html());
-                        } else {
-                            $(self.settings.targetElement).html(responseData);
-                        }
+                        self.replaceContent(hash, responseData);
 
                         if (typeof hash !== 'undefined') {
                             window.location.hash = hash;
@@ -224,6 +212,14 @@
                 $submitButton.prop('disabled', true);
             }
         },
+        redirectToNewPage: function (hash, responseData) {
+            if (typeof hash !== 'undefined') {
+                window.location.href = responseData.redirect_url + hash;
+                window.location.reload();
+            } else {
+                window.location.href = responseData.redirect_url;
+            }
+        },
         /**
          * Scroll to the beginning of the content area, if the current viewport is near the bottom
          */
@@ -237,6 +233,13 @@
                     },
                     'fast'
                 );
+            }
+        },
+        replaceContent: function (hash, responseData) {
+            if (hash && $(hash).length) {
+                $(hash).html($(responseData).find(hash).html());
+            } else {
+                $(this.settings.targetElement).html(responseData);
             }
         },
         hideLoadingLayer: function ($submitButton) {
