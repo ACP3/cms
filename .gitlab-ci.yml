@@ -15,8 +15,6 @@ before_script:
 
 stages:
   - test
-  - subtree-split
-  - post-subtree-split
   - deploy
   - post-deploy
 
@@ -57,9 +55,9 @@ test:eslint:
     - npm install
     - npm run-script eslint
 
-subtree-split:
+deploy:subtree-split:
   image: jderusse/gitsplit
-  stage: subtree-split
+  stage: deploy
   cache:
     key: subtree-split
     paths:
@@ -77,17 +75,8 @@ subtree-split:
     - git config remote.origin.mirror true
     - git fetch
     - gitsplit
-#  only:
-#    - tags
-
-subtree-split:notify-packagist:
-  stage: post-subtree-split
-  before_script:
-    - bash ./build/gitlab/before_script.sh > /dev/null
-  script:
-    - bash ./build/gitlab/notify_packagist.sh
-#  only:
-#    - tags
+  only:
+    - tags
 
 deploy:generate-artifact:
   stage: deploy
@@ -120,21 +109,24 @@ deploy:generate-artifact:
   only:
     - tags
 
-post-deploy:update-version-check:
+post-deploy:notify-packagist: &post-deploy-base
   stage: post-deploy
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
   script:
-    - bash ./build/gitlab/update_version_check.sh
+    - bash ./build/gitlab/notify_packagist.sh
   only:
     - tags
 
+post-deploy:update-version-check:
+  <<: *post-deploy-base
+  script:
+    - bash ./build/gitlab/update_version_check.sh
+
 post-deploy:apidocs:
-  stage: post-deploy
+  <<: *post-deploy-base
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
     - bash ./build/gitlab/before_script_php.sh > /dev/null
   script:
     - bash ./build/gitlab/generate_api_docs.sh
-  only:
-    - tags
