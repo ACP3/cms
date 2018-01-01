@@ -77,6 +77,7 @@ deploy:subtree-split:
     - gitsplit
   only:
     - tags
+    - schedules
 
 deploy:generate-artifact:
   stage: deploy
@@ -117,6 +118,7 @@ post-deploy:notify-packagist: &post-deploy-base
     - bash ./build/gitlab/notify_packagist.sh
   only:
     - tags
+    - schedules
 
 post-deploy:update-version-check:
   <<: *post-deploy-base
