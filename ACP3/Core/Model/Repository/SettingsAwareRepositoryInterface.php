@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\Model\Repository;
 
-interface SettingsAwareRepositoryInterface extends RepositoryInterface
+interface SettingsAwareRepositoryInterface extends WriterRepositoryInterface
 {
     /**
      * @return array

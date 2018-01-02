@@ -6,11 +6,7 @@
 
 namespace ACP3\Core\Model\Repository;
 
-/**
- * Interface RepositoryInterface
- * @package ACP3\Core\Model\Repository
- */
-interface RepositoryInterface
+interface WriterRepositoryInterface extends TableNameAwareRepositoryInterface
 {
     /**
      * Executes the SQL insert statement
@@ -21,20 +17,13 @@ interface RepositoryInterface
     public function insert(array $data);
 
     /**
-     * @param string $tableName
-     *
-     * @return string
-     */
-    public function getTableName($tableName = '');
-
-    /**
      * Executes the SQL delete statement
      *
      * @param int|array $entryId
      * @param string $columnName
      * @return bool|int
      */
-    public function delete($entryId, $columnName = 'id');
+    public function delete($entryId, string $columnName = 'id');
 
     /**
      * Executes the SQL update statement
@@ -44,10 +33,4 @@ interface RepositoryInterface
      * @return bool|int
      */
     public function update(array $data, $entryId);
-
-    /**
-     * @param int $entryId
-     * @return array
-     */
-    public function getOneById(int $entryId);
 }

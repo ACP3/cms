@@ -6,10 +6,10 @@
 
 namespace ACP3\Modules\ACP3\Articles\View\Block\Admin;
 
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractAdminFormBlock;
 use ACP3\Modules\ACP3\Articles\Helpers;
 
-class ArticleFormBlock extends AbstractFormBlock
+class ArticleFormBlock extends AbstractAdminFormBlock
 {
     /**
      * @inheritdoc
@@ -40,7 +40,7 @@ class ArticleFormBlock extends AbstractFormBlock
             'form' => array_merge($data, $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken(),
             'SEO_URI_PATTERN' => Helpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => $this->getSeoRouteName((int) $data['id'])
+            'SEO_ROUTE_NAME' => $this->getSeoRouteName((int)$data['id'])
         ];
     }
 

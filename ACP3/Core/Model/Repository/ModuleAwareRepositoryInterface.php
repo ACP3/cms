@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\Model\Repository;
 
-interface ModuleAwareRepositoryInterface extends RepositoryInterface
+interface ModuleAwareRepositoryInterface extends WriterRepositoryInterface
 {
     /**
      * @param string $moduleName

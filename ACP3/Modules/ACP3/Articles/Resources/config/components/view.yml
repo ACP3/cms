@@ -3,6 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Articles\View\Block\Admin\ArticleFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+      - '@articles.model.repository.articles_repository'
 
   articles.view.block.admin.articles_data_grid_block:
     class: ACP3\Modules\ACP3\Articles\View\Block\Admin\ArticlesDataGridBlock

@@ -6,66 +6,23 @@
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
-use ACP3\Core;
-use ACP3\Modules\ACP3\Articles;
-
-class Create extends Core\Controller\AbstractFrontendAction
+class Create extends AbstractFormAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
-     */
-    protected $adminFormValidation;
-    /**
-     * @var Articles\Model\ArticlesModel
-     */
-    protected $articlesModel;
-    /**
-     * @var Core\View\Block\FormBlockInterface
-     */
-    private $block;
+    public function execute(?int $id)
+    {
+        if (!empty($id)) {
+            throw new \InvalidArgumentException();
+        }
 
-    /**
-     * Create constructor.
-     * @param Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
-     * @param Articles\Model\ArticlesModel $articlesModel
-     * @param Articles\Validation\AdminFormValidation $adminFormValidation
-     */
-    public function __construct(
-        Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
-        Articles\Model\ArticlesModel $articlesModel,
-        Articles\Validation\AdminFormValidation $adminFormValidation
-    ) {
-        parent::__construct($context);
-
-        $this->articlesModel = $articlesModel;
-        $this->adminFormValidation = $adminFormValidation;
-        $this->block = $block;
+        return parent::execute($id);
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function executePost(?int $id)
     {
-        return $this->block
-            ->setRequestData($this->request->getPost()->all())
-            ->render();
-    }
+        if (!empty($id)) {
+            throw new \InvalidArgumentException();
+        }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function executePost()
-    {
-        return $this->actionHelper->handleSaveAction(function () {
-            $formData = $this->request->getPost()->all();
-            $this->adminFormValidation->validate($formData);
-
-            $formData['user_id'] = $this->user->getUserId();
-
-            return $this->articlesModel->save($formData);
-        });
+        return parent::executePost($id);
     }
 }
