@@ -124,6 +124,8 @@ post-deploy:update-version-check:
   <<: *post-deploy-base
   script:
     - bash ./build/gitlab/update_version_check.sh
+  only:
+    - tags
 
 post-deploy:apidocs:
   <<: *post-deploy-base
@@ -132,3 +134,5 @@ post-deploy:apidocs:
     - bash ./build/gitlab/before_script_php.sh > /dev/null
   script:
     - bash ./build/gitlab/generate_api_docs.sh
+  only:
+    - tags
