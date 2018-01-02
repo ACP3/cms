@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
@@ -39,7 +39,7 @@ class Create extends Core\Controller\AbstractFrontendAction
         Core\View\Block\FormBlockInterface $block,
         Categories\Model\CategoriesModel $categoriesModel,
         Categories\Validation\AdminFormValidation $adminFormValidation
-    ) {
+        ) {
         parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;

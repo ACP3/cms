@@ -46,12 +46,15 @@
         <item key="frontend_account_settings">Edit settings</item>
         <item key="frontend_index_forgot_pwd">Forgot password?</item>
         <item key="frontend_index_login">Login</item>
+        <item key="frontend_index_logout">Logout</item>
         <item key="frontend_index_register">Register</item>
         <item key="frontend_index_view_profile">View profile</item>
         <item key="gender">Gender</item>
         <item key="gender_female">Female</item>
         <item key="gender_male">Male</item>
         <item key="gender_not_specified">Not specified</item>
+        <item key="go_to_homepage">Homepage</item>
+        <item key="go_to_previous_page">Previous page</item>
         <item key="home">Control center</item>
         <item key="icq">ICQ-Number</item>
         <item key="invalid_birthday">Please type in a valid birthday.</item>
@@ -94,6 +97,7 @@
         <item key="send_email">Send E-mail</item>
         <item key="settings">Settings</item>
         <item key="skype">Skype</item>
+        <item key="successfully_logged_out">You have been successfully logged out.</item>
         <item key="super_user">Super user</item>
         <item key="type_in_nickname_or_email">Please either enter the E-mail address or the user name you used with the registration.</item>
         <item key="type_in_pwd">Either the password is empty or there is a typo in the repetition.</item>

@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Core\Test\Breadcrumb;
@@ -98,6 +98,19 @@ class TitleTest extends \PHPUnit_Framework_TestCase
             ->setPageTitle('FooBar');
 
         $expected = 'FooBar | Lorem Ipsum';
+        $this->assertEquals($expected, $this->title->getSiteAndPageTitle());
+    }
+
+    public function testGetSiteAndPageTitleMetaTitleTakesPrecedenceOverPageTitle()
+    {
+        $this->setUpStepsExpectations(0);
+
+        $this->title
+            ->setSiteTitle('Lorem Ipsum')
+            ->setMetaTitle('Baz')
+            ->setPageTitle('FooBar');
+
+        $expected = 'Baz | Lorem Ipsum';
         $this->assertEquals($expected, $this->title->getSiteAndPageTitle());
     }
 }

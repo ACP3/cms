@@ -1,12 +1,12 @@
 /*
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-;(function ($, window, document) {
-    "use strict";
+(function ($, window, document) {
+    'use strict';
 
-    const pluginName = "formSubmit",
+    const pluginName = 'formSubmit',
         defaults = {
             targetElement: '#content',
             customFormData: null,
@@ -55,8 +55,8 @@
         },
         findSubmitButton: function () {
             $(this.element).find(':submit').click(function () {
-                $(":submit", $(this).closest("form")).removeAttr("data-clicked");
-                $(this).attr("data-clicked", "true");
+                $(':submit', $(this).closest('form')).removeAttr('data-clicked');
+                $(this).attr('data-clicked', 'true');
             });
         },
         preValidateForm: function () {
@@ -73,7 +73,7 @@
         },
         checkFormElementsForErrors: function (form) {
             for (const field of form.elements) {
-                if (field.nodeName !== "INPUT" && field.nodeName !== "TEXTAREA" && field.nodeName !== "SELECT") {
+                if (field.nodeName !== 'INPUT' && field.nodeName !== 'TEXTAREA' && field.nodeName !== 'SELECT') {
                     continue;
                 }
 
@@ -156,29 +156,21 @@
 
                     if (typeof window[callback] === 'function') {
                         window[callback](responseData);
+                    } else if (responseData.redirect_url) {
+                        this.redirectToNewPage(hash, responseData);
+                        return;
                     } else {
-                        if (responseData.redirect_url) {
-                            if (typeof hash !== "undefined") {
-                                window.location.href = responseData.redirect_url + hash;
-                                window.location.reload();
-                            } else {
-                                window.location.href = responseData.redirect_url;
-                            }
-                            return;
-                        }
-
                         this.scrollIntoView();
+                        this.replaceContent(hash, responseData);
 
-                        $(this.settings.targetElement).html(responseData);
-
-                        if (typeof hash !== "undefined") {
+                        if (typeof hash !== 'undefined') {
                             window.location.hash = hash;
                         }
                     }
 
                     this.hideLoadingLayer($submitButton);
                 } catch (err) {
-                    console.log(err.message);
+                    console.error(err.message);
 
                     this.hideLoadingLayer($submitButton);
                 }
@@ -214,8 +206,16 @@
                 $loadingLayer.addClass(this.settings.loadingLayerActiveClass);
             }
 
-            if (typeof $submitButton !== "undefined") {
+            if (typeof $submitButton !== 'undefined') {
                 $submitButton.prop('disabled', true);
+            }
+        },
+        redirectToNewPage: function (hash, responseData) {
+            if (typeof hash !== 'undefined') {
+                window.location.href = responseData.redirect_url + hash;
+                window.location.reload();
+            } else {
+                window.location.href = responseData.redirect_url;
             }
         },
         /**
@@ -233,10 +233,17 @@
                 );
             }
         },
+        replaceContent: function (hash, responseData) {
+            if (hash && $(hash).length) {
+                $(hash).html($(responseData).find(hash).html());
+            } else {
+                $(this.settings.targetElement).html(responseData);
+            }
+        },
         hideLoadingLayer: function ($submitButton) {
             $('#loading-layer').removeClass(this.settings.loadingLayerActiveClass);
 
-            if (typeof $submitButton !== "undefined") {
+            if (typeof $submitButton !== 'undefined') {
                 $submitButton.prop('disabled', false);
             }
         },
@@ -287,8 +294,8 @@
 
     $.fn[pluginName] = function (options) {
         return this.each(function () {
-            if (!$.data(this, "plugin_" + pluginName)) {
-                $.data(this, "plugin_" + pluginName, new Plugin(this, options));
+            if (!$.data(this, 'plugin_' + pluginName)) {
+                $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
             }
         });
     };

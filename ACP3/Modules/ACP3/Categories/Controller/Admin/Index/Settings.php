@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
@@ -32,8 +32,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\SettingsFormBlockInterface $block,
-        Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        Core\View\Block\SettingsFormBlockInterface $block,Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
 

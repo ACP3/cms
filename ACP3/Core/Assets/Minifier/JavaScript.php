@@ -10,6 +10,11 @@ class JavaScript extends AbstractMinifier
      */
     private $javascript = [];
 
+    protected function getAssetGroup(): string
+    {
+        return 'js';
+    }
+
     /**
      * @inheritdoc
      */
@@ -57,13 +62,5 @@ class JavaScript extends AbstractMinifier
 
         // Include general js file of the layout
         $this->javascript[] = $this->fileResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $layout . '.js');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getAssetGroup(): string
-    {
-        return 'js';
     }
 }

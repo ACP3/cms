@@ -13,8 +13,8 @@ jQuery(document).ready(function ($) {
                 $datepickerStart.datetimepicker();
                 $datepickerEnd.datetimepicker();
 
-                $datepickerStart.on("dp.change", function (e) {
-                    $datepickerEnd.data("DateTimePicker").minDate(e.date);
+                $datepickerStart.on('dp.change', function (e) {
+                    $datepickerEnd.data('DateTimePicker').minDate(e.date);
                 });
 
                 $datepickerEnd.data('DateTimePicker').minDate(datepickers.startDefaultDate);

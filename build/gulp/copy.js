@@ -1,12 +1,12 @@
 /*
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 const libraryPaths = require('./libary-paths');
 
 module.exports = function (gulp) {
-    "use strict";
+    'use strict';
 
     return function () {
         for (const path of libraryPaths) {
@@ -15,5 +15,5 @@ module.exports = function (gulp) {
         }
 
         return 0;
-    }
+    };
 };

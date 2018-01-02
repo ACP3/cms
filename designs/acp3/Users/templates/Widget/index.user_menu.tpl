@@ -2,7 +2,7 @@
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-user-menu-collapse">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only">{lang t="system|toggle_navigation"}</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -12,9 +12,9 @@
             </span>
         </div>
         <div id="nav-user-menu-collapse" class="collapse navbar-collapse">
-            {if isset($modules) || isset($system)}
+            {if !empty($modules) || !empty($system)}
                 <ul class="nav navbar-nav">
-                    {if isset($modules)}
+                    {if !empty($modules)}
                         <li class="dropdown">
                             <a href="{uri args="acp/acp"}" id="menu-admin-label" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu-administration">
                                 <i class="fa fa-file" aria-hidden="true"></i>
@@ -28,7 +28,7 @@
                             </ul>
                         </li>
                     {/if}
-                    {if isset($system)}
+                    {if !empty($system)}
                         <li class="dropdown">
                             <a href="{uri args="acp/system"}" id="menu-system-label" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu-system">
                                 <i class="fa fa-cog" aria-hidden="true"></i>

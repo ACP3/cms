@@ -11,7 +11,7 @@
   ],
   "support": {
     "email": "mail@acp3-cms.net",
-    "issues": "https://github.com/ACP3/cms/issues"
+    "issues": "https://gitlab.com/ACP3/cms/issues"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -43,7 +43,8 @@
     "symfony/http-kernel": "^3.3",
     "symfony/yaml": "^3.3",
     "thepixeldeveloper/sitemap": "^5.0",
-    "marcj/topsort": "^1.1"
+    "marcj/topsort": "^1.1",
+    "toflar/psr6-symfony-http-cache-store": "^1.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.0.0",
@@ -88,7 +89,9 @@
     "test": "./vendor/bin/phpunit -c ./tests/phpunit.dist.xml",
     "test-windows": ".\\vendor\\bin\\phpunit.bat -c .\\tests\\phpunit.dist.xml",
     "test-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover ./build/logs/clover.xml",
-    "lint": "./vendor/bin/php-cs-fixer fix",
-    "lint-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix"
+    "lint": "./vendor/bin/php-cs-fixer fix --dry-run --show-progress=estimating -v",
+    "lint-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --dry-run --show-progress=estimating -v",
+    "php-cs-fixer": "./vendor/bin/php-cs-fixer fix --show-progress=estimating -v",
+    "php-cs-fixer-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --show-progress=estimating -v"
   }
 }

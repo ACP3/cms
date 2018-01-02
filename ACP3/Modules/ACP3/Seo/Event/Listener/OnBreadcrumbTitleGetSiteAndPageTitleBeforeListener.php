@@ -1,11 +1,10 @@
 <?php
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
-
 
 use ACP3\Core\Breadcrumb\Event\GetSiteAndPageTitleBeforeEvent;
 use ACP3\Core\Http\RequestInterface;
@@ -40,10 +39,6 @@ class OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener
      */
     public function useMetaTitle(GetSiteAndPageTitleBeforeEvent $event)
     {
-        $metaTitle = $this->metaStatements->getTitle($this->request->getQuery());
-
-        if (!empty($metaTitle)) {
-            $event->getTitle()->setPageTitle($metaTitle);
-        }
+        $event->getTitle()->setMetaTitle($this->metaStatements->getTitle($this->request->getQuery()));
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Model\Repository;
@@ -32,7 +32,7 @@ class GalleryPicturesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getOneById(int $entryId)
     {
-        return $this->db->fetchAssoc('SELECT g.id AS gallery_id, g.title, p.* FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = ? AND p.gallery_id = g.id', [$entryId]);
+        return $this->db->fetchAssoc('SELECT g.id AS gallery_id, g.title AS gallery_title, p.* FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = ? AND p.gallery_id = g.id', [$entryId]);
     }
 
     /**

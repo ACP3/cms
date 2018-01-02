@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Core\Breadcrumb;
@@ -74,23 +74,15 @@ class Steps extends Core\Breadcrumb\Steps
         }
 
         if (!empty($this->stepsFromDb)) {
-            $lastDbStepUri = $this->stepsFromDb[count($this->stepsFromDb) - 1]['uri'];
+            $offset = $this->findFirstMatchingStep();
 
-            if (count($this->steps) === 1 && empty($this->steps[0]['uri'])) {
-                $this->copyTitleFromFirstStepToLastDbStep();
-                $this->steps[0]['uri'] = $lastDbStepUri;
-            }
-
-            if ($lastDbStepUri === $this->steps[0]['uri']) {
-                $this->copyTitleFromFirstStepToLastDbStep();
-
-                $this->breadcrumbCache = array_merge($this->stepsFromDb, array_slice($this->steps, 1));
-            }
+            $this->breadcrumbCache = array_merge($this->stepsFromDb, array_slice($this->steps, $offset));
         }
     }
 
     /**
      * Initializes and pre populates the breadcrumb
+     * @throws \Doctrine\DBAL\DBALException
      */
     private function prePopulate()
     {
@@ -108,7 +100,8 @@ class Steps extends Core\Breadcrumb\Steps
         }
     }
 
-    private function getPossiblyMatchingRoutes() {
+    private function getPossiblyMatchingRoutes()
+    {
         return [
             $this->request->getQuery(),
             $this->request->getUriWithoutPages(),
@@ -152,8 +145,22 @@ class Steps extends Core\Breadcrumb\Steps
         return $this;
     }
 
-    private function copyTitleFromFirstStepToLastDbStep()
+    /**
+     * @return int
+     */
+    private function findFirstMatchingStep(): int
     {
-        $this->stepsFromDb[count($this->stepsFromDb) - 1]['title'] = $this->steps[0]['title'];
+        $steps = array_reverse($this->steps);
+        $lastDbStep = end($this->stepsFromDb);
+
+        $offset = 0;
+        foreach ($steps as $index => $step) {
+            if ($step['uri'] === $lastDbStep['uri']) {
+                $offset = $index;
+                break;
+            }
+        }
+
+        return count($steps) - $offset;
     }
 }

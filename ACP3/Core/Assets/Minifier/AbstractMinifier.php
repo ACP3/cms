@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Core\Assets\Minifier;
@@ -89,6 +89,8 @@ abstract class AbstractMinifier implements MinifierInterface
         $this->environment = $environment;
         $this->logger = $logger;
     }
+
+    abstract protected function getAssetGroup(): string;
 
     /**
      * Returns the name of the asset group

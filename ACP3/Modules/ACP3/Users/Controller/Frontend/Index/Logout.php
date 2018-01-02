@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
@@ -35,21 +35,25 @@ class Logout extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $last
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute($last = '')
+    public function execute()
     {
+        if (!$this->user->isAuthenticated()) {
+            return $this->redirect()->toNewPage($this->appPath->getWebRoot());
+        }
+
         $this->authenticationModel->logout();
 
-        if (!empty($last)) {
-            $lastPage = base64_decode($last);
-
-            if (!preg_match('/^((acp|users)\/)/', $lastPage)) {
-                return $this->redirect()->temporary($lastPage);
-            }
+        $redirectUrl = $this->appPath->getWebRoot();
+        $referer = $this->request->getSymfonyRequest()->headers->get('referer');
+        if ($referer !== $this->router->route($this->request->getPathInfo())) {
+            $redirectUrl = $referer;
         }
-        return $this->redirect()->toNewPage($this->appPath->getWebRoot());
+
+        return [
+            'url_homepage' => $this->appPath->getWebRoot(),
+            'url_previous_page' => $redirectUrl
+        ];
     }
 }

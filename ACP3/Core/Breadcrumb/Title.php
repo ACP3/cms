@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Core\Breadcrumb;
@@ -40,6 +40,10 @@ class Title
      * @var string
      */
     protected $pageTitleSeparator = '-';
+    /**
+     * @var string
+     */
+    private $metaTitle = '';
     /**
      * @var string
      */
@@ -186,6 +190,25 @@ class Title
     /**
      * @return string
      */
+    public function getMetaTitle(): string
+    {
+        return $this->metaTitle;
+    }
+
+    /**
+     * @param string $metaTitle
+     * @return $this
+     */
+    public function setMetaTitle(string $metaTitle)
+    {
+        $this->metaTitle = $metaTitle;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getSiteTitleSeparator()
     {
         return ' ' . $this->siteTitleSeparator . ' ';
@@ -215,7 +238,7 @@ class Title
             new GetSiteAndPageTitleBeforeEvent($this)
         );
 
-        $title = $this->getPageTitle();
+        $title = !empty($this->getMetaTitle()) ? $this->getMetaTitle() : $this->getPageTitle();
 
         if (!empty($this->pageTitlePrefix)) {
             $title = $this->pageTitlePrefix . $this->getPageTitleSeparator() . $title;

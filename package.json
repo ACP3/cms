@@ -1,20 +1,23 @@
 {
   "name": "acp3-cms",
-  "version": "4.18.0",
+  "version": "4.20.0",
   "description": "The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP and MySQL.",
   "main": "",
   "directories": {},
-  "scripts": {},
+  "scripts": {
+    "eslint": "node_modules/.bin/eslint -c .eslintrc.json ./",
+    "eslint-fix": "node_modules/.bin/eslint -c .eslintrc.json ./ --fix"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ACP3/cms.git"
+    "url": "git+https://gitlab.com/ACP3/cms.git"
   },
   "author": "Tino Goratsch <mail@acp3-cms.net>",
   "license": "GPL-2.0+",
   "bugs": {
-    "url": "https://github.com/ACP3/cms/issues"
+    "url": "https://gitlab.com/ACP3/cms/issues"
   },
-  "homepage": "http://www.acp3-cms.net",
+  "homepage": "https://www.acp3-cms.net",
   "private": true,
   "devDependencies": {
     "@fancyapps/fancybox": "^3.2.5",
@@ -24,6 +27,7 @@
     "datatables.net": "^1.10.16",
     "datatables.net-bs": "^1.10.16",
     "eonasdan-bootstrap-datetimepicker": "^4.17.42",
+    "eslint": "^4.14.0",
     "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
     "gulp-change": "^1.0.0",
@@ -35,11 +39,9 @@
     "html5shiv": "^3.7.3",
     "jquery": "^2.2.4",
     "js-cookie": "^2.2.0",
-    "moment": "^2.19.3",
+    "moment": "^2.20.1",
     "moment-timezone": "^0.4.0",
-    "yargs": "^8.0.0"
-  },
-  "dependencies": {
-    "tinymce": "^4.7.3"
+    "tinymce": "^4.7.3",
+    "yargs": "^10.0.3"
   }
 }

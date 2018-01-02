@@ -1,6 +1,6 @@
 /*
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 const argv = require('yargs').argv;
@@ -9,7 +9,7 @@ module.exports = (gulp, plugins) => {
     "use strict";
 
     /**
-     * Reads the current version of the ACP3 from the package.json
+     * Reads the current ACP3 CMS version from the package.json
      */
     function getCurrentVersion() {
         return require('../../package.json').version;

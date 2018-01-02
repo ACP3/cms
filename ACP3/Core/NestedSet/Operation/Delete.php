@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Core\NestedSet\Operation;
@@ -25,7 +25,10 @@ class Delete extends AbstractOperation
         $callback = function () use ($resultId) {
             $nodes = $this->nestedSetRepository->fetchNodeWithSiblings((int)$resultId);
             if (!empty($nodes)) {
-                $this->db->getConnection()->delete($this->nestedSetRepository->getTableName(), ['id' => (int)$resultId]);
+                $this->db->getConnection()->delete(
+                    $this->nestedSetRepository->getTableName(),
+                    ['id' => (int)$resultId]
+                );
 
                 $this->moveSiblingsOneLevelUp($nodes);
                 $this->adjustParentNodesAfterSeparation(2, $nodes[0]['left_id'], $nodes[0]['right_id']);

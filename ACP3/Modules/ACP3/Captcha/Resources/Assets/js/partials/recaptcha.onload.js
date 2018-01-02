@@ -1,15 +1,16 @@
 /*
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-let onloadCallback = function() {
+/* global onloadCallback:true */
+onloadCallback = function() {
     jQuery('.recaptcha-placeholder').each((index, element) => {
         element.innerHtml = '';
 
-        grecaptcha.render(this.id, {
-            'sitekey': this.dataset.sitekey,
-            'size': this.dataset.size
+        grecaptcha.render(element.id, {
+            'sitekey': element.dataset.sitekey,
+            'size': element.dataset.size
         });
     });
 };

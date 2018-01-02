@@ -1,11 +1,10 @@
 <?php
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
-
 
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
@@ -46,7 +45,8 @@ class RouteColumnRenderer extends AbstractColumnRenderer
 HTML;
             $value = sprintf(
                 $pattern,
-                $route, $this->translator->t('system', 'open_in_new_window'),
+                $route,
+                $this->translator->t('system', 'open_in_new_window'),
                 $value
             );
         }

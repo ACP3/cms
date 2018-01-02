@@ -29,7 +29,8 @@ function markEntries($markAllElem, name, action) {
 jQuery.fn.highlightTableRow = function (checkboxName) {
     const $markAllCheckbox = $(this);
 
-    $markAllCheckbox.closest('table')
+    $markAllCheckbox
+        .closest('table')
         .on('click', 'tr:has(td :checkbox)', function (e) {
             const $tableRow = $(this),
                 $tbody = $tableRow.closest('tbody');
@@ -89,7 +90,7 @@ jQuery.fn.deleteMarkedResults = function (options) {
                 if (result) {
                     const $form = $this.closest('form');
 
-                    $form.formSubmit({ customFormData: data });
+                    $form.formSubmit({customFormData: data});
                     $form.triggerHandler('submit');
                 }
             });
@@ -101,7 +102,7 @@ jQuery.fn.deleteMarkedResults = function (options) {
     return $this;
 };
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
     const $markAll = $('[data-mark-all-id]');
 
     $markAll.each((index, element) => {

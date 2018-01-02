@@ -22,7 +22,7 @@ before_script:
   - ./build/travis/before_script.sh ${ACP3_CI_USER_GH_TOKEN} ${TRAVIS_PHP_VERSION}
 
 script:
-  - ./build/travis/run_unit_tests.sh ${TRAVIS_PHP_VERSION}
+  - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover ./build/logs/clover.xml
 
 after_success:
   - travis_retry vendor/bin/coveralls -v
@@ -37,24 +37,6 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
-      condition: "$TRAVIS_PHP_VERSION = 7.1*"
-  - provider: script
-    script: ./build/travis/update_module_repositories.sh ${TRAVIS_TAG}
-    skip_cleanup: true
-    on:
-      tags: true
-      condition: "$TRAVIS_PHP_VERSION = 7.1*"
-  - provider: script
-    script: ./build/travis/update_version_check.sh ${TRAVIS_TAG}
-    skip_cleanup: true
-    on:
-      tags: true
-      condition: "$TRAVIS_PHP_VERSION = 7.1*"
-  - provider: script
-    script: ./build/travis/generate_api_docs.sh
-    skip_cleanup: true
-    on:
-      branch: master
       condition: "$TRAVIS_PHP_VERSION = 7.1*"
 
 cache:

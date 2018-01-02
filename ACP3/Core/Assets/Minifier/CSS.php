@@ -10,6 +10,11 @@ class CSS extends AbstractMinifier
      */
     private $stylesheets = [];
 
+    protected function getAssetGroup(): string
+    {
+        return 'css';
+    }
+
     /**
      * @inheritdoc
      */
@@ -102,13 +107,5 @@ class CSS extends AbstractMinifier
                 }
             }
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getAssetGroup(): string
-    {
-        return 'css';
     }
 }

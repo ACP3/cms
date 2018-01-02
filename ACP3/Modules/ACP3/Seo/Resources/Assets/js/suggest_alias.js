@@ -1,12 +1,12 @@
 /*
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-;(function ($) {
-    "use strict";
+(function ($) {
+    'use strict';
 
-    const pluginName = "suggestAlias",
+    const pluginName = 'suggestAlias',
         defaults = {
             prefix: '',
             slugBaseElement: null,
@@ -44,11 +44,11 @@
                     }
                 }).done((responseData) => {
                     try {
-                        if (typeof responseData.alias !== "undefined" && responseData.alias.length > 0) {
+                        if (typeof responseData.alias !== 'undefined' && responseData.alias.length > 0) {
                             $(this.settings.aliasElement).val(responseData.alias);
                         }
                     } catch (err) {
-                        console.log(err.message);
+                        console.error(err.message);
                     } finally {
                         $(this.element).removeClass('disabled');
                     }
@@ -67,8 +67,8 @@
 
     $.fn[pluginName] = function (options) {
         return this.each(function () {
-            if (!$.data(this, "plugin_" + pluginName)) {
-                $.data(this, "plugin_" + pluginName, new Plugin(this, options));
+            if (!$.data(this, 'plugin_' + pluginName)) {
+                $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
             }
         });
     };

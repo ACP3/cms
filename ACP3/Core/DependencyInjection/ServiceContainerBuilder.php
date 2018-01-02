@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Core\DependencyInjection;
@@ -76,7 +76,8 @@ class ServiceContainerBuilder extends ContainerBuilder
         $this->setParameter('core.environment', $this->applicationMode);
 
         $this
-            ->addCompilerPass(new RegisterListenersPass(
+            ->addCompilerPass(
+                new RegisterListenersPass(
                     'core.event_dispatcher',
                     'core.eventListener',
                     'core.eventSubscriber'

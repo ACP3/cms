@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Core\Session;
@@ -42,11 +42,7 @@ abstract class AbstractSessionHandler implements SessionHandlerInterface
             ini_set('session.gc_probability', $this->gcProbability);
             ini_set('session.gc_divisor', $this->gcDivisor);
 
-            // Set our own session handling methods
-            ini_set('session.save_handler', 'user');
             session_set_save_handler($this, true);
-
-            session_register_shutdown();
 
             // Start the session and secure it
             $this->startSession();

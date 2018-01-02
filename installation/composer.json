@@ -11,7 +11,7 @@
   ],
   "support": {
     "email": "mail@acp3-cms.net",
-    "issues": "https://github.com/ACP3/cms/issues"
+    "issues": "https://gitlab.com/ACP3/cms/issues"
   },
   "autoload": {
     "psr-4": {
@@ -20,7 +20,7 @@
   },
   "require": {
     "acp3/composer-installer": "^1.0",
-    "acp3/core": "^4.18.0"
+    "acp3/core": "^4.20.0"
   },
   "extra": {
     "installer-name": "installation"

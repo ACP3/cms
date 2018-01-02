@@ -22,33 +22,33 @@ jQuery(document).ready(function ($) {
 
     // Seitentyp
     $mode.change(function () {
-        const mode = this.value;
+        const mode = parseInt(this.value);
 
-        if (mode == 1) {
+        if (mode === 1) {
             $module.show();
             $hints.hide();
             $link.hide();
             $articles.hide();
 
             // Modul im Dropdown-Menü selektieren, falls zuvor als Modus eine dynamische Seite aktiv war
-            if (currentMode == 2) {
+            if (currentMode === 2) {
                 const $linkUri = $('#uri'),
-                    match = $linkUri.val().match(/^([a-z\d_\-]+)\/([a-z\d_\-]+\/)+$/);
+                    match = $linkUri.val().match(/^([a-z\d_-]+)\/([a-z\d_-]+\/)+$/);
                 if (!$linkUri.val().match(articlesPattern) && match[1] != null && $('#module').find('option[value="' + match[1] + '"]').length > 0) {
                     $('#link-module').val(match[1]);
                 }
             }
-        } else if (mode == 2) {
+        } else if (mode === 2) {
             $module.hide();
             $hints.show();
             $link.show();
             $articles.hide();
-        } else if (mode == 3) {
+        } else if (mode === 3) {
             $module.hide();
             $hints.hide();
             $link.show();
             $articles.hide();
-        } else if (mode == 4) {
+        } else if (mode === 4) {
             $module.hide();
             $hints.hide();
             $link.hide();

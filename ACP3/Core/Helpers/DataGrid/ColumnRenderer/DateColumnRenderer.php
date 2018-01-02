@@ -45,7 +45,10 @@ class DateColumnRenderer extends AbstractColumnRenderer
             ];
         }
 
-        return $this->render($column, $value);
+        return $this->render(
+            $column,
+            $value
+        );
     }
 
     /**

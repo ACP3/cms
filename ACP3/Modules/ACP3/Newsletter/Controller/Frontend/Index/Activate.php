@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licencing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
@@ -64,9 +64,11 @@ class Activate extends Core\Controller\AbstractFrontendAction
             );
 
             return $this->alerts->confirmBox(
-                $this->translator->t('newsletter', $bool !== false
+                $this->translator->t(
+                'newsletter', $bool !== false
                     ? 'activate_success'
-                    : 'activate_error'),
+                    : 'activate_error'
+            ),
                 $this->appPath->getWebRoot()
             );
         } catch (Core\Validation\Exceptions\ValidationFailedException $e) {
