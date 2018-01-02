@@ -2,6 +2,7 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->exclude('ACP3/Modules/ACP3/Filemanager/libraries')
+    ->exclude('ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets/js/ckeditor/')
     ->exclude('build')
     ->exclude('cache')
     ->exclude('designs')
