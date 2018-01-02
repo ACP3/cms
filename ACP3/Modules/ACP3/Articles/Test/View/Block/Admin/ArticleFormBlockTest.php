@@ -8,16 +8,31 @@ namespace ACP3\Modules\ACP3\Articles\Test\View\Block\Admin;
 
 use ACP3\Core\Test\View\Block\AbstractFormBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
+use ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository;
 use ACP3\Modules\ACP3\Articles\View\Block\Admin\ArticleFormBlock;
 
 class ArticleFormBlockTest extends AbstractFormBlockTest
 {
     /**
+     * @var ArticlesRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $repository;
+
+    protected function setUpMockObjects()
+    {
+        $this->repository = $this->getMockBuilder(ArticlesRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        parent::setUpMockObjects();
+    }
+
+    /**
      * @inheritdoc
      */
     protected function instantiateBlock(): BlockInterface
     {
-        return new ArticleFormBlock($this->context);
+        return new ArticleFormBlock($this->context, $this->repository);
     }
 
     /**
