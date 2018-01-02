@@ -49,7 +49,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 36;
+        return 37;
     }
 
     /**
@@ -120,6 +120,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
             "INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (" . PrivilegeEnum::ADMIN_EDIT . ", 'admin_edit', '')",
             "INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (" . PrivilegeEnum::ADMIN_DELETE . ", 'admin_delete', '')",
             "INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (" . PrivilegeEnum::ADMIN_SETTINGS . ", 'admin_settings', '');",
+            "INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (" . PrivilegeEnum::ADMIN_MANAGE . ", 'admin_manage', '');",
             "INSERT INTO `{pre}acl_roles` (`id`, `name`, `root_id`, `parent_id`, `left_id`, `right_id`) VALUES (1, 'Gast', 1, 0, 1, 8)",
             "INSERT INTO `{pre}acl_roles` (`id`, `name`, `root_id`, `parent_id`, `left_id`, `right_id`) VALUES (2, 'Mitglied', 1, 1, 2, 7)",
             "INSERT INTO `{pre}acl_roles` (`id`, `name`, `root_id`, `parent_id`, `left_id`, `right_id`) VALUES (3, 'Autor', 1, 2, 3, 6)",

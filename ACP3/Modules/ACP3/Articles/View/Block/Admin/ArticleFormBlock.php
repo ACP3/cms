@@ -33,6 +33,10 @@ class ArticleFormBlock extends AbstractAdminFormBlock
     {
         $data = $this->getData();
 
+        $this->title->setPageTitle(
+            $this->translator->t('articles', empty($data['title']) ? 'admin_index_create' : 'admin_index_edit')
+        );
+
         $this->title->setPageTitlePrefix($data['title']);
 
         return [

@@ -2,10 +2,8 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Installer;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\Permissions\Installer
- */
+use ACP3\Core\ACL\PrivilegeEnum;
+
 class Migration implements \ACP3\Core\Installer\MigrationInterface
 {
     /**
@@ -63,6 +61,9 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` NOT IN (SELECT `id` FROM `{pre}modules`);",
                 "ALTER TABLE `{pre}acl_resources` ADD INDEX (`module_id`)",
                 "ALTER TABLE `{pre}acl_resources` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE"
+            ],
+            37 => [
+                "INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (" . PrivilegeEnum::ADMIN_MANAGE . ", 'admin_manage', '');",
             ]
         ];
     }

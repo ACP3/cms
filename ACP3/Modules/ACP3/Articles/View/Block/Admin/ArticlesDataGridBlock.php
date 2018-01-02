@@ -62,7 +62,7 @@ class ArticlesDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#articles-data-grid',
             'resource_path_delete' => 'admin/articles/index/delete',
-            'resource_path_edit' => 'admin/articles/index/edit',
+            'resource_path_edit' => 'admin/articles/index/manage',
         ]);
 
         $grid = $dataGrid->render();

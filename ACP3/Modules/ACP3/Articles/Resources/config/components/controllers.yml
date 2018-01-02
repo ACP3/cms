@@ -1,6 +1,6 @@
 services:
-  articles.controller.admin.index.create:
-    class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Create
+  articles.controller.admin.index.manage:
+    class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Manage
     arguments:
       - '@core.context.frontend'
       - '@articles.view.block.admin.article_form_block'
@@ -18,14 +18,6 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@articles.model.articles_model'
-
-  articles.controller.admin.index.edit:
-    class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit
-    arguments:
-      - '@core.context.frontend'
-      - '@articles.view.block.admin.article_form_block'
-      - '@articles.model.articles_model'
-      - '@articles.validation.admin_form_validation'
 
   articles.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Index
