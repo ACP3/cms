@@ -6,7 +6,6 @@
 
 namespace ACP3\Core\Model\Repository;
 
-
 interface ReaderRepositoryInterface extends TableNameAwareRepositoryInterface
 {
     /**
