@@ -27,8 +27,10 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
     public function galleryExists($galleryId, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period,
-                ['id' => $galleryId, 'time' => $time]) > 0);
+        return ((int)$this->db->fetchColumn(
+            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period,
+                ['id' => $galleryId, 'time' => $time]
+        ) > 0);
     }
 
     /**
@@ -50,7 +52,8 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = $time !== '' ? ' WHERE ' . $this->getPublicationPeriod() : '';
         return $this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->getTableName()}{$where}", ['time' => $time]
+            "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
+            ['time' => $time]
         );
     }
 

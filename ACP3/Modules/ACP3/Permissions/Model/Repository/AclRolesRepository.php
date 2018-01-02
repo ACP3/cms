@@ -19,8 +19,10 @@ class AclRolesRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
      */
     public function roleExists($roleId)
     {
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id',
-                ['id' => $roleId]) > 0);
+        return ((int)$this->db->fetchColumn(
+            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id',
+                ['id' => $roleId]
+        ) > 0);
     }
 
     /**
@@ -32,11 +34,15 @@ class AclRolesRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     public function roleExistsByName($roleName, $roleId = 0)
     {
         if ($roleId !== 0) {
-            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND `name` = ?',
-                    [(int)$roleId, $roleName]) == 1;
+            return !empty($roleName) && $this->db->fetchColumn(
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND `name` = ?',
+                    [(int)$roleId, $roleName]
+            ) == 1;
         } else {
-            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?',
-                    [$roleName]) == 1;
+            return !empty($roleName) && $this->db->fetchColumn(
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?',
+                    [$roleName]
+            ) == 1;
         }
     }
 

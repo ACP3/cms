@@ -65,7 +65,8 @@ class Activate extends Core\Controller\AbstractFrontendAction
 
             return $this->alerts->confirmBox(
                 $this->translator->t(
-                'newsletter', $bool !== false
+                'newsletter',
+                    $bool !== false
                     ? 'activate_success'
                     : 'activate_error'
             ),

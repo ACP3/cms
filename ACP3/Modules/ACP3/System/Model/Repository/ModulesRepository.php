@@ -23,7 +23,8 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     public function getModuleId($moduleName)
     {
         return $this->db->fetchColumn(
-            'SELECT `id` FROM ' . $this->getTableName() . ' WHERE `name` = ?', [$moduleName]
+            'SELECT `id` FROM ' . $this->getTableName() . ' WHERE `name` = ?',
+            [$moduleName]
         );
     }
 
@@ -35,7 +36,8 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     public function getModuleSchemaVersion($moduleName)
     {
         return $this->db->fetchColumn(
-            'SELECT `version` FROM ' . $this->getTableName() . ' WHERE `name` = ?', [$moduleName]
+            'SELECT `version` FROM ' . $this->getTableName() . ' WHERE `name` = ?',
+            [$moduleName]
         );
     }
 
@@ -47,7 +49,8 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     public function moduleExists($moduleName)
     {
         return $this->db->fetchColumn(
-                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?', [$moduleName]
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?',
+            [$moduleName]
         ) > 0;
     }
 
@@ -72,7 +75,8 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     public function getModuleNameById($moduleId)
     {
         return $this->db->fetchColumn(
-            'SELECT `name` FROM ' . $this->getTableName() . ' WHERE `id` = ?', [$moduleId]
+            'SELECT `name` FROM ' . $this->getTableName() . ' WHERE `id` = ?',
+            [$moduleId]
         );
     }
 }

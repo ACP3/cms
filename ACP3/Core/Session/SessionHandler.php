@@ -124,7 +124,8 @@ class SessionHandler extends AbstractSessionHandler
     public function read($sessionId)
     {
         $session = $this->db->fetchColumn(
-            "SELECT `session_data` FROM `{$this->db->getPrefix()}sessions` WHERE `session_id` = ?;", [$sessionId]
+            "SELECT `session_data` FROM `{$this->db->getPrefix()}sessions` WHERE `session_id` = ?;",
+            [$sessionId]
         );
 
         return $session ?: ''; // Return an empty string, if the requested session can't be found

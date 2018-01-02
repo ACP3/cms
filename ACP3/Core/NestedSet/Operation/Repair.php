@@ -1,7 +1,6 @@
 <?php
 namespace ACP3\Core\NestedSet\Operation;
 
-
 class Repair extends AbstractOperation
 {
     public function execute()

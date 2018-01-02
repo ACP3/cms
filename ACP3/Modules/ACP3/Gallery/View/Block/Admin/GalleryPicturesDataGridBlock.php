@@ -35,8 +35,8 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
     public function __construct(
         Context\DataGridBlockContext $context,
         Core\ACL\ACLInterface $acl,
-        GalleryRepository $galleryRepository)
-    {
+        GalleryRepository $galleryRepository
+    ) {
         parent::__construct($context);
 
         $this->acl = $acl;

@@ -135,7 +135,8 @@ class SchemaHelper
     public function moduleIsInstalled($moduleName)
     {
         return $this->db->fetchColumn(
-                "SELECT COUNT(*) FROM {$this->systemModuleRepository->getTableName()} WHERE `name` = ?", [$moduleName]
+            "SELECT COUNT(*) FROM {$this->systemModuleRepository->getTableName()} WHERE `name` = ?",
+            [$moduleName]
         ) == 1;
     }
 }

@@ -23,8 +23,10 @@ class GalleryPicturesRepository extends Core\Model\Repository\AbstractRepository
     public function pictureExists($pictureId, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod('g.') : '';
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = :id AND p.gallery_id = g.id' . $period,
-                ['id' => $pictureId, 'time' => $time]) > 0);
+        return ((int)$this->db->fetchColumn(
+            'SELECT COUNT(*) FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = :id AND p.gallery_id = g.id' . $period,
+                ['id' => $pictureId, 'time' => $time]
+        ) > 0);
     }
 
     /**
@@ -42,8 +44,10 @@ class GalleryPicturesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getGalleryIdFromPictureId($pictureId)
     {
-        return (int)$this->db->fetchColumn('SELECT gallery_id FROM ' . $this->getTableName() . ' WHERE id = ?',
-            [$pictureId]);
+        return (int)$this->db->fetchColumn(
+            'SELECT gallery_id FROM ' . $this->getTableName() . ' WHERE id = ?',
+            [$pictureId]
+        );
     }
 
     /**
@@ -53,8 +57,10 @@ class GalleryPicturesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getLastPictureByGalleryId($galleryId)
     {
-        return (int)$this->db->fetchColumn('SELECT MAX(pic) FROM ' . $this->getTableName() . ' WHERE gallery_id = ?',
-            [$galleryId]);
+        return (int)$this->db->fetchColumn(
+            'SELECT MAX(pic) FROM ' . $this->getTableName() . ' WHERE gallery_id = ?',
+            [$galleryId]
+        );
     }
 
     /**
@@ -85,8 +91,10 @@ class GalleryPicturesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getPreviousPictureId($pictureNumber, $galleryId)
     {
-        return (int)$this->db->fetchColumn('SELECT id FROM ' . $this->getTableName() . ' WHERE pic < ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1',
-            [$pictureNumber, $galleryId]);
+        return (int)$this->db->fetchColumn(
+            'SELECT id FROM ' . $this->getTableName() . ' WHERE pic < ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1',
+            [$pictureNumber, $galleryId]
+        );
     }
 
     /**
@@ -97,8 +105,10 @@ class GalleryPicturesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getNextPictureId($pictureNumber, $galleryId)
     {
-        return (int)$this->db->fetchColumn('SELECT id FROM ' . $this->getTableName() . ' WHERE pic > ? AND gallery_id = ? ORDER BY pic ASC LIMIT 1',
-            [$pictureNumber, $galleryId]);
+        return (int)$this->db->fetchColumn(
+            'SELECT id FROM ' . $this->getTableName() . ' WHERE pic > ? AND gallery_id = ? ORDER BY pic ASC LIMIT 1',
+            [$pictureNumber, $galleryId]
+        );
     }
 
     /**

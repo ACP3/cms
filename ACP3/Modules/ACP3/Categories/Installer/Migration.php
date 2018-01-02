@@ -36,7 +36,7 @@ class Migration extends AbstractMigration
                 "UPDATE `{pre}categories` SET `root_id` = `id`, `parent_id` = 0;"
             ],
             36 => [
-                function() {
+                function () {
                     $this->schemaHelper->getContainer()->get('categories.nested_set.operation.repair')->execute();
 
                     return true;

@@ -126,7 +126,7 @@ class Register extends Core\Controller\AbstractFrontendAction
                         $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'
                     ),
                     $this->appPath->getWebRoot()
-                ));
+                );
             },
             $this->request->getFullPath()
         );

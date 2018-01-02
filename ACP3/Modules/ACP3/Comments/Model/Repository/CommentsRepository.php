@@ -31,7 +31,8 @@ class CommentsRepository extends Core\Model\Repository\AbstractRepository implem
     public function resultsExistByModuleId($moduleId)
     {
         return $this->db->fetchColumn(
-                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?', [$moduleId]
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
+            [$moduleId]
         ) > 0;
     }
 
@@ -47,7 +48,8 @@ class CommentsRepository extends Core\Model\Repository\AbstractRepository implem
         }
 
         return $this->db->fetchColumn(
-            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?', [$moduleId]
+            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
+            [$moduleId]
         );
     }
 
@@ -70,7 +72,8 @@ class CommentsRepository extends Core\Model\Repository\AbstractRepository implem
     public function getLastDateFromIp($ipAddress)
     {
         return $this->db->fetchColumn(
-            'SELECT MAX(`date`) FROM ' . $this->getTableName() . ' WHERE ip = ?', [$ipAddress]
+            'SELECT MAX(`date`) FROM ' . $this->getTableName() . ' WHERE ip = ?',
+            [$ipAddress]
         );
     }
 

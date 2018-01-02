@@ -46,7 +46,8 @@ class PollsRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = empty($time) === false ? ' WHERE start <= :time' : '';
         return (int)$this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->getTableName()}{$where}", ['time' => $time]
+            "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
+            ['time' => $time]
         );
     }
 

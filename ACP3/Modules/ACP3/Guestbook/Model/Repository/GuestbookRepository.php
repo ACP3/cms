@@ -24,7 +24,8 @@ class GuestbookRepository extends Core\Model\Repository\AbstractRepository imple
     public function resultExists($guestbookId)
     {
         return ((int)$this->db->fetchColumn(
-                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $guestbookId]
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id',
+            ['id' => $guestbookId]
             ) > 0);
     }
 
@@ -60,7 +61,9 @@ class GuestbookRepository extends Core\Model\Repository\AbstractRepository imple
      */
     public function getLastDateFromIp($ipAddress)
     {
-        return $this->db->fetchColumn('SELECT MAX(`date`) FROM ' . $this->getTableName() . ' WHERE ip = ?',
-            [$ipAddress]);
+        return $this->db->fetchColumn(
+            'SELECT MAX(`date`) FROM ' . $this->getTableName() . ' WHERE ip = ?',
+            [$ipAddress]
+        );
     }
 }

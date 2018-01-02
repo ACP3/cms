@@ -34,8 +34,10 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      */
     public function resultIsDuplicate(string $title, int $moduleId, int $categoryId)
     {
-        return (int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE title = ? AND module_id = ? AND id != ?",
-                [$title, $moduleId, $categoryId]) > 0;
+        return (int)$this->db->fetchColumn(
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE title = ? AND module_id = ? AND id != ?",
+                [$title, $moduleId, $categoryId]
+        ) > 0;
     }
 
     /**
@@ -93,8 +95,10 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      */
     public function getModuleIdByCategoryId(int $categoryId)
     {
-        return (int)$this->db->fetchColumn("SELECT `module_id` FROM {$this->getTableName()} WHERE `id` = ?",
-            [$categoryId]);
+        return (int)$this->db->fetchColumn(
+            "SELECT `module_id` FROM {$this->getTableName()} WHERE `id` = ?",
+            [$categoryId]
+        );
     }
 
     /**
