@@ -134,4 +134,11 @@ class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
 
         parent::testGetSiteAndPageTitleWithPrefixAndPostfixAndSeparator();
     }
+
+    public function testGetSiteAndPageTitleMetaTitleTakesPrecedenceOverPageTitle()
+    {
+        $this->setUpConfigMockExpectations('', '', 1, 0);
+
+        parent::testGetSiteAndPageTitleMetaTitleTakesPrecedenceOverPageTitle();
+    }
 }
