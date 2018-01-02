@@ -31,28 +31,30 @@ jQuery.fn.highlightTableRow = function (checkboxName) {
 
     $markAllCheckbox
         .closest('table')
-        .on('click', 'tr:has(td :checkbox)', function (e) {
-            const $tableRow = $(this),
-                $tbody = $tableRow.closest('tbody');
+        .on(
+            'click', 'tr:has(td :checkbox)',
+            function (e) {
+                const $tableRow = $(this),
+                    $tbody = $tableRow.closest('tbody');
 
-            if (e.target.type !== 'checkbox') {
-                if (e.target.nodeName === 'A') {
-                    return;
+                if (e.target.type !== 'checkbox') {
+                    if (e.target.nodeName === 'A') {
+                        return;
+                    }
+
+                    const $elem = $('input[name="' + checkboxName + '[]"]', this);
+                    $elem.prop('checked', !$elem.is(':checked'));
                 }
 
-                const $elem = $('input[name="' + checkboxName + '[]"]', this);
-                $elem.prop('checked', !$elem.is(':checked'));
+                $tableRow.toggleClass(cssClassName);
+
+                // Alle Datensätze auf einer Seite wurden markiert
+                $markAllCheckbox.prop(
+                    'checked',
+                    ($tbody.find('input[name="' + checkboxName + '[]"]:visible').length === $tbody.find('tr.' + cssClassName + ':visible').length)
+                );
             }
-
-            $tableRow.toggleClass(cssClassName);
-
-            // Alle Datensätze auf einer Seite wurden markiert
-            $markAllCheckbox.prop(
-                'checked',
-                ($tbody.find('input[name="' + checkboxName + '[]"]:visible').length === $tbody.find('tr.' + cssClassName + ':visible').length)
-            );
-        }
-    );
+        );
 
     return $markAllCheckbox;
 };

@@ -6,7 +6,7 @@
 const argv = require('yargs').argv;
 
 module.exports = (gulp, plugins) => {
-    "use strict";
+    'use strict';
 
     /**
      * Reads the current ACP3 CMS version from the package.json
@@ -20,7 +20,7 @@ module.exports = (gulp, plugins) => {
     }
 
     function escapeRegExp(str) {
-        return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+        return str.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1');
     }
 
     /**
@@ -65,9 +65,9 @@ module.exports = (gulp, plugins) => {
                 }
             ).pipe(plugins.change((content) => {
                 return replaceAll(content, from, bumpedVersion);
-            })).pipe(gulp.dest('./'))
+            })).pipe(gulp.dest('./'));
         } catch (e) {
             plugins.util.log(plugins.util.colors.red(e.message));
         }
-    }
+    };
 };

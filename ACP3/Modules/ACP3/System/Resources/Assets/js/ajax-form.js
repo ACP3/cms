@@ -40,18 +40,20 @@
                     if (this.isFormValid && this.preValidateForm()) {
                         this.processAjaxRequest();
                     }
-                }).on('click', (e) => {
-                if ($(this.element).prop('tagName') === 'A') {
-                    e.preventDefault();
+                })
+                .on('click', (e) => {
+                    if ($(this.element).prop('tagName') === 'A') {
+                        e.preventDefault();
 
-                    this.processAjaxRequest();
-                }
-            }).on('change', () => {
-                if (this.isFormValid === false) {
-                    this.removeAllPreviousErrors();
-                    this.checkFormElementsForErrors(this.element);
-                }
-            });
+                        this.processAjaxRequest();
+                    }
+                })
+                .on('change', () => {
+                    if (this.isFormValid === false) {
+                        this.removeAllPreviousErrors();
+                        this.checkFormElementsForErrors(this.element);
+                    }
+                });
         },
         findSubmitButton: function () {
             $(this.element).find(':submit').click(function () {
@@ -306,5 +308,5 @@ jQuery(document).ready(function ($) {
 
     $(document).on('draw.dt', function (e) {
         $(e.target).find('[data-ajax-form="true"]').formSubmit();
-    })
+    });
 });
