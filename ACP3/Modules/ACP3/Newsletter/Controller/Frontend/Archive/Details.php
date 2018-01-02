@@ -43,8 +43,8 @@ class Details extends Core\Controller\AbstractFrontendAction
     /**
      * @param int $id
      *
-     * @return array
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @return array|\Symfony\Component\HttpFoundation\Response
+     * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
     {
@@ -52,6 +52,10 @@ class Details extends Core\Controller\AbstractFrontendAction
 
         if (!empty($newsletter)) {
             $this->setCacheResponseCacheable();
+
+            $this->block->setData($newsletter);
+
+            return $this->block->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
