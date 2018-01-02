@@ -90,8 +90,6 @@ abstract class AbstractMinifier implements MinifierInterface
         $this->logger = $logger;
     }
 
-    abstract protected function getAssetGroup(): string;
-
     /**
      * Returns the name of the asset group
      *
