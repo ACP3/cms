@@ -241,6 +241,8 @@
             } else {
                 $(this.settings.targetElement).html(responseData);
             }
+
+            this.findSubmitButton();
         },
         hideLoadingLayer: function ($submitButton) {
             $('#loading-layer').removeClass('loading-layer__active');
