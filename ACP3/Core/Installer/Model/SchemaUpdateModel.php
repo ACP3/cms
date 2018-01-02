@@ -75,7 +75,7 @@ class SchemaUpdateModel
      */
     public function updateModules(): array
     {
-        foreach ($this->modules->getAllModulesAlphabeticallySorted() as $moduleInfo) {
+        foreach ($this->modules->getAllModulesTopSorted() as $moduleInfo) {
             $module = strtolower($moduleInfo['dir']);
             $this->results[$module] = $this->updateModule($module);
         }
