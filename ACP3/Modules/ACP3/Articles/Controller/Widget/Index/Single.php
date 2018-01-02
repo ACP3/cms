@@ -53,7 +53,7 @@ class Single extends Core\Controller\AbstractWidgetAction
      * @param int $id
      * @return array
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         if ($this->articleRepository->resultExists((int)$id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable();

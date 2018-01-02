@@ -46,7 +46,7 @@ class Files extends Core\Controller\AbstractFrontendAction
      * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($cat)
+    public function execute(int $cat)
     {
         if ($this->categoryRepository->resultExists($cat) === true) {
             $this->setCacheResponseCacheable();

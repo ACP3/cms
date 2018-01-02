@@ -60,7 +60,7 @@ class Edit extends AbstractFormAction
      * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $file = $this->filesModel->getOneById($id);
 
@@ -81,7 +81,7 @@ class Edit extends AbstractFormAction
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -118,6 +118,7 @@ class Edit extends AbstractFormAction
      * @param string $currentFileName
      *
      * @return array
+     * @throws Core\Validation\Exceptions\ValidationFailedException
      */
     protected function updateAssociatedFile($file, array $formData, $currentFileName)
     {

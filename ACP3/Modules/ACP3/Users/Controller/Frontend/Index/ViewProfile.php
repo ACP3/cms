@@ -39,7 +39,7 @@ class ViewProfile extends Core\Controller\AbstractFrontendAction
      * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $user = $this->user->getUserInfo($id);
 

@@ -51,7 +51,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $guestbook = $this->guestbookModel->getOneById($id);
         if (empty($guestbook) === false) {

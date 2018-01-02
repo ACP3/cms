@@ -45,7 +45,7 @@ class Image extends Core\Controller\AbstractFrontendAction
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id, $action = '')
+    public function execute(int $id, string $action = '')
     {
         set_time_limit(20);
         $picture = $this->pictureRepository->getFileById($id);

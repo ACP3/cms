@@ -42,7 +42,7 @@ class Sort extends AbstractFrontendAction
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id, $action)
+    public function execute(int $id, string $action)
     {
         if (($action === 'up' || $action === 'down') && $this->filesRepository->resultExists($id) === true) {
             if ($action === 'up') {

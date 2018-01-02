@@ -53,7 +53,7 @@ class Pics extends Core\Controller\AbstractFrontendAction
      * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         if ($this->galleryRepository->galleryExists($id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable();

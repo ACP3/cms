@@ -45,7 +45,7 @@ class Latest extends Core\Controller\AbstractWidgetAction
      *
      * @return array
      */
-    public function execute($categoryId = 0)
+    public function execute(int $categoryId = 0)
     {
         $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
 

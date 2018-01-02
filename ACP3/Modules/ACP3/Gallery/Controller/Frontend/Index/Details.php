@@ -53,7 +53,7 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         if ($this->pictureRepository->pictureExists($id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable();

@@ -48,7 +48,7 @@ class Index extends Core\Controller\AbstractWidgetAction
      *
      * @return array
      */
-    public function execute($categoryId = 0, $template = '')
+    public function execute(int $categoryId = 0, string $template = '')
     {
         $this->setCacheResponseCacheable();
 
@@ -66,7 +66,7 @@ class Index extends Core\Controller\AbstractWidgetAction
      * @param array $settings
      * @return array
      */
-    private function fetchFiles($categoryId, array $settings)
+    private function fetchFiles(int $categoryId, array $settings)
     {
         if (!empty($categoryId)) {
             $files = $this->filesRepository->getAllByCategoryId(

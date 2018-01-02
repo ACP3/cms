@@ -36,7 +36,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      *
      * @return array
      */
-    public function execute($cat = 0)
+    public function execute(int $cat = 0)
     {
         $this->setCacheResponseCacheable();
 

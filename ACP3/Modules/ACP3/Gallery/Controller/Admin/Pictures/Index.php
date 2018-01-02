@@ -33,9 +33,8 @@ class Index extends AbstractFrontendAction
     /**
      * @param int $id
      * @return array
-     * @throws Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         return $this->block
             ->setData(['gallery_id' => $id])

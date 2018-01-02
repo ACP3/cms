@@ -58,7 +58,7 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         if ($this->galleryRepository->galleryExists($id) === true) {
             return $this->block
@@ -75,7 +75,7 @@ class Create extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(
             function () use ($id) {

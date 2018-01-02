@@ -74,7 +74,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
      * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
             return $this->block
@@ -93,7 +93,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handlePostAction(
             function () use ($id) {

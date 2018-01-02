@@ -93,9 +93,9 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $dir
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function execute($action = '', $dir = '')
+    public function execute(?string $action, ?string $dir)
     {
         switch ($action) {
             case 'activate':
@@ -117,8 +117,9 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $moduleDirectory
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    protected function enableModule($moduleDirectory)
+    protected function enableModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -151,7 +152,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $moduleDirectory
      * @throws System\Exception\ModuleInstallerException
      */
-    private function checkPreconditions($moduleDirectory)
+    private function checkPreconditions(string $moduleDirectory)
     {
         $info = $this->modules->getModuleInfo($moduleDirectory);
         if (empty($info) || $info['protected'] === true || $info['installable'] === false) {
@@ -166,7 +167,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws System\Exception\ModuleInstallerException
      */
-    protected function moduleInstallerExists($serviceId)
+    protected function moduleInstallerExists(string $serviceId)
     {
         if ($this->schemaRegistrar->has($serviceId) === false) {
             throw new System\Exception\ModuleInstallerException(
@@ -181,7 +182,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
      */
-    protected function checkForFailedModuleDependencies(array $dependencies, $phrase)
+    protected function checkForFailedModuleDependencies(array $dependencies, string $phrase)
     {
         if (!empty($dependencies)) {
             throw new System\Exception\ModuleInstallerException(
@@ -196,11 +197,12 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param string $moduleDirectory
-     * @param int    $active
+     * @param int $active
      *
      * @return bool|int
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    protected function saveModuleState($moduleDirectory, $active)
+    protected function saveModuleState(string $moduleDirectory, int $active)
     {
         return $this->systemModuleRepository->update(['active' => $active], ['name' => $moduleDirectory]);
     }
@@ -214,9 +216,9 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $moduleDirectory
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    protected function disableModule($moduleDirectory)
+    protected function disableModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -250,7 +252,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function installModule($moduleDirectory)
+    protected function installModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -289,7 +291,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function uninstallModule($moduleDirectory)
+    protected function uninstallModule(string $moduleDirectory)
     {
         $result = false;
 

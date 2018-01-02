@@ -37,7 +37,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute($dir = '')
+    public function execute(string $dir = '')
     {
         if (!empty($dir)) {
             return $this->executePost($dir);
@@ -51,7 +51,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost($design)
+    protected function executePost(string $design)
     {
         $bool = false;
 

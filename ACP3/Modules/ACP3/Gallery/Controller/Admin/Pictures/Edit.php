@@ -59,7 +59,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $picture = $this->pictureModel->getOneById($id);
 
@@ -78,7 +78,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         $picture = $this->pictureModel->getOneById($id);
 

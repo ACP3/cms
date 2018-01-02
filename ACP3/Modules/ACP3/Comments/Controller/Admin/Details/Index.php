@@ -36,7 +36,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      *
      * @return array|JsonResponse
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         return $this->block
             ->setData([

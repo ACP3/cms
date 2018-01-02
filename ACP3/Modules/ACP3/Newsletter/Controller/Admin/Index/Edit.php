@@ -52,7 +52,7 @@ class Edit extends AbstractFormAction
      * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $newsletter = $this->newsletterModel->getOneById($id);
 
@@ -71,7 +71,7 @@ class Edit extends AbstractFormAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handlePostAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

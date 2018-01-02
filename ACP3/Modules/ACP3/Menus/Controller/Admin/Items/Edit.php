@@ -51,7 +51,7 @@ class Edit extends AbstractFormAction
      * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $menuItem = $this->menuItemsModel->getOneById($id);
 
@@ -70,7 +70,7 @@ class Edit extends AbstractFormAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(
             function () use ($id) {

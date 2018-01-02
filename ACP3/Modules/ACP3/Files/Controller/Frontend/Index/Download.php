@@ -61,7 +61,7 @@ class Download extends Core\Controller\AbstractFrontendAction
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         if ($this->filesRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $file = $this->filesCache->getCache($id);

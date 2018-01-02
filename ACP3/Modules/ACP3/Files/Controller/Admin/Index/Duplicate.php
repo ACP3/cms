@@ -35,7 +35,7 @@ class Duplicate extends AbstractFrontendAction
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $result = $this->filesModel->duplicate($id);
 

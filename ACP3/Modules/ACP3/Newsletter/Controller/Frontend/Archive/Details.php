@@ -46,7 +46,7 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @return array|\Symfony\Component\HttpFoundation\Response
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $newsletter = $this->newsletterRepository->getOneByIdAndStatus($id, Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED);
 

@@ -53,7 +53,7 @@ class Activate extends Core\Controller\AbstractFrontendAction
      * @param string $hash
      * @return string
      */
-    public function execute($hash)
+    public function execute(string $hash)
     {
         try {
             $this->activateAccountFormValidation->validate(['hash' => $hash]);

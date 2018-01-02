@@ -39,7 +39,7 @@ class CategoryExistsValidationRule extends AbstractValidationRule
             $categoryId = reset($field);
             $createCategory = next($field);
 
-            return !empty($data[$createCategory]) || $this->categoryRepository->resultExists($data[$categoryId]);
+            return !empty($data[$createCategory]) || $this->categoryRepository->resultExists((int)$data[$categoryId]);
         }
 
         return false;

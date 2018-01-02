@@ -36,7 +36,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      *
      * @return array
      */
-    public function execute($module, $entryId)
+    public function execute(string $module, int $entryId)
     {
         $this->setCacheResponseCacheable();
 

@@ -56,7 +56,7 @@ class Order extends Core\Controller\AbstractFrontendAction
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id, $action)
+    public function execute(int $id, string $action)
     {
         if ($this->roleRepository->roleExists($id) === true) {
             $this->sortOperation->execute($id, $action);

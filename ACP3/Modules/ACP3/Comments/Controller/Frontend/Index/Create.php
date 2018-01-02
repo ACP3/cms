@@ -48,7 +48,7 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @param string $redirectUrl
      * @return array
      */
-    public function execute($module, $entryId, $redirectUrl)
+    public function execute(string $module, int $entryId, string $redirectUrl)
     {
         return $this->block
             ->setData([
@@ -66,7 +66,7 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @param string $redirectUrl
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost($module, $entryId, $redirectUrl)
+    public function executePost(string $module, int $entryId, string $redirectUrl)
     {
         return $this->actionHelper->handlePostAction(
             function () use ($module, $entryId, $redirectUrl) {
