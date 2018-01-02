@@ -55,9 +55,12 @@ class GalleryPicturesListingBlock extends AbstractBlock
     {
         $data = $this->getData();
 
+        $galleryTitle = $this->galleryRepository->getGalleryTitle($data['gallery_id']);
+
         $this->breadcrumb
             ->append($this->translator->t('gallery', 'gallery'), 'gallery')
-            ->append($this->galleryRepository->getGalleryTitle($data['gallery_id']));
+            ->append($galleryTitle);
+        $this->title->setPageTitle($galleryTitle);
 
         return [
             'pictures' => $this->galleryCache->getCache($data['gallery_id']),

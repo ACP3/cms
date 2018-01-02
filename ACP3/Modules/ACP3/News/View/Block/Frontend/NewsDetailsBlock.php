@@ -71,5 +71,6 @@ class NewsDetailsBlock extends AbstractBlock
             }
         }
         $this->breadcrumb->append($news['title']);
+        $this->title->setPageTitle($news['title']);
     }
 }

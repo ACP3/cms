@@ -68,5 +68,6 @@ class FileDetailsBlock extends AbstractBlock
         }
 
         $this->breadcrumb->append($this->getData()['title']);
+        $this->title->setPageTitle($this->getData()['title']);
     }
 }

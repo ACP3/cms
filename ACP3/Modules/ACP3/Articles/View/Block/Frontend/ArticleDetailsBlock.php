@@ -44,6 +44,7 @@ class ArticleDetailsBlock extends AbstractBlock
         $article = $this->getData();
 
         $this->breadcrumb->append($article['title']);
+        $this->title->setPageTitle($article['title']);
 
         return [
             'page' => array_merge(
