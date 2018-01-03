@@ -8,12 +8,14 @@ namespace ACP3\Modules\ACP3\Files\View\Block\Admin;
 
 use ACP3\Core\Modules\Modules;
 use ACP3\Core\Settings\SettingsInterface;
+use ACP3\Core\View\Block\AbstractAdminFormBlock;
 use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
+use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
-class FileFormBlock extends AbstractFormBlock
+class FileAdminFormBlock extends AbstractAdminFormBlock
 {
     /**
      * @var SettingsInterface
@@ -31,17 +33,19 @@ class FileFormBlock extends AbstractFormBlock
     /**
      * FileFormBlock constructor.
      * @param FormBlockContext $context
+     * @param FilesRepository $filesRepository
      * @param SettingsInterface $settings
      * @param Modules $modules
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         FormBlockContext $context,
+        FilesRepository $filesRepository,
         SettingsInterface $settings,
         Modules $modules,
         \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $filesRepository);
 
         $this->settings = $settings;
         $this->modules = $modules;

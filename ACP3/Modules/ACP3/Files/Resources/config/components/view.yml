@@ -1,8 +1,9 @@
 services:
-  files.view.block.admin.file_form_block:
-    class: ACP3\Modules\ACP3\Files\View\Block\Admin\FileFormBlock
+  files.view.block.admin.file_admin_form_block:
+    class: ACP3\Modules\ACP3\Files\View\Block\Admin\FileAdminFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+      - '@files.model.repository.files_repository'
       - '@core.config'
       - '@core.modules'
       - '@categories.helpers'

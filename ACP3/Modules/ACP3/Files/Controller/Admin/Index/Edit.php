@@ -27,22 +27,21 @@ class Edit extends AbstractFormAction
      */
     protected $filesModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\AdminFormBlockInterface
      */
     private $block;
 
     /**
      * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\AdminFormBlockInterface $block
      * @param Files\Model\FilesModel $filesModel
-     * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
+     * @param Files\Validation\AdminFormValidation $adminFormValidation
+     * @param Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\AdminFormBlockInterface $block,
         Files\Model\FilesModel $filesModel,
         Files\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
@@ -58,23 +57,13 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return array
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id)
     {
-        $file = $this->filesModel->getOneById($id);
-
-        if (empty($file) === false) {
-            $file['filesize'] = '';
-            $file['file_external'] = '';
-
-            return $this->block
-                ->setRequestData($this->request->getPost()->all())
-                ->setData($file)
-                ->render();
-        }
-
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        return $this->block
+            ->setDataById($id)
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
