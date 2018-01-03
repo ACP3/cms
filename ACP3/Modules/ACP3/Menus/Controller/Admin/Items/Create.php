@@ -20,7 +20,7 @@ class Create extends AbstractFormAction
      */
     protected $menuItemsModel;
     /**
-     * @var Core\View\Block\AdminFormBlockInterface
+     * @var Core\View\Block\RepositoryAwareFormBlockInterface
      */
     private $block;
 
@@ -28,13 +28,13 @@ class Create extends AbstractFormAction
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\AdminFormBlockInterface $block
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
      * @param Menus\Model\MenuItemsModel $menuItemsModel
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\AdminFormBlockInterface $block,
+        Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Menus\Model\MenuItemsModel $menuItemsModel,
         Menus\Validation\MenuItemFormValidation $menuItemFormValidation
     ) {

@@ -7,12 +7,10 @@
 namespace ACP3\Core\View\Block;
 
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
-use ACP3\Core\Helpers\Forms;
-use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Model\Repository\ReaderRepositoryInterface;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 
-abstract class AbstractAdminFormBlock extends AbstractFormBlock implements AdminFormBlockInterface
+abstract class AbstractRepositoryAwareFormBlock extends AbstractFormBlock implements RepositoryAwareFormBlockInterface
 {
     /**
      * @var ReaderRepositoryInterface

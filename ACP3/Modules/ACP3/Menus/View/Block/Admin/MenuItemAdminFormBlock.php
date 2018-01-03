@@ -7,14 +7,14 @@
 namespace ACP3\Modules\ACP3\Menus\View\Block\Admin;
 
 use ACP3\Core\Modules\Modules;
-use ACP3\Core\View\Block\AbstractAdminFormBlock;
+use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields;
 use ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository;
 
-class MenuItemAdminFormBlock extends AbstractAdminFormBlock
+class MenuItemAdminFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var Modules

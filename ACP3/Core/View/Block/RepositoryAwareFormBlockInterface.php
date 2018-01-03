@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\View\Block;
 
-interface AdminFormBlockInterface extends BlockInterface
+interface RepositoryAwareFormBlockInterface extends BlockInterface
 {
     /**
      * @return array

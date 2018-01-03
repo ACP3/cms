@@ -25,7 +25,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $pictureModel;
     /**
-     * @var Core\View\Block\AdminFormBlockInterface
+     * @var Core\View\Block\RepositoryAwareFormBlockInterface
      */
     private $block;
 
@@ -33,14 +33,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\AdminFormBlockInterface $block
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
      * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
      * @param Gallery\Model\GalleryPicturesModel $pictureModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\AdminFormBlockInterface $block,
+        Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\GalleryPicturesModel $pictureModel,
         Gallery\Validation\PictureFormValidation $pictureFormValidation

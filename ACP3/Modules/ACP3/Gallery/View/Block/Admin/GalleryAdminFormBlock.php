@@ -6,10 +6,10 @@
 
 namespace ACP3\Modules\ACP3\Gallery\View\Block\Admin;
 
-use ACP3\Core\View\Block\AbstractAdminFormBlock;
+use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 use ACP3\Modules\ACP3\Gallery\Helpers;
 
-class GalleryAdminFormBlock extends AbstractAdminFormBlock
+class GalleryAdminFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @inheritdoc

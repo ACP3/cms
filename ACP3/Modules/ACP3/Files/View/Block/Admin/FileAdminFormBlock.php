@@ -8,14 +8,13 @@ namespace ACP3\Modules\ACP3\Files\View\Block\Admin;
 
 use ACP3\Core\Modules\Modules;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\View\Block\AbstractAdminFormBlock;
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
-class FileAdminFormBlock extends AbstractAdminFormBlock
+class FileAdminFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var SettingsInterface

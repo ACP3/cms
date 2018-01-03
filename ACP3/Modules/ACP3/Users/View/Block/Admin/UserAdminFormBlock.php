@@ -7,12 +7,12 @@
 namespace ACP3\Modules\ACP3\Users\View\Block\Admin;
 
 use ACP3\Core\ACL\ACLInterface;
-use ACP3\Core\View\Block\AbstractAdminFormBlock;
+use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Users\Helpers\Forms;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-class UserAdminFormBlock extends AbstractAdminFormBlock
+class UserAdminFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var ACLInterface

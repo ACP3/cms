@@ -8,13 +8,13 @@ namespace ACP3\Modules\ACP3\Gallery\View\Block\Admin;
 
 use ACP3\Core\Modules\Modules;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\View\Block\AbstractAdminFormBlock;
+use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
 
-class GalleryPictureAdminFormBlock extends AbstractAdminFormBlock
+class GalleryPictureAdminFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var SettingsInterface

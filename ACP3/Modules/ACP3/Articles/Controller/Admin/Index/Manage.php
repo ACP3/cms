@@ -21,20 +21,20 @@ class Manage extends AbstractFrontendAction
      */
     protected $articlesModel;
     /**
-     * @var Core\View\Block\AdminFormBlockInterface
+     * @var Core\View\Block\RepositoryAwareFormBlockInterface
      */
     private $block;
 
     /**
      * Create constructor.
      * @param Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\AdminFormBlockInterface $block
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
      * @param Articles\Model\ArticlesModel $articlesModel
      * @param Articles\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\AdminFormBlockInterface $block,
+        Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Articles\Model\ArticlesModel $articlesModel,
         Articles\Validation\AdminFormValidation $adminFormValidation
     ) {

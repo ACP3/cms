@@ -7,12 +7,12 @@
 namespace ACP3\Modules\ACP3\Guestbook\View\Block\Admin;
 
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\View\Block\AbstractAdminFormBlock;
+use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
 use ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository;
 
-class GuestbookAdminFormBlock extends AbstractAdminFormBlock
+class GuestbookAdminFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var SettingsInterface

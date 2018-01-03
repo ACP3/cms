@@ -7,12 +7,12 @@
 namespace ACP3\Modules\ACP3\Newsletter\View\Block\Admin;
 
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\View\Block\AbstractAdminFormBlock;
+use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository;
 
-class NewsletterAdminFormBlock extends AbstractAdminFormBlock
+class NewsletterAdminFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var SettingsInterface

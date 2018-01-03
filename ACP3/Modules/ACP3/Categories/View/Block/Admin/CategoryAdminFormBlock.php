@@ -7,12 +7,11 @@
 namespace ACP3\Modules\ACP3\Categories\View\Block\Admin;
 
 use ACP3\Core\Modules\Modules;
-use ACP3\Core\View\Block\AbstractAdminFormBlock;
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 
-class CategoryAdminFormBlock extends AbstractAdminFormBlock
+class CategoryAdminFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var Modules

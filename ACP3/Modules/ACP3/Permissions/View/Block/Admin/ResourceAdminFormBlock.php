@@ -8,12 +8,12 @@ namespace ACP3\Modules\ACP3\Permissions\View\Block\Admin;
 
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Modules\Modules;
-use ACP3\Core\View\Block\AbstractAdminFormBlock;
+use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclResourcesRepository;
 
-class ResourceAdminFormBlock extends AbstractAdminFormBlock
+class ResourceAdminFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var Modules

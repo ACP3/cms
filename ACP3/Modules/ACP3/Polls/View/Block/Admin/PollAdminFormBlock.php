@@ -6,12 +6,12 @@
 
 namespace ACP3\Modules\ACP3\Polls\View\Block\Admin;
 
-use ACP3\Core\View\Block\AbstractAdminFormBlock;
+use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Polls\Model\Repository\PollAnswersRepository;
 use ACP3\Modules\ACP3\Polls\Model\Repository\PollsRepository;
 
-class PollAdminFormBlock extends AbstractAdminFormBlock
+class PollAdminFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var PollAnswersRepository
