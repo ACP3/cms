@@ -71,7 +71,7 @@ class ContactFormBlock extends AbstractFormBlock
         ];
 
         if ($this->user->isAuthenticated() === true) {
-            $user = $this->user->getUserInfo();
+            $user = $this->user->getOneById($this->user->getUserId());
             $defaults['name'] = !empty($user['realname']) ? $user['realname'] : $user['nickname'];
             $defaults['name_disabled'] = true;
             $defaults['mail'] = $user['mail'];

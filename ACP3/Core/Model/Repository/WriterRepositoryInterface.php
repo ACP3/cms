@@ -6,7 +6,7 @@
 
 namespace ACP3\Core\Model\Repository;
 
-interface WriterRepositoryInterface extends TableNameAwareRepositoryInterface
+interface WriterRepositoryInterface
 {
     /**
      * Executes the SQL insert statement

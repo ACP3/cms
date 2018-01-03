@@ -4,21 +4,15 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-/**
- * Created by PhpStorm.
- * User: tinog
- * Date: 01.05.2017
- * Time: 21:40
- */
-
 namespace ACP3\Modules\ACP3\Users\View\Block\Admin;
 
 use ACP3\Core\ACL\ACLInterface;
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractAdminFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Users\Helpers\Forms;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-class UserFormBlock extends AbstractFormBlock
+class UserAdminFormBlock extends AbstractAdminFormBlock
 {
     /**
      * @var ACLInterface
@@ -32,12 +26,17 @@ class UserFormBlock extends AbstractFormBlock
     /**
      * UserFormBlock constructor.
      * @param FormBlockContext $context
+     * @param UserModel $userModel
      * @param ACLInterface $acl
      * @param Forms $userFormsHelpers
      */
-    public function __construct(FormBlockContext $context, ACLInterface $acl, Forms $userFormsHelpers)
-    {
-        parent::__construct($context);
+    public function __construct(
+        FormBlockContext $context,
+        UserModel $userModel,
+        ACLInterface $acl,
+        Forms $userFormsHelpers
+    ) {
+        parent::__construct($context, $userModel);
 
         $this->acl = $acl;
         $this->userFormsHelpers = $userFormsHelpers;

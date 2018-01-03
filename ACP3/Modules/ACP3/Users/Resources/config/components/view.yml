@@ -12,10 +12,11 @@ services:
       - '@core.view.context.form_block_context'
       - '@core.config'
 
-  users.view.block.admin.user_form_block:
-    class: ACP3\Modules\ACP3\Users\View\Block\Admin\UserFormBlock
+  users.view.block.admin.user_admin_form_block:
+    class: ACP3\Modules\ACP3\Users\View\Block\Admin\UserAdminFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+      - '@users.model.user_model'
       - '@core.acl'
       - '@users.helpers.forms'
 

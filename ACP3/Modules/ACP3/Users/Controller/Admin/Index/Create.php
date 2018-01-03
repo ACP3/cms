@@ -29,7 +29,7 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     protected $usersModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\AdminFormBlockInterface
      */
     private $block;
 
@@ -37,7 +37,7 @@ class Create extends Core\Controller\AbstractFrontendAction
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\AdminFormBlockInterface $block
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param Users\Model\UsersModel $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation $adminFormValidation
@@ -45,7 +45,7 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\AdminFormBlockInterface $block,
         Core\Helpers\Secure $secureHelper,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AdminFormValidation $adminFormValidation,

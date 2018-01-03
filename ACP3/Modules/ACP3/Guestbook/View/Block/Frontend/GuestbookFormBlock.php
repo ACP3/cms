@@ -10,9 +10,9 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
+use ACP3\Modules\ACP3\Newsletter;
 use ACP3\Modules\ACP3\System\Installer\Schema as SystemSchema;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
-use ACP3\Modules\ACP3\Newsletter;
 
 class GuestbookFormBlock extends AbstractFormBlock
 {
@@ -110,7 +110,7 @@ class GuestbookFormBlock extends AbstractFormBlock
         ];
 
         if ($this->user->isAuthenticated() === true) {
-            $users = $this->user->getUserInfo();
+            $users = $this->user->getOneById($this->user->getUserId());
             $defaults['name'] = $users['nickname'];
             $defaults['name_disabled'] = true;
             $defaults['mail'] = $users['mail'];

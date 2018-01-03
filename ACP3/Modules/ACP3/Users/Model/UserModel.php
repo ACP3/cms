@@ -7,9 +7,10 @@
 namespace ACP3\Modules\ACP3\Users\Model;
 
 use ACP3\Core\I18n\CountryList;
+use ACP3\Core\Model\Repository\ReaderRepositoryInterface;
 use ACP3\Modules\ACP3\Users;
 
-class UserModel
+class UserModel implements ReaderRepositoryInterface
 {
     const SALT_LENGTH = 16;
 
@@ -59,14 +60,8 @@ class UserModel
      *
      * @return array
      */
-    public function getUserInfo($userId = 0)
+    public function getOneById(int $userId)
     {
-        if (empty($userId) && $this->isAuthenticated() === true) {
-            $userId = $this->getUserId();
-        }
-
-        $userId = (int)$userId;
-
         if (empty($this->userInfo[$userId])) {
             $countries = $this->countryList->worldCountries();
             $info = $this->userRepository->getOneById($userId);

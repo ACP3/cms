@@ -50,7 +50,7 @@ class Edit extends AbstractAction
      */
     public function execute()
     {
-        $user = $this->user->getUserInfo();
+        $user = $this->user->getOneById($this->user->getUserId());
 
         return $this->block
             ->setRequestData($this->request->getPost()->all())

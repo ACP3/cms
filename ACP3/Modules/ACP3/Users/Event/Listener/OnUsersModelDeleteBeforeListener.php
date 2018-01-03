@@ -37,7 +37,7 @@ class OnUsersModelDeleteBeforeListener
         }
 
         foreach ($event->getEntryId() as $item) {
-            $user = $this->userModel->getUserInfo($item);
+            $user = $this->userModel->getOneById($item);
             if ($user['super_user'] == 1) {
                 throw new SuperUserNotDeletableException();
             }

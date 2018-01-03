@@ -32,7 +32,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $usersModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\AdminFormBlockInterface
      */
     private $block;
 
@@ -40,7 +40,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\AdminFormBlockInterface $block
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Model\AuthenticationModel $authenticationModel
      * @param Users\Model\UsersModel $usersModel
@@ -49,7 +49,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\AdminFormBlockInterface $block,
         Core\Helpers\Secure $secureHelper,
         Users\Model\AuthenticationModel $authenticationModel,
         Users\Model\UsersModel $usersModel,
@@ -70,20 +70,13 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id)
     {
-        $user = $this->user->getUserInfo($id);
-
-        if (!empty($user)) {
-            return $this->block
-                ->setRequestData($this->request->getPost()->all())
-                ->setData($user)
-                ->render();
-        }
-
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        return $this->block
+            ->setDataById($id)
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**

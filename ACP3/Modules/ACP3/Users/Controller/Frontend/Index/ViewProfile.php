@@ -41,7 +41,7 @@ class ViewProfile extends Core\Controller\AbstractFrontendAction
      */
     public function execute(int $id)
     {
-        $user = $this->user->getUserInfo($id);
+        $user = $this->user->getOneById($id);
 
         if (!empty($user)) {
             $this->setCacheResponseCacheable();
