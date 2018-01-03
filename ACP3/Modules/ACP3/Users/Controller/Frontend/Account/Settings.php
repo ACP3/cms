@@ -27,7 +27,7 @@ class Settings extends AbstractAction
      */
     protected $authenticationModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\RepositoryAwareFormBlockInterface
      */
     private $block;
 
@@ -35,7 +35,7 @@ class Settings extends AbstractAction
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
      * @param Core\Helpers\Secure $secureHelper
      * @param Users\Model\AuthenticationModel $authenticationModel
      * @param Users\Model\UsersModel $usersModel
@@ -43,7 +43,7 @@ class Settings extends AbstractAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Core\Helpers\Secure $secureHelper,
         Users\Model\AuthenticationModel $authenticationModel,
         Users\Model\UsersModel $usersModel,
@@ -64,8 +64,8 @@ class Settings extends AbstractAction
     public function execute()
     {
         return $this->block
+            ->setDataById($this->user->getUserId())
             ->setRequestData($this->request->getPost()->all())
-            ->setData($this->usersModel->getOneById($this->user->getUserId()))
             ->render();
     }
 

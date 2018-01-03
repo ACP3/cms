@@ -20,7 +20,7 @@ class Edit extends AbstractAction
      */
     protected $usersModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\RepositoryAwareFormBlockInterface
      */
     private $block;
 
@@ -28,13 +28,13 @@ class Edit extends AbstractAction
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
      * @param Users\Model\UsersModel $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation $accountFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AccountFormValidation $accountFormValidation
     ) {
@@ -50,11 +50,9 @@ class Edit extends AbstractAction
      */
     public function execute()
     {
-        $user = $this->user->getOneById($this->user->getUserId());
-
         return $this->block
+            ->setDataById($this->user->getUserId())
             ->setRequestData($this->request->getPost()->all())
-            ->setData($user)
             ->render();
     }
 

@@ -6,11 +6,12 @@
 
 namespace ACP3\Modules\ACP3\Users\View\Block\Frontend;
 
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Users\Helpers\Forms;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-class UserAccountSettingsFormBlock extends AbstractFormBlock
+class UserAccountSettingsFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var Forms
@@ -20,11 +21,12 @@ class UserAccountSettingsFormBlock extends AbstractFormBlock
     /**
      * UserAccountSettingsFormBlock constructor.
      * @param FormBlockContext $context
+     * @param UserModel $userModel
      * @param Forms $userFormsHelper
      */
-    public function __construct(FormBlockContext $context, Forms $userFormsHelper)
+    public function __construct(FormBlockContext $context, UserModel $userModel, Forms $userFormsHelper)
     {
-        parent::__construct($context);
+        parent::__construct($context, $userModel);
 
         $this->userFormsHelper = $userFormsHelper;
     }
