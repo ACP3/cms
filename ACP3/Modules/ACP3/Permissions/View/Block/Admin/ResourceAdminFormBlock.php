@@ -8,11 +8,12 @@ namespace ACP3\Modules\ACP3\Permissions\View\Block\Admin;
 
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Modules\Modules;
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractAdminFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\AclResourcesRepository;
 
-class ResourceFormBlock extends AbstractFormBlock
+class ResourceAdminFormBlock extends AbstractAdminFormBlock
 {
     /**
      * @var Modules
@@ -26,15 +27,17 @@ class ResourceFormBlock extends AbstractFormBlock
     /**
      * ResourceFormBlock constructor.
      * @param FormBlockContext $context
+     * @param AclResourcesRepository $aclResourcesRepository
      * @param Modules $modules
      * @param AclPrivilegesRepository $privilegeRepository
      */
     public function __construct(
         FormBlockContext $context,
+        AclResourcesRepository $aclResourcesRepository,
         Modules $modules,
         AclPrivilegesRepository $privilegeRepository
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $aclResourcesRepository);
 
         $this->modules = $modules;
         $this->privilegeRepository = $privilegeRepository;

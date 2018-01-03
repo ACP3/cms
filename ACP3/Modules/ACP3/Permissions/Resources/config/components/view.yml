@@ -17,10 +17,11 @@ services:
       - '@permissions.model.repository.acl_privileges_repository'
       - '@permissions.cache'
 
-  permissions.view.block.admin.resource_form_block:
-    class: ACP3\Modules\ACP3\Permissions\View\Block\Admin\ResourceFormBlock
+  permissions.view.block.admin.resource_admin_form_block:
+    class: ACP3\Modules\ACP3\Permissions\View\Block\Admin\ResourceAdminFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+      - '@permissions.model.repository.acl_resources_repository'
       - '@core.modules'
       - '@permissions.model.repository.acl_privileges_repository'
 

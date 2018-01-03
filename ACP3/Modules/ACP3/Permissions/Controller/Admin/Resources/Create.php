@@ -20,19 +20,19 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     protected $resourcesModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\AdminFormBlockInterface
      */
     private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\AdminFormBlockInterface $block
      * @param Permissions\Model\AclResourcesModel $resourcesModel
      * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation $resourceFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\AdminFormBlockInterface $block,
         Permissions\Model\AclResourcesModel $resourcesModel,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
