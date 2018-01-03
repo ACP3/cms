@@ -1,8 +1,9 @@
 services:
-  news.view.block.admin.news_form_block:
-    class: ACP3\Modules\ACP3\News\View\Block\Admin\NewsFormBlock
+  news.view.block.admin.news_admin_form_block:
+    class: ACP3\Modules\ACP3\News\View\Block\Admin\NewsAdminFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+      - '@news.model.repository.news_repository'
       - '@core.config'
       - '@core.modules'
       - '@categories.helpers'

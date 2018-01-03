@@ -8,12 +8,13 @@ namespace ACP3\Modules\ACP3\News\View\Block\Admin;
 
 use ACP3\Core\Modules\Modules;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractAdminFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\News\Helpers;
 use ACP3\Modules\ACP3\News\Installer\Schema;
+use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 
-class NewsFormBlock extends AbstractFormBlock
+class NewsAdminFormBlock extends AbstractAdminFormBlock
 {
     /**
      * @var SettingsInterface
@@ -31,17 +32,19 @@ class NewsFormBlock extends AbstractFormBlock
     /**
      * NewsFormBlock constructor.
      * @param FormBlockContext $context
+     * @param NewsRepository $newsRepository
      * @param SettingsInterface $settings
      * @param Modules $modules
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         FormBlockContext $context,
+        NewsRepository $newsRepository,
         SettingsInterface $settings,
         Modules $modules,
         \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $newsRepository);
 
         $this->settings = $settings;
         $this->modules = $modules;
