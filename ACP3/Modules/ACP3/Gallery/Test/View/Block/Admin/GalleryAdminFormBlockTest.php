@@ -8,16 +8,31 @@ namespace ACP3\Modules\ACP3\Gallery\Test\View\Block\Admin;
 
 use ACP3\Core\Test\View\Block\AbstractFormBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
-use ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryFormBlock;
+use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
+use ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryAdminFormBlock;
 
-class GalleryFormBlockTest extends AbstractFormBlockTest
+class GalleryAdminFormBlockTest extends AbstractFormBlockTest
 {
+    /**
+     * @var GalleryRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $repository;
+
+    protected function setUpMockObjects()
+    {
+        parent::setUpMockObjects();
+
+        $this->repository = $this->getMockBuilder(GalleryRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
     /**
      * @inheritdoc
      */
     protected function instantiateBlock(): BlockInterface
     {
-        return new GalleryFormBlock($this->context);
+        return new GalleryAdminFormBlock($this->context, $this->repository);
     }
 
     /**

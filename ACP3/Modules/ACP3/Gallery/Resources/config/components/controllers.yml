@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@gallery.view.block.admin.gallery_form_block'
+      - '@gallery.view.block.admin.gallery_admin_form_block'
       - '@gallery.model.galleries_model'
       - '@gallery.validation.gallery_form_validation'
 
@@ -22,7 +22,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@gallery.view.block.admin.gallery_form_block'
+      - '@gallery.view.block.admin.gallery_admin_form_block'
       - '@gallery.model.galleries_model'
       - '@gallery.validation.gallery_form_validation'
 
