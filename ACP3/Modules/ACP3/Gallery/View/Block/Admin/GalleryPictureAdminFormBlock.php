@@ -8,12 +8,13 @@ namespace ACP3\Modules\ACP3\Gallery\View\Block\Admin;
 
 use ACP3\Core\Modules\Modules;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractAdminFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
+use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
 
-class PictureFormBlock extends AbstractFormBlock
+class GalleryPictureAdminFormBlock extends AbstractAdminFormBlock
 {
     /**
      * @var SettingsInterface
@@ -31,17 +32,19 @@ class PictureFormBlock extends AbstractFormBlock
     /**
      * PictureFormBlock constructor.
      * @param FormBlockContext $context
+     * @param GalleryPicturesRepository $galleryPicturesRepository
      * @param SettingsInterface $settings
      * @param Modules $modules
      * @param GalleryRepository $galleryRepository
      */
     public function __construct(
         FormBlockContext $context,
+        GalleryPicturesRepository $galleryPicturesRepository,
         SettingsInterface $settings,
         Modules $modules,
         GalleryRepository $galleryRepository
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $galleryPicturesRepository);
 
         $this->settings = $settings;
         $this->modules = $modules;

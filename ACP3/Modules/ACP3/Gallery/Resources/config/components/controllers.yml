@@ -45,7 +45,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Create
     arguments:
       - '@core.context.frontend'
-      - '@gallery.view.block.admin.picture_form_block'
+      - '@gallery.view.block.admin.gallery_picture_admin_form_block'
       - '@gallery.model.repository.galleries_repository'
       - '@gallery.model.gallery_pictures_model'
       - '@gallery.validation.picture_form_validation'
@@ -64,7 +64,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Edit
     arguments:
       - '@core.context.frontend'
-      - '@gallery.view.block.admin.picture_form_block'
+      - '@gallery.view.block.admin.gallery_picture_admin_form_block'
       - '@gallery.helpers'
       - '@gallery.model.gallery_pictures_model'
       - '@gallery.validation.picture_form_validation'

@@ -29,10 +29,11 @@ services:
       - '@core.modules'
       - '@core.helpers.date'
 
-  gallery.view.block.admin.picture_form_block:
-    class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\PictureFormBlock
+  gallery.view.block.admin.gallery_picture_admin_form_block:
+    class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryPictureAdminFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+      - '@gallery.model.repository.gallery_pictures_repository'
       - '@core.config'
       - '@core.modules'
       - '@gallery.model.repository.galleries_repository'

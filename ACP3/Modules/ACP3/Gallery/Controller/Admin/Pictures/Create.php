@@ -25,7 +25,7 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     protected $pictureModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\AdminFormBlockInterface
      */
     private $block;
 
@@ -33,14 +33,14 @@ class Create extends Core\Controller\AbstractFrontendAction
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\AdminFormBlockInterface $block
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
      * @param Gallery\Model\GalleryPicturesModel $pictureModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\AdminFormBlockInterface $block,
         Gallery\Model\Repository\GalleryRepository $galleryRepository,
         Gallery\Model\GalleryPicturesModel $pictureModel,
         Gallery\Validation\PictureFormValidation $pictureFormValidation
