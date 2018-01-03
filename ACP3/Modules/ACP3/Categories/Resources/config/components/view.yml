@@ -1,10 +1,10 @@
 services:
-  categories.view.block.admin.category_form_block:
-    class: ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoryFormBlock
+  categories.view.block.admin.category_admin_form_block:
+    class: ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoryAdminFormBlock
     arguments:
       - '@core.view.context.form_block_context'
-      - '@core.modules'
       - '@categories.model.repository.categories_repository'
+      - '@core.modules'
 
   categories.view.block.admin.categories_settings_form_block:
     class: ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoriesSettingsFormBlock

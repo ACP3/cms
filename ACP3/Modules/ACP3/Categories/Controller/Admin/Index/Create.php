@@ -24,19 +24,20 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     protected $categoriesModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\AdminFormBlockInterface
      */
     private $block;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * Create constructor.
+     * @param Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\AdminFormBlockInterface $block
      * @param Categories\Model\CategoriesModel $categoriesModel
-     * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
+     * @param Categories\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\AdminFormBlockInterface $block,
         Categories\Model\CategoriesModel $categoriesModel,
         Categories\Validation\AdminFormValidation $adminFormValidation
         ) {

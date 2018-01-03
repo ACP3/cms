@@ -11,7 +11,7 @@ use ACP3\Core\View\Block\BlockInterface;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository;
 use ACP3\Modules\ACP3\Articles\View\Block\Admin\ArticleAdminFormBlock;
 
-class ArticleFormBlockTest extends AbstractFormBlockTest
+class ArticleAdminFormBlockTest extends AbstractFormBlockTest
 {
     /**
      * @var ArticlesRepository|\PHPUnit_Framework_MockObject_MockObject

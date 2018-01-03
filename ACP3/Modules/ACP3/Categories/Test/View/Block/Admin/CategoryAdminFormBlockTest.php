@@ -10,9 +10,9 @@ use ACP3\Core\Modules\Modules;
 use ACP3\Core\Test\View\Block\AbstractFormBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
-use ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoryFormBlock;
+use ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoryAdminFormBlock;
 
-class CategoryFormBlockTest extends AbstractFormBlockTest
+class CategoryAdminFormBlockTest extends AbstractFormBlockTest
 {
 
     /**
@@ -41,7 +41,7 @@ class CategoryFormBlockTest extends AbstractFormBlockTest
         $categoriesRepository->expects($this->never())
             ->method('getAllByModuleId');
 
-        return new CategoryFormBlock($this->context, $modules, $categoriesRepository);
+        return new CategoryAdminFormBlock($this->context, $categoriesRepository, $modules);
     }
 
     /**

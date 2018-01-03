@@ -24,19 +24,20 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $categoriesModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\AdminFormBlockInterface
      */
     private $block;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * Edit constructor.
+     * @param Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\AdminFormBlockInterface $block
      * @param Categories\Model\CategoriesModel $categoriesModel
-     * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
+     * @param Categories\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\AdminFormBlockInterface $block,
         Categories\Model\CategoriesModel $categoriesModel,
         Categories\Validation\AdminFormValidation $adminFormValidation
     ) {
@@ -51,20 +52,13 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id)
     {
-        $category = $this->categoriesModel->getOneById($id);
-
-        if (empty($category) === false) {
-            return $this->block
-                ->setData($category)
-                ->setRequestData($this->request->getPost()->all())
-                ->render();
-        }
-
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        return $this->block
+            ->setDataById($id)
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**

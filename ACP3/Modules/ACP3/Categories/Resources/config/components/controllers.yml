@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@categories.view.block.admin.category_form_block'
+      - '@categories.view.block.admin.category_admin_form_block'
       - '@categories.model.categories_model'
       - '@categories.validation.admin_form_validation'
 
@@ -18,7 +18,7 @@ services:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@categories.view.block.admin.category_form_block'
+      - '@categories.view.block.admin.category_admin_form_block'
       - '@categories.model.categories_model'
       - '@categories.validation.admin_form_validation'
 

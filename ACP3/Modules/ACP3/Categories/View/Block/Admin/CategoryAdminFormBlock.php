@@ -7,11 +7,12 @@
 namespace ACP3\Modules\ACP3\Categories\View\Block\Admin;
 
 use ACP3\Core\Modules\Modules;
+use ACP3\Core\View\Block\AbstractAdminFormBlock;
 use ACP3\Core\View\Block\AbstractFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 
-class CategoryFormBlock extends AbstractFormBlock
+class CategoryAdminFormBlock extends AbstractAdminFormBlock
 {
     /**
      * @var Modules
@@ -25,12 +26,12 @@ class CategoryFormBlock extends AbstractFormBlock
     /**
      * CategoryFormBlock constructor.
      * @param FormBlockContext $context
-     * @param Modules $modules
      * @param CategoriesRepository $categoriesRepository
+     * @param Modules $modules
      */
-    public function __construct(FormBlockContext $context, Modules $modules, CategoriesRepository $categoriesRepository)
+    public function __construct(FormBlockContext $context, CategoriesRepository $categoriesRepository, Modules $modules)
     {
-        parent::__construct($context);
+        parent::__construct($context, $categoriesRepository);
 
         $this->modules = $modules;
         $this->categoriesRepository = $categoriesRepository;
@@ -48,10 +49,7 @@ class CategoryFormBlock extends AbstractFormBlock
         return [
             'form' => array_merge($data, $this->getRequestData()),
             'category_tree' => $this->fetchCategoryTree(
-                $data['parent_id'],
-                $data['left_id'],
-                $data['right_id'],
-                $data['module_id']
+                $data['module_id'], $data['parent_id'], $data['left_id'], $data['right_id']
             ),
             'mod_list' => $this->fetchModules(),
             'form_token' => $this->formToken->renderFormToken()
@@ -75,16 +73,16 @@ class CategoryFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @param int $parentId
-     * @param int $leftId
-     * @param int $rightId
-     * @param int $moduleId
+     * @param int|null $moduleId
+     * @param int|null $parentId
+     * @param int|null $leftId
+     * @param int|null $rightId
      * @return array
      */
-    private function fetchCategoryTree(int $parentId = 0, int $leftId = 0, int $rightId = 0, int $moduleId = 0): array
+    private function fetchCategoryTree(?int $moduleId, ?int $parentId, ?int $leftId, ?int $rightId): array
     {
         $categories = [];
-        if ($moduleId !== 0) {
+        if ($moduleId !== null) {
             $categories = $this->categoriesRepository->getAllByModuleId($moduleId);
             $cCategories = count($categories);
             for ($i = 0; $i < $cCategories; ++$i) {
@@ -106,6 +104,6 @@ class CategoryFormBlock extends AbstractFormBlock
      */
     public function getDefaultData(): array
     {
-        return ['title' => '', 'description' => '', 'parent_id' => 0, 'left_id' => 0, 'right_id' => 0, 'module_id' => 0];
+        return ['title' => '', 'description' => '', 'parent_id' => 0, 'left_id' => 0, 'right_id' => 0, 'module_id' => null];
     }
 }
