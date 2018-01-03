@@ -7,13 +7,14 @@
 namespace ACP3\Modules\ACP3\Menus\View\Block\Admin;
 
 use ACP3\Core\Modules\Modules;
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractAdminFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields;
 use ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository;
 
-class MenuItemFormBlock extends AbstractFormBlock
+class MenuItemAdminFormBlock extends AbstractAdminFormBlock
 {
     /**
      * @var Modules
@@ -31,15 +32,17 @@ class MenuItemFormBlock extends AbstractFormBlock
     /**
      * MenuItemFormBlock constructor.
      * @param FormBlockContext $context
+     * @param MenuItemsRepository $menuItemsRepository
      * @param Modules $modules
      * @param MenuItemFormFields $menuItemFormFields
      */
     public function __construct(
         FormBlockContext $context,
+        MenuItemsRepository $menuItemsRepository,
         Modules $modules,
         MenuItemFormFields $menuItemFormFields
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $menuItemsRepository);
 
         $this->modules = $modules;
         $this->menuItemFormFields = $menuItemFormFields;

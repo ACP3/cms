@@ -20,7 +20,7 @@ class Edit extends AbstractFormAction
      */
     protected $menuItemsModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\AdminFormBlockInterface
      */
     private $block;
 
@@ -28,13 +28,13 @@ class Edit extends AbstractFormAction
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\AdminFormBlockInterface $block
      * @param Menus\Model\MenuItemsModel $menuItemsModel
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\AdminFormBlockInterface $block,
         Menus\Model\MenuItemsModel $menuItemsModel,
         Menus\Validation\MenuItemFormValidation $menuItemFormValidation
     ) {
@@ -49,20 +49,13 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return array
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id)
     {
-        $menuItem = $this->menuItemsModel->getOneById($id);
-
-        if (empty($menuItem) === false) {
-            return $this->block
-                ->setRequestData($this->request->getPost()->all())
-                ->setData($menuItem)
-                ->render();
-        }
-
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        return $this->block
+            ->setDataById($id)
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**

@@ -31,7 +31,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Create
     arguments:
       - '@core.context.frontend'
-      - '@menus.view.block.admin.menu_item_form_block'
+      - '@menus.view.block.admin.menu_item_admin_form_block'
       - '@menus.model.menu_items_model'
       - '@menus.validation.menu_item_form_validation'
 
@@ -45,7 +45,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Edit
     arguments:
       - '@core.context.frontend'
-      - '@menus.view.block.admin.menu_item_form_block'
+      - '@menus.view.block.admin.menu_item_admin_form_block'
       - '@menus.model.menu_items_model'
       - '@menus.validation.menu_item_form_validation'
 

@@ -13,10 +13,11 @@ services:
       - '@menus.model.repository.menus_repository'
       - '@menus.helpers.menuitemslist'
 
-  menus.view.block.admin.menu_item_form_block:
-    class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuItemFormBlock
+  menus.view.block.admin.menu_item_admin_form_block:
+    class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuItemAdminFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+      - '@menus.model.repository.menu_items_repository'
       - '@core.modules'
       - '@menus.helpers.menuitemformfields'
     calls:
