@@ -20,7 +20,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $seoModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\AdminFormBlockInterface
      */
     private $block;
 
@@ -28,13 +28,13 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\AdminFormBlockInterface $block
      * @param Seo\Model\SeoModel $seoModel
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\AdminFormBlockInterface $block,
         Seo\Model\SeoModel $seoModel,
         Seo\Validation\AdminFormValidation $adminFormValidation
     ) {
@@ -49,20 +49,13 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id)
     {
-        $seo = $this->seoModel->getOneById($id);
-
-        if (empty($seo) === false) {
-            return $this->block
-                ->setRequestData($this->request->getPost()->all())
-                ->setData($seo)
-                ->render();
-        }
-
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        return $this->block
+            ->setDataById($id)
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**

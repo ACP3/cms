@@ -20,7 +20,7 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     protected $seoModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\AdminFormBlockInterface
      */
     private $block;
 
@@ -28,13 +28,13 @@ class Create extends Core\Controller\AbstractFrontendAction
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\AdminFormBlockInterface $block
      * @param Seo\Model\SeoModel $seoModel
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\AdminFormBlockInterface $block,
         Seo\Model\SeoModel $seoModel,
         Seo\Validation\AdminFormValidation $adminFormValidation
     ) {

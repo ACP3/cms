@@ -7,10 +7,11 @@ services:
     calls:
       - ['setDataGridRepository', ['@seo.model.repository.seo_data_grid_repository']]
 
-  seo.view.block.admin.seo_form_block:
-    class: ACP3\Modules\ACP3\Seo\View\Block\Admin\SeoFormBlock
+  seo.view.block.admin.seo_admin_form_block:
+    class: ACP3\Modules\ACP3\Seo\View\Block\Admin\SeoAdminFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+      - '@seo.model.repository.seo_repository'
       - '@seo.helper.meta_form_fields'
 
   seo.view.block.admin.seo_settings_form_block:
