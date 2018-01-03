@@ -61,7 +61,7 @@ class GalleryPictureAdminFormBlock extends AbstractAdminFormBlock
         $galleryTitle = $this->galleryRepository->getGalleryTitle($data['gallery_id']);
 
         $this->breadcrumb
-            ->append($galleryTitle, 'acp/gallery/index/edit/id_' . $data['gallery_id']);
+            ->append($galleryTitle, 'acp/gallery/pictures/index/id_' . $data['gallery_id']);
 
         if (!empty($data['pic'])) {
             $this->breadcrumb
