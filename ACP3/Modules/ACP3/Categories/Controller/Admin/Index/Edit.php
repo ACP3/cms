@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Categories\Controller\Admin\Index
- */
 class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -53,7 +49,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      *
      * @return array
      */
-    public function execute(int $id)
+    public function execute(?int $id)
     {
         return $this->block
             ->setDataById($id)
@@ -65,7 +61,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost(int $id)
+    public function executePost(?int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -73,14 +69,17 @@ class Edit extends Core\Controller\AbstractFrontendAction
 
             $this->adminFormValidation
                 ->setFile($file)
-                ->setSettings($this->config->getSettings(Categories\Installer\Schema::MODULE_NAME))
                 ->setCategoryId($id)
                 ->validate($formData);
 
             if (empty($file) === false) {
-                $category = $this->categoriesModel->getOneById($id);
                 $upload = new Core\Helpers\Upload($this->appPath, Categories\Installer\Schema::MODULE_NAME);
-                $upload->removeUploadedFile($category['picture']);
+
+                if ($id !== null) {
+                    $category = $this->categoriesModel->getOneById($id);
+                    $upload->removeUploadedFile($category['picture']);
+                }
+
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $formData['picture'] = $result['name'];
             }

@@ -4,6 +4,7 @@ services:
     arguments:
       - '@core.i18n.translator'
       - '@core.validator'
+      - '@core.config'
       - '@categories.model.repository.categories_repository'
 
   categories.validation.admin_settings_form_validation:

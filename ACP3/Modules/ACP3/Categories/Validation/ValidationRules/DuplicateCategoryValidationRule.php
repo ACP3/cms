@@ -41,13 +41,13 @@ class DuplicateCategoryValidationRule extends AbstractValidationRule
 
         $params = array_merge([
             'module_id' => 0,
-            'category_id' => ''
+            'category_id' => 0
         ], $extra);
 
         return !$this->categoryRepository->resultIsDuplicate(
             $data,
             $params['module_id'],
-            $params['category_id']
+            (int)$params['category_id']
         );
     }
 }
