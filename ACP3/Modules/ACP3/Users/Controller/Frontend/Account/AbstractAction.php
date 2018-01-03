@@ -15,6 +15,11 @@ use ACP3\Core\Controller\AbstractFrontendAction;
  */
 abstract class AbstractAction extends AbstractFrontendAction
 {
+    /**
+     * @return $this|void
+     * @throws UnauthorizedAccessException
+     * @throws \ACP3\Core\ACL\Exception\AccessForbiddenException
+     */
     public function preDispatch()
     {
         parent::preDispatch();
