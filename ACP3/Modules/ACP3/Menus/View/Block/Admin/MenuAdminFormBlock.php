@@ -6,9 +6,9 @@
 
 namespace ACP3\Modules\ACP3\Menus\View\Block\Admin;
 
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractAdminFormBlock;
 
-class MenuFormBlock extends AbstractFormBlock
+class MenuAdminFormBlock extends AbstractAdminFormBlock
 {
     /**
      * @inheritdoc

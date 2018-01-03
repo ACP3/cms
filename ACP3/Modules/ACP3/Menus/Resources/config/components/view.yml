@@ -1,8 +1,9 @@
 services:
-  menus.view.block.admin.menu_form_block:
-    class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuFormBlock
+  menus.view.block.admin.menu_admin_form_block:
+    class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuAdminFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+      - '@menus.model.repository.menus_repository'
 
   menus.view.block.admin.menus_listing_block:
     class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenusListingBlock
