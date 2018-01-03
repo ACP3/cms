@@ -5,7 +5,6 @@
         <item key="admin_index_create">Neuen Artikel erstellen</item>
         <item key="admin_index_delete">Artikel löschen</item>
         <item key="admin_index_edit">Artikel bearbeiten</item>
-        <item key="admin_index_manage">Artikel erstellen/bearbeiten</item>
         <item key="articles">Artikel</item>
         <item key="latest_articles">Neueste Artikel</item>
         <item key="page_statements">Seitenangaben</item>

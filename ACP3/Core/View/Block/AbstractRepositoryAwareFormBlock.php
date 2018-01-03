@@ -16,6 +16,10 @@ abstract class AbstractRepositoryAwareFormBlock extends AbstractFormBlock implem
      * @var ReaderRepositoryInterface
      */
     private $repository;
+    /**
+     * @var int|null
+     */
+    private $id;
 
     /**
      * AbstractFormTemplate constructor.
@@ -40,6 +44,8 @@ abstract class AbstractRepositoryAwareFormBlock extends AbstractFormBlock implem
             return $this;
         }
 
+        $this->id = $id;
+
         $data = $this->repository->getOneById($id);
 
         if (empty($data)) {
@@ -49,5 +55,13 @@ abstract class AbstractRepositoryAwareFormBlock extends AbstractFormBlock implem
         $this->setData($data);
 
         return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    protected function getId(): ?int
+    {
+        return $this->id;
     }
 }

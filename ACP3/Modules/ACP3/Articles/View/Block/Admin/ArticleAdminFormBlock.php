@@ -34,9 +34,8 @@ class ArticleAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $data = $this->getData();
 
         $this->breadcrumb->setLastStepReplacement(
-            $this->translator->t('articles', empty($data['title']) ? 'admin_index_create' : 'admin_index_edit')
+            $this->translator->t('articles', !$this->getId() ? 'admin_index_create' : 'admin_index_edit')
         );
-
         $this->title->setPageTitlePrefix($data['title']);
 
         return [
@@ -44,15 +43,15 @@ class ArticleAdminFormBlock extends AbstractRepositoryAwareFormBlock
             'form' => array_merge($data, $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken(),
             'SEO_URI_PATTERN' => Helpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => $this->getSeoRouteName((int)$data['id'])
+            'SEO_ROUTE_NAME' => $this->getSeoRouteName($this->getId())
         ];
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      * @return string
      */
-    private function getSeoRouteName(int $id): string
+    private function getSeoRouteName(?int $id): string
     {
         return !empty($id) ? sprintf(Helpers::URL_KEY_PATTERN, $id) : '';
     }
