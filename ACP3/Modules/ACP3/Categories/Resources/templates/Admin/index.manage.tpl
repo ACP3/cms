@@ -6,7 +6,9 @@
     {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength="120" label={lang t="categories|title"}}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="description" value=$form.description maxlength="120" label={lang t="system|description"}}
     {include file="asset:System/Partials/form_group.input_file.tpl" name="picture" label={lang t="categories|picture"}}
-    {block CATEGORIES_MODULE}
+    {if !empty($form.module_id)}
+        <input type="hidden" name="module_id" value="{$form.module_id}">
+    {else}
         <div class="form-group">
             <label for="module-id" class="col-sm-2 control-label required">{lang t="categories|module"}</label>
 
@@ -18,7 +20,7 @@
                 </select>
             </div>
         </div>
-    {/block}
+    {/if}
     {if !empty($category_tree)}
         <div class="form-group">
             <label for="parent-id" class="col-sm-2 control-label">{lang t="categories|superior_category"}</label>

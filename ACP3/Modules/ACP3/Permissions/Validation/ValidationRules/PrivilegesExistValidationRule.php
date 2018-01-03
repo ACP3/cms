@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Modules\ACP3\Permissions\Validation\ValidationRules;
 
+use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository;
 
@@ -73,7 +74,7 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
     protected function isValidPrivilege($privilegeId, array $privilege, $permission)
     {
         return $privilegeId == $privilege['id']
-        && $permission >= ACL\PermissionEnum::DENY_ACCESS
-        && $permission <= ACL\PermissionEnum::INHERIT_ACCESS;
+        && $permission >= PermissionEnum::DENY_ACCESS
+        && $permission <= PermissionEnum::INHERIT_ACCESS;
     }
 }

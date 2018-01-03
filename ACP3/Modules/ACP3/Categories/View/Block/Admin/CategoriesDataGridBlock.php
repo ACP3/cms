@@ -90,7 +90,7 @@ class CategoriesDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#categories-data-grid',
             'resource_path_delete' => 'admin/categories/index/delete',
-            'resource_path_edit' => 'admin/categories/index/edit'
+            'resource_path_edit' => 'admin/categories/index/manage'
         ]);
 
         $grid = $dataGrid->render();

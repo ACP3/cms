@@ -1,12 +1,4 @@
 services:
-  categories.controller.admin.index.create:
-    class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@categories.view.block.admin.category_admin_form_block'
-      - '@categories.model.categories_model'
-      - '@categories.validation.admin_form_validation'
-
   categories.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Delete
     arguments:
@@ -14,8 +6,8 @@ services:
       - '@categories.model.categories_model'
       - '@categories.cache'
 
-  categories.controller.admin.index.edit:
-    class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Edit
+  categories.controller.admin.index.manage:
+    class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Manage
     arguments:
       - '@core.context.frontend'
       - '@categories.view.block.admin.category_admin_form_block'

@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Manage extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation
