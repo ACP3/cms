@@ -21,7 +21,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@newsletter.view.block.admin.newsletter_form_block'
+      - '@newsletter.view.block.admin.newsletter_admin_form_block'
       - '@newsletter.model.newsletters_model'
       - '@newsletter.validation.admin_form_validation'
       - '@newsletter.helper.sendnewsletter'
@@ -36,7 +36,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@newsletter.view.block.admin.newsletter_form_block'
+      - '@newsletter.view.block.admin.newsletter_admin_form_block'
       - '@newsletter.model.newsletters_model'
       - '@newsletter.validation.admin_form_validation'
       - '@newsletter.helper.sendnewsletter'

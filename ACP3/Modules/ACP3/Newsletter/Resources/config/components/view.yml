@@ -13,10 +13,11 @@ services:
     calls:
       - ['setDataGridRepository', ['@newsletter.model.repository.newsletters_data_grid_repository']]
 
-  newsletter.view.block.admin.newsletter_form_block:
-    class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterFormBlock
+  newsletter.view.block.admin.newsletter_admin_form_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterAdminFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+      - '@newsletter.model.repository.newsletters_repository'
       - '@core.config'
 
   newsletter.view.block.admin.newsletter_settings_form_block:

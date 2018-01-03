@@ -7,11 +7,12 @@
 namespace ACP3\Modules\ACP3\Newsletter\View\Block\Admin;
 
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractAdminFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository;
 
-class NewsletterFormBlock extends AbstractFormBlock
+class NewsletterAdminFormBlock extends AbstractAdminFormBlock
 {
     /**
      * @var SettingsInterface
@@ -21,11 +22,15 @@ class NewsletterFormBlock extends AbstractFormBlock
     /**
      * NewsletterFormBlock constructor.
      * @param FormBlockContext $context
+     * @param NewslettersRepository $newslettersRepository
      * @param SettingsInterface $settings
      */
-    public function __construct(FormBlockContext $context, SettingsInterface $settings)
-    {
-        parent::__construct($context);
+    public function __construct(
+        FormBlockContext $context,
+        NewslettersRepository $newslettersRepository,
+        SettingsInterface $settings
+    ) {
+        parent::__construct($context, $newslettersRepository);
 
         $this->settings = $settings;
     }
