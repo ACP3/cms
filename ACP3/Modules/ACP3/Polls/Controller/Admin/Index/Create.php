@@ -19,19 +19,19 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     protected $pollsModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\AdminFormBlockInterface
      */
     private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\AdminFormBlockInterface $block
      * @param Polls\Model\PollsModel $pollsModel
      * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation $pollsValidator
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\AdminFormBlockInterface $block,
         Polls\Model\PollsModel $pollsModel,
         Polls\Validation\AdminFormValidation $pollsValidator
     ) {
