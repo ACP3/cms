@@ -1,6 +1,6 @@
 services:
-  articles.view.block.admin.article_form_block:
-    class: ACP3\Modules\ACP3\Articles\View\Block\Admin\ArticleFormBlock
+  articles.view.block.admin.article_admin_form_block:
+    class: ACP3\Modules\ACP3\Articles\View\Block\Admin\ArticleAdminFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@articles.model.repository.articles_repository'
