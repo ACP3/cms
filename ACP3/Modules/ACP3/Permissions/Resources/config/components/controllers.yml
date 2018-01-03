@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@permissions.view.block.admin.role_form_block'
+      - '@permissions.view.block.admin.role_admin_form_block'
       - '@permissions.model.acl_roles_model'
       - '@permissions.model.acl_rules_model'
       - '@permissions.validation.role_form_validation'
@@ -19,7 +19,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@permissions.view.block.admin.role_form_block'
+      - '@permissions.view.block.admin.role_admin_form_block'
       - '@permissions.model.acl_roles_model'
       - '@permissions.model.acl_rules_model'
       - '@permissions.validation.role_form_validation'

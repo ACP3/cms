@@ -23,7 +23,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $rulesModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\AdminFormBlockInterface
      */
     private $block;
 
@@ -31,14 +31,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\AdminFormBlockInterface $block
      * @param Permissions\Model\AclRolesModel $rolesModel
      * @param Permissions\Model\AclRulesModel $rulesModel
      * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\AdminFormBlockInterface $block,
         Permissions\Model\AclRolesModel $rolesModel,
         Permissions\Model\AclRulesModel $rulesModel,
         Permissions\Validation\RoleFormValidation $roleFormValidation
@@ -55,20 +55,13 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id)
     {
-        $role = $this->rolesModel->getOneById($id);
-
-        if (!empty($role)) {
-            return $this->block
-                ->setRequestData($this->request->getPost()->all())
-                ->setData($role)
-                ->render();
-        }
-
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        return $this->block
+            ->setDataById($id)
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
