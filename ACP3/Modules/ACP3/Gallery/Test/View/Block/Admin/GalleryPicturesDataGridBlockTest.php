@@ -61,7 +61,6 @@ class GalleryPicturesDataGridBlockTest extends AbstractDataGridBlockTest
             ->willReturn([
                 'title' => 'Test-Gallery'
             ]);
-
     }
 
     public function testRenderReturnsArrayWithExpectedKeys()
