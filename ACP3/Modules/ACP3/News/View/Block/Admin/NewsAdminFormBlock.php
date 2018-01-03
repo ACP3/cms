@@ -72,7 +72,7 @@ class NewsAdminFormBlock extends AbstractRepositoryAwareFormBlock
             'form' => array_merge($news, $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken(),
             'SEO_URI_PATTERN' => Helpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => $this->getSeoRouteName((int)$news['id'])
+            'SEO_ROUTE_NAME' => $this->getSeoRouteName($this->getId())
         ];
     }
 
@@ -107,10 +107,10 @@ class NewsAdminFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      * @return string
      */
-    private function getSeoRouteName(int $id): string
+    private function getSeoRouteName(?int $id): string
     {
         return !empty($id) ? sprintf(Helpers::URL_KEY_PATTERN, $id) : '';
     }
