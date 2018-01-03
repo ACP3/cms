@@ -6,10 +6,11 @@ services:
     calls:
       - ['setDataGridRepository', ['@guestbook.model.repository.guestbook_data_grid_repository']]
 
-  guestbook.view.block.admin.guestbook_form_block:
-    class: ACP3\Modules\ACP3\Guestbook\View\Block\Admin\GuestbookFormBlock
+  guestbook.view.block.admin.guestbook_admin_form_block:
+    class: ACP3\Modules\ACP3\Guestbook\View\Block\Admin\GuestbookAdminFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+      - '@guestbook.model.repository.guestbook_repository'
       - '@core.config'
 
   guestbook.view.block.admin.guestbook_settings_form_block:

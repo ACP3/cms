@@ -20,7 +20,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     private $guestbookModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\AdminFormBlockInterface
      */
     private $block;
 
@@ -28,13 +28,13 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\AdminFormBlockInterface $block
      * @param Guestbook\Model\GuestbookModel $guestbookModel
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\AdminFormBlockInterface $block,
         Guestbook\Model\GuestbookModel $guestbookModel,
         Guestbook\Validation\AdminFormValidation $adminFormValidation
     ) {
@@ -49,19 +49,13 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id)
     {
-        $guestbook = $this->guestbookModel->getOneById($id);
-        if (empty($guestbook) === false) {
-            return $this->block
-                ->setRequestData($this->request->getPost()->all())
-                ->setData($guestbook)
-                ->render();
-        }
-
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        return $this->block
+            ->setDataById($id)
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**

@@ -6,9 +6,9 @@
 
 namespace ACP3\Modules\ACP3\Comments\View\Block\Admin;
 
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractAdminFormBlock;
 
-class CommentFormBlock extends AbstractFormBlock
+class CommentAdminFormBlock extends AbstractAdminFormBlock
 {
     /**
      * @inheritdoc

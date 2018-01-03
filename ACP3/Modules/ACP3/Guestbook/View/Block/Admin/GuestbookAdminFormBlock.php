@@ -7,11 +7,12 @@
 namespace ACP3\Modules\ACP3\Guestbook\View\Block\Admin;
 
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractAdminFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
+use ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository;
 
-class GuestbookFormBlock extends AbstractFormBlock
+class GuestbookAdminFormBlock extends AbstractAdminFormBlock
 {
     /**
      * @var SettingsInterface
@@ -21,11 +22,15 @@ class GuestbookFormBlock extends AbstractFormBlock
     /**
      * GuestbookFormBlock constructor.
      * @param FormBlockContext $context
+     * @param GuestbookRepository $repository
      * @param SettingsInterface $settings
      */
-    public function __construct(FormBlockContext $context, SettingsInterface $settings)
-    {
-        parent::__construct($context);
+    public function __construct(
+        FormBlockContext $context,
+        GuestbookRepository $repository,
+        SettingsInterface $settings
+    ) {
+        parent::__construct($context, $repository);
 
         $this->settings = $settings;
     }

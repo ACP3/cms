@@ -8,17 +8,31 @@ namespace ACP3\Modules\ACP3\Comments\Test\View\Block\Admin;
 
 use ACP3\Core\Test\View\Block\AbstractFormBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
-use ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentFormBlock;
+use ACP3\Modules\ACP3\Comments\Model\Repository\CommentsRepository;
+use ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentAdminFormBlock;
 
-class CommentFormBlockTest extends AbstractFormBlockTest
+class CommentAdminFormBlockTest extends AbstractFormBlockTest
 {
+    /**
+     * @var CommentsRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $repository;
+
+    protected function setUpMockObjects()
+    {
+        parent::setUpMockObjects();
+
+        $this->repository = $this->getMockBuilder(CommentsRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
 
     /**
      * @inheritdoc
      */
     protected function instantiateBlock(): BlockInterface
     {
-        return new CommentFormBlock($this->context);
+        return new CommentAdminFormBlock($this->context, $this->repository);
     }
 
     public function testRenderReturnsArray()

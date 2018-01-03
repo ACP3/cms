@@ -10,7 +10,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Edit
     arguments:
       - '@core.context.frontend'
-      - '@comments.view.block.admin.comment_form_block'
+      - '@comments.view.block.admin.comment_admin_form_block'
       - '@core.validator'
       - '@comments.model.comments_model'
       - '@comments.validation.admin_form_validation'
