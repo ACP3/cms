@@ -28,8 +28,11 @@ class CategoryAdminFormBlock extends AbstractRepositoryAwareFormBlock
      * @param CategoriesRepository $categoriesRepository
      * @param Modules $modules
      */
-    public function __construct(FormBlockContext $context, CategoriesRepository $categoriesRepository, Modules $modules)
-    {
+    public function __construct(
+        FormBlockContext $context,
+        CategoriesRepository $categoriesRepository,
+        Modules $modules
+    ) {
         parent::__construct($context, $categoriesRepository);
 
         $this->modules = $modules;
@@ -48,7 +51,10 @@ class CategoryAdminFormBlock extends AbstractRepositoryAwareFormBlock
         return [
             'form' => array_merge($data, $this->getRequestData()),
             'category_tree' => $this->fetchCategoryTree(
-                $data['module_id'], $data['parent_id'], $data['left_id'], $data['right_id']
+                $data['module_id'],
+                $data['parent_id'],
+                $data['left_id'],
+                $data['right_id']
             ),
             'mod_list' => $this->fetchModules(),
             'form_token' => $this->formToken->renderFormToken()
