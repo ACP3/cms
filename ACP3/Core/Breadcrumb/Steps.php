@@ -43,6 +43,10 @@ class Steps
     /**
      * @var array
      */
+    private $lastStep = [];
+    /**
+     * @var array
+     */
     protected $breadcrumbCache = [];
 
     /**
@@ -129,6 +133,8 @@ class Steps
             );
         }
 
+        $this->doReplaceLastStep();
+
         $this->breadcrumbCache = $this->steps;
     }
 
@@ -177,6 +183,14 @@ class Steps
         return $this->request->getArea() . '_' . $this->request->getController() . '_index';
     }
 
+    private function doReplaceLastStep()
+    {
+        if (!empty($this->lastStep)) {
+            end($this->steps);
+            $this->steps[(int)key($this->steps)] = $this->lastStep;
+        }
+    }
+
     /**
      * Sets the breadcrumb steps cache for frontend action requests
      */
@@ -191,6 +205,8 @@ class Steps
             $this->appendControllerActionBreadcrumbs();
         }
 
+        $this->doReplaceLastStep();
+
         $this->breadcrumbCache = $this->steps;
     }
 
@@ -199,16 +215,11 @@ class Steps
      *
      * @param string $title
      * @param string $path
-     * @param bool $dbSteps
-     *
      * @return $this
      */
-    public function replaceAncestor($title, $path = '', $dbSteps = false)
+    public function setLastStepReplacement(string $title, string $path = '')
     {
-        if ($dbSteps === false) {
-            end($this->steps);
-            $this->steps[(int)key($this->steps)] = $this->buildStepItem($title, $path);
-        }
+        $this->lastStep = $this->buildStepItem($title, $path);
 
         return $this;
     }
@@ -218,7 +229,7 @@ class Steps
      * @param string $path
      * @return array
      */
-    protected function buildStepItem($title, $path)
+    protected function buildStepItem(string $title, string $path = '')
     {
         return [
             'title' => $title,
@@ -234,7 +245,7 @@ class Steps
      *
      * @return $this
      */
-    public function append($title, $path = '')
+    public function append(string $title, string $path = '')
     {
         if (!$this->stepAlreadyExists($path)) {
             $this->steps[] = $this->buildStepItem($title, $path);
@@ -251,7 +262,7 @@ class Steps
      *
      * @return $this
      */
-    public function prepend($title, $path)
+    public function prepend(string $title, string $path)
     {
         if (!$this->stepAlreadyExists($path)) {
             $step = $this->buildStepItem($title, $path);
@@ -266,7 +277,7 @@ class Steps
      *
      * @return bool
      */
-    private function stepAlreadyExists($path)
+    private function stepAlreadyExists(string $path)
     {
         $route = $this->router->route($path);
         foreach ($this->steps as $step) {

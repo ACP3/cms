@@ -335,7 +335,7 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $this->steps->append('FooBarBaz2', 'foo/bar/baz2');
         $this->steps->append('FooBarBaz3', 'foo/bar/baz3');
 
-        $this->steps->replaceAncestor('Lorem Ipsum', 'lorem/ipsum/dolor');
+        $this->steps->setLastStepReplacement('Lorem Ipsum', 'lorem/ipsum/dolor');
 
         $expected = [
             [

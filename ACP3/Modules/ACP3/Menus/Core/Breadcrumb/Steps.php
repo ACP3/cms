@@ -52,19 +52,6 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * @inheritdoc
      */
-    public function replaceAncestor($title, $path = '', $dbSteps = false)
-    {
-        if ($dbSteps === true) {
-            end($this->stepsFromDb);
-            $this->stepsFromDb[(int)key($this->stepsFromDb)] = $this->buildStepItem($title, $path);
-        }
-
-        return parent::replaceAncestor($title, $path, $dbSteps);
-    }
-
-    /**
-     * @inheritdoc
-     */
     protected function buildBreadcrumbCacheForFrontend()
     {
         parent::buildBreadcrumbCacheForFrontend();

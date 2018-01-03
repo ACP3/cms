@@ -33,7 +33,7 @@ class ArticleAdminFormBlock extends AbstractRepositoryAwareFormBlock
     {
         $data = $this->getData();
 
-        $this->title->setPageTitle(
+        $this->breadcrumb->setLastStepReplacement(
             $this->translator->t('articles', empty($data['title']) ? 'admin_index_create' : 'admin_index_edit')
         );
 

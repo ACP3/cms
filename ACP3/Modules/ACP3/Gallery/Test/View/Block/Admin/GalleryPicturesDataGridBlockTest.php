@@ -15,30 +15,59 @@ use ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryPicturesDataGridBlock;
 class GalleryPicturesDataGridBlockTest extends AbstractDataGridBlockTest
 {
     /**
+     * @var ACLInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $acl;
+    /**
+     * @var GalleryRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $galleryRepository;
+
+    protected function setUpMockObjects()
+    {
+        parent::setUpMockObjects();
+
+        $this->acl = $this->getMockBuilder(ACLInterface::class)
+            ->disableOriginalConstructor()
+            ->getMockForAbstractClass();
+
+        $this->galleryRepository = $this->getMockBuilder(GalleryRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    /**
      * @inheritdoc
      */
     protected function instantiateBlock(): BlockInterface
     {
-        $acl = $this->getMockBuilder(ACLInterface::class)
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
-
-        $galleryRepository = $this->getMockBuilder(GalleryRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        return new GalleryPicturesDataGridBlock($this->context, $acl, $galleryRepository);
+        return new GalleryPicturesDataGridBlock($this->context, $this->acl, $this->galleryRepository);
     }
 
     public function testRenderReturnsArray()
     {
+        $this->setUpGalleryRepositoryExpectations();
+
         $this->block->setData(['results' => [], 'gallery_id' => 2]);
 
         parent::testRenderReturnsArray();
     }
 
+    private function setUpGalleryRepositoryExpectations()
+    {
+        $this->galleryRepository->expects($this->once())
+            ->method('getOneById')
+            ->with(2)
+            ->willReturn([
+                'title' => 'Test-Gallery'
+            ]);
+
+    }
+
     public function testRenderReturnsArrayWithExpectedKeys()
     {
+        $this->setUpGalleryRepositoryExpectations();
+
         $this->block->setData(['results' => [], 'gallery_id' => 2]);
 
         parent::testRenderReturnsArrayWithExpectedKeys();
