@@ -61,4 +61,14 @@ abstract class AbstractBlock implements BlockInterface
     {
         return $this->data;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function setTemplate(string $templateName)
+    {
+        $this->view->setTemplate($templateName);
+
+        return $this;
+    }
 }

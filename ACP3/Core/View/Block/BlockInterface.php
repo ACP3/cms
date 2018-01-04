@@ -22,6 +22,12 @@ interface BlockInterface
     public function getData(): array;
 
     /**
+     * @param string $templateName
+     * @return $this
+     */
+    public function setTemplate(string $templateName);
+
+    /**
      * @return array|Response
      */
     public function render();
