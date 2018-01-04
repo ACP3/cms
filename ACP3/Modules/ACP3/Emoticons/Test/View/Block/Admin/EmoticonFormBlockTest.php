@@ -8,7 +8,7 @@ namespace ACP3\Modules\ACP3\Emoticons\Test\View\Block\Admin;
 
 use ACP3\Core\Test\View\Block\AbstractFormBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
-use ACP3\Modules\ACP3\Emoticons\View\Block\Admin\EmoticonFormBlock;
+use ACP3\Modules\ACP3\Emoticons\View\Block\Admin\EmoticonManageFormBlock;
 
 class EmoticonFormBlockTest extends AbstractFormBlockTest
 {
@@ -17,7 +17,7 @@ class EmoticonFormBlockTest extends AbstractFormBlockTest
      */
     protected function instantiateBlock(): BlockInterface
     {
-        return new EmoticonFormBlock($this->context);
+        return new EmoticonManageFormBlock($this->context);
     }
 
     /**

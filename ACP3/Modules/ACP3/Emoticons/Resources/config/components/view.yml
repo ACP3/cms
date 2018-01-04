@@ -1,8 +1,9 @@
 services:
-  emoticons.view.block.admin.emoticon_form_block:
-    class: ACP3\Modules\ACP3\Emoticons\View\Block\Admin\EmoticonFormBlock
+  emoticons.view.block.admin.emoticon_manage_form_block:
+    class: ACP3\Modules\ACP3\Emoticons\View\Block\Admin\EmoticonManageFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+      - '@emoticons.model.repository.emoticons_repository'
 
   emoticons.view.block.admin.emoticons_data_grid_block:
     class: ACP3\Modules\ACP3\Emoticons\View\Block\Admin\EmoticonsDataGridBlock

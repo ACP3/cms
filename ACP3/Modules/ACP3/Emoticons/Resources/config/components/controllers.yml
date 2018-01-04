@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@emoticons.view.block.admin.emoticon_form_block'
+      - '@emoticons.view.block.admin.emoticon_manage_form_block'
       - '@emoticons.model.emoticons_model'
       - '@emoticons.validation.admin_form_validation'
 
@@ -17,7 +17,7 @@ services:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@emoticons.view.block.admin.emoticon_form_block'
+      - '@emoticons.view.block.admin.emoticon_manage_form_block'
       - '@emoticons.model.emoticons_model'
       - '@emoticons.validation.admin_form_validation'
 

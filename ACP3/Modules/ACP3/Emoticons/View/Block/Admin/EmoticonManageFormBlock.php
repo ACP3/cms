@@ -6,9 +6,9 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\View\Block\Admin;
 
-use ACP3\Core\View\Block\AbstractFormBlock;
+use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 
-class EmoticonFormBlock extends AbstractFormBlock
+class EmoticonManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @inheritdoc

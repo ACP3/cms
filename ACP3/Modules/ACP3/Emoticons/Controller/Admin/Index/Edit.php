@@ -20,7 +20,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $emoticonsModel;
     /**
-     * @var Core\View\Block\FormBlockInterface
+     * @var Core\View\Block\RepositoryAwareFormBlockInterface
      */
     private $block;
 
@@ -28,13 +28,13 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
      * @param Emoticons\Model\EmoticonsModel $emoticonsModel
      * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\View\Block\FormBlockInterface $block,
+        Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Emoticons\Model\EmoticonsModel $emoticonsModel,
         Emoticons\Validation\AdminFormValidation $adminFormValidation
     ) {
@@ -49,20 +49,13 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id)
     {
-        $emoticon = $this->emoticonsModel->getOneById($id);
-
-        if (empty($emoticon) === false) {
-            return $this->block
-                ->setData($emoticon)
-                ->setRequestData($this->request->getPost()->all())
-                ->render();
-        }
-
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        return $this->block
+            ->setDataById($id)
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
