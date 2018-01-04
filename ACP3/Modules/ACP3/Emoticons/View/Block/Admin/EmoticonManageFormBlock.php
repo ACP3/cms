@@ -15,6 +15,10 @@ class EmoticonManageFormBlock extends AbstractRepositoryAwareFormBlock
      */
     public function render()
     {
+        $this->breadcrumb->setLastStepReplacement(
+            $this->translator->t('emoticons', !$this->getId() ? 'admin_index_create' : 'admin_index_edit')
+        );
+
         return [
             'form' => array_merge($this->getData(), $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken()
