@@ -15,7 +15,9 @@ class EmoticonManageFormBlock extends AbstractRepositoryAwareFormBlock
      */
     public function render()
     {
-        $this->setTemplate($this->getId() ? 'Emoticons/Admin/index.edit.tpl' : 'Emoticons/Admin/index.create.tpl');
+        $this->setTemplate(
+            $this->getId() ? 'Emoticons/Admin/index.manage_with_id.tpl' : 'Emoticons/Admin/index.manage.tpl'
+        );
 
         $this->breadcrumb->setLastStepReplacement(
             $this->translator->t('emoticons', !$this->getId() ? 'admin_index_create' : 'admin_index_edit')
