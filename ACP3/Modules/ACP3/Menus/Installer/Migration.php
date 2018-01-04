@@ -55,6 +55,10 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
             ],
             37 => [
                 "ALTER TABLE `{pre}menus` ADD UNIQUE KEY `index_name` (`index_name`);"
+            ],
+            38 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'manage', '', 8);",
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'items', 'manage', '', 8);",
             ]
         ];
     }

@@ -17,6 +17,10 @@ class MenuAdminFormBlock extends AbstractRepositoryAwareFormBlock
     {
         $data = $this->getData();
 
+        $this->breadcrumb->setLastStepReplacement(
+            $this->translator->t('menus', !$this->getId() ? 'admin_index_create' : 'admin_index_edit')
+        );
+
         $this->title->setPageTitlePrefix($data['title']);
 
         return [

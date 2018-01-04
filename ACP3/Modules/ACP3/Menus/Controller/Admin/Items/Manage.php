@@ -7,9 +7,10 @@
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
 
-class Create extends AbstractFormAction
+class Manage extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation
@@ -25,7 +26,7 @@ class Create extends AbstractFormAction
     private $block;
 
     /**
-     * Create constructor.
+     * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
@@ -46,31 +47,62 @@ class Create extends AbstractFormAction
     }
 
     /**
+     * @param int $id
+     *
      * @return array
      */
-    public function execute()
+    public function execute(?int $id)
     {
         return $this->block
+            ->setDataById($id)
             ->setRequestData($this->request->getPost()->all())
             ->render();
     }
 
     /**
+     * @param int|null $id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost()
+    public function executePost(?int $id)
     {
         return $this->actionHelper->handleSaveAction(
-            function () {
+            function () use ($id) {
                 $formData = $this->request->getPost()->all();
 
                 $this->menuItemFormValidation->validate($formData);
 
                 $formData['mode'] = $this->fetchMenuItemModeForSave($formData);
                 $formData['uri'] = $this->fetchMenuItemUriForSave($formData);
-                return $this->menuItemsModel->save($formData);
+                return $this->menuItemsModel->save($formData, $id);
             },
             'acp/menus'
         );
+    }
+
+    /**
+     * @param array $formData
+     *
+     * @return string
+     */
+    protected function fetchMenuItemModeForSave(array $formData)
+    {
+        return ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(
+            Menus\Helpers\MenuItemsList::ARTICLES_URL_KEY_REGEX,
+            $formData['uri']
+        ) ? '4' : $formData['mode'];
+    }
+
+    /**
+     * @param array $formData
+     *
+     * @return string
+     */
+    protected function fetchMenuItemUriForSave(array $formData)
+    {
+        return $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? sprintf(
+            Articles\Helpers::URL_KEY_PATTERN,
+            $formData['articles']
+        ) : $formData['uri']);
     }
 }

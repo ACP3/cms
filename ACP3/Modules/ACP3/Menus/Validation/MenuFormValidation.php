@@ -14,16 +14,16 @@ class MenuFormValidation extends Core\Validation\AbstractFormValidation
     /**
      * @var int
      */
-    protected $menuId = 0;
+    protected $menuId;
 
     /**
-     * @param int $menuId
+     * @param int|null $menuId
      *
      * @return $this
      */
-    public function setMenuId($menuId)
+    public function setMenuId(?int $menuId)
     {
-        $this->menuId = (int)$menuId;
+        $this->menuId = $menuId;
 
         return $this;
     }

@@ -3,8 +3,8 @@
 {$DELETE_ROUTE={uri args="acp/menus/items/delete"}}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/menus/items/create" class="fa fa-plus text-success"}
-    {check_access mode="link" path="acp/menus/index/create" class="fa fa-th text-info"}
+    {check_access mode="link" path="acp/menus/items/manage" class="fa fa-plus text-success" lang="menus|admin_items_create"}
+    {check_access mode="link" path="acp/menus/index/manage" class="fa fa-th text-info" lang="menus|admin_index_create"}
     {if isset($pages_list)}
         {check_access mode="button" path="acp/menus/items/delete" class="fa fa-trash text-danger" lang="system|delete_marked"}
     {/if}
@@ -35,11 +35,12 @@
                 {foreach $pages_list as $block => $values}
                     <tr>
                         <td class="sub-table-header{if $can_edit || $can_delete} has-buttons{/if}" colspan="{$colspan}">
-                            {$values.title} <span>({lang t="menus|index_name2"} {$block})</span>
+                            {$values.title}
+                            <span>({lang t="menus|index_name2"} {$block})</span>
                             {if $can_delete || $can_edit}
                                 <div class="btn-group pull-right">
                                     {if $can_edit}
-                                        <a href="{uri args="acp/menus/index/edit/id_`$values.menu_id`"}" class="btn btn-default btn-sm" title="{lang t="menus|admin_index_edit"}">
+                                        <a href="{uri args="acp/menus/index/manage/id_`$values.menu_id`"}" class="btn btn-default btn-sm" title="{lang t="menus|admin_index_edit"}">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
                                     {/if}
@@ -85,7 +86,7 @@
                                 <td class="datagrid-column datagrid-column__actions">
                                     <div class="btn-group pull-right">
                                         {if $can_edit_item === true}
-                                            <a href="{uri args="acp/menus/items/edit/id_`$row.id`"}" class="btn btn-default btn-xs" title="{lang t="menus|admin_items_edit"}">
+                                            <a href="{uri args="acp/menus/items/manage/id_`$row.id`"}" class="btn btn-default btn-xs" title="{lang t="menus|admin_items_edit"}">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                                             </a>
                                         {/if}

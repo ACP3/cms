@@ -52,7 +52,7 @@ class MenusListingBlock extends AbstractBlock
     public function render()
     {
         $canDeleteItem = $this->acl->hasPermission('admin/menus/items/delete');
-        $canEditItem = $this->acl->hasPermission('admin/menus/items/edit');
+        $canEditItem = $this->acl->hasPermission('admin/menus/items/manage');
         $canSortItem = $this->acl->hasPermission('admin/menus/items/order');
 
         return [
@@ -60,7 +60,7 @@ class MenusListingBlock extends AbstractBlock
             'can_edit_item' => $canEditItem,
             'can_order_item' => $canSortItem,
             'can_delete' => $this->acl->hasPermission('admin/menus/index/delete'),
-            'can_edit' => $this->acl->hasPermission('admin/menus/index/edit'),
+            'can_edit' => $this->acl->hasPermission('admin/menus/index/manage'),
             'colspan' => $this->calculateColspan($canDeleteItem, $canEditItem, $canSortItem),
             'pages_list' => $this->fetchMenuItems()
         ];

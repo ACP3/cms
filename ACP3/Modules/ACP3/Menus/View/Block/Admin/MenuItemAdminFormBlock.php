@@ -67,8 +67,11 @@ class MenuItemAdminFormBlock extends AbstractRepositoryAwareFormBlock
     {
         $menuItem = $this->getData();
 
+        $this->breadcrumb->setLastStepReplacement(
+            $this->translator->t('menus', !$this->getId() ? 'admin_items_create' : 'admin_items_edit')
+        );
+
         $this->title->setPageTitlePrefix($menuItem['title']);
-        ;
 
         return array_merge(
             $this->menuItemFormFields->createMenuItemFormFields(
