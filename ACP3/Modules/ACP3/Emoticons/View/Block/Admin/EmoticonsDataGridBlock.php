@@ -76,7 +76,7 @@ class EmoticonsDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#emoticons-data-grid',
             'resource_path_delete' => 'admin/emoticons/index/delete',
-            'resource_path_edit' => 'admin/emoticons/index/edit'
+            'resource_path_edit' => 'admin/emoticons/index/manage'
         ]);
 
         $grid = $dataGrid->render();

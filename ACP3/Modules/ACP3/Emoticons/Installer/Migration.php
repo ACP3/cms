@@ -21,6 +21,9 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
             ],
             32 => [
                 "ALTER TABLE `{pre}emoticons` ENGINE = InnoDB",
+            ],
+            33 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'manage', '', 8);",
             ]
         ];
     }

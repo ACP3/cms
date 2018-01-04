@@ -37,7 +37,8 @@ class Edit extends Core\Controller\AbstractFrontendAction
         Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Emoticons\Model\EmoticonsModel $emoticonsModel,
         Emoticons\Validation\AdminFormValidation $adminFormValidation
-    ) {
+    )
+    {
         parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;
@@ -46,11 +47,11 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      *
      * @return array
      */
-    public function execute(int $id)
+    public function execute(?int $id)
     {
         return $this->block
             ->setDataById($id)
@@ -59,25 +60,32 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost(int $id)
+    public function executePost(?int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
-            $emoticon = $this->emoticonsModel->getOneById($id);
             $file = $this->request->getFiles()->get('picture');
+
+            if ($id === null) {
+                $this->adminFormValidation->setFileRequired(true);
+            }
 
             $this->adminFormValidation
                 ->setFile($file)
-                ->setSettings($this->config->getSettings(Emoticons\Installer\Schema::MODULE_NAME))
                 ->validate($formData);
 
             if (empty($file) === false) {
                 $upload = new Core\Helpers\Upload($this->appPath, Emoticons\Installer\Schema::MODULE_NAME);
-                $upload->removeUploadedFile($emoticon['img']);
+
+                if ($id !== null) {
+                    $emoticon = $this->emoticonsModel->getOneById($id);
+                    $upload->removeUploadedFile($emoticon['img']);
+                }
+
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $formData['img'] = $result['name'];
             }

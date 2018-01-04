@@ -1,19 +1,11 @@
 services:
-  emoticons.controller.admin.index.create:
-    class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@emoticons.view.block.admin.emoticon_manage_form_block'
-      - '@emoticons.model.emoticons_model'
-      - '@emoticons.validation.admin_form_validation'
-
   emoticons.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
       - '@emoticons.model.emoticons_model'
 
-  emoticons.controller.admin.index.edit:
+  emoticons.controller.admin.index.manage:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'

@@ -1,7 +1,10 @@
 services:
   emoticons.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation
-    parent: core.validator.abstract
+    arguments:
+      - '@core.i18n.translator'
+      - '@core.validator'
+      - '@core.config'
 
   emoticons.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Emoticons\Validation\AdminSettingsFormValidation
