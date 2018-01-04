@@ -44,6 +44,8 @@ class SearchResultsBlock extends AbstractBlock
      */
     public function render()
     {
+        $this->setTemplate('Search/Frontend/index.results.tpl');
+
         $data = $this->getData();
 
         $this->breadcrumb
