@@ -11,10 +11,6 @@ use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files as FilesModule;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Files
- * @package ACP3\Modules\ACP3\Files\Controller\Frontend\Index
- */
 class Files extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;

@@ -5,10 +5,6 @@ use ACP3\Core;
 use ACP3\Core\Validation\AbstractFormValidation;
 use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsByHashValidationRule;
 
-/**
- * Class ActivateAccountFormValidation
- * @package ACP3\Modules\ACP3\Newsletter\Validation
- */
 class ActivateAccountFormValidation extends AbstractFormValidation
 {
 

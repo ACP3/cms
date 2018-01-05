@@ -5,10 +5,6 @@ namespace ACP3\Modules\ACP3\Feeds\Installer;
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
-/**
- * Class Installer
- * @package ACP3\Modules\ACP3\Feeds
- */
 class Schema implements Modules\Installer\SchemaInterface
 {
     const MODULE_NAME = 'feeds';

@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Polls\Validation\ValidationRules;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule;
 
-/**
- * Class AbstractAnswerValidationRule
- * @package ACP3\Modules\ACP3\Polls\Validation\ValidationRules
- */
 abstract class AbstractAnswerValidationRule extends AbstractValidationRule
 {
     /**

@@ -3,10 +3,6 @@ namespace ACP3\Core\Modules;
 
 use ACP3\Core\Modules\Installer\SchemaInterface;
 
-/**
- * Interface InstallerInterface
- * @package ACP3\Core\Modules
- */
 interface InstallerInterface
 {
     /**

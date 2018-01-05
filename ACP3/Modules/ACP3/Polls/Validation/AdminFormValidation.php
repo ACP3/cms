@@ -5,10 +5,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Polls\Validation\ValidationRules\AtLeastTwoAnswersValidationRule;
 use ACP3\Modules\ACP3\Polls\Validation\ValidationRules\DeleteAllAnswersValidationRule;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Polls\Validation
- */
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

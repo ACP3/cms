@@ -10,10 +10,6 @@ use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-/**
- * Class DataGridRepository
- * @package ACP3\Modules\ACP3\Files\Model\Repository
- */
 class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
 {
     const TABLE_NAME = FilesRepository::TABLE_NAME;

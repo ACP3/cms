@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Search\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Search;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Search\Controller\Frontend\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**

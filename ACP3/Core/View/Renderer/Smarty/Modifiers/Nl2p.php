@@ -3,10 +3,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Modifiers;
 
 use ACP3\Core\Helpers\StringFormatter;
 
-/**
- * Class Nl2p
- * @package ACP3\Core\View\Renderer\Smarty\Modifiers
- */
 class Nl2p extends AbstractModifier
 {
     /**

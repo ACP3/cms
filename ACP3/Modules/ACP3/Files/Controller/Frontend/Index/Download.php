@@ -11,10 +11,6 @@ use ACP3\Modules\ACP3\Files;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-/**
- * Class Download
- * @package ACP3\Modules\ACP3\Files\Controller\Frontend\Index
- */
 class Download extends Core\Controller\AbstractFrontendAction
 {
     /**

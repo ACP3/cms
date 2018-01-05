@@ -12,10 +12,6 @@ use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\News\Controller\Frontend\Index
- */
 class Index extends AbstractAction
 {
     use Core\Cache\CacheResponseTrait;

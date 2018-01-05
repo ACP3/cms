@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Files;
 
-/**
- * Class Settings
- * @package ACP3\Modules\ACP3\Files\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**

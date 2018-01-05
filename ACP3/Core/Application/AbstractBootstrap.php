@@ -5,10 +5,6 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\ErrorHandler;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class AbstractBootstrap
- * @package ACP3\Core\Application
- */
 abstract class AbstractBootstrap implements BootstrapInterface
 {
     /**

@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\News;
 use ACP3\Core;
 use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\News
- */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID = 'details_id_';

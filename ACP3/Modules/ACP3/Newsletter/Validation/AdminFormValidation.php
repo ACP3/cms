@@ -3,10 +3,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Newsletter\Validation
- */
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

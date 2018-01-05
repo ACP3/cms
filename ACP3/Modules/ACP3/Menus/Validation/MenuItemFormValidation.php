@@ -6,10 +6,6 @@ use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\AllowedMenuValidationRule
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\LinkModeValidationRule;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\ParentIdValidationRule;
 
-/**
- * Class MenuItemFormValidation
- * @package ACP3\Modules\ACP3\Menus\Validation
- */
 class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

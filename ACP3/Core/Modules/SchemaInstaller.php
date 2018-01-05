@@ -5,10 +5,6 @@ namespace ACP3\Core\Modules;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class SchemaInstaller
- * @package ACP3\Core\Modules
- */
 class SchemaInstaller extends SchemaHelper implements InstallerInterface
 {
     /**

@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty;
 
-/**
- * Interface PluginInterface
- * @package ACP3\Core\View\Renderer\Smarty
- */
 interface PluginInterface
 {
     const EXTENSION_TYPE_BLOCK = 'block';

@@ -8,10 +8,6 @@ namespace ACP3\Core\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class DisplayActionTrait
- * @package ACP3\Core\Controller
- */
 trait DisplayActionTrait
 {
     /**

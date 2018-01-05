@@ -11,10 +11,6 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules\Vendor;
 use Fisharebest\Localization\Locale;
 
-/**
- * Class Cache
- * @package ACP3\Core\I18n
- */
 class DictionaryCache
 {
     use ExtractFromPathTrait;

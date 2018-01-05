@@ -8,10 +8,6 @@ namespace ACP3\Installer\Modules\Install\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 
-/**
- * Class DatabaseConnectionValidationRule
- * @package ACP3\Installer\Modules\Install\Validation\ValidationRules
- */
 class DatabaseConnectionValidationRule extends AbstractValidationRule
 {
     /**

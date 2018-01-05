@@ -12,10 +12,6 @@ use ACP3\Modules\ACP3\Menus;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Steps
- * @package ACP3\Modules\ACP3\Menus\Core\Breadcrumb
- */
 class Steps extends Core\Breadcrumb\Steps
 {
     /**

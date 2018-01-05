@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-/**
- * Class NotEmptyValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class NotEmptyValidationRule extends AbstractValidationRule
 {
     /**

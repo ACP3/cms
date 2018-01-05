@@ -13,10 +13,6 @@ use ACP3\Core\I18n\Translator;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\XML;
 
-/**
- * Class ModuleInfoCache
- * @package ACP3\Core\Modules
- */
 class ModuleInfoCache
 {
     use ModuleDependenciesTrait;

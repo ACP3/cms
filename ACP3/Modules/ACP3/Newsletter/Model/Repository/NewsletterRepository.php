@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class NewsletterRepository
- * @package ACP3\Modules\ACP3\Newsletter\Model\Repository
- */
 class NewsletterRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'newsletters';

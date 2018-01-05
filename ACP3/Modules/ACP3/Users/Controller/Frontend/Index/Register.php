@@ -11,10 +11,6 @@ use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class Register
- * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
- */
 class Register extends Core\Controller\AbstractFrontendAction
 {
     /**

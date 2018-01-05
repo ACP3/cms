@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Permissions\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class UserRoleRepository
- * @package ACP3\Modules\ACP3\Permissions\Model\Repository
- */
 class UserRoleRepository extends Core\Model\Repository\AbstractRepository implements Core\ACL\Model\Repository\UserRoleRepositoryInterface
 {
     const TABLE_NAME = 'acl_user_roles';

@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-/**
- * Class PasswordValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class PasswordValidationRule extends AbstractValidationRule
 {
     /**

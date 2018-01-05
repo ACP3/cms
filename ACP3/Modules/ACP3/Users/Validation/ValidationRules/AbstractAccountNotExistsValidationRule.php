@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Users\Validation\ValidationRules;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
 
-/**
- * Class AccountExistsValidationRule
- * @package ACP3\Modules\ACP3\Users\Validation\ValidationRules
- */
 abstract class AbstractAccountNotExistsValidationRule extends AbstractValidationRule
 {
     /**

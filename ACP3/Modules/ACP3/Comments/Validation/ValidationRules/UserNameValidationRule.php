@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Comments\Validation\ValidationRules;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 
-/**
- * Class UserNameValidationRule
- * @package ACP3\Modules\ACP3\Comments\Validation\ValidationRules
- */
 class UserNameValidationRule extends AbstractValidationRule
 {
     /**

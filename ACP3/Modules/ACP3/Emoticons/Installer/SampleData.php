@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Emoticons\Installer;
 
 use ACP3\Core\Modules\Installer\AbstractSampleData;
 
-/**
- * Class SampleData
- * @package ACP3\Modules\ACP3\Emoticons\Installer
- */
 class SampleData extends AbstractSampleData
 {
 

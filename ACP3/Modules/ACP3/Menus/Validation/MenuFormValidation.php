@@ -5,10 +5,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuAlreadyExistsValidationRule;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuNameValidationRule;
 
-/**
- * Class MenuFormValidation
- * @package ACP3\Modules\ACP3\Menus\Validation
- */
 class MenuFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

@@ -3,10 +3,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Router\RouterInterface;
 
-/**
- * Class PictureColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
- */
 class PictureColumnRenderer extends AbstractColumnRenderer
 {
     /**

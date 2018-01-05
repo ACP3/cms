@@ -3,10 +3,6 @@ namespace ACP3\Core\Helpers\Formatter;
 
 use ACP3\Core\I18n\Translator;
 
-/**
- * Class MarkEntries
- * @package ACP3\Core\Helpers\Formatter
- */
 class MarkEntries
 {
     /**

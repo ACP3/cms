@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Pics
- * @package ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index
- */
 class Pics extends AbstractAction
 {
     use Core\Cache\CacheResponseTrait;

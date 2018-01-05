@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Seo;
 use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Seo\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**

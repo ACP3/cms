@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class Modules
- * @package ACP3\Modules\ACP3\System\Controller\Admin\Extensions
- */
 class Modules extends Core\Controller\AbstractFrontendAction
 {
     /**

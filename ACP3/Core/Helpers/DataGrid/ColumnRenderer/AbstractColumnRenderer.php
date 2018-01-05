@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
-/**
- * Class AbstractColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
- */
 abstract class AbstractColumnRenderer implements ColumnRendererInterface
 {
     const CELL_TYPE = 'td';

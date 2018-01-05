@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Widget\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Polls\Controller\Widget\Index
- */
 class Index extends Core\Controller\AbstractWidgetAction
 {
     /**

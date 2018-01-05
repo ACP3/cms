@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Menus\Helpers;
 use ACP3\Modules\ACP3\Menus\Model\MenuItemsModel;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 
-/**
- * Class ManageMenuItem
- * @package ACP3\Modules\ACP3\Menus\Helpers
- */
 class ManageMenuItem
 {
     /**

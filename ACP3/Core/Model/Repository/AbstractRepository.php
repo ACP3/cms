@@ -8,10 +8,6 @@ namespace ACP3\Core\Model\Repository;
 
 use ACP3\Core\Database\Connection;
 
-/**
- * Class AbstractRepository
- * @package ACP3\Core\Model\Repository
- */
 abstract class AbstractRepository implements RepositoryInterface
 {
     const TABLE_NAME = '';

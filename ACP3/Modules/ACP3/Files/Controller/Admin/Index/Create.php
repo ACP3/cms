@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Files\Controller\Admin\Index
- */
 class Create extends AbstractFormAction
 {
     /**

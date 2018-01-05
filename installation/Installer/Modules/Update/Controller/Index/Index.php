@@ -10,10 +10,6 @@ use ACP3\Core\Cache;
 use ACP3\Installer\Core;
 use ACP3\Installer\Modules\Update\Model\SchemaUpdateModel;
 
-/**
- * Class Index
- * @package ACP3\Installer\Modules\Update\Controller\Index
- */
 class Index extends Core\Controller\AbstractInstallerAction
 {
     /**

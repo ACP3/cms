@@ -5,10 +5,6 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-/**
- * Class RegisterColumnRendererPass
- * @package ACP3\Core\Helpers\DataGrid\DependencyInjection
- */
 class RegisterColumnRendererPass implements CompilerPassInterface
 {
     /**

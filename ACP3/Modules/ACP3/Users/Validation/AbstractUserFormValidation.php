@@ -7,10 +7,6 @@ use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByEmailVa
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameValidationRule;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\IcqNumberValidationRule;
 
-/**
- * Class AbstractUserFormValidation
- * @package ACP3\Modules\ACP3\Users\Validation
- */
 abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

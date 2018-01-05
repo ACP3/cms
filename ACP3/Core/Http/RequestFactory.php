@@ -10,10 +10,6 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
-/**
- * Class RequestFactory
- * @package ACP3\Core\Http
- */
 class RequestFactory
 {
     /**

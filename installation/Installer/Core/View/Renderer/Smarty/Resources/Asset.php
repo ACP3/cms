@@ -4,10 +4,6 @@ namespace ACP3\Installer\Core\View\Renderer\Smarty\Resources;
 use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 
-/**
- * Class Asset
- * @package ACP3\Installer\Core\View\Renderer\Smarty\Resources
- */
 class Asset extends AbstractResource
 {
     /**

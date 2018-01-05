@@ -6,10 +6,6 @@ use ACP3\Core;
 use ACP3\Core\Validation\AbstractFormValidation;
 use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
 
-/**
- * Class AdminSettingsFormValidation
- * @package ACP3\Modules\ACP3\Seo\Validation
- */
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
     /**

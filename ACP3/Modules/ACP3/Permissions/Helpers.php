@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository;
 
-/**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Permissions
- */
 class Helpers
 {
     /**

@@ -13,10 +13,6 @@ use ACP3\Core\Mailer\MailerMessage;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Contact\Installer\Schema;
 
-/**
- * Class ContactFormModel
- * @package ACP3\Modules\ACP3\Contact\Model
- */
 class ContactFormModel
 {
     /**

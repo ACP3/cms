@@ -5,10 +5,6 @@ namespace ACP3\Modules\ACP3\Emoticons\Installer;
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\Emoticons\Installer
- */
 class Schema implements Modules\Installer\SchemaInterface
 {
     const MODULE_NAME = 'emoticons';

@@ -5,10 +5,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Gallery
- */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     /**

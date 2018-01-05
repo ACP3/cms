@@ -14,10 +14,6 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Cache as SeoCache;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
-/**
- * Class MetaStatements
- * @package ACP3\Modules\ACP3\Seo\Helper
- */
 class MetaStatements
 {
     /**

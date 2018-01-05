@@ -16,10 +16,6 @@ use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
-/**
- * Class Pagination
- * @package ACP3\Modules\ACP3\Seo\Core
- */
 class Pagination extends \ACP3\Core\Pagination
 {
     /**

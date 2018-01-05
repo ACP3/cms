@@ -14,10 +14,6 @@ use ACP3\Core\Router\RouterInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Steps
- * @package ACP3\Core\Breadcrumb
- */
 class Steps
 {
     /**

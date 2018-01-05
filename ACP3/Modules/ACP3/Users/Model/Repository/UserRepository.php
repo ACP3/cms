@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Users\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class UserRepository
- * @package ACP3\Modules\ACP3\Users\Model\Repository
- */
 class UserRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'users';

@@ -8,10 +8,6 @@ namespace ACP3\Core\Controller;
 
 use ACP3\Core;
 
-/**
- * Class AbstractFrontendAction
- * @package ACP3\Core\Controller
- */
 abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetAction
 {
     /**

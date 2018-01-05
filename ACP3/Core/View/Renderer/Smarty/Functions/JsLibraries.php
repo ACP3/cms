@@ -3,10 +3,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
-/**
- * Class JsLibraries
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class JsLibraries extends AbstractFunction
 {
     /**

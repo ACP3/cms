@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-/**
- * Class InternalUriValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class InternalUriValidationRule extends AbstractValidationRule
 {
     /**

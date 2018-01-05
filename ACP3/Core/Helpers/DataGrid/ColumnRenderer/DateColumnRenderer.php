@@ -4,10 +4,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\Formatter\DateRange;
 
-/**
- * Class DateColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
- */
 class DateColumnRenderer extends AbstractColumnRenderer
 {
     /**

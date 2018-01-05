@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Emoticons\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class EmoticonRepository
- * @package ACP3\Modules\ACP3\Emoticons\Model\Repository
- */
 class EmoticonRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'emoticons';

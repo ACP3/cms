@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**

@@ -4,10 +4,6 @@ namespace ACP3\Core\Helpers\Formatter;
 use ACP3\Core\Date;
 use ACP3\Core\I18n\Translator;
 
-/**
- * Class DateRange
- * @package ACP3\Core\Helpers\Formatter
- */
 class DateRange
 {
     /**

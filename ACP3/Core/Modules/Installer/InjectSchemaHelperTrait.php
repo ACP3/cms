@@ -3,10 +3,6 @@ namespace ACP3\Core\Modules\Installer;
 
 use ACP3\Core\Modules\SchemaHelper;
 
-/**
- * Class InjectSchemaHelperTrait
- * @package ACP3\Core\Modules\Installer
- */
 trait InjectSchemaHelperTrait
 {
     /**

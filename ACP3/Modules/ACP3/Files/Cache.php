@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Files;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Files
- */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID = 'details_id_';

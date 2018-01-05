@@ -10,10 +10,6 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class SmartyRendererFactory
- * @package ACP3\Core\View\Renderer
- */
 class SmartyRendererFactory
 {
     /**

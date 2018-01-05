@@ -6,10 +6,6 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Modifiers;
 
-/**
- * Class AddProtocol
- * @package ACP3\Core\View\Renderer\Smarty\Modifiers
- */
 class PrefixUri extends AbstractModifier
 {
     /**

@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Articles;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Articles\Controller\Admin\Index
- */
 class Edit extends AbstractFrontendAction
 {
     /**

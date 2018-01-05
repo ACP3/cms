@@ -8,10 +8,6 @@ namespace ACP3\Core\Database;
 
 use Psr\Log\LoggerInterface;
 
-/**
- * Class SQLLogger
- * @package ACP3\Core\Database
- */
 class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
 {
     /**

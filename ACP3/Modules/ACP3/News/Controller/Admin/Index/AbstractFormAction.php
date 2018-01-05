@@ -11,10 +11,6 @@ use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
 
-/**
- * Class AbstractFormAction
- * @package ACP3\Modules\ACP3\News\Controller\Admin\Index
- */
 abstract class AbstractFormAction extends AbstractFrontendAction
 {
     /**

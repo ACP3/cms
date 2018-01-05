@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Permissions\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class RoleRepository
- * @package ACP3\Modules\ACP3\Permissions\Model\Repository
- */
 class RoleRepository extends Core\NestedSet\Model\Repository\NestedSetRepository
 {
     const TABLE_NAME = 'acl_roles';

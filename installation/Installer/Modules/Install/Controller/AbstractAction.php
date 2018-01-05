@@ -9,10 +9,6 @@ namespace ACP3\Installer\Modules\Install\Controller;
 use ACP3\Installer\Core;
 use ACP3\Installer\Modules\Install\Helpers\Navigation;
 
-/**
- * Class AbstractController
- * @package ACP3\Installer\Modules\Install\Controller
- */
 abstract class AbstractAction extends Core\Controller\AbstractInstallerAction
 {
     /**

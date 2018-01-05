@@ -21,10 +21,6 @@ use Symfony\Component\HttpKernel\HttpCache\StoreInterface;
 use Symfony\Component\HttpKernel\HttpCache\SurrogateInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-/**
- * Class BootstrapCache
- * @package ACP3\Core\Application
- */
 class BootstrapCache extends HttpCache implements CacheInvalidation
 {
     use EventDispatchingHttpCache;

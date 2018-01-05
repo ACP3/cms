@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
-/**
- * Class MassActionColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
- */
 class MassActionColumnRenderer extends AbstractColumnRenderer
 {
     /**

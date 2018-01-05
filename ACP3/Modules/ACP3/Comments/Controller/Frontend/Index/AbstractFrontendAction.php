@@ -10,10 +10,6 @@ use ACP3\Core\Controller\AbstractFrontendAction as CoreAbstractFrontendAction;
 use ACP3\Modules\ACP3\Comments\Installer\Schema;
 use ACP3\Modules\ACP3\Emoticons;
 
-/**
- * Class AbstractAction
- * @package ACP3\Modules\ACP3\Comments\Controller\Frontend\Index
- */
 abstract class AbstractFrontendAction extends CoreAbstractFrontendAction
 {
     /**

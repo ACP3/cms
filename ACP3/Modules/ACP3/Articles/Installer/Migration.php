@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Articles\Installer;
 
 use ACP3\Core\Modules\Installer\AbstractMigration;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\Articles\Installer
- */
 class Migration extends AbstractMigration
 {
 

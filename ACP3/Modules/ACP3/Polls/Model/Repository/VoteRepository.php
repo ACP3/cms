@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Polls\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class VoteRepository
- * @package ACP3\Modules\ACP3\Polls\Model\Repository
- */
 class VoteRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'poll_votes';

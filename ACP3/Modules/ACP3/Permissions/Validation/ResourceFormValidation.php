@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Permissions\Validation;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegeExistsValidationRule;
 
-/**
- * Class ResourceFormValidation
- * @package ACP3\Modules\ACP3\Permissions\Validation
- */
 class ResourceFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

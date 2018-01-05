@@ -12,10 +12,6 @@ use ACP3\Core\Modules\ModuleInfoCache;
 use ACP3\Core\Modules\Vendor;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class Modules
- * @package ACP3\Core
- */
 class Modules
 {
     /**

@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-/**
- * Class Unsubscribe
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index
- */
 class Unsubscribe extends Core\Controller\AbstractFrontendAction
 {
     /**

@@ -3,10 +3,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
 
 use ACP3\Core\Router\RouterInterface;
 
-/**
- * Class OptionRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer
- */
 class OptionRenderer
 {
     /**

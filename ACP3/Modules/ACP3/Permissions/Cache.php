@@ -6,10 +6,6 @@ use ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Permissions
- */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID_RESOURCES = 'acl_resources';

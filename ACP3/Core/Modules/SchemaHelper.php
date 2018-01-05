@@ -6,10 +6,6 @@ use ACP3\Modules\ACP3\System;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-/**
- * Class SchemaHelper
- * @package ACP3\Core\Modules
- */
 class SchemaHelper
 {
     use ContainerAwareTrait;

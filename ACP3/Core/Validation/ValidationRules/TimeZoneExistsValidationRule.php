@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-/**
- * Class TimeZoneExistsValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class TimeZoneExistsValidationRule extends AbstractValidationRule
 {
     /**

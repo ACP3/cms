@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Emoticons;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Emoticons
- */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID = 'list';

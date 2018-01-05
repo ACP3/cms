@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Assets\Minifier;
 
-/**
- * Class CSS
- * @package ACP3\Core\Assets\Minifier
- */
 class CSS extends AbstractMinifier
 {
     /**

@@ -5,10 +5,6 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-/**
- * Class RegisterSmartyPluginsPass
- * @package ACP3\Core\View\Renderer\Smarty\DependencyInjection
- */
 class RegisterSmartyPluginsPass implements CompilerPassInterface
 {
 

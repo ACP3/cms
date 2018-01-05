@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 
-/**
- * Class Settings
- * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**

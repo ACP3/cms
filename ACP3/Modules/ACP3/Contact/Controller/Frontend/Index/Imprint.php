@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Contact;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Imprint
- * @package ACP3\Modules\ACP3\Contact\Controller\Frontend\Index
- */
 class Imprint extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;

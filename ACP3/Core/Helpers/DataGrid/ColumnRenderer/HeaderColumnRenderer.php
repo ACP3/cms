@@ -3,10 +3,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Helpers\Formatter\MarkEntries;
 
-/**
- * Class HeaderColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
- */
 class HeaderColumnRenderer extends AbstractColumnRenderer
 {
     const CELL_TYPE = 'th';

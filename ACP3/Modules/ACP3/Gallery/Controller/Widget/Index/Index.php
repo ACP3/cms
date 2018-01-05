@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Gallery\Controller\Widget\Index
- */
 class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;

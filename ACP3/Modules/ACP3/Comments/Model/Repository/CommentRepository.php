@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Comments\Model\Repository;
 use ACP3\Core;
 use ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository;
 
-/**
- * Class CommentRepository
- * @package ACP3\Modules\ACP3\Comments\Model\Repository
- */
 class CommentRepository extends Core\Model\Repository\AbstractRepository implements Core\Model\Repository\FloodBarrierAwareRepositoryInterface
 {
     const TABLE_NAME = 'comments';

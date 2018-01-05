@@ -6,10 +6,6 @@
 
 namespace ACP3\Core\Model\Repository;
 
-/**
- * Interface RepositoryInterface
- * @package ACP3\Core\Model\Repository
- */
 interface RepositoryInterface
 {
     /**

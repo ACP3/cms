@@ -5,10 +5,6 @@ namespace ACP3\Modules\ACP3\Files\Installer;
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
-/**
- * Class Installer
- * @package ACP3\Modules\ACP3\Files
- */
 class Schema implements Modules\Installer\SchemaInterface
 {
     const MODULE_NAME = 'files';

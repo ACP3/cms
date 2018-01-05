@@ -9,10 +9,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Details
- * @package ACP3\Modules\ACP3\News\Controller\Frontend\Index
- */
 class Details extends AbstractAction
 {
     use Core\Cache\CacheResponseTrait;

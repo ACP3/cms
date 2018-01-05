@@ -13,10 +13,6 @@ use ACP3\Installer\Core\I18n\Translator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class InstallerContext
- * @package ACP3\Installer\Core\Controller\Context
- */
 class InstallerContext
 {
     /**

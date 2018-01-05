@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Contact\Installer;
 
 use ACP3\Core\Modules;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\Contact\Installer
- */
 class Migration extends Modules\Installer\AbstractMigration
 {
     /**

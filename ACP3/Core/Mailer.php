@@ -11,10 +11,6 @@ use PHPMailer\PHPMailer\Exception as PHPMailerException;
 use PHPMailer\PHPMailer\PHPMailer;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class Email
- * @package ACP3\Core
- */
 class Mailer
 {
     /**

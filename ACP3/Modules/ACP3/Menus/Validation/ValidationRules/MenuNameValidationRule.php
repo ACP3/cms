@@ -3,10 +3,6 @@ namespace ACP3\Modules\ACP3\Menus\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 
-/**
- * Class MenuNameValidationRule
- * @package ACP3\Modules\ACP3\Menus\Validation\ValidationRules
- */
 class MenuNameValidationRule extends AbstractValidationRule
 {
     /**

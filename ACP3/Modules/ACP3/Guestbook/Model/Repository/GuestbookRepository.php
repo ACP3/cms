@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Guestbook\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class GuestbookRepository
- * @package ACP3\Modules\ACP3\Guestbook\Model\Repository
- */
 class GuestbookRepository extends Core\Model\Repository\AbstractRepository implements Core\Model\Repository\FloodBarrierAwareRepositoryInterface
 {
     const TABLE_NAME = 'guestbook';

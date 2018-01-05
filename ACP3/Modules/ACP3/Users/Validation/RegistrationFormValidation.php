@@ -5,10 +5,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByEmailValidationRule;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameValidationRule;
 
-/**
- * Class RegistrationFormValidation
- * @package ACP3\Modules\ACP3\Users\Validation
- */
 class RegistrationFormValidation extends AbstractUserFormValidation
 {
     /**

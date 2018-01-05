@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Categories\Model\Repository;
 use ACP3\Core;
 use ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository;
 
-/**
- * Class CategoryRepository
- * @package ACP3\Modules\ACP3\Categories\Model\Repository
- */
 class CategoryRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'categories';

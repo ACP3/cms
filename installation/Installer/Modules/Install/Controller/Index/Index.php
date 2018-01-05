@@ -7,10 +7,6 @@ namespace ACP3\Installer\Modules\Install\Controller\Index;
 
 use ACP3\Installer\Modules\Install\Controller\AbstractAction;
 
-/**
- * Class Index
- * @package ACP3\Installer\Modules\Install\Controller\Index
- */
 class Index extends AbstractAction
 {
     public function execute()

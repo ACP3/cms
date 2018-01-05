@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Core\Helpers\TableOfContents;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
-/**
- * Class PageBreaks
- * @package ACP3\Modules\ACP3\Seo\Core\Helpers
- */
 class PageBreaks extends \ACP3\Core\Helpers\PageBreaks
 {
     /**

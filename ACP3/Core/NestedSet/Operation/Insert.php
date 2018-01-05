@@ -6,10 +6,6 @@
 
 namespace ACP3\Core\NestedSet\Operation;
 
-/**
- * Class Insert
- * @package ACP3\Core\NestedSet\Operation
- */
 class Insert extends AbstractOperation
 {
     /**

@@ -6,10 +6,6 @@
 
 namespace ACP3\Core\Controller\Exception;
 
-/**
- * Class ResultNotExistsException
- * @package ACP3\Core\Controller\Exception
- */
 class ResultNotExistsException extends \Exception
 {
 }

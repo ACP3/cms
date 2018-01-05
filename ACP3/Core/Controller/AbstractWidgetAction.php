@@ -9,10 +9,6 @@ namespace ACP3\Core\Controller;
 use ACP3\Core;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class AbstractWidgetAction
- * @package ACP3\Core\Controller
- */
 abstract class AbstractWidgetAction implements ActionInterface
 {
     use Core\Controller\DisplayActionTrait;

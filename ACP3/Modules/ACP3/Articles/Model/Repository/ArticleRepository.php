@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Articles\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class ArticleRepository
- * @package ACP3\Modules\ACP3\Articles\Model\Repository
- */
 class ArticleRepository extends Core\Model\Repository\AbstractRepository
 {
     use Core\Model\Repository\PublicationPeriodAwareTrait;

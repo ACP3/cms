@@ -3,10 +3,6 @@ namespace ACP3\Core\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AbstractFormValidation
- * @package ACP3\Core\Validation
- */
 abstract class AbstractFormValidation
 {
     /**

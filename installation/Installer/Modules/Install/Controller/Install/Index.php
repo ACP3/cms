@@ -19,10 +19,6 @@ use ACP3\Modules\ACP3\System\Helper\AvailableDesignsTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class Index
- * @package ACP3\Installer\Modules\Install\Controller\Install
- */
 class Index extends AbstractAction
 {
     use AvailableDesignsTrait;

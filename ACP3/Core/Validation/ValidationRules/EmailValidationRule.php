@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-/**
- * Class EmailValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class EmailValidationRule extends AbstractValidationRule
 {
     /**

@@ -5,10 +5,6 @@ namespace ACP3\Modules\ACP3\Menus\Installer;
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\Menus\Installer
- */
 class Schema implements Modules\Installer\SchemaInterface
 {
     const MODULE_NAME = 'menus';

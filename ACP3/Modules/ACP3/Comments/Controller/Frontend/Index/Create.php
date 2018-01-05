@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Comments\Controller\Frontend\Index
- */
 class Create extends AbstractFrontendAction
 {
     /**

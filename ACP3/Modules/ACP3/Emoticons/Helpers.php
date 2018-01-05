@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Emoticons;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Emoticons\Installer\Schema;
 
-/**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Emoticons
- */
 class Helpers
 {
     /**

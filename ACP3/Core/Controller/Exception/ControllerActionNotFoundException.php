@@ -6,10 +6,6 @@
 
 namespace ACP3\Core\Controller\Exception;
 
-/**
- * Class ControllerActionNotFoundException
- * @package ACP3\Core\Controller\Exception
- */
 class ControllerActionNotFoundException extends \Exception
 {
 }

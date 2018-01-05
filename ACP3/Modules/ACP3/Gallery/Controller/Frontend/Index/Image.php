@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Image
- * @package ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index
- */
 class Image extends AbstractAction
 {
     /**

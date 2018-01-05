@@ -7,10 +7,6 @@ use ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
-/**
- * Class Bootstrap
- * @package ACP3\Installer\Core\Application
- */
 class Bootstrap extends Core\Application\AbstractBootstrap
 {
     /**

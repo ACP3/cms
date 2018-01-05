@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Validation;
 use ACP3\Core;
 use ACP3\Core\Validation\AbstractFormValidation;
 
-/**
- * Class AdminSettingsFormValidation
- * @package ACP3\Modules\ACP3\Newsletter\Validation
- */
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
 

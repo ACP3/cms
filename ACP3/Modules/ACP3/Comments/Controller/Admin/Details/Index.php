@@ -11,10 +11,6 @@ use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Details
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**

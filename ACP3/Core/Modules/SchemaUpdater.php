@@ -6,10 +6,6 @@ use ACP3\Core\Modules\Installer\MigrationInterface;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class SchemaUpdater
- * @package ACP3\Core\Modules
- */
 class SchemaUpdater extends SchemaHelper
 {
     /**

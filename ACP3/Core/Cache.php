@@ -3,10 +3,6 @@ namespace ACP3\Core;
 
 use ACP3\Core\Cache\CacheDriverFactory;
 
-/**
- * Class Cache
- * @package ACP3\Core
- */
 class Cache
 {
     /**

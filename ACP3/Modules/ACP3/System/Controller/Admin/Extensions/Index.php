@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
 use ACP3\Core;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\System\Controller\Admin\Extensions
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     public function execute()

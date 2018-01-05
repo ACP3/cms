@@ -10,10 +10,6 @@ use ACP3\Installer\Core\Controller\AbstractInstallerAction;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-/**
- * Class AvailableDatabases
- * @package ACP3\Installer\Modules\Install\Controller\Install
- */
 class AvailableDatabases extends AbstractInstallerAction
 {
     /**

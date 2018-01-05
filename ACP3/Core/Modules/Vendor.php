@@ -9,10 +9,6 @@ namespace ACP3\Core\Modules;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
 
-/**
- * Class Vendor
- * @package ACP3\Core\Modules
- */
 class Vendor
 {
     /**

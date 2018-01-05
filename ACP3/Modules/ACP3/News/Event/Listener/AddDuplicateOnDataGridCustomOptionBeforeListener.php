@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\News\Event\Listener;
 
 use ACP3\Core\Model\Event\Listener\AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener;
 
-/**
- * Class AddDuplicateOnDataGridCustomOptionBeforeListener
- * @package ACP3\Modules\ACP3\News\Event\Listener
- */
 class AddDuplicateOnDataGridCustomOptionBeforeListener extends AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
 {
     /**

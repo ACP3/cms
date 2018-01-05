@@ -11,10 +11,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class Action
- * @package ACP3\Core\Modules\Helper
- */
 class Action
 {
     /**

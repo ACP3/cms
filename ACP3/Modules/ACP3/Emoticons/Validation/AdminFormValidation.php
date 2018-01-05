@@ -3,10 +3,6 @@ namespace ACP3\Modules\ACP3\Emoticons\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Emoticons\Validation
- */
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

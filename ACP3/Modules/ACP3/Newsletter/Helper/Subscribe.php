@@ -5,10 +5,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
 
-/**
- * Class Subscribe
- * @package ACP3\Modules\ACP3\Newsletter\Helper
- */
 class Subscribe
 {
     /**

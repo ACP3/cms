@@ -5,10 +5,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Menus
- */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID = 'items';

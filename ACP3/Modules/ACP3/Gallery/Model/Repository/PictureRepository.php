@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Gallery\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class PictureRepository
- * @package ACP3\Modules\ACP3\Gallery\Model\Repository
- */
 class PictureRepository extends Core\Model\Repository\AbstractRepository
 {
     use Core\Model\Repository\PublicationPeriodAwareTrait;

@@ -5,10 +5,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Guestbook\Validation\ValidationRules\FloodBarrierValidationRule;
 use ACP3\Modules\ACP3\Newsletter;
 
-/**
- * Class Validator
- * @package ACP3\Modules\ACP3\Guestbook\Validation
- */
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
- */
 class Create extends Core\Controller\AbstractFrontendAction
 {
     /**

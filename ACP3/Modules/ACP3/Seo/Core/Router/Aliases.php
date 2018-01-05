@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Seo\Core\Router;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Seo;
 
-/**
- * Class Aliases
- * @package ACP3\Modules\ACP3\Seo\Core\Router
- */
 class Aliases
 {
     /**

@@ -5,10 +5,6 @@ namespace ACP3\Modules\ACP3\System\Installer;
 use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Modules;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\System\Installer
- */
 class Migration extends Modules\Installer\AbstractMigration
 {
     /**

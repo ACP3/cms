@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Core\XML;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class Installer
- * @package ACP3\Modules\ACP3\System\Helper
- */
 class Installer
 {
     use Core\Modules\ModuleDependenciesTrait;

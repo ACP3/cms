@@ -4,10 +4,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Modifiers;
 use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
 use ACP3\Core\View\Renderer\Smarty\PluginInterface;
 
-/**
- * Class AbstractModifier
- * @package ACP3\Core\View\Renderer\Smarty\Modifiers
- */
 abstract class AbstractModifier extends AbstractPlugin
 {
     /**

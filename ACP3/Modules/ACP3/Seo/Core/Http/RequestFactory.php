@@ -12,10 +12,6 @@ use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
-/**
- * Class RequestFactory
- * @package ACP3\Modules\ACP3\Seo\Core\Http
- */
 class RequestFactory extends \ACP3\Core\Http\RequestFactory
 {
     /**

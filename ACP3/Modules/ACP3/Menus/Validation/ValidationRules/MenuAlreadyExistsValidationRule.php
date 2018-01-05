@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Menus\Validation\ValidationRules;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
 
-/**
- * Class MenuAlreadyExistsValidationRule
- * @package ACP3\Modules\ACP3\Menus\Validation\ValidationRules
- */
 class MenuAlreadyExistsValidationRule extends AbstractValidationRule
 {
     /**

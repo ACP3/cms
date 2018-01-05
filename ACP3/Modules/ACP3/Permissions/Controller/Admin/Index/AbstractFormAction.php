@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class AbstractFormAction
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Index
- */
 abstract class AbstractFormAction extends AbstractFrontendAction
 {
     /**

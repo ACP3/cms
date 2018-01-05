@@ -6,10 +6,6 @@ use ACP3\Installer\Modules\Install\Validation\ValidationRules\ConfigFileValidati
 use ACP3\Installer\Modules\Install\Validation\ValidationRules\DatabaseConnectionValidationRule;
 use ACP3\Installer\Modules\Install\Validation\ValidationRules\DesignExistsValidationRule;
 
-/**
- * Class FormValidation
- * @package ACP3\Installer\Modules\Install\Validation
- */
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

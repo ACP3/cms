@@ -18,10 +18,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class ServiceContainerBuilder
- * @package ACP3\Installer\Core\DependencyInjection
- */
 class ServiceContainerBuilder extends ContainerBuilder
 {
     /**

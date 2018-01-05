@@ -11,10 +11,6 @@ use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Modules\ACP3\Gallery;
 
-/**
- * Class AbstractFormAction
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
- */
 class AbstractFormAction extends AbstractFrontendAction
 {
     /**

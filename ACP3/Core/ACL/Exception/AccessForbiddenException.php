@@ -6,10 +6,6 @@
 
 namespace ACP3\Core\ACL\Exception;
 
-/**
- * Class AccessForbiddenException
- * @package ACP3\Core\ACL\Exception
- */
 class AccessForbiddenException extends \Exception
 {
 }

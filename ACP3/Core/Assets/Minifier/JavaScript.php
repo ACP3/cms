@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Assets\Minifier;
 
-/**
- * Class JavaScript
- * @package ACP3\Core\Assets\Minifier
- */
 class JavaScript extends AbstractMinifier
 {
     /**

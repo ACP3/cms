@@ -3,10 +3,6 @@ namespace ACP3\Core\Http\Request;
 
 use Symfony\Component\HttpFoundation\ServerBag;
 
-/**
- * Class UserAgent
- * @package ACP3\Core\Http\Request
- */
 class UserAgent
 {
     /**

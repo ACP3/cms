@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Seo\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class SeoRepository
- * @package ACP3\Modules\ACP3\Seo\Model\Repository
- */
 class SeoRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'seo';

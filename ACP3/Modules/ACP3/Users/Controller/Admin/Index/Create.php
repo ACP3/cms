@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Users\Controller\Admin\Index
- */
 class Create extends AbstractFormAction
 {
     /**

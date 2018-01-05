@@ -5,10 +5,6 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Validation\ValidationRules\DateValidationRule;
 
-/**
- * Class Date
- * @package ACP3\Core\Helpers
- */
 class Date
 {
     /**

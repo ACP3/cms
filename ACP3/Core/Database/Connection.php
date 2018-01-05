@@ -13,10 +13,6 @@ use Doctrine\DBAL;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class Connection
- * @package ACP3\Core\Database
- */
 class Connection
 {
     /**

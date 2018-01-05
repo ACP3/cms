@@ -12,10 +12,6 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Title
- * @package ACP3\Modules\ACP3\System\Core\Breadcrumb
- */
 class Title extends \ACP3\Core\Breadcrumb\Title
 {
     /**

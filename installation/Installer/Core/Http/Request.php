@@ -3,10 +3,6 @@ namespace ACP3\Installer\Core\Http;
 
 use ACP3\Core;
 
-/**
- * Class Request
- * @package ACP3\Installer\Core\Http
- */
 class Request extends Core\Http\Request
 {
     /**

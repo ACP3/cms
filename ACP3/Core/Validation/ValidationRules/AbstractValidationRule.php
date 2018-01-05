@@ -3,10 +3,6 @@ namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\Validation\Validator;
 
-/**
- * Class AbstractValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 abstract class AbstractValidationRule implements ValidationRuleInterface
 {
     /**

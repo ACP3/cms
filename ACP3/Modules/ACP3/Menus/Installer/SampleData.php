@@ -3,10 +3,6 @@ namespace ACP3\Modules\ACP3\Menus\Installer;
 
 use ACP3\Core\Modules\Installer\AbstractSampleData;
 
-/**
- * Class SampleData
- * @package ACP3\Modules\ACP3\Menus\Installer
- */
 class SampleData extends AbstractSampleData
 {
     /**

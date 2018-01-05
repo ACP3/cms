@@ -8,10 +8,6 @@ namespace ACP3\Core\Date;
 
 use ACP3\Core\I18n\Translator;
 
-/**
- * Class DateTranslator
- * @package ACP3\Core\Date
- */
 class DateTranslator
 {
     /**

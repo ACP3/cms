@@ -5,10 +5,7 @@ use ACP3\Core\Application\Bootstrap;
 use ACP3\Core\Environment\ApplicationMode;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class ACP3
- * @package kcfinder\cms
- */
+
 class acp3
 {
     /**

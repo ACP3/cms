@@ -10,10 +10,6 @@ use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Model\Repository\DataGridRepository;
 
-/**
- * Class DataGrid
- * @package ACP3\Core\Helpers
- */
 class DataGrid
 {
     /**

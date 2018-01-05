@@ -2,10 +2,6 @@
 
 namespace ACP3\Core\Validation\Exceptions;
 
-/**
- * Class ValidationFailedException
- * @package ACP3\Core\Validation\Exceptions
- */
 class ValidationFailedException extends \Exception
 {
     /**

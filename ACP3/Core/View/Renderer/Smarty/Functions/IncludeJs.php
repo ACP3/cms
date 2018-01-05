@@ -4,10 +4,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
-/**
- * Class IncludeJs
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class IncludeJs extends AbstractFunction
 {
     /**

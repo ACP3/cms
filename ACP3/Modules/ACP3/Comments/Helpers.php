@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Comments;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository;
 
-/**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Comments
- */
 class Helpers
 {
     /**

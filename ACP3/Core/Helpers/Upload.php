@@ -4,10 +4,6 @@ namespace ACP3\Core\Helpers;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 
-/**
- * Class Upload
- * @package ACP3\Core\Helpers
- */
 class Upload
 {
     /**

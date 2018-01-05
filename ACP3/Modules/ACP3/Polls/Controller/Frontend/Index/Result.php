@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Result
- * @package ACP3\Modules\ACP3\Polls\Controller\Frontend\Index
- */
 class Result extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;

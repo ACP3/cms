@@ -5,10 +5,6 @@ use ACP3\Core\Date;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
 
-/**
- * Class AccountStatus
- * @package ACP3\Modules\ACP3\Newsletter\Helper
- */
 class AccountStatus
 {
     const ACCOUNT_STATUS_CONFIRMATION_NEEDED = 0;

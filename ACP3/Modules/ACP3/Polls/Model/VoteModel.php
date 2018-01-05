@@ -11,10 +11,6 @@ use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-/**
- * Class VoteModel
- * @package ACP3\Modules\ACP3\Polls\Model
- */
 class VoteModel
 {
     /**

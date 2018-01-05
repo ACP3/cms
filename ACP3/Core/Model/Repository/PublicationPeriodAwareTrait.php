@@ -6,10 +6,6 @@
 
 namespace ACP3\Core\Model\Repository;
 
-/**
- * Class PublicationPeriodAwareTrait
- * @package ACP3\Core\Model\Repository
- */
 trait PublicationPeriodAwareTrait
 {
     /**

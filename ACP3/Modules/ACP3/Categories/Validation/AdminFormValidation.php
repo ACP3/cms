@@ -5,10 +5,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Categories\Validation
- */
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

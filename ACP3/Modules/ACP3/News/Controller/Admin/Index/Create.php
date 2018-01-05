@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\News\Controller\Admin\Index
- */
 class Create extends AbstractFormAction
 {
     use CommentsHelperTrait;

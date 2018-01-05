@@ -15,10 +15,6 @@ use ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository;
 use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class PollsModel
- * @package ACP3\Modules\ACP3\Polls\Model
- */
 class PollsModel extends AbstractModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;

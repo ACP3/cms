@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
-/**
- * Class SiteAndPageTitle
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class SiteAndPageTitle extends SiteTitle
 {
     /**

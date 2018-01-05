@@ -8,10 +8,6 @@ namespace ACP3\Core\NestedSet\Operation;
 
 use Doctrine\DBAL\Connection;
 
-/**
- * Class Delete
- * @package ACP3\Core\NestedSet\Operation
- */
 class Delete extends AbstractOperation
 {
     /**

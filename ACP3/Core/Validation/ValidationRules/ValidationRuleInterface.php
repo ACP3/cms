@@ -3,10 +3,6 @@ namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\Validation\Validator;
 
-/**
- * Interface ValidationRuleInterface
- * @package ACP3\Core\Validation\ValidationRules
- */
 interface ValidationRuleInterface
 {
     /**

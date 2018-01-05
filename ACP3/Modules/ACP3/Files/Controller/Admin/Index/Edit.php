@@ -12,10 +12,6 @@ use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\Files\Helpers;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Files\Controller\Admin\Index
- */
 class Edit extends AbstractFormAction
 {
     /**

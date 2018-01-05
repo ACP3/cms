@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Articles\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Articles\Validation
- */
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

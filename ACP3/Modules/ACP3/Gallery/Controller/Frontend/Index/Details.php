@@ -11,10 +11,6 @@ use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Details
- * @package ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index
- */
 class Details extends AbstractAction
 {
     use Core\Cache\CacheResponseTrait;

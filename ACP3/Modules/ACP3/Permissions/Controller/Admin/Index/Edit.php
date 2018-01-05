@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Index
- */
 class Edit extends AbstractFormAction
 {
     /**

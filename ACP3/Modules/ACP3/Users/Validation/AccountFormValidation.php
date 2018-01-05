@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Users\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AccountFormValidation
- * @package ACP3\Modules\ACP3\Users\Validation
- */
 class AccountFormValidation extends AbstractUserFormValidation
 {
     protected $userId = 0;

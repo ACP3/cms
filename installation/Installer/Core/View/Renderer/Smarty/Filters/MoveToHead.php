@@ -6,10 +6,6 @@
 
 namespace ACP3\Installer\Core\View\Renderer\Smarty\Filters;
 
-/**
- * Class MoveToHead
- * @package ACP3\Installer\Core\View\Renderer\Smarty\Filters
- */
 class MoveToHead extends \ACP3\Core\View\Renderer\Smarty\Filters\MoveToHead
 {
     public function __construct()

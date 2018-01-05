@@ -11,10 +11,6 @@ use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Permissions\Cache;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-/**
- * Class ACLTest
- * @package ACP3\Core\Test
- */
 class ACLTest extends \PHPUnit_Framework_TestCase
 {
     /**

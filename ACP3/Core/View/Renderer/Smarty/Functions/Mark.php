@@ -3,10 +3,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
-/**
- * Class Mark
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class Mark extends AbstractFunction
 {
     /**

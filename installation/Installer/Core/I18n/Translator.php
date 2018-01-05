@@ -4,10 +4,6 @@ namespace ACP3\Installer\Core\I18n;
 
 use ACP3\Installer\Core\Environment\ApplicationPath;
 
-/**
- * Class Lang
- * @package ACP3\Installer\Core
- */
 class Translator extends \ACP3\Core\I18n\Translator
 {
     /**

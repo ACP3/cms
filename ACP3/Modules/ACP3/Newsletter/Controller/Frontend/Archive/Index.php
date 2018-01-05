@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;

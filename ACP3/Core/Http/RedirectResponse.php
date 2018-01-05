@@ -11,10 +11,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class RedirectResponse
- * @package ACP3\Core\Http
- */
 class RedirectResponse
 {
     /**

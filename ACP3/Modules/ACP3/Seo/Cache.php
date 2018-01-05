@@ -5,10 +5,6 @@ namespace ACP3\Modules\ACP3\Seo;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Seo
- */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     /**

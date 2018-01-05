@@ -7,10 +7,6 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
 
-/**
- * Class Pagination
- * @package ACP3\Core
- */
 class Pagination
 {
     /**

@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Contact;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Contact\Controller\Widget\Index
- */
 class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;

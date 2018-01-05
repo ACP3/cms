@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-/**
- * Class BirthdayValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class BirthdayValidationRule extends AbstractValidationRule
 {
     /**

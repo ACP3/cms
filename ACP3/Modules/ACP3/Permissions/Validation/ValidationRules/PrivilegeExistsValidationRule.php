@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Permissions\Validation\ValidationRules;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository;
 
-/**
- * Class PrivilegeExistsValidationRule
- * @package ACP3\Modules\ACP3\Permissions\Validation\ValidationRules
- */
 class PrivilegeExistsValidationRule extends AbstractValidationRule
 {
     /**

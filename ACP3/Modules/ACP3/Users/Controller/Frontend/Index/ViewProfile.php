@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class ViewProfile
- * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
- */
 class ViewProfile extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;

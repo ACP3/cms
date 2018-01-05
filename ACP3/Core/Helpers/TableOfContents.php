@@ -3,10 +3,6 @@ namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
 
-/**
- * Class TableOfContents
- * @package ACP3\Core\Helpers
- */
 class TableOfContents
 {
     /**

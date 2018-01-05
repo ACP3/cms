@@ -8,10 +8,6 @@ namespace ACP3\Core\Controller\Context;
 
 use ACP3\Core;
 
-/**
- * Class FrontendContext
- * @package ACP3\Core\Controller\Context
- */
 class FrontendContext extends Core\Controller\Context\WidgetContext
 {
     /**

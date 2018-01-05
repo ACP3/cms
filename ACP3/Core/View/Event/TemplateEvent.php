@@ -8,10 +8,6 @@ namespace ACP3\Core\View\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
-/**
- * Class TemplateEvent
- * @package ACP3\Core\View\Event
- */
 class TemplateEvent extends Event
 {
     /**

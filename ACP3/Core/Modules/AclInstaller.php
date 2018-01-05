@@ -9,10 +9,6 @@ use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class AclInstaller
- * @package ACP3\Core\Modules
- */
 class AclInstaller implements InstallerInterface
 {
     const INSTALL_RESOURCES_AND_RULES = 1;

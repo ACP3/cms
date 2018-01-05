@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Users\Validation;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RolesExistValidationRule;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Users\Validation
- */
 class AdminFormValidation extends AbstractUserFormValidation
 {
     /**

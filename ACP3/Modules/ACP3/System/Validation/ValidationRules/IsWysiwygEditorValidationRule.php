@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\System\Validation\ValidationRules;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Core\WYSIWYG\WysiwygEditorRegistrar;
 
-/**
- * Class IsWysiwygEditorValidationRule
- * @package ACP3\Modules\ACP3\System\Validation\ValidationRules
- */
 class IsWysiwygEditorValidationRule extends AbstractValidationRule
 {
     /**

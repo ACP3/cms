@@ -3,10 +3,6 @@ namespace ACP3\Core\Http;
 
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
-/**
- * Interface RequestInterface
- * @package ACP3\Core\Http
- */
 interface RequestInterface
 {
     /**

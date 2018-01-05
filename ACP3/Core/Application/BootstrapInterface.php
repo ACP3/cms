@@ -5,10 +5,6 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-/**
- * Interface BootstrapInterface
- * @package ACP3\Core\Application
- */
 interface BootstrapInterface extends HttpKernelInterface
 {
     /**

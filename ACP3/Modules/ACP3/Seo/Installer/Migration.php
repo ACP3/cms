@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Seo\Installer;
 
 use ACP3\Core\Modules;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\Seo\Installer
- */
 class Migration implements Modules\Installer\MigrationInterface
 {
     /**

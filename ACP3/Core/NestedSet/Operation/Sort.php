@@ -6,10 +6,6 @@
 
 namespace ACP3\Core\NestedSet\Operation;
 
-/**
- * Class Sort
- * @package ACP3\Core\NestedSet\Operation
- */
 class Sort extends AbstractOperation
 {
     /**

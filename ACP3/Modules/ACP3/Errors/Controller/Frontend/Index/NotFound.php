@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Errors\Controller\Frontend\Index;
 use ACP3\Core;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class NotFound
- * @package ACP3\Modules\ACP3\Errors\Controller\Frontend\Index
- */
 class NotFound extends Core\Controller\AbstractFrontendAction
 {
     public function execute()

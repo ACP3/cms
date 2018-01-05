@@ -5,10 +5,6 @@ namespace ACP3\Modules\ACP3\Gallery;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 
-/**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Gallery
- */
 class Helpers
 {
     const URL_KEY_PATTERN_GALLERY = 'gallery/index/pics/id_%s/';

@@ -6,10 +6,6 @@ use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRendere
 use ACP3\Core\I18n\Translator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-/**
- * Class OptionColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
- */
 class OptionColumnRenderer extends AbstractColumnRenderer
 {
     /**

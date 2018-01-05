@@ -4,10 +4,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Filters;
 use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
 use ACP3\Core\View\Renderer\Smarty\PluginInterface;
 
-/**
- * Class AbstractFilter
- * @package ACP3\Core\View\Renderer\Smarty\Filters
- */
 abstract class AbstractFilter extends AbstractPlugin
 {
     /**

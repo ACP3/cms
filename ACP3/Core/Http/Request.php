@@ -3,10 +3,6 @@ namespace ACP3\Core\Http;
 
 use ACP3\Core\Controller\AreaEnum;
 
-/**
- * Class Request
- * @package ACP3\Core\Http
- */
 class Request extends AbstractRequest
 {
     const ADMIN_PANEL_PATTERN = '=^acp/=';

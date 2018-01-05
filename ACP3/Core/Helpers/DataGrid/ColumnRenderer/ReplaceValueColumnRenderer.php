@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
-/**
- * Class ReplaceValueColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
- */
 class ReplaceValueColumnRenderer extends AbstractColumnRenderer
 {
     /**

@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Core\Database\Connection;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 
-/**
- * Class FilesRepository
- * @package ACP3\Modules\ACP3\Files\Model\Repository
- */
 class FilesRepository extends Core\Model\Repository\AbstractRepository
 {
     use Core\Model\Repository\PublicationPeriodAwareTrait;

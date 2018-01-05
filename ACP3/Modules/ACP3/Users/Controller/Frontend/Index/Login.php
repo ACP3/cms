@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Users;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-/**
- * Class Login
- * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
- */
 class Login extends Core\Controller\AbstractFrontendAction
 {
     /**

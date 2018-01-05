@@ -12,10 +12,6 @@ use ACP3\Core\Helpers\Forms;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
 
-/**
- * Class AbstractFormAction
- * @package ACP3\Modules\ACP3\Menus\Controller\Admin\Items
- */
 abstract class AbstractFormAction extends AbstractFrontendAction
 {
     /**

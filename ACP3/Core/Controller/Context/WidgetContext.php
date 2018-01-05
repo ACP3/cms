@@ -20,10 +20,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class WidgetContext
- * @package ACP3\Core\Controller\Context
- */
 class WidgetContext
 {
     /**

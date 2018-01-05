@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Articles;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Articles
- */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID = 'list_id_';

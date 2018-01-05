@@ -3,10 +3,6 @@ namespace ACP3\Modules\ACP3\Gallery\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AdminSettingsFormValidation
- * @package ACP3\Modules\ACP3\Gallery\Validation
- */
 class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

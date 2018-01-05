@@ -10,10 +10,6 @@ use ACP3\Modules\ACP3\Guestbook;
 use ACP3\Modules\ACP3\Newsletter;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index
- */
 class Create extends AbstractAction
 {
     /**

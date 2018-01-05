@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Comments\Validation;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments\Validation\ValidationRules\FloodBarrierValidationRule;
 
-/**
- * Class FormValidation
- * @package ACP3\Modules\ACP3\Comments\Validation
- */
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     protected $ipAddress = '';

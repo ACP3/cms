@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Guestbook\Validation;
 use ACP3\Core;
 use ACP3\Core\Validation\AbstractFormValidation;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Guestbook\Validation
- */
 class AdminFormValidation extends AbstractFormValidation
 {
     /**

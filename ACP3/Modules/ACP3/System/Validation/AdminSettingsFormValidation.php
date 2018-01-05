@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\System\Validation;
 use ACP3\Core;
 use ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidationRule;
 
-/**
- * Class AdminSettingsFormValidation
- * @package ACP3\Modules\ACP3\System\Validation
- */
 class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

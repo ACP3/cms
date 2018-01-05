@@ -9,10 +9,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Comments\Controller\Frontend\Index
- */
 class Index extends AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;

@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Files\Controller\Frontend\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;

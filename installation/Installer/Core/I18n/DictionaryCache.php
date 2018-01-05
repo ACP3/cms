@@ -10,10 +10,6 @@ use ACP3\Core\I18n\ExtractFromPathTrait;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 use Fisharebest\Localization\Locale;
 
-/**
- * Class DictionaryCache
- * @package ACP3\Installer\Core\I18n
- */
 class DictionaryCache
 {
     use ExtractFromPathTrait;

@@ -10,10 +10,6 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-/**
- * Class AlreadyVotedValidationRule
- * @package ACP3\Modules\ACP3\Polls\Validation\ValidationRules
- */
 class AlreadyVotedValidationRule extends AbstractValidationRule
 {
     /**

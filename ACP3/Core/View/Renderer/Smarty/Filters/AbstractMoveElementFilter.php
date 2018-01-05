@@ -6,10 +6,6 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
-/**
- * Class AbstractMoveElementFilter
- * @package ACP3\Core\View\Renderer\Smarty\Filters
- */
 abstract class AbstractMoveElementFilter extends AbstractFilter
 {
     const ELEMENT_CATCHER_REGEX_PATTERN = '';

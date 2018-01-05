@@ -8,10 +8,6 @@ namespace ACP3\Core\Cache;
 
 use ACP3\Core\Filesystem;
 
-/**
- * Class Purge
- * @package ACP3\Core\Cache
- */
 class Purge
 {
     /**

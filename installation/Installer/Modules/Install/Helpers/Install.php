@@ -7,10 +7,6 @@ use ACP3\Core\Modules\SchemaHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Yaml\Dumper;
 
-/**
- * Class Install
- * @package ACP3\Installer\Modules\Install\Helpers
- */
 class Install
 {
     /**

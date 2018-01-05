@@ -5,10 +5,6 @@ use ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-/**
- * Class ACL
- * @package ACP3\Core
- */
 class ACL
 {
     /**

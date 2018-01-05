@@ -10,10 +10,6 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
 use ACP3\Installer\Core\I18n\Translator;
 
-/**
- * Class Requirements
- * @package ACP3\Installer\Modules\Install\Helpers
- */
 class Requirements
 {
     const REQUIRED_PHP_VERSION = '7.1.0';
