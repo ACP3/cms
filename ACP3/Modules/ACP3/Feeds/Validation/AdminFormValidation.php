@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Feeds\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Feeds\Validation
- */
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

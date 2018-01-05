@@ -11,10 +11,6 @@ use ACP3\Core\Environment\ApplicationPath;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\PhpFileCache;
 
-/**
- * Class CacheDriverFactory
- * @package ACP3\Core\Cache
- */
 class CacheDriverFactory
 {
     /**

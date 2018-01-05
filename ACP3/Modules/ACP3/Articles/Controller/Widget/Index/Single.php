@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Widget\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
 
-/**
- * Class Single
- * @package ACP3\Modules\ACP3\Articles\Controller\Widget\Index
- */
 class Single extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;

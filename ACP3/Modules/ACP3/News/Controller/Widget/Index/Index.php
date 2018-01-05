@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 use ACP3\Modules\ACP3\News;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\News\Controller\Widget\Index
- */
 class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;

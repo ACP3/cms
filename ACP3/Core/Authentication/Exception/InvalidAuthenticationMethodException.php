@@ -6,10 +6,6 @@
 
 namespace ACP3\Core\Authentication\Exception;
 
-/**
- * Class InvalidAuthenticationMethodException
- * @package ACP3\Core\Authentication\Exception
- */
 class InvalidAuthenticationMethodException extends \Exception
 {
 }

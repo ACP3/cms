@@ -3,10 +3,6 @@ namespace ACP3\Core\Helpers;
 
 use Cocur\Slugify\Slugify;
 
-/**
- * Class StringFormatter
- * @package ACP3\Core\Helpers
- */
 class StringFormatter
 {
     /**

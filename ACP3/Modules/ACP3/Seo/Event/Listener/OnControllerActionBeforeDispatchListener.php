@@ -14,10 +14,6 @@ use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
-/**
- * Class OnControllerActionBeforeDispatchListener
- * @package ACP3\Modules\ACP3\Seo\Event\Listener
- */
 class OnControllerActionBeforeDispatchListener
 {
     /**

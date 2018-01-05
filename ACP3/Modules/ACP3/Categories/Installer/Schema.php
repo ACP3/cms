@@ -3,10 +3,6 @@ namespace ACP3\Modules\ACP3\Categories\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\Categories\Installer
- */
 class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     const MODULE_NAME = 'categories';

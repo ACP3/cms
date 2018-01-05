@@ -3,10 +3,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Modifiers;
 
 use ACP3\Core\Helpers\Formatter\RewriteInternalUri;
 
-/**
- * Class RewriteUri
- * @package ACP3\Core\View\Renderer\Smarty\Modifiers
- */
 class RewriteUri extends AbstractModifier
 {
     /**

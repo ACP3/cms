@@ -11,10 +11,6 @@ use ACP3\Core\Filesystem;
 use ACP3\Modules\ACP3\System;
 use MJS\TopSort\Implementations\StringSort;
 
-/**
- * Class Modules
- * @package ACP3\Core
- */
 class Modules
 {
     /**

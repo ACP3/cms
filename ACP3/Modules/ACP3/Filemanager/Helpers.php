@@ -3,10 +3,6 @@ namespace ACP3\Modules\ACP3\Filemanager;
 
 use ACP3\Core;
 
-/**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Filemanager
- */
 class Helpers
 {
     /**

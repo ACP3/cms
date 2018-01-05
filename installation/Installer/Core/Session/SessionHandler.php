@@ -8,10 +8,6 @@ namespace ACP3\Installer\Core\Session;
 
 use ACP3\Core\Session\AbstractSessionHandler;
 
-/**
- * Class SessionHandler
- * @package ACP3\Installer\Core
- */
 class SessionHandler extends AbstractSessionHandler
 {
     public function __construct()

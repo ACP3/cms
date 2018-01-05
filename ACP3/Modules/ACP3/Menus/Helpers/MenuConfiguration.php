@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
-/**
- * Class MenuConfiguration
- * @package ACP3\Modules\ACP3\Menus\Helpers
- */
 class MenuConfiguration
 {
     /**

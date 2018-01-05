@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Articles;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository;
 
-/**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Articles
- */
 class Helpers
 {
     const URL_KEY_PATTERN = 'articles/index/details/id_%s/';

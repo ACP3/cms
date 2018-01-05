@@ -13,10 +13,6 @@ use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
 use ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository;
 
-/**
- * Class Native
- * @package ACP3\Modules\ACP3\Users\Core\Authentication
- */
 class Native implements AuthenticationInterface
 {
     /**

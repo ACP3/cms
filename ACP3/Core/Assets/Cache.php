@@ -3,10 +3,6 @@ namespace ACP3\Core\Assets;
 
 use ACP3\Core;
 
-/**
- * Class Cache
- * @package ACP3\Core\Assets
- */
 class Cache
 {
     const CACHE_ID = 'resources';

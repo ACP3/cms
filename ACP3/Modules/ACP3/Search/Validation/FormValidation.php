@@ -3,10 +3,6 @@ namespace ACP3\Modules\ACP3\Search\Validation;
 
 use ACP3\Core;
 
-/**
- * Class FormValidation
- * @package ACP3\Modules\ACP3\Search\Validation
- */
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

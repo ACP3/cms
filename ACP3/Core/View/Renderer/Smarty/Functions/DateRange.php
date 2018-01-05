@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
-/**
- * Class DateRange
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class DateRange extends AbstractFunction
 {
     /**

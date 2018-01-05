@@ -3,10 +3,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
 use ACP3\Core;
 
-/**
- * Class PageCssClasses
- * @package ACP3\Core\View\Renderer\Smarty\Filters
- */
 class PageCssClasses extends AbstractFilter
 {
     /**

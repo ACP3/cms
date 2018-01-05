@@ -3,10 +3,6 @@ namespace ACP3\Core\Validation\ValidationRules;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * Class FileUploadValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class FileUploadValidationRule extends AbstractValidationRule
 {
     /**

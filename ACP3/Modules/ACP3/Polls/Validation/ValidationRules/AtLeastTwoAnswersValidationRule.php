@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Modules\ACP3\Polls\Validation\ValidationRules;
 
-/**
- * Class AtLeastTwoAnswersValidationRule
- * @package ACP3\Modules\ACP3\Polls\Validation\ValidationRules
- */
 class AtLeastTwoAnswersValidationRule extends AbstractAnswerValidationRule
 {
     /**

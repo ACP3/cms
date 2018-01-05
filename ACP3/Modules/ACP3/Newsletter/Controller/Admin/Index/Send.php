@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-/**
- * Class Send
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index
- */
 class Send extends Core\Controller\AbstractFrontendAction
 {
     /**

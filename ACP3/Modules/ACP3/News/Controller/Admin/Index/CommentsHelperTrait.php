@@ -7,10 +7,6 @@ namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 use ACP3\Modules\ACP3\Comments;
 
-/**
- * Class CommentsHelperTrait
- * @package ACP3\Modules\ACP3\News\Controller\Admin\Index
- */
 trait CommentsHelperTrait
 {
     /**

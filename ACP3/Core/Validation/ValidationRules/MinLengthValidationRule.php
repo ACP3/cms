@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-/**
- * Class MinLengthValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class MinLengthValidationRule extends AbstractValidationRule
 {
     /**

@@ -10,10 +10,6 @@ use ACP3\Core;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class AbstractWidgetAction
- * @package ACP3\Core\Controller
- */
 abstract class AbstractWidgetAction implements ActionInterface
 {
     /**

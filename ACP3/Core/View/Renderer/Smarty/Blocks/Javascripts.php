@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty\Blocks;
 
-/**
- * Class Javascripts
- * @package ACP3\Core\View\Renderer\Smarty\Blocks
- */
 class Javascripts extends AbstractBlock
 {
     /**

@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-/**
- * Class DateValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class DateValidationRule extends AbstractValidationRule
 {
     /**

@@ -5,10 +5,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegesExistValidationRule;
 use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RoleNotExistsValidationRule;
 
-/**
- * Class RoleFormValidation
- * @package ACP3\Modules\ACP3\Permissions\Validation
- */
 class RoleFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Frontend\Index;
 
 use ACP3\Core;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Articles\Controller\Frontend\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;

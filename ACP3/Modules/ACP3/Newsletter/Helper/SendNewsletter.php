@@ -6,10 +6,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository;
 
-/**
- * Class SendNewsletter
- * @package ACP3\Modules\ACP3\Newsletter\Helper
- */
 class SendNewsletter
 {
     /**

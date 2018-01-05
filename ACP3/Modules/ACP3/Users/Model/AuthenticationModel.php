@@ -14,10 +14,6 @@ use ACP3\Modules\ACP3\Users;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class AuthenticationModel
- * @package ACP3\Modules\ACP3\Users\Model
- */
 class AuthenticationModel
 {
     const AUTH_NAME = 'ACP3_AUTH';

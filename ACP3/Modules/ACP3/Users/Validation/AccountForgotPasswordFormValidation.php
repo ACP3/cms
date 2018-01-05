@@ -6,10 +6,6 @@ use ACP3\Core\Validation\AbstractFormValidation;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountExistsByEmailValidationRule;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountExistsByNameValidationRule;
 
-/**
- * Class AccountForgotPasswordFormValidation
- * @package ACP3\Modules\ACP3\Users\Validation
- */
 class AccountForgotPasswordFormValidation extends AbstractFormValidation
 {
     /**

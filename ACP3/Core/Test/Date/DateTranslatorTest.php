@@ -9,10 +9,6 @@ namespace ACP3\Core\Test\Date;
 use ACP3\Core\Date\DateTranslator;
 use ACP3\Core\I18n\Translator;
 
-/**
- * Class DateTranslatorTest
- * @package ACP3\Core\Test
- */
 class DateTranslatorTest extends \PHPUnit_Framework_TestCase
 {
     /**

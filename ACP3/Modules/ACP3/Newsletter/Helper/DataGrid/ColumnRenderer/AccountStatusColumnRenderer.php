@@ -5,10 +5,6 @@ use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
 use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Router\RouterInterface;
 
-/**
- * Class AccountStatusColumnRenderer
- * @package ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer
- */
 class AccountStatusColumnRenderer extends AbstractColumnRenderer
 {
     /**

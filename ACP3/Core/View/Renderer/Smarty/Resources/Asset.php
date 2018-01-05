@@ -3,10 +3,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Resources;
 
 use ACP3\Core;
 
-/**
- * Class Asset
- * @package ACP3\Core\View\Renderer\Smarty\Resource
- */
 class Asset extends AbstractResource
 {
     /**

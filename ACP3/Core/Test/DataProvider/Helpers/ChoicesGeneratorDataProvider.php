@@ -8,10 +8,6 @@ namespace ACP3\Core\Test\DataProvider\Helpers;
 
 use ACP3\Core\Test\DataProvider\DataProviderInterface;
 
-/**
- * Class ChoicesGeneratorDataProvider
- * @package ACP3\Core\Test\DataProvider\Helpers
- */
 class ChoicesGeneratorDataProvider implements DataProviderInterface
 {
 

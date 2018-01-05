@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus;
 
-/**
- * Class Delete
- * @package ACP3\Modules\ACP3\Menus\Controller\Admin\Items
- */
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**

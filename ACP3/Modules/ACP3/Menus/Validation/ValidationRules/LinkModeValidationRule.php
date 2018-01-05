@@ -6,10 +6,6 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Core\Validation\ValidationRules\InternalUriValidationRule;
 use ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule;
 
-/**
- * Class LinkModeValidationRule
- * @package ACP3\Modules\ACP3\Menus\Validation\ValidationRules
- */
 class LinkModeValidationRule extends AbstractValidationRule
 {
     /**

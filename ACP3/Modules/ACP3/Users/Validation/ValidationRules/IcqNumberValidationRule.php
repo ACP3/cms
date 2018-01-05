@@ -3,10 +3,6 @@ namespace ACP3\Modules\ACP3\Users\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 
-/**
- * Class IcqNumberValidationRule
- * @package ACP3\Modules\ACP3\Users\Validation\ValidationRules
- */
 class IcqNumberValidationRule extends AbstractValidationRule
 {
     /**

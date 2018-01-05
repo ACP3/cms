@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 
-/**
- * Class Order
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
- */
 class Order extends Core\Controller\AbstractFrontendAction
 {
     /**

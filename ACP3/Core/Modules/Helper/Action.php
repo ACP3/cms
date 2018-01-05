@@ -98,6 +98,7 @@ class Action
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
      * @return array|JsonResponse|RedirectResponse
+     * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function handleDeleteAction(
         $action,

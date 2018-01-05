@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-/**
- * Class IntegerValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class IntegerValidationRule extends AbstractValidationRule
 {
     /**

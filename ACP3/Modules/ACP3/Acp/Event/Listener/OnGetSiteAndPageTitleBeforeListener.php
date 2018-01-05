@@ -12,10 +12,6 @@ use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\TranslatorInterface;
 
-/**
- * Class OnGetSiteAndPageTitleBeforeListener
- * @package ACP3\Modules\ACP3\Acp\Event\Listener
- */
 class OnGetSiteAndPageTitleBeforeListener
 {
     /**

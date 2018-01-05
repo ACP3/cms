@@ -3,10 +3,6 @@ namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\Modules\Modules;
 
-/**
- * Class ModuleIsInstalledValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class ModuleIsInstalledValidationRule extends AbstractValidationRule
 {
     /**

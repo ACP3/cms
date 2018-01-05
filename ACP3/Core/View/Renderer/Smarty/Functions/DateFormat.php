@@ -3,10 +3,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\Date;
 
-/**
- * Class DateFormat
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class DateFormat extends AbstractFunction
 {
     /**

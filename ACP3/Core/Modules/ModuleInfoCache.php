@@ -14,10 +14,6 @@ use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use Composer\Json\JsonFile;
 
-/**
- * Class ModuleInfoCache
- * @package ACP3\Core\Modules
- */
 class ModuleInfoCache
 {
     use ModuleDependenciesTrait;

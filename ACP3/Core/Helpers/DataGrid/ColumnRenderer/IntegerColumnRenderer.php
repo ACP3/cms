@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
-/**
- * Class IntegerColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
- */
 class IntegerColumnRenderer extends AbstractColumnRenderer
 {
     /**

@@ -10,10 +10,6 @@ use ACP3\Installer\Modules\Install\Controller\AbstractAction;
 use ACP3\Installer\Modules\Install\Helpers\Navigation;
 use ACP3\Installer\Modules\Install\Helpers\Requirements as RequirementsHelper;
 
-/**
- * Class Requirements
- * @package ACP3\Installer\Modules\Install\Controller\Index
- */
 class Requirements extends AbstractAction
 {
     /**

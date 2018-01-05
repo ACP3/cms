@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Seo\Core\Http;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 
-/**
- * Class Request
- * @package ACP3\Modules\ACP3\Seo\Core\Http
- */
 class Request extends \ACP3\Core\Http\Request
 {
     /**

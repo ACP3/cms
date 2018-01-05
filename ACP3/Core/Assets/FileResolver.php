@@ -8,10 +8,6 @@ namespace ACP3\Core\Assets;
 
 use ACP3\Core;
 
-/**
- * Class FileResolver
- * @package ACP3\Core\Assets
- */
 class FileResolver
 {
     /**

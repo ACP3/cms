@@ -9,10 +9,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 use ACP3\Core;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class WYSIWYG
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class WYSIWYG extends AbstractFunction
 {
     /**

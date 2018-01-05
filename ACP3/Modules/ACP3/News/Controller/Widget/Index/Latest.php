@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\News\Controller\Widget\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\News;
 
-/**
- * Class Latest
- * @package ACP3\Modules\ACP3\News\Controller\Widget\Index
- */
 class Latest extends Core\Controller\AbstractWidgetAction
 {
     /**

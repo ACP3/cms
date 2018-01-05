@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 use ACP3\Core;
 use ACP3\Core\Controller\Context\WidgetContext;
 
-/**
- * Class UserMenu
- * @package ACP3\Modules\ACP3\Users\Controller\Widget\Index
- */
 class UserMenu extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;

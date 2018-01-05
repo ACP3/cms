@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Helpers\DataGrid;
 
-/**
- * Class ColumnPriorityQueue
- * @package ACP3\Core\Helpers\DataGrid
- */
 class ColumnPriorityQueue extends \SplPriorityQueue
 {
     /**

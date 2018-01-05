@@ -2,10 +2,6 @@
 
 namespace ACP3\Modules\ACP3\Filemanager\Installer;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\Filemanager\Installer
- */
 class Migration implements \ACP3\Core\Installer\MigrationInterface
 {
     /**

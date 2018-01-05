@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Seo\Test\Core\Helper;
 use ACP3\Modules\ACP3\Seo\Core\Helpers\PageBreaks;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
-/**
- * Class PageBreaksTest
- * @package ACP3\Modules\ACP3\Seo\Test\Core\Helper
- */
 class PageBreaksTest extends \ACP3\Core\Test\Helpers\PageBreaksTest
 {
     /**

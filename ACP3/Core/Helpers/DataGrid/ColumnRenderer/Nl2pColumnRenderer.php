@@ -3,10 +3,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Helpers\StringFormatter;
 
-/**
- * Class Nl2pColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
- */
 class Nl2pColumnRenderer extends AbstractColumnRenderer
 {
     /**

@@ -7,10 +7,6 @@ namespace ACP3\Installer\Modules\Install\Controller\Index;
 
 use ACP3\Installer\Modules\Install\Controller\AbstractAction;
 
-/**
- * Class Licence
- * @package ACP3\Installer\Modules\Install\Controller\Index
- */
 class Licence extends AbstractAction
 {
     public function execute()

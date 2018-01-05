@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty\Blocks;
 
-/**
- * Class Stylesheets
- * @package ACP3\Core\View\Renderer\Smarty\Blocks
- */
 class Stylesheets extends AbstractBlock
 {
     /**

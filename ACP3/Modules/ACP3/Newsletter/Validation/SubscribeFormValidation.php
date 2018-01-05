@@ -5,10 +5,6 @@ use ACP3\Core;
 use ACP3\Core\Validation\AbstractFormValidation;
 use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountNotExistsValidationRule;
 
-/**
- * Class SubscribeFormValidation
- * @package ACP3\Modules\ACP3\Newsletter\Validation
- */
 class SubscribeFormValidation extends AbstractFormValidation
 {
     /**

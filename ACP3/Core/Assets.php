@@ -4,10 +4,6 @@ namespace ACP3\Core;
 use ACP3\Core\Assets\Libraries;
 use ACP3\Core\Environment\ApplicationPath;
 
-/**
- * Class Assets
- * @package ACP3\Core
- */
 class Assets
 {
     /**

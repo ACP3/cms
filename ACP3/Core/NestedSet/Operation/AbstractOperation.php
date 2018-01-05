@@ -10,10 +10,6 @@ use ACP3\Core\Database\Connection;
 use ACP3\Core\NestedSet\Model\Repository\BlockAwareNestedSetRepositoryInterface;
 use ACP3\Core\NestedSet\Model\Repository\NestedSetRepository;
 
-/**
- * Class AbstractNestedSetOperation
- * @package ACP3\Core\NestedSet\Operation
- */
 abstract class AbstractOperation
 {
     /**

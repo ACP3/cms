@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-/**
- * Class ExternalLinkValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class ExternalLinkValidationRule extends AbstractValidationRule
 {
     /**

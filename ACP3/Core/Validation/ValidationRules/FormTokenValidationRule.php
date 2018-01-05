@@ -6,10 +6,6 @@ use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\Validation\Exceptions\InvalidFormTokenException;
 use ACP3\Core\Validation\Validator;
 
-/**
- * Class FormTokenValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class FormTokenValidationRule extends AbstractValidationRule
 {
     /**

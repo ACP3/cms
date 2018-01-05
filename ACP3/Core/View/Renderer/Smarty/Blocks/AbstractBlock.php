@@ -4,10 +4,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Blocks;
 use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
 use ACP3\Core\View\Renderer\Smarty\PluginInterface;
 
-/**
- * Class AbstractBlock
- * @package ACP3\Core\View\Renderer\Smarty\Blocks
- */
 abstract class AbstractBlock extends AbstractPlugin
 {
     /**

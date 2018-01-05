@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\System\Model\Repository;
 use ACP3\Core\Model\Repository\AbstractRepository;
 use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
 
-/**
- * Class SettingsRepository
- * @package ACP3\Modules\ACP3\System\Model\Repository
- */
 class SettingsRepository extends AbstractRepository implements SettingsAwareRepositoryInterface
 {
     const TABLE_NAME = 'settings';

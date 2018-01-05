@@ -10,10 +10,6 @@ use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Model\Repository\AbstractRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class AbstractModel
- * @package ACP3\Core\Model
- */
 abstract class AbstractModel
 {
     const EVENT_PREFIX = '';

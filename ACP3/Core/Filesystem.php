@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core;
 
-/**
- * Class Filesystem
- * @package ACP3\Core
- */
 class Filesystem
 {
     /**

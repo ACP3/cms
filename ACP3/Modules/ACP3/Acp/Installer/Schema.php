@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Acp\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
 
-/**
- * Class Installer
- * @package ACP3\Modules\ACP3\Acp\Installer
- */
 class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     const MODULE_NAME = 'acp';

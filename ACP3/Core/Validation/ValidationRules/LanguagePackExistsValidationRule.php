@@ -3,10 +3,6 @@ namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\I18n\AvailableLanguagePacks;
 
-/**
- * Class LanguagePackExistsValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class LanguagePackExistsValidationRule extends AbstractValidationRule
 {
     /**

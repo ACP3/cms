@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Seo\Helper;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 use ACP3\Modules\ACP3\Seo\Model\SeoModel;
 
-/**
- * Class UriAliasManager
- * @package ACP3\Modules\ACP3\Seo\Helper
- */
 class UriAliasManager
 {
     /**

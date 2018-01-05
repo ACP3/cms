@@ -2,10 +2,6 @@
 
 namespace ACP3\Modules\ACP3\Filemanager\Installer;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\Filemanager\Installer
- */
 class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     const MODULE_NAME = 'filemanager';

@@ -5,10 +5,6 @@ use ACP3\Core;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Seo;
 
-/**
- * Class UriAliasValidationRule
- * @package ACP3\Modules\ACP3\Seo\Validation\ValidationRules
- */
 class UriAliasValidationRule extends AbstractValidationRule
 {
     /**

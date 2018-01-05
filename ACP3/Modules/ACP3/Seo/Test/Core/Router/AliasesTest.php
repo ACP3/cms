@@ -10,10 +10,6 @@ use ACP3\Core\Modules\Modules;
 use ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
-/**
- * Class AliasesTest
- * @package ACP3\Modules\ACP3\Seo\Test\Core\Router
- */
 class AliasesTest extends \PHPUnit_Framework_TestCase
 {
     /**

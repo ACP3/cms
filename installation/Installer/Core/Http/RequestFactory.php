@@ -8,10 +8,6 @@ namespace ACP3\Installer\Core\Http;
 
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
-/**
- * Class RequestFactory
- * @package ACP3\Installer\Core\Http
- */
 class RequestFactory
 {
     /**

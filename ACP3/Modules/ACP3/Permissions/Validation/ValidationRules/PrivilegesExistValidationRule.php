@@ -5,10 +5,6 @@ use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository;
 
-/**
- * Class PrivilegesExistValidationRule
- * @package ACP3\Modules\ACP3\Permissions\Validation\ValidationRules
- */
 class PrivilegesExistValidationRule extends AbstractValidationRule
 {
     /**

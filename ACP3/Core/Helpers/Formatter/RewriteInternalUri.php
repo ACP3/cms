@@ -3,10 +3,6 @@ namespace ACP3\Core\Helpers\Formatter;
 
 use ACP3\Core;
 
-/**
- * Class RewriteInternalUri
- * @package ACP3\Core\Helpers\Formatter
- */
 class RewriteInternalUri
 {
     /**

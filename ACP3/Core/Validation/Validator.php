@@ -7,10 +7,6 @@ use ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException;
 use ACP3\Core\Validation\ValidationRules\ValidationRuleInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Validator
- * @package ACP3\Core\Validation
- */
 class Validator
 {
     /**

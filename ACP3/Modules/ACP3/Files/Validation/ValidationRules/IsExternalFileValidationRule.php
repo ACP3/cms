@@ -3,10 +3,6 @@ namespace ACP3\Modules\ACP3\Files\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 
-/**
- * Class IsExternalFileValidationRule
- * @package ACP3\Modules\ACP3\Files\Validation\ValidationRules
- */
 class IsExternalFileValidationRule extends AbstractValidationRule
 {
     /**

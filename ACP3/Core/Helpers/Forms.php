@@ -5,10 +5,6 @@ namespace ACP3\Core\Helpers;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\TranslatorInterface;
 
-/**
- * Class Forms
- * @package ACP3\Core\Helpers
- */
 class Forms
 {
     /**

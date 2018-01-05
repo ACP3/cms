@@ -5,10 +5,6 @@ use ACP3\Core;
 use ACP3\Core\Validation\ValidationRules\ExternalLinkValidationRule;
 use ACP3\Modules\ACP3\Categories;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\News\Validation
- */
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     protected $uriAlias = '';

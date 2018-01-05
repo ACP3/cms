@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class Delete
- * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Details
- */
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**

@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-/**
- * Class InArrayValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class InArrayValidationRule extends AbstractValidationRule
 {
     /**

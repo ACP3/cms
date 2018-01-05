@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Core\Validation\AbstractFormValidation;
 use ACP3\Modules\ACP3\Comments\Validation\ValidationRules\UserNameValidationRule;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Comments\Validation
- */
 class AdminFormValidation extends AbstractFormValidation
 {
     /**

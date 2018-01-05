@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Modules\ACP3\Polls\Validation\ValidationRules;
 
-/**
- * Class DeleteAllAnswersValidationRule
- * @package ACP3\Modules\ACP3\Polls\Validation\ValidationRules
- */
 class DeleteAllAnswersValidationRule extends AbstractAnswerValidationRule
 {
     /**

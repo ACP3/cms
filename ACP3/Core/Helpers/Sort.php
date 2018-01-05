@@ -3,10 +3,6 @@ namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Database\Connection;
 
-/**
- * Class Sort
- * @package ACP3\Core\Helpers
- */
 class Sort
 {
     /**

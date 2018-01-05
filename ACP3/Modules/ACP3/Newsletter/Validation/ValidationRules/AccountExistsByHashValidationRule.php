@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules;
 
-/**
- * Class AccountExistsByHashValidationRule
- * @package ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules
- */
 class AccountExistsByHashValidationRule extends AccountExistsValidationRule
 {
     /**

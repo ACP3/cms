@@ -8,10 +8,6 @@ namespace ACP3\Installer\Modules\Install\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 
-/**
- * Class DesignExistsValidationRule
- * @package ACP3\Installer\Modules\Install\Validation\ValidationRules
- */
 class DesignExistsValidationRule extends AbstractValidationRule
 {
 

@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Menus\Helpers;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage;
 
-/**
- * Class MenuItemsList
- * @package ACP3\Modules\ACP3\Menus\Helpers
- */
 class MenuItemsList
 {
     const ARTICLES_URL_KEY_REGEX = '/^(articles\/index\/details\/id_([0-9]+)\/)$/';

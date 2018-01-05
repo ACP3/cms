@@ -11,10 +11,6 @@ use ACP3\Modules\ACP3\Categories\Cache\CategoriesCacheStorage;
 use ACP3\Modules\ACP3\Categories\Model\CategoriesModel;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 
-/**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Categories
- */
 class Helpers
 {
     /**

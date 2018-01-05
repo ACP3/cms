@@ -3,10 +3,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 use ACP3\Core\I18n\TranslatorInterface;
 
-/**
- * Class TranslateColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
- */
 class TranslateColumnRenderer extends AbstractColumnRenderer
 {
     /**

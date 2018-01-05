@@ -8,10 +8,6 @@ namespace ACP3\Core\Controller;
 
 use ACP3\Core\Enum\BaseEnum;
 
-/**
- * Class AreaEnum
- * @package ACP3\Core\Controller
- */
 class AreaEnum extends BaseEnum
 {
     const AREA_ADMIN = 'admin';

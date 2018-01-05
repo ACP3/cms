@@ -13,7 +13,6 @@ use FOS\HttpCache\SymfonyCache\CacheInvalidation;
 use FOS\HttpCache\SymfonyCache\DebugListener;
 use FOS\HttpCache\SymfonyCache\EventDispatchingHttpCache;
 use FOS\HttpCache\SymfonyCache\PurgeListener;
-use FOS\HttpCache\SymfonyCache\PurgeTagsListener;
 use FOS\HttpCache\SymfonyCache\RefreshListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpCache\HttpCache;
@@ -21,10 +20,6 @@ use Symfony\Component\HttpKernel\HttpCache\StoreInterface;
 use Symfony\Component\HttpKernel\HttpCache\SurrogateInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-/**
- * Class BootstrapCache
- * @package ACP3\Core\Application
- */
 class BootstrapCache extends HttpCache implements CacheInvalidation
 {
     use EventDispatchingHttpCache;

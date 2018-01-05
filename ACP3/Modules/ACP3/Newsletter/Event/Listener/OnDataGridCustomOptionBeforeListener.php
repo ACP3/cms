@@ -6,10 +6,6 @@ use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
 use ACP3\Core\I18n\TranslatorInterface;
 
-/**
- * Class OnDataGridCustomOptionBeforeListener
- * @package ACP3\Modules\ACP3\Newsletter\Event\Listener
- */
 class OnDataGridCustomOptionBeforeListener
 {
     /**

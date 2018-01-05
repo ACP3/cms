@@ -11,10 +11,6 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class Router
- * @package ACP3\Core\Router
- */
 class Router implements RouterInterface
 {
     const ADMIN_PANEL_PATTERN = '=^(acp|admin)/=';

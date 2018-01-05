@@ -9,10 +9,6 @@ namespace ACP3\Core\Breadcrumb;
 use ACP3\Core\Breadcrumb\Event\GetSiteAndPageTitleBeforeEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Title
- * @package ACP3\Core\Breadcrumb\Breadcrumb
- */
 class Title
 {
     /**

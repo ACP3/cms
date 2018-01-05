@@ -5,10 +5,6 @@ use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Router\RouterInterface;
 
-/**
- * Class LoadModule
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class LoadModule extends AbstractFunction
 {
     /**

@@ -4,10 +4,6 @@ namespace ACP3\Core\Helpers\View;
 
 use ACP3\Core;
 
-/**
- * Class CheckAccess
- * @package ACP3\Core\Helpers\View
- */
 class CheckAccess
 {
     /**

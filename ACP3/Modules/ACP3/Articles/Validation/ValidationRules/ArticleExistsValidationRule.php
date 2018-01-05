@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Articles\Validation\ValidationRules;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository;
 
-/**
- * Class ArticleExistsValidationRule
- * @package ACP3\Modules\ACP3\Articles\Validation\ValidationRules
- */
 class ArticleExistsValidationRule extends AbstractValidationRule
 {
     /**

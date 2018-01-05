@@ -12,10 +12,6 @@ use ACP3\Core\Http\Request;
 use ACP3\Core\Router\Router;
 use ACP3\Core\Settings\SettingsInterface;
 
-/**
- * Class RouterTest
- * @package ACP3\Core\Test
- */
 class RouterTest extends \PHPUnit_Framework_TestCase
 {
     /**

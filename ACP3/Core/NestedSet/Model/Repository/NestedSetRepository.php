@@ -8,10 +8,6 @@ namespace ACP3\Core\NestedSet\Model\Repository;
 
 use ACP3\Core\Model\Repository\AbstractRepository;
 
-/**
- * Class NestedSetRepository
- * @package ACP3\Core\NestedSet\Model\Repository
- */
 abstract class NestedSetRepository extends AbstractRepository
 {
     const BLOCK_COLUMN_NAME = 'block_id';

@@ -9,10 +9,6 @@ namespace ACP3\Core\Controller\Event;
 use ACP3\Core\View;
 use Symfony\Component\EventDispatcher\Event;
 
-/**
- * Class CustomTemplateVariableEvent
- * @package ACP3\Core\Controller\Event
- */
 class CustomTemplateVariableEvent extends Event
 {
     /**

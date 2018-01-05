@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Permissions\Validation\ValidationRules;
 use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 
-/**
- * Class RolesExistValidationRule
- * @package ACP3\Modules\ACP3\Permissions\Validation\ValidationRules
- */
 class RolesExistValidationRule extends AbstractValidationRule
 {
     /**

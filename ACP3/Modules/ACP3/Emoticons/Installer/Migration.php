@@ -2,10 +2,6 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\Installer;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\Emoticons\Installer
- */
 class Migration implements \ACP3\Core\Installer\MigrationInterface
 {
     /**

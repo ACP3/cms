@@ -5,10 +5,6 @@ use Symfony\Component\HttpFoundation\AcceptHeader;
 use Symfony\Component\HttpFoundation\AcceptHeaderItem;
 use Symfony\Component\HttpFoundation\ServerBag;
 
-/**
- * Class UserAgent
- * @package ACP3\Core\Http\Request
- */
 class UserAgent
 {
     /**

@@ -4,10 +4,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer;
 use Symfony\Component\EventDispatcher\Event;
 
-/**
- * Class CustomOptionEvent
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event
- */
 class CustomOptionEvent extends Event
 {
     /**

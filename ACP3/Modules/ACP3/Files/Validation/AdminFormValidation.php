@@ -5,10 +5,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files\Validation\ValidationRules\IsExternalFileValidationRule;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Files\Validation
- */
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

@@ -3,10 +3,6 @@ namespace ACP3\Core\Modules\Helper;
 
 use Psr\Container\ContainerInterface;
 
-/**
- * Class ControllerActionExists
- * @package ACP3\Core\Modules\Helper
- */
 class ControllerActionExists
 {
     /**

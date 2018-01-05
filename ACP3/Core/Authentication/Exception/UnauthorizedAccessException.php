@@ -6,10 +6,6 @@
 
 namespace ACP3\Core\Authentication\Exception;
 
-/**
- * Class UnauthorizedAccessException
- * @package ACP3\Core\Authentication\Exception
- */
 class UnauthorizedAccessException extends \Exception
 {
 }

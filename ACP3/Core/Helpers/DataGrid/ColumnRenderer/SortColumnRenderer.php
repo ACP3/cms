@@ -9,10 +9,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Router\RouterInterface;
 
-/**
- * Class SortColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
- */
 class SortColumnRenderer extends AbstractColumnRenderer
 {
     /**

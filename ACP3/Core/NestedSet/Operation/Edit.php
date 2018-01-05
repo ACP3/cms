@@ -6,10 +6,6 @@
 
 namespace ACP3\Core\NestedSet\Operation;
 
-/**
- * Class Edit
- * @package ACP3\Core\NestedSet\Operation
- */
 class Edit extends AbstractOperation
 {
     /**

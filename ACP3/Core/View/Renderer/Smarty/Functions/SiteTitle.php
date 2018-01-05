@@ -8,10 +8,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\Breadcrumb\Title;
 
-/**
- * Class SiteTitle
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class SiteTitle extends AbstractFunction
 {
     /**

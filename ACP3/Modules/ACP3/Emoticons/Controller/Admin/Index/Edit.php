@@ -37,8 +37,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Emoticons\Model\EmoticonsModel $emoticonsModel,
         Emoticons\Validation\AdminFormValidation $adminFormValidation
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;

@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Acp\Event\Listener;
 use ACP3\Core\Breadcrumb\Event\StepsBuildCacheEvent;
 use ACP3\Core\I18n\TranslatorInterface;
 
-/**
- * Class OnBuildAdminCacheNotEmptyStepsAfterListener
- * @package ACP3\Modules\ACP3\Acp\Event\Listener
- */
 class OnBuildAdminCacheNotEmptyStepsAfterListener
 {
     /**

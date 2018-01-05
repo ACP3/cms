@@ -11,10 +11,6 @@ use ACP3\Core\Validation\ValidationRules\FormTokenValidationRule;
 use ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule;
 use ACP3\Modules\ACP3\Polls\Validation\ValidationRules\AlreadyVotedValidationRule;
 
-/**
- * Class VoteValidation
- * @package ACP3\Modules\ACP3\Polls\Validation
- */
 class VoteValidation extends AbstractFormValidation
 {
     /**

@@ -8,10 +8,6 @@ namespace ACP3\Modules\ACP3\Acp\Installer;
 
 use ACP3\Core\Installer\MigrationInterface;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\Acp\Installer
- */
 class Migration implements MigrationInterface
 {
 

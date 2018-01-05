@@ -9,10 +9,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 use ACP3\Core\View\Event\TemplateEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Event
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class Event extends AbstractFunction
 {
     /**

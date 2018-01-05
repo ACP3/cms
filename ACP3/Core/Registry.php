@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core;
 
-/**
- * Class Registry
- * @package ACP3\Core
- */
 class Registry
 {
     private static $registry = [];

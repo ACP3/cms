@@ -9,10 +9,6 @@ namespace ACP3\Modules\ACP3\Acp\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Core\Controller\Context;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Acp\Controller\Admin\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**

@@ -3,10 +3,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\Assets;
 
-/**
- * Class PageCssClasses
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class PageCssClasses extends AbstractFunction
 {
     /**

@@ -7,10 +7,6 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
 
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Account
- */
 class Index extends AbstractAction
 {
     public function execute()

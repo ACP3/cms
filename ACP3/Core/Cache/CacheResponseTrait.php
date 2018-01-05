@@ -12,10 +12,6 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class CacheResponseTrait
- * @package ACP3\Core\Cache
- */
 trait CacheResponseTrait
 {
     abstract protected function getRequest(): RequestInterface;

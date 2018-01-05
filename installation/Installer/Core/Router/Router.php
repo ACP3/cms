@@ -8,10 +8,6 @@ namespace ACP3\Installer\Core\Router;
 
 use ACP3\Core;
 
-/**
- * Class Router
- * @package ACP3\Installer\Core\Router
- */
 class Router implements Core\Router\RouterInterface
 {
     /**

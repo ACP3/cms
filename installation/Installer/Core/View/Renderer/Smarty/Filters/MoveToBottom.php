@@ -6,10 +6,6 @@
 
 namespace ACP3\Installer\Core\View\Renderer\Smarty\Filters;
 
-/**
- * Class MoveToBottom
- * @package ACP3\Installer\Core\View\Renderer\Smarty\Filters
- */
 class MoveToBottom extends \ACP3\Core\View\Renderer\Smarty\Filters\MoveToBottom
 {
     public function __construct()

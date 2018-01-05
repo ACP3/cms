@@ -5,10 +5,6 @@ namespace ACP3\Modules\ACP3\Gallery\Installer;
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\Gallery\Installer
- */
 class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     const MODULE_NAME = 'gallery';

@@ -2,10 +2,6 @@
 
 namespace ACP3\Modules\ACP3\Errors\Installer;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\Errors\Installer
- */
 class Migration extends \ACP3\Core\Installer\AbstractMigration
 {
     /**

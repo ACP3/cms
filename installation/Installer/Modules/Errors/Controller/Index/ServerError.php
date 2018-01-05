@@ -9,10 +9,6 @@ namespace ACP3\Installer\Modules\Errors\Controller\Index;
 use ACP3\Installer\Core\Controller\AbstractInstallerAction;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class ServerError
- * @package ACP3\Installer\Modules\Errors\Controller\Index
- */
 class ServerError extends AbstractInstallerAction
 {
     public function execute()

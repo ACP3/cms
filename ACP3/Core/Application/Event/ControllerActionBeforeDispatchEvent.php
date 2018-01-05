@@ -8,10 +8,6 @@ namespace ACP3\Core\Application\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
-/**
- * Class ControllerActionBeforeDispatchEvent
- * @package ACP3\Core\Application\Event
- */
 class ControllerActionBeforeDispatchEvent extends Event
 {
     /**

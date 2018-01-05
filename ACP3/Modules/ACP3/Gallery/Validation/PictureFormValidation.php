@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Gallery\Validation;
 use ACP3\Core;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * Class PictureFormValidation
- * @package ACP3\Modules\ACP3\Gallery\Validation
- */
 class PictureFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

@@ -3,10 +3,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\Helpers\Date;
 
-/**
- * Class Datepicker
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class Datepicker extends AbstractFunction
 {
     /**

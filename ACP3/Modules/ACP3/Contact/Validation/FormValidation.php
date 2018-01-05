@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Contact\Validation;
 
 use ACP3\Core;
 
-/**
- * Class FormValidation
- * @package ACP3\Modules\ACP3\Contact\Validation
- */
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**

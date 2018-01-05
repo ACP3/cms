@@ -10,10 +10,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
-/**
- * Class Delete
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
- */
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**

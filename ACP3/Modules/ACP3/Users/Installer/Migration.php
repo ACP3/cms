@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Users\Installer;
 
 use ACP3\Core\Date;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\Users\Installer
- */
 class Migration extends \ACP3\Core\Installer\AbstractMigration
 {
     /**

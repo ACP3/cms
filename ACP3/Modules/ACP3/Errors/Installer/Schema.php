@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Errors\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\Errors\Installer
- */
 class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     const MODULE_NAME = 'errors';

@@ -4,10 +4,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository;
 
-/**
- * Class AccountExistsValidationRule
- * @package ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules
- */
 class AccountExistsValidationRule extends AbstractValidationRule
 {
     /**

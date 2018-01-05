@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\View\Renderer\Smarty;
 
-/**
- * Class AbstractPlugin
- * @package ACP3\Core\View\Renderer\Smarty
- */
 abstract class AbstractPlugin implements PluginInterface
 {
     /**

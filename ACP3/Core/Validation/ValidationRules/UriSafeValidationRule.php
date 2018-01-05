@@ -1,10 +1,6 @@
 <?php
 namespace ACP3\Core\Validation\ValidationRules;
 
-/**
- * Class UriSafeValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class UriSafeValidationRule extends AbstractValidationRule
 {
     /**
