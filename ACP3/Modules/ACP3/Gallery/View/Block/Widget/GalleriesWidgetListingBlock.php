@@ -59,7 +59,7 @@ class GalleriesWidgetListingBlock extends AbstractBlock
             'sidebar_galleries' => $this->galleryRepository->getAll(
                 $this->date->getCurrentDateTime(),
                 $settings['sidebar']
-            )
+            ),
         ];
     }
 }

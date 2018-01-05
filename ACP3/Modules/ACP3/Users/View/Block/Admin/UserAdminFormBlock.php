@@ -53,7 +53,7 @@ class UserAdminFormBlock extends AbstractRepositoryAwareFormBlock
 
         $userRoles = $this->acl->getUserRoleIds($user['id']);
 
-        return array_merge(
+        return \array_merge(
             [
                 'roles' => $this->fetchUserRoles($userRoles),
                 'super_user' => $this->fetchIsSuperUser($user['super_user']),
@@ -63,8 +63,8 @@ class UserAdminFormBlock extends AbstractRepositoryAwareFormBlock
                     $user['icq'],
                     $user['skype']
                 ),
-                'form' => array_merge($user, $this->getRequestData()),
-                'form_token' => $this->formToken->renderFormToken()
+                'form' => \array_merge($user, $this->getRequestData()),
+                'form_token' => $this->formToken->renderFormToken(),
             ],
             $this->userFormsHelpers->fetchUserSettingsFormFields(
                 $user['address_display'],
@@ -91,8 +91,9 @@ class UserAdminFormBlock extends AbstractRepositoryAwareFormBlock
 
         $availableUserRoles = [];
         foreach ($roles as $role) {
-            $availableUserRoles[$role['id']] = str_repeat('&nbsp;&nbsp;', $role['level']) . $role['name'];
+            $availableUserRoles[$role['id']] = \str_repeat('&nbsp;&nbsp;', $role['level']) . $role['name'];
         }
+
         return $this->forms->choicesGenerator('roles', $availableUserRoles, $currentUserRoles);
     }
 
@@ -130,7 +131,7 @@ class UserAdminFormBlock extends AbstractRepositoryAwareFormBlock
             'address_display' => 0,
             'birthday_display' => 0,
             'country_display' => 0,
-            'mail_display' => 0
+            'mail_display' => 0,
         ];
     }
 }

@@ -39,7 +39,7 @@ class CommentsDataGridRepository extends AbstractDataGridRepository
             'main.ip',
             'main.user_id',
             'main.date',
-            'main.message'
+            'main.message',
         ];
     }
 

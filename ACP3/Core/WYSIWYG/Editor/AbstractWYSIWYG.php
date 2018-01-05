@@ -8,7 +8,6 @@ namespace ACP3\Core\WYSIWYG\Editor;
 
 /**
  * Abstract Class for the various WYSIWYG editors
- * @package ACP3\Core\WYSIWYG\Editor
  */
 abstract class AbstractWYSIWYG
 {

@@ -23,8 +23,8 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 'items' => [
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'manage' => PrivilegeEnum::ADMIN_MANAGE,
-                    'order' => PrivilegeEnum::ADMIN_CREATE
-                ]
+                    'order' => PrivilegeEnum::ADMIN_CREATE,
+                ],
             ],
         ];
     }
@@ -51,14 +51,14 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}menus` (
+            'CREATE TABLE `{pre}menus` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `index_name` VARCHAR(10) NOT NULL,
                 `title` VARCHAR(120) NOT NULL,
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `index_name` (`index_name`)
-            ) {ENGINE} {CHARSET};",
-            "CREATE TABLE `{pre}menu_items` (
+            ) {ENGINE} {CHARSET};',
+            'CREATE TABLE `{pre}menu_items` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `mode` TINYINT(1) UNSIGNED NOT NULL,
                 `block_id` INT(10) UNSIGNED NOT NULL,
@@ -74,7 +74,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 INDEX `foreign_block_id` (`block_id`),
                 INDEX `left_id` (`left_id`),
                 FOREIGN KEY (`block_id`) REFERENCES `{pre}menus` (`id`) ON DELETE CASCADE
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -84,8 +84,8 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            "DROP TABLE IF EXISTS `{pre}menus`;",
-            "DROP TABLE IF EXISTS `{pre}menu_items`;"
+            'DROP TABLE IF EXISTS `{pre}menus`;',
+            'DROP TABLE IF EXISTS `{pre}menu_items`;',
         ];
     }
 

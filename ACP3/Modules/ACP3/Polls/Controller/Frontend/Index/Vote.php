@@ -76,7 +76,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
             return $this->block
                 ->setData([
                     'poll' => $this->pollRepository->getOneById($id),
-                    'answers' => $this->answerRepository->getAnswersByPollId($id)
+                    'answers' => $this->answerRepository->getAnswersByPollId($id),
                 ])
                 ->render();
         }
@@ -105,6 +105,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
                 $result = $this->pollsModel->vote($formData, $id, $ipAddress, $time);
 
                 $text = $this->translator->t('polls', $result !== false ? 'poll_success' : 'poll_error');
+
                 return $this->redirectMessages()->setMessage($result, $text, 'polls/index/result/id_' . $id);
             },
             'polls/index/vote/id_' . $id

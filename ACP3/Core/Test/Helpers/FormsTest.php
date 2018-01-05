@@ -128,7 +128,7 @@ class FormsTest extends \PHPUnit_Framework_TestCase
         $values = [
             'foo' => 'Lorem',
             'bar' => 'Ipsum',
-            'baz' => 'Dolor'
+            'baz' => 'Dolor',
         ];
 
         $this->assertEquals(
@@ -159,7 +159,7 @@ class FormsTest extends \PHPUnit_Framework_TestCase
         $values = [
             'foo' => 'Lorem',
             'bar' => 'Ipsum',
-            'baz' => 'Dolor'
+            'baz' => 'Dolor',
         ];
 
         $this->assertEquals(

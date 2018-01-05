@@ -64,12 +64,12 @@ class ModuleInstaller
                 $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
                 $module = $schema->getModuleName();
 
-                $moduleConfigPath = $vendorPath . ucfirst($module) . '/composer.json';
+                $moduleConfigPath = $vendorPath . \ucfirst($module) . '/composer.json';
 
                 if ($this->isValidModule($moduleConfigPath)) {
                     $dependencies = $this->getModuleDependencies($moduleConfigPath);
 
-                    if (count($dependencies) > 0) {
+                    if (\count($dependencies) > 0) {
                         $this->installModules($container, $this->collectDependentSchemas($container, $dependencies));
                     }
 
@@ -93,7 +93,7 @@ class ModuleInstaller
      */
     private function isValidModule(string $moduleConfigPath): bool
     {
-        if (is_file($moduleConfigPath)) {
+        if (\is_file($moduleConfigPath)) {
             $config = (new JsonFile($moduleConfigPath))->read();
 
             return !isset($config['extra']['installable']);

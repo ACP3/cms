@@ -31,7 +31,7 @@ class FilesDataGridBlockTest extends AbstractDataGridBlockTest
             ->method('getSettings')
             ->with('files')
             ->willReturn([
-                'order_by' => 'date'
+                'order_by' => 'date',
             ]);
 
         return new FilesDataGridBlock($this->context, $acl, $settings);
@@ -44,7 +44,7 @@ class FilesDataGridBlockTest extends AbstractDataGridBlockTest
     {
         return [
             'grid',
-            'show_mass_delete_button'
+            'show_mass_delete_button',
         ];
     }
 }

@@ -89,7 +89,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
      */
     protected function configureDataGrid(DataGrid $dataGrid, array $dataGridOptions)
     {
-        $dataGridOptions = array_merge($this->getDefaultDataGridOptions(), $dataGridOptions);
+        $dataGridOptions = \array_merge($this->getDefaultDataGridOptions(), $dataGridOptions);
 
         $options = (new DataGrid\Options())
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage($this->getModuleName()))
@@ -121,7 +121,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
             'resource_path_delete' => '',
             'resource_path_edit' => '',
             'ajax' => false,
-            'query_options' => []
+            'query_options' => [],
         ];
     }
 

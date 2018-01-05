@@ -44,13 +44,13 @@ class SortColumnRenderer extends AbstractColumnRenderer
         $value = '';
         if ($dbResultRow['last'] != $dbValue) {
             $value .= $this->fetchSortDirectionHtml(
-                $this->router->route(sprintf($column['custom']['route_sort_down'], $dbResultRow[$this->primaryKey])),
+                $this->router->route(\sprintf($column['custom']['route_sort_down'], $dbResultRow[$this->primaryKey])),
                 'down'
             );
         }
         if ($dbResultRow['first'] != $dbValue) {
             $value .= $this->fetchSortDirectionHtml(
-                $this->router->route(sprintf($column['custom']['route_sort_up'], $dbResultRow[$this->primaryKey])),
+                $this->router->route(\sprintf($column['custom']['route_sort_up'], $dbResultRow[$this->primaryKey])),
                 'up'
             );
         }
@@ -59,7 +59,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
         }
 
         $column['attribute'] += [
-            'sort' => $dbResultRow[$this->getFirstDbField($column)]
+            'sort' => $dbResultRow[$this->getFirstDbField($column)],
         ];
 
         return $this->render($column, $value);
@@ -78,7 +78,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
 </a>
 HTML;
 
-        return sprintf(
+        return \sprintf(
             $html,
             $url,
             $this->translator->t('system', 'move_' . $direction),
@@ -96,7 +96,7 @@ HTML;
 <i class="fa fa-minus-circle text-danger text-danger" aria-hidden="true" title="%s"></i>
 HTML;
 
-        return sprintf($html, $this->translator->t('system', 'move_impossible'));
+        return \sprintf($html, $this->translator->t('system', 'move_impossible'));
     }
 
     /**

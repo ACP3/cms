@@ -89,7 +89,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $data = [
                 'dateformat' => $this->secure->strEncode($formData['dateformat']),
                 'sidebar' => (int)$formData['sidebar'],
-                'order_by' => $formData['order_by']
+                'order_by' => $formData['order_by'],
             ];
 
             if ($this->commentsHelpers) {

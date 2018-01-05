@@ -43,12 +43,12 @@ class PageCssClasses extends AbstractFilter
      */
     public function process($tplOutput, \Smarty_Internal_Template $smarty)
     {
-        if (strpos($tplOutput, '<body') !== false) {
+        if (\strpos($tplOutput, '<body') !== false) {
             if ($this->cssClassCache === '') {
-                $this->cssClassCache = 'class="' . implode(' ', $this->buildPageCssClasses()) . '"';
+                $this->cssClassCache = 'class="' . \implode(' ', $this->buildPageCssClasses()) . '"';
             }
 
-            $tplOutput = str_replace('<body', '<body ' . $this->cssClassCache, $tplOutput);
+            $tplOutput = \str_replace('<body', '<body ' . $this->cssClassCache, $tplOutput);
         }
 
         return $tplOutput;
@@ -61,7 +61,7 @@ class PageCssClasses extends AbstractFilter
     {
         $pieces = [
             $this->pageCssClasses->getModule(),
-            $this->pageCssClasses->getControllerAction()
+            $this->pageCssClasses->getControllerAction(),
         ];
 
         if ($this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN) {

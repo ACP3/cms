@@ -55,8 +55,8 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
                 'fields' => ['id'],
                 'custom' => [
                     'pattern' => 'gallery/index/image/id_%s/action_thumb',
-                    'isRoute' => true
-                ]
+                    'isRoute' => true,
+                ],
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'description'),
@@ -69,8 +69,8 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
                 'fields' => ['id'],
                 'primary' => true,
                 'custom' => [
-                    'path' => Helpers::URL_KEY_PATTERN_PICTURE
-                ]
+                    'path' => Helpers::URL_KEY_PATTERN_PICTURE,
+                ],
             ], 10);
 
         if ($this->acl->hasPermission('admin/gallery/pictures/order')) {
@@ -83,7 +83,7 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
                     'custom' => [
                         'route_sort_down' => 'acp/gallery/pictures/order/id_%d/action_down',
                         'route_sort_up' => 'acp/gallery/pictures/order/id_%d/action_up',
-                    ]
+                    ],
                 ], 20);
         }
     }
@@ -104,8 +104,8 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
             'resource_path_delete' => 'admin/gallery/pictures/delete/id_' . $data['gallery_id'],
             'resource_path_edit' => 'admin/gallery/pictures/edit',
             'query_options' => [
-                new DataGrid\QueryOption('gallery_id', $data['gallery_id'])
-            ]
+                new DataGrid\QueryOption('gallery_id', $data['gallery_id']),
+            ],
         ]);
 
         $grid = $dataGrid->render();
@@ -116,7 +116,7 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
         return [
             'gallery_id' => $data['gallery_id'],
             'grid' => $grid,
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

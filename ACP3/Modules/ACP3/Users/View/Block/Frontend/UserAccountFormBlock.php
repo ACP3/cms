@@ -38,7 +38,7 @@ class UserAccountFormBlock extends AbstractRepositoryAwareFormBlock
     {
         $user = $this->getData();
 
-        return array_merge(
+        return \array_merge(
             $this->userFormsHelper->fetchUserProfileFormFields(
                 $user['birthday'],
                 $user['country'],
@@ -51,8 +51,8 @@ class UserAccountFormBlock extends AbstractRepositoryAwareFormBlock
                     $user['icq'],
                     $user['skype']
                 ),
-                'form' => array_merge($user, $this->getRequestData()),
-                'form_token' => $this->formToken->renderFormToken()
+                'form' => \array_merge($user, $this->getRequestData()),
+                'form_token' => $this->formToken->renderFormToken(),
             ]
         );
     }

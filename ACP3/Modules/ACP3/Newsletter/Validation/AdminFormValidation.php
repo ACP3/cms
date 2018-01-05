@@ -17,7 +17,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->translator->t('newsletter', 'subject_to_short')
+                    'message' => $this->translator->t('newsletter', 'subject_to_short'),
                 ]
             )
             ->addConstraint(
@@ -25,7 +25,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'text',
-                    'message' => $this->translator->t('newsletter', 'text_to_short')
+                    'message' => $this->translator->t('newsletter', 'text_to_short'),
                 ]
             );
 

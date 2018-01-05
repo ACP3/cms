@@ -32,6 +32,7 @@ class AclRolesDataGridRepository extends AbstractDataGridRepository
             $result['first'] = $this->isFirstInSet($index, $results);
             $result['last'] = $this->isLastItemInSet($index, $results);
         }
+
         return $results;
     }
 
@@ -62,7 +63,7 @@ class AclRolesDataGridRepository extends AbstractDataGridRepository
      */
     private function isLastItemInSet(int $index, array $nestedSet): bool
     {
-        $cItems = count($nestedSet);
+        $cItems = \count($nestedSet);
         for ($j = $index + 1; $j < $cItems; ++$j) {
             if ($nestedSet[$index]['parent_id'] == $nestedSet[$j]['parent_id']) {
                 return false;

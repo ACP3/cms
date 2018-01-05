@@ -36,7 +36,7 @@ class CategoriesListingBlock extends AbstractBlock
     public function render()
     {
         return [
-            'categories' => $this->categoriesRepository->getAllRootCategoriesByModuleName(Schema::MODULE_NAME)
+            'categories' => $this->categoriesRepository->getAllRootCategoriesByModuleName(Schema::MODULE_NAME),
         ];
     }
 }

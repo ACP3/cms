@@ -87,7 +87,7 @@ class CommentsListingBlock extends AbstractListingBlock
             $this->pagination->getResultsStartOffset(),
             $resultsPerPage
         );
-        $cComments = count($comments);
+        $cComments = \count($comments);
 
         $settings = $this->settings->getSettings($this->getModuleName());
 
@@ -114,7 +114,7 @@ class CommentsListingBlock extends AbstractListingBlock
         return [
             'comments' => $this->getResults($resultsPerPage),
             'dateformat' => $this->settings->getSettings($this->getModuleName())['dateformat'],
-            'pagination' => $this->pagination->render()
+            'pagination' => $this->pagination->render(),
         ];
     }
 }

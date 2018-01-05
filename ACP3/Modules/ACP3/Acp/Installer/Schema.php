@@ -48,9 +48,9 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
         return [
             'admin' => [
                 'index' => [
-                    'index' => PrivilegeEnum::ADMIN_VIEW
-                ]
-            ]
+                    'index' => PrivilegeEnum::ADMIN_VIEW,
+                ],
+            ],
         ];
     }
 

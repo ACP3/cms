@@ -14,11 +14,11 @@ class IntegerColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidField()
     {
-        $this->columnData = array_merge($this->columnData, [
-            'fields' => ['text']
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['text'],
         ]);
         $this->dbData = [
-            'text' => '1'
+            'text' => '1',
         ];
 
         $expected = '<td>1</td>';
@@ -27,11 +27,11 @@ class IntegerColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidFieldStringToIntegerConversion()
     {
-        $this->columnData = array_merge($this->columnData, [
-            'fields' => ['text']
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['text'],
         ]);
         $this->dbData = [
-            'text' => 'Test'
+            'text' => 'Test',
         ];
 
         $expected = '<td>0</td>';

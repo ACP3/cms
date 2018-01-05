@@ -37,7 +37,7 @@ class ContactSettingsFormBlockTest extends AbstractFormBlockTest
     {
         return [
             'form',
-            'form_token'
+            'form_token',
         ];
     }
 }

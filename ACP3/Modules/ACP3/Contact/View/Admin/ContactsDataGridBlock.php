@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ContactsDataGridBlock extends AbstractDataGridBlock
 {
-
     /**
      * @inheritdoc
      */
@@ -26,7 +25,7 @@ class ContactsDataGridBlock extends AbstractDataGridBlock
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['date'],
                 'default_sort' => true,
-                'default_sort_direction' => 'desc'
+                'default_sort_direction' => 'desc',
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'name'),

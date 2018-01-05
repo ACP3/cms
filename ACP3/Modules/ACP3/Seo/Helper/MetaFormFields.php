@@ -67,7 +67,7 @@ class MetaFormFields
     public function formFields($path = '')
     {
         if (!empty($path)) {
-            $path .= !preg_match('/\/$/', $path) ? '/' : '';
+            $path .= !\preg_match('/\/$/', $path) ? '/' : '';
 
             $alias = $this->request->getPost()->get('alias', $this->aliases->getUriAlias($path, true));
             $title = $this->request->getPost()->get('seo_title', $this->metaStatements->getTitle($path));
@@ -91,7 +91,7 @@ class MetaFormFields
                 'seo_robots',
                 $this->getRobotsChoicesGeneratorValues(),
                 $robots
-            )
+            ),
         ];
     }
 
@@ -109,7 +109,7 @@ class MetaFormFields
             1 => $this->translator->t('seo', 'robots_index_follow'),
             2 => $this->translator->t('seo', 'robots_index_nofollow'),
             3 => $this->translator->t('seo', 'robots_noindex_follow'),
-            4 => $this->translator->t('seo', 'robots_noindex_nofollow')
+            4 => $this->translator->t('seo', 'robots_noindex_nofollow'),
         ];
     }
 }

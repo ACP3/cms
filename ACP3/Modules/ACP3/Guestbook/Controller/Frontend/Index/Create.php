@@ -130,7 +130,7 @@ class Create extends Core\Controller\AbstractFrontendAction
     protected function sendNotificationEmail($entryId)
     {
         $fullPath = $this->router->route('guestbook', true) . '#gb-entry-' . $entryId;
-        $body = sprintf(
+        $body = \sprintf(
             $this->guestbookSettings['notify'] == 1
                 ? $this->translator->t('guestbook', 'notification_email_body_1')
                 : $this->translator->t('guestbook', 'notification_email_body_2'),

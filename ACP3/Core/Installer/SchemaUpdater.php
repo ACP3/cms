@@ -7,7 +7,6 @@
 namespace ACP3\Core\Installer;
 
 use ACP3\Core\Installer\Helper\SchemaHelper;
-use ACP3\Modules\ACP3\System;
 
 class SchemaUpdater extends SchemaHelper
 {
@@ -28,7 +27,7 @@ class SchemaUpdater extends SchemaHelper
         // Falls eine Methode zum Umbenennen des Moduls existiert,
         // diese mit der aktuell installierten Schemaverion aufrufen
         $moduleNames = $migration->renameModule();
-        if (count($moduleNames) > 0) {
+        if (\count($moduleNames) > 0) {
             $result = $this->iterateOverSchemaUpdates(
                 $schema->getModuleName(),
                 $schema->getSchemaVersion(),
@@ -38,8 +37,8 @@ class SchemaUpdater extends SchemaHelper
         }
 
         $queries = $migration->schemaUpdates();
-        if (is_array($queries) && count($queries) > 0) {
-            ksort($queries);
+        if (\is_array($queries) && \count($queries) > 0) {
+            \ksort($queries);
 
             $result = $this->iterateOverSchemaUpdates(
                 $schema->getModuleName(),
@@ -84,6 +83,7 @@ class SchemaUpdater extends SchemaHelper
                 }
             }
         }
+
         return $result;
     }
 
@@ -94,7 +94,7 @@ class SchemaUpdater extends SchemaHelper
      */
     private function forceSqlQueriesToArray($queries): array
     {
-        return (is_array($queries) === false) ? (array)$queries : $queries;
+        return (\is_array($queries) === false) ? (array)$queries : $queries;
     }
 
     /**

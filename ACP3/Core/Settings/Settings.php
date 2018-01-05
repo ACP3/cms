@@ -10,12 +10,10 @@ use ACP3\Core\Cache\Cache;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
 use ACP3\Core\Settings\Event\SettingsSaveEvent;
-use ACP3\Modules\ACP3\System;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Manages the various module settings
- * @package ACP3\Core\Settings
  */
 class Settings implements SettingsInterface
 {
@@ -73,11 +71,11 @@ class Settings implements SettingsInterface
 
             foreach ($data as $key => $value) {
                 $updateValues = [
-                    'value' => $value
+                    'value' => $value,
                 ];
                 $where = [
                     'module_id' => $moduleId,
-                    'name' => $key
+                    'name' => $key,
                 ];
                 $bool = $this->systemSettingsRepository->update($updateValues, $where);
             }

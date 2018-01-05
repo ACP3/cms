@@ -20,17 +20,17 @@ class UserMenuWidgetBlock extends AbstractBlock
         [
             'controller' => 'index',
             'action' => 'settings',
-            'phrase' => 'settings'
+            'phrase' => 'settings',
         ],
         [
             'controller' => 'extensions',
             'action' => '',
-            'phrase' => 'extensions'
+            'phrase' => 'extensions',
         ],
         [
             'controller' => 'maintenance',
             'action' => '',
-            'phrase' => 'maintenance'
+            'phrase' => 'maintenance',
         ],
     ];
     /**
@@ -63,7 +63,7 @@ class UserMenuWidgetBlock extends AbstractBlock
     {
         return [
             'modules' => $this->addModules(),
-            'system' => $this->addSystemActions()
+            'system' => $this->addSystemActions(),
         ];
     }
 
@@ -95,8 +95,8 @@ class UserMenuWidgetBlock extends AbstractBlock
         $activeModules = $this->modules->getActiveModules();
         $navMods = [];
         foreach ($activeModules as $name => $info) {
-            $dir = strtolower($info['dir']);
-            if (!in_array($dir, ['acp', 'system']) && $this->acl->hasPermission('admin/' . $dir . '/index') === true) {
+            $dir = \strtolower($info['dir']);
+            if (!\in_array($dir, ['acp', 'system']) && $this->acl->hasPermission('admin/' . $dir . '/index') === true) {
                 $navMods[$name] = [
                     'path' => $dir,
                     'name' => $name,

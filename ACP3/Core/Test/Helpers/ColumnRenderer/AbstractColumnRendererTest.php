@@ -46,16 +46,16 @@ abstract class AbstractColumnRendererTest extends \PHPUnit_Framework_TestCase
             'default_sort_direction' => 'asc',
             'custom' => [],
             'attribute' => [],
-            'primary' => false
+            'primary' => false,
         ];
     }
 
     public function testSingleCustomHtmlAttribute()
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = \array_merge($this->columnData, [
             'attribute' => [
-                'order' => 'bar'
-            ]
+                'order' => 'bar',
+            ],
         ]);
 
         $expected = '<td data-order="bar"></td>';
@@ -64,11 +64,11 @@ abstract class AbstractColumnRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testMultipleCustomHtmlAttributes()
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = \array_merge($this->columnData, [
             'attribute' => [
                 'foo' => 'bar',
                 'lorem' => 'ipsum',
-            ]
+            ],
         ]);
 
         $expected = '<td data-foo="bar" data-lorem="ipsum"></td>';
@@ -77,8 +77,8 @@ abstract class AbstractColumnRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testAddCssClass()
     {
-        $this->columnData = array_merge($this->columnData, [
-            'class' => 'foobar'
+        $this->columnData = \array_merge($this->columnData, [
+            'class' => 'foobar',
         ]);
 
         $expected = '<td class="foobar"></td>';
@@ -87,11 +87,11 @@ abstract class AbstractColumnRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidField()
     {
-        $this->columnData = array_merge($this->columnData, [
-            'fields' => ['test']
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['test'],
         ]);
         $this->dbData = [
-            'text' => 'Lorem Ipsum'
+            'text' => 'Lorem Ipsum',
         ];
 
         $expected = '<td></td>';
@@ -100,11 +100,11 @@ abstract class AbstractColumnRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testValidField()
     {
-        $this->columnData = array_merge($this->columnData, [
-            'fields' => ['text']
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['text'],
         ]);
         $this->dbData = [
-            'text' => 'Lorem Ipsum'
+            'text' => 'Lorem Ipsum',
         ];
 
         $expected = '<td>Lorem Ipsum</td>';
@@ -113,14 +113,14 @@ abstract class AbstractColumnRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultValueIfNull()
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = \array_merge($this->columnData, [
             'fields' => ['text'],
             'custom' => [
-                'default_value' => 'Foo Bar'
-            ]
+                'default_value' => 'Foo Bar',
+            ],
         ]);
         $this->dbData = [
-            'text' => null
+            'text' => null,
         ];
 
         $expected = '<td>Foo Bar</td>';
@@ -129,14 +129,14 @@ abstract class AbstractColumnRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultValueIfNotFound()
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = \array_merge($this->columnData, [
             'fields' => ['test'],
             'custom' => [
-                'default_value' => 'Foo Bar'
-            ]
+                'default_value' => 'Foo Bar',
+            ],
         ]);
         $this->dbData = [
-            'text' => 'Lorem Ipsum'
+            'text' => 'Lorem Ipsum',
         ];
 
         $expected = '<td>Foo Bar</td>';

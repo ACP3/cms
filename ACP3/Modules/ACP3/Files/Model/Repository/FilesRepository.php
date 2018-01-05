@@ -41,10 +41,11 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     public function resultExists($fileId, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
-        return ((int)$this->db->fetchColumn(
+
+        return (int)$this->db->fetchColumn(
                 "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id" . $period,
                 ['id' => $fileId, 'time' => $time, 'active' => 1]
-            ) > 0);
+            ) > 0;
     }
 
     /**
@@ -82,7 +83,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
             $results = $this->getAll($time);
         }
 
-        return count($results);
+        return \count($results);
     }
 
     /**
@@ -97,6 +98,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
+
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()} WHERE `category_id` = :categoryId {$where} ORDER BY {$this->getOrderBy()}{$limitStmt}",
             ['time' => $time, 'active' => 1, 'categoryId' => $categoryId]
@@ -114,6 +116,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
+
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()}{$where} ORDER BY {$this->getOrderBy()}{$limitStmt}",
             ['time' => $time, 'active' => 1]
@@ -137,7 +140,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
 
         $orderByMap = [
             'date' => '`start` DESC, `end` DESC, `id` DESC',
-            'custom' => '`sort` ASC'
+            'custom' => '`sort` ASC',
         ];
 
         if (isset($settings['order_by']) && isset($orderByMap[$settings['order_by']])) {

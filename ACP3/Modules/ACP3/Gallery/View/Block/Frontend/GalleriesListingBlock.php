@@ -82,10 +82,11 @@ class GalleriesListingBlock extends AbstractListingBlock
     public function render()
     {
         $resultsPerPage = $this->getResultsPerPage();
+
         return [
             'galleries' => $this->getResults($resultsPerPage),
             'dateformat' => $this->settings->getSettings($this->getModuleName())['dateformat'],
-            'pagination' => $this->pagination->render()
+            'pagination' => $this->pagination->render(),
         ];
     }
 }

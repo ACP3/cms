@@ -97,7 +97,7 @@ class ServiceContainerBuilder extends ContainerBuilder
             $modulePath = $this->applicationPath->getModulesDir() . $module['vendor'] . '/' . $module['dir'];
             $path = $modulePath . '/Resources/config/services.yml';
 
-            if (is_file($path)) {
+            if (\is_file($path)) {
                 $loader->load($path);
             }
 
@@ -129,9 +129,9 @@ class ServiceContainerBuilder extends ContainerBuilder
      */
     private function registerCompilerPass(string $vendor, string $moduleName)
     {
-        $fqcn = "\\ACP3\\Modules\\" . $vendor . "\\" . $moduleName . "\\ModuleRegistration";
+        $fqcn = '\\ACP3\\Modules\\' . $vendor . '\\' . $moduleName . '\\ModuleRegistration';
 
-        if (class_exists($fqcn)) {
+        if (\class_exists($fqcn)) {
             $instance = new $fqcn;
 
             if ($instance instanceof Modules\ModuleRegistration) {

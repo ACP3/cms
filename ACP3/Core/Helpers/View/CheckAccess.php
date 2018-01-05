@@ -45,7 +45,7 @@ class CheckAccess
     {
         if (isset($params['mode']) && isset($params['path'])) {
             $action = [];
-            $query = explode('/', strtolower($params['path']));
+            $query = \explode('/', \strtolower($params['path']));
 
             if (isset($query[0]) && $query[0] === 'acp') {
                 $action[0] = $query[1] ?? 'acp';
@@ -91,7 +91,7 @@ class CheckAccess
             $accessCheck['title'] = $params['title'];
         }
         if (isset($params['lang'])) {
-            $langArray = explode('|', $params['lang']);
+            $langArray = \explode('|', $params['lang']);
             $accessCheck['lang'] = $this->translator->t($langArray[0], $langArray[1]);
         } else {
             $accessCheck['lang'] = $this->translator->t($action[0], $area . '_' . $action[1] . '_' . $action[2]);

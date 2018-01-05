@@ -25,11 +25,11 @@ class PictureValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        $params = array_merge([
+        $params = \array_merge([
             'width' => 0,
             'height' => 0,
             'filesize' => 0,
-            'required' => true
+            'required' => true,
         ], $extra);
 
         if ($this->fileUploadValidationRule->isValid($data)) {
@@ -56,7 +56,7 @@ class PictureValidationRule extends AbstractValidationRule
      */
     protected function isPicture($file, $width = 0, $height = 0, $filesize = 0)
     {
-        $info = getimagesize($file);
+        $info = \getimagesize($file);
         $isPicture = ($info[2] >= 1 && $info[2] <= 3);
 
         if ($isPicture === true) {
@@ -68,6 +68,7 @@ class PictureValidationRule extends AbstractValidationRule
 
             return $bool;
         }
+
         return false;
     }
 
@@ -85,6 +86,6 @@ class PictureValidationRule extends AbstractValidationRule
     {
         return $width > 0 && $info[0] > $width ||
         $height > 0 && $info[1] > $height ||
-        $filesize > 0 && filesize($file) > $filesize;
+        $filesize > 0 && \filesize($file) > $filesize;
     }
 }

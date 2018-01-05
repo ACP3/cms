@@ -42,9 +42,9 @@ class Asset extends AbstractResource
     {
         $asset = $this->resolveTemplatePath($name);
 
-        if ($asset !== '' && is_file($asset)) {
-            $source = file_get_contents($asset);
-            $mtime = filemtime($asset);
+        if ($asset !== '' && \is_file($asset)) {
+            $source = \file_get_contents($asset);
+            $mtime = \filemtime($asset);
         } else {
             $source = null;
             $mtime = null;
@@ -59,13 +59,13 @@ class Asset extends AbstractResource
     protected function resolveTemplatePath($template)
     {
         // If an template with directory is given, uppercase the first letter
-        if (strpos($template, '/') !== false) {
-            $template = ucfirst($template);
+        if (\strpos($template, '/') !== false) {
+            $template = \ucfirst($template);
 
             // Pfad zerlegen
-            $fragments = explode('/', $template);
+            $fragments = \explode('/', $template);
 
-            if (count($fragments) === 3) {
+            if (\count($fragments) === 3) {
                 $path = $fragments[0] . '/Resources/templates/' . $fragments[1] . '/' . $fragments[2];
             } else {
                 $path = $fragments[0] . '/Resources/templates/' . $fragments[1];
@@ -91,23 +91,24 @@ class Asset extends AbstractResource
         $compiled->includes = [];
         $compiled->nocache_hash = null;
         $compiled->unifunc = null;
-        $level = ob_get_level();
-        ob_start();
+        $level = \ob_get_level();
+        \ob_start();
         $_smarty_tpl->loadCompiler();
         // call compiler
         try {
-            eval("?>" . $_smarty_tpl->compiler->compileTemplate($_smarty_tpl));
+            eval('?>' . $_smarty_tpl->compiler->compileTemplate($_smarty_tpl));
         } catch (\Exception $e) {
             unset($_smarty_tpl->compiler);
-            while (ob_get_level() > $level) {
-                ob_end_clean();
+            while (\ob_get_level() > $level) {
+                \ob_end_clean();
             }
+
             throw $e;
         }
         // release compiler object to free memory
         unset($_smarty_tpl->compiler);
-        ob_get_clean();
-        $compiled->timestamp = time();
+        \ob_get_clean();
+        $compiled->timestamp = \time();
         $compiled->exists = true;
     }
 

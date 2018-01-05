@@ -98,7 +98,7 @@ class GalleryPictureDetailsBlock extends AbstractBlock
             'picture' => $picture,
             'picture_next' => $nextPicture,
             'picture_previous' => $previousPicture,
-            'comments_allowed' => $this->isCommentsAllowed((int)$picture['comments'])
+            'comments_allowed' => $this->isCommentsAllowed((int)$picture['comments']),
         ];
     }
 
@@ -113,15 +113,15 @@ class GalleryPictureDetailsBlock extends AbstractBlock
 
         $picture['width'] = $settings['width'];
         $picture['height'] = $settings['height'];
-        $picInfos = @getimagesize($this->appPath->getUploadsDir() . 'gallery/' . $picture['file']);
+        $picInfos = @\getimagesize($this->appPath->getUploadsDir() . 'gallery/' . $picture['file']);
         if ($picInfos !== false) {
             if ($picInfos[0] > $settings['width'] || $picInfos[1] > $settings['height']) {
                 if ($picInfos[0] > $picInfos[1]) {
                     $newWidth = $settings['width'];
-                    $newHeight = intval($picInfos[1] * $newWidth / $picInfos[0]);
+                    $newHeight = \intval($picInfos[1] * $newWidth / $picInfos[0]);
                 } else {
                     $newHeight = $settings['height'];
-                    $newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
+                    $newWidth = \intval($picInfos[0] * $newHeight / $picInfos[1]);
                 }
             }
 
@@ -147,7 +147,7 @@ class GalleryPictureDetailsBlock extends AbstractBlock
     {
         if ($this->metaStatements && !empty($nextPicture)) {
             $this->metaStatements->setNextPage(
-                $this->router->route(sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $nextPicture))
+                $this->router->route(\sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $nextPicture))
             );
         }
     }
@@ -159,7 +159,7 @@ class GalleryPictureDetailsBlock extends AbstractBlock
     {
         if ($this->metaStatements && !empty($previousPicture)) {
             $this->metaStatements->setPreviousPage(
-                $this->router->route(sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $previousPicture))
+                $this->router->route(\sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $previousPicture))
             );
         }
     }
@@ -172,6 +172,7 @@ class GalleryPictureDetailsBlock extends AbstractBlock
     private function isCommentsAllowed(int $pictureCommentsAllowed): bool
     {
         $settings = $this->getGallerySettings();
+
         return $settings['overlay'] == 0 && $settings['comments'] == 1 && $pictureCommentsAllowed == 1;
     }
 }

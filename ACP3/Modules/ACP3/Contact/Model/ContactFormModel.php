@@ -78,11 +78,11 @@ class ContactFormModel
             ->setTemplate('Contact/layout.email.tpl')
             ->setRecipients([
                 'name' => $systemSettings['site_title'],
-                'email' => $settings['mail']
+                'email' => $settings['mail'],
             ])
             ->setFrom([
                 'name' => $formData['name'],
-                'email' => $formData['mail']
+                'email' => $formData['mail'],
             ])
             ->setSender($settings['mail']);
 
@@ -128,7 +128,7 @@ class ContactFormModel
             [
                 '%name%' => $formData['name'],
                 '%mail%' => $formData['mail'],
-                '%message%' => $this->secure->strEncode($formData['message'], true)
+                '%message%' => $this->secure->strEncode($formData['message'], true),
             ]
         );
     }
@@ -155,7 +155,7 @@ class ContactFormModel
             ])
             ->setFrom([
                 'name' => $systemSettings['site_title'],
-                'email' => $settings['mail']
+                'email' => $settings['mail'],
             ]);
 
         return $this->sendEmail->execute($data);

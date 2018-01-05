@@ -63,8 +63,8 @@ class Download extends Core\Controller\AbstractFrontendAction
             $file = $this->filesCache->getCache($id);
 
             $path = $this->appPath->getUploadsDir() . 'files/';
-            if (is_file($path . $file['file'])) {
-                $ext = strrchr($file['file'], '.');
+            if (\is_file($path . $file['file'])) {
+                $ext = \strrchr($file['file'], '.');
                 $filename = $this->stringFormatter->makeStringUrlSafe($file['title']) . $ext;
 
                 $response = new BinaryFileResponse($path . $file['file']);
@@ -74,7 +74,7 @@ class Download extends Core\Controller\AbstractFrontendAction
                 );
 
                 return $response;
-            } elseif (preg_match('/^([a-z]+):\/\//', $file['file'])) { // External file
+            } elseif (\preg_match('/^([a-z]+):\/\//', $file['file'])) { // External file
                 return $this->redirect()->toNewPage($file['file']);
             }
         }

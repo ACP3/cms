@@ -61,7 +61,7 @@ class SessionHandler extends AbstractSessionHandler
     protected function startSession()
     {
         // Set the session cookie parameters
-        session_set_cookie_params(
+        \session_set_cookie_params(
             0,
             $this->appPath->getWebRoot(),
             null,
@@ -70,7 +70,7 @@ class SessionHandler extends AbstractSessionHandler
         );
 
         // Start the session
-        session_start();
+        \session_start();
     }
 
     /**
@@ -78,7 +78,7 @@ class SessionHandler extends AbstractSessionHandler
      */
     public function secureSession()
     {
-        session_regenerate_id();
+        \session_regenerate_id();
         $this->resetSessionData();
     }
 
@@ -103,7 +103,7 @@ class SessionHandler extends AbstractSessionHandler
             $this->gcCalled = false;
             $this->db->getConnection()->executeUpdate(
                 "DELETE FROM `{$this->db->getPrefix()}sessions` WHERE `session_starttime` + ? < ?;",
-                [$this->expireTime, time()]
+                [$this->expireTime, \time()]
             );
         }
 
@@ -138,7 +138,7 @@ class SessionHandler extends AbstractSessionHandler
     {
         $this->db->getConnection()->executeUpdate(
             "INSERT INTO `{$this->db->getPrefix()}sessions` (`session_id`, `session_starttime`, `session_data`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `session_data` = ?;",
-            [$sessionId, time(), $data, $data]
+            [$sessionId, \time(), $data, $data]
         );
 
         return true;

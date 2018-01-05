@@ -45,8 +45,8 @@ class AvailableLanguagePacks
      */
     public function languagePackExists(string $locale): bool
     {
-        return !preg_match('=/=', $locale)
-            && is_file($this->appPath->getModulesDir() . 'ACP3/System/Resources/i18n/' . $locale . '.xml') === true;
+        return !\preg_match('=/=', $locale)
+            && \is_file($this->appPath->getModulesDir() . 'ACP3/System/Resources/i18n/' . $locale . '.xml') === true;
     }
 
     /**

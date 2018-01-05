@@ -22,7 +22,6 @@ use ACP3\Modules\ACP3\Captcha\View\Block\Admin\CaptchaSettingsFormBlock;
 
 class CaptchaSettingsFormBlockTest extends AbstractFormBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -47,7 +46,7 @@ class CaptchaSettingsFormBlockTest extends AbstractFormBlockTest
         $captchaRegistrar->expects($this->once())
             ->method('getAvailableCaptchas')
             ->willReturn([
-                'captcha.extension.foo' => $captchaMock
+                'captcha.extension.foo' => $captchaMock,
             ]);
 
         return new CaptchaSettingsFormBlock($this->context, $settings, $captchaRegistrar);
@@ -61,7 +60,7 @@ class CaptchaSettingsFormBlockTest extends AbstractFormBlockTest
         return [
             'captchas',
             'form',
-            'form_token'
+            'form_token',
         ];
     }
 }

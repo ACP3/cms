@@ -12,7 +12,6 @@ use ACP3\Modules\ACP3\Articles\View\Block\Admin\ArticlesDataGridBlock;
 
 class ArticlesDataGridBlockTest extends AbstractDataGridBlockTest
 {
-
     /**
      * @return BlockInterface
      */
@@ -28,7 +27,7 @@ class ArticlesDataGridBlockTest extends AbstractDataGridBlockTest
     {
         return [
             'grid',
-            'show_mass_delete_button'
+            'show_mass_delete_button',
         ];
     }
 }

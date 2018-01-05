@@ -35,7 +35,7 @@ class SystemUpdateCheckBlock extends AbstractBlock
     public function render()
     {
         return [
-            'update' => $this->updateCheck->checkForNewVersion()
+            'update' => $this->updateCheck->checkForNewVersion(),
         ];
     }
 }

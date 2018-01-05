@@ -10,15 +10,15 @@ class Filesystem
 
     public static function scandir(string $directory, array $excluded = []): array
     {
-        $directory = @scandir($directory);
+        $directory = @\scandir($directory);
 
         if ($directory !== false) {
-            $filesAndDirectories = array_diff(
+            $filesAndDirectories = \array_diff(
                 $directory,
-                array_merge(static::$excluded, $excluded)
+                \array_merge(static::$excluded, $excluded)
             );
 
-            return array_values($filesAndDirectories);
+            return \array_values($filesAndDirectories);
         }
 
         return [];

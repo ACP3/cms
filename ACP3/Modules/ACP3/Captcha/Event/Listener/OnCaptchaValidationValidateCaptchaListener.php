@@ -38,7 +38,7 @@ class OnCaptchaValidationValidateCaptchaListener
                 [
                     'data' => $event->getFormData(),
                     'field' => 'captcha',
-                    'message' => $this->translator->t('captcha', 'invalid_captcha_entered')
+                    'message' => $this->translator->t('captcha', 'invalid_captcha_entered'),
                 ]
             );
     }

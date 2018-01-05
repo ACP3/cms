@@ -49,7 +49,7 @@ class Logout extends Core\Controller\AbstractFrontendAction
 
         return [
             'url_homepage' => $this->appPath->getWebRoot(),
-            'url_previous_page' => $redirectUrl
+            'url_previous_page' => $redirectUrl,
         ];
     }
 }

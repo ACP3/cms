@@ -8,11 +8,11 @@ class InArrayValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        if (empty($extra['haystack']) || is_array($extra['haystack']) === false) {
+        if (empty($extra['haystack']) || \is_array($extra['haystack']) === false) {
             return false;
         }
 
@@ -27,6 +27,6 @@ class InArrayValidationRule extends AbstractValidationRule
      */
     protected function checkInArray($needle, array $haystack)
     {
-        return in_array($needle, $haystack);
+        return \in_array($needle, $haystack);
     }
 }

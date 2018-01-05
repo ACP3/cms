@@ -41,7 +41,7 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
                 'removeSubscriber',
                 'getListeners',
                 'getListenerPriority',
-                'hasListeners'
+                'hasListeners',
             ])
             ->disableOriginalConstructor()
             ->getMock();

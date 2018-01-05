@@ -37,7 +37,7 @@ class DateColumnRenderer extends AbstractColumnRenderer
         if ($value !== null && $value !== $this->getDefaultValue($column)) {
             $field = $this->getFirstDbField($column);
             $column['attribute'] += [
-                'sort' => $this->date->format($dbResultRow[$field], 'U')
+                'sort' => $this->date->format($dbResultRow[$field], 'U'),
             ];
         }
 
@@ -59,7 +59,7 @@ class DateColumnRenderer extends AbstractColumnRenderer
             $value = $this->getDefaultValue($column);
         } else {
             $fields = $this->getDbFields($column);
-            $value = $this->dateRangeHelper->formatTimeRange($value, $this->getDbValueIfExists($dbResultRow, next($fields)));
+            $value = $this->dateRangeHelper->formatTimeRange($value, $this->getDbValueIfExists($dbResultRow, \next($fields)));
         }
 
         return $value;

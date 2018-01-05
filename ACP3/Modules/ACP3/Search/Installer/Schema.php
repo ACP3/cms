@@ -17,13 +17,13 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
             'frontend' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                ]
+                ],
             ],
             'widget' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

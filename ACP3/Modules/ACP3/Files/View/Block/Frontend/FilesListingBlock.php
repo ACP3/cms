@@ -107,7 +107,7 @@ class FilesListingBlock extends AbstractListingBlock
             'categories' => $this->categoryRepository->getAllDirectSiblings($data['category_id']),
             'dateformat' => $settings['dateformat'],
             'files' => $this->getResults($resultsPerPage),
-            'pagination' => $this->pagination->render()
+            'pagination' => $this->pagination->render(),
         ];
     }
 

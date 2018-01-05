@@ -34,7 +34,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->addConstraint(EmailValidationRule::class, [
             'data' => 'test@example.com',
             'field' => 'mail',
-            'message' => 'Invalid E-mail address'
+            'message' => 'Invalid E-mail address',
         ]);
 
         try {
@@ -51,7 +51,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->addConstraint(EmailValidationRule::class, [
             'data' => 'testexample.com',
             'field' => 'mail',
-            'message' => 'Invalid E-mail address'
+            'message' => 'Invalid E-mail address',
         ]);
 
         try {
@@ -60,9 +60,9 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             $this->fail();
         } catch (ValidationFailedException $e) {
             $expected = [
-                'mail' => 'Invalid E-mail address'
+                'mail' => 'Invalid E-mail address',
             ];
-            $errors = unserialize($e->getMessage());
+            $errors = \unserialize($e->getMessage());
 
             $this->assertEquals($expected, $errors);
         }
@@ -74,7 +74,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->addConstraint(EmailValidationRule::class, [
             'data' => 'testexample.com',
-            'message' => 'Invalid E-mail address'
+            'message' => 'Invalid E-mail address',
         ]);
 
         try {
@@ -83,9 +83,9 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             $this->fail();
         } catch (ValidationFailedException $e) {
             $expected = [
-                'Invalid E-mail address'
+                'Invalid E-mail address',
             ];
-            $errors = unserialize($e->getMessage());
+            $errors = \unserialize($e->getMessage());
 
             $this->assertEquals($expected, $errors);
         }
@@ -100,7 +100,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->addConstraint('invalid_validation_rule', [
             'data' => 'testexample.com',
-            'message' => 'Invalid E-mail address'
+            'message' => 'Invalid E-mail address',
         ]);
 
         $this->validator->validate();
@@ -137,7 +137,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['test@example.com', true],
-            ['testexample.com', false]
+            ['testexample.com', false],
         ];
     }
 }

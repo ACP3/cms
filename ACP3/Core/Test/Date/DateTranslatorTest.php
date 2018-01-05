@@ -39,7 +39,7 @@ class DateTranslatorTest extends \PHPUnit_Framework_TestCase
             'Thu' => '{THU}',
             'Fri' => '{FRI}',
             'Sat' => '{SAT}',
-            'Sun' => '{SUN}'
+            'Sun' => '{SUN}',
         ];
 
         $this->setTranslatorExpectation($expected, 7);
@@ -56,7 +56,7 @@ class DateTranslatorTest extends \PHPUnit_Framework_TestCase
             'Thursday' => '{THURSDAY}',
             'Friday' => '{FRIDAY}',
             'Saturday' => '{SATURDAY}',
-            'Sunday' => '{SUNDAY}'
+            'Sunday' => '{SUNDAY}',
         ];
 
         $this->setTranslatorExpectation($expected, 7);
@@ -78,7 +78,7 @@ class DateTranslatorTest extends \PHPUnit_Framework_TestCase
             'Sep' => '{SEP}',
             'Oct' => '{OCT}',
             'Nov' => '{NOV}',
-            'Dec' => '{DEC}'
+            'Dec' => '{DEC}',
         ];
 
         $this->setTranslatorExpectation($expected, 12);
@@ -100,7 +100,7 @@ class DateTranslatorTest extends \PHPUnit_Framework_TestCase
             'September' => '{SEPTEMBER}',
             'October' => '{OCTOBER}',
             'November' => '{NOVEMBER}',
-            'December' => '{DECEMBER}'
+            'December' => '{DECEMBER}',
         ];
 
         $this->setTranslatorExpectation($expected, 12);
@@ -123,6 +123,6 @@ class DateTranslatorTest extends \PHPUnit_Framework_TestCase
             ->expects($this->exactly($methodCallCount))
             ->method('t');
 
-        call_user_func_array([$invocationMocker, 'willReturnOnConsecutiveCalls'], $translations);
+        \call_user_func_array([$invocationMocker, 'willReturnOnConsecutiveCalls'], $translations);
     }
 }

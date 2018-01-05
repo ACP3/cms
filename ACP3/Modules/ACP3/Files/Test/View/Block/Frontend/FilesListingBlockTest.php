@@ -16,7 +16,6 @@ use ACP3\Modules\ACP3\Files\View\Block\Frontend\FilesListingBlock;
 
 class FilesListingBlockTest extends AbstractListingBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -34,7 +33,7 @@ class FilesListingBlockTest extends AbstractListingBlockTest
             ->method('getSettings')
             ->with('files')
             ->willReturn([
-                'dateformat' => 'long'
+                'dateformat' => 'long',
             ]);
 
         $filesRepository = $this->getMockBuilder(FilesRepository::class)
@@ -84,7 +83,7 @@ class FilesListingBlockTest extends AbstractListingBlockTest
             'categories',
             'dateformat',
             'files',
-            'pagination'
+            'pagination',
         ];
     }
 

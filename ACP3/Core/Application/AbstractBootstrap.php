@@ -72,6 +72,6 @@ abstract class AbstractBootstrap implements BootstrapInterface
     {
         $path = $this->appPath->getAppDir() . 'config.yml';
 
-        return is_file($path) === true && filesize($path) !== 0;
+        return \is_file($path) === true && \filesize($path) !== 0;
     }
 }

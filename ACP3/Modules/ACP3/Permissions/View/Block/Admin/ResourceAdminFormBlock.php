@@ -59,11 +59,11 @@ class ResourceAdminFormBlock extends AbstractRepositoryAwareFormBlock
             'modules' => $this->fetchActiveModules($resource['module_name']),
             'areas' => $this->fetchAreas($resource['area']),
             'privileges' => $this->fetchPrivileges($resource['privilege_id']),
-            'form' => array_merge(
+            'form' => \array_merge(
                 $resource,
                 $this->getRequestData()
             ),
-            'form_token' => $this->formToken->renderFormToken()
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 
@@ -74,7 +74,7 @@ class ResourceAdminFormBlock extends AbstractRepositoryAwareFormBlock
     private function fetchPrivileges(int $privilegeId): array
     {
         $privileges = $this->privilegeRepository->getAllPrivileges();
-        $cPrivileges = count($privileges);
+        $cPrivileges = \count($privileges);
         for ($i = 0; $i < $cPrivileges; ++$i) {
             $privileges[$i]['selected'] = $this->forms->selectEntry(
                 'privileges',
@@ -97,9 +97,10 @@ class ResourceAdminFormBlock extends AbstractRepositoryAwareFormBlock
             $modules[$row['name']]['selected'] = $this->forms->selectEntry(
                 'modules',
                 $row['dir'],
-                ucfirst(trim($currentModule))
+                \ucfirst(\trim($currentModule))
             );
         }
+
         return $modules;
     }
 
@@ -109,9 +110,9 @@ class ResourceAdminFormBlock extends AbstractRepositoryAwareFormBlock
      */
     private function fetchAreas(string $currentArea = ''): array
     {
-        $areas = array_values(AreaEnum::getAreas());
+        $areas = \array_values(AreaEnum::getAreas());
 
-        return $this->forms->choicesGenerator('area', array_combine($areas, $areas), $currentArea);
+        return $this->forms->choicesGenerator('area', \array_combine($areas, $areas), $currentArea);
     }
 
     /**
@@ -125,7 +126,7 @@ class ResourceAdminFormBlock extends AbstractRepositoryAwareFormBlock
             'module_name' => '',
             'area' => '',
             'resource' => '',
-            'controller' => ''
+            'controller' => '',
         ];
     }
 }

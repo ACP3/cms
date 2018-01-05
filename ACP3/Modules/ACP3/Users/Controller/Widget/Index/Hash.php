@@ -43,7 +43,7 @@ class Hash extends AbstractWidgetAction
             $this->response->setMaxAge(3600);
             $this->response->headers->add([
                 'Content-type' => 'application/vnd.fos.user-context-hash',
-                'X-User-Context-Hash' => $this->hashGenerator->generateHash()
+                'X-User-Context-Hash' => $this->hashGenerator->generateHash(),
             ]);
         } else {
             $this->response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);

@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Bootstraps the application
- * @package ACP3\Core\Application
  */
 class Bootstrap extends AbstractBootstrap
 {
@@ -103,7 +102,7 @@ class Bootstrap extends AbstractBootstrap
         } catch (\ACP3\Core\Authentication\Exception\UnauthorizedAccessException $e) {
             /** @var \ACP3\Core\Http\Request $request */
             $request = $this->container->get('core.http.request');
-            $redirectUri = base64_encode($request->getPathInfo());
+            $redirectUri = \base64_encode($request->getPathInfo());
             $response = $redirect->temporary('users/index/login/redirect_' . $redirectUri);
         } catch (\ACP3\Core\ACL\Exception\AccessForbiddenException $e) {
             $response = $redirect->temporary('errors/index/access_forbidden');
@@ -147,7 +146,7 @@ class Bootstrap extends AbstractBootstrap
 
         return (bool)$this->systemSettings['maintenance_mode'] === true &&
             $request->getArea() !== AreaEnum::AREA_ADMIN &&
-            strpos($request->getQuery(), 'users/index/login/') !== 0;
+            \strpos($request->getQuery(), 'users/index/login/') !== 0;
     }
 
     /**
@@ -161,7 +160,7 @@ class Bootstrap extends AbstractBootstrap
         $view->assign([
             'PAGE_TITLE' => 'ACP3',
             'ROOT_DIR' => $this->appPath->getWebRoot(),
-            'CONTENT' => $this->systemSettings['maintenance_message']
+            'CONTENT' => $this->systemSettings['maintenance_message'],
         ]);
 
         $response = new Response($view->fetchTemplate('System/layout.maintenance.tpl'));
@@ -215,7 +214,7 @@ class Bootstrap extends AbstractBootstrap
      */
     public function startupChecks()
     {
-        date_default_timezone_set('UTC');
+        \date_default_timezone_set('UTC');
 
         return $this->databaseConfigExists();
     }

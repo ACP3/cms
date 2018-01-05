@@ -68,7 +68,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $data = [
                 'mail' => $formData['mail'],
                 'mailsig' => $this->secureHelper->strEncode($formData['mailsig'], true),
-                'html' => (int)$formData['html']
+                'html' => (int)$formData['html'],
             ];
 
             return $this->config->saveSettings($data, Newsletter\Installer\Schema::MODULE_NAME);

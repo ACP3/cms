@@ -30,9 +30,9 @@ class AllowedSuperiorCategoryValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && is_array($field)) {
-            $parentId = reset($field);
-            $blockId = next($field);
+        if (\is_array($data) && \is_array($field)) {
+            $parentId = \reset($field);
+            $blockId = \next($field);
 
             return $this->checkIsAllowedMenu($data[$parentId], $data[$blockId]);
         }
@@ -54,6 +54,6 @@ class AllowedSuperiorCategoryValidationRule extends AbstractValidationRule
 
         $parentCategoryId = $this->categoriesRepository->getModuleIdByCategoryId($parentId);
 
-        return (!empty($parentCategoryId) && $parentCategoryId == $categoryId);
+        return !empty($parentCategoryId) && $parentCategoryId == $categoryId;
     }
 }

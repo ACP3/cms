@@ -70,7 +70,7 @@ class OnArticlesModelDeleteAfterListener
         foreach ($event->getEntryId() as $entryId) {
             $this->articlesCache->getCacheDriver()->delete(ArticleCacheStorage::CACHE_ID . $entryId);
 
-            $uri = sprintf(Helpers::URL_KEY_PATTERN, $entryId);
+            $uri = \sprintf(Helpers::URL_KEY_PATTERN, $entryId);
 
             if ($this->manageMenuItemHelper) {
                 $this->manageMenuItemHelper->manageMenuItem($uri, false);

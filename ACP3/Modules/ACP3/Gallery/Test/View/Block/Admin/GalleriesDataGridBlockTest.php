@@ -27,7 +27,7 @@ class GalleriesDataGridBlockTest extends AbstractDataGridBlockTest
     {
         return [
             'grid',
-            'show_mass_delete_button'
+            'show_mass_delete_button',
         ];
     }
 }

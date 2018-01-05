@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Interface ActionInterface
- * @package ACP3\Core\Controller
  */
 interface ActionInterface
 {

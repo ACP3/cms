@@ -114,7 +114,7 @@ class OnMenusLayoutRenderManageMenuItemListener
     private function fetchCreateMenuItemOption($currentValue = 0)
     {
         $createMenuItem = [
-            1 => $this->translator->t('menus', 'create_menu_item')
+            1 => $this->translator->t('menus', 'create_menu_item'),
         ];
 
         return $this->forms->checkboxGenerator('create_menu_item', $createMenuItem, $currentValue);
@@ -128,7 +128,7 @@ class OnMenusLayoutRenderManageMenuItemListener
     {
         $formData = $this->view->getRenderer()->getTemplateVars('form');
 
-        if (is_array($formData) && !isset($formData['menu_item_title'])) {
+        if (\is_array($formData) && !isset($formData['menu_item_title'])) {
             $formData['menu_item_title'] = !empty($menuItem) ? $menuItem['title'] : '';
         }
 

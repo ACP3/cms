@@ -75,7 +75,7 @@ class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
                 'site_title' => $siteTitle,
                 'site_subtitle' => $siteSubtitle,
                 'site_subtitle_homepage_mode' => $subtitleHomepageMode,
-                'site_subtitle_mode' => $subtitleMode
+                'site_subtitle_mode' => $subtitleMode,
             ]);
     }
 

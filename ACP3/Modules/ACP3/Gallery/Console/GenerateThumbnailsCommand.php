@@ -80,7 +80,7 @@ class GenerateThumbnailsCommand extends Command
             $output->write("Generating thumbnails for gallery `{$gallery['title']}`:");
 
             $pictures = $this->galleryPicturesRepository->getPicturesByGalleryId($gallery['id']);
-            $progress = new ProgressBar($output, count($pictures));
+            $progress = new ProgressBar($output, \count($pictures));
             $progress->setFormat('custom');
 
             foreach ($pictures as $picture) {

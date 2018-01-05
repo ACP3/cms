@@ -18,11 +18,11 @@ class GalleryPicturesDataGridRepository extends AbstractDataGridRepository
      */
     protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
-        return array_merge(
+        return \array_merge(
             parent::getColumns($gridColumns),
             [
                 '(SELECT MIN(pmin.pic) FROM ' . $this->getTableName() . ' AS pmin WHERE pmin.gallery_id = main.gallery_id) AS `first`',
-                '(SELECT MAX(pmax.pic) FROM ' . $this->getTableName() . ' AS pmax WHERE pmax.gallery_id = main.gallery_id) AS `last`'
+                '(SELECT MAX(pmax.pic) FROM ' . $this->getTableName() . ' AS pmax WHERE pmax.gallery_id = main.gallery_id) AS `last`',
             ]
         );
     }

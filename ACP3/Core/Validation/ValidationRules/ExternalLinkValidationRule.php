@@ -23,10 +23,10 @@ class ExternalLinkValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && is_array($field)) {
-            $linkTitle = reset($field);
-            $uri = next($field);
-            $target = next($field);
+        if (\is_array($data) && \is_array($field)) {
+            $linkTitle = \reset($field);
+            $uri = \next($field);
+            $target = \next($field);
 
             return $this->isValidLink($data[$linkTitle], $data[$uri], $data[$target]);
         }

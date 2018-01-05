@@ -31,7 +31,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
         return [
             'captcha' => 'captcha.extension.native_captcha_extension',
             'recaptcha_sitekey' => '',
-            'recaptcha_secret' => ''
+            'recaptcha_secret' => '',
         ];
     }
 
@@ -45,12 +45,12 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 'index' => [
                     'index' => PrivilegeEnum::ADMIN_VIEW,
                     'settings' => PrivilegeEnum::ADMIN_SETTINGS,
-                ]
+                ],
             ],
             'frontend' => [
                 'index' => [
                     'image' => PrivilegeEnum::FRONTEND_VIEW,
-                ]
+                ],
             ],
         ];
     }

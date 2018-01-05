@@ -37,23 +37,23 @@ class SearchFormBlock extends AbstractFormBlock
         $searchAreas = [
             'title_content' => $this->translator->t('search', 'title_and_content'),
             'title' => $this->translator->t('search', 'title_only'),
-            'content' => $this->translator->t('search', 'content_only')
+            'content' => $this->translator->t('search', 'content_only'),
         ];
 
         $sortDirections = [
             'asc' => $this->translator->t('search', 'asc'),
-            'desc' => $this->translator->t('search', 'desc')
+            'desc' => $this->translator->t('search', 'desc'),
         ];
 
         return [
-            'form' => array_merge($this->getData(), $this->getRequestData()),
+            'form' => \array_merge($this->getData(), $this->getRequestData()),
             'search_mods' => $this->searchHelpers->getModules(),
             'search_areas' => $this->forms->checkboxGenerator(
                 'area',
                 $searchAreas,
                 'title_content'
             ),
-            'sort_hits' => $this->forms->checkboxGenerator('sort', $sortDirections, 'asc')
+            'sort_hits' => $this->forms->checkboxGenerator('sort', $sortDirections, 'asc'),
         ];
     }
 

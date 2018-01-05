@@ -33,7 +33,7 @@ class DataProcessor
     {
         $data = [];
         foreach ($columnData as $column => $value) {
-            if (array_key_exists($column, $columnConstraints)) {
+            if (\array_key_exists($column, $columnConstraints)) {
                 $data[$column] = $this->factory->getStrategy($columnConstraints[$column])->doEscape($value);
             }
         }

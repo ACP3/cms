@@ -14,7 +14,6 @@ use ACP3\Modules\ACP3\Comments\View\Block\Frontend\CommentsListingBlock;
 
 class CommentsListingBlockTest extends AbstractListingBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -65,7 +64,7 @@ class CommentsListingBlockTest extends AbstractListingBlockTest
         return [
             'comments',
             'dateformat',
-            'pagination'
+            'pagination',
         ];
     }
 

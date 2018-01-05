@@ -39,6 +39,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function setFile($file)
     {
         $this->file = $file;
+
         return $this;
     }
 
@@ -68,7 +69,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'code',
-                    'message' => $this->translator->t('emoticons', 'type_in_code')
+                    'message' => $this->translator->t('emoticons', 'type_in_code'),
                 ]
             )
             ->addConstraint(
@@ -76,7 +77,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'description',
-                    'message' => $this->translator->t('emoticons', 'type_in_description')
+                    'message' => $this->translator->t('emoticons', 'type_in_description'),
                 ]
             )
             ->addConstraint(
@@ -89,8 +90,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                         'width' => $settings['width'],
                         'height' => $settings['height'],
                         'filesize' => $settings['filesize'],
-                        'required' => $this->fileRequired
-                    ]
+                        'required' => $this->fileRequired,
+                    ],
                 ]
             );
 

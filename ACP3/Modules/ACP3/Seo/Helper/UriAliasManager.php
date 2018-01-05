@@ -55,7 +55,7 @@ class UriAliasManager
      */
     protected function preparePath($path)
     {
-        return !preg_match('/\/$/', $path) ? '/' : '';
+        return !\preg_match('/\/$/', $path) ? '/' : '';
     }
 
     /**
@@ -77,7 +77,7 @@ class UriAliasManager
             'seo_title' => $title,
             'seo_keywords' => $keywords,
             'seo_description' => $description,
-            'seo_robots' => (int)$robots
+            'seo_robots' => (int)$robots,
         ];
 
         $seo = $this->seoRepository->getOneByUri($path);

@@ -10,18 +10,17 @@ use ACP3\Core\View\Block\AbstractFormBlock;
 
 class UserLoginFormBlock extends AbstractFormBlock
 {
-
     /**
      * @inheritdoc
      */
     public function render()
     {
         $rememberMe = [
-            1 => $this->translator->t('users', 'remember_me')
+            1 => $this->translator->t('users', 'remember_me'),
         ];
 
         return [
-            'remember_me' => $this->forms->checkboxGenerator('remember', $rememberMe, 0)
+            'remember_me' => $this->forms->checkboxGenerator('remember', $rememberMe, 0),
         ];
     }
 

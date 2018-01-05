@@ -67,7 +67,7 @@ class LoadModule extends AbstractFunction
      */
     protected function convertPathToArray($resource)
     {
-        $pathArray = explode('/', strtolower($resource));
+        $pathArray = \explode('/', \strtolower($resource));
 
         if (empty($pathArray[2]) === true) {
             $pathArray[2] = 'index';
@@ -75,6 +75,7 @@ class LoadModule extends AbstractFunction
         if (empty($pathArray[3]) === true) {
             $pathArray[3] = 'index';
         }
+
         return $pathArray;
     }
 
@@ -84,11 +85,12 @@ class LoadModule extends AbstractFunction
      */
     protected function parseControllerActionArguments(array $arguments)
     {
-        if (isset($arguments['args']) && is_array($arguments['args'])) {
+        if (isset($arguments['args']) && \is_array($arguments['args'])) {
             return $this->urlEncodeArguments($arguments['args']);
         }
 
         unset($arguments['module']);
+
         return $this->urlEncodeArguments($arguments);
     }
 
@@ -98,9 +100,9 @@ class LoadModule extends AbstractFunction
      */
     protected function urlEncodeArguments(array $arguments)
     {
-        return array_map(
+        return \array_map(
             function ($item) {
-                return urlencode($item);
+                return \urlencode($item);
             },
             $arguments
         );

@@ -13,7 +13,6 @@ use ACP3\Modules\ACP3\Contact\View\Frontend\ImprintBlock;
 
 class ImprintBlockTest extends AbstractBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -38,7 +37,7 @@ class ImprintBlockTest extends AbstractBlockTest
     {
         return [
             'imprint',
-            'powered_by'
+            'powered_by',
         ];
     }
 }

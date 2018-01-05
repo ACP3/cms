@@ -64,6 +64,7 @@ class Create extends Core\Controller\AbstractFrontendAction
             $this->resourceFormValidation->validate($formData);
 
             $formData['module_id'] = $this->modules->getModuleId($formData['modules']);
+
             return $this->resourcesModel->save($formData);
         });
     }

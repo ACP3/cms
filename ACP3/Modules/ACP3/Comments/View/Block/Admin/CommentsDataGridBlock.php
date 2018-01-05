@@ -45,7 +45,7 @@ class CommentsDataGridBlock extends AbstractDataGridBlock
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['date'],
                 'default_sort' => true,
-                'default_sort_direction' => 'desc'
+                'default_sort_direction' => 'desc',
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('system', 'name'),
@@ -66,7 +66,7 @@ class CommentsDataGridBlock extends AbstractDataGridBlock
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
             ], 10);
     }
 
@@ -88,8 +88,8 @@ class CommentsDataGridBlock extends AbstractDataGridBlock
             'resource_path_delete' => 'admin/comments/details/delete/id_' . $data['moduleId'],
             'resource_path_edit' => 'admin/comments/details/edit',
             'query_options' => [
-                new DataGrid\QueryOption('module_id', $data['moduleId'])
-            ]
+                new DataGrid\QueryOption('module_id', $data['moduleId']),
+            ],
         ]);
 
         $grid = $dataGrid->render();
@@ -100,7 +100,7 @@ class CommentsDataGridBlock extends AbstractDataGridBlock
         return [
             'grid' => $grid,
             'module_id' => $data['moduleId'],
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

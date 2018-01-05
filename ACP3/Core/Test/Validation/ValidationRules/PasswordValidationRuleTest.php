@@ -22,7 +22,7 @@ class PasswordValidationRuleTest extends AbstractValidationRuleTest
             'invalid-data-array' => [['pw' => 'test1234'], ['pw'], [], false],
             'invalid-data-flat-array' => [['test1234'], [], [], false],
             'invalid-data-string' => ['foobar', '', [], false],
-            'invalid-no-data' => [null, null, [], false]
+            'invalid-no-data' => [null, null, [], false],
         ];
     }
 }

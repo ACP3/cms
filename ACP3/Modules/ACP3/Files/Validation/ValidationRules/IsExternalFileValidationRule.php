@@ -10,10 +10,10 @@ class IsExternalFileValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && is_array($field)) {
-            $external = reset($field);
-            $filesize = next($field);
-            $unit = next($field);
+        if (\is_array($data) && \is_array($field)) {
+            $external = \reset($field);
+            $filesize = \next($field);
+            $unit = \next($field);
 
             $file = $extra['file'] ?? null;
 

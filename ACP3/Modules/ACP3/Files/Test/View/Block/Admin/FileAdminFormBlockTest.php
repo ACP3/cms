@@ -33,7 +33,7 @@ class FileAdminFormBlockTest extends AbstractFormBlockTest
             ->method('getSettings')
             ->with('files')
             ->willReturn([
-                'comments' => 1
+                'comments' => 1,
             ]);
 
         $modules = $this->getMockBuilder(Modules::class)
@@ -62,7 +62,7 @@ class FileAdminFormBlockTest extends AbstractFormBlockTest
             'form',
             'form_token',
             'SEO_URI_PATTERN',
-            'SEO_ROUTE_NAME'
+            'SEO_ROUTE_NAME',
         ];
     }
 }

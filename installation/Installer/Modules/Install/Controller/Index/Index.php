@@ -11,6 +11,5 @@ class Index extends AbstractAction
 {
     public function execute()
     {
-        return;
     }
 }

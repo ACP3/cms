@@ -34,7 +34,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'uri',
-                    'message' => $this->translator->t('seo', 'type_in_valid_resource')
+                    'message' => $this->translator->t('seo', 'type_in_valid_resource'),
                 ]
             )
             ->addConstraint(
@@ -44,8 +44,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'seo_robots',
                     'message' => $this->translator->t('seo', 'select_robots'),
                     'extra' => [
-                        'haystack' => [0, 1, 2, 3, 4]
-                    ]
+                        'haystack' => [0, 1, 2, 3, 4],
+                    ],
                 ]
             );
 

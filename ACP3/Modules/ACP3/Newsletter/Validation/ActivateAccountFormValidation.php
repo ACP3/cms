@@ -6,7 +6,6 @@ use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsByHashV
 
 class ActivateAccountFormValidation extends AbstractFormValidation
 {
-
     /**
      * @inheritdoc
      */
@@ -17,7 +16,7 @@ class ActivateAccountFormValidation extends AbstractFormValidation
                 AccountExistsByHashValidationRule::class,
                 [
                     'data' => $formData['hash'],
-                    'message' => $this->translator->t('newsletter', 'account_not_exists')
+                    'message' => $this->translator->t('newsletter', 'account_not_exists'),
                 ]
             );
 

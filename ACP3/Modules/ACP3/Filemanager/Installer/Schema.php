@@ -29,6 +29,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     {
         return 1;
     }
+
     /**
      * @return array
      */

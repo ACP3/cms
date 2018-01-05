@@ -66,27 +66,27 @@ HTML;
             'single_line' => [
                 'Foo Bar Baz',
                 false,
-                '<p>Foo Bar Baz</p>'
+                '<p>Foo Bar Baz</p>',
             ],
             'single_line_line_breaks' => [
                 'Foo Bar Baz',
                 true,
-                '<p>Foo Bar Baz</p>'
+                '<p>Foo Bar Baz</p>',
             ],
             'multi_line' => [
                 "Foo\nBar\nBaz",
                 false,
-                "<p>Foo</p>\n<p>Bar</p>\n<p>Baz</p>"
+                "<p>Foo</p>\n<p>Bar</p>\n<p>Baz</p>",
             ],
             'multi_line_line_breaks' => [
                 "Foo\nBar\nBaz",
                 true,
-                "<p>Foo<br>Bar<br>Baz</p>"
+                '<p>Foo<br>Bar<br>Baz</p>',
             ],
             'multi_empty_line_line_breaks' => [
                 "Foo\n\nBar\n\nBaz\nLorem",
                 true,
-                "<p>Foo</p>\n<p>Bar</p>\n<p>Baz<br>Lorem</p>"
+                "<p>Foo</p>\n<p>Bar</p>\n<p>Baz<br>Lorem</p>",
             ],
         ];
     }
@@ -110,29 +110,29 @@ HTML;
                 '',
                 0,
                 '',
-                ''
+                '',
             ],
             'shorten_text_without_offset' => [
                 $this->shortenEntryText,
                 0,
                 '',
                 'It looks like that the installation of the ACP3 CMS was successful.
-This is just a test news, you ca'
+This is just a test news, you ca',
             ],
             'shorten_text_with_offset' => [
                 $this->shortenEntryText,
                 10,
                 '',
                 'It looks like that the installation of the ACP3 CMS was successful.
-This is just a test ne'
+This is just a test ne',
             ],
             'append_text' => [
                 $this->shortenEntryText,
                 0,
                 '...',
                 'It looks like that the installation of the ACP3 CMS was successful.
-This is just a test news, you ca...'
-            ]
+This is just a test news, you ca...',
+            ],
         ];
     }
 

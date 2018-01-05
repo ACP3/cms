@@ -22,7 +22,7 @@ class EmoticonsModel extends AbstractModel
         return [
             'code' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'img' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW
+            'img' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
         ];
     }
 }

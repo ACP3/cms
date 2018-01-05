@@ -22,10 +22,10 @@ class GalleryAdminFormBlock extends AbstractRepositoryAwareFormBlock
 
         return [
             'gallery_id' => $data['id'],
-            'form' => array_merge($data, $this->getRequestData()),
+            'form' => \array_merge($data, $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken(),
             'SEO_URI_PATTERN' => Helpers::URL_KEY_PATTERN_GALLERY,
-            'SEO_ROUTE_NAME' => $this->getSeoRouteName($this->getId())
+            'SEO_ROUTE_NAME' => $this->getSeoRouteName($this->getId()),
         ];
     }
 
@@ -35,7 +35,7 @@ class GalleryAdminFormBlock extends AbstractRepositoryAwareFormBlock
      */
     private function getSeoRouteName(?int $id): string
     {
-        return !empty($id) ? sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $id) : '';
+        return !empty($id) ? \sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $id) : '';
     }
 
     /**
@@ -47,7 +47,7 @@ class GalleryAdminFormBlock extends AbstractRepositoryAwareFormBlock
             'id' => '',
             'title' => '',
             'start' => '',
-            'end' => ''
+            'end' => '',
         ];
     }
 }

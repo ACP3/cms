@@ -52,7 +52,7 @@ class IncludeJs extends AbstractFunction
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         if (!empty($params['depends'])) {
-            $this->assets->enableLibraries(explode(',', $params['depends']));
+            $this->assets->enableLibraries(\explode(',', $params['depends']));
         }
 
         if ($this->hasValidParams($params)) {
@@ -62,7 +62,7 @@ class IncludeJs extends AbstractFunction
             if (isset($this->alreadyIncluded[$key]) === false) {
                 $this->alreadyIncluded[$key] = true;
 
-                return sprintf(
+                return \sprintf(
                     '<script defer src="%s"></script>',
                     $this->resolvePath($params) . '?v=' . Core\Application\BootstrapInterface::VERSION
                 );
@@ -85,8 +85,8 @@ class IncludeJs extends AbstractFunction
     private function hasValidParams(array $params)
     {
         return isset($params['module'], $params['file']) === true &&
-            (bool)preg_match('=/=', $params['module']) === false &&
-            (bool)preg_match('=\./=', $params['file']) === false;
+            (bool)\preg_match('=/=', $params['module']) === false &&
+            (bool)\preg_match('=\./=', $params['file']) === false;
     }
 
     /**
@@ -95,7 +95,7 @@ class IncludeJs extends AbstractFunction
      */
     protected function resolvePath(array $params)
     {
-        $module = ucfirst($params['module']);
+        $module = \ucfirst($params['module']);
         $file = $params['file'];
 
         $path = $this->fileResolver->getStaticAssetPath(
@@ -105,10 +105,10 @@ class IncludeJs extends AbstractFunction
             $file . '.js'
         );
 
-        if (strpos($path, '/ACP3/Modules/') !== false) {
-            $path = $this->appPath->getWebRoot() . substr($path, strpos($path, '/ACP3/Modules/') + 1);
+        if (\strpos($path, '/ACP3/Modules/') !== false) {
+            $path = $this->appPath->getWebRoot() . \substr($path, \strpos($path, '/ACP3/Modules/') + 1);
         } else {
-            $path = $this->appPath->getWebRoot() . substr($path, strlen(ACP3_ROOT_DIR));
+            $path = $this->appPath->getWebRoot() . \substr($path, \strlen(ACP3_ROOT_DIR));
         }
 
         return $path;

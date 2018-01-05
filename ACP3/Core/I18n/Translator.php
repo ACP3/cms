@@ -39,9 +39,9 @@ class Translator implements TranslatorInterface
         }
 
         if (isset($this->buffer[$this->locale->getLocale()]['keys'][$module . $phrase])) {
-            return strtr($this->buffer[$this->locale->getLocale()]['keys'][$module . $phrase], $arguments);
+            return \strtr($this->buffer[$this->locale->getLocale()]['keys'][$module . $phrase], $arguments);
         }
 
-        return strtoupper('{' . $module . '_' . $phrase . '}');
+        return \strtoupper('{' . $module . '_' . $phrase . '}');
     }
 }

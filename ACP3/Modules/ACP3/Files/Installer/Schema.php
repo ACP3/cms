@@ -23,21 +23,21 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                     'index' => PrivilegeEnum::ADMIN_VIEW,
                     'settings' => PrivilegeEnum::ADMIN_SETTINGS,
                     'sort' => PrivilegeEnum::ADMIN_CREATE,
-                ]
+                ],
             ],
             'frontend' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
                     'details' => PrivilegeEnum::FRONTEND_VIEW,
                     'download' => PrivilegeEnum::FRONTEND_VIEW,
-                    'files' => PrivilegeEnum::FRONTEND_VIEW
-                ]
+                    'files' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
             ],
             'widget' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -63,7 +63,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}files` (
+            'CREATE TABLE `{pre}files` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `active` TINYINT(1) UNSIGNED NOT NULL,
                 `start` DATETIME NOT NULL,
@@ -84,7 +84,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 INDEX (`sort`),
                 FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE SET NULL,
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -94,7 +94,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            "DROP TABLE IF EXISTS `{pre}files`;"
+            'DROP TABLE IF EXISTS `{pre}files`;',
         ];
     }
 
@@ -107,7 +107,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
             'comments' => 1,
             'dateformat' => 'long',
             'sidebar' => 5,
-            'order_by' => 'date'
+            'order_by' => 'date',
         ];
     }
 }

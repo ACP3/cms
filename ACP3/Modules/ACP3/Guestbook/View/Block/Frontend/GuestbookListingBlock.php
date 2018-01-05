@@ -9,9 +9,9 @@ namespace ACP3\Modules\ACP3\Guestbook\View\Block\Frontend;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractListingBlock;
 use ACP3\Core\View\Block\Context\ListingBlockContext;
+use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
 use ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository;
-use ACP3\Modules\ACP3\Emoticons;
 
 class GuestbookListingBlock extends AbstractListingBlock
 {
@@ -87,7 +87,7 @@ class GuestbookListingBlock extends AbstractListingBlock
             $this->pagination->getResultsStartOffset(),
             $resultsPerPage
         );
-        $cResults = count($results);
+        $cResults = \count($results);
 
         for ($i = 0; $i < $cResults; ++$i) {
             if ($settings['emoticons'] == 1 && $this->emoticonsHelpers) {
@@ -112,7 +112,7 @@ class GuestbookListingBlock extends AbstractListingBlock
             'guestbook' => $this->getResults($resultsPerPage),
             'overlay' => $settings['overlay'],
             'pagination' => $this->pagination->render(),
-            'dateformat' => $settings['dateformat']
+            'dateformat' => $settings['dateformat'],
         ];
     }
 }

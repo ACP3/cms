@@ -42,8 +42,8 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 'index' => [
                     'access_forbidden' => PrivilegeEnum::FRONTEND_VIEW,
                     'not_found' => PrivilegeEnum::FRONTEND_VIEW,
-                    'server_error' => PrivilegeEnum::FRONTEND_VIEW
-                ]
+                    'server_error' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
             ],
         ];
     }

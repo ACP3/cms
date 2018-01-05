@@ -68,7 +68,7 @@ class NewslettersModel extends AbstractModel
             'text' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
             'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'html' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'status' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'status' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

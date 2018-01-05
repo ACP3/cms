@@ -101,7 +101,7 @@ class Steps
             $this->buildBreadcrumbCacheForFrontend();
         }
 
-        $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['last'] = true;
+        $this->breadcrumbCache[\count($this->breadcrumbCache) - 1]['last'] = true;
     }
 
     /**
@@ -186,8 +186,8 @@ class Steps
     private function doReplaceLastStep()
     {
         if (!empty($this->lastStep)) {
-            end($this->steps);
-            $this->steps[(int)key($this->steps)] = $this->lastStep;
+            \end($this->steps);
+            $this->steps[(int)\key($this->steps)] = $this->lastStep;
         }
     }
 
@@ -233,7 +233,7 @@ class Steps
     {
         return [
             'title' => $title,
-            'uri' => !empty($path) ? $this->router->route($path) : ''
+            'uri' => !empty($path) ? $this->router->route($path) : '',
         ];
     }
 
@@ -266,7 +266,7 @@ class Steps
     {
         if (!$this->stepAlreadyExists($path)) {
             $step = $this->buildStepItem($title, $path);
-            array_unshift($this->steps, $step);
+            \array_unshift($this->steps, $step);
         }
 
         return $this;

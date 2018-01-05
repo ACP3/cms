@@ -10,25 +10,24 @@ use ACP3\Core\View\Block\AbstractBlock;
 
 class UserDetailsBlock extends AbstractBlock
 {
-
     /**
      * @inheritdoc
      */
     public function render()
     {
         $user = $this->getData();
-        $user['gender'] = str_replace(
+        $user['gender'] = \str_replace(
             [1, 2, 3],
             [
                 '',
                 $this->translator->t('users', 'female'),
-                $this->translator->t('users', 'male')
+                $this->translator->t('users', 'male'),
             ],
             $user['gender']
         );
 
         return [
-            'user' => $user
+            'user' => $user,
         ];
     }
 }

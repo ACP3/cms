@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\System\Controller\Admin\Maintenance;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Context;
-use ACP3\Modules\ACP3\System;
 
 class UpdateCheck extends Core\Controller\AbstractFrontendAction
 {

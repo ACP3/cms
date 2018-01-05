@@ -73,8 +73,8 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
     {
         $this->setUpSeoCacheExpectations([
             'foo/bar/baz/' => [
-                'alias' => 'lorem-ipsum-dolor'
-            ]
+                'alias' => 'lorem-ipsum-dolor',
+            ],
         ]);
 
         $path = 'foo/bar/baz';
@@ -93,8 +93,8 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
     {
         $this->setUpSeoCacheExpectations([
             'foo/bar/baz/' => [
-                'alias' => 'lorem-ipsum-dolor'
-            ]
+                'alias' => 'lorem-ipsum-dolor',
+            ],
         ]);
 
         $path = 'foo/bar/baz';

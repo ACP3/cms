@@ -72,8 +72,8 @@ class RoleAdminFormBlock extends AbstractRepositoryAwareFormBlock
             'parent' => $role['id'] != 1
                 ? $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id'])
                 : [],
-            'form' => array_merge($role, $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form' => \array_merge($role, $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 
@@ -87,15 +87,16 @@ class RoleAdminFormBlock extends AbstractRepositoryAwareFormBlock
     private function fetchRoles(int $roleParentId = 0, int $roleLeftId = 0, int $roleRightId = 0): array
     {
         $roles = $this->acl->getAllRoles();
-        $cRoles = count($roles);
+        $cRoles = \count($roles);
         for ($i = 0; $i < $cRoles; ++$i) {
             if ($roles[$i]['left_id'] >= $roleLeftId && $roles[$i]['right_id'] <= $roleRightId) {
                 unset($roles[$i]);
             } else {
                 $roles[$i]['selected'] = $this->forms->selectEntry('roles', $roles[$i]['id'], $roleParentId);
-                $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
+                $roles[$i]['name'] = \str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
             }
         }
+
         return $roles;
     }
 
@@ -110,10 +111,10 @@ class RoleAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $rules = $this->permissionsCache->getRulesCache([$roleId]);
         $modules = $this->modules->getActiveModules();
         $privileges = $this->privilegeRepository->getAllPrivileges();
-        $cPrivileges = count($privileges);
+        $cPrivileges = \count($privileges);
 
         foreach ($modules as $name => $moduleInfo) {
-            $moduleDir = strtolower($moduleInfo['dir']);
+            $moduleDir = \strtolower($moduleInfo['dir']);
             for ($j = 0; $j < $cPrivileges; ++$j) {
                 $privileges[$j]['select'] = $this->generatePrivilegeCheckboxes(
                     $roleId,
@@ -131,6 +132,7 @@ class RoleAdminFormBlock extends AbstractRepositoryAwareFormBlock
             }
             $modules[$name]['privileges'] = $privileges;
         }
+
         return $modules;
     }
 
@@ -147,7 +149,7 @@ class RoleAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $permissions = [
             0 => 'deny_access',
             1 => 'allow_access',
-            2 => 'inherit_access'
+            2 => 'inherit_access',
         ];
 
         $select = [];
@@ -159,7 +161,7 @@ class RoleAdminFormBlock extends AbstractRepositoryAwareFormBlock
             $select[$value] = [
                 'value' => $value,
                 'selected' => $this->privilegeIsChecked($moduleId, $privilegeId, $value, $defaultValue),
-                'lang' => $this->translator->t('permissions', $phrase)
+                'lang' => $this->translator->t('permissions', $phrase),
             ];
         }
 
@@ -177,8 +179,8 @@ class RoleAdminFormBlock extends AbstractRepositoryAwareFormBlock
     private function privilegeIsChecked(int $moduleId, int $privilegeId, int $value = 0, $defaultValue = null): string
     {
         $requestData = $this->getRequestData();
-        if (count($requestData) == 0 && $defaultValue === $value ||
-            count($requestData) !== 0 && (int)$requestData['privileges'][$moduleId][$privilegeId] === $value
+        if (\count($requestData) == 0 && $defaultValue === $value ||
+            \count($requestData) !== 0 && (int)$requestData['privileges'][$moduleId][$privilegeId] === $value
         ) {
             return ' checked="checked"';
         }
@@ -195,7 +197,7 @@ class RoleAdminFormBlock extends AbstractRepositoryAwareFormBlock
      */
     private function calculatePermission(array $rules, string $moduleDir, string $key): string
     {
-        return sprintf(
+        return \sprintf(
             $this->translator->t('permissions', 'calculated_permission'),
             $this->translator->t(
                 'permissions',
@@ -216,7 +218,7 @@ class RoleAdminFormBlock extends AbstractRepositoryAwareFormBlock
             'name' => '',
             'parent_id' => 0,
             'left_id' => 0,
-            'right_id' => 0
+            'right_id' => 0,
         ];
     }
 }

@@ -68,7 +68,7 @@ class MessageProcessor
      */
     private function encodeSubject(string $subject): string
     {
-        return "=?utf-8?b?" . base64_encode($this->decodeHtmlEntities($subject)) . "?=";
+        return '=?utf-8?b?' . \base64_encode($this->decodeHtmlEntities($subject)) . '?=';
     }
 
     /**
@@ -77,7 +77,7 @@ class MessageProcessor
      */
     private function decodeHtmlEntities(string $data): string
     {
-        return html_entity_decode($data, ENT_QUOTES, 'UTF-8');
+        return \html_entity_decode($data, ENT_QUOTES, 'UTF-8');
     }
 
     /**
@@ -91,9 +91,9 @@ class MessageProcessor
             'title' => $message->getSubject(),
             'body' => !empty($message->getHtmlBody()) ?
                 $message->getHtmlBody() :
-                $this->stringFormatter->nl2p(htmlspecialchars($message->getBody())),
+                $this->stringFormatter->nl2p(\htmlspecialchars($message->getBody())),
             'signature' => $this->getHtmlSignature($message->getMailSignature()),
-            'url_web_view' => $message->getUrlWeb()
+            'url_web_view' => $message->getUrlWeb(),
         ];
         $this->view->assign('mail', $mail);
 
@@ -122,11 +122,13 @@ class MessageProcessor
     private function getHtmlSignature(string $signature): string
     {
         if (!empty($signature)) {
-            if ($signature === strip_tags($signature)) {
+            if ($signature === \strip_tags($signature)) {
                 return $this->stringFormatter->nl2p($signature);
             }
+
             return $signature;
         }
+
         return '';
     }
 
@@ -140,6 +142,7 @@ class MessageProcessor
         if (!empty($signature)) {
             return "\n-- \n" . $phpMailer->html2text($signature, true);
         }
+
         return '';
     }
 }

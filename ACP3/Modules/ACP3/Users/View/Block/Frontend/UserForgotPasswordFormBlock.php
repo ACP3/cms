@@ -10,15 +10,14 @@ use ACP3\Core\View\Block\AbstractFormBlock;
 
 class UserForgotPasswordFormBlock extends AbstractFormBlock
 {
-
     /**
      * @inheritdoc
      */
     public function render()
     {
         return [
-            'form' => array_merge($this->getData(), $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form' => \array_merge($this->getData(), $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 

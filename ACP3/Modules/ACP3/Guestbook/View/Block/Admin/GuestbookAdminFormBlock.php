@@ -47,12 +47,12 @@ class GuestbookAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $this->title->setPageTitlePrefix($data['name']);
 
         return [
-            'form' => array_merge($data, $this->getRequestData()),
+            'form' => \array_merge($data, $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken(),
             'can_use_emoticons' => $settings['emoticons'] == 1,
             'activate' => $settings['notify'] == 2
                 ? $this->forms->yesNoCheckboxGenerator('active', $data['active'])
-                : []
+                : [],
         ];
     }
 

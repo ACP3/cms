@@ -39,11 +39,11 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
     {
         $this->setUpLangMockExpectation('news', '{NEWS_NEWS}');
 
-        $this->columnData = array_merge($this->columnData, [
-            'fields' => ['text']
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['text'],
         ]);
         $this->dbData = [
-            'text' => 'news'
+            'text' => 'news',
         ];
 
         $expected = '<td>{NEWS_NEWS}</td>';

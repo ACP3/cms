@@ -33,7 +33,7 @@ class FilesSettingsFormBlockTest extends AbstractFormBlockTest
             ->willReturn([
                 'order_by' => 'date',
                 'dateformat' => 'long',
-                'sidebar' => 5
+                'sidebar' => 5,
             ]);
 
         return new FilesSettingsFormBlock($this->context, $dateHelper, $settings);
@@ -49,7 +49,7 @@ class FilesSettingsFormBlockTest extends AbstractFormBlockTest
             'dateformat',
             'sidebar_entries',
             'form_token',
-            'comments'
+            'comments',
         ];
     }
 }

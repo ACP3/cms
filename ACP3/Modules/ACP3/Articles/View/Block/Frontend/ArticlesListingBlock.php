@@ -75,7 +75,7 @@ class ArticlesListingBlock extends AbstractListingBlock
 
         return [
             'articles' => $this->getResults($resultsPerPage),
-            'pagination' => $this->pagination->render()
+            'pagination' => $this->pagination->render(),
         ];
     }
 }

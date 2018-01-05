@@ -69,7 +69,7 @@ class PermissionsCacheStorage extends Core\Cache\AbstractCacheStorage
     public function saveResourcesCache()
     {
         $resources = $this->resourceRepository->getAllResources();
-        $cResources = count($resources);
+        $cResources = \count($resources);
         $data = [];
 
         for ($i = 0; $i < $cResources; ++$i) {
@@ -85,6 +85,7 @@ class PermissionsCacheStorage extends Core\Cache\AbstractCacheStorage
                 'key' => $resources[$i]['privilege_name'],
             ];
         }
+
         return $this->cache->save(static::CACHE_ID_RESOURCES, $data);
     }
 
@@ -108,7 +109,7 @@ class PermissionsCacheStorage extends Core\Cache\AbstractCacheStorage
     public function saveRolesCache()
     {
         $roles = $this->roleRepository->getAllRoles();
-        $cRoles = count($roles);
+        $cRoles = \count($roles);
 
         for ($i = 0; $i < $cRoles; ++$i) {
             // Bestimmen, ob die Seite die Erste und/oder Letzte eines Knotens ist
@@ -117,6 +118,7 @@ class PermissionsCacheStorage extends Core\Cache\AbstractCacheStorage
                 for ($j = $i - 1; $j >= 0; --$j) {
                     if ($roles[$j]['parent_id'] === $roles[$i]['parent_id']) {
                         $first = false;
+
                         break;
                     }
                 }
@@ -125,6 +127,7 @@ class PermissionsCacheStorage extends Core\Cache\AbstractCacheStorage
             for ($j = $i + 1; $j < $cRoles; ++$j) {
                 if ($roles[$i]['parent_id'] === $roles[$j]['parent_id']) {
                     $last = false;
+
                     break;
                 }
             }
@@ -143,7 +146,7 @@ class PermissionsCacheStorage extends Core\Cache\AbstractCacheStorage
      */
     public function getRulesCache(array $roles)
     {
-        $filename = static::CACHE_ID_RULES . implode(',', $roles);
+        $filename = static::CACHE_ID_RULES . \implode(',', $roles);
         if ($this->cache->contains($filename) === false) {
             $this->saveRulesCache($roles);
         }
@@ -162,7 +165,7 @@ class PermissionsCacheStorage extends Core\Cache\AbstractCacheStorage
     {
         $privileges = [];
         foreach ($this->ruleRepository->getAllRulesByRoleIds($roles) as $rule) {
-            $privilegeKey = strtolower($rule['key']);
+            $privilegeKey = \strtolower($rule['key']);
             $privileges[$rule['module_name']][$privilegeKey] = [
                 'id' => $rule['privilege_id'],
                 'description' => $rule['description'],
@@ -171,7 +174,7 @@ class PermissionsCacheStorage extends Core\Cache\AbstractCacheStorage
             ];
         }
 
-        return $this->cache->save(static::CACHE_ID_RULES . implode(',', $roles), $privileges);
+        return $this->cache->save(static::CACHE_ID_RULES . \implode(',', $roles), $privileges);
     }
 
     /**
@@ -198,6 +201,7 @@ class PermissionsCacheStorage extends Core\Cache\AbstractCacheStorage
     protected function getPermissionValue($privilegeKey, $roleId)
     {
         $value = $this->roleRepository->getPermissionByKeyAndRoleId($privilegeKey, $roleId);
+
         return $value['permission'] ?? Core\ACL\PermissionEnum::DENY_ACCESS;
     }
 }

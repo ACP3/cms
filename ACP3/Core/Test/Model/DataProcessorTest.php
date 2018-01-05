@@ -35,12 +35,12 @@ class DataProcessorTest extends \PHPUnit_Framework_TestCase
         $columnData = [
             'foo' => 'Lorem',
             'bar' => 'Ipsum',
-            'baz' => 'Dolor'
+            'baz' => 'Dolor',
         ];
 
         $columnConstraints = [
             'foo' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'bar' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW
+            'bar' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
         ];
 
         $this->setUpColumnTypeStrategyFactoryExpectations();

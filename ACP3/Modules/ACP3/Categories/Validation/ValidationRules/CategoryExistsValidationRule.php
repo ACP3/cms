@@ -31,9 +31,9 @@ class CategoryExistsValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && is_array($field)) {
-            $categoryId = reset($field);
-            $createCategory = next($field);
+        if (\is_array($data) && \is_array($field)) {
+            $categoryId = \reset($field);
+            $createCategory = \next($field);
 
             return !empty($data[$createCategory]) || $this->categoryRepository->resultExists((int)$data[$categoryId]);
         }

@@ -48,7 +48,7 @@ class Request extends \ACP3\Core\Http\Request
         list($params, $probableQuery) = $this->checkUriAliasForAdditionalParameters();
 
         // Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-        $alias = $this->seoRepository->getUriByAlias(substr($probableQuery, 0, -1));
+        $alias = $this->seoRepository->getUriByAlias(\substr($probableQuery, 0, -1));
         if (!empty($alias)) {
             $this->query = $alias . $params;
         }
@@ -63,8 +63,8 @@ class Request extends \ACP3\Core\Http\Request
     {
         $params = '';
         $probableQuery = $this->query;
-        if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)([a-z\d\-]+\/)*(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
-            $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
+        if (\preg_match('/^([a-z]{1}[a-z\d\-]*\/)([a-z\d\-]+\/)*(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
+            $query = \preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
             if (isset($query[1]) === false) {
                 $query[1] = 'index';
             }
@@ -74,14 +74,14 @@ class Request extends \ACP3\Core\Http\Request
 
             $length = 0;
             foreach ($query as $row) {
-                if (strpos($row, '_') !== false) {
+                if (\strpos($row, '_') !== false) {
                     break;
                 }
 
-                $length += strlen($row) + 1;
+                $length += \strlen($row) + 1;
             }
-            $params = substr($this->query, $length);
-            $probableQuery = substr($this->query, 0, $length);
+            $params = \substr($this->query, $length);
+            $probableQuery = \substr($this->query, 0, $length);
         }
 
         return [$params, $probableQuery];

@@ -9,28 +9,28 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
     {
         $this->columnRenderer = new ReplaceValueColumnRenderer();
 
-        $this->columnData = array_merge(
+        $this->columnData = \array_merge(
             $this->getColumnDefaults(),
             [
                 'custom' => [
                     'search' => [],
-                    'replace' => []
-                ]
+                    'replace' => [],
+                ],
             ]
         );
     }
 
     public function testValidField()
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = \array_merge($this->columnData, [
             'fields' => ['text'],
             'custom' => [
                 'search' => ['Lorem'],
-                'replace' => ['Dolor']
-            ]
+                'replace' => ['Dolor'],
+            ],
         ]);
         $this->dbData = [
-            'text' => 'Lorem Ipsum'
+            'text' => 'Lorem Ipsum',
         ];
 
         $expected = '<td>Dolor Ipsum</td>';
@@ -39,16 +39,16 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
 
     public function testDefaultValueIfNull()
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = \array_merge($this->columnData, [
             'fields' => ['text'],
             'custom' => [
                 'default_value' => 'Foo Bar',
                 'search' => [],
-                'replace' => []
-            ]
+                'replace' => [],
+            ],
         ]);
         $this->dbData = [
-            'text' => null
+            'text' => null,
         ];
 
         $expected = '<td>Foo Bar</td>';
@@ -57,16 +57,16 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
 
     public function testDefaultValueIfNotFound()
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = \array_merge($this->columnData, [
             'fields' => ['test'],
             'custom' => [
                 'default_value' => 'Foo Bar',
                 'search' => [],
-                'replace' => []
-            ]
+                'replace' => [],
+            ],
         ]);
         $this->dbData = [
-            'text' => 'Lorem Ipsum'
+            'text' => 'Lorem Ipsum',
         ];
 
         $expected = '<td>Foo Bar</td>';

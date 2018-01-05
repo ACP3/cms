@@ -62,7 +62,7 @@ class RolesDataGridBlock extends AbstractDataGridBlock
                     'custom' => [
                         'route_sort_down' => 'acp/permissions/index/order/id_%d/action_down',
                         'route_sort_up' => 'acp/permissions/index/order/id_%d/action_up',
-                    ]
+                    ],
                 ], 20);
         }
     }
@@ -78,7 +78,7 @@ class RolesDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#roles-data-grid',
             'resource_path_delete' => 'admin/permissions/index/delete',
-            'resource_path_edit' => 'admin/permissions/index/edit'
+            'resource_path_edit' => 'admin/permissions/index/edit',
         ]);
 
         $grid = $dataGrid->render();
@@ -88,7 +88,7 @@ class RolesDataGridBlock extends AbstractDataGridBlock
 
         return [
             'grid' => $grid,
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

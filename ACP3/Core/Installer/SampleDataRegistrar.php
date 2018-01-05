@@ -51,7 +51,7 @@ class SampleDataRegistrar
         }
 
         throw new \InvalidArgumentException(
-            sprintf('The sample data with the service id "%s" could not be found.', $serviceId)
+            \sprintf('The sample data with the service id "%s" could not be found.', $serviceId)
         );
     }
 }

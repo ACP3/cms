@@ -24,6 +24,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function setUriAlias($uriAlias)
     {
         $this->uriAlias = $uriAlias;
+
         return $this;
     }
 
@@ -35,6 +36,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function setFile($file)
     {
         $this->file = $file;
+
         return $this;
     }
 
@@ -52,8 +54,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'active',
                     'message' => $this->translator->t('files', 'select_active'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -61,7 +63,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
-                    'message' => $this->translator->t('system', 'select_date')
+                    'message' => $this->translator->t('system', 'select_date'),
                 ]
             )
             ->addConstraint(
@@ -69,7 +71,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->translator->t('files', 'type_in_title')
+                    'message' => $this->translator->t('files', 'type_in_title'),
                 ]
             )
             ->addConstraint(
@@ -77,7 +79,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'text',
-                    'message' => $this->translator->t('files', 'description_to_short')
+                    'message' => $this->translator->t('files', 'description_to_short'),
                 ]
             )
             ->addConstraint(
@@ -87,8 +89,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => ['external', 'filesize', 'unit'],
                     'message' => $this->translator->t('files', 'type_in_external_resource'),
                     'extra' => [
-                        'file' => $this->file
-                    ]
+                        'file' => $this->file,
+                    ],
                 ]
             )
             ->addConstraint(
@@ -96,7 +98,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['cat', 'cat_create'],
-                    'message' => $this->translator->t('files', 'select_category')
+                    'message' => $this->translator->t('files', 'select_category'),
                 ]
             );
 
@@ -109,8 +111,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                         'field' => 'file_internal',
                         'message' => $this->translator->t('files', 'select_internal_resource'),
                         'extra' => [
-                            'required' => empty($this->uriAlias)
-                        ]
+                            'required' => empty($this->uriAlias),
+                        ],
                     ]
                 );
         }

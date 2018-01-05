@@ -45,7 +45,7 @@ trait CacheResponseTrait
             ->setMaxAge($lifetime)
             ->setSharedMaxAge($lifetime)
             ->headers->add([
-                $varyHeaderName => $this->getRequest()->getSymfonyRequest()->headers->get($varyHeaderName)
+                $varyHeaderName => $this->getRequest()->getSymfonyRequest()->headers->get($varyHeaderName),
             ]);
 
         if ($this->disallowPageCache()) {

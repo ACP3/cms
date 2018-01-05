@@ -38,7 +38,7 @@ class SystemModulesBlock extends AbstractBlock
         $installedModules = $newModules = [];
 
         foreach ($modules as $key => $values) {
-            $values['dir'] = strtolower($values['dir']);
+            $values['dir'] = \strtolower($values['dir']);
             if ($this->modules->isInstalled($values['dir']) === true || $values['installable'] === false) {
                 $installedModules[$key] = $values;
             } else {
@@ -48,7 +48,7 @@ class SystemModulesBlock extends AbstractBlock
 
         return [
             'installed_modules' => $installedModules,
-            'new_modules' => $newModules
+            'new_modules' => $newModules,
         ];
     }
 }

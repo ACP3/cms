@@ -36,7 +36,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'db_host',
-                    'message' => $this->translator->t('install', 'type_in_db_host')
+                    'message' => $this->translator->t('install', 'type_in_db_host'),
                 ]
             )
             ->addConstraint(
@@ -44,7 +44,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'db_user',
-                    'message' => $this->translator->t('install', 'type_in_db_username')
+                    'message' => $this->translator->t('install', 'type_in_db_username'),
                 ]
             )
             ->addConstraint(
@@ -52,7 +52,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'db_name',
-                    'message' => $this->translator->t('install', 'type_in_db_name')
+                    'message' => $this->translator->t('install', 'type_in_db_name'),
                 ]
             )
             ->addConstraint(
@@ -60,7 +60,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['db_host', 'db_user', 'db_password', 'db_name'],
-                    'message' => $this->translator->t('install', 'db_connection_failed')
+                    'message' => $this->translator->t('install', 'db_connection_failed'),
                 ]
             )
             ->addConstraint(
@@ -68,7 +68,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'user_name',
-                    'message' => $this->translator->t('install', 'type_in_user_name')
+                    'message' => $this->translator->t('install', 'type_in_user_name'),
                 ]
             )
             ->addConstraint(
@@ -76,7 +76,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->translator->t('install', 'wrong_email_format')
+                    'message' => $this->translator->t('install', 'wrong_email_format'),
                 ]
             )
             ->addConstraint(
@@ -84,7 +84,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'date_format_long',
-                    'message' => $this->translator->t('install', 'type_in_long_date_format')
+                    'message' => $this->translator->t('install', 'type_in_long_date_format'),
                 ]
             )
             ->addConstraint(
@@ -92,7 +92,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'date_format_short',
-                    'message' => $this->translator->t('install', 'type_in_short_date_format')
+                    'message' => $this->translator->t('install', 'type_in_short_date_format'),
                 ]
             )
             ->addConstraint(
@@ -100,7 +100,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['user_pwd', 'user_pwd_wdh'],
-                    'message' => $this->translator->t('install', 'type_in_pwd')
+                    'message' => $this->translator->t('install', 'type_in_pwd'),
                 ]
             )
             ->addConstraint(
@@ -108,14 +108,14 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'date_time_zone',
-                    'message' => $this->translator->t('install', 'select_time_zone')
+                    'message' => $this->translator->t('install', 'select_time_zone'),
                 ]
             )
             ->addConstraint(
                 ConfigFileValidationRule::class,
                 [
                     'data' => $this->configFilePath,
-                    'message' => $this->translator->t('install', 'wrong_chmod_for_config_file')
+                    'message' => $this->translator->t('install', 'wrong_chmod_for_config_file'),
                 ]
             )
             ->addConstraint(
@@ -123,7 +123,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'design',
-                    'message' => $this->translator->t('install', 'select_valid_design')
+                    'message' => $this->translator->t('install', 'select_valid_design'),
                 ]
             );
 

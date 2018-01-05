@@ -13,7 +13,6 @@ use ACP3\Modules\ACP3\Files\View\Block\Frontend\CategoriesListingBlock;
 
 class CategoriesListingBlockTest extends AbstractBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -32,7 +31,7 @@ class CategoriesListingBlockTest extends AbstractBlockTest
     protected function getExpectedArrayKeys(): array
     {
         return [
-            'categories'
+            'categories',
         ];
     }
 }

@@ -34,7 +34,7 @@ class GalleryFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
-                    'message' => $this->translator->t('system', 'select_date')
+                    'message' => $this->translator->t('system', 'select_date'),
                 ]
             )
             ->addConstraint(
@@ -42,7 +42,7 @@ class GalleryFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->translator->t('gallery', 'type_in_gallery_title')
+                    'message' => $this->translator->t('gallery', 'type_in_gallery_title'),
                 ]
             );
 

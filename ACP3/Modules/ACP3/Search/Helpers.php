@@ -59,11 +59,11 @@ class Helpers
                 $searchModules[$name] = [
                     'dir' => $module,
                     'checked' => $this->formsHelper->selectEntry('mods', $module, $module, 'checked'),
-                    'name' => $name
+                    'name' => $name,
                 ];
             }
         }
-        ksort($searchModules);
+        \ksort($searchModules);
 
         return $searchModules;
     }

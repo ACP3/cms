@@ -40,6 +40,7 @@ abstract class AbstractRepository implements WriterRepositoryInterface, ReaderRe
                 $this->getTableName(),
                 $data
             );
+
             return (int)$this->db->getConnection()->lastInsertId();
         });
     }
@@ -80,7 +81,7 @@ abstract class AbstractRepository implements WriterRepositoryInterface, ReaderRe
      */
     private function getIdentifier($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
     {
-        return is_array($entryId) === true ? $entryId : [$columnName => (int)$entryId];
+        return \is_array($entryId) === true ? $entryId : [$columnName => (int)$entryId];
     }
 
     /**

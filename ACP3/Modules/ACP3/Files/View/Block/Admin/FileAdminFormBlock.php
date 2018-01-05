@@ -61,7 +61,7 @@ class FileAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $this->title->setPageTitlePrefix($data['title']);
 
         $external = [
-            1 => $this->translator->t('files', 'external_resource')
+            1 => $this->translator->t('files', 'external_resource'),
         ];
 
         return [
@@ -70,7 +70,7 @@ class FileAdminFormBlock extends AbstractRepositoryAwareFormBlock
             'units' => $this->forms->choicesGenerator(
                 'units',
                 $this->getUnits(),
-                trim(strrchr($data['size'], ' '))
+                \trim(\strrchr($data['size'], ' '))
             ),
             'categories' => $this->categoriesHelpers->categoriesList(
                 Schema::MODULE_NAME,
@@ -79,10 +79,10 @@ class FileAdminFormBlock extends AbstractRepositoryAwareFormBlock
             ),
             'external' => $this->forms->checkboxGenerator('external', $external),
             'current_file' => $data['file'],
-            'form' => array_merge($data, $this->getRequestData()),
+            'form' => \array_merge($data, $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken(),
             'SEO_URI_PATTERN' => Helpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => $this->getSeoRouteName($this->getId())
+            'SEO_ROUTE_NAME' => $this->getSeoRouteName($this->getId()),
         ];
     }
 
@@ -97,7 +97,7 @@ class FileAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $options = [];
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
             $comments = [
-                '1' => $this->translator->t('system', 'allow_comments')
+                '1' => $this->translator->t('system', 'allow_comments'),
             ];
 
             $options = $this->forms->checkboxGenerator('comments', $comments, $file['comments']);
@@ -116,7 +116,7 @@ class FileAdminFormBlock extends AbstractRepositoryAwareFormBlock
             'KiB' => 'KiB',
             'MiB' => 'MiB',
             'GiB' => 'GiB',
-            'TiB' => 'TiB'
+            'TiB' => 'TiB',
         ];
     }
 
@@ -126,7 +126,7 @@ class FileAdminFormBlock extends AbstractRepositoryAwareFormBlock
      */
     private function getSeoRouteName(?int $id): string
     {
-        return !empty($id) ? sprintf(Helpers::URL_KEY_PATTERN, $id) : '';
+        return !empty($id) ? \sprintf(Helpers::URL_KEY_PATTERN, $id) : '';
     }
 
     /**
@@ -146,7 +146,7 @@ class FileAdminFormBlock extends AbstractRepositoryAwareFormBlock
             'filesize' => '',
             'text' => '',
             'start' => '',
-            'end' => ''
+            'end' => '',
         ];
     }
 }

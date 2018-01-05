@@ -23,12 +23,12 @@ class SeoSettingsFormBlock extends AbstractSettingsFormBlock
             1 => $this->translator->t('seo', 'robots_index_follow'),
             2 => $this->translator->t('seo', 'robots_index_nofollow'),
             3 => $this->translator->t('seo', 'robots_noindex_follow'),
-            4 => $this->translator->t('seo', 'robots_noindex_nofollow')
+            4 => $this->translator->t('seo', 'robots_noindex_nofollow'),
         ];
 
         $indexPaginatedContent = [
             IndexPaginatedContentEnum::INDEX_FIST_PAGE_ONLY => $this->translator->t('seo', 'index_first_page_only'),
-            IndexPaginatedContentEnum::INDEX_ALL_PAGES => $this->translator->t('seo', 'index_all_pages')
+            IndexPaginatedContentEnum::INDEX_ALL_PAGES => $this->translator->t('seo', 'index_all_pages'),
         ];
 
         $sitemapSaveMode = [
@@ -56,8 +56,8 @@ class SeoSettingsFormBlock extends AbstractSettingsFormBlock
                 $sitemapSaveMode,
                 $seoSettings['sitemap_save_mode']
             ),
-            'form' => array_merge($seoSettings, $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form' => \array_merge($seoSettings, $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 

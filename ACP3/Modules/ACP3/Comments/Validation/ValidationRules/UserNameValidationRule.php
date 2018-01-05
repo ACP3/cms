@@ -31,9 +31,9 @@ class UserNameValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && is_array($field)) {
-            $userName = reset($field);
-            $userId = next($field);
+        if (\is_array($data) && \is_array($field)) {
+            $userName = \reset($field);
+            $userId = \next($field);
 
             return (!empty($data[$userId]) && $this->integerValidationRule->isValid($data[$userId])) || !empty($data[$userName]);
         };

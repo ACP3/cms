@@ -141,7 +141,7 @@ HTML;
         $this->requestMock->expects($this->once())
             ->method('getServer')
             ->willReturn(new ServerBag([
-                'HTTP_HOST' => $httpHost
+                'HTTP_HOST' => $httpHost,
             ]));
     }
 

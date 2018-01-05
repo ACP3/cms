@@ -12,7 +12,6 @@ use ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsByModuleDataGridBlock;
 
 class CommentsByModuleDataGridBlockTest extends AbstractDataGridBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -28,7 +27,7 @@ class CommentsByModuleDataGridBlockTest extends AbstractDataGridBlockTest
     {
         return [
             'grid',
-            'show_mass_delete_button'
+            'show_mass_delete_button',
         ];
     }
 }

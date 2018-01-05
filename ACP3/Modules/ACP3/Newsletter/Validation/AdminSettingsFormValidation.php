@@ -6,7 +6,6 @@ use ACP3\Core\Validation\AbstractFormValidation;
 
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
-
     /**
      * @inheritdoc
      */
@@ -19,7 +18,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->translator->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format'),
                 ]
             );
 

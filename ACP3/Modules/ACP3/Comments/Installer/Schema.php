@@ -14,7 +14,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}comments` (
+            'CREATE TABLE `{pre}comments` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `ip` VARCHAR(40) NOT NULL,
                 `date` DATETIME NOT NULL,
@@ -29,7 +29,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 INDEX (`user_id`),
                 FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE,
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -38,7 +38,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
      */
     public function removeTables()
     {
-        return ["DROP TABLE IF EXISTS `{pre}comments`;"];
+        return ['DROP TABLE IF EXISTS `{pre}comments`;'];
     }
 
     /**
@@ -62,19 +62,19 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 'index' => [
                     'index' => PrivilegeEnum::ADMIN_VIEW,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
                 ],
                 'details' => [
                     'index' => PrivilegeEnum::ADMIN_VIEW,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
-                    'delete' => PrivilegeEnum::ADMIN_DELETE
-                ]
+                    'delete' => PrivilegeEnum::ADMIN_DELETE,
+                ],
             ],
             'frontend' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                    'create' => PrivilegeEnum::FRONTEND_CREATE
-                ]
+                    'create' => PrivilegeEnum::FRONTEND_CREATE,
+                ],
             ],
         ];
     }

@@ -55,7 +55,7 @@ class FileDetailsBlock extends AbstractBlock
         return [
             'file' => $file,
             'dateformat' => $settings['dateformat'],
-            'comments_allowed' => $settings['comments'] == 1 && $file['comments'] == 1
+            'comments_allowed' => $settings['comments'] == 1 && $file['comments'] == 1,
         ];
     }
 

@@ -71,13 +71,13 @@ class SystemSettingsFormBlock extends AbstractSettingsFormBlock
 
         $mailerTypes = [
             'mail' => $this->translator->t('system', 'mailer_type_php_mail'),
-            'smtp' => $this->translator->t('system', 'mailer_type_smtp')
+            'smtp' => $this->translator->t('system', 'mailer_type_smtp'),
         ];
 
         $mailerSmtpSecurity = [
             'none' => $this->translator->t('system', 'mailer_smtp_security_none'),
             'ssl' => $this->translator->t('system', 'mailer_smtp_security_ssl'),
-            'tls' => $this->translator->t('system', 'mailer_smtp_security_tls')
+            'tls' => $this->translator->t('system', 'mailer_smtp_security_tls'),
         ];
 
         return [
@@ -130,8 +130,8 @@ class SystemSettingsFormBlock extends AbstractSettingsFormBlock
                 $mailerSmtpSecurity,
                 $systemSettings['mailer_smtp_security']
             ),
-            'form' => array_merge($systemSettings, $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form' => \array_merge($systemSettings, $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 
@@ -147,6 +147,7 @@ class SystemSettingsFormBlock extends AbstractSettingsFormBlock
                 $wysiwyg[$serviceId] = $editorInstance->getFriendlyName();
             }
         }
+
         return $this->forms->choicesGenerator('wysiwyg', $wysiwyg, $currentWysiwygEditor);
     }
 

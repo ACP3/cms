@@ -39,8 +39,8 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
         parent::__construct($applicationMode);
 
         $this->installerWebRoot = $this->getWebRoot();
-        $this->setWebRoot(substr($this->getWebRoot() !== '/' ? $this->getWebRoot() . '/' : '/', 0, -14));
-        $this->installerAppDir = realpath($this->getAppDir() . '../installation') . '/Installer/';
+        $this->setWebRoot(\substr($this->getWebRoot() !== '/' ? $this->getWebRoot() . '/' : '/', 0, -14));
+        $this->installerAppDir = \realpath($this->getAppDir() . '../installation') . '/Installer/';
         $this->installerModulesDir = $this->installerAppDir . 'Modules/';
         $this->installerClassesDir = $this->installerAppDir . 'Core/';
         $this->setDesignRootPathInternal(ACP3_ROOT_DIR . 'installation/design/');
@@ -62,6 +62,7 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
     public function setInstallerAppDir($installerAppDir)
     {
         $this->installerAppDir = $installerAppDir;
+
         return $this;
     }
 
@@ -81,6 +82,7 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
     public function setInstallerCacheDir($installerCacheDir)
     {
         $this->installerCacheDir = $installerCacheDir;
+
         return $this;
     }
 
@@ -100,6 +102,7 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
     public function setInstallerClassesDir($installerClassesDir)
     {
         $this->installerClassesDir = $installerClassesDir;
+
         return $this;
     }
 
@@ -119,6 +122,7 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
     public function setInstallerModulesDir($installerModulesDir)
     {
         $this->installerModulesDir = $installerModulesDir;
+
         return $this;
     }
 
@@ -138,6 +142,7 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
     public function setInstallerWebRoot($installerWebRoot)
     {
         $this->installerWebRoot = $installerWebRoot;
+
         return $this;
     }
 }

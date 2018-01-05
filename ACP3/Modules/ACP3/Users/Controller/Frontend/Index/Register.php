@@ -157,7 +157,7 @@ class Register extends Core\Controller\AbstractFrontendAction
                 '{mail}' => $formData['mail'],
                 '{password}' => $formData['pwd'],
                 '{title}' => $systemSettings['site_title'],
-                '{host}' => $this->request->getHost()
+                '{host}' => $this->request->getHost(),
             ]
         );
 

@@ -85,7 +85,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
                     if ($this->uriAliasManager) {
                         $this->uriAliasManager->deleteUriAlias(
-                            sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item)
+                            \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item)
                         );
                     }
 
@@ -106,11 +106,11 @@ class Delete extends Core\Controller\AbstractFrontendAction
     {
         if ($this->uriAliasManager) {
             $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
-            $cPictures = count($pictures);
+            $cPictures = \count($pictures);
 
             for ($i = 0; $i < $cPictures; ++$i) {
                 $this->uriAliasManager->deleteUriAlias(
-                    sprintf(
+                    \sprintf(
                         Gallery\Helpers::URL_KEY_PATTERN_PICTURE,
                     $pictures[$i]['id']
                     )

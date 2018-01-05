@@ -44,7 +44,7 @@ class RedirectMessages
     public function getMessage()
     {
         $param = $this->sessionHandler->get('redirect_message');
-        if (isset($param) && is_array($param)) {
+        if (isset($param) && \is_array($param)) {
             $this->sessionHandler->remove('redirect_message');
         }
 
@@ -65,8 +65,8 @@ class RedirectMessages
         $this->sessionHandler->set(
             'redirect_message',
             [
-                'success' => is_int($success) ? true : (bool)$success,
-                'text' => $text
+                'success' => \is_int($success) ? true : (bool)$success,
+                'text' => $text,
             ]
         );
 

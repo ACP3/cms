@@ -52,6 +52,7 @@ class Alerts
 
             return 'System/Alerts/confirm_box.tpl';
         }
+
         return '';
     }
 
@@ -78,9 +79,10 @@ class Alerts
             }
 
             return [
-                'confirm' => $confirm
+                'confirm' => $confirm,
             ];
         }
+
         return [];
     }
 
@@ -93,6 +95,7 @@ class Alerts
     public function errorBox($errors)
     {
         $this->view->assign('CONTENT_ONLY', $this->request->isXmlHttpRequest());
+
         return $this->view->fetchTemplate($this->errorBoxContent($errors));
     }
 
@@ -117,9 +120,10 @@ class Alerts
 
         $errors = $this->prepareErrorBoxData($errors);
 
-        foreach (array_keys($errors) as $key) {
-            if (is_numeric($key) === false) {
+        foreach (\array_keys($errors) as $key) {
+            if (\is_numeric($key) === false) {
                 $hasNonIntegerKeys = true;
+
                 break;
             }
         }
@@ -128,7 +132,7 @@ class Alerts
             'error_box',
             [
                 'non_integer_keys' => $hasNonIntegerKeys,
-                'errors' => $errors
+                'errors' => $errors,
             ]
         );
     }
@@ -139,11 +143,11 @@ class Alerts
      */
     protected function prepareErrorBoxData($errors)
     {
-        if (is_string($errors) && ($data = @unserialize($errors)) !== false) {
+        if (\is_string($errors) && ($data = @\unserialize($errors)) !== false) {
             $errors = $data;
         }
 
-        if (is_array($errors) === false) {
+        if (\is_array($errors) === false) {
             $errors = (array)$errors;
         }
 

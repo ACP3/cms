@@ -42,7 +42,7 @@ class EmoticonManageFormBlockTest extends AbstractFormBlockTest
     {
         return [
             'form',
-            'form_token'
+            'form_token',
         ];
     }
 }

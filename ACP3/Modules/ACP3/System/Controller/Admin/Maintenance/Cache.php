@@ -60,8 +60,8 @@ class Cache extends Core\Controller\AbstractFrontendAction
             'page' => $this->appPath->getCacheDir() . 'http',
             'templates' => [
                 $this->appPath->getCacheDir() . 'tpl_compiled',
-                $this->appPath->getCacheDir() . 'tpl_cached'
-            ]
+                $this->appPath->getCacheDir() . 'tpl_cached',
+            ],
         ];
 
         $result = false;
@@ -85,6 +85,7 @@ class Cache extends Core\Controller\AbstractFrontendAction
                         System\Installer\Schema::MODULE_NAME
                     );
                 }
+
                 break;
             default:
                 $text = $this->translator->t('system', 'cache_type_not_found');

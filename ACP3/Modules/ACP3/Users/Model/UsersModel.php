@@ -40,7 +40,7 @@ class UsersModel extends AbstractModel
             'address_display' => ColumnTypes::COLUMN_TYPE_BOOLEAN,
             'country' => ColumnTypes::COLUMN_TYPE_TEXT,
             'country_display' => ColumnTypes::COLUMN_TYPE_BOOLEAN,
-            'registration_date' => ColumnTypes::COLUMN_TYPE_DATETIME
+            'registration_date' => ColumnTypes::COLUMN_TYPE_DATETIME,
         ];
     }
 }

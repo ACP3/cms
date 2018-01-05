@@ -57,7 +57,7 @@ class FilesSettingsFormBlock extends AbstractSettingsFormBlock
 
         $orderBy = [
             'date' => $this->translator->t('files', 'order_by_date_descending'),
-            'custom' => $this->translator->t('files', 'order_by_custom')
+            'custom' => $this->translator->t('files', 'order_by_custom'),
         ];
 
         return [
@@ -65,7 +65,7 @@ class FilesSettingsFormBlock extends AbstractSettingsFormBlock
             'dateformat' => $this->dateHelper->dateFormatDropdown($data['dateformat']),
             'sidebar_entries' => $this->forms->recordsPerPage((int)$data['sidebar'], 1, 10, 'sidebar'),
             'form_token' => $this->formToken->renderFormToken(),
-            'comments' => $this->fetchOptions($data)
+            'comments' => $this->fetchOptions($data),
         ];
     }
 

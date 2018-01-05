@@ -78,10 +78,10 @@ class GalleryPictureAdminFormBlock extends AbstractRepositoryAwareFormBlock
         }
 
         return [
-            'form' => array_merge($data, $this->getRequestData()),
+            'form' => \array_merge($data, $this->getRequestData()),
             'gallery_id' => $data['gallery_id'],
             'form_token' => $this->formToken->renderFormToken(),
-            'options' => $this->fetchOptions($data)
+            'options' => $this->fetchOptions($data),
         ];
     }
 
@@ -93,7 +93,7 @@ class GalleryPictureAdminFormBlock extends AbstractRepositoryAwareFormBlock
     {
         if ($this->hasAvailableOptions()) {
             $comments = [
-                '1' => $this->translator->t('system', 'allow_comments')
+                '1' => $this->translator->t('system', 'allow_comments'),
             ];
 
             return $this->forms->checkboxGenerator('comments', $comments, $data['comments']);
@@ -121,7 +121,7 @@ class GalleryPictureAdminFormBlock extends AbstractRepositoryAwareFormBlock
     {
         return [
             'comments' => '0',
-            'description' => ''
+            'description' => '',
         ];
     }
 }

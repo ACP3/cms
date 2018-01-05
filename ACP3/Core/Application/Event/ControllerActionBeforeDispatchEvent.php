@@ -33,7 +33,7 @@ class ControllerActionBeforeDispatchEvent extends Event
 
     protected function splitServiceIdIntoParts()
     {
-        $this->serviceIdParts = explode('.', $this->controllerServiceId);
+        $this->serviceIdParts = \explode('.', $this->controllerServiceId);
     }
 
     /**

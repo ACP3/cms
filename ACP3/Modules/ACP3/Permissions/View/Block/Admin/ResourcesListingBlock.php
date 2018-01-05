@@ -53,7 +53,7 @@ class ResourcesListingBlock extends AbstractBlock
     public function render()
     {
         $resources = $this->resourceRepository->getAllResources();
-        $cResources = count($resources);
+        $cResources = \count($resources);
         $output = [];
         for ($i = 0; $i < $cResources; ++$i) {
             if ($this->modules->isActive($resources[$i]['module_name']) === true) {
@@ -61,12 +61,12 @@ class ResourcesListingBlock extends AbstractBlock
                 $output[$module][] = $resources[$i];
             }
         }
-        ksort($output);
+        \ksort($output);
 
         return [
             'resources' => $output,
             'can_delete_resource' => $this->acl->hasPermission('admin/permissions/resources/delete'),
-            'can_edit_resource' => $this->acl->hasPermission('admin/permissions/resources/edit')
+            'can_edit_resource' => $this->acl->hasPermission('admin/permissions/resources/edit'),
         ];
     }
 }

@@ -88,6 +88,7 @@ class CommentsRepository extends Core\Model\Repository\AbstractRepository implem
     public function getAllByModule($moduleId, $resultId, $limitStart = '', $resultsPerPage = '')
     {
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
+
         return $this->db->fetchAll(
             'SELECT IF(c.user_id IS NULL, c.name, u.nickname) AS `name`, c.user_id, c.date, c.message FROM ' . $this->getTableName() . ' AS c LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository::TABLE_NAME) . ' AS u ON (u.id = c.user_id) WHERE c.module_id = ? AND c.entry_id = ? ORDER BY c.date ASC' . $limitStmt,
             [$moduleId, $resultId]

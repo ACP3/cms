@@ -68,7 +68,7 @@ class Manage extends AbstractFrontendAction
             $formData = $this->request->getPost()->all();
 
             if ($id !== null) {
-                $this->adminFormValidation->setUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id));
+                $this->adminFormValidation->setUriAlias(\sprintf(Articles\Helpers::URL_KEY_PATTERN, $id));
             }
 
             $this->adminFormValidation->validate($formData);

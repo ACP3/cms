@@ -18,7 +18,7 @@ trait ModuleDependenciesTrait
     {
         $composer = (new JsonFile($path))->read();
 
-        if (isset($composer['extra']['dependencies']) && is_array($composer['extra']['dependencies'])) {
+        if (isset($composer['extra']['dependencies']) && \is_array($composer['extra']['dependencies'])) {
             return $composer['extra']['dependencies'];
         }
 

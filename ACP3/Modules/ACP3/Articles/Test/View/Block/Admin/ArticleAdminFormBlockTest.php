@@ -45,7 +45,7 @@ class ArticleAdminFormBlockTest extends AbstractFormBlockTest
             'form',
             'form_token',
             'SEO_URI_PATTERN',
-            'SEO_ROUTE_NAME'
+            'SEO_ROUTE_NAME',
         ];
     }
 }

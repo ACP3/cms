@@ -44,7 +44,7 @@ class ContactFormBlockTest extends AbstractFormBlockTest
             'form',
             'copy',
             'contact',
-            'form_token'
+            'form_token',
         ];
     }
 }

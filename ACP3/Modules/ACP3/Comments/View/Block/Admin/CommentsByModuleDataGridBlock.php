@@ -24,7 +24,7 @@ class CommentsByModuleDataGridBlock extends AbstractDataGridBlock
                 'label' => $this->translator->t('comments', 'module'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer::class,
                 'fields' => ['module'],
-                'default_sort' => true
+                'default_sort' => true,
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('comments', 'comments_count'),
@@ -33,7 +33,7 @@ class CommentsByModuleDataGridBlock extends AbstractDataGridBlock
             ], 20)
             ->addColumn([
                 'fields' => ['module_id'],
-                'primary' => true
+                'primary' => true,
             ], 10);
     }
 
@@ -57,7 +57,7 @@ class CommentsByModuleDataGridBlock extends AbstractDataGridBlock
 
         return [
             'grid' => $grid,
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

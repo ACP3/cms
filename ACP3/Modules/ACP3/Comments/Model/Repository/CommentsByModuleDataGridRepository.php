@@ -31,7 +31,7 @@ class CommentsByModuleDataGridRepository extends AbstractDataGridRepository
         return [
             'main.module_id',
             'COUNT(main.module_id) AS `comments_count`',
-            'm.name AS module'
+            'm.name AS module',
         ];
     }
 

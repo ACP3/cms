@@ -48,9 +48,10 @@ class Datepicker extends AbstractFunction
             'value' => '',
             'withTime' => true,
             'inputFieldOnly' => false,
-            'label' => ''
+            'label' => '',
         ];
-        return array_merge($defaults, $params);
+
+        return \array_merge($defaults, $params);
     }
 
     /**

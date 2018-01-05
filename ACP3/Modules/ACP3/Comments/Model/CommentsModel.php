@@ -26,7 +26,7 @@ class CommentsModel extends AbstractModel
             'user_id' => ColumnTypes::COLUMN_TYPE_INT_NULLABLE,
             'message' => ColumnTypes::COLUMN_TYPE_TEXT,
             'module_id' => ColumnTypes::COLUMN_TYPE_INT,
-            'entry_id' => ColumnTypes::COLUMN_TYPE_INT
+            'entry_id' => ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

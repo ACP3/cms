@@ -23,7 +23,7 @@ class Javascripts extends AbstractBlock
     {
         if (!$repeat) {
             if (isset($content)) {
-                return '@@@SMARTY:JAVASCRIPTS:BEGIN@@@' . trim($content) . '@@@SMARTY:JAVASCRIPTS:END@@@';
+                return '@@@SMARTY:JAVASCRIPTS:BEGIN@@@' . \trim($content) . '@@@SMARTY:JAVASCRIPTS:END@@@';
             }
         }
 

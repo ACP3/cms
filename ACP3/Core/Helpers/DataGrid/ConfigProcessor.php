@@ -44,16 +44,16 @@ class ConfigProcessor
             'autoWidth' => false,
             'language' => $this->getLanguage(),
             'sorting' => $this->getDefaultSorting($columns),
-            'columns' => $this->getColumnDefinitions($columns, $options->isUseAjax())
+            'columns' => $this->getColumnDefinitions($columns, $options->isUseAjax()),
         ];
 
         if ($options->isUseAjax()) {
-            $config['ajax'] = $this->request->getFullPath() . 'ajax_' . substr($options->getIdentifier(), 1);
+            $config['ajax'] = $this->request->getFullPath() . 'ajax_' . \substr($options->getIdentifier(), 1);
         }
 
         return [
             'identifier' => $options->getIdentifier(),
-            'config' => json_encode($config),
+            'config' => \json_encode($config),
         ];
     }
 
@@ -64,7 +64,7 @@ class ConfigProcessor
     {
         return [
             [10, 15, 20, 25, 50, -1],
-            [10, 15, 20, 25, 50, $this->translator->t('system', 'data_table_all')]
+            [10, 15, 20, 25, 50, $this->translator->t('system', 'data_table_all')],
         ];
     }
 
@@ -85,7 +85,7 @@ class ConfigProcessor
             'paginate' => [
                 'previous' => $this->translator->t('system', 'previous'),
                 'next' => $this->translator->t('system', 'next'),
-            ]
+            ],
         ];
     }
 
@@ -99,13 +99,13 @@ class ConfigProcessor
 
         foreach (clone $columns as $column) {
             if ($column['default_sort'] === true &&
-                in_array($column['default_sort_direction'], ['asc', 'desc'])
+                \in_array($column['default_sort_direction'], ['asc', 'desc'])
             ) {
                 return [
                     [
                         $i,
-                        $column['default_sort_direction']
-                    ]
+                        $column['default_sort_direction'],
+                    ],
                 ];
             }
 
@@ -134,9 +134,9 @@ class ConfigProcessor
             if ($useAjax && !empty($column['class'])) {
                 $columnDefinitions[$i]['className'] = $column['class'];
             }
-            if ($useAjax && is_callable($column['type'] . '::mandatoryAttributes')) {
-                $attributes = call_user_func($column['type'] . '::mandatoryAttributes');
-                if (is_array($attributes) && !empty($attributes)) {
+            if ($useAjax && \is_callable($column['type'] . '::mandatoryAttributes')) {
+                $attributes = \call_user_func($column['type'] . '::mandatoryAttributes');
+                if (\is_array($attributes) && !empty($attributes)) {
                     $mapper = [];
                     foreach ($attributes as $attribute) {
                         $mapper[$attribute] = $attribute;

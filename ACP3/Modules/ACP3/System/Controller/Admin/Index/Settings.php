@@ -94,7 +94,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
                     'site_subtitle' => $this->secure->strEncode($formData['site_subtitle']),
                     'site_subtitle_homepage_mode' => (int)$formData['site_subtitle_homepage_mode'],
                     'site_subtitle_mode' => (int)$formData['site_subtitle_mode'],
-                    'wysiwyg' => $formData['wysiwyg']
+                    'wysiwyg' => $formData['wysiwyg'],
                 ];
 
                 return $this->config->saveSettings($data, System\Installer\Schema::MODULE_NAME);

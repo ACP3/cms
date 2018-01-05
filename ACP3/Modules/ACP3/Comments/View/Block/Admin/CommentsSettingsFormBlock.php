@@ -53,7 +53,7 @@ class CommentsSettingsFormBlock extends AbstractSettingsFormBlock
         return [
             'dateformat' => $this->dateHelper->dateFormatDropdown($data['dateformat']),
             'form_token' => $this->formToken->renderFormToken(),
-            'allow_emoticons' => $this->fetchAllowEmoticons($data['emoticons'])
+            'allow_emoticons' => $this->fetchAllowEmoticons($data['emoticons']),
         ];
     }
 

@@ -101,6 +101,7 @@ class Helpers
                 'module_id' => $moduleInfo['id'],
                 'parent_id' => 0,
             ];
+
             return $this->categoriesModel->save($insertValues);
         }
 
@@ -127,7 +128,7 @@ class Helpers
     ) {
         $categories = $this->categoriesCache->getCache($moduleName);
         foreach ($categories as &$category) {
-            $category['title'] = str_repeat('&nbsp;&nbsp;', $category['level']) . $category['title'];
+            $category['title'] = \str_repeat('&nbsp;&nbsp;', $category['level']) . $category['title'];
             $category['selected'] = $this->formsHelper->selectEntry(
                 $formFieldName,
                 $category['id'],
@@ -150,6 +151,7 @@ class Helpers
             $formFields['name'] = $formFieldName . '_create';
             $formFields['value'] = $this->request->getPost()->get('create', ['name' => ''])['name'];
         }
+
         return $formFields;
     }
 }

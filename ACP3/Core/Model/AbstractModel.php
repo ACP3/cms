@@ -155,7 +155,7 @@ abstract class AbstractModel
     {
         $repository = $this->repository;
 
-        if (!is_array($entryId)) {
+        if (!\is_array($entryId)) {
             $entryId = [$entryId];
         }
 

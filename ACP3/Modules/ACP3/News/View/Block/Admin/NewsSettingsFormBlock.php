@@ -58,14 +58,14 @@ class NewsSettingsFormBlock extends AbstractSettingsFormBlock
         return [
             'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
             'readmore' => $this->forms->yesNoCheckboxGenerator('readmore', $settings['readmore']),
-            'form' => array_merge($settings, $this->getRequestData()),
+            'form' => \array_merge($settings, $this->getRequestData()),
             'sidebar_entries' => $this->forms->recordsPerPage((int)$settings['sidebar'], 1, 10, 'sidebar'),
             'category_in_breadcrumb' => $this->forms->yesNoCheckboxGenerator(
                 'category_in_breadcrumb',
                 $settings['category_in_breadcrumb']
             ),
             'form_token' => $this->formToken->renderFormToken(),
-            'allow_comments' => $this->fetchOptions($settings)
+            'allow_comments' => $this->fetchOptions($settings),
         ];
     }
 

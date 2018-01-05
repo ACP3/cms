@@ -29,14 +29,14 @@ class MarkEntries
     public function execute($name, $markAllId = '')
     {
         $markAllId = !empty($markAllId) ? $markAllId : 'mark-all';
-        $deleteOptions = json_encode(
+        $deleteOptions = \json_encode(
             [
                 'checkBoxName' => $name,
                 'language' => [
                     'confirmationTextSingle' => $this->translator->t('system', 'confirm_delete_single'),
                     'confirmationTextMultiple' => $this->translator->t('system', 'confirm_delete_multiple'),
-                    'noEntriesSelectedText' => $this->translator->t('system', 'no_entries_selected')
-                ]
+                    'noEntriesSelectedText' => $this->translator->t('system', 'no_entries_selected'),
+                ],
             ]
         );
 

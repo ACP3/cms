@@ -115,9 +115,11 @@ class Date
             case '':
             case 'short':
                 $format = $this->dateFormatShort;
+
                 break;
             case 'long':
                 $format = $this->dateFormatLong;
+
                 break;
         }
 
@@ -129,7 +131,8 @@ class Date
                 $dateTime->setTimestamp($dateTime->getTimestamp() - $dateTime->getOffset());
             }
         }
-        return strtr($dateTime->format($format), $this->dateTranslator->localize($format));
+
+        return \strtr($dateTime->format($format), $this->dateTranslator->localize($format));
     }
 
     /**
@@ -138,8 +141,8 @@ class Date
      */
     public function toDateTime($time = 'now')
     {
-        if (is_numeric($time)) {
-            $time = date('c', $time);
+        if (\is_numeric($time)) {
+            $time = \date('c', $time);
         }
 
         return new \DateTime($time, $this->dateTimeZone);

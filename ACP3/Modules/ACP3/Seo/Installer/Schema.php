@@ -22,8 +22,8 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'settings' => PrivilegeEnum::ADMIN_SETTINGS,
                     'sitemap' => PrivilegeEnum::ADMIN_SETTINGS,
-                    'suggest' => PrivilegeEnum::ADMIN_VIEW
-                ]
+                    'suggest' => PrivilegeEnum::ADMIN_VIEW,
+                ],
             ],
         ];
     }
@@ -50,7 +50,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE IF NOT EXISTS `{pre}seo` (
+            'CREATE TABLE IF NOT EXISTS `{pre}seo` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `uri` VARCHAR(255) NOT NULL,
                 `alias` VARCHAR(100) NOT NULL,
@@ -59,7 +59,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 `description` VARCHAR(255) NOT NULL,
                 `robots` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`), UNIQUE(`uri`), INDEX (`alias`)
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -69,7 +69,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            "DROP TABLE IF EXISTS `{pre}seo`;",
+            'DROP TABLE IF EXISTS `{pre}seo`;',
         ];
     }
 
@@ -85,7 +85,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
             'index_paginated_content' => 'first',
             'sitemap_is_enabled' => 0,
             'sitemap_save_mode' => 2,
-            'sitemap_separate' => 0
+            'sitemap_separate' => 0,
         ];
     }
 }

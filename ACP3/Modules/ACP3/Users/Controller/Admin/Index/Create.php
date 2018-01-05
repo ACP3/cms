@@ -82,7 +82,7 @@ class Create extends Core\Controller\AbstractFrontendAction
 
             $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
 
-            $formData = array_merge($formData, [
+            $formData = \array_merge($formData, [
                 'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd'], 'sha512'),
                 'pwd_salt' => $salt,
                 'registration_date' => 'now',

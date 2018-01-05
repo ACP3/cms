@@ -14,13 +14,13 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}emoticons` (
+            'CREATE TABLE `{pre}emoticons` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `code` VARCHAR(10) NOT NULL,
                 `description` VARCHAR(15) NOT NULL,
                 `img` VARCHAR(40) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -29,7 +29,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
      */
     public function removeTables()
     {
-        return ["DROP TABLE IF EXISTS `{pre}emoticons`;"];
+        return ['DROP TABLE IF EXISTS `{pre}emoticons`;'];
     }
 
     /**
@@ -55,8 +55,8 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'index' => PrivilegeEnum::ADMIN_VIEW,
                     'manage' => PrivilegeEnum::ADMIN_MANAGE,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
-                ]
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
+                ],
             ],
         ];
     }

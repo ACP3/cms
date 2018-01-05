@@ -67,7 +67,7 @@ trait LayoutAwareControllerTrait
             $this->getRequest()->getModule() . '/' . $this->getRequest()->getArea() . '/' . $layoutFileName . '.' . $this->getRequest()->getController() . '.tpl',
             $this->getRequest()->getModule() . '/' . $this->getRequest()->getArea() . '/' . $layoutFileName . '.tpl',
             $this->getRequest()->getModule() . '/' . $layoutFileName . '.tpl',
-            $defaultLayoutName
+            $defaultLayoutName,
         ];
     }
 
@@ -83,6 +83,7 @@ trait LayoutAwareControllerTrait
         foreach ($paths as $path) {
             if ($this->getView()->templateExists($path)) {
                 $this->setLayout($path);
+
                 break;
             }
         }

@@ -74,6 +74,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
 
                 $formData['mode'] = $this->fetchMenuItemModeForSave($formData);
                 $formData['uri'] = $this->fetchMenuItemUriForSave($formData);
+
                 return $this->menuItemsModel->save($formData, $id);
             },
             'acp/menus'
@@ -87,7 +88,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
      */
     protected function fetchMenuItemModeForSave(array $formData)
     {
-        return ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(
+        return ($formData['mode'] == 2 || $formData['mode'] == 3) && \preg_match(
             Menus\Helpers\MenuItemsList::ARTICLES_URL_KEY_REGEX,
             $formData['uri']
         ) ? '4' : $formData['mode'];
@@ -100,7 +101,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
      */
     protected function fetchMenuItemUriForSave(array $formData)
     {
-        return $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? sprintf(
+        return $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? \sprintf(
             Articles\Helpers::URL_KEY_PATTERN,
             $formData['articles']
         ) : $formData['uri']);

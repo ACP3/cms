@@ -63,7 +63,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
         $columnsToSelect = [];
         foreach (clone $gridColumns as $column) {
             if (!empty($column['fields'])) {
-                if (!is_array($column['fields'])) {
+                if (!\is_array($column['fields'])) {
                     $column['fields'] = [$column['fields']];
                 }
 
@@ -119,12 +119,12 @@ abstract class AbstractDataGridRepository extends AbstractRepository
     {
         foreach (clone $gridColumns as $gridColumn) {
             if ($gridColumn['default_sort'] === true) {
-                if (!is_array($gridColumn['fields'])) {
+                if (!\is_array($gridColumn['fields'])) {
                     $gridColumn['fields'] = [$gridColumn['fields']];
                 }
 
                 foreach ($gridColumn['fields'] as $field) {
-                    $queryBuilder->addOrderBy($field, strtoupper($gridColumn['default_sort_direction']));
+                    $queryBuilder->addOrderBy($field, \strtoupper($gridColumn['default_sort_direction']));
                 }
             }
         }

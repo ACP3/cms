@@ -15,9 +15,9 @@ class UpdateFileParser
      */
     public function parseUpdateFile($path)
     {
-        $file = @file_get_contents($path);
+        $file = @\file_get_contents($path);
         if ($file !== false) {
-            list($latestVersion, $url) = explode('||', $file);
+            list($latestVersion, $url) = \explode('||', $file);
 
             return [
                 'latest_version' => $latestVersion,

@@ -64,7 +64,7 @@ class GalleryPicturesListingBlock extends AbstractBlock
 
         return [
             'pictures' => $this->galleryCache->getCache($data['gallery_id']),
-            'overlay' => (int)$this->settings->getSettings(Schema::MODULE_NAME)['overlay']
+            'overlay' => (int)$this->settings->getSettings(Schema::MODULE_NAME)['overlay'],
         ];
     }
 }

@@ -92,7 +92,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
         $path = ''
     ) {
         if (!$this->user->isAuthenticated() && $this->hasCaptchaAccess()) {
-            $path = sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
+            $path = \sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
 
             $this->sessionHandler->set('captcha_' . $path, $this->secureHelper->salt($captchaLength));
 
@@ -101,10 +101,12 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
                 'id' => $formFieldId,
                 'height' => 30,
                 'input_only' => $inputOnly,
-                'path' => $path
+                'path' => $path,
             ]);
+
             return $this->view->fetchTemplate('Captcha/Partials/captcha_native.tpl');
         }
+
         return '';
     }
 
@@ -131,9 +133,9 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
 
         $value = $formData[$formFieldName];
         $routePath = empty($extra['path']) === true ? $this->request->getQuery() : $extra['path'];
-        $indexName = 'captcha_' . sha1($this->router->route($routePath));
+        $indexName = 'captcha_' . \sha1($this->router->route($routePath));
 
-        return preg_match('/^[a-zA-Z0-9]+$/', $value)
-            && strtolower($value) === strtolower($this->sessionHandler->get($indexName, ''));
+        return \preg_match('/^[a-zA-Z0-9]+$/', $value)
+            && \strtolower($value) === \strtolower($this->sessionHandler->get($indexName, ''));
     }
 }

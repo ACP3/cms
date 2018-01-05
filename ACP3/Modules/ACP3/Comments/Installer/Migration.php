@@ -26,19 +26,19 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
                 "UPDATE `{pre}acl_resources` SET `controller` = 'details' WHERE `module_id` = '{moduleId}' AND `page` = 'edit';",
             ],
             34 => [
-                "ALTER TABLE `{pre}comments` ENGINE = InnoDB",
+                'ALTER TABLE `{pre}comments` ENGINE = InnoDB',
             ],
             35 => [
-                "DELETE FROM `{pre}comments` WHERE `module_id` NOT IN (SELECT `id` FROM `{pre}modules`);",
-                "ALTER TABLE `{pre}comments` ADD INDEX (`module_id`)",
-                "ALTER TABLE `{pre}comments` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE"
+                'DELETE FROM `{pre}comments` WHERE `module_id` NOT IN (SELECT `id` FROM `{pre}modules`);',
+                'ALTER TABLE `{pre}comments` ADD INDEX (`module_id`)',
+                'ALTER TABLE `{pre}comments` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE',
             ],
             36 => [
-                "ALTER TABLE `{pre}comments` CHANGE `user_id` `user_id` INT(10) UNSIGNED",
-                "ALTER TABLE `{pre}comments` ADD INDEX (`user_id`)",
-                "UPDATE `{pre}comments` SET `user_id` = NULL WHERE `user_id` = 0",
-                "ALTER TABLE `{pre}comments` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL"
-            ]
+                'ALTER TABLE `{pre}comments` CHANGE `user_id` `user_id` INT(10) UNSIGNED',
+                'ALTER TABLE `{pre}comments` ADD INDEX (`user_id`)',
+                'UPDATE `{pre}comments` SET `user_id` = NULL WHERE `user_id` = 0',
+                'ALTER TABLE `{pre}comments` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL',
+            ],
         ];
     }
 

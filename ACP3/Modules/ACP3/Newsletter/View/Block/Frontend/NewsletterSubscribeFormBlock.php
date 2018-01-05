@@ -10,7 +10,6 @@ use ACP3\Core\View\Block\AbstractFormBlock;
 
 class NewsletterSubscribeFormBlock extends AbstractFormBlock
 {
-
     /**
      * @inheritdoc
      */
@@ -19,13 +18,13 @@ class NewsletterSubscribeFormBlock extends AbstractFormBlock
         $salutations = [
             0 => $this->translator->t('newsletter', 'salutation_unspecified'),
             1 => $this->translator->t('newsletter', 'salutation_female'),
-            2 => $this->translator->t('newsletter', 'salutation_male')
+            2 => $this->translator->t('newsletter', 'salutation_male'),
         ];
 
         return [
             'salutation' => $this->forms->choicesGenerator('salutation', $salutations),
-            'form' => array_merge($this->getData(), $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form' => \array_merge($this->getData(), $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 
@@ -37,7 +36,7 @@ class NewsletterSubscribeFormBlock extends AbstractFormBlock
         return [
             'first_name' => '',
             'last_name' => '',
-            'mail' => ''
+            'mail' => '',
         ];
     }
 }

@@ -13,7 +13,6 @@ use ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoriesDataGridBlock;
 
 class CategoriesDataGridBlockTest extends AbstractDataGridBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -34,7 +33,7 @@ class CategoriesDataGridBlockTest extends AbstractDataGridBlockTest
     {
         return [
             'grid',
-            'show_mass_delete_button'
+            'show_mass_delete_button',
         ];
     }
 }

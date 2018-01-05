@@ -20,6 +20,7 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
     public function setRoleId($roleId)
     {
         $this->roleId = (int)$roleId;
+
         return $this;
     }
 
@@ -35,7 +36,7 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'name',
-                    'message' => $this->translator->t('system', 'name_to_short')
+                    'message' => $this->translator->t('system', 'name_to_short'),
                 ]
             )
             ->addConstraint(
@@ -45,8 +46,8 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'name',
                     'message' => $this->translator->t('permissions', 'role_already_exists'),
                     'extra' => [
-                        'role_id' => $this->roleId
-                    ]
+                        'role_id' => $this->roleId,
+                    ],
                 ]
             )
             ->addConstraint(
@@ -54,7 +55,7 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'privileges',
-                    'message' => $this->translator->t('permissions', 'invalid_privileges')
+                    'message' => $this->translator->t('permissions', 'invalid_privileges'),
                 ]
             );
 

@@ -43,7 +43,7 @@ class ArrayActionResultType implements ActionResultTypeInterface
      */
     public function supports($result): bool
     {
-        return is_array($result);
+        return \is_array($result);
     }
 
     /**
@@ -68,7 +68,7 @@ class ArrayActionResultType implements ActionResultTypeInterface
     private function applyTemplateFromRequest(): string
     {
         return $this->request->getModule() . '/'
-            . ucfirst($this->request->getArea()) . '/'
+            . \ucfirst($this->request->getArea()) . '/'
             . $this->request->getController() . '.'
             . $this->request->getAction() . '.tpl';
     }

@@ -27,15 +27,15 @@ class PictureColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidField()
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = \array_merge($this->columnData, [
             'fields' => ['picture'],
             'custom' => [
                 'pattern' => 'gallery/index/pic/id_%s',
-                'isRoute' => true
-            ]
+                'isRoute' => true,
+            ],
         ]);
         $this->dbData = [
-            'picture' => 1
+            'picture' => 1,
         ];
 
         $this->routerMock->expects($this->once())
@@ -49,14 +49,14 @@ class PictureColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidFieldWithNoInternalRoute()
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = \array_merge($this->columnData, [
             'fields' => ['picture'],
             'custom' => [
-                'pattern' => 'gallery/index/pic/id_%s'
-            ]
+                'pattern' => 'gallery/index/pic/id_%s',
+            ],
         ]);
         $this->dbData = [
-            'picture' => 1
+            'picture' => 1,
         ];
 
         $this->routerMock->expects($this->never())

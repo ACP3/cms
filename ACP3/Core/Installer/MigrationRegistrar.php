@@ -51,7 +51,7 @@ class MigrationRegistrar
         }
 
         throw new \InvalidArgumentException(
-            sprintf('The migration with the service id "%s" could not be found.', $serviceId)
+            \sprintf('The migration with the service id "%s" could not be found.', $serviceId)
         );
     }
 }

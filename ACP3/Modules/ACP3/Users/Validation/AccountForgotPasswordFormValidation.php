@@ -26,7 +26,7 @@ class AccountForgotPasswordFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'nick_mail',
-                    'message' => $this->translator->t('users', 'type_in_nickname_or_email')
+                    'message' => $this->translator->t('users', 'type_in_nickname_or_email'),
                 ]
             )
             ->addConstraint(
@@ -34,7 +34,7 @@ class AccountForgotPasswordFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'nick_mail',
-                    'message' => $this->translator->t('users', 'user_not_exists')
+                    'message' => $this->translator->t('users', 'user_not_exists'),
                 ]
             );
 

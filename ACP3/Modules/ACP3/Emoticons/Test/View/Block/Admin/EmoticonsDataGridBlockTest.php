@@ -13,7 +13,6 @@ use ACP3\Modules\ACP3\Emoticons\View\Block\Admin\EmoticonsDataGridBlock;
 
 class EmoticonsDataGridBlockTest extends AbstractDataGridBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -33,7 +32,7 @@ class EmoticonsDataGridBlockTest extends AbstractDataGridBlockTest
     {
         return [
             'grid',
-            'show_mass_delete_button'
+            'show_mass_delete_button',
         ];
     }
 }

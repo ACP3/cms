@@ -42,7 +42,7 @@ class AllowedModulesBlock extends AbstractBlock
     public function render()
     {
         return [
-            'modules' => $this->getAllowedModules()
+            'modules' => $this->getAllowedModules(),
         ];
     }
 
@@ -53,14 +53,15 @@ class AllowedModulesBlock extends AbstractBlock
     {
         $allowedModules = [];
         foreach ($this->modules->getActiveModules() as $name => $info) {
-            $dir = strtolower($info['dir']);
+            $dir = \strtolower($info['dir']);
             if ($this->acl->hasPermission('admin/' . $dir) === true && $dir !== 'acp') {
                 $allowedModules[$name] = [
                     'name' => $name,
-                    'dir' => $dir
+                    'dir' => $dir,
                 ];
             }
         }
+
         return $allowedModules;
     }
 }

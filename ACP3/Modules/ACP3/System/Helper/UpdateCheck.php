@@ -58,7 +58,7 @@ class UpdateCheck
                 'installed_version' => BootstrapInterface::VERSION,
                 'latest_version' => $settings['update_new_version'],
                 'is_latest' => $this->isLatestVersion($settings['update_new_version']),
-                'url' => $settings['update_new_version_url']
+                'url' => $settings['update_new_version_url'],
             ];
         }
 
@@ -86,7 +86,7 @@ class UpdateCheck
                 'installed_version' => BootstrapInterface::VERSION,
                 'latest_version' => $data['latest_version'],
                 'is_latest' => $this->isLatestVersion($data['latest_version']),
-                'url' => $data['url']
+                'url' => $data['url'],
             ];
 
             $this->saveUpdateSettings($update);

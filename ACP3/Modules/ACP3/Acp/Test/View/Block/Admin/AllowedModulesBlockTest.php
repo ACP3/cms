@@ -14,7 +14,6 @@ use ACP3\Modules\ACP3\Acp\View\Block\Admin\AllowedModulesBlock;
 
 class AllowedModulesBlockTest extends AbstractBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -34,8 +33,8 @@ class AllowedModulesBlockTest extends AbstractBlockTest
             ->method('getActiveModules')
             ->willReturn([
                 'foo' => [
-                    'dir' => 'foo/'
-                ]
+                    'dir' => 'foo/',
+                ],
             ]);
 
         return new AllowedModulesBlock($this->context, $acl, $modules);
@@ -47,7 +46,7 @@ class AllowedModulesBlockTest extends AbstractBlockTest
     protected function getExpectedArrayKeys(): array
     {
         return [
-            'modules'
+            'modules',
         ];
     }
 }

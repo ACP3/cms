@@ -46,8 +46,8 @@ class PollAdminFormBlock extends AbstractRepositoryAwareFormBlock
         return [
             'answers' => $this->getAnswers($poll['id']),
             'options' => $this->fetchOptions($poll['multiple']),
-            'form' => array_merge($poll, $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form' => \array_merge($poll, $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 
@@ -67,7 +67,7 @@ class PollAdminFormBlock extends AbstractRepositoryAwareFormBlock
 
         return [
             ['text' => ''],
-            ['text' => '']
+            ['text' => ''],
         ];
     }
 
@@ -107,10 +107,10 @@ class PollAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $data = $this->getData();
 
         $reset = [
-            '1' => $this->translator->t('polls', 'reset_votes')
+            '1' => $this->translator->t('polls', 'reset_votes'),
         ];
 
-        return array_merge(
+        return \array_merge(
             $this->fetchMultipleChoiceOption($useMultipleChoice),
             !empty($data['id'])
                 ? $this->forms->checkboxGenerator('reset', $reset, '0')
@@ -126,8 +126,9 @@ class PollAdminFormBlock extends AbstractRepositoryAwareFormBlock
     private function fetchMultipleChoiceOption(string $currentValue): array
     {
         $values = [
-            '1' => $this->translator->t('polls', 'multiple_choice')
+            '1' => $this->translator->t('polls', 'multiple_choice'),
         ];
+
         return $this->forms->checkboxGenerator('multiple', $values, $currentValue);
     }
 
@@ -141,7 +142,7 @@ class PollAdminFormBlock extends AbstractRepositoryAwareFormBlock
             'start' => '',
             'end' => '',
             'title' => '',
-            'multiple' => 0
+            'multiple' => 0,
         ];
     }
 }

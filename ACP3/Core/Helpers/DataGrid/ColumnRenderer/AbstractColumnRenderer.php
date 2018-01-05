@@ -82,7 +82,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     private function renderAjax(array $column, string $value = '')
     {
-        if (is_array($column['attribute']) && count($column['attribute'])) {
+        if (\is_array($column['attribute']) && \count($column['attribute'])) {
             $column['attribute']['_'] = $value;
 
             return $column['attribute'];
@@ -99,7 +99,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     private function addHtmlAttribute($attributeName, $attributeData = null)
     {
-        if (is_array($attributeName)) {
+        if (\is_array($attributeName)) {
             $data = '';
             foreach ($attributeName as $key => $value) {
                 $data .= $this->addHtmlAttribute('data-' . $key, $value);
@@ -122,7 +122,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     {
         $fields = $this->getDbFields($column);
 
-        return reset($fields);
+        return \reset($fields);
     }
 
     /**

@@ -19,7 +19,7 @@ class AclResourcesModel extends AbstractModel
      */
     public function save(array $data, $entryId = null)
     {
-        $data = array_merge($data, [
+        $data = \array_merge($data, [
             'page' => $data['resource'],
             'privilege_id' => $data['privileges'],
         ]);
@@ -37,7 +37,7 @@ class AclResourcesModel extends AbstractModel
             'area' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
             'controller' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
             'page' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'privilege_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'privilege_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

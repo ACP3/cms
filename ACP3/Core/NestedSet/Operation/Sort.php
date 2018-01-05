@@ -134,7 +134,7 @@ class Sort extends AbstractOperation
     {
         return [
             $node['left_id'] - $elem['left_id'],
-            $node['right_id'] - $elem['right_id']
+            $node['right_id'] - $elem['right_id'],
         ];
     }
 
@@ -145,6 +145,6 @@ class Sort extends AbstractOperation
      */
     protected function getBlockId(array $node)
     {
-        return ($this->isBlockAware() === true ? $node[$this->getBlockColumnName()] : 0);
+        return $this->isBlockAware() === true ? $node[$this->getBlockColumnName()] : 0;
     }
 }

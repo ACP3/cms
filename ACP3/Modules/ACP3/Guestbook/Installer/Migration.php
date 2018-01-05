@@ -20,13 +20,13 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
                 $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "guestbook/create/", "guestbook/index/create/") WHERE `uri` LIKE "guestbook/create/%";' : '',
             ],
             33 => [
-                "ALTER TABLE `{pre}guestbook` ENGINE = InnoDB",
+                'ALTER TABLE `{pre}guestbook` ENGINE = InnoDB',
             ],
             34 => [
-                "ALTER TABLE `{pre}guestbook` CHANGE `user_id` `user_id` INT(10) UNSIGNED",
-                "UPDATE `{pre}guestbook` SET `user_id` = NULL WHERE `user_id` = 0",
-                "ALTER TABLE `{pre}guestbook` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL"
-            ]
+                'ALTER TABLE `{pre}guestbook` CHANGE `user_id` `user_id` INT(10) UNSIGNED',
+                'UPDATE `{pre}guestbook` SET `user_id` = NULL WHERE `user_id` = 0',
+                'ALTER TABLE `{pre}guestbook` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL',
+            ],
         ];
     }
 

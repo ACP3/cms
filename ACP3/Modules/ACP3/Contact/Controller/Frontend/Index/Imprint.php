@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Contact\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Context;
-use ACP3\Modules\ACP3\Contact;
 
 class Imprint extends Core\Controller\AbstractFrontendAction
 {

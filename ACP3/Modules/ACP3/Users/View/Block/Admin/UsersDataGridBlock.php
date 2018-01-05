@@ -25,7 +25,7 @@ class UsersDataGridBlock extends AbstractDataGridBlock
                 'label' => $this->translator->t('users', 'nickname'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['nickname'],
-                'default_sort' => true
+                'default_sort' => true,
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'email_address'),
@@ -41,7 +41,7 @@ class UsersDataGridBlock extends AbstractDataGridBlock
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
             ], 10);
     }
 
@@ -65,7 +65,7 @@ class UsersDataGridBlock extends AbstractDataGridBlock
 
         return [
             'grid' => $grid,
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

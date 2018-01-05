@@ -89,7 +89,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                     $formData['mods'],
                     $this->secure->strEncode($formData['search_term']),
                     $formData['area'],
-                    strtoupper($formData['sort'])
+                    \strtoupper($formData['sort'])
                 );
             }
         );
@@ -137,7 +137,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'modules' => $modules,
                 'search_term' => $searchTerm,
                 'area' => $area,
-                'sort' => $sort
+                'sort' => $sort,
             ])
             ->render();
     }

@@ -80,7 +80,8 @@ abstract class NestedSetRepository extends AbstractRepository
      */
     public function nextNodeExists(int $rightId, int $blockId = 0)
     {
-        $where = ($blockId !== 0) ? " AND " . static::BLOCK_COLUMN_NAME . " = ?" : '';
+        $where = ($blockId !== 0) ? ' AND ' . static::BLOCK_COLUMN_NAME . ' = ?' : '';
+
         return $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()} WHERE right_id = ? {$where}",
             [$rightId, $blockId]
@@ -95,6 +96,7 @@ abstract class NestedSetRepository extends AbstractRepository
     public function previousNodeExists(int $rightId, int $blockId = 0)
     {
         $where = ($blockId !== 0) ? ' AND ' . static::BLOCK_COLUMN_NAME . ' = ?' : '';
+
         return $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()} WHERE left_id = ? {$where}",
             [$rightId, $blockId]
@@ -159,7 +161,7 @@ abstract class NestedSetRepository extends AbstractRepository
     public function fetchMaximumRightIdByBlockId(int $blockId)
     {
         return (int)$this->db->fetchColumn(
-            "SELECT MAX(`right_id`) FROM {$this->getTableName()} WHERE " . static::BLOCK_COLUMN_NAME . " = ?",
+            "SELECT MAX(`right_id`) FROM {$this->getTableName()} WHERE " . static::BLOCK_COLUMN_NAME . ' = ?',
             [$blockId]
         );
     }
@@ -179,7 +181,7 @@ abstract class NestedSetRepository extends AbstractRepository
     public function fetchMinimumLeftIdByBlockId(int $blockId)
     {
         return (int)$this->db->fetchColumn(
-            "SELECT MIN(`left_id`) AS left_id FROM {$this->getTableName()} WHERE " . static::BLOCK_COLUMN_NAME . " = ?",
+            "SELECT MIN(`left_id`) AS left_id FROM {$this->getTableName()} WHERE " . static::BLOCK_COLUMN_NAME . ' = ?',
             [$blockId]
         );
     }

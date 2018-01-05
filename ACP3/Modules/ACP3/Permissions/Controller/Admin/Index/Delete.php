@@ -52,7 +52,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
                 $bool = $levelNotDeletable = false;
 
                 foreach ($items as $item) {
-                    if (in_array($item, [1, 2, 4]) === true) {
+                    if (\in_array($item, [1, 2, 4]) === true) {
                         $levelNotDeletable = true;
                     } else {
                         $bool = $this->rolesModel->delete($item);

@@ -56,7 +56,7 @@ class AuthenticationRegistrar
         }
 
         throw new InvalidAuthenticationMethodException(
-            sprintf('The authentication with the service id "%s" could not be found.', $serviceId)
+            \sprintf('The authentication with the service id "%s" could not be found.', $serviceId)
         );
     }
 }

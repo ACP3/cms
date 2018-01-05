@@ -54,7 +54,7 @@ class Create extends Core\Controller\AbstractFrontendAction
             ->setData([
                 'module' => $module,
                 'entryId' => $entryId,
-                'redirectUrl' => $redirectUrl
+                'redirectUrl' => $redirectUrl,
             ])
             ->setRequestData($this->request->getPost()->all())
             ->render();
@@ -88,7 +88,7 @@ class Create extends Core\Controller\AbstractFrontendAction
                 return $this->redirectMessages()->setMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),
-                    base64_decode(urldecode($redirectUrl))
+                    \base64_decode(\urldecode($redirectUrl))
                 );
             }
         );

@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Users;
 
 class ViewProfile extends Core\Controller\AbstractFrontendAction
 {

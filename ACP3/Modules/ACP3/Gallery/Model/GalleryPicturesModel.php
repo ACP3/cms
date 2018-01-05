@@ -51,7 +51,7 @@ class GalleryPicturesModel extends AbstractModel
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-        $data = array_merge($data, [
+        $data = \array_merge($data, [
             'comments' => $settings['comments'] == 1
                 ? (isset($data['comments']) && $data['comments'] == 1 ? 1 : 0)
                 : $settings['comments'],
@@ -59,7 +59,7 @@ class GalleryPicturesModel extends AbstractModel
 
         if ($entryId === null) {
             $picNum = $this->repository->getLastPictureByGalleryId($data['gallery_id']);
-            $data['pic'] = !is_null($picNum) ? $picNum + 1 : 1;
+            $data['pic'] = !\is_null($picNum) ? $picNum + 1 : 1;
         }
 
         return parent::save($data, $entryId);
@@ -75,7 +75,7 @@ class GalleryPicturesModel extends AbstractModel
             'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
             'comments' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'file' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'pic' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'pic' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

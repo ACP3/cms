@@ -20,10 +20,10 @@ class CommentAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $this->modifyBreadcrumbAndTitle($data);
 
         return [
-            'form' => array_merge($data, $this->getRequestData()),
+            'form' => \array_merge($data, $this->getRequestData()),
             'module_id' => (int)$data['module_id'],
             'form_token' => $this->formToken->renderFormToken(),
-            'can_use_emoticons' => true
+            'can_use_emoticons' => true,
         ];
     }
 

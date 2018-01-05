@@ -18,8 +18,8 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'search_term',
                     'message' => $this->translator->t('search', 'search_term_to_short'),
                     'extra' => [
-                        'length' => 4
-                    ]
+                        'length' => 4,
+                    ],
                 ]
             )
             ->addConstraint(
@@ -27,7 +27,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mods',
-                    'message' => $this->translator->t('search', 'no_module_selected')
+                    'message' => $this->translator->t('search', 'no_module_selected'),
                 ]
             )
             ->addConstraint(
@@ -37,8 +37,8 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'area',
                     'message' => $this->translator->t('search', 'no_area_selected'),
                     'extra' => [
-                        'haystack' => ['title_content', 'title', 'content']
-                    ]
+                        'haystack' => ['title_content', 'title', 'content'],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -48,8 +48,8 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'sort',
                     'message' => $this->translator->t('search', 'no_sorting_selected'),
                     'extra' => [
-                        'haystack' => ['asc', 'desc']
-                    ]
+                        'haystack' => ['asc', 'desc'],
+                    ],
                 ]
             );
 

@@ -80,7 +80,7 @@ class Forms
                 'lang' => $this->translator->t('users', 'skype'),
                 'value' => $this->request->getPost()->get('skype', $defaultSkypeName),
                 'maxlength' => '28',
-            ]
+            ],
         ];
     }
 
@@ -139,8 +139,9 @@ class Forms
         $displayBirthday = [
             0 => $this->translator->t('users', 'birthday_hide'),
             1 => $this->translator->t('users', 'birthday_display_completely'),
-            2 => $this->translator->t('users', 'birthday_hide_year')
+            2 => $this->translator->t('users', 'birthday_hide_year'),
         ];
+
         return $this->formsHelpers->checkboxGenerator('birthday_display', $displayBirthday, $value);
     }
 
@@ -190,8 +191,9 @@ class Forms
         $genders = [
             1 => $this->translator->t('users', 'gender_not_specified'),
             2 => $this->translator->t('users', 'gender_female'),
-            3 => $this->translator->t('users', 'gender_male')
+            3 => $this->translator->t('users', 'gender_male'),
         ];
+
         return $this->formsHelpers->choicesGenerator('gender', $genders, $currentGender);
     }
 }

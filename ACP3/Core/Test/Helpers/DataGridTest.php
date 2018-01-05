@@ -77,7 +77,7 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
             'header' => '',
             'config' => [],
             'results' => '',
-            'num_results' => 0
+            'num_results' => 0,
         ];
     }
 
@@ -111,10 +111,10 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
         $this->dataGrid->addColumn([
             'label' => 'Foo',
             'fields' => ['title'],
-            'type' => DataGrid\ColumnRenderer\TextColumnRenderer::class
+            'type' => DataGrid\ColumnRenderer\TextColumnRenderer::class,
         ], 10);
 
-        $expected = array_merge(
+        $expected = \array_merge(
             $this->getDefaultExpected(),
             [
                 'header' => '<th>Foo</th>',
@@ -129,11 +129,11 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
     {
         $data = [
             [
-                'title' => 'Lorem Ipsum'
+                'title' => 'Lorem Ipsum',
             ],
             [
-                'title' => 'Lorem Ipsum Dolor'
-            ]
+                'title' => 'Lorem Ipsum Dolor',
+            ],
         ];
         $this->aclMock
             ->expects($this->exactly(2))
@@ -151,17 +151,17 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
         $this->dataGrid->addColumn([
             'label' => 'Foo',
             'fields' => ['title'],
-            'type' => DataGrid\ColumnRenderer\TextColumnRenderer::class
+            'type' => DataGrid\ColumnRenderer\TextColumnRenderer::class,
         ], 10);
         $this->dataGrid->setResults($data);
 
-        $expected = array_merge(
+        $expected = \array_merge(
             $this->getDefaultExpected(),
             [
                 'header' => '<th>Foo</th>',
                 'config' => [],
                 'results' => "<tr><td>Lorem Ipsum</td></tr>\n<tr><td>Lorem Ipsum Dolor</td></tr>\n",
-                'num_results' => 2
+                'num_results' => 2,
             ]
         );
 

@@ -14,7 +14,6 @@ use ACP3\Modules\ACP3\Articles\View\Block\Frontend\ArticleDetailsBlock;
 
 class ArticleDetailsBlockTest extends AbstractBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -56,7 +55,7 @@ class ArticleDetailsBlockTest extends AbstractBlockTest
     protected function getExpectedArrayKeys(): array
     {
         return [
-            'page'
+            'page',
         ];
     }
 }

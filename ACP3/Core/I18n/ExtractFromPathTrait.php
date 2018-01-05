@@ -14,7 +14,7 @@ trait ExtractFromPathTrait
      */
     protected function getLanguagePackIsoCode(string $filePath): string
     {
-        return substr($filePath, strrpos($filePath, '/') + 1, -4);
+        return \substr($filePath, \strrpos($filePath, '/') + 1, -4);
     }
 
     /**
@@ -23,8 +23,8 @@ trait ExtractFromPathTrait
      */
     protected function getModuleFromPath(string $filePath): string
     {
-        $pathArray = explode('/', $filePath);
+        $pathArray = \explode('/', $filePath);
 
-        return $pathArray[count($pathArray) - 4];
+        return $pathArray[\count($pathArray) - 4];
     }
 }

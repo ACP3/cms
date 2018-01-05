@@ -33,6 +33,7 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
             $result['first'] = $this->isFirstInSet($index, $results);
             $result['last'] = $this->isLastItemInSet($index, $results);
         }
+
         return $results;
     }
 
@@ -65,7 +66,7 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
      */
     private function isLastItemInSet(int $index, array $nestedSet): bool
     {
-        $cItems = count($nestedSet);
+        $cItems = \count($nestedSet);
         for ($j = $index + 1; $j < $cItems; ++$j) {
             if ($nestedSet[$index]['parent_id'] == $nestedSet[$j]['parent_id']
                 && $nestedSet[$j]['module_id'] == $nestedSet[$index]['module_id']

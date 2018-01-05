@@ -36,7 +36,7 @@ class MenuItemsModel extends AbstractNestedSetModel
             'display' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'target' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'target' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

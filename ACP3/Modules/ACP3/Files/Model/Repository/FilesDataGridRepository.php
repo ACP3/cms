@@ -24,7 +24,7 @@ class FilesDataGridRepository extends AbstractDataGridRepository
             'main.*',
             'c.title AS cat',
             "(SELECT MIN(`sort`) FROM {$this->getTableName()}) AS `first`",
-            "(SELECT MAX(`sort`) FROM {$this->getTableName()}) AS `last`"
+            "(SELECT MAX(`sort`) FROM {$this->getTableName()}) AS `last`",
         ];
     }
 

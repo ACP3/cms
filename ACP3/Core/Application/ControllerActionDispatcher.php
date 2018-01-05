@@ -121,7 +121,7 @@ class ControllerActionDispatcher
             $arguments = $this->argumentResolver->getArguments($this->request->getSymfonyRequest(), $callable);
         }
 
-        return call_user_func_array($callable, $arguments);
+        return \call_user_func_array($callable, $arguments);
     }
 
     /**
@@ -132,7 +132,7 @@ class ControllerActionDispatcher
     {
         $callable = [$controller, 'execute'];
         if (($this->request->getPost()->has('submit') || $this->request->getPost()->has('continue'))
-            && method_exists($controller, 'executePost')) {
+            && \method_exists($controller, 'executePost')) {
             $reflection = new \ReflectionMethod($controller, 'executePost');
 
             if ($reflection->isPublic()) {

@@ -24,7 +24,7 @@ class GalleryDataGridRepository extends AbstractDataGridRepository
             'main.start',
             'main.end',
             'main.title',
-            'COUNT(p.gallery_id) AS pictures'
+            'COUNT(p.gallery_id) AS pictures',
         ];
     }
 

@@ -43,8 +43,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'dateformat',
                     'message' => $this->translator->t('system', 'select_date_format'),
                     'extra' => [
-                        'haystack' => ['long', 'short']
-                    ]
+                        'haystack' => ['long', 'short'],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -52,7 +52,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'sidebar',
-                    'message' => $this->translator->t('system', 'select_sidebar_entries')
+                    'message' => $this->translator->t('system', 'select_sidebar_entries'),
                 ]
             )
             ->addConstraint(
@@ -62,8 +62,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'order_by',
                     'message' => $this->translator->t('files', 'select_order_by'),
                     'extra' => [
-                        'haystack' => ['date', 'custom']
-                    ]
+                        'haystack' => ['date', 'custom'],
+                    ],
                 ]
             );
 
@@ -76,8 +76,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'field' => 'comments',
                         'message' => $this->translator->t('files', 'select_allow_comments'),
                         'extra' => [
-                            'haystack' => [0, 1]
-                        ]
+                            'haystack' => [0, 1],
+                        ],
                     ]
                 );
         }

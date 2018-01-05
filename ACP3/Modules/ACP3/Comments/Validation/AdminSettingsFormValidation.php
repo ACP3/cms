@@ -47,8 +47,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'dateformat',
                     'message' => $this->translator->t('system', 'select_date_format'),
                     'extra' => [
-                        'haystack' => ['long', 'short']
-                    ]
+                        'haystack' => ['long', 'short'],
+                    ],
                 ]
             );
 
@@ -61,8 +61,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'field' => 'emoticons',
                         'message' => $this->translator->t('comments', 'select_emoticons'),
                         'extra' => [
-                            'haystack' => [0, 1]
-                        ]
+                            'haystack' => [0, 1],
+                        ],
                     ]
                 );
         }

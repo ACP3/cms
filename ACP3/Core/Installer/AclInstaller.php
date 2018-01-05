@@ -100,11 +100,11 @@ class AclInstaller implements InstallerInterface
                 foreach ($actions as $action => $privilegeId) {
                     $insertValues = [
                         'module_id' => $this->schemaHelper->getModuleId($schema->getModuleName()),
-                        'area' => !empty($area) ? strtolower($area) : AreaEnum::AREA_FRONTEND,
-                        'controller' => strtolower($controller),
+                        'area' => !empty($area) ? \strtolower($area) : AreaEnum::AREA_FRONTEND,
+                        'controller' => \strtolower($controller),
                         'page' => $this->convertCamelCaseToUnderscore($action),
                         'params' => '',
-                        'privilege_id' => (int)$privilegeId
+                        'privilege_id' => (int)$privilegeId,
                     ];
                     $this->resourceRepository->insert($insertValues);
                 }
@@ -119,7 +119,7 @@ class AclInstaller implements InstallerInterface
      */
     private function convertCamelCaseToUnderscore($action)
     {
-        return strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
+        return \strtolower(\preg_replace('/\B([A-Z])/', '_$1', $action));
     }
 
     /**
@@ -140,7 +140,7 @@ class AclInstaller implements InstallerInterface
                     'role_id' => $role['id'],
                     'module_id' => $moduleId,
                     'privilege_id' => $privilege['id'],
-                    'permission' => $this->getDefaultAclRulePermission($role, $privilege)
+                    'permission' => $this->getDefaultAclRulePermission($role, $privilege),
                 ];
                 $this->ruleRepository->insert($insertValues);
             }

@@ -22,6 +22,7 @@ class NewsletterAccountsRepository extends AbstractRepository
     public function accountExists($emailAddress, $hash = '')
     {
         $where = empty($hash) === false ? ' AND `hash` = :hash' : '';
+
         return $this->db->fetchColumn(
                 "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `mail` = :mail" . $where,
                 ['mail' => $emailAddress, 'hash' => $hash]

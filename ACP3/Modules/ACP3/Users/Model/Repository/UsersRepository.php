@@ -20,7 +20,8 @@ class UsersRepository extends Core\Model\Repository\AbstractRepository
     public function resultExists($userId)
     {
         $query = "SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id";
-        return ((int)$this->db->fetchColumn($query, ['id' => $userId]) > 0);
+
+        return (int)$this->db->fetchColumn($query, ['id' => $userId]) > 0;
     }
 
     /**
@@ -35,10 +36,12 @@ class UsersRepository extends Core\Model\Repository\AbstractRepository
     {
         if (!empty($userId)) {
             $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND nickname = ?';
+
             return !empty($nickname) && $this->db->fetchColumn($query, [(int)$userId, $nickname]) == 1;
         }
 
         $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE nickname = ?';
+
         return !empty($nickname) && $this->db->fetchColumn($query, [$nickname]) == 1;
     }
 
@@ -54,8 +57,10 @@ class UsersRepository extends Core\Model\Repository\AbstractRepository
     {
         if (!empty($userId)) {
             $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND mail = ?';
+
             return $this->db->fetchColumn($query, [(int)$userId, $mail]) > 0;
         }
+
         return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE mail = ?', [$mail]) > 0;
     }
 
@@ -112,6 +117,7 @@ class UsersRepository extends Core\Model\Repository\AbstractRepository
     public function getAll($limitStart = '', $resultsPerPage = '')
     {
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
+
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()} ORDER BY `nickname` ASC, `id` ASC {$limitStmt}"
         );

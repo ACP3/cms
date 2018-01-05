@@ -18,7 +18,7 @@ class Purge
      */
     public static function doPurge($directory, $cacheId = '')
     {
-        if (is_array($directory)) {
+        if (\is_array($directory)) {
             return self::handleMultipleDirectories($directory, $cacheId);
         }
 
@@ -48,23 +48,23 @@ class Purge
      */
     protected static function purgeCurrentDirectory($directory, $cacheId)
     {
-        if (is_link($directory)) {
-            static::purgeCurrentDirectory(readlink($directory), $cacheId);
-        } elseif (is_dir($directory)) {
+        if (\is_link($directory)) {
+            static::purgeCurrentDirectory(\readlink($directory), $cacheId);
+        } elseif (\is_dir($directory)) {
             foreach (Filesystem::scandir($directory) as $dirContent) {
                 $path = "$directory/$dirContent";
 
-                if (is_dir($path)) {
+                if (\is_dir($path)) {
                     static::purgeCurrentDirectory($path, $cacheId);
                     if (empty($cacheId)) {
-                        @rmdir($path);
+                        @\rmdir($path);
                     }
-                } elseif (empty($cacheId) || strpos($dirContent, $cacheId) !== false) {
-                    @unlink($path);
+                } elseif (empty($cacheId) || \strpos($dirContent, $cacheId) !== false) {
+                    @\unlink($path);
                 }
             }
-        } elseif (is_file($directory)) {
-            @unlink($directory);
+        } elseif (\is_file($directory)) {
+            @\unlink($directory);
         }
     }
 }

@@ -12,7 +12,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterAuthenticationsCompilerPass implements CompilerPassInterface
 {
-
     /**
      * @inheritdoc
      */

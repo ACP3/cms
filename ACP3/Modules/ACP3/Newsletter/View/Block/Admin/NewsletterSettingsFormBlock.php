@@ -20,8 +20,8 @@ class NewsletterSettingsFormBlock extends AbstractSettingsFormBlock
 
         return [
             'html' => $this->forms->yesNoCheckboxGenerator('html', $settings['html']),
-            'form' => array_merge($settings, $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form' => \array_merge($settings, $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 

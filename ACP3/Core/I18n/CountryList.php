@@ -17,11 +17,11 @@ class CountryList
     /**
      * @var null|array
      */
-    private $countries = null;
+    private $countries;
     /**
      * @var null|array
      */
-    private $supportedLocales = null;
+    private $supportedLocales;
 
     /**
      * Country constructor.
@@ -52,7 +52,7 @@ class CountryList
 
         $locales = [
             $this->getTransformedLocale(),
-            $this->locale->getShortIsoCode()
+            $this->locale->getShortIsoCode(),
         ];
 
         foreach ($locales as $locale) {
@@ -61,7 +61,7 @@ class CountryList
             }
         }
 
-        asort($this->countries, SORT_STRING);
+        \asort($this->countries, SORT_STRING);
     }
 
     /**
@@ -74,7 +74,7 @@ class CountryList
             $this->supportedLocales = LocaleLib::getSupportedLocales();
         }
 
-        return in_array($locale, $this->supportedLocales);
+        return \in_array($locale, $this->supportedLocales);
     }
 
     /**
@@ -82,6 +82,6 @@ class CountryList
      */
     private function getTransformedLocale()
     {
-        return strtolower(str_replace('_', '-', $this->locale->getLocale()));
+        return \strtolower(\str_replace('_', '-', $this->locale->getLocale()));
     }
 }

@@ -20,7 +20,7 @@ abstract class AbstractPlugin implements PluginInterface
      */
     private function isPlugin()
     {
-        return in_array(
+        return \in_array(
             $this->getExtensionType(),
             [static::EXTENSION_TYPE_BLOCK, static::EXTENSION_TYPE_FUNCTION, static::EXTENSION_TYPE_MODIFIER]
         );

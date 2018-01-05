@@ -33,8 +33,8 @@ class AvailableLanguagePacks
     public function languagePackExists(string $locale): bool
     {
         return !empty($locale)
-            && !preg_match('=/=', $locale)
-            && is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $locale . '.xml') === true;
+            && !\preg_match('=/=', $locale)
+            && \is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $locale . '.xml') === true;
     }
 
     /**
@@ -43,8 +43,8 @@ class AvailableLanguagePacks
     public function getAll(): array
     {
         $languagePacks = [];
-        foreach (glob($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/*.xml') as $languagePack) {
-            $languagePacks[] = substr($languagePack, strrpos($languagePack, '/') + 1, -4);
+        foreach (\glob($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/*.xml') as $languagePack) {
+            $languagePacks[] = \substr($languagePack, \strrpos($languagePack, '/') + 1, -4);
         }
 
         return $languagePacks;

@@ -85,7 +85,7 @@ class ModelSaveEvent extends Event
      */
     public function isDeleteStatement()
     {
-        return count($this->filteredData) === 0 && is_array($this->entryId);
+        return \count($this->filteredData) === 0 && \is_array($this->entryId);
     }
 
     /**

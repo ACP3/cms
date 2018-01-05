@@ -13,7 +13,6 @@ use ACP3\Modules\ACP3\Feeds\View\Block\Admin\FeedsSettingsFormBlock;
 
 class FeedsSettingsFormBlockTest extends AbstractFormBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -27,7 +26,7 @@ class FeedsSettingsFormBlockTest extends AbstractFormBlockTest
             ->method('getSettings')
             ->with('feeds')
             ->willReturn([
-                'feed_type' => 'RSS 2.0'
+                'feed_type' => 'RSS 2.0',
             ]);
 
         return new FeedsSettingsFormBlock($this->context, $settings);
@@ -41,7 +40,7 @@ class FeedsSettingsFormBlockTest extends AbstractFormBlockTest
         return [
             'feed_types',
             'form',
-            'form_token'
+            'form_token',
         ];
     }
 }

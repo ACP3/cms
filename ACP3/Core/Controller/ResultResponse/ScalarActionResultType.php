@@ -35,7 +35,7 @@ class ScalarActionResultType extends ArrayActionResultType
      */
     public function supports($result): bool
     {
-        return (is_scalar($result) || $result === null);
+        return \is_scalar($result) || $result === null;
     }
 
     /**

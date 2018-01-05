@@ -54,8 +54,8 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
             ->with('en_US')
             ->willReturn([
                 'keys' => [
-                    'foofoobar' => 'foobar'
-                ]
+                    'foofoobar' => 'foobar',
+                ],
             ]);
 
         $this->assertEquals('foobar', $this->translator->t('foo', 'foobar'));
@@ -72,8 +72,8 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
             ->with('en_US')
             ->willReturn([
                 'keys' => [
-                    'foofoobar2' => 'foobar'
-                ]
+                    'foofoobar2' => 'foobar',
+                ],
             ]);
 
         $this->assertEquals('{FOO_FOOBAR}', $this->translator->t('foo', 'foobar'));

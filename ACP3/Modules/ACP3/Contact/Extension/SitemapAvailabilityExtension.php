@@ -26,7 +26,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     {
         $routeNames = [
             'contact/index/index',
-            'contact/index/imprint'
+            'contact/index/imprint',
         ];
 
         foreach ($routeNames as $routeName) {

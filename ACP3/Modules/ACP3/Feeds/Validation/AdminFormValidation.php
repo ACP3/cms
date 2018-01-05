@@ -20,8 +20,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'feed_type',
                     'message' => $this->translator->t('feeds', 'select_feed_type'),
                     'extra' => [
-                        'haystack' => ['RSS 1.0', 'RSS 2.0', 'ATOM']
-                    ]
+                        'haystack' => ['RSS 1.0', 'RSS 2.0', 'ATOM'],
+                    ],
                 ]
             );
 

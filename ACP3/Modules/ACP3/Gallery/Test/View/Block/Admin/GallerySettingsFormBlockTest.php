@@ -15,7 +15,6 @@ use ACP3\Modules\ACP3\Gallery\View\Block\Admin\GallerySettingsFormBlock;
 
 class GallerySettingsFormBlockTest extends AbstractFormBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -32,7 +31,7 @@ class GallerySettingsFormBlockTest extends AbstractFormBlockTest
                 'comments' => 1,
                 'sidebar' => 5,
                 'dateformat' => 'long',
-                'overlay' => 1
+                'overlay' => 1,
             ]);
 
         $modules = $this->getMockBuilder(Modules::class)
@@ -62,7 +61,7 @@ class GallerySettingsFormBlockTest extends AbstractFormBlockTest
             'sidebar_entries',
             'form',
             'form_token',
-            'comments'
+            'comments',
         ];
     }
 }

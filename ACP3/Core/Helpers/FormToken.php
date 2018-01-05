@@ -39,7 +39,7 @@ class FormToken
         $sessionToken = $this->sessionHandler->get($tokenName);
 
         if (empty($sessionToken)) {
-            $sessionToken = sha1(uniqid(mt_rand(), true));
+            $sessionToken = \sha1(\uniqid(\mt_rand(), true));
             $this->sessionHandler->set($tokenName, $sessionToken);
         }
 

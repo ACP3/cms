@@ -36,7 +36,7 @@ class ContactSidebarBlock extends AbstractBlock
     public function render(): array
     {
         return [
-            'sidebar_contact' => $this->settings->getSettings(Schema::MODULE_NAME)
+            'sidebar_contact' => $this->settings->getSettings(Schema::MODULE_NAME),
         ];
     }
 }

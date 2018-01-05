@@ -23,7 +23,7 @@ class RegisterColumnTypesCompilerPass implements CompilerPassInterface
         foreach ($plugins as $serviceId => $tags) {
             $definition->addMethodCall(
                 'registerColumnType',
-                [new Reference($serviceId), reset($tags)['columnType']]
+                [new Reference($serviceId), \reset($tags)['columnType']]
             );
         }
     }

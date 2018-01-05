@@ -16,7 +16,7 @@ class NewsletterSubscribeWidgetFormBlock extends AbstractFormBlock
     public function render()
     {
         return [
-            'form_token' => $this->formToken->renderFormToken()
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 

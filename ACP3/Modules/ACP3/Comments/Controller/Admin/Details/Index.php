@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\System;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Index extends Core\Controller\AbstractFrontendAction
@@ -40,7 +39,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         return $this->block
             ->setData([
-                'moduleId' => $id
+                'moduleId' => $id,
             ])
             ->render();
     }

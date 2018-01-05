@@ -143,7 +143,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         $basePath = $this->applicationPath->getModulesDir() . $vendor . '/*/Resources/config/';
         $basePath .= $this->migrationsOnly === true ? 'components/installer.yml' : 'services.yml';
 
-        return glob($basePath);
+        return \glob($basePath);
     }
 
     /**

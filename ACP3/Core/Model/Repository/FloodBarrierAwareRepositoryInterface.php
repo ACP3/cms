@@ -8,7 +8,6 @@ namespace ACP3\Core\Model\Repository;
 
 /**
  * Interface FloodBarrierAwareRepositoryInterface
- * @package ACP3\Core\Model\Repository
  */
 interface FloodBarrierAwareRepositoryInterface
 {

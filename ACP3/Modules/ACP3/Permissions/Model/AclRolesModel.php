@@ -21,7 +21,7 @@ class AclRolesModel extends AbstractNestedSetModel
     {
         return [
             'name' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'parent_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'parent_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

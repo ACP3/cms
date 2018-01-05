@@ -73,7 +73,7 @@ class MenuItemAdminFormBlock extends AbstractRepositoryAwareFormBlock
 
         $this->title->setPageTitlePrefix($menuItem['title']);
 
-        return array_merge(
+        return \array_merge(
             $this->menuItemFormFields->createMenuItemFormFields(
                 $menuItem['block_id'],
                 $menuItem['parent_id'],
@@ -86,8 +86,8 @@ class MenuItemAdminFormBlock extends AbstractRepositoryAwareFormBlock
                 'mode' => $this->fetchMenuItemTypes($menuItem['mode']),
                 'modules' => $this->fetchModules($menuItem),
                 'target' => $this->forms->linkTargetChoicesGenerator('target', $menuItem['target']),
-                'form' => array_merge($menuItem, $this->getRequestData()),
-                'form_token' => $this->formToken->renderFormToken()
+                'form' => \array_merge($menuItem, $this->getRequestData()),
+                'form_token' => $this->formToken->renderFormToken(),
             ]
         );
     }
@@ -102,7 +102,7 @@ class MenuItemAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $menuItemTypes = [
             1 => $this->translator->t('menus', 'module'),
             2 => $this->translator->t('menus', 'dynamic_page'),
-            3 => $this->translator->t('menus', 'hyperlink')
+            3 => $this->translator->t('menus', 'hyperlink'),
         ];
         if ($this->articlesHelpers) {
             $menuItemTypes[4] = $this->translator->t('menus', 'article');
@@ -120,13 +120,14 @@ class MenuItemAdminFormBlock extends AbstractRepositoryAwareFormBlock
     {
         $modules = $this->modules->getAllModulesAlphabeticallySorted();
         foreach ($modules as $row) {
-            $row['dir'] = strtolower($row['dir']);
+            $row['dir'] = \strtolower($row['dir']);
             $modules[$row['name']]['selected'] = $this->forms->selectEntry(
                 'module',
                 $row['dir'],
                 !empty($menuItem) && $menuItem['mode'] == 1 ? $menuItem['uri'] : ''
             );
         }
+
         return $modules;
     }
 
@@ -157,8 +158,8 @@ class MenuItemAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $results = [];
         if ($this->articlesHelpers) {
             $matches = [];
-            if (count($this->getRequestData()) == 0 && $menuItem['mode'] == 4) {
-                preg_match_all(MenuItemsList::ARTICLES_URL_KEY_REGEX, $menuItem['uri'], $matches);
+            if (\count($this->getRequestData()) == 0 && $menuItem['mode'] == 4) {
+                \preg_match_all(MenuItemsList::ARTICLES_URL_KEY_REGEX, $menuItem['uri'], $matches);
             }
 
             $results['articles'] = $this->articlesHelpers->articlesList(!empty($matches[2]) ? $matches[2][0] : '');

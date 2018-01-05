@@ -39,7 +39,7 @@ class SetLanguageCookieOnControllerActionDispatcherBeforeDispatchListener
     public function onLanguageChange()
     {
         if ($this->request->getPost()->has('lang')) {
-            setcookie('ACP3_INSTALLER_LANG', $this->request->getPost()->get('lang', ''), time() + 3600, '/');
+            \setcookie('ACP3_INSTALLER_LANG', $this->request->getPost()->get('lang', ''), \time() + 3600, '/');
             $this->redirect->temporary($this->request->getFullPath())->send();
             exit;
         }

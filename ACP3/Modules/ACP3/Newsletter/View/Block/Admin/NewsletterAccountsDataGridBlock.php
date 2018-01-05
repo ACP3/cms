@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class NewsletterAccountsDataGridBlock extends AbstractDataGridBlock
 {
-
     /**
      * @inheritdoc
      */
@@ -26,7 +25,7 @@ class NewsletterAccountsDataGridBlock extends AbstractDataGridBlock
                 'label' => $this->translator->t('system', 'email_address'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['mail'],
-                'default_sort' => true
+                'default_sort' => true,
             ], 60)
             ->addColumn([
                 'label' => $this->translator->t('newsletter', 'salutation'),
@@ -38,8 +37,8 @@ class NewsletterAccountsDataGridBlock extends AbstractDataGridBlock
                         '',
                         $this->translator->t('newsletter', 'salutation_female'),
                         $this->translator->t('newsletter', 'salutation_male'),
-                    ]
-                ]
+                    ],
+                ],
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('newsletter', 'first_name'),
@@ -60,7 +59,7 @@ class NewsletterAccountsDataGridBlock extends AbstractDataGridBlock
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
             ], 10);
     }
 
@@ -73,7 +72,7 @@ class NewsletterAccountsDataGridBlock extends AbstractDataGridBlock
         $this->configureDataGrid($dataGrid, [
             'ajax' => true,
             'identifier' => '#newsletter-accounts-data-grid',
-            'resource_path_delete' => 'admin/newsletter/accounts/delete'
+            'resource_path_delete' => 'admin/newsletter/accounts/delete',
         ]);
 
         $grid = $dataGrid->render();
@@ -83,7 +82,7 @@ class NewsletterAccountsDataGridBlock extends AbstractDataGridBlock
 
         return [
             'grid' => $grid,
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

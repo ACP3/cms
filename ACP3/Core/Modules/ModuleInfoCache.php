@@ -123,7 +123,7 @@ class ModuleInfoCache
                 $moduleInfo = $this->fetchModuleInfo($module);
 
                 if (!empty($moduleInfo)) {
-                    $infos[strtolower($module)] = $moduleInfo;
+                    $infos[\strtolower($module)] = $moduleInfo;
                 }
             }
         }
@@ -139,12 +139,12 @@ class ModuleInfoCache
     private function fetchModuleInfo(string $moduleDirectory): array
     {
         // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
-        $vendors = array_reverse($this->vendors->getVendors());
+        $vendors = \array_reverse($this->vendors->getVendors());
         foreach ($vendors as $vendor) {
             $moduleComposerJson = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/composer.json';
 
-            if (is_file($moduleComposerJson)) {
-                $moduleName = strtolower($moduleDirectory);
+            if (\is_file($moduleComposerJson)) {
+                $moduleName = \strtolower($moduleDirectory);
                 $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
 
                 $composer = (new JsonFile($moduleComposerJson))->read();

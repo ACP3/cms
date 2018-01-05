@@ -48,7 +48,7 @@ class AvailableDatabases extends AbstractInstallerAction
                 'password' => $password,
                 'host' => $hostname,
                 'driver' => 'pdo_mysql',
-                'charset' => 'utf8'
+                'charset' => 'utf8',
             ];
 
             return \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
@@ -68,7 +68,8 @@ class AvailableDatabases extends AbstractInstallerAction
         foreach ($databases as $database) {
             $availableDatabases[] = $database['Database'];
         }
-        return array_values(array_diff($availableDatabases, $this->getMySQLDefaultDatabases()));
+
+        return \array_values(\array_diff($availableDatabases, $this->getMySQLDefaultDatabases()));
     }
 
     /**

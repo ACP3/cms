@@ -38,6 +38,7 @@ abstract class AbstractAnswerValidationRule extends AbstractValidationRule
                 ++$markedAnswers;
             }
         }
+
         return [$markedAnswers, $notEmptyAnswers];
     }
 }

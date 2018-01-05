@@ -35,7 +35,7 @@ class AdminFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'message',
-                    'message' => $this->translator->t('system', 'message_to_short')
+                    'message' => $this->translator->t('system', 'message_to_short'),
                 ]
             );
 
@@ -48,8 +48,8 @@ class AdminFormValidation extends AbstractFormValidation
                         'field' => 'active',
                         'message' => $this->translator->t('guestbook', 'select_activate'),
                         'extra' => [
-                            'haystack' => [0, 1]
-                        ]
+                            'haystack' => [0, 1],
+                        ],
                     ]
                 );
         }

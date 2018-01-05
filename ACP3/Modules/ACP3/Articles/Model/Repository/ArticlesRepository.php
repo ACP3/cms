@@ -23,6 +23,7 @@ class ArticlesRepository extends Core\Model\Repository\AbstractRepository
     public function resultExists($articleId, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
+
         return $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id{$period}",
             ['id' => $articleId, 'time' => $time, 'active' => 1]
@@ -37,6 +38,7 @@ class ArticlesRepository extends Core\Model\Repository\AbstractRepository
     public function countAll($time = '')
     {
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
+
         return $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
             ['time' => $time, 'active' => 1]
@@ -54,6 +56,7 @@ class ArticlesRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
+
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()}{$where} ORDER BY `title` ASC{$limitStmt}",
             ['time' => $time, 'active' => 1]
@@ -71,6 +74,7 @@ class ArticlesRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
+
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()}{$where} ORDER BY `start` DESC{$limitStmt}",
             ['time' => $time, 'active' => 1]

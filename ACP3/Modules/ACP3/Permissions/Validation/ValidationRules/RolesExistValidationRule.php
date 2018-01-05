@@ -25,11 +25,11 @@ class RolesExistValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return is_array($data) ? $this->aclRolesExist($data) : false;
+        return \is_array($data) ? $this->aclRolesExist($data) : false;
     }
 
     /**
@@ -46,10 +46,11 @@ class RolesExistValidationRule extends AbstractValidationRule
         }
 
         foreach ($roles as $row) {
-            if (in_array($row, $good) === false) {
+            if (\in_array($row, $good) === false) {
                 return false;
             }
         }
+
         return true;
     }
 }

@@ -45,8 +45,8 @@ class SeoAdminFormBlock extends AbstractRepositoryAwareFormBlock
 
         return [
             'SEO_FORM_FIELDS' => $this->metaFormFields->formFields($data['uri']),
-            'form' => array_merge($data, $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form' => \array_merge($data, $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 
@@ -57,7 +57,7 @@ class SeoAdminFormBlock extends AbstractRepositoryAwareFormBlock
     {
         return [
             'alias' => '',
-            'uri' => ''
+            'uri' => '',
         ];
     }
 }

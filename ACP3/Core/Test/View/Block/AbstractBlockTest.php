@@ -86,14 +86,14 @@ abstract class AbstractBlockTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->block->render();
 
-        $this->assertTrue(is_array($result));
+        $this->assertTrue(\is_array($result));
     }
 
     public function testRenderReturnsArrayWithExpectedKeys()
     {
         $result = $this->block->render();
 
-        $this->assertEquals($this->getExpectedArrayKeys(), array_keys($result));
+        $this->assertEquals($this->getExpectedArrayKeys(), \array_keys($result));
     }
 
     /**

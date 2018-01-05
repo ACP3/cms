@@ -33,7 +33,7 @@ class CheckAccess extends AbstractFunction
     {
         $return = $this->checkAccess->outputLinkOrButton($params);
 
-        if (is_array($return)) {
+        if (\is_array($return)) {
             $smarty->smarty->assign('access_check', $return);
 
             return $smarty->smarty->fetch('asset:System/Partials/access_check.tpl');

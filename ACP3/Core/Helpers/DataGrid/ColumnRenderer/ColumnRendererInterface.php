@@ -3,7 +3,6 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 /**
  * Interface ColumnRendererInterface
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
  */
 interface ColumnRendererInterface
 {

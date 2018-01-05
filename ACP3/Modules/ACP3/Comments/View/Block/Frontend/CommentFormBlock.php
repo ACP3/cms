@@ -45,12 +45,12 @@ class CommentFormBlock extends AbstractFormBlock
         $data = $this->getData();
 
         return [
-            'form' => array_merge($data, $this->getRequestData()),
+            'form' => \array_merge($data, $this->getRequestData()),
             'module' => $data['module'],
             'entry_id' => $data['entryId'],
             'redirect_url' => $data['redirectUrl'],
             'form_token' => $this->formToken->renderFormToken(),
-            'can_use_emoticons' => $this->canUseEmoticons()
+            'can_use_emoticons' => $this->canUseEmoticons(),
         ];
     }
 
@@ -72,7 +72,7 @@ class CommentFormBlock extends AbstractFormBlock
         $defaults = [
             'name' => '',
             'name_disabled' => false,
-            'message' => ''
+            'message' => '',
         ];
 
         if ($this->user->isAuthenticated() === true) {
@@ -81,6 +81,7 @@ class CommentFormBlock extends AbstractFormBlock
             $defaults['name_disabled'] = true;
             $defaults['message'] = '';
         }
+
         return $defaults;
     }
 }

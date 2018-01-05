@@ -36,7 +36,7 @@ abstract class AbstractAction extends Core\Controller\AbstractInstallerAction
         $completedSteps = 0;
         if ($this->navigation->has($key) === true) {
             $this->navigation->markStepActive($key);
-            $completedSteps = array_search($key, array_keys($this->navigation->all()));
+            $completedSteps = \array_search($key, \array_keys($this->navigation->all()));
         }
 
         if ($completedSteps > 0) {

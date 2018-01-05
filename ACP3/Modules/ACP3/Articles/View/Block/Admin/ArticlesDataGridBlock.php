@@ -27,19 +27,19 @@ class ArticlesDataGridBlock extends AbstractDataGridBlock
                 'fields' => ['active'],
                 'custom' => [
                     'search' => [0, 1],
-                    'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')]
-                ]
+                    'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')],
+                ],
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
-                'fields' => ['start', 'end']
+                'fields' => ['start', 'end'],
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('articles', 'title'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['title'],
-                'default_sort' => true
+                'default_sort' => true,
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
@@ -47,8 +47,8 @@ class ArticlesDataGridBlock extends AbstractDataGridBlock
                 'fields' => ['id'],
                 'primary' => true,
                 'custom' => [
-                    'path' => Helpers::URL_KEY_PATTERN
-                ]
+                    'path' => Helpers::URL_KEY_PATTERN,
+                ],
             ], 10);
     }
 
@@ -72,7 +72,7 @@ class ArticlesDataGridBlock extends AbstractDataGridBlock
 
         return [
             'grid' => $grid,
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

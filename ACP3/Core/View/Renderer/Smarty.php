@@ -8,7 +8,6 @@ use ACP3\Core\Environment\ApplicationPath;
 /**
  * Renderer for the Smarty template engine
  *
- * @package ACP3\Core\View\Renderer
  */
 class Smarty implements RendererInterface
 {
@@ -62,7 +61,8 @@ class Smarty implements RendererInterface
     protected function isDevOrInstall()
     {
         $environments = [ApplicationMode::DEVELOPMENT, ApplicationMode::INSTALLER, ApplicationMode::UPDATER];
-        return in_array($this->environment, $environments);
+
+        return \in_array($this->environment, $environments);
     }
 
     /**

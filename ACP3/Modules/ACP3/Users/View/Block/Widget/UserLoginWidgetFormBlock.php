@@ -39,7 +39,7 @@ class UserLoginWidgetFormBlock extends AbstractFormBlock
 
         return [
             'enable_registration' => $settings['enable_registration'],
-            'redirect_uri' => $this->getData()['redirect_url']
+            'redirect_uri' => $this->getData()['redirect_url'],
         ];
     }
 

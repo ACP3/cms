@@ -49,8 +49,8 @@ class CaptchaSettingsFormBlock extends AbstractSettingsFormBlock
                 $this->getAvailableCaptchas(),
                 $data['captcha']
             ),
-            'form' => array_merge($data, $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form' => \array_merge($data, $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 
@@ -64,6 +64,7 @@ class CaptchaSettingsFormBlock extends AbstractSettingsFormBlock
             /** @var CaptchaExtensionInterface $captcha */
             $captchas[$serviceId] = $captcha->getCaptchaName();
         }
+
         return $captchas;
     }
 

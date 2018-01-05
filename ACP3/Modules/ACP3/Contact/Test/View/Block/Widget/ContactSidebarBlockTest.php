@@ -36,7 +36,7 @@ class ContactSidebarBlockTest extends AbstractBlockTest
     protected function getExpectedArrayKeys(): array
     {
         return [
-            'sidebar_contact'
+            'sidebar_contact',
         ];
     }
 }

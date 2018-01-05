@@ -74,7 +74,7 @@ class CategoriesDataGridBlock extends AbstractDataGridBlock
                     'custom' => [
                         'route_sort_down' => 'acp/categories/index/order/id_%d/action_down',
                         'route_sort_up' => 'acp/categories/index/order/id_%d/action_up',
-                    ]
+                    ],
                 ], 20);
         }
     }
@@ -90,7 +90,7 @@ class CategoriesDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#categories-data-grid',
             'resource_path_delete' => 'admin/categories/index/delete',
-            'resource_path_edit' => 'admin/categories/index/manage'
+            'resource_path_edit' => 'admin/categories/index/manage',
         ]);
 
         $grid = $dataGrid->render();
@@ -100,7 +100,7 @@ class CategoriesDataGridBlock extends AbstractDataGridBlock
 
         return [
             'grid' => $grid,
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

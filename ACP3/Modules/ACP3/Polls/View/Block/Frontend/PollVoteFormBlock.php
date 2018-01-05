@@ -20,7 +20,7 @@ class PollVoteFormBlock extends AbstractFormBlock
         return [
             'poll' => $data['poll'],
             'answers' => $data['answers'],
-            'form_token' => $this->formToken->renderFormToken()
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 

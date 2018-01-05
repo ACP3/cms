@@ -12,7 +12,6 @@ use ACP3\Modules\ACP3\Errors\View\Block\Frontend\AccessForbiddenBlock;
 
 class AccessForbiddenBlockTest extends AbstractBlockTest
 {
-
     /**
      * @inheritdoc
      */

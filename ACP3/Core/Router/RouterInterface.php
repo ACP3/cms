@@ -8,7 +8,6 @@ namespace ACP3\Core\Router;
 
 /**
  * Interface RouterInterface
- * @package ACP3\Core\Router
  */
 interface RouterInterface
 {

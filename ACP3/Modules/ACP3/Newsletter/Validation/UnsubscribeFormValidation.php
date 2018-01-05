@@ -7,7 +7,6 @@ use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidat
 
 class UnsubscribeFormValidation extends AbstractFormValidation
 {
-
     /**
      * @inheritdoc
      */
@@ -20,7 +19,7 @@ class UnsubscribeFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->translator->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format'),
                 ]
             )
             ->addConstraint(
@@ -28,7 +27,7 @@ class UnsubscribeFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->translator->t('newsletter', 'account_not_exists')
+                    'message' => $this->translator->t('newsletter', 'account_not_exists'),
                 ]
             );
 

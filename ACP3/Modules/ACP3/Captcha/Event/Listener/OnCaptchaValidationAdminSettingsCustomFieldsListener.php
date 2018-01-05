@@ -38,12 +38,12 @@ class OnCaptchaValidationAdminSettingsCustomFieldsListener
                 ->addConstraint(NotEmptyValidationRule::class, [
                     'data' => $formData,
                     'field' => 'recaptcha_sitekey',
-                    'message' => $this->translator->t('captcha', 'type_in_recaptcha_sitekey')
+                    'message' => $this->translator->t('captcha', 'type_in_recaptcha_sitekey'),
                 ])
                 ->addConstraint(NotEmptyValidationRule::class, [
                     'data' => $formData,
                     'field' => 'recaptcha_secret',
-                    'message' => $this->translator->t('captcha', 'type_in_recaptcha_secret')
+                    'message' => $this->translator->t('captcha', 'type_in_recaptcha_secret'),
                 ]);
         }
     }

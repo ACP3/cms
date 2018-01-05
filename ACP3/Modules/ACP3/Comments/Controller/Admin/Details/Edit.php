@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 use ACP3\Core;
 use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 use ACP3\Modules\ACP3\Comments;
-use ACP3\Modules\ACP3\System;
 
 class Edit extends Core\Controller\AbstractFrontendAction
 {
@@ -82,7 +81,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
                 $this->adminFormValidation->validate($formData);
 
                 $updateValues = [
-                    'message' => $formData['message']
+                    'message' => $formData['message'],
                 ];
                 if ((empty($comment['user_id']) || $this->validator->is(IntegerValidationRule::class, $comment['user_id']) === false) &&
                     !empty($formData['name'])

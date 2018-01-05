@@ -45,8 +45,8 @@ class SeoDataGridBlock extends AbstractDataGridBlock
                 'fields' => ['uri'],
                 'default_sort' => true,
                 'custom' => [
-                    'path' => '%s'
-                ]
+                    'path' => '%s',
+                ],
             ], 60)
             ->addColumn([
                 'label' => $this->translator->t('seo', 'alias'),
@@ -78,15 +78,15 @@ class SeoDataGridBlock extends AbstractDataGridBlock
                         $this->translator->t('seo', 'robots_index_follow'),
                         $this->translator->t('seo', 'robots_index_nofollow'),
                         $this->translator->t('seo', 'robots_noindex_follow'),
-                        $this->translator->t('seo', 'robots_noindex_nofollow')
-                    ]
-                ]
+                        $this->translator->t('seo', 'robots_noindex_nofollow'),
+                    ],
+                ],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
             ], 10);
     }
 
@@ -110,7 +110,7 @@ class SeoDataGridBlock extends AbstractDataGridBlock
 
         return [
             'grid' => $grid,
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

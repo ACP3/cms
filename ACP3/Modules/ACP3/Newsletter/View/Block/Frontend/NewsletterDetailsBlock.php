@@ -24,7 +24,7 @@ class NewsletterDetailsBlock extends AbstractBlock
         $this->title->setPageTitle($newsletter['title']);
 
         return [
-            'newsletter' => $newsletter
+            'newsletter' => $newsletter,
         ];
     }
 }

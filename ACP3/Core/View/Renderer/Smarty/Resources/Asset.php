@@ -38,8 +38,8 @@ class Asset extends AbstractResource
         $asset = $this->fileResolver->resolveTemplatePath($name);
 
         if ($asset !== '') {
-            $source = file_get_contents($asset);
-            $mtime = filemtime($asset);
+            $source = \file_get_contents($asset);
+            $mtime = \filemtime($asset);
         } else {
             $source = null;
             $mtime = null;
@@ -57,6 +57,6 @@ class Asset extends AbstractResource
     {
         $asset = $this->fileResolver->resolveTemplatePath($name);
 
-        return filemtime($asset);
+        return \filemtime($asset);
     }
 }

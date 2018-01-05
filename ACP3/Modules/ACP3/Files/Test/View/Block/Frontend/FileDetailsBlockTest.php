@@ -28,7 +28,7 @@ class FileDetailsBlockTest extends AbstractBlockTest
             ->with('files')
             ->willReturn([
                 'dateformat' => 'long',
-                'comments' => 1
+                'comments' => 1,
             ]);
 
         $categoriesRepository = $this->getMockBuilder(CategoriesRepository::class)
@@ -50,7 +50,7 @@ class FileDetailsBlockTest extends AbstractBlockTest
             'category_title' => 'Category Foo',
             'title' => 'Foo',
             'text' => 'Foo Bar Baz',
-            'comments' => 1
+            'comments' => 1,
         ]);
 
         parent::testRenderReturnsArray();
@@ -63,7 +63,7 @@ class FileDetailsBlockTest extends AbstractBlockTest
             'category_title' => 'Category Foo',
             'title' => 'Foo',
             'text' => 'Foo Bar Baz',
-            'comments' => 1
+            'comments' => 1,
         ]);
 
         parent::testRenderReturnsArrayWithExpectedKeys();
@@ -77,7 +77,7 @@ class FileDetailsBlockTest extends AbstractBlockTest
         return [
             'file',
             'dateformat',
-            'comments_allowed'
+            'comments_allowed',
         ];
     }
 }

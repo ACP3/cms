@@ -57,7 +57,7 @@ class RenderRecaptchaOnLayoutContentBeforeListener
         if ($this->isRecaptcha($settings)) {
             $this->view->assign('recaptcha', [
                 'sitekey' => $settings['recaptcha_sitekey'],
-                'lang' => $this->locale->getShortIsoCode()
+                'lang' => $this->locale->getShortIsoCode(),
             ]);
             $this->view->displayTemplate($this->getServiceIdTemplateMap()[$settings['captcha']]);
         }
@@ -80,7 +80,7 @@ class RenderRecaptchaOnLayoutContentBeforeListener
     private function isRecaptcha(array $settings)
     {
         return !empty($settings)
-            && array_key_exists($settings['captcha'], $this->getServiceIdTemplateMap())
+            && \array_key_exists($settings['captcha'], $this->getServiceIdTemplateMap())
             && !empty($settings['recaptcha_sitekey'])
             && !empty($settings['recaptcha_secret']);
     }

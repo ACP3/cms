@@ -31,7 +31,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     {
         return [
             'feed_image' => '',
-            'feed_type' => 'RSS 2.0'
+            'feed_type' => 'RSS 2.0',
         ];
     }
 
@@ -44,13 +44,13 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
             'admin' => [
                 'index' => [
                     'index' => PrivilegeEnum::ADMIN_VIEW,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
-                ]
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
+                ],
             ],
             'frontend' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                ]
+                ],
             ],
         ];
     }

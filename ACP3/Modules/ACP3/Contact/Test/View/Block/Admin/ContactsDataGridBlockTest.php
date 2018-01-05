@@ -26,7 +26,7 @@ class ContactsDataGridBlockTest extends AbstractDataGridBlockTest
     protected function getExpectedArrayKeys(): array
     {
         return [
-            'grid'
+            'grid',
         ];
     }
 }

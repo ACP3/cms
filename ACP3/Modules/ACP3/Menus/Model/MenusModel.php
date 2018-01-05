@@ -21,7 +21,7 @@ class MenusModel extends AbstractModel
     {
         return [
             'index_name' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT
+            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
         ];
     }
 }

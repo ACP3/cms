@@ -53,7 +53,7 @@ class CaptchaRegistrar
         }
 
         throw new \InvalidArgumentException(
-            sprintf('Can not find the captcha extension with the name "%s".', $serviceId)
+            \sprintf('Can not find the captcha extension with the name "%s".', $serviceId)
         );
     }
 }

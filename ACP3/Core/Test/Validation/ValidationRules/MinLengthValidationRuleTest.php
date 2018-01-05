@@ -22,7 +22,7 @@ class MinLengthValidationRuleTest extends AbstractValidationRuleTest
             'valid-data-array' => [['foo' => 'foobar'], 'foo', ['length' => 3], true],
             'invalid-data-string' => ['foobar', '', ['length' => 7], false],
             'invalid-data-array' => [['foo' => 'foobar'], 'foo', ['length' => 7], false],
-            'invalid-no-data' => [null, null, [], false]
+            'invalid-no-data' => [null, null, [], false],
         ];
     }
 }

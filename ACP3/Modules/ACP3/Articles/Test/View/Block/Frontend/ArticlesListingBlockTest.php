@@ -14,7 +14,6 @@ use ACP3\Modules\ACP3\Articles\View\Block\Frontend\ArticlesListingBlock;
 
 class ArticlesListingBlockTest extends AbstractListingBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -46,7 +45,7 @@ class ArticlesListingBlockTest extends AbstractListingBlockTest
     {
         return [
             'articles',
-            'pagination'
+            'pagination',
         ];
     }
 

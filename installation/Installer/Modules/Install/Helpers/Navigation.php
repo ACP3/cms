@@ -59,7 +59,7 @@ class Navigation
     public function addStep($stepName, array $options)
     {
         if (!$this->has($stepName)) {
-            $this->navbar[$stepName] = array_merge($this->getDefaultOptions(), $options);
+            $this->navbar[$stepName] = \array_merge($this->getDefaultOptions(), $options);
         }
 
         return $this;
@@ -73,7 +73,7 @@ class Navigation
         return [
             'lang' => '',
             'active' => false,
-            'complete' => false
+            'complete' => false,
         ];
     }
 

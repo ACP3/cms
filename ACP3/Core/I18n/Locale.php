@@ -44,7 +44,7 @@ class Locale implements LocaleInterface
      */
     public function getShortIsoCode(): string
     {
-        return substr($this->getLocale(), 0, strpos($this->getLocale(), '_'));
+        return \substr($this->getLocale(), 0, \strpos($this->getLocale(), '_'));
     }
 
     /**

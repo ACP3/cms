@@ -120,18 +120,18 @@ class Request extends AbstractRequest
         $this->query = $this->pathInfo;
 
         // It's an request for the admin panel page
-        if (preg_match(self::ADMIN_PANEL_PATTERN, $this->query)) {
+        if (\preg_match(self::ADMIN_PANEL_PATTERN, $this->query)) {
             $this->symfonyRequest->attributes->set('_area', AreaEnum::AREA_ADMIN);
             // strip "acp/"
-            $this->query = substr($this->query, 4);
-        } elseif (preg_match(self::WIDGET_PATTERN, $this->query)) {
+            $this->query = \substr($this->query, 4);
+        } elseif (\preg_match(self::WIDGET_PATTERN, $this->query)) {
             $this->symfonyRequest->attributes->set('_area', AreaEnum::AREA_WIDGET);
 
             // strip "widget/"
-            $this->query = substr($this->query, 7);
+            $this->query = \substr($this->query, 7);
         } else {
-            if (strpos($this->query, 'frontend/') === 0) {
-                $this->query = substr($this->query, 9);
+            if (\strpos($this->query, 'frontend/') === 0) {
+                $this->query = \substr($this->query, 9);
             }
 
             $this->symfonyRequest->attributes->set('_area', AreaEnum::AREA_FRONTEND);
@@ -150,7 +150,7 @@ class Request extends AbstractRequest
      */
     protected function parseURI()
     {
-        $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
+        $query = \preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
 
         if (isset($query[0])) {
             $this->symfonyRequest->attributes->set('_module', $query[0]);
@@ -195,13 +195,13 @@ class Request extends AbstractRequest
      */
     public function getUriWithoutPages()
     {
-        return preg_replace('/\/page_(\d+)\//', '/', $this->query);
+        return \preg_replace('/\/page_(\d+)\//', '/', $this->query);
     }
 
     protected function setPathInfo()
     {
-        $this->pathInfo = substr($this->symfonyRequest->getPathInfo(), 1);
-        $this->pathInfo .= !preg_match('/\/$/', $this->pathInfo) ? '/' : '';
+        $this->pathInfo = \substr($this->symfonyRequest->getPathInfo(), 1);
+        $this->pathInfo .= !\preg_match('/\/$/', $this->pathInfo) ? '/' : '';
     }
 
     /**
@@ -210,15 +210,15 @@ class Request extends AbstractRequest
     protected function setRequestParameters(array $query)
     {
         if (isset($query[3])) {
-            $cQuery = count($query);
+            $cQuery = \count($query);
 
             for ($i = 3; $i < $cQuery; ++$i) {
-                if (preg_match('/^(page_(\d+))$/', $query[$i])) { // Current page
-                    $this->symfonyRequest->attributes->add(['page' => (int)substr($query[$i], 5)]);
-                } elseif (preg_match('/^(id_(\d+))$/', $query[$i])) { // result ID
-                    $this->symfonyRequest->attributes->add(['id' => (int)substr($query[$i], 3)]);
-                } elseif (preg_match('/^(([a-zA-Z0-9-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
-                    $param = explode('_', $query[$i], 2);
+                if (\preg_match('/^(page_(\d+))$/', $query[$i])) { // Current page
+                    $this->symfonyRequest->attributes->add(['page' => (int)\substr($query[$i], 5)]);
+                } elseif (\preg_match('/^(id_(\d+))$/', $query[$i])) { // result ID
+                    $this->symfonyRequest->attributes->add(['id' => (int)\substr($query[$i], 3)]);
+                } elseif (\preg_match('/^(([a-zA-Z0-9-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
+                    $param = \explode('_', $query[$i], 2);
                     $this->symfonyRequest->attributes->add([$param[0] => $param[1]]);
                 }
             }

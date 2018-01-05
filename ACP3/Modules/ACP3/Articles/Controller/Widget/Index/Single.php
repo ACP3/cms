@@ -55,7 +55,7 @@ class Single extends Core\Controller\AbstractWidgetAction
             $this->setCacheResponseCacheable();
 
             return [
-                'sidebar_article' => $this->articlesCache->getCache($id)
+                'sidebar_article' => $this->articlesCache->getCache($id),
             ];
         }
     }

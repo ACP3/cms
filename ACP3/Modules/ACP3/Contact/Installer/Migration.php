@@ -13,7 +13,7 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
     {
         return [
             31 => [
-                "UPDATE `{pre}acl_resources` SET privilege_id = 7 WHERE `page` = 'acp_list' AND `module_id` = '{moduleId}';"
+                "UPDATE `{pre}acl_resources` SET privilege_id = 7 WHERE `page` = 'acp_list' AND `module_id` = '{moduleId}';",
             ],
             32 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'sidebar', '', 1);",
@@ -29,13 +29,13 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
                 'UPDATE `{pre}seo` SET `uri` = "contact/index/index/" WHERE `uri` = "contact/index/list/";',
             ],
             36 => [
-                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'vat_id', '');"
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'vat_id', '');",
             ],
             37 => [
-                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'ceo', '');"
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'ceo', '');",
             ],
             38 => [
-                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
+                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';",
             ],
             39 => [
                 "UPDATE `{pre}acl_resources` SET `privilege_id` = 3 WHERE `module_id` = '{moduleId}' AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'index';",
@@ -43,18 +43,18 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
             ],
             40 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'mobile_phone', '');",
-                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'picture_credits', '');"
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'picture_credits', '');",
             ],
             41 => [
-                "CREATE TABLE `{pre}contacts` (
+                'CREATE TABLE `{pre}contacts` (
                     `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                     `date` DATETIME NOT NULL,
                     `mail` VARCHAR(120) NOT NULL,
                     `name` VARCHAR(80) NOT NULL,
                     `message` TEXT NOT NULL,
                     PRIMARY KEY (`id`)
-                ) {ENGINE} {CHARSET};"
-            ]
+                ) {ENGINE} {CHARSET};',
+            ],
         ];
     }
 

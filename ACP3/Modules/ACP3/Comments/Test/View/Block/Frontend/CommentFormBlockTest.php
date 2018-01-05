@@ -14,7 +14,6 @@ use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 class CommentFormBlockTest extends AbstractFormBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -60,7 +59,7 @@ class CommentFormBlockTest extends AbstractFormBlockTest
             'entry_id',
             'redirect_url',
             'form_token',
-            'can_use_emoticons'
+            'can_use_emoticons',
         ];
     }
 }

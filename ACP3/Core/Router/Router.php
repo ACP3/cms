@@ -60,7 +60,7 @@ class Router implements RouterInterface
             $path = $this->preparePath($path);
 
             if ($this->isAdminUri($path) === false) {
-                $path .= (!preg_match('/\/$/', $path) ? '/' : '');
+                $path .= (!\preg_match('/\/$/', $path) ? '/' : '');
             }
         }
 
@@ -74,14 +74,14 @@ class Router implements RouterInterface
      */
     protected function preparePath($path)
     {
-        $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
+        $path = $path . (!\preg_match('/\/$/', $path) ? '/' : '');
         if ($path === 'acp/') {
             $path = 'acp/acp/index/index/';
         }
 
         $prefix = 'admin/';
-        if (substr($path, 0, strlen($prefix)) == $prefix) {
-            $path = 'acp/' . substr($path, strlen($prefix));
+        if (\substr($path, 0, \strlen($prefix)) == $prefix) {
+            $path = 'acp/' . \substr($path, \strlen($prefix));
         }
 
         return $this->addControllerAndAction($path);
@@ -94,7 +94,7 @@ class Router implements RouterInterface
      */
     protected function addControllerAndAction($path)
     {
-        $pathArray = preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
+        $pathArray = \preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
         $indexes = ($this->isAdminUri($path) === true) ? [2, 3] : [1, 2];
 
         foreach ($indexes as $index) {
@@ -113,7 +113,7 @@ class Router implements RouterInterface
      */
     protected function isAdminUri($path)
     {
-        return preg_match(self::ADMIN_PANEL_PATTERN, $path) != false;
+        return \preg_match(self::ADMIN_PANEL_PATTERN, $path) != false;
     }
 
     /**

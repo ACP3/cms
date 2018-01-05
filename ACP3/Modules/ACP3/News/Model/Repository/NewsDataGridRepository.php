@@ -22,7 +22,7 @@ class NewsDataGridRepository extends AbstractDataGridRepository
     {
         return [
             'main.*',
-            'c.title AS cat'
+            'c.title AS cat',
         ];
     }
 

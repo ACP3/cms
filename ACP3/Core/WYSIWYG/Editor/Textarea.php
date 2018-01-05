@@ -8,7 +8,6 @@ namespace ACP3\Core\WYSIWYG\Editor;
 
 /**
  * Implementation of the AbstractWYSIWYG class for a simple textarea
- * @package ACP3\Core\WYSIWYG\Editor
  */
 class Textarea extends AbstractWYSIWYG
 {
@@ -43,8 +42,8 @@ class Textarea extends AbstractWYSIWYG
                 'name' => $this->name,
                 'value' => $this->value,
                 'js' => '',
-                'advanced' => false
-            ]
+                'advanced' => false,
+            ],
         ];
     }
 

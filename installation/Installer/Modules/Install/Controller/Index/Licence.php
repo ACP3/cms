@@ -11,6 +11,5 @@ class Licence extends AbstractAction
 {
     public function execute()
     {
-        return;
     }
 }

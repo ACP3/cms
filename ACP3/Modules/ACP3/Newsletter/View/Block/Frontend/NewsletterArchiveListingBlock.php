@@ -69,7 +69,7 @@ class NewsletterArchiveListingBlock extends AbstractListingBlock
 
         return [
             'newsletters' => $this->getResults($resultsPerPage),
-            'pagination' => $this->pagination->render()
+            'pagination' => $this->pagination->render(),
         ];
     }
 }

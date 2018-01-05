@@ -56,7 +56,7 @@ class Send extends Core\Controller\AbstractFrontendAction
     {
         if ($this->newsletterRepository->newsletterExists($id) === true) {
             $accounts = $this->accountRepository->getAllActiveAccounts();
-            $cAccounts = count($accounts);
+            $cAccounts = \count($accounts);
             $recipients = [];
 
             for ($i = 0; $i < $cAccounts; ++$i) {

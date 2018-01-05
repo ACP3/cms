@@ -36,20 +36,20 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'duplicate' => PrivilegeEnum::ADMIN_CREATE,
                     'index' => PrivilegeEnum::ADMIN_VIEW,
-                ]
+                ],
             ],
             'frontend' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                    'details' => PrivilegeEnum::FRONTEND_VIEW
-                ]
+                    'details' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
             ],
             'widget' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                    'single' => PrivilegeEnum::FRONTEND_VIEW
-                ]
-            ]
+                    'single' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
+            ],
         ];
     }
 
@@ -59,7 +59,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}articles` (
+            'CREATE TABLE `{pre}articles` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `active` TINYINT(1) UNSIGNED NOT NULL,
                 `start` DATETIME NOT NULL,
@@ -73,7 +73,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 INDEX (`active`),
                 INDEX (`user_id`),
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -82,7 +82,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
      */
     public function removeTables()
     {
-        return ["DROP TABLE IF EXISTS `{pre}articles`;"];
+        return ['DROP TABLE IF EXISTS `{pre}articles`;'];
     }
 
     /**

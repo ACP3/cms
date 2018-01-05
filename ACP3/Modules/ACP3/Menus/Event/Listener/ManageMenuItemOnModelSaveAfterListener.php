@@ -44,11 +44,11 @@ class ManageMenuItemOnModelSaveAfterListener
                 'parent_id' => (int)$formData['parent_id'],
                 'display' => $formData['display'],
                 'title' => $formData['menu_item_title'],
-                'target' => 1
+                'target' => 1,
             ];
 
             $this->menuItemManager->manageMenuItem(
-                sprintf($formData['menu_item_uri_pattern'], $event->getEntryId()),
+                \sprintf($formData['menu_item_uri_pattern'], $event->getEntryId()),
                 isset($formData['create_menu_item']) === true,
                 $data
             );

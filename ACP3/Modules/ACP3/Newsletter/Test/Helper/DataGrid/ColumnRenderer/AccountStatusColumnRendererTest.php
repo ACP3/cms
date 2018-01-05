@@ -39,12 +39,12 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidField()
     {
-        $this->columnData = array_merge($this->columnData, [
-            'fields' => ['status']
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['status'],
         ]);
         $this->dbData = [
             'id' => 123,
-            'status' => 1
+            'status' => 1,
         ];
 
         $this->primaryKey = 'id';
@@ -65,12 +65,12 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
             ->with('acp/newsletter/accounts/activate/id_123')
             ->willReturn('/index.php/acp/newsletter/accounts/activate/id_123/');
 
-        $this->columnData = array_merge($this->columnData, [
-            'fields' => ['status']
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['status'],
         ]);
         $this->dbData = [
             'id' => 123,
-            'status' => 0
+            'status' => 0,
         ];
 
         $this->primaryKey = 'id';

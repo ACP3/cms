@@ -5,7 +5,6 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 /**
  * Interface RequestInterface
- * @package ACP3\Core\Http
  */
 interface RequestInterface
 {
@@ -13,6 +12,7 @@ interface RequestInterface
      * @return SymfonyRequest
      */
     public function getSymfonyRequest();
+
     /**
      * Returns the used protocol of the current request
      *

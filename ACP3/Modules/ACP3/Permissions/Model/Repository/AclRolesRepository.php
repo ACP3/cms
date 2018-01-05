@@ -19,10 +19,10 @@ class AclRolesRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
      */
     public function roleExists($roleId)
     {
-        return ((int)$this->db->fetchColumn(
+        return (int)$this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id',
                 ['id' => $roleId]
-        ) > 0);
+        ) > 0;
     }
 
     /**
@@ -38,12 +38,12 @@ class AclRolesRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND `name` = ?',
                     [(int)$roleId, $roleName]
             ) == 1;
-        } else {
-            return !empty($roleName) && $this->db->fetchColumn(
+        }
+
+        return !empty($roleName) && $this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?',
                     [$roleName]
             ) == 1;
-        }
     }
 
     /**

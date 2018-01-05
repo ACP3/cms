@@ -64,8 +64,8 @@ class ApplicationPath
     public function __construct(string $applicationMode)
     {
         $this->environment = $applicationMode;
-        $this->phpSelf = htmlentities($_SERVER['SCRIPT_NAME']);
-        $this->webRoot = substr($this->phpSelf, 0, strrpos($this->phpSelf, '/') + 1);
+        $this->phpSelf = \htmlentities($_SERVER['SCRIPT_NAME']);
+        $this->webRoot = \substr($this->phpSelf, 0, \strrpos($this->phpSelf, '/') + 1);
         $this->appDir = ACP3_ROOT_DIR . 'ACP3/';
         $this->classesDir = $this->appDir . 'Core/';
         $this->modulesDir = $this->appDir . 'Modules/';
@@ -99,6 +99,7 @@ class ApplicationPath
     public function setPhpSelf($phpSelf)
     {
         $this->phpSelf = $phpSelf;
+
         return $this;
     }
 
@@ -118,6 +119,7 @@ class ApplicationPath
     public function setWebRoot($webRoot)
     {
         $this->webRoot = $webRoot;
+
         return $this;
     }
 
@@ -137,6 +139,7 @@ class ApplicationPath
     public function setAppDir($appDir)
     {
         $this->appDir = $appDir;
+
         return $this;
     }
 
@@ -156,6 +159,7 @@ class ApplicationPath
     public function setClassesDir($classesDir)
     {
         $this->classesDir = $classesDir;
+
         return $this;
     }
 
@@ -175,6 +179,7 @@ class ApplicationPath
     public function setModulesDir($modulesDir)
     {
         $this->modulesDir = $modulesDir;
+
         return $this;
     }
 
@@ -194,6 +199,7 @@ class ApplicationPath
     public function setUploadsDir($uploadsDir)
     {
         $this->uploadsDir = $uploadsDir;
+
         return $this;
     }
 
@@ -213,6 +219,7 @@ class ApplicationPath
     public function setCacheDir($cacheDir)
     {
         $this->cacheDir = $cacheDir;
+
         return $this;
     }
 
@@ -232,6 +239,7 @@ class ApplicationPath
     public function setDesignRootPathInternal($designRootPathInternal)
     {
         $this->designRootPathInternal = $designRootPathInternal;
+
         return $this;
     }
 
@@ -251,6 +259,7 @@ class ApplicationPath
     public function setDesignPathInternal($designPathInternal)
     {
         $this->designPathInternal = $this->designRootPathInternal . $designPathInternal;
+
         return $this;
     }
 
@@ -270,6 +279,7 @@ class ApplicationPath
     public function setDesignPathWeb($designPathWeb)
     {
         $this->designPathWeb = $designPathWeb;
+
         return $this;
     }
 
@@ -288,11 +298,12 @@ class ApplicationPath
      */
     public function setDesignPathAbsolute($designPathAbsolute)
     {
-        if (!preg_match('=^(http(s?))://=', $designPathAbsolute)) {
+        if (!\preg_match('=^(http(s?))://=', $designPathAbsolute)) {
             throw new \InvalidArgumentException('The given absolute design path (' . $designPathAbsolute . ') doesn\'t start with a valid protocol.');
         }
 
         $this->designPathAbsolute = $designPathAbsolute;
+
         return $this;
     }
 

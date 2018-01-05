@@ -28,6 +28,6 @@ class ReplaceValueColumnRenderer extends AbstractColumnRenderer
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
-        return isset($dbResultRow[$field]) ? str_replace($this->search, $this->replace, $dbResultRow[$field]) : null;
+        return isset($dbResultRow[$field]) ? \str_replace($this->search, $this->replace, $dbResultRow[$field]) : null;
     }
 }

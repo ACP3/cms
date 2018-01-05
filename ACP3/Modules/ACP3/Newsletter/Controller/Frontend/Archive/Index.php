@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Newsletter;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {

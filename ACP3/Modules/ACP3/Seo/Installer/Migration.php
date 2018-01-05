@@ -14,7 +14,7 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
         return [
             2 => [
                 "DELETE FROM `{pre}settings` WHERE `module_id` = '{moduleId}' AND `name` LIKE 'seo_%';",
-                "UPDATE `{pre}settings` SET `module_id` = '{moduleId}' WHERE `module_id` = (SELECT `id` FROM `{pre}modules` WHERE `name` = 'system') AND `name` LIKE 'seo_%';"
+                "UPDATE `{pre}settings` SET `module_id` = '{moduleId}' WHERE `module_id` = (SELECT `id` FROM `{pre}modules` WHERE `name` = 'system') AND `name` LIKE 'seo_%';",
             ],
             3 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'settings', '', 7);",
@@ -23,7 +23,7 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
                 "UPDATE `{pre}settings` SET `name` = SUBSTRING(`name`, 5) WHERE `module_id` = '{moduleId}' AND `name` LIKE 'seo_%';",
             ],
             5 => [
-                "ALTER TABLE `{pre}seo` ENGINE = InnoDB",
+                'ALTER TABLE `{pre}seo` ENGINE = InnoDB',
             ],
             6 => [
                 "DELETE FROM `{pre}settings` WHERE `module_id` = '{moduleId}' AND `name` = 'mod_rewrite';",
@@ -48,8 +48,8 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'index_paginated_content', 'first');",
             ],
             13 => [
-                "ALTER TABLE `{pre}seo` ADD COLUMN `title` VARCHAR(255) NOT NULL AFTER `alias`;"
-            ]
+                'ALTER TABLE `{pre}seo` ADD COLUMN `title` VARCHAR(255) NOT NULL AFTER `alias`;',
+            ],
         ];
     }
 

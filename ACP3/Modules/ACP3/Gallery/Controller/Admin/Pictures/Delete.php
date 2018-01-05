@@ -81,7 +81,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
                         if ($this->uriAliasManager) {
                             $this->uriAliasManager->deleteUriAlias(
-                                sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item)
+                                \sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item)
                             );
                         }
 

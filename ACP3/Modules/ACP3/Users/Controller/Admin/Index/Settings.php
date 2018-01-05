@@ -60,7 +60,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
             $data = [
                 'enable_registration' => $formData['enable_registration'],
-                'mail' => $formData['mail']
+                'mail' => $formData['mail'],
             ];
 
             return $this->config->saveSettings($data, Users\Installer\Schema::MODULE_NAME);

@@ -23,7 +23,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->translator->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format'),
                 ]
             );
 

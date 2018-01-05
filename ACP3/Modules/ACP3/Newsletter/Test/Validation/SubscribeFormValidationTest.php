@@ -63,14 +63,7 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
                 'mail' => 'test@example.com',
                 'salutation' => '',
                 'first_name' => 'Foo',
-                'last_name' => 'bar'
-            ],
-            [
-                SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
-                'mail' => 'test@example.com',
-                'salutation' => '',
-                'first_name' => '',
-                'last_name' => ''
+                'last_name' => 'bar',
             ],
             [
                 SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
@@ -78,8 +71,15 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
                 'salutation' => '',
                 'first_name' => '',
                 'last_name' => '',
-                'captcha' => '123456'
-            ]
+            ],
+            [
+                SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
+                'mail' => 'test@example.com',
+                'salutation' => '',
+                'first_name' => '',
+                'last_name' => '',
+                'captcha' => '123456',
+            ],
         ];
     }
 
@@ -94,15 +94,15 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
                 'mail' => 'testexample.com',
                 'salutation' => '',
                 'first_name' => 'Foo',
-                'last_name' => 'bar'
+                'last_name' => 'bar',
             ],
             [
                 SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'test@example.com',
                 'salutation' => 3,
                 'first_name' => '',
-                'last_name' => ''
-            ]
+                'last_name' => '',
+            ],
         ];
     }
 }

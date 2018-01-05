@@ -50,7 +50,7 @@ class SchemaRegistrar
         }
 
         throw new \InvalidArgumentException(
-            sprintf('The schema with the service id "%s" could not be found.', $moduleName)
+            \sprintf('The schema with the service id "%s" could not be found.', $moduleName)
         );
     }
 }

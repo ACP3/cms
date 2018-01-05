@@ -35,7 +35,7 @@ class LibrariesTest extends \PHPUnit_Framework_TestCase
             'enabled' => false,
             'dependencies' => ['jquery'],
             'css' => 'foo.css',
-            'js' => 'bar.js'
+            'js' => 'bar.js',
         ];
         $this->libraries->addLibrary('foobar', $data);
 

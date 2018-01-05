@@ -37,7 +37,7 @@ class BootstrapCache extends HttpCache implements CacheInvalidation
 
         $this->addSubscriber(new UserContextListener([
             'user_hash_uri' => '/widget/users/index/hash/',
-            'session_name_prefix' => SessionHandlerInterface::SESSION_NAME
+            'session_name_prefix' => SessionHandlerInterface::SESSION_NAME,
         ]));
         $this->addSubscriber(new PurgeListener());
         $this->addSubscriber(new RefreshListener());

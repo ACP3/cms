@@ -25,7 +25,7 @@ class GuestbookDataGridBlock extends AbstractDataGridBlock
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['date'],
                 'default_sort' => true,
-                'default_sort_direction' => 'desc'
+                'default_sort_direction' => 'desc',
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('system', 'name'),
@@ -46,7 +46,7 @@ class GuestbookDataGridBlock extends AbstractDataGridBlock
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
             ], 10);
     }
 
@@ -60,7 +60,7 @@ class GuestbookDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#guestbook-data-grid',
             'resource_path_delete' => 'admin/guestbook/index/delete',
-            'resource_path_edit' => 'admin/guestbook/index/edit'
+            'resource_path_edit' => 'admin/guestbook/index/edit',
         ]);
 
         $grid = $dataGrid->render();
@@ -70,7 +70,7 @@ class GuestbookDataGridBlock extends AbstractDataGridBlock
 
         return [
             'grid' => $grid,
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

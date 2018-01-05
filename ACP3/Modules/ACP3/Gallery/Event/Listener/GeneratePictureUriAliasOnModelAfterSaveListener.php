@@ -77,22 +77,22 @@ class GeneratePictureUriAliasOnModelAfterSaveListener
             $pictureId = $event->getEntryId();
 
             $galleryId = $this->pictureRepository->getGalleryIdFromPictureId($pictureId);
-            $alias = $this->aliases->getUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId), true);
+            $alias = $this->aliases->getUriAlias(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId), true);
             if (!empty($alias)) {
                 $alias .= '/img-' . $pictureId;
             }
             $seoKeywords = $this->metaStatements->getKeywords(
-                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
+                \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
             );
             $seoDescription = $this->metaStatements->getDescription(
-                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
+                \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
             );
             $seoRobots = $this->metaStatements->getRobotsSetting(
-                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
+                \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
             );
 
             $this->uriAliasManager->insertUriAlias(
-                sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $pictureId),
+                \sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $pictureId),
                 $alias,
                 $seoKeywords,
                 $seoDescription,

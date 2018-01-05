@@ -44,15 +44,15 @@ class Image extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        if (isset($params['file']) === true && (bool)preg_match('=\./=', $params['file']) === false) {
+        if (isset($params['file']) === true && (bool)\preg_match('=\./=', $params['file']) === false) {
             $file = $params['file'];
 
             $path = $this->fileResolver->getStaticAssetPath('/', '/', 'Assets/img', $file);
 
-            if (strpos($path, '/ACP3/Modules/') !== false) {
-                $path = $this->appPath->getWebRoot() . substr($path, strpos($path, '/ACP3/Modules/') + 1);
+            if (\strpos($path, '/ACP3/Modules/') !== false) {
+                $path = $this->appPath->getWebRoot() . \substr($path, \strpos($path, '/ACP3/Modules/') + 1);
             } else {
-                $path = $this->appPath->getWebRoot() . substr($path, strlen(ACP3_ROOT_DIR));
+                $path = $this->appPath->getWebRoot() . \substr($path, \strlen(ACP3_ROOT_DIR));
             }
 
             if (isset($params['absolute']) && $params['absolute'] === true) {

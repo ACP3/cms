@@ -15,6 +15,6 @@ class ConfigFileValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        return is_file($data) === true && is_writable($data) === true;
+        return \is_file($data) === true && \is_writable($data) === true;
     }
 }

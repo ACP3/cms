@@ -13,7 +13,6 @@ use ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsDataGridBlock;
 
 class CommentsDataGridBlockTest extends AbstractDataGridBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -30,7 +29,7 @@ class CommentsDataGridBlockTest extends AbstractDataGridBlockTest
                 'update',
                 'delete',
                 'getOneById',
-                'getTableName'
+                'getTableName',
             ])
             ->getMock();
 
@@ -63,7 +62,7 @@ class CommentsDataGridBlockTest extends AbstractDataGridBlockTest
         return [
             'grid',
             'module_id',
-            'show_mass_delete_button'
+            'show_mass_delete_button',
         ];
     }
 }

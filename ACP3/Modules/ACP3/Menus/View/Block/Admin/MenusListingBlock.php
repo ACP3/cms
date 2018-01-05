@@ -62,7 +62,7 @@ class MenusListingBlock extends AbstractBlock
             'can_delete' => $this->acl->hasPermission('admin/menus/index/delete'),
             'can_edit' => $this->acl->hasPermission('admin/menus/index/manage'),
             'colspan' => $this->calculateColspan($canDeleteItem, $canEditItem, $canSortItem),
-            'pages_list' => $this->fetchMenuItems()
+            'pages_list' => $this->fetchMenuItems(),
         ];
     }
 
@@ -72,7 +72,7 @@ class MenusListingBlock extends AbstractBlock
     private function fetchMenuItems(): array
     {
         $menus = $this->menuRepository->getAllMenus();
-        $cMenus = count($menus);
+        $cMenus = \count($menus);
         $menuItems = $this->menusHelpers->menuItemsList();
         for ($i = 0; $i < $cMenus; ++$i) {
             if (isset($menuItems[$menus[$i]['index_name']]) === false) {
@@ -81,6 +81,7 @@ class MenusListingBlock extends AbstractBlock
                 $menuItems[$menus[$i]['index_name']]['items'] = [];
             }
         }
+
         return $menuItems;
     }
 
@@ -99,6 +100,7 @@ class MenusListingBlock extends AbstractBlock
         if ($canSortItem) {
             $colspan += 1;
         }
+
         return $colspan;
     }
 }

@@ -52,6 +52,7 @@ class Options
     public function setIdentifier(string $identifier): Options
     {
         $this->identifier = $identifier;
+
         return $this;
     }
 
@@ -70,6 +71,7 @@ class Options
     public function setRecordsPerPage(int $recordsPerPage): Options
     {
         $this->recordsPerPage = $recordsPerPage;
+
         return $this;
     }
 
@@ -88,6 +90,7 @@ class Options
     public function setEnableOptions(bool $enableOptions): Options
     {
         $this->enableOptions = $enableOptions;
+
         return $this;
     }
 
@@ -106,6 +109,7 @@ class Options
     public function setUseAjax(bool $useAjax): Options
     {
         $this->useAjax = $useAjax;
+
         return $this;
     }
 
@@ -124,6 +128,7 @@ class Options
     public function setResourcePathEdit(string $resourcePathEdit): Options
     {
         $this->resourcePathEdit = $resourcePathEdit;
+
         return $this;
     }
 
@@ -142,6 +147,7 @@ class Options
     public function setResourcePathDelete(string $resourcePathDelete): Options
     {
         $this->resourcePathDelete = $resourcePathDelete;
+
         return $this;
     }
 
@@ -160,6 +166,7 @@ class Options
     public function setEnableMassAction(bool $enableMassAction): Options
     {
         $this->enableMassAction = $enableMassAction;
+
         return $this;
     }
 }

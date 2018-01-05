@@ -60,7 +60,7 @@ class UriTest extends AbstractPluginTest
     public function testUriWithRouteOnly()
     {
         $params = [
-            'args' => 'foo/bar/baz'
+            'args' => 'foo/bar/baz',
         ];
 
         $this->routerMock->expects($this->once())
@@ -90,7 +90,7 @@ class UriTest extends AbstractPluginTest
     {
         $params = [
             'args' => 'foo/bar/baz',
-            'secure' => true
+            'secure' => true,
         ];
 
         $this->routerMock->expects($this->once())

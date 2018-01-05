@@ -47,7 +47,7 @@ class Vendor
      */
     protected function cacheVendors()
     {
-        $this->vendors = array_merge(
+        $this->vendors = \array_merge(
             ['ACP3'],
             Filesystem::scandir($this->appPath->getModulesDir(), ['ACP3'])
         );

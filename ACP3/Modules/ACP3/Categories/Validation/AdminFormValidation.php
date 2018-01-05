@@ -56,6 +56,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function setFile($file)
     {
         $this->file = $file;
+
         return $this;
     }
 
@@ -67,6 +68,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function setCategoryId(?int $categoryId)
     {
         $this->categoryId = $categoryId;
+
         return $this;
     }
 
@@ -84,7 +86,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->translator->t('categories', 'title_to_short')
+                    'message' => $this->translator->t('categories', 'title_to_short'),
                 ]
             )
             ->addConstraint(
@@ -97,8 +99,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                         'width' => $settings['width'],
                         'height' => $settings['height'],
                         'filesize' => $settings['filesize'],
-                        'required' => false
-                    ]
+                        'required' => false,
+                    ],
                 ]
             )
             ->addConstraint(
@@ -109,8 +111,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'message' => $this->translator->t('categories', 'category_already_exists'),
                     'extra' => [
                         'module_id' => empty($this->categoryId) ? $formData['module_id'] : $this->categoryRepository->getModuleIdByCategoryId($this->categoryId),
-                        'category_id' => $this->categoryId
-                    ]
+                        'category_id' => $this->categoryId,
+                    ],
                 ]
             )
             ->addConstraint(
@@ -118,7 +120,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'parent_id',
-                    'message' => $this->translator->t('categories', 'select_superior_category')
+                    'message' => $this->translator->t('categories', 'select_superior_category'),
                 ]
             )
             ->addConstraint(
@@ -126,7 +128,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['parent_id', 'module_id'],
-                    'message' => $this->translator->t('categories', 'superior_category_not_allowed')
+                    'message' => $this->translator->t('categories', 'superior_category_not_allowed'),
                 ]
             );
 
@@ -136,7 +138,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'module_id',
-                    'message' => $this->translator->t('categories', 'select_module')
+                    'message' => $this->translator->t('categories', 'select_module'),
                 ]
             );
         }

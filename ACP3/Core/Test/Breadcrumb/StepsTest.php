@@ -89,8 +89,8 @@ class StepsTest extends \PHPUnit_Framework_TestCase
             [
                 'title' => '{FOO_FOO}',
                 'uri' => '/acp/foo/',
-                'last' => true
-            ]
+                'last' => true,
+            ],
         ];
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
     }
@@ -127,7 +127,7 @@ class StepsTest extends \PHPUnit_Framework_TestCase
                 ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller . '/' . $action . '/'
             );
 
-        $parameters .= preg_match('=/$=', $parameters) ? '' : '/';
+        $parameters .= \preg_match('=/$=', $parameters) ? '' : '/';
         $this->requestMock->expects($this->any())
             ->method('getQuery')
             ->willReturn($moduleName . '/' . $controller . '/' . $action . '/' . $parameters);
@@ -153,7 +153,7 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $this->routerMock->expects($this->atLeastOnce())
             ->method('route')
             ->willReturnCallback(function ($path) {
-                return '/' . $path . (!preg_match('=/$=', $path) ? '/' : '');
+                return '/' . $path . (!\preg_match('=/$=', $path) ? '/' : '');
             });
     }
 
@@ -162,7 +162,7 @@ class StepsTest extends \PHPUnit_Framework_TestCase
         $this->translatorMock->expects($this->atLeast($callCount))
             ->method('t')
             ->willReturnCallback(function ($module, $phrase) {
-                return strtoupper('{' . $module . '_' . $phrase . '}');
+                return \strtoupper('{' . $module . '_' . $phrase . '}');
             });
     }
 
@@ -189,8 +189,8 @@ class StepsTest extends \PHPUnit_Framework_TestCase
             [
                 'title' => '{FOO_ADMIN_DETAILS_INDEX}',
                 'uri' => '/acp/foo/details/',
-                'last' => true
-            ]
+                'last' => true,
+            ],
         ];
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
     }
@@ -216,8 +216,8 @@ class StepsTest extends \PHPUnit_Framework_TestCase
             [
                 'title' => 'FooBarBaz',
                 'uri' => '/acp/foo/bar/baz/',
-                'last' => true
-            ]
+                'last' => true,
+            ],
         ];
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
     }
@@ -237,8 +237,8 @@ class StepsTest extends \PHPUnit_Framework_TestCase
             [
                 'title' => '{FOO_FOO}',
                 'uri' => '/foo/',
-                'last' => true
-            ]
+                'last' => true,
+            ],
         ];
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
     }
@@ -266,8 +266,8 @@ class StepsTest extends \PHPUnit_Framework_TestCase
             [
                 'title' => '{FOO_FRONTEND_DETAILS_INDEX}',
                 'uri' => '/foo/details/',
-                'last' => true
-            ]
+                'last' => true,
+            ],
         ];
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
     }
@@ -289,8 +289,8 @@ class StepsTest extends \PHPUnit_Framework_TestCase
             [
                 'title' => 'FooBarBaz',
                 'uri' => '/foo/bar/baz/',
-                'last' => true
-            ]
+                'last' => true,
+            ],
         ];
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
     }
@@ -314,8 +314,8 @@ class StepsTest extends \PHPUnit_Framework_TestCase
             [
                 'title' => 'FooBarBaz',
                 'uri' => '/foo/bar/baz/',
-                'last' => true
-            ]
+                'last' => true,
+            ],
         ];
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
     }
@@ -349,7 +349,7 @@ class StepsTest extends \PHPUnit_Framework_TestCase
             [
                 'title' => 'Lorem Ipsum',
                 'uri' => '/lorem/ipsum/dolor/',
-                'last' => true
+                'last' => true,
             ],
         ];
         $this->assertEquals($expected, $this->steps->getBreadcrumb());

@@ -35,7 +35,7 @@ class SearchWidgetFormBlock extends AbstractBlock
     public function render()
     {
         return [
-            'search_mods' => $this->searchHelpers->getModules()
+            'search_mods' => $this->searchHelpers->getModules(),
         ];
     }
 }

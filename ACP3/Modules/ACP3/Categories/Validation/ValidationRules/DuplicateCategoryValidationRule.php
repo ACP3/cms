@@ -31,13 +31,13 @@ class DuplicateCategoryValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        $params = array_merge([
+        $params = \array_merge([
             'module_id' => 0,
-            'category_id' => 0
+            'category_id' => 0,
         ], $extra);
 
         return !$this->categoryRepository->resultIsDuplicate(

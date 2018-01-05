@@ -58,7 +58,7 @@ class CommentAdminFormBlockTest extends AbstractFormBlockTest
             'form',
             'module_id',
             'form_token',
-            'can_use_emoticons'
+            'can_use_emoticons',
         ];
     }
 }

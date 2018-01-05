@@ -140,7 +140,7 @@ class Action
 
         if ($result instanceof RedirectResponse) {
             return $result;
-        } elseif (is_array($result)) {
+        } elseif (\is_array($result)) {
             if ($action === 'confirmed') {
                 return $callback($result);
             }
@@ -238,7 +238,7 @@ class Action
         } elseif ($action !== 'confirmed') {
             $data = [
                 'action' => 'confirmed',
-                'entries' => $entries
+                'entries' => $entries,
             ];
 
             return $this->alerts->confirmBoxPost(
@@ -258,10 +258,10 @@ class Action
     private function prepareRequestData()
     {
         $entries = [];
-        if (is_array($this->request->getPost()->get('entries')) === true) {
+        if (\is_array($this->request->getPost()->get('entries')) === true) {
             $entries = $this->request->getPost()->get('entries');
-        } elseif ((bool)preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
-            $entries = explode('|', $this->request->getParameters()->get('entries'));
+        } elseif ((bool)\preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
+            $entries = \explode('|', $this->request->getParameters()->get('entries'));
         }
 
         return $entries;
@@ -274,7 +274,7 @@ class Action
      */
     private function prepareConfirmationBoxText(array $entries)
     {
-        $entriesCount = count($entries);
+        $entriesCount = \count($entries);
         if ($entriesCount === 1) {
             return $this->translator->t('system', 'confirm_delete_single');
         }

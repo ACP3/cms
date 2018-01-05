@@ -80,7 +80,7 @@ class SendNewsletter
         $newsletter = $this->newsletterRepository->getOneById($newsletterId);
         $from = [
             'email' => $settings['mail'],
-            'name' => $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME)['site_title']
+            'name' => $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME)['site_title'],
         ];
 
         $message = (new Core\Mailer\MailerMessage())

@@ -56,7 +56,7 @@ class AclRulesModel extends AbstractModel
                     'role_id' => $roleId,
                     'module_id' => $moduleId,
                     'privilege_id' => $privilegeId,
-                    'permission' => $permission
+                    'permission' => $permission,
                 ];
 
                 $this->save($ruleInsertValues);
@@ -73,7 +73,7 @@ class AclRulesModel extends AbstractModel
             'role_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'module_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'privilege_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'permission' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'permission' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

@@ -8,11 +8,11 @@ class AtLeastTwoAnswersValidationRule extends AbstractAnswerValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        if (is_array($data)) {
+        if (\is_array($data)) {
             list(, $notEmptyAnswers) = $this->validateAnswers($data);
 
             return $notEmptyAnswers > 0;

@@ -82,6 +82,6 @@ class GenerateSitemapOnModelAfterSaveListener
      */
     private function isAllowedModule($moduleName)
     {
-        return array_key_exists($moduleName, $this->sitemapRegistrar->getAvailableModules());
+        return \array_key_exists($moduleName, $this->sitemapRegistrar->getAvailableModules());
     }
 }

@@ -43,13 +43,14 @@ class Helpers
     public function articlesList($id = 0)
     {
         $articles = $this->articleRepository->getAll();
-        $cArticles = count($articles);
+        $cArticles = \count($articles);
 
         if ($cArticles > 0) {
             for ($i = 0; $i < $cArticles; ++$i) {
                 $articles[$i]['selected'] = $this->formsHelper->selectEntry('articles', $articles[$i]['id'], $id);
             }
         }
+
         return $articles;
     }
 

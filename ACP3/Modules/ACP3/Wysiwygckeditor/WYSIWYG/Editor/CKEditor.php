@@ -11,7 +11,6 @@ use ACP3\Core\WYSIWYG\Editor\Textarea;
 
 /**
  * Implementation of the AbstractWYSIWYG class for CKEditor
- * @package ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor
  */
 class CKEditor extends Textarea
 {
@@ -149,7 +148,7 @@ class CKEditor extends Textarea
             'highlightMatches' => true,
             'showFormatButton' => false,
             'showCommentButton' => false,
-            'showUncommentButton' => false
+            'showUncommentButton' => false,
         ];
 
         // Full toolbar
@@ -159,7 +158,7 @@ class CKEditor extends Textarea
             $this->configureBasicToolbar();
         }
 
-        return json_encode($this->config);
+        return \json_encode($this->config);
     }
 
     /**
@@ -181,7 +180,7 @@ class CKEditor extends Textarea
 
         $config = $this->configure();
         if (!empty($config)) {
-            $js .= "CKEDITOR.replace('" . $this->id . "', " . $config . ");";
+            $js .= "CKEDITOR.replace('" . $this->id . "', " . $config . ');';
         } else {
             $js .= "CKEDITOR.replace('" . $this->id . "');";
         }
@@ -190,7 +189,7 @@ class CKEditor extends Textarea
 
         return [
             'template' => 'Wysiwygckeditor/ckeditor.tpl',
-            'config' => $out
+            'config' => $out,
         ];
     }
 
@@ -203,7 +202,7 @@ class CKEditor extends Textarea
      */
     private function script($js)
     {
-        $out = "<script type=\"text/javascript\">";
+        $out = '<script type="text/javascript">';
         $out .= $js;
         $out .= "</script>\n";
 
@@ -216,19 +215,19 @@ class CKEditor extends Textarea
     private function init()
     {
         if ($this->isInitialized === true) {
-            return "";
+            return '';
         }
 
         $this->isInitialized = true;
         $basePath = $this->appPath->getWebRoot() . 'node_modules/ckeditor/';
-        $out = "";
+        $out = '';
 
         // Skip relative paths...
-        if (strpos($basePath, '..') !== 0) {
+        if (\strpos($basePath, '..') !== 0) {
             $out .= $this->script("window.CKEDITOR_BASEPATH='" . $basePath . "';");
         }
 
-        $out .= "<script type=\"text/javascript\" src=\"" . $basePath . "ckeditor.js\"></script>\n";
+        $out .= '<script type="text/javascript" src="' . $basePath . "ckeditor.js\"></script>\n";
 
         return $out;
     }
@@ -238,7 +237,7 @@ class CKEditor extends Textarea
         $this->config['smiley_path'] = $this->appPath->getWebRoot() . 'uploads/emoticons/';
         $this->config['smiley_images'] = $this->config['smiley_descriptions'] = '';
         $emoticons = $this->emoticonRepository->getAll();
-        $cEmoticons = count($emoticons);
+        $cEmoticons = \count($emoticons);
 
         $images = $descriptions = [];
         for ($i = 0; $i < $cEmoticons; ++$i) {
@@ -256,12 +255,12 @@ class CKEditor extends Textarea
         $fileBrowserUri = $kcfinderPath . 'browse.php?opener=ckeditor%s&cms=acp3';
         $uploadUri = $kcfinderPath . 'upload.php?opener=ckeditor%s&cms=acp3';
 
-        $this->config['filebrowserBrowseUrl'] = sprintf($fileBrowserUri, '&type=files');
-        $this->config['filebrowserImageBrowseUrl'] = sprintf($fileBrowserUri, '&type=gallery');
-        $this->config['filebrowserFlashBrowseUrl'] = sprintf($fileBrowserUri, '&type=files');
-        $this->config['filebrowserUploadUrl'] = sprintf($uploadUri, '&type=files');
-        $this->config['filebrowserImageUploadUrl'] = sprintf($uploadUri, '&type=gallery');
-        $this->config['filebrowserFlashUploadUrl'] = sprintf($uploadUri, '&type=files');
+        $this->config['filebrowserBrowseUrl'] = \sprintf($fileBrowserUri, '&type=files');
+        $this->config['filebrowserImageBrowseUrl'] = \sprintf($fileBrowserUri, '&type=gallery');
+        $this->config['filebrowserFlashBrowseUrl'] = \sprintf($fileBrowserUri, '&type=files');
+        $this->config['filebrowserUploadUrl'] = \sprintf($uploadUri, '&type=files');
+        $this->config['filebrowserImageUploadUrl'] = \sprintf($uploadUri, '&type=gallery');
+        $this->config['filebrowserFlashUploadUrl'] = \sprintf($uploadUri, '&type=files');
     }
 
     private function configureFullToolbar()
@@ -288,7 +287,7 @@ class CKEditor extends Textarea
             ['name' => 'colors'],
             ['name' => 'tools'],
             ['name' => 'others'],
-            ['name' => 'about']
+            ['name' => 'about'],
         ];
         ;
 
@@ -317,8 +316,8 @@ class CKEditor extends Textarea
                 'Link',
                 'Unlink',
                 '-',
-                'About'
-            ]
+                'About',
+            ],
         ];
     }
 }

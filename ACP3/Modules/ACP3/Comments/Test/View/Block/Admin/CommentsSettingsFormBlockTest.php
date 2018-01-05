@@ -48,7 +48,7 @@ class CommentsSettingsFormBlockTest extends AbstractFormBlockTest
         return [
             'dateformat',
             'form_token',
-            'allow_emoticons'
+            'allow_emoticons',
         ];
     }
 }

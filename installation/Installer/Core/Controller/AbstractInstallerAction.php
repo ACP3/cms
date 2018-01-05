@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Module Controller of the installer modules
- * @package ACP3\Installer\Core\Controller
  */
 abstract class AbstractInstallerAction implements ActionInterface
 {
@@ -160,7 +159,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     private function languagesDropdown(string $selectedLanguage): array
     {
         $languages = [];
-        $paths = glob($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/*.xml');
+        $paths = \glob($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/*.xml');
 
         foreach ($paths as $file) {
             try {
@@ -170,11 +169,12 @@ abstract class AbstractInstallerAction implements ActionInterface
                 $languages[] = [
                     'language' => $isoCode,
                     'selected' => $selectedLanguage === $isoCode ? ' selected="selected"' : '',
-                    'name' => $locale->endonym()
+                    'name' => $locale->endonym(),
                 ];
             } catch (\DomainException $e) {
             }
         }
+
         return $languages;
     }
 

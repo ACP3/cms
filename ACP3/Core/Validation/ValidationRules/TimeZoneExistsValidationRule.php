@@ -8,16 +8,18 @@ class TimeZoneExistsValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
         $bool = true;
+
         try {
             new \DateTimeZone($data);
         } catch (\Exception $e) {
             $bool = false;
         }
+
         return $bool;
     }
 }

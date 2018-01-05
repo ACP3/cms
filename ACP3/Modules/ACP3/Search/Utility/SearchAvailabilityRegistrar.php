@@ -39,6 +39,6 @@ class SearchAvailabilityRegistrar
      */
     public function getAvailableModuleNames()
     {
-        return array_keys($this->availableModules);
+        return \array_keys($this->availableModules);
     }
 }

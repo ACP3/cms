@@ -52,7 +52,7 @@ class CategoryAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $this->title->setPageTitlePrefix($data['title']);
 
         return [
-            'form' => array_merge($data, $this->getRequestData()),
+            'form' => \array_merge($data, $this->getRequestData()),
             'category_tree' => $this->fetchCategoryTree(
                 $data['module_id'],
                 $data['parent_id'],
@@ -60,7 +60,7 @@ class CategoryAdminFormBlock extends AbstractRepositoryAwareFormBlock
                 $data['right_id']
             ),
             'mod_list' => $this->fetchModules(),
-            'form_token' => $this->formToken->renderFormToken()
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 
@@ -71,12 +71,13 @@ class CategoryAdminFormBlock extends AbstractRepositoryAwareFormBlock
     {
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $name => $info) {
-            if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
+            if ($info['active'] && \in_array('categories', $info['dependencies']) === true) {
                 $modules[$name]['selected'] = $this->forms->selectEntry('module_id', $info['id']);
             } else {
                 unset($modules[$name]);
             }
         }
+
         return $modules;
     }
 
@@ -92,20 +93,19 @@ class CategoryAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $categories = [];
         if ($moduleId !== null) {
             $categories = $this->categoriesRepository->getAllByModuleId($moduleId);
-            $cCategories = count($categories);
+            $cCategories = \count($categories);
             for ($i = 0; $i < $cCategories; ++$i) {
                 if ($categories[$i]['left_id'] >= $leftId && $categories[$i]['right_id'] <= $rightId) {
                     unset($categories[$i]);
                 } else {
                     $categories[$i]['selected'] = $this->forms->selectEntry('parent_id', $categories[$i]['id'], $parentId);
-                    $categories[$i]['title'] = str_repeat('&nbsp;&nbsp;', $categories[$i]['level']) . $categories[$i]['title'];
+                    $categories[$i]['title'] = \str_repeat('&nbsp;&nbsp;', $categories[$i]['level']) . $categories[$i]['title'];
                 }
             }
         }
 
         return $categories;
     }
-
 
     /**
      * @inheritdoc

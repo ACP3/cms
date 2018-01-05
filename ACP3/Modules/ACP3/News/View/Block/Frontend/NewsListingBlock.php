@@ -124,7 +124,7 @@ class NewsListingBlock extends AbstractListingBlock
     {
         $data = $this->getData();
         $news = $this->fetchNews($resultsPerPage, $data['category_id'], $this->date->getCurrentDateTime());
-        $cNews = count($news);
+        $cNews = \count($news);
 
         $settings = $this->getNewsSettings();
 
@@ -211,7 +211,7 @@ class NewsListingBlock extends AbstractListingBlock
             'news' => $this->getResults($resultsPerPage),
             'dateformat' => $this->getNewsSettings()['dateformat'],
             'categories' => $this->categoriesHelpers->categoriesList('news', $data['category_id']),
-            'pagination' => $this->pagination->render()
+            'pagination' => $this->pagination->render(),
         ];
     }
 

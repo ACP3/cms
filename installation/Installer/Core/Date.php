@@ -25,7 +25,7 @@ class Date extends \ACP3\Core\Date
 
     protected function setFormatAndTimeZone()
     {
-        $defaultTimeZone = date_default_timezone_get();
+        $defaultTimeZone = \date_default_timezone_get();
 
         $this->dateFormatLong = 'd.m.y, H:i';
         $this->dateFormatShort = 'd.m.y';

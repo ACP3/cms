@@ -64,7 +64,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
             $data = [
                 'feed_image' => $this->secureHelper->strEncode($formData['feed_image']),
-                'feed_type' => $formData['feed_type']
+                'feed_type' => $formData['feed_type'],
             ];
 
             return $this->config->saveSettings($data, Feeds\Installer\Schema::MODULE_NAME);

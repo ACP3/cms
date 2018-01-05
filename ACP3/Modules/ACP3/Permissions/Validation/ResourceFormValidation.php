@@ -18,7 +18,7 @@ class ResourceFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'modules',
-                    'message' => $this->translator->t('permissions', 'select_module')
+                    'message' => $this->translator->t('permissions', 'select_module'),
                 ]
             )
             ->addConstraint(
@@ -31,9 +31,9 @@ class ResourceFormValidation extends Core\Validation\AbstractFormValidation
                         'haystack' => [
                             Core\Controller\AreaEnum::AREA_ADMIN,
                             Core\Controller\AreaEnum::AREA_FRONTEND,
-                            Core\Controller\AreaEnum::AREA_WIDGET
-                        ]
-                    ]
+                            Core\Controller\AreaEnum::AREA_WIDGET,
+                        ],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -41,7 +41,7 @@ class ResourceFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'controller',
-                    'message' => $this->translator->t('permissions', 'type_in_controller')
+                    'message' => $this->translator->t('permissions', 'type_in_controller'),
                 ]
             )
             ->addConstraint(
@@ -49,15 +49,15 @@ class ResourceFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'privileges',
-                    'message' => $this->translator->t('permissions', 'privilege_does_not_exist')
+                    'message' => $this->translator->t('permissions', 'privilege_does_not_exist'),
                 ]
             )
             ->addConstraint(
                 Core\Validation\ValidationRules\InternalUriValidationRule::class,
                 [
-                    'data' => strtolower($formData['modules'] . '/' . $formData['controller'] . '/' . $formData['resource'] . '/'),
+                    'data' => \strtolower($formData['modules'] . '/' . $formData['controller'] . '/' . $formData['resource'] . '/'),
                     'field' => 'resource',
-                    'message' => $this->translator->t('permissions', 'type_in_resource')
+                    'message' => $this->translator->t('permissions', 'type_in_resource'),
                 ]
             );
 

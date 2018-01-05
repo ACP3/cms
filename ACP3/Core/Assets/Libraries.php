@@ -17,11 +17,11 @@ class Libraries
     protected $libraries = [
         'moment' => [
             'enabled' => false,
-            'js' => 'moment.min.js'
+            'js' => 'moment.min.js',
         ],
         'jquery' => [
             'enabled' => true,
-            'js' => 'jquery.min.js'
+            'js' => 'jquery.min.js',
         ],
         'js-cookie' => [
             'enabled' => true,
@@ -31,35 +31,35 @@ class Libraries
             'enabled' => false,
             'dependencies' => ['jquery'],
             'css' => 'jquery.fancybox.css',
-            'js' => 'jquery.fancybox.min.js'
+            'js' => 'jquery.fancybox.min.js',
         ],
         'bootstrap' => [
             'enabled' => false,
             'dependencies' => ['jquery'],
             'css' => 'bootstrap.min.css',
-            'js' => 'bootstrap.min.js'
+            'js' => 'bootstrap.min.js',
         ],
         'datatables' => [
             'enabled' => false,
             'dependencies' => ['bootstrap'],
             'css' => 'dataTables.bootstrap.css',
-            'js' => 'jquery.dataTables.js'
+            'js' => 'jquery.dataTables.js',
         ],
         'bootbox' => [
             'enabled' => false,
             'dependencies' => ['bootstrap'],
-            'js' => 'bootbox.js'
+            'js' => 'bootbox.js',
         ],
         'datetimepicker' => [
             'enabled' => false,
             'dependencies' => ['jquery', 'moment'],
             'css' => 'bootstrap-datetimepicker.css',
-            'js' => 'bootstrap-datetimepicker.min.js'
+            'js' => 'bootstrap-datetimepicker.min.js',
         ],
         'font-awesome' => [
             'enabled' => true,
             'css' => 'font-awesome.css',
-        ]
+        ],
     ];
     /**
      * @var EventDispatcherInterface
@@ -112,7 +112,7 @@ class Libraries
     public function enableLibraries(array $libraries)
     {
         foreach ($libraries as $library) {
-            if (array_key_exists($library, $this->libraries) === true) {
+            if (\array_key_exists($library, $this->libraries) === true) {
                 // Resolve javascript library dependencies recursively
                 if (!empty($this->libraries[$library]['dependencies'])) {
                     $this->enableLibraries($this->libraries[$library]['dependencies']);

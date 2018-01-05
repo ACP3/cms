@@ -189,7 +189,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
                 $this->translator->t(
                     'system',
                     $phrase,
-                    ['%modules%' => implode(', ', $dependencies)]
+                    ['%modules%' => \implode(', ', $dependencies)]
                 )
             );
         }

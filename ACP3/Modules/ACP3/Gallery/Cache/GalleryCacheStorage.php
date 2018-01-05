@@ -75,18 +75,18 @@ class GalleryCacheStorage extends Core\Cache\AbstractCacheStorage
     public function saveCache($galleryId)
     {
         $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
-        $cPictures = count($pictures);
+        $cPictures = \count($pictures);
 
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
         for ($i = 0; $i < $cPictures; ++$i) {
             $pictures[$i]['width'] = $settings['thumbwidth'];
             $pictures[$i]['height'] = $settings['thumbheight'];
-            $picInfos = @getimagesize($this->appPath->getModulesDir() . 'gallery/' . $pictures[$i]['file']);
+            $picInfos = @\getimagesize($this->appPath->getModulesDir() . 'gallery/' . $pictures[$i]['file']);
             if ($picInfos !== false) {
                 if ($picInfos[0] > $settings['thumbwidth'] || $picInfos[1] > $settings['thumbheight']) {
                     $newHeight = $settings['thumbheight'];
-                    $newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
+                    $newWidth = \intval($picInfos[0] * $newHeight / $picInfos[1]);
                 }
 
                 $pictures[$i]['width'] = $newWidth ?? $picInfos[0];

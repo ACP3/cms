@@ -71,7 +71,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 'robots' => (int)$formData['robots'],
                 'sitemap_is_enabled' => (int)$formData['sitemap_is_enabled'],
                 'sitemap_save_mode' => (int)$formData['sitemap_save_mode'],
-                'sitemap_separate' => (int)$formData['sitemap_separate']
+                'sitemap_separate' => (int)$formData['sitemap_separate'],
             ];
 
             return $this->config->saveSettings($data, Seo\Installer\Schema::MODULE_NAME);

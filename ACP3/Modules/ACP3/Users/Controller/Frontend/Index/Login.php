@@ -71,7 +71,7 @@ class Login extends Core\Controller\AbstractFrontendAction
 
             if ($this->request->getParameters()->has('redirect')) {
                 return $this->redirect()->temporary(
-                    base64_decode($this->request->getParameters()->get('redirect'))
+                    \base64_decode($this->request->getParameters()->get('redirect'))
                 );
             }
 

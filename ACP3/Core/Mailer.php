@@ -82,9 +82,9 @@ class Mailer
             $this->messageParser->process($this->phpMailer, $this->message);
 
             // Add attachments to the E-mail
-            if (count($this->message->getAttachments()) > 0) {
+            if (\count($this->message->getAttachments()) > 0) {
                 foreach ($this->message->getAttachments() as $attachment) {
-                    if (!empty($attachment) && is_file($attachment)) {
+                    if (!empty($attachment) && \is_file($attachment)) {
                         $this->phpMailer->addAttachment($attachment);
                     }
                 }
@@ -106,7 +106,7 @@ class Mailer
     {
         $replyTo = $this->message->getReplyTo();
 
-        if (is_array($replyTo) === true) {
+        if (\is_array($replyTo) === true) {
             $this->phpMailer->addReplyTo($replyTo['email'], $replyTo['name']);
         } elseif (!empty($replyTo)) {
             $this->phpMailer->addReplyTo($replyTo);
@@ -119,7 +119,7 @@ class Mailer
     private function addFrom()
     {
         $from = $this->message->getFrom();
-        if (is_array($from) === true) {
+        if (\is_array($from) === true) {
             $this->phpMailer->setFrom($from['email'], $from['name']);
         } else {
             $this->phpMailer->setFrom($from);
@@ -142,7 +142,7 @@ class Mailer
     private function sendBcc()
     {
         foreach ($this->message->getRecipients() as $recipient) {
-            set_time_limit(10);
+            \set_time_limit(10);
 
             $this->addRecipients($recipient, true);
         }
@@ -160,12 +160,12 @@ class Mailer
      */
     private function addRecipients($recipients, $bcc = false)
     {
-        if (is_array($recipients) === true) {
+        if (\is_array($recipients) === true) {
             if (isset($recipients['email'], $recipients['name']) === true) {
                 $this->addRecipient($recipients['email'], $recipients['name'], $bcc);
             } else {
                 foreach ($recipients as $recipient) {
-                    if (is_array($recipient) === true) {
+                    if (\is_array($recipient) === true) {
                         $this->addRecipient($recipient['email'], $recipient['name'], $bcc);
                     } else {
                         $this->addRecipient($recipient, '', $bcc);
@@ -208,7 +208,7 @@ class Mailer
     private function sendTo(): bool
     {
         foreach ($this->message->getRecipients() as $recipient) {
-            set_time_limit(20);
+            \set_time_limit(20);
             $this->addRecipients($recipient);
             $this->phpMailer->send();
             $this->phpMailer->clearAllRecipients();
@@ -246,11 +246,11 @@ class Mailer
 
             $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-            if (strtolower($settings['mailer_type']) === 'smtp') {
+            if (\strtolower($settings['mailer_type']) === 'smtp') {
                 $this->phpMailer->set('Mailer', 'smtp');
                 $this->phpMailer->Host = $settings['mailer_smtp_host'];
                 $this->phpMailer->Port = $settings['mailer_smtp_port'];
-                $this->phpMailer->SMTPSecure = in_array($settings['mailer_smtp_security'], ['ssl', 'tls'])
+                $this->phpMailer->SMTPSecure = \in_array($settings['mailer_smtp_security'], ['ssl', 'tls'])
                     ? $settings['mailer_smtp_security']
                     : '';
                 if ((bool)$settings['mailer_smtp_auth'] === true) {

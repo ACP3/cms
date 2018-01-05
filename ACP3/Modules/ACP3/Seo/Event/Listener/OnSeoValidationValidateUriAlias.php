@@ -49,7 +49,7 @@ class OnSeoValidationValidateUriAlias
                         'data' => $event->getFormData(),
                         'field' => 'alias',
                         'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
-                        'extra' => $event->getExtra()
+                        'extra' => $event->getExtra(),
                     ]
                 );
         }

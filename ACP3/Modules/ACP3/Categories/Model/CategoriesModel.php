@@ -36,7 +36,7 @@ class CategoriesModel extends AbstractNestedSetModel
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'module_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'picture' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW
+            'picture' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
         ];
     }
 }

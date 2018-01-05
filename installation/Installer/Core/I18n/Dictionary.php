@@ -53,7 +53,7 @@ class Dictionary implements DictionaryInterface
     {
         $data = [];
 
-        $languageFiles = glob($this->appPath->getInstallerModulesDir() . '*/Resources/i18n/' . $locale . '.xml');
+        $languageFiles = \glob($this->appPath->getInstallerModulesDir() . '*/Resources/i18n/' . $locale . '.xml');
         foreach ($languageFiles as $file) {
             if (isset($data['info']['direction']) === false) {
                 $localeInfo = Locale::create($locale);
@@ -63,9 +63,9 @@ class Dictionary implements DictionaryInterface
             $module = $this->getModuleFromPath($file);
 
             // Über die einzelnen Sprachstrings iterieren
-            $xml = simplexml_load_file($file);
+            $xml = \simplexml_load_file($file);
             foreach ($xml->keys->item as $item) {
-                $data['keys'][strtolower($module . (string)$item['key'])] = trim((string)$item);
+                $data['keys'][\strtolower($module . (string)$item['key'])] = \trim((string)$item);
             }
         }
 

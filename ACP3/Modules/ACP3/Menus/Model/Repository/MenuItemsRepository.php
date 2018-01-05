@@ -20,10 +20,10 @@ class MenuItemsRepository extends NestedSetRepository implements BlockAwareNeste
      */
     public function menuItemExists(int $menuItemId)
     {
-        return ((int)$this->db->fetchColumn(
+        return (int)$this->db->fetchColumn(
                 "SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id",
                 ['id' => $menuItemId]
-            ) > 0);
+            ) > 0;
     }
 
     /**
@@ -125,7 +125,7 @@ class MenuItemsRepository extends NestedSetRepository implements BlockAwareNeste
     {
         return (int)$this->db->executeQuery(
             "SELECT m.left_id FROM {$this->getTableName()} AS m JOIN {$this->getTableName(MenusRepository::TABLE_NAME)} AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC",
-            [$menuName, array_unique($uris)],
+            [$menuName, \array_unique($uris)],
             [\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY]
         )->fetchColumn(
             \PDO::FETCH_COLUMN
@@ -142,7 +142,7 @@ class MenuItemsRepository extends NestedSetRepository implements BlockAwareNeste
     {
         return $this->db->executeQuery(
             "SELECT p.title, p.uri, p.left_id, p.right_id FROM {$this->getTableName()} AS c, {$this->getTableName()} AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC",
-            [array_unique($uris)],
+            [\array_unique($uris)],
             [\Doctrine\DBAL\Connection::PARAM_STR_ARRAY]
         )->fetchAll();
     }

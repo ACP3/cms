@@ -32,8 +32,8 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'message' => $this->translator->t('system', 'flood_no_entry_possible'),
                     'extra' => [
-                        'ip' => $this->ipAddress
-                    ]
+                        'ip' => $this->ipAddress,
+                    ],
                 ]
             )
             ->addConstraint(
@@ -41,7 +41,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'name',
-                    'message' => $this->translator->t('system', 'name_to_short')
+                    'message' => $this->translator->t('system', 'name_to_short'),
                 ]
             )
             ->addConstraint(
@@ -49,7 +49,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'message',
-                    'message' => $this->translator->t('system', 'message_to_short')
+                    'message' => $this->translator->t('system', 'message_to_short'),
                 ]
             );
 

@@ -69,7 +69,7 @@ class LanguagePacksCollector
         $languagePacks = [];
 
         foreach ($this->vendors->getVendors() as $vendors) {
-            $languageFiles = glob($this->appPath->getModulesDir() . $vendors . '/*/Resources/i18n/*.xml');
+            $languageFiles = \glob($this->appPath->getModulesDir() . $vendors . '/*/Resources/i18n/*.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
@@ -100,8 +100,8 @@ class LanguagePacksCollector
             return [
                 $languageIso => [
                     'iso' => $languageIso,
-                    'name' => $locale->endonym()
-                ]
+                    'name' => $locale->endonym(),
+                ],
             ];
         } catch (\DomainException $e) {
             return [];

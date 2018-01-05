@@ -17,8 +17,8 @@ class DoubleColumnTypeTest extends AbstractColumnTypeTest
 
     public function testDoEscape()
     {
-        $this->assertTrue(is_double($this->columnType->doEscape('foo')));
-        $this->assertTrue(is_double($this->columnType->doEscape('0.00')));
-        $this->assertTrue(is_double($this->columnType->doEscape('0')));
+        $this->assertTrue(\is_double($this->columnType->doEscape('foo')));
+        $this->assertTrue(\is_double($this->columnType->doEscape('0.00')));
+        $this->assertTrue(\is_double($this->columnType->doEscape('0')));
     }
 }

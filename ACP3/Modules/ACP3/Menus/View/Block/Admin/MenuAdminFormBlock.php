@@ -24,8 +24,8 @@ class MenuAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $this->title->setPageTitlePrefix($data['title']);
 
         return [
-            'form' => array_merge($data, $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form' => \array_merge($data, $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 

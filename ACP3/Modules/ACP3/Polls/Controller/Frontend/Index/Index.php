@@ -7,7 +7,6 @@
 namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Polls;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
@@ -39,7 +38,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         return $this->block
             ->setData([
                 'ip_address' => $this->request->getSymfonyRequest()->getClientIp(),
-                'user_id' => $this->user->getUserId()
+                'user_id' => $this->user->getUserId(),
             ])
             ->render();
     }

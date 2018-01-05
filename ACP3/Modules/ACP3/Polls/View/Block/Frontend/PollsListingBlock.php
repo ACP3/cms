@@ -47,7 +47,7 @@ class PollsListingBlock extends AbstractListingBlock
 
         return [
             'polls' => $this->getResults($resultsPerPage),
-            'pagination' => $this->pagination->render()
+            'pagination' => $this->pagination->render(),
         ];
     }
 
@@ -81,7 +81,7 @@ class PollsListingBlock extends AbstractListingBlock
             $this->pagination->getResultsStartOffset(),
             $resultsPerPage
         );
-        $cPolls = count($polls);
+        $cPolls = \count($polls);
 
         for ($i = 0; $i < $cPolls; ++$i) {
             if ($polls[$i]['has_voted'] == 1 ||

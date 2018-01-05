@@ -19,7 +19,7 @@ trait DuplicationAwareTrait
         $resultSet = $this->getRepository()->getOneById($entryId);
 
         if (!empty($resultSet)) {
-            return $this->save(array_merge($resultSet, $this->getDefaultDataForDuplication()));
+            return $this->save(\array_merge($resultSet, $this->getDefaultDataForDuplication()));
         }
 
         return false;

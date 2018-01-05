@@ -45,7 +45,7 @@ class SystemDesignsBlock extends AbstractBlock
     public function render()
     {
         return [
-            'designs' => $this->getAvailableDesigns()
+            'designs' => $this->getAvailableDesigns(),
         ];
     }
 

@@ -27,7 +27,7 @@ class GuestbookModel extends AbstractModel
             'message' => ColumnTypes::COLUMN_TYPE_TEXT,
             'website' => ColumnTypes::COLUMN_TYPE_TEXT,
             'mail' => ColumnTypes::COLUMN_TYPE_RAW,
-            'active' => ColumnTypes::COLUMN_TYPE_INT
+            'active' => ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

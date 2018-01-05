@@ -76,10 +76,11 @@ class Locale implements LocaleInterface
             $availableLanguagePacks = $this->availableLanguagePacks->getAll();
 
             foreach ($this->request->getUserAgent()->parseAcceptLanguage() as $locale => $headerItem) {
-                $locale = str_replace('-', '_', $locale);
+                $locale = \str_replace('-', '_', $locale);
                 foreach ($availableLanguagePacks as $languagePack) {
-                    if ($locale === $languagePack || $locale === substr($languagePack, 0, strpos($languagePack, '_'))) {
+                    if ($locale === $languagePack || $locale === \substr($languagePack, 0, \strpos($languagePack, '_'))) {
                         $this->locale = $languagePack;
+
                         break 2;
                     }
                 }
@@ -92,7 +93,7 @@ class Locale implements LocaleInterface
      */
     public function getShortIsoCode(): string
     {
-        return substr($this->getLocale(), 0, strpos($this->getLocale(), '_'));
+        return \substr($this->getLocale(), 0, \strpos($this->getLocale(), '_'));
     }
 
     /**

@@ -68,7 +68,7 @@ class UsersListingBlock extends AbstractListingBlock
         return [
             'users' => $this->getResults($resultsPerPage),
             'pagination' => $this->pagination->render(),
-            'all_users' => $this->getTotalResults()
+            'all_users' => $this->getTotalResults(),
         ];
     }
 }

@@ -74,7 +74,7 @@ class MessageProcessorTest extends \PHPUnit_Framework_TestCase
 
         $this->messageProcessor->process($this->phpMailerMock, $message);
 
-        $this->assertEquals("Foobarbaz", $this->phpMailerMock->Body);
+        $this->assertEquals('Foobarbaz', $this->phpMailerMock->Body);
     }
 
     public function testTextMessageWithSignature()

@@ -25,6 +25,6 @@ class UserRolesColumnRenderer extends AbstractColumnRenderer
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
-        return isset($dbResultRow[$field]) ? implode(', ', $this->acl->getUserRoleNames($dbResultRow[$field])) : null;
+        return isset($dbResultRow[$field]) ? \implode(', ', $this->acl->getUserRoleNames($dbResultRow[$field])) : null;
     }
 }

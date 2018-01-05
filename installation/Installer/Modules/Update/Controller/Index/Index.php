@@ -44,13 +44,13 @@ class Index extends Core\Controller\AbstractInstallerAction
     public function executePost()
     {
         $results = $this->schemaUpdateModel->updateModules();
-        ksort($results);
+        \ksort($results);
 
         $this->view->setTemplate('Update/Install/index.result.tpl');
         $this->clearCaches();
 
         return [
-            'results' => $results
+            'results' => $results,
         ];
     }
 
@@ -58,7 +58,7 @@ class Index extends Core\Controller\AbstractInstallerAction
     {
         return Purge::doPurge([
             ACP3_ROOT_DIR . 'cache/',
-            $this->appPath->getUploadsDir() . 'assets'
+            $this->appPath->getUploadsDir() . 'assets',
         ]);
     }
 }

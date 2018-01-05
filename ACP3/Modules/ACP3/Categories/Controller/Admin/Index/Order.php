@@ -8,7 +8,6 @@ namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
-use ACP3\Modules\ACP3\Menus;
 
 class Order extends Core\Controller\AbstractFrontendAction
 {

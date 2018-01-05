@@ -21,10 +21,11 @@ class NewslettersRepository extends Core\Model\Repository\AbstractRepository
     public function newsletterExists($newsletterId, $status = '')
     {
         $where = empty($status) === false ? ' AND status = :status' : '';
-        return ((int)$this->db->fetchAssoc(
+
+        return (int)$this->db->fetchAssoc(
                 "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id" . $where,
                 ['id' => $newsletterId, 'status' => $status]
-            ) > 0);
+            ) > 0;
     }
 
     /**
@@ -49,6 +50,7 @@ class NewslettersRepository extends Core\Model\Repository\AbstractRepository
     public function countAll($status = '')
     {
         $where = empty($time) === false ? ' WHERE status = :status' : '';
+
         return (int)$this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
             ['status' => $status]
@@ -66,6 +68,7 @@ class NewslettersRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = empty($status) === false ? ' WHERE status = :status' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
+
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()}{$where} ORDER BY `date` DESC {$limitStmt}",
             ['status' => $status]

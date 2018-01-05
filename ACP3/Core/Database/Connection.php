@@ -190,7 +190,7 @@ class Connection
             $query,
             $params,
             $types,
-            $cache ? new QueryCacheProfile($lifetime, $cacheKey ?: md5($query)) : null
+            $cache ? new QueryCacheProfile($lifetime, $cacheKey ?: \md5($query)) : null
         );
     }
 

@@ -15,11 +15,11 @@ class DatabaseConnectionValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && is_array($field)) {
-            $dbHost = reset($field);
-            $dbUser = next($field);
-            $dbPassword = next($field);
-            $dbName = next($field);
+        if (\is_array($data) && \is_array($field)) {
+            $dbHost = \reset($field);
+            $dbUser = \next($field);
+            $dbPassword = \next($field);
+            $dbName = \next($field);
 
             try {
                 $config = new \Doctrine\DBAL\Configuration();
@@ -30,14 +30,14 @@ class DatabaseConnectionValidationRule extends AbstractValidationRule
                     'password' => $data[$dbPassword],
                     'host' => $data[$dbHost],
                     'driver' => 'pdo_mysql',
-                    'charset' => 'utf8'
+                    'charset' => 'utf8',
                 ];
                 $db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
                 $db->query('USE `' . $data[$dbName] . '`');
 
                 return true;
             } catch (\Exception $e) {
-                $this->setMessage(sprintf($this->getMessage(), $e->getMessage()));
+                $this->setMessage(\sprintf($this->getMessage(), $e->getMessage()));
             }
         }
 

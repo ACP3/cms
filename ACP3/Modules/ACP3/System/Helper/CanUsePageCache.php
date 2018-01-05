@@ -38,6 +38,7 @@ class CanUsePageCache
     public function canUsePageCache()
     {
         $systemSettings = $this->settings->getSettings(Schema::MODULE_NAME);
+
         return $systemSettings['page_cache_is_enabled'] == 1 && $this->environment === ApplicationMode::PRODUCTION;
     }
 }

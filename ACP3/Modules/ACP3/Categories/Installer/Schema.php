@@ -13,7 +13,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}categories` (
+            'CREATE TABLE `{pre}categories` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `root_id` INT(10) UNSIGNED NOT NULL,
                 `parent_id` INT(10) UNSIGNED NOT NULL,
@@ -27,7 +27,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 INDEX `left_id` (`left_id`),
                 INDEX (`module_id`),
                 FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -36,7 +36,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
      */
     public function removeTables()
     {
-        return ["DROP TABLE IF EXISTS `{pre}categories`;"];
+        return ['DROP TABLE IF EXISTS `{pre}categories`;'];
     }
 
     /**
@@ -47,7 +47,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
         return [
             'width' => 100,
             'height' => 50,
-            'filesize' => 40960
+            'filesize' => 40960,
         ];
     }
 
@@ -63,8 +63,8 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                     'manage' => PrivilegeEnum::ADMIN_MANAGE,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'order' => PrivilegeEnum::ADMIN_CREATE,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
-                ]
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
+                ],
             ],
         ];
     }

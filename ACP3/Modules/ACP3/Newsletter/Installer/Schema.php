@@ -18,7 +18,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 'accounts' => [
                     'activate' => PrivilegeEnum::ADMIN_VIEW,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
-                    'index' => PrivilegeEnum::ADMIN_VIEW
+                    'index' => PrivilegeEnum::ADMIN_VIEW,
                 ],
                 'index' => [
                     'index' => PrivilegeEnum::ADMIN_VIEW,
@@ -26,25 +26,25 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'send' => PrivilegeEnum::ADMIN_CREATE,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
-                ]
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
+                ],
             ],
             'frontend' => [
                 'archive' => [
                     'details' => PrivilegeEnum::FRONTEND_VIEW,
-                    'index' => PrivilegeEnum::FRONTEND_VIEW
+                    'index' => PrivilegeEnum::FRONTEND_VIEW,
                 ],
                 'index' => [
                     'activate' => PrivilegeEnum::FRONTEND_VIEW,
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                    'unsubscribe' => PrivilegeEnum::FRONTEND_VIEW
-                ]
+                    'unsubscribe' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
             ],
             'widget' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -70,7 +70,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}newsletters` (
+            'CREATE TABLE `{pre}newsletters` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `date` DATETIME NOT NULL,
                 `updated_at` DATETIME NOT NULL,
@@ -82,8 +82,8 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 PRIMARY KEY (`id`),
                 INDEX (`user_id`),
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
-            ) {ENGINE} {CHARSET};",
-            "CREATE TABLE `{pre}newsletter_accounts` (
+            ) {ENGINE} {CHARSET};',
+            'CREATE TABLE `{pre}newsletter_accounts` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `mail` VARCHAR(255) NOT NULL,
                 `salutation` TINYINT(1) NOT NULL,
@@ -94,15 +94,15 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 PRIMARY KEY (`id`),
                 INDEX(`mail`),
                 INDEX(`hash`)
-            ) {ENGINE} {CHARSET};",
-            "CREATE TABLE `{pre}newsletter_account_history` (
+            ) {ENGINE} {CHARSET};',
+            'CREATE TABLE `{pre}newsletter_account_history` (
                 `newsletter_account_id` INT(10) UNSIGNED NOT NULL,
                 `date` DATETIME NOT NULL,
                 `action` TINYINT(1) NOT NULL,
                 INDEX (`newsletter_account_id`),
                 FOREIGN KEY (`newsletter_account_id`) REFERENCES `{pre}newsletter_accounts` (`id`)
-            ) {ENGINE} {CHARSET};",
-            "CREATE TABLE `{pre}newsletter_queue` (
+            ) {ENGINE} {CHARSET};',
+            'CREATE TABLE `{pre}newsletter_queue` (
                 `newsletter_account_id` INT(10) UNSIGNED NOT NULL,
                 `newsletter_id` INT(10) UNSIGNED NOT NULL,
                 UNIQUE KEY (`newsletter_account_id`, `newsletter_id`),
@@ -110,7 +110,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 INDEX (`newsletter_id`),
                 FOREIGN KEY (`newsletter_account_id`) REFERENCES `{pre}newsletter_accounts` (`id`),
                 FOREIGN KEY (`newsletter_id`) REFERENCES `{pre}newsletters` (`id`) ON DELETE CASCADE
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -120,10 +120,10 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            "DROP TABLE IF EXISTS `{pre}newsletter_account_history`;",
-            "DROP TABLE IF EXISTS `{pre}newsletter_queue`;",
-            "DROP TABLE IF EXISTS `{pre}newsletter_accounts`;",
-            "DROP TABLE IF EXISTS `{pre}newsletters`;"
+            'DROP TABLE IF EXISTS `{pre}newsletter_account_history`;',
+            'DROP TABLE IF EXISTS `{pre}newsletter_queue`;',
+            'DROP TABLE IF EXISTS `{pre}newsletter_accounts`;',
+            'DROP TABLE IF EXISTS `{pre}newsletters`;',
         ];
     }
 
@@ -135,7 +135,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
         return [
             'mail' => '',
             'mailsig' => '',
-            'html' => 1
+            'html' => 1,
         ];
     }
 }

@@ -21,8 +21,8 @@ class SubscribeFormValidation extends AbstractFormValidation
                     'field' => 'salutation',
                     'message' => $this->translator->t('newsletter', 'select_salutation'),
                     'extra' => [
-                        'haystack' => [0, 1, 2]
-                    ]
+                        'haystack' => [0, 1, 2],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -30,7 +30,7 @@ class SubscribeFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->translator->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format'),
                 ]
             )
             ->addConstraint(
@@ -38,7 +38,7 @@ class SubscribeFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->translator->t('newsletter', 'account_exists')
+                    'message' => $this->translator->t('newsletter', 'account_exists'),
                 ]
             );
 

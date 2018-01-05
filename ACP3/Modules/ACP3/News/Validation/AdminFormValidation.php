@@ -35,8 +35,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'active',
                     'message' => $this->translator->t('news', 'select_active'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -44,7 +44,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
-                    'message' => $this->translator->t('system', 'select_date')
+                    'message' => $this->translator->t('system', 'select_date'),
                 ]
             )
             ->addConstraint(
@@ -52,7 +52,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->translator->t('news', 'title_to_short')
+                    'message' => $this->translator->t('news', 'title_to_short'),
                 ]
             )
             ->addConstraint(
@@ -60,7 +60,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'text',
-                    'message' => $this->translator->t('news', 'text_to_short')
+                    'message' => $this->translator->t('news', 'text_to_short'),
                 ]
             )
             ->addConstraint(
@@ -68,7 +68,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['cat', 'cat_create'],
-                    'message' => $this->translator->t('news', 'select_category')
+                    'message' => $this->translator->t('news', 'select_category'),
                 ]
             )
             ->addConstraint(
@@ -76,7 +76,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['link_title', 'uri', 'target'],
-                    'message' => $this->translator->t('news', 'complete_hyperlink_statements')
+                    'message' => $this->translator->t('news', 'complete_hyperlink_statements'),
                 ]
             );
 

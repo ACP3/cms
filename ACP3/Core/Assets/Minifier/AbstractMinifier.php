@@ -121,7 +121,7 @@ abstract class AbstractMinifier implements MinifierInterface
         $filename .= '_' . $this->assets->getEnabledLibrariesAsString();
         $filename .= '_' . $group;
 
-        return md5($filename);
+        return \md5($filename);
     }
 
     /**
@@ -140,15 +140,15 @@ abstract class AbstractMinifier implements MinifierInterface
         $cacheId = 'assets-last-generated-' . $filenameHash;
 
         if (false === ($lastGenerated = $this->systemCache->fetch($cacheId))) {
-            $lastGenerated = time(); // Assets are not cached -> set the current time as the new timestamp
+            $lastGenerated = \time(); // Assets are not cached -> set the current time as the new timestamp
         }
 
         $path = $this->buildAssetPath($debug, $this->getAssetGroup(), $filenameHash, $lastGenerated);
 
         // If the requested minified StyleSheet and/or the JavaScript file doesn't exist, generate it
-        if (is_file($this->appPath->getUploadsDir() . $path) === false || $debug === true) {
+        if (\is_file($this->appPath->getUploadsDir() . $path) === false || $debug === true) {
             // Get the enabled libraries and filter out empty entries
-            $files = array_filter(
+            $files = \array_filter(
                 $this->processLibraries($layout),
                 function ($var) {
                     return !empty($var);
@@ -174,18 +174,18 @@ abstract class AbstractMinifier implements MinifierInterface
             'options' => [
                 \Minify::TYPE_CSS => [\Minify_CSSmin::class, 'minify'],
                 \Minify::TYPE_JS => [JSMin::class, 'minify'],
-            ]
+            ],
         ];
 
         $minify = new \Minify(new \Minify_Cache_Null(), $this->logger);
         $content = $minify->combine($files, $options);
 
-        if (!is_dir($this->appPath->getUploadsDir() . 'assets')) {
-            @mkdir($this->appPath->getUploadsDir() . 'assets', 0755);
+        if (!\is_dir($this->appPath->getUploadsDir() . 'assets')) {
+            @\mkdir($this->appPath->getUploadsDir() . 'assets', 0755);
         }
 
         // Write the contents of the file to the uploads folder
-        file_put_contents($path, $content, LOCK_EX);
+        \file_put_contents($path, $content, LOCK_EX);
     }
 
     /**

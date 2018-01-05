@@ -23,10 +23,11 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     public function resultExists($newsId, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
-        return ((int)$this->db->fetchColumn(
+
+        return (int)$this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id' . $period,
                 ['id' => $newsId, 'time' => $time, 'active' => 1]
-            ) > 0);
+            ) > 0;
     }
 
     /**
@@ -48,6 +49,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
         }
 
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
+
         return (int)$this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC',
             ['time' => $time, 'active' => 1]
@@ -66,6 +68,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
+
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()} WHERE category_id IN(:categoryId) {$where} ORDER BY `start` DESC, `end` DESC, `id` DESC {$limitStmt}",
             ['time' => $time, 'categoryId' => $categoryIds, 'active' => 1],

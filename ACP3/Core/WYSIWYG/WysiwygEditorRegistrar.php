@@ -56,7 +56,7 @@ class WysiwygEditorRegistrar
         }
 
         throw new \InvalidArgumentException(
-            sprintf('Can not find the WYSIWYG-Editor with the name: %s', $serviceId)
+            \sprintf('Can not find the WYSIWYG-Editor with the name: %s', $serviceId)
         );
     }
 }

@@ -14,7 +14,6 @@ use ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoryAdminFormBlock;
 
 class CategoryAdminFormBlockTest extends AbstractFormBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -30,8 +29,8 @@ class CategoryAdminFormBlockTest extends AbstractFormBlockTest
                 'foo' => [
                     'id' => 1,
                     'active' => true,
-                    'dependencies' => ['categories']
-                ]
+                    'dependencies' => ['categories'],
+                ],
             ]);
 
         $categoriesRepository = $this->getMockBuilder(CategoriesRepository::class)
@@ -53,7 +52,7 @@ class CategoryAdminFormBlockTest extends AbstractFormBlockTest
             'form',
             'category_tree',
             'mod_list',
-            'form_token'
+            'form_token',
         ];
     }
 }

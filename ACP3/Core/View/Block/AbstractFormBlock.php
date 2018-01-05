@@ -43,7 +43,7 @@ abstract class AbstractFormBlock extends AbstractBlock implements FormBlockInter
      */
     public function getData(): array
     {
-        return array_merge($this->getDefaultData(), parent::getData());
+        return \array_merge($this->getDefaultData(), parent::getData());
     }
 
     /**

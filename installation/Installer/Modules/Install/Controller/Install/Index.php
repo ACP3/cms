@@ -84,9 +84,9 @@ class Index extends AbstractAction
     public function execute()
     {
         return [
-            'time_zones' => $this->dateHelper->getTimeZones(date_default_timezone_get()),
-            'form' => array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
-            'designs' => $this->getAvailableDesigns()
+            'time_zones' => $this->dateHelper->getTimeZones(\date_default_timezone_get()),
+            'form' => \array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
+            'designs' => $this->getAvailableDesigns(),
         ];
     }
 
@@ -141,6 +141,7 @@ class Index extends AbstractAction
             return $this->renderErrorBoxOnFailedFormValidation($e);
         } catch (\Exception $e) {
             $this->get('core.logger.system_logger')->error($e);
+
             return 'Install/Install/install.error.tpl';
         }
     }

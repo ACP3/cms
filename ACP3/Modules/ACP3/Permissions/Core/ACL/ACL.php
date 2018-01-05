@@ -81,7 +81,7 @@ class ACL implements ACLInterface
      */
     public function userHasRole(int $roleId): bool
     {
-        return in_array($roleId, $this->getUserRoleIds($this->user->getUserId()));
+        return \in_array($roleId, $this->getUserRoleIds($this->user->getUserId()));
     }
 
     /**
@@ -99,6 +99,7 @@ class ACL implements ACLInterface
                 }
             }
         }
+
         return $this->userRoles[$userId];
     }
 
@@ -111,6 +112,7 @@ class ACL implements ACLInterface
         foreach ($this->userRoleRepository->getRolesByUserId($userId) as $userRole) {
             $roles[] = $userRole['name'];
         }
+
         return $roles;
     }
 
@@ -140,7 +142,7 @@ class ACL implements ACLInterface
     public function hasPermission(string $resource): bool
     {
         if (!empty($resource) && $this->controllerActionExists->controllerActionExists($resource) === true) {
-            $resourceParts = explode('/', $resource);
+            $resourceParts = \explode('/', $resource);
 
             if ($this->modules->isActive($resourceParts[1]) === true) {
                 return $this->canAccessResource($resource);
@@ -166,6 +168,7 @@ class ACL implements ACLInterface
         if (isset($this->getResources()[$area][$resource])) {
             $module = $resourceParts[1];
             $privilegeKey = $this->getResources()[$area][$resource]['key'];
+
             return $this->userHasPrivilege($module, $privilegeKey) === true || $this->user->isSuperUser() === true;
         }
 
@@ -179,7 +182,7 @@ class ACL implements ACLInterface
      */
     private function convertResourcePathToArray(string $resource): array
     {
-        $resourceArray = explode('/', $resource);
+        $resourceArray = \explode('/', $resource);
 
         if (empty($resourceArray[2]) === true) {
             $resourceArray[2] = 'index';
@@ -187,6 +190,7 @@ class ACL implements ACLInterface
         if (empty($resourceArray[3]) === true) {
             $resourceArray[3] = 'index';
         }
+
         return $resourceArray;
     }
 
@@ -214,7 +218,7 @@ class ACL implements ACLInterface
      */
     private function userHasPrivilege(string $module, string $privilegeKey): bool
     {
-        $privilegeKey = strtolower($privilegeKey);
+        $privilegeKey = \strtolower($privilegeKey);
 
         return $this->getPrivileges()[$module][$privilegeKey]['access'] ?? false;
     }

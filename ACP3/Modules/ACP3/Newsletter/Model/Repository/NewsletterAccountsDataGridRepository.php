@@ -30,7 +30,7 @@ class NewsletterAccountsDataGridRepository extends AbstractDataGridRepository
      */
     protected function getParameters(QueryOption ...$queryOptions)
     {
-        return array_merge(
+        return \array_merge(
             ['status' => AccountStatus::ACCOUNT_STATUS_DISABLED],
             parent::getParameters(...$queryOptions)
         );

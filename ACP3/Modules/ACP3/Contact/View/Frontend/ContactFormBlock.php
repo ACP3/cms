@@ -46,14 +46,14 @@ class ContactFormBlock extends AbstractFormBlock
     public function render()
     {
         $copy = [
-            1 => $this->translator->t('contact', 'send_copy_to_sender')
+            1 => $this->translator->t('contact', 'send_copy_to_sender'),
         ];
 
         return [
-            'form' => array_merge($this->getData(), $this->getRequestData()),
+            'form' => \array_merge($this->getData(), $this->getRequestData()),
             'copy' => $this->forms->checkboxGenerator('copy', $copy, 0),
             'contact' => $this->settings->getSettings(Schema::MODULE_NAME),
-            'form_token' => $this->formToken->renderFormToken()
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 

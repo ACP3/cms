@@ -65,7 +65,7 @@ class Dictionary implements DictionaryInterface
         $data = [];
 
         foreach ($this->vendors->getVendors() as $vendor) {
-            $languageFiles = glob($this->appPath->getModulesDir() . $vendor . '/*/Resources/i18n/' . $locale . '.xml');
+            $languageFiles = \glob($this->appPath->getModulesDir() . $vendor . '/*/Resources/i18n/' . $locale . '.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
@@ -77,9 +77,9 @@ class Dictionary implements DictionaryInterface
                     $module = $this->getModuleFromPath($file);
 
                     // Iterate over all language keys
-                    $xml = simplexml_load_file($file);
+                    $xml = \simplexml_load_file($file);
                     foreach ($xml->keys->item as $item) {
-                        $data['keys'][strtolower($module . (string)$item['key'])] = trim((string)$item);
+                        $data['keys'][\strtolower($module . (string)$item['key'])] = \trim((string)$item);
                     }
                 }
             }

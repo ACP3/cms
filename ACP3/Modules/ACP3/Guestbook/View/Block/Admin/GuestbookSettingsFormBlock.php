@@ -54,16 +54,16 @@ class GuestbookSettingsFormBlock extends AbstractSettingsFormBlock
         $notificationTypes = [
             0 => $this->translator->t('guestbook', 'no_notification'),
             1 => $this->translator->t('guestbook', 'notify_on_new_entry'),
-            2 => $this->translator->t('guestbook', 'notify_and_enable')
+            2 => $this->translator->t('guestbook', 'notify_and_enable'),
         ];
 
         return [
             'dateformat' => $this->date->dateFormatDropdown($settings['dateformat']),
             'notify' => $this->forms->choicesGenerator('notify', $notificationTypes, $settings['notify']),
             'overlay' => $this->forms->yesNoCheckboxGenerator('overlay', $settings['overlay']),
-            'form' => array_merge($settings, $this->getRequestData()),
+            'form' => \array_merge($settings, $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken(),
-            'options' => $this->fetchOptions($settings)
+            'options' => $this->fetchOptions($settings),
         ];
     }
 

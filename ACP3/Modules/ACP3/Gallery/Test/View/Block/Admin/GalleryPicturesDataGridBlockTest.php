@@ -59,7 +59,7 @@ class GalleryPicturesDataGridBlockTest extends AbstractDataGridBlockTest
             ->method('getOneById')
             ->with(2)
             ->willReturn([
-                'title' => 'Test-Gallery'
+                'title' => 'Test-Gallery',
             ]);
     }
 
@@ -80,7 +80,7 @@ class GalleryPicturesDataGridBlockTest extends AbstractDataGridBlockTest
         return [
             'gallery_id',
             'grid',
-            'show_mass_delete_button'
+            'show_mass_delete_button',
         ];
     }
 }

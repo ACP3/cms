@@ -56,7 +56,7 @@ class AbstractFormAction extends AbstractFrontendAction
 
         return [
             $text,
-            $result
+            $result,
         ];
     }
 }

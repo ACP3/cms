@@ -53,6 +53,7 @@ class Helpers
         if ($this->isActive) {
             $this->view->assign('emoticons_field_id', empty($formFieldId) ? 'message' : $formFieldId);
             $this->view->assign('emoticons', $this->emoticonsCache->getCache());
+
             return $this->view->fetchTemplate('emoticons/emoticons.tpl');
         }
 
@@ -70,7 +71,7 @@ class Helpers
     public function emoticonsReplace($string)
     {
         if ($this->isActive) {
-            return strtr($string, $this->emoticonsCache->getCache());
+            return \strtr($string, $this->emoticonsCache->getCache());
         }
 
         return $string;

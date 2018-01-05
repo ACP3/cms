@@ -11,7 +11,6 @@ use ACP3\Modules\ACP3\Users\Installer\Schema;
 
 class UsersSettingsFormBlock extends AbstractSettingsFormBlock
 {
-
     /**
      * @inheritdoc
      */
@@ -24,8 +23,8 @@ class UsersSettingsFormBlock extends AbstractSettingsFormBlock
                 'enable_registration',
                 $settings['enable_registration']
             ),
-            'form' => array_merge($settings, $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form' => \array_merge($settings, $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 

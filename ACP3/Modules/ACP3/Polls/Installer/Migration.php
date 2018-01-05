@@ -13,7 +13,7 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
     {
         return [
             31 => [
-                "ALTER TABLE `{pre}polls` CHANGE `question` `title` VARCHAR(120) {CHARSET} NOT NULL",
+                'ALTER TABLE `{pre}polls` CHANGE `question` `title` VARCHAR(120) {CHARSET} NOT NULL',
             ],
             32 => [
                 'UPDATE `{pre}seo` SET `uri`=REPLACE(`uri`, "polls/", "polls/index/") WHERE `uri` LIKE "polls/%";',
@@ -24,34 +24,34 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
                 $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "polls/result/", "polls/index/result/") WHERE `uri` LIKE "polls/result/%";' : '',
             ],
             34 => [
-                "ALTER TABLE `{pre}polls` ENGINE = InnoDB",
-                "ALTER TABLE `{pre}poll_answers` ENGINE = InnoDB",
-                "ALTER TABLE `{pre}poll_votes` ENGINE = InnoDB",
+                'ALTER TABLE `{pre}polls` ENGINE = InnoDB',
+                'ALTER TABLE `{pre}poll_answers` ENGINE = InnoDB',
+                'ALTER TABLE `{pre}poll_votes` ENGINE = InnoDB',
             ],
             35 => [
-                "ALTER TABLE `{pre}poll_answers` ADD FOREIGN KEY (`poll_id`) REFERENCES `{pre}polls` (`id`) ON DELETE CASCADE;",
-                "ALTER TABLE `{pre}poll_votes` DROP INDEX `poll_id`",
-                "ALTER TABLE `{pre}poll_votes` ADD INDEX (`poll_id`)",
-                "ALTER TABLE `{pre}poll_votes` ADD INDEX (`answer_id`)",
-                "ALTER TABLE `{pre}poll_votes` ADD INDEX (`user_id`)",
-                "ALTER TABLE `{pre}poll_votes` ADD FOREIGN KEY (`poll_id`) REFERENCES `{pre}polls` (`id`) ON DELETE CASCADE;",
-                "ALTER TABLE `{pre}poll_votes` ADD FOREIGN KEY (`answer_id`) REFERENCES `{pre}poll_answers` (`id`) ON DELETE CASCADE;",
+                'ALTER TABLE `{pre}poll_answers` ADD FOREIGN KEY (`poll_id`) REFERENCES `{pre}polls` (`id`) ON DELETE CASCADE;',
+                'ALTER TABLE `{pre}poll_votes` DROP INDEX `poll_id`',
+                'ALTER TABLE `{pre}poll_votes` ADD INDEX (`poll_id`)',
+                'ALTER TABLE `{pre}poll_votes` ADD INDEX (`answer_id`)',
+                'ALTER TABLE `{pre}poll_votes` ADD INDEX (`user_id`)',
+                'ALTER TABLE `{pre}poll_votes` ADD FOREIGN KEY (`poll_id`) REFERENCES `{pre}polls` (`id`) ON DELETE CASCADE;',
+                'ALTER TABLE `{pre}poll_votes` ADD FOREIGN KEY (`answer_id`) REFERENCES `{pre}poll_answers` (`id`) ON DELETE CASCADE;',
             ],
             36 => [
-                "ALTER TABLE `{pre}polls` CHANGE `user_id` `user_id` INT(10) UNSIGNED",
-                "ALTER TABLE `{pre}polls` ADD INDEX (`user_id`)",
-                "UPDATE `{pre}polls` SET `user_id` = NULL WHERE `user_id` = 0",
-                "ALTER TABLE `{pre}polls` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL",
-                "ALTER TABLE `{pre}poll_votes` CHANGE `user_id` `user_id` INT(10) UNSIGNED",
-                "ALTER TABLE `{pre}poll_votes` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL"
+                'ALTER TABLE `{pre}polls` CHANGE `user_id` `user_id` INT(10) UNSIGNED',
+                'ALTER TABLE `{pre}polls` ADD INDEX (`user_id`)',
+                'UPDATE `{pre}polls` SET `user_id` = NULL WHERE `user_id` = 0',
+                'ALTER TABLE `{pre}polls` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL',
+                'ALTER TABLE `{pre}poll_votes` CHANGE `user_id` `user_id` INT(10) UNSIGNED',
+                'ALTER TABLE `{pre}poll_votes` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL',
             ],
             37 => [
-                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
+                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';",
             ],
             38 => [
-                "ALTER TABLE `{pre}polls` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `end`;",
-                "UPDATE `{pre}polls` SET `updated_at` = `start`;"
-            ]
+                'ALTER TABLE `{pre}polls` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `end`;',
+                'UPDATE `{pre}polls` SET `updated_at` = `start`;',
+            ],
         ];
     }
 

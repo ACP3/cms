@@ -62,7 +62,7 @@ class CSS extends AbstractMinifier
                 '',
                 '',
                 static::ASSETS_PATH_CSS,
-                trim($file)
+                \trim($file)
             );
         }
 

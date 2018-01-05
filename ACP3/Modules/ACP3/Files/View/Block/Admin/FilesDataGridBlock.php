@@ -56,15 +56,15 @@ class FilesDataGridBlock extends AbstractDataGridBlock
                 'fields' => ['active'],
                 'custom' => [
                     'search' => [0, 1],
-                    'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')]
-                ]
+                    'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')],
+                ],
             ], 60)
             ->addColumn([
                 'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['start', 'end'],
                 'default_sort' => $settings['order_by'] === 'date',
-                'default_sort_direction' => 'desc'
+                'default_sort_direction' => 'desc',
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('files', 'title'),
@@ -74,15 +74,15 @@ class FilesDataGridBlock extends AbstractDataGridBlock
             ->addColumn([
                 'label' => $this->translator->t('categories', 'category'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['cat']
+                'fields' => ['cat'],
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('files', 'filesize'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['size'],
                 'customer' => [
-                    'default_value' => $this->translator->t('files', 'unknown_filesize')
-                ]
+                    'default_value' => $this->translator->t('files', 'unknown_filesize'),
+                ],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
@@ -90,8 +90,8 @@ class FilesDataGridBlock extends AbstractDataGridBlock
                 'fields' => ['id'],
                 'primary' => true,
                 'custom' => [
-                    'path' => Helpers::URL_KEY_PATTERN
-                ]
+                    'path' => Helpers::URL_KEY_PATTERN,
+                ],
             ], 10);
 
         if ($this->acl->hasPermission('admin/files/index/sort') && $settings['order_by'] === 'custom') {
@@ -104,7 +104,7 @@ class FilesDataGridBlock extends AbstractDataGridBlock
                     'custom' => [
                         'route_sort_down' => 'acp/files/index/sort/id_%d/action_down',
                         'route_sort_up' => 'acp/files/index/sort/id_%d/action_up',
-                    ]
+                    ],
                 ], 15);
         }
     }
@@ -130,7 +130,7 @@ class FilesDataGridBlock extends AbstractDataGridBlock
 
         return [
             'grid' => $grid,
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

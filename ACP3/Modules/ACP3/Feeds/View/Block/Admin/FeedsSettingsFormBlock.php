@@ -21,13 +21,13 @@ class FeedsSettingsFormBlock extends AbstractSettingsFormBlock
         $feedTypes = [
             'RSS 1.0' => 'RSS 1.0',
             'RSS 2.0' => 'RSS 2.0',
-            'ATOM' => 'ATOM'
+            'ATOM' => 'ATOM',
         ];
 
         return [
             'feed_types' => $this->forms->choicesGenerator('feed_type', $feedTypes, $settings['feed_type']),
-            'form' => array_merge($settings, $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form' => \array_merge($settings, $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 

@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PollsDataGridBlock extends AbstractDataGridBlock
 {
-
     /**
      * @inheritdoc
      */
@@ -26,7 +25,7 @@ class PollsDataGridBlock extends AbstractDataGridBlock
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['start', 'end'],
                 'default_sort' => true,
-                'default_sort_direction' => 'desc'
+                'default_sort_direction' => 'desc',
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('polls', 'question'),
@@ -37,7 +36,7 @@ class PollsDataGridBlock extends AbstractDataGridBlock
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
             ], 10);
     }
 
@@ -61,7 +60,7 @@ class PollsDataGridBlock extends AbstractDataGridBlock
 
         return [
             'grid' => $grid,
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

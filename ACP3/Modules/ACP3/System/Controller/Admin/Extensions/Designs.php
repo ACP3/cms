@@ -55,15 +55,15 @@ class Designs extends Core\Controller\AbstractFrontendAction
     {
         $bool = false;
 
-        if ((bool)preg_match('=/=', $design) === false &&
-            is_file($this->appPath->getDesignRootPathInternal() . $design . '/info.xml') === true
+        if ((bool)\preg_match('=/=', $design) === false &&
+            \is_file($this->appPath->getDesignRootPathInternal() . $design . '/info.xml') === true
         ) {
             $bool = $this->config->saveSettings(['design' => $design], Schema::MODULE_NAME);
 
             Core\Cache\Purge::doPurge([
                 $this->appPath->getCacheDir() . 'sql',
                 $this->appPath->getCacheDir() . 'tpl_compiled',
-                $this->appPath->getCacheDir() . 'http'
+                $this->appPath->getCacheDir() . 'http',
             ]);
         }
 

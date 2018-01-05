@@ -27,11 +27,11 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return !empty($data) && is_array($data) ? $this->privilegesExist($data) : false;
+        return !empty($data) && \is_array($data) ? $this->privilegesExist($data) : false;
     }
 
     /**
@@ -51,6 +51,7 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
                 foreach ($module as $privilegeId => $permission) {
                     if ($this->isValidPrivilege($privilegeId, $privilege, $permission)) {
                         $valid = true;
+
                         break 2;
                     }
                 }

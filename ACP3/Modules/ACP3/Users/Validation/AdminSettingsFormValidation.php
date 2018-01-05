@@ -6,7 +6,6 @@ use ACP3\Core\Validation\AbstractFormValidation;
 
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
-
     /**
      * @inheritdoc
      */
@@ -19,7 +18,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->translator->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format'),
                 ]
             )
             ->addConstraint(
@@ -29,8 +28,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'enable_registration',
                     'message' => $this->translator->t('users', 'select_enable_registration'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             );
 

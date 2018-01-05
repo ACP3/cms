@@ -57,8 +57,8 @@ class TitleTest extends \PHPUnit_Framework_TestCase
         $steps = [
             [
                 'title' => 'Foo',
-                'uri' => '/foo/bar/baz/'
-            ]
+                'uri' => '/foo/bar/baz/',
+            ],
         ];
 
         $this->stepsMock->expects($this->exactly($callCount))

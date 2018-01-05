@@ -47,13 +47,13 @@ class ArticleDetailsBlock extends AbstractBlock
         $this->title->setPageTitle($article['title']);
 
         return [
-            'page' => array_merge(
+            'page' => \array_merge(
                 $article,
                 $this->pageBreaksHelper->splitTextIntoPages(
                     $this->view->fetchStringAsTemplate($article['text']),
                     $this->request->getUriWithoutPages()
                 )
-            )
+            ),
         ];
     }
 }

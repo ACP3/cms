@@ -11,7 +11,6 @@ use ACP3\Core\Validation\AbstractFormValidation;
 
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
-
     /**
      * @inheritdoc
      */
@@ -24,7 +23,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'width',
-                    'message' => $this->translator->t('categories', 'invalid_image_width_entered')
+                    'message' => $this->translator->t('categories', 'invalid_image_width_entered'),
                 ]
             )
             ->addConstraint(
@@ -32,7 +31,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'height',
-                    'message' => $this->translator->t('categories', 'invalid_image_height_entered')
+                    'message' => $this->translator->t('categories', 'invalid_image_height_entered'),
                 ]
             )
             ->addConstraint(
@@ -40,7 +39,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'filesize',
-                    'message' => $this->translator->t('categories', 'invalid_image_filesize_entered')
+                    'message' => $this->translator->t('categories', 'invalid_image_filesize_entered'),
                 ]
             );
 

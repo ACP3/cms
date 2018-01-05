@@ -72,7 +72,7 @@ class OnNewsModelAfterDeleteListener
             $this->cache->getCacheDriver()->delete(NewsCacheStorage::CACHE_ID . $item);
 
             if ($this->uriAliasManager) {
-                $this->uriAliasManager->deleteUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $item));
+                $this->uriAliasManager->deleteUriAlias(\sprintf(Helpers::URL_KEY_PATTERN, $item));
             }
         }
     }

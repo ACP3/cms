@@ -10,7 +10,6 @@ use ACP3\Core\Test\DataProvider\DataProviderInterface;
 
 class CheckboxGeneratorDataProvider implements DataProviderInterface
 {
-
     /**
      * @return array
      */
@@ -26,23 +25,23 @@ class CheckboxGeneratorDataProvider implements DataProviderInterface
                         'id' => 'form-field-foo',
                         'checked' => '',
                         'lang' => 'Lorem',
-                        'name' => 'form_field'
+                        'name' => 'form_field',
                     ],
                     [
                         'value' => 'bar',
                         'id' => 'form-field-bar',
                         'checked' => ' checked="checked"',
                         'lang' => 'Ipsum',
-                        'name' => 'form_field'
+                        'name' => 'form_field',
                     ],
                     [
                         'value' => 'baz',
                         'id' => 'form-field-baz',
                         'checked' => '',
                         'lang' => 'Dolor',
-                        'name' => 'form_field'
+                        'name' => 'form_field',
                     ],
-                ]
+                ],
             ],
             'test-not-checked' => [
                 '',
@@ -53,24 +52,24 @@ class CheckboxGeneratorDataProvider implements DataProviderInterface
                         'id' => 'form-field-foo',
                         'checked' => '',
                         'lang' => 'Lorem',
-                        'name' => 'form_field'
+                        'name' => 'form_field',
                     ],
                     [
                         'value' => 'bar',
                         'id' => 'form-field-bar',
                         'checked' => '',
                         'lang' => 'Ipsum',
-                        'name' => 'form_field'
+                        'name' => 'form_field',
                     ],
                     [
                         'value' => 'baz',
                         'id' => 'form-field-baz',
                         'checked' => '',
                         'lang' => 'Dolor',
-                        'name' => 'form_field'
+                        'name' => 'form_field',
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }

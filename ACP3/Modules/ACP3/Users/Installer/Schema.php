@@ -20,14 +20,14 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                     'create' => PrivilegeEnum::ADMIN_CREATE,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
-                ]
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
+                ],
             ],
             'frontend' => [
                 'account' => [
                     'edit' => PrivilegeEnum::FRONTEND_VIEW,
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                    'settings' => PrivilegeEnum::FRONTEND_VIEW
+                    'settings' => PrivilegeEnum::FRONTEND_VIEW,
                 ],
                 'index' => [
                     'forgot_pwd' => PrivilegeEnum::FRONTEND_VIEW,
@@ -35,16 +35,16 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                     'login' => PrivilegeEnum::FRONTEND_VIEW,
                     'logout' => PrivilegeEnum::FRONTEND_VIEW,
                     'register' => PrivilegeEnum::FRONTEND_VIEW,
-                    'view_profile' => PrivilegeEnum::FRONTEND_VIEW
-                ]
+                    'view_profile' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
             ],
             'widget' => [
                 'index' => [
                     'hash' => PrivilegeEnum::FRONTEND_VIEW,
                     'login' => PrivilegeEnum::FRONTEND_VIEW,
-                    'user_menu' => PrivilegeEnum::FRONTEND_VIEW
-                ]
-            ]
+                    'user_menu' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
+            ],
         ];
     }
 
@@ -70,7 +70,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}users` (
+            'CREATE TABLE `{pre}users` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `super_user` TINYINT(1) UNSIGNED NOT NULL,
                 `nickname` VARCHAR(30) NOT NULL,
@@ -98,7 +98,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `nickname` (`nickname`),
                 UNIQUE KEY `mail` (`mail`)
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -117,7 +117,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     {
         return [
             'enable_registration' => 1,
-            'mail' => ''
+            'mail' => '',
         ];
     }
 }

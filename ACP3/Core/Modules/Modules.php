@@ -8,7 +8,6 @@ namespace ACP3\Core\Modules;
 
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
-use ACP3\Modules\ACP3\System;
 use MJS\TopSort\Implementations\StringSort;
 
 class Modules
@@ -59,6 +58,7 @@ class Modules
     public function isActive(string $moduleName): bool
     {
         $info = $this->getModuleInfo($moduleName);
+
         return !empty($info) && $info['active'] === true;
     }
 
@@ -71,10 +71,11 @@ class Modules
      */
     public function getModuleInfo(string $moduleName): array
     {
-        $moduleName = strtolower($moduleName);
+        $moduleName = \strtolower($moduleName);
         if (empty($this->modulesInfo)) {
             $this->modulesInfo = $this->moduleInfoCache->getModulesInfoCache();
         }
+
         return !empty($this->modulesInfo[$moduleName]) ? $this->modulesInfo[$moduleName] : [];
     }
 
@@ -86,6 +87,7 @@ class Modules
     public function getModuleId(string $moduleName): int
     {
         $info = $this->getModuleInfo($moduleName);
+
         return $info['id'] ?? 0;
     }
 
@@ -99,6 +101,7 @@ class Modules
     public function isInstalled(string $moduleName): bool
     {
         $info = $this->getModuleInfo($moduleName);
+
         return !empty($info) && $info['installed'] === true || $info['installable'] === false;
     }
 
@@ -150,7 +153,7 @@ class Modules
             $allModulesAlphabeticallySorted[$info['name']] = $info;
         }
 
-        ksort($allModulesAlphabeticallySorted);
+        \ksort($allModulesAlphabeticallySorted);
 
         return $allModulesAlphabeticallySorted;
     }
@@ -163,7 +166,7 @@ class Modules
                     $info = $this->getModuleInfo($module);
                     if (!empty($info)) {
                         $info['vendor'] = $vendor;
-                        $this->allModules[strtolower($module)] = $info;
+                        $this->allModules[\strtolower($module)] = $info;
                     }
                 }
             }
@@ -183,7 +186,7 @@ class Modules
 
         $modules = $this->getAllModules();
         foreach ($modules as $module) {
-            $topSort->add(strtolower($module['dir']), $module['dependencies']);
+            $topSort->add(\strtolower($module['dir']), $module['dependencies']);
         }
 
         $topSortedModules = [];

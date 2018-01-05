@@ -42,26 +42,26 @@ class EmoticonsDataGridBlock extends AbstractDataGridBlock
                 'label' => $this->translator->t('system', 'description'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['description'],
-                'default_sort' => true
+                'default_sort' => true,
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('emoticons', 'code'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['code']
+                'fields' => ['code'],
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('emoticons', 'picture'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer::class,
                 'fields' => ['img'],
                 'custom' => [
-                    'pattern' => $this->appPath->getWebRoot() . 'uploads/emoticons/%s'
-                ]
+                    'pattern' => $this->appPath->getWebRoot() . 'uploads/emoticons/%s',
+                ],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
             ], 10);
     }
 
@@ -76,7 +76,7 @@ class EmoticonsDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#emoticons-data-grid',
             'resource_path_delete' => 'admin/emoticons/index/delete',
-            'resource_path_edit' => 'admin/emoticons/index/manage'
+            'resource_path_edit' => 'admin/emoticons/index/manage',
         ]);
 
         $grid = $dataGrid->render();
@@ -86,7 +86,7 @@ class EmoticonsDataGridBlock extends AbstractDataGridBlock
 
         return [
             'grid' => $grid,
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

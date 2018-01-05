@@ -69,10 +69,10 @@ class NewsAdminFormBlock extends AbstractRepositoryAwareFormBlock
             ),
             'options' => $this->fetchOptions((int)$news['readmore'], (int)$news['comments']),
             'target' => $this->forms->linkTargetChoicesGenerator('target', $news['target']),
-            'form' => array_merge($news, $this->getRequestData()),
+            'form' => \array_merge($news, $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken(),
             'SEO_URI_PATTERN' => Helpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => $this->getSeoRouteName($this->getId())
+            'SEO_ROUTE_NAME' => $this->getSeoRouteName($this->getId()),
         ];
     }
 
@@ -87,17 +87,17 @@ class NewsAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $options = [];
         if ($settings['readmore'] == 1) {
             $readMore = [
-                '1' => $this->translator->t('news', 'activate_readmore')
+                '1' => $this->translator->t('news', 'activate_readmore'),
             ];
 
             $options = $this->forms->checkboxGenerator('readmore', $readMore, $readMoreValue);
         }
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
             $comments = [
-                '1' => $this->translator->t('system', 'allow_comments')
+                '1' => $this->translator->t('system', 'allow_comments'),
             ];
 
-            $options = array_merge(
+            $options = \array_merge(
                 $options,
                 $this->forms->checkboxGenerator('comments', $comments, $commentsValue)
             );
@@ -112,7 +112,7 @@ class NewsAdminFormBlock extends AbstractRepositoryAwareFormBlock
      */
     private function getSeoRouteName(?int $id): string
     {
-        return !empty($id) ? sprintf(Helpers::URL_KEY_PATTERN, $id) : '';
+        return !empty($id) ? \sprintf(Helpers::URL_KEY_PATTERN, $id) : '';
     }
 
     /**
@@ -132,7 +132,7 @@ class NewsAdminFormBlock extends AbstractRepositoryAwareFormBlock
             'target' => '',
             'active' => 1,
             'start' => '',
-            'end' => ''
+            'end' => '',
         ];
     }
 }

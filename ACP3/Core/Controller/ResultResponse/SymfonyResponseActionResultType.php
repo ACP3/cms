@@ -53,6 +53,7 @@ class SymfonyResponseActionResultType implements ActionResultTypeInterface
         foreach ($this->response->headers->getCookies() as $cookie) {
             $result->headers->setCookie($cookie);
         }
+
         return $result;
     }
 }

@@ -51,8 +51,8 @@ class CacheClearCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->title('Clearing paths...');
 
-        $paths = glob(ACP3_ROOT_DIR . 'cache/*/*');
-        $length = array_push($paths, $this->applicationPath->getUploadsDir() . 'assets');
+        $paths = \glob(ACP3_ROOT_DIR . 'cache/*/*');
+        $length = \array_push($paths, $this->applicationPath->getUploadsDir() . 'assets');
 
         $progress = new ProgressBar($output, $length);
         ProgressBar::setFormatDefinition('custom', ' %current%/%max% -- %message%');

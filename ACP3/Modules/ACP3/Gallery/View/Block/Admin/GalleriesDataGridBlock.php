@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class GalleriesDataGridBlock extends AbstractDataGridBlock
 {
-
     /**
      * @inheritdoc
      */
@@ -26,7 +25,7 @@ class GalleriesDataGridBlock extends AbstractDataGridBlock
                 'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['start', 'end'],
-                'default_sort' => true
+                'default_sort' => true,
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('gallery', 'title'),
@@ -44,8 +43,8 @@ class GalleriesDataGridBlock extends AbstractDataGridBlock
                 'fields' => ['id'],
                 'primary' => true,
                 'custom' => [
-                    'path' => Helpers::URL_KEY_PATTERN_GALLERY
-                ]
+                    'path' => Helpers::URL_KEY_PATTERN_GALLERY,
+                ],
             ], 10);
     }
 
@@ -69,7 +68,7 @@ class GalleriesDataGridBlock extends AbstractDataGridBlock
 
         return [
             'grid' => $grid,
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

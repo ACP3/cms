@@ -59,11 +59,11 @@ class EmoticonsCacheStorage extends Core\Cache\AbstractCacheStorage
     public function saveCache()
     {
         $emoticons = $this->emoticonRepository->getAll();
-        $cEmoticons = count($emoticons);
+        $cEmoticons = \count($emoticons);
 
         $data = [];
         for ($i = 0; $i < $cEmoticons; ++$i) {
-            $picInfos = getimagesize($this->appPath->getUploadsDir() . 'emoticons/' . $emoticons[$i]['img']);
+            $picInfos = \getimagesize($this->appPath->getUploadsDir() . 'emoticons/' . $emoticons[$i]['img']);
             $code = $emoticons[$i]['code'];
             $description = $emoticons[$i]['description'];
             $data[$code] = '<img src="' . $this->appPath->getWebRoot() . 'uploads/emoticons/' . $emoticons[$i]['img'] . '" width="' . $picInfos[0] . '" height="' . $picInfos[1] . '" alt="' . $description . '" title="' . $description . '" />';

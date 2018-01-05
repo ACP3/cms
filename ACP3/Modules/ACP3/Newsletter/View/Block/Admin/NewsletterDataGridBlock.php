@@ -25,7 +25,7 @@ class NewsletterDataGridBlock extends AbstractDataGridBlock
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['date'],
                 'default_sort' => true,
-                'default_sort_direction' => 'desc'
+                'default_sort_direction' => 'desc',
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('newsletter', 'subject'),
@@ -41,14 +41,14 @@ class NewsletterDataGridBlock extends AbstractDataGridBlock
                     'replace' => [
                         $this->translator->t('newsletter', 'not_yet_sent'),
                         $this->translator->t('newsletter', 'already_sent'),
-                    ]
-                ]
+                    ],
+                ],
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
             ], 10);
     }
 
@@ -62,7 +62,7 @@ class NewsletterDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#newsletter-data-grid',
             'resource_path_delete' => 'admin/newsletter/index/delete',
-            'resource_path_edit' => 'admin/newsletter/index/edit'
+            'resource_path_edit' => 'admin/newsletter/index/edit',
         ]);
 
         $grid = $dataGrid->render();
@@ -72,7 +72,7 @@ class NewsletterDataGridBlock extends AbstractDataGridBlock
 
         return [
             'grid' => $grid,
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 

@@ -29,7 +29,7 @@ class Migration implements MigrationInterface
             34 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'recaptcha_sitekey', '');",
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'recaptcha_secret', '');",
-            ]
+            ],
         ];
     }
 

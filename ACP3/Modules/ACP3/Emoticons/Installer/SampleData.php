@@ -10,7 +10,6 @@ use ACP3\Core\Installer\AbstractSampleData;
 
 class SampleData extends AbstractSampleData
 {
-
     /**
      * @return array
      */
@@ -38,7 +37,7 @@ class SampleData extends AbstractSampleData
             "INSERT INTO `{pre}emoticons` VALUES ('', ':idea:', 'Idea', '19.gif');",
             "INSERT INTO `{pre}emoticons` VALUES ('', ':arrow:', 'Arrow', '20.gif');",
             "INSERT INTO `{pre}emoticons` VALUES ('', ':|', 'Neutral', '21.gif');",
-            "INSERT INTO `{pre}emoticons` VALUES ('', ':mrgreen:', 'Mr. Green', '22.gif');"
+            "INSERT INTO `{pre}emoticons` VALUES ('', ':mrgreen:', 'Mr. Green', '22.gif');",
         ];
     }
 }

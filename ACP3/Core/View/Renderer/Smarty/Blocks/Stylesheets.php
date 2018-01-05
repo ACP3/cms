@@ -23,7 +23,7 @@ class Stylesheets extends AbstractBlock
     {
         if (!$repeat) {
             if (isset($content)) {
-                return '@@@SMARTY:STYLESHEETS:BEGIN@@@' . trim($content) . '@@@SMARTY:STYLESHEETS:END@@@';
+                return '@@@SMARTY:STYLESHEETS:BEGIN@@@' . \trim($content) . '@@@SMARTY:STYLESHEETS:END@@@';
             }
         }
 

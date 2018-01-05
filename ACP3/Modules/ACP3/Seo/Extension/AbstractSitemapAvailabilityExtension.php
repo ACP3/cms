@@ -64,7 +64,7 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
      */
     private function pageIsIndexable(string $routeName): bool
     {
-        return in_array($this->metaStatements->getRobotsSetting($routeName), ['index,follow', 'index,nofollow']);
+        return \in_array($this->metaStatements->getRobotsSetting($routeName), ['index,follow', 'index,nofollow']);
     }
 
     /**

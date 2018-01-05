@@ -10,7 +10,6 @@ use ACP3\Core\Installer\MigrationInterface;
 
 class Migration implements MigrationInterface
 {
-
     /**
      * @inheritdoc
      *

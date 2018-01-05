@@ -48,17 +48,17 @@ class NewsletterAdminFormBlock extends AbstractRepositoryAwareFormBlock
 
         $actions = [
             1 => $this->translator->t('newsletter', 'send_and_save'),
-            0 => $this->translator->t('newsletter', 'only_save')
+            0 => $this->translator->t('newsletter', 'only_save'),
         ];
 
         return [
             'settings' => !empty($newsletter['html'])
-                ? array_merge($settings, ['html' => $newsletter['html']])
+                ? \array_merge($settings, ['html' => $newsletter['html']])
                 : $settings,
             'test' => $this->forms->yesNoCheckboxGenerator('test', 0),
             'action' => $this->forms->checkboxGenerator('action', $actions, 1),
-            'form' => array_merge($newsletter, $this->getRequestData()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form' => \array_merge($newsletter, $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 
@@ -70,7 +70,7 @@ class NewsletterAdminFormBlock extends AbstractRepositoryAwareFormBlock
         return [
             'title' => '',
             'text' => '',
-            'date' => ''
+            'date' => '',
         ];
     }
 }

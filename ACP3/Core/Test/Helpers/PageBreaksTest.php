@@ -61,7 +61,7 @@ class PageBreaksTest extends \PHPUnit_Framework_TestCase
                 'Foo Bar Baz',
                 $baseUrlPath,
                 '',
-                ''
+                '',
             ],
             'two_pages_first_page_visible' => [
                 'Foo Bar Baz<hr class="page-break">Lorem Ipsum Dolor<hr class="page-break">',
@@ -69,7 +69,7 @@ class PageBreaksTest extends \PHPUnit_Framework_TestCase
                 'Foo Bar Baz',
                 $baseUrlPath,
                 '/' . $baseUrlPath . 'page_2/',
-                ''
+                '',
             ],
             'two_pages_last_page_visible' => [
                 'Foo Bar Baz<hr class="page-break">Lorem Ipsum Dolor<hr class="page-break">',
@@ -77,7 +77,7 @@ class PageBreaksTest extends \PHPUnit_Framework_TestCase
                 'Lorem Ipsum Dolor',
                 $baseUrlPath,
                 '',
-                '/' . $baseUrlPath
+                '/' . $baseUrlPath,
             ],
         ];
     }

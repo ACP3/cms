@@ -53,7 +53,7 @@ class Index extends Core\Controller\AbstractWidgetAction
         $this->view->setTemplate($template);
 
         return [
-            'sidebar_files' => $this->fetchFiles($categoryId, $settings)
+            'sidebar_files' => $this->fetchFiles($categoryId, $settings),
         ];
     }
 

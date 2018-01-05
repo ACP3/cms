@@ -49,7 +49,7 @@ class AccountStatus
     {
         $result = $this->accountRepository->update(['status' => $status], $entryId);
 
-        if (is_array($entryId)) {
+        if (\is_array($entryId)) {
             $accountId = $this->retrieveAccountId($entryId);
 
             $this->addAccountHistory($status, $accountId);
@@ -71,8 +71,9 @@ class AccountStatus
         $historyInsertValues = [
             'newsletter_account_id' => $accountId,
             'date' => $this->date->toSQL(),
-            'action' => $status
+            'action' => $status,
         ];
+
         return $this->accountHistoryRepository->insert($historyInsertValues);
     }
 
@@ -83,9 +84,10 @@ class AccountStatus
      */
     protected function retrieveAccountId(array $entry)
     {
-        switch (key($entry)) {
+        switch (\key($entry)) {
             case 'mail':
                 $account = $this->accountRepository->getOneByEmail($entry['mail']);
+
                 break;
             case 'hash':
                 $account = $this->accountRepository->getOneByHash($entry['hash']);

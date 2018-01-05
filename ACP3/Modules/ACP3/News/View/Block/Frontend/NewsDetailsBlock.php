@@ -56,7 +56,7 @@ class NewsDetailsBlock extends AbstractBlock
         return [
             'news' => $news,
             'dateformat' => $settings['dateformat'],
-            'comments_allowed' => $settings['comments'] == 1 && $news['comments'] == 1
+            'comments_allowed' => $settings['comments'] == 1 && $news['comments'] == 1,
         ];
     }
 

@@ -62,7 +62,7 @@ class Index extends Core\Controller\AbstractWidgetAction
 
         return [
             'sidebar_news' => $this->fetchNews($categoryId, $settings),
-            'dateformat' => $settings['dateformat']
+            'dateformat' => $settings['dateformat'],
         ];
     }
 

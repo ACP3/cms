@@ -21,8 +21,8 @@ class SystemCacheBlock extends AbstractBlock
                 'images',
                 'minify',
                 'page',
-                'templates'
-            ]
+                'templates',
+            ],
         ];
     }
 }

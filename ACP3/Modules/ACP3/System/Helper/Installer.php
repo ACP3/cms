@@ -81,6 +81,7 @@ class Installer
                 }
             }
         }
+
         return $modulesToEnable;
     }
 
@@ -94,17 +95,18 @@ class Installer
         $moduleDependencies = [];
 
         foreach ($modules as $module) {
-            $moduleName = strtolower($module['dir']);
+            $moduleName = \strtolower($module['dir']);
             if ($moduleName !== $schema->getModuleName()) {
                 if ($this->schemaRegistrar->has($moduleName) === true) {
                     $dependencies = $this->getDependencies($moduleName);
 
-                    if (in_array($schema->getModuleName(), $dependencies) === true) {
+                    if (\in_array($schema->getModuleName(), $dependencies) === true) {
                         $moduleDependencies[] = $module['name'];
                     }
                 }
             }
         }
+
         return $moduleDependencies;
     }
 
@@ -117,11 +119,11 @@ class Installer
      */
     protected function getDependencies(string $moduleName): array
     {
-        if ((bool)preg_match('=/=', $moduleName) === false) {
+        if ((bool)\preg_match('=/=', $moduleName) === false) {
             foreach ($this->vendors->getVendors() as $vendor) {
-                $path = $this->appPath->getModulesDir() . $vendor . '/' . ucfirst($moduleName) . '/composer.json';
+                $path = $this->appPath->getModulesDir() . $vendor . '/' . \ucfirst($moduleName) . '/composer.json';
 
-                if (is_file($path) === true) {
+                if (\is_file($path) === true) {
                     return $this->getModuleDependencies($path);
                 }
             }

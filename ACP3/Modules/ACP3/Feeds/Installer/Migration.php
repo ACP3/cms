@@ -20,7 +20,7 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
             32 => [
                 "UPDATE `{pre}acl_resources` SET `privilege_id` = 3 WHERE `module_id` = '{moduleId}' AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'index';",
                 "INSERT INTO `{pre}acl_resources` (`module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES ('{moduleId}', 'admin', 'index', 'settings', '', 7);",
-            ]
+            ],
         ];
     }
 

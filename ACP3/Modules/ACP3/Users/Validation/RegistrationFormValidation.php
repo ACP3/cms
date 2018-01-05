@@ -19,7 +19,7 @@ class RegistrationFormValidation extends AbstractUserFormValidation
                 [
                     'data' => $formData,
                     'field' => 'nickname',
-                    'message' => $this->translator->t('system', 'name_to_short')
+                    'message' => $this->translator->t('system', 'name_to_short'),
                 ]
             )
             ->addConstraint(
@@ -27,7 +27,7 @@ class RegistrationFormValidation extends AbstractUserFormValidation
                 [
                     'data' => $formData,
                     'field' => 'nickname',
-                    'message' => $this->translator->t('users', 'user_name_already_exists')
+                    'message' => $this->translator->t('users', 'user_name_already_exists'),
                 ]
             )
             ->addConstraint(
@@ -35,7 +35,7 @@ class RegistrationFormValidation extends AbstractUserFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->translator->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format'),
                 ]
             )
             ->addConstraint(
@@ -43,7 +43,7 @@ class RegistrationFormValidation extends AbstractUserFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->translator->t('users', 'user_email_already_exists')
+                    'message' => $this->translator->t('users', 'user_email_already_exists'),
                 ]
             );
 

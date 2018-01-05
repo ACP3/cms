@@ -28,9 +28,9 @@ class FilesModel extends AbstractModel
      */
     public function save(array $data, $entryId = null)
     {
-        $data = array_merge($data, [
+        $data = \array_merge($data, [
             'category_id' => $data['cat'] ?? $data['category_id'],
-            'updated_at' => 'now'
+            'updated_at' => 'now',
         ]);
 
         if (!empty($data['filesize'])) {
@@ -61,7 +61,7 @@ class FilesModel extends AbstractModel
             'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'file' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
             'size' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'sort' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'sort' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 
@@ -73,7 +73,7 @@ class FilesModel extends AbstractModel
         return [
             'active' => 0,
             'start' => 'now',
-            'end' => 'now'
+            'end' => 'now',
         ];
     }
 }

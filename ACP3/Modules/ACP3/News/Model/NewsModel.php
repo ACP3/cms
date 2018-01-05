@@ -50,7 +50,7 @@ class NewsModel extends AbstractModel
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-        $data = array_merge($data, [
+        $data = \array_merge($data, [
             'updated_at' => 'now',
             'readmore' => $this->useReadMore($data, $settings),
             'comments' => $this->useComments($data, $settings),
@@ -100,7 +100,7 @@ class NewsModel extends AbstractModel
             'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
             'target' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'link_title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 
@@ -112,7 +112,7 @@ class NewsModel extends AbstractModel
         return [
             'active' => 0,
             'start' => 'now',
-            'end' => 'now'
+            'end' => 'now',
         ];
     }
 }

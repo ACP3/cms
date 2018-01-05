@@ -47,7 +47,7 @@ class Latest extends Core\Controller\AbstractWidgetAction
 
         return [
             'sidebar_news_latest' => $this->fetchLatestNews((int)$categoryId),
-            'dateformat' => $settings['dateformat']
+            'dateformat' => $settings['dateformat'],
         ];
     }
 

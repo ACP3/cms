@@ -84,7 +84,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
                 'id' => $formFieldId,
                 'input_only' => $inputOnly,
                 'length' => $captchaLength,
-                'sitekey' => $settings['recaptcha_sitekey']
+                'sitekey' => $settings['recaptcha_sitekey'],
             ]);
 
             return $this->view->fetchTemplate(static::TEMPLATE);

@@ -24,7 +24,7 @@ class AdminFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['name', 'user_id'],
-                    'message' => $this->translator->t('system', 'name_to_short')
+                    'message' => $this->translator->t('system', 'name_to_short'),
                 ]
             )
             ->addConstraint(

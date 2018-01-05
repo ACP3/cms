@@ -14,13 +14,13 @@ class MassActionColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidField()
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = \array_merge($this->columnData, [
             'custom' => [
-                'can_delete' => true
+                'can_delete' => true,
             ],
         ]);
         $this->dbData = [
-            'id' => 1234
+            'id' => 1234,
         ];
 
         $this->primaryKey = 'id';

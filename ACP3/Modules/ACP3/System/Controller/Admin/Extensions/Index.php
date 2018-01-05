@@ -7,12 +7,10 @@
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\System;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
     public function execute()
     {
-        return;
     }
 }

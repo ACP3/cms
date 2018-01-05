@@ -76,7 +76,7 @@ class SchemaUpdateModel
     public function updateModules(): array
     {
         foreach ($this->modules->getAllModulesTopSorted() as $moduleInfo) {
-            $module = strtolower($moduleInfo['dir']);
+            $module = \strtolower($moduleInfo['dir']);
             $this->results[$module] = $this->updateModule($module);
         }
 
@@ -99,7 +99,7 @@ class SchemaUpdateModel
         ) {
             $moduleSchema = $this->schemaRegistrar->get($moduleName);
             $moduleMigration = $this->migrationRegistrar->get($serviceIdMigration);
-            if ($this->modules->isInstalled($moduleName) || count($moduleMigration->renameModule()) > 0) {
+            if ($this->modules->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
                 $result = $this->schemaUpdater->updateSchema($moduleSchema, $moduleMigration);
             }
         }

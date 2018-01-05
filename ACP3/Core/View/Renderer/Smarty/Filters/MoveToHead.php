@@ -5,7 +5,7 @@ use ACP3\Core\Assets\Minifier\MinifierInterface;
 
 class MoveToHead extends AbstractMoveElementFilter
 {
-    const ELEMENT_CATCHER_REGEX_PATTERN = "!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is";
+    const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is';
     const PLACEHOLDER = '<!-- STYLESHEETS -->';
 
     /**
@@ -34,8 +34,8 @@ class MoveToHead extends AbstractMoveElementFilter
      */
     public function process($tplOutput, \Smarty_Internal_Template $smarty)
     {
-        if (strpos($tplOutput, static::PLACEHOLDER) !== false) {
-            $tplOutput = str_replace(
+        if (\strpos($tplOutput, static::PLACEHOLDER) !== false) {
+            $tplOutput = \str_replace(
                 static::PLACEHOLDER,
                 $this->addElementFromMinifier() . $this->addElementsFromTemplates($tplOutput),
                 $this->getCleanedUpTemplateOutput($tplOutput)

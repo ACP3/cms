@@ -44,6 +44,7 @@ class Forms
         for ($i = $steps; $i <= $maxValue; $i += $steps) {
             $values[$i] = $i;
         }
+
         return $this->choicesGenerator($formFieldName, $values, $currentValue);
     }
 
@@ -62,9 +63,9 @@ class Forms
         $htmlAttribute = $this->buildHtmlAttribute($htmlAttribute);
         $currentValue = $this->request->getPost()->get($formFieldName, $currentValue);
 
-        if (is_array($currentValue) === false && $currentValue == $defaultValue) {
+        if (\is_array($currentValue) === false && $currentValue == $defaultValue) {
             return $htmlAttribute;
-        } elseif (is_array($currentValue) === true && in_array($defaultValue, $currentValue)) {
+        } elseif (\is_array($currentValue) === true && \in_array($defaultValue, $currentValue)) {
             return $htmlAttribute;
         }
 
@@ -97,16 +98,17 @@ class Forms
     public function choicesGenerator($formFieldName, array $values, $currentValue = '', $htmlAttribute = 'selected')
     {
         $choices = [];
-        $id = str_replace('_', '-', $formFieldName);
+        $id = \str_replace('_', '-', $formFieldName);
         foreach ($values as $value => $phrase) {
             $choices[] = [
                 'value' => $value,
                 'id' => ($htmlAttribute === 'checked' ? $id . '-' . $value : $id),
                 'name' => $formFieldName,
                 $htmlAttribute => $this->selectEntry($formFieldName, $value, $currentValue, $htmlAttribute),
-                'lang' => $phrase
+                'lang' => $phrase,
             ];
         }
+
         return $choices;
     }
 
@@ -121,7 +123,7 @@ class Forms
     {
         $linkTargets = [
             1 => $this->translator->t('system', 'window_self'),
-            2 => $this->translator->t('system', 'window_blank')
+            2 => $this->translator->t('system', 'window_blank'),
         ];
 
         return $this->choicesGenerator($formFieldName, $linkTargets, $currentValue, $htmlAttribute);
@@ -138,7 +140,7 @@ class Forms
     {
         $values = [
             1 => $this->translator->t('system', 'yes'),
-            0 => $this->translator->t('system', 'no')
+            0 => $this->translator->t('system', 'no'),
         ];
 
         return $this->choicesGenerator($formFieldName, $values, $currentValue, $htmlAttribute);
@@ -166,7 +168,7 @@ class Forms
     {
         $values = [
             1 => $this->translator->t('system', 'yes'),
-            0 => $this->translator->t('system', 'no')
+            0 => $this->translator->t('system', 'no'),
         ];
 
         return $this->checkboxGenerator($formFieldName, $values, $currentValue);

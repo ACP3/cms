@@ -58,7 +58,7 @@ class PollVotesModel
         $userId = $this->userModel->isAuthenticated() ? $this->userModel->getUserId() : null;
 
         // Multiple Answers
-        if (is_array($answers) === false) {
+        if (\is_array($answers) === false) {
             $answers = [$answers];
         }
 
@@ -74,6 +74,7 @@ class PollVotesModel
                 $bool = $this->voteRepository->insert($insertValues);
             }
         }
+
         return $bool;
     }
 }

@@ -43,7 +43,7 @@ class TemplateActionResultType implements ActionResultTypeInterface
      */
     public function supports($result): bool
     {
-        return is_string($result) && $this->view->templateExists($result);
+        return \is_string($result) && $this->view->templateExists($result);
     }
 
     /**

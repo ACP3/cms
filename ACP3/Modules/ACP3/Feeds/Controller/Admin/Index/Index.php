@@ -12,6 +12,5 @@ class Index extends Core\Controller\AbstractFrontendAction
 {
     public function execute()
     {
-        return;
     }
 }

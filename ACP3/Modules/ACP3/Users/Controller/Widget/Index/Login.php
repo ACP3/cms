@@ -40,11 +40,11 @@ class Login extends Core\Controller\AbstractWidgetAction
 
         if ($this->user->isAuthenticated() === false) {
             $prefix = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN ? 'acp/' : '';
-            $currentPage = base64_encode($prefix . $this->request->getQuery());
+            $currentPage = \base64_encode($prefix . $this->request->getQuery());
 
             return $this->block
                 ->setData([
-                    'redirect_url' => $this->request->getPost()->get('redirect_uri', $currentPage)
+                    'redirect_url' => $this->request->getPost()->get('redirect_uri', $currentPage),
                 ])
                 ->render();
         }

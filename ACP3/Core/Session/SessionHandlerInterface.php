@@ -8,7 +8,6 @@ namespace ACP3\Core\Session;
 
 /**
  * Interface SessionHandlerInterface
- * @package ACP3\Core\Session
  */
 interface SessionHandlerInterface extends \SessionHandlerInterface
 {

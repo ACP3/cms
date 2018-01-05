@@ -13,7 +13,6 @@ use ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoriesSettingsFormBlock;
 
 class CategoriesSettingsFormBlockTest extends AbstractFormBlockTest
 {
-
     /**
      * @inheritdoc
      */
@@ -29,7 +28,7 @@ class CategoriesSettingsFormBlockTest extends AbstractFormBlockTest
             ->willReturn([
                 'width' => 100,
                 'height' => 50,
-                'filesize' => '40960'
+                'filesize' => '40960',
             ]);
 
         return new CategoriesSettingsFormBlock($this->context, $settings);
@@ -42,7 +41,7 @@ class CategoriesSettingsFormBlockTest extends AbstractFormBlockTest
     {
         return [
             'form',
-            'form_token'
+            'form_token',
         ];
     }
 }

@@ -80,7 +80,7 @@ class PollsModel extends AbstractModel
                 if (!empty($row['text']) && !isset($row['delete'])) {
                     $data = [
                         'text' => $this->secure->strEncode($row['text']),
-                        'poll_id' => $pollId
+                        'poll_id' => $pollId,
                     ];
                     $bool = $this->answerRepository->insert($data);
                 }
@@ -117,7 +117,7 @@ class PollsModel extends AbstractModel
             'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'multiple' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
-            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

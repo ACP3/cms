@@ -22,8 +22,8 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
                 $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET `uri`=REPLACE(`uri`, "search/list/", "search/index/index/") WHERE `uri` LIKE "search/list/%";' : '',
             ],
             34 => [
-                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
-            ]
+                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';",
+            ],
         ];
     }
 

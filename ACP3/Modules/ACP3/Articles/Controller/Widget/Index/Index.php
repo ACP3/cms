@@ -49,7 +49,7 @@ class Index extends Core\Controller\AbstractWidgetAction
         $this->view->setTemplate($template);
 
         return [
-            'sidebar_articles' => $this->articleRepository->getAll($this->date->getCurrentDateTime(), 5)
+            'sidebar_articles' => $this->articleRepository->getAll($this->date->getCurrentDateTime(), 5),
         ];
     }
 }

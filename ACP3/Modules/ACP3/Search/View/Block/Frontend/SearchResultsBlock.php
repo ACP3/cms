@@ -59,7 +59,7 @@ class SearchResultsBlock extends AbstractBlock
                 $data['area'],
                 $data['sort']
             ),
-            'search_term' => $data['search_term']
+            'search_term' => $data['search_term'],
         ];
     }
 
@@ -74,7 +74,7 @@ class SearchResultsBlock extends AbstractBlock
     {
         $searchResults = [];
         foreach ($this->availabilityRegistrar->getAvailableModules() as $moduleName => $searchAvailability) {
-            if (in_array($moduleName, $modules) && $this->acl->hasPermission('frontend/' . $moduleName)) {
+            if (\in_array($moduleName, $modules) && $this->acl->hasPermission('frontend/' . $moduleName)) {
                 $results = $searchAvailability->fetchSearchResults($searchTerm, $area, $sort);
 
                 if (!empty($results)) {
@@ -83,7 +83,7 @@ class SearchResultsBlock extends AbstractBlock
             }
         }
 
-        ksort($searchResults);
+        \ksort($searchResults);
 
         return $searchResults;
     }
