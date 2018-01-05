@@ -19,6 +19,8 @@ return PhpCsFixer\Config::create()
         'blank_line_before_statement' => true,
         'class_attributes_separation' => ['elements' => ['method']],
         'increment_style' => ['style' =>'pre'],
+        'method_chaining_indentation' => true,
+        'modernize_types_casting' => true,
         'native_function_casing' => true,
         'native_function_invocation' => true,
         'normalize_index_brace' => true,
