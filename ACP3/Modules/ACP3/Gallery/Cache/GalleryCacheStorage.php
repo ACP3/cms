@@ -56,7 +56,7 @@ class GalleryCacheStorage extends Core\Cache\AbstractCacheStorage
      *
      * @return array
      */
-    public function getCache($galleryId)
+    public function getCache(int $galleryId)
     {
         if ($this->cache->contains(self::CACHE_ID . $galleryId) === false) {
             $this->saveCache($galleryId);
@@ -72,7 +72,7 @@ class GalleryCacheStorage extends Core\Cache\AbstractCacheStorage
      *
      * @return boolean
      */
-    public function saveCache($galleryId)
+    public function saveCache(int $galleryId)
     {
         $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
         $cPictures = \count($pictures);
@@ -86,7 +86,7 @@ class GalleryCacheStorage extends Core\Cache\AbstractCacheStorage
             if ($picInfos !== false) {
                 if ($picInfos[0] > $settings['thumbwidth'] || $picInfos[1] > $settings['thumbheight']) {
                     $newHeight = $settings['thumbheight'];
-                    $newWidth = \intval($picInfos[0] * $newHeight / $picInfos[1]);
+                    $newWidth = (int) ($picInfos[0] * $newHeight / $picInfos[1]);
                 }
 
                 $pictures[$i]['width'] = $newWidth ?? $picInfos[0];

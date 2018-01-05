@@ -14,6 +14,6 @@ class DoubleColumnType implements ColumnTypeStrategyInterface
      */
     public function doEscape($value)
     {
-        return \doubleval($value);
+        return (double) $value;
     }
 }
