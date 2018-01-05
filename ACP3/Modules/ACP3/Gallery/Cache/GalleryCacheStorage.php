@@ -86,7 +86,7 @@ class GalleryCacheStorage extends Core\Cache\AbstractCacheStorage
             if ($picInfos !== false) {
                 if ($picInfos[0] > $settings['thumbwidth'] || $picInfos[1] > $settings['thumbheight']) {
                     $newHeight = $settings['thumbheight'];
-                    $newWidth = (int) ($picInfos[0] * $newHeight / $picInfos[1]);
+                    $newWidth = (int)($picInfos[0] * $newHeight / $picInfos[1]);
                 }
 
                 $pictures[$i]['width'] = $newWidth ?? $picInfos[0];

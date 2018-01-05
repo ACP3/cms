@@ -338,10 +338,10 @@ class Picture
     {
         if (($width >= $height || $this->preferWidth === true) && $this->preferHeight === false) {
             $newWidth = $this->maxWidth;
-            $newHeight = (int) ($height * $newWidth / $width);
+            $newHeight = (int)($height * $newWidth / $width);
         } else {
             $newHeight = $this->maxHeight;
-            $newWidth = (int) ($width * $newHeight / $height);
+            $newWidth = (int)($width * $newHeight / $height);
         }
 
         return ['width' => $newWidth, 'height' => $newHeight];

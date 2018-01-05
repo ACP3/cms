@@ -14,6 +14,6 @@ class IntegerColumnType implements ColumnTypeStrategyInterface
      */
     public function doEscape($value)
     {
-        return (int) $value;
+        return (int)$value;
     }
 }

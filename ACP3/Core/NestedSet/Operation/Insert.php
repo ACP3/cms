@@ -49,7 +49,7 @@ class Insert extends AbstractOperation
 
                 $this->db->getConnection()->insert($this->nestedSetRepository->getTableName(), $insertValues);
 
-                $result = (int) $this->db->getConnection()->lastInsertId();
+                $result = (int)$this->db->getConnection()->lastInsertId();
             }
 
             return $result;
@@ -72,6 +72,6 @@ class Insert extends AbstractOperation
             $maxRightId = $this->nestedSetRepository->fetchMaximumRightId();
         }
 
-        return (int) $maxRightId;
+        return (int)$maxRightId;
     }
 }

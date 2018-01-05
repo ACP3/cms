@@ -118,10 +118,10 @@ class GalleryPictureDetailsBlock extends AbstractBlock
             if ($picInfos[0] > $settings['width'] || $picInfos[1] > $settings['height']) {
                 if ($picInfos[0] > $picInfos[1]) {
                     $newWidth = $settings['width'];
-                    $newHeight = (int) ($picInfos[1] * $newWidth / $picInfos[0]);
+                    $newHeight = (int)($picInfos[1] * $newWidth / $picInfos[0]);
                 } else {
                     $newHeight = $settings['height'];
-                    $newWidth = (int) ($picInfos[0] * $newHeight / $picInfos[1]);
+                    $newWidth = (int)($picInfos[0] * $newHeight / $picInfos[1]);
                 }
             }
 
