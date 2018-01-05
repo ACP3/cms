@@ -11,16 +11,26 @@ $finder = PhpCsFixer\Finder::create()
     ->exclude('vendor')
     ->in(__DIR__);
 
+$header = <<<DOCBLOCK
+Copyright (c) by the ACP3 Developers.
+See the LICENSE file at the top-level module directory for licensing details.
+DOCBLOCK;
+
 return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
     ->setLineEnding("\n")
     ->setRules([
         '@PSR2' => true,
         'array_syntax' => ['syntax' => 'short'],
+        'blank_line_after_opening_tag' => true,
         'blank_line_before_statement' => true,
         'cast_spaces' => ['space' => 'none'],
         'class_attributes_separation' => ['elements' => ['method']],
         'declare_equal_normalize' => ['space' => 'single'],
+        'header_comment' => [
+            'commentType' => 'PHPDoc',
+            'header' => $header,
+        ],
         'increment_style' => ['style' =>'pre'],
         'method_chaining_indentation' => true,
         'modernize_types_casting' => true,
