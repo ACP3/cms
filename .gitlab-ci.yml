@@ -12,10 +12,25 @@ cache:
   - .php_cs.cache
 
 stages:
-  - static-analysis
   - test
+  - static-analysis
   - deploy
   - post-deploy
+
+test:php71-unit: &php-unit-base
+  stage: test
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+    - bash ./build/gitlab/before_script_php.sh > /dev/null
+  script:
+    - php composer.phar install -n -o
+    - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
+  coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+
+test:php72-unit:
+  <<: *php-unit-base
+  image: php:7.2
+  coverage: ~
 
 static-analysis:phpcs:
   stage: static-analysis
@@ -38,21 +53,6 @@ static-analysis:eslint:
   script:
     - npm install
     - npm run-script eslint
-
-test:php71-unit: &php-unit-base
-  stage: test
-  before_script:
-    - bash ./build/gitlab/before_script.sh > /dev/null
-    - bash ./build/gitlab/before_script_php.sh > /dev/null
-  script:
-    - php composer.phar install -n -o
-    - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
-  coverage: '/^\s*Lines:\s*\d+.\d+\%/'
-
-test:php72-unit:
-  <<: *php-unit-base
-  image: php:7.2
-  coverage: ~
 
 deploy:subtree-split:
   image: jderusse/gitsplit
