@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
 use ACP3\Core\Assets;
@@ -43,8 +49,8 @@ class MoveToBottom extends AbstractMoveElementFilter
      */
     public function process($tplOutput, \Smarty_Internal_Template $smarty)
     {
-        if (strpos($tplOutput, static::PLACEHOLDER) !== false) {
-            return str_replace(
+        if (\strpos($tplOutput, static::PLACEHOLDER) !== false) {
+            return \str_replace(
                 static::PLACEHOLDER,
                 $this->addElementFromMinifier() . $this->addElementsFromTemplates($tplOutput),
                 $this->getCleanedUpTemplateOutput($tplOutput)
@@ -63,6 +69,7 @@ class MoveToBottom extends AbstractMoveElementFilter
         if (!$this->request->isXmlHttpRequest()) {
             $minifyJs = '<script src="' . $this->minifier->getURI() . '"></script>' . "\n";
         }
+
         return $minifyJs;
     }
 }

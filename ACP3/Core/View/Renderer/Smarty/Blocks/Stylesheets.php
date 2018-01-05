@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Blocks;
 
 class Stylesheets extends AbstractBlock
@@ -23,7 +29,7 @@ class Stylesheets extends AbstractBlock
     {
         if (!$repeat) {
             if (isset($content)) {
-                return '@@@SMARTY:STYLESHEETS:BEGIN@@@' . trim($content) . '@@@SMARTY:STYLESHEETS:END@@@';
+                return '@@@SMARTY:STYLESHEETS:BEGIN@@@' . \trim($content) . '@@@SMARTY:STYLESHEETS:END@@@';
             }
         }
 

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model\Repository;
@@ -42,7 +43,7 @@ class DataGridRepository extends AbstractRepository
         $columnsToSelect = [];
         foreach (clone $gridColumns as $column) {
             if (!empty($column['fields'])) {
-                if (!is_array($column['fields'])) {
+                if (!\is_array($column['fields'])) {
                     $column['fields'] = [$column['fields']];
                 }
 
@@ -92,12 +93,12 @@ class DataGridRepository extends AbstractRepository
     {
         foreach (clone $gridColumns as $gridColumn) {
             if ($gridColumn['default_sort'] === true) {
-                if (!is_array($gridColumn['fields'])) {
+                if (!\is_array($gridColumn['fields'])) {
                     $gridColumn['fields'] = [$gridColumn['fields']];
                 }
 
                 foreach ($gridColumn['fields'] as $field) {
-                    $queryBuilder->addOrderBy($field, strtoupper($gridColumn['default_sort_direction']));
+                    $queryBuilder->addOrderBy($field, \strtoupper($gridColumn['default_sort_direction']));
                 }
             }
         }

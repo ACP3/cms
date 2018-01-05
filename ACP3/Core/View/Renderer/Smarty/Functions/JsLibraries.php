@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
@@ -35,6 +41,6 @@ class JsLibraries extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        $this->assets->enableLibraries(explode(',', $params['enable']));
+        $this->assets->enableLibraries(\explode(',', $params['enable']));
     }
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Update\Model;
@@ -86,22 +87,22 @@ class SchemaUpdateModel
     {
         foreach ($this->vendor->getVendors() as $vendor) {
             $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
-            $vendorModules = count($modules) > 0 ? $modules : Filesystem::scandir($vendorPath);
+            $vendorModules = \count($modules) > 0 ? $modules : Filesystem::scandir($vendorPath);
 
             foreach ($vendorModules as $module) {
-                $module = strtolower($module);
+                $module = \strtolower($module);
 
                 if (isset($this->results[$module])) {
                     continue;
                 }
 
-                $modulePath = $vendorPath . ucfirst($module) . '/';
+                $modulePath = $vendorPath . \ucfirst($module) . '/';
                 $moduleConfigPath = $modulePath . 'Resources/config/module.xml';
 
-                if (is_dir($modulePath) && is_file($moduleConfigPath)) {
+                if (\is_dir($modulePath) && \is_file($moduleConfigPath)) {
                     $dependencies = $this->getModuleDependencies($moduleConfigPath);
 
-                    if (count($dependencies) > 0) {
+                    if (\count($dependencies) > 0) {
                         $this->updateModules($dependencies);
                     }
 
@@ -129,7 +130,7 @@ class SchemaUpdateModel
         ) {
             $moduleSchema = $this->schemaRegistrar->get($module);
             $moduleMigration = $this->migrationRegistrar->get($serviceIdMigration);
-            if ($this->modules->isInstalled($module) || count($moduleMigration->renameModule()) > 0) {
+            if ($this->modules->isInstalled($module) || \count($moduleMigration->renameModule()) > 0) {
                 $result = $this->schemaUpdater->updateSchema($moduleSchema, $moduleMigration);
             }
         }

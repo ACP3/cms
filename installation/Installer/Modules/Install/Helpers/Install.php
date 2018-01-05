@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Installer\Modules\Install\Helpers;
 
 use ACP3\Core;
@@ -19,13 +24,13 @@ class Install
      */
     public function writeConfigFile($configFilePath, array $data)
     {
-        if (is_writable($configFilePath) === true) {
-            ksort($data);
+        if (\is_writable($configFilePath) === true) {
+            \ksort($data);
 
             $dumper = new Dumper();
             $yaml = $dumper->dump($data);
 
-            return file_put_contents($configFilePath, $yaml, LOCK_EX) !== false;
+            return \file_put_contents($configFilePath, $yaml, LOCK_EX) !== false;
         }
 
         return false;

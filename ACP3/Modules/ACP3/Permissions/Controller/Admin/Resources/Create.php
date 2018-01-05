@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
@@ -56,11 +57,11 @@ class Create extends AbstractFormAction
             'modules' => $this->fetchActiveModules(),
             'areas' => $this->fetchAreas(),
             'privileges' => $this->fetchPrivileges(0),
-            'form' => array_merge(
+            'form' => \array_merge(
                 ['resource' => '', 'area' => '', 'controller' => ''],
                 $this->request->getPost()->all()
             ),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -75,6 +76,7 @@ class Create extends AbstractFormAction
             $this->resourceFormValidation->validate($formData);
 
             $formData['module_id'] = $this->fetchModuleId($formData['modules']);
+
             return $this->resourcesModel->save($formData);
         });
     }

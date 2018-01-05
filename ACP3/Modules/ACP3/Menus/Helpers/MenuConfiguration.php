@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 class MenuConfiguration
@@ -135,6 +141,6 @@ class MenuConfiguration
      */
     public function __toString()
     {
-        return implode(':', get_object_vars($this));
+        return \implode(':', \get_object_vars($this));
     }
 }

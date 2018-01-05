@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Test\Helpers;
 
 use ACP3\Core\ACL;
@@ -55,11 +61,11 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
             'config' => [
                 'element' => '#data-grid',
                 'records_per_page' => 10,
-                'hide_col_sort' => "0",
+                'hide_col_sort' => '0',
                 'sort_col' => null,
-                'sort_dir' => null
+                'sort_dir' => null,
             ],
-            'results' => ''
+            'results' => '',
         ];
     }
 
@@ -93,19 +99,19 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
         $this->dataGrid->addColumn([
             'label' => 'Foo',
             'fields' => ['title'],
-            'type' => DataGrid\ColumnRenderer\TextColumnRenderer::class
+            'type' => DataGrid\ColumnRenderer\TextColumnRenderer::class,
         ], 10);
 
-        $expected = array_merge(
+        $expected = \array_merge(
             $this->getDefaultExpected(),
             [
                 'header' => '<th>Foo</th>',
                 'config' => [
                     'element' => '#data-grid',
                     'records_per_page' => 10,
-                    'hide_col_sort' => "1",
+                    'hide_col_sort' => '1',
                     'sort_col' => null,
-                    'sort_dir' => null
+                    'sort_dir' => null,
                 ],
             ]
         );
@@ -117,11 +123,11 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
     {
         $data = [
             [
-                'title' => 'Lorem Ipsum'
+                'title' => 'Lorem Ipsum',
             ],
             [
-                'title' => 'Lorem Ipsum Dolor'
-            ]
+                'title' => 'Lorem Ipsum Dolor',
+            ],
         ];
         $this->aclMock
             ->expects($this->exactly(2))
@@ -139,22 +145,22 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
         $this->dataGrid->addColumn([
             'label' => 'Foo',
             'fields' => ['title'],
-            'type' => DataGrid\ColumnRenderer\TextColumnRenderer::class
+            'type' => DataGrid\ColumnRenderer\TextColumnRenderer::class,
         ], 10);
         $this->dataGrid->setResults($data);
 
-        $expected = array_merge(
+        $expected = \array_merge(
             $this->getDefaultExpected(),
             [
                 'header' => '<th>Foo</th>',
                 'config' => [
                     'element' => '#data-grid',
                     'records_per_page' => 10,
-                    'hide_col_sort' => "1",
+                    'hide_col_sort' => '1',
                     'sort_col' => null,
-                    'sort_dir' => null
+                    'sort_dir' => null,
                 ],
-                'results' => "<tr><td>Lorem Ipsum</td></tr>\n<tr><td>Lorem Ipsum Dolor</td></tr>\n"
+                'results' => "<tr><td>Lorem Ipsum</td></tr>\n<tr><td>Lorem Ipsum Dolor</td></tr>\n",
             ]
         );
 

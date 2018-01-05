@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core;
 
 class Filesystem
@@ -16,15 +22,15 @@ class Filesystem
      */
     public static function scandir($directory, array $excluded = [])
     {
-        $directory = @scandir($directory);
+        $directory = @\scandir($directory);
 
         if ($directory !== false) {
-            $filesAndDirectories = array_diff(
+            $filesAndDirectories = \array_diff(
                 $directory,
-                array_merge(static::$excluded, $excluded)
+                \array_merge(static::$excluded, $excluded)
             );
 
-            return array_values($filesAndDirectories);
+            return \array_values($filesAndDirectories);
         }
 
         return [];

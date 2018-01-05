@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Comments\Validation;
@@ -47,8 +48,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'dateformat',
                     'message' => $this->translator->t('system', 'select_date_format'),
                     'extra' => [
-                        'haystack' => ['long', 'short']
-                    ]
+                        'haystack' => ['long', 'short'],
+                    ],
                 ]
             );
 
@@ -61,8 +62,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'field' => 'emoticons',
                         'message' => $this->translator->t('comments', 'select_emoticons'),
                         'extra' => [
-                            'haystack' => [0, 1]
-                        ]
+                            'haystack' => [0, 1],
+                        ],
                     ]
                 );
         }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
@@ -63,8 +64,8 @@ class Download extends Core\Controller\AbstractFrontendAction
             $file = $this->filesCache->getCache($id);
 
             $path = $this->appPath->getUploadsDir() . 'files/';
-            if (is_file($path . $file['file'])) {
-                $ext = strrchr($file['file'], '.');
+            if (\is_file($path . $file['file'])) {
+                $ext = \strrchr($file['file'], '.');
                 $filename = $this->stringFormatter->makeStringUrlSafe($file['title']) . $ext;
 
                 $response = new BinaryFileResponse($path . $file['file']);
@@ -74,7 +75,7 @@ class Download extends Core\Controller\AbstractFrontendAction
                 );
 
                 return $response;
-            } elseif (preg_match('/^([a-z]+):\/\//', $file['file'])) { // External file
+            } elseif (\preg_match('/^([a-z]+):\/\//', $file['file'])) { // External file
                 return $this->redirect()->toNewPage($file['file']);
             }
         }

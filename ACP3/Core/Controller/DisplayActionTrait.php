@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Controller;
@@ -31,10 +32,11 @@ trait DisplayActionTrait
             foreach ($this->getResponse()->headers->getCookies() as $cookie) {
                 $actionResult->headers->setCookie($cookie);
             }
+
             return $actionResult;
-        } elseif (is_string($actionResult)) {
+        } elseif (\is_string($actionResult)) {
             $this->setContent($actionResult);
-        } elseif (is_array($actionResult)) {
+        } elseif (\is_array($actionResult)) {
             $this->getView()->assign($actionResult);
         }
 

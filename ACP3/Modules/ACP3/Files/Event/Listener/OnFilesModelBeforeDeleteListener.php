@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Event\Listener;
@@ -106,7 +107,7 @@ class OnFilesModelBeforeDeleteListener
             $this->cache->getCacheDriver()->delete(Cache::CACHE_ID . $item);
 
             if ($this->uriAliasManager) {
-                $this->uriAliasManager->deleteUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $item));
+                $this->uriAliasManager->deleteUriAlias(\sprintf(Helpers::URL_KEY_PATTERN, $item));
             }
         }
     }

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core;
@@ -61,7 +66,7 @@ class SendNewsletter
         $newsletter = $this->newsletterRepository->getOneById($newsletterId);
         $sender = [
             'email' => $settings['mail'],
-            'name' => $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME)['site_title']
+            'name' => $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME)['site_title'],
         ];
 
         $this->mailer

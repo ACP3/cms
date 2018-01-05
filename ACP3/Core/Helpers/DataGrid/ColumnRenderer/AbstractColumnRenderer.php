@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 abstract class AbstractColumnRenderer implements ColumnRendererInterface
@@ -70,7 +76,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     protected function addHtmlAttribute($attributeName, $attributeData = null)
     {
-        if (is_array($attributeName)) {
+        if (\is_array($attributeName)) {
             $data = '';
             foreach ($attributeName as $key => $value) {
                 $data .= $this->addHtmlAttribute($key, $value);
@@ -93,7 +99,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     {
         $fields = $this->getDbFields($column);
 
-        return reset($fields);
+        return \reset($fields);
     }
 
     /**
@@ -122,7 +128,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
-        return isset($dbResultRow[$field]) ? $dbResultRow[$field] : null;
+        return $dbResultRow[$field] ?? null;
     }
 
     /**

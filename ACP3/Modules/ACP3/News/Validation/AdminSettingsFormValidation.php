@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\News\Validation;
 
 use ACP3\Core;
@@ -42,8 +48,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'dateformat',
                     'message' => $this->translator->t('system', 'select_date_format'),
                     'extra' => [
-                        'haystack' => ['long', 'short']
-                    ]
+                        'haystack' => ['long', 'short'],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -51,7 +57,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'sidebar',
-                    'message' => $this->translator->t('system', 'select_sidebar_entries')
+                    'message' => $this->translator->t('system', 'select_sidebar_entries'),
                 ]
             )
             ->addConstraint(
@@ -61,8 +67,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'readmore_chars',
                     'message' => $this->translator->t('news', 'type_in_readmore_chars'),
                     'extra' => [
-                        'value' => 0
-                    ]
+                        'value' => 0,
+                    ],
                 ]
             )
             ->addConstraint(
@@ -72,8 +78,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'readmore',
                     'message' => $this->translator->t('news', 'select_activate_readmore'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -83,8 +89,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'category_in_breadcrumb',
                     'message' => $this->translator->t('news', 'select_display_category_in_breadcrumb'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             );
 
@@ -97,8 +103,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'field' => 'comments',
                         'message' => $this->translator->t('news', 'select_allow_comments'),
                         'extra' => [
-                            'haystack' => [0, 1]
-                        ]
+                            'haystack' => [0, 1],
+                        ],
                     ]
                 );
         }

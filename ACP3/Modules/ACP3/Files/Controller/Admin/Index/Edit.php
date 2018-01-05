@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
@@ -80,7 +81,7 @@ class Edit extends AbstractFormAction
             $file['file_external'] = '';
 
             $external = [
-                1 => $this->translator->t('files', 'external_resource')
+                1 => $this->translator->t('files', 'external_resource'),
             ];
 
             return [
@@ -89,7 +90,7 @@ class Edit extends AbstractFormAction
                 'units' => $this->formsHelper->choicesGenerator(
                     'units',
                     $this->getUnits(),
-                    trim(strrchr($file['size'], ' '))
+                    \trim(\strrchr($file['size'], ' '))
                 ),
                 'categories' => $this->categoriesHelpers->categoriesList(
                     Files\Installer\Schema::MODULE_NAME,
@@ -98,10 +99,10 @@ class Edit extends AbstractFormAction
                 ),
                 'external' => $this->formsHelper->checkboxGenerator('external', $external),
                 'current_file' => $file['file'],
-                'form' => array_merge($file, $this->request->getPost()->all()),
+                'form' => \array_merge($file, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
                 'SEO_URI_PATTERN' => Files\Helpers::URL_KEY_PATTERN,
-                'SEO_ROUTE_NAME' => sprintf(Files\Helpers::URL_KEY_PATTERN, $id)
+                'SEO_ROUTE_NAME' => \sprintf(Files\Helpers::URL_KEY_PATTERN, $id),
             ];
         }
 
@@ -126,7 +127,7 @@ class Edit extends AbstractFormAction
 
             $this->adminFormValidation
                 ->setFile($file)
-                ->setUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $id))
+                ->setUriAlias(\sprintf(Helpers::URL_KEY_PATTERN, $id))
                 ->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryId($formData);
@@ -136,7 +137,7 @@ class Edit extends AbstractFormAction
             if (!empty($file)) {
                 $newFileSql = $this->updateAssociatedFile($file, $formData, $dl['file']);
 
-                $formData = array_merge($formData, $newFileSql);
+                $formData = \array_merge($formData, $newFileSql);
             }
 
             return $this->filesModel->save($formData, $id);

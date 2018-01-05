@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core;
 
 use ACP3\Core\Helpers\StringFormatter;
@@ -209,7 +214,7 @@ class Mailer
      */
     public function setAttachments($attachments)
     {
-        if (is_array($attachments)) {
+        if (\is_array($attachments)) {
             $this->attachments = $attachments;
         } else {
             $this->attachments[] = $attachments;
@@ -271,9 +276,9 @@ class Mailer
             $this->generateBody();
 
             // Add attachments to the E-mail
-            if (count($this->attachments) > 0) {
+            if (\count($this->attachments) > 0) {
                 foreach ($this->attachments as $attachment) {
-                    if (!empty($attachment) && is_file($attachment)) {
+                    if (!empty($attachment) && \is_file($attachment)) {
                         $this->phpMailer->addAttachment($attachment);
                     }
                 }
@@ -296,7 +301,7 @@ class Mailer
      */
     protected function generateSubject()
     {
-        return "=?utf-8?b?" . base64_encode($this->decodeHtmlEntities($this->subject)) . "?=";
+        return '=?utf-8?b?' . \base64_encode($this->decodeHtmlEntities($this->subject)) . '?=';
     }
 
     private function addReplyTo()
@@ -307,7 +312,7 @@ class Mailer
 
         $replyTo = $this->mailerMessage->getReplyTo();
 
-        if (is_array($replyTo) === true) {
+        if (\is_array($replyTo) === true) {
             $this->phpMailer->addReplyTo($replyTo['email'], $replyTo['name']);
         } elseif (!empty($replyTo)) {
             $this->phpMailer->addReplyTo($replyTo);
@@ -319,7 +324,7 @@ class Mailer
      */
     private function addFrom()
     {
-        if (is_array($this->from) === true) {
+        if (\is_array($this->from) === true) {
             $this->phpMailer->setFrom($this->from['email'], $this->from['name']);
         } else {
             $this->phpMailer->setFrom($this->from);
@@ -348,9 +353,9 @@ class Mailer
             $mail = [
                 'charset' => 'UTF-8',
                 'title' => $this->subject,
-                'body' => !empty($this->htmlBody) ? $this->htmlBody : $this->stringFormatter->nl2p(htmlspecialchars($this->body)),
+                'body' => !empty($this->htmlBody) ? $this->htmlBody : $this->stringFormatter->nl2p(\htmlspecialchars($this->body)),
                 'signature' => $this->getHtmlSignature(),
-                'url_web_view' => $this->urlWeb
+                'url_web_view' => $this->urlWeb,
             ];
             $this->view->assign('mail', $mail);
 
@@ -381,11 +386,13 @@ class Mailer
     private function getHtmlSignature()
     {
         if (!empty($this->mailSignature)) {
-            if ($this->mailSignature === strip_tags($this->mailSignature)) {
+            if ($this->mailSignature === \strip_tags($this->mailSignature)) {
                 return $this->stringFormatter->nl2p($this->mailSignature);
             }
+
             return $this->mailSignature;
         }
+
         return '';
     }
 
@@ -397,7 +404,7 @@ class Mailer
      */
     private function decodeHtmlEntities($data)
     {
-        return html_entity_decode($data, ENT_QUOTES, 'UTF-8');
+        return \html_entity_decode($data, ENT_QUOTES, 'UTF-8');
     }
 
     /**
@@ -408,6 +415,7 @@ class Mailer
         if (!empty($this->mailSignature)) {
             return "\n-- \n" . $this->phpMailer->html2text($this->mailSignature, true);
         }
+
         return '';
     }
 
@@ -419,12 +427,12 @@ class Mailer
      */
     private function sendBcc()
     {
-        if (is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
+        if (\is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
             $this->recipients = [$this->recipients];
         }
 
         foreach ($this->recipients as $recipient) {
-            set_time_limit(10);
+            \set_time_limit(10);
 
             $this->addRecipients($recipient, true);
         }
@@ -442,12 +450,12 @@ class Mailer
      */
     private function addRecipients($recipients, $bcc = false)
     {
-        if (is_array($recipients) === true) {
+        if (\is_array($recipients) === true) {
             if (isset($recipients['email'], $recipients['name']) === true) {
                 $this->addRecipient($recipients['email'], $recipients['name'], $bcc);
             } else {
                 foreach ($recipients as $recipient) {
-                    if (is_array($recipient) === true) {
+                    if (\is_array($recipient) === true) {
                         $this->addRecipient($recipient['email'], $recipient['name'], $bcc);
                     } else {
                         $this->addRecipient($recipient, '', $bcc);
@@ -489,12 +497,12 @@ class Mailer
      */
     private function sendTo()
     {
-        if (is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
+        if (\is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
             $this->recipients = [$this->recipients];
         }
 
         foreach ($this->recipients as $recipient) {
-            set_time_limit(20);
+            \set_time_limit(20);
             $this->addRecipients($recipient);
             $this->phpMailer->send();
             $this->phpMailer->clearAllRecipients();
@@ -541,11 +549,11 @@ class Mailer
 
             $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-            if (strtolower($settings['mailer_type']) === 'smtp') {
+            if (\strtolower($settings['mailer_type']) === 'smtp') {
                 $this->phpMailer->set('Mailer', 'smtp');
                 $this->phpMailer->Host = $settings['mailer_smtp_host'];
                 $this->phpMailer->Port = $settings['mailer_smtp_port'];
-                $this->phpMailer->SMTPSecure = in_array($settings['mailer_smtp_security'], ['ssl', 'tls'])
+                $this->phpMailer->SMTPSecure = \in_array($settings['mailer_smtp_security'], ['ssl', 'tls'])
                     ? $settings['mailer_smtp_security']
                     : '';
                 if ((bool)$settings['mailer_smtp_auth'] === true) {

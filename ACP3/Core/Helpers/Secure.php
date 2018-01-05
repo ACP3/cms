@@ -1,7 +1,11 @@
 <?php
-namespace ACP3\Core\Helpers;
 
-use ACP3\Core;
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
+namespace ACP3\Core\Helpers;
 
 class Secure
 {
@@ -16,7 +20,7 @@ class Secure
      */
     public function generateSaltedPassword($salt, $password, $algorithm = 'sha1')
     {
-        return hash($algorithm, $salt . hash($algorithm, $password));
+        return \hash($algorithm, $salt . \hash($algorithm, $password));
     }
 
     /**
@@ -30,13 +34,14 @@ class Secure
     {
         $salt = '';
         $chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-        $cChars = strlen($chars) - 1;
-        while (strlen($salt) < $length) {
-            $char = $chars[mt_rand(0, $cChars)];
-            if (strpos($salt, $char) === false) {
+        $cChars = \strlen($chars) - 1;
+        while (\strlen($salt) < $length) {
+            $char = $chars[\mt_rand(0, $cChars)];
+            if (\strpos($salt, $char) === false) {
                 $salt .= $char;
             }
         }
+
         return $salt;
     }
 
@@ -50,7 +55,8 @@ class Secure
      */
     public function strEncode($var, $scriptTagOnly = false)
     {
-        $var = preg_replace('=<script[^>]*>.*</script>=isU', '', $var);
-        return $scriptTagOnly === true ? $var : htmlentities($var, ENT_QUOTES, 'UTF-8');
+        $var = \preg_replace('=<script[^>]*>.*</script>=isU', '', $var);
+
+        return $scriptTagOnly === true ? $var : \htmlentities($var, ENT_QUOTES, 'UTF-8');
     }
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Test\Core\Breadcrumb;
@@ -75,7 +76,7 @@ class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
                 'site_title' => $siteTitle,
                 'site_subtitle' => $siteSubtitle,
                 'site_subtitle_homepage_mode' => $subtitleHomepageMode,
-                'site_subtitle_mode' => $subtitleMode
+                'site_subtitle_mode' => $subtitleMode,
             ]);
     }
 

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
@@ -66,8 +67,8 @@ class Create extends Core\Controller\AbstractFrontendAction
     {
         return [
             'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper->formFields(),
-            'form' => array_merge(['uri' => ''], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge(['uri' => ''], $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 

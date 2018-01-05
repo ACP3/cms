@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Emoticons;
@@ -52,6 +53,7 @@ class Helpers
         if ($this->isActive) {
             $this->view->assign('emoticons_field_id', empty($formFieldId) ? 'message' : $formFieldId);
             $this->view->assign('emoticons', $this->emoticonsCache->getCache());
+
             return $this->view->fetchTemplate('emoticons/emoticons.tpl');
         }
 
@@ -69,7 +71,7 @@ class Helpers
     public function emoticonsReplace($string)
     {
         if ($this->isActive) {
-            return strtr($string, $this->emoticonsCache->getCache());
+            return \strtr($string, $this->emoticonsCache->getCache());
         }
 
         return $string;

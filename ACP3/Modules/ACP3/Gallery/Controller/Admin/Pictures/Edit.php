@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
@@ -82,9 +83,9 @@ class Edit extends AbstractFormAction
             }
 
             return [
-                'form' => array_merge($picture, $this->request->getPost()->all()),
+                'form' => \array_merge($picture, $this->request->getPost()->all()),
                 'gallery_id' => $picture['gallery_id'],
-                'form_token' => $this->formTokenHelper->renderFormToken()
+                'form_token' => $this->formTokenHelper->renderFormToken(),
             ];
         }
 
@@ -121,6 +122,7 @@ class Edit extends AbstractFormAction
                 }
 
                 $formData['gallery_id'] = $picture['gallery_id'];
+
                 return $this->pictureModel->save($formData, $id);
             },
             'acp/gallery/pictures/index/id_' . $picture['gallery_id']

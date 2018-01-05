@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Core\Router;
@@ -54,7 +55,7 @@ class Aliases
             $this->aliasesCache = $this->seoCache->getCache();
         }
 
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
+        $path .= !\preg_match('/\/$/', $path) ? '/' : '';
 
         return !empty($this->aliasesCache[$path]['alias'])
             ? $this->aliasesCache[$path]['alias']
@@ -70,6 +71,6 @@ class Aliases
      */
     public function uriAliasExists($path)
     {
-        return ($this->getUriAlias($path, true) !== '');
+        return $this->getUriAlias($path, true) !== '';
     }
 }

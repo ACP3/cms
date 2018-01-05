@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Helpers;
@@ -71,12 +72,12 @@ class ModuleInstaller
                 $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
                 $module = $schema->getModuleName();
 
-                $moduleConfigPath = $vendorPath . ucfirst($module) . '/Resources/config/module.xml';
+                $moduleConfigPath = $vendorPath . \ucfirst($module) . '/Resources/config/module.xml';
 
                 if ($this->isValidModule($moduleConfigPath)) {
                     $dependencies = $this->getModuleDependencies($moduleConfigPath);
 
-                    if (count($dependencies) > 0) {
+                    if (\count($dependencies) > 0) {
                         $this->installModules($container, $this->collectDependentSchemas($container, $dependencies));
                     }
 
@@ -100,7 +101,7 @@ class ModuleInstaller
      */
     private function isValidModule($moduleConfigPath)
     {
-        if (is_file($moduleConfigPath)) {
+        if (\is_file($moduleConfigPath)) {
             $config = $this->xml->parseXmlFile($moduleConfigPath, '/module/info');
 
             return !isset($config['no_install']);

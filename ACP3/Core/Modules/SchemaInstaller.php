@@ -1,9 +1,13 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Modules;
 
 use ACP3\Core\Modules\Installer\SchemaInterface;
-use ACP3\Modules\ACP3\System;
 
 class SchemaInstaller extends SchemaHelper implements InstallerInterface
 {
@@ -51,7 +55,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
             'id' => '',
             'name' => $moduleName,
             'version' => $schemaVersion,
-            'active' => 1
+            'active' => 1,
         ];
 
         return $this->systemModuleRepository->insert($insertValues) !== false;
@@ -68,8 +72,9 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     protected function installSettings($moduleName, array $settings)
     {
-        if (count($settings) > 0) {
+        if (\count($settings) > 0) {
             $this->db->getConnection()->beginTransaction();
+
             try {
                 $moduleId = $this->getModuleId($moduleName);
                 foreach ($settings as $key => $value) {
@@ -77,7 +82,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
                         'id' => '',
                         'module_id' => $moduleId,
                         'name' => $key,
-                        'value' => $value
+                        'value' => $value,
                     ];
                     $this->systemSettingsRepository->insert($insertValues);
                 }
@@ -86,9 +91,11 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
                 $this->db->getConnection()->rollBack();
 
                 $this->logger->warning($e);
+
                 return false;
             }
         }
+
         return true;
     }
 

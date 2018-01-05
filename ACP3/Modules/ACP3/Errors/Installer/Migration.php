@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Errors\Installer;
 
 use ACP3\Core\Modules;
@@ -23,16 +28,16 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             33 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'frontend', 'index', '500', '', 1);",
-                "UPDATE `{pre}acl_resources` SET `page` = '401' WHERE `module_id` = '{moduleId}' AND `area` = 'frontend' AND `controller` = 'index' AND `page` = '403';"
+                "UPDATE `{pre}acl_resources` SET `page` = '401' WHERE `module_id` = '{moduleId}' AND `area` = 'frontend' AND `controller` = 'index' AND `page` = '403';",
             ],
             34 => [
-                "UPDATE `{pre}acl_resources` SET `page` = '403' WHERE `module_id` = '{moduleId}' AND `area` = 'frontend' AND `controller` = 'index' AND `page` = '401';"
+                "UPDATE `{pre}acl_resources` SET `page` = '403' WHERE `module_id` = '{moduleId}' AND `area` = 'frontend' AND `controller` = 'index' AND `page` = '401';",
             ],
             35 => [
                 "UPDATE `{pre}acl_resources` SET `page` = 'access_forbidden' WHERE `module_id` = '{moduleId}' AND `area` = 'frontend' AND `controller` = 'index' AND `page` = '403';",
                 "UPDATE `{pre}acl_resources` SET `page` = 'not_found' WHERE `module_id` = '{moduleId}' AND `area` = 'frontend' AND `controller` = 'index' AND `page` = '404';",
-                "UPDATE `{pre}acl_resources` SET `page` = 'server_error' WHERE `module_id` = '{moduleId}' AND `area` = 'frontend' AND `controller` = 'index' AND `page` = '500';"
-            ]
+                "UPDATE `{pre}acl_resources` SET `page` = 'server_error' WHERE `module_id` = '{moduleId}' AND `area` = 'frontend' AND `controller` = 'index' AND `page` = '500';",
+            ],
         ];
     }
 

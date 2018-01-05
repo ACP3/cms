@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
@@ -26,8 +31,8 @@ class Schema implements Modules\Installer\SchemaInterface
                     'create' => PrivilegeEnum::ADMIN_CREATE,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
-                    'order' => PrivilegeEnum::ADMIN_CREATE
-                ]
+                    'order' => PrivilegeEnum::ADMIN_CREATE,
+                ],
             ],
         ];
     }
@@ -54,14 +59,14 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}menus` (
+            'CREATE TABLE `{pre}menus` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `index_name` VARCHAR(10) NOT NULL,
                 `title` VARCHAR(120) NOT NULL,
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `index_name` (`index_name`)
-            ) {ENGINE} {CHARSET};",
-            "CREATE TABLE `{pre}menu_items` (
+            ) {ENGINE} {CHARSET};',
+            'CREATE TABLE `{pre}menu_items` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `mode` TINYINT(1) UNSIGNED NOT NULL,
                 `block_id` INT(10) UNSIGNED NOT NULL,
@@ -77,7 +82,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 INDEX `foreign_block_id` (`block_id`),
                 INDEX `left_id` (`left_id`),
                 FOREIGN KEY (`block_id`) REFERENCES `{pre}menus` (`id`) ON DELETE CASCADE
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -87,8 +92,8 @@ class Schema implements Modules\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            "DROP TABLE IF EXISTS `{pre}menus`;",
-            "DROP TABLE IF EXISTS `{pre}menu_items`;"
+            'DROP TABLE IF EXISTS `{pre}menus`;',
+            'DROP TABLE IF EXISTS `{pre}menu_items`;',
         ];
     }
 

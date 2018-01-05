@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core;
 
 use ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface;
@@ -80,6 +86,7 @@ class ACL
                 }
             }
         }
+
         return $this->userRoles[$userId];
     }
 
@@ -96,6 +103,7 @@ class ACL
         foreach ($this->userRoleRepository->getRolesByUserId($userId) as $userRole) {
             $roles[] = $userRole['name'];
         }
+
         return $roles;
     }
 
@@ -114,7 +122,7 @@ class ACL
      */
     public function userHasRole($roleId)
     {
-        return in_array($roleId, $this->getUserRoleIds($this->user->getUserId()));
+        return \in_array($roleId, $this->getUserRoleIds($this->user->getUserId()));
     }
 
     /**
@@ -151,7 +159,7 @@ class ACL
     public function hasPermission($resource)
     {
         if (!empty($resource) && $this->modules->controllerActionExists($resource) === true) {
-            $resourceParts = explode('/', $resource);
+            $resourceParts = \explode('/', $resource);
 
             if ($this->modules->isActive($resourceParts[1]) === true) {
                 return $this->canAccessResource($resource);
@@ -177,6 +185,7 @@ class ACL
         if (isset($this->getResources()[$area][$resource])) {
             $module = $resourceParts[1];
             $privilegeKey = $this->getResources()[$area][$resource]['key'];
+
             return $this->userHasPrivilege($module, $privilegeKey) === true || $this->user->isSuperUser() === true;
         }
 
@@ -190,7 +199,7 @@ class ACL
      */
     protected function convertResourcePathToArray($resource)
     {
-        $resourceArray = explode('/', $resource);
+        $resourceArray = \explode('/', $resource);
 
         if (empty($resourceArray[2]) === true) {
             $resourceArray[2] = 'index';
@@ -198,6 +207,7 @@ class ACL
         if (empty($resourceArray[3]) === true) {
             $resourceArray[3] = 'index';
         }
+
         return $resourceArray;
     }
 
@@ -225,10 +235,11 @@ class ACL
      */
     protected function userHasPrivilege($module, $privilegeKey)
     {
-        $privilegeKey = strtolower($privilegeKey);
+        $privilegeKey = \strtolower($privilegeKey);
         if (isset($this->getPrivileges()[$module][$privilegeKey])) {
             return $this->getPrivileges()[$module][$privilegeKey]['access'];
         }
+
         return false;
     }
 }

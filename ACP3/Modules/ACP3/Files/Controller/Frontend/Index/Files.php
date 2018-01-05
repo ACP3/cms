@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
@@ -70,7 +71,7 @@ class Files extends Core\Controller\AbstractFrontendAction
 
             return [
                 'dateformat' => $settings['dateformat'],
-                'files' => $this->filesRepository->getAllByCategoryId($cat, $this->date->getCurrentDateTime())
+                'files' => $this->filesRepository->getAllByCategoryId($cat, $this->date->getCurrentDateTime()),
             ];
         }
 

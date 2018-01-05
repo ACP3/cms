@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
@@ -51,12 +53,12 @@ class Create extends AbstractFrontendAction
     public function execute($module, $entryId, $redirectUrl)
     {
         return [
-            'form' => array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
+            'form' => \array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
             'module' => $module,
             'entry_id' => $entryId,
             'redirect_url' => $redirectUrl,
             'form_token' => $this->formTokenHelper->renderFormToken(),
-            'can_use_emoticons' => $this->emoticonsActive === true
+            'can_use_emoticons' => $this->emoticonsActive === true,
         ];
     }
 
@@ -88,7 +90,7 @@ class Create extends AbstractFrontendAction
                 return $this->redirectMessages()->setMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),
-                    base64_decode(urldecode($redirectUrl))
+                    \base64_decode(\urldecode($redirectUrl))
                 );
             }
         );
@@ -102,7 +104,7 @@ class Create extends AbstractFrontendAction
         $defaults = [
             'name' => '',
             'name_disabled' => false,
-            'message' => ''
+            'message' => '',
         ];
 
         if ($this->user->isAuthenticated() === true) {
@@ -111,6 +113,7 @@ class Create extends AbstractFrontendAction
             $defaults['name_disabled'] = true;
             $defaults['message'] = '';
         }
+
         return $defaults;
     }
 }

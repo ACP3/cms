@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
@@ -84,8 +90,10 @@ class TableOfContents
                 ++$i;
             }
             $this->view->assign('toc', $toc);
+
             return $this->view->fetchTemplate('System/Partials/toc.tpl');
         }
+
         return '';
     }
 
@@ -100,11 +108,11 @@ class TableOfContents
     protected function getHtmlAttributes($string)
     {
         $matches = [];
-        preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $matches);
+        \preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $matches);
 
         $return = [];
         if (!empty($matches)) {
-            $cMatches = count($matches[1]);
+            $cMatches = \count($matches[1]);
             for ($i = 0; $i < $cMatches; ++$i) {
                 $return[$matches[1][$i]] = $matches[2][$i];
             }
@@ -124,7 +132,7 @@ class TableOfContents
     protected function isCurrentPage($customUris, $page, $pageNumber, $currentIndex)
     {
         if ($customUris === true) {
-            if (is_array($page) === true && $page['uri'] === $this->router->route($this->request->getQuery())
+            if (\is_array($page) === true && $page['uri'] === $this->router->route($this->request->getQuery())
                 || $this->router->route($this->request->getQuery()) === $this->router->route($this->request->getFullPath()) && $currentIndex == 0
             ) {
                 return true;
@@ -147,11 +155,12 @@ class TableOfContents
      */
     protected function fetchTocPageTitle($page, $pageNumber, $titlesFromDb)
     {
-        if ($titlesFromDb === false && is_array($page) === false) {
+        if ($titlesFromDb === false && \is_array($page) === false) {
             $page = $this->getHtmlAttributes($page);
         }
 
         $transPageNumber = $this->translator->t('system', 'toc_page', ['%page%' => $pageNumber]);
+
         return !empty($page['title']) ? $page['title'] : $transPageNumber;
     }
 
@@ -165,7 +174,7 @@ class TableOfContents
      */
     protected function fetchTocPageUri($customUris, $page, $pageNumber, $requestQuery)
     {
-        if ($customUris === true && is_array($page) === true) {
+        if ($customUris === true && \is_array($page) === true) {
             return $page['uri'];
         }
 

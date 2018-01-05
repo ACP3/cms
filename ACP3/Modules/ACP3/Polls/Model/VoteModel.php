@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Model;
@@ -58,7 +59,7 @@ class VoteModel
         $userId = $this->userModel->isAuthenticated() ? $this->userModel->getUserId() : null;
 
         // Multiple Answers
-        if (is_array($answers) === false) {
+        if (\is_array($answers) === false) {
             $answers = [$answers];
         }
 
@@ -74,6 +75,7 @@ class VoteModel
                 $bool = $this->voteRepository->insert($insertValues);
             }
         }
+
         return $bool;
     }
 }

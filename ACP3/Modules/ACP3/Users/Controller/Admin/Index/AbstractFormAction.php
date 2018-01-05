@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
@@ -31,7 +32,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         $this->formsHelpers = $formsHelpers;
     }
 
-
     /**
      * @param array $currentUserRoles
      *
@@ -43,8 +43,9 @@ abstract class AbstractFormAction extends AbstractFrontendAction
 
         $availableUserRoles = [];
         foreach ($roles as $role) {
-            $availableUserRoles[$role['id']] = str_repeat('&nbsp;&nbsp;', $role['level']) . $role['name'];
+            $availableUserRoles[$role['id']] = \str_repeat('&nbsp;&nbsp;', $role['level']) . $role['name'];
         }
+
         return $this->formsHelpers->choicesGenerator('roles', $availableUserRoles, $currentUserRoles);
     }
 

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Core\DependencyInjection;
@@ -143,7 +144,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         $basePath = $this->applicationPath->getModulesDir() . $vendor . '/*/Resources/config/';
         $basePath .= $this->migrationsOnly === true ? 'components/installer.yml' : 'services.yml';
 
-        return glob($basePath);
+        return \glob($basePath);
     }
 
     /**

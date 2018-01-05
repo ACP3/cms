@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
@@ -41,7 +42,7 @@ class AbstractFormAction extends AbstractFrontendAction
     protected function fetchPrivileges($privilegeId)
     {
         $privileges = $this->privilegeRepository->getAllPrivileges();
-        $cPrivileges = count($privileges);
+        $cPrivileges = \count($privileges);
         for ($i = 0; $i < $cPrivileges; ++$i) {
             $privileges[$i]['selected'] = $this->formsHelper->selectEntry(
                 'privileges',
@@ -64,9 +65,10 @@ class AbstractFormAction extends AbstractFrontendAction
             $modules[$row['name']]['selected'] = $this->formsHelper->selectEntry(
                 'modules',
                 $row['dir'],
-                ucfirst(trim($currentModule))
+                \ucfirst(\trim($currentModule))
             );
         }
+
         return $modules;
     }
 
@@ -78,7 +80,7 @@ class AbstractFormAction extends AbstractFrontendAction
     {
         $moduleInfo = $this->modules->getModuleInfo($moduleName);
 
-        return isset($moduleInfo['id']) ? $moduleInfo['id'] : 0;
+        return $moduleInfo['id'] ?? 0;
     }
 
     /**
@@ -87,8 +89,8 @@ class AbstractFormAction extends AbstractFrontendAction
      */
     protected function fetchAreas($currentArea = '')
     {
-        $areas = array_values(AreaEnum::getAreas());
+        $areas = \array_values(AreaEnum::getAreas());
 
-        return $this->formsHelper->choicesGenerator('area', array_combine($areas, $areas), $currentArea);
+        return $this->formsHelper->choicesGenerator('area', \array_combine($areas, $areas), $currentArea);
     }
 }

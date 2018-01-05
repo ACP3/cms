@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Seo\Validation;
 
 use ACP3\Core;
@@ -22,8 +27,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'robots',
                     'message' => $this->translator->t('seo', 'select_robots'),
                     'extra' => [
-                        'haystack' => [1, 2, 3, 4]
-                    ]
+                        'haystack' => [1, 2, 3, 4],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -35,9 +40,9 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'extra' => [
                         'haystack' => [
                             IndexPaginatedContentEnum::INDEX_FIST_PAGE_ONLY,
-                            IndexPaginatedContentEnum::INDEX_ALL_PAGES
-                        ]
-                    ]
+                            IndexPaginatedContentEnum::INDEX_ALL_PAGES,
+                        ],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -47,8 +52,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'sitemap_is_enabled',
                     'message' => $this->translator->t('seo', 'select_sitemap_is_enabled'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -58,8 +63,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'sitemap_save_mode',
                     'message' => $this->translator->t('seo', 'select_sitemap_save_mode'),
                     'extra' => [
-                        'haystack' => [1, 2]
-                    ]
+                        'haystack' => [1, 2],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -69,8 +74,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'sitemap_separate',
                     'message' => $this->translator->t('seo', 'select_sitemap_separate'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             );
 

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Controller\Admin\Index;
@@ -73,8 +74,8 @@ class Settings extends AbstractFrontendAction
 
         return [
             'captchas' => $this->forms->choicesGenerator('captcha', $captchas, $settings['captcha']),
-            'form' => array_merge($settings, $this->request->getPost()->all()),
-            'form_token' => $this->formToken->renderFormToken()
+            'form' => \array_merge($settings, $this->request->getPost()->all()),
+            'form_token' => $this->formToken->renderFormToken(),
         ];
     }
 

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Core\Authentication;
@@ -61,7 +62,7 @@ class Native implements AuthenticationInterface
         if ($this->sessionHandler->has(AuthenticationModel::AUTH_NAME)) {
             $userData = $this->sessionHandler->get(AuthenticationModel::AUTH_NAME, []);
         } elseif ($this->request->getCookies()->has(AuthenticationModel::AUTH_NAME)) {
-            list($userId, $token) = explode('|', $this->request->getCookies()->get(AuthenticationModel::AUTH_NAME, ''));
+            list($userId, $token) = \explode('|', $this->request->getCookies()->get(AuthenticationModel::AUTH_NAME, ''));
 
             $userData = $this->verifyCredentials($userId, $token);
         }

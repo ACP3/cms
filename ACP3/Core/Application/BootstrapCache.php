@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Application;
@@ -13,7 +14,6 @@ use FOS\HttpCache\SymfonyCache\CacheInvalidation;
 use FOS\HttpCache\SymfonyCache\DebugListener;
 use FOS\HttpCache\SymfonyCache\EventDispatchingHttpCache;
 use FOS\HttpCache\SymfonyCache\PurgeListener;
-use FOS\HttpCache\SymfonyCache\PurgeTagsListener;
 use FOS\HttpCache\SymfonyCache\RefreshListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpCache\HttpCache;
@@ -38,7 +38,7 @@ class BootstrapCache extends HttpCache implements CacheInvalidation
 
         $this->addSubscriber(new UserContextListener([
             'user_hash_uri' => '/widget/users/index/hash/',
-            'session_name_prefix' => SessionHandlerInterface::SESSION_NAME
+            'session_name_prefix' => SessionHandlerInterface::SESSION_NAME,
         ]));
         $this->addSubscriber(new PurgeListener());
         $this->addSubscriber(new RefreshListener());

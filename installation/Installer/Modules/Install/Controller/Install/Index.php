@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Controller\Install;
@@ -84,9 +85,9 @@ class Index extends AbstractAction
     public function execute()
     {
         return [
-            'time_zones' => $this->dateHelper->getTimeZones(date_default_timezone_get()),
-            'form' => array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
-            'designs' => $this->getAvailableDesigns()
+            'time_zones' => $this->dateHelper->getTimeZones(\date_default_timezone_get()),
+            'form' => \array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
+            'designs' => $this->getAvailableDesigns(),
         ];
     }
 

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Index;
@@ -79,13 +80,13 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
         $mailerTypes = [
             'mail' => $this->translator->t('system', 'mailer_type_php_mail'),
-            'smtp' => $this->translator->t('system', 'mailer_type_smtp')
+            'smtp' => $this->translator->t('system', 'mailer_type_smtp'),
         ];
 
         $mailerSmtpSecurity = [
             'none' => $this->translator->t('system', 'mailer_smtp_security_none'),
             'ssl' => $this->translator->t('system', 'mailer_smtp_security_ssl'),
-            'tls' => $this->translator->t('system', 'mailer_smtp_security_tls')
+            'tls' => $this->translator->t('system', 'mailer_smtp_security_tls'),
         ];
 
         return [
@@ -138,8 +139,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 $mailerSmtpSecurity,
                 $systemSettings['mailer_smtp_security']
             ),
-            'form' => array_merge($systemSettings, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge($systemSettings, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -182,7 +183,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
                     'site_subtitle' => $this->secure->strEncode($formData['site_subtitle']),
                     'site_subtitle_homepage_mode' => (int)$formData['site_subtitle_homepage_mode'],
                     'site_subtitle_mode' => (int)$formData['site_subtitle_mode'],
-                    'wysiwyg' => $formData['wysiwyg']
+                    'wysiwyg' => $formData['wysiwyg'],
                 ];
 
                 return $this->config->saveSettings($data, System\Installer\Schema::MODULE_NAME);
@@ -202,6 +203,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 $wysiwyg[$serviceId] = $editorInstance->getFriendlyName();
             }
         }
+
         return $this->formsHelper->choicesGenerator('wysiwyg', $wysiwyg, $currentWysiwygEditor);
     }
 }

@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
@@ -60,15 +62,15 @@ class Create extends AbstractFormAction
     {
         $actions = [
             1 => $this->translator->t('newsletter', 'send_and_save'),
-            0 => $this->translator->t('newsletter', 'only_save')
+            0 => $this->translator->t('newsletter', 'only_save'),
         ];
 
         return [
             'settings' => $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME),
             'test' => $this->formsHelper->yesNoCheckboxGenerator('test', 0),
             'action' => $this->formsHelper->checkboxGenerator('action', $actions, 1),
-            'form' => array_merge(['title' => '', 'text' => '', 'date' => ''], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge(['title' => '', 'text' => '', 'date' => ''], $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 

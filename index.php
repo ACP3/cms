@@ -1,18 +1,18 @@
 <?php
+
 /**
- * Index
- *
- * @author Tino Goratsch
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-define('ACP3_ROOT_DIR', realpath(__DIR__) . '/');
+\define('ACP3_ROOT_DIR', \realpath(__DIR__) . '/');
 
 require ACP3_ROOT_DIR . 'vendor/autoload.php';
 
 $request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
 
 $appMode = \ACP3\Core\Environment\ApplicationMode::PRODUCTION;
-if (getenv('ACP3_APPLICATION_MODE') === \ACP3\Core\Environment\ApplicationMode::DEVELOPMENT) {
+if (\getenv('ACP3_APPLICATION_MODE') === \ACP3\Core\Environment\ApplicationMode::DEVELOPMENT) {
     $appMode = \ACP3\Core\Environment\ApplicationMode::DEVELOPMENT;
 }
 
@@ -28,7 +28,7 @@ HTML;
 }
 
 $cacheStore = new \Toflar\Psr6HttpCacheStore\Psr6Store([
-    'cache_directory' => $kernel->getAppPath()->getCacheDir() . 'http/'
+    'cache_directory' => $kernel->getAppPath()->getCacheDir() . 'http/',
 ]);
 
 $appCache = new \ACP3\Core\Application\BootstrapCache(

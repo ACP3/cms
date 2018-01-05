@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
@@ -44,11 +45,11 @@ class Settings extends Core\Controller\AbstractFrontendAction
     public function execute()
     {
         return [
-            'form' => array_merge(
+            'form' => \array_merge(
                 $this->config->getSettings(Emoticons\Installer\Schema::MODULE_NAME),
                 $this->request->getPost()->all()
             ),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 

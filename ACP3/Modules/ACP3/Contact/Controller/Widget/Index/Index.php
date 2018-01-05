@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Contact\Controller\Widget\Index;
@@ -22,7 +23,7 @@ class Index extends Core\Controller\AbstractWidgetAction
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
         return [
-            'sidebar_contact' => $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME)
+            'sidebar_contact' => $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME),
         ];
     }
 }

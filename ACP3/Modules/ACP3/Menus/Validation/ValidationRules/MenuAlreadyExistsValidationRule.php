@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
@@ -26,11 +32,12 @@ class MenuAlreadyExistsValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        $menuId = isset($extra['menu_id']) ? $extra['menu_id'] : 0;
+        $menuId = $extra['menu_id'] ?? 0;
+
         return $this->menuRepository->menuExistsByName($data, $menuId) === false;
     }
 }

@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\ACL;
@@ -85,7 +91,7 @@ class DataGrid
      */
     public function registerColumnRenderer(ColumnRendererInterface $columnRenderer)
     {
-        $this->columnRenderer[get_class($columnRenderer)] = $columnRenderer;
+        $this->columnRenderer[\get_class($columnRenderer)] = $columnRenderer;
 
         return $this;
     }
@@ -170,6 +176,7 @@ class DataGrid
     public function setEnableOptions($enableOptions)
     {
         $this->enableOptions = (bool)$enableOptions;
+
         return $this;
     }
 
@@ -193,7 +200,7 @@ class DataGrid
      */
     public function addColumn(array $columnData, $priority)
     {
-        $columnData = array_merge(
+        $columnData = \array_merge(
             [
                 'label' => '',
                 'type' => '',
@@ -205,7 +212,7 @@ class DataGrid
                 'default_sort_direction' => 'asc',
                 'custom' => [],
                 'attribute' => [],
-                'primary' => false
+                'primary' => false,
             ],
             $columnData
         );
@@ -229,10 +236,10 @@ class DataGrid
         return [
             'can_edit' => $canEdit,
             'can_delete' => $canDelete,
-            'identifier' => substr($this->identifier, 1),
+            'identifier' => \substr($this->identifier, 1),
             'header' => $this->renderTableHeader(),
             'config' => $this->generateDataTableConfig(),
-            'results' => $this->mapTableColumnsToDbFields()
+            'results' => $this->mapTableColumnsToDbFields(),
         ];
     }
 
@@ -254,7 +261,6 @@ class DataGrid
         return $header;
     }
 
-
     /**
      * @return string
      */
@@ -264,7 +270,7 @@ class DataGrid
         foreach ($this->fetchDbResults() as $result) {
             $renderedResults .= '<tr>';
             foreach (clone $this->columns as $column) {
-                if (array_key_exists($column['type'], $this->columnRenderer) && !empty($column['label'])) {
+                if (\array_key_exists($column['type'], $this->columnRenderer) && !empty($column['label'])) {
                     $renderedResults .= $this->columnRenderer[$column['type']]
                         ->setIdentifier($this->identifier)
                         ->setPrimaryKey($this->primaryKey)
@@ -293,7 +299,7 @@ class DataGrid
             };
 
             if ($column['default_sort'] === true &&
-                in_array($column['default_sort_direction'], ['asc', 'desc'])
+                \in_array($column['default_sort_direction'], ['asc', 'desc'])
             ) {
                 $defaultSortColumn = $i;
                 $defaultSortDirection = $column['default_sort_direction'];
@@ -307,9 +313,9 @@ class DataGrid
         return [
             'element' => $this->identifier,
             'records_per_page' => $this->recordsPerPage,
-            'hide_col_sort' => implode(', ', $columnDefinitions),
+            'hide_col_sort' => \implode(', ', $columnDefinitions),
             'sort_col' => $defaultSortColumn,
-            'sort_dir' => $defaultSortDirection
+            'sort_dir' => $defaultSortDirection,
         ];
     }
 
@@ -326,8 +332,8 @@ class DataGrid
                 'class' => 'datagrid-column datagrid-column__mass-action',
                 'sortable' => false,
                 'custom' => [
-                    'can_delete' => $canDelete
-                ]
+                    'can_delete' => $canDelete,
+                ],
             ], 1000);
         }
 
@@ -341,8 +347,8 @@ class DataGrid
                     'can_delete' => $canDelete,
                     'can_edit' => $canEdit,
                     'resource_path_delete' => $this->resourcePathDelete,
-                    'resource_path_edit' => $this->resourcePathEdit
-                ]
+                    'resource_path_edit' => $this->resourcePathEdit,
+                ],
             ], 0);
         }
     }
@@ -354,7 +360,8 @@ class DataGrid
     {
         foreach (clone $this->columns as $column) {
             if ($column['primary'] === true && !empty($column['fields'])) {
-                $this->primaryKey = reset($column['fields']);
+                $this->primaryKey = \reset($column['fields']);
+
                 break;
             }
         }
@@ -377,6 +384,6 @@ class DataGrid
      */
     public function countDbResults()
     {
-        return count($this->fetchDbResults());
+        return \count($this->fetchDbResults());
     }
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Model;
@@ -68,7 +69,7 @@ class NewsletterModel extends AbstractModel
             'text' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
             'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'html' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'status' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'status' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

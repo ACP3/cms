@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing
- * details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
@@ -100,7 +101,7 @@ class Index extends AbstractAction
             ->setTotalResults($this->newsRepository->countAll($time, $cat));
 
         $news = $this->fetchNews($cat, $time);
-        $cNews = count($news);
+        $cNews = \count($news);
 
         for ($i = 0; $i < $cNews; ++$i) {
             $news[$i]['text'] = $this->view->fetchStringAsTemplate($news[$i]['text']);
@@ -119,7 +120,7 @@ class Index extends AbstractAction
             'news' => $news,
             'dateformat' => $this->newsSettings['dateformat'],
             'categories' => $this->categoriesHelpers->categoriesList('news', $cat),
-            'pagination' => $this->pagination->render()
+            'pagination' => $this->pagination->render(),
         ];
     }
 

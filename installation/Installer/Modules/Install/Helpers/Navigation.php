@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Helpers;
@@ -59,7 +60,7 @@ class Navigation
     public function addStep($stepName, array $options)
     {
         if (!$this->has($stepName)) {
-            $this->navbar[$stepName] = array_merge($this->getDefaultOptions(), $options);
+            $this->navbar[$stepName] = \array_merge($this->getDefaultOptions(), $options);
         }
 
         return $this;
@@ -73,7 +74,7 @@ class Navigation
         return [
             'lang' => '',
             'active' => false,
-            'complete' => false
+            'complete' => false,
         ];
     }
 

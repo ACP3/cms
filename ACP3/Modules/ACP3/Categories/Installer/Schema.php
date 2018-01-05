@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Categories\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
@@ -14,7 +20,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}categories` (
+            'CREATE TABLE `{pre}categories` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `title` VARCHAR(120) NOT NULL,
                 `picture` VARCHAR(120) NOT NULL,
@@ -23,7 +29,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 PRIMARY KEY (`id`),
                 INDEX (`module_id`),
                 FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -32,7 +38,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function removeTables()
     {
-        return ["DROP TABLE IF EXISTS `{pre}categories`;"];
+        return ['DROP TABLE IF EXISTS `{pre}categories`;'];
     }
 
     /**
@@ -43,7 +49,7 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             'width' => 100,
             'height' => 50,
-            'filesize' => 40960
+            'filesize' => 40960,
         ];
     }
 
@@ -59,8 +65,8 @@ class Schema implements Modules\Installer\SchemaInterface
                     'create' => PrivilegeEnum::ADMIN_CREATE,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
-                ]
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
+                ],
             ],
         ];
     }

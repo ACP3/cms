@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
@@ -17,7 +18,7 @@ abstract class AbstractMoveElementFilter extends AbstractFilter
      */
     protected function getCleanedUpTemplateOutput($tplOutput)
     {
-        return preg_replace(static::ELEMENT_CATCHER_REGEX_PATTERN, '', $tplOutput);
+        return \preg_replace(static::ELEMENT_CATCHER_REGEX_PATTERN, '', $tplOutput);
     }
 
     /**
@@ -27,8 +28,8 @@ abstract class AbstractMoveElementFilter extends AbstractFilter
     protected function addElementsFromTemplates($tplOutput)
     {
         $matches = [];
-        preg_match_all(static::ELEMENT_CATCHER_REGEX_PATTERN, $tplOutput, $matches);
+        \preg_match_all(static::ELEMENT_CATCHER_REGEX_PATTERN, $tplOutput, $matches);
 
-        return implode("\n", array_unique($matches[1])) . "\n";
+        return \implode("\n", \array_unique($matches[1])) . "\n";
     }
 }

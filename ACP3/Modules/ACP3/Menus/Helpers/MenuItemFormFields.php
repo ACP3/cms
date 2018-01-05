@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 use ACP3\Core;
@@ -44,7 +50,7 @@ class MenuItemFormFields
     protected function menusDropDown($selected = 0)
     {
         $menus = $this->menusModel->getAllMenus();
-        $cMenus = count($menus);
+        $cMenus = \count($menus);
         for ($i = 0; $i < $cMenus; ++$i) {
             $menus[$i]['selected'] = $this->formsHelper->selectEntry('block_id', (int)$menus[$i]['id'], (int)$selected);
         }
@@ -66,7 +72,7 @@ class MenuItemFormFields
         return [
             'blocks' => $this->menusDropDown($blockId),
             'display' => $this->formsHelper->yesNoCheckboxGenerator('display', $displayMenuItem),
-            'menuItems' => $this->menusHelper->menuItemsList($parentId, $leftId, $rightId)
+            'menuItems' => $this->menusHelper->menuItemsList($parentId, $leftId, $rightId),
         ];
     }
 }

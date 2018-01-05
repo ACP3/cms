@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
@@ -61,17 +62,17 @@ class Result extends Core\Controller\AbstractFrontendAction
         if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
             $question = $this->pollRepository->getOneByIdWithTotalVotes($id);
             $answers = $this->answerRepository->getAnswersWithVotesByPollId($id);
-            $cAnswers = count($answers);
+            $cAnswers = \count($answers);
             $totalVotes = $question['total_votes'];
 
             for ($i = 0; $i < $cAnswers; ++$i) {
-                $answers[$i]['percent'] = $totalVotes > 0 ? round(100 * $answers[$i]['votes'] / $totalVotes, 2) : '0';
+                $answers[$i]['percent'] = $totalVotes > 0 ? \round(100 * $answers[$i]['votes'] / $totalVotes, 2) : '0';
             }
 
             return [
                 'question' => $question['title'],
                 'answers' => $answers,
-                'total_votes' => $totalVotes
+                'total_votes' => $totalVotes,
             ];
         }
 

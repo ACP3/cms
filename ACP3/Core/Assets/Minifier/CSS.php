@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Assets\Minifier;
 
 class CSS extends AbstractMinifier
@@ -60,7 +66,7 @@ class CSS extends AbstractMinifier
                 '',
                 '',
                 static::ASSETS_PATH_CSS,
-                trim($file)
+                \trim($file)
             );
         }
 

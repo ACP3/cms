@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
 use ACP3\Core;
@@ -43,12 +49,12 @@ class PageCssClasses extends AbstractFilter
      */
     public function process($tplOutput, \Smarty_Internal_Template $smarty)
     {
-        if (strpos($tplOutput, '<body') !== false) {
+        if (\strpos($tplOutput, '<body') !== false) {
             if ($this->cssClassCache === '') {
-                $this->cssClassCache = 'class="' . implode(' ', $this->buildPageCssClasses()) . '"';
+                $this->cssClassCache = 'class="' . \implode(' ', $this->buildPageCssClasses()) . '"';
             }
 
-            $tplOutput = str_replace('<body', '<body ' . $this->cssClassCache, $tplOutput);
+            $tplOutput = \str_replace('<body', '<body ' . $this->cssClassCache, $tplOutput);
         }
 
         return $tplOutput;
@@ -61,7 +67,7 @@ class PageCssClasses extends AbstractFilter
     {
         $pieces = [
             $this->pageCssClasses->getModule(),
-            $this->pageCssClasses->getControllerAction()
+            $this->pageCssClasses->getControllerAction(),
         ];
 
         if ($this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN) {

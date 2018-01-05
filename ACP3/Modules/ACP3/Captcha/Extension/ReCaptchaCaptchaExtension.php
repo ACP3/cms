@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Extension;
@@ -84,7 +85,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
                 'id' => $formFieldId,
                 'input_only' => $inputOnly,
                 'length' => $captchaLength,
-                'sitekey' => $settings['recaptcha_sitekey']
+                'sitekey' => $settings['recaptcha_sitekey'],
             ]);
 
             return $this->view->fetchTemplate(static::TEMPLATE);

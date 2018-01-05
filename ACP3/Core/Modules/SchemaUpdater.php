@@ -1,10 +1,14 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Modules;
 
 use ACP3\Core\Modules\Installer\MigrationInterface;
 use ACP3\Core\Modules\Installer\SchemaInterface;
-use ACP3\Modules\ACP3\System;
 
 class SchemaUpdater extends SchemaHelper
 {
@@ -25,7 +29,7 @@ class SchemaUpdater extends SchemaHelper
         // Falls eine Methode zum Umbenennen des Moduls existiert,
         // diese mit der aktuell installierten Schemaverion aufrufen
         $moduleNames = $migration->renameModule();
-        if (count($moduleNames) > 0) {
+        if (\count($moduleNames) > 0) {
             $result = $this->iterateOverSchemaUpdates(
                 $schema->getModuleName(),
                 $schema->getSchemaVersion(),
@@ -35,9 +39,9 @@ class SchemaUpdater extends SchemaHelper
         }
 
         $queries = $migration->schemaUpdates();
-        if (is_array($queries) && count($queries) > 0) {
+        if (\is_array($queries) && \count($queries) > 0) {
             // Nur für den Fall der Fälle... ;)
-            ksort($queries);
+            \ksort($queries);
 
             $result = $this->iterateOverSchemaUpdates(
                 $schema->getModuleName(),
@@ -79,6 +83,7 @@ class SchemaUpdater extends SchemaHelper
                 }
             }
         }
+
         return $result;
     }
 
@@ -102,6 +107,6 @@ class SchemaUpdater extends SchemaHelper
      */
     protected function forceSqlQueriesToArray($queries)
     {
-        return (is_array($queries) === false) ? (array)$queries : $queries;
+        return (\is_array($queries) === false) ? (array)$queries : $queries;
     }
 }

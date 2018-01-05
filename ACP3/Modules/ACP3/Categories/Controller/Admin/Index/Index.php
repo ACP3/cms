@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
@@ -50,7 +51,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         return [
             'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 
@@ -64,12 +65,12 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'label' => $this->translator->t('categories', 'title'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['title'],
-                'default_sort' => true
+                'default_sort' => true,
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('system', 'description'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['description']
+                'fields' => ['description'],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('categories', 'module'),
@@ -80,7 +81,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
             ], 10);
     }
 }

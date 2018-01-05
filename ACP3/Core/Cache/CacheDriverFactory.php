@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Cache;
@@ -70,14 +71,14 @@ class CacheDriverFactory
     protected function initializeCacheDriver($driverName)
     {
         /** @var \Doctrine\Common\Cache\CacheProvider $driver */
-        switch (strtolower($driverName)) {
+        switch (\strtolower($driverName)) {
             case 'phpfile':
                 return new PhpFileCache($this->appPath->getCacheDir() . 'sql/');
             case 'array':
                 return new ArrayCache();
             default:
                 throw new \InvalidArgumentException(
-                    sprintf('Could not find the requested cache driver "%s"!', $driverName)
+                    \sprintf('Could not find the requested cache driver "%s"!', $driverName)
                 );
         }
     }

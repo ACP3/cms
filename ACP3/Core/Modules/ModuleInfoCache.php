@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Modules;
@@ -120,7 +121,7 @@ class ModuleInfoCache
                 $moduleInfo = $this->fetchModuleInfo($module);
 
                 if (!empty($moduleInfo)) {
-                    $infos[strtolower($module)] = $moduleInfo;
+                    $infos[\strtolower($module)] = $moduleInfo;
                 }
             }
         }
@@ -135,14 +136,14 @@ class ModuleInfoCache
      */
     protected function fetchModuleInfo($moduleDirectory)
     {
-        $vendors = array_reverse($this->vendors->getVendors()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
+        $vendors = \array_reverse($this->vendors->getVendors()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
         foreach ($vendors as $vendor) {
             $path = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/Resources/config/module.xml';
-            if (is_file($path) === true) {
+            if (\is_file($path) === true) {
                 $moduleInfo = $this->xml->parseXmlFile($path, 'info');
 
                 if (!empty($moduleInfo)) {
-                    $moduleName = strtolower($moduleDirectory);
+                    $moduleName = \strtolower($moduleDirectory);
                     $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
 
                     return [

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
@@ -57,8 +58,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 'enable_registration',
                 $settings['enable_registration']
             ),
-            'form' => array_merge(['mail' => $settings['mail']], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge(['mail' => $settings['mail']], $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -74,7 +75,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
             $data = [
                 'enable_registration' => $formData['enable_registration'],
-                'mail' => $formData['mail']
+                'mail' => $formData['mail'],
             ];
 
             return $this->config->saveSettings($data, Users\Installer\Schema::MODULE_NAME);

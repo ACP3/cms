@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\NestedSet\Operation;
@@ -46,7 +47,7 @@ class Delete extends AbstractOperation
      */
     protected function moveSiblingsOneLevelUp(array $nodes)
     {
-        array_shift($nodes);
+        \array_shift($nodes);
 
         // Update the root_id and parent_id of the siblings
         foreach ($nodes as $node) {
@@ -57,7 +58,7 @@ class Delete extends AbstractOperation
                 [
                     $nodes[0]['id'],
                     $parentId,
-                    $node['id']
+                    $node['id'],
                 ]
             );
         }
@@ -79,6 +80,7 @@ class Delete extends AbstractOperation
         foreach ($nodes as $node) {
             $nodeIds[] = $node['id'];
         }
+
         return $nodeIds;
     }
 }

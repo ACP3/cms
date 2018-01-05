@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\DependencyInjection;
@@ -101,7 +102,7 @@ class ServiceContainerBuilder extends ContainerBuilder
                 $modulePath = $this->applicationPath->getModulesDir() . $vendor . '/' . $module['dir'];
                 $path = $modulePath . '/Resources/config/services.yml';
 
-                if (is_file($path)) {
+                if (\is_file($path)) {
                     $loader->load($path);
                 }
 
@@ -134,9 +135,9 @@ class ServiceContainerBuilder extends ContainerBuilder
      */
     private function registerCompilerPass($vendor, $moduleName)
     {
-        $fqn = "\\ACP3\\Modules\\" . $vendor . "\\" . $moduleName . "\\ModuleRegistration";
+        $fqn = '\\ACP3\\Modules\\' . $vendor . '\\' . $moduleName . '\\ModuleRegistration';
 
-        if (class_exists($fqn)) {
+        if (\class_exists($fqn)) {
             $instance = new $fqn;
 
             if ($instance instanceof Modules\ModuleRegistration) {

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Widget\Index;
@@ -66,13 +67,13 @@ class Index extends Core\Controller\AbstractWidgetAction
             if ($this->hasAlreadyVoted($poll['id'])) {
                 $totalVotes = $poll['total_votes'];
 
-                $cAnswers = count($answers);
+                $cAnswers = \count($answers);
                 for ($i = 0; $i < $cAnswers; ++$i) {
                     $votes = $answers[$i]['votes'];
                     $answers[$i]['votes'] = ($votes > 1)
                         ? $this->translator->t('polls', 'number_of_votes', ['%votes%' => $votes])
                         : $this->translator->t('polls', ($votes == 1 ? 'one_vote' : 'no_votes'));
-                    $answers[$i]['percent'] = $totalVotes > 0 ? round(100 * $votes / $totalVotes, 2) : '0';
+                    $answers[$i]['percent'] = $totalVotes > 0 ? \round(100 * $votes / $totalVotes, 2) : '0';
                 }
 
                 $this->setTemplate('Polls/Widget/index.result.tpl');
@@ -81,7 +82,7 @@ class Index extends Core\Controller\AbstractWidgetAction
 
         return [
             'sidebar_polls' => $poll,
-            'sidebar_poll_answers' => $answers
+            'sidebar_poll_answers' => $answers,
         ];
     }
 

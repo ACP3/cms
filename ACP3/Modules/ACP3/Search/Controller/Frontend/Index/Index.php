@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Search\Controller\Frontend\Index;
@@ -66,23 +67,23 @@ class Index extends Core\Controller\AbstractFrontendAction
         $searchAreas = [
             'title_content' => $this->translator->t('search', 'title_and_content'),
             'title' => $this->translator->t('search', 'title_only'),
-            'content' => $this->translator->t('search', 'content_only')
+            'content' => $this->translator->t('search', 'content_only'),
         ];
 
         $sortDirections = [
             'asc' => $this->translator->t('search', 'asc'),
-            'desc' => $this->translator->t('search', 'desc')
+            'desc' => $this->translator->t('search', 'desc'),
         ];
 
         return [
-            'form' => array_merge(['search_term' => ''], $this->request->getPost()->all()),
+            'form' => \array_merge(['search_term' => ''], $this->request->getPost()->all()),
             'search_mods' => $this->searchHelpers->getModules(),
             'search_areas' => $this->formsHelper->checkboxGenerator(
                 'area',
                 $searchAreas,
                 'title_content'
             ),
-            'sort_hits' => $this->formsHelper->checkboxGenerator('sort', $sortDirections, 'asc')
+            'sort_hits' => $this->formsHelper->checkboxGenerator('sort', $sortDirections, 'asc'),
         ];
     }
 
@@ -102,7 +103,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                     $formData['mods'],
                     $this->get('core.helpers.secure')->strEncode($formData['search_term']),
                     $formData['area'],
-                    strtoupper($formData['sort'])
+                    \strtoupper($formData['sort'])
                 );
             }
         );
@@ -130,6 +131,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 $formData['sort'] = 'asc';
             }
         }
+
         return $formData;
     }
 
@@ -150,7 +152,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         return [
             'results_mods' => $this->processSearchResults($modules, $searchTerm, $area, $sort),
-            'search_term' => $searchTerm
+            'search_term' => $searchTerm,
         ];
     }
 
@@ -165,7 +167,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         $searchResults = [];
         foreach ($this->availableModulesRegistrar->getAvailableModules() as $moduleName => $searchAvailability) {
-            if (in_array($moduleName, $modules) && $this->acl->hasPermission('frontend/' . $moduleName)) {
+            if (\in_array($moduleName, $modules) && $this->acl->hasPermission('frontend/' . $moduleName)) {
                 $results = $searchAvailability->fetchSearchResults($searchTerm, $area, $sort);
 
                 if (!empty($results)) {
@@ -173,7 +175,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 }
             }
         }
-        ksort($searchResults);
+        \ksort($searchResults);
 
         return $searchResults;
     }

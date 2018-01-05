@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
@@ -41,7 +42,7 @@ class Image extends AbstractAction
      */
     public function execute($id, $action = '')
     {
-        set_time_limit(20);
+        \set_time_limit(20);
         $picture = $this->pictureRepository->getFileById($id);
         $action = $action === 'thumb' ? 'thumb' : '';
 

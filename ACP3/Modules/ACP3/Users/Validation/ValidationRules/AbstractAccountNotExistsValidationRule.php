@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Users\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
@@ -30,11 +36,11 @@ abstract class AbstractAccountNotExistsValidationRule extends AbstractValidation
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->accountExists($data, isset($extra['user_id']) ? $extra['user_id'] : 0);
+        return $this->accountExists($data, $extra['user_id'] ?? 0);
     }
 
     /**

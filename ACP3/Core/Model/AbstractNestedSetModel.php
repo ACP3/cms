@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model;
@@ -74,7 +75,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
             $result = $this->editOperation->execute(
                 $entryId,
                 $filteredData['parent_id'],
-                isset($filteredData['block_id']) ? $filteredData['block_id'] : 0,
+                $filteredData['block_id'] ?? 0,
                 $filteredData
             );
         }
@@ -92,7 +93,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
     {
         $repository = $this->repository;
 
-        if (!is_array($entryId)) {
+        if (!\is_array($entryId)) {
             $entryId = [$entryId];
         }
 

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
@@ -39,7 +40,7 @@ class AbstractFormAction extends AbstractFrontendAction
     protected function getOptions($currentValue = '0')
     {
         $comments = [
-            '1' => $this->translator->t('system', 'allow_comments')
+            '1' => $this->translator->t('system', 'allow_comments'),
         ];
 
         return $this->formsHelper->checkboxGenerator('comments', $comments, $currentValue);

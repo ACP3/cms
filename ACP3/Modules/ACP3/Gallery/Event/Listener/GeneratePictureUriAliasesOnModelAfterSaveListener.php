@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Event\Listener;
@@ -81,7 +82,7 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
 
             foreach ($pictures as $picture) {
                 $this->uriAliasManager->insertUriAlias(
-                    sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
+                    \sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
                     !empty($rawData['alias']) ? $rawData['alias'] . '/img-' . $picture['id'] : '',
                     $rawData['seo_keywords'],
                     $rawData['seo_description'],

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
@@ -50,9 +51,9 @@ class OnLayoutSeoRenderFormFieldsListener
         if ($this->acl->hasPermission('admin/seo/index/create')) {
             $parameters = $event->getParameters();
 
-            $formFields = array_merge(
-                $this->metaFormFields->formFields(isset($parameters['path']) ? $parameters['path'] : ''),
-                ['uri_pattern' => isset($parameters['uri_pattern']) ? $parameters['uri_pattern'] : '']
+            $formFields = \array_merge(
+                $this->metaFormFields->formFields($parameters['path'] ?? ''),
+                ['uri_pattern' => $parameters['uri_pattern'] ?? '']
             );
 
             $this->view

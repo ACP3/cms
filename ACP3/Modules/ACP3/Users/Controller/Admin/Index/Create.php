@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
@@ -92,8 +93,8 @@ class Create extends AbstractFormAction
             'roles' => $this->fetchUserRoles(),
             'super_user' => $this->fetchIsSuperUser(),
             'contact' => $this->userFormsHelpers->fetchContactDetails(),
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -109,7 +110,7 @@ class Create extends AbstractFormAction
 
             $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
 
-            $formData = array_merge($formData, [
+            $formData = \array_merge($formData, [
                 'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd'], 'sha512'),
                 'pwd_salt' => $salt,
                 'registration_date' => 'now',

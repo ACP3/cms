@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\NestedSet\Operation;
@@ -47,7 +48,7 @@ class Insert extends AbstractOperation
 
                 $this->db->getConnection()->insert($this->nestedSetRepository->getTableName(), $insertValues);
 
-                $result = (int) $this->db->getConnection()->lastInsertId();
+                $result = (int)$this->db->getConnection()->lastInsertId();
             }
 
             return $result;
@@ -70,6 +71,6 @@ class Insert extends AbstractOperation
             $maxRightId = $this->nestedSetRepository->fetchMaximumRightId();
         }
 
-        return (int) $maxRightId;
+        return (int)$maxRightId;
     }
 }

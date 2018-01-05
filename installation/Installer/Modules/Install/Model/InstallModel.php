@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Model;
@@ -99,8 +100,8 @@ class InstallModel
                 'db_password' => $formData['db_password'],
                 'db_user' => $formData['db_user'],
                 'db_driver' => 'pdo_mysql',
-                'db_charset' => 'utf8'
-            ]
+                'db_charset' => 'utf8',
+            ],
         ];
 
         $this->installHelper->writeConfigFile($configFilePath, $configParams);
@@ -140,7 +141,7 @@ class InstallModel
         foreach ($this->container->get('core.installer.schema_registrar')->all() as $schema) {
             if ($this->installHelper->installResources($schema, $this->container) === false) {
                 throw new \Exception(
-                    sprintf("Error while installing ACL resources for the module %s.", $schema->getModuleName())
+                    \sprintf('Error while installing ACL resources for the module %s.', $schema->getModuleName())
                 );
             }
         }
@@ -161,11 +162,11 @@ class InstallModel
                 'maintenance_message' => $this->translator->t('install', 'offline_message'),
                 'lang' => $this->translator->getLocale(),
                 'design' => $formData['design'],
-                'site_title' => !empty($formData['title']) ? $formData['title'] : 'ACP3'
+                'site_title' => !empty($formData['title']) ? $formData['title'] : 'ACP3',
             ],
             \ACP3\Modules\ACP3\Users\Installer\Schema::MODULE_NAME => [
-                'mail' => $formData['mail']
-            ]
+                'mail' => $formData['mail'],
+            ],
         ];
 
         foreach ($settings as $module => $data) {
@@ -183,18 +184,18 @@ class InstallModel
         $this->db = $this->container->get('core.db');
 
         $salt = $this->secure->salt(UserModel::SALT_LENGTH);
-        $currentDate = gmdate('Y-m-d H:i:s');
+        $currentDate = \gmdate('Y-m-d H:i:s');
 
         $queries = [
             "INSERT INTO
                 `{pre}users`
             VALUES
-                (1, 1, {$this->db->getConnection()->quote($formData["user_name"])}, '{$this->secure->generateSaltedPassword($salt, $formData["user_pwd"], 'sha512')}', '{$salt}', '', 0, '', '1', '', 0, '{$formData["mail"]}', 0, '', '', '', '', '', '', '', '', 0, 0, '{$currentDate}');",
-            "INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (1, 4);"
+                (1, 1, {$this->db->getConnection()->quote($formData['user_name'])}, '{$this->secure->generateSaltedPassword($salt, $formData['user_pwd'], 'sha512')}', '{$salt}', '', 0, '', '1', '', 0, '{$formData['mail']}', 0, '', '', '', '', '', '', '', '', 0, 0, '{$currentDate}');",
+            'INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (1, 4);',
         ];
 
         if ($this->container->get('core.modules.schemaHelper')->executeSqlQueries($queries) === false) {
-            throw new \Exception("Error while creating the super user.");
+            throw new \Exception('Error while creating the super user.');
         }
     }
 
@@ -210,7 +211,7 @@ class InstallModel
             );
 
             if ($sampleDataInstallResult === false) {
-                throw new \Exception("Error while installing module sample data.");
+                throw new \Exception('Error while installing module sample data.');
             }
         }
     }

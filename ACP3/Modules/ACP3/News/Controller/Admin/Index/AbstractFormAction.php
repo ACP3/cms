@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
@@ -63,17 +64,17 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         $options = [];
         if ($settings['readmore'] == 1) {
             $readMore = [
-                '1' => $this->translator->t('news', 'activate_readmore')
+                '1' => $this->translator->t('news', 'activate_readmore'),
             ];
 
             $options = $this->formsHelper->checkboxGenerator('readmore', $readMore, $readMoreValue);
         }
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
             $comments = [
-                '1' => $this->translator->t('system', 'allow_comments')
+                '1' => $this->translator->t('system', 'allow_comments'),
             ];
 
-            $options = array_merge(
+            $options = \array_merge(
                 $options,
                 $this->formsHelper->checkboxGenerator('comments', $comments, $commentsValue)
             );

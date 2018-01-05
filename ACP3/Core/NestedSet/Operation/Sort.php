@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\NestedSet\Operation;
@@ -134,7 +135,7 @@ class Sort extends AbstractOperation
     {
         return [
             $node['left_id'] - $elem['left_id'],
-            $node['right_id'] - $elem['right_id']
+            $node['right_id'] - $elem['right_id'],
         ];
     }
 
@@ -145,6 +146,6 @@ class Sort extends AbstractOperation
      */
     protected function getBlockId(array $node)
     {
-        return ($this->isBlockAware === true ? $node['block_id'] : 0);
+        return $this->isBlockAware === true ? $node['block_id'] : 0;
     }
 }

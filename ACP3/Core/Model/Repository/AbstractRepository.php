@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model\Repository;
@@ -39,6 +40,7 @@ abstract class AbstractRepository implements RepositoryInterface
                 $this->getTableName(),
                 $data
             );
+
             return (int)$this->db->getConnection()->lastInsertId();
         });
     }
@@ -78,7 +80,7 @@ abstract class AbstractRepository implements RepositoryInterface
      */
     private function getIdentifier($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
     {
-        return is_array($entryId) === true ? $entryId : [$columnName => (int)$entryId];
+        return \is_array($entryId) === true ? $entryId : [$columnName => (int)$entryId];
     }
 
     /**

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\Helpers\Formatter;
@@ -141,7 +142,7 @@ HTML;
         $this->requestMock->expects($this->once())
             ->method('getServer')
             ->willReturn(new ServerBag([
-                'HTTP_HOST' => $httpHost
+                'HTTP_HOST' => $httpHost,
             ]));
     }
 

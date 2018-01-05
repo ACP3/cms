@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Breadcrumb;
@@ -111,7 +112,7 @@ class Title
     {
         if (empty($this->pageTitle)) {
             $steps = $this->steps->getBreadcrumb();
-            $lastCrumb = end($steps);
+            $lastCrumb = \end($steps);
 
             $this->pageTitle = $lastCrumb['title'];
         }

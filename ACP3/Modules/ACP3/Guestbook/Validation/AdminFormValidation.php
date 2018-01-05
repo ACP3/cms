@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Guestbook\Validation;
 
 use ACP3\Core;
@@ -35,7 +41,7 @@ class AdminFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'message',
-                    'message' => $this->translator->t('system', 'message_to_short')
+                    'message' => $this->translator->t('system', 'message_to_short'),
                 ]
             );
 
@@ -48,8 +54,8 @@ class AdminFormValidation extends AbstractFormValidation
                         'field' => 'active',
                         'message' => $this->translator->t('guestbook', 'select_activate'),
                         'extra' => [
-                            'haystack' => [0, 1]
-                        ]
+                            'haystack' => [0, 1],
+                        ],
                     ]
                 );
         }

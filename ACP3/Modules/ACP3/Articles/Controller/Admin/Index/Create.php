@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
@@ -60,15 +61,15 @@ class Create extends AbstractFrontendAction
             'title' => '',
             'text' => '',
             'start' => '',
-            'end' => ''
+            'end' => '',
         ];
 
         return [
             'active' => $this->formsHelper->yesNoCheckboxGenerator('active', 1),
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
+            'form' => \array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => Articles\Helpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => ''
+            'SEO_ROUTE_NAME' => '',
         ];
     }
 

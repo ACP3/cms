@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
@@ -46,8 +52,8 @@ class PageBreaks
     public function splitTextIntoPages($text, $baseUrlPath)
     {
         $matches = [];
-        preg_match_all($this->getSplitPagesRegex(), $text, $matches);
-        $pages = preg_split($this->getSplitPagesRegex(), $text, -1, PREG_SPLIT_NO_EMPTY);
+        \preg_match_all($this->getSplitPagesRegex(), $text, $matches);
+        $pages = \preg_split($this->getSplitPagesRegex(), $text, -1, PREG_SPLIT_NO_EMPTY);
 
         $currentPage = $this->getCurrentPage($pages);
         $nextPage = !empty($pages[$currentPage]) ? $this->router->route($baseUrlPath) . 'page_' . ($currentPage + 1) . '/' : '';
@@ -77,6 +83,7 @@ class PageBreaks
     private function getCurrentPage(array $pages)
     {
         $currentPage = (int)$this->request->getParameters()->get('page', 1);
-        return ($currentPage <= count($pages)) ? $currentPage : 1;
+
+        return ($currentPage <= \count($pages)) ? $currentPage : 1;
     }
 }

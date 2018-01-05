@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Emoticons;
@@ -59,11 +60,11 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function saveCache()
     {
         $emoticons = $this->emoticonRepository->getAll();
-        $cEmoticons = count($emoticons);
+        $cEmoticons = \count($emoticons);
 
         $data = [];
         for ($i = 0; $i < $cEmoticons; ++$i) {
-            $picInfos = getimagesize($this->appPath->getUploadsDir() . 'emoticons/' . $emoticons[$i]['img']);
+            $picInfos = \getimagesize($this->appPath->getUploadsDir() . 'emoticons/' . $emoticons[$i]['img']);
             $code = $emoticons[$i]['code'];
             $description = $emoticons[$i]['description'];
             $data[$code] = '<img src="' . $this->appPath->getWebRoot() . 'uploads/emoticons/' . $emoticons[$i]['img'] . '" width="' . $picInfos[0] . '" height="' . $picInfos[1] . '" alt="' . $description . '" title="' . $description . '" />';

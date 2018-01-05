@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index;
@@ -91,7 +93,7 @@ class Create extends AbstractAction
                     'guestbook',
                     'subscribe_to_newsletter',
                     ['%title%' => $this->config->getSettings(Schema::MODULE_NAME)['site_title']]
-                )
+                ),
             ];
             $this->view->assign(
                 'subscribe_newsletter',
@@ -100,9 +102,9 @@ class Create extends AbstractAction
         }
 
         return [
-            'form' => array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
+            'form' => \array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
-            'can_use_emoticons' => $this->guestbookSettings['emoticons'] == 1
+            'can_use_emoticons' => $this->guestbookSettings['emoticons'] == 1,
         ];
     }
 
@@ -146,7 +148,7 @@ class Create extends AbstractAction
     protected function sendNotificationEmail($entryId)
     {
         $fullPath = $this->router->route('guestbook', true) . '#gb-entry-' . $entryId;
-        $body = sprintf(
+        $body = \sprintf(
             $this->guestbookSettings['notify'] == 1
                 ? $this->translator->t('guestbook', 'notification_email_body_1')
                 : $this->translator->t('guestbook', 'notification_email_body_2'),
@@ -186,6 +188,7 @@ class Create extends AbstractAction
             $defaults['website'] = $users['website'];
             $defaults['website_disabled'] = !empty($users['website']);
         }
+
         return $defaults;
     }
 }

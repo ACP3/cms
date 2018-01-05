@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
@@ -55,7 +56,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     protected function fetchMenuItemModeForSave(array $formData)
     {
-        return ($formData['mode'] == 2 || $formData['mode'] == 3) && preg_match(
+        return ($formData['mode'] == 2 || $formData['mode'] == 3) && \preg_match(
             Menus\Helpers\MenuItemsList::ARTICLES_URL_KEY_REGEX,
             $formData['uri']
         ) ? '4' : $formData['mode'];
@@ -68,7 +69,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     protected function fetchMenuItemUriForSave(array $formData)
     {
-        return $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? sprintf(
+        return $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? \sprintf(
             Articles\Helpers::URL_KEY_PATTERN,
             $formData['articles']
         ) : $formData['uri']);
@@ -84,7 +85,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         $menuItemTypes = [
             1 => $this->translator->t('menus', 'module'),
             2 => $this->translator->t('menus', 'dynamic_page'),
-            3 => $this->translator->t('menus', 'hyperlink')
+            3 => $this->translator->t('menus', 'hyperlink'),
         ];
         if ($this->articlesHelpers) {
             $menuItemTypes[4] = $this->translator->t('menus', 'article');
@@ -102,13 +103,14 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     {
         $modules = $this->modules->getAllModules();
         foreach ($modules as $row) {
-            $row['dir'] = strtolower($row['dir']);
+            $row['dir'] = \strtolower($row['dir']);
             $modules[$row['name']]['selected'] = $this->formsHelper->selectEntry(
                 'module',
                 $row['dir'],
                 !empty($menuItem) && $menuItem['mode'] == 1 ? $menuItem['uri'] : ''
             );
         }
+
         return $modules;
     }
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model\DataProcessor\DependencyInjection;
@@ -23,7 +24,7 @@ class RegisterColumnTypesCompilerPass implements CompilerPassInterface
         foreach ($plugins as $serviceId => $tags) {
             $definition->addMethodCall(
                 'registerColumnType',
-                [new Reference($serviceId), reset($tags)['columnType']]
+                [new Reference($serviceId), \reset($tags)['columnType']]
             );
         }
     }

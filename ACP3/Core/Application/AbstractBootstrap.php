@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Application;
 
 use ACP3\Core\Environment\ApplicationPath;
@@ -72,6 +78,6 @@ abstract class AbstractBootstrap implements BootstrapInterface
     {
         $path = $this->appPath->getAppDir() . 'config.yml';
 
-        return is_file($path) === true && filesize($path) !== 0;
+        return \is_file($path) === true && \filesize($path) !== 0;
     }
 }

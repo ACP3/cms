@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Database;
@@ -191,7 +192,7 @@ class Connection
             $query,
             $params,
             $types,
-            $cache ? new QueryCacheProfile($lifetime, $cacheKey ?: md5($query)) : null
+            $cache ? new QueryCacheProfile($lifetime, $cacheKey ?: \md5($query)) : null
         );
     }
 

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Model;
@@ -84,7 +85,7 @@ class AuthenticationModel
      */
     public function authenticate($userData)
     {
-        if (is_array($userData)) {
+        if (\is_array($userData)) {
             $this->userModel
                 ->setIsAuthenticated(true)
                 ->setUserId($userData['id'])
@@ -104,7 +105,7 @@ class AuthenticationModel
         }
 
         $this->saveRememberMeToken($userId, '');
-        $this->sessionHandler->destroy(session_id());
+        $this->sessionHandler->destroy(\session_id());
         $this->response->headers->setCookie(
             $this->setRememberMeCookie($userId, '', -1 * self::REMEMBER_ME_COOKIE_LIFETIME)
         );
@@ -175,6 +176,7 @@ class AuthenticationModel
 
                 $this->authenticate($user);
                 $this->setSessionValues();
+
                 return;
             } elseif ($this->saveFailedLoginAttempts($user) === 3) {
                 throw new Users\Exception\UserAccountLockedException();
@@ -201,6 +203,7 @@ class AuthenticationModel
     {
         $loginErrors = $userData['login_errors'] + 1;
         $this->userRepository->update(['login_errors' => $loginErrors], (int)$userData['id']);
+
         return $loginErrors;
     }
 
@@ -209,9 +212,10 @@ class AuthenticationModel
      */
     protected function getCookieDomain()
     {
-        if (strpos($this->request->getServer()->get('HTTP_HOST'), '.') !== false) {
+        if (\strpos($this->request->getServer()->get('HTTP_HOST'), '.') !== false) {
             return $this->request->getServer()->get('HTTP_HOST', '');
         }
+
         return '';
     }
 
@@ -222,7 +226,7 @@ class AuthenticationModel
      */
     protected function generateRememberMeToken(array $user)
     {
-        return hash('sha512', $user['id'] . ':' . $user['pwd_salt'] . ':' . uniqid(mt_rand()));
+        return \hash('sha512', $user['id'] . ':' . $user['pwd_salt'] . ':' . \uniqid(\mt_rand()));
     }
 
     /**
@@ -249,7 +253,7 @@ class AuthenticationModel
         $salt = $this->secureHelper->salt(self::SALT_LENGTH);
         $updateValues = [
             'pwd' => $this->secureHelper->generateSaltedPassword($salt, $password, 'sha512'),
-            'pwd_salt' => $salt
+            'pwd_salt' => $salt,
         ];
 
         $this->userRepository->update($updateValues, $userId);
@@ -265,7 +269,7 @@ class AuthenticationModel
      */
     protected function userHasOldPassword($password, array $user)
     {
-        return strlen($user['pwd']) === 40
+        return \strlen($user['pwd']) === 40
         && $user['pwd'] === $this->secureHelper->generateSaltedPassword($user['pwd_salt'], $password);
     }
 }

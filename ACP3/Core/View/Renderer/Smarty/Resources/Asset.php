@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Resources;
 
 use ACP3\Core;
@@ -38,8 +44,8 @@ class Asset extends AbstractResource
         $asset = $this->fileResolver->resolveTemplatePath($name);
 
         if ($asset !== '') {
-            $source = file_get_contents($asset);
-            $mtime = filemtime($asset);
+            $source = \file_get_contents($asset);
+            $mtime = \filemtime($asset);
         } else {
             $source = null;
             $mtime = null;
@@ -57,6 +63,6 @@ class Asset extends AbstractResource
     {
         $asset = $this->fileResolver->resolveTemplatePath($name);
 
-        return filemtime($asset);
+        return \filemtime($asset);
     }
 }

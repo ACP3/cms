@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
@@ -82,14 +83,14 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
         $orderBy = [
             'date' => $this->translator->t('files', 'order_by_date_descending'),
-            'custom' => $this->translator->t('files', 'order_by_custom')
+            'custom' => $this->translator->t('files', 'order_by_custom'),
         ];
 
         return [
             'order_by' => $this->formsHelper->choicesGenerator('order_by', $orderBy, $settings['order_by']),
             'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
             'sidebar_entries' => $this->formsHelper->recordsPerPage((int)$settings['sidebar'], 1, 10, 'sidebar'),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -106,7 +107,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $data = [
                 'dateformat' => $this->get('core.helpers.secure')->strEncode($formData['dateformat']),
                 'sidebar' => (int)$formData['sidebar'],
-                'order_by' => $formData['order_by']
+                'order_by' => $formData['order_by'],
             ];
 
             if ($this->commentsHelpers) {

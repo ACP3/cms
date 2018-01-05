@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\Assets;
@@ -35,7 +36,7 @@ class LibrariesTest extends \PHPUnit_Framework_TestCase
             'enabled' => false,
             'dependencies' => ['jquery'],
             'css' => 'foo.css',
-            'js' => 'bar.js'
+            'js' => 'bar.js',
         ];
         $this->libraries->addLibrary('foobar', $data);
 

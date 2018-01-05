@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Event\Listener;
@@ -44,10 +45,10 @@ class OnDisplayCaptchaListener
             $arguments = $templateEvent->getParameters();
 
             echo $this->captchaExtension->getCaptcha(
-                isset($arguments['length']) ? $arguments['length'] : CaptchaExtensionInterface::CAPTCHA_DEFAULT_LENGTH,
-                isset($arguments['input_id']) ? $arguments['input_id'] : CaptchaExtensionInterface::CAPTCHA_DEFAULT_INPUT_ID,
-                isset($arguments['input_only']) ? $arguments['input_only'] : false,
-                isset($arguments['path']) ? $arguments['path'] : ''
+                $arguments['length'] ?? CaptchaExtensionInterface::CAPTCHA_DEFAULT_LENGTH,
+                $arguments['input_id'] ?? CaptchaExtensionInterface::CAPTCHA_DEFAULT_INPUT_ID,
+                $arguments['input_only'] ?? false,
+                $arguments['path'] ?? ''
             );
         }
     }

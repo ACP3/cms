@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core;
@@ -10,7 +11,6 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules\Helper\ControllerActionExists;
 use ACP3\Core\Modules\ModuleInfoCache;
 use ACP3\Core\Modules\Vendor;
-use ACP3\Modules\ACP3\System;
 
 class Modules
 {
@@ -79,6 +79,7 @@ class Modules
     public function isActive($module)
     {
         $info = $this->getModuleInfo($module);
+
         return !empty($info) && $info['active'] === true;
     }
 
@@ -91,10 +92,11 @@ class Modules
      */
     public function getModuleInfo($module)
     {
-        $module = strtolower($module);
+        $module = \strtolower($module);
         if (empty($this->modulesInfo)) {
             $this->modulesInfo = $this->moduleInfoCache->getModulesInfoCache();
         }
+
         return !empty($this->modulesInfo[$module]) ? $this->modulesInfo[$module] : [];
     }
 
@@ -106,6 +108,7 @@ class Modules
     public function getModuleId($module)
     {
         $info = $this->getModuleInfo($module);
+
         return !empty($info) ? $info['id'] : 0;
     }
 
@@ -119,6 +122,7 @@ class Modules
     public function isInstalled($moduleName)
     {
         $info = $this->getModuleInfo($moduleName);
+
         return !empty($info) && $info['installed'] === true || $info['installable'] === false;
     }
 
@@ -175,7 +179,7 @@ class Modules
                 }
             }
 
-            ksort($this->allModules);
+            \ksort($this->allModules);
         }
 
         return $this->allModules;

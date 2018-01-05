@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Application;
@@ -118,7 +119,7 @@ class ControllerActionDispatcher
             $arguments = $this->argumentResolver->getArguments($this->request->getSymfonyRequest(), $callable);
         }
 
-        return call_user_func_array($callable, $arguments);
+        return \call_user_func_array($callable, $arguments);
     }
 
     /**
@@ -129,7 +130,7 @@ class ControllerActionDispatcher
     {
         $callable = [$controller, 'execute'];
         if (($this->request->getPost()->has('submit') || $this->request->getPost()->has('continue'))
-            && method_exists($controller, 'executePost')) {
+            && \method_exists($controller, 'executePost')) {
             $reflection = new \ReflectionMethod($controller, 'executePost');
 
             if ($reflection->isPublic()) {

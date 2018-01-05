@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
@@ -67,13 +68,13 @@ class Vote extends Core\Controller\AbstractFrontendAction
     {
         $answer = $this->request->getPost()->get('answer');
         $time = $this->date->getCurrentDateTime();
-        if ($this->pollRepository->pollExists($id, $time, is_array($answer)) === true) {
+        if ($this->pollRepository->pollExists($id, $time, \is_array($answer)) === true) {
             $poll = $this->pollRepository->getOneById($id);
 
             return [
                 'question' => $poll['title'],
                 'multiple' => $poll['multiple'],
-                'answers' => $this->answerRepository->getAnswersByPollId($id)
+                'answers' => $this->answerRepository->getAnswersByPollId($id),
             ];
         }
 
@@ -101,6 +102,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
                 $result = $this->pollsModel->vote($formData, $id, $ipAddress, $time);
 
                 $text = $this->translator->t('polls', $result !== false ? 'poll_success' : 'poll_error');
+
                 return $this->redirectMessages()->setMessage($result, $text, 'polls/index/result/id_' . $id);
             },
             'polls/index/vote/id_' . $id

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Model\Repository;
@@ -23,7 +24,7 @@ class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
             'main.*',
             'c.title AS cat',
             "(SELECT MIN(`sort`) FROM {$this->getTableName()}) AS `first`",
-            "(SELECT MAX(`sort`) FROM {$this->getTableName()}) AS `last`"
+            "(SELECT MAX(`sort`) FROM {$this->getTableName()}) AS `last`",
         ];
     }
 

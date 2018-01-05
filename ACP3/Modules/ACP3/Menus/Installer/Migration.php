@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Installer;
 
 use ACP3\Core\Modules;
@@ -14,7 +19,7 @@ class Migration implements Modules\Installer\MigrationInterface
     public function renameModule()
     {
         return [
-            31 => "UPDATE `{pre}modules` SET `name` = 'menus' WHERE `name` = 'menu_items';"
+            31 => "UPDATE `{pre}modules` SET `name` = 'menus' WHERE `name` = 'menu_items';",
         ];
     }
 
@@ -31,7 +36,7 @@ class Migration implements Modules\Installer\MigrationInterface
                 "UPDATE `{pre}acl_resources` SET `page` = 'acp_delete_item' WHERE `module_id` = '{moduleId}' AND `page` = 'acp_delete_blocks';",
                 "UPDATE `{pre}acl_resources` SET `page` = 'acp_edit_item' WHERE `module_id` = '{moduleId}' AND `page` = 'acp_edit_block';",
                 "DELETE  FROM `{pre}acl_resources` WHERE `page` = 'acp_list_blocks' AND `module_id` = '{moduleId}';",
-                "RENAME TABLE `{pre}menu_items_blocks` TO `{pre}menus`;"
+                'RENAME TABLE `{pre}menu_items_blocks` TO `{pre}menus`;',
             ],
             32 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `page` = 'functions';",
@@ -42,18 +47,18 @@ class Migration implements Modules\Installer\MigrationInterface
                 "UPDATE `{pre}acl_resources` SET `controller` = 'items' WHERE `module_id` = '{moduleId}' AND `page` = 'order';",
             ],
             34 => [
-                "ALTER TABLE `{pre}menu_items` ENGINE = InnoDB",
-                "ALTER TABLE `{pre}menus` ENGINE = InnoDB",
+                'ALTER TABLE `{pre}menu_items` ENGINE = InnoDB',
+                'ALTER TABLE `{pre}menus` ENGINE = InnoDB',
             ],
             35 => [
-                "ALTER TABLE `{pre}menu_items` ADD FOREIGN KEY (`block_id`) REFERENCES `{pre}menus` (`id`) ON DELETE CASCADE"
+                'ALTER TABLE `{pre}menu_items` ADD FOREIGN KEY (`block_id`) REFERENCES `{pre}menus` (`id`) ON DELETE CASCADE',
             ],
             36 => [
-                "ALTER TABLE `{pre}menu_items` ADD INDEX `left_id` (`left_id`);"
+                'ALTER TABLE `{pre}menu_items` ADD INDEX `left_id` (`left_id`);',
             ],
             37 => [
-                "ALTER TABLE `{pre}menus` ADD UNIQUE KEY `index_name` (`index_name`);"
-            ]
+                'ALTER TABLE `{pre}menus` ADD UNIQUE KEY `index_name` (`index_name`);',
+            ],
         ];
     }
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Contact\Controller\Frontend\Index;
@@ -29,9 +30,9 @@ class Imprint extends Core\Controller\AbstractFrontendAction
                 'contact',
                 'powered_by',
                 [
-                    '%ACP3%' => '<a href="https://www.acp3-cms.net" target="_blank">ACP3 CMS</a>'
+                    '%ACP3%' => '<a href="https://www.acp3-cms.net" target="_blank">ACP3 CMS</a>',
                 ]
-            )
+            ),
         ];
     }
 }

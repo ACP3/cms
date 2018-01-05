@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
@@ -94,7 +95,7 @@ class Details extends AbstractAction
                 'picture' => $picture,
                 'picture_next' => $nextPicture,
                 'picture_previous' => $previousPicture,
-                'comments_allowed' => $this->isCommentsAllowed($picture)
+                'comments_allowed' => $this->isCommentsAllowed($picture),
             ];
         }
 
@@ -110,20 +111,20 @@ class Details extends AbstractAction
     {
         $picture['width'] = $this->settings['width'];
         $picture['height'] = $this->settings['height'];
-        $picInfos = @getimagesize($this->appPath->getUploadsDir() . 'gallery/' . $picture['file']);
+        $picInfos = @\getimagesize($this->appPath->getUploadsDir() . 'gallery/' . $picture['file']);
         if ($picInfos !== false) {
             if ($picInfos[0] > $this->settings['width'] || $picInfos[1] > $this->settings['height']) {
                 if ($picInfos[0] > $picInfos[1]) {
                     $newWidth = $this->settings['width'];
-                    $newHeight = intval($picInfos[1] * $newWidth / $picInfos[0]);
+                    $newHeight = (int)($picInfos[1] * $newWidth / $picInfos[0]);
                 } else {
                     $newHeight = $this->settings['height'];
-                    $newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
+                    $newWidth = (int)($picInfos[0] * $newHeight / $picInfos[1]);
                 }
             }
 
-            $picture['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
-            $picture['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
+            $picture['width'] = $newWidth ?? $picInfos[0];
+            $picture['height'] = $newHeight ?? $picInfos[1];
         }
 
         return $picture;
@@ -136,7 +137,7 @@ class Details extends AbstractAction
     {
         if ($this->metaStatements instanceof MetaStatements) {
             $this->metaStatements->setNextPage(
-                $this->router->route(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $nextPicture))
+                $this->router->route(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $nextPicture))
             );
         }
     }
@@ -148,7 +149,7 @@ class Details extends AbstractAction
     {
         if ($this->metaStatements instanceof MetaStatements) {
             $this->metaStatements->setPreviousPage(
-                $this->router->route(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $previousPicture))
+                $this->router->route(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $previousPicture))
             );
         }
     }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
@@ -20,17 +21,17 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
         [
             'controller' => 'index',
             'action' => 'settings',
-            'phrase' => 'settings'
+            'phrase' => 'settings',
         ],
         [
             'controller' => 'extensions',
             'action' => '',
-            'phrase' => 'extensions'
+            'phrase' => 'extensions',
         ],
         [
             'controller' => 'maintenance',
             'action' => '',
-            'phrase' => 'maintenance'
+            'phrase' => 'maintenance',
         ],
     ];
 
@@ -47,13 +48,13 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
             $prefix = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN ? 'acp/' : '';
 
             $userSidebar = [
-                'current_page' => base64_encode($prefix . $this->request->getQuery()),
+                'current_page' => \base64_encode($prefix . $this->request->getQuery()),
                 'modules' => $this->addModules(),
-                'system' => $this->addSystemActions()
+                'system' => $this->addSystemActions(),
             ];
 
             return [
-                'user_sidebar' => $userSidebar
+                'user_sidebar' => $userSidebar,
             ];
         }
 
@@ -75,7 +76,7 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
                 $navSystem[] = [
                     'path' => $path,
                     'name' => $this->translator->t('system', $action['phrase']),
-                    'is_active' => strpos($this->request->getQuery(), $path) === 0
+                    'is_active' => \strpos($this->request->getQuery(), $path) === 0,
                 ];
             }
         }
@@ -91,12 +92,12 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
         $activeModules = $this->modules->getActiveModules();
         $navMods = [];
         foreach ($activeModules as $name => $info) {
-            $dir = strtolower($info['dir']);
-            if (!in_array($dir, ['acp', 'system']) && $this->acl->hasPermission('admin/' . $dir . '/index') === true) {
+            $dir = \strtolower($info['dir']);
+            if (!\in_array($dir, ['acp', 'system']) && $this->acl->hasPermission('admin/' . $dir . '/index') === true) {
                 $navMods[$name] = [
                     'path' => $dir,
                     'name' => $name,
-                    'is_active' => $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN && $dir === $this->request->getModule()
+                    'is_active' => $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN && $dir === $this->request->getModule(),
                 ];
             }
         }

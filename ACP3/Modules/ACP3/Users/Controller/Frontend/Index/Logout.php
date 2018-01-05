@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
@@ -49,7 +50,7 @@ class Logout extends Core\Controller\AbstractFrontendAction
 
         return [
             'url_homepage' => $this->appPath->getWebRoot(),
-            'url_previous_page' => $redirectUrl
+            'url_previous_page' => $redirectUrl,
         ];
     }
 }

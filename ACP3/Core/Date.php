@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core;
 
 use ACP3\Core\Date\DateTranslator;
@@ -115,14 +120,16 @@ class Date
             case '':
             case 'short':
                 $format = $this->dateFormatShort;
+
                 break;
             case 'long':
                 $format = $this->dateFormatLong;
+
                 break;
         }
 
-        if (is_numeric($time)) {
-            $time = date('c', $time);
+        if (\is_numeric($time)) {
+            $time = \date('c', $time);
         }
 
         $dateTime = new \DateTime($time, $this->dateTimeZone);
@@ -133,7 +140,8 @@ class Date
                 $dateTime->setTimestamp($dateTime->getTimestamp() - $dateTime->getOffset());
             }
         }
-        return strtr($dateTime->format($format), $this->dateTranslator->localize($format));
+
+        return \strtr($dateTime->format($format), $this->dateTranslator->localize($format));
     }
 
     /**

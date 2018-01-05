@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Test\Helpers\ColumnRenderer;
 
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer;
@@ -39,11 +45,11 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
     {
         $this->setUpLangMockExpectation('news', '{NEWS_NEWS}');
 
-        $this->columnData = array_merge($this->columnData, [
-            'fields' => ['text']
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['text'],
         ]);
         $this->dbData = [
-            'text' => 'news'
+            'text' => 'news',
         ];
 
         $expected = '<td>{NEWS_NEWS}</td>';

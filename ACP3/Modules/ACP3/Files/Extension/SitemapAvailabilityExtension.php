@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Extension;
@@ -73,7 +74,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 
         foreach ($this->filesRepository->getAll($this->date->getCurrentDateTime()) as $result) {
             $this->addUrl(
-                sprintf(Helpers::URL_KEY_PATTERN, $result['id']),
+                \sprintf(Helpers::URL_KEY_PATTERN, $result['id']),
                 $this->date->format($result['updated_at'], 'Y-m-d'),
                 $isSecure
             );

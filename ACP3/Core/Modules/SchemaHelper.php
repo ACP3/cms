@@ -1,8 +1,13 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Modules;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\System;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
@@ -81,22 +86,23 @@ class SchemaHelper
      */
     public function executeSqlQueries(array $queries, $moduleName = '')
     {
-        if (count($queries) > 0) {
+        if (\count($queries) > 0) {
             $search = ['{pre}', '{engine}', '{charset}'];
             $replace = [$this->db->getPrefix(), 'ENGINE=InnoDB', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`'];
 
             $this->db->getConnection()->beginTransaction();
+
             try {
                 foreach ($queries as $query) {
-                    if (is_object($query) && ($query instanceof \Closure)) {
+                    if (\is_object($query) && ($query instanceof \Closure)) {
                         if ($query() === false) {
                             return false;
                         }
                     } elseif (!empty($query)) {
-                        if (strpos($query, '{moduleId}') !== false) {
-                            $query = str_replace('{moduleId}', $this->getModuleId($moduleName), $query);
+                        if (\strpos($query, '{moduleId}') !== false) {
+                            $query = \str_replace('{moduleId}', $this->getModuleId($moduleName), $query);
                         }
-                        $this->db->getConnection()->query(str_ireplace($search, $replace, $query));
+                        $this->db->getConnection()->query(\str_ireplace($search, $replace, $query));
                     }
                 }
                 $this->db->getConnection()->commit();
@@ -104,9 +110,11 @@ class SchemaHelper
                 $this->db->getConnection()->rollBack();
 
                 $this->logger->warning($e);
+
                 return false;
             }
         }
+
         return true;
     }
 

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Core\Router;
@@ -36,8 +37,8 @@ class Router implements Core\Router\RouterInterface
      */
     public function route($path, $isAbsolute = false, $isSecure = null)
     {
-        $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
-        $pathArray = preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
+        $path = $path . (!\preg_match('/\/$/', $path) ? '/' : '');
+        $pathArray = \preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
 
         if (isset($pathArray[1]) === false) {
             $path .= 'index/';
@@ -54,6 +55,7 @@ class Router implements Core\Router\RouterInterface
         }
 
         $prefix .= $this->appPath->getPhpSelf() . '/';
+
         return $prefix . $path;
     }
 

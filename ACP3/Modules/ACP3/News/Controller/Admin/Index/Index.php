@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
@@ -51,7 +52,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         return [
             'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 
@@ -67,15 +68,15 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'fields' => ['active'],
                 'custom' => [
                     'search' => [0, 1],
-                    'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')]
-                ]
+                    'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')],
+                ],
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['start', 'end'],
                 'default_sort' => true,
-                'default_sort_direction' => 'desc'
+                'default_sort_direction' => 'desc',
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('news', 'title'),
@@ -85,7 +86,7 @@ class Index extends Core\Controller\AbstractFrontendAction
             ->addColumn([
                 'label' => $this->translator->t('categories', 'category'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['cat']
+                'fields' => ['cat'],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
@@ -93,7 +94,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'fields' => ['id'],
                 'primary' => true,
                 'custom' => [
-                    'path' => Helpers::URL_KEY_PATTERN
+                    'path' => Helpers::URL_KEY_PATTERN,
                 ],
             ], 10);
     }

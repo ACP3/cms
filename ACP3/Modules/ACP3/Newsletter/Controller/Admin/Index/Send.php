@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
@@ -55,7 +56,7 @@ class Send extends Core\Controller\AbstractFrontendAction
     {
         if ($this->newsletterRepository->newsletterExists($id) === true) {
             $accounts = $this->accountRepository->getAllActiveAccounts();
-            $cAccounts = count($accounts);
+            $cAccounts = \count($accounts);
             $recipients = [];
 
             for ($i = 0; $i < $cAccounts; ++$i) {

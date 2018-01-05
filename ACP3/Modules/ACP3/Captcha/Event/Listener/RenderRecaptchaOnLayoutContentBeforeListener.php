@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Event\Listener;
@@ -57,7 +58,7 @@ class RenderRecaptchaOnLayoutContentBeforeListener
         if ($this->isRecaptcha($settings)) {
             $this->view->assign('recaptcha', [
                 'sitekey' => $settings['recaptcha_sitekey'],
-                'lang' => $this->translator->getShortIsoCode()
+                'lang' => $this->translator->getShortIsoCode(),
             ]);
             $this->view->displayTemplate($this->getServiceIdTemplateMap()[$settings['captcha']]);
         }
@@ -80,7 +81,7 @@ class RenderRecaptchaOnLayoutContentBeforeListener
     private function isRecaptcha(array $settings)
     {
         return !empty($settings)
-            && array_key_exists($settings['captcha'], $this->getServiceIdTemplateMap())
+            && \array_key_exists($settings['captcha'], $this->getServiceIdTemplateMap())
             && !empty($settings['recaptcha_sitekey'])
             && !empty($settings['recaptcha_secret']);
     }

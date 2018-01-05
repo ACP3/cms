@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Maintenance;
@@ -28,8 +29,8 @@ class Cache extends Core\Controller\AbstractFrontendAction
                 'images',
                 'minify',
                 'page',
-                'templates'
-            ]
+                'templates',
+            ],
         ];
     }
 
@@ -50,8 +51,8 @@ class Cache extends Core\Controller\AbstractFrontendAction
             'page' => $this->appPath->getCacheDir() . 'http',
             'templates' => [
                 $this->appPath->getCacheDir() . 'tpl_compiled',
-                $this->appPath->getCacheDir() . 'tpl_cached'
-            ]
+                $this->appPath->getCacheDir() . 'tpl_cached',
+            ],
         ];
 
         $result = false;
@@ -75,6 +76,7 @@ class Cache extends Core\Controller\AbstractFrontendAction
                         System\Installer\Schema::MODULE_NAME
                     );
                 }
+
                 break;
             default:
                 $text = $this->translator->t('system', 'cache_type_not_found');

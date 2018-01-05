@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
@@ -83,8 +84,9 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     protected function fetchMultipleChoiceOption($currentValue)
     {
         $values = [
-            '1' => $this->translator->t('polls', 'multiple_choice')
+            '1' => $this->translator->t('polls', 'multiple_choice'),
         ];
+
         return $this->formsHelper->checkboxGenerator('multiple', $values, $currentValue);
     }
 }

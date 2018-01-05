@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Search;
 
 use ACP3\Core;
@@ -58,11 +63,11 @@ class Helpers
                 $searchModules[$name] = [
                     'dir' => $module,
                     'checked' => $this->formsHelper->selectEntry('mods', $module, $module, 'checked'),
-                    'name' => $name
+                    'name' => $name,
                 ];
             }
         }
-        ksort($searchModules);
+        \ksort($searchModules);
 
         return $searchModules;
     }

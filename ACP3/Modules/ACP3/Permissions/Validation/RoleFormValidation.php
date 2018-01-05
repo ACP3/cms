@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Permissions\Validation;
 
 use ACP3\Core;
@@ -20,6 +26,7 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
     public function setRoleId($roleId)
     {
         $this->roleId = (int)$roleId;
+
         return $this;
     }
 
@@ -35,7 +42,7 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'name',
-                    'message' => $this->translator->t('system', 'name_to_short')
+                    'message' => $this->translator->t('system', 'name_to_short'),
                 ]
             )
             ->addConstraint(
@@ -45,8 +52,8 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'name',
                     'message' => $this->translator->t('permissions', 'role_already_exists'),
                     'extra' => [
-                        'role_id' => $this->roleId
-                    ]
+                        'role_id' => $this->roleId,
+                    ],
                 ]
             )
             ->addConstraint(
@@ -54,7 +61,7 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'privileges',
-                    'message' => $this->translator->t('permissions', 'invalid_privileges')
+                    'message' => $this->translator->t('permissions', 'invalid_privileges'),
                 ]
             );
 

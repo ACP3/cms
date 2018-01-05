@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 class DateRange extends AbstractFunction
@@ -29,7 +35,7 @@ class DateRange extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        $format = isset($params['format']) ? $params['format'] : 'long';
+        $format = $params['format'] ?? 'long';
 
         if (isset($params['start']) && isset($params['end'])) {
             return $this->dateRangeFormatter->formatTimeRange($params['start'], $params['end'], $format);

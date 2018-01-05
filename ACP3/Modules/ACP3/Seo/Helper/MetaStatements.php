@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Helper;
@@ -190,7 +191,7 @@ class MetaStatements
             $keywords = $this->getKeywords($this->request->getModule());
         }
 
-        return strtolower(!empty($keywords) ? $keywords : $this->getSeoSettings()['meta_keywords']);
+        return \strtolower(!empty($keywords) ? $keywords : $this->getSeoSettings()['meta_keywords']);
     }
 
     /**
@@ -235,7 +236,7 @@ class MetaStatements
             $this->aliasesCache = $this->seoCache->getCache();
         }
 
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
+        $path .= !\preg_match('/\/$/', $path) ? '/' : '';
 
         return !empty($this->aliasesCache[$path][$key]) ? $this->aliasesCache[$path][$key] : $defaultValue;
     }
@@ -259,7 +260,7 @@ class MetaStatements
             $robots = $this->getRobotsSetting($this->request->getModule());
         }
 
-        return strtolower(!empty($robots) ? $robots : $this->getRobotsSetting());
+        return \strtolower(!empty($robots) ? $robots : $this->getRobotsSetting());
     }
 
     /**
@@ -279,7 +280,7 @@ class MetaStatements
         ];
 
         if ($path === '') {
-            return strtr($this->getSeoSettings()['robots'], $replace);
+            return \strtr($this->getSeoSettings()['robots'], $replace);
         }
 
         $robot = $this->getSeoInformation($path, 'robots', 0);
@@ -288,7 +289,7 @@ class MetaStatements
             $robot = $this->getSeoSettings()['robots'];
         }
 
-        return strtr($robot, $replace);
+        return \strtr($robot, $replace);
     }
 
     /**

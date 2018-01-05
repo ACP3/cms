@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
@@ -52,7 +53,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
                 $bool = $levelNotDeletable = false;
 
                 foreach ($items as $item) {
-                    if (in_array($item, [1, 2, 4]) === true) {
+                    if (\in_array($item, [1, 2, 4]) === true) {
                         $levelNotDeletable = true;
                     } else {
                         $bool = $this->rolesModel->delete($item);

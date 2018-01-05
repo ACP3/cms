@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Guestbook\Validation;
 
 use ACP3\Core;
@@ -42,8 +48,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'dateformat',
                     'message' => $this->translator->t('system', 'select_date_format'),
                     'extra' => [
-                        'haystack' => ['long', 'short']
-                    ]
+                        'haystack' => ['long', 'short'],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -53,8 +59,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'notify',
                     'message' => $this->translator->t('guestbook', 'select_notification_type'),
                     'extra' => [
-                        'haystack' => [0, 1, 2]
-                    ]
+                        'haystack' => [0, 1, 2],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -64,8 +70,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'overlay',
                     'message' => $this->translator->t('guestbook', 'select_use_overlay'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             );
 
@@ -76,7 +82,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'notify_email',
-                        'message' => $this->translator->t('system', 'wrong_email_format')
+                        'message' => $this->translator->t('system', 'wrong_email_format'),
                     ]
                 );
         }
@@ -90,8 +96,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'field' => 'emoticons',
                         'message' => $this->translator->t('guestbook', 'select_emoticons'),
                         'extra' => [
-                            'haystack' => [0, 1]
-                        ]
+                            'haystack' => [0, 1],
+                        ],
                     ]
                 );
         }
@@ -105,8 +111,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'field' => 'newsletter_integration',
                         'message' => $this->translator->t('guestbook', 'select_newsletter_integration'),
                         'extra' => [
-                            'haystack' => [0, 1]
-                        ]
+                            'haystack' => [0, 1],
+                        ],
                     ]
                 );
         }

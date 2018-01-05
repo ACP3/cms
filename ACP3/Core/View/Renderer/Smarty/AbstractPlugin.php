@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty;
 
 abstract class AbstractPlugin implements PluginInterface
@@ -20,7 +26,7 @@ abstract class AbstractPlugin implements PluginInterface
      */
     private function isPlugin()
     {
-        return in_array(
+        return \in_array(
             $this->getExtensionType(),
             [static::EXTENSION_TYPE_BLOCK, static::EXTENSION_TYPE_FUNCTION, static::EXTENSION_TYPE_MODIFIER]
         );

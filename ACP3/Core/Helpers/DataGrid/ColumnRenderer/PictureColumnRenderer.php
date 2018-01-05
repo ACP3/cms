@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Router\RouterInterface;
@@ -45,7 +51,7 @@ class PictureColumnRenderer extends AbstractColumnRenderer
      */
     protected function getUrl(array $data, $value)
     {
-        $url = sprintf($data['pattern'], $value);
+        $url = \sprintf($data['pattern'], $value);
         if (isset($data['isRoute'])) {
             return $this->router->route($url);
         }

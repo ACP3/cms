@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Frontend\Index;
@@ -72,13 +73,13 @@ class Details extends Core\Controller\AbstractFrontendAction
             $this->title->setPageTitle($article['title']);
 
             return [
-                'page' => array_merge(
+                'page' => \array_merge(
                     $article,
                     $this->pageBreaksHelper->splitTextIntoPages(
                         $this->view->fetchStringAsTemplate($article['text']),
                         $this->request->getUriWithoutPages()
                     )
-                )
+                ),
             ];
         }
 

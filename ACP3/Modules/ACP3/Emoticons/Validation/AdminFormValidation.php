@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Emoticons\Validation;
 
 use ACP3\Core;
@@ -26,6 +32,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function setFile($file)
     {
         $this->file = $file;
+
         return $this;
     }
 
@@ -40,7 +47,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
 
         return $this;
     }
-
 
     /**
      * @param bool $fileRequired
@@ -66,7 +72,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'code',
-                    'message' => $this->translator->t('emoticons', 'type_in_code')
+                    'message' => $this->translator->t('emoticons', 'type_in_code'),
                 ]
             )
             ->addConstraint(
@@ -74,7 +80,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'description',
-                    'message' => $this->translator->t('emoticons', 'type_in_description')
+                    'message' => $this->translator->t('emoticons', 'type_in_description'),
                 ]
             )
             ->addConstraint(
@@ -87,8 +93,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                         'width' => $this->settings['width'],
                         'height' => $this->settings['height'],
                         'filesize' => $this->settings['filesize'],
-                        'required' => $this->fileRequired
-                    ]
+                        'required' => $this->fileRequired,
+                    ],
                 ]
             );
 

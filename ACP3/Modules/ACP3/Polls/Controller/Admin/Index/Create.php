@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
@@ -68,14 +70,14 @@ class Create extends AbstractFormAction
         $defaults = [
             'title' => '',
             'start' => '',
-            'end' => ''
+            'end' => '',
         ];
 
         return [
             'answers' => $this->getAnswers(),
             'options' => $this->fetchOptions(0),
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -111,7 +113,7 @@ class Create extends AbstractFormAction
         } else {
             $answers = [
                 ['text' => ''],
-                ['text' => '']
+                ['text' => ''],
             ];
         }
 

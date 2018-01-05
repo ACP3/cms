@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
@@ -57,8 +58,8 @@ class Edit extends Core\Controller\AbstractFrontendAction
 
         if (empty($emoticon) === false) {
             return [
-                'form' => array_merge($emoticon, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken()
+                'form' => \array_merge($emoticon, $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken(),
             ];
         }
 

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
@@ -179,7 +180,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
                 $this->translator->t(
                     'system',
                     $phrase,
-                    ['%modules%' => implode(', ', $dependencies)]
+                    ['%modules%' => \implode(', ', $dependencies)]
                 )
             );
         }
@@ -340,7 +341,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
         $installedModules = $newModules = [];
 
         foreach ($modules as $key => $values) {
-            $values['dir'] = strtolower($values['dir']);
+            $values['dir'] = \strtolower($values['dir']);
             if ($this->modules->isInstalled($values['dir']) === true || $values['installable'] === false) {
                 $installedModules[$key] = $values;
             } else {
@@ -350,7 +351,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
         return [
             'installed_modules' => $installedModules,
-            'new_modules' => $newModules
+            'new_modules' => $newModules,
         ];
     }
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Model;
@@ -28,9 +29,9 @@ class FilesModel extends AbstractModel
      */
     public function save(array $data, $entryId = null)
     {
-        $data = array_merge($data, [
-            'category_id' => isset($data['cat']) ? $data['cat'] : $data['category_id'],
-            'updated_at' => 'now'
+        $data = \array_merge($data, [
+            'category_id' => $data['cat'] ?? $data['category_id'],
+            'updated_at' => 'now',
         ]);
 
         if (!empty($data['filesize'])) {
@@ -61,7 +62,7 @@ class FilesModel extends AbstractModel
             'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'file' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
             'size' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'sort' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'sort' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 
@@ -73,7 +74,7 @@ class FilesModel extends AbstractModel
         return [
             'active' => 0,
             'start' => 'now',
-            'end' => 'now'
+            'end' => 'now',
         ];
     }
 }

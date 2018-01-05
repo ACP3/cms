@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Extension;
@@ -69,14 +70,14 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 
         foreach ($this->galleryRepository->getAll($this->date->getCurrentDateTime()) as $result) {
             $this->addUrl(
-                sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $result['id']),
+                \sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $result['id']),
                 $this->date->format($result['updated_at'], 'Y-m-d'),
                 $isSecure
             );
 
             foreach ($this->pictureRepository->getPicturesByGalleryId($result['id']) as $picture) {
                 $this->addUrl(
-                    sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
+                    \sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
                     $this->date->format($result['updated_at'], 'Y-m-d'),
                     $isSecure
                 );

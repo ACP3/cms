@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\System\Installer;
 
 use ACP3\Core\Application\BootstrapInterface;
@@ -91,16 +96,16 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}seo` ADD `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;',
             ],
             50 => [
-                $this->migrateToVersion50()
+                $this->migrateToVersion50(),
             ],
             51 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'maintenance', 'cache', '', 7);",
             ],
             52 => [
-                $this->migrationToVersion52()
+                $this->migrationToVersion52(),
             ],
             53 => [
-                $this->migrateToVersion53()
+                $this->migrateToVersion53(),
             ],
             54 => [
                 "UPDATE `{pre}settings` SET `value` = 'core.wysiwyg.ckeditor' WHERE `module_id` = '{moduleId}' AND `name` = 'wysiwyg' AND `value` = 'CKEditor';",
@@ -108,29 +113,29 @@ class Migration extends Modules\Installer\AbstractMigration
                 "UPDATE `{pre}settings` SET `value` = 'core.wysiwyg.tinymce' WHERE `module_id` = '{moduleId}' AND `name` = 'wysiwyg' AND `value` = 'TinyMCE';",
             ],
             55 => [
-                "ALTER TABLE `{pre}modules` ENGINE = InnoDB",
-                "ALTER TABLE `{pre}sessions` ENGINE = InnoDB",
-                "ALTER TABLE `{pre}settings` ENGINE = InnoDB",
+                'ALTER TABLE `{pre}modules` ENGINE = InnoDB',
+                'ALTER TABLE `{pre}sessions` ENGINE = InnoDB',
+                'ALTER TABLE `{pre}settings` ENGINE = InnoDB',
             ],
             56 => [
-                "DELETE FROM `{pre}settings` WHERE `module_id` NOT IN (SELECT `id` FROM `{pre}modules`);",
-                "ALTER TABLE `{pre}settings` CHANGE `module_id` `module_id` INT(10) UNSIGNED NOT NULL",
-                "ALTER TABLE `{pre}settings` ADD INDEX (`module_id`)",
-                "ALTER TABLE `{pre}settings` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE"
+                'DELETE FROM `{pre}settings` WHERE `module_id` NOT IN (SELECT `id` FROM `{pre}modules`);',
+                'ALTER TABLE `{pre}settings` CHANGE `module_id` `module_id` INT(10) UNSIGNED NOT NULL',
+                'ALTER TABLE `{pre}settings` ADD INDEX (`module_id`)',
+                'ALTER TABLE `{pre}settings` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE',
             ],
             57 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `area` = 'admin' AND `controller` = 'maintenance' AND `page` ='sql_export';",
-                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `area` = 'admin' AND `controller` = 'maintenance' AND `page` ='sql_import';"
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `area` = 'admin' AND `controller` = 'maintenance' AND `page` ='sql_import';",
             ],
             58 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'mod_rewrite', '0');",
             ],
             59 => [
-                "UPDATE `{pre}settings` SET `name` = 'cache_lifetime' WHERE `module_id` = {moduleId} AND `name` = 'cache_minify';"
+                "UPDATE `{pre}settings` SET `name` = 'cache_lifetime' WHERE `module_id` = {moduleId} AND `name` = 'cache_minify';",
             ],
             60 => [
-                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'security_secret', '" . uniqid(
-                    mt_rand(),
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'security_secret', '" . \uniqid(
+                    \mt_rand(),
                     true
                 ) . "');",
             ],
@@ -145,7 +150,7 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             64 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'site_title', '');",
-                $this->migrateToVersion64()
+                $this->migrateToVersion64(),
             ],
             65 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'page_cache_purge_mode', 1);",
@@ -168,7 +173,7 @@ class Migration extends Modules\Installer\AbstractMigration
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'update_last_check', '0');",
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'update_new_version', '" . BootstrapInterface::VERSION. "');",
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'update_new_version_url', '');",
-            ]
+            ],
         ];
     }
 

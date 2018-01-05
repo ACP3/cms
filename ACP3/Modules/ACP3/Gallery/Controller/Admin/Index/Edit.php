@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
@@ -59,10 +60,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
             $this->title->setPageTitlePrefix($gallery['title']);
 
             return [
-                'form' => array_merge($gallery, $this->request->getPost()->all()),
+                'form' => \array_merge($gallery, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
                 'SEO_URI_PATTERN' => Gallery\Helpers::URL_KEY_PATTERN_GALLERY,
-                'SEO_ROUTE_NAME' => sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id)
+                'SEO_ROUTE_NAME' => \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id),
             ];
         }
 
@@ -80,7 +81,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
             $formData = $this->request->getPost()->all();
 
             $this->galleryFormValidation
-                ->setUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id))
+                ->setUriAlias(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id))
                 ->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();

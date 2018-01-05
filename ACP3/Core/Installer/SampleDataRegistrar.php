@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Installer;
@@ -53,7 +54,7 @@ class SampleDataRegistrar
         }
 
         throw new \InvalidArgumentException(
-            sprintf('The sample data with the service id "%s" could not be found.', $serviceId)
+            \sprintf('The sample data with the service id "%s" could not be found.', $serviceId)
         );
     }
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Event\Listener;
@@ -52,7 +53,7 @@ class OnMenusValidationValidateManageMenuItem
                     [
                         'data' => $formData,
                         'field' => 'menu_item_title',
-                        'message' => $this->translator->t('menus', 'title_to_short')
+                        'message' => $this->translator->t('menus', 'title_to_short'),
                     ]
                 )
                 ->addConstraint(
@@ -60,7 +61,7 @@ class OnMenusValidationValidateManageMenuItem
                     [
                         'data' => $formData,
                         'field' => 'block_id',
-                        'message' => $this->translator->t('menus', 'select_menu_bar')
+                        'message' => $this->translator->t('menus', 'select_menu_bar'),
                     ]
                 )
                 ->addConstraint(
@@ -68,7 +69,7 @@ class OnMenusValidationValidateManageMenuItem
                     [
                         'data' => $formData,
                         'field' => 'parent_id',
-                        'message' => $this->translator->t('menus', 'select_superior_page')
+                        'message' => $this->translator->t('menus', 'select_superior_page'),
                     ]
                 )
                 ->addConstraint(
@@ -78,8 +79,8 @@ class OnMenusValidationValidateManageMenuItem
                         'field' => 'display',
                         'message' => $this->translator->t('menus', 'select_item_visibility'),
                         'extra' => [
-                            'haystack' => [0, 1]
-                        ]
+                            'haystack' => [0, 1],
+                        ],
                     ]
                 )
                 ->addConstraint(
@@ -87,7 +88,7 @@ class OnMenusValidationValidateManageMenuItem
                     [
                         'data' => $formData,
                         'field' => ['parent_id', 'block_id'],
-                        'message' => $this->translator->t('menus', 'superior_page_not_allowed')
+                        'message' => $this->translator->t('menus', 'superior_page_not_allowed'),
                     ]
                 );
         }

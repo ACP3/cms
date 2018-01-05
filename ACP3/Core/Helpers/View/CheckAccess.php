@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers\View;
 
 use ACP3\Core;
@@ -44,18 +50,18 @@ class CheckAccess
     {
         if (isset($params['mode']) && isset($params['path'])) {
             $action = [];
-            $query = explode('/', strtolower($params['path']));
+            $query = \explode('/', \strtolower($params['path']));
 
             if (isset($query[0]) && $query[0] === 'acp') {
-                $action[0] = (isset($query[1]) ? $query[1] : 'acp');
-                $action[1] = (isset($query[2]) ? $query[2] : 'index');
-                $action[2] = isset($query[3]) ? $query[3] : 'index';
+                $action[0] = ($query[1] ?? 'acp');
+                $action[1] = ($query[2] ?? 'index');
+                $action[2] = $query[3] ?? 'index';
 
                 $area = Core\Controller\AreaEnum::AREA_ADMIN;
             } else {
                 $action[0] = $query[0];
-                $action[1] = isset($query[1]) ? $query[1] : 'index';
-                $action[2] = isset($query[2]) ? $query[2] : 'index';
+                $action[1] = $query[1] ?? 'index';
+                $action[2] = $query[2] ?? 'index';
 
                 $area = Core\Controller\AreaEnum::AREA_FRONTEND;
             }
@@ -90,7 +96,7 @@ class CheckAccess
             $accessCheck['title'] = $params['title'];
         }
         if (isset($params['lang'])) {
-            $langArray = explode('|', $params['lang']);
+            $langArray = \explode('|', $params['lang']);
             $accessCheck['lang'] = $this->translator->t($langArray[0], $langArray[1]);
         } else {
             $accessCheck['lang'] = $this->translator->t($action[0], $area . '_' . $action[1] . '_' . $action[2]);

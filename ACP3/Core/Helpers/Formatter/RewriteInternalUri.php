@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers\Formatter;
 
 use ACP3\Core;
@@ -56,13 +62,13 @@ class RewriteInternalUri
      */
     public function rewriteInternalUri($text)
     {
-        $rootDir = str_replace('/', '\/', $this->appPath->getWebRoot());
+        $rootDir = \str_replace('/', '\/', $this->appPath->getWebRoot());
         $host = $this->request->getServer()->get('HTTP_HOST');
         $pattern = '/(<a([^>]+)href=")?(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})(")?/i';
 
-        return preg_replace_callback(
+        return \preg_replace_callback(
             $pattern,
-            [$this, "rewriteInternalUriCallback"],
+            [$this, 'rewriteInternalUriCallback'],
             $text
         );
     }
@@ -75,7 +81,7 @@ class RewriteInternalUri
     private function rewriteInternalUriCallback(array $matches)
     {
         if ($this->internalUriValidationRule->isValid($matches[8]) === true) {
-            $resourceParts = explode('/', $matches[8]);
+            $resourceParts = \explode('/', $matches[8]);
             $path = $this->getResourcePath($resourceParts);
             if ($this->controllerActionExists->controllerActionExists($path) === true) {
                 if (!empty($matches[1])) {

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\NestedSet\Model\Repository;
@@ -65,6 +66,7 @@ abstract class NestedSetRepository extends AbstractRepository
     public function nextNodeExists($rightId, $blockId = 0)
     {
         $where = ($blockId !== 0) ? ' AND block_id = ?' : '';
+
         return $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()} WHERE right_id = ? {$where}",
             [$rightId, $blockId]
@@ -79,6 +81,7 @@ abstract class NestedSetRepository extends AbstractRepository
     public function previousNodeExists($rightId, $blockId = 0)
     {
         $where = ($blockId !== 0) ? ' AND block_id = ?' : '';
+
         return $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()} WHERE left_id = ? {$where}",
             [$rightId, $blockId]

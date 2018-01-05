@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
@@ -81,7 +82,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
                         if ($this->uriAliasManager) {
                             $this->uriAliasManager->deleteUriAlias(
-                                sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item)
+                                \sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item)
                             );
                         }
 

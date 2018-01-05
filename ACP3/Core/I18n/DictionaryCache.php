@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\I18n;
@@ -73,7 +74,7 @@ class DictionaryCache
         $data = [];
 
         foreach ($this->vendors->getVendors() as $vendor) {
-            $languageFiles = glob($this->appPath->getModulesDir() . $vendor . '/*/Resources/i18n/' . $language . '.xml');
+            $languageFiles = \glob($this->appPath->getModulesDir() . $vendor . '/*/Resources/i18n/' . $language . '.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
@@ -85,9 +86,9 @@ class DictionaryCache
                     $module = $this->getModuleFromPath($file);
 
                     // Iterate over all language keys
-                    $xml = simplexml_load_file($file);
+                    $xml = \simplexml_load_file($file);
                     foreach ($xml->keys->item as $item) {
-                        $data['keys'][strtolower($module . (string)$item['key'])] = trim((string)$item);
+                        $data['keys'][\strtolower($module . (string)$item['key'])] = \trim((string)$item);
                     }
                 }
             }
@@ -120,7 +121,7 @@ class DictionaryCache
         $languagePacks = [];
 
         foreach ($this->vendors->getVendors() as $vendors) {
-            $languageFiles = glob($this->appPath->getModulesDir() . $vendors . '/*/Resources/i18n/*.xml');
+            $languageFiles = \glob($this->appPath->getModulesDir() . $vendors . '/*/Resources/i18n/*.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
@@ -151,8 +152,8 @@ class DictionaryCache
             return [
                 $languageIso => [
                     'iso' => $languageIso,
-                    'name' => $locale->endonym()
-                ]
+                    'name' => $locale->endonym(),
+                ],
             ];
         } catch (\DomainException $e) {
             return [];

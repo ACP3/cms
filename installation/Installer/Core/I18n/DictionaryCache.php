@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Core\I18n;
@@ -60,7 +61,7 @@ class DictionaryCache
     {
         $data = [];
 
-        $languageFiles = glob($this->appPath->getInstallerModulesDir() . '*/Resources/i18n/' . $language . '.xml');
+        $languageFiles = \glob($this->appPath->getInstallerModulesDir() . '*/Resources/i18n/' . $language . '.xml');
         foreach ($languageFiles as $file) {
             if (isset($data['info']['direction']) === false) {
                 $locale = Locale::create($this->getLanguagePackIsoCode($file));
@@ -70,9 +71,9 @@ class DictionaryCache
             $module = $this->getModuleFromPath($file);
 
             // Über die einzelnen Sprachstrings iterieren
-            $xml = simplexml_load_file($file);
+            $xml = \simplexml_load_file($file);
             foreach ($xml->keys->item as $item) {
-                $data['keys'][strtolower($module . (string)$item['key'])] = trim((string)$item);
+                $data['keys'][\strtolower($module . (string)$item['key'])] = \trim((string)$item);
             }
         }
 

@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Categories\Validation;
 
 use ACP3\Core;
@@ -49,6 +55,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function setFile($file)
     {
         $this->file = $file;
+
         return $this;
     }
 
@@ -60,6 +67,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function setSettings($settings)
     {
         $this->settings = $settings;
+
         return $this;
     }
 
@@ -71,6 +79,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function setCategoryId($categoryId)
     {
         $this->categoryId = $categoryId;
+
         return $this;
     }
 
@@ -86,7 +95,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->translator->t('categories', 'title_to_short')
+                    'message' => $this->translator->t('categories', 'title_to_short'),
                 ]
             )
             ->addConstraint(
@@ -99,8 +108,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                         'width' => $this->settings['width'],
                         'height' => $this->settings['height'],
                         'filesize' => $this->settings['filesize'],
-                        'required' => false
-                    ]
+                        'required' => false,
+                    ],
                 ]
             )
             ->addConstraint(
@@ -111,8 +120,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'message' => $this->translator->t('categories', 'category_already_exists'),
                     'extra' => [
                         'module_id' => empty($this->categoryId) ? $formData['module'] : $this->categoryRepository->getModuleIdByCategoryId($this->categoryId),
-                        'category_id' => $this->categoryId
-                    ]
+                        'category_id' => $this->categoryId,
+                    ],
                 ]
             );
 
@@ -122,7 +131,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'module',
-                    'message' => $this->translator->t('categories', 'select_module')
+                    'message' => $this->translator->t('categories', 'select_module'),
                 ]
             );
         }

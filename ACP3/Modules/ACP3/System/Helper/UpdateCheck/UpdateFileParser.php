@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Helper\UpdateCheck;
@@ -15,9 +16,9 @@ class UpdateFileParser
      */
     public function parseUpdateFile($path)
     {
-        $file = @file_get_contents($path);
+        $file = @\file_get_contents($path);
         if ($file !== false) {
-            list($latestVersion, $url) = explode('||', $file);
+            list($latestVersion, $url) = \explode('||', $file);
 
             return [
                 'latest_version' => $latestVersion,

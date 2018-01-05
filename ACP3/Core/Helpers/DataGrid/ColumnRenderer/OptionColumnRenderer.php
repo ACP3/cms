@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
@@ -48,7 +54,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
 
         if ($column['custom']['can_edit']) {
             $resourcePathEdit = $column['custom']['resource_path_edit'];
-            $resourcePathEdit .= !preg_match('=/$=', $resourcePathEdit) ? '/' : '';
+            $resourcePathEdit .= !\preg_match('=/$=', $resourcePathEdit) ? '/' : '';
             $this->optionRenderer->addOption(
                 $resourcePathEdit . 'id_' . $dbResultRow[$this->primaryKey],
                 $this->translator->t('system', 'edit'),
@@ -64,7 +70,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
 
         if ($column['custom']['can_delete']) {
             $resourcePathDelete = $column['custom']['resource_path_delete'];
-            $resourcePathDelete .= !preg_match('=/$=', $resourcePathDelete) ? '/' : '';
+            $resourcePathDelete .= !\preg_match('=/$=', $resourcePathDelete) ? '/' : '';
             $this->optionRenderer->addOption(
                 $resourcePathDelete . 'entries_' . $dbResultRow[$this->primaryKey],
                 $this->translator->t('system', 'delete'),

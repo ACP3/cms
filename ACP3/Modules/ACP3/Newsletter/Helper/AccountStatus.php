@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core\Date;
@@ -49,7 +55,7 @@ class AccountStatus
     {
         $result = $this->accountRepository->update(['status' => $status], $entryId);
 
-        if (is_array($entryId)) {
+        if (\is_array($entryId)) {
             $accountId = $this->retrieveAccountId($entryId);
 
             $this->addAccountHistory($status, $accountId);
@@ -71,8 +77,9 @@ class AccountStatus
         $historyInsertValues = [
             'newsletter_account_id' => $accountId,
             'date' => $this->date->toSQL(),
-            'action' => $status
+            'action' => $status,
         ];
+
         return $this->accountHistoryRepository->insert($historyInsertValues);
     }
 
@@ -83,9 +90,10 @@ class AccountStatus
      */
     protected function retrieveAccountId(array $entry)
     {
-        switch (key($entry)) {
+        switch (\key($entry)) {
             case 'mail':
                 $account = $this->accountRepository->getOneByEmail($entry['mail']);
+
                 break;
             case 'hash':
                 $account = $this->accountRepository->getOneByHash($entry['hash']);

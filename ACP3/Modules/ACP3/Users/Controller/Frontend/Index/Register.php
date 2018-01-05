@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
@@ -98,8 +99,8 @@ class Register extends Core\Controller\AbstractFrontendAction
         ];
 
         return [
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -166,7 +167,7 @@ class Register extends Core\Controller\AbstractFrontendAction
                 '{mail}' => $formData['mail'],
                 '{password}' => $formData['pwd'],
                 '{title}' => $systemSettings['site_title'],
-                '{host}' => $this->request->getHost()
+                '{host}' => $this->request->getHost(),
             ]
         );
 

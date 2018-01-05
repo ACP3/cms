@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles;
@@ -43,13 +44,14 @@ class Helpers
     public function articlesList($id = 0)
     {
         $articles = $this->articleRepository->getAll();
-        $cArticles = count($articles);
+        $cArticles = \count($articles);
 
         if ($cArticles > 0) {
             for ($i = 0; $i < $cArticles; ++$i) {
                 $articles[$i]['selected'] = $this->formsHelper->selectEntry('articles', $articles[$i]['id'], $id);
             }
         }
+
         return $articles;
     }
 

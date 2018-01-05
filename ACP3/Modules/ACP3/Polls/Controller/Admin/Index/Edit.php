@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
@@ -70,8 +71,8 @@ class Edit extends AbstractFormAction
             return [
                 'answers' => $this->getAnswers($id),
                 'options' => $this->fetchOptions($poll['multiple']),
-                'form' => array_merge($poll, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken()
+                'form' => \array_merge($poll, $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken(),
             ];
         }
 
@@ -124,10 +125,10 @@ class Edit extends AbstractFormAction
     protected function fetchOptions($useMultipleChoice)
     {
         $reset = [
-            '1' => $this->translator->t('polls', 'reset_votes')
+            '1' => $this->translator->t('polls', 'reset_votes'),
         ];
 
-        return array_merge(
+        return \array_merge(
             parent::fetchOptions($useMultipleChoice),
             $this->formsHelper->checkboxGenerator('reset', $reset, '0')
         );

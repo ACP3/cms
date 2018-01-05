@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Test\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\ChangePasswordValidationRule;
@@ -24,7 +30,7 @@ class ChangePasswordValidationRuleTest extends AbstractValidationRuleTest
             'invalid-data-array' => [['pw' => 'test1234'], ['pw'], [], false],
             'invalid-data-flat-array' => [['test1234'], [], [], false],
             'invalid-data-string' => ['foobar', '', [], false],
-            'invalid-no-data' => [null, null, [], false]
+            'invalid-no-data' => [null, null, [], false],
         ];
     }
 }

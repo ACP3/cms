@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Event\Listener;
@@ -44,11 +45,11 @@ class ManageMenuItemOnModelSaveAfterListener
                 'parent_id' => (int)$formData['parent_id'],
                 'display' => $formData['display'],
                 'title' => $formData['menu_item_title'],
-                'target' => 1
+                'target' => 1,
             ];
 
             $this->menuItemManager->manageMenuItem(
-                sprintf($formData['menu_item_uri_pattern'], $event->getEntryId()),
+                \sprintf($formData['menu_item_uri_pattern'], $event->getEntryId()),
                 isset($formData['create_menu_item']) === true,
                 $data
             );

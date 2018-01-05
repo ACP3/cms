@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Test;
 
 use ACP3\Core\Assets;
@@ -41,7 +47,7 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
                 'removeSubscriber',
                 'getListeners',
                 'getListenerPriority',
-                'hasListeners'
+                'hasListeners',
             ])
             ->disableOriginalConstructor()
             ->getMock();

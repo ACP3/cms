@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
@@ -70,8 +71,8 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
         }
 
         return [
-            'form' => array_merge(['nick_mail' => ''], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge(['nick_mail' => ''], $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -96,7 +97,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
                     $updateValues = [
                         'pwd' => $this->secureHelper->generateSaltedPassword($salt, $newPassword, 'sha512'),
                         'pwd_salt' => $salt,
-                        'login_errors' => 0
+                        'login_errors' => 0,
                     ];
                     $bool = $this->userRepository->update($updateValues, $user['id']);
                 }
@@ -144,7 +145,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
             'forgot_pwd_mail_subject',
             [
                 '{title}' => $systemSettings['site_title'],
-                '{host}' => $this->request->getHost()
+                '{host}' => $this->request->getHost(),
             ]
         );
         $body = $this->translator->t(
@@ -155,7 +156,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
                 '{mail}' => $user['mail'],
                 '{password}' => $newPassword,
                 '{title}' => $systemSettings['site_title'],
-                '{host}' => $this->request->getHost()
+                '{host}' => $this->request->getHost(),
             ]
         );
 
@@ -164,7 +165,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
         $data = (new Core\Mailer\MailerMessage())
             ->setRecipients([
                 'name' => $user['realname'],
-                'email' => $user['mail']
+                'email' => $user['mail'],
             ])
             ->setFrom($settings['mail'])
             ->setSubject($subject)

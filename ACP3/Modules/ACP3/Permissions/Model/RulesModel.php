@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Model;
@@ -56,7 +57,7 @@ class RulesModel extends AbstractModel
                     'role_id' => $roleId,
                     'module_id' => $moduleId,
                     'privilege_id' => $privilegeId,
-                    'permission' => $permission
+                    'permission' => $permission,
                 ];
 
                 $this->save($ruleInsertValues);
@@ -73,7 +74,7 @@ class RulesModel extends AbstractModel
             'role_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'module_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'privilege_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'permission' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'permission' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

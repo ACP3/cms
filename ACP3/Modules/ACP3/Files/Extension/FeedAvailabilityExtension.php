@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Extension;
@@ -67,14 +68,14 @@ class FeedAvailabilityExtension implements FeedAvailabilityExtensionInterface
     {
         $items = [];
         $results = $this->filesRepository->getAll($this->date->getCurrentDateTime(), 10);
-        $cResults = count($results);
+        $cResults = \count($results);
 
         for ($i = 0; $i < $cResults; ++$i) {
             $items[] = [
                 'title' => $results[$i]['title'],
                 'date' => $this->date->timestamp($results[$i]['start']),
                 'description' => $this->formatter->shortenEntry($results[$i]['text'], 300, 0),
-                'link' => $this->router->route('files/index/details/id_' . $results[$i]['id'], true)
+                'link' => $this->router->route('files/index/details/id_' . $results[$i]['id'], true),
             ];
         }
 

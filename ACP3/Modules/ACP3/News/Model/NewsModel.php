@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Model;
@@ -50,11 +51,11 @@ class NewsModel extends AbstractModel
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-        $data = array_merge($data, [
+        $data = \array_merge($data, [
             'updated_at' => 'now',
             'readmore' => $this->useReadMore($data, $settings),
             'comments' => $this->useComments($data, $settings),
-            'category_id' => isset($data['cat']) ? $data['cat'] : $data['category_id'],
+            'category_id' => $data['cat'] ?? $data['category_id'],
         ]);
 
         return parent::save($data, $newsId);
@@ -100,7 +101,7 @@ class NewsModel extends AbstractModel
             'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
             'target' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'link_title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 
@@ -112,7 +113,7 @@ class NewsModel extends AbstractModel
         return [
             'active' => 0,
             'start' => 'now',
-            'end' => 'now'
+            'end' => 'now',
         ];
     }
 }

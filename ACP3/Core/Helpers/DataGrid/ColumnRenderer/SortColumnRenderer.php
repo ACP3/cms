@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
@@ -44,13 +45,13 @@ class SortColumnRenderer extends AbstractColumnRenderer
         $value = '';
         if ($dbResultRow['last'] != $dbValue) {
             $value .= $this->fetchSortDirectionHtml(
-                $this->router->route(sprintf($column['custom']['route_sort_down'], $dbResultRow[$this->primaryKey])),
+                $this->router->route(\sprintf($column['custom']['route_sort_down'], $dbResultRow[$this->primaryKey])),
                 'down'
             );
         }
         if ($dbResultRow['first'] != $dbValue) {
             $value .= $this->fetchSortDirectionHtml(
-                $this->router->route(sprintf($column['custom']['route_sort_up'], $dbResultRow[$this->primaryKey])),
+                $this->router->route(\sprintf($column['custom']['route_sort_up'], $dbResultRow[$this->primaryKey])),
                 'up'
             );
         }
@@ -76,7 +77,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
 </a>
 HTML;
 
-        return sprintf(
+        return \sprintf(
             $html,
             $url,
             $this->translator->t('system', 'move_' . $direction),
@@ -94,6 +95,6 @@ HTML;
 <i class="glyphicon glyphicon-remove-circle text-danger text-danger" aria-hidden="true" title="%s"></i>
 HTML;
 
-        return sprintf($html, $this->translator->t('system', 'move_impossible'));
+        return \sprintf($html, $this->translator->t('system', 'move_impossible'));
     }
 }

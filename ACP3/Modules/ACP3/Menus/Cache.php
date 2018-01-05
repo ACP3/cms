@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus;
 
 use ACP3\Core;
@@ -64,11 +70,11 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public function saveMenusCache()
     {
         $menuItems = $this->menuItemRepository->getAllMenuItems();
-        $cMenuItems = count($menuItems);
+        $cMenuItems = \count($menuItems);
 
         if ($cMenuItems > 0) {
             $menus = $this->menuRepository->getAllMenus();
-            $cMenus = count($menus);
+            $cMenus = \count($menus);
 
             for ($i = 0; $i < $cMenus; ++$i) {
                 $this->saveVisibleMenuItemsCache($menus[$i]['index_name']);
@@ -88,15 +94,16 @@ class Cache extends Core\Modules\AbstractCacheStorage
                 $this->translator->t('menus', 'module'),
                 $this->translator->t('menus', 'dynamic_page'),
                 $this->translator->t('menus', 'hyperlink'),
-                $this->translator->t('menus', 'article')
+                $this->translator->t('menus', 'article'),
             ];
 
             for ($i = 0; $i < $cMenuItems; ++$i) {
-                $menuItems[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, $menuItems[$i]['mode']);
+                $menuItems[$i]['mode_formatted'] = \str_replace($modeSearch, $modeReplace, $menuItems[$i]['mode']);
                 $menuItems[$i]['first'] = $this->isFirstItemInSet($i, $menuItems);
                 $menuItems[$i]['last'] = $this->isLastItemInSet($i, $menuItems);
             }
         }
+
         return $this->cache->save(self::CACHE_ID, $menuItems);
     }
 
@@ -160,7 +167,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     protected function isLastItemInSet($index, array $menuItems)
     {
-        $cItems = count($menuItems);
+        $cItems = \count($menuItems);
         for ($j = $index + 1; $j < $cItems; ++$j) {
             if ($menuItems[$index]['parent_id'] == $menuItems[$j]['parent_id']
                 && $menuItems[$j]['block_name'] == $menuItems[$index]['block_name']

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Installer\Core\I18n;
 
 use ACP3\Installer\Core\Environment\ApplicationPath;
@@ -24,7 +29,7 @@ class Translator extends \ACP3\Core\I18n\Translator
         $this->appPath = $appPath;
         $this->dictionaryCache = $dictionaryCache;
         $this->locale = $locale;
-        $this->lang2Characters = substr($this->locale, 0, strpos($this->locale, '_'));
+        $this->lang2Characters = \substr($this->locale, 0, \strpos($this->locale, '_'));
     }
 
     /**
@@ -32,7 +37,7 @@ class Translator extends \ACP3\Core\I18n\Translator
      */
     public function languagePackExists($locale)
     {
-        return !preg_match('=/=', $locale)
-            && is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $locale . '.xml') === true;
+        return !\preg_match('=/=', $locale)
+            && \is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $locale . '.xml') === true;
     }
 }

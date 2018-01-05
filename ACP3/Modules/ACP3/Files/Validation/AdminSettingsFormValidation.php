@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Files\Validation;
 
 use ACP3\Core;
@@ -42,8 +48,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'dateformat',
                     'message' => $this->translator->t('system', 'select_date_format'),
                     'extra' => [
-                        'haystack' => ['long', 'short']
-                    ]
+                        'haystack' => ['long', 'short'],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -51,7 +57,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'sidebar',
-                    'message' => $this->translator->t('system', 'select_sidebar_entries')
+                    'message' => $this->translator->t('system', 'select_sidebar_entries'),
                 ]
             )
             ->addConstraint(
@@ -61,8 +67,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'order_by',
                     'message' => $this->translator->t('files', 'select_order_by'),
                     'extra' => [
-                        'haystack' => ['date', 'custom']
-                    ]
+                        'haystack' => ['date', 'custom'],
+                    ],
                 ]
             );
 
@@ -75,8 +81,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'field' => 'comments',
                         'message' => $this->translator->t('files', 'select_allow_comments'),
                         'extra' => [
-                            'haystack' => [0, 1]
-                        ]
+                            'haystack' => [0, 1],
+                        ],
                     ]
                 );
         }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\DataProvider\Helpers;
@@ -22,7 +23,7 @@ class SelectEntryDataProvider implements DataProviderInterface
                 0,
                 'selected',
                 null,
-                ''
+                '',
             ],
             'value_array_not_selected' => [
                 'foo',
@@ -30,11 +31,11 @@ class SelectEntryDataProvider implements DataProviderInterface
                 [
                     'a',
                     'b',
-                    'c'
+                    'c',
                 ],
                 'selected',
                 null,
-                ''
+                '',
             ],
             'value_array_selected' => [
                 'foo',
@@ -42,26 +43,26 @@ class SelectEntryDataProvider implements DataProviderInterface
                 [
                     'a',
                     'b',
-                    'c'
+                    'c',
                 ],
                 'selected',
                 null,
-                ' selected="selected"'
+                ' selected="selected"',
             ],
             'value_array_post_selected' => [
                 'foo',
                 'b',
                 [
                     'a',
-                    'c'
+                    'c',
                 ],
                 'selected',
                 [
                     'a',
                     'b',
-                    'c'
+                    'c',
                 ],
-                ' selected="selected"'
+                ' selected="selected"',
             ],
             'empty_attribute_selected' => [
                 'foo',
@@ -69,7 +70,7 @@ class SelectEntryDataProvider implements DataProviderInterface
                 1,
                 '',
                 1,
-                ' selected="selected"'
+                ' selected="selected"',
             ],
             'checked' => [
                 'foo',
@@ -77,7 +78,7 @@ class SelectEntryDataProvider implements DataProviderInterface
                 1,
                 'checked',
                 1,
-                ' checked="checked"'
+                ' checked="checked"',
             ],
         ];
     }

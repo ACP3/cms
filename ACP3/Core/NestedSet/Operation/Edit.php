@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\NestedSet\Operation;
@@ -62,6 +63,7 @@ class Edit extends AbstractOperation
                     );
                 }
             }
+
             return $bool;
         };
 
@@ -124,7 +126,7 @@ class Edit extends AbstractOperation
 
         // Falls die Knoten in einen leeren Block verschoben werden sollen,
         // die right_id des letzten Elementes verwenden
-        if (empty($newBlockLeftId) || is_null($newBlockLeftId) === true) {
+        if (empty($newBlockLeftId) || \is_null($newBlockLeftId) === true) {
             $newBlockLeftId = $this->nestedSetRepository->fetchMaximumRightId();
             $newBlockLeftId += 1;
         }
@@ -191,7 +193,7 @@ class Edit extends AbstractOperation
                         $parentId,
                         $node['left_id'],
                         $node['right_id'],
-                        $node['id']
+                        $node['id'],
                     ]
                 );
             } else {
@@ -202,7 +204,7 @@ class Edit extends AbstractOperation
                         $parentId,
                         $node['left_id'],
                         $node['right_id'],
-                        $node['id']
+                        $node['id'],
                     ]
                 );
             }
@@ -210,6 +212,7 @@ class Edit extends AbstractOperation
                 break;
             }
         }
+
         return $bool;
     }
 
@@ -247,6 +250,7 @@ class Edit extends AbstractOperation
         $this->adjustFollowingNodesAfterSeparation($itemDiff, $nodes[0]['right_id']);
         $this->adjustParentNodesAfterInsert($itemDiff, $newParent['left_id'], $newParent['right_id']);
         $this->adjustFollowingNodesAfterInsert($itemDiff, $newParent['left_id'] + 1);
+
         return [$diff, $rootId];
     }
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Breadcrumb;
@@ -98,7 +99,7 @@ class Steps
             $this->buildBreadcrumbCacheForFrontend();
         }
 
-        $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['last'] = true;
+        $this->breadcrumbCache[\count($this->breadcrumbCache) - 1]['last'] = true;
     }
 
     /**
@@ -207,8 +208,8 @@ class Steps
     public function replaceAncestor($title, $path = '', $dbSteps = false)
     {
         if ($dbSteps === false) {
-            end($this->steps);
-            $this->steps[(int)key($this->steps)] = $this->buildStepItem($title, $path);
+            \end($this->steps);
+            $this->steps[(int)\key($this->steps)] = $this->buildStepItem($title, $path);
         }
 
         return $this;
@@ -223,7 +224,7 @@ class Steps
     {
         return [
             'title' => $title,
-            'uri' => !empty($path) ? $this->router->route($path) : ''
+            'uri' => !empty($path) ? $this->router->route($path) : '',
         ];
     }
 
@@ -256,7 +257,7 @@ class Steps
     {
         if (!$this->stepAlreadyExists($path)) {
             $step = $this->buildStepItem($title, $path);
-            array_unshift($this->steps, $step);
+            \array_unshift($this->steps, $step);
         }
 
         return $this;

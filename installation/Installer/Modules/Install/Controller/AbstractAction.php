@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Controller;
@@ -36,7 +37,7 @@ abstract class AbstractAction extends Core\Controller\AbstractInstallerAction
         $completedSteps = 0;
         if ($this->navigation->has($key) === true) {
             $this->navigation->markStepActive($key);
-            $completedSteps = array_search($key, array_keys($this->navigation->all()));
+            $completedSteps = \array_search($key, \array_keys($this->navigation->all()));
         }
 
         if ($completedSteps > 0) {

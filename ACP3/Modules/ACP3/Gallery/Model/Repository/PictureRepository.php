@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Model\Repository;
@@ -23,7 +24,8 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     public function pictureExists($pictureId, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod('g.') : '';
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = :id AND p.gallery_id = g.id' . $period, ['id' => $pictureId, 'time' => $time]) > 0);
+
+        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = :id AND p.gallery_id = g.id' . $period, ['id' => $pictureId, 'time' => $time]) > 0;
     }
 
     /**

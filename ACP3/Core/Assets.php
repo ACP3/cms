@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core;
 
 use ACP3\Core\Assets\Libraries;
@@ -35,7 +41,7 @@ class Assets
      */
     public function __construct(ApplicationPath $appPath, Libraries $libraries)
     {
-        $this->designXml = simplexml_load_file($appPath->getDesignPathInternal() . 'info.xml');
+        $this->designXml = \simplexml_load_file($appPath->getDesignPathInternal() . 'info.xml');
         $this->libraries = $libraries;
 
         if (isset($this->designXml->use_bootstrap) && (string)$this->designXml->use_bootstrap === 'true') {
@@ -125,7 +131,7 @@ class Assets
     public function getEnabledLibrariesAsString()
     {
         if (empty($this->enabledLibraries)) {
-            $this->enabledLibraries = implode(',', $this->libraries->getEnabledLibraries());
+            $this->enabledLibraries = \implode(',', $this->libraries->getEnabledLibraries());
         }
 
         return $this->enabledLibraries;

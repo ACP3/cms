@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
@@ -56,9 +57,9 @@ class Create extends Core\Controller\AbstractFrontendAction
     public function execute()
     {
         return [
-            'form' => array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()),
+            'form' => \array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()),
             'mod_list' => $this->fetchModules(),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -93,12 +94,13 @@ class Create extends Core\Controller\AbstractFrontendAction
     {
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $name => $info) {
-            if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
+            if ($info['active'] && \in_array('categories', $info['dependencies']) === true) {
                 $modules[$name]['selected'] = $this->formsHelper->selectEntry('module', $info['id']);
             } else {
                 unset($modules[$name]);
             }
         }
+
         return $modules;
     }
 }

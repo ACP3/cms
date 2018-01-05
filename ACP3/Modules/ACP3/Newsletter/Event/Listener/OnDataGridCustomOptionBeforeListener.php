@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Newsletter\Event\Listener;
 
 use ACP3\Core\ACL;
@@ -40,7 +46,7 @@ class OnDataGridCustomOptionBeforeListener
         ) {
             $dbResultRow = $customOptionEvent->getDbResultRow();
 
-            if (array_key_exists('status', $dbResultRow) && $dbResultRow['status'] != 1) {
+            if (\array_key_exists('status', $dbResultRow) && $dbResultRow['status'] != 1) {
                 $customOptionEvent->getOptionRenderer()->addOption(
                     'acp/newsletter/index/send/id_' . $dbResultRow['id'],
                     $this->translator->t('newsletter', 'send'),

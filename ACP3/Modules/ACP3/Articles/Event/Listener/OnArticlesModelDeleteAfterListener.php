@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Event\Listener;
@@ -70,7 +71,7 @@ class OnArticlesModelDeleteAfterListener
         foreach ($event->getEntryId() as $entryId) {
             $this->articlesCache->getCacheDriver()->delete(Cache::CACHE_ID . $entryId);
 
-            $uri = sprintf(Helpers::URL_KEY_PATTERN, $entryId);
+            $uri = \sprintf(Helpers::URL_KEY_PATTERN, $entryId);
 
             if ($this->manageMenuItemHelper) {
                 $this->manageMenuItemHelper->manageMenuItem($uri, false);

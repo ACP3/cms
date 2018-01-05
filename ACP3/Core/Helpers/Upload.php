@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Environment\ApplicationPath;
@@ -42,12 +48,12 @@ class Upload
     {
         $path = $this->appPath->getUploadsDir() . $this->directory . '/';
 
-        if (!is_dir($path)) {
-            $result = @mkdir($path);
+        if (!\is_dir($path)) {
+            $result = @\mkdir($path);
 
             if (!$result) {
                 throw new ValidationFailedException(
-                    [sprintf('Could not create folder "%s"', $this->directory)]
+                    [\sprintf('Could not create folder "%s"', $this->directory)]
                 );
             }
         }
@@ -56,27 +62,27 @@ class Upload
             $newFilename = $filename;
         } else {
             $newFilename = 1;
-            $ext = strrchr($filename, '.');
+            $ext = \strrchr($filename, '.');
 
             // Dateiname solange ändern, wie eine Datei mit dem selben Dateinamen im aktuellen Ordner existiert
-            while (is_file($path . $newFilename . $ext) === true) {
+            while (\is_file($path . $newFilename . $ext) === true) {
                 ++$newFilename;
             }
 
             $newFilename .= $ext;
         }
 
-        if (is_writable($path) === true) {
-            if (!@move_uploaded_file($tmpFilename, $path . $newFilename)) {
+        if (\is_writable($path) === true) {
+            if (!@\move_uploaded_file($tmpFilename, $path . $newFilename)) {
                 return [];
-            } else {
-                $return = [];
-                $return['name'] = $newFilename;
-                $return['size'] = $this->calcFilesize(filesize($path . $return['name']));
-
-                return $return;
             }
+            $return = [];
+            $return['name'] = $newFilename;
+            $return['size'] = $this->calcFilesize(\filesize($path . $return['name']));
+
+            return $return;
         }
+
         return [];
     }
 
@@ -107,7 +113,7 @@ class Upload
             $value = $value / 1024;
         }
 
-        return round($value, 2) . ' ' . $units[$i];
+        return \round($value, 2) . ' ' . $units[$i];
     }
 
     /**
@@ -120,9 +126,10 @@ class Upload
     public function removeUploadedFile($file)
     {
         $path = $this->appPath->getUploadsDir() . $this->directory . '/' . $file;
-        if (!empty($file) && !preg_match('=/=', $file) && is_file($path) === true) {
-            return unlink($path);
+        if (!empty($file) && !\preg_match('=/=', $file) && \is_file($path) === true) {
+            return \unlink($path);
         }
+
         return false;
     }
 }

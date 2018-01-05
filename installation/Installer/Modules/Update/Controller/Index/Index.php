@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Update\Controller\Index;
@@ -47,13 +48,13 @@ class Index extends Core\Controller\AbstractInstallerAction
     protected function executePost()
     {
         $results = $this->schemaUpdateModel->updateModules();
-        ksort($results);
+        \ksort($results);
 
         $this->setTemplate('Update/index.result.tpl');
         $this->clearCaches();
 
         return [
-            'results' => $results
+            'results' => $results,
         ];
     }
 
@@ -61,7 +62,7 @@ class Index extends Core\Controller\AbstractInstallerAction
     {
         Cache\Purge::doPurge([
             ACP3_ROOT_DIR . 'cache/',
-            $this->appPath->getUploadsDir() . 'assets'
+            $this->appPath->getUploadsDir() . 'assets',
         ]);
     }
 }

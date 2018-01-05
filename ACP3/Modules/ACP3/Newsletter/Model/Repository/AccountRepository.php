@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Model\Repository;
@@ -22,6 +23,7 @@ class AccountRepository extends AbstractRepository
     public function accountExists($emailAddress, $hash = '')
     {
         $where = empty($hash) === false ? ' AND `hash` = :hash' : '';
+
         return $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `mail` = :mail" . $where,
             ['mail' => $emailAddress, 'hash' => $hash]

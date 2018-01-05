@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
@@ -74,7 +76,7 @@ class Details extends AbstractAction
             return [
                 'news' => $news,
                 'dateformat' => $this->newsSettings['dateformat'],
-                'comments_allowed' => $this->commentsActive === true && $news['comments'] == 1
+                'comments_allowed' => $this->commentsActive === true && $news['comments'] == 1,
             ];
         }
 

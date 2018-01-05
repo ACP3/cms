@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Users\Validation;
 
 use ACP3\Core;
@@ -19,6 +25,7 @@ class AdminFormValidation extends AbstractUserFormValidation
     public function setUserId($userId)
     {
         $this->userId = (int)$userId;
+
         return $this;
     }
 
@@ -34,7 +41,7 @@ class AdminFormValidation extends AbstractUserFormValidation
                 [
                     'data' => $formData,
                     'field' => 'roles',
-                    'message' => $this->translator->t('users', 'select_access_level')
+                    'message' => $this->translator->t('users', 'select_access_level'),
                 ]
             )
             ->addConstraint(
@@ -44,8 +51,8 @@ class AdminFormValidation extends AbstractUserFormValidation
                     'field' => 'super_user',
                     'message' => $this->translator->t('users', 'select_super_user'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             );
 

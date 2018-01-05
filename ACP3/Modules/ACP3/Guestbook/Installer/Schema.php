@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Guestbook\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
@@ -20,14 +25,14 @@ class Schema implements Modules\Installer\SchemaInterface
                     'index' => PrivilegeEnum::ADMIN_VIEW,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
-                ]
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
+                ],
             ],
             'frontend' => [
                 'index' => [
                     'create' => PrivilegeEnum::FRONTEND_CREATE,
-                    'index' => PrivilegeEnum::FRONTEND_VIEW
-                ]
+                    'index' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
             ],
         ];
     }
@@ -54,7 +59,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}guestbook` (
+            'CREATE TABLE `{pre}guestbook` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `date` DATETIME NOT NULL,
                 `ip` VARCHAR(40) NOT NULL,
@@ -67,7 +72,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 PRIMARY KEY (`id`),
                 INDEX `foreign_user_id` (`user_id`),
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -76,7 +81,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function removeTables()
     {
-        return ["DROP TABLE IF EXISTS `{pre}guestbook`;"];
+        return ['DROP TABLE IF EXISTS `{pre}guestbook`;'];
     }
 
     /**
@@ -90,7 +95,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'notify_email' => '',
             'emoticons' => 1,
             'newsletter_integration' => 0,
-            'overlay' => 1
+            'overlay' => 1,
         ];
     }
 }

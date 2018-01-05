@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\Helpers;
@@ -128,7 +129,7 @@ class FormsTest extends \PHPUnit_Framework_TestCase
         $values = [
             'foo' => 'Lorem',
             'bar' => 'Ipsum',
-            'baz' => 'Dolor'
+            'baz' => 'Dolor',
         ];
 
         $this->assertEquals(
@@ -159,7 +160,7 @@ class FormsTest extends \PHPUnit_Framework_TestCase
         $values = [
             'foo' => 'Lorem',
             'bar' => 'Ipsum',
-            'baz' => 'Dolor'
+            'baz' => 'Dolor',
         ];
 
         $this->assertEquals(
