@@ -9,13 +9,11 @@ module.exports = function (gulp, plugins) {
     return function () {
         return gulp.src(
             [
-                './ACP3/Modules/*/*/Resources/Assets/less/style.less',
-                './ACP3/Modules/*/*/Resources/Assets/less/append.less',
-                './designs/*/*/Assets/less/style.less',
-                './designs/*/*/Assets/less/append.less',
+                './ACP3/Modules/*/*/Resources/Assets/less/*.less',
+                './designs/*/*/Assets/less/*.less',
                 './designs/*/Assets/less/*.less',
                 './installation/design/Assets/less/*.less',
-                './installation/Installer/Modules/*/Resources/Assets/less/style.less'
+                './installation/Installer/Modules/*/Resources/Assets/less/*.less'
             ],
             {base: './'}
         )

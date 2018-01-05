@@ -1,8 +1,24 @@
-.picture {
+.gallery .gallery__thumbnail a:hover,
+.gallery .gallery__thumbnail a:focus,
+.gallery .gallery__thumbnail a:active {
+  text-decoration: none;
+}
+.gallery .gallery__title {
+  margin-top: 0;
+}
+.gallery-pictures {
+  text-align: center;
+  font-size: 0;
+}
+.gallery-pictures .gallery-pictures__picture {
+  margin: 3px;
+  display: inline-block;
+}
+.gallery-picture {
   margin: 10px 0;
   text-align: center;
 }
-.picture .description {
+.gallery-picture .gallery-picture__description {
   width: 60%;
   margin: 10px auto;
 }

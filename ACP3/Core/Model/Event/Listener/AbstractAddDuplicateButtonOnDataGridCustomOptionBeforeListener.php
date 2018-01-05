@@ -1,35 +1,36 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model\Event\Listener;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 
 abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var \ACP3\Core\ACL\ACLInterface
      */
     private $acl;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     private $translator;
 
     /**
      * OnDataGridCustomOptionBeforeListener constructor.
      *
-     * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\ACL\ACLInterface $acl
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
     public function __construct(
-        ACL $acl,
-        Translator $translator
+        ACLInterface $acl,
+        TranslatorInterface $translator
     ) {
         $this->acl = $acl;
         $this->translator = $translator;
@@ -48,7 +49,7 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
             $customOptionEvent->getOptionRenderer()->addOption(
                 $this->getRoute($dbResultRow),
                 $this->translator->t('system', 'duplicate_entry'),
-                'glyphicon-repeat',
+                'fa-repeat',
                 'btn-default',
                 true
             );

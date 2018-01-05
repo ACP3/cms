@@ -1,25 +1,27 @@
 <?php
-namespace ACP3\Core\Helpers\Formatter;
-
-use ACP3\Core\I18n\Translator;
 
 /**
- * Class MarkEntries
- * @package ACP3\Core\Helpers\Formatter
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Helpers\Formatter;
+
+use ACP3\Core\I18n\TranslatorInterface;
+
 class MarkEntries
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
 
     /**
      * MarkEntries constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
@@ -33,14 +35,14 @@ class MarkEntries
     public function execute($name, $markAllId = '')
     {
         $markAllId = !empty($markAllId) ? $markAllId : 'mark-all';
-        $deleteOptions = json_encode(
+        $deleteOptions = \json_encode(
             [
                 'checkBoxName' => $name,
                 'language' => [
                     'confirmationTextSingle' => $this->translator->t('system', 'confirm_delete_single'),
                     'confirmationTextMultiple' => $this->translator->t('system', 'confirm_delete_multiple'),
-                    'noEntriesSelectedText' => $this->translator->t('system', 'no_entries_selected')
-                ]
+                    'noEntriesSelectedText' => $this->translator->t('system', 'no_entries_selected'),
+                ],
             ]
         );
 

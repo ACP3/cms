@@ -5,12 +5,12 @@
 
 /* global onloadCallback:true */
 onloadCallback = function() {
-    jQuery('.recaptcha-placeholder').each(function() {
-        this.innerHtml = '';
+    jQuery('.recaptcha-placeholder').each((index, element) => {
+        element.innerHtml = '';
 
-        grecaptcha.render(this.id, {
-            'sitekey': this.dataset.sitekey,
-            'size': this.dataset.size
+        grecaptcha.render(element.id, {
+            'sitekey': element.dataset.sitekey,
+            'size': element.dataset.size
         });
     });
 };

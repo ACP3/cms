@@ -10,7 +10,7 @@ services:
   permissions.validation.validation_rules.privilege_exists_validation_rule:
     class: ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegeExistsValidationRule
     arguments:
-      - '@permissions.model.privilegerepository'
+      - '@permissions.model.repository.acl_privileges_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false
@@ -18,7 +18,7 @@ services:
   permissions.validation.validation_rules.privileges_exist_validation_rule:
     class: ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegesExistValidationRule
     arguments:
-      - '@permissions.model.privilegerepository'
+      - '@permissions.model.repository.acl_privileges_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false
@@ -26,7 +26,7 @@ services:
   permissions.validation.validation_rules.role_not_exists_validation_rule:
     class: ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RoleNotExistsValidationRule
     arguments:
-      - '@permissions.model.rolerepository'
+      - '@permissions.model.repository.acl_roles_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false

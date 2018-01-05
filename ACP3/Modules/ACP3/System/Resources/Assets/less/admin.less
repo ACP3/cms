@@ -1,0 +1,47 @@
+/*
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+@import "modules/datagrid";
+
+#adm-list {
+  .navbar-text {
+    margin: 0;
+
+    a {
+      color: #333;
+    }
+
+    .btn-link {
+      margin-left: 8px;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .fa,
+    .glyphicon {
+      font-size: 32px;
+    }
+
+    .glyphicon-plus {
+      &:before {
+        position: relative;
+        top: -2px;
+      }
+    }
+
+    .fa-plus {
+      &:before {
+        position: relative;
+        top: 1px;
+      }
+    }
+  }
+
+  a,
+  input {
+    margin: 8px 0 0 8px;
+    float: right;
+  }
+}

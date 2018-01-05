@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Extension;
@@ -10,8 +11,8 @@ use ACP3\Core\Date;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Gallery\Helpers;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
+use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
@@ -26,7 +27,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
      */
     protected $galleryRepository;
     /**
-     * @var PictureRepository
+     * @var GalleryPicturesRepository
      */
     protected $pictureRepository;
 
@@ -35,14 +36,14 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
      * @param Date $date
      * @param RouterInterface $router
      * @param GalleryRepository $galleryRepository
-     * @param PictureRepository $pictureRepository
+     * @param GalleryPicturesRepository $pictureRepository
      * @param MetaStatements $metaStatements
      */
     public function __construct(
         Date $date,
         RouterInterface $router,
         GalleryRepository $galleryRepository,
-        PictureRepository $pictureRepository,
+        GalleryPicturesRepository $pictureRepository,
         MetaStatements $metaStatements
     ) {
         parent::__construct($router, $metaStatements);
@@ -69,15 +70,15 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 
         foreach ($this->galleryRepository->getAll($this->date->getCurrentDateTime()) as $result) {
             $this->addUrl(
-                sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $result['id']),
-                $this->date->format($result['updated_at'], 'Y-m-d'),
+                \sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $result['id']),
+                $this->date->toDateTime($result['updated_at']),
                 $isSecure
             );
 
             foreach ($this->pictureRepository->getPicturesByGalleryId($result['id']) as $picture) {
                 $this->addUrl(
-                    sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
-                    $this->date->format($result['updated_at'], 'Y-m-d'),
+                    \sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
+                    $this->date->toDateTime($result['updated_at']),
                     $isSecure
                 );
             }

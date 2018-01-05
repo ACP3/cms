@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Mailer;
@@ -72,6 +73,7 @@ class MailerMessage
     public function setSubject($subject)
     {
         $this->subject = $subject;
+
         return $this;
     }
 
@@ -90,6 +92,7 @@ class MailerMessage
     public function setBody($body)
     {
         $this->body = $body;
+
         return $this;
     }
 
@@ -108,6 +111,7 @@ class MailerMessage
     public function setHtmlBody($htmlBody)
     {
         $this->htmlBody = $htmlBody;
+
         return $this;
     }
 
@@ -126,6 +130,7 @@ class MailerMessage
     public function setUrlWeb($urlWeb)
     {
         $this->urlWeb = $urlWeb;
+
         return $this;
     }
 
@@ -144,6 +149,7 @@ class MailerMessage
     public function setMailSignature($mailSignature)
     {
         $this->mailSignature = $mailSignature;
+
         return $this;
     }
 
@@ -162,6 +168,7 @@ class MailerMessage
     public function setFrom($from)
     {
         $this->from = $from;
+
         return $this;
     }
 
@@ -180,6 +187,7 @@ class MailerMessage
     public function setReplyTo($replyTo)
     {
         $this->replyTo = $replyTo;
+
         return $this;
     }
 
@@ -198,14 +206,19 @@ class MailerMessage
     public function setSender($sender)
     {
         $this->sender = $sender;
+
         return $this;
     }
 
     /**
-     * @return array|string
+     * @return array
      */
     public function getRecipients()
     {
+        if (\is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
+            return [$this->recipients];
+        }
+
         return $this->recipients;
     }
 
@@ -216,6 +229,7 @@ class MailerMessage
     public function setRecipients($recipients)
     {
         $this->recipients = $recipients;
+
         return $this;
     }
 
@@ -234,6 +248,7 @@ class MailerMessage
     public function setBcc($bcc)
     {
         $this->bcc = $bcc;
+
         return $this;
     }
 
@@ -252,6 +267,7 @@ class MailerMessage
     public function setAttachments(array $attachments)
     {
         $this->attachments = $attachments;
+
         return $this;
     }
 
@@ -262,6 +278,7 @@ class MailerMessage
     public function addAttachment($attachment)
     {
         $this->attachments[] = $attachment;
+
         return $this;
     }
 
@@ -280,6 +297,7 @@ class MailerMessage
     public function setTemplate($template)
     {
         $this->template = $template;
+
         return $this;
     }
 }

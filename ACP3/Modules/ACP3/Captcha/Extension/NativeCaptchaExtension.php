@@ -1,18 +1,18 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Extension;
 
 use ACP3\Core;
-use ACP3\Core\I18n\Translator;
 
 class NativeCaptchaExtension implements CaptchaExtensionInterface
 {
     /**
-     * @var Translator
+     * @var Core\I18n\TranslatorInterface
      */
     private $translator;
     /**
@@ -40,14 +40,14 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
      */
     private $user;
     /**
-     * @var Core\ACL
+     * @var Core\ACL\ACLInterface
      */
     private $acl;
 
     /**
      * NativeCaptchaExtension constructor.
-     * @param Core\ACL $acl
-     * @param Translator $translator
+     * @param Core\ACL\ACLInterface $acl
+     * @param Core\I18n\TranslatorInterface $translator
      * @param Core\Http\RequestInterface $request
      * @param Core\Router\RouterInterface $router
      * @param Core\Session\SessionHandlerInterface $sessionHandler
@@ -56,8 +56,8 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
      * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
      */
     public function __construct(
-        Core\ACL $acl,
-        Translator $translator,
+        Core\ACL\ACLInterface $acl,
+        Core\I18n\TranslatorInterface $translator,
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
         Core\Session\SessionHandlerInterface $sessionHandler,
@@ -93,7 +93,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
         $path = ''
     ) {
         if (!$this->user->isAuthenticated() && $this->hasCaptchaAccess()) {
-            $path = sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
+            $path = \sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
 
             $this->sessionHandler->set('captcha_' . $path, $this->secureHelper->salt($captchaLength));
 
@@ -102,10 +102,12 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
                 'id' => $formFieldId,
                 'height' => 30,
                 'input_only' => $inputOnly,
-                'path' => $path
+                'path' => $path,
             ]);
+
             return $this->view->fetchTemplate('Captcha/Partials/captcha_native.tpl');
         }
+
         return '';
     }
 
@@ -132,9 +134,9 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
 
         $value = $formData[$formFieldName];
         $routePath = empty($extra['path']) === true ? $this->request->getQuery() : $extra['path'];
-        $indexName = 'captcha_' . sha1($this->router->route($routePath));
+        $indexName = 'captcha_' . \sha1($this->router->route($routePath));
 
-        return preg_match('/^[a-zA-Z0-9]+$/', $value)
-            && strtolower($value) === strtolower($this->sessionHandler->get($indexName, ''));
+        return \preg_match('/^[a-zA-Z0-9]+$/', $value)
+            && \strtolower($value) === \strtolower($this->sessionHandler->get($indexName, ''));
     }
 }

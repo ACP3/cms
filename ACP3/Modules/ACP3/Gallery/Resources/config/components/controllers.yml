@@ -3,8 +3,8 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
-      - '@gallery.model.gallery_model'
+      - '@gallery.view.block.admin.gallery_admin_form_block'
+      - '@gallery.model.galleries_model'
       - '@gallery.validation.gallery_form_validation'
 
   gallery.controller.admin.index.delete:
@@ -13,8 +13,8 @@ services:
       - '@core.context.frontend'
       - '@gallery.cache'
       - '@gallery.helpers'
-      - '@gallery.model.gallery_model'
-      - '@gallery.model.picturerepository'
+      - '@gallery.model.galleries_model'
+      - '@gallery.model.repository.gallery_pictures_repository'
     calls:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
@@ -22,33 +22,32 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
-      - '@gallery.model.gallery_model'
+      - '@gallery.view.block.admin.gallery_admin_form_block'
+      - '@gallery.model.galleries_model'
       - '@gallery.validation.gallery_form_validation'
 
   gallery.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@gallery.model.gallery_data_grid_repository'
+      - '@gallery.view.block.admin.galleries_data_grid_block'
 
   gallery.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@gallery.view.block.admin.gallery_settings_form_block'
+      - '@core.helpers.secure'
       - '@gallery.cache.core'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
       - '@gallery.validation.admin_settings_form_validation'
 
   gallery.controller.admin.pictures.create:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@gallery.model.galleryrepository'
-      - '@gallery.model.picture_model'
+      - '@gallery.view.block.admin.gallery_picture_admin_form_block'
+      - '@gallery.model.repository.galleries_repository'
+      - '@gallery.model.gallery_pictures_model'
       - '@gallery.validation.picture_form_validation'
 
   gallery.controller.admin.pictures.delete:
@@ -56,7 +55,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@gallery.helpers'
-      - '@gallery.model.picturerepository'
+      - '@gallery.model.repository.gallery_pictures_repository'
       - '@gallery.cache'
     calls:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
@@ -65,62 +64,56 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@gallery.view.block.admin.gallery_picture_admin_form_block'
       - '@gallery.helpers'
-      - '@gallery.model.picture_model'
+      - '@gallery.model.gallery_pictures_model'
       - '@gallery.validation.picture_form_validation'
 
   gallery.controller.admin.pictures.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Index
     arguments:
       - '@core.context.frontend'
-      - '@gallery.model.picturerepository'
-      - '@gallery.model.gallery_model'
+      - '@gallery.view.block.admin.gallery_pictures_data_grid_block'
 
   gallery.controller.admin.pictures.order:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Order
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.sort'
-      - '@gallery.model.picturerepository'
+      - '@gallery.model.repository.gallery_pictures_repository'
       - '@gallery.cache'
 
   gallery.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Details
     arguments:
       - '@core.context.frontend'
+      - '@gallery.view.block.frontend.gallery_picture_details_block'
       - '@core.date'
-      - '@gallery.model.picturerepository'
-    calls:
-      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
+      - '@gallery.model.repository.gallery_pictures_repository'
 
   gallery.controller.frontend.index.image:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Image
     arguments:
       - '@core.context.frontend'
-      - '@gallery.model.picturerepository'
+      - '@gallery.helper.thumbnail_generator'
+      - '@gallery.model.repository.gallery_pictures_repository'
 
   gallery.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@core.pagination'
-      - '@gallery.model.galleryrepository'
+      - '@gallery.view.block.frontend.galleries_listing_block'
 
   gallery.controller.frontend.index.pics:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Pics
     arguments:
       - '@core.context.frontend'
+      - '@gallery.view.block.frontend.gallery_pictures_listing_block'
       - '@core.date'
-      - '@gallery.model.galleryrepository'
-      - '@gallery.cache'
+      - '@gallery.model.repository.galleries_repository'
 
   gallery.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
-      - '@core.date'
-      - '@gallery.model.galleryrepository'
-
+      - '@gallery.view.block.widget.galleries_widget_listing_block'

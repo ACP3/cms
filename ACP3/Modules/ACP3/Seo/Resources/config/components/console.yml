@@ -1,0 +1,8 @@
+services:
+  seo.console.http_cache_warmup_command:
+    class: ACP3\Modules\ACP3\Seo\Console\HttpCacheWarmupCommand
+    arguments:
+      - '@core.environment.application_path'
+    tags:
+      - { name: 'acp3.console.command' }
+    public: false

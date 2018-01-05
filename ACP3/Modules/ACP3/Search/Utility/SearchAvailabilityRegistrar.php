@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Search\Utility;
@@ -39,6 +40,6 @@ class SearchAvailabilityRegistrar
      */
     public function getAvailableModuleNames()
     {
-        return array_keys($this->availableModules);
+        return \array_keys($this->availableModules);
     }
 }

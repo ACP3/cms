@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Test\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
@@ -24,7 +30,7 @@ class InArrayValidationRuleTest extends AbstractValidationRuleTest
             'valid-data-array' => [['foo' => 'foobar'], 'foo', $haystack, true],
             'invalid-data-string' => ['baz', '', $haystack, false],
             'invalid-data-array' => [['foo' => 'baz'], 'foo', $haystack, false],
-            'invalid-no-data' => [null, null, [], false]
+            'invalid-no-data' => [null, null, [], false],
         ];
     }
 }

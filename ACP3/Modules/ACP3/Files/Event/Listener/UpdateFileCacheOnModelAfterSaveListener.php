@@ -1,26 +1,27 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Modules\ACP3\Files\Cache;
+use ACP3\Modules\ACP3\Files\Cache\FileCacheStorage;
 
 class UpdateFileCacheOnModelAfterSaveListener
 {
     /**
-     * @var Cache
+     * @var FileCacheStorage
      */
     protected $cache;
 
     /**
      * UpdateFileCacheOnModelAfterSaveListener constructor.
-     * @param Cache $cache
+     * @param FileCacheStorage $cache
      */
-    public function __construct(Cache $cache)
+    public function __construct(FileCacheStorage $cache)
     {
         $this->cache = $cache;
     }

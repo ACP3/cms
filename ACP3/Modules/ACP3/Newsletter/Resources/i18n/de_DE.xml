@@ -29,7 +29,6 @@
         <item key="last_name">Nachname</item>
         <item key="mailsig">E-Mail Signatur</item>
         <item key="missed_out_newsletter">Newsletterausgabe verpasst?</item>
-        <item key="mod_description">Dieses Modul ist für den Newsletter zuständig.</item>
         <item key="newsletter">Newsletter</item>
         <item key="newsletter_accounts">Newsletterkonten</item>
         <item key="newsletter_archive">Newsletterarchiv</item>

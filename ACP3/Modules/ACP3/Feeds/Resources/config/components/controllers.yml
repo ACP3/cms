@@ -1,20 +1,20 @@
 services:
   feeds.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Feeds\Controller\Admin\Index\Index
-    parent: core.controller.admin
+    parent: core.controller.frontend
 
   feeds.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Feeds\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@feeds.view.block.admin.feeds_settings_form_block'
       - '@core.helpers.secure'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
       - '@feeds.validation.admin_form_validation'
 
   feeds.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Feeds\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.acl'
       - '@feeds.view.renderer.feedgenerator'
       - '@feeds.utility.feed_availability_registrar'

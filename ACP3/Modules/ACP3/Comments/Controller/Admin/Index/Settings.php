@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 
-/**
- * Class Settings
- * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -20,33 +17,33 @@ class Settings extends Core\Controller\AbstractFrontendAction
      */
     protected $adminSettingsFormValidation;
     /**
-     * @var \ACP3\Core\Helpers\FormToken
+     * @var Core\View\Block\SettingsFormBlockInterface
      */
-    protected $formTokenHelper;
+    private $block;
     /**
-     * @var \ACP3\Core\Helpers\Forms
+     * @var Core\Helpers\Secure
      */
-    protected $formsHelper;
+    private $secure;
 
     /**
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param Core\View\Block\SettingsFormBlockInterface $block
+     * @param Core\Helpers\Secure $secure
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
-        Core\Helpers\FormToken $formTokenHelper
+        Core\View\Block\SettingsFormBlockInterface $block,
+        Core\Helpers\Secure $secure,
+        Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
+        $this->block = $block;
+        $this->secure = $secure;
     }
 
     /**
@@ -54,19 +51,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings(Comments\Installer\Schema::MODULE_NAME);
-
-        if ($this->modules->isActive('emoticons') === true) {
-            $this->view->assign(
-                'allow_emoticons',
-                $this->formsHelper->yesNoCheckboxGenerator('emoticons', $settings['emoticons'])
-            );
-        }
-
-        return [
-            'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block->setRequestData($this->request->getPost()->all())->render();
     }
 
     /**
@@ -79,7 +64,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
-                'dateformat' => $this->get('core.helpers.secure')->strEncode($formData['dateformat']),
+                'dateformat' => $this->secure->strEncode($formData['dateformat']),
                 'emoticons' => $formData['emoticons'],
             ];
 

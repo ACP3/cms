@@ -1,19 +1,16 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Test\Core\Router;
 
-use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Seo\Cache;
+use ACP3\Core\Modules\Modules;
+use ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
-/**
- * Class AliasesTest
- * @package ACP3\Modules\ACP3\Seo\Test\Core\Router
- */
 class AliasesTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -31,7 +28,7 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->seoCacheMock = $this->getMockBuilder(Cache::class)
+        $this->seoCacheMock = $this->getMockBuilder(SeoCacheStorage::class)
             ->disableOriginalConstructor()
             ->setMethods(['getCache'])
             ->getMock();
@@ -39,6 +36,9 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['isActive'])
             ->getMock();
+        $this->modulesMock->expects($this->once())
+            ->method('isActive')
+            ->willReturn(true);
 
         $this->aliases = new Aliases($this->modulesMock, $this->seoCacheMock);
     }
@@ -74,8 +74,8 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
     {
         $this->setUpSeoCacheExpectations([
             'foo/bar/baz/' => [
-                'alias' => 'lorem-ipsum-dolor'
-            ]
+                'alias' => 'lorem-ipsum-dolor',
+            ],
         ]);
 
         $path = 'foo/bar/baz';
@@ -94,8 +94,8 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
     {
         $this->setUpSeoCacheExpectations([
             'foo/bar/baz/' => [
-                'alias' => 'lorem-ipsum-dolor'
-            ]
+                'alias' => 'lorem-ipsum-dolor',
+            ],
         ]);
 
         $path = 'foo/bar/baz';

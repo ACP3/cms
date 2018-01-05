@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\NestedSet\Operation;
@@ -10,10 +11,6 @@ use ACP3\Core\Database\Connection;
 use ACP3\Core\NestedSet\Model\Repository\BlockAwareNestedSetRepositoryInterface;
 use ACP3\Core\NestedSet\Model\Repository\NestedSetRepository;
 
-/**
- * Class AbstractNestedSetOperation
- * @package ACP3\Core\NestedSet\Operation
- */
 abstract class AbstractOperation
 {
     /**
@@ -21,13 +18,9 @@ abstract class AbstractOperation
      */
     protected $db;
     /**
-     * @var \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository
+     * @var \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository|BlockAwareNestedSetRepositoryInterface
      */
     protected $nestedSetRepository;
-    /**
-     * @var bool
-     */
-    protected $isBlockAware;
 
     /**
      * @param \ACP3\Core\Database\Connection $db
@@ -39,7 +32,16 @@ abstract class AbstractOperation
     ) {
         $this->db = $db;
         $this->nestedSetRepository = $nestedSetRepository;
-        $this->isBlockAware = $nestedSetRepository instanceof BlockAwareNestedSetRepositoryInterface;
+    }
+
+    /**
+     * Returns, whether the data repository is aware of the block handling
+     *
+     * @return bool
+     */
+    protected function isBlockAware(): bool
+    {
+        return $this->nestedSetRepository instanceof BlockAwareNestedSetRepositoryInterface;
     }
 
     /**
@@ -49,7 +51,7 @@ abstract class AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function adjustParentNodesAfterSeparation($diff, $leftId, $rightId)
+    protected function adjustParentNodesAfterSeparation(int $diff, int $leftId, int $rightId)
     {
         $this->db->getConnection()->executeUpdate(
             "UPDATE {$this->nestedSetRepository->getTableName()} SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?",
@@ -64,7 +66,7 @@ abstract class AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function adjustParentNodesAfterInsert($diff, $leftId, $rightId)
+    protected function adjustParentNodesAfterInsert(int $diff, int $leftId, int $rightId)
     {
         $this->db->getConnection()->executeUpdate(
             "UPDATE {$this->nestedSetRepository->getTableName()} SET right_id = right_id + ? WHERE left_id <= ? AND right_id >= ?",
@@ -78,7 +80,7 @@ abstract class AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function adjustFollowingNodesAfterSeparation($diff, $leftId)
+    protected function adjustFollowingNodesAfterSeparation(int $diff, int $leftId)
     {
         $this->db->getConnection()->executeUpdate(
             "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?",
@@ -92,11 +94,21 @@ abstract class AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function adjustFollowingNodesAfterInsert($diff, $leftId)
+    protected function adjustFollowingNodesAfterInsert(int $diff, int $leftId)
     {
         $this->db->getConnection()->executeUpdate(
             "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id >= ?",
             [$diff, $diff, $leftId]
         );
+    }
+
+    /**
+     * Returns the name of the block
+     *
+     * @return string
+     */
+    protected function getBlockColumnName(): string
+    {
+        return $this->nestedSetRepository::BLOCK_COLUMN_NAME;
     }
 }

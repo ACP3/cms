@@ -4,8 +4,8 @@ services:
     arguments:
       - '@core.date'
       - '@core.router'
-      - '@gallery.model.galleryrepository'
-      - '@gallery.model.picturerepository'
+      - '@gallery.model.repository.galleries_repository'
+      - '@gallery.model.repository.gallery_pictures_repository'
       - '@?seo.helper.meta_statements'
     tags:
       - { name: seo.extension.sitemap_availability }

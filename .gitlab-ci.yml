@@ -9,12 +9,11 @@ cache:
   paths:
   - ${COMPOSER_HOME}
   - vendor
-
-before_script:
-  - bash ./build/gitlab/before_script.sh > /dev/null
+  - .php_cs.cache
 
 stages:
   - test
+  - static-analysis
   - deploy
   - post-deploy
 
@@ -33,8 +32,8 @@ test:php72-unit:
   image: php:7.2
   coverage: ~
 
-test:phpcs:
-  stage: test
+static-analysis:phpcs:
+  stage: static-analysis
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
     - bash ./build/gitlab/before_script_php.sh > /dev/null
@@ -42,9 +41,9 @@ test:phpcs:
     - php composer.phar install -n -o
     - php composer.phar run-script lint
 
-test:eslint:
+static-analysis:eslint:
   image: node:slim
-  stage: test
+  stage: static-analysis
   cache:
     key: node-$CI_COMMIT_REF_NAME
     paths:

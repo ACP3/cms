@@ -4,7 +4,7 @@
 /ACP3/config.yml
 /build/logs/
 /build/sami/
-/cache/*
+/var/*
 /node_modules
 /tests/cache/
 /uploads/.htaccess

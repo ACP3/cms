@@ -1,0 +1,24 @@
+services:
+  menus.view.block.admin.menu_admin_form_block:
+    class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuAdminFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@menus.model.repository.menus_repository'
+
+  menus.view.block.admin.menus_listing_block:
+    class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenusListingBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.acl'
+      - '@menus.model.repository.menus_repository'
+      - '@menus.helpers.menuitemslist'
+
+  menus.view.block.admin.menu_item_admin_form_block:
+    class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuItemAdminFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@menus.model.repository.menu_items_repository'
+      - '@core.modules'
+      - '@menus.helpers.menuitemformfields'
+    calls:
+      - ['setArticlesHelpers', ['@?articles.helpers']]

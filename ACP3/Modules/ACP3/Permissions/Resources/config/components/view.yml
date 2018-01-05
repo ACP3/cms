@@ -1,0 +1,34 @@
+services:
+  permissions.view.block.admin.roles_data_grid_block:
+    class: ACP3\Modules\ACP3\Permissions\View\Block\Admin\RolesDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+      - '@core.acl'
+    calls:
+      - ['setDataGridRepository', ['@permissions.model.repository.acl_roles_data_grid_repository']]
+
+  permissions.view.block.admin.role_admin_form_block:
+    class: ACP3\Modules\ACP3\Permissions\View\Block\Admin\RoleAdminFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@permissions.model.repository.acl_roles_repository'
+      - '@core.acl'
+      - '@core.modules'
+      - '@permissions.model.repository.acl_privileges_repository'
+      - '@permissions.cache'
+
+  permissions.view.block.admin.resource_admin_form_block:
+    class: ACP3\Modules\ACP3\Permissions\View\Block\Admin\ResourceAdminFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@permissions.model.repository.acl_resources_repository'
+      - '@core.modules'
+      - '@permissions.model.repository.acl_privileges_repository'
+
+  permissions.view.block.admin.resources_listing_block:
+    class: ACP3\Modules\ACP3\Permissions\View\Block\Admin\ResourcesListingBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.acl'
+      - '@core.modules'
+      - '@permissions.model.repository.acl_resources_repository'

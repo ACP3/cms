@@ -6,10 +6,11 @@
 (function ($, window, document) {
     'use strict';
 
-    var pluginName = 'formSubmit',
+    const pluginName = 'formSubmit',
         defaults = {
             targetElement: '#content',
-            customFormData: null
+            customFormData: null,
+            loadingLayerActiveClass: 'loading-layer_active'
         };
 
     function Plugin(element, options) {
@@ -24,33 +25,35 @@
 
     $.extend(Plugin.prototype, {
         init: function () {
-            var that = this;
-
             this.findSubmitButton();
             this.element.noValidate = true;
 
-            $(this.element).on('submit', function (e) {
-                e.preventDefault();
-
-                that.isFormValid = true;
-
-                $(document).trigger('acp3.ajaxFrom.submit.before', [that]);
-
-                if (that.isFormValid && that.preValidateForm(that.element)) {
-                    that.processAjaxRequest();
-                }
-            }).on('click', function (e) {
-                if ($(this).prop('tagName') === 'A') {
+            $(this.element)
+                .off()
+                .on('submit', (e) => {
                     e.preventDefault();
 
-                    that.processAjaxRequest();
-                }
-            }).on('change', function () {
-                if (that.isFormValid === false) {
-                    that.removeAllPreviousErrors();
-                    that.checkFormElementsForErrors(that.element);
-                }
-            });
+                    this.isFormValid = true;
+
+                    $(document).trigger('acp3.ajaxFrom.submit.before', [this]);
+
+                    if (this.isFormValid && this.preValidateForm()) {
+                        this.processAjaxRequest();
+                    }
+                })
+                .on('click', (e) => {
+                    if ($(this.element).prop('tagName') === 'A') {
+                        e.preventDefault();
+
+                        this.processAjaxRequest();
+                    }
+                })
+                .on('change', () => {
+                    if (this.isFormValid === false) {
+                        this.removeAllPreviousErrors();
+                        this.checkFormElementsForErrors(this.element);
+                    }
+                });
         },
         findSubmitButton: function () {
             $(this.element).find(':submit').click(function () {
@@ -58,9 +61,9 @@
                 $(this).attr('data-clicked', 'true');
             });
         },
-        preValidateForm: function (form) {
+        preValidateForm: function () {
             this.removeAllPreviousErrors();
-            this.checkFormElementsForErrors(form);
+            this.checkFormElementsForErrors(this.element);
             this.focusTabWithFirstErrorMessage();
 
             return this.isFormValid;
@@ -71,10 +74,7 @@
                 .find('.validation-failed').remove();
         },
         checkFormElementsForErrors: function (form) {
-            var field;
-            for (var i = 0; i < form.elements.length; i++) {
-                field = form.elements[i];
-
+            for (const field of form.elements) {
                 if (field.nodeName !== 'INPUT' && field.nodeName !== 'TEXTAREA' && field.nodeName !== 'SELECT') {
                     continue;
                 }
@@ -99,12 +99,12 @@
             $formField
                 .closest('div:not(.input-group):not(.btn-group)')
                 .append(
-                    '<small class="help-block validation-failed"><i class="glyphicon glyphicon-remove"></i> ' + errorMessage + '</small>'
+                    '<small class="help-block validation-failed"><i class="fa fa-exclamation-triangle"></i> ' + errorMessage + '</small>'
                 );
         },
         focusTabWithFirstErrorMessage: function () {
             if ($('.tabbable').length > 0) {
-                var $elem = $('.tabbable .form-group.has-error:first'),
+                const $elem = $('.tabbable .form-group.has-error:first'),
                     tabId = $elem.closest('.tab-pane').prop('id');
                 $('.tabbable .nav-tabs a[href="#' + tabId + '"]').tab('show');
 
@@ -112,15 +112,15 @@
             }
         },
         processAjaxRequest: function () {
-            var hash,
-                self = this,
+            let hash,
                 $form = $(this.element),
+                $submitButton,
                 hasCustomData = !$.isEmptyObject(this.settings.customFormData),
                 processData = true,
                 data = this.settings.customFormData || {};
 
             if ($form.attr('method')) {
-                var $submitButton = $(':submit[data-clicked="true"]', $form);
+                $submitButton = $(':submit[data-clicked="true"]', $form);
 
                 hash = $submitButton.data('hashChange');
 
@@ -131,7 +131,7 @@
                 }
 
                 if (hasCustomData) {
-                    for (var key in this.settings.customFormData) {
+                    for (const key in this.settings.customFormData) {
                         if (this.settings.customFormData.hasOwnProperty(key)) {
                             data.append(key, this.settings.customFormData[key]);
                         }
@@ -149,39 +149,39 @@
                 data: data,
                 processData: processData,
                 contentType: processData ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,
-                beforeSend: function () {
-                    self.showLoadingLayer($submitButton);
+                beforeSend: () => {
+                    this.showLoadingLayer($submitButton);
                 }
-            }).done(function (responseData) {
+            }).done((responseData) => {
                 try {
-                    var callback = $form.data('ajax-form-complete-callback');
+                    const callback = $form.data('ajax-form-complete-callback');
 
                     if (typeof window[callback] === 'function') {
                         window[callback](responseData);
                     } else if (responseData.redirect_url) {
-                        self.redirectToNewPage(hash, responseData);
+                        this.redirectToNewPage(hash, responseData);
                         return;
                     } else {
-                        self.scrollIntoView();
-                        self.replaceContent(hash, responseData);
+                        this.scrollIntoView();
+                        this.replaceContent(hash, responseData);
 
                         if (typeof hash !== 'undefined') {
                             window.location.hash = hash;
                         }
                     }
 
-                    self.hideLoadingLayer($submitButton);
+                    this.hideLoadingLayer($submitButton);
                 } catch (err) {
                     console.error(err.message);
 
-                    self.hideLoadingLayer($submitButton);
+                    this.hideLoadingLayer($submitButton);
                 }
-            }).fail(function (jqXHR) {
-                self.hideLoadingLayer($submitButton);
+            }).fail((jqXHR) => {
+                this.hideLoadingLayer($submitButton);
 
                 if (jqXHR.status === 400) {
-                    self.handleFormErrorMessages($form, jqXHR.responseText);
-                    self.scrollIntoView();
+                    this.handleFormErrorMessages($form, jqXHR.responseText);
+                    this.scrollIntoView();
                 } else if (jqXHR.responseText.length > 0) {
                     document.open();
                     document.write(jqXHR.responseText);
@@ -190,22 +190,22 @@
             });
         },
         showLoadingLayer: function ($submitButton) {
-            var $loadingLayer = $('#loading-layer');
+            let $loadingLayer = $('#loading-layer');
 
             if ($loadingLayer.length === 0) {
-                var $body = $('body'),
+                const $body = $('body'),
                     loadingText = $(this.element).data('ajax-form-loading-text') || '',
-                    html = '<div id="loading-layer" class="loading-layer"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>';
+                    html = '<div id="loading-layer" class="loading-layer"><h1 class="loading-layer__title"><span class="fa fa-cog fa-spin fa-fw"></span>' + loadingText + '</h1></div>';
 
                 $(html).appendTo($body);
 
-                setTimeout(function () {
+                setTimeout(() => {
                     $loadingLayer = $($loadingLayer.selector);
 
-                    $loadingLayer.addClass('loading-layer__active');
+                    $loadingLayer.addClass(this.settings.loadingLayerActiveClass);
                 }, 10);
             } else {
-                $loadingLayer.addClass('loading-layer__active');
+                $loadingLayer.addClass(this.settings.loadingLayerActiveClass);
             }
 
             if (typeof $submitButton !== 'undefined') {
@@ -224,7 +224,7 @@
          * Scroll to the beginning of the content area, if the current viewport is near the bottom
          */
         scrollIntoView: function () {
-            var offsetTop = $(this.settings.targetElement).offset().top;
+            const offsetTop = $(this.settings.targetElement).offset().top;
 
             if ($(document).scrollTop() > offsetTop) {
                 $('html, body').animate(
@@ -245,14 +245,14 @@
             this.findSubmitButton();
         },
         hideLoadingLayer: function ($submitButton) {
-            $('#loading-layer').removeClass('loading-layer__active');
+            $('#loading-layer').removeClass(this.settings.loadingLayerActiveClass);
 
             if (typeof $submitButton !== 'undefined') {
                 $submitButton.prop('disabled', false);
             }
         },
         handleFormErrorMessages: function ($form, errorMessagesHtml) {
-            var $errorBox = $('#error-box'),
+            const $errorBox = $('#error-box'),
                 $modalBody = $form.find('.modal-body');
 
             $errorBox.remove();
@@ -266,23 +266,21 @@
             this.prettyPrintResponseErrorMessages($($errorBox.selector));
         },
         prettyPrintResponseErrorMessages: function ($errorBox) {
-            var that = this;
-
             this.removeAllPreviousErrors();
 
             // highlight all input fields where the validation has failed
-            $errorBox.find('li').each(function () {
-                var $this = $(this),
+            $errorBox.find('li').each((index, element) => {
+                const $this = $(element),
                     errorClass = $this.data('error');
                 if (errorClass.length > 0) {
-                    var $elem = $('[id|="' + errorClass + '"]').filter(':not([id$="container"])');
+                    const $elem = $('[id|="' + errorClass + '"]').filter(':not([id$="container"])');
                     if ($elem.length > 0) {
-                        that.addErrorDecorationToFormGroup($elem);
+                        this.addErrorDecorationToFormGroup($elem);
 
                         // Move the error message to the responsible input field(s)
                         // and remove the list item from the error box container
                         if ($elem.length === 1) {
-                            that.addErrorMessageToFormField($elem, $this.html());
+                            this.addErrorMessageToFormField($elem, $this.html());
                             $this.remove();
                         }
                     }
@@ -309,4 +307,8 @@
 
 jQuery(document).ready(function ($) {
     $('[data-ajax-form="true"]').formSubmit();
+
+    $(document).on('draw.dt', function (e) {
+        $(e.target).find('[data-ajax-form="true"]').formSubmit();
+    });
 });

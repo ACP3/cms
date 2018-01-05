@@ -1,14 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Validation\ValidationRules\DateValidationRule;
 
-/**
- * Class Date
- * @package ACP3\Core\Helpers
- */
 class Date
 {
     /**
@@ -16,7 +18,7 @@ class Date
      */
     protected $date;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -35,15 +37,15 @@ class Date
     /**
      * Date constructor.
      *
-     * @param \ACP3\Core\Date                                          $date
-     * @param \ACP3\Core\I18n\Translator                               $translator
-     * @param \ACP3\Core\Http\RequestInterface                         $request
-     * @param \ACP3\Core\Helpers\Forms                                 $formsHelper
+     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
      * @param \ACP3\Core\Validation\ValidationRules\DateValidationRule $dateValidationRule
      */
     public function __construct(
         \ACP3\Core\Date $date,
-        Translator $translator,
+        TranslatorInterface $translator,
         RequestInterface $request,
         Forms $formsHelper,
         DateValidationRule $dateValidationRule
@@ -90,6 +92,7 @@ class Date
                 ++$i;
             }
         }
+
         return $timeZones;
     }
 
@@ -105,8 +108,9 @@ class Date
     {
         $dateFormats = [
             'short' => $this->translator->t('system', 'date_format_short'),
-            'long' => $this->translator->t('system', 'date_format_long')
+            'long' => $this->translator->t('system', 'date_format_long'),
         ];
+
         return $this->formsHelper->choicesGenerator('dateformat', $dateFormats, $currentDateFormat);
     }
 
@@ -115,8 +119,8 @@ class Date
      *
      * @param string|array $name
      * @param string|array $value
-     * @param bool         $showTime
-     * @param bool         $inputFieldOnly
+     * @param bool $showTime
+     * @param bool $inputFieldOnly
      *
      * @return array
      */
@@ -135,7 +139,7 @@ class Date
                 'format' => $this->getPickerDateFormat($showTime),
                 'changeMonth' => 'true',
                 'changeYear' => 'true',
-            ]
+            ],
         ];
 
         if ($this->isRange($name) === true) {
@@ -144,14 +148,14 @@ class Date
             $datePicker['id_start'] = $this->getInputId($name[0]);
             $datePicker['id_end'] = $this->getInputId($name[1]);
 
-            $datePicker = array_merge($datePicker, $this->fetchRangeDatePickerValues($name, $value, $showTime));
+            $datePicker = \array_merge($datePicker, $this->fetchRangeDatePickerValues($name, $value, $showTime));
 
-            $datePicker['range_json'] = json_encode(
+            $datePicker['range_json'] = \json_encode(
                 [
                     'start' => '#' . $datePicker['id_start'],
                     'startDefaultDate' => $datePicker['value_start_r'],
                     'end' => '#' . $datePicker['id_end'],
-                    'endDefaultDate' => $datePicker['value_end_r']
+                    'endDefaultDate' => $datePicker['value_end_r'],
                 ]
             );
         } else { // Einfaches Inputfeld mit Datepicker
@@ -170,13 +174,13 @@ class Date
      */
     protected function getInputId($fieldName)
     {
-        return 'date-' . str_replace('_', '-', $fieldName);
+        return 'date-' . \str_replace('_', '-', $fieldName);
     }
 
     /**
      * @param array $name
      * @param array $value
-     * @param bool  $showTime
+     * @param bool $showTime
      *
      * @return array
      */
@@ -187,7 +191,7 @@ class Date
             $valueEnd = $this->request->getPost()->get($name[1]);
             $valueStartR = $this->date->format($valueStart, 'c', false);
             $valueEndR = $this->date->format($valueEnd, 'c', false);
-        } elseif (is_array($value) && $this->dateValidationRule->isValid($value) === true) {
+        } elseif (\is_array($value) && $this->dateValidationRule->isValid($value) === true) {
             $valueStart = $this->date->format($value[0], $this->getDateFormat($showTime));
             $valueEnd = $this->date->format($value[1], $this->getDateFormat($showTime));
             $valueStartR = $this->date->format($value[0], 'c');
@@ -203,14 +207,14 @@ class Date
             'value_start' => $valueStart,
             'value_end' => $valueEnd,
             'value_start_r' => $valueStartR,
-            'value_end_r' => $valueEndR
+            'value_end_r' => $valueEndR,
         ];
     }
 
     /**
      * @param string $name
      * @param string $value
-     * @param bool   $showTime
+     * @param bool $showTime
      *
      * @return string
      */
@@ -242,7 +246,7 @@ class Date
      */
     protected function isRange($name)
     {
-        return (is_array($name) === true);
+        return \is_array($name) === true;
     }
 
     /**

@@ -14,7 +14,6 @@
         <item key="frontend_index_result">Result</item>
         <item key="frontend_index_vote">Vote</item>
         <item key="latest_poll">Latest poll</item>
-        <item key="mod_description">With this module you can administer the polls.</item>
         <item key="multiple_choice">Multiple choice</item>
         <item key="no_votes">No votes</item>
         <item key="number_of_votes">%votes% votes</item>

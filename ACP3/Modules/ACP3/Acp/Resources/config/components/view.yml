@@ -1,0 +1,7 @@
+services:
+  acp.view.block.admin.allowed_modules_block:
+    class: ACP3\Modules\ACP3\Acp\View\Block\Admin\AllowedModulesBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.acl'
+      - '@core.modules'

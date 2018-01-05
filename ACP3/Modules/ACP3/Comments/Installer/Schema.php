@@ -1,15 +1,15 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Comments\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\Modules;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\Comments\Installer
- */
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     const MODULE_NAME = 'comments';
 
@@ -19,7 +19,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}comments` (
+            'CREATE TABLE `{pre}comments` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `ip` VARCHAR(40) NOT NULL,
                 `date` DATETIME NOT NULL,
@@ -34,7 +34,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 INDEX (`user_id`),
                 FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE,
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -43,7 +43,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function removeTables()
     {
-        return ["DROP TABLE IF EXISTS `{pre}comments`;"];
+        return ['DROP TABLE IF EXISTS `{pre}comments`;'];
     }
 
     /**
@@ -67,19 +67,19 @@ class Schema implements Modules\Installer\SchemaInterface
                 'index' => [
                     'index' => PrivilegeEnum::ADMIN_VIEW,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
                 ],
                 'details' => [
                     'index' => PrivilegeEnum::ADMIN_VIEW,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
-                    'delete' => PrivilegeEnum::ADMIN_DELETE
-                ]
+                    'delete' => PrivilegeEnum::ADMIN_DELETE,
+                ],
             ],
             'frontend' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                    'create' => PrivilegeEnum::FRONTEND_CREATE
-                ]
+                    'create' => PrivilegeEnum::FRONTEND_CREATE,
+                ],
             ],
         ];
     }

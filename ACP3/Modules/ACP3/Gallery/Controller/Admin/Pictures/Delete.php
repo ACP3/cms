@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
-/**
- * Class Delete
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
- */
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -21,11 +18,11 @@ class Delete extends Core\Controller\AbstractFrontendAction
      */
     protected $galleryHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Cache
+     * @var \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage
      */
     protected $galleryCache;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository
      */
     protected $pictureRepository;
     /**
@@ -38,14 +35,14 @@ class Delete extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage $galleryCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Gallery\Helpers $galleryHelpers,
-        Gallery\Model\Repository\PictureRepository $pictureRepository,
-        Gallery\Cache $galleryCache
+        Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository,
+        Gallery\Cache\GalleryCacheStorage $galleryCache
     ) {
         parent::__construct($context);
 
@@ -85,7 +82,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
                         if ($this->uriAliasManager) {
                             $this->uriAliasManager->deleteUriAlias(
-                                sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item)
+                                \sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item)
                             );
                         }
 

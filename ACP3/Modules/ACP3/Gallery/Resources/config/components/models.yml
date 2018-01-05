@@ -1,30 +1,35 @@
 services:
-  gallery.model.galleryrepository:
+  gallery.model.repository.galleries_repository:
     class: ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
     arguments:
       - '@core.db'
 
-  gallery.model.gallery_data_grid_repository:
+  gallery.model.repository.galleries_data_grid_repository:
     class: ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryDataGridRepository
     arguments:
       - '@core.db'
 
-  gallery.model.picturerepository:
-    class: ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+  gallery.model.repository.gallery_pictures_data_grid_repository:
+    class: ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesDataGridRepository
     arguments:
       - '@core.db'
 
-  gallery.model.gallery_model:
+  gallery.model.repository.gallery_pictures_repository:
+    class: ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository
+    arguments:
+      - '@core.db'
+
+  gallery.model.galleries_model:
     class: ACP3\Modules\ACP3\Gallery\Model\GalleryModel
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
-      - '@gallery.model.galleryrepository'
+      - '@gallery.model.repository.galleries_repository'
 
-  gallery.model.picture_model:
-    class: ACP3\Modules\ACP3\Gallery\Model\PictureModel
+  gallery.model.gallery_pictures_model:
+    class: ACP3\Modules\ACP3\Gallery\Model\GalleryPicturesModel
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@core.config'
-      - '@gallery.model.picturerepository'
+      - '@gallery.model.repository.gallery_pictures_repository'

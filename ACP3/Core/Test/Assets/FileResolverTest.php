@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\Assets;
@@ -64,14 +65,14 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
 
     public function testResolveTemplatePath()
     {
-        $expected = $this->appPath->getModulesDir() . 'ACP3/System/Resources/View/Partials/breadcrumb.tpl';
+        $expected = $this->appPath->getModulesDir() . 'ACP3/System/Resources/templates/Partials/breadcrumb.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/breadcrumb.tpl');
         $this->assertEquals($expected, $actual);
     }
 
     public function testResolveTemplatePathWithInheritance()
     {
-        $expected = $this->appPath->getDesignPathInternal() . 'System/View/Partials/mark.tpl';
+        $expected = $this->appPath->getDesignPathInternal() . 'System/templates/Partials/mark.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/mark.tpl');
         $this->assertEquals($expected, $actual);
     }

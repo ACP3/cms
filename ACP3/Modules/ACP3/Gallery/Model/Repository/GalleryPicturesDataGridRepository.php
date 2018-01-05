@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
+namespace ACP3\Modules\ACP3\Gallery\Model\Repository;
+
+use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
+use ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository;
+
+class GalleryPicturesDataGridRepository extends AbstractDataGridRepository
+{
+    const TABLE_NAME = GalleryPicturesRepository::TABLE_NAME;
+
+    /**
+     * @inheritdoc
+     */
+    protected function getColumns(ColumnPriorityQueue $gridColumns)
+    {
+        return \array_merge(
+            parent::getColumns($gridColumns),
+            [
+                '(SELECT MIN(pmin.pic) FROM ' . $this->getTableName() . ' AS pmin WHERE pmin.gallery_id = main.gallery_id) AS `first`',
+                '(SELECT MAX(pmax.pic) FROM ' . $this->getTableName() . ' AS pmax WHERE pmax.gallery_id = main.gallery_id) AS `last`',
+            ]
+        );
+    }
+}

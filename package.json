@@ -23,10 +23,12 @@
     "@fancyapps/fancybox": "^3.2.5",
     "bootbox": "^4.4.0",
     "bootstrap": "^3.3.7",
-    "datatables.net": "^1.10.12",
-    "datatables.net-bs": "^1.10.12",
+    "ckeditor": "ckeditor/ckeditor-releases#full/stable",
+    "datatables.net": "^1.10.16",
+    "datatables.net-bs": "^1.10.16",
     "eonasdan-bootstrap-datetimepicker": "^4.17.42",
     "eslint": "^4.14.0",
+    "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
     "gulp-change": "^1.0.0",
     "gulp-less": "^3.1.0",
@@ -38,6 +40,8 @@
     "jquery": "^2.2.4",
     "js-cookie": "^2.2.0",
     "moment": "^2.20.1",
+    "moment-timezone": "^0.4.0",
+    "tinymce": "^4.7.3",
     "yargs": "^10.0.3"
   }
 }

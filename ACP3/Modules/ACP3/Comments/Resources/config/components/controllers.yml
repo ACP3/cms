@@ -4,56 +4,53 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@comments.model.comments_model'
-      - '@comments.model.commentrepository'
+      - '@comments.model.repository.comments_repository'
 
   comments.controller.admin.details.edit:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Edit
     arguments:
       - '@core.context.frontend'
+      - '@comments.view.block.admin.comment_admin_form_block'
+      - '@core.validator'
       - '@comments.model.comments_model'
       - '@comments.validation.admin_form_validation'
-      - '@core.helpers.formToken'
 
   comments.controller.admin.details.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Index
     arguments:
       - '@core.context.frontend'
-      - '@comments.model.commentrepository'
-      - '@system.model.modulerepository'
+      - '@comments.view.block.admin.comments_data_grid_block'
 
   comments.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
-      - '@comments.model.commentrepository'
+      - '@comments.model.repository.comments_repository'
 
   comments.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@comments.model.commentrepository'
+      - '@comments.view.block.admin.comments_by_module_data_grid_block'
 
   comments.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
+      - '@comments.view.block.admin.comments_settings_form_block'
+      - '@core.helpers.secure'
       - '@comments.validation.admin_settings_form_validation'
-      - '@core.helpers.formToken'
 
   comments.controller.frontend.index.create:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@comments.view.block.frontend.comment_form_block'
       - '@comments.model.comments_model'
       - '@comments.validation.form_validation'
-      - '@core.helpers.formToken'
 
   comments.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.pagination'
-      - '@comments.model.commentrepository'
-    calls:
-      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
+      - '@comments.view.block.frontend.comments_listing_block'

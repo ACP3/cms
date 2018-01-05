@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
@@ -9,46 +10,38 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources
- */
-class Create extends AbstractFormAction
+class Create extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
      */
     protected $resourceFormValidation;
     /**
-     * @var Permissions\Model\ResourcesModel
+     * @var Permissions\Model\AclResourcesModel
      */
     protected $resourcesModel;
+    /**
+     * @var Core\View\Block\RepositoryAwareFormBlockInterface
+     */
+    private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param Permissions\Model\ResourcesModel $resourcesModel
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
+     * @param Permissions\Model\AclResourcesModel $resourcesModel
      * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation $resourceFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
-        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
-        Permissions\Model\ResourcesModel $resourcesModel,
+        Core\View\Block\RepositoryAwareFormBlockInterface $block,
+        Permissions\Model\AclResourcesModel $resourcesModel,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
-        parent::__construct($context, $formsHelper, $privilegeRepository);
+        parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->resourceFormValidation = $resourceFormValidation;
         $this->resourcesModel = $resourcesModel;
+        $this->block = $block;
     }
 
     /**
@@ -56,16 +49,9 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        return [
-            'modules' => $this->fetchActiveModules(),
-            'areas' => $this->fetchAreas(),
-            'privileges' => $this->fetchPrivileges(0),
-            'form' => array_merge(
-                ['resource' => '', 'area' => '', 'controller' => ''],
-                $this->request->getPost()->all()
-            ),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
@@ -78,7 +64,8 @@ class Create extends AbstractFormAction
 
             $this->resourceFormValidation->validate($formData);
 
-            $formData['module_id'] = $this->fetchModuleId($formData['modules']);
+            $formData['module_id'] = $this->modules->getModuleId($formData['modules']);
+
             return $this->resourcesModel->save($formData);
         });
     }

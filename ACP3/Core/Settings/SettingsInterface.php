@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Settings;
@@ -14,7 +15,7 @@ interface SettingsInterface
      * @param string $module
      * @return array
      */
-    public function getSettings($module);
+    public function getSettings(string $module): array;
 
     /**
      * Saves the module's settings to the database
@@ -24,5 +25,5 @@ interface SettingsInterface
      *
      * @return bool
      */
-    public function saveSettings(array $data, $module);
+    public function saveSettings(array $data, string $module): bool;
 }

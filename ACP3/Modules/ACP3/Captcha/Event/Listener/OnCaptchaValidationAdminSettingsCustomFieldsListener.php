@@ -1,27 +1,28 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Event\Listener;
 
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule;
 
 class OnCaptchaValidationAdminSettingsCustomFieldsListener
 {
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
 
     /**
      * OnCaptchaValidationAdminSettingsCustomFieldsListener constructor.
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
@@ -38,12 +39,12 @@ class OnCaptchaValidationAdminSettingsCustomFieldsListener
                 ->addConstraint(NotEmptyValidationRule::class, [
                     'data' => $formData,
                     'field' => 'recaptcha_sitekey',
-                    'message' => $this->translator->t('captcha', 'type_in_recaptcha_sitekey')
+                    'message' => $this->translator->t('captcha', 'type_in_recaptcha_sitekey'),
                 ])
                 ->addConstraint(NotEmptyValidationRule::class, [
                     'data' => $formData,
                     'field' => 'recaptcha_secret',
-                    'message' => $this->translator->t('captcha', 'type_in_recaptcha_secret')
+                    'message' => $this->translator->t('captcha', 'type_in_recaptcha_secret'),
                 ]);
         }
     }

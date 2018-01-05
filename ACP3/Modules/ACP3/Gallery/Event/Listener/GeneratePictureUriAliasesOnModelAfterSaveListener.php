@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Event\Listener;
@@ -15,7 +16,7 @@ use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 class GeneratePictureUriAliasesOnModelAfterSaveListener
 {
     /**
-     * @var Gallery\Model\Repository\PictureRepository
+     * @var Gallery\Model\Repository\GalleryPicturesRepository
      */
     private $pictureRepository;
     /**
@@ -33,9 +34,9 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
 
     /**
      * UpdateUriAliasesOnModelAfterSaveListener constructor.
-     * @param Gallery\Model\Repository\PictureRepository $pictureRepository
+     * @param Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
      */
-    public function __construct(Gallery\Model\Repository\PictureRepository $pictureRepository)
+    public function __construct(Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository)
     {
         $this->pictureRepository = $pictureRepository;
     }
@@ -81,7 +82,7 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
 
             foreach ($pictures as $picture) {
                 $this->uriAliasManager->insertUriAlias(
-                    sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
+                    \sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
                     !empty($rawData['alias']) ? $rawData['alias'] . '/img-' . $picture['id'] : '',
                     $rawData['seo_keywords'],
                     $rawData['seo_description'],

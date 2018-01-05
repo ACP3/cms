@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
@@ -9,18 +10,14 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class Order
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Index
- */
 class Order extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository
      */
     protected $roleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache
+     * @var \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage
      */
     protected $permissionsCache;
     /**
@@ -33,14 +30,14 @@ class Order extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\NestedSet\Operation\Sort $sortOperation
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\NestedSet\Operation\Sort $sortOperation,
-        Permissions\Model\Repository\RoleRepository $roleRepository,
-        Permissions\Cache $permissionsCache
+        Permissions\Model\Repository\AclRolesRepository $roleRepository,
+        Permissions\Cache\PermissionsCacheStorage $permissionsCache
     ) {
         parent::__construct($context);
 
@@ -56,7 +53,7 @@ class Order extends Core\Controller\AbstractFrontendAction
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id, $action)
+    public function execute(int $id, string $action)
     {
         if ($this->roleRepository->roleExists($id) === true) {
             $this->sortOperation->execute($id, $action);

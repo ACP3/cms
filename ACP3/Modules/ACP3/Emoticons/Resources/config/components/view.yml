@@ -1,0 +1,20 @@
+services:
+  emoticons.view.block.admin.emoticon_manage_form_block:
+    class: ACP3\Modules\ACP3\Emoticons\View\Block\Admin\EmoticonManageFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@emoticons.model.repository.emoticons_repository'
+
+  emoticons.view.block.admin.emoticons_data_grid_block:
+    class: ACP3\Modules\ACP3\Emoticons\View\Block\Admin\EmoticonsDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+      - '@core.environment.application_path'
+    calls:
+      - ['setDataGridRepository', ['@emoticons.model.repository.emoticons_data_grid_repository']]
+
+  emoticons.view.block.admin.emoticons_settings_form_block:
+    class: ACP3\Modules\ACP3\Emoticons\View\Block\Admin\EmoticonsSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'

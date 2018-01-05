@@ -1,16 +1,17 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Model;
 
 use ACP3\Core\I18n\CountryList;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\Model\Repository\ReaderRepositoryInterface;
 use ACP3\Modules\ACP3\Users;
 
-class UserModel
+class UserModel implements ReaderRepositoryInterface
 {
     const SALT_LENGTH = 16;
 
@@ -31,13 +32,9 @@ class UserModel
      */
     protected $userInfo = [];
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository
      */
     protected $userRepository;
-    /**
-     * @var Translator
-     */
-    private $translator;
     /**
      * @var CountryList
      */
@@ -46,17 +43,14 @@ class UserModel
     /**
      * UserModel constructor.
      *
-     * @param Translator $translator
      * @param CountryList $countryList
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository $userRepository
      */
     public function __construct(
-        Translator $translator,
         CountryList $countryList,
-        Users\Model\Repository\UserRepository $userRepository
+        Users\Model\Repository\UsersRepository $userRepository
     ) {
         $this->userRepository = $userRepository;
-        $this->translator = $translator;
         $this->countryList = $countryList;
     }
 
@@ -67,19 +61,13 @@ class UserModel
      *
      * @return array
      */
-    public function getUserInfo($userId = 0)
+    public function getOneById(int $userId)
     {
-        if (empty($userId) && $this->isAuthenticated() === true) {
-            $userId = $this->getUserId();
-        }
-
-        $userId = (int)$userId;
-
         if (empty($this->userInfo[$userId])) {
             $countries = $this->countryList->worldCountries();
             $info = $this->userRepository->getOneById($userId);
             if (!empty($info)) {
-                $info['country_formatted'] = isset($countries[$info['country']]) ? $countries[$info['country']] : '';
+                $info['country_formatted'] = $countries[$info['country']] ?? '';
                 $this->userInfo[$userId] = $info;
             }
         }

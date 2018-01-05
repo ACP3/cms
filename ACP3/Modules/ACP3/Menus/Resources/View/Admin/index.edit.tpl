@@ -1,1 +1,0 @@
-{extends file="asset:menus/admin/index.create.tpl"}

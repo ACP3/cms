@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Extension;
@@ -10,7 +11,7 @@ use ACP3\Core\Date;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Articles\Helpers;
 use ACP3\Modules\ACP3\Articles\Installer\Schema;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
@@ -21,7 +22,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
      */
     protected $date;
     /**
-     * @var ArticleRepository
+     * @var ArticlesRepository
      */
     protected $articleRepository;
 
@@ -29,13 +30,13 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
      * SitemapAvailabilityExtension constructor.
      * @param Date $date
      * @param RouterInterface $router
-     * @param ArticleRepository $articleRepository
+     * @param ArticlesRepository $articleRepository
      * @param MetaStatements $metaStatements
      */
     public function __construct(
         Date $date,
         RouterInterface $router,
-        ArticleRepository $articleRepository,
+        ArticlesRepository $articleRepository,
         MetaStatements $metaStatements
     ) {
         parent::__construct($router, $metaStatements);
@@ -61,8 +62,8 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 
         foreach ($this->articleRepository->getAll($this->date->getCurrentDateTime()) as $result) {
             $this->addUrl(
-                sprintf(Helpers::URL_KEY_PATTERN, $result['id']),
-                $this->date->format($result['updated_at'], 'Y-m-d'),
+                \sprintf(Helpers::URL_KEY_PATTERN, $result['id']),
+                $this->date->toDateTime($result['updated_at']),
                 $isSecure
             );
         }

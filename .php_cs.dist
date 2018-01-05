@@ -2,6 +2,7 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->exclude('ACP3/Modules/ACP3/Filemanager/libraries')
+    ->exclude('ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets/js/ckeditor/')
     ->exclude('build')
     ->exclude('cache')
     ->exclude('designs')
@@ -10,10 +11,51 @@ $finder = PhpCsFixer\Finder::create()
     ->exclude('vendor')
     ->in(__DIR__);
 
+$header = <<<DOCBLOCK
+Copyright (c) by the ACP3 Developers.
+See the LICENSE file at the top-level module directory for licensing details.
+DOCBLOCK;
+
 return PhpCsFixer\Config::create()
+    ->setRiskyAllowed(true)
+    ->setLineEnding("\n")
     ->setRules([
         '@PSR2' => true,
         'array_syntax' => ['syntax' => 'short'],
+        'blank_line_after_opening_tag' => true,
+        'blank_line_before_statement' => true,
+        'cast_spaces' => ['space' => 'none'],
+        'class_attributes_separation' => ['elements' => ['method']],
+        'declare_equal_normalize' => ['space' => 'single'],
+        'header_comment' => [
+            'commentType' => 'PHPDoc',
+            'header' => $header,
+        ],
+        'increment_style' => ['style' =>'pre'],
+        'method_chaining_indentation' => true,
+        'modernize_types_casting' => true,
+        'native_function_casing' => true,
+        'native_function_invocation' => true,
+        'normalize_index_brace' => true,
+        'no_blank_lines_after_class_opening' => true,
+        'no_leading_import_slash' => true,
+        'no_leading_namespace_whitespace' => true,
+        'no_null_property_initialization' => true,
+        'no_singleline_whitespace_before_semicolons' => true,
+        'no_unneeded_control_parentheses' => true,
+        'no_unused_imports' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'no_whitespace_before_comma_in_array' => true,
+        'no_whitespace_in_blank_line' => true,
+        'object_operator_without_whitespace' => true,
+        'ordered_imports' => ['importsOrder' => null],
+        'phpdoc_no_package' => true,
+        'single_quote' => true,
+        'ternary_to_null_coalescing' => true,
+        'trailing_comma_in_multiline_array' => true,
+        'trim_array_spaces' => true,
+        'whitespace_after_comma_in_array' => true,
     ])
     ->setFinder($finder)
 ;

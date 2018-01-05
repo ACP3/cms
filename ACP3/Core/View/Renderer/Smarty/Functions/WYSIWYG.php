@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
@@ -9,10 +10,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 use ACP3\Core;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class WYSIWYG
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class WYSIWYG extends AbstractFunction
 {
     /**

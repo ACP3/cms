@@ -1,19 +1,21 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-/**
- * Class OptionColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
- */
 class OptionColumnRenderer extends AbstractColumnRenderer
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -26,12 +28,12 @@ class OptionColumnRenderer extends AbstractColumnRenderer
     protected $optionRenderer;
 
     /**
-     * @param \ACP3\Core\I18n\Translator                                                     $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer $optionRenderer
-     * @param \Symfony\Component\EventDispatcher\EventDispatcher                             $eventDispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcher $eventDispatcher
      */
     public function __construct(
-        Translator $translator,
+        TranslatorInterface $translator,
         OptionRenderer $optionRenderer,
         EventDispatcher $eventDispatcher
     ) {
@@ -52,11 +54,11 @@ class OptionColumnRenderer extends AbstractColumnRenderer
 
         if ($column['custom']['can_edit']) {
             $resourcePathEdit = $column['custom']['resource_path_edit'];
-            $resourcePathEdit .= !preg_match('=/$=', $resourcePathEdit) ? '/' : '';
+            $resourcePathEdit .= !\preg_match('=/$=', $resourcePathEdit) ? '/' : '';
             $this->optionRenderer->addOption(
                 $resourcePathEdit . 'id_' . $dbResultRow[$this->primaryKey],
                 $this->translator->t('system', 'edit'),
-                'glyphicon-edit',
+                'fa-pencil',
                 'btn-default'
             );
         }
@@ -68,11 +70,11 @@ class OptionColumnRenderer extends AbstractColumnRenderer
 
         if ($column['custom']['can_delete']) {
             $resourcePathDelete = $column['custom']['resource_path_delete'];
-            $resourcePathDelete .= !preg_match('=/$=', $resourcePathDelete) ? '/' : '';
+            $resourcePathDelete .= !\preg_match('=/$=', $resourcePathDelete) ? '/' : '';
             $this->optionRenderer->addOption(
                 $resourcePathDelete . 'entries_' . $dbResultRow[$this->primaryKey],
                 $this->translator->t('system', 'delete'),
-                'glyphicon-remove',
+                'fa-trash',
                 'btn-danger'
             );
         }

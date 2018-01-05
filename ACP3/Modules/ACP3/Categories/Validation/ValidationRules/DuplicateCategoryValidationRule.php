@@ -1,31 +1,28 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Categories\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 
-/**
- * Class DuplicateCategoryValidationRule
- * @package ACP3\Modules\ACP3\Categories\Validation\ValidationRules
- */
 class DuplicateCategoryValidationRule extends AbstractValidationRule
 {
     /**
-     * @var CategoryRepository
+     * @var CategoriesRepository
      */
     protected $categoryRepository;
 
     /**
      * CategoryExistsValidationRule constructor.
      *
-     * @param CategoryRepository $categoryRepository
+     * @param CategoriesRepository $categoryRepository
      */
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(CategoriesRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
     }
@@ -35,19 +32,19 @@ class DuplicateCategoryValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        $params = array_merge([
+        $params = \array_merge([
             'module_id' => 0,
-            'category_id' => ''
+            'category_id' => 0,
         ], $extra);
 
         return !$this->categoryRepository->resultIsDuplicate(
             $data,
             $params['module_id'],
-            $params['category_id']
+            (int)$params['category_id']
         );
     }
 }

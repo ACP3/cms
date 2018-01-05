@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Newsletter\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Newsletter\Validation
- */
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
@@ -21,7 +23,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->translator->t('newsletter', 'subject_to_short')
+                    'message' => $this->translator->t('newsletter', 'subject_to_short'),
                 ]
             )
             ->addConstraint(
@@ -29,7 +31,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'text',
-                    'message' => $this->translator->t('newsletter', 'text_to_short')
+                    'message' => $this->translator->t('newsletter', 'text_to_short'),
                 ]
             );
 

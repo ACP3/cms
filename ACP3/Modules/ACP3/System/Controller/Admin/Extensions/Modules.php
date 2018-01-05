@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class Modules
- * @package ACP3\Modules\ACP3\System\Controller\Admin\Extensions
- */
 class Modules extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -29,49 +26,55 @@ class Modules extends Core\Controller\AbstractFrontendAction
      */
     protected $installerHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache
+     * @var \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage
      */
     protected $permissionsCache;
     /**
-     * @var Core\I18n\DictionaryCache
+     * @var Core\I18n\DictionaryInterface
      */
-    private $dictionaryCache;
+    private $dictionary;
     /**
      * @var Core\Installer\SchemaRegistrar
      */
     private $schemaRegistrar;
     /**
-     * @var Core\Modules\SchemaInstaller
+     * @var \ACP3\Core\Installer\SchemaInstaller
      */
     private $schemaInstaller;
     /**
-     * @var Core\Modules\AclInstaller
+     * @var \ACP3\Core\Installer\AclInstaller
      */
     private $aclInstaller;
+    /**
+     * @var Core\View\Block\BlockInterface
+     */
+    private $block;
 
     /**
      * Modules constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\I18n\DictionaryCache $dictionaryCache
+     * @param Core\View\Block\BlockInterface $block
+     * @param Core\I18n\DictionaryInterface $dictionary
      * @param \ACP3\Core\Modules\ModuleInfoCache $moduleInfoCache
      * @param \ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository $systemModuleRepository
      * @param \ACP3\Modules\ACP3\System\Helper\Installer $installerHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage $permissionsCache
      * @param Core\Installer\SchemaRegistrar $schemaRegistrar
-     * @param Core\Modules\SchemaInstaller $schemaInstaller
-     * @param Core\Modules\AclInstaller $aclInstaller
+     * @param \ACP3\Core\Installer\SchemaInstaller $schemaInstaller
+     * @param \ACP3\Core\Installer\AclInstaller $aclInstaller
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\I18n\DictionaryCache $dictionaryCache,
+        Core\View\Block\BlockInterface $block,
+        Core\I18n\DictionaryInterface $dictionary,
         Core\Modules\ModuleInfoCache $moduleInfoCache,
         System\Model\Repository\ModulesRepository $systemModuleRepository,
         System\Helper\Installer $installerHelper,
-        Permissions\Cache $permissionsCache,
+        Permissions\Cache\PermissionsCacheStorage $permissionsCache,
         Core\Installer\SchemaRegistrar $schemaRegistrar,
-        Core\Modules\SchemaInstaller $schemaInstaller,
-        Core\Modules\AclInstaller $aclInstaller
+        Core\Installer\SchemaInstaller $schemaInstaller,
+        Core\Installer\AclInstaller $aclInstaller
     ) {
         parent::__construct($context);
 
@@ -79,10 +82,11 @@ class Modules extends Core\Controller\AbstractFrontendAction
         $this->systemModuleRepository = $systemModuleRepository;
         $this->installerHelper = $installerHelper;
         $this->permissionsCache = $permissionsCache;
-        $this->dictionaryCache = $dictionaryCache;
+        $this->dictionary = $dictionary;
         $this->schemaRegistrar = $schemaRegistrar;
         $this->schemaInstaller = $schemaInstaller;
         $this->aclInstaller = $aclInstaller;
+        $this->block = $block;
     }
 
     /**
@@ -90,9 +94,9 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $dir
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function execute($action = '', $dir = '')
+    public function execute(?string $action, ?string $dir)
     {
         switch ($action) {
             case 'activate':
@@ -103,6 +107,8 @@ class Modules extends Core\Controller\AbstractFrontendAction
                 return $this->installModule($dir);
             case 'uninstall':
                 return $this->uninstallModule($dir);
+            case 'refresh':
+                return $this->refreshCaches();
             default:
                 return $this->outputPage();
         }
@@ -112,8 +118,9 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $moduleDirectory
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    protected function enableModule($moduleDirectory)
+    protected function enableModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -146,7 +153,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $moduleDirectory
      * @throws System\Exception\ModuleInstallerException
      */
-    private function checkPreconditions($moduleDirectory)
+    private function checkPreconditions(string $moduleDirectory)
     {
         $info = $this->modules->getModuleInfo($moduleDirectory);
         if (empty($info) || $info['protected'] === true || $info['installable'] === false) {
@@ -161,7 +168,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws System\Exception\ModuleInstallerException
      */
-    protected function moduleInstallerExists($serviceId)
+    protected function moduleInstallerExists(string $serviceId)
     {
         if ($this->schemaRegistrar->has($serviceId) === false) {
             throw new System\Exception\ModuleInstallerException(
@@ -176,14 +183,14 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
      */
-    protected function checkForFailedModuleDependencies(array $dependencies, $phrase)
+    protected function checkForFailedModuleDependencies(array $dependencies, string $phrase)
     {
         if (!empty($dependencies)) {
             throw new System\Exception\ModuleInstallerException(
                 $this->translator->t(
                     'system',
                     $phrase,
-                    ['%modules%' => implode(', ', $dependencies)]
+                    ['%modules%' => \implode(', ', $dependencies)]
                 )
             );
         }
@@ -191,41 +198,28 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param string $moduleDirectory
-     * @param int    $active
+     * @param int $active
      *
      * @return bool|int
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    protected function saveModuleState($moduleDirectory, $active)
+    protected function saveModuleState(string $moduleDirectory, int $active)
     {
         return $this->systemModuleRepository->update(['active' => $active], ['name' => $moduleDirectory]);
     }
 
-    protected function purgeCaches()
+    private function purgeCaches(): bool
     {
-        Core\Cache\Purge::doPurge([
-            $this->appPath->getCacheDir() . 'http',
-            $this->appPath->getCacheDir() . 'sql',
-            $this->appPath->getCacheDir() . 'tpl_compiled',
-            $this->appPath->getCacheDir() . 'tpl_cached',
-            $this->appPath->getCacheDir() . 'container.php',
-            $this->appPath->getCacheDir() . 'container.php.meta',
-        ]);
-    }
-
-    protected function renewCaches()
-    {
-        $this->dictionaryCache->saveLanguageCache($this->translator->getLocale());
-        $this->moduleInfoCache->saveModulesInfoCache();
-        $this->permissionsCache->saveResourcesCache();
+        return Core\Cache\Purge::doPurge($this->appPath->getCacheDir());
     }
 
     /**
      * @param string $moduleDirectory
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    protected function disableModule($moduleDirectory)
+    protected function disableModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -259,7 +253,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function installModule($moduleDirectory)
+    protected function installModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -298,7 +292,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function uninstallModule($moduleDirectory)
+    protected function uninstallModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -333,28 +327,22 @@ class Modules extends Core\Controller\AbstractFrontendAction
         return $this->redirectMessages()->setMessage($result, $text, $this->request->getFullPath());
     }
 
+    private function refreshCaches()
+    {
+        $result = $this->purgeCaches();
+
+        return $this->redirectMessages()->setMessage(
+            $result,
+            $this->translator->t('system', $result ? 'cache_refresh_success' : 'cache_refresh_error'),
+            $this->request->getFullPath()
+        );
+    }
+
     /**
      * @return array
      */
     protected function outputPage()
     {
-        $this->renewCaches();
-
-        $modules = $this->modules->getAllModules();
-        $installedModules = $newModules = [];
-
-        foreach ($modules as $key => $values) {
-            $values['dir'] = strtolower($values['dir']);
-            if ($this->modules->isInstalled($values['dir']) === true || $values['installable'] === false) {
-                $installedModules[$key] = $values;
-            } else {
-                $newModules[$key] = $values;
-            }
-        }
-
-        return [
-            'installed_modules' => $installedModules,
-            'new_modules' => $newModules
-        ];
+        return $this->block->render();
     }
 }

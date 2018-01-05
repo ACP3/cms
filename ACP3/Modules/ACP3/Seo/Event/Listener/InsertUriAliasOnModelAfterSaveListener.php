@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
@@ -18,17 +19,17 @@ class InsertUriAliasOnModelAfterSaveListener
      */
     private $uriAliasManager;
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
 
     /**
      * InsertUriAliasOnModelAfterSaveListener constructor.
-     * @param ACL $acl
+     * @param ACLInterface $acl
      * @param UriAliasManager $uriAliasManager
      */
     public function __construct(
-        ACL $acl,
+        ACLInterface $acl,
         UriAliasManager $uriAliasManager
     ) {
         $this->uriAliasManager = $uriAliasManager;
@@ -45,7 +46,7 @@ class InsertUriAliasOnModelAfterSaveListener
 
             if ($event->getModuleName() !== Schema::MODULE_NAME && !empty($formData['seo_uri_pattern'])) {
                 $this->uriAliasManager->insertUriAlias(
-                    sprintf($formData['seo_uri_pattern'], $event->getEntryId()),
+                    \sprintf($formData['seo_uri_pattern'], $event->getEntryId()),
                     $formData['alias'],
                     $formData['seo_keywords'],
                     $formData['seo_description'],

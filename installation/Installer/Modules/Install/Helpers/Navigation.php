@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Helpers;
 
-use ACP3\Installer\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 
 class Navigation
 {
@@ -15,15 +16,15 @@ class Navigation
      */
     private $navbar = [];
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
 
     /**
-     * Navbar constructor.
-     * @param Translator $translator
+     * Navigation constructor.
+     * @param TranslatorInterface $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
 
@@ -59,7 +60,7 @@ class Navigation
     public function addStep($stepName, array $options)
     {
         if (!$this->has($stepName)) {
-            $this->navbar[$stepName] = array_merge($this->getDefaultOptions(), $options);
+            $this->navbar[$stepName] = \array_merge($this->getDefaultOptions(), $options);
         }
 
         return $this;
@@ -73,7 +74,7 @@ class Navigation
         return [
             'lang' => '',
             'active' => false,
-            'complete' => false
+            'complete' => false,
         ];
     }
 

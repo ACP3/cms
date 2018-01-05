@@ -3,49 +3,50 @@ services:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Designs
     arguments:
       - '@core.context.frontend'
-      - '@core.xml'
+      - '@system.view.block.admin.system_designs_block'
 
   system.controller.admin.extensions.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Index
-    parent: core.controller.admin
+    parent: core.controller.frontend
 
   system.controller.admin.extensions.modules:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Modules
     arguments:
       - '@core.context.frontend'
-      - '@core.i18n.dictionary_cache'
-      - '@core.modules.moduleInfoCache'
-      - '@system.model.modulerepository'
+      - '@system.view.block.admin.system_modules_block'
+      - '@core.i18n.dictionary'
+      - '@core.modules.module_info_cache'
+      - '@system.model.repository.modules_repository'
       - '@system.helpers.installer'
       - '@permissions.cache'
       - '@core.installer.schema_registrar'
-      - '@core.modules.schemaInstaller'
-      - '@core.modules.aclInstaller'
+      - '@core.installer.schema_installer'
+      - '@core.installer.acl_installer'
 
   system.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@system.view.block.admin.system_settings_form_block'
       - '@core.helpers.secure'
-      - '@core.wysiwyg.wysiwyg_editor_registrar'
       - '@system.validation.admin_settings_form_validation'
 
   system.controller.admin.index.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Index
-    parent: core.controller.admin
+    parent: core.controller.frontend
 
   system.controller.admin.maintenance.cache:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Cache
-    parent: core.controller.admin
+    arguments:
+      - '@core.context.frontend'
+      - '@system.view.block.admin.system_cache_block'
 
   system.controller.admin.maintenance.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Index
-    parent: core.controller.admin
+    parent: core.controller.frontend
 
   system.controller.admin.maintenance.update_check:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\UpdateCheck
     arguments:
       - '@core.context.frontend'
-      - '@system.helpers.update_check'
+      - '@system.view.block.system_update_check_block'

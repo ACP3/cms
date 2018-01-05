@@ -1,19 +1,16 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Widget\Index;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 use ACP3\Modules\ACP3\News;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\News\Controller\Widget\Index
- */
 class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -26,21 +23,28 @@ class Index extends Core\Controller\AbstractWidgetAction
      * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
      */
     protected $newsRepository;
+    /**
+     * @var CategoriesRepository
+     */
+    private $categoriesRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext  $context
-     * @param \ACP3\Core\Date                              $date
+     * @param \ACP3\Core\Controller\Context\WidgetContext $context
+     * @param \ACP3\Core\Date $date
      * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
+     * @param CategoriesRepository $categoriesRepository
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
-        News\Model\Repository\NewsRepository $newsRepository
+        News\Model\Repository\NewsRepository $newsRepository,
+        CategoriesRepository $categoriesRepository
     ) {
         parent::__construct($context);
 
         $this->date = $date;
         $this->newsRepository = $newsRepository;
+        $this->categoriesRepository = $categoriesRepository;
     }
 
     /**
@@ -49,17 +53,17 @@ class Index extends Core\Controller\AbstractWidgetAction
      *
      * @return array
      */
-    public function execute($categoryId = 0, $template = '')
+    public function execute(int $categoryId = 0, string $template = '')
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $this->setCacheResponseCacheable();
 
         $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
 
-        $this->setTemplate($template);
+        $this->view->setTemplate($template);
 
         return [
             'sidebar_news' => $this->fetchNews($categoryId, $settings),
-            'dateformat' => $settings['dateformat']
+            'dateformat' => $settings['dateformat'],
         ];
     }
 
@@ -68,11 +72,11 @@ class Index extends Core\Controller\AbstractWidgetAction
      * @param array $settings
      * @return array
      */
-    private function fetchNews($categoryId, array $settings)
+    private function fetchNews(int $categoryId, array $settings)
     {
         if (!empty($categoryId)) {
             $news = $this->newsRepository->getAllByCategoryId(
-                (int)$categoryId,
+                $this->categoriesRepository->getAllSiblingsAsId((int)$categoryId),
                 $this->date->getCurrentDateTime(),
                 $settings['sidebar']
             );

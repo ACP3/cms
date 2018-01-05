@@ -1,0 +1,49 @@
+services:
+  files.view.block.admin.file_admin_form_block:
+    class: ACP3\Modules\ACP3\Files\View\Block\Admin\FileAdminFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@files.model.repository.files_repository'
+      - '@core.config'
+      - '@core.modules'
+      - '@categories.helpers'
+
+  files.view.block.admin.files_data_grid_form_block:
+    class: ACP3\Modules\ACP3\Files\View\Block\Admin\FilesDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+      - '@core.acl'
+      - '@core.config'
+    calls:
+      - ['setDataGridRepository', ['@files.model.repository.files_data_grid_repository']]
+
+  files.view.block.admin.files_settings_form_block:
+    class: ACP3\Modules\ACP3\Files\View\Block\Admin\FilesSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.helpers.date'
+      - '@core.config'
+    calls:
+      - ['setCommentsHelpers', ['@?comments.helpers']]
+
+  files.view.block.frontend.categories_listing_block:
+    class: ACP3\Modules\ACP3\Files\View\Block\Frontend\CategoriesListingBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@categories.model.repository.categories_repository'
+
+  files.view.block.frontend.file_details_block:
+    class: ACP3\Modules\ACP3\Files\View\Block\Frontend\FileDetailsBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.config'
+      - '@categories.model.repository.categories_repository'
+
+  files.view.block.frontend.files_listing_block:
+    class: ACP3\Modules\ACP3\Files\View\Block\Frontend\FilesListingBlock
+    arguments:
+      - '@core.view.context.listing_block_context'
+      - '@core.date'
+      - '@core.config'
+      - '@files.model.repository.files_repository'
+      - '@categories.model.repository.categories_repository'

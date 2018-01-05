@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model;
@@ -10,10 +11,6 @@ use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Model\Repository\AbstractRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class AbstractModel
- * @package ACP3\Core\Model
- */
 abstract class AbstractModel
 {
     const EVENT_PREFIX = '';
@@ -159,7 +156,7 @@ abstract class AbstractModel
     {
         $repository = $this->repository;
 
-        if (!is_array($entryId)) {
+        if (!\is_array($entryId)) {
             $entryId = [$entryId];
         }
 

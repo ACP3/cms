@@ -3,12 +3,21 @@ services:
     class: ACP3\Core\Mailer
     arguments:
       - '@core.mailer.logger'
-      - '@core.view'
+      - '@core.mailer.message_processor'
       - '@core.config'
+
+  core.mailer.message_processor:
+    class: ACP3\Core\Mailer\MessageProcessor
+    arguments:
+      - '@inline_style'
       - '@core.helpers.string_formatter'
+      - '@core.view'
 
   core.mailer.logger:
     class: Psr\Log\LoggerInterface
     factory: 'core.logger.logger_factory:create'
     arguments:
       - 'mailer'
+
+  inline_style:
+    class: InlineStyle\InlineStyle

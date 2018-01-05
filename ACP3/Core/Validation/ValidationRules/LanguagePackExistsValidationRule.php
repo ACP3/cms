@@ -1,27 +1,30 @@
 <?php
-namespace ACP3\Core\Validation\ValidationRules;
-
-use ACP3\Core\I18n\Translator;
 
 /**
- * Class LanguagePackExistsValidationRule
- * @package ACP3\Core\Validation\ValidationRules
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Validation\ValidationRules;
+
+use ACP3\Core\I18n\AvailableLanguagePacks;
+
 class LanguagePackExistsValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var AvailableLanguagePacks
      */
-    protected $translator;
+    private $availableLanguagePacks;
 
     /**
      * LanguagePackExistsValidationRule constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param AvailableLanguagePacks $availableLanguagePacks
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(AvailableLanguagePacks $availableLanguagePacks)
     {
-        $this->translator = $translator;
+        $this->availableLanguagePacks = $availableLanguagePacks;
     }
 
     /**
@@ -29,10 +32,10 @@ class LanguagePackExistsValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->translator->languagePackExists($data);
+        return $this->availableLanguagePacks->languagePackExists($data);
     }
 }

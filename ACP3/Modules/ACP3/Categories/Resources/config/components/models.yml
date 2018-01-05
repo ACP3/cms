@@ -1,11 +1,11 @@
 services:
-  categories.model.categories_repository:
-    class: ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+  categories.model.repository.categories_repository:
+    class: ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository
     arguments:
       - '@core.db'
 
-  categories.model.data_grid_repository:
-    class: ACP3\Modules\ACP3\Categories\Model\Repository\DataGridRepository
+  categories.model.repository.categories_data_grid_repository:
+    class: ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesDataGridRepository
     arguments:
       - '@core.db'
 
@@ -14,4 +14,7 @@ services:
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
-      - '@categories.model.categories_repository'
+      - '@categories.model.repository.categories_repository'
+      - '@categories.nested_set.operation.insert'
+      - '@categories.nested_set.operation.edit'
+      - '@categories.nested_set.operation.delete'

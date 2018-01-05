@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
@@ -10,14 +11,10 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
-/**
- * Class Delete
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
- */
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Cache
+     * @var \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage
      */
     protected $galleryCache;
     /**
@@ -25,7 +22,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
      */
     protected $galleryHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository
      */
     protected $pictureRepository;
     /**
@@ -41,17 +38,17 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Gallery\Cache $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage $galleryCache
      * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
      * @param Gallery\Model\GalleryModel $galleryModel
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Gallery\Cache $galleryCache,
+        Gallery\Cache\GalleryCacheStorage $galleryCache,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\GalleryModel $galleryModel,
-        Gallery\Model\Repository\PictureRepository $pictureRepository
+        Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
     ) {
         parent::__construct($context);
 
@@ -85,11 +82,11 @@ class Delete extends Core\Controller\AbstractFrontendAction
                         $this->galleryHelpers->removePicture($row['file']);
                     }
 
-                    $this->galleryCache->getCacheDriver()->delete(Gallery\Cache::CACHE_ID . $item);
+                    $this->galleryCache->getCacheDriver()->delete(Gallery\Cache\GalleryCacheStorage::CACHE_ID . $item);
 
                     if ($this->uriAliasManager) {
                         $this->uriAliasManager->deleteUriAlias(
-                            sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item)
+                            \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item)
                         );
                     }
 
@@ -110,11 +107,11 @@ class Delete extends Core\Controller\AbstractFrontendAction
     {
         if ($this->uriAliasManager) {
             $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
-            $cPictures = count($pictures);
+            $cPictures = \count($pictures);
 
             for ($i = 0; $i < $cPictures; ++$i) {
                 $this->uriAliasManager->deleteUriAlias(
-                    sprintf(
+                    \sprintf(
                         Gallery\Helpers::URL_KEY_PATTERN_PICTURE,
                     $pictures[$i]['id']
                     )

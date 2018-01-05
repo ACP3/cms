@@ -11,8 +11,8 @@ services:
     class: Symfony\Component\HttpKernel\Controller\ArgumentResolver
     public: false
 
-  core.application.event.listener.on_controller_action_dispatcher_before_dispatch_listener:
-    class: ACP3\Installer\Core\Application\Event\Listener\OnControllerActionDispatcherBeforeDispatchListener
+  core.application.event.listener.set_language_cookie_on_controller_action_dispatcher_before_dispatch_listener:
+    class: ACP3\Installer\Core\Application\Event\Listener\SetLanguageCookieOnControllerActionDispatcherBeforeDispatchListener
     arguments:
       - '@core.http.request'
       - '@core.http.redirect_response'

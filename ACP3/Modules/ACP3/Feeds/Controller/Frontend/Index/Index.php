@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Feeds\Controller\Frontend\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Feeds;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Feeds\Controller\Frontend\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -26,14 +23,21 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var Feeds\Utility\FeedAvailabilityRegistrar
      */
     protected $availableFeedsRegistrar;
+    /**
+     * @var Core\ACL\ACLInterface
+     */
+    private $acl;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator $feedGenerator
+     * Index constructor.
+     * @param Core\Controller\Context\FrontendContext $context
+     * @param Core\ACL\ACLInterface $acl
+     * @param Feeds\View\Renderer\FeedGenerator $feedGenerator
      * @param Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\ACL\ACLInterface $acl,
         Feeds\View\Renderer\FeedGenerator $feedGenerator,
         Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
     ) {
@@ -41,6 +45,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->feedGenerator = $feedGenerator;
         $this->availableFeedsRegistrar = $availableFeedsRegistrar;
+        $this->acl = $acl;
     }
 
     /**
@@ -66,7 +71,8 @@ class Index extends Core\Controller\AbstractFrontendAction
                     ->setDescription($this->translator->t($feed, $feed))
                     ->assign($feedItems);
 
-                $this->setContentType('text/xml');
+                $this->getResponse()->headers->set('Content-type', 'text/xml');
+
                 return $this->response->setContent($this->feedGenerator->generateFeed());
             } catch (\InvalidArgumentException $e) {
             }

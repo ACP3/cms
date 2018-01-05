@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Http;
 
 use ACP3\Core\Http\Request\UserAgent;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
-/**
- * Class AbstractRequest
- * @package ACP3\Core\Http
- */
 abstract class AbstractRequest implements RequestInterface
 {
     /**

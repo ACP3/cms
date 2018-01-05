@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository;
 
-/**
- * Class MenuItemFormFields
- * @package ACP3\Modules\ACP3\Menus\Helpers
- */
 class MenuItemFormFields
 {
     /**
@@ -15,7 +17,7 @@ class MenuItemFormFields
      */
     protected $formsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository
      */
     protected $menusModel;
     /**
@@ -26,12 +28,12 @@ class MenuItemFormFields
     /**
      * @param \ACP3\Core\Helpers\Forms                      $formsHelper
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList              $menusHelper
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository $menusModel
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository $menusModel
      */
     public function __construct(
         Core\Helpers\Forms $formsHelper,
         MenuItemsList $menusHelper,
-        MenuRepository $menusModel
+        MenusRepository $menusModel
     ) {
         $this->formsHelper = $formsHelper;
         $this->menusHelper = $menusHelper;
@@ -48,7 +50,7 @@ class MenuItemFormFields
     protected function menusDropDown($selected = 0)
     {
         $menus = $this->menusModel->getAllMenus();
-        $cMenus = count($menus);
+        $cMenus = \count($menus);
         for ($i = 0; $i < $cMenus; ++$i) {
             $menus[$i]['selected'] = $this->formsHelper->selectEntry('block_id', (int)$menus[$i]['id'], (int)$selected);
         }
@@ -70,7 +72,7 @@ class MenuItemFormFields
         return [
             'blocks' => $this->menusDropDown($blockId),
             'display' => $this->formsHelper->yesNoCheckboxGenerator('display', $displayMenuItem),
-            'menuItems' => $this->menusHelper->menuItemsList($parentId, $leftId, $rightId)
+            'menuItems' => $this->menusHelper->menuItemsList($parentId, $leftId, $rightId),
         ];
     }
 }

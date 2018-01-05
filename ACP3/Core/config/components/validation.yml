@@ -72,7 +72,7 @@ services:
   core.validation.validation_rules.language_pack_exists_validation_rule:
     class: ACP3\Core\Validation\ValidationRules\LanguagePackExistsValidationRule
     arguments:
-      - '@core.i18n.translator'
+      - '@core.i18n.available_language_packs'
     tags:
       - { name: core.validation.validation_rule }
     public: false

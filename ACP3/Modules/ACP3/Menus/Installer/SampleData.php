@@ -1,12 +1,14 @@
 <?php
-namespace ACP3\Modules\ACP3\Menus\Installer;
-
-use ACP3\Core\Modules\Installer\AbstractSampleData;
 
 /**
- * Class SampleData
- * @package ACP3\Modules\ACP3\Menus\Installer
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Modules\ACP3\Menus\Installer;
+
+use ACP3\Core\Installer\AbstractSampleData;
+
 class SampleData extends AbstractSampleData
 {
     /**
@@ -14,7 +16,7 @@ class SampleData extends AbstractSampleData
      */
     public function sampleData()
     {
-        $translator = $this->schemaHelper->getContainer()->get('core.lang');
+        $translator = $this->schemaHelper->getContainer()->get('core.i18n.translator');
 
         return [
             "INSERT INTO `{pre}menus` VALUES (1, 'main', '{$translator->t('install', 'pages_main')}');",

@@ -17,8 +17,8 @@
         <item key="filename">Filename</item>
         <item key="files">Downloads</item>
         <item key="filesize">Filesize</item>
+        <item key="further_categories">Further categories</item>
         <item key="latest_files">Latest downloads</item>
-        <item key="mod_description">With this module you are able to administer the downloads.</item>
         <item key="new_file">Replace current file</item>
         <item key="select_active">Please select, whether this file should be active or not.</item>
         <item key="select_allow_comments">Please select whether you want to allow comments under downloads or not.</item>

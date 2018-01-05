@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Event\Listener;
 
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\LocaleInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
@@ -27,19 +28,19 @@ class RenderRecaptchaOnLayoutContentBeforeListener
      */
     private $userModel;
     /**
-     * @var Translator
+     * @var LocaleInterface
      */
-    private $translator;
+    private $locale;
 
     /**
      * RenderRecaptchaOnLayoutContentBeforeListener constructor.
-     * @param Translator $translator
+     * @param LocaleInterface $locale
      * @param SettingsInterface $settings
      * @param View $view
      * @param UserModel $userModel
      */
     public function __construct(
-        Translator $translator,
+        LocaleInterface $locale,
         SettingsInterface $settings,
         View $view,
         UserModel $userModel
@@ -47,7 +48,7 @@ class RenderRecaptchaOnLayoutContentBeforeListener
         $this->settings = $settings;
         $this->view = $view;
         $this->userModel = $userModel;
-        $this->translator = $translator;
+        $this->locale = $locale;
     }
 
     public function renderRecaptcha()
@@ -57,7 +58,7 @@ class RenderRecaptchaOnLayoutContentBeforeListener
         if ($this->isRecaptcha($settings)) {
             $this->view->assign('recaptcha', [
                 'sitekey' => $settings['recaptcha_sitekey'],
-                'lang' => $this->translator->getShortIsoCode()
+                'lang' => $this->locale->getShortIsoCode(),
             ]);
             $this->view->displayTemplate($this->getServiceIdTemplateMap()[$settings['captcha']]);
         }
@@ -80,7 +81,7 @@ class RenderRecaptchaOnLayoutContentBeforeListener
     private function isRecaptcha(array $settings)
     {
         return !empty($settings)
-            && array_key_exists($settings['captcha'], $this->getServiceIdTemplateMap())
+            && \array_key_exists($settings['captcha'], $this->getServiceIdTemplateMap())
             && !empty($settings['recaptcha_sitekey'])
             && !empty($settings['recaptcha_secret']);
     }

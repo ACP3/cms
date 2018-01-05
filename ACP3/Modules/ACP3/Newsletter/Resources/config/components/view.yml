@@ -1,0 +1,53 @@
+services:
+  newsletter.view.block.admin.newsletter_accounts_data_grid_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterAccountsDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+    calls:
+      - ['setDataGridRepository', ['@newsletter.model.repository.newsletter_accounts_data_grid_repository']]
+
+  newsletter.view.block.admin.newsletter_data_grid_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+    calls:
+      - ['setDataGridRepository', ['@newsletter.model.repository.newsletters_data_grid_repository']]
+
+  newsletter.view.block.admin.newsletter_admin_form_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterAdminFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@newsletter.model.repository.newsletters_repository'
+      - '@core.config'
+
+  newsletter.view.block.admin.newsletter_settings_form_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+
+  newsletter.view.block.frontend.newsletter_archive_form_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Frontend\NewsletterArchiveListingBlock
+    arguments:
+      - '@core.view.context.listing_block_context'
+      - '@newsletter.model.repository.newsletters_repository'
+
+  newsletter.view.block.frontend.newsletter_details_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Frontend\NewsletterDetailsBlock
+    arguments:
+      - '@core.view.context.block_context'
+
+  newsletter.view.block.frontend.newsletter_subscribe_form_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Frontend\NewsletterSubscribeFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+
+  newsletter.view.block.frontend.newsletter_unsubscribe_form_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterUnsubscribeFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+
+  newsletter.view.block.widget.newsletter_subscribe_widget_form_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Widget\NewsletterSubscribeWidgetFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'

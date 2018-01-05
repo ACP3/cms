@@ -7,8 +7,7 @@ services:
       - '@core.modules'
       - '@core.modules.vendors'
       - '@core.installer.schema_registrar'
-      - '@core.modules.schemaInstaller'
-      - '@core.xml'
+      - '@core.installer.schema_installer'
 
   system.helpers.can_use_page_cache:
     class: ACP3\Modules\ACP3\System\Helper\CanUsePageCache

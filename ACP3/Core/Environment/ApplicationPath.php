@@ -1,72 +1,92 @@
 <?php
-namespace ACP3\Core\Environment;
 
 /**
- * Class ApplicationPath
- * @package ACP3\Core\Environment
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Environment;
+
 class ApplicationPath
 {
     /**
      * @var string
      */
-    protected $phpSelf;
+    private $phpSelf;
     /**
      * @var string
      */
-    protected $webRoot;
+    private $webRoot;
     /**
      * @var string
      */
-    protected $appDir;
+    private $appDir;
     /**
      * @var string
      */
-    protected $classesDir;
+    private $classesDir;
     /**
      * @var string
      */
-    protected $modulesDir;
+    private $modulesDir;
     /**
      * @var string
      */
-    protected $uploadsDir;
+    private $uploadsDir;
     /**
      * @var string
      */
-    protected $cacheDir;
+    private $cacheDir;
     /**
      * @var string
      */
-    protected $designRootPathInternal;
+    private $designRootPathInternal;
     /**
      * @var string
      */
-    protected $designPathInternal;
+    private $designPathInternal;
     /**
      * @var string
      */
-    protected $designPathWeb;
+    private $designPathWeb;
     /**
      * @var string
      */
-    protected $designPathAbsolute;
+    private $designPathAbsolute;
+    /**
+     * @var string
+     */
+    private $environment;
+    /**
+     * @var string
+     */
+    private $varDir;
 
     /**
      * ApplicationPath constructor.
      *
      * @param string $applicationMode
      */
-    public function __construct($applicationMode)
+    public function __construct(string $applicationMode)
     {
-        $this->phpSelf = htmlentities($_SERVER['SCRIPT_NAME']);
-        $this->webRoot = substr($this->phpSelf, 0, strrpos($this->phpSelf, '/') + 1);
+        $this->environment = $applicationMode;
+        $this->phpSelf = \htmlentities($_SERVER['SCRIPT_NAME']);
+        $this->webRoot = \substr($this->phpSelf, 0, \strrpos($this->phpSelf, '/') + 1);
         $this->appDir = ACP3_ROOT_DIR . 'ACP3/';
         $this->classesDir = $this->appDir . 'Core/';
         $this->modulesDir = $this->appDir . 'Modules/';
         $this->uploadsDir = ACP3_ROOT_DIR . 'uploads/';
-        $this->cacheDir = ACP3_ROOT_DIR . 'cache/' . $applicationMode . '/';
+        $this->varDir = ACP3_ROOT_DIR . 'var/' . $applicationMode . '/';
+        $this->cacheDir = $this->varDir . 'cache/';
         $this->designRootPathInternal = ACP3_ROOT_DIR . 'designs/';
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnvironment(): string
+    {
+        return $this->environment;
     }
 
     /**
@@ -85,6 +105,7 @@ class ApplicationPath
     public function setPhpSelf($phpSelf)
     {
         $this->phpSelf = $phpSelf;
+
         return $this;
     }
 
@@ -104,6 +125,7 @@ class ApplicationPath
     public function setWebRoot($webRoot)
     {
         $this->webRoot = $webRoot;
+
         return $this;
     }
 
@@ -123,6 +145,7 @@ class ApplicationPath
     public function setAppDir($appDir)
     {
         $this->appDir = $appDir;
+
         return $this;
     }
 
@@ -142,6 +165,7 @@ class ApplicationPath
     public function setClassesDir($classesDir)
     {
         $this->classesDir = $classesDir;
+
         return $this;
     }
 
@@ -161,6 +185,7 @@ class ApplicationPath
     public function setModulesDir($modulesDir)
     {
         $this->modulesDir = $modulesDir;
+
         return $this;
     }
 
@@ -180,6 +205,7 @@ class ApplicationPath
     public function setUploadsDir($uploadsDir)
     {
         $this->uploadsDir = $uploadsDir;
+
         return $this;
     }
 
@@ -199,6 +225,7 @@ class ApplicationPath
     public function setCacheDir($cacheDir)
     {
         $this->cacheDir = $cacheDir;
+
         return $this;
     }
 
@@ -218,6 +245,7 @@ class ApplicationPath
     public function setDesignRootPathInternal($designRootPathInternal)
     {
         $this->designRootPathInternal = $designRootPathInternal;
+
         return $this;
     }
 
@@ -237,6 +265,7 @@ class ApplicationPath
     public function setDesignPathInternal($designPathInternal)
     {
         $this->designPathInternal = $this->designRootPathInternal . $designPathInternal;
+
         return $this;
     }
 
@@ -256,6 +285,7 @@ class ApplicationPath
     public function setDesignPathWeb($designPathWeb)
     {
         $this->designPathWeb = $designPathWeb;
+
         return $this;
     }
 
@@ -274,11 +304,20 @@ class ApplicationPath
      */
     public function setDesignPathAbsolute($designPathAbsolute)
     {
-        if (!preg_match('=^(http(s?))://=', $designPathAbsolute)) {
+        if (!\preg_match('=^(http(s?))://=', $designPathAbsolute)) {
             throw new \InvalidArgumentException('The given absolute design path (' . $designPathAbsolute . ') doesn\'t start with a valid protocol.');
         }
 
         $this->designPathAbsolute = $designPathAbsolute;
+
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVarDir(): string
+    {
+        return $this->varDir;
     }
 }

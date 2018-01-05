@@ -1,14 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository;
 
-/**
- * Class Subscribe
- * @package ACP3\Modules\ACP3\Newsletter\Helper
- */
 class Subscribe
 {
     /**
@@ -16,7 +18,7 @@ class Subscribe
      */
     protected $date;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -40,7 +42,7 @@ class Subscribe
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository
      */
     protected $accountRepository;
     /**
@@ -56,7 +58,7 @@ class Subscribe
      * Subscribe constructor.
      *
      * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Mailer $mailer
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Router\RouterInterface $router
@@ -64,11 +66,11 @@ class Subscribe
      * @param \ACP3\Core\Helpers\Secure $secureHelper
      * @param \ACP3\Core\Settings\SettingsInterface $config
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository $accountRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository $accountRepository
      */
     public function __construct(
         Core\Date $date,
-        Core\I18n\Translator $translator,
+        Core\I18n\TranslatorInterface $translator,
         Core\Mailer $mailer,
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
@@ -76,7 +78,7 @@ class Subscribe
         Core\Helpers\Secure $secureHelper,
         Core\Settings\SettingsInterface $config,
         AccountStatus $accountStatusHelper,
-        AccountRepository $accountRepository
+        NewsletterAccountsRepository $accountRepository
     ) {
         $this->date = $date;
         $this->translator = $translator;
@@ -102,7 +104,7 @@ class Subscribe
      */
     public function subscribeToNewsletter($emailAddress, $salutation = 0, $firstName = '', $lastName = '')
     {
-        $hash = $this->secureHelper->generateSaltedPassword('', mt_rand(0, microtime(true)), 'sha512');
+        $hash = $this->secureHelper->generateSaltedPassword('', \mt_rand(0, \microtime(true)), 'sha512');
         $mailSent = $this->sendDoubleOptInEmail($emailAddress, $hash);
         $result = $this->addNewsletterAccount($emailAddress, $salutation, $firstName, $lastName, $hash);
 
@@ -154,7 +156,7 @@ class Subscribe
         $data = (new Core\Mailer\MailerMessage())
             ->setFrom([
                 'email' => $settings['mail'],
-                'name' => $systemSettings['site_title']
+                'name' => $systemSettings['site_title'],
             ])
             ->setSubject($this->translator->t(
                 'newsletter',
@@ -195,7 +197,7 @@ class Subscribe
             'salutation' => $salutation,
             'first_name' => $firstName,
             'last_name' => $lastName,
-            'hash' => $hash
+            'hash' => $hash,
         ];
 
         if ($newsletterAccount['status'] != AccountStatus::ACCOUNT_STATUS_CONFIRMED) {
@@ -225,7 +227,7 @@ class Subscribe
             'first_name' => $firstName,
             'last_name' => $lastName,
             'hash' => $hash,
-            'status' => AccountStatus::ACCOUNT_STATUS_CONFIRMATION_NEEDED
+            'status' => AccountStatus::ACCOUNT_STATUS_CONFIRMATION_NEEDED,
         ];
 
         return $this->accountRepository->insert($insertValues);

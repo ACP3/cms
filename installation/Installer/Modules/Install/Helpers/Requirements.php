@@ -1,46 +1,36 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Helpers;
 
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Filesystem;
-use ACP3\Installer\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 
-/**
- * Class Requirements
- * @package ACP3\Installer\Modules\Install\Helpers
- */
 class Requirements
 {
     const REQUIRED_PHP_VERSION = '7.1.0';
-    const COLOR_ERROR = 'f00';
-    const COLOR_SUCCESS = '090';
-    const CLASS_ERROR = 'danger';
-    const CLASS_SUCCESS = 'success';
-    const CLASS_WARNING = 'warning';
 
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
     /**
-     * @var \ACP3\Installer\Core\I18n\Translator
+     * @var TranslatorInterface
      */
     protected $translator;
 
     /**
      * Requirements constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Installer\Core\I18n\Translator   $translator
+     * @param ApplicationPath $appPath
+     * @param TranslatorInterface $translator
      */
     public function __construct(
         ApplicationPath $appPath,
-        Translator $translator
+        TranslatorInterface $translator
     ) {
         $this->appPath = $appPath;
         $this->translator = $translator;
@@ -54,34 +44,36 @@ class Requirements
     {
         $requirements = [];
         $requirements[0]['name'] = $this->translator->t('install', 'php_version');
-        $requirements[0]['color'] = version_compare(phpversion(), self::REQUIRED_PHP_VERSION, '>=') ? self::COLOR_SUCCESS : self::COLOR_ERROR;
-        $requirements[0]['found'] = phpversion();
+        $requirements[0]['success'] = \version_compare(\phpversion(), self::REQUIRED_PHP_VERSION, '>=');
+        $requirements[0]['found'] = \phpversion();
         $requirements[0]['required'] = self::REQUIRED_PHP_VERSION;
         $requirements[1]['name'] = $this->translator->t('install', 'pdo_extension');
-        $requirements[1]['color'] = extension_loaded('pdo') && extension_loaded('pdo_mysql') ? self::COLOR_SUCCESS : self::COLOR_ERROR;
+        $requirements[1]['success'] = \extension_loaded('pdo') && \extension_loaded('pdo_mysql');
         $requirements[1]['found'] = $this->translator->t(
             'install',
-            $requirements[1]['color'] == self::COLOR_SUCCESS ? 'on' : 'off'
+            $requirements[1]['success'] === true ? 'on' : 'off'
         );
         $requirements[1]['required'] = $this->translator->t('install', 'on');
         $requirements[2]['name'] = $this->translator->t('install', 'gd_library');
-        $requirements[2]['color'] = extension_loaded('gd') ? self::COLOR_SUCCESS : self::COLOR_ERROR;
+        $requirements[2]['success'] = \extension_loaded('gd');
         $requirements[2]['found'] = $this->translator->t(
             'install',
-            $requirements[2]['color'] == self::COLOR_SUCCESS ? 'on' : 'off'
+            $requirements[2]['success'] === true ? 'on' : 'off'
         );
         $requirements[2]['required'] = $this->translator->t('install', 'on');
 
         $stopInstall = false;
         foreach ($requirements as $requirement) {
-            if ($requirement['color'] !== self::COLOR_SUCCESS) {
+            if ($requirement['success'] === false) {
                 $stopInstall = true;
+
+                break;
             }
         }
 
         return [
             $requirements,
-            $stopInstall
+            $stopInstall,
         ];
     }
 
@@ -100,11 +92,12 @@ class Requirements
         foreach ($defaults as $fileOrDirectory) {
             $requiredFilesAndDirs[$i] = $this->requiredFileOrFolderHasPermission($fileOrDirectory);
 
-            if ($requiredFilesAndDirs[$i]['class_1'] === self::CLASS_ERROR || $requiredFilesAndDirs[$i]['class_2'] === self::CLASS_ERROR) {
+            if ($requiredFilesAndDirs[$i]['exists'] === false || $requiredFilesAndDirs[$i]['writable'] === false) {
                 $checkAgain = true;
             }
             ++$i;
         }
+
         return [$requiredFilesAndDirs, $checkAgain];
     }
 
@@ -116,9 +109,9 @@ class Requirements
         return [
             [
                 'setting' => $this->translator->t('install', 'maximum_uploadsize'),
-                'class' => ini_get('post_max_size') > 0 ? self::CLASS_SUCCESS : self::CLASS_WARNING,
-                'value' => ini_get('post_max_size'),
-            ]
+                'success' => \ini_get('post_max_size') > 0,
+                'value' => \ini_get('post_max_size'),
+            ],
         ];
     }
 
@@ -132,18 +125,18 @@ class Requirements
         $result = [];
         $result['path'] = $fileOrDirectory;
         // Überprüfen, ob es eine Datei oder ein Ordner ist
-        if (is_file(ACP3_ROOT_DIR . $fileOrDirectory) === true) {
-            $result['class_1'] = self::CLASS_SUCCESS;
-            $result['exists'] = $this->translator->t('install', 'found');
-        } elseif (is_dir(ACP3_ROOT_DIR . $fileOrDirectory) === true) {
-            $result['class_1'] = self::CLASS_SUCCESS;
-            $result['exists'] = $this->translator->t('install', 'found');
+        if (\is_file(ACP3_ROOT_DIR . $fileOrDirectory) === true) {
+            $result['exists'] = true;
+            $result['exists_lang'] = $this->translator->t('install', 'found');
+        } elseif (\is_dir(ACP3_ROOT_DIR . $fileOrDirectory) === true) {
+            $result['exists'] = true;
+            $result['exists_lang'] = $this->translator->t('install', 'found');
         } else {
-            $result['class_1'] = self::CLASS_ERROR;
-            $result['exists'] = $this->translator->t('install', 'not_found');
+            $result['exists'] = false;
+            $result['exists_lang'] = $this->translator->t('install', 'not_found');
         }
-        $result['class_2'] = is_writable(ACP3_ROOT_DIR . $fileOrDirectory) === true ? self::CLASS_SUCCESS : self::CLASS_ERROR;
-        $result['writable'] = $result['class_2'] === self::CLASS_SUCCESS ? $this->translator->t(
+        $result['writable'] = \is_writable(ACP3_ROOT_DIR . $fileOrDirectory) === true;
+        $result['writable_lang'] = $result['writable'] === true ? $this->translator->t(
             'install',
             'writable'
         ) : $this->translator->t('install', 'not_writable');
@@ -156,14 +149,6 @@ class Requirements
      */
     private function fetchRequiredFilesAndDirectories()
     {
-        $defaults = ['ACP3/config.yml', 'cache/', 'uploads/', 'uploads/assets/'];
-
-        foreach (Filesystem::scandir($this->appPath->getModulesDir()) as $row) {
-            $path = 'uploads/' . $row . '/';
-            if (is_dir(ACP3_ROOT_DIR . $path) === true) {
-                $defaults[] = $path;
-            }
-        }
-        return $defaults;
+        return ['ACP3/config.yml', 'var/', 'uploads/'];
     }
 }

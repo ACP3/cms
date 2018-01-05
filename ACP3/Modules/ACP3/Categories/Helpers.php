@@ -1,30 +1,29 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Categories;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Cache\CategoriesCacheStorage;
+use ACP3\Modules\ACP3\Categories\Model\CategoriesModel;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 
-/**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Categories
- */
 class Helpers
 {
     /**
-     * @var Core\ACL
+     * @var Core\ACL\ACLInterface
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
-     * @var Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     protected $modules;
     /**
@@ -32,11 +31,11 @@ class Helpers
      */
     protected $request;
     /**
-     * @var Cache
+     * @var CategoriesCacheStorage
      */
     protected $categoriesCache;
     /**
-     * @var CategoryRepository
+     * @var CategoriesRepository
      */
     protected $categoryRepository;
     /**
@@ -47,26 +46,33 @@ class Helpers
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
+    /**
+     * @var CategoriesModel
+     */
+    private $categoriesModel;
 
     /**
-     * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Modules $modules
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
+     * Helpers constructor.
+     * @param Core\ACL\ACLInterface $acl
+     * @param Core\I18n\TranslatorInterface $translator
+     * @param \ACP3\Core\Modules\Modules $modules
+     * @param Core\Http\RequestInterface $request
+     * @param Core\Helpers\Forms $formsHelper
+     * @param Core\Helpers\Secure $secureHelper
+     * @param CategoriesCacheStorage $categoriesCache
+     * @param CategoriesRepository $categoryRepository
+     * @param CategoriesModel $categoriesModel
      */
     public function __construct(
-        Core\ACL $acl,
-        Core\I18n\Translator $translator,
-        Core\Modules $modules,
+        Core\ACL\ACLInterface $acl,
+        Core\I18n\TranslatorInterface $translator,
+        Core\Modules\Modules $modules,
         Core\Http\RequestInterface $request,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\Secure $secureHelper,
-        Cache $categoriesCache,
-        CategoryRepository $categoryRepository
+        CategoriesCacheStorage $categoriesCache,
+        CategoriesRepository $categoryRepository,
+        CategoriesModel $categoriesModel
     ) {
         $this->acl = $acl;
         $this->translator = $translator;
@@ -76,75 +82,77 @@ class Helpers
         $this->secureHelper = $secureHelper;
         $this->categoriesCache = $categoriesCache;
         $this->categoryRepository = $categoryRepository;
+        $this->categoriesModel = $categoriesModel;
     }
 
     /**
      * Erzeugt eine neue Kategorie und gibt ihre ID zurück
      *
-     * @param string $title
-     * @param string $module
+     * @param string $categoryTitle
+     * @param string $moduleName
      *
      * @return integer
      */
-    public function categoriesCreate($title, $module)
+    public function categoryCreate(string $categoryTitle, string $moduleName)
     {
-        $moduleInfo = $this->modules->getModuleInfo($module);
-        if ($this->categoryRepository->resultIsDuplicate($title, $moduleInfo['id'], '') === false) {
+        $moduleInfo = $this->modules->getModuleInfo($moduleName);
+        if ($this->categoryRepository->resultIsDuplicate($categoryTitle, $moduleInfo['id'], 0) === false) {
             $insertValues = [
-                'id' => '',
-                'title' => $this->secureHelper->strEncode($title),
-                'picture' => '',
-                'description' => '',
+                'title' => $this->secureHelper->strEncode($categoryTitle),
                 'module_id' => $moduleInfo['id'],
+                'parent_id' => 0,
             ];
-            $result = $this->categoryRepository->insert($insertValues);
 
-            $this->categoriesCache->saveCache($module);
-
-            return $result;
+            return $this->categoriesModel->save($insertValues);
         }
 
-        return $this->categoryRepository->getOneByTitleAndModule($title, $module)['id'];
+        return $this->categoryRepository->getOneByTitleAndModule($categoryTitle, $moduleName)['id'];
     }
 
     /**
      * Listet alle Kategorien eines Moduls auf
      *
-     * @param string $module
-     * @param string $categoryId
+     * @param string $moduleName
+     * @param int $categoryId
      * @param boolean $categoryCreate
      * @param string $formFieldName
-     * @param string $customText
+     * @param string|null $customText
      *
      * @return array
      */
     public function categoriesList(
-        $module,
-        $categoryId = '',
-        $categoryCreate = false,
-        $formFieldName = 'cat',
-        $customText = ''
+        string $moduleName,
+        int $categoryId = null,
+        bool $categoryCreate = false,
+        string $formFieldName = 'cat',
+        string $customText = null
     ) {
-        $categories = [];
-
-        $categories['custom_text'] = !empty($customText) ? $customText : $this->translator->t('system', 'pls_select');
-        $categories['name'] = $formFieldName;
-
-        $categories['categories'] = $this->categoriesCache->getCache($module);
-        $cData = count($categories['categories']);
-        for ($i = 0; $i < $cData; ++$i) {
-            $categories['categories'][$i]['selected'] = $this->formsHelper->selectEntry(
+        $categories = $this->categoriesCache->getCache($moduleName);
+        foreach ($categories as &$category) {
+            $category['title'] = \str_repeat('&nbsp;&nbsp;', $category['level']) . $category['title'];
+            $category['selected'] = $this->formsHelper->selectEntry(
                 $formFieldName,
-                $categories['categories'][$i]['id'],
+                $category['id'],
                 $categoryId
             );
         }
 
+        return [
+            'custom_text' => $customText ?: $this->translator->t('system', 'pls_select'),
+            'name' => $formFieldName,
+            'categories' => $categories,
+            'create' => $this->addCreateCategoryFormFields($categoryCreate, $formFieldName),
+        ];
+    }
+
+    private function addCreateCategoryFormFields(bool $categoryCreate, string $formFieldName): array
+    {
+        $formFields = [];
         if ($categoryCreate === true && $this->acl->hasPermission('admin/categories/index/create') === true) {
-            $categories['create']['name'] = $formFieldName . '_create';
-            $categories['create']['value'] = $this->request->getPost()->get('create', ['name' => ''])['name'];
+            $formFields['name'] = $formFieldName . '_create';
+            $formFields['value'] = $this->request->getPost()->get('create', ['name' => ''])['name'];
         }
 
-        return $categories;
+        return $formFields;
     }
 }

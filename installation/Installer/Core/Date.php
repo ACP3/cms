@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Core;
@@ -25,7 +26,7 @@ class Date extends \ACP3\Core\Date
 
     protected function setFormatAndTimeZone()
     {
-        $defaultTimeZone = date_default_timezone_get();
+        $defaultTimeZone = \date_default_timezone_get();
 
         $this->dateFormatLong = 'd.m.y, H:i';
         $this->dateFormatShort = 'd.m.y';

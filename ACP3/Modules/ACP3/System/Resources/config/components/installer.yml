@@ -7,7 +7,7 @@ services:
 
   system.installer.migration:
     class: ACP3\Modules\ACP3\System\Installer\Migration
-    parent: core.modules.installer.abstractMigration
+    parent: core.installer.abstract_migration
     tags:
       - { name: core.installer.migration }
     public: false

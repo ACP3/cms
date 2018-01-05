@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Users;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-/**
- * Class Login
- * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
- */
 class Login extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -21,25 +18,32 @@ class Login extends Core\Controller\AbstractFrontendAction
      */
     protected $authenticationModel;
     /**
-     * @var Core\Helpers\Forms
+     * @var Core\View\Block\FormBlockInterface
      */
-    protected $forms;
+    private $block;
+    /**
+     * @var Core\Helpers\Secure
+     */
+    private $secure;
 
     /**
      * Login constructor.
      * @param Core\Controller\Context\FrontendContext $context
-     * @param Core\Helpers\Forms $forms
+     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\Helpers\Secure $secure
      * @param Users\Model\AuthenticationModel $authenticationModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $forms,
+        Core\View\Block\FormBlockInterface $block,
+        Core\Helpers\Secure $secure,
         Users\Model\AuthenticationModel $authenticationModel
     ) {
         parent::__construct($context);
 
         $this->authenticationModel = $authenticationModel;
-        $this->forms = $forms;
+        $this->block = $block;
+        $this->secure = $secure;
     }
 
     /**
@@ -51,13 +55,7 @@ class Login extends Core\Controller\AbstractFrontendAction
             return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         }
 
-        $rememberMe = [
-            1 => $this->translator->t('users', 'remember_me')
-        ];
-
-        return [
-            'remember_me' => $this->forms->checkboxGenerator('remember', $rememberMe, 0)
-        ];
+        return $this->block->render();
     }
 
     /**
@@ -67,14 +65,14 @@ class Login extends Core\Controller\AbstractFrontendAction
     {
         try {
             $this->authenticationModel->login(
-                $this->get('core.helpers.secure')->strEncode($this->request->getPost()->get('nickname', '')),
+                $this->secure->strEncode($this->request->getPost()->get('nickname', '')),
                 $this->request->getPost()->get('pwd', ''),
                 $this->request->getPost()->has('remember')
             );
 
             if ($this->request->getParameters()->has('redirect')) {
                 return $this->redirect()->temporary(
-                    base64_decode($this->request->getParameters()->get('redirect'))
+                    \base64_decode($this->request->getParameters()->get('redirect'))
                 );
             }
 

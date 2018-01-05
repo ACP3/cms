@@ -1,23 +1,25 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
-/**
- * Class Translate
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class Translate extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
 
     /**
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
-    public function __construct(Core\I18n\Translator $translator)
+    public function __construct(Core\I18n\TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
@@ -35,8 +37,9 @@ class Translate extends AbstractFunction
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        $values = explode('|', $params['t']);
-        $params = isset($params['args']) && is_array($params['args']) ? $params['args'] : [];
+        $values = \explode('|', $params['t']);
+        $params = isset($params['args']) && \is_array($params['args']) ? $params['args'] : [];
+
         return $this->translator->t($values[0], $values[1], $params);
     }
 }

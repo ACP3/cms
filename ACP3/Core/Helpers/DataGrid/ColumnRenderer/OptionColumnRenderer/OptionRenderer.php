@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
 
 use ACP3\Core\Router\RouterInterface;
 
-/**
- * Class OptionRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer
- */
 class OptionRenderer
 {
     /**
@@ -39,7 +41,7 @@ class OptionRenderer
     {
         $ajax = $useAjax === true ? ' data-ajax-form="true"' : '';
         $value = ' <a href="' . $this->router->route($route) . '" class="btn btn-xs ' . $buttonClass . '"' . $ajax . ' title="' . $translationPhrase . '">';
-        $value .= '<i class="glyphicon ' . $iconClass . '"></i>';
+        $value .= '<i class="fa ' . $iconClass . '"></i>';
         $value .= '<span class="sr-only">' . $translationPhrase . '</span>';
         $value .= '</a>';
 

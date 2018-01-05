@@ -1,72 +1,82 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Core\Controller\Context;
 
+use ACP3\Core\Controller\ActionResultFactory;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\I18n\LocaleInterface;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Installer\Core\Environment\ApplicationPath;
-use ACP3\Installer\Core\I18n\Translator;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class InstallerContext
- * @package ACP3\Installer\Core\Controller\Context
- */
 class InstallerContext
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var ContainerInterface
      */
-    protected $container;
+    private $container;
     /**
-     * @var \ACP3\Installer\Core\I18n\Translator
+     * @var TranslatorInterface
      */
-    protected $translator;
+    private $translator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \Symfony\Component\HttpFoundation\Response
      */
-    protected $response;
+    private $response;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
     /**
      * @var \ACP3\Core\View
      */
-    protected $view;
+    private $view;
     /**
      * @var \ACP3\Installer\Core\Environment\ApplicationPath
      */
-    protected $appPath;
+    private $appPath;
+    /**
+     * @var ActionResultFactory
+     */
+    private $actionResultFactory;
+    /**
+     * @var LocaleInterface
+     */
+    private $locale;
 
     /**
      * InstallerContext constructor.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Installer\Core\I18n\Translator                      $translator
-     * @param \ACP3\Core\Http\RequestInterface                          $request
-     * @param \ACP3\Core\Router\RouterInterface                                $router
-     * @param \ACP3\Core\View                                           $view
-     * @param \Symfony\Component\HttpFoundation\Response                $response
-     * @param \ACP3\Installer\Core\Environment\ApplicationPath          $appPath
+     * @param ContainerInterface $container
+     * @param TranslatorInterface $translator
+     * @param LocaleInterface $locale
+     * @param RequestInterface $request
+     * @param RouterInterface $router
+     * @param \ACP3\Core\View $view
+     * @param Response $response
+     * @param ApplicationPath $appPath
+     * @param ActionResultFactory $actionResultFactory
      */
     public function __construct(
         ContainerInterface $container,
-        Translator $translator,
+        TranslatorInterface $translator,
+        LocaleInterface $locale,
         RequestInterface $request,
         RouterInterface $router,
         \ACP3\Core\View $view,
         Response $response,
-        ApplicationPath $appPath
+        ApplicationPath $appPath,
+        ActionResultFactory $actionResultFactory
     ) {
         $this->container = $container;
         $this->translator = $translator;
@@ -75,10 +85,12 @@ class InstallerContext
         $this->view = $view;
         $this->response = $response;
         $this->appPath = $appPath;
+        $this->actionResultFactory = $actionResultFactory;
+        $this->locale = $locale;
     }
 
     /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     * @return ContainerInterface
      */
     public function getContainer()
     {
@@ -86,7 +98,7 @@ class InstallerContext
     }
 
     /**
-     * @return \ACP3\Installer\Core\I18n\Translator
+     * @return TranslatorInterface
      */
     public function getTranslator()
     {
@@ -131,5 +143,21 @@ class InstallerContext
     public function getAppPath()
     {
         return $this->appPath;
+    }
+
+    /**
+     * @return ActionResultFactory
+     */
+    public function getActionResultFactory(): ActionResultFactory
+    {
+        return $this->actionResultFactory;
+    }
+
+    /**
+     * @return LocaleInterface
+     */
+    public function getLocale(): LocaleInterface
+    {
+        return $this->locale;
     }
 }

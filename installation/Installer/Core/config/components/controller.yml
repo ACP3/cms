@@ -4,11 +4,13 @@ services:
     arguments:
       - '@service_container'
       - '@core.i18n.translator'
+      - '@core.i18n.locale'
       - '@core.http.request'
       - '@core.router'
       - '@core.view'
       - '@core.http.response'
       - '@core.environment.application_path'
+      - '@core.controller.action_result_factory'
 
   core.controller.install:
     abstract: true

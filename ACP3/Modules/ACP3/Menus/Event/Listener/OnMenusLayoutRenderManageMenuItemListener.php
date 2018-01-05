@@ -1,23 +1,24 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Event\Listener;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Helpers\Forms;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\View;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository;
 
 class OnMenusLayoutRenderManageMenuItemListener
 {
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
     /**
@@ -25,7 +26,7 @@ class OnMenusLayoutRenderManageMenuItemListener
      */
     private $view;
     /**
-     * @var MenuItemRepository
+     * @var MenuItemsRepository
      */
     private $menuItemRepository;
     /**
@@ -33,7 +34,7 @@ class OnMenusLayoutRenderManageMenuItemListener
      */
     private $menuItemFormFields;
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
     /**
@@ -43,20 +44,20 @@ class OnMenusLayoutRenderManageMenuItemListener
 
     /**
      * OnMenusLayoutRenderManageMenuItemListener constructor.
-     * @param ACL $acl
-     * @param Translator $translator
+     * @param ACLInterface $acl
+     * @param TranslatorInterface $translator
      * @param View $view
      * @param Forms $forms
      * @param MenuItemFormFields $menuItemFormFields
-     * @param MenuItemRepository $menuItemRepository
+     * @param MenuItemsRepository $menuItemRepository
      */
     public function __construct(
-        ACL $acl,
-        Translator $translator,
+        ACLInterface $acl,
+        TranslatorInterface $translator,
         View $view,
         Forms $forms,
         MenuItemFormFields $menuItemFormFields,
-        MenuItemRepository $menuItemRepository
+        MenuItemsRepository $menuItemRepository
     ) {
         $this->acl = $acl;
         $this->view = $view;
@@ -114,7 +115,7 @@ class OnMenusLayoutRenderManageMenuItemListener
     private function fetchCreateMenuItemOption($currentValue = 0)
     {
         $createMenuItem = [
-            1 => $this->translator->t('menus', 'create_menu_item')
+            1 => $this->translator->t('menus', 'create_menu_item'),
         ];
 
         return $this->forms->checkboxGenerator('create_menu_item', $createMenuItem, $currentValue);
@@ -128,7 +129,7 @@ class OnMenusLayoutRenderManageMenuItemListener
     {
         $formData = $this->view->getRenderer()->getTemplateVars('form');
 
-        if (is_array($formData) && !isset($formData['menu_item_title'])) {
+        if (\is_array($formData) && !isset($formData['menu_item_title'])) {
             $formData['menu_item_title'] = !empty($menuItem) ? $menuItem['title'] : '';
         }
 

@@ -1,5 +1,5 @@
 services:
-  core.helpers.view.checkAccess:
+  core.helpers.view.check_access:
     class: ACP3\Core\Helpers\View\CheckAccess
     arguments:
       - '@core.acl'
@@ -27,7 +27,7 @@ services:
       - '@core.i18n.translator'
       - '@core.http.request'
 
-  core.helpers.sendEmail:
+  core.helpers.send_email:
     class: ACP3\Core\Helpers\SendEmail
     arguments:
       - '@core.mailer'
@@ -42,13 +42,13 @@ services:
   core.helpers.secure:
     class: ACP3\Core\Helpers\Secure
 
-  core.helpers.formToken:
+  core.helpers.form_token:
     class: ACP3\Core\Helpers\FormToken
     arguments:
       - '@core.http.request'
       - '@core.session'
 
-  core.helpers.pageBreaks:
+  core.helpers.page_breaks:
     class: ACP3\Core\Helpers\PageBreaks
     arguments:
       - '@core.http.request'
@@ -95,7 +95,7 @@ services:
     class: ACP3\Core\Helpers\Formatter\RewriteInternalUri
     arguments:
       - '@core.environment.application_path'
-      - '@core.modules.helper.controllerActionExists'
+      - '@core.modules.helper.controller_action_exists'
       - '@core.http.request'
       - '@core.router'
       - '@core.validation.validation_rules.internal_uri_validation_rule'

@@ -1,20 +1,17 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Helper;
 
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
-/**
- * Class MetaFormFields
- * @package ACP3\Modules\ACP3\Seo\Helper
- */
 class MetaFormFields
 {
     /**
@@ -26,7 +23,7 @@ class MetaFormFields
      */
     protected $aliases;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -42,14 +39,14 @@ class MetaFormFields
      * MetaFormFields constructor.
      *
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
-     * @param \ACP3\Core\I18n\Translator                   $translator
-     * @param \ACP3\Core\Http\RequestInterface             $request
-     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases   $aliases
-     * @param \ACP3\Core\Helpers\Forms                     $formsHelper
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
      */
     public function __construct(
         MetaStatements $metaStatements,
-        Translator $translator,
+        TranslatorInterface $translator,
         RequestInterface $request,
         Aliases $aliases,
         Forms $formsHelper
@@ -71,7 +68,7 @@ class MetaFormFields
     public function formFields($path = '')
     {
         if (!empty($path)) {
-            $path .= !preg_match('/\/$/', $path) ? '/' : '';
+            $path .= !\preg_match('/\/$/', $path) ? '/' : '';
 
             $alias = $this->request->getPost()->get('alias', $this->aliases->getUriAlias($path, true));
             $title = $this->request->getPost()->get('seo_title', $this->metaStatements->getTitle($path));
@@ -95,7 +92,7 @@ class MetaFormFields
                 'seo_robots',
                 $this->getRobotsChoicesGeneratorValues(),
                 $robots
-            )
+            ),
         ];
     }
 
@@ -113,7 +110,7 @@ class MetaFormFields
             1 => $this->translator->t('seo', 'robots_index_follow'),
             2 => $this->translator->t('seo', 'robots_index_nofollow'),
             3 => $this->translator->t('seo', 'robots_noindex_follow'),
-            4 => $this->translator->t('seo', 'robots_noindex_nofollow')
+            4 => $this->translator->t('seo', 'robots_noindex_nofollow'),
         ];
     }
 }

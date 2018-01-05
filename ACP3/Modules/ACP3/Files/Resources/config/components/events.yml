@@ -12,7 +12,7 @@ services:
     arguments:
       - '@core.environment.application_path'
       - '@core.modules'
-      - '@files.model.filesrepository'
+      - '@files.model.repository.files_repository'
       - '@files.cache'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]

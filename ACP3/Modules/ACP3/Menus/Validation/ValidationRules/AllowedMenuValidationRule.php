@@ -1,26 +1,28 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository;
 
-/**
- * Class AllowedMenuValidationRule
- * @package ACP3\Modules\ACP3\Menus\Validation\ValidationRules
- */
 class AllowedMenuValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository
      */
     protected $menuItemRepository;
 
     /**
      * AllowedMenuValidationRule constructor.
      *
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository $menuItemRepository
      */
-    public function __construct(MenuItemRepository $menuItemRepository)
+    public function __construct(MenuItemsRepository $menuItemRepository)
     {
         $this->menuItemRepository = $menuItemRepository;
     }
@@ -30,9 +32,9 @@ class AllowedMenuValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && is_array($field)) {
-            $parentId = reset($field);
-            $blockId = next($field);
+        if (\is_array($data) && \is_array($field)) {
+            $parentId = \reset($field);
+            $blockId = \next($field);
 
             return $this->checkIsAllowedMenu($data[$parentId], $data[$blockId]);
         }
@@ -54,6 +56,6 @@ class AllowedMenuValidationRule extends AbstractValidationRule
 
         $parentMenuId = $this->menuItemRepository->getMenuIdByMenuItemId($parentId);
 
-        return (!empty($parentMenuId) && $parentMenuId == $menuId);
+        return !empty($parentMenuId) && $parentMenuId == $menuId;
     }
 }

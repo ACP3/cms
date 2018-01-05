@@ -3,12 +3,8 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@polls.model.pollrepository'
+      - '@polls.view.block.admin.poll_admin_form_block'
       - '@polls.model.polls_model'
-      - '@polls.model.answerrepository'
       - '@polls.validation.admin_form_validation'
 
   polls.controller.admin.index.delete:
@@ -21,51 +17,48 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@polls.view.block.admin.poll_admin_form_block'
       - '@polls.model.polls_model'
-      - '@polls.model.answerrepository'
       - '@polls.validation.admin_form_validation'
 
   polls.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@polls.model.data_grid_repository'
+      - '@polls.view.block.admin.polls_data_grid_block'
 
   polls.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@polls.model.pollrepository'
-      - '@polls.model.voterepository'
+      - '@polls.view.block.frontend.polls_listing_block'
 
   polls.controller.frontend.index.result:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Result
     arguments:
       - '@core.context.frontend'
+      - '@polls.view.block.frontend.poll_details_block'
       - '@core.date'
-      - '@polls.model.pollrepository'
-      - '@polls.model.answerrepository'
+      - '@polls.model.repository.polls_repository'
 
   polls.controller.frontend.index.vote:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Vote
     arguments:
       - '@core.context.frontend'
+      - '@polls.view.block.frontend.poll_vote_form_block'
       - '@core.date'
       - '@polls.validation.vote_validation'
-      - '@polls.model.vote_model'
-      - '@polls.model.pollrepository'
-      - '@polls.model.answerrepository'
+      - '@polls.model.poll_votes_model'
+      - '@polls.model.repository.polls_repository'
+      - '@polls.model.repository.poll_answers_repository'
 
   polls.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
+      - '@polls.view.block.widget.poll_vote_widget_form_block'
+      - '@polls.view.block.widget.poll_details_widget_block'
       - '@core.date'
-      - '@polls.model.pollrepository'
-      - '@polls.model.answerrepository'
-      - '@polls.model.voterepository'
+      - '@polls.model.repository.polls_repository'
+      - '@polls.model.repository.poll_answers_repository'
 

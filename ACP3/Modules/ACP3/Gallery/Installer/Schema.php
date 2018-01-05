@@ -1,16 +1,15 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Gallery\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\System;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\Gallery\Installer
- */
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     const MODULE_NAME = 'gallery';
 
@@ -26,29 +25,29 @@ class Schema implements Modules\Installer\SchemaInterface
                     'create' => PrivilegeEnum::ADMIN_CREATE,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
                 ],
                 'pictures' => [
                     'create' => PrivilegeEnum::ADMIN_CREATE,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'index' => PrivilegeEnum::ADMIN_VIEW,
-                    'order' => PrivilegeEnum::ADMIN_CREATE
-                ]
+                    'order' => PrivilegeEnum::ADMIN_CREATE,
+                ],
             ],
             'frontend' => [
                 'index' => [
                     'image' => PrivilegeEnum::FRONTEND_VIEW,
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
                     'details' => PrivilegeEnum::FRONTEND_VIEW,
-                    'pics' => PrivilegeEnum::FRONTEND_VIEW
-                ]
+                    'pics' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
             ],
             'widget' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -74,7 +73,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}gallery` (
+            'CREATE TABLE `{pre}gallery` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `start` DATETIME NOT NULL,
                 `end` DATETIME NOT NULL,
@@ -84,8 +83,8 @@ class Schema implements Modules\Installer\SchemaInterface
                 PRIMARY KEY (`id`),
                 INDEX (`user_id`),
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
-            ) {ENGINE} {CHARSET};",
-            "CREATE TABLE `{pre}gallery_pictures` (
+            ) {ENGINE} {CHARSET};',
+            'CREATE TABLE `{pre}gallery_pictures` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `pic` INT(10) UNSIGNED NOT NULL,
                 `gallery_id` INT(10) UNSIGNED NOT NULL,
@@ -95,7 +94,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 PRIMARY KEY (`id`),
                 INDEX `foreign_gallery_id` (`gallery_id`),
                 FOREIGN KEY (`gallery_id`) REFERENCES `{pre}gallery` (`id`) ON DELETE CASCADE
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -105,8 +104,8 @@ class Schema implements Modules\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            "DROP TABLE IF EXISTS `{pre}gallery_pictures`;",
-            "DROP TABLE IF EXISTS `{pre}gallery`;"
+            'DROP TABLE IF EXISTS `{pre}gallery_pictures`;',
+            'DROP TABLE IF EXISTS `{pre}gallery`;',
         ];
     }
 

@@ -24,7 +24,6 @@
         <item key="menu_bar_title">Name der Navigationsleiste</item>
         <item key="menu_bar_title_to_short">Der Name der Navigationsleiste darf nicht leer sein.</item>
         <item key="menu_items">Menüpunkte</item>
-        <item key="mod_description">Dieses Modul verwaltet die Navigationsleisten.</item>
         <item key="module">Modul</item>
         <item key="no_superior_page">Keine übergeordnete Seite</item>
         <item key="page_type">Seitentyp</item>
@@ -33,7 +32,7 @@
         <item key="select_page_type">Bitte wählen Sie den Seitentyp aus.</item>
         <item key="select_superior_page">Bitte wählen Sie eine übergeordnete Seite aus.</item>
         <item key="superior_page">Übergeordnete Seite</item>
-        <item key="superior_page_not_allowed">Die gerade ausgewählte Seite kann nicht als übergeordnete Seite verwendet werden.</item>
+        <item key="superior_page_not_allowed">Die ausgewählte Seite kann nicht als übergeordnete Seite verwendet werden.</item>
         <item key="target_page">Zielseite</item>
         <item key="title">Name des Menüpunkts</item>
         <item key="title_to_short">Der Name des Menüpunkts darf nicht leer sein.</item>

@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Newsletter\Test\Helper\DataGrid\ColumnRenderer;
 
 use ACP3\Core\I18n\Translator;
@@ -39,17 +45,17 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidField()
     {
-        $this->columnData = array_merge($this->columnData, [
-            'fields' => ['status']
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['status'],
         ]);
         $this->dbData = [
             'id' => 123,
-            'status' => 1
+            'status' => 1,
         ];
 
         $this->primaryKey = 'id';
 
-        $expected = '<td><i class="glyphicon glyphicon-ok text-success"></i></td>';
+        $expected = '<td><i class="fa fa-check text-success"></i></td>';
         $this->compareResults($expected);
     }
 
@@ -65,17 +71,17 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
             ->with('acp/newsletter/accounts/activate/id_123')
             ->willReturn('/index.php/acp/newsletter/accounts/activate/id_123/');
 
-        $this->columnData = array_merge($this->columnData, [
-            'fields' => ['status']
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['status'],
         ]);
         $this->dbData = [
             'id' => 123,
-            'status' => 0
+            'status' => 0,
         ];
 
         $this->primaryKey = 'id';
 
-        $expected = '<td><a href="/index.php/acp/newsletter/accounts/activate/id_123/" title="{NEWSLETTER_ACTIVATE_ACCOUNT}"><i class="glyphicon glyphicon-remove text-danger"></i></a></td>';
+        $expected = '<td><a href="/index.php/acp/newsletter/accounts/activate/id_123/" title="{NEWSLETTER_ACTIVATE_ACCOUNT}"><i class="fa fa-times text-danger"></i></a></td>';
         $this->compareResults($expected);
     }
 }

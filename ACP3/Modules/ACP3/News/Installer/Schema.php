@@ -1,15 +1,15 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\News\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\Modules;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\News\Installer
- */
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     const MODULE_NAME = 'news';
 
@@ -26,21 +26,21 @@ class Schema implements Modules\Installer\SchemaInterface
                     'duplicate' => PrivilegeEnum::ADMIN_CREATE,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'index' => PrivilegeEnum::ADMIN_VIEW,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
-                ]
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
+                ],
             ],
             'frontend' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                    'details' => PrivilegeEnum::FRONTEND_VIEW
-                ]
+                    'details' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
             ],
             'widget' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                    'latest' => PrivilegeEnum::FRONTEND_VIEW
-                ]
-            ]
+                    'latest' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
+            ],
         ];
     }
 
@@ -66,7 +66,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}news` (
+            'CREATE TABLE `{pre}news` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `active` TINYINT(1) UNSIGNED NOT NULL,
                 `start` DATETIME NOT NULL,
@@ -88,7 +88,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 INDEX (`user_id`),
                 FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE SET NULL,
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -98,7 +98,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            "DROP TABLE IF EXISTS `{pre}news`;"
+            'DROP TABLE IF EXISTS `{pre}news`;',
         ];
     }
 
@@ -113,7 +113,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'readmore' => 1,
             'readmore_chars' => 350,
             'sidebar' => 5,
-            'category_in_breadcrumb' => 1
+            'category_in_breadcrumb' => 1,
         ];
     }
 }

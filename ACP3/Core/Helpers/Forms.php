@@ -1,17 +1,19 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 
-/**
- * Class Forms
- * @package ACP3\Core\Helpers
- */
 class Forms
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -20,11 +22,11 @@ class Forms
     protected $request;
 
     /**
-     * @param \ACP3\Core\I18n\Translator       $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Http\RequestInterface $request
      */
     public function __construct(
-        Translator $translator,
+        TranslatorInterface $translator,
         RequestInterface $request
     ) {
         $this->translator = $translator;
@@ -47,16 +49,17 @@ class Forms
         for ($i = $steps; $i <= $maxValue; $i += $steps) {
             $values[$i] = $i;
         }
+
         return $this->choicesGenerator($formFieldName, $values, $currentValue);
     }
 
     /**
      * Selektion eines Eintrages in einem Dropdown-Menü
      *
-     * @param string               $formFieldName
-     * @param mixed                $defaultValue
+     * @param string $formFieldName
+     * @param mixed $defaultValue
      * @param string|integer|array $currentValue
-     * @param string               $htmlAttribute
+     * @param string $htmlAttribute
      *
      * @return string
      */
@@ -65,9 +68,9 @@ class Forms
         $htmlAttribute = $this->buildHtmlAttribute($htmlAttribute);
         $currentValue = $this->request->getPost()->get($formFieldName, $currentValue);
 
-        if (is_array($currentValue) === false && $currentValue == $defaultValue) {
+        if (\is_array($currentValue) === false && $currentValue == $defaultValue) {
             return $htmlAttribute;
-        } elseif (is_array($currentValue) === true && in_array($defaultValue, $currentValue)) {
+        } elseif (\is_array($currentValue) === true && \in_array($defaultValue, $currentValue)) {
             return $htmlAttribute;
         }
 
@@ -90,26 +93,27 @@ class Forms
 
     /**
      *
-     * @param string               $formFieldName
-     * @param array                $values
+     * @param string $formFieldName
+     * @param array $values
      * @param string|integer|array $currentValue
-     * @param string               $htmlAttribute
+     * @param string $htmlAttribute
      *
      * @return array
      */
     public function choicesGenerator($formFieldName, array $values, $currentValue = '', $htmlAttribute = 'selected')
     {
         $choices = [];
-        $id = str_replace('_', '-', $formFieldName);
+        $id = \str_replace('_', '-', $formFieldName);
         foreach ($values as $value => $phrase) {
             $choices[] = [
                 'value' => $value,
                 'id' => ($htmlAttribute === 'checked' ? $id . '-' . $value : $id),
                 'name' => $formFieldName,
                 $htmlAttribute => $this->selectEntry($formFieldName, $value, $currentValue, $htmlAttribute),
-                'lang' => $phrase
+                'lang' => $phrase,
             ];
         }
+
         return $choices;
     }
 
@@ -124,7 +128,7 @@ class Forms
     {
         $linkTargets = [
             1 => $this->translator->t('system', 'window_self'),
-            2 => $this->translator->t('system', 'window_blank')
+            2 => $this->translator->t('system', 'window_blank'),
         ];
 
         return $this->choicesGenerator($formFieldName, $linkTargets, $currentValue, $htmlAttribute);
@@ -141,15 +145,15 @@ class Forms
     {
         $values = [
             1 => $this->translator->t('system', 'yes'),
-            0 => $this->translator->t('system', 'no')
+            0 => $this->translator->t('system', 'no'),
         ];
 
         return $this->choicesGenerator($formFieldName, $values, $currentValue, $htmlAttribute);
     }
 
     /**
-     * @param string               $formFieldName
-     * @param array                $values
+     * @param string $formFieldName
+     * @param array $values
      * @param string|integer|array $currentValue
      *
      * @return array
@@ -169,7 +173,7 @@ class Forms
     {
         $values = [
             1 => $this->translator->t('system', 'yes'),
-            0 => $this->translator->t('system', 'no')
+            0 => $this->translator->t('system', 'no'),
         ];
 
         return $this->checkboxGenerator($formFieldName, $values, $currentValue);

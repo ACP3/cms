@@ -1,26 +1,41 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Emoticons\Validation;
 
 use ACP3\Core;
+use ACP3\Core\Validation\Validator;
+use ACP3\Modules\ACP3\Emoticons\Installer\Schema;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Emoticons\Validation
- */
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
+    /**
+     * @var Core\Settings\SettingsInterface
+     */
+    private $settings;
+
     /**
      * @var null|array
      */
     protected $file;
     /**
-     * @var array
-     */
-    protected $settings = [];
-    /**
      * @var bool
      */
     protected $fileRequired = false;
+
+    public function __construct(
+        Core\I18n\TranslatorInterface $translator,
+        Validator $validator,
+        Core\Settings\SettingsInterface $settings
+    ) {
+        parent::__construct($translator, $validator);
+
+        $this->settings = $settings;
+    }
 
     /**
      * @param array|null $file
@@ -30,21 +45,9 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function setFile($file)
     {
         $this->file = $file;
-        return $this;
-    }
-
-    /**
-     * @param array $settings
-     *
-     * @return $this
-     */
-    public function setSettings(array $settings)
-    {
-        $this->settings = $settings;
 
         return $this;
     }
-
 
     /**
      * @param bool $fileRequired
@@ -63,6 +66,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
      */
     public function validate(array $formData)
     {
+        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
+
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
@@ -70,7 +75,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'code',
-                    'message' => $this->translator->t('emoticons', 'type_in_code')
+                    'message' => $this->translator->t('emoticons', 'type_in_code'),
                 ]
             )
             ->addConstraint(
@@ -78,7 +83,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'description',
-                    'message' => $this->translator->t('emoticons', 'type_in_description')
+                    'message' => $this->translator->t('emoticons', 'type_in_description'),
                 ]
             )
             ->addConstraint(
@@ -88,11 +93,11 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'picture',
                     'message' => $this->translator->t('emoticons', 'invalid_image_selected'),
                     'extra' => [
-                        'width' => $this->settings['width'],
-                        'height' => $this->settings['height'],
-                        'filesize' => $this->settings['filesize'],
-                        'required' => $this->fileRequired
-                    ]
+                        'width' => $settings['width'],
+                        'height' => $settings['height'],
+                        'filesize' => $settings['filesize'],
+                        'required' => $this->fileRequired,
+                    ],
                 ]
             );
 

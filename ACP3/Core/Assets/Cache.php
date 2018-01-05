@@ -1,24 +1,26 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Assets;
 
 use ACP3\Core;
 
-/**
- * Class Cache
- * @package ACP3\Core\Assets
- */
 class Cache
 {
     const CACHE_ID = 'resources';
     /**
-     * @var \ACP3\Core\Cache
+     * @var \ACP3\Core\Cache\Cache
      */
     protected $cache;
 
     /**
-     * @param \ACP3\Core\Cache $cache
+     * @param \ACP3\Core\Cache\Cache $cache
      */
-    public function __construct(Core\Cache $cache)
+    public function __construct(Core\Cache\Cache $cache)
     {
         $this->cache = $cache;
     }

@@ -1,10 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Captcha\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\Modules;
 
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     const MODULE_NAME = 'captcha';
 
@@ -32,7 +37,7 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             'captcha' => 'captcha.extension.native_captcha_extension',
             'recaptcha_sitekey' => '',
-            'recaptcha_secret' => ''
+            'recaptcha_secret' => '',
         ];
     }
 
@@ -46,12 +51,12 @@ class Schema implements Modules\Installer\SchemaInterface
                 'index' => [
                     'index' => PrivilegeEnum::ADMIN_VIEW,
                     'settings' => PrivilegeEnum::ADMIN_SETTINGS,
-                ]
+                ],
             ],
             'frontend' => [
                 'index' => [
                     'image' => PrivilegeEnum::FRONTEND_VIEW,
-                ]
+                ],
             ],
         ];
     }

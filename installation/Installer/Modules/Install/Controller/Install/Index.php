@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Controller\Install;
@@ -19,10 +20,6 @@ use ACP3\Modules\ACP3\System\Helper\AvailableDesignsTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class Index
- * @package ACP3\Installer\Modules\Install\Controller\Install
- */
 class Index extends AbstractAction
 {
     use AvailableDesignsTrait;
@@ -88,9 +85,9 @@ class Index extends AbstractAction
     public function execute()
     {
         return [
-            'time_zones' => $this->dateHelper->getTimeZones(date_default_timezone_get()),
-            'form' => array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
-            'designs' => $this->getAvailableDesigns()
+            'time_zones' => $this->dateHelper->getTimeZones(\date_default_timezone_get()),
+            'form' => \array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
+            'designs' => $this->getAvailableDesigns(),
         ];
     }
 
@@ -113,7 +110,7 @@ class Index extends AbstractAction
     }
 
     /**
-     * @return array|JsonResponse
+     * @return array|string|JsonResponse
      */
     public function executePost()
     {
@@ -140,12 +137,13 @@ class Index extends AbstractAction
 
             $this->navigation->markStepComplete('install_index');
 
-            $this->setTemplate('install/install.result.tpl');
+            return 'Install/Install/install.result.tpl';
         } catch (ValidationFailedException $e) {
             return $this->renderErrorBoxOnFailedFormValidation($e);
         } catch (\Exception $e) {
             $this->get('core.logger.system_logger')->error($e);
-            $this->setTemplate('install/install.error.tpl');
+
+            return 'Install/Install/install.error.tpl';
         }
     }
 

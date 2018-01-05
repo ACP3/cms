@@ -1,0 +1,15 @@
+services:
+  errors.view.block.frontend.access_forbidden_block:
+    class: ACP3\Modules\ACP3\Errors\View\Block\Frontend\AccessForbiddenBlock
+    arguments:
+      - '@core.view.context.block_context'
+
+  errors.view.block.frontend.not_found_block:
+    class: ACP3\Modules\ACP3\Errors\View\Block\Frontend\NotFoundBlock
+    arguments:
+      - '@core.view.context.block_context'
+
+  errors.view.block.frontend.server_error_block:
+    class: ACP3\Modules\ACP3\Errors\View\Block\Frontend\ServerErrorBlock
+    arguments:
+      - '@core.view.context.block_context'

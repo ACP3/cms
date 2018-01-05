@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 
-/**
- * Class Order
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
- */
 class Order extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -20,11 +17,11 @@ class Order extends Core\Controller\AbstractFrontendAction
      */
     protected $sortHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Cache
+     * @var \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage
      */
     protected $galleryCache;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository
      */
     protected $pictureRepository;
 
@@ -33,14 +30,14 @@ class Order extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext         $context
      * @param \ACP3\Core\Helpers\Sort                            $sortHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage                   $galleryCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Sort $sortHelper,
-        Gallery\Model\Repository\PictureRepository $pictureRepository,
-        Gallery\Cache $galleryCache
+        Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository,
+        Gallery\Cache\GalleryCacheStorage $galleryCache
     ) {
         parent::__construct($context);
 
@@ -56,13 +53,13 @@ class Order extends Core\Controller\AbstractFrontendAction
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id, $action)
+    public function execute(int $id, string $action)
     {
         if (($action === 'up' || $action === 'down') && $this->pictureRepository->pictureExists($id) === true) {
             if ($action === 'up') {
-                $this->sortHelper->up(Gallery\Model\Repository\PictureRepository::TABLE_NAME, 'id', 'pic', $id, 'gallery_id');
+                $this->sortHelper->up(Gallery\Model\Repository\GalleryPicturesRepository::TABLE_NAME, 'id', 'pic', $id, 'gallery_id');
             } else {
-                $this->sortHelper->down(Gallery\Model\Repository\PictureRepository::TABLE_NAME, 'id', 'pic', $id, 'gallery_id');
+                $this->sortHelper->down(Gallery\Model\Repository\GalleryPicturesRepository::TABLE_NAME, 'id', 'pic', $id, 'gallery_id');
             }
 
             $galleryId = $this->pictureRepository->getGalleryIdFromPictureId($id);

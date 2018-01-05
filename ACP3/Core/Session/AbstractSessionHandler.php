@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Session;
@@ -27,22 +28,22 @@ abstract class AbstractSessionHandler implements SessionHandlerInterface
      */
     protected function configureSession($isSecure = false)
     {
-        if (session_status() == PHP_SESSION_NONE) {
+        if (\session_status() == PHP_SESSION_NONE) {
             // Configure the php.ini session settings
-            ini_set('session.name', self::SESSION_NAME);
-            ini_set('session.use_trans_sid', 0);
-            ini_set('session.use_cookies', 'on');
-            ini_set('session.use_only_cookies', 'on');
-            ini_set('session.cookie_httponly', 'on');
-            ini_set('session.use_strict_mode', 'on');
-            ini_set('session.cookie_secure', $isSecure ? 'on' : 'off');
+            \ini_set('session.name', self::SESSION_NAME);
+            \ini_set('session.use_trans_sid', 0);
+            \ini_set('session.use_cookies', 'on');
+            \ini_set('session.use_only_cookies', 'on');
+            \ini_set('session.cookie_httponly', 'on');
+            \ini_set('session.use_strict_mode', 'on');
+            \ini_set('session.cookie_secure', $isSecure ? 'on' : 'off');
 
             // Session GC
-            ini_set('session.gc_maxlifetime', $this->expireTime);
-            ini_set('session.gc_probability', $this->gcProbability);
-            ini_set('session.gc_divisor', $this->gcDivisor);
+            \ini_set('session.gc_maxlifetime', $this->expireTime);
+            \ini_set('session.gc_probability', $this->gcProbability);
+            \ini_set('session.gc_divisor', $this->gcDivisor);
 
-            session_set_save_handler($this, true);
+            \session_set_save_handler($this, true);
 
             // Start the session and secure it
             $this->startSession();
@@ -73,7 +74,7 @@ abstract class AbstractSessionHandler implements SessionHandlerInterface
      */
     public function has($key)
     {
-        return array_key_exists($key, $_SESSION);
+        return \array_key_exists($key, $_SESSION);
     }
 
     /**

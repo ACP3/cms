@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
@@ -9,10 +10,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 use ACP3\Core\View\Event\TemplateEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Event
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class Event extends AbstractFunction
 {
     /**
@@ -47,10 +44,10 @@ class Event extends AbstractFunction
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         if (isset($params['name'])) {
-            ob_start();
+            \ob_start();
             $this->eventDispatcher->dispatch($params['name'], new TemplateEvent($this->parseArguments($params)));
-            $result = ob_get_contents();
-            ob_end_clean();
+            $result = \ob_get_contents();
+            \ob_end_clean();
 
             return $result;
         }

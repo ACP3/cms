@@ -1,10 +1,12 @@
 <?php
-namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 /**
- * Class AbstractColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
+
 abstract class AbstractColumnRenderer implements ColumnRendererInterface
 {
     const CELL_TYPE = 'td';
@@ -17,13 +19,15 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      * @var string
      */
     protected $primaryKey = '';
+    /**
+     * @var bool
+     */
+    protected $isAjax = false;
 
     /**
-     * @param string $identifier
-     *
-     * @return $this
+     * @inheritdoc
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier(string $identifier)
     {
         $this->identifier = $identifier;
 
@@ -31,13 +35,21 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param string $primaryKey
-     *
-     * @return $this
+     * @inheritdoc
      */
-    public function setPrimaryKey($primaryKey)
+    public function setPrimaryKey(string $primaryKey)
     {
         $this->primaryKey = $primaryKey;
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setIsAjax(bool $isAjax)
+    {
+        $this->isAjax = $isAjax;
 
         return $this;
     }
@@ -58,12 +70,31 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     protected function render(array $column, $value = '')
     {
+        if ($this->isAjax) {
+            return $this->renderAjax($column, $value);
+        }
+
         $type = static::CELL_TYPE;
         $attribute = $this->addHtmlAttribute($column['attribute']);
         $class = $this->addHtmlAttribute('class', $column['class']);
-        $style = $this->addHtmlAttribute('style', $column['style']);
 
-        return "<{$type}{$attribute}{$class}{$style}>{$value}</{$type}>";
+        return "<{$type}{$attribute}{$class}>{$value}</{$type}>";
+    }
+
+    /**
+     * @param array $column
+     * @param string $value
+     * @return string|array
+     */
+    private function renderAjax(array $column, string $value = '')
+    {
+        if (\is_array($column['attribute']) && \count($column['attribute'])) {
+            $column['attribute']['_'] = $value;
+
+            return $column['attribute'];
+        }
+
+        return $value;
     }
 
     /**
@@ -72,12 +103,12 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      *
      * @return string
      */
-    protected function addHtmlAttribute($attributeName, $attributeData = null)
+    private function addHtmlAttribute($attributeName, $attributeData = null)
     {
-        if (is_array($attributeName)) {
+        if (\is_array($attributeName)) {
             $data = '';
             foreach ($attributeName as $key => $value) {
-                $data .= $this->addHtmlAttribute($key, $value);
+                $data .= $this->addHtmlAttribute('data-' . $key, $value);
             }
 
             return $data;
@@ -97,7 +128,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     {
         $fields = $this->getDbFields($column);
 
-        return reset($fields);
+        return \reset($fields);
     }
 
     /**
@@ -126,7 +157,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
-        return isset($dbResultRow[$field]) ? $dbResultRow[$field] : null;
+        return $dbResultRow[$field] ?? null;
     }
 
     /**
@@ -136,11 +167,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     protected function getDefaultValue(array $column)
     {
-        if (isset($column['custom']['default_value'])) {
-            return $column['custom']['default_value'];
-        }
-
-        return '';
+        return $column['custom']['default_value'] ?? '';
     }
 
     /**

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Helpers;
@@ -33,7 +34,7 @@ class ResultsPerPage
      * @param string $moduleName
      * @return int
      */
-    public function getResultsPerPage($moduleName)
+    public function getResultsPerPage(string $moduleName): int
     {
         if (!isset($this->resultsPerPage[$moduleName])) {
             $moduleSettings = $this->settings->getSettings($moduleName);

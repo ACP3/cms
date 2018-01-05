@@ -1,27 +1,28 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Event\Listener;
 
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaValidationRule;
 
 class OnCaptchaValidationValidateCaptchaListener
 {
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
 
     /**
      * OnCaptchaValidationValidateCaptcha constructor.
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
@@ -38,7 +39,7 @@ class OnCaptchaValidationValidateCaptchaListener
                 [
                     'data' => $event->getFormData(),
                     'field' => 'captcha',
-                    'message' => $this->translator->t('captcha', 'invalid_captcha_entered')
+                    'message' => $this->translator->t('captcha', 'invalid_captcha_entered'),
                 ]
             );
     }

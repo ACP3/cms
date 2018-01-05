@@ -1,26 +1,28 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Permissions\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository;
 
-/**
- * Class RoleNotExistsValidationRule
- * @package ACP3\Modules\ACP3\Permissions\Validation\ValidationRules
- */
 class RoleNotExistsValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository
      */
     protected $roleRepository;
 
     /**
      * RoleExistsValidationRule constructor.
      *
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository $roleRepository
      */
-    public function __construct(RoleRepository $roleRepository)
+    public function __construct(AclRolesRepository $roleRepository)
     {
         $this->roleRepository = $roleRepository;
     }
@@ -30,10 +32,10 @@ class RoleNotExistsValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->roleRepository->roleExistsByName($data, isset($extra['role_id']) ? $extra['role_id'] : 0) === false;
+        return $this->roleRepository->roleExistsByName($data, $extra['role_id'] ?? 0) === false;
     }
 }

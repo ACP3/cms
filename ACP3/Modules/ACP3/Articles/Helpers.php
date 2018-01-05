@@ -1,18 +1,15 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository;
 
-/**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Articles
- */
 class Helpers
 {
     const URL_KEY_PATTERN = 'articles/index/details/id_%s/';
@@ -21,17 +18,17 @@ class Helpers
      */
     protected $formsHelper;
     /**
-     * @var ArticleRepository
+     * @var ArticlesRepository
      */
     protected $articleRepository;
 
     /**
      * @param Core\Helpers\Forms $formsHelper
-     * @param ArticleRepository  $articleRepository
+     * @param ArticlesRepository  $articleRepository
      */
     public function __construct(
         Core\Helpers\Forms $formsHelper,
-        ArticleRepository $articleRepository
+        ArticlesRepository $articleRepository
     ) {
         $this->formsHelper = $formsHelper;
         $this->articleRepository = $articleRepository;
@@ -47,13 +44,14 @@ class Helpers
     public function articlesList($id = 0)
     {
         $articles = $this->articleRepository->getAll();
-        $cArticles = count($articles);
+        $cArticles = \count($articles);
 
         if ($cArticles > 0) {
             for ($i = 0; $i < $cArticles; ++$i) {
                 $articles[$i]['selected'] = $this->formsHelper->selectEntry('articles', $articles[$i]['id'], $id);
             }
         }
+
         return $articles;
     }
 

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Extension;
@@ -39,16 +40,20 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
     }
 
     /**
-     * @param $routeName
-     * @param null|string $lastModificationDate
+     * @param string $routeName
+     * @param \DateTimeInterface|null $lastModificationDate
      * @param bool|null $isSecure
      * @return $this
      */
-    protected function addUrl($routeName, $lastModificationDate = null, $isSecure = null)
+    protected function addUrl(string $routeName, ?\DateTimeInterface $lastModificationDate, ?bool $isSecure)
     {
         if ($this->pageIsIndexable($routeName)) {
-            $this->urls[] = (new Url($this->router->route($routeName, true, $isSecure)))
-                ->setLastMod($lastModificationDate);
+            $url = new Url($this->router->route($routeName, true, $isSecure));
+            if ($lastModificationDate !== null) {
+                $url->setLastMod($lastModificationDate);
+            }
+
+            $this->urls[] = $url;
         }
 
         return $this;
@@ -58,9 +63,9 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
      * @param string $routeName
      * @return bool
      */
-    private function pageIsIndexable($routeName)
+    private function pageIsIndexable(string $routeName): bool
     {
-        return in_array($this->metaStatements->getRobotsSetting($routeName), ['index,follow', 'index,nofollow']);
+        return \in_array($this->metaStatements->getRobotsSetting($routeName), ['index,follow', 'index,nofollow']);
     }
 
     /**

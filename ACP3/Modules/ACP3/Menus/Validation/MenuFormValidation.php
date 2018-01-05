@@ -1,29 +1,31 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Validation;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuAlreadyExistsValidationRule;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuNameValidationRule;
 
-/**
- * Class MenuFormValidation
- * @package ACP3\Modules\ACP3\Menus\Validation
- */
 class MenuFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @var int
      */
-    protected $menuId = 0;
+    protected $menuId;
 
     /**
-     * @param int $menuId
+     * @param int|null $menuId
      *
      * @return $this
      */
-    public function setMenuId($menuId)
+    public function setMenuId(?int $menuId)
     {
-        $this->menuId = (int)$menuId;
+        $this->menuId = $menuId;
 
         return $this;
     }
@@ -40,7 +42,7 @@ class MenuFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'index_name',
-                    'message' => $this->translator->t('menus', 'type_in_index_name')
+                    'message' => $this->translator->t('menus', 'type_in_index_name'),
                 ]
             )
             ->addConstraint(
@@ -50,8 +52,8 @@ class MenuFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'index_name',
                     'message' => $this->translator->t('menus', 'index_name_unique'),
                     'extra' => [
-                        'menu_id' => $this->menuId
-                    ]
+                        'menu_id' => $this->menuId,
+                    ],
                 ]
             )
             ->addConstraint(
@@ -59,7 +61,7 @@ class MenuFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->translator->t('menus', 'menu_bar_title_to_short')
+                    'message' => $this->translator->t('menus', 'menu_bar_title_to_short'),
                 ]
             );
 

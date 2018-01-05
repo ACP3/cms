@@ -15,15 +15,14 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts\Index
     arguments:
       - '@core.context.frontend'
-      - '@newsletter.model.account_data_grid_repository'
+      - '@newsletter.view.block.admin.newsletter_accounts_data_grid_block'
 
   newsletter.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@newsletter.model'
+      - '@newsletter.view.block.admin.newsletter_admin_form_block'
+      - '@newsletter.model.newsletters_model'
       - '@newsletter.validation.admin_form_validation'
       - '@newsletter.helper.sendnewsletter'
 
@@ -31,15 +30,14 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
-      - '@newsletter.model'
+      - '@newsletter.model.newsletters_model'
 
   newsletter.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@newsletter.model'
+      - '@newsletter.view.block.admin.newsletter_admin_form_block'
+      - '@newsletter.model.newsletters_model'
       - '@newsletter.validation.admin_form_validation'
       - '@newsletter.helper.sendnewsletter'
 
@@ -47,22 +45,21 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@newsletter.model.newsletter_data_grid_repository'
+      - '@newsletter.view.block.admin.newsletter_data_grid_block'
 
   newsletter.controller.admin.index.send:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Send
     arguments:
       - '@core.context.frontend'
-      - '@newsletter.model.newsletterrepository'
-      - '@newsletter.model.accountrepository'
+      - '@newsletter.model.repository.newsletters_repository'
+      - '@newsletter.model.repository.newsletter_accounts_repository'
       - '@newsletter.helper.sendnewsletter'
 
   newsletter.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@newsletter.view.block.admin.newsletter_settings_form_block'
       - '@core.helpers.secure'
       - '@newsletter.validation.admin_settings_form_validation'
 
@@ -70,19 +67,20 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive\Details
     arguments:
       - '@core.context.frontend'
-      - '@newsletter.model.newsletterrepository'
+      - '@newsletter.view.block.frontend.newsletter_details_block'
+      - '@newsletter.model.repository.newsletters_repository'
 
   newsletter.controller.frontend.archive.index:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.pagination'
-      - '@newsletter.model.newsletterrepository'
+      - '@newsletter.view.block.frontend.newsletter_archive_form_block'
 
   newsletter.controller.frontend.index.activate:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\Activate
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.alerts'
       - '@newsletter.helper.accountstatus'
       - '@newsletter.validation.activate_account_form_validation'
 
@@ -90,8 +88,8 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@newsletter.view.block.frontend.newsletter_subscribe_form_block'
+      - '@core.helpers.alerts'
       - '@newsletter.helper.subscribe'
       - '@newsletter.validation.subscribe_form_validation'
 
@@ -99,7 +97,8 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\Unsubscribe
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
+      - '@newsletter.view.block.frontend.newsletter_unsubscribe_form_block'
+      - '@core.helpers.alerts'
       - '@newsletter.helper.accountstatus'
       - '@newsletter.validation.unsubscribe_form_validation'
 
@@ -107,4 +106,4 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
-      - '@core.helpers.formToken'
+      - '@newsletter.view.block.widget.newsletter_subscribe_widget_form_block'

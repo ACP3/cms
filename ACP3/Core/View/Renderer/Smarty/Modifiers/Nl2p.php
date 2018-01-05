@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Modifiers;
 
 use ACP3\Core\Helpers\StringFormatter;
 
-/**
- * Class Nl2p
- * @package ACP3\Core\View\Renderer\Smarty\Modifiers
- */
 class Nl2p extends AbstractModifier
 {
     /**

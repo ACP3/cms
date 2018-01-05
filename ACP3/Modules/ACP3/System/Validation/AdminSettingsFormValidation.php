@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\System\Validation;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidationRule;
 
-/**
- * Class AdminSettingsFormValidation
- * @package ACP3\Modules\ACP3\System\Validation
- */
 class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
@@ -40,7 +42,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'homepage',
-                    'message' => $this->translator->t('system', 'incorrect_homepage')
+                    'message' => $this->translator->t('system', 'incorrect_homepage'),
                 ]
             )
             ->addConstraint(
@@ -48,7 +50,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'entries',
-                    'message' => $this->translator->t('system', 'select_records_per_page')
+                    'message' => $this->translator->t('system', 'select_records_per_page'),
                 ]
             )
             ->addConstraint(
@@ -56,7 +58,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'flood',
-                    'message' => $this->translator->t('system', 'type_in_flood_barrier')
+                    'message' => $this->translator->t('system', 'type_in_flood_barrier'),
                 ]
             )
             ->addConstraint(
@@ -64,7 +66,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'wysiwyg',
-                    'message' => $this->translator->t('system', 'select_editor')
+                    'message' => $this->translator->t('system', 'select_editor'),
                 ]
             )
             ->addConstraint(
@@ -72,7 +74,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'language',
-                    'message' => $this->translator->t('system', 'select_language')
+                    'message' => $this->translator->t('system', 'select_language'),
                 ]
             )
             ->addConstraint(
@@ -82,8 +84,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'mod_rewrite',
                     'message' => $this->translator->t('system', 'select_mod_rewrite'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -93,8 +95,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'cookie_consent_is_enabled',
                     'message' => $this->translator->t('system', 'select_enable_cookie_consent'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             );
     }
@@ -107,7 +109,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'site_title',
-                    'message' => $this->translator->t('system', 'title_to_short')
+                    'message' => $this->translator->t('system', 'title_to_short'),
                 ]
             )
             ->addConstraint(
@@ -117,8 +119,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'site_subtitle_mode',
                     'message' => $this->translator->t('system', 'select_site_subtitle_mode'),
                     'extra' => [
-                        'haystack' => [1, 2, 3]
-                    ]
+                        'haystack' => [1, 2, 3],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -128,8 +130,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'site_subtitle_homepage_mode',
                     'message' => $this->translator->t('system', 'select_site_subtitle_homepage_mode'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             );
     }
@@ -145,7 +147,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'date_format_long',
-                    'message' => $this->translator->t('system', 'type_in_long_date_format')
+                    'message' => $this->translator->t('system', 'type_in_long_date_format'),
                 ]
             )
             ->addConstraint(
@@ -153,7 +155,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'date_format_short',
-                    'message' => $this->translator->t('system', 'type_in_short_date_format')
+                    'message' => $this->translator->t('system', 'type_in_short_date_format'),
                 ]
             )
             ->addConstraint(
@@ -161,7 +163,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'date_time_zone',
-                    'message' => $this->translator->t('system', 'select_time_zone')
+                    'message' => $this->translator->t('system', 'select_time_zone'),
                 ]
             );
     }
@@ -179,8 +181,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'maintenance_mode',
                     'message' => $this->translator->t('system', 'select_online_maintenance'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -188,7 +190,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'maintenance_message',
-                    'message' => $this->translator->t('system', 'maintenance_message_to_short')
+                    'message' => $this->translator->t('system', 'maintenance_message_to_short'),
                 ]
             );
     }
@@ -206,8 +208,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'page_cache_is_enabled',
                     'message' => $this->translator->t('system', 'select_enable_page_cache'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -217,8 +219,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'page_cache_purge_mode',
                     'message' => $this->translator->t('system', 'select_page_cache_purge_mode'),
                     'extra' => [
-                        'haystack' => [1, 2]
-                    ]
+                        'haystack' => [1, 2],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -228,8 +230,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'cache_images',
                     'message' => $this->translator->t('system', 'select_cache_images'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -237,7 +239,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'cache_lifetime',
-                    'message' => $this->translator->t('system', 'type_in_cache_lifetime')
+                    'message' => $this->translator->t('system', 'type_in_cache_lifetime'),
                 ]
             );
     }
@@ -255,8 +257,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'mailer_type',
                     'message' => $this->translator->t('system', 'select_mailer_type'),
                     'extra' => [
-                        'haystack' => ['mail', 'smtp']
-                    ]
+                        'haystack' => ['mail', 'smtp'],
+                    ],
                 ]
             );
 
@@ -267,7 +269,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'mailer_smtp_host',
-                        'message' => $this->translator->t('system', 'type_in_mailer_smtp_host')
+                        'message' => $this->translator->t('system', 'type_in_mailer_smtp_host'),
                     ]
                 )
                 ->addConstraint(
@@ -275,7 +277,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'mailer_smtp_port',
-                        'message' => $this->translator->t('system', 'type_in_mailer_smtp_port')
+                        'message' => $this->translator->t('system', 'type_in_mailer_smtp_port'),
                     ]
                 )
                 ->addConstraint(
@@ -285,8 +287,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                         'field' => 'mailer_smtp_security',
                         'message' => $this->translator->t('system', 'select_mailer_smtp_security'),
                         'extra' => [
-                            'haystack' => ['none', 'ssl', 'tls']
-                        ]
+                            'haystack' => ['none', 'ssl', 'tls'],
+                        ],
                     ]
                 );
 
@@ -297,7 +299,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                         [
                             'data' => $formData,
                             'field' => 'mailer_smtp_user',
-                            'message' => $this->translator->t('system', 'type_in_mailer_smtp_username')
+                            'message' => $this->translator->t('system', 'type_in_mailer_smtp_username'),
                         ]
                     );
             }

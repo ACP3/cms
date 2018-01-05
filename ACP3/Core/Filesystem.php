@@ -1,10 +1,12 @@
 <?php
-namespace ACP3\Core;
 
 /**
- * Class Filesystem
- * @package ACP3\Core
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core;
+
 class Filesystem
 {
     /**
@@ -12,23 +14,17 @@ class Filesystem
      */
     protected static $excluded = ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd'];
 
-    /**
-     * @param string $directory
-     * @param array  $excluded
-     *
-     * @return array
-     */
-    public static function scandir($directory, array $excluded = [])
+    public static function scandir(string $directory, array $excluded = []): array
     {
-        $directory = @scandir($directory);
+        $directory = @\scandir($directory);
 
         if ($directory !== false) {
-            $filesAndDirectories = array_diff(
+            $filesAndDirectories = \array_diff(
                 $directory,
-                array_merge(static::$excluded, $excluded)
+                \array_merge(static::$excluded, $excluded)
             );
 
-            return array_values($filesAndDirectories);
+            return \array_values($filesAndDirectories);
         }
 
         return [];

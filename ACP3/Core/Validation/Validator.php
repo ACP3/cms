@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Validation;
 
 use ACP3\Core\Validation\Event\FormValidationEvent;
@@ -7,10 +13,6 @@ use ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException;
 use ACP3\Core\Validation\ValidationRules\ValidationRuleInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Validator
- * @package ACP3\Core\Validation
- */
 class Validator
 {
     /**
@@ -46,7 +48,7 @@ class Validator
      */
     public function registerValidationRule(ValidationRuleInterface $validationRule)
     {
-        $this->validationRules[get_class($validationRule)] = $validationRule;
+        $this->validationRules[\get_class($validationRule)] = $validationRule;
 
         return $this;
     }
@@ -61,7 +63,7 @@ class Validator
     {
         $this->constraints[] = [
             'rule' => $validationRule,
-            'params' => array_merge($this->getDefaultConstraintParams(), $params)
+            'params' => \array_merge($this->getDefaultConstraintParams(), $params),
         ];
 
         return $this;
@@ -76,7 +78,7 @@ class Validator
             'data' => null,
             'field' => '',
             'message' => '',
-            'extra' => []
+            'extra' => [],
         ];
     }
 
@@ -105,11 +107,11 @@ class Validator
      */
     protected function mapField($field)
     {
-        if (is_array($field)) {
-            $field = reset($field);
+        if (\is_array($field)) {
+            $field = \reset($field);
         }
 
-        return str_replace('_', '-', $field);
+        return \str_replace('_', '-', $field);
     }
 
     /**
@@ -148,7 +150,7 @@ class Validator
                     $params['extra']
                 );
             } else {
-                throw new ValidationRuleNotFoundException(sprintf($this->getExceptionMessage(), $constraint['rule']));
+                throw new ValidationRuleNotFoundException(\sprintf($this->getExceptionMessage(), $constraint['rule']));
             }
         }
 
@@ -186,6 +188,6 @@ class Validator
             return $this->validationRules[$validationRule]->isValid($field);
         }
 
-        throw new ValidationRuleNotFoundException(sprintf($this->getExceptionMessage(), $validationRule));
+        throw new ValidationRuleNotFoundException(\sprintf($this->getExceptionMessage(), $validationRule));
     }
 }

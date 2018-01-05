@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\WYSIWYG;
@@ -56,7 +57,7 @@ class WysiwygEditorRegistrar
         }
 
         throw new \InvalidArgumentException(
-            sprintf('Can not find the WYSIWYG-Editor with the name: %s', $serviceId)
+            \sprintf('Can not find the WYSIWYG-Editor with the name: %s', $serviceId)
         );
     }
 }

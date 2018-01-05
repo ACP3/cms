@@ -1,12 +1,22 @@
 services:
-  comments.model.commentrepository:
-    class: ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
-    arguments:
-      - '@core.db'
-
   comments.model.comments_model:
     class: ACP3\Modules\ACP3\Comments\Model\CommentsModel
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
-      - '@comments.model.commentrepository'
+      - '@comments.model.repository.comments_repository'
+
+  comments.model.repository.comments_repository:
+    class: ACP3\Modules\ACP3\Comments\Model\Repository\CommentsRepository
+    arguments:
+      - '@core.db'
+
+  comments.model.repository.comments_by_module_data_grid_repository:
+    class: ACP3\Modules\ACP3\Comments\Model\Repository\CommentsByModuleDataGridRepository
+    arguments:
+      - '@core.db'
+
+  comments.model.repository.comments_data_grid_repository:
+    class: ACP3\Modules\ACP3\Comments\Model\Repository\CommentsDataGridRepository
+    arguments:
+      - '@core.db'

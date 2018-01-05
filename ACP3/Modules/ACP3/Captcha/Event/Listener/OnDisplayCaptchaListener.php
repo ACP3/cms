@@ -1,21 +1,22 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Event\Listener;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface;
 
 class OnDisplayCaptchaListener
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var ACLInterface
      */
-    protected $acl;
+    private $acl;
     /**
      * @var CaptchaExtensionInterface
      */
@@ -23,11 +24,10 @@ class OnDisplayCaptchaListener
 
     /**
      * OnDisplayCaptchaListener constructor.
-     *
-     * @param ACL $acl
-     * @param CaptchaExtensionInterface $captchaExtension
+     * @param ACLInterface $acl
+     * @param CaptchaExtensionInterface|null $captchaExtension
      */
-    public function __construct(ACL $acl, CaptchaExtensionInterface $captchaExtension = null)
+    public function __construct(ACLInterface $acl, CaptchaExtensionInterface $captchaExtension = null)
     {
         $this->acl = $acl;
         $this->captchaExtension = $captchaExtension;
@@ -44,10 +44,10 @@ class OnDisplayCaptchaListener
             $arguments = $templateEvent->getParameters();
 
             echo $this->captchaExtension->getCaptcha(
-                isset($arguments['length']) ? $arguments['length'] : CaptchaExtensionInterface::CAPTCHA_DEFAULT_LENGTH,
-                isset($arguments['input_id']) ? $arguments['input_id'] : CaptchaExtensionInterface::CAPTCHA_DEFAULT_INPUT_ID,
-                isset($arguments['input_only']) ? $arguments['input_only'] : false,
-                isset($arguments['path']) ? $arguments['path'] : ''
+                $arguments['length'] ?? CaptchaExtensionInterface::CAPTCHA_DEFAULT_LENGTH,
+                $arguments['input_id'] ?? CaptchaExtensionInterface::CAPTCHA_DEFAULT_INPUT_ID,
+                $arguments['input_only'] ?? false,
+                $arguments['path'] ?? ''
             );
         }
     }

@@ -1,56 +1,44 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\Files as FilesModule;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Files
- * @package ACP3\Modules\ACP3\Files\Controller\Frontend\Index
- */
 class Files extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
-     */
-    protected $filesRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository
      */
     protected $categoryRepository;
+    /**
+     * @var Core\View\Block\ListingBlockInterface
+     */
+    private $block;
 
     /**
      * Files constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
-     * @param \ACP3\Core\Date                                        $date
-     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository         $filesRepository
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\ListingBlockInterface $block
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository $categoryRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Date $date,
-        FilesModule\Model\Repository\FilesRepository $filesRepository,
-        Categories\Model\Repository\CategoryRepository $categoryRepository
+        Core\View\Block\ListingBlockInterface $block,
+        Categories\Model\Repository\CategoriesRepository $categoryRepository
     ) {
         parent::__construct($context);
 
-        $this->date = $date;
-        $this->filesRepository = $filesRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->block = $block;
     }
 
     /**
@@ -59,23 +47,14 @@ class Files extends Core\Controller\AbstractFrontendAction
      * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($cat)
+    public function execute(int $cat)
     {
         if ($this->categoryRepository->resultExists($cat) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+            $this->setCacheResponseCacheable();
 
-            $category = $this->categoryRepository->getOneById($cat);
-
-            $this->breadcrumb
-                ->append($this->translator->t('files', 'files'), 'files')
-                ->append($category['title']);
-
-            $settings = $this->config->getSettings(FilesModule\Installer\Schema::MODULE_NAME);
-
-            return [
-                'dateformat' => $settings['dateformat'],
-                'files' => $this->filesRepository->getAllByCategoryId($cat, $this->date->getCurrentDateTime())
-            ];
+            return $this->block
+                ->setData(['category_id' => $cat])
+                ->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

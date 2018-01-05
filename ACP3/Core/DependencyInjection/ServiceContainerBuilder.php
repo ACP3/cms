@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\DependencyInjection;
@@ -22,10 +23,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
-/**
- * Class ServiceContainerBuilder
- * @package ACP3\Core\DependencyInjection
- */
 class ServiceContainerBuilder extends ContainerBuilder
 {
     /**
@@ -56,7 +53,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         LoggerInterface $logger,
         ApplicationPath $applicationPath,
         SymfonyRequest $symfonyRequest,
-        $applicationMode
+        string $applicationMode
     ) {
         parent::__construct();
 
@@ -95,22 +92,17 @@ class ServiceContainerBuilder extends ContainerBuilder
         $loader->load($this->applicationPath->getClassesDir() . 'config/services.yml');
         $loader->load($this->applicationPath->getClassesDir() . 'View/Renderer/Smarty/config/services.yml');
 
-        // Try to get all available services
-        /** @var Modules $modules */
+        /** @var Modules\Modules $modules */
         $modules = $this->get('core.modules');
-        $vendors = $this->get('core.modules.vendors')->getVendors();
+        foreach ($modules->getAllModulesTopSorted() as $module) {
+            $modulePath = $this->applicationPath->getModulesDir() . $module['vendor'] . '/' . $module['dir'];
+            $path = $modulePath . '/Resources/config/services.yml';
 
-        foreach ($modules->getAllModules() as $module) {
-            foreach ($vendors as $vendor) {
-                $modulePath = $this->applicationPath->getModulesDir() . $vendor . '/' . $module['dir'];
-                $path = $modulePath . '/Resources/config/services.yml';
-
-                if (is_file($path)) {
-                    $loader->load($path);
-                }
-
-                $this->registerCompilerPass($vendor, $module['dir']);
+            if (\is_file($path)) {
+                $loader->load($path);
             }
+
+            $this->registerCompilerPass($module['vendor'], $module['dir']);
         }
 
         $this->compile();
@@ -136,12 +128,12 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param string $vendor
      * @param string $moduleName
      */
-    private function registerCompilerPass($vendor, $moduleName)
+    private function registerCompilerPass(string $vendor, string $moduleName)
     {
-        $fqn = "\\ACP3\\Modules\\" . $vendor . "\\" . $moduleName . "\\ModuleRegistration";
+        $fqcn = '\\ACP3\\Modules\\' . $vendor . '\\' . $moduleName . '\\ModuleRegistration';
 
-        if (class_exists($fqn)) {
-            $instance = new $fqn;
+        if (\class_exists($fqcn)) {
+            $instance = new $fqcn;
 
             if ($instance instanceof Modules\ModuleRegistration) {
                 $instance->build($this);

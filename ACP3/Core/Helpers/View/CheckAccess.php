@@ -1,20 +1,22 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers\View;
 
 use ACP3\Core;
 
-/**
- * Class CheckAccess
- * @package ACP3\Core\Helpers\View
- */
 class CheckAccess
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var \ACP3\Core\ACL\ACLInterface
      */
     protected $acl;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -25,13 +27,13 @@ class CheckAccess
     /**
      * CheckAccess constructor.
      *
-     * @param \ACP3\Core\ACL             $acl
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\ACL\ACLInterface $acl
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(
-        Core\ACL $acl,
-        Core\I18n\Translator $translator,
+        Core\ACL\ACLInterface $acl,
+        Core\I18n\TranslatorInterface $translator,
         Core\Router\RouterInterface $router
     ) {
         $this->translator = $translator;
@@ -42,24 +44,24 @@ class CheckAccess
     /**
      * @param array $params
      *
-     * @return string
+     * @return string|array
      */
     public function outputLinkOrButton(array $params)
     {
         if (isset($params['mode']) && isset($params['path'])) {
             $action = [];
-            $query = explode('/', strtolower($params['path']));
+            $query = \explode('/', \strtolower($params['path']));
 
             if (isset($query[0]) && $query[0] === 'acp') {
-                $action[0] = (isset($query[1]) ? $query[1] : 'acp');
-                $action[1] = (isset($query[2]) ? $query[2] : 'index');
-                $action[2] = isset($query[3]) ? $query[3] : 'index';
+                $action[0] = $query[1] ?? 'acp';
+                $action[1] = $query[2] ?? 'index';
+                $action[2] = $query[3] ?? 'index';
 
                 $area = Core\Controller\AreaEnum::AREA_ADMIN;
             } else {
                 $action[0] = $query[0];
-                $action[1] = isset($query[1]) ? $query[1] : 'index';
-                $action[2] = isset($query[2]) ? $query[2] : 'index';
+                $action[1] = $query[1] ?? 'index';
+                $action[2] = $query[2] ?? 'index';
 
                 $area = Core\Controller\AreaEnum::AREA_FRONTEND;
             }
@@ -79,13 +81,13 @@ class CheckAccess
     }
 
     /**
-     * @param array  $params
-     * @param string $action
+     * @param array $params
+     * @param string[] $action
      * @param string $area
      *
      * @return array
      */
-    private function collectData(array $params, $action, $area)
+    private function collectData(array $params, array $action, $area): array
     {
         $accessCheck = [];
         $accessCheck['uri'] = $this->router->route($params['path']);
@@ -94,7 +96,7 @@ class CheckAccess
             $accessCheck['title'] = $params['title'];
         }
         if (isset($params['lang'])) {
-            $langArray = explode('|', $params['lang']);
+            $langArray = \explode('|', $params['lang']);
             $accessCheck['lang'] = $this->translator->t($langArray[0], $langArray[1]);
         } else {
             $accessCheck['lang'] = $this->translator->t($action[0], $area . '_' . $action[1] . '_' . $action[2]);

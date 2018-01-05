@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
@@ -8,24 +10,12 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class Settings
- * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Account
- */
 class Settings extends AbstractAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation
      */
     protected $accountSettingsFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Helpers\Forms
-     */
-    protected $userFormsHelper;
     /**
      * @var Users\Model\UsersModel
      */
@@ -38,35 +28,36 @@ class Settings extends AbstractAction
      * @var Users\Model\AuthenticationModel
      */
     protected $authenticationModel;
+    /**
+     * @var Core\View\Block\RepositoryAwareFormBlockInterface
+     */
+    private $block;
 
     /**
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
      * @param Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms $userFormsHelper
      * @param Users\Model\AuthenticationModel $authenticationModel
      * @param Users\Model\UsersModel $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Core\Helpers\Secure $secureHelper,
-        Users\Helpers\Forms $userFormsHelper,
         Users\Model\AuthenticationModel $authenticationModel,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
-        $this->userFormsHelper = $userFormsHelper;
         $this->accountSettingsFormValidation = $accountSettingsFormValidation;
         $this->usersModel = $usersModel;
         $this->secureHelper = $secureHelper;
         $this->authenticationModel = $authenticationModel;
+        $this->block = $block;
     }
 
     /**
@@ -74,21 +65,10 @@ class Settings extends AbstractAction
      */
     public function execute()
     {
-        $user = $this->usersModel->getOneById($this->user->getUserId());
-
-        $this->view->assign(
-            $this->userFormsHelper->fetchUserSettingsFormFields(
-                $user['address_display'],
-                $user['birthday_display'],
-                $user['country_display'],
-                $user['mail_display']
-            )
-        );
-
-        return [
-            'form' => array_merge($user, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setDataById($this->user->getUserId())
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**

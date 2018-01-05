@@ -1,12 +1,12 @@
 services:
   articles.cache:
-    class: ACP3\Modules\ACP3\Articles\Cache
+    class: ACP3\Modules\ACP3\Articles\Cache\ArticleCacheStorage
     arguments:
       - '@articles.cache.core'
-      - '@articles.model.articlerepository'
+      - '@articles.model.repository.articles_repository'
 
   articles.cache.core:
-    class: ACP3\Core\Cache
+    class: ACP3\Core\Cache\Cache
     arguments:
       - '@core.cache.cache_driver_factory'
       - 'articles'

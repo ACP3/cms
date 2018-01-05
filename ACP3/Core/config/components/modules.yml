@@ -1,21 +1,10 @@
 services:
   core.modules:
-    class: ACP3\Core\Modules
+    class: ACP3\Core\Modules\Modules
     arguments:
       - '@core.environment.application_path'
-      - '@core.modules.helper.controllerActionExists'
-      - '@core.modules.moduleInfoCache'
+      - '@core.modules.module_info_cache'
       - '@core.modules.vendors'
-
-  core.modules.aclInstaller:
-    class: ACP3\Core\Modules\AclInstaller
-    arguments:
-      - '@core.cache.system'
-      - '@core.modules.schemaHelper'
-      - '@permissions.model.rolerepository'
-      - '@permissions.model.rulerepository'
-      - '@permissions.model.resourcerepository'
-      - '@permissions.model.privilegerepository'
 
   core.modules.helper.action:
     class: ACP3\Core\Modules\Helper\Action
@@ -26,54 +15,20 @@ services:
       - '@core.helpers.alerts'
       - '@core.helpers.redirect'
 
-  core.modules.helper.controllerActionExists:
+  core.modules.helper.controller_action_exists:
     class: ACP3\Core\Modules\Helper\ControllerActionExists
     arguments:
       - '@service_container'
 
-  core.modules.moduleInfoCache:
+  core.modules.module_info_cache:
     class: ACP3\Core\Modules\ModuleInfoCache
     arguments:
       - '@core.cache.system'
       - '@core.environment.application_path'
       - '@core.i18n.translator'
+      - '@core.i18n.locale'
       - '@core.modules.vendors'
-      - '@core.xml'
-      - '@system.model.modulerepository'
-
-  core.modules.schemaHelper:
-    class: ACP3\Core\Modules\SchemaHelper
-    arguments:
-      - '@core.modules.installer_logger'
-      - '@core.db'
-      - '@system.model.modulerepository'
-      - '@system.model.settingsrepository'
-    calls:
-      - ['setContainer', ['@service_container']]
-
-  core.modules.installer_logger:
-    class: Psr\Log\LoggerInterface
-    factory: 'core.logger.logger_factory:create'
-    arguments:
-      - 'installer'
-
-  core.modules.installer.abstractMigration:
-    abstract: true
-    arguments:
-      - '@core.modules.schemaHelper'
-
-  core.modules.installer.abstractSampleData:
-    abstract: true
-    arguments:
-      - '@core.modules.schemaHelper'
-
-  core.modules.schemaInstaller:
-    class: ACP3\Core\Modules\SchemaInstaller
-    parent: core.modules.schemaHelper
-
-  core.modules.schemaUpdater:
-    class: ACP3\Core\Modules\SchemaUpdater
-    parent: core.modules.schemaHelper
+      - '@system.model.repository.modules_repository'
 
   core.modules.vendors:
     class: ACP3\Core\Modules\Vendor

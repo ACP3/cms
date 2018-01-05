@@ -3,9 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
-      - '@seo.helper.meta_form_fields'
-      - '@seo.helper.uri_alias_manager'
+      - '@seo.view.block.admin.seo_admin_form_block'
       - '@seo.model.seo_model'
       - '@seo.validation.admin_form_validation'
 
@@ -20,8 +18,7 @@ services:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
-      - '@seo.helper.meta_form_fields'
+      - '@seo.view.block.admin.seo_admin_form_block'
       - '@seo.model.seo_model'
       - '@seo.validation.admin_form_validation'
 
@@ -29,15 +26,14 @@ services:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@seo.model.data_grid_repository'
-      - '@seo.helper.meta_statements'
+      - '@seo.view.block.admin.seo_data_grid_block'
 
   seo.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@seo.view.block.admin.seo_settings_form_block'
+      - '@core.helpers.secure'
       - '@seo.validation.admin_settings_form_validation'
 
   seo.controller.admin.index.sitemap:

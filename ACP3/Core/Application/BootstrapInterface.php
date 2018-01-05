@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Application;
 
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -7,7 +13,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * Interface BootstrapInterface
- * @package ACP3\Core\Application
  */
 interface BootstrapInterface extends HttpKernelInterface
 {

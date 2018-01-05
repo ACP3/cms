@@ -1,11 +1,11 @@
 <?php
+
 /**
- * UPDATER
- *
- * @author Tino Goratsch
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-define('ACP3_ROOT_DIR', realpath(__DIR__ . '/../') . '/');
+\define('ACP3_ROOT_DIR', \realpath(__DIR__ . '/../') . '/');
 
 require ACP3_ROOT_DIR . 'vendor/autoload.php';
 

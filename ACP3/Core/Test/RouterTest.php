@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test;
@@ -12,10 +13,6 @@ use ACP3\Core\Http\Request;
 use ACP3\Core\Router\Router;
 use ACP3\Core\Settings\SettingsInterface;
 
-/**
- * Class RouterTest
- * @package ACP3\Core\Test
- */
 class RouterTest extends \PHPUnit_Framework_TestCase
 {
     /**

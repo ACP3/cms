@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Test\Helpers\ColumnRenderer;
 
 use ACP3\Core\Date;
@@ -71,28 +76,28 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidField()
     {
-        $this->columnData = array_merge($this->columnData, [
-            'fields' => ['date']
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['date'],
         ]);
         $this->dbData = [
-            'date' => '2015-10-20 20:20:21'
+            'date' => '2015-10-20 20:20:21',
         ];
 
-        $expected = '<td data-order="1445372421"><time datetime="2015-10-20T22:20:21+02:00" title="2015-10-20 22:20">2015-10-20 22:20</time></td>';
+        $expected = '<td data-sort="1445372421"><time datetime="2015-10-20T22:20:21+02:00" title="2015-10-20 22:20">2015-10-20 22:20</time></td>';
         $this->compareResults($expected);
     }
 
     public function testValidFieldWithDateRange()
     {
-        $this->columnData = array_merge($this->columnData, [
-            'fields' => ['start', 'end']
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['start', 'end'],
         ]);
         $this->dbData = [
             'start' => '2015-10-20 20:20:21',
-            'end' => '2015-10-25 20:20:21'
+            'end' => '2015-10-25 20:20:21',
         ];
 
-        $expected = '<td data-order="1445372421"><time datetime="2015-10-20T22:20:21+02:00">2015-10-20 22:20</time>&ndash;<time datetime="2015-10-25T21:20:21+01:00">2015-10-25 21:20</time></td>';
+        $expected = '<td data-sort="1445372421"><time datetime="2015-10-20T22:20:21+02:00">2015-10-20 22:20</time>&ndash;<time datetime="2015-10-25T21:20:21+01:00">2015-10-25 21:20</time></td>';
         $this->compareResults($expected);
     }
 }

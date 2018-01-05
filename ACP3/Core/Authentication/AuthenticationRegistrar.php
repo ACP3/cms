@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Authentication;
@@ -56,7 +57,7 @@ class AuthenticationRegistrar
         }
 
         throw new InvalidAuthenticationMethodException(
-            sprintf('The authentication with the service id "%s" could not be found.', $serviceId)
+            \sprintf('The authentication with the service id "%s" could not be found.', $serviceId)
         );
     }
 }

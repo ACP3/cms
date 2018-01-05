@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Logger;
@@ -35,7 +36,7 @@ class LoggerFactory
      */
     public function create($channel, $level = LogLevel::DEBUG)
     {
-        $fileName = $this->appPath->getCacheDir() . 'logs/' . $channel . '.log';
+        $fileName = $this->appPath->getVarDir() . 'logs/' . $channel . '.log';
 
         $stream = new StreamHandler($fileName, $level);
         $stream->setFormatter(new LineFormatter(null, null, true));

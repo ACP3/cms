@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model;
@@ -19,7 +20,7 @@ trait DuplicationAwareTrait
         $resultSet = $this->getRepository()->getOneById($entryId);
 
         if (!empty($resultSet)) {
-            return $this->save(array_merge($resultSet, $this->getDefaultDataForDuplication()));
+            return $this->save(\array_merge($resultSet, $this->getDefaultDataForDuplication()));
         }
 
         return false;

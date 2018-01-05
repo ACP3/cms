@@ -1,0 +1,47 @@
+{
+  "_from": "tinymce",
+  "_id": "tinymce@4.7.3",
+  "_inBundle": false,
+  "_integrity": "sha1-Osej1E2qthgU5WATL1lsxH0BR6w=",
+  "_location": "/tinymce",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "tinymce",
+    "name": "tinymce",
+    "escapedName": "tinymce",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/tinymce/-/tinymce-4.7.3.tgz",
+  "_shasum": "3ac7a3d44daab61814e560132f596cc47d0147ac",
+  "_spec": "tinymce",
+  "_where": "C:\\xampp\\htdocs\\acp3\\cms",
+  "author": {
+    "name": "Ephox Corporation"
+  },
+  "bugs": {
+    "url": "https://github.com/tinymce/tinymce/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Web based JavaScript HTML WYSIWYG editor control.",
+  "keywords": [
+    "editor",
+    "wysiwyg",
+    "tinymce",
+    "richtext",
+    "javascript",
+    "html"
+  ],
+  "license": "LGPL-2.1",
+  "main": "tinymce.js",
+  "name": "tinymce",
+  "version": "4.7.3"
+}

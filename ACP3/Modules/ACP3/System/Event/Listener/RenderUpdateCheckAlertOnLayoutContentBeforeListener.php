@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Event\Listener;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\View;
@@ -27,19 +28,19 @@ class RenderUpdateCheckAlertOnLayoutContentBeforeListener
      */
     private $request;
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
 
     /**
      * RenderUpdateCheckAlertOnLayoutContentBeforeListener constructor.
-     * @param ACL $acl
+     * @param ACLInterface $acl
      * @param RequestInterface $request
      * @param View $view
      * @param UpdateCheck $updateCheck
      */
     public function __construct(
-        ACL $acl,
+        ACLInterface $acl,
         RequestInterface $request,
         View $view,
         UpdateCheck $updateCheck

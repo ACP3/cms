@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Core\Breadcrumb;
@@ -9,17 +10,13 @@ namespace ACP3\Modules\ACP3\Menus\Core\Breadcrumb;
 use ACP3\Core;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Modules\ACP3\Menus;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Steps
- * @package ACP3\Modules\ACP3\Menus\Core\Breadcrumb
- */
 class Steps extends Core\Breadcrumb\Steps
 {
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository
      */
     protected $menuItemRepository;
     /**
@@ -28,39 +25,25 @@ class Steps extends Core\Breadcrumb\Steps
     protected $stepsFromDb = [];
 
     /**
-     * Breadcrumb constructor.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
+     * Steps constructor.
+     * @param ContainerInterface $container
+     * @param Core\I18n\TranslatorInterface $translator
+     * @param RequestInterface $request
+     * @param Core\Router\RouterInterface $router
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param Menus\Model\Repository\MenuItemsRepository $menuItemRepository
      */
     public function __construct(
         ContainerInterface $container,
-        Core\I18n\Translator $translator,
+        Core\I18n\TranslatorInterface $translator,
         RequestInterface $request,
         Core\Router\RouterInterface $router,
         EventDispatcherInterface $eventDispatcher,
-        Menus\Model\Repository\MenuItemRepository $menuItemRepository
+        Menus\Model\Repository\MenuItemsRepository $menuItemRepository
     ) {
         parent::__construct($container, $translator, $request, $router, $eventDispatcher);
 
         $this->menuItemRepository = $menuItemRepository;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function replaceAncestor($title, $path = '', $dbSteps = false)
-    {
-        if ($dbSteps === true) {
-            end($this->stepsFromDb);
-            $this->stepsFromDb[(int)key($this->stepsFromDb)] = $this->buildStepItem($title, $path);
-        }
-
-        return parent::replaceAncestor($title, $path, $dbSteps);
     }
 
     /**
@@ -77,7 +60,7 @@ class Steps extends Core\Breadcrumb\Steps
         if (!empty($this->stepsFromDb)) {
             $offset = $this->findFirstMatchingStep();
 
-            $this->breadcrumbCache = array_merge($this->stepsFromDb, array_slice($this->steps, $offset));
+            $this->breadcrumbCache = \array_merge($this->stepsFromDb, \array_slice($this->steps, $offset));
         }
     }
 
@@ -108,7 +91,7 @@ class Steps extends Core\Breadcrumb\Steps
             $this->request->getUriWithoutPages(),
             $this->request->getFullPath(),
             $this->request->getModuleAndController(),
-            $this->request->getModule()
+            $this->request->getModule(),
         ];
     }
 
@@ -118,9 +101,9 @@ class Steps extends Core\Breadcrumb\Steps
      */
     private function findRestrictionInRoutes(array $items)
     {
-        rsort($items);
+        \rsort($items);
         foreach ($items as $index => $item) {
-            if (in_array($item['uri'], $this->getPossiblyMatchingRoutes())) {
+            if (\in_array($item['uri'], $this->getPossiblyMatchingRoutes())) {
                 return [
                     $item['left_id'],
                     $item['right_id'],
@@ -151,17 +134,18 @@ class Steps extends Core\Breadcrumb\Steps
      */
     private function findFirstMatchingStep(): int
     {
-        $steps = array_reverse($this->steps);
-        $lastDbStep = end($this->stepsFromDb);
+        $steps = \array_reverse($this->steps);
+        $lastDbStep = \end($this->stepsFromDb);
 
         $offset = 0;
         foreach ($steps as $index => $step) {
             if ($step['uri'] === $lastDbStep['uri']) {
                 $offset = $index;
+
                 break;
             }
         }
 
-        return count($steps) - $offset;
+        return \count($steps) - $offset;
     }
 }

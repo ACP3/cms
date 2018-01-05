@@ -27,7 +27,9 @@
         <item key="cache_images">Cache pictures</item>
         <item key="cache_lifetime">Page-Cache lifetime</item>
         <item key="cache_lifetime_description">Statements in seconds.</item>
-        <item key="cache_type_general">General Modules-Cache (Modules, Database queries, paths to static ressources)</item>
+        <item key="cache_refresh_success">While refreshing the caches an error has occurred.</item>
+        <item key="cache_refresh_success">The caches has been successfully refreshed.</item>
+        <item key="cache_type_general">General Modules-Cache (Modules, Database queries, paths to static resources)</item>
         <item key="cache_type_general_delete_error">While emptying the Modules-Cache an error has occurred.</item>
         <item key="cache_type_general_delete_success">The Modules-Cache has been successfully emptied.</item>
         <item key="cache_type_images">Cached images</item>
@@ -177,7 +179,6 @@
         <item key="mod_deactivate_error">While disabling the module an error has occurred.</item>
         <item key="mod_deactivate_forbidden">It is impossible to enable resp. disable this module.</item>
         <item key="mod_deactivate_success">The module has been successfully disabled.</item>
-        <item key="mod_description">This module is responsible for the basic functions of the ACP3.</item>
         <item key="mod_installation_error">While installing the module an error has occurred.</item>
         <item key="mod_installation_success">The module has been successfully installed.</item>
         <item key="mod_rewrite">Use mod_rewrite</item>
@@ -191,6 +192,7 @@
         </item>
         <item key="module_installer_not_found">Unfortunately, this module does not have an installer!</item>
         <item key="module_name">Module name</item>
+        <item key="module_name_formatted"><![CDATA[%name% <code>%package_name%</code>]]></item>
         <item key="modules">Modules</item>
         <item key="month">Month</item>
         <item key="month_abbr_apr">Apr</item>
@@ -258,6 +260,7 @@
         <item key="publication_period">Publication period</item>
         <item key="records_per_page">Records per page</item>
         <item key="refresh">Refresh</item>
+        <item key="refresh_caches">Refresh the caches to register new modules.</item>
         <item key="reset">Reset</item>
         <item key="result">Result</item>
         <item key="save_and_close">Save and close</item>

@@ -1,17 +1,14 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Assets;
 
 use ACP3\Core;
 
-/**
- * Class FileResolver
- * @package ACP3\Core\Assets
- */
 class FileResolver
 {
     /**
@@ -88,7 +85,7 @@ class FileResolver
         if ($this->needsTrailingSlash($designPath)) {
             $designPath .= '/';
         }
-        if (!empty($dir) && !preg_match('=/$=', $dir)) {
+        if (!empty($dir) && !\preg_match('=/$=', $dir)) {
             $dir .= '/';
         }
 
@@ -108,7 +105,7 @@ class FileResolver
      */
     protected function needsTrailingSlash($path)
     {
-        return $path !== '' && strpos($path, '.') === false && !preg_match('=/$=', $path);
+        return $path !== '' && \strpos($path, '.') === false && !\preg_match('=/$=', $path);
     }
 
     /**
@@ -129,7 +126,7 @@ class FileResolver
         $designAssetPath = $this->designAssetsPath . $designPath . $dir . $file;
 
         // A theme has overridden a static asset of a module
-        if (is_file($designAssetPath) === true) {
+        if (\is_file($designAssetPath) === true) {
             $assetPath = $designAssetPath;
         } else {
             $designInfo = $this->xml->parseXmlFile($this->designAssetsPath . '/info.xml', '/design');
@@ -139,14 +136,16 @@ class FileResolver
                 $this->designAssetsPath = $this->appPath->getDesignRootPathInternal() . $designInfo['parent'] . '/';
                 $assetPath = $this->getStaticAssetPath($modulePath, $designPath, $dir, $file);
                 $this->designAssetsPath = $this->appPath->getDesignPathInternal();
+
                 return $assetPath;
             }
 
             // No overrides have been found -> iterate over all possible module namespaces
-            foreach (array_reverse($this->vendors->getVendors()) as $vendor) {
+            foreach (\array_reverse($this->vendors->getVendors()) as $vendor) {
                 $moduleAssetPath = $this->appPath->getModulesDir() . $vendor . '/' . $modulePath . $dir . $file;
-                if (is_file($moduleAssetPath) === true) {
+                if (\is_file($moduleAssetPath) === true) {
                     $assetPath = $moduleAssetPath;
+
                     break;
                 }
             }
@@ -167,23 +166,22 @@ class FileResolver
     public function resolveTemplatePath($template)
     {
         // A path without any slash was given -> has to be the layout file of the current design
-        if (strpos($template, '/') === false) {
+        if (\strpos($template, '/') === false) {
             return $this->getStaticAssetPath('', '', '', $template);
-        } else {
-            // Split the template path in its components
-            $fragments = explode('/', ucfirst($template));
-
-            if (isset($fragments[2])) {
-                $fragments[1] = ucfirst($fragments[1]);
-            }
-            $modulesPath = $fragments[0] . '/Resources/';
-            $designPath = $fragments[0];
-            $template = $fragments[1];
-            if (isset($fragments[2])) {
-                $template .= '/' . $fragments[2];
-            }
-
-            return $this->getStaticAssetPath($modulesPath, $designPath, 'View', $template);
         }
+        // Split the template path in its components
+        $fragments = \explode('/', \ucfirst($template));
+
+        if (isset($fragments[2])) {
+            $fragments[1] = \ucfirst($fragments[1]);
+        }
+        $modulesPath = $fragments[0] . '/Resources/';
+        $designPath = $fragments[0];
+        $template = $fragments[1];
+        if (isset($fragments[2])) {
+            $template .= '/' . $fragments[2];
+        }
+
+        return $this->getStaticAssetPath($modulesPath, $designPath, 'templates', $template);
     }
 }

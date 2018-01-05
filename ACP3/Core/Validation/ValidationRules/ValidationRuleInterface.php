@@ -1,11 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\Validation\Validator;
 
 /**
  * Interface ValidationRuleInterface
- * @package ACP3\Core\Validation\ValidationRules
  */
 interface ValidationRuleInterface
 {

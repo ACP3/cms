@@ -1,69 +1,56 @@
 services:
-  articles.controller.admin.index.create:
-    class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Create
+  articles.controller.admin.index.manage:
+    class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Manage
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@articles.model'
+      - '@articles.view.block.admin.article_admin_form_block'
+      - '@articles.model.articles_model'
       - '@articles.validation.admin_form_validation'
-      - '@core.helpers.formToken'
 
   articles.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
-      - '@articles.model'
+      - '@articles.model.articles_model'
 
   articles.controller.admin.index.duplicate:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Duplicate
     arguments:
       - '@core.context.frontend'
-      - '@articles.model'
-
-  articles.controller.admin.index.edit:
-    class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit
-    arguments:
-      - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@articles.model'
-      - '@articles.validation.admin_form_validation'
-      - '@core.helpers.formToken'
+      - '@articles.model.articles_model'
 
   articles.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@articles.model.data_grid_repository'
+      - '@articles.view.block.admin.articles_data_grid_block'
 
   articles.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Details
     arguments:
       - '@core.context.frontend'
       - '@core.date'
-      - '@core.helpers.pageBreaks'
-      - '@articles.model.articlerepository'
+      - '@articles.view.block.frontend.article_details_block'
+      - '@articles.model.repository.articles_repository'
       - '@articles.cache'
 
   articles.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@core.pagination'
-      - '@articles.model.articlerepository'
+      - '@articles.view.block.frontend.articles_listing_block'
 
   articles.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
       - '@core.date'
-      - '@articles.model.articlerepository'
-      - '@articles.cache'
+      - '@articles.model.repository.articles_repository'
 
   articles.controller.widget.index.single:
     class: ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Single
     arguments:
       - '@core.context.widget'
       - '@core.date'
-      - '@articles.model.articlerepository'
+      - '@articles.model.repository.articles_repository'
       - '@articles.cache'

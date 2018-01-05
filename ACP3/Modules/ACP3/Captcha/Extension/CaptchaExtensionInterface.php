@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Extension;
@@ -12,6 +13,8 @@ interface CaptchaExtensionInterface
     const CAPTCHA_DEFAULT_INPUT_ID = 'captcha';
 
     /**
+     * Returns the translated name of the captcha
+     *
      * @return string
      */
     public function getCaptchaName();

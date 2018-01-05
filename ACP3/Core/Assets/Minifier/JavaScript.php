@@ -1,16 +1,20 @@
 <?php
-namespace ACP3\Core\Assets\Minifier;
 
 /**
- * Class JavaScript
- * @package ACP3\Core\Assets\Minifier
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Assets\Minifier;
+
 class JavaScript extends AbstractMinifier
 {
+    const ASSETS_PATH_JS = 'Assets/js';
+
     /**
      * @var array
      */
-    protected $javascript = [];
+    private $javascript = [];
 
     protected function getAssetGroup(): string
     {
@@ -20,7 +24,7 @@ class JavaScript extends AbstractMinifier
     /**
      * @inheritdoc
      */
-    protected function processLibraries($layout)
+    protected function processLibraries(string $layout)
     {
         $cacheId = $this->buildCacheId($this->getAssetGroup(), $layout);
 
@@ -56,7 +60,7 @@ class JavaScript extends AbstractMinifier
      *
      * @param string $layout
      */
-    protected function fetchThemeJavaScript($layout)
+    protected function fetchThemeJavaScript(string $layout)
     {
         foreach ($this->assets->fetchAdditionalThemeJsFiles() as $file) {
             $this->javascript[] = $this->fileResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $file);

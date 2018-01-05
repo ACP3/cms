@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Feeds\View\Renderer;
@@ -13,7 +14,6 @@ use FeedWriter\ATOM;
 
 /**
  * Renderer for the output of RSS and ATOM News feeds
- * @package ACP3\Modules\ACP3\Feeds\View\Renderer
  */
 class FeedGenerator
 {
@@ -64,6 +64,7 @@ class FeedGenerator
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -75,6 +76,7 @@ class FeedGenerator
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -89,9 +91,11 @@ class FeedGenerator
         switch ($this->settings['feed_type']) {
             case 'ATOM':
                 $feedType = 'ATOM';
+
                 break;
             case 'RSS 1.0':
                 $feedType = 'RSS1';
+
                 break;
             default:
                 $feedType = 'RSS2';
@@ -110,7 +114,7 @@ class FeedGenerator
         $this->renderer->setLink($link);
 
         if ($this->renderer instanceof ATOM) {
-            $this->renderer->setChannelElement('updated', date(DATE_ATOM, time()));
+            $this->renderer->setChannelElement('updated', \date(DATE_ATOM, \time()));
             $this->renderer->setChannelElement('author', ['name' => $this->title]);
         } else {
             $this->renderer->setDescription($this->description);
@@ -155,6 +159,7 @@ class FeedGenerator
         $this->configure();
 
         $this->generateChannel();
+
         return $this->renderer->generateFeed();
     }
 }

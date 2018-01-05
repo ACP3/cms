@@ -1,0 +1,21 @@
+services:
+  categories.view.block.admin.category_admin_form_block:
+    class: ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoryAdminFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@categories.model.repository.categories_repository'
+      - '@core.modules'
+
+  categories.view.block.admin.categories_settings_form_block:
+    class: ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoriesSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+
+  categories.view.block.admin.categories_data_grid_block:
+    class: ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoriesDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+      - '@core.acl'
+    calls:
+      - ['setDataGridRepository', ['@categories.model.repository.categories_data_grid_repository']]

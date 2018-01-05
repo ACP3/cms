@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Helper;
@@ -58,7 +59,7 @@ class UpdateCheck
                 'installed_version' => BootstrapInterface::VERSION,
                 'latest_version' => $settings['update_new_version'],
                 'is_latest' => $this->isLatestVersion($settings['update_new_version']),
-                'url' => $settings['update_new_version_url']
+                'url' => $settings['update_new_version_url'],
             ];
         }
 
@@ -86,7 +87,7 @@ class UpdateCheck
                 'installed_version' => BootstrapInterface::VERSION,
                 'latest_version' => $data['latest_version'],
                 'is_latest' => $this->isLatestVersion($data['latest_version']),
-                'url' => $data['url']
+                'url' => $data['url'],
             ];
 
             $this->saveUpdateSettings($update);

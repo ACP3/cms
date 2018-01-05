@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Controller\Event;
@@ -9,10 +10,6 @@ namespace ACP3\Core\Controller\Event;
 use ACP3\Core\View;
 use Symfony\Component\EventDispatcher\Event;
 
-/**
- * Class CustomTemplateVariableEvent
- * @package ACP3\Core\Controller\Event
- */
 class CustomTemplateVariableEvent extends Event
 {
     /**

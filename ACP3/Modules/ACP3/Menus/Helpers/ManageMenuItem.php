@@ -1,17 +1,19 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 use ACP3\Modules\ACP3\Menus\Model\MenuItemsModel;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository;
 
-/**
- * Class ManageMenuItem
- * @package ACP3\Modules\ACP3\Menus\Helpers
- */
 class ManageMenuItem
 {
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository
      */
     protected $menuItemRepository;
     /**
@@ -21,11 +23,11 @@ class ManageMenuItem
 
     /**
      * @param MenuItemsModel $menuItemsModel
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository $menuItemRepository
      */
     public function __construct(
         MenuItemsModel $menuItemsModel,
-        MenuItemRepository $menuItemRepository
+        MenuItemsRepository $menuItemRepository
     ) {
         $this->menuItemRepository = $menuItemRepository;
         $this->menuItemsModel = $menuItemsModel;

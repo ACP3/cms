@@ -1,22 +1,19 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Router\RouterInterface;
 
-/**
- * Class SortColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
- */
 class SortColumnRenderer extends AbstractColumnRenderer
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -27,11 +24,11 @@ class SortColumnRenderer extends AbstractColumnRenderer
     /**
      * PictureSortColumnRenderer constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(
-        Translator $translator,
+        TranslatorInterface $translator,
         RouterInterface $router
     ) {
         $this->translator = $translator;
@@ -48,13 +45,13 @@ class SortColumnRenderer extends AbstractColumnRenderer
         $value = '';
         if ($dbResultRow['last'] != $dbValue) {
             $value .= $this->fetchSortDirectionHtml(
-                $this->router->route(sprintf($column['custom']['route_sort_down'], $dbResultRow[$this->primaryKey])),
+                $this->router->route(\sprintf($column['custom']['route_sort_down'], $dbResultRow[$this->primaryKey])),
                 'down'
             );
         }
         if ($dbResultRow['first'] != $dbValue) {
             $value .= $this->fetchSortDirectionHtml(
-                $this->router->route(sprintf($column['custom']['route_sort_up'], $dbResultRow[$this->primaryKey])),
+                $this->router->route(\sprintf($column['custom']['route_sort_up'], $dbResultRow[$this->primaryKey])),
                 'up'
             );
         }
@@ -62,7 +59,9 @@ class SortColumnRenderer extends AbstractColumnRenderer
             $value = $this->fetchSortForbiddenHtml();
         }
 
-        $column['attribute']['data-order'] = $dbResultRow[$this->getFirstDbField($column)];
+        $column['attribute'] += [
+            'sort' => $dbResultRow[$this->getFirstDbField($column)],
+        ];
 
         return $this->render($column, $value);
     }
@@ -76,11 +75,11 @@ class SortColumnRenderer extends AbstractColumnRenderer
     {
         $html = <<<HTML
 <a href="%s" title="%s" data-ajax-form="true" data-ajax-form-loading-text="%s">
-    <i class="glyphicon glyphicon-arrow-%s" aria-hidden="true"></i>
+    <i class="fa fa-arrow-%s" aria-hidden="true"></i>
 </a>
 HTML;
 
-        return sprintf(
+        return \sprintf(
             $html,
             $url,
             $this->translator->t('system', 'move_' . $direction),
@@ -95,9 +94,17 @@ HTML;
     protected function fetchSortForbiddenHtml()
     {
         $html = <<<HTML
-<i class="glyphicon glyphicon-remove-circle text-danger text-danger" aria-hidden="true" title="%s"></i>
+<i class="fa fa-minus-circle text-danger text-danger" aria-hidden="true" title="%s"></i>
 HTML;
 
-        return sprintf($html, $this->translator->t('system', 'move_impossible'));
+        return \sprintf($html, $this->translator->t('system', 'move_impossible'));
+    }
+
+    /**
+     * @return array
+     */
+    public static function mandatoryAttributes(): array
+    {
+        return ['sort', '_'];
     }
 }

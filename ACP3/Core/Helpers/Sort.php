@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Database\Connection;
 
-/**
- * Class Sort
- * @package ACP3\Core\Helpers
- */
 class Sort
 {
     /**
@@ -69,6 +71,7 @@ class Sort
     private function moveOneStep($action, $table, $idField, $sortField, $id, $where = '')
     {
         $this->db->getConnection()->beginTransaction();
+
         try {
             $id = (int)$id;
             $table = $this->db->getPrefix() . $table;
@@ -80,9 +83,9 @@ class Sort
             $queryString = 'SELECT a.%2$s AS other_id, a.%3$s AS other_sort, b.%3$s AS elem_sort FROM %1$s AS a, %1$s AS b WHERE %5$sb.%2$s = %4$s AND a.%3$s %6$s b.%3$s ORDER BY a.%3$s %7$s LIMIT 1';
 
             if ($action === 'up') {
-                $query = $this->db->getConnection()->fetchAssoc(sprintf($queryString, $table, $idField, $sortField, $id, $where, '<', 'DESC'));
+                $query = $this->db->getConnection()->fetchAssoc(\sprintf($queryString, $table, $idField, $sortField, $id, $where, '<', 'DESC'));
             } else {
-                $query = $this->db->getConnection()->fetchAssoc(sprintf($queryString, $table, $idField, $sortField, $id, $where, '>', 'ASC'));
+                $query = $this->db->getConnection()->fetchAssoc(\sprintf($queryString, $table, $idField, $sortField, $id, $where, '>', 'ASC'));
             }
 
             if (!empty($query)) {
@@ -94,6 +97,7 @@ class Sort
                 $this->db->getConnection()->update($table, [$sortField => $query['other_sort']], [$idField => $id]);
 
                 $this->db->getConnection()->commit();
+
                 return true;
             }
         } catch (\Exception $e) {

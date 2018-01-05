@@ -1,19 +1,15 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Details
- * @package ACP3\Modules\ACP3\Articles\Controller\Frontend\Index
- */
 class Details extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -23,40 +19,40 @@ class Details extends Core\Controller\AbstractFrontendAction
      */
     protected $date;
     /**
-     * @var \ACP3\Core\Helpers\PageBreaks
-     */
-    protected $pageBreaksHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
+     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository
      */
     protected $articleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Cache
+     * @var \ACP3\Modules\ACP3\Articles\Cache\ArticleCacheStorage
      */
     protected $articlesCache;
+    /**
+     * @var Core\View\Block\BlockInterface
+     */
+    private $block;
 
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
-     * @param \ACP3\Core\Date                                     $date
-     * @param \ACP3\Core\Helpers\PageBreaks                       $pageBreaksHelper
-     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Date $date
+     * @param Core\View\Block\BlockInterface $block
+     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository $articleRepository
+     * @param \ACP3\Modules\ACP3\Articles\Cache\ArticleCacheStorage $articlesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
-        Core\Helpers\PageBreaks $pageBreaksHelper,
-        Articles\Model\Repository\ArticleRepository $articleRepository,
-        Articles\Cache $articlesCache
+        Core\View\Block\BlockInterface $block,
+        Articles\Model\Repository\ArticlesRepository $articleRepository,
+        Articles\Cache\ArticleCacheStorage $articlesCache
     ) {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->pageBreaksHelper = $pageBreaksHelper;
         $this->articleRepository = $articleRepository;
         $this->articlesCache = $articlesCache;
+        $this->block = $block;
     }
 
     /**
@@ -65,25 +61,14 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         if ($this->articleRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+            $this->setCacheResponseCacheable();
 
-            $article = $this->articlesCache->getCache($id);
-
-            $this->breadcrumb->append($article['title']);
-            $this->title->setPageTitle($article['title']);
-
-            return [
-                'page' => array_merge(
-                    $article,
-                    $this->pageBreaksHelper->splitTextIntoPages(
-                        $this->view->fetchStringAsTemplate($article['text']),
-                        $this->request->getUriWithoutPages()
-                    )
-                )
-            ];
+            return $this->block
+                ->setData($this->articlesCache->getCache($id))
+                ->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

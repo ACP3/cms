@@ -1,6 +1,7 @@
 {
   "name": "acp3/module-seo",
   "description": "Provides the SEO module for the ACP3 CMS.",
+  "version": "4.18.0",
   "type": "acp3-module",
   "license": "GPL-2.0+",
   "authors": [
@@ -23,7 +24,7 @@
     "acp3/module-permissions": "^4.20.0",
     "acp3/module-system": "^4.20.0",
     "acp3/module-users": "^4.20.0",
-    "thepixeldeveloper/sitemap": "^4.4.2"
+    "thepixeldeveloper/sitemap": "^5.0"
   },
   "autoload": {
     "psr-4": {
@@ -31,6 +32,10 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Seo"
+    "installer-name": "ACP3/Seo",
+    "dependencies": [
+      "permissions",
+      "system"
+    ]
   }
 }

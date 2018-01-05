@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Test;
 
 use ACP3\Core\Assets;
@@ -41,7 +47,7 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
                 'removeSubscriber',
                 'getListeners',
                 'getListenerPriority',
-                'hasListeners'
+                'hasListeners',
             ])
             ->disableOriginalConstructor()
             ->getMock();
@@ -50,7 +56,7 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
     public function testDefaultLibrariesEnabled()
     {
         $libraries = $this->assets->getEnabledLibrariesAsString();
-        $this->assertEquals('jquery,js-cookie,bootstrap', $libraries);
+        $this->assertEquals('jquery,js-cookie,bootstrap,font-awesome', $libraries);
     }
 
     public function testEnableDatepicker()
@@ -58,7 +64,7 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
         $this->assets->enableLibraries(['datetimepicker']);
 
         $libraries = $this->assets->getEnabledLibrariesAsString();
-        $this->assertEquals('moment,jquery,js-cookie,bootstrap,datetimepicker', $libraries);
+        $this->assertEquals('moment,jquery,js-cookie,bootstrap,datetimepicker,font-awesome', $libraries);
     }
 
     public function testFetchAdditionalThemeCssFiles()

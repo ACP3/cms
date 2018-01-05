@@ -1,5 +1,5 @@
 services:
-  contact.model.repository.data_grid_repository:
+  contact.model.repository.contacts_data_grid_repository:
     class: ACP3\Modules\ACP3\Contact\Model\Repository\DataGridRepository
     arguments:
       - '@core.db'
@@ -22,4 +22,4 @@ services:
       - '@core.config'
       - '@core.i18n.translator'
       - '@core.helpers.secure'
-      - '@core.helpers.sendEmail'
+      - '@core.helpers.send_email'

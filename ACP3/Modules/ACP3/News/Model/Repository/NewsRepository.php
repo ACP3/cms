@@ -1,17 +1,14 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class NewsRepository
- * @package ACP3\Modules\ACP3\News\Model\Repository
- */
 class NewsRepository extends Core\Model\Repository\AbstractRepository
 {
     use Core\Model\Repository\PublicationPeriodAwareTrait;
@@ -19,7 +16,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'news';
 
     /**
-     * @param int    $newsId
+     * @param int $newsId
      * @param string $time
      *
      * @return bool
@@ -27,64 +24,56 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     public function resultExists($newsId, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
-        return ((int)$this->db->fetchColumn(
+
+        return (int)$this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id' . $period,
                 ['id' => $newsId, 'time' => $time, 'active' => 1]
-            ) > 0);
-    }
-
-    /**
-     * @param int $newsId
-     *
-     * @return array
-     */
-    public function getOneById($newsId)
-    {
-        return $this->db->fetchAssoc(
-            'SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?',
-            [$newsId]
-        );
+            ) > 0;
     }
 
     /**
      * @param string $time
-     * @param string $categoryId
+     * @param int[] $categoryId
      *
      * @return int
      */
-    public function countAll($time = '', $categoryId = '')
+    public function countAll($time = '', array $categoryId = [])
     {
         if (!empty($categoryId)) {
             $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
-            return $this->db->fetchColumn(
-                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE category_id = :categoryId' . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC',
-                ['time' => $time, 'categoryId' => $categoryId, 'active' => 1]
+            return (int)$this->db->fetchColumn(
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . " WHERE `category_id` IN(:categoryId) {$where} ORDER BY `start` DESC, `end` DESC, `id` DESC",
+                ['time' => $time, 'categoryId' => $categoryId, 'active' => 1],
+                ['time' => \PDO::PARAM_STR, 'categoryId' => \Doctrine\DBAL\Connection::PARAM_INT_ARRAY, 'active' => \PDO::PARAM_INT]
             );
         }
 
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
-        return $this->db->fetchColumn(
+
+        return (int)$this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC',
             ['time' => $time, 'active' => 1]
         );
     }
 
     /**
-     * @param int    $categoryId
+     * @param int[] $categoryIds
      * @param string $time
      * @param string $limitStart
      * @param string $resultsPerPage
      *
      * @return array
      */
-    public function getAllByCategoryId($categoryId, $time = '', $limitStart = '', $resultsPerPage = '')
+    public function getAllByCategoryId(array $categoryIds, $time = '', $limitStart = '', $resultsPerPage = '')
     {
         $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
+
         return $this->db->fetchAll(
-            "SELECT * FROM {$this->getTableName()} WHERE category_id = :categoryId{$where} ORDER BY `start` DESC, `end` DESC, `id` DESC {$limitStmt}",
-            ['time' => $time, 'categoryId' => $categoryId, 'active' => 1]
+            "SELECT * FROM {$this->getTableName()} WHERE category_id IN(:categoryId) {$where} ORDER BY `start` DESC, `end` DESC, `id` DESC {$limitStmt}",
+            ['time' => $time, 'categoryId' => $categoryIds, 'active' => 1],
+            ['time' => \PDO::PARAM_STR, 'categoryId' => \Doctrine\DBAL\Connection::PARAM_INT_ARRAY, 'active' => \PDO::PARAM_INT]
         );
     }
 
@@ -107,7 +96,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int    $categoryId
+     * @param int $categoryId
      * @param string $time
      *
      * @return array

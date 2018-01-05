@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Breadcrumb;
@@ -9,23 +10,19 @@ namespace ACP3\Core\Breadcrumb;
 use ACP3\Core\Breadcrumb\Event\StepsBuildCacheEvent;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Router\RouterInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Steps
- * @package ACP3\Core\Breadcrumb
- */
 class Steps
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var ContainerInterface
      */
     protected $container;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var TranslatorInterface
      */
     protected $translator;
     /**
@@ -47,20 +44,23 @@ class Steps
     /**
      * @var array
      */
+    private $lastStep = [];
+    /**
+     * @var array
+     */
     protected $breadcrumbCache = [];
 
     /**
-     * Breadcrumb constructor.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * Steps constructor.
+     * @param ContainerInterface $container
+     * @param TranslatorInterface $translator
+     * @param RequestInterface $request
+     * @param RouterInterface $router
+     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         ContainerInterface $container,
-        Translator $translator,
+        TranslatorInterface $translator,
         RequestInterface $request,
         RouterInterface $router,
         EventDispatcherInterface $eventDispatcher
@@ -102,7 +102,7 @@ class Steps
             $this->buildBreadcrumbCacheForFrontend();
         }
 
-        $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['last'] = true;
+        $this->breadcrumbCache[\count($this->breadcrumbCache) - 1]['last'] = true;
     }
 
     /**
@@ -133,6 +133,8 @@ class Steps
                 new StepsBuildCacheEvent($this)
             );
         }
+
+        $this->doReplaceLastStep();
 
         $this->breadcrumbCache = $this->steps;
     }
@@ -182,6 +184,14 @@ class Steps
         return $this->request->getArea() . '_' . $this->request->getController() . '_index';
     }
 
+    private function doReplaceLastStep()
+    {
+        if (!empty($this->lastStep)) {
+            \end($this->steps);
+            $this->steps[(int)\key($this->steps)] = $this->lastStep;
+        }
+    }
+
     /**
      * Sets the breadcrumb steps cache for frontend action requests
      */
@@ -196,6 +206,8 @@ class Steps
             $this->appendControllerActionBreadcrumbs();
         }
 
+        $this->doReplaceLastStep();
+
         $this->breadcrumbCache = $this->steps;
     }
 
@@ -204,16 +216,11 @@ class Steps
      *
      * @param string $title
      * @param string $path
-     * @param bool $dbSteps
-     *
      * @return $this
      */
-    public function replaceAncestor($title, $path = '', $dbSteps = false)
+    public function setLastStepReplacement(string $title, string $path = '')
     {
-        if ($dbSteps === false) {
-            end($this->steps);
-            $this->steps[(int)key($this->steps)] = $this->buildStepItem($title, $path);
-        }
+        $this->lastStep = $this->buildStepItem($title, $path);
 
         return $this;
     }
@@ -223,11 +230,11 @@ class Steps
      * @param string $path
      * @return array
      */
-    protected function buildStepItem($title, $path)
+    protected function buildStepItem(string $title, string $path = '')
     {
         return [
             'title' => $title,
-            'uri' => !empty($path) ? $this->router->route($path) : ''
+            'uri' => !empty($path) ? $this->router->route($path) : '',
         ];
     }
 
@@ -239,7 +246,7 @@ class Steps
      *
      * @return $this
      */
-    public function append($title, $path = '')
+    public function append(string $title, string $path = '')
     {
         if (!$this->stepAlreadyExists($path)) {
             $this->steps[] = $this->buildStepItem($title, $path);
@@ -256,11 +263,11 @@ class Steps
      *
      * @return $this
      */
-    public function prepend($title, $path)
+    public function prepend(string $title, string $path)
     {
         if (!$this->stepAlreadyExists($path)) {
             $step = $this->buildStepItem($title, $path);
-            array_unshift($this->steps, $step);
+            \array_unshift($this->steps, $step);
         }
 
         return $this;
@@ -271,7 +278,7 @@ class Steps
      *
      * @return bool
      */
-    private function stepAlreadyExists($path)
+    private function stepAlreadyExists(string $path)
     {
         $route = $this->router->route($path);
         foreach ($this->steps as $step) {

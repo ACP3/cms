@@ -1,29 +1,30 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Modules\ACP3\Menus\Cache;
+use ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage;
 use ACP3\Modules\ACP3\Menus\Model\MenuItemsModel;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository;
 
 class OnMenusModelBeforeDeleteListener
 {
     /**
-     * @var Cache
+     * @var MenusCacheStorage
      */
     protected $cache;
     /**
-     * @var MenuRepository
+     * @var MenusRepository
      */
     protected $menuRepository;
     /**
-     * @var MenuItemRepository
+     * @var MenuItemsRepository
      */
     protected $menuItemRepository;
     /**
@@ -33,15 +34,15 @@ class OnMenusModelBeforeDeleteListener
 
     /**
      * OnMenusModelBeforeDeleteListener constructor.
-     * @param Cache $cache
-     * @param MenuRepository $menuRepository
-     * @param MenuItemRepository $menuItemRepository
+     * @param MenusCacheStorage $cache
+     * @param MenusRepository $menuRepository
+     * @param MenuItemsRepository $menuItemRepository
      * @param MenuItemsModel $menuItemsModel
      */
     public function __construct(
-        Cache $cache,
-        MenuRepository $menuRepository,
-        MenuItemRepository $menuItemRepository,
+        MenusCacheStorage $cache,
+        MenusRepository $menuRepository,
+        MenuItemsRepository $menuItemRepository,
         MenuItemsModel $menuItemsModel
     ) {
         $this->cache = $cache;
@@ -68,7 +69,7 @@ class OnMenusModelBeforeDeleteListener
                 }
 
                 $menuName = $this->menuRepository->getMenuNameById($item);
-                $this->cache->getCacheDriver()->delete(Cache::CACHE_ID_VISIBLE . $menuName);
+                $this->cache->getCacheDriver()->delete(MenusCacheStorage::CACHE_ID_VISIBLE . $menuName);
             }
         }
     }

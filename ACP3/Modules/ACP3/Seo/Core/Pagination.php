@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Core;
@@ -9,17 +10,13 @@ namespace ACP3\Modules\ACP3\Seo\Core;
 use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
-/**
- * Class Pagination
- * @package ACP3\Modules\ACP3\Seo\Core
- */
 class Pagination extends \ACP3\Core\Pagination
 {
     /**
@@ -34,7 +31,7 @@ class Pagination extends \ACP3\Core\Pagination
     /**
      * Pagination constructor.
      * @param Title $title
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      * @param RequestInterface $request
      * @param RouterInterface $router
      * @param MetaStatements $metaStatements
@@ -42,7 +39,7 @@ class Pagination extends \ACP3\Core\Pagination
      */
     public function __construct(
         Title $title,
-        Translator $translator,
+        TranslatorInterface $translator,
         RequestInterface $request,
         RouterInterface $router,
         MetaStatements $metaStatements,
@@ -78,6 +75,7 @@ class Pagination extends \ACP3\Core\Pagination
     private function getRoute()
     {
         $path = ($this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $this->request->getUriWithoutPages();
+
         return $this->router->route($path);
     }
 

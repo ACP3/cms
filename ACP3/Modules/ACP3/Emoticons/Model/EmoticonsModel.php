@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Emoticons\Model;
@@ -22,7 +23,7 @@ class EmoticonsModel extends AbstractModel
         return [
             'code' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'img' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW
+            'img' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
         ];
     }
 }

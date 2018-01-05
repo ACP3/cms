@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
@@ -9,58 +10,40 @@ namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Seo;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Seo\Controller\Admin\Index
- */
 class Create extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
-     */
-    protected $metaFormFieldsHelper;
     /**
      * @var \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
-     */
-    protected $uriAliasManager;
-    /**
      * @var Seo\Model\SeoModel
      */
     protected $seoModel;
+    /**
+     * @var Core\View\Block\RepositoryAwareFormBlockInterface
+     */
+    private $block;
 
     /**
      * Create constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields $metaFormFieldsHelper
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
      * @param Seo\Model\SeoModel $seoModel
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
-        Seo\Helper\MetaFormFields $metaFormFieldsHelper,
-        Seo\Helper\UriAliasManager $uriAliasManager,
+        Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Seo\Model\SeoModel $seoModel,
         Seo\Validation\AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
-        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
-        $this->uriAliasManager = $uriAliasManager;
         $this->adminFormValidation = $adminFormValidation;
         $this->seoModel = $seoModel;
+        $this->block = $block;
     }
 
     /**
@@ -68,11 +51,9 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        return [
-            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper->formFields(),
-            'form' => array_merge(['uri' => ''], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**

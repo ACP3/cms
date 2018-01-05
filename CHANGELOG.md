@@ -4,6 +4,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Next] - 2018-xx-yy
+### Added
+- Added a new honeypot captcha type
+- [#51](https://github.com/ACP3/cms/issues/51) [#63](https://github.com/ACP3/cms/issues/63) The results of the data grids will now be retrieved via AJAX, so that they provide a better performance for large ACP3 installs
+- [#43](https://github.com/ACP3/cms/issues/43) Added the possibility to run CLI commands.
+  Added the following CLI commands: 
+  - `acp3:assets:clear`         Clears all locally stored assets.
+  - `acp3:cache:clear`          Clears all locally stored caches.
+  - `acp3:http-cache:warmup`    Warms up the HTTP cache.
+  - `acp3:maintenance:disable`  Disables the maintenance mode of the ACP3.
+  - `acp3:maintenance:enable`   Enables the maintenance mode of the ACP3.
+  - `acp3:modules:update`       Updates the database schema of all currently installed modules.
+
+
+### BC Breaks
+- Dropped the support for PHP 5.6. PHP 7.1 is the minimum supported version now
+- Removed the deprecated `ACP3\Core\Logger` class
+- Removed all deprecated methods of the `ACP3\Core\Mailer` class and refactored it
+- Removed the deprecated `ACP3\Core\Controller\Context\AdminContext` class
+- Removed the deprecated `core.lang` service name. Use the `core.i18n.translator` service instead
+- Removed the deprecated `ACP3\Modules\ACP3\Captcha\Helpers` class
+- Removed the deprecated `ACP3\Core\Controller\AbstractAdminAction` class
+- Removed the class `ACP3\Core\Controller\DisplayActionTrait` class and replaced it with the new `ActionResultFactory` class
+- Renamed the class `ACP3\Core\Model\DataGridRepository` to `AbstractDataGridRepository` and moved it to the namespace `ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository`
+- Added the new interface `ACP3\Core\ACL\ACLInterface` and type hinted against it
+- Moved the `ACP3\Core\ACL` class to the `Permissions` module
+- [#65](https://github.com/ACP3/cms/issues/65) Renamed all DI service names for the `*Repository`, `*DataGridRepository` and `*Model` classes to follow a strict spec (see the ticket for details) 
+- [#66](https://github.com/ACP3/cms/issues/66) Renamed all `*Repository`, `*DataGridRepository` and `*Model` classes to follow a strict spec (see the ticket for details) 
+- [#67](https://github.com/ACP3/cms/issues/67) Renamed the folder `View` inside the `Resources` folder of each module to `templates`
+- [#68](https://github.com/ACP3/cms/issues/68) Replace Glyphicons with FontAwesome
+- Moved all info from the `module.xml` to the module `composer.json`'s `extra`-node.
+  Mapping of the new keys:
+  - `no_install` -> `installable` (bool)
+  - `protected` -> `protected` (bool)
+  - `dependencies/module` -> `dependencies` (array)
+
+
 ## [4.20.0] - 2017-12-21
 ### Changed
 - Updated the friendsofsymfony/http-cache package to version 2.1.0

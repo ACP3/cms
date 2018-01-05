@@ -1,20 +1,16 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 
-/**
- * Class DesignExistsValidationRule
- * @package ACP3\Installer\Modules\Install\Validation\ValidationRules
- */
 class DesignExistsValidationRule extends AbstractValidationRule
 {
-
     /**
      * @param mixed $data
      * @param string $field
@@ -24,7 +20,7 @@ class DesignExistsValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
@@ -39,6 +35,6 @@ class DesignExistsValidationRule extends AbstractValidationRule
     {
         $path = ACP3_ROOT_DIR . 'designs/' . $design . '/info.xml';
 
-        return !preg_match('=/=', $design) && is_file($path) === true;
+        return !\preg_match('=/=', $design) && \is_file($path) === true;
     }
 }

@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\Formatter\DateRange;
 
-/**
- * Class DateColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
- */
 class DateColumnRenderer extends AbstractColumnRenderer
 {
     /**
@@ -41,7 +43,7 @@ class DateColumnRenderer extends AbstractColumnRenderer
         if ($value !== null && $value !== $this->getDefaultValue($column)) {
             $field = $this->getFirstDbField($column);
             $column['attribute'] += [
-                'data-order' => $this->date->format($dbResultRow[$field], 'U')
+                'sort' => $this->date->format($dbResultRow[$field], 'U'),
             ];
         }
 
@@ -63,9 +65,17 @@ class DateColumnRenderer extends AbstractColumnRenderer
             $value = $this->getDefaultValue($column);
         } else {
             $fields = $this->getDbFields($column);
-            $value = $this->dateRangeHelper->formatTimeRange($value, $this->getDbValueIfExists($dbResultRow, next($fields)));
+            $value = $this->dateRangeHelper->formatTimeRange($value, $this->getDbValueIfExists($dbResultRow, \next($fields)));
         }
 
         return $value;
+    }
+
+    /**
+     * @return array
+     */
+    public static function mandatoryAttributes(): array
+    {
+        return ['sort', '_'];
     }
 }

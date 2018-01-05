@@ -1,25 +1,26 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Event\Listener;
 
-use ACP3\Modules\ACP3\Permissions\Cache;
+use ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage;
 
 class UpdateResourcesCacheOnModelAfterSaveListener
 {
     /**
-     * @var Cache
+     * @var PermissionsCacheStorage
      */
     protected $cache;
 
     /**
      * UpdateResourcesCacheOnModelAfterSaveListener constructor.
-     * @param Cache $cache
+     * @param PermissionsCacheStorage $cache
      */
-    public function __construct(Cache $cache)
+    public function __construct(PermissionsCacheStorage $cache)
     {
         $this->cache = $cache;
     }

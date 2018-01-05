@@ -8,5 +8,6 @@ services:
       - '@core.modules.vendors'
       - '@core.helpers.secure'
       - '@core.i18n.translator'
+      - '@core.i18n.locale'
       - '@install.helpers.install'
       - '@install.helpers.module_installer'

@@ -1,19 +1,20 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Emoticons\Event\Listener;
 
-use ACP3\Core\Modules;
+use ACP3\Core\Modules\Modules;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Emoticons\Helpers;
 
 class OnWysiwygTextareaBeforeListener
 {
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     protected $modules;
     /**
@@ -24,7 +25,7 @@ class OnWysiwygTextareaBeforeListener
     /**
      * OnAfterFormListener constructor.
      *
-     * @param \ACP3\Core\Modules                   $modules
+     * @param \ACP3\Core\Modules\Modules                   $modules
      * @param \ACP3\Modules\ACP3\Emoticons\Helpers $emoticonsHelper
      */
     public function __construct(

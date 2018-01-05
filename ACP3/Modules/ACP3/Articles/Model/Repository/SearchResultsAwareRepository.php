@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Model\Repository;
@@ -14,7 +15,7 @@ use ACP3\Modules\ACP3\Search\Model\Repository\SearchResultsAwareRepositoryInterf
 
 class SearchResultsAwareRepository extends AbstractRepository implements SearchResultsAwareRepositoryInterface
 {
-    const TABLE_NAME = ArticleRepository::TABLE_NAME;
+    const TABLE_NAME = ArticlesRepository::TABLE_NAME;
 
     use PublicationPeriodAwareTrait;
 

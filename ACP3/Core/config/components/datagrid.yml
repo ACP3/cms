@@ -3,8 +3,16 @@ services:
     class: ACP3\Core\Helpers\DataGrid
     arguments:
       - '@core.acl'
+      - '@core.http.request'
       - '@core.i18n.translator'
+      - '@core.helpers.data_grid.config_processor'
     shared: false
+
+  core.helpers.data_grid.config_processor:
+    class: ACP3\Core\Helpers\DataGrid\ConfigProcessor
+    arguments:
+      - '@core.http.request'
+      - '@core.i18n.translator'
 
   core.helpers.data_grid.column_renderer.date_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer
@@ -31,6 +39,15 @@ services:
 
   core.helpers.data_grid.column_renderer.mass_action_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\MassActionColumnRenderer
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+    public: false
+
+  core.helpers.data_grid.column_renderer.nested_set_sort_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\NestedSetSortColumnRenderer
+    arguments:
+      - '@core.i18n.translator'
+      - '@core.router'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
     public: false

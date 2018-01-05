@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
 
-/**
- * Class TableOfContents
- * @package ACP3\Core\Helpers
- */
 class TableOfContents
 {
     /**
@@ -14,7 +16,7 @@ class TableOfContents
      */
     protected $title;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -37,16 +39,16 @@ class TableOfContents
     /**
      * TableOfContents constructor.
      *
-     * @param \ACP3\Core\Breadcrumb\Title                                 $title
-     * @param \ACP3\Core\I18n\Translator                                  $translator
-     * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \ACP3\Core\Router\RouterInterface                                  $router
+     * @param \ACP3\Core\Breadcrumb\Title $title
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Router\RouterInterface $router
      * @param \ACP3\Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule
-     * @param \ACP3\Core\View                                             $view
+     * @param \ACP3\Core\View $view
      */
     public function __construct(
         Core\Breadcrumb\Title $title,
-        Core\I18n\Translator $translator,
+        Core\I18n\TranslatorInterface $translator,
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
         Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule,
@@ -63,8 +65,8 @@ class TableOfContents
     /**
      * Generates the table of contents
      *
-     * @param array   $pages
-     * @param string  $baseUrlPath
+     * @param array $pages
+     * @param string $baseUrlPath
      * @param boolean $titlesFromDb
      * @param boolean $customUris
      *
@@ -88,8 +90,10 @@ class TableOfContents
                 ++$i;
             }
             $this->view->assign('toc', $toc);
+
             return $this->view->fetchTemplate('System/Partials/toc.tpl');
         }
+
         return '';
     }
 
@@ -104,11 +108,11 @@ class TableOfContents
     protected function getHtmlAttributes($string)
     {
         $matches = [];
-        preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $matches);
+        \preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $matches);
 
         $return = [];
         if (!empty($matches)) {
-            $cMatches = count($matches[1]);
+            $cMatches = \count($matches[1]);
             for ($i = 0; $i < $cMatches; ++$i) {
                 $return[$matches[1][$i]] = $matches[2][$i];
             }
@@ -118,17 +122,17 @@ class TableOfContents
     }
 
     /**
-     * @param bool         $customUris
+     * @param bool $customUris
      * @param array|string $page
-     * @param int          $pageNumber
-     * @param int          $currentIndex
+     * @param int $pageNumber
+     * @param int $currentIndex
      *
      * @return bool
      */
     protected function isCurrentPage($customUris, $page, $pageNumber, $currentIndex)
     {
         if ($customUris === true) {
-            if (is_array($page) === true && $page['uri'] === $this->router->route($this->request->getQuery())
+            if (\is_array($page) === true && $page['uri'] === $this->router->route($this->request->getQuery())
                 || $this->router->route($this->request->getQuery()) === $this->router->route($this->request->getFullPath()) && $currentIndex == 0
             ) {
                 return true;
@@ -144,32 +148,33 @@ class TableOfContents
 
     /**
      * @param array|string $page
-     * @param int          $pageNumber
-     * @param bool         $titlesFromDb
+     * @param int $pageNumber
+     * @param bool $titlesFromDb
      *
      * @return string
      */
     protected function fetchTocPageTitle($page, $pageNumber, $titlesFromDb)
     {
-        if ($titlesFromDb === false && is_array($page) === false) {
+        if ($titlesFromDb === false && \is_array($page) === false) {
             $page = $this->getHtmlAttributes($page);
         }
 
         $transPageNumber = $this->translator->t('system', 'toc_page', ['%page%' => $pageNumber]);
+
         return !empty($page['title']) ? $page['title'] : $transPageNumber;
     }
 
     /**
-     * @param bool         $customUris
+     * @param bool $customUris
      * @param array|string $page
-     * @param int          $pageNumber
-     * @param string       $requestQuery
+     * @param int $pageNumber
+     * @param string $requestQuery
      *
      * @return string
      */
     protected function fetchTocPageUri($customUris, $page, $pageNumber, $requestQuery)
     {
-        if ($customUris === true && is_array($page) === true) {
+        if ($customUris === true && \is_array($page) === true) {
             return $page['uri'];
         }
 

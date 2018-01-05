@@ -1,18 +1,15 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model\Repository;
 
 use ACP3\Core\Database\Connection;
 
-/**
- * Class AbstractRepository
- * @package ACP3\Core\Model\Repository
- */
-abstract class AbstractRepository implements RepositoryInterface
+abstract class AbstractRepository implements WriterRepositoryInterface, ReaderRepositoryInterface, TableNameAwareRepositoryInterface
 {
     const TABLE_NAME = '';
     const PRIMARY_KEY_COLUMN = 'id';
@@ -35,6 +32,7 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @param array $data
      * @return bool|int
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function insert(array $data)
     {
@@ -43,6 +41,7 @@ abstract class AbstractRepository implements RepositoryInterface
                 $this->getTableName(),
                 $data
             );
+
             return (int)$this->db->getConnection()->lastInsertId();
         });
     }
@@ -63,8 +62,9 @@ abstract class AbstractRepository implements RepositoryInterface
      * @param int|array $entryId
      * @param string $columnName
      * @return bool|int
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function delete($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
+    public function delete($entryId, string $columnName = 'id')
     {
         return $this->db->executeTransactionalQuery(function () use ($entryId, $columnName) {
             return $this->db->getConnection()->delete(
@@ -82,7 +82,7 @@ abstract class AbstractRepository implements RepositoryInterface
      */
     private function getIdentifier($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
     {
-        return is_array($entryId) === true ? $entryId : [$columnName => (int)$entryId];
+        return \is_array($entryId) === true ? $entryId : [$columnName => (int)$entryId];
     }
 
     /**
@@ -91,6 +91,7 @@ abstract class AbstractRepository implements RepositoryInterface
      * @param array $data
      * @param int|array $entryId
      * @return bool|int
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function update(array $data, $entryId)
     {
@@ -123,11 +124,9 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * @param int $entryId
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function getOneById($entryId)
+    public function getOneById(int $entryId)
     {
         return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE id = ?", [$entryId]);
     }

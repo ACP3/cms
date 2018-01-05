@@ -1,28 +1,26 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Modules;
 
-use ACP3\Core\Cache;
+use ACP3\Core\Cache\Cache;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\LocaleInterface;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
-use ACP3\Core\XML;
+use Composer\Json\JsonFile;
 
-/**
- * Class ModuleInfoCache
- * @package ACP3\Core\Modules
- */
 class ModuleInfoCache
 {
     use ModuleDependenciesTrait;
 
     /**
-     * @var \ACP3\Core\Cache
+     * @var \ACP3\Core\Cache\Cache
      */
     protected $cache;
     /**
@@ -30,7 +28,7 @@ class ModuleInfoCache
      */
     protected $appPath;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -38,51 +36,43 @@ class ModuleInfoCache
      */
     protected $vendors;
     /**
-     * @var \ACP3\Core\XML
-     */
-    protected $xml;
-    /**
      * @var ModuleAwareRepositoryInterface
      */
     protected $systemModuleRepository;
+    /**
+     * @var LocaleInterface
+     */
+    private $locale;
 
     /**
      * ModuleInfoCache constructor.
      * @param Cache $cache
      * @param ApplicationPath $appPath
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
+     * @param LocaleInterface $locale
      * @param Vendor $vendors
-     * @param XML $xml
      * @param ModuleAwareRepositoryInterface $systemModuleRepository
      */
     public function __construct(
         Cache $cache,
         ApplicationPath $appPath,
-        Translator $translator,
+        TranslatorInterface $translator,
+        LocaleInterface $locale,
         Vendor $vendors,
-        XML $xml,
         ModuleAwareRepositoryInterface $systemModuleRepository
     ) {
         $this->cache = $cache;
         $this->appPath = $appPath;
         $this->translator = $translator;
         $this->vendors = $vendors;
-        $this->xml = $xml;
         $this->systemModuleRepository = $systemModuleRepository;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCacheKey()
-    {
-        return 'infos_' . $this->translator->getLocale();
+        $this->locale = $locale;
     }
 
     /**
      * @return array
      */
-    public function getModulesInfoCache()
+    public function getModulesInfoCache(): array
     {
         if ($this->cache->contains($this->getCacheKey()) === false) {
             $this->saveModulesInfoCache();
@@ -92,9 +82,19 @@ class ModuleInfoCache
     }
 
     /**
-     * Saves the modules info cache
+     * @return string
      */
-    public function saveModulesInfoCache()
+    private function getCacheKey(): string
+    {
+        return 'infos_' . $this->locale->getLocale();
+    }
+
+    /**
+     * Saves the modules info cache
+     *
+     * @return bool
+     */
+    public function saveModulesInfoCache(): bool
     {
         $infos = [];
 
@@ -105,7 +105,7 @@ class ModuleInfoCache
             $infos += $this->fetchVendorModules($vendor);
         }
 
-        $this->cache->save($this->getCacheKey(), $infos);
+        return $this->cache->save($this->getCacheKey(), $infos);
     }
 
     /**
@@ -113,7 +113,7 @@ class ModuleInfoCache
      *
      * @return array
      */
-    protected function fetchVendorModules($vendor)
+    private function fetchVendorModules(string $vendor): array
     {
         $infos = [];
 
@@ -124,7 +124,7 @@ class ModuleInfoCache
                 $moduleInfo = $this->fetchModuleInfo($module);
 
                 if (!empty($moduleInfo)) {
-                    $infos[strtolower($module)] = $moduleInfo;
+                    $infos[\strtolower($module)] = $moduleInfo;
                 }
             }
         }
@@ -137,34 +137,34 @@ class ModuleInfoCache
      *
      * @return array
      */
-    protected function fetchModuleInfo($moduleDirectory)
+    private function fetchModuleInfo(string $moduleDirectory): array
     {
-        $vendors = array_reverse($this->vendors->getVendors()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
+        // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
+        $vendors = \array_reverse($this->vendors->getVendors());
         foreach ($vendors as $vendor) {
-            $path = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/Resources/config/module.xml';
-            if (is_file($path) === true) {
-                $moduleInfo = $this->xml->parseXmlFile($path, 'info');
+            $moduleComposerJson = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/composer.json';
 
-                if (!empty($moduleInfo)) {
-                    $moduleName = strtolower($moduleDirectory);
-                    $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
+            if (\is_file($moduleComposerJson)) {
+                $moduleName = \strtolower($moduleDirectory);
+                $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
 
-                    return [
-                        'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
-                        'dir' => $moduleDirectory,
-                        'installed' => (!empty($moduleInfoDb)),
-                        'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
-                        'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
-                        'description' => $this->getModuleDescription($moduleInfo, $moduleName),
-                        'author' => $moduleInfo['author'],
-                        'version' => $moduleInfo['version'],
-                        'name' => $this->getModuleName($moduleInfo, $moduleName),
-                        'categories' => isset($moduleInfo['categories']),
-                        'protected' => isset($moduleInfo['protected']),
-                        'installable' => !isset($moduleInfo['no_install']),
-                        'dependencies' => $this->getModuleDependencies($path),
-                    ];
-                }
+                $composer = (new JsonFile($moduleComposerJson))->read();
+
+                return [
+                    'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
+                    'dir' => $moduleDirectory,
+                    'installed' => (!empty($moduleInfoDb)),
+                    'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
+                    'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
+                    'description' => $this->getModuleDescription($composer),
+                    'author' => $this->getAuthor($composer),
+                    'version' => $this->getModuleVersion($composer),
+                    'name' => $this->getModuleName($moduleName),
+                    'package_name' => $composer['name'],
+                    'protected' => $composer['extra']['protected'] ?? false,
+                    'installable' => $composer['extra']['installable'] ?? true,
+                    'dependencies' => $this->getModuleDependencies($moduleComposerJson),
+                ];
             }
         }
 
@@ -172,40 +172,53 @@ class ModuleInfoCache
     }
 
     /**
-     * @param array  $moduleInfo
-     * @param string $moduleName
+     * Returns the description of an ACP3 module
      *
+     * @param array $composer
      * @return string
      */
-    protected function getModuleDescription(array $moduleInfo, $moduleName)
+    private function getModuleDescription(array $composer): string
     {
-        if (isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true') {
-            return $this->translator->t($moduleName, 'mod_description');
-        }
-
-        return $moduleInfo['description'];
+        return $composer['description'];
     }
 
     /**
-     * @param array  $moduleInfo
-     * @param string $moduleName
+     * Returns the author of an ACP3 module
      *
-     * @return string
+     * @param array $composer
+     * @return array
      */
-    protected function getModuleName(array $moduleInfo, $moduleName)
+    private function getAuthor(array $composer): array
     {
-        if (isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] === 'true') {
-            return $this->translator->t($moduleName, $moduleName);
+        $authors = [];
+        if (isset($composer['authors'])) {
+            foreach ($composer['authors'] as $author) {
+                $authors[] = $author['name'];
+            }
         }
 
-        return $moduleInfo['name'];
+        return $authors;
     }
 
     /**
-     * @return XML
+     * Returns the version of an ACP3 module
+     *
+     * @param array $composer
+     * @return string
      */
-    protected function getXml()
+    private function getModuleVersion(array $composer): string
     {
-        return $this->xml;
+        return $composer['version'] ?? 'N/A';
+    }
+
+    /**
+     * Returns the localized name of an ACP3 module
+     *
+     * @param string $moduleName
+     * @return string
+     */
+    private function getModuleName(string $moduleName)
+    {
+        return $this->translator->t($moduleName, $moduleName);
     }
 }

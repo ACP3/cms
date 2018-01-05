@@ -1,15 +1,12 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\NestedSet\Operation;
 
-/**
- * Class Edit
- * @package ACP3\Core\NestedSet\Operation
- */
 class Edit extends AbstractOperation
 {
     /**
@@ -66,6 +63,7 @@ class Edit extends AbstractOperation
                     );
                 }
             }
+
             return $bool;
         };
 
@@ -75,15 +73,15 @@ class Edit extends AbstractOperation
     /**
      * @param int   $parentId
      * @param int   $blockId
-     * @param array $items
+     * @param array $item
      *
      * @return bool
      */
-    protected function nodeIsRootItemAndNoChangeNeed($parentId, $blockId, array $items)
+    protected function nodeIsRootItemAndNoChangeNeed($parentId, $blockId, array $item)
     {
         return empty($parentId) &&
-        ($this->isBlockAware === false || ($this->isBlockAware === true && $blockId == $items['block_id'])) &&
-        $this->nestedSetRepository->nodeIsRootItem($items['left_id'], $items['right_id']) === true;
+        ($this->isBlockAware() === false || ($this->isBlockAware() === true && $blockId == $item[$this->getBlockColumnName()])) &&
+        $this->nestedSetRepository->nodeIsRootItem($item['left_id'], $item['right_id']) === true;
     }
 
     /**
@@ -97,8 +95,8 @@ class Edit extends AbstractOperation
     protected function nodeBecomesRootNode($id, $blockId, array $nodes)
     {
         $itemDiff = $this->calcDiffBetweenNodes($nodes[0]['left_id'], $nodes[0]['right_id']);
-        if ($this->isBlockAware === true) {
-            if ($nodes[0]['block_id'] != $blockId) {
+        if ($this->isBlockAware() === true) {
+            if ($nodes[0][$this->getBlockColumnName()] != $blockId) {
                 $diff = $this->nodeBecomesRootNodeInNewBlock($blockId, $nodes, $itemDiff);
             } else {
                 $diff = $this->nodeBecomesRootNodeInSameBlock($nodes, $itemDiff);
@@ -128,12 +126,12 @@ class Edit extends AbstractOperation
 
         // Falls die Knoten in einen leeren Block verschoben werden sollen,
         // die right_id des letzten Elementes verwenden
-        if (empty($newBlockLeftId) || is_null($newBlockLeftId) === true) {
+        if (empty($newBlockLeftId) || \is_null($newBlockLeftId) === true) {
             $newBlockLeftId = $this->nestedSetRepository->fetchMaximumRightId();
             $newBlockLeftId += 1;
         }
 
-        if ($blockId > $nodes[0]['block_id']) {
+        if ($blockId > $nodes[0][$this->getBlockColumnName()]) {
             $newBlockLeftId -= $itemDiff;
         }
 
@@ -153,13 +151,13 @@ class Edit extends AbstractOperation
      */
     protected function nodeBecomesRootNodeInSameBlock(array $nodes, $itemDiff)
     {
-        $maxId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($nodes[0]['block_id']);
+        $maxId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($nodes[0][$this->getBlockColumnName()]);
 
         $this->adjustParentNodesAfterSeparation($itemDiff, $nodes[0]['left_id'], $nodes[0]['right_id']);
 
         $this->db->getConnection()->executeUpdate(
-            "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ? AND block_id = ?",
-            [$itemDiff, $itemDiff, $nodes[0]['right_id'], $nodes[0]['block_id']]
+            "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ? AND {$this->getBlockColumnName()} = ?",
+            [$itemDiff, $itemDiff, $nodes[0]['right_id'], $nodes[0][$this->getBlockColumnName()]]
         );
 
         return $maxId - $nodes[0]['right_id'];
@@ -186,16 +184,16 @@ class Edit extends AbstractOperation
                 $node['left_id'],
                 $node['right_id']
             );
-            if ($this->isBlockAware === true) {
+            if ($this->isBlockAware()) {
                 $bool = $this->db->getConnection()->executeUpdate(
-                    "UPDATE {$this->nestedSetRepository->getTableName()} SET block_id = ?, root_id = ?, parent_id = ?, left_id = ?, right_id = ? WHERE id = ?",
+                    "UPDATE {$this->nestedSetRepository->getTableName()} SET {$this->getBlockColumnName()} = ?, root_id = ?, parent_id = ?, left_id = ?, right_id = ? WHERE id = ?",
                     [
                         $blockId,
                         $rootId,
                         $parentId,
                         $node['left_id'],
                         $node['right_id'],
-                        $node['id']
+                        $node['id'],
                     ]
                 );
             } else {
@@ -206,7 +204,7 @@ class Edit extends AbstractOperation
                         $parentId,
                         $node['left_id'],
                         $node['right_id'],
-                        $node['id']
+                        $node['id'],
                     ]
                 );
             }
@@ -214,6 +212,7 @@ class Edit extends AbstractOperation
                 break;
             }
         }
+
         return $bool;
     }
 
@@ -251,6 +250,7 @@ class Edit extends AbstractOperation
         $this->adjustFollowingNodesAfterSeparation($itemDiff, $nodes[0]['right_id']);
         $this->adjustParentNodesAfterInsert($itemDiff, $newParent['left_id'], $newParent['right_id']);
         $this->adjustFollowingNodesAfterInsert($itemDiff, $newParent['left_id'] + 1);
+
         return [$diff, $rootId];
     }
 }

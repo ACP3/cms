@@ -1,0 +1,61 @@
+{extends file="asset:`$LAYOUT`"}
+
+{block CONTENT}
+    {if $overlay == 1}
+        <div class="modal fade" id="modal-create" tabindex="-1" role="dialog" aria-labelledby="modal-create" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                </div>
+            </div>
+        </div>
+        <p class="text-center">
+            <a href="{uri args="guestbook/index/create"}" id="create-link" title="{lang t="guestbook|create"}" data-toggle="modal" data-target="#modal-create">{lang t="guestbook|create"}</a>
+        </p>
+    {else}
+        <p class="text-center">
+            <a href="{uri args="guestbook/index/create"}" id="create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
+        </p>
+    {/if}
+    {redirect_message}
+    {if !empty($guestbook)}
+        {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
+        {foreach $guestbook as $row}
+            <article id="gb-entry-{$row.id}" class="dataset-box dataset-box__guestbook clearfix">
+                <header class="navbar navbar-default">
+                    <div class="navbar-header">
+                        <strong class="navbar-text">
+                            {if !is_null($row.user_id)}
+                                <a href="{uri args="users/index/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>
+                            {else}
+                                {$row.name}
+                            {/if}
+                        </strong>
+                    </div>
+                    <time class="navbar-text small pull-right" datetime="{date_format date=$row.date format="c"}">
+                        {date_format date=$row.date format=$dateformat}
+                    </time>
+                </header>
+                <div class="dataset-box__content">
+                    <div class="pull-right">
+                        {if $row.website != ''}
+                            <a href="{$row.website|prefix_uri}"
+                               target="_blank"
+                               rel="noopener nofollow"
+                               title="{lang t="guestbook|visit_website"}">
+                                <i class="fa fa-link" aria-hidden="true"></i>
+                            </a>
+                            <br>
+                        {/if}
+                        {if $row.mail != ''}
+                            {mailto address=$row.mail encode="javascript" text='<i class="fa fa-envelope" aria-hidden="true"></i>'}
+                        {/if}
+                    </div>
+                    {$row.message|nl2p}
+                </div>
+            </article>
+        {/foreach}
+        {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
+    {else}
+        {include file="asset:System/Partials/no_results.tpl"}
+    {/if}
+{/block}

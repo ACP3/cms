@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core;
@@ -11,7 +12,6 @@ use ACP3\Core\Application\Bootstrap;
 /**
  * Parses XML files
  *
- * @package ACP3\Core
  */
 class XML
 {
@@ -34,9 +34,9 @@ class XML
     {
         if (!empty($this->info[$path][$xpath])) {
             return $this->info[$path][$xpath];
-        } elseif (is_file($path) === true) {
+        } elseif (\is_file($path) === true) {
             /** @var \SimpleXMLElement $xml */
-            $xml = simplexml_load_file($path);
+            $xml = \simplexml_load_file($path);
             $data = $xml->xpath($xpath);
 
             if (!empty($data)) {
@@ -45,7 +45,7 @@ class XML
                         /** @var \SimpleXMLElement $value */
                         if ($value->attributes()) {
                             $this->parseAttributes($value->attributes(), $path, $xpath, $key);
-                        } elseif (isset($this->info[$path][$xpath][(string)$key]) && is_array($this->info[$path][$xpath][(string)$key])) {
+                        } elseif (isset($this->info[$path][$xpath][(string)$key]) && \is_array($this->info[$path][$xpath][(string)$key])) {
                             $this->info[$path][$xpath][(string)$key][] = (string)$value;
                         } elseif (isset($this->info[$path][$xpath][(string)$key])) {
                             $tmp = $this->info[$path][$xpath][(string)$key];
@@ -57,9 +57,11 @@ class XML
                         }
                     }
                 }
-                return $this->info[$path][$xpath];
+
+                return $this->info[$path][$xpath] ?? [];
             }
         }
+
         return [];
     }
 

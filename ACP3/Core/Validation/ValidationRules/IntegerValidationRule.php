@@ -1,10 +1,12 @@
 <?php
-namespace ACP3\Core\Validation\ValidationRules;
 
 /**
- * Class IntegerValidationRule
- * @package ACP3\Core\Validation\ValidationRules
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Validation\ValidationRules;
+
 class IntegerValidationRule extends AbstractValidationRule
 {
     /**
@@ -12,7 +14,7 @@ class IntegerValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
@@ -26,6 +28,6 @@ class IntegerValidationRule extends AbstractValidationRule
      */
     protected function checkAgainstPattern($value)
     {
-        return preg_match('/^(\d+)$/', $value) === 1;
+        return \preg_match('/^(\d+)$/', $value) === 1;
     }
 }

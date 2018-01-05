@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Search\Extension;
@@ -46,10 +47,10 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
             $searchTerm,
             $sortDirection
         );
-        $cResults = count($results);
+        $cResults = \count($results);
 
         for ($i = 0; $i < $cResults; ++$i) {
-            $results[$i]['hyperlink'] = $this->router->route(sprintf($this->getRouteName(), $results[$i]['id']));
+            $results[$i]['hyperlink'] = $this->router->route(\sprintf($this->getRouteName(), $results[$i]['id']));
         }
 
         return $results;

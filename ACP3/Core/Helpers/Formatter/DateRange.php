@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers\Formatter;
 
 use ACP3\Core\Date;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 
-/**
- * Class DateRange
- * @package ACP3\Core\Helpers\Formatter
- */
 class DateRange
 {
     /**
@@ -15,17 +17,17 @@ class DateRange
      */
     protected $date;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
 
     /**
-     * @param \ACP3\Core\Date            $date
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
     public function __construct(
         Date $date,
-        Translator $translator
+        TranslatorInterface $translator
     ) {
         $this->date = $date;
         $this->translator = $translator;
@@ -52,14 +54,14 @@ class DateRange
                     ['%date%' => $this->date->format($start, $format)]
                 );
             }
-            return $this->generateTimeTag($start, $format, $title);
-        } else {
-            $dateRange = $this->generateTimeTag($start, $format);
-            $dateRange .= '&ndash;';
-            $dateRange .= $this->generateTimeTag($end, $format);
 
-            return $dateRange;
+            return $this->generateTimeTag($start, $format, $title);
         }
+        $dateRange = $this->generateTimeTag($start, $format);
+        $dateRange .= '&ndash;';
+        $dateRange .= $this->generateTimeTag($end, $format);
+
+        return $dateRange;
     }
 
     /**
@@ -73,6 +75,7 @@ class DateRange
     {
         $rfcDate = $this->date->format($date, 'c');
         $title = !empty($title) ? ' title="' . $title . '"' : '';
+
         return '<time datetime="' . $rfcDate . '"' . $title . '>' . $this->date->format($date, $format) . '</time>';
     }
 }

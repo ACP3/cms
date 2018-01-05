@@ -1,20 +1,16 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Emoticons\Installer;
 
-use ACP3\Core\Modules\Installer\AbstractSampleData;
+use ACP3\Core\Installer\AbstractSampleData;
 
-/**
- * Class SampleData
- * @package ACP3\Modules\ACP3\Emoticons\Installer
- */
 class SampleData extends AbstractSampleData
 {
-
     /**
      * @return array
      */
@@ -42,7 +38,7 @@ class SampleData extends AbstractSampleData
             "INSERT INTO `{pre}emoticons` VALUES ('', ':idea:', 'Idea', '19.gif');",
             "INSERT INTO `{pre}emoticons` VALUES ('', ':arrow:', 'Arrow', '20.gif');",
             "INSERT INTO `{pre}emoticons` VALUES ('', ':|', 'Neutral', '21.gif');",
-            "INSERT INTO `{pre}emoticons` VALUES ('', ':mrgreen:', 'Mr. Green', '22.gif');"
+            "INSERT INTO `{pre}emoticons` VALUES ('', ':mrgreen:', 'Mr. Green', '22.gif');",
         ];
     }
 }

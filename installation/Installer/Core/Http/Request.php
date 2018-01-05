@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Installer\Core\Http;
 
 use ACP3\Core;
 
-/**
- * Class Request
- * @package ACP3\Installer\Core\Http
- */
 class Request extends Core\Http\Request
 {
     /**

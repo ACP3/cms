@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
@@ -9,14 +10,10 @@ namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 
-/**
- * Class Delete
- * @package ACP3\Modules\ACP3\Categories\Controller\Admin\Index
- */
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Cache
+     * @var \ACP3\Modules\ACP3\Categories\Cache\CategoriesCacheStorage
      */
     protected $categoriesCache;
     /**
@@ -29,12 +26,12 @@ class Delete extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Categories\Model\CategoriesModel $categoriesModel
-     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
+     * @param \ACP3\Modules\ACP3\Categories\Cache\CategoriesCacheStorage $categoriesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Categories\Model\CategoriesModel $categoriesModel,
-        Categories\Cache $categoriesCache
+        Categories\Cache\CategoriesCacheStorage $categoriesCache
     ) {
         parent::__construct($context);
 

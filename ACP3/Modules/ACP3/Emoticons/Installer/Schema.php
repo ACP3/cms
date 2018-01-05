@@ -1,15 +1,15 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Emoticons\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\Modules;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\Emoticons\Installer
- */
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     const MODULE_NAME = 'emoticons';
 
@@ -19,13 +19,13 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}emoticons` (
+            'CREATE TABLE `{pre}emoticons` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `code` VARCHAR(10) NOT NULL,
                 `description` VARCHAR(15) NOT NULL,
                 `img` VARCHAR(40) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -34,7 +34,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function removeTables()
     {
-        return ["DROP TABLE IF EXISTS `{pre}emoticons`;"];
+        return ['DROP TABLE IF EXISTS `{pre}emoticons`;'];
     }
 
     /**
@@ -57,12 +57,11 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             'admin' => [
                 'index' => [
-                    'index' => PrivilegeEnum::ADMIN_VIEW,
-                    'create' => PrivilegeEnum::ADMIN_CREATE,
-                    'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
-                ]
+                    'index' => PrivilegeEnum::ADMIN_VIEW,
+                    'manage' => PrivilegeEnum::ADMIN_MANAGE,
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
+                ],
             ],
         ];
     }
@@ -80,6 +79,6 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 32;
+        return 33;
     }
 }

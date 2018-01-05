@@ -1,21 +1,20 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Settings;
 
-use ACP3\Core\Cache;
+use ACP3\Core\Cache\Cache;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
 use ACP3\Core\Settings\Event\SettingsSaveEvent;
-use ACP3\Modules\ACP3\System;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Manages the various module settings
- * @package ACP3\Core\Settings
  */
 class Settings implements SettingsInterface
 {
@@ -34,7 +33,7 @@ class Settings implements SettingsInterface
      */
     protected $systemSettingsRepository;
     /**
-     * @var \ACP3\Core\Cache
+     * @var \ACP3\Core\Cache\Cache
      */
     protected $coreCache;
     /**
@@ -62,14 +61,9 @@ class Settings implements SettingsInterface
     }
 
     /**
-     * Saves the module's settings to the database
-     *
-     * @param array $data
-     * @param string $module
-     *
-     * @return bool
+     * @inheritdoc
      */
-    public function saveSettings(array $data, $module)
+    public function saveSettings(array $data, string $module): bool
     {
         $bool = $bool2 = false;
         $moduleId = $this->systemModuleRepository->getModuleId($module);
@@ -78,11 +72,11 @@ class Settings implements SettingsInterface
 
             foreach ($data as $key => $value) {
                 $updateValues = [
-                    'value' => $value
+                    'value' => $value,
                 ];
                 $where = [
                     'module_id' => $moduleId,
-                    'name' => $key
+                    'name' => $key,
                 ];
                 $bool = $this->systemSettingsRepository->update($updateValues, $where);
             }
@@ -97,7 +91,7 @@ class Settings implements SettingsInterface
      *
      * @return bool
      */
-    protected function saveCache()
+    private function saveCache(): bool
     {
         $settings = $this->systemSettingsRepository->getAllSettings();
 
@@ -110,12 +104,9 @@ class Settings implements SettingsInterface
     }
 
     /**
-     * Returns the module's settings from the cache
-     *
-     * @param string $module
-     * @return array
+     * @inheritdoc
      */
-    public function getSettings($module)
+    public function getSettings(string $module): array
     {
         if ($this->settings === []) {
             if ($this->coreCache->contains(static::CACHE_ID) === false) {
@@ -125,6 +116,6 @@ class Settings implements SettingsInterface
             $this->settings = $this->coreCache->fetch(static::CACHE_ID);
         }
 
-        return isset($this->settings[$module]) ? $this->settings[$module] : [];
+        return $this->settings[$module] ?? [];
     }
 }

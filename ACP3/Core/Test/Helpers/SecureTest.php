@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\Helpers;
@@ -25,24 +26,24 @@ class SecureTest extends \PHPUnit_Framework_TestCase
         return [
             'single_line' => [
                 'Foo Bar <script type="text/javascript">alert(\'huhu\')</script> Test',
-                'Foo Bar  Test'
+                'Foo Bar  Test',
             ],
             'single_line_no_spaces' => [
                 'Foo Bar<script type="text/javascript">alert(\'huhu\')</script>Test',
-                'Foo BarTest'
+                'Foo BarTest',
             ],
             'multi_line' => [
                 "Foo Bar\n\n<script type=\"text/javascript\">alert('huhu')</script>\nTest",
-                "Foo Bar\n\n\nTest"
+                "Foo Bar\n\n\nTest",
             ],
             'mixed_case' => [
                 "Foo Bar\n\n<sCRipT type=\"text/javascript\">alert('huhu')</sCRipT>\nTest",
-                "Foo Bar\n\n\nTest"
+                "Foo Bar\n\n\nTest",
             ],
             'multiple_scripts' => [
                 '<script type="text/javascript">alert(\'huhu\')</script> Foo Bar <script type="text/javascript">alert(\'huhu\')</script> Test <script type="text/javascript">alert(\'huhu\')</script>',
-                ' Foo Bar  Test '
-            ]
+                ' Foo Bar  Test ',
+            ],
         ];
     }
 
@@ -61,9 +62,9 @@ class SecureTest extends \PHPUnit_Framework_TestCase
     {
         $length = 10;
         $salt = $this->secureHelper->salt($length);
-        $saltArray = str_split($salt);
+        $saltArray = \str_split($salt);
 
-        $this->assertEquals($length, strlen($salt));
-        $this->assertCount($length, array_unique($saltArray));
+        $this->assertEquals($length, \strlen($salt));
+        $this->assertCount($length, \array_unique($saltArray));
     }
 }

@@ -1,16 +1,18 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core;
 
 use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Router\RouterInterface;
 
-/**
- * Class Pagination
- * @package ACP3\Core
- */
 class Pagination
 {
     /**
@@ -18,7 +20,7 @@ class Pagination
      */
     protected $title;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -69,13 +71,13 @@ class Pagination
     /**
      * Pagination constructor.
      * @param Title $title
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      * @param RequestInterface $request
      * @param RouterInterface $router
      */
     public function __construct(
         Title $title,
-        Translator $translator,
+        TranslatorInterface $translator,
         RequestInterface $request,
         RouterInterface $router
     ) {
@@ -143,7 +145,7 @@ class Pagination
 
         foreach ($map as $result) {
             if (!$result) {
-                $pagesToDisplay++;
+                ++$pagesToDisplay;
             }
         }
 
@@ -192,7 +194,7 @@ class Pagination
             $link = $this->router->route($areaPrefix . $this->request->getUriWithoutPages());
 
             $this->currentPage = (int)$this->request->getParameters()->get('page', 1);
-            $this->totalPages = (int)ceil($this->totalResults / $this->resultsPerPage);
+            $this->totalPages = (int)\ceil($this->totalResults / $this->resultsPerPage);
 
             $this->setMetaStatements();
             [$rangeStart, $rangeEnd] = $this->calculateRange();
@@ -237,19 +239,19 @@ class Pagination
         $pagesToDisplay = $this->getPagesToDisplay();
 
         if ($this->totalPages > $pagesToDisplay) {
-            $center = floor($pagesToDisplay / 2);
-            $rangeStart = max(1, $this->currentPage - $center);
-            $rangeEnd = min($this->totalPages, $rangeStart + $pagesToDisplay - 1);
+            $center = \floor($pagesToDisplay / 2);
+            $rangeStart = \max(1, $this->currentPage - $center);
+            $rangeEnd = \min($this->totalPages, $rangeStart + $pagesToDisplay - 1);
 
             // Anzuzeigende Seiten immer auf dem Wert von $pagesToDisplay halten
             if ($rangeEnd === $this->totalPages) {
-                $rangeStart = min($rangeStart, $rangeEnd - $pagesToDisplay + 1);
+                $rangeStart = \min($rangeStart, $rangeEnd - $pagesToDisplay + 1);
             }
         }
 
         return [
             (int)$rangeStart,
-            (int)$rangeEnd
+            (int)$rangeEnd,
         ];
     }
 
@@ -310,7 +312,7 @@ class Pagination
             'uri' => $uri,
             'title' => $title,
             'selected' => (bool)$selected,
-            'selector' => $selector
+            'selector' => $selector,
         ];
     }
 

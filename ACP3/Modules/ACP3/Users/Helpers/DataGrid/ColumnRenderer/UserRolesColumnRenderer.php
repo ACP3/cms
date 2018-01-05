@@ -1,26 +1,27 @@
 <?php
-namespace ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer;
-
-use ACP3\Core\ACL;
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
 
 /**
- * Class UserRolesColumnRenderer
- * @package ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer;
+
+use ACP3\Core\ACL\ACLInterface;
+use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
+
 class UserRolesColumnRenderer extends AbstractColumnRenderer
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var ACLInterface
      */
     protected $acl;
 
     /**
      * UserRolesColumnRenderer constructor.
-     *
-     * @param \ACP3\Core\ACL $acl
+     * @param ACLInterface $acl
      */
-    public function __construct(ACL $acl)
+    public function __construct(ACLInterface $acl)
     {
         $this->acl = $acl;
     }
@@ -30,6 +31,6 @@ class UserRolesColumnRenderer extends AbstractColumnRenderer
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
-        return isset($dbResultRow[$field]) ? implode(', ', $this->acl->getUserRoleNames($dbResultRow[$field])) : null;
+        return isset($dbResultRow[$field]) ? \implode(', ', $this->acl->getUserRoleNames($dbResultRow[$field])) : null;
     }
 }

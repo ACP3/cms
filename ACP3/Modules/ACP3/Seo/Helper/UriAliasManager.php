@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Helper;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Seo\Helper;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 use ACP3\Modules\ACP3\Seo\Model\SeoModel;
 
-/**
- * Class UriAliasManager
- * @package ACP3\Modules\ACP3\Seo\Helper
- */
 class UriAliasManager
 {
     /**
@@ -59,7 +56,7 @@ class UriAliasManager
      */
     protected function preparePath($path)
     {
-        return !preg_match('/\/$/', $path) ? '/' : '';
+        return !\preg_match('/\/$/', $path) ? '/' : '';
     }
 
     /**
@@ -81,7 +78,7 @@ class UriAliasManager
             'seo_title' => $title,
             'seo_keywords' => $keywords,
             'seo_description' => $description,
-            'seo_robots' => (int)$robots
+            'seo_robots' => (int)$robots,
         ];
 
         $seo = $this->seoRepository->getOneByUri($path);

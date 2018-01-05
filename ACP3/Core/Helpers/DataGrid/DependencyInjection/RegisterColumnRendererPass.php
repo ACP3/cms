@@ -1,14 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers\DataGrid\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-/**
- * Class RegisterColumnRendererPass
- * @package ACP3\Core\Helpers\DataGrid\DependencyInjection
- */
 class RegisterColumnRendererPass implements CompilerPassInterface
 {
     /**

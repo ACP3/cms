@@ -1,19 +1,15 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Helper;
 
 use ACP3\Core;
-use ACP3\Core\XML;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class Installer
- * @package ACP3\Modules\ACP3\System\Helper
- */
 class Installer
 {
     use Core\Modules\ModuleDependenciesTrait;
@@ -23,21 +19,17 @@ class Installer
      */
     protected $appPath;
     /**
-     * @var Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     protected $modules;
     /**
-     * @var \ACP3\Core\Modules\SchemaInstaller
+     * @var \ACP3\Core\Installer\SchemaInstaller
      */
     protected $schemaInstaller;
     /**
      * @var \ACP3\Core\Modules\Vendor
      */
     protected $vendors;
-    /**
-     * @var \ACP3\Core\XML
-     */
-    protected $xml;
     /**
      * @var LoggerInterface
      */
@@ -50,26 +42,23 @@ class Installer
     /**
      * @param LoggerInterface $logger
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\Modules\Modules $modules
      * @param \ACP3\Core\Modules\Vendor $vendors
      * @param Core\Installer\SchemaRegistrar $schemaRegistrar
-     * @param \ACP3\Core\Modules\SchemaInstaller $schemaInstaller
-     * @param \ACP3\Core\XML $xml
+     * @param \ACP3\Core\Installer\SchemaInstaller $schemaInstaller
      */
     public function __construct(
         LoggerInterface $logger,
         Core\Environment\ApplicationPath $appPath,
-        Core\Modules $modules,
+        Core\Modules\Modules $modules,
         Core\Modules\Vendor $vendors,
         Core\Installer\SchemaRegistrar $schemaRegistrar,
-        Core\Modules\SchemaInstaller $schemaInstaller,
-        Core\XML $xml
+        Core\Installer\SchemaInstaller $schemaInstaller
     ) {
         $this->appPath = $appPath;
         $this->modules = $modules;
         $this->vendors = $vendors;
         $this->schemaInstaller = $schemaInstaller;
-        $this->xml = $xml;
         $this->logger = $logger;
         $this->schemaRegistrar = $schemaRegistrar;
     }
@@ -77,11 +66,11 @@ class Installer
     /**
      * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls
      *
-     * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
+     * @param \ACP3\Core\Installer\SchemaInterface $schema
      *
      * @return array
      */
-    public function checkInstallDependencies(Core\Modules\Installer\SchemaInterface $schema)
+    public function checkInstallDependencies(Core\Installer\SchemaInterface $schema)
     {
         $dependencies = $this->getDependencies($schema->getModuleName());
         $modulesToEnable = [];
@@ -93,30 +82,32 @@ class Installer
                 }
             }
         }
+
         return $modulesToEnable;
     }
 
     /**
-     * @param Core\Modules\Installer\SchemaInterface $schema
+     * @param \ACP3\Core\Installer\SchemaInterface $schema
      * @return array
      */
-    public function checkUninstallDependencies(Core\Modules\Installer\SchemaInterface $schema)
+    public function checkUninstallDependencies(Core\Installer\SchemaInterface $schema)
     {
         $modules = $this->modules->getInstalledModules();
         $moduleDependencies = [];
 
         foreach ($modules as $module) {
-            $moduleName = strtolower($module['dir']);
+            $moduleName = \strtolower($module['dir']);
             if ($moduleName !== $schema->getModuleName()) {
                 if ($this->schemaRegistrar->has($moduleName) === true) {
                     $dependencies = $this->getDependencies($moduleName);
 
-                    if (in_array($schema->getModuleName(), $dependencies) === true) {
+                    if (\in_array($schema->getModuleName(), $dependencies) === true) {
                         $moduleDependencies[] = $module['name'];
                     }
                 }
             }
         }
+
         return $moduleDependencies;
     }
 
@@ -127,26 +118,18 @@ class Installer
      *
      * @return array
      */
-    protected function getDependencies($moduleName)
+    protected function getDependencies(string $moduleName): array
     {
-        if ((bool)preg_match('=/=', $moduleName) === false) {
+        if ((bool)\preg_match('=/=', $moduleName) === false) {
             foreach ($this->vendors->getVendors() as $vendor) {
-                $path = $this->appPath->getModulesDir() . $vendor . '/' . ucfirst($moduleName) . '/Resources/config/module.xml';
+                $path = $this->appPath->getModulesDir() . $vendor . '/' . \ucfirst($moduleName) . '/composer.json';
 
-                if (is_file($path) === true) {
+                if (\is_file($path) === true) {
                     return $this->getModuleDependencies($path);
                 }
             }
         }
 
         return [];
-    }
-
-    /**
-     * @return XML
-     */
-    protected function getXml()
-    {
-        return $this->xml;
     }
 }

@@ -8,9 +8,7 @@ services:
     class: ACP3\Modules\ACP3\Captcha\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@captcha.utility.captcha_registrar'
+      - '@captcha.view.block.admin.captcha_settings_form_block'
       - '@cpatcha.validation.admin_settings_form_validation'
 
   captcha.controller.frontend.index.image:

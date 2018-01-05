@@ -3,19 +3,15 @@ parameters:
 
 imports:
   - { resource: ../../../../ACP3/Core/config/components/logger.yml }
+  - { resource: ../../../../ACP3/Core/config/components/action_result_types.yml }
   - { resource: components/*.yml }
   - { resource: ../../../../ACP3/Core/config/components/installer.yml }
   - { resource: ../View/Renderer/Smarty/config/services.yml }
   - { resource: ../../Modules/Errors/Resources/config/services.yml }
   - { resource: ../../Modules/Install/Resources/config/services.yml }
-  - { resource: ../../../../ACP3/Core/View/Renderer/Smarty/Blocks/config/services.yml }
+  - { resource: ../../../../ACP3/Core/View/Renderer/Smarty/config/components/blocks.yml }
 
 services:
-  core.logger:
-    class: ACP3\Core\Logger
-    arguments:
-      - '@core.environment.application_path'
-
   core.router:
     class: ACP3\Installer\Core\Router\Router
     arguments:
@@ -41,9 +37,7 @@ services:
       - '%core.environment%'
 
   core.event_dispatcher:
-    class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
-    arguments:
-      - '@service_container'
+    class: Symfony\Component\EventDispatcher\EventDispatcher
 
   core.xml:
     class: ACP3\Core\XML

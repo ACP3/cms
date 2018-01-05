@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Modules\Helper;
@@ -11,14 +12,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class Action
- * @package ACP3\Core\Modules\Helper
- */
 class Action
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -41,14 +38,14 @@ class Action
     /**
      * Action constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Router\RouterInterface $router
      * @param \ACP3\Core\Helpers\Alerts $alerts
      * @param \ACP3\Core\Helpers\RedirectMessages $redirectMessages
      */
     public function __construct(
-        Core\I18n\Translator $translator,
+        Core\I18n\TranslatorInterface $translator,
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
         Core\Helpers\Alerts $alerts,
@@ -102,6 +99,7 @@ class Action
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
      * @return array|JsonResponse|RedirectResponse
+     * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function handleDeleteAction(
         $action,
@@ -143,7 +141,7 @@ class Action
 
         if ($result instanceof RedirectResponse) {
             return $result;
-        } elseif (is_array($result)) {
+        } elseif (\is_array($result)) {
             if ($action === 'confirmed') {
                 return $callback($result);
             }
@@ -167,32 +165,6 @@ class Action
 
             return $this->prepareRedirectMessageAfterPost($result, 'settings', $path);
         }, $path);
-    }
-
-    /**
-     * @param callable $callback
-     * @param null|string $path
-     *
-     * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @deprecated since 4.4.4, to be removed with version 4.5.0
-     */
-    public function handleCreatePostAction(callable $callback, $path = null)
-    {
-        return $this->handleSaveAction($callback, $path);
-    }
-
-    /**
-     * @param callable $callback
-     * @param null|string $path
-     *
-     * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @deprecated since 4.4.4, to be removed with version 4.5.0
-     */
-    public function handleEditPostAction(callable $callback, $path = null)
-    {
-        return $this->handleSaveAction($callback, $path);
     }
 
     /**
@@ -267,7 +239,7 @@ class Action
         } elseif ($action !== 'confirmed') {
             $data = [
                 'action' => 'confirmed',
-                'entries' => $entries
+                'entries' => $entries,
             ];
 
             return $this->alerts->confirmBoxPost(
@@ -287,10 +259,10 @@ class Action
     private function prepareRequestData()
     {
         $entries = [];
-        if (is_array($this->request->getPost()->get('entries')) === true) {
+        if (\is_array($this->request->getPost()->get('entries')) === true) {
             $entries = $this->request->getPost()->get('entries');
-        } elseif ((bool)preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
-            $entries = explode('|', $this->request->getParameters()->get('entries'));
+        } elseif ((bool)\preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
+            $entries = \explode('|', $this->request->getParameters()->get('entries'));
         }
 
         return $entries;
@@ -303,7 +275,7 @@ class Action
      */
     private function prepareConfirmationBoxText(array $entries)
     {
-        $entriesCount = count($entries);
+        $entriesCount = \count($entries);
         if ($entriesCount === 1) {
             return $this->translator->t('system', 'confirm_delete_single');
         }

@@ -1,17 +1,14 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Controller;
 
 use ACP3\Core\Enum\BaseEnum;
 
-/**
- * Class AreaEnum
- * @package ACP3\Core\Controller
- */
 class AreaEnum extends BaseEnum
 {
     const AREA_ADMIN = 'admin';

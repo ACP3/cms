@@ -5,6 +5,7 @@
     <title>{$TITLE} | {$PAGE_TITLE}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}Assets/css/style.css">
     <!-- STYLESHEETS -->
     <!--[if lt IE 9]>
@@ -14,11 +15,13 @@
 
 <body>
 <div class="container">
-    <h1 id="logo" class="text-center hidden-xs">
-        <img src="{$DESIGN_PATH}Assets/img/logo.png"
-             srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
-             alt="{$PAGE_TITLE}">
-    </h1>
+    <header>
+        <h1 id="logo" class="text-center hidden-xs">
+            <img src="{$DESIGN_PATH}Assets/img/logo.png"
+                 srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
+                 alt="{$PAGE_TITLE}">
+        </h1>
+    </header>
     <nav id="main-navigation" class="navbar navbar-default{if empty($navbar)} visible-xs{/if}">
         <div class="navbar-header">
             {if !empty($navbar)}
@@ -48,7 +51,7 @@
         {/if}
     </nav>
     <main id="content">
-        <h2>{$TITLE}</h2>
+        <h1 class="h2">{$TITLE}</h1>
         {block CONTENT}{/block}
     </main>
     <footer id="footer">

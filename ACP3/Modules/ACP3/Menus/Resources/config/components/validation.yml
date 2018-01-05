@@ -10,7 +10,7 @@ services:
   menus.validation.validation_rules.allowed_menu_validation_rule:
     class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\AllowedMenuValidationRule
     arguments:
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.repository.menu_items_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false
@@ -29,7 +29,7 @@ services:
   menus.validation.validation_rules.menu_already_exists_validation_rule:
     class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuAlreadyExistsValidationRule
     arguments:
-      - '@menus.model.menurepository'
+      - '@menus.model.repository.menus_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false
@@ -43,7 +43,7 @@ services:
   menus.validation.validation_rules.parent_id_validation_rule:
     class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\ParentIdValidationRule
     arguments:
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.repository.menu_items_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false

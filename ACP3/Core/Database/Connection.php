@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Database;
@@ -13,10 +14,6 @@ use Doctrine\DBAL;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class Connection
- * @package ACP3\Core\Database
- */
 class Connection
 {
     /**
@@ -160,13 +157,12 @@ class Connection
 
     /**
      * @param string $statement
-     * @param array  $params
-     * @param int    $column
-     * @param array  $types
-     *
+     * @param array $params
+     * @param array $types
+     * @param int $column
      * @return bool|string
      */
-    public function fetchColumn($statement, array $params = [], $column = 0, array $types = [])
+    public function fetchColumn($statement, array $params = [], array $types = [], $column = 0)
     {
         return $this->executeQuery($statement, $params, $types)->fetchColumn($column);
     }
@@ -195,7 +191,7 @@ class Connection
             $query,
             $params,
             $types,
-            $cache ? new QueryCacheProfile($lifetime, $cacheKey ?: md5($query)) : null
+            $cache ? new QueryCacheProfile($lifetime, $cacheKey ?: \md5($query)) : null
         );
     }
 

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
@@ -10,22 +11,14 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class ForgotPwd
- * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Index
- */
 class ForgotPwd extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository
      */
     protected $userRepository;
     /**
@@ -36,32 +29,43 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\SendEmail
      */
     protected $sendEmail;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
+    /**
+     * @var Core\Helpers\Alerts
+     */
+    private $alerts;
 
     /**
      * ForgotPwd constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\FormBlockInterface $block
      * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
+     * @param Core\Helpers\Alerts $alerts
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation
      * @param \ACP3\Core\Helpers\SendEmail $sendEmail
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\FormBlockInterface $block,
         Core\Helpers\Secure $secureHelper,
-        Users\Model\Repository\UserRepository $userRepository,
+        Core\Helpers\Alerts $alerts,
+        Users\Model\Repository\UsersRepository $userRepository,
         Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation,
         Core\Helpers\SendEmail $sendEmail
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
         $this->userRepository = $userRepository;
         $this->accountForgotPasswordFormValidation = $accountForgotPasswordFormValidation;
         $this->sendEmail = $sendEmail;
+        $this->block = $block;
+        $this->alerts = $alerts;
     }
 
     /**
@@ -73,10 +77,9 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
             return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         }
 
-        return [
-            'form' => array_merge(['nick_mail' => ''], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
@@ -100,18 +103,18 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
                     $updateValues = [
                         'pwd' => $this->secureHelper->generateSaltedPassword($salt, $newPassword, 'sha512'),
                         'pwd_salt' => $salt,
-                        'login_errors' => 0
+                        'login_errors' => 0,
                     ];
                     $bool = $this->userRepository->update($updateValues, $user['id']);
                 }
 
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
+                return $this->alerts->confirmBox(
                     $this->translator->t(
                         'users',
                         $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'
                     ),
                     $this->appPath->getWebRoot()
-                ));
+                );
             },
             $this->request->getFullPath()
         );
@@ -148,7 +151,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
             'forgot_pwd_mail_subject',
             [
                 '{title}' => $systemSettings['site_title'],
-                '{host}' => $this->request->getHost()
+                '{host}' => $this->request->getHost(),
             ]
         );
         $body = $this->translator->t(
@@ -159,7 +162,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
                 '{mail}' => $user['mail'],
                 '{password}' => $newPassword,
                 '{title}' => $systemSettings['site_title'],
-                '{host}' => $this->request->getHost()
+                '{host}' => $this->request->getHost(),
             ]
         );
 
@@ -168,7 +171,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
         $data = (new Core\Mailer\MailerMessage())
             ->setRecipients([
                 'name' => $user['realname'],
-                'email' => $user['mail']
+                'email' => $user['mail'],
             ])
             ->setFrom($settings['mail'])
             ->setSubject($subject)

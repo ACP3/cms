@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
@@ -9,44 +10,40 @@ namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Guestbook;
 
-/**
- * Class Settings
- * @package ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation
      */
     protected $adminSettingsFormValidation;
     /**
-     * @var \ACP3\Core\Helpers\Forms
+     * @var Core\View\Block\SettingsFormBlockInterface
      */
-    protected $formsHelper;
+    private $block;
+    /**
+     * @var Core\Helpers\Secure
+     */
+    private $secure;
 
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                          $context
-     * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\SettingsFormBlockInterface $block
+     * @param Core\Helpers\Secure $secure
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\SettingsFormBlockInterface $block,
+        Core\Helpers\Secure $secure,
         Guestbook\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
+        $this->block = $block;
+        $this->secure = $secure;
     }
 
     /**
@@ -54,35 +51,9 @@ class Settings extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        $settings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
-
-        $notificationTypes = [
-            0 => $this->translator->t('guestbook', 'no_notification'),
-            1 => $this->translator->t('guestbook', 'notify_on_new_entry'),
-            2 => $this->translator->t('guestbook', 'notify_and_enable')
-        ];
-
-        if ($this->modules->isActive('emoticons') === true) {
-            $this->view->assign(
-                'allow_emoticons',
-                $this->formsHelper->yesNoCheckboxGenerator('emoticons', $settings['emoticons'])
-            );
-        }
-
-        if ($this->modules->isActive('newsletter') === true) {
-            $this->view->assign(
-                'newsletter_integration',
-                $this->formsHelper->yesNoCheckboxGenerator('newsletter_integration', $settings['newsletter_integration'])
-            );
-        }
-
-        return [
-            'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
-            'notify' => $this->formsHelper->choicesGenerator('notify', $notificationTypes, $settings['notify']),
-            'overlay' => $this->formsHelper->yesNoCheckboxGenerator('overlay', $settings['overlay']),
-            'form' => array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
@@ -96,7 +67,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
-                'dateformat' => $this->get('core.helpers.secure')->strEncode($formData['dateformat']),
+                'dateformat' => $this->secure->strEncode($formData['dateformat']),
                 'notify' => $formData['notify'],
                 'notify_email' => $formData['notify_email'],
                 'overlay' => $formData['overlay'],

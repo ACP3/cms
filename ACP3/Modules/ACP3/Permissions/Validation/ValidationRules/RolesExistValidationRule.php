@@ -1,26 +1,27 @@
 <?php
-namespace ACP3\Modules\ACP3\Permissions\Validation\ValidationRules;
-
-use ACP3\Core\ACL;
-use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 
 /**
- * Class RolesExistValidationRule
- * @package ACP3\Modules\ACP3\Permissions\Validation\ValidationRules
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Modules\ACP3\Permissions\Validation\ValidationRules;
+
+use ACP3\Core\ACL\ACLInterface;
+use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
+
 class RolesExistValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var ACLInterface
      */
     protected $acl;
 
     /**
      * RolesExistValidationRule constructor.
-     *
-     * @param \ACP3\Core\ACL $acl
+     * @param ACLInterface $acl
      */
-    public function __construct(ACL $acl)
+    public function __construct(ACLInterface $acl)
     {
         $this->acl = $acl;
     }
@@ -30,11 +31,11 @@ class RolesExistValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return is_array($data) ? $this->aclRolesExist($data) : false;
+        return \is_array($data) ? $this->aclRolesExist($data) : false;
     }
 
     /**
@@ -51,10 +52,11 @@ class RolesExistValidationRule extends AbstractValidationRule
         }
 
         foreach ($roles as $row) {
-            if (in_array($row, $good) === false) {
+            if (\in_array($row, $good) === false) {
                 return false;
             }
         }
+
         return true;
     }
 }

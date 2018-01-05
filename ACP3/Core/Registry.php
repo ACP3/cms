@@ -1,10 +1,12 @@
 <?php
-namespace ACP3\Core;
 
 /**
- * Class Registry
- * @package ACP3\Core
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core;
+
 class Registry
 {
     private static $registry = [];

@@ -1,16 +1,18 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AbstractFormValidation
- * @package ACP3\Core\Validation
- */
 abstract class AbstractFormValidation
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -19,11 +21,11 @@ abstract class AbstractFormValidation
     protected $validator;
 
     /**
-     * @param \ACP3\Core\I18n\Translator      $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Validation\Validator $validator
      */
     public function __construct(
-        Core\I18n\Translator $translator,
+        Core\I18n\TranslatorInterface $translator,
         Core\Validation\Validator $validator
     ) {
         $this->translator = $translator;

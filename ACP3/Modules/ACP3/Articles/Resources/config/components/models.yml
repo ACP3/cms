@@ -1,23 +1,23 @@
 services:
-  articles.model.data_grid_repository:
-    class: ACP3\Modules\ACP3\Articles\Model\Repository\DataGridRepository
+  articles.model.repository.articles_data_grid_repository:
+    class: ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesDataGridRepository
     arguments:
       - '@core.db'
 
-  articles.model.articlerepository:
-    class: ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
+  articles.model.repository.articles_repository:
+    class: ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository
     arguments:
       - '@core.db'
 
-  articles.model.search_results_aware_repository:
+  articles.model.repository.search_results_aware_repository:
     class: ACP3\Modules\ACP3\Articles\Model\Repository\SearchResultsAwareRepository
     arguments:
       - '@core.db'
       - '@core.date'
 
-  articles.model:
+  articles.model.articles_model:
     class: ACP3\Modules\ACP3\Articles\Model\ArticlesModel
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
-      - '@articles.model.articlerepository'
+      - '@articles.model.repository.articles_repository'

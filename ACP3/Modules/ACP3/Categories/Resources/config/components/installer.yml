@@ -7,6 +7,7 @@ services:
 
   categories.installer.migration:
     class: ACP3\Modules\ACP3\Categories\Installer\Migration
+    parent: core.installer.abstract_migration
     tags:
       - { name: core.installer.migration }
     public: false

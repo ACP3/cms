@@ -1,12 +1,12 @@
 services:
   files.cache:
-    class: ACP3\Modules\ACP3\Files\Cache
+    class: ACP3\Modules\ACP3\Files\Cache\FileCacheStorage
     arguments:
       - '@files.cache.core'
-      - '@files.model.filesrepository'
+      - '@files.model.repository.files_repository'
 
   files.cache.core:
-    class: ACP3\Core\Cache
+    class: ACP3\Core\Cache\Cache
     arguments:
       - '@core.cache.cache_driver_factory'
       - 'files'

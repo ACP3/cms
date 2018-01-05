@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Model;
@@ -35,7 +36,7 @@ class ArticlesModel extends AbstractModel
         return [
             'active' => 0,
             'start' => 'now',
-            'end' => 'now'
+            'end' => 'now',
         ];
     }
 
@@ -51,7 +52,7 @@ class ArticlesModel extends AbstractModel
             'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'text' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
-            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

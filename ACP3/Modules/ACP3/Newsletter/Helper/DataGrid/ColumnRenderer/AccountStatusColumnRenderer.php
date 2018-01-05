@@ -1,18 +1,20 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Router\RouterInterface;
 
-/**
- * Class AccountStatusColumnRenderer
- * @package ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer
- */
 class AccountStatusColumnRenderer extends AbstractColumnRenderer
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
@@ -23,11 +25,11 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     /**
      * AccountStatusColumnRenderer constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(
-        Translator $translator,
+        TranslatorInterface $translator,
         RouterInterface $router
     ) {
         $this->translator = $translator;
@@ -44,10 +46,10 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
                 $route = $this->router->route('acp/newsletter/accounts/activate/id_' . $dbResultRow[$this->primaryKey]);
                 $title = $this->translator->t('newsletter', 'activate_account');
                 $value = '<a href="' . $route . '" title="' . $title . '">';
-                $value .= '<i class="glyphicon glyphicon-remove text-danger"></i>';
+                $value .= '<i class="fa fa-times text-danger"></i>';
                 $value .= '</a>';
             } else {
-                $value = '<i class="glyphicon glyphicon-ok text-success"></i>';
+                $value = '<i class="fa fa-check text-success"></i>';
             }
 
             return $value;

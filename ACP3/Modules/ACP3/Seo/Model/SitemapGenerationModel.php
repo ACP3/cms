@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Model;
@@ -11,7 +12,7 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Exception\SitemapGenerationException;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Utility\SitemapAvailabilityRegistrar;
-use Thepixeldeveloper\Sitemap\Output;
+use Thepixeldeveloper\Sitemap\Interfaces\DriverInterface;
 use Thepixeldeveloper\Sitemap\Urlset;
 
 class SitemapGenerationModel
@@ -38,23 +39,30 @@ class SitemapGenerationModel
         1 => [
             ['filename' => 'sitemap_https.xml', 'secure' => true],
             ['filename' => 'sitemap_http.xml', 'secure' => false],
-        ]
+        ],
     ];
+    /**
+     * @var DriverInterface
+     */
+    private $xmlSitemapDriver;
 
     /**
      * SitemapGenerationModel constructor.
      * @param ApplicationPath $applicationPath
      * @param SettingsInterface $settings
      * @param SitemapAvailabilityRegistrar $sitemapRegistrar
+     * @param DriverInterface $xmlSitemapDriver
      */
     public function __construct(
         ApplicationPath $applicationPath,
         SettingsInterface $settings,
-        SitemapAvailabilityRegistrar $sitemapRegistrar
+        SitemapAvailabilityRegistrar $sitemapRegistrar,
+        DriverInterface $xmlSitemapDriver
     ) {
         $this->applicationPath = $applicationPath;
         $this->sitemapRegistrar = $sitemapRegistrar;
         $this->settings = $settings;
+        $this->xmlSitemapDriver = $xmlSitemapDriver;
     }
 
     /**
@@ -79,15 +87,15 @@ class SitemapGenerationModel
      * @param string $filename
      * @throws SitemapGenerationException
      */
-    protected function checkSitemapFilePermissions($filename)
+    protected function checkSitemapFilePermissions(string $filename)
     {
         $filePath = $this->getSitemapFilePath($filename);
 
-        if (!is_file($filePath)) {
-            touch($filePath);
+        if (!\is_file($filePath)) {
+            \touch($filePath);
         }
 
-        if (!is_file($filePath) || !is_writable($filePath)) {
+        if (!\is_file($filePath) || !\is_writable($filePath)) {
             throw new SitemapGenerationException(
                 'The requested file "' . $filePath . '" either not exists or is not writable.'
                 . 'Aborting sitemap generation.'
@@ -99,7 +107,7 @@ class SitemapGenerationModel
      * @param string $filename
      * @return string
      */
-    protected function getSitemapFilePath($filename)
+    protected function getSitemapFilePath(string $filename)
     {
         return ACP3_ROOT_DIR . $filename;
     }
@@ -108,14 +116,15 @@ class SitemapGenerationModel
      * @param bool|null $isSecure
      * @return Urlset
      */
-    protected function collectSitemapItems($isSecure)
+    protected function collectSitemapItems(?bool $isSecure)
     {
         $urlSet = new Urlset();
         foreach ($this->sitemapRegistrar->getAvailableModules() as $module) {
             foreach ($module->getUrls($isSecure) as $sitemapItem) {
-                $urlSet->addUrl($sitemapItem);
+                $urlSet->add($sitemapItem);
             }
         }
+
         return $urlSet;
     }
 
@@ -124,10 +133,10 @@ class SitemapGenerationModel
      * @param string $filename
      * @return bool
      */
-    protected function saveSitemap(Urlset $urlSet, $filename)
+    protected function saveSitemap(Urlset $urlSet, string $filename)
     {
-        $output = (new Output())->getOutput($urlSet);
+        $urlSet->accept($this->xmlSitemapDriver);
 
-        return file_put_contents($this->getSitemapFilePath($filename), $output) !== false;
+        return \file_put_contents($this->getSitemapFilePath($filename), $this->xmlSitemapDriver->output()) !== false;
     }
 }

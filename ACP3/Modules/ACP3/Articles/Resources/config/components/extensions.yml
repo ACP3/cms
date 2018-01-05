@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Articles\Extension\SearchAvailabilityExtension
     arguments:
       - '@core.router'
-      - '@articles.model.search_results_aware_repository'
+      - '@articles.model.repository.search_results_aware_repository'
     tags:
       - { name: search.extension.search_availability }
     public: false
@@ -13,7 +13,7 @@ services:
     arguments:
       - '@core.date'
       - '@core.router'
-      - '@articles.model.articlerepository'
+      - '@articles.model.repository.articles_repository'
       - '@?seo.helper.meta_statements'
     tags:
       - { name: seo.extension.sitemap_availability }

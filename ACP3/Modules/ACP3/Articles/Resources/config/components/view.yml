@@ -1,0 +1,27 @@
+services:
+  articles.view.block.admin.article_admin_form_block:
+    class: ACP3\Modules\ACP3\Articles\View\Block\Admin\ArticleAdminFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@articles.model.repository.articles_repository'
+
+  articles.view.block.admin.articles_data_grid_block:
+    class: ACP3\Modules\ACP3\Articles\View\Block\Admin\ArticlesDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+    calls:
+      - ['setDataGridRepository', ['@articles.model.repository.articles_data_grid_repository']]
+
+  articles.view.block.frontend.article_details_block:
+    class: ACP3\Modules\ACP3\Articles\View\Block\Frontend\ArticleDetailsBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.http.request'
+      - '@core.helpers.page_breaks'
+
+  articles.view.block.frontend.articles_listing_block:
+    class: ACP3\Modules\ACP3\Articles\View\Block\Frontend\ArticlesListingBlock
+    arguments:
+      - '@core.view.context.listing_block_context'
+      - '@core.date'
+      - '@articles.model.repository.articles_repository'

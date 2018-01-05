@@ -1,14 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Seo\Validation\ValidationRules;
 
 use ACP3\Core;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Seo;
 
-/**
- * Class UriAliasValidationRule
- * @package ACP3\Modules\ACP3\Seo\Validation\ValidationRules
- */
 class UriAliasValidationRule extends AbstractValidationRule
 {
     /**
@@ -53,11 +55,11 @@ class UriAliasValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->checkUriAlias($data, isset($extra['path']) ? $extra['path'] : '');
+        return $this->checkUriAlias($data, $extra['path'] ?? '');
     }
 
     /**
@@ -73,17 +75,18 @@ class UriAliasValidationRule extends AbstractValidationRule
         }
 
         if ($this->uriSafeValidationRule->isValid($alias)) {
-            if (is_dir($this->appPath->getModulesDir() . $alias) === true) {
+            if (\is_dir($this->appPath->getModulesDir() . $alias) === true) {
                 return false;
             }
 
-            $path .= !preg_match('=/$=', $path) ? '/' : '';
+            $path .= !\preg_match('=/$=', $path) ? '/' : '';
             if ($path !== '/' && $this->internalUriValidationRule->isValid($path) === false) {
                 return false;
             }
 
             return !$this->seoRepository->uriAliasExistsByAlias($alias, $path);
         }
+
         return false;
     }
 }

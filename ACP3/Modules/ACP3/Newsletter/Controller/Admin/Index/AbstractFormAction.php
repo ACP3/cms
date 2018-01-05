@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
@@ -10,10 +11,6 @@ use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter;
 
-/**
- * Class AbstractFormAction
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index
- */
 class AbstractFormAction extends AbstractFrontendAction
 {
     /**
@@ -24,7 +21,7 @@ class AbstractFormAction extends AbstractFrontendAction
     /**
      * AbstractFormAction constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter $newsletterHelpers
      */
     public function __construct(FrontendContext $context, SendNewsletter $newsletterHelpers)
@@ -35,9 +32,9 @@ class AbstractFormAction extends AbstractFrontendAction
     }
 
     /**
-     * @param bool   $isTest
-     * @param int    $id
-     * @param bool   $dbResult
+     * @param bool $isTest
+     * @param int $id
+     * @param bool $dbResult
      * @param string $testEmailAddress
      *
      * @return array
@@ -60,7 +57,7 @@ class AbstractFormAction extends AbstractFrontendAction
 
         return [
             $text,
-            $result
+            $result,
         ];
     }
 }

@@ -27,7 +27,7 @@ services:
     class: ACP3\Modules\ACP3\Polls\Validation\ValidationRules\AlreadyVotedValidationRule
     arguments:
       - '@users.model.user_model'
-      - '@polls.model.voterepository'
+      - '@polls.model.repository.poll_votes_repository'
     tags:
       - { name: core.validation.validation_rule }
     public: false

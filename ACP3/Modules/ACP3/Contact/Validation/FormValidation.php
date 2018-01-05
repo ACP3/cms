@@ -1,13 +1,14 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Contact\Validation;
 
 use ACP3\Core;
 
-/**
- * Class FormValidation
- * @package ACP3\Modules\ACP3\Contact\Validation
- */
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
@@ -22,7 +23,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'name',
-                    'message' => $this->translator->t('system', 'name_to_short')
+                    'message' => $this->translator->t('system', 'name_to_short'),
                 ]
             )
             ->addConstraint(
@@ -30,7 +31,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->translator->t('system', 'wrong_email_format')
+                    'message' => $this->translator->t('system', 'wrong_email_format'),
                 ]
             )
             ->addConstraint(
@@ -38,7 +39,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'message',
-                    'message' => $this->translator->t('system', 'message_to_short')
+                    'message' => $this->translator->t('system', 'message_to_short'),
                 ]
             );
 

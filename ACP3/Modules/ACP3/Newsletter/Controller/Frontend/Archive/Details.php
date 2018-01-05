@@ -1,65 +1,62 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Details
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive
- */
 class Details extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository
      */
     protected $newsletterRepository;
+    /**
+     * @var Core\View\Block\BlockInterface
+     */
+    private $block;
 
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext            $context
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\BlockInterface $block
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository $newsletterRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
+        Core\View\Block\BlockInterface $block,
+        Newsletter\Model\Repository\NewslettersRepository $newsletterRepository
     ) {
         parent::__construct($context);
 
         $this->newsletterRepository = $newsletterRepository;
+        $this->block = $block;
     }
 
     /**
      * @param int $id
      *
-     * @return array
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @return array|\Symfony\Component\HttpFoundation\Response
+     * @throws Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
-        $newsletter = $this->newsletterRepository->getOneByIdAndStatus($id, 1);
+        $newsletter = $this->newsletterRepository->getOneByIdAndStatus($id, Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED);
 
         if (!empty($newsletter)) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+            $this->setCacheResponseCacheable();
 
-            $this->breadcrumb
-                ->append($this->translator->t('newsletter', 'index'), 'newsletter')
-                ->append($this->translator->t('newsletter', 'frontend_archive_index'), 'newsletter/archive')
-                ->append($newsletter['title']);
-            $this->title->setPageTitle($newsletter['title']);
+            $this->block->setData($newsletter);
 
-            return [
-                'newsletter' => $newsletter
-            ];
+            return $this->block->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

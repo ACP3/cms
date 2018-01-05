@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
@@ -9,16 +11,8 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Users\Controller\Admin\Index
- */
-class Edit extends AbstractFormAction
+class Edit extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
@@ -40,18 +34,16 @@ class Edit extends AbstractFormAction
      */
     protected $usersModel;
     /**
-     * @var Users\Helpers\Forms
+     * @var Core\View\Block\RepositoryAwareFormBlockInterface
      */
-    private $userFormsHelpers;
+    private $block;
 
     /**
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
      * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Core\Helpers\Forms $formsHelpers
-     * @param Users\Helpers\Forms $userFormsHelpers
      * @param \ACP3\Modules\ACP3\Users\Model\AuthenticationModel $authenticationModel
      * @param Users\Model\UsersModel $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation $adminFormValidation
@@ -59,71 +51,34 @@ class Edit extends AbstractFormAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Core\Helpers\Secure $secureHelper,
-        Core\Helpers\Forms $formsHelpers,
-        Users\Helpers\Forms $userFormsHelpers,
         Users\Model\AuthenticationModel $authenticationModel,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AdminFormValidation $adminFormValidation,
         Permissions\Helpers $permissionsHelpers
     ) {
-        parent::__construct($context, $formsHelpers);
+        parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
         $this->authenticationModel = $authenticationModel;
         $this->adminFormValidation = $adminFormValidation;
         $this->permissionsHelpers = $permissionsHelpers;
         $this->usersModel = $usersModel;
-        $this->userFormsHelpers = $userFormsHelpers;
+        $this->block = $block;
     }
 
     /**
      * @param int $id
      *
      * @return array
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
-        $user = $this->user->getUserInfo($id);
-
-        if (!empty($user)) {
-            $this->title->setPageTitlePrefix($user['nickname']);
-
-            $userRoles = $this->acl->getUserRoleIds($id);
-            $this->view->assign(
-                $this->userFormsHelpers->fetchUserSettingsFormFields(
-                    $user['address_display'],
-                    $user['birthday_display'],
-                    $user['country_display'],
-                    $user['mail_display']
-                )
-            );
-            $this->view->assign(
-                $this->userFormsHelpers->fetchUserProfileFormFields(
-                    $user['birthday'],
-                    $user['country'],
-                    $user['gender']
-                )
-            );
-
-            return [
-                'roles' => $this->fetchUserRoles($userRoles),
-                'super_user' => $this->fetchIsSuperUser($user['super_user']),
-                'contact' => $this->userFormsHelpers->fetchContactDetails(
-                    $user['mail'],
-                    $user['website'],
-                    $user['icq'],
-                    $user['skype']
-                ),
-                'form' => array_merge($user, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken()
-            ];
-        }
-
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        return $this->block
+            ->setDataById($id)
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
@@ -131,7 +86,7 @@ class Edit extends AbstractFormAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -160,7 +115,7 @@ class Edit extends AbstractFormAction
     /**
      * @param int $userId
      */
-    protected function updateCurrentlyLoggedInUserCookie($userId)
+    protected function updateCurrentlyLoggedInUserCookie(int $userId)
     {
         if ($userId == $this->user->getUserId() && $this->request->getCookies()->has(Users\Model\AuthenticationModel::AUTH_NAME)) {
             $user = $this->usersModel->getOneById($userId);

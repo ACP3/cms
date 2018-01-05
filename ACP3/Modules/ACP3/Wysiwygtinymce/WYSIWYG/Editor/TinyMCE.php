@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG\Editor;
@@ -10,7 +11,6 @@ use ACP3\Core;
 
 /**
  * Implementation of the AbstractWYSIWYG class for TinyMCE
- * @package ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG\Editor
  */
 class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 {
@@ -18,10 +18,6 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
      * @var \ACP3\Core\Assets\Minifier\MinifierInterface
      */
     protected $minifier;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    protected $translator;
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
@@ -38,16 +34,13 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 
     /**
      * @param \ACP3\Core\Assets\Minifier\MinifierInterface    $minifier
-     * @param \ACP3\Core\I18n\Translator             $translator
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
         Core\Assets\Minifier\MinifierInterface $minifier,
-        Core\I18n\Translator $translator,
         Core\Environment\ApplicationPath $appPath
     ) {
         $this->minifier = $minifier;
-        $this->translator = $translator;
         $this->appPath = $appPath;
     }
 
@@ -78,8 +71,8 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     {
         parent::setParameters($params);
 
-        $this->config['toolbar'] = (isset($params['toolbar'])) ? $params['toolbar'] : '';
-        $this->config['height'] = ((isset($params['height'])) ? $params['height'] : 250) . 'px';
+        $this->config['toolbar'] = $params['toolbar'] ?? '';
+        $this->config['height'] = ($params['height'] ?? 250) . 'px';
     }
 
     /**
@@ -113,7 +106,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
             'selector' => 'textarea#' . $this->id,
             'theme' => 'modern',
             'height' => $this->config['height'],
-            'content_css' => $this->minifier->getURI()
+            'content_css' => $this->minifier->getURI(),
         ];
 
         if ($this->initialized === false) {
@@ -125,7 +118,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
             $plugins = [
                 'advlist autolink lists link image charmap print preview anchor',
                 'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table contextmenu paste'
+                'insertdatetime media table contextmenu paste',
             ];
             $toolbar = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image';
             $imagesAdvanced = 'false';
@@ -134,7 +127,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
                 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
                 'searchreplace wordcount visualblocks visualchars code fullscreen',
                 'insertdatetime media nonbreaking save table contextmenu directionality',
-                'emoticons template paste textcolor colorpicker'
+                'emoticons template paste textcolor colorpicker',
             ];
             $toolbar = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons';
             $imagesAdvanced = 'true';
@@ -144,13 +137,13 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
             }
         }
 
-        $config['plugins'] = json_encode($plugins);
+        $config['plugins'] = \json_encode($plugins);
         $config['toolbar'] = $toolbar;
         $config['image_advtab'] = $imagesAdvanced;
 
         return [
             'template' => 'Wysiwygtinymce/tinymce.tpl',
-            'config' => $config
+            'config' => $config,
         ];
     }
 }

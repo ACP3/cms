@@ -1,33 +1,30 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Controller\Context;
 
-use ACP3\Core\ACL;
+use ACP3\Core\Controller\ActionResultFactory;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\Translator;
-use ACP3\Core\Modules;
+use ACP3\Core\I18n\LocaleInterface;
+use ACP3\Core\I18n\TranslatorInterface;
+use ACP3\Core\Modules\Modules;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\Validation\Validator;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class WidgetContext
- * @package ACP3\Core\Controller\Context
- */
 class WidgetContext
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var ContainerInterface
      */
     protected $container;
     /**
@@ -35,19 +32,15 @@ class WidgetContext
      */
     protected $eventDispatcher;
     /**
-     * @var \ACP3\Core\ACL
-     */
-    protected $acl;
-    /**
      * @var \ACP3\Modules\ACP3\Users\Model\UserModel
      */
     protected $user;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var \ACP3\Core\I18n\TranslatorInterface
      */
     protected $translator;
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     protected $modules;
     /**
@@ -58,10 +51,6 @@ class WidgetContext
      * @var \ACP3\Core\Router\RouterInterface
      */
     protected $router;
-    /**
-     * @var \ACP3\Core\Validation\Validator
-     */
-    protected $validator;
     /**
      * @var \ACP3\Core\View
      */
@@ -79,58 +68,58 @@ class WidgetContext
      */
     private $response;
     /**
-     * @var ResultsPerPage
+     * @var ActionResultFactory
      */
-    private $resultsPerPage;
+    private $actionResultFactory;
+    /**
+     * @var LocaleInterface
+     */
+    private $locale;
 
     /**
      * WidgetContext constructor.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Modules $modules
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \ACP3\Core\Validation\Validator $validator
-     * @param \ACP3\Core\View $view
-     * @param \ACP3\Core\Settings\SettingsInterface $config
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param ContainerInterface $container
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param UserModel $user
+     * @param TranslatorInterface $translator
+     * @param LocaleInterface $locale
+     * @param Modules $modules
+     * @param RequestInterface $request
+     * @param RouterInterface $router
+     * @param View $view
+     * @param SettingsInterface $config
+     * @param ApplicationPath $appPath
      * @param Response $response
-     * @param ResultsPerPage $resultsPerPage
+     * @param ActionResultFactory $actionResultFactory
      */
     public function __construct(
         ContainerInterface $container,
         EventDispatcherInterface $eventDispatcher,
-        ACL $acl,
         UserModel $user,
-        Translator $translator,
+        TranslatorInterface $translator,
+        LocaleInterface $locale,
         Modules $modules,
         RequestInterface $request,
         RouterInterface $router,
-        Validator $validator,
         View $view,
         SettingsInterface $config,
         ApplicationPath $appPath,
         Response $response,
-        ResultsPerPage $resultsPerPage
+        ActionResultFactory $actionResultFactory
     ) {
         $this->container = $container;
         $this->eventDispatcher = $eventDispatcher;
-        $this->acl = $acl;
         $this->user = $user;
         $this->translator = $translator;
         $this->modules = $modules;
         $this->request = $request;
         $this->router = $router;
-        $this->validator = $validator;
         $this->view = $view;
         $this->config = $config;
         $this->appPath = $appPath;
         $this->response = $response;
-        $this->resultsPerPage = $resultsPerPage;
+        $this->actionResultFactory = $actionResultFactory;
+        $this->locale = $locale;
     }
 
     /**
@@ -150,14 +139,6 @@ class WidgetContext
     }
 
     /**
-     * @return \ACP3\Core\ACL
-     */
-    public function getACL()
-    {
-        return $this->acl;
-    }
-
-    /**
      * @return \ACP3\Modules\ACP3\Users\Model\UserModel
      */
     public function getUser()
@@ -166,7 +147,7 @@ class WidgetContext
     }
 
     /**
-     * @return \ACP3\Core\I18n\Translator
+     * @return \ACP3\Core\I18n\TranslatorInterface
      */
     public function getTranslator()
     {
@@ -174,7 +155,7 @@ class WidgetContext
     }
 
     /**
-     * @return \ACP3\Core\Modules
+     * @return \ACP3\Core\Modules\Modules
      */
     public function getModules()
     {
@@ -195,14 +176,6 @@ class WidgetContext
     public function getRouter()
     {
         return $this->router;
-    }
-
-    /**
-     * @return \ACP3\Core\Validation\Validator
-     */
-    public function getValidator()
-    {
-        return $this->validator;
     }
 
     /**
@@ -238,10 +211,18 @@ class WidgetContext
     }
 
     /**
-     * @return ResultsPerPage
+     * @return ActionResultFactory
      */
-    public function getResultsPerPage()
+    public function getActionResultFactory(): ActionResultFactory
     {
-        return $this->resultsPerPage;
+        return $this->actionResultFactory;
+    }
+
+    /**
+     * @return LocaleInterface
+     */
+    public function getLocale(): LocaleInterface
+    {
+        return $this->locale;
     }
 }

@@ -3,50 +3,44 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@news.model'
+      - '@news.view.block.admin.news_admin_form_block'
+      - '@news.model.news_model'
       - '@news.validation.admin_form_validation'
       - '@categories.helpers'
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
 
   news.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
-      - '@news.model'
+      - '@news.model.news_model'
 
   news.controller.admin.index.duplicate:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Duplicate
     arguments:
       - '@core.context.frontend'
-      - '@news.model'
+      - '@news.model.news_model'
 
   news.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@news.model'
+      - '@news.view.block.admin.news_admin_form_block'
+      - '@news.model.news_model'
       - '@news.validation.admin_form_validation'
       - '@categories.helpers'
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
 
   news.controller.admin.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@news.model.data_grid_repository'
+      - '@news.view.block.admin.news_data_grid_block'
 
   news.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@news.view.block.admin.news_settings_form_block'
+      - '@core.helpers.secure'
       - '@news.validation.admin_settings_form_validation'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
@@ -55,33 +49,28 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Details
     arguments:
       - '@core.context.frontend'
+      - '@news.view.block.frontend.news_details_block'
       - '@core.date'
-      - '@news.model.newsrepository'
+      - '@news.model.repository.news_repository'
       - '@news.cache'
 
   news.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@core.helpers.string_formatter'
-      - '@core.pagination'
-      - '@news.model.newsrepository'
-      - '@categories.helpers'
-      - '@categories.model.categories_repository'
-    calls:
-      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
+      - '@news.view.block.frontend.news_listing_block'
 
   news.controller.widget.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
       - '@core.date'
-      - '@news.model.newsrepository'
+      - '@news.model.repository.news_repository'
+      - '@categories.model.repository.categories_repository'
 
   news.controller.widget.index.latest:
     class: ACP3\Modules\ACP3\News\Controller\Widget\Index\Latest
     arguments:
       - '@core.context.widget'
       - '@core.date'
-      - '@news.model.newsrepository'
+      - '@news.model.repository.news_repository'

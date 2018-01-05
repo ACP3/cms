@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
@@ -9,14 +10,10 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class Delete
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources
- */
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var Permissions\Model\ResourcesModel
+     * @var Permissions\Model\AclResourcesModel
      */
     protected $resourcesModel;
 
@@ -24,11 +21,11 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Permissions\Model\ResourcesModel $resourcesModel
+     * @param Permissions\Model\AclResourcesModel $resourcesModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Permissions\Model\ResourcesModel $resourcesModel
+        Permissions\Model\AclResourcesModel $resourcesModel
     ) {
         parent::__construct($context);
 

@@ -1,10 +1,12 @@
 <?php
-namespace ACP3\Core\Validation\ValidationRules;
 
 /**
- * Class NumberGreaterThanValidationRule
- * @package ACP3\Core\Validation\ValidationRules
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Validation\ValidationRules;
+
 class NumberGreaterThanValidationRule extends AbstractValidationRule
 {
     /**
@@ -12,11 +14,11 @@ class NumberGreaterThanValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        $comparator = isset($extra['value']) ? $extra['value'] : 0;
+        $comparator = $extra['value'] ?? 0;
 
         return $data > $comparator;
     }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\Model;
@@ -35,12 +36,12 @@ class DataProcessorTest extends \PHPUnit_Framework_TestCase
         $columnData = [
             'foo' => 'Lorem',
             'bar' => 'Ipsum',
-            'baz' => 'Dolor'
+            'baz' => 'Dolor',
         ];
 
         $columnConstraints = [
             'foo' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'bar' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW
+            'bar' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
         ];
 
         $this->setUpColumnTypeStrategyFactoryExpectations();

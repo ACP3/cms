@@ -1,17 +1,21 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model;
 
-use ACP3\Core\Model\Repository\AbstractRepository;
+use ACP3\Core\NestedSet\Model\Repository\NestedSetRepository;
 use ACP3\Core\NestedSet\Operation\Delete;
 use ACP3\Core\NestedSet\Operation\Edit;
 use ACP3\Core\NestedSet\Operation\Insert;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @property NestedSetRepository $repository
+ */
 abstract class AbstractNestedSetModel extends AbstractModel
 {
     /**
@@ -31,7 +35,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
      * AbstractNestedSetModel constructor.
      * @param EventDispatcherInterface $eventDispatcher
      * @param DataProcessor $dataProcessor
-     * @param AbstractRepository $repository
+     * @param NestedSetRepository $repository
      * @param Insert $insertOperation
      * @param Edit $editOperation
      * @param Delete $deleteOperation
@@ -39,7 +43,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
-        AbstractRepository $repository,
+        NestedSetRepository $repository,
         Insert $insertOperation,
         Edit $editOperation,
         Delete $deleteOperation
@@ -74,7 +78,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
             $result = $this->editOperation->execute(
                 $entryId,
                 $filteredData['parent_id'],
-                isset($filteredData['block_id']) ? $filteredData['block_id'] : 0,
+                $filteredData[$this->repository::BLOCK_COLUMN_NAME] ?? 0,
                 $filteredData
             );
         }
@@ -92,7 +96,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
     {
         $repository = $this->repository;
 
-        if (!is_array($entryId)) {
+        if (!\is_array($entryId)) {
             $entryId = [$entryId];
         }
 

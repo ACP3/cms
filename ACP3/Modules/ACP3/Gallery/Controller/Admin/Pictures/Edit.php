@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
@@ -10,16 +11,8 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
- */
-class Edit extends AbstractFormAction
+class Edit extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Helpers
      */
@@ -29,70 +22,49 @@ class Edit extends AbstractFormAction
      */
     protected $pictureFormValidation;
     /**
-     * @var Gallery\Model\PictureModel
+     * @var Gallery\Model\GalleryPicturesModel
      */
     protected $pictureModel;
+    /**
+     * @var Core\View\Block\RepositoryAwareFormBlockInterface
+     */
+    private $block;
 
     /**
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
      * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
-     * @param Gallery\Model\PictureModel $pictureModel
+     * @param Gallery\Model\GalleryPicturesModel $pictureModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Gallery\Helpers $galleryHelpers,
-        Gallery\Model\PictureModel $pictureModel,
+        Gallery\Model\GalleryPicturesModel $pictureModel,
         Gallery\Validation\PictureFormValidation $pictureFormValidation
     ) {
-        parent::__construct($context, $formsHelper);
+        parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->galleryHelpers = $galleryHelpers;
         $this->pictureFormValidation = $pictureFormValidation;
         $this->pictureModel = $pictureModel;
+        $this->block = $block;
     }
 
     /**
      * @param int $id
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
-        $picture = $this->pictureModel->getOneById($id);
-
-        if (!empty($picture)) {
-            $this->breadcrumb
-                ->append($picture['title'], 'acp/gallery/pictures/index/id_' . $picture['gallery_id'])
-                ->append($this->translator->t('gallery', 'admin_pictures_edit'));
-
-            $this->title
-                ->setPageTitlePrefix(
-                    $picture['title']
-                    . $this->title->getPageTitleSeparator()
-                    . $this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']])
-                );
-
-            if ($this->canUseComments() === true) {
-                $this->view->assign('options', $this->getOptions($picture['comments']));
-            }
-
-            return [
-                'form' => array_merge($picture, $this->request->getPost()->all()),
-                'gallery_id' => $picture['gallery_id'],
-                'form_token' => $this->formTokenHelper->renderFormToken()
-            ];
-        }
-
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        return $this->block
+            ->setDataById($id)
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
@@ -100,7 +72,7 @@ class Edit extends AbstractFormAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         $picture = $this->pictureModel->getOneById($id);
 
@@ -125,6 +97,7 @@ class Edit extends AbstractFormAction
                 }
 
                 $formData['gallery_id'] = $picture['gallery_id'];
+
                 return $this->pictureModel->save($formData, $id);
             },
             'acp/gallery/pictures/index/id_' . $picture['gallery_id']

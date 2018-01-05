@@ -1,9 +1,4 @@
 services:
-  core.logger:
-    class: ACP3\Core\Logger
-    arguments:
-      - '@core.environment.application_path'
-
   core.logger.logger_factory:
     class: ACP3\Core\Logger\LoggerFactory
     arguments:

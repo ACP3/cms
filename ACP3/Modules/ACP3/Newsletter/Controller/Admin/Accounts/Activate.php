@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-/**
- * Class Activate
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts
- */
 class Activate extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -40,7 +37,7 @@ class Activate extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $bool = $this->accountStatusHelper->changeAccountStatus(
             Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,

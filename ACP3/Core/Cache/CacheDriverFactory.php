@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Cache;
@@ -11,10 +12,6 @@ use ACP3\Core\Environment\ApplicationPath;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\PhpFileCache;
 
-/**
- * Class CacheDriverFactory
- * @package ACP3\Core\Cache
- */
 class CacheDriverFactory
 {
     /**
@@ -37,7 +34,7 @@ class CacheDriverFactory
      * @param string $cacheDriver
      * @param string $environment
      */
-    public function __construct(ApplicationPath $appPath, $cacheDriver, $environment)
+    public function __construct(ApplicationPath $appPath, string $cacheDriver, string $environment)
     {
         $this->appPath = $appPath;
         $this->cacheDriver = $cacheDriver;
@@ -49,7 +46,7 @@ class CacheDriverFactory
      *
      * @return \Doctrine\Common\Cache\CacheProvider
      */
-    public function create($namespace)
+    public function create(string $namespace)
     {
         $driver = $this->initializeCacheDriver($this->getCacheDriverName());
         $driver->setNamespace($namespace);
@@ -60,9 +57,9 @@ class CacheDriverFactory
     /**
      * @return string
      */
-    protected function getCacheDriverName()
+    private function getCacheDriverName(): string
     {
-        return $this->environment !== ApplicationMode::DEVELOPMENT ? $this->cacheDriver : 'Array';
+        return $this->environment === ApplicationMode::PRODUCTION ? $this->cacheDriver : 'Array';
     }
 
     /**
@@ -71,17 +68,17 @@ class CacheDriverFactory
      * @return \Doctrine\Common\Cache\CacheProvider
      * @throws \InvalidArgumentException
      */
-    protected function initializeCacheDriver($driverName)
+    private function initializeCacheDriver(string $driverName)
     {
         /** @var \Doctrine\Common\Cache\CacheProvider $driver */
-        switch (strtolower($driverName)) {
+        switch (\strtolower($driverName)) {
             case 'phpfile':
                 return new PhpFileCache($this->appPath->getCacheDir() . 'sql/');
             case 'array':
                 return new ArrayCache();
             default:
                 throw new \InvalidArgumentException(
-                    sprintf('Could not find the requested cache driver "%s"!', $driverName)
+                    \sprintf('Could not find the requested cache driver "%s"!', $driverName)
                 );
         }
     }

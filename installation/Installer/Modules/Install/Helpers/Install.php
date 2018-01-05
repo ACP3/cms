@@ -1,16 +1,17 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Installer\Modules\Install\Helpers;
 
 use ACP3\Core;
-use ACP3\Core\Modules\SchemaHelper;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use ACP3\Core\Installer\Helper\SchemaHelper;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Yaml\Dumper;
 
-/**
- * Class Install
- * @package ACP3\Installer\Modules\Install\Helpers
- */
 class Install
 {
     /**
@@ -23,46 +24,46 @@ class Install
      */
     public function writeConfigFile($configFilePath, array $data)
     {
-        if (is_writable($configFilePath) === true) {
-            ksort($data);
+        if (\is_writable($configFilePath) === true) {
+            \ksort($data);
 
             $dumper = new Dumper();
             $yaml = $dumper->dump($data);
 
-            return file_put_contents($configFilePath, $yaml, LOCK_EX) !== false;
+            return \file_put_contents($configFilePath, $yaml, LOCK_EX) !== false;
         }
 
         return false;
     }
 
     /**
-     * @param Core\Modules\Installer\SchemaInterface $schema
+     * @param \ACP3\Core\Installer\SchemaInterface $schema
      * @param ContainerInterface $container
      * @return bool
      */
-    public function installModule(Core\Modules\Installer\SchemaInterface $schema, ContainerInterface $container)
+    public function installModule(Core\Installer\SchemaInterface $schema, ContainerInterface $container)
     {
-        return $this->install($schema, $container, 'core.modules.schemaInstaller');
+        return $this->install($schema, $container, 'core.installer.schema_installer');
     }
 
     /**
-     * @param Core\Modules\Installer\SchemaInterface $schema
+     * @param \ACP3\Core\Installer\SchemaInterface $schema
      * @param ContainerInterface $container
      * @return bool
      */
-    public function installResources(Core\Modules\Installer\SchemaInterface $schema, ContainerInterface $container)
+    public function installResources(Core\Installer\SchemaInterface $schema, ContainerInterface $container)
     {
-        return $this->install($schema, $container, 'core.modules.aclInstaller');
+        return $this->install($schema, $container, 'core.installer.acl_installer');
     }
 
     /**
-     * @param Core\Modules\Installer\SchemaInterface $schema
+     * @param \ACP3\Core\Installer\SchemaInterface $schema
      * @param ContainerInterface $container
      * @param string $installerServiceId
      * @return bool
      */
     private function install(
-        Core\Modules\Installer\SchemaInterface $schema,
+        Core\Installer\SchemaInterface $schema,
         ContainerInterface $container,
         $installerServiceId
     ) {
@@ -70,12 +71,12 @@ class Install
     }
 
     /**
-     * @param Core\Modules\Installer\SampleDataInterface $sampleData
+     * @param \ACP3\Core\Installer\SampleDataInterface $sampleData
      * @param SchemaHelper $schemaHelper
      * @return bool
      */
     public function installSampleData(
-        Core\Modules\Installer\SampleDataInterface $sampleData,
+        Core\Installer\SampleDataInterface $sampleData,
         SchemaHelper $schemaHelper
     ) {
         return $schemaHelper->executeSqlQueries($sampleData->sampleData());

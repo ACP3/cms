@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Modules;
 
-use ACP3\Core\XML;
+use Composer\Json\JsonFile;
 
 trait ModuleDependenciesTrait
 {
@@ -14,19 +15,14 @@ trait ModuleDependenciesTrait
      * @param string $path
      * @return array
      */
-    protected function getModuleDependencies($path)
+    protected function getModuleDependencies(string $path): array
     {
-        $dependencies = $this->getXml()->parseXmlFile($path, '/module/info/dependencies');
+        $composer = (new JsonFile($path))->read();
 
-        if (isset($dependencies['module'])) {
-            return is_array($dependencies['module']) ? $dependencies['module'] : [$dependencies['module']];
+        if (isset($composer['extra']['dependencies']) && \is_array($composer['extra']['dependencies'])) {
+            return $composer['extra']['dependencies'];
         }
 
         return [];
     }
-
-    /**
-     * @return XML
-     */
-    abstract protected function getXml();
 }

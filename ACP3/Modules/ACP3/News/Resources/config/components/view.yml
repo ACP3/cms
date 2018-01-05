@@ -1,0 +1,46 @@
+services:
+  news.view.block.admin.news_admin_form_block:
+    class: ACP3\Modules\ACP3\News\View\Block\Admin\NewsAdminFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@news.model.repository.news_repository'
+      - '@core.config'
+      - '@core.modules'
+      - '@categories.helpers'
+
+  news.view.block.admin.news_data_grid_block:
+    class: ACP3\Modules\ACP3\News\View\Block\Admin\NewsDataGridBlock
+    arguments:
+      - '@core.view.context.data_grid_block_context'
+    calls:
+      - ['setDataGridRepository', ['@news.model.repository.news_data_grid_repository']]
+
+  news.view.block.admin.news_settings_form_block:
+    class: ACP3\Modules\ACP3\News\View\Block\Admin\NewsSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+      - '@core.modules'
+      - '@core.helpers.date'
+
+  news.view.block.frontend.news_details_block:
+    class: ACP3\Modules\ACP3\News\View\Block\Frontend\NewsDetailsBlock
+    arguments:
+      - '@core.view.context.block_context'
+      - '@core.config'
+      - '@categories.model.repository.categories_repository'
+
+  news.view.block.frontend.news_listing_block:
+    class: ACP3\Modules\ACP3\News\View\Block\Frontend\NewsListingBlock
+    arguments:
+      - '@core.view.context.listing_block_context'
+      - '@core.config'
+      - '@core.date'
+      - '@core.router'
+      - '@core.helpers.string_formatter'
+      - '@news.model.repository.news_repository'
+      - '@categories.model.repository.categories_repository'
+      - '@categories.helpers'
+    calls:
+      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
+      - ['setCommentsHelpers', ['@?comments.helpers']]

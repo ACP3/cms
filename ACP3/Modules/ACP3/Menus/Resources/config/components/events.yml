@@ -3,8 +3,8 @@ services:
     class: ACP3\Modules\ACP3\Menus\Event\Listener\OnMenusModelBeforeDeleteListener
     arguments:
       - '@menus.cache'
-      - '@menus.model.menurepository'
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.repository.menus_repository'
+      - '@menus.model.repository.menu_items_repository'
       - '@menus.model.menu_items_model'
     tags:
       - { name: core.eventListener, event: menus.model.menus.before_delete, method: execute }
@@ -34,7 +34,7 @@ services:
       - '@core.view'
       - '@core.helpers.forms'
       - '@menus.helpers.menuitemformfields'
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.repository.menu_items_repository'
     tags:
       - { name: core.eventListener, event: menus.layout.render_manage_menu_item, method: renderManageMenuItem }
 

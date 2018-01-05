@@ -1,6 +1,7 @@
 {
   "name": "acp3/module-categories",
   "description": "Provides the categories module for the ACP3 CMS.",
+  "version": "4.18.0",
   "type": "acp3-module",
   "license": "GPL-2.0+",
   "authors": [
@@ -30,6 +31,10 @@
     }
   },
   "extra": {
-    "installer-name": "ACP3/Categories"
+    "installer-name": "ACP3/Categories",
+    "dependencies": [
+      "permissions",
+      "system"
+    ]
   }
 }

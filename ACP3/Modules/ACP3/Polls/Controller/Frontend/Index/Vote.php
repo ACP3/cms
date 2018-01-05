@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 
-/**
- * Class Vote
- * @package ACP3\Modules\ACP3\Polls\Controller\Frontend\Index
- */
 class Vote extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -20,37 +17,43 @@ class Vote extends Core\Controller\AbstractFrontendAction
      */
     protected $date;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
+     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollsRepository
      */
     protected $pollRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository
+     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollAnswersRepository
      */
     protected $answerRepository;
     /**
-     * @var Polls\Model\VoteModel
+     * @var Polls\Model\PollVotesModel
      */
     protected $pollsModel;
     /**
      * @var Polls\Validation\VoteValidation
      */
     protected $voteValidation;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\FormBlockInterface $block
      * @param Core\Date $date
      * @param Polls\Validation\VoteValidation $voteValidation
-     * @param Polls\Model\VoteModel $pollsModel
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
+     * @param Polls\Model\PollVotesModel $pollsModel
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollsRepository $pollRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollAnswersRepository $answerRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\View\Block\FormBlockInterface $block,
         Core\Date $date,
         Polls\Validation\VoteValidation $voteValidation,
-        Polls\Model\VoteModel $pollsModel,
-        Polls\Model\Repository\PollRepository $pollRepository,
-        Polls\Model\Repository\AnswerRepository $answerRepository
+        Polls\Model\PollVotesModel $pollsModel,
+        Polls\Model\Repository\PollsRepository $pollRepository,
+        Polls\Model\Repository\PollAnswersRepository $answerRepository
     ) {
         parent::__construct($context);
 
@@ -59,6 +62,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
         $this->pollsModel = $pollsModel;
         $this->pollRepository = $pollRepository;
         $this->answerRepository = $answerRepository;
+        $this->block = $block;
     }
 
     /**
@@ -67,18 +71,15 @@ class Vote extends Core\Controller\AbstractFrontendAction
      * @return array
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
-        $answer = $this->request->getPost()->get('answer');
-        $time = $this->date->getCurrentDateTime();
-        if ($this->pollRepository->pollExists($id, $time, is_array($answer)) === true) {
-            $poll = $this->pollRepository->getOneById($id);
-
-            return [
-                'question' => $poll['title'],
-                'multiple' => $poll['multiple'],
-                'answers' => $this->answerRepository->getAnswersByPollId($id)
-            ];
+        if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
+            return $this->block
+                ->setData([
+                    'poll' => $this->pollRepository->getOneById($id),
+                    'answers' => $this->answerRepository->getAnswersByPollId($id),
+                ])
+                ->render();
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
@@ -89,7 +90,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handlePostAction(
             function () use ($id) {
@@ -105,6 +106,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
                 $result = $this->pollsModel->vote($formData, $id, $ipAddress, $time);
 
                 $text = $this->translator->t('polls', $result !== false ? 'poll_success' : 'poll_error');
+
                 return $this->redirectMessages()->setMessage($result, $text, 'polls/index/result/id_' . $id);
             },
             'polls/index/vote/id_' . $id

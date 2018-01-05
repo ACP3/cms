@@ -1,11 +1,11 @@
 services:
-  menus.model.menurepository:
-    class: ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
+  menus.model.repository.menus_repository:
+    class: ACP3\Modules\ACP3\Menus\Model\Repository\MenusRepository
     arguments:
       - '@core.db'
 
-  menus.model.menuitemrepository:
-    class: ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
+  menus.model.repository.menu_items_repository:
+    class: ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository
     arguments:
       - '@core.db'
 
@@ -14,14 +14,14 @@ services:
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
-      - '@menus.model.menurepository'
+      - '@menus.model.repository.menus_repository'
 
   menus.model.menu_items_model:
     class: ACP3\Modules\ACP3\Menus\Model\MenuItemsModel
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
-      - '@menus.model.menuitemrepository'
+      - '@menus.model.repository.menu_items_repository'
       - '@menus.nested_set.operation.insert'
       - '@menus.nested_set.operation.edit'
       - '@menus.nested_set.operation.delete'

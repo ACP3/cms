@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Event\Listener;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -14,7 +15,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class OnLayoutContentBeforeListener
 {
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
     /**
@@ -28,11 +29,11 @@ class OnLayoutContentBeforeListener
 
     /**
      * OnLayoutContentBeforeListener constructor.
-     * @param ACL $acl
+     * @param ACLInterface $acl
      * @param SettingsInterface $settings
      * @param View $view
      */
-    public function __construct(ACL $acl, SettingsInterface $settings, View $view)
+    public function __construct(ACLInterface $acl, SettingsInterface $settings, View $view)
     {
         $this->acl = $acl;
         $this->settings = $settings;

@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Core\Application\BootstrapCache;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\ACLInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
@@ -24,17 +25,17 @@ class IsAuthenticatedProvider implements ContextProvider
      */
     private $userModel;
     /**
-     * @var ACL
+     * @var ACLInterface
      */
     private $acl;
 
     /**
      * IsAuthenticatedProvider constructor.
      * @param SettingsInterface $settings
-     * @param ACL $acl
+     * @param ACLInterface $acl
      * @param UserModel $userModel
      */
-    public function __construct(SettingsInterface $settings, ACL $acl, UserModel $userModel)
+    public function __construct(SettingsInterface $settings, ACLInterface $acl, UserModel $userModel)
     {
         $this->settings = $settings;
         $this->userModel = $userModel;

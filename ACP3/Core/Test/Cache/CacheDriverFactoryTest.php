@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\Cache;
 
 use ACP3\Core\Cache\CacheDriverFactory;
-use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\CacheProvider;
@@ -69,7 +69,7 @@ class CacheDriverFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->setUpAppPathMockExpectations();
 
-        $this->initializeCacheDriverFactory('LoremIpsum', 'test');
+        $this->initializeCacheDriverFactory('LoremIpsum', 'prod');
 
         $this->cacheDriverFactory->create('test');
     }
@@ -78,7 +78,7 @@ class CacheDriverFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->setUpAppPathMockExpectations();
 
-        $this->initializeCacheDriverFactory('PhpFile', ApplicationMode::DEVELOPMENT);
+        $this->initializeCacheDriverFactory('PhpFile', 'dev');
 
         $this->assertInstanceOf(ArrayCache::class, $this->cacheDriverFactory->create('test'));
     }
@@ -87,7 +87,7 @@ class CacheDriverFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->setUpAppPathMockExpectations();
 
-        $this->initializeCacheDriverFactory('PhpFile', 'test');
+        $this->initializeCacheDriverFactory('PhpFile', 'prod');
 
         $this->assertInstanceOf(PhpFileCache::class, $this->cacheDriverFactory->create('test'));
     }

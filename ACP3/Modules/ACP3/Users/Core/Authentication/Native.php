@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Core\Authentication;
@@ -11,12 +12,8 @@ use ACP3\Core\Authentication\Exception\AuthenticationException;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
-use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
+use ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository;
 
-/**
- * Class Native
- * @package ACP3\Modules\ACP3\Users\Core\Authentication
- */
 class Native implements AuthenticationInterface
 {
     /**
@@ -32,7 +29,7 @@ class Native implements AuthenticationInterface
      */
     protected $authenticationModel;
     /**
-     * @var UserRepository
+     * @var UsersRepository
      */
     protected $userRepository;
 
@@ -42,13 +39,13 @@ class Native implements AuthenticationInterface
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
      * @param AuthenticationModel $authenticationModel
-     * @param UserRepository $userRepository
+     * @param UsersRepository $userRepository
      */
     public function __construct(
         RequestInterface $request,
         SessionHandlerInterface $sessionHandler,
         AuthenticationModel $authenticationModel,
-        UserRepository $userRepository
+        UsersRepository $userRepository
     ) {
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;
@@ -65,7 +62,7 @@ class Native implements AuthenticationInterface
         if ($this->sessionHandler->has(AuthenticationModel::AUTH_NAME)) {
             $userData = $this->sessionHandler->get(AuthenticationModel::AUTH_NAME, []);
         } elseif ($this->request->getCookies()->has(AuthenticationModel::AUTH_NAME)) {
-            list($userId, $token) = explode('|', $this->request->getCookies()->get(AuthenticationModel::AUTH_NAME, ''));
+            list($userId, $token) = \explode('|', $this->request->getCookies()->get(AuthenticationModel::AUTH_NAME, ''));
 
             $userData = $this->verifyCredentials($userId, $token);
         }

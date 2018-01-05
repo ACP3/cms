@@ -10,6 +10,9 @@
     "bootbox": false,
     "Cookies": false
   },
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
   "rules": {
     "indent": [
       "error",

@@ -3,26 +3,28 @@ services:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@contact.model.repository.data_grid_repository'
+      - '@contact.view.block.admin.contacts_data_grid_block'
 
   contact.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@contact.view.block.admin.contact_settings_form_block'
       - '@core.helpers.secure'
-      - '@core.helpers.formToken'
       - '@contact.validation.admin_settings_form_validation'
 
   contact.controller.frontend.index.imprint:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Imprint
-    parent: core.controller.frontend
+    arguments:
+      - '@core.context.frontend'
+      - '@contact.view.block.frontend.imprint_block'
 
   contact.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
+      - '@contact.view.block.frontend.contact_form_block'
+      - '@core.helpers.alerts'
       - '@contact.validation.form_validation'
       - '@contact.model.contacts_model'
       - '@contact.model.contact_form_model'
@@ -31,4 +33,4 @@ services:
     class: ACP3\Modules\ACP3\Contact\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
-
+      - '@contact.view.block.widget.contact_sidebar_block'

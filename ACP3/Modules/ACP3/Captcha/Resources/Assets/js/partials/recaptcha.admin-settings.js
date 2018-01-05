@@ -4,7 +4,7 @@
  */
 
 jQuery(document).ready(function ($) {
-    var $recaptchaWrapper = $('#recaptcha-wrapper'),
+    const $recaptchaWrapper = $('#recaptcha-wrapper'),
         serviceIds = [
             'captcha.extension.recaptcha_captcha_extension'
         ];

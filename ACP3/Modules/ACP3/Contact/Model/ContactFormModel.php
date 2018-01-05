@@ -1,22 +1,19 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Contact\Model;
 
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Helpers\SendEmail;
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Mailer\MailerMessage;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Contact\Installer\Schema;
 
-/**
- * Class ContactFormModel
- * @package ACP3\Modules\ACP3\Contact\Model
- */
 class ContactFormModel
 {
     /**
@@ -24,7 +21,7 @@ class ContactFormModel
      */
     protected $secure;
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     protected $translator;
     /**
@@ -39,13 +36,13 @@ class ContactFormModel
     /**
      * ContactFormModel constructor.
      * @param SettingsInterface $config
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      * @param Secure $secure
      * @param SendEmail $sendEmail
      */
     public function __construct(
         SettingsInterface $config,
-        Translator $translator,
+        TranslatorInterface $translator,
         Secure $secure,
         SendEmail $sendEmail
     ) {
@@ -82,11 +79,11 @@ class ContactFormModel
             ->setTemplate('Contact/layout.email.tpl')
             ->setRecipients([
                 'name' => $systemSettings['site_title'],
-                'email' => $settings['mail']
+                'email' => $settings['mail'],
             ])
             ->setFrom([
                 'name' => $formData['name'],
-                'email' => $formData['mail']
+                'email' => $formData['mail'],
             ])
             ->setSender($settings['mail']);
 
@@ -132,7 +129,7 @@ class ContactFormModel
             [
                 '%name%' => $formData['name'],
                 '%mail%' => $formData['mail'],
-                '%message%' => $this->secure->strEncode($formData['message'], true)
+                '%message%' => $this->secure->strEncode($formData['message'], true),
             ]
         );
     }
@@ -159,7 +156,7 @@ class ContactFormModel
             ])
             ->setFrom([
                 'name' => $systemSettings['site_title'],
-                'email' => $settings['mail']
+                'email' => $settings['mail'],
             ]);
 
         return $this->sendEmail->execute($data);

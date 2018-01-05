@@ -1,15 +1,12 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\NestedSet\Operation;
 
-/**
- * Class Insert
- * @package ACP3\Core\NestedSet\Operation
- */
 class Insert extends AbstractOperation
 {
     /**
@@ -25,7 +22,7 @@ class Insert extends AbstractOperation
             // No parent item has been assigned
             if ($this->nestedSetRepository->nodeExists((int)$parentId) === false) {
                 // Select the last result set
-                $maxRightId = $this->fetchMaximumRightId($insertValues['block_id']);
+                $maxRightId = $this->fetchMaximumRightId($insertValues[$this->getBlockColumnName()]);
 
                 $insertValues['left_id'] = $maxRightId + 1;
                 $insertValues['right_id'] = $maxRightId + 2;
@@ -34,11 +31,13 @@ class Insert extends AbstractOperation
 
                 $this->db->getConnection()->insert($this->nestedSetRepository->getTableName(), $insertValues);
                 $rootId = $this->db->getConnection()->lastInsertId();
-                $result = $this->db->getConnection()->update(
+                $this->db->getConnection()->update(
                     $this->nestedSetRepository->getTableName(),
                     ['root_id' => $rootId],
                     ['id' => $rootId]
                 );
+
+                $result = $rootId;
             } else { // a parent item for the node has been assigned
                 $parent = $this->nestedSetRepository->fetchNodeById((int)$parentId);
 
@@ -51,7 +50,7 @@ class Insert extends AbstractOperation
 
                 $this->db->getConnection()->insert($this->nestedSetRepository->getTableName(), $insertValues);
 
-                $result = (int) $this->db->getConnection()->lastInsertId();
+                $result = (int)$this->db->getConnection()->lastInsertId();
             }
 
             return $result;
@@ -67,13 +66,13 @@ class Insert extends AbstractOperation
      */
     protected function fetchMaximumRightId($blockId)
     {
-        if ($this->isBlockAware === true) {
+        if ($this->isBlockAware() === true) {
             $maxRightId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($blockId);
         }
         if (empty($maxRightId)) {
             $maxRightId = $this->nestedSetRepository->fetchMaximumRightId();
         }
 
-        return (int) $maxRightId;
+        return (int)$maxRightId;
     }
 }

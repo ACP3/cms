@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Comments\Model;
@@ -26,7 +27,7 @@ class CommentsModel extends AbstractModel
             'user_id' => ColumnTypes::COLUMN_TYPE_INT_NULLABLE,
             'message' => ColumnTypes::COLUMN_TYPE_TEXT,
             'module_id' => ColumnTypes::COLUMN_TYPE_INT,
-            'entry_id' => ColumnTypes::COLUMN_TYPE_INT
+            'entry_id' => ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

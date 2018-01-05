@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Breadcrumb;
@@ -9,10 +10,6 @@ namespace ACP3\Core\Breadcrumb;
 use ACP3\Core\Breadcrumb\Event\GetSiteAndPageTitleBeforeEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Title
- * @package ACP3\Core\Breadcrumb\Breadcrumb
- */
 class Title
 {
     /**
@@ -115,7 +112,7 @@ class Title
     {
         if (empty($this->pageTitle)) {
             $steps = $this->steps->getBreadcrumb();
-            $lastCrumb = end($steps);
+            $lastCrumb = \end($steps);
 
             $this->pageTitle = $lastCrumb['title'];
         }

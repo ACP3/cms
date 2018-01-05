@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model;
@@ -33,7 +34,7 @@ class DataProcessor
     {
         $data = [];
         foreach ($columnData as $column => $value) {
-            if (array_key_exists($column, $columnConstraints)) {
+            if (\array_key_exists($column, $columnConstraints)) {
                 $data[$column] = $this->factory->getStrategy($columnConstraints[$column])->doEscape($value);
             }
         }

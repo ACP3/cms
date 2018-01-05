@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
+namespace ACP3\Modules\ACP3\Emoticons\View\Block\Admin;
+
+use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
+
+class EmoticonManageFormBlock extends AbstractRepositoryAwareFormBlock
+{
+    /**
+     * @inheritdoc
+     */
+    public function render()
+    {
+        $this->setTemplate(
+            $this->getId() ? 'Emoticons/Admin/index.manage_with_id.tpl' : 'Emoticons/Admin/index.manage.tpl'
+        );
+
+        $this->breadcrumb->setLastStepReplacement(
+            $this->translator->t('emoticons', !$this->getId() ? 'admin_index_create' : 'admin_index_edit')
+        );
+
+        return [
+            'form' => \array_merge($this->getData(), $this->getRequestData()),
+            'form_token' => $this->formToken->renderFormToken(),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDefaultData(): array
+    {
+        return ['code' => '', 'description' => ''];
+    }
+}

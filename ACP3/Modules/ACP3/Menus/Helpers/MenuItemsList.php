@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Menus\Cache;
+use ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage;
 
-/**
- * Class MenuItemsList
- * @package ACP3\Modules\ACP3\Menus\Helpers
- */
 class MenuItemsList
 {
     const ARTICLES_URL_KEY_REGEX = '/^(articles\/index\/details\/id_([0-9]+)\/)$/';
@@ -21,17 +23,17 @@ class MenuItemsList
      */
     protected $formsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Cache
+     * @var \ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage
      */
     protected $menusCache;
 
     /**
      * @param \ACP3\Core\Helpers\Forms       $formsHelper
-     * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
+     * @param \ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage $menusCache
      */
     public function __construct(
         Core\Helpers\Forms $formsHelper,
-        Cache $menusCache
+        MenusCacheStorage $menusCache
     ) {
         $this->formsHelper = $formsHelper;
         $this->menusCache = $menusCache;
@@ -55,11 +57,11 @@ class MenuItemsList
 
         $output = [];
 
-        if (count($this->menuItems) > 0) {
+        if (\count($this->menuItems) > 0) {
             foreach ($this->menuItems as $row) {
                 if (!($row['left_id'] >= $leftId && $row['right_id'] <= $rightId)) {
                     $row['selected'] = $this->formsHelper->selectEntry('parent_id', $row['id'], $parentId);
-                    $row['spaces'] = str_repeat('&nbsp;&nbsp;', $row['level']);
+                    $row['spaces'] = \str_repeat('&nbsp;&nbsp;', $row['level']);
 
                     // Titel für den aktuellen Block setzen
                     $output[$row['block_name']]['title'] = $row['block_title'];
@@ -68,6 +70,7 @@ class MenuItemsList
                 }
             }
         }
+
         return $output;
     }
 }

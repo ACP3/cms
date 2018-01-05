@@ -1,10 +1,10 @@
 services:
-  guestbook.model.data_grid_repository:
-    class: ACP3\Modules\ACP3\Guestbook\Model\Repository\DataGridRepository
+  guestbook.model.repository.guestbook_data_grid_repository:
+    class: ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookDataGridRepository
     arguments:
       - '@core.db'
 
-  guestbook.model.guestbookrepository:
+  guestbook.model.repository.guestbook_repository:
     class: ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository
     arguments:
       - '@core.db'
@@ -14,4 +14,4 @@ services:
     arguments:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
-      - '@guestbook.model.guestbookrepository'
+      - '@guestbook.model.repository.guestbook_repository'

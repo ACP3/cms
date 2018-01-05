@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core;
 
 use Psr\Log\LoggerInterface;
@@ -53,17 +59,17 @@ class ErrorHandler
 
     public function registerExceptionHandler()
     {
-        set_exception_handler([$this, 'handleException']);
+        \set_exception_handler([$this, 'handleException']);
     }
 
     public function registerErrorHandler()
     {
-        set_error_handler([$this, 'handleError'], -1);
+        \set_error_handler([$this, 'handleError'], -1);
     }
 
     public function registerFatalHandler()
     {
-        register_shutdown_function([$this, 'handleFatalError']);
+        \register_shutdown_function([$this, 'handleFatalError']);
     }
 
     /**
@@ -86,27 +92,27 @@ class ErrorHandler
      */
     public function handleError($code, $message, $file = '', $line = 0)
     {
-        if (!(error_reporting() & $code)) {
+        if (!(\error_reporting() & $code)) {
             return;
         }
 
         // fatal error codes are ignored if a fatal error handler is present as well to avoid duplicate log entries
-        if (!in_array($code, self::$fatalErrors, true)) {
+        if (!\in_array($code, self::$fatalErrors, true)) {
             throw new \ErrorException($message, $code, 1, $file, $line);
         }
     }
 
     public function handleFatalError()
     {
-        $lastError = error_get_last();
-        if ($lastError !== null && in_array($lastError['type'], self::$fatalErrors, true)) {
+        $lastError = \error_get_last();
+        if ($lastError !== null && \in_array($lastError['type'], self::$fatalErrors, true)) {
             $this->logger->alert(
                 'Fatal Error (' . self::errorCodeToString($lastError['type']) . '): ' . $lastError['message'],
                 [
                     'code' => $lastError['type'],
                     'message' => $lastError['message'],
                     'file' => $lastError['file'],
-                    'line' => $lastError['line']
+                    'line' => $lastError['line'],
                 ]
             );
         }

@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing
- * details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\Date;
@@ -9,14 +10,10 @@ namespace ACP3\Core\Test\Date;
 use ACP3\Core\Date\DateTranslator;
 use ACP3\Core\I18n\Translator;
 
-/**
- * Class DateTranslatorTest
- * @package ACP3\Core\Test
- */
 class DateTranslatorTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \ACP3\Installer\Core\I18n\Translator|\PHPUnit_Framework_MockObject_MockObject
+     * @var \ACP3\Core\I18n\Translator|\PHPUnit_Framework_MockObject_MockObject
      */
     private $translatorMock;
     /**
@@ -43,7 +40,7 @@ class DateTranslatorTest extends \PHPUnit_Framework_TestCase
             'Thu' => '{THU}',
             'Fri' => '{FRI}',
             'Sat' => '{SAT}',
-            'Sun' => '{SUN}'
+            'Sun' => '{SUN}',
         ];
 
         $this->setTranslatorExpectation($expected, 7);
@@ -60,7 +57,7 @@ class DateTranslatorTest extends \PHPUnit_Framework_TestCase
             'Thursday' => '{THURSDAY}',
             'Friday' => '{FRIDAY}',
             'Saturday' => '{SATURDAY}',
-            'Sunday' => '{SUNDAY}'
+            'Sunday' => '{SUNDAY}',
         ];
 
         $this->setTranslatorExpectation($expected, 7);
@@ -82,7 +79,7 @@ class DateTranslatorTest extends \PHPUnit_Framework_TestCase
             'Sep' => '{SEP}',
             'Oct' => '{OCT}',
             'Nov' => '{NOV}',
-            'Dec' => '{DEC}'
+            'Dec' => '{DEC}',
         ];
 
         $this->setTranslatorExpectation($expected, 12);
@@ -104,7 +101,7 @@ class DateTranslatorTest extends \PHPUnit_Framework_TestCase
             'September' => '{SEPTEMBER}',
             'October' => '{OCTOBER}',
             'November' => '{NOVEMBER}',
-            'December' => '{DECEMBER}'
+            'December' => '{DECEMBER}',
         ];
 
         $this->setTranslatorExpectation($expected, 12);
@@ -127,6 +124,6 @@ class DateTranslatorTest extends \PHPUnit_Framework_TestCase
             ->expects($this->exactly($methodCallCount))
             ->method('t');
 
-        call_user_func_array([$invocationMocker, 'willReturnOnConsecutiveCalls'], $translations);
+        \call_user_func_array([$invocationMocker, 'willReturnOnConsecutiveCalls'], $translations);
     }
 }

@@ -1,25 +1,27 @@
 <?php
-namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
-
-use ACP3\Core\I18n\Translator;
 
 /**
- * Class TranslateColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
+
+use ACP3\Core\I18n\TranslatorInterface;
+
 class TranslateColumnRenderer extends AbstractColumnRenderer
 {
     /**
-     * @var
+     * @var TranslatorInterface
      */
     protected $translator;
 
     /**
      * TranslateColumnRenderer constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }

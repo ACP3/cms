@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Comments\Validation\ValidationRules;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Comments\Validation\ValidationRules;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 
-/**
- * Class UserNameValidationRule
- * @package ACP3\Modules\ACP3\Comments\Validation\ValidationRules
- */
 class UserNameValidationRule extends AbstractValidationRule
 {
     /**
@@ -35,9 +32,9 @@ class UserNameValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && is_array($field)) {
-            $userName = reset($field);
-            $userId = next($field);
+        if (\is_array($data) && \is_array($field)) {
+            $userName = \reset($field);
+            $userId = \next($field);
 
             return (!empty($data[$userId]) && $this->integerValidationRule->isValid($data[$userId])) || !empty($data[$userName]);
         };

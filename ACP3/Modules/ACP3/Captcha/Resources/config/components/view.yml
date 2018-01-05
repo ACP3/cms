@@ -1,0 +1,7 @@
+services:
+  captcha.view.block.admin.captcha_settings_form_block:
+    class: ACP3\Modules\ACP3\Captcha\View\Block\Admin\CaptchaSettingsFormBlock
+    arguments:
+      - '@core.view.context.form_block_context'
+      - '@core.config'
+      - '@captcha.utility.captcha_registrar'

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
@@ -9,12 +10,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 use ACP3\Core;
 use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 use ACP3\Modules\ACP3\Comments;
-use ACP3\Modules\ACP3\System;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Details
- */
 class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -22,71 +18,61 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $adminFormValidation;
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var Comments\Model\CommentsModel
      */
     protected $commentsModel;
+    /**
+     * @var Core\View\Block\RepositoryAwareFormBlockInterface
+     */
+    private $block;
+    /**
+     * @var Core\Validation\Validator
+     */
+    private $validator;
 
     /**
      * Details constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
+     * @param Core\Validation\Validator $validator
      * @param Comments\Model\CommentsModel $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\View\Block\RepositoryAwareFormBlockInterface $block,
+        Core\Validation\Validator $validator,
         Comments\Model\CommentsModel $commentsModel,
-        Comments\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\FormToken $formTokenHelper
+        Comments\Validation\AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
         $this->commentsModel = $commentsModel;
+        $this->block = $block;
+        $this->validator = $validator;
     }
 
     /**
      * @param int $id
      *
      * @return array
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
-        $comment = $this->commentsModel->getOneById($id);
-
-        if (empty($comment) === false) {
-            $this->breadcrumb
-                ->append(
-                    $this->translator->t($comment['module'], $comment['module']),
-                    'acp/comments/details/index/id_' . $comment['module_id']
-                )
-                ->append($this->translator->t('comments', 'admin_details_edit'));
-
-            $this->title->setPageTitlePrefix($comment['name']);
-
-            return [
-                'form' => array_merge($comment, $this->request->getPost()->all()),
-                'module_id' => (int)$comment['module_id'],
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-                'can_use_emoticons' => true
-            ];
-        }
-
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        return $this->block
+            ->setDataById($id)
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
+
     /**
      * @param int   $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         $comment = $this->commentsModel->getOneById($id);
 
@@ -96,7 +82,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
                 $this->adminFormValidation->validate($formData);
 
                 $updateValues = [
-                    'message' => $formData['message']
+                    'message' => $formData['message'],
                 ];
                 if ((empty($comment['user_id']) || $this->validator->is(IntegerValidationRule::class, $comment['user_id']) === false) &&
                     !empty($formData['name'])

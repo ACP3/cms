@@ -4,7 +4,7 @@
  */
 
 jQuery(document).ready(function($) {
-    var $cookieNotice = $('#cookie-consent'),
+    const $cookieNotice = $('#cookie-consent'),
         cookieName = 'ACCEPT_COOKIES';
 
     $('#accept-cookies').click(function() {

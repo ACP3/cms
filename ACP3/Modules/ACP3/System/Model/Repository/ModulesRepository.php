@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Model\Repository;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\System\Model\Repository;
 use ACP3\Core\Model\Repository\AbstractRepository;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 
-/**
- * Class ModulesRepository
- * @package ACP3\Modules\ACP3\System\Model\Repository
- */
 class ModulesRepository extends AbstractRepository implements ModuleAwareRepositoryInterface
 {
     const TABLE_NAME = 'modules';
@@ -49,7 +46,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     public function moduleExists($moduleName)
     {
         return $this->db->fetchColumn(
-            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?',
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?',
             [$moduleName]
         ) > 0;
     }

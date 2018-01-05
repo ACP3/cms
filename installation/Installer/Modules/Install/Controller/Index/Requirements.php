@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Controller\Index;
@@ -10,10 +12,6 @@ use ACP3\Installer\Modules\Install\Controller\AbstractAction;
 use ACP3\Installer\Modules\Install\Helpers\Navigation;
 use ACP3\Installer\Modules\Install\Helpers\Requirements as RequirementsHelper;
 
-/**
- * Class Requirements
- * @package ACP3\Installer\Modules\Install\Controller\Index
- */
 class Requirements extends AbstractAction
 {
     /**
@@ -43,10 +41,12 @@ class Requirements extends AbstractAction
         list($requirements, $stopInstall) = $this->requirementsHelpers->checkMandatoryRequirements();
         list($requiredFilesAndDirs, $checkAgain) = $this->requirementsHelpers->checkFolderAndFilePermissions();
 
-        $this->view->assign('requirements', $requirements);
-        $this->view->assign('files_dirs', $requiredFilesAndDirs);
-        $this->view->assign('php_settings', $this->requirementsHelpers->checkOptionalRequirements());
-        $this->view->assign('stop_install', $stopInstall);
-        $this->view->assign('check_again', $checkAgain);
+        return [
+            'requirements' => $requirements,
+            'files_dirs' => $requiredFilesAndDirs,
+            'php_settings' => $this->requirementsHelpers->checkOptionalRequirements(),
+            'stop_install' => $stopInstall,
+            'check_again' => $checkAgain,
+        ];
     }
 }

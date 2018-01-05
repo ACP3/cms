@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Guestbook\Event\Listener;
 
-use ACP3\Core\I18n\Translator;
+use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;
@@ -24,7 +25,7 @@ class SubscribeToNewsletterOnModelAfterSaveListener
      */
     private $router;
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
     /**
@@ -36,12 +37,12 @@ class SubscribeToNewsletterOnModelAfterSaveListener
      * SubscribeToNewsletterOnModelAfterSaveListener constructor.
      * @param SettingsInterface $settings
      * @param RouterInterface $router
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      */
     public function __construct(
         SettingsInterface $settings,
         RouterInterface $router,
-        Translator $translator
+        TranslatorInterface $translator
     ) {
         $this->settings = $settings;
         $this->router = $router;

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Core\Router;
@@ -9,14 +10,10 @@ namespace ACP3\Modules\ACP3\Seo\Core\Router;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Seo;
 
-/**
- * Class Aliases
- * @package ACP3\Modules\ACP3\Seo\Core\Router
- */
 class Aliases
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Cache
+     * @var \ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage
      */
     protected $seoCache;
     /**
@@ -29,12 +26,12 @@ class Aliases
     private $isActive;
 
     /**
-     * @param Core\Modules $modules
-     * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
+     * @param \ACP3\Core\Modules\Modules $modules
+     * @param \ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage $seoCache
      */
     public function __construct(
-        Core\Modules $modules,
-        Seo\Cache $seoCache
+        Core\Modules\Modules $modules,
+        Seo\Cache\SeoCacheStorage $seoCache
     ) {
         $this->seoCache = $seoCache;
         $this->isActive = $modules->isActive(Seo\Installer\Schema::MODULE_NAME);
@@ -50,6 +47,8 @@ class Aliases
      */
     public function getUriAlias($path, $emptyOnNoResult = false)
     {
+        $path .= !\preg_match('/\/$/', $path) ? '/' : '';
+
         if ($this->isActive === false) {
             return $path;
         }
@@ -57,8 +56,6 @@ class Aliases
         if ($this->aliasesCache === []) {
             $this->aliasesCache = $this->seoCache->getCache();
         }
-
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
         return !empty($this->aliasesCache[$path]['alias'])
             ? $this->aliasesCache[$path]['alias']
@@ -74,6 +71,6 @@ class Aliases
      */
     public function uriAliasExists($path)
     {
-        return ($this->getUriAlias($path, true) !== '');
+        return $this->getUriAlias($path, true) !== '';
     }
 }

@@ -1,14 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Guestbook\Validation;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Guestbook\Validation\ValidationRules\FloodBarrierValidationRule;
 use ACP3\Modules\ACP3\Newsletter;
 
-/**
- * Class Validator
- * @package ACP3\Modules\ACP3\Guestbook\Validation
- */
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
@@ -28,6 +30,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     public function setIpAddress($ipAddress)
     {
         $this->ipAddress = $ipAddress;
+
         return $this;
     }
 
@@ -39,6 +42,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     public function setNewsletterAccess($newsletterAccess)
     {
         $this->newsletterAccess = (bool)$newsletterAccess;
+
         return $this;
     }
 
@@ -54,8 +58,8 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'message' => $this->translator->t('system', 'flood_no_entry_possible'),
                     'extra' => [
-                        'ip' => $this->ipAddress
-                    ]
+                        'ip' => $this->ipAddress,
+                    ],
                 ]
             )
             ->addConstraint(
@@ -63,7 +67,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'name',
-                    'message' => $this->translator->t('system', 'name_to_short')
+                    'message' => $this->translator->t('system', 'name_to_short'),
                 ]
             )
             ->addConstraint(
@@ -71,7 +75,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'message',
-                    'message' => $this->translator->t('system', 'message_to_short')
+                    'message' => $this->translator->t('system', 'message_to_short'),
                 ]
             );
 
@@ -82,7 +86,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'mail',
-                        'message' => $this->translator->t('system', 'wrong_email_format')
+                        'message' => $this->translator->t('system', 'wrong_email_format'),
                     ]
                 );
         }
@@ -97,7 +101,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                         'message' => $this->translator->t(
                             'guestbook',
                             'type_in_email_address_to_subscribe_to_newsletter'
-                        )
+                        ),
                     ]
                 )
                 ->addConstraint(
@@ -105,7 +109,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'mail',
-                        'message' => $this->translator->t('newsletter', 'account_exists')
+                        'message' => $this->translator->t('newsletter', 'account_exists'),
                     ]
                 );
         }

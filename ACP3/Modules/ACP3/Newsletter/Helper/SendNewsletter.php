@@ -1,15 +1,16 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository;
 
-/**
- * Class SendNewsletter
- * @package ACP3\Modules\ACP3\Newsletter\Helper
- */
 class SendNewsletter
 {
     /**
@@ -21,7 +22,7 @@ class SendNewsletter
      */
     protected $router;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository
      */
     protected $newsletterRepository;
     /**
@@ -35,13 +36,13 @@ class SendNewsletter
      * @param \ACP3\Core\Mailer $mailer
      * @param \ACP3\Core\Router\RouterInterface $router
      * @param \ACP3\Core\Settings\SettingsInterface $config
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository $newsletterRepository
      */
     public function __construct(
         Core\Mailer $mailer,
         Core\Router\RouterInterface $router,
         Core\Settings\SettingsInterface $config,
-        NewsletterRepository $newsletterRepository
+        NewslettersRepository $newsletterRepository
     ) {
         $this->mailer = $mailer;
         $this->router = $router;
@@ -60,31 +61,47 @@ class SendNewsletter
      */
     public function sendNewsletter($newsletterId, $recipients, $bcc = false)
     {
-        $settings = $this->config->getSettings(Schema::MODULE_NAME);
+        $message = $this->collectMailerMessageData($newsletterId);
 
-        $newsletter = $this->newsletterRepository->getOneById($newsletterId);
-        $sender = [
-            'email' => $settings['mail'],
-            'name' => $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME)['site_title']
-        ];
+        $message
+            ->setBcc($bcc)
+            ->setRecipients($recipients);
 
         $this->mailer
             ->reset()
-            ->setBcc($bcc)
-            ->setFrom($sender)
+            ->setData($message);
+
+        return $this->mailer->send();
+    }
+
+    /**
+     * @param int $newsletterId
+     * @return Core\Mailer\MailerMessage
+     */
+    protected function collectMailerMessageData($newsletterId)
+    {
+        $settings = $this->config->getSettings(Schema::MODULE_NAME);
+
+        $newsletter = $this->newsletterRepository->getOneById($newsletterId);
+        $from = [
+            'email' => $settings['mail'],
+            'name' => $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME)['site_title'],
+        ];
+
+        $message = (new Core\Mailer\MailerMessage())
+            ->setFrom($from)
+            ->setFrom($from)
             ->setSubject($newsletter['title'])
             ->setUrlWeb($this->router->route('newsletter/archive/details/id_' . $newsletterId, true))
             ->setMailSignature($settings['mailsig']);
 
         if ($newsletter['html'] == 1) {
-            $this->mailer->setTemplate('newsletter/layout.email.tpl');
-            $this->mailer->setHtmlBody($newsletter['text']);
+            $message->setTemplate('newsletter/layout.email.tpl');
+            $message->setHtmlBody($newsletter['text']);
         } else {
-            $this->mailer->setBody($newsletter['text']);
+            $message->setBody($newsletter['text']);
         }
 
-        $this->mailer->setRecipients($recipients);
-
-        return $this->mailer->send();
+        return $message;
     }
 }

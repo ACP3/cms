@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Validation;
 
 use ACP3\Core;
@@ -6,10 +12,6 @@ use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\AllowedMenuValidationRule
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\LinkModeValidationRule;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\ParentIdValidationRule;
 
-/**
- * Class MenuItemFormValidation
- * @package ACP3\Modules\ACP3\Menus\Validation
- */
 class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
@@ -26,8 +28,8 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'mode',
                     'message' => $this->translator->t('menus', 'select_page_type'),
                     'extra' => [
-                        'haystack' => [1, 2, 3, 4]
-                    ]
+                        'haystack' => [1, 2, 3, 4],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -35,7 +37,7 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->translator->t('menus', 'title_to_short')
+                    'message' => $this->translator->t('menus', 'title_to_short'),
                 ]
             )
             ->addConstraint(
@@ -43,7 +45,7 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'block_id',
-                    'message' => $this->translator->t('menus', 'select_menu_bar')
+                    'message' => $this->translator->t('menus', 'select_menu_bar'),
                 ]
             )
             ->addConstraint(
@@ -51,7 +53,7 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'parent_id',
-                    'message' => $this->translator->t('menus', 'select_superior_page')
+                    'message' => $this->translator->t('menus', 'select_superior_page'),
                 ]
             )
             ->addConstraint(
@@ -59,7 +61,7 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['parent_id', 'block_id'],
-                    'message' => $this->translator->t('menus', 'superior_page_not_allowed')
+                    'message' => $this->translator->t('menus', 'superior_page_not_allowed'),
                 ]
             )
             ->addConstraint(
@@ -69,8 +71,8 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'display',
                     'message' => $this->translator->t('menus', 'select_item_visibility'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
+                        'haystack' => [0, 1],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -80,8 +82,8 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'target',
                     'message' => $this->translator->t('menus', 'type_in_uri_and_target'),
                     'extra' => [
-                        'haystack' => [1, 2]
-                    ]
+                        'haystack' => [1, 2],
+                    ],
                 ]
             )
             ->addConstraint(
@@ -89,7 +91,7 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['mode', 'module', 'uri', 'articles'],
-                    'message' => $this->translator->t('menus', 'type_in_uri_and_target')
+                    'message' => $this->translator->t('menus', 'type_in_uri_and_target'),
                 ]
             );
 

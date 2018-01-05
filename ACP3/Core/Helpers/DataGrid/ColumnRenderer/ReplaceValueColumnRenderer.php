@@ -1,10 +1,12 @@
 <?php
-namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 /**
- * Class ReplaceValueColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
+
 class ReplaceValueColumnRenderer extends AbstractColumnRenderer
 {
     /**
@@ -32,6 +34,6 @@ class ReplaceValueColumnRenderer extends AbstractColumnRenderer
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
-        return isset($dbResultRow[$field]) ? str_replace($this->search, $this->replace, $dbResultRow[$field]) : null;
+        return isset($dbResultRow[$field]) ? \str_replace($this->search, $this->replace, $dbResultRow[$field]) : null;
     }
 }

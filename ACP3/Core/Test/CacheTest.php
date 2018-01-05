@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test;
@@ -13,7 +14,7 @@ use Doctrine\Common\Cache\CacheProvider;
 class CacheTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \ACP3\Core\Cache
+     * @var \ACP3\Core\Cache\Cache
      */
     private $cache;
     /**
@@ -25,7 +26,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     {
         $this->initializeMockObjects();
 
-        $this->cache = new Cache(
+        $this->cache = new Cache\Cache(
             $this->cacheDriverFactoryMock,
             'test'
         );

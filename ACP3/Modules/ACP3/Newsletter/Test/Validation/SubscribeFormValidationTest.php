@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Test\Validation;
@@ -10,7 +11,7 @@ use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\Test\Validation\AbstractFormValidationTest;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
+use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository;
 use ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation;
 use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountNotExistsValidationRule;
 
@@ -45,7 +46,7 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
         $emailRule = new EmailValidationRule();
         $this->validator->registerValidationRule($emailRule);
 
-        $this->accountRepositoryMock = $this->getMockBuilder(AccountRepository::class)
+        $this->accountRepositoryMock = $this->getMockBuilder(NewsletterAccountsRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
         $accountNotExistsRule = new AccountNotExistsValidationRule($this->accountRepositoryMock);
@@ -63,14 +64,7 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
                 'mail' => 'test@example.com',
                 'salutation' => '',
                 'first_name' => 'Foo',
-                'last_name' => 'bar'
-            ],
-            [
-                SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
-                'mail' => 'test@example.com',
-                'salutation' => '',
-                'first_name' => '',
-                'last_name' => ''
+                'last_name' => 'bar',
             ],
             [
                 SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
@@ -78,8 +72,15 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
                 'salutation' => '',
                 'first_name' => '',
                 'last_name' => '',
-                'captcha' => '123456'
-            ]
+            ],
+            [
+                SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
+                'mail' => 'test@example.com',
+                'salutation' => '',
+                'first_name' => '',
+                'last_name' => '',
+                'captcha' => '123456',
+            ],
         ];
     }
 
@@ -94,15 +95,15 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
                 'mail' => 'testexample.com',
                 'salutation' => '',
                 'first_name' => 'Foo',
-                'last_name' => 'bar'
+                'last_name' => 'bar',
             ],
             [
                 SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'test@example.com',
                 'salutation' => 3,
                 'first_name' => '',
-                'last_name' => ''
-            ]
+                'last_name' => '',
+            ],
         ];
     }
 }

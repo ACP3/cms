@@ -1,15 +1,15 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\Modules;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\Menus\Installer
- */
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     const MODULE_NAME = 'menus';
 
@@ -22,16 +22,14 @@ class Schema implements Modules\Installer\SchemaInterface
             'admin' => [
                 'index' => [
                     'index' => PrivilegeEnum::ADMIN_VIEW,
-                    'create' => PrivilegeEnum::ADMIN_CREATE,
-                    'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
+                    'manage' => PrivilegeEnum::ADMIN_MANAGE,
                 ],
                 'items' => [
-                    'create' => PrivilegeEnum::ADMIN_CREATE,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
-                    'edit' => PrivilegeEnum::ADMIN_EDIT,
-                    'order' => PrivilegeEnum::ADMIN_CREATE
-                ]
+                    'manage' => PrivilegeEnum::ADMIN_MANAGE,
+                    'order' => PrivilegeEnum::ADMIN_CREATE,
+                ],
             ],
         ];
     }
@@ -49,7 +47,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 37;
+        return 38;
     }
 
     /**
@@ -58,14 +56,14 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}menus` (
+            'CREATE TABLE `{pre}menus` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `index_name` VARCHAR(10) NOT NULL,
                 `title` VARCHAR(120) NOT NULL,
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `index_name` (`index_name`)
-            ) {ENGINE} {CHARSET};",
-            "CREATE TABLE `{pre}menu_items` (
+            ) {ENGINE} {CHARSET};',
+            'CREATE TABLE `{pre}menu_items` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `mode` TINYINT(1) UNSIGNED NOT NULL,
                 `block_id` INT(10) UNSIGNED NOT NULL,
@@ -81,7 +79,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 INDEX `foreign_block_id` (`block_id`),
                 INDEX `left_id` (`left_id`),
                 FOREIGN KEY (`block_id`) REFERENCES `{pre}menus` (`id`) ON DELETE CASCADE
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -91,8 +89,8 @@ class Schema implements Modules\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            "DROP TABLE IF EXISTS `{pre}menus`;",
-            "DROP TABLE IF EXISTS `{pre}menu_items`;"
+            'DROP TABLE IF EXISTS `{pre}menus`;',
+            'DROP TABLE IF EXISTS `{pre}menu_items`;',
         ];
     }
 

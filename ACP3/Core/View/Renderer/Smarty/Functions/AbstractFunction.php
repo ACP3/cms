@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
 use ACP3\Core\View\Renderer\Smarty\PluginInterface;
 
-/**
- * Class AbstractFunction
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 abstract class AbstractFunction extends AbstractPlugin
 {
     /**

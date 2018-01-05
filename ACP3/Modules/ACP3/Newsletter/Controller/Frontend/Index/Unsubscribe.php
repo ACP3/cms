@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
@@ -9,16 +10,8 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-/**
- * Class Unsubscribe
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index
- */
 class Unsubscribe extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
      */
@@ -27,26 +20,37 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation
      */
     protected $unsubscribeFormValidation;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
+    /**
+     * @var Core\Helpers\Alerts
+     */
+    private $alerts;
 
     /**
      * Unsubscribe constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
-     * @param \ACP3\Core\Helpers\FormToken                                       $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus                 $accountStatusHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\Helpers\Alerts $alerts
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
+        Core\View\Block\FormBlockInterface $block,
+        Core\Helpers\Alerts $alerts,
         Newsletter\Helper\AccountStatus $accountStatusHelper,
         Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->accountStatusHelper = $accountStatusHelper;
         $this->unsubscribeFormValidation = $unsubscribeFormValidation;
+        $this->block = $block;
+        $this->alerts = $alerts;
     }
 
     /**
@@ -54,14 +58,9 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        $defaults = [
-            'mail' => ''
-        ];
-
-        return [
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
-        ];
+        return $this->block
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
@@ -80,11 +79,9 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
                     ['mail' => $formData['mail']]
                 );
 
-                $this->setTemplate(
-                    $this->get('core.helpers.alerts')->confirmBox(
+                return $this->alerts->confirmBox(
                     $this->translator->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'),
                     $this->appPath->getWebRoot()
-                )
                 );
             }
         );

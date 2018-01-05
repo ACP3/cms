@@ -12,4 +12,5 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.secure'
       - '@categories.cache'
-      - '@categories.model.categories_repository'
+      - '@categories.model.repository.categories_repository'
+      - '@categories.model.categories_model'

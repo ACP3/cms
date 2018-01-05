@@ -1,16 +1,20 @@
 <?php
-namespace ACP3\Core\Assets\Minifier;
 
 /**
- * Class CSS
- * @package ACP3\Core\Assets\Minifier
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Assets\Minifier;
+
 class CSS extends AbstractMinifier
 {
+    const ASSETS_PATH_CSS = 'Assets/css';
+
     /**
      * @var array
      */
-    protected $stylesheets = [];
+    private $stylesheets = [];
 
     protected function getAssetGroup(): string
     {
@@ -20,7 +24,7 @@ class CSS extends AbstractMinifier
     /**
      * @inheritdoc
      */
-    protected function processLibraries($layout)
+    protected function processLibraries(string $layout)
     {
         $cacheId = $this->buildCacheId($this->getAssetGroup(), $layout);
 
@@ -64,7 +68,7 @@ class CSS extends AbstractMinifier
                 '',
                 '',
                 static::ASSETS_PATH_CSS,
-                trim($file)
+                \trim($file)
             );
         }
 
@@ -88,30 +92,25 @@ class CSS extends AbstractMinifier
      */
     protected function fetchModuleStylesheets()
     {
-        $modules = $this->modules->getActiveModules();
-        foreach ($modules as $module) {
+        $stylesheetNames = ['admin.css', 'widget.css', 'style.css', 'append.css'];
+        foreach ($this->modules->getActiveModules() as $module) {
             $modulePath = $module['dir'] . '/Resources/';
             $designPath = $module['dir'] . '/';
 
-            $stylesheet = $this->fileResolver->getStaticAssetPath(
-                $modulePath,
-                $designPath,
-                static::ASSETS_PATH_CSS,
-                'style.css'
-            );
-            if ('' !== $stylesheet && $module['dir'] !== 'System') {
-                $this->stylesheets[] = $stylesheet;
-            }
+            foreach ($stylesheetNames as $fileName) {
+                if ($fileName === 'style.css' && $module['dir'] === 'System') {
+                    continue;
+                }
 
-            // Append custom styles to the default module styling
-            $appendStylesheet = $this->fileResolver->getStaticAssetPath(
-                $modulePath,
-                $designPath,
-                static::ASSETS_PATH_CSS,
-                'append.css'
-            );
-            if ('' !== $appendStylesheet) {
-                $this->stylesheets[] = $appendStylesheet;
+                $stylesheet = $this->fileResolver->getStaticAssetPath(
+                    $modulePath,
+                    $designPath,
+                    static::ASSETS_PATH_CSS,
+                    $fileName
+                );
+                if ('' !== $stylesheet) {
+                    $this->stylesheets[] = $stylesheet;
+                }
             }
         }
     }

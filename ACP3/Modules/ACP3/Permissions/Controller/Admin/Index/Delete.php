@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
@@ -9,18 +10,14 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class Delete
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Index
- */
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache
+     * @var \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage
      */
     protected $permissionsCache;
     /**
-     * @var Permissions\Model\RolesModel
+     * @var Permissions\Model\AclRolesModel
      */
     protected $rolesModel;
 
@@ -28,13 +25,13 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Permissions\Model\RolesModel $rolesModel
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param Permissions\Model\AclRolesModel $rolesModel
+     * @param \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Permissions\Model\RolesModel $rolesModel,
-        Permissions\Cache $permissionsCache
+        Permissions\Model\AclRolesModel $rolesModel,
+        Permissions\Cache\PermissionsCacheStorage $permissionsCache
     ) {
         parent::__construct($context);
 
@@ -56,7 +53,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
                 $bool = $levelNotDeletable = false;
 
                 foreach ($items as $item) {
-                    if (in_array($item, [1, 2, 4]) === true) {
+                    if (\in_array($item, [1, 2, 4]) === true) {
                         $levelNotDeletable = true;
                     } else {
                         $bool = $this->rolesModel->delete($item);

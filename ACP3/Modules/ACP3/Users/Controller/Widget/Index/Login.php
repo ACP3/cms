@@ -1,26 +1,39 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Users\Installer\Schema;
+use ACP3\Core\Controller\Context\WidgetContext;
 
-/**
- * Class Login
- * @package ACP3\Modules\ACP3\Users\Controller\Widget\Index
- */
 class Login extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
+    /**
+     * @var Core\View\Block\FormBlockInterface
+     */
+    private $block;
+
+    /**
+     * Login constructor.
+     * @param WidgetContext $context
+     * @param Core\View\Block\FormBlockInterface $block
+     */
+    public function __construct(WidgetContext $context, Core\View\Block\FormBlockInterface $block)
+    {
+        parent::__construct($context);
+
+        $this->block = $block;
+    }
 
     /**
      * Displays the login mask, if the user is not already logged in
      *
-     * @return array|void
+     * @return array|bool
      */
     public function execute()
     {
@@ -28,15 +41,15 @@ class Login extends Core\Controller\AbstractWidgetAction
 
         if ($this->user->isAuthenticated() === false) {
             $prefix = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN ? 'acp/' : '';
-            $currentPage = base64_encode($prefix . $this->request->getQuery());
-            $settings = $this->config->getSettings(Schema::MODULE_NAME);
+            $currentPage = \base64_encode($prefix . $this->request->getQuery());
 
-            return [
-                'enable_registration' => $settings['enable_registration'],
-                'redirect_uri' => $this->request->getPost()->get('redirect_uri', $currentPage)
-            ];
+            return $this->block
+                ->setData([
+                    'redirect_url' => $this->request->getPost()->get('redirect_uri', $currentPage),
+                ])
+                ->render();
         }
 
-        $this->setContent(false);
+        return false;
     }
 }

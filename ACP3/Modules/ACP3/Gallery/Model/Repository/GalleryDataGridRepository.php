@@ -1,20 +1,17 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Model\Repository;
 
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
-use ACP3\Core\Model\Repository\DataGridRepository;
+use ACP3\Core\Helpers\DataGrid\Model\Repository\AbstractDataGridRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-/**
- * Class GalleryDataGridRepository
- * @package ACP3\Modules\ACP3\Gallery\Model\Repository
- */
-class GalleryDataGridRepository extends DataGridRepository
+class GalleryDataGridRepository extends AbstractDataGridRepository
 {
     const TABLE_NAME = GalleryRepository::TABLE_NAME;
 
@@ -28,7 +25,7 @@ class GalleryDataGridRepository extends DataGridRepository
             'main.start',
             'main.end',
             'main.title',
-            'COUNT(p.gallery_id) AS pictures'
+            'COUNT(p.gallery_id) AS pictures',
         ];
     }
 
@@ -39,7 +36,7 @@ class GalleryDataGridRepository extends DataGridRepository
     {
         $queryBuilder->leftJoin(
             'main',
-            $this->getTableName(PictureRepository::TABLE_NAME),
+            $this->getTableName(GalleryPicturesRepository::TABLE_NAME),
             'p',
             'main.id = p.gallery_id'
         );

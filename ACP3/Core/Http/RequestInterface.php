@@ -1,11 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Http;
 
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 /**
  * Interface RequestInterface
- * @package ACP3\Core\Http
  */
 interface RequestInterface
 {
@@ -13,6 +18,7 @@ interface RequestInterface
      * @return SymfonyRequest
      */
     public function getSymfonyRequest();
+
     /**
      * Returns the used protocol of the current request
      *
@@ -153,6 +159,8 @@ interface RequestInterface
 
     /**
      * Processes the request
+     *
+     * @return void
      */
     public function processQuery();
 

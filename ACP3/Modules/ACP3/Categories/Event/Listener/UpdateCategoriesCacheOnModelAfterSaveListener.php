@@ -1,32 +1,33 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Categories\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Modules\ACP3\Categories\Cache;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Cache\CategoriesCacheStorage;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 
 class UpdateCategoriesCacheOnModelAfterSaveListener
 {
     /**
-     * @var Cache
+     * @var CategoriesCacheStorage
      */
     protected $cache;
     /**
-     * @var CategoryRepository
+     * @var CategoriesRepository
      */
     protected $categoryRepository;
 
     /**
      * UpdateCategoriesCacheOnModelAfterSaveListener constructor.
-     * @param Cache $cache
-     * @param CategoryRepository $categoryRepository
+     * @param CategoriesCacheStorage $cache
+     * @param CategoriesRepository $categoryRepository
      */
-    public function __construct(Cache $cache, CategoryRepository $categoryRepository)
+    public function __construct(CategoriesCacheStorage $cache, CategoriesRepository $categoryRepository)
     {
         $this->cache = $cache;
         $this->categoryRepository = $categoryRepository;

@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
@@ -8,92 +10,68 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Index
- */
-class Edit extends AbstractFormAction
+class Edit extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation
      */
     protected $roleFormValidation;
     /**
-     * @var Permissions\Model\RolesModel
+     * @var Permissions\Model\AclRolesModel
      */
     protected $rolesModel;
     /**
-     * @var Permissions\Model\RulesModel
+     * @var Permissions\Model\AclRulesModel
      */
     protected $rulesModel;
+    /**
+     * @var Core\View\Block\RepositoryAwareFormBlockInterface
+     */
+    private $block;
 
     /**
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Permissions\Model\RolesModel $rolesModel
-     * @param Permissions\Model\RulesModel $rulesModel
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
+     * @param Permissions\Model\AclRolesModel $rolesModel
+     * @param Permissions\Model\AclRulesModel $rulesModel
      * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Permissions\Model\RolesModel $rolesModel,
-        Permissions\Model\RulesModel $rulesModel,
-        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
-        Permissions\Cache $permissionsCache,
+        Core\View\Block\RepositoryAwareFormBlockInterface $block,
+        Permissions\Model\AclRolesModel $rolesModel,
+        Permissions\Model\AclRulesModel $rulesModel,
         Permissions\Validation\RoleFormValidation $roleFormValidation
     ) {
-        parent::__construct($context, $formsHelper, $privilegeRepository, $permissionsCache);
+        parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->roleFormValidation = $roleFormValidation;
         $this->rolesModel = $rolesModel;
         $this->rulesModel = $rulesModel;
+        $this->block = $block;
     }
 
     /**
      * @param int $id
      *
      * @return array
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
-        $role = $this->rolesModel->getOneById($id);
-
-        if (!empty($role)) {
-            $this->title->setPageTitlePrefix($role['name']);
-
-            return [
-                'parent' => $id != 1
-                    ? $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id'])
-                    : [],
-                'modules' => $this->fetchModulePermissions($id),
-                'form' => array_merge($role, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken()
-            ];
-        }
-
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        return $this->block
+            ->setDataById($id)
+            ->setRequestData($this->request->getPost()->all())
+            ->render();
     }
 
     /**
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

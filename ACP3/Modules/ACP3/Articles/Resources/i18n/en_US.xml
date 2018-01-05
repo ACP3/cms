@@ -7,7 +7,6 @@
         <item key="admin_index_edit">Edit article</item>
         <item key="articles">Articles</item>
         <item key="latest_articles">Latest articles</item>
-        <item key="mod_description">This module manages the articles.</item>
         <item key="page_statements">Page statements</item>
         <item key="select_active">Please select, whether the article should be active or not.</item>
         <item key="select_create_menu_item">Please select, whether you want to create am menu item for this article or not.</item>

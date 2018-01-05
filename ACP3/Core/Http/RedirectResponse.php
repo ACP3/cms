@@ -1,26 +1,18 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Http;
 
 use ACP3\Core\Router\RouterInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class RedirectResponse
- * @package ACP3\Core\Http
- */
 class RedirectResponse
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    protected $request;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
@@ -29,28 +21,20 @@ class RedirectResponse
     /**
      * Redirect constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface       $router
+     * @param \ACP3\Core\Router\RouterInterface $router
      */
-    public function __construct(
-        RequestInterface $request,
-        RouterInterface $router
-    ) {
-        $this->request = $request;
+    public function __construct(RouterInterface $router)
+    {
         $this->router = $router;
     }
 
     /**
      * @param string $url
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function toNewPage($url)
+    public function toNewPage(string $url)
     {
-        if ($this->request->isXmlHttpRequest() === true) {
-            return $this->createAjaxRedirectResponse($url);
-        }
-
         return new SymfonyRedirectResponse($url);
     }
 
@@ -59,9 +43,9 @@ class RedirectResponse
      *
      * @param string $path
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function temporary($path)
+    public function temporary(string $path)
     {
         return $this->createRedirectResponse($path, Response::HTTP_FOUND);
     }
@@ -70,31 +54,13 @@ class RedirectResponse
      * Redirect to an other URLs
      *
      * @param string $path
-     * @param int    $statusCode
+     * @param int $statusCode
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createRedirectResponse($path, $statusCode)
+    protected function createRedirectResponse(string $path, int $statusCode)
     {
-        $path = $this->router->route($path, true);
-
-        if ($this->request->isXmlHttpRequest() === true) {
-            return $this->createAjaxRedirectResponse($path);
-        }
-
-        return new SymfonyRedirectResponse($path, $statusCode);
-    }
-
-    /**
-     * Outputs a JSON response with a redirect url
-     *
-     * @param string $path
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    protected function createAjaxRedirectResponse($path)
-    {
-        return new JsonResponse(['redirect_url' => $path]);
+        return new SymfonyRedirectResponse($this->router->route($path, true), $statusCode);
     }
 
     /**
@@ -102,9 +68,9 @@ class RedirectResponse
      *
      * @param string $path
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function permanent($path)
+    public function permanent(string $path)
     {
         return $this->createRedirectResponse($path, Response::HTTP_MOVED_PERMANENTLY);
     }

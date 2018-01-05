@@ -1,23 +1,26 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
-/**
- * Class HasPermission
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class HasPermission extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var Core\ACL\ACLInterface
      */
-    protected $acl;
+    private $acl;
 
     /**
-     * @param \ACP3\Core\ACL $acl
+     * HasPermission constructor.
+     * @param Core\ACL\ACLInterface $acl
      */
-    public function __construct(Core\ACL $acl)
+    public function __construct(Core\ACL\ACLInterface $acl)
     {
         $this->acl = $acl;
     }

@@ -1,31 +1,33 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Comments;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository;
+use ACP3\Modules\ACP3\Comments\Model\Repository\CommentsRepository;
 
-/**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Comments
- */
 class Helpers
 {
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     protected $modules;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
+     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentsRepository
      */
     protected $commentRepository;
 
     /**
-     * @param \ACP3\Core\Modules                                  $modules
-     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
+     * @param \ACP3\Core\Modules\Modules                                  $modules
+     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentsRepository $commentRepository
      */
     public function __construct(
-        Core\Modules $modules,
-        CommentRepository $commentRepository
+        Core\Modules\Modules $modules,
+        CommentsRepository $commentRepository
     ) {
         $this->modules = $modules;
         $this->commentRepository = $commentRepository;

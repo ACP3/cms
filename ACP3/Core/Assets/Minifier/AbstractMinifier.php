@@ -1,16 +1,17 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Assets\Minifier;
 
 use ACP3\Core\Assets;
 use ACP3\Core\Assets\FileResolver;
-use ACP3\Core\Cache;
+use ACP3\Core\Cache\Cache;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Modules;
+use ACP3\Core\Modules\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use JSMin\JSMin;
@@ -18,9 +19,6 @@ use Psr\Log\LoggerInterface;
 
 abstract class AbstractMinifier implements MinifierInterface
 {
-    const ASSETS_PATH_CSS = 'Assets/css';
-    const ASSETS_PATH_JS = 'Assets/js';
-
     /**
      * @var \ACP3\Core\Assets
      */
@@ -30,7 +28,7 @@ abstract class AbstractMinifier implements MinifierInterface
      */
     protected $appPath;
     /**
-     * @var \ACP3\Core\Cache
+     * @var \ACP3\Core\Cache\Cache
      */
     protected $systemCache;
     /**
@@ -38,7 +36,7 @@ abstract class AbstractMinifier implements MinifierInterface
      */
     protected $config;
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Core\Modules\Modules
      */
     protected $modules;
     /**
@@ -67,9 +65,9 @@ abstract class AbstractMinifier implements MinifierInterface
      * @param LoggerInterface $logger
      * @param \ACP3\Core\Assets $assets
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Cache $systemCache
+     * @param \ACP3\Core\Cache\Cache $systemCache
      * @param SettingsInterface $config
-     * @param \ACP3\Core\Modules $modules
+     * @param \ACP3\Core\Modules\Modules $modules
      * @param \ACP3\Core\Assets\FileResolver $fileResolver
      * @param string $environment
      */
@@ -93,6 +91,11 @@ abstract class AbstractMinifier implements MinifierInterface
         $this->logger = $logger;
     }
 
+    /**
+     * Returns the name of the asset group
+     *
+     * @return string
+     */
     abstract protected function getAssetGroup(): string;
 
     /**
@@ -119,35 +122,34 @@ abstract class AbstractMinifier implements MinifierInterface
         $filename .= '_' . $this->assets->getEnabledLibrariesAsString();
         $filename .= '_' . $group;
 
-        return md5($filename);
+        return \md5($filename);
     }
 
     /**
      * @param string $layout
-     *
      * @return array
      */
-    abstract protected function processLibraries($layout);
+    abstract protected function processLibraries(string $layout);
 
     /**
      * @inheritdoc
      */
-    public function getURI($layout = 'layout')
+    public function getURI(string $layout = 'layout')
     {
         $debug = $this->environment === 'dev';
         $filenameHash = $this->generateFilenameHash($this->getAssetGroup(), $layout);
         $cacheId = 'assets-last-generated-' . $filenameHash;
 
         if (false === ($lastGenerated = $this->systemCache->fetch($cacheId))) {
-            $lastGenerated = time(); // Assets are not cached -> set the current time as the new timestamp
+            $lastGenerated = \time(); // Assets are not cached -> set the current time as the new timestamp
         }
 
         $path = $this->buildAssetPath($debug, $this->getAssetGroup(), $filenameHash, $lastGenerated);
 
         // If the requested minified StyleSheet and/or the JavaScript file doesn't exist, generate it
-        if (is_file($this->appPath->getUploadsDir() . $path) === false || $debug === true) {
+        if (\is_file($this->appPath->getUploadsDir() . $path) === false || $debug === true) {
             // Get the enabled libraries and filter out empty entries
-            $files = array_filter(
+            $files = \array_filter(
                 $this->processLibraries($layout),
                 function ($var) {
                     return !empty($var);
@@ -173,18 +175,18 @@ abstract class AbstractMinifier implements MinifierInterface
             'options' => [
                 \Minify::TYPE_CSS => [\Minify_CSSmin::class, 'minify'],
                 \Minify::TYPE_JS => [JSMin::class, 'minify'],
-            ]
+            ],
         ];
 
         $minify = new \Minify(new \Minify_Cache_Null(), $this->logger);
         $content = $minify->combine($files, $options);
 
-        if (!is_dir($this->appPath->getUploadsDir() . 'assets')) {
-            @mkdir($this->appPath->getUploadsDir() . 'assets', 0755);
+        if (!\is_dir($this->appPath->getUploadsDir() . 'assets')) {
+            @\mkdir($this->appPath->getUploadsDir() . 'assets', 0755);
         }
 
         // Write the contents of the file to the uploads folder
-        file_put_contents($path, $content, LOCK_EX);
+        \file_put_contents($path, $content, LOCK_EX);
     }
 
     /**

@@ -1,16 +1,16 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\System\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Application\BootstrapInterface;
-use ACP3\Core\Modules;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\System\Installer
- */
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     const MODULE_NAME = 'system';
 
@@ -24,7 +24,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 'extensions' => [
                     'designs' => PrivilegeEnum::ADMIN_SETTINGS,
                     'index' => PrivilegeEnum::ADMIN_SETTINGS,
-                    'modules' => PrivilegeEnum::ADMIN_SETTINGS
+                    'modules' => PrivilegeEnum::ADMIN_SETTINGS,
                 ],
                 'index' => [
                     'index' => PrivilegeEnum::ADMIN_VIEW,
@@ -33,8 +33,8 @@ class Schema implements Modules\Installer\SchemaInterface
                 'maintenance' => [
                     'cache' => PrivilegeEnum::ADMIN_SETTINGS,
                     'index' => PrivilegeEnum::ADMIN_VIEW,
-                    'update_check' => PrivilegeEnum::ADMIN_VIEW
-                ]
+                    'update_check' => PrivilegeEnum::ADMIN_VIEW,
+                ],
             ],
         ];
     }
@@ -61,20 +61,20 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}modules` (
+            'CREATE TABLE `{pre}modules` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `name` VARCHAR(100) NOT NULL,
                 `version` TINYINT(3) UNSIGNED NOT NULL,
                 `active` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {ENGINE} {CHARSET};",
-            "CREATE TABLE `{pre}sessions` (
+            ) {ENGINE} {CHARSET};',
+            'CREATE TABLE `{pre}sessions` (
                 `session_id` VARCHAR(32) NOT NULL,
                 `session_starttime` INT(10) UNSIGNED NOT NULL,
                 `session_data` TEXT NOT NULL,
                 PRIMARY KEY (`session_id`)
-            ) {ENGINE} {CHARSET};",
-            "CREATE TABLE `{pre}settings` (
+            ) {ENGINE} {CHARSET};',
+            'CREATE TABLE `{pre}settings` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `module_id` INT(10) UNSIGNED NOT NULL,
                 `name` VARCHAR(40) NOT NULL,
@@ -83,7 +83,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 UNIQUE KEY (`module_id`,`name`),
                 INDEX (`module_id`),
                 FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -127,7 +127,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'page_cache_is_enabled' => false,
             'page_cache_is_valid' => true,
             'page_cache_purge_mode' => 1,
-            'security_secret' => uniqid(mt_rand(), true),
+            'security_secret' => \uniqid(\mt_rand(), true),
             'site_title' => '',
             'site_subtitle' => '',
             'site_subtitle_homepage_mode' => 0,
@@ -135,7 +135,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'update_last_check' => 0,
             'update_new_version' => BootstrapInterface::VERSION,
             'update_new_version_url' => '',
-            'wysiwyg' => 'core.wysiwyg.textarea'
+            'wysiwyg' => 'core.wysiwyg.textarea',
         ];
     }
 }
