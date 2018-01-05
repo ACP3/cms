@@ -9,6 +9,7 @@ cache:
   paths:
   - ${COMPOSER_HOME}
   - vendor
+  - .php_cs.cache
 
 before_script:
   - bash ./build/gitlab/before_script.sh > /dev/null
