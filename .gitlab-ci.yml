@@ -11,13 +11,33 @@ cache:
   - vendor
   - .php_cs.cache
 
-before_script:
-  - bash ./build/gitlab/before_script.sh > /dev/null
-
 stages:
+  - static-analysis
   - test
   - deploy
   - post-deploy
+
+static-analysis:phpcs:
+  stage: static-analysis
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+    - bash ./build/gitlab/before_script_php.sh > /dev/null
+  script:
+    - php composer.phar install -n -o
+    - php composer.phar run-script lint
+
+static-analysis:eslint:
+  image: node:slim
+  stage: static-analysis
+  cache:
+    key: node-$CI_COMMIT_REF_NAME
+    paths:
+    - node_modules
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+  script:
+    - npm install
+    - npm run-script eslint
 
 test:php71-unit: &php-unit-base
   stage: test
@@ -33,28 +53,6 @@ test:php72-unit:
   <<: *php-unit-base
   image: php:7.2
   coverage: ~
-
-test:phpcs:
-  stage: test
-  before_script:
-    - bash ./build/gitlab/before_script.sh > /dev/null
-    - bash ./build/gitlab/before_script_php.sh > /dev/null
-  script:
-    - php composer.phar install -n -o
-    - php composer.phar run-script lint
-
-test:eslint:
-  image: node:slim
-  stage: test
-  cache:
-    key: node-$CI_COMMIT_REF_NAME
-    paths:
-    - node_modules
-  before_script:
-    - bash ./build/gitlab/before_script.sh > /dev/null
-  script:
-    - npm install
-    - npm run-script eslint
 
 deploy:subtree-split:
   image: jderusse/gitsplit
