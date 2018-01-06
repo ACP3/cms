@@ -148,7 +148,7 @@ class Helpers
     private function addCreateCategoryFormFields(bool $categoryCreate, string $formFieldName): array
     {
         $formFields = [];
-        if ($categoryCreate === true && $this->acl->hasPermission('admin/categories/index/create') === true) {
+        if ($categoryCreate === true && $this->acl->hasPermission('admin/categories/index/manage') === true) {
             $formFields['name'] = $formFieldName . '_create';
             $formFields['value'] = $this->request->getPost()->get('create', ['name' => ''])['name'];
         }
