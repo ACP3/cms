@@ -56,7 +56,7 @@ class UsersDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#users-data-grid',
             'resource_path_delete' => 'admin/users/index/delete',
-            'resource_path_edit' => 'admin/users/index/edit',
+            'resource_path_edit' => 'admin/users/index/manage',
         ]);
 
         $grid = $dataGrid->render();

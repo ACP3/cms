@@ -1,22 +1,12 @@
 services:
-  users.controller.admin.index.create:
-    class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@users.view.block.admin.user_admin_form_block'
-      - '@core.helpers.secure'
-      - '@users.model.users_model'
-      - '@users.validation.admin_form_validation'
-      - '@permissions.helpers'
-
   users.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
       - '@users.model.users_model'
 
-  users.controller.admin.index.edit:
-    class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Edit
+  users.controller.admin.index.manage:
+    class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Manage
     arguments:
       - '@core.context.frontend'
       - '@users.view.block.admin.user_admin_form_block'

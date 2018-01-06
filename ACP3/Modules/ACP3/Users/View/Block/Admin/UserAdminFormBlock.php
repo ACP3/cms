@@ -48,7 +48,15 @@ class UserAdminFormBlock extends AbstractRepositoryAwareFormBlock
      */
     public function render()
     {
+        $this->setTemplate(
+            $this->getId() ? 'Users/Admin/index.manage_with_id.tpl' : 'Users/Admin/index.manage.tpl'
+        );
+
         $user = $this->getData();
+
+        $this->breadcrumb->setLastStepReplacement(
+            $this->translator->t('users', !$this->getId() ? 'admin_index_create' : 'admin_index_edit')
+        );
 
         $this->title->setPageTitlePrefix($user['nickname']);
 

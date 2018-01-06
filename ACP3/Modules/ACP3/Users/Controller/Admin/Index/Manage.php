@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Manage extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Helpers\Secure
@@ -69,11 +69,11 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      *
      * @return array
      */
-    public function execute(int $id)
+    public function execute(?int $id)
     {
         return $this->block
             ->setDataById($id)
@@ -82,34 +82,49 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost(int $id)
+    public function executePost(?int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
 
-            $this->adminFormValidation
-                ->setUserId($id)
-                ->validate($formData);
+            if ($id !== null) {
+                $this->adminFormValidation->setUserId($id);
+            }
 
-            $this->permissionsHelpers->updateUserRoles($formData['roles'], $id);
+            $this->adminFormValidation->validate($formData);
 
-            if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
-                $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
+            if ($id === null) {
+                $salt = $this->generatePasswordSalt();
+                $formData = \array_merge($formData, [
+                    'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd'], 'sha512'),
+                    'pwd_salt' => $salt,
+                    'registration_date' => 'now',
+                ]);
+            } elseif (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
+                $salt = $this->generatePasswordSalt();
                 $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd'], 'sha512');
                 $formData['pwd'] = $newPassword;
                 $formData['pwd_salt'] = $salt;
             }
 
-            $bool = $this->usersModel->save($formData, $id);
+            $result = $this->usersModel->save($formData, $id);
 
-            $this->updateCurrentlyLoggedInUserCookie($id);
+            if ($result !== false) {
+                $this->permissionsHelpers->updateUserRoles($formData['roles'], $result);
+                $this->updateCurrentlyLoggedInUserCookie($result);
+            }
 
-            return $bool;
+            return $result;
         });
+    }
+
+    private function generatePasswordSalt(): string
+    {
+        return $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
     }
 
     /**
