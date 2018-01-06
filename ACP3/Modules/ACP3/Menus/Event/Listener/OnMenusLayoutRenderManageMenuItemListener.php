@@ -74,7 +74,7 @@ class OnMenusLayoutRenderManageMenuItemListener
     {
         $parameters = $event->getParameters();
 
-        if ($this->acl->hasPermission('admin/menus/items/create') === true) {
+        if ($this->acl->hasPermission('admin/menus/items/manage') === true) {
             $menuItem = $this->fetchMenuItem(!empty($parameters['path']) ? $parameters['path'] : '');
             $formFields = $this->addFormFields($menuItem);
 
