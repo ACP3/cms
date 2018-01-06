@@ -57,6 +57,10 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
                 'ALTER TABLE `{pre}polls` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `end`;',
                 'UPDATE `{pre}polls` SET `updated_at` = `start`;',
             ],
+            39 => [
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'create';",
+                "UPDATE `{pre}acl_resources` SET `page` = 'manage' WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'edit';",
+            ],
         ];
     }
 

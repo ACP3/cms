@@ -3,7 +3,7 @@
 {$DELETE_ROUTE={uri args="acp/polls/index/delete"}}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/polls/index/create" class="fa fa-plus text-success"}
+    {check_access mode="link" path="acp/polls/index/manage" class="fa fa-plus text-success" lang="polls|admin_index_create"}
     {if $show_mass_delete_button}
         {check_access mode="button" path="acp/polls/index/delete" class="fa fa-trash text-danger" lang="system|delete_marked"}
     {/if}

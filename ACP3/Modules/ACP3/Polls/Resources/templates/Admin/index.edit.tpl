@@ -1,1 +1,0 @@
-{extends file="asset:Polls/Admin/index.create.tpl"}

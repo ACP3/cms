@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Manage extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation
@@ -45,11 +45,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
+     * @param int|null $id
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
-    public function execute(int $id)
+    public function execute(?int $id)
     {
         return $this->block
             ->setDataById($id)
@@ -58,11 +57,11 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost(int $id)
+    public function executePost(?int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -70,15 +69,18 @@ class Edit extends Core\Controller\AbstractFrontendAction
             $this->pollsValidator->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $bool = $this->pollsModel->save($formData, $id);
+            $result = $this->pollsModel->save($formData, $id);
 
             if (!empty($formData['reset'])) {
                 $this->pollsModel->resetVotesByPollId($id);
             }
 
-            $bool2 = $this->pollsModel->saveAnswers($formData['answers'], $id);
+            $resultAnswers = false;
+            if ($result !== false) {
+                $resultAnswers = $this->pollsModel->saveAnswers($formData['answers'], $result);
+            }
 
-            return $bool !== false && $bool2 !== false;
+            return $result !== false && $resultAnswers !== false;
         });
     }
 }

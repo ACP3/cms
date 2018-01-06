@@ -42,6 +42,10 @@ class PollAdminFormBlock extends AbstractRepositoryAwareFormBlock
     {
         $poll = $this->getData();
 
+        $this->breadcrumb->setLastStepReplacement(
+            $this->translator->t('polls', !$this->getId() ? 'admin_index_create' : 'admin_index_edit')
+        );
+
         $this->title->setPageTitlePrefix($poll['title']);
 
         return [
@@ -61,7 +65,7 @@ class PollAdminFormBlock extends AbstractRepositoryAwareFormBlock
         $formData = $this->getRequestData();
 
         if (isset($formData['add_answer'])) {
-            return $this->addNewAnswer($formData['answers']);
+            return $this->addNewAnswer($formData['answers'] ?? []);
         } elseif (!empty($pollId)) {
             return $this->answerRepository->getAnswersWithVotesByPollId($pollId);
         }
@@ -92,7 +96,7 @@ class PollAdminFormBlock extends AbstractRepositoryAwareFormBlock
         }
 
         // Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
-        if (!empty($currentAnswers[$i - 1]['text'])) {
+        if (empty($currentAnswers) || !empty($currentAnswers[$i - 1]['text'])) {
             $answers[$i]['text'] = '';
         }
 

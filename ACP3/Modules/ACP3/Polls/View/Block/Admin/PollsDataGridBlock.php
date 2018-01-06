@@ -51,7 +51,7 @@ class PollsDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#polls-data-grid',
             'resource_path_delete' => 'admin/polls/index/delete',
-            'resource_path_edit' => 'admin/polls/index/edit',
+            'resource_path_edit' => 'admin/polls/index/manage',
         ]);
 
         $grid = $dataGrid->render();

@@ -122,7 +122,7 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
             53 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'create';",
                 "UPDATE `{pre}acl_resources` SET `page` = 'manage' WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'edit';",
-            ]
+            ],
         ];
     }
 

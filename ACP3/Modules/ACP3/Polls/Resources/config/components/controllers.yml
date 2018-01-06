@@ -1,20 +1,12 @@
 services:
-  polls.controller.admin.index.create:
-    class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@polls.view.block.admin.poll_admin_form_block'
-      - '@polls.model.polls_model'
-      - '@polls.validation.admin_form_validation'
-
   polls.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
       - '@polls.model.polls_model'
 
-  polls.controller.admin.index.edit:
-    class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Edit
+  polls.controller.admin.index.manage:
+    class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Manage
     arguments:
       - '@core.context.frontend'
       - '@polls.view.block.admin.poll_admin_form_block'
