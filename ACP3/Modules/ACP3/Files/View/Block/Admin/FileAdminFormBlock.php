@@ -59,6 +59,14 @@ class FileAdminFormBlock extends AbstractRepositoryAwareFormBlock
     {
         $data = $this->getData();
 
+        $this->setTemplate(
+            $this->getId() ? 'Files/Admin/index.manage_with_id.tpl' : 'Files/Admin/index.manage.tpl'
+        );
+
+        $this->breadcrumb->setLastStepReplacement(
+            $this->translator->t('files', !$this->getId() ? 'admin_index_create' : 'admin_index_edit')
+        );
+
         $this->title->setPageTitlePrefix($data['title']);
 
         $external = [

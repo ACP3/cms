@@ -27,7 +27,7 @@ class Upload
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param string                                 $directory
      */
-    public function __construct(ApplicationPath $appPath, $directory)
+    public function __construct(ApplicationPath $appPath, string $directory)
     {
         $this->appPath = $appPath;
         $this->directory = $directory;
@@ -37,14 +37,12 @@ class Upload
      * Hochgeladene Dateien verschieben und umbenennen
      *
      * @param string $tmpFilename
-     *  Temporäre Datei
      * @param string $filename
-     *  Dateiname
      * @param bool $retainFilename
      * @return array
      * @throws ValidationFailedException
      */
-    public function moveFile($tmpFilename, $filename, $retainFilename = false)
+    public function moveFile(string $tmpFilename, string $filename, bool $retainFilename = false)
     {
         $path = $this->appPath->getUploadsDir() . $this->directory . '/';
 
@@ -95,7 +93,7 @@ class Upload
      * @return string
      *    Die Dateigröße als Fließkommazahl mit der dazugehörigen Einheit
      */
-    public function calcFilesize($value)
+    public function calcFilesize(int $value)
     {
         $units = [
             0 => 'Byte',
@@ -123,7 +121,7 @@ class Upload
      *
      * @return boolean
      */
-    public function removeUploadedFile($file)
+    public function removeUploadedFile(string $file)
     {
         $path = $this->appPath->getUploadsDir() . $this->directory . '/' . $file;
         if (!empty($file) && !\preg_match('=/=', $file) && \is_file($path) === true) {

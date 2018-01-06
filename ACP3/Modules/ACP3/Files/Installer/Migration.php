@@ -92,6 +92,10 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
                 'ALTER TABLE `{pre}files` DROP FOREIGN KEY `{pre}files_ibfk_1`;',
                 'ALTER TABLE `{pre}files` ADD FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE SET NULL',
             ],
+            48 => [
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'create';",
+                "UPDATE `{pre}acl_resources` SET `page` = 'manage' WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'edit';",
+            ],
         ];
     }
 

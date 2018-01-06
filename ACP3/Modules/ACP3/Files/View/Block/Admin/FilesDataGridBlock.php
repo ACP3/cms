@@ -121,7 +121,7 @@ class FilesDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#files-data-grid',
             'resource_path_delete' => 'admin/files/index/delete',
-            'resource_path_edit' => 'admin/files/index/edit',
+            'resource_path_edit' => 'admin/files/index/manage',
         ]);
 
         $grid = $dataGrid->render();

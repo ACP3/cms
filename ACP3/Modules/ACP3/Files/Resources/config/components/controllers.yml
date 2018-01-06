@@ -1,13 +1,4 @@
 services:
-  files.controller.admin.index.create:
-    class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@files.view.block.admin.file_admin_form_block'
-      - '@files.model.files_model'
-      - '@files.validation.admin_form_validation'
-      - '@categories.helpers'
-
   files.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Delete
     arguments:
@@ -20,8 +11,8 @@ services:
       - '@core.context.frontend'
       - '@files.model.files_model'
 
-  files.controller.admin.index.edit:
-    class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Edit
+  files.controller.admin.index.manage:
+    class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Manage
     arguments:
       - '@core.context.frontend'
       - '@files.view.block.admin.file_admin_form_block'

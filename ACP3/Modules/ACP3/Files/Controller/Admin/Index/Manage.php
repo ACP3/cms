@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\Files\Helpers;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class Edit extends AbstractFormAction
+class Manage extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation
@@ -31,6 +31,10 @@ class Edit extends AbstractFormAction
      * @var Core\View\Block\RepositoryAwareFormBlockInterface
      */
     private $block;
+    /**
+     * @var Categories\Helpers
+     */
+    private $categoriesHelpers;
 
     /**
      * Edit constructor.
@@ -47,19 +51,19 @@ class Edit extends AbstractFormAction
         Files\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
     ) {
-        parent::__construct($context, $categoriesHelpers);
+        parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;
         $this->filesModel = $filesModel;
         $this->block = $block;
+        $this->categoriesHelpers = $categoriesHelpers;
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
+     * @param int|null $id
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
-    public function execute(int $id)
+    public function execute(?int $id)
     {
         return $this->block
             ->setDataById($id)
@@ -68,10 +72,10 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost(int $id)
+    public function executePost(?int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -81,11 +85,13 @@ class Edit extends AbstractFormAction
             } elseif ($this->request->getFiles()->has('file_internal')) {
                 $file = $this->request->getFiles()->get('file_internal');
             }
-            $dl = $this->filesModel->getOneById($id);
+
+            if ($id !== null) {
+                $this->adminFormValidation->setUriAlias(\sprintf(Helpers::URL_KEY_PATTERN, $id));
+            }
 
             $this->adminFormValidation
                 ->setFile($file)
-                ->setUriAlias(\sprintf(Helpers::URL_KEY_PATTERN, $id))
                 ->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryId($formData);
@@ -93,9 +99,18 @@ class Edit extends AbstractFormAction
             $formData['user_id'] = $this->user->getUserId();
 
             if (!empty($file)) {
-                $newFileSql = $this->updateAssociatedFile($file, $formData, $dl['file']);
-
-                $formData = \array_merge($formData, $newFileSql);
+                if ($id !== null) {
+                    $dl = $this->filesModel->getOneById($id);
+                    $formData = \array_merge(
+                        $formData,
+                        $this->updateAssociatedFile($file, $formData, $dl['file'])
+                    );
+                } else {
+                    $formData = \array_merge(
+                        $formData,
+                        $this->updateAssociatedFile($file, $formData, null)
+                    );
+                }
             }
 
             return $this->filesModel->save($formData, $id);
@@ -103,31 +118,54 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param string|UploadedFile $file
      * @param array $formData
-     * @param string $currentFileName
      *
+     * @return int
+     */
+    private function fetchCategoryId(array $formData)
+    {
+        return !empty($formData['cat_create'])
+            ? $this->categoriesHelpers->categoryCreate($formData['cat_create'], Files\Installer\Schema::MODULE_NAME)
+            : $formData['cat'];
+    }
+
+    /**
+     * @param array $formData
+     * @return int
+     */
+    private function useComments(array $formData)
+    {
+        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
+
+        return $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0;
+    }
+
+    /**
+     * @param UploadedFile|string|null $file
+     * @param array $formData
+     * @param null|string $currentFileName
      * @return array
      * @throws Core\Validation\Exceptions\ValidationFailedException
      */
-    protected function updateAssociatedFile($file, array $formData, $currentFileName)
+    private function updateAssociatedFile($file, array $formData, ?string $currentFileName)
     {
         $upload = new Core\Helpers\Upload($this->appPath, Files\Installer\Schema::MODULE_NAME);
 
         if ($file instanceof UploadedFile) {
             $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
-            $newFile = $result['name'];
+            $fileName = $result['name'];
             $fileSize = $result['size'];
         } else {
-            $formData['filesize'] = (float)$formData['filesize'];
-            $newFile = $file;
-            $fileSize = $formData['filesize'] . ' ' . $formData['unit'];
+            $fileName = $file;
+            $fileSize = ((float)$formData['filesize']) . ' ' . $formData['unit'];
         }
 
-        $upload->removeUploadedFile($currentFileName);
+        if (!empty($currentFileName)) {
+            $upload->removeUploadedFile($currentFileName);
+        }
 
         return [
-            'file' => $newFile,
+            'file' => $fileName,
             'filesize' => $fileSize,
         ];
     }

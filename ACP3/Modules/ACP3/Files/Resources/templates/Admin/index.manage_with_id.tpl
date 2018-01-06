@@ -1,4 +1,4 @@
-{extends file="asset:Files/Admin/index.create.tpl"}
+{extends file="asset:Files/Admin/index.manage.tpl"}
 
 {block FILES_FILE_UPLOAD}
     {include file="asset:System/Partials/form_group.static.tpl" value=$current_file label={lang t="files|current_file"}}

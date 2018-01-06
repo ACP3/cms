@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Files\Validation;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files\Validation\ValidationRules\IsExternalFileValidationRule;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
@@ -18,7 +19,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
      */
     protected $uriAlias = '';
     /**
-     * @var null|array
+     * @var UploadedFile|string|null
      */
     protected $file;
 
@@ -27,7 +28,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
      *
      * @return $this
      */
-    public function setUriAlias($uriAlias)
+    public function setUriAlias(string $uriAlias)
     {
         $this->uriAlias = $uriAlias;
 
@@ -35,7 +36,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @param array|null $file
+     * @param UploadedFile|string|null $file
      *
      * @return $this
      */
