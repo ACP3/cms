@@ -14,18 +14,18 @@ use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RoleNotExistsValida
 class RoleFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @var int
+     * @var int|null
      */
-    protected $roleId = 0;
+    protected $roleId;
 
     /**
-     * @param int $roleId
+     * @param int|null $roleId
      *
      * @return $this
      */
-    public function setRoleId($roleId)
+    public function setRoleId(?int $roleId)
     {
-        $this->roleId = (int)$roleId;
+        $this->roleId = $roleId;
 
         return $this;
     }

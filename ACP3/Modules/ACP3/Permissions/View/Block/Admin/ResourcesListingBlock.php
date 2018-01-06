@@ -67,7 +67,7 @@ class ResourcesListingBlock extends AbstractBlock
         return [
             'resources' => $output,
             'can_delete_resource' => $this->acl->hasPermission('admin/permissions/resources/delete'),
-            'can_edit_resource' => $this->acl->hasPermission('admin/permissions/resources/edit'),
+            'can_edit_resource' => $this->acl->hasPermission('admin/permissions/resources/manage'),
         ];
     }
 }

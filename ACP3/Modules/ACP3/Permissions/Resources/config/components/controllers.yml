@@ -1,13 +1,4 @@
 services:
-  permissions.controller.admin.index.create:
-    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@permissions.view.block.admin.role_admin_form_block'
-      - '@permissions.model.acl_roles_model'
-      - '@permissions.model.acl_rules_model'
-      - '@permissions.validation.role_form_validation'
-
   permissions.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Delete
     arguments:
@@ -15,8 +6,8 @@ services:
       - '@permissions.model.acl_roles_model'
       - '@permissions.cache'
 
-  permissions.controller.admin.index.edit:
-    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Edit
+  permissions.controller.admin.index.manage:
+    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Manage
     arguments:
       - '@core.context.frontend'
       - '@permissions.view.block.admin.role_admin_form_block'
@@ -38,22 +29,14 @@ services:
       - '@permissions.model.repository.acl_roles_repository'
       - '@permissions.cache'
 
-  permissions.controller.admin.resources.create:
-    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@permissions.view.block.admin.resource_admin_form_block'
-      - '@permissions.model.acl_resources_model'
-      - '@permissions.validation.resource_form_validation'
-
   permissions.controller.admin.resources.delete:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Delete
     arguments:
       - '@core.context.frontend'
       - '@permissions.model.acl_resources_model'
 
-  permissions.controller.admin.resources.edit:
-    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Edit
+  permissions.controller.admin.resources.manage:
+    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Manage
     arguments:
       - '@core.context.frontend'
       - '@permissions.view.block.admin.resource_admin_form_block'

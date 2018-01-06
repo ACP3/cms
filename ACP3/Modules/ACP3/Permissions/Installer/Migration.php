@@ -65,6 +65,12 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
                 'ALTER TABLE `{pre}acl_resources` ADD INDEX (`module_id`)',
                 'ALTER TABLE `{pre}acl_resources` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE',
             ],
+            37 => [
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'create';",
+                "UPDATE `{pre}acl_resources` SET `page` = 'manage' WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'edit';",
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'resources' AND `page` = 'create';",
+                "UPDATE `{pre}acl_resources` SET `page` = 'manage' WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'resources' AND `page` = 'edit';",
+            ],
         ];
     }
 }

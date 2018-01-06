@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Manage extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation
@@ -54,11 +54,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
+     * @param int|null $id
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
-    public function execute(int $id)
+    public function execute(?int $id)
     {
         return $this->block
             ->setDataById($id)
@@ -67,11 +66,11 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost(int $id)
+    public function executePost(?int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -80,10 +79,12 @@ class Edit extends Core\Controller\AbstractFrontendAction
                 ->setRoleId($id)
                 ->validate($formData);
 
-            $formData['parent_id'] = $id === 1 ? 0 : $formData['parent_id'];
+            if ($id !== null) {
+                $formData['parent_id'] = $id === 1 ? 0 : $formData['parent_id'];
+            }
 
             $result = $this->rolesModel->save($formData, $id);
-            $this->rulesModel->updateRules($formData['privileges'], $id);
+            $this->rulesModel->updateRules($formData['privileges'], $result);
 
             return $result;
         });

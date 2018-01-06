@@ -79,7 +79,7 @@ class RolesDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#roles-data-grid',
             'resource_path_delete' => 'admin/permissions/index/delete',
-            'resource_path_edit' => 'admin/permissions/index/edit',
+            'resource_path_edit' => 'admin/permissions/index/manage',
         ]);
 
         $grid = $dataGrid->render();

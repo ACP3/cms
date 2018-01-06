@@ -51,6 +51,10 @@ class ResourceAdminFormBlock extends AbstractRepositoryAwareFormBlock
     {
         $resource = $this->getData();
 
+        $this->breadcrumb->setLastStepReplacement(
+            $this->translator->t('permissions', !$this->getId() ? 'admin_resources_create' : 'admin_resources_edit')
+        );
+
         if (!empty($resource['page'])) {
             $resource['resource'] = $resource['page'];
             unset($resource['page']);

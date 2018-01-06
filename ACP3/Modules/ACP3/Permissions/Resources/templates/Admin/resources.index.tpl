@@ -3,7 +3,7 @@
 {$DELETE_ROUTE={uri args="acp/permissions/resources/delete"}}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/permissions/resources/create"  class="fa fa-plus text-success"}
+    {check_access mode="link" path="acp/permissions/resources/manage" class="fa fa-plus text-success" lang="permissions|admin_resources_create"}
     {if isset($resources)}
         {check_access mode="button" path="acp/permissions/resources/delete" class="fa fa-trash text-danger" lang="system|delete_marked"}
     {/if}
@@ -43,7 +43,7 @@
                                 <td class="datagrid-column__actions">
                                     <div class="btn-group pull-right">
                                         {if $can_edit_resource === true}
-                                            <a href="{uri args="acp/permissions/resources/edit/id_`$row.resource_id`"}"
+                                            <a href="{uri args="acp/permissions/resources/manage/id_`$row.resource_id`"}"
                                                class="btn btn-default btn-xs"
                                                title="{lang t="permissions|admin_resources_edit"}">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i>

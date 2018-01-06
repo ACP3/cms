@@ -66,6 +66,10 @@ class RoleAdminFormBlock extends AbstractRepositoryAwareFormBlock
     {
         $role = $this->getData();
 
+        $this->breadcrumb->setLastStepReplacement(
+            $this->translator->t('permissions', !$this->getId() ? 'admin_index_create' : 'admin_index_edit')
+        );
+
         $this->title->setPageTitlePrefix($role['name']);
 
         return [
