@@ -67,6 +67,9 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
                 'ALTER TABLE `{pre}news` DROP FOREIGN KEY `{pre}news_ibfk_1`;',
                 'ALTER TABLE `{pre}news` ADD FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE SET NULL',
             ],
+            44 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'manage', '', 8);",
+            ],
         ];
     }
 

@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
 
-class Edit extends AbstractFormAction
+class Manage extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\News\Validation\AdminFormValidation
@@ -25,6 +25,10 @@ class Edit extends AbstractFormAction
      * @var Core\View\Block\RepositoryAwareFormBlockInterface
      */
     private $block;
+    /**
+     * @var Categories\Helpers
+     */
+    private $categoriesHelpers;
 
     /**
      * Edit constructor.
@@ -41,20 +45,21 @@ class Edit extends AbstractFormAction
         News\Model\NewsModel $newsModel,
         News\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
-    ) {
-        parent::__construct($context, $categoriesHelpers);
+    )
+    {
+        parent::__construct($context);
 
         $this->newsModel = $newsModel;
         $this->adminFormValidation = $adminFormValidation;
         $this->block = $block;
+        $this->categoriesHelpers = $categoriesHelpers;
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
+     * @param int|null $id
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
-    public function execute(int $id)
+    public function execute(?int $id)
     {
         return $this->block
             ->setDataById($id)
@@ -63,22 +68,36 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost(int $id)
+    public function executePost(?int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
 
-            $this->adminFormValidation
-                ->setUriAlias(\sprintf(News\Helpers::URL_KEY_PATTERN, $id))
-                ->validate($formData);
+            if ($id !== null) {
+                $this->adminFormValidation->setUriAlias(\sprintf(News\Helpers::URL_KEY_PATTERN, $id));
+            }
+
+            $this->adminFormValidation->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryIdForSave($formData);
             $formData['user_id'] = $this->user->getUserId();
 
             return $this->newsModel->save($formData, $id);
         });
+    }
+
+    /**
+     * @param array $formData
+     *
+     * @return int
+     */
+    protected function fetchCategoryIdForSave(array $formData): int
+    {
+        return !empty($formData['cat_create'])
+            ? $this->categoriesHelpers->categoryCreate($formData['cat_create'], News\Installer\Schema::MODULE_NAME)
+            : $formData['cat'];
     }
 }

@@ -69,7 +69,7 @@ class NewsDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#news-data-grid',
             'resource_path_delete' => 'admin/news/index/delete',
-            'resource_path_edit' => 'admin/news/index/edit',
+            'resource_path_edit' => 'admin/news/index/manage',
         ]);
 
         $grid = $dataGrid->render();

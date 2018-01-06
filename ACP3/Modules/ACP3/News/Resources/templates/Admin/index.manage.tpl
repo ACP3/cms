@@ -38,6 +38,6 @@
     </div>
     {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/news"}}
     {javascripts}
-        {include_js module="articles" file="admin/index.create"}
+        {include_js module="articles" file="admin/index.manage"}
     {/javascripts}
 {/block}
