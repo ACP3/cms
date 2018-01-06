@@ -12,7 +12,7 @@ use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 
-class SeoAdminFormBlock extends AbstractRepositoryAwareFormBlock
+class SeoManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var MetaFormFields

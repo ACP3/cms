@@ -9,7 +9,7 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Manage
     arguments:
       - '@core.context.frontend'
-      - '@polls.view.block.admin.poll_admin_form_block'
+      - '@polls.view.block.admin.poll_manage_form_block'
       - '@polls.model.polls_model'
       - '@polls.validation.admin_form_validation'
 

@@ -9,7 +9,7 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@guestbook.view.block.admin.guestbook_admin_form_block'
+      - '@guestbook.view.block.admin.guestbook_manage_form_block'
       - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.admin_form_validation'
 

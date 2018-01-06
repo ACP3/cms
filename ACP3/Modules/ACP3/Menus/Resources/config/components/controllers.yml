@@ -9,7 +9,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Manage
     arguments:
       - '@core.context.frontend'
-      - '@menus.view.block.admin.menu_admin_form_block'
+      - '@menus.view.block.admin.menu_manage_form_block'
       - '@menus.model.menus_model'
       - '@menus.validation.menu_form_validation'
 
@@ -29,7 +29,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Manage
     arguments:
       - '@core.context.frontend'
-      - '@menus.view.block.admin.menu_item_admin_form_block'
+      - '@menus.view.block.admin.menu_item_manage_form_block'
       - '@menus.model.menu_items_model'
       - '@menus.validation.menu_item_form_validation'
 

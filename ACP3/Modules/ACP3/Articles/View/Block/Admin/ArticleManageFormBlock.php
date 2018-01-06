@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Articles\View\Block\Admin;
 use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 use ACP3\Modules\ACP3\Articles\Helpers;
 
-class ArticleAdminFormBlock extends AbstractRepositoryAwareFormBlock
+class ArticleManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @inheritdoc

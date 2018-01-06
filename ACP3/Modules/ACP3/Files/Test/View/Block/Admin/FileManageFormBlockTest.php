@@ -13,9 +13,9 @@ use ACP3\Core\Test\View\Block\AbstractFormBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
 use ACP3\Modules\ACP3\Categories\Helpers;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
-use ACP3\Modules\ACP3\Files\View\Block\Admin\FileAdminFormBlock;
+use ACP3\Modules\ACP3\Files\View\Block\Admin\FileManageFormBlock;
 
-class FileAdminFormBlockTest extends AbstractFormBlockTest
+class FileManageFormBlockTest extends AbstractFormBlockTest
 {
     /**
      * @inheritdoc
@@ -45,7 +45,7 @@ class FileAdminFormBlockTest extends AbstractFormBlockTest
             ->disableOriginalConstructor()
             ->getMock();
 
-        return new FileAdminFormBlock($this->context, $filesRepository, $settings, $modules, $categoriesHelpers);
+        return new FileManageFormBlock($this->context, $filesRepository, $settings, $modules, $categoriesHelpers);
     }
 
     /**

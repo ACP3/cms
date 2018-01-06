@@ -1,5 +1,5 @@
 services:
-  comments.view.block.admin.comment_admin_form_block:
+  comments.view.block.admin.comment_manage_form_block:
     class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentAdminFormBlock
     arguments:
       - '@core.view.context.form_block_context'

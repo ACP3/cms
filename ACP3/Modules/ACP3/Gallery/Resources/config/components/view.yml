@@ -6,8 +6,8 @@ services:
     calls:
       - ['setDataGridRepository', ['@gallery.model.repository.galleries_data_grid_repository']]
 
-  gallery.view.block.admin.gallery_admin_form_block:
-    class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryAdminFormBlock
+  gallery.view.block.admin.gallery_manage_form_block:
+    class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryManageFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@gallery.model.repository.galleries_repository'
@@ -29,8 +29,8 @@ services:
       - '@core.modules'
       - '@core.helpers.date'
 
-  gallery.view.block.admin.gallery_picture_admin_form_block:
-    class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryPictureAdminFormBlock
+  gallery.view.block.admin.gallery_picture_manage_form_block:
+    class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryPictureManageFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@gallery.model.repository.gallery_pictures_repository'

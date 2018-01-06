@@ -11,9 +11,9 @@ use ACP3\Core\Modules\Modules;
 use ACP3\Core\Test\View\Block\AbstractFormBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
-use ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoryAdminFormBlock;
+use ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoryManageFormBlock;
 
-class CategoryAdminFormBlockTest extends AbstractFormBlockTest
+class CategoryManageFormBlockTest extends AbstractFormBlockTest
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class CategoryAdminFormBlockTest extends AbstractFormBlockTest
         $categoriesRepository->expects($this->never())
             ->method('getAllByModuleId');
 
-        return new CategoryAdminFormBlock($this->context, $categoriesRepository, $modules);
+        return new CategoryManageFormBlock($this->context, $categoriesRepository, $modules);
     }
 
     /**

@@ -12,7 +12,7 @@ use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository;
 
-class CategoryAdminFormBlock extends AbstractRepositoryAwareFormBlock
+class CategoryManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var Modules

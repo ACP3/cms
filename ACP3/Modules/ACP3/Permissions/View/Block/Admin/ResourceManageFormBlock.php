@@ -14,7 +14,7 @@ use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclResourcesRepository;
 
-class ResourceAdminFormBlock extends AbstractRepositoryAwareFormBlock
+class ResourceManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var Modules

@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
 
-class GalleryPictureAdminFormBlock extends AbstractRepositoryAwareFormBlock
+class GalleryPictureManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var SettingsInterface

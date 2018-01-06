@@ -13,7 +13,7 @@ use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository;
 
-class NewsletterAdminFormBlock extends AbstractRepositoryAwareFormBlock
+class NewsletterManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var SettingsInterface

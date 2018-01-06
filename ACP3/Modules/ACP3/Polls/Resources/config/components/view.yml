@@ -6,8 +6,8 @@ services:
     calls:
       - ['setDataGridRepository', ['@polls.model.repository.polls_data_grid_repository']]
 
-  polls.view.block.admin.poll_admin_form_block:
-    class: ACP3\Modules\ACP3\Polls\View\Block\Admin\PollAdminFormBlock
+  polls.view.block.admin.poll_manage_form_block:
+    class: ACP3\Modules\ACP3\Polls\View\Block\Admin\PollManageFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@polls.model.repository.polls_repository'

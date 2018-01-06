@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Menus\View\Block\Admin;
 
 use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 
-class MenuAdminFormBlock extends AbstractRepositoryAwareFormBlock
+class MenuManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @inheritdoc

@@ -1,6 +1,6 @@
 services:
-  menus.view.block.admin.menu_admin_form_block:
-    class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuAdminFormBlock
+  menus.view.block.admin.menu_manage_form_block:
+    class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuManageFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@menus.model.repository.menus_repository'
@@ -13,8 +13,8 @@ services:
       - '@menus.model.repository.menus_repository'
       - '@menus.helpers.menuitemslist'
 
-  menus.view.block.admin.menu_item_admin_form_block:
-    class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuItemAdminFormBlock
+  menus.view.block.admin.menu_item_manage_form_block:
+    class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuItemManageFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@menus.model.repository.menu_items_repository'

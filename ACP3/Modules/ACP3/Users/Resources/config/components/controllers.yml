@@ -9,7 +9,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Manage
     arguments:
       - '@core.context.frontend'
-      - '@users.view.block.admin.user_admin_form_block'
+      - '@users.view.block.admin.user_manage_form_block'
       - '@core.helpers.secure'
       - '@users.model.authentication_model'
       - '@users.model.users_model'

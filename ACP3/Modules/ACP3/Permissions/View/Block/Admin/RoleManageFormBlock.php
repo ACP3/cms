@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclPrivilegesRepository;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\AclRolesRepository;
 
-class RoleAdminFormBlock extends AbstractRepositoryAwareFormBlock
+class RoleManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var ACLInterface

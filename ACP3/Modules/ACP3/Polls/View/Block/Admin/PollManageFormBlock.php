@@ -12,7 +12,7 @@ use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Polls\Model\Repository\PollAnswersRepository;
 use ACP3\Modules\ACP3\Polls\Model\Repository\PollsRepository;
 
-class PollAdminFormBlock extends AbstractRepositoryAwareFormBlock
+class PollManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var PollAnswersRepository

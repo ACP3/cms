@@ -13,8 +13,8 @@ services:
     calls:
       - ['setDataGridRepository', ['@newsletter.model.repository.newsletters_data_grid_repository']]
 
-  newsletter.view.block.admin.newsletter_admin_form_block:
-    class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterAdminFormBlock
+  newsletter.view.block.admin.newsletter_manage_form_block:
+    class: ACP3\Modules\ACP3\Newsletter\View\Block\Admin\NewsletterManageFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@newsletter.model.repository.newsletters_repository'

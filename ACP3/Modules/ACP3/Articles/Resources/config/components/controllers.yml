@@ -3,7 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Manage
     arguments:
       - '@core.context.frontend'
-      - '@articles.view.block.admin.article_admin_form_block'
+      - '@articles.view.block.admin.article_manage_form_block'
       - '@articles.model.articles_model'
       - '@articles.validation.admin_form_validation'
 

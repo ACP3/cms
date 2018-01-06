@@ -13,7 +13,7 @@ use ACP3\Core\View\Block\Context\FormBlockContext;
 use ACP3\Modules\ACP3\Users\Helpers\Forms;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-class UserAdminFormBlock extends AbstractRepositoryAwareFormBlock
+class UserManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var ACLInterface

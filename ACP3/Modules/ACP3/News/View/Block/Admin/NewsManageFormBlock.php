@@ -5,17 +5,17 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Files\View\Block\Admin;
+namespace ACP3\Modules\ACP3\News\View\Block\Admin;
 
 use ACP3\Core\Modules\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 use ACP3\Core\View\Block\Context\FormBlockContext;
-use ACP3\Modules\ACP3\Files\Helpers;
-use ACP3\Modules\ACP3\Files\Installer\Schema;
-use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
+use ACP3\Modules\ACP3\News\Helpers;
+use ACP3\Modules\ACP3\News\Installer\Schema;
+use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 
-class FileAdminFormBlock extends AbstractRepositoryAwareFormBlock
+class NewsManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var SettingsInterface
@@ -31,21 +31,21 @@ class FileAdminFormBlock extends AbstractRepositoryAwareFormBlock
     private $categoriesHelpers;
 
     /**
-     * FileFormBlock constructor.
+     * NewsFormBlock constructor.
      * @param FormBlockContext $context
-     * @param FilesRepository $filesRepository
+     * @param NewsRepository $newsRepository
      * @param SettingsInterface $settings
      * @param Modules $modules
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
         FormBlockContext $context,
-        FilesRepository $filesRepository,
+        NewsRepository $newsRepository,
         SettingsInterface $settings,
         Modules $modules,
         \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
     ) {
-        parent::__construct($context, $filesRepository);
+        parent::__construct($context, $newsRepository);
 
         $this->settings = $settings;
         $this->modules = $modules;
@@ -57,38 +57,24 @@ class FileAdminFormBlock extends AbstractRepositoryAwareFormBlock
      */
     public function render()
     {
-        $data = $this->getData();
-
-        $this->setTemplate(
-            $this->getId() ? 'Files/Admin/index.manage_with_id.tpl' : 'Files/Admin/index.manage.tpl'
-        );
+        $news = $this->getData();
 
         $this->breadcrumb->setLastStepReplacement(
-            $this->translator->t('files', !$this->getId() ? 'admin_index_create' : 'admin_index_edit')
+            $this->translator->t('news', !$this->getId() ? 'admin_index_create' : 'admin_index_edit')
         );
 
-        $this->title->setPageTitlePrefix($data['title']);
-
-        $external = [
-            1 => $this->translator->t('files', 'external_resource'),
-        ];
+        $this->title->setPageTitlePrefix($news['title']);
 
         return [
-            'active' => $this->forms->yesNoCheckboxGenerator('active', $data['active']),
-            'options' => $this->getOptions(['comments' => '0']),
-            'units' => $this->forms->choicesGenerator(
-                'units',
-                $this->getUnits(),
-                \trim(\strrchr($data['size'], ' '))
-            ),
+            'active' => $this->forms->yesNoCheckboxGenerator('active', $news['active']),
             'categories' => $this->categoriesHelpers->categoriesList(
                 Schema::MODULE_NAME,
-                $data['category_id'],
+                $news['category_id'],
                 true
             ),
-            'external' => $this->forms->checkboxGenerator('external', $external),
-            'current_file' => $data['file'],
-            'form' => \array_merge($data, $this->getRequestData()),
+            'options' => $this->fetchOptions((int)$news['readmore'], (int)$news['comments']),
+            'target' => $this->forms->linkTargetChoicesGenerator('target', $news['target']),
+            'form' => \array_merge($news, $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken(),
             'SEO_URI_PATTERN' => Helpers::URL_KEY_PATTERN,
             'SEO_ROUTE_NAME' => $this->getSeoRouteName($this->getId()),
@@ -96,37 +82,33 @@ class FileAdminFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @param array $file
+     * @param int $readMoreValue
+     * @param int $commentsValue
      * @return array
      */
-    protected function getOptions(array $file): array
+    private function fetchOptions(int $readMoreValue, int $commentsValue): array
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
-
         $options = [];
+        if ($settings['readmore'] == 1) {
+            $readMore = [
+                '1' => $this->translator->t('news', 'activate_readmore'),
+            ];
+
+            $options = $this->forms->checkboxGenerator('readmore', $readMore, $readMoreValue);
+        }
         if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
             $comments = [
                 '1' => $this->translator->t('system', 'allow_comments'),
             ];
 
-            $options = $this->forms->checkboxGenerator('comments', $comments, $file['comments']);
+            $options = \array_merge(
+                $options,
+                $this->forms->checkboxGenerator('comments', $comments, $commentsValue)
+            );
         }
 
         return $options;
-    }
-
-    /**
-     * @return array
-     */
-    private function getUnits(): array
-    {
-        return [
-            'Byte' => 'Byte',
-            'KiB' => 'KiB',
-            'MiB' => 'MiB',
-            'GiB' => 'GiB',
-            'TiB' => 'TiB',
-        ];
     }
 
     /**
@@ -145,15 +127,15 @@ class FileAdminFormBlock extends AbstractRepositoryAwareFormBlock
     {
         return [
             'id' => '',
-            'active' => 1,
             'title' => '',
-            'category_id' => 0,
-            'file_internal' => '',
-            'file_external' => '',
-            'size' => '',
-            'file' => '',
-            'filesize' => '',
             'text' => '',
+            'category_id' => 0,
+            'readmore' => 0,
+            'comments' => 0,
+            'uri' => '',
+            'link_title' => '',
+            'target' => '',
+            'active' => 1,
             'start' => '',
             'end' => '',
         ];

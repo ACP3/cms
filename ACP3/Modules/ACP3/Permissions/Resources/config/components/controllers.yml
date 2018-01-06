@@ -10,7 +10,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Manage
     arguments:
       - '@core.context.frontend'
-      - '@permissions.view.block.admin.role_admin_form_block'
+      - '@permissions.view.block.admin.role_manage_form_block'
       - '@permissions.model.acl_roles_model'
       - '@permissions.model.acl_rules_model'
       - '@permissions.validation.role_form_validation'
@@ -39,7 +39,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Manage
     arguments:
       - '@core.context.frontend'
-      - '@permissions.view.block.admin.resource_admin_form_block'
+      - '@permissions.view.block.admin.resource_manage_form_block'
       - '@permissions.model.acl_resources_model'
       - '@permissions.validation.resource_form_validation'
 

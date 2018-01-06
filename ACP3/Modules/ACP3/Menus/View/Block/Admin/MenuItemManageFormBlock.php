@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields;
 use ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository;
 
-class MenuItemAdminFormBlock extends AbstractRepositoryAwareFormBlock
+class MenuItemManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
      * @var Modules
