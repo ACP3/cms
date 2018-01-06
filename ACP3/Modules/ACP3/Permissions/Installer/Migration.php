@@ -67,9 +67,6 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
                 'ALTER TABLE `{pre}acl_resources` ADD INDEX (`module_id`)',
                 'ALTER TABLE `{pre}acl_resources` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE',
             ],
-            37 => [
-                'INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (' . PrivilegeEnum::ADMIN_MANAGE . ", 'admin_manage', '');",
-            ],
         ];
     }
 }

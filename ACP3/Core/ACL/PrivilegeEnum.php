@@ -13,7 +13,6 @@ class PrivilegeEnum extends BaseEnum
 {
     const ADMIN_SETTINGS = 7;
     const ADMIN_DELETE = 6;
-    const ADMIN_MANAGE = 8;
     const ADMIN_EDIT = 5;
     const ADMIN_CREATE = 4;
     const ADMIN_VIEW = 3;
