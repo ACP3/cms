@@ -7,8 +7,6 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Installer;
 
-use ACP3\Core\ACL\PrivilegeEnum;
-
 class Migration implements \ACP3\Core\Installer\MigrationInterface
 {
     /**
