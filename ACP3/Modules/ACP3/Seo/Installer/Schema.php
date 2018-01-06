@@ -22,8 +22,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
             'admin' => [
                 'index' => [
                     'index' => PrivilegeEnum::ADMIN_VIEW,
-                    'create' => PrivilegeEnum::ADMIN_CREATE,
-                    'edit' => PrivilegeEnum::ADMIN_EDIT,
+                    'manage' => PrivilegeEnum::ADMIN_EDIT,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'settings' => PrivilegeEnum::ADMIN_SETTINGS,
                     'sitemap' => PrivilegeEnum::ADMIN_SETTINGS,
@@ -46,7 +45,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 13;
+        return 14;
     }
 
     /**

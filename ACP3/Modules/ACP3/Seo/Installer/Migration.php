@@ -55,6 +55,10 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
             13 => [
                 'ALTER TABLE `{pre}seo` ADD COLUMN `title` VARCHAR(255) NOT NULL AFTER `alias`;',
             ],
+            14 => [
+                "DELETE FROM `{pre}acl_resources` WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'create';",
+                "UPDATE `{pre}acl_resources` SET `page` = 'manage' WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'edit';",
+            ],
         ];
     }
 

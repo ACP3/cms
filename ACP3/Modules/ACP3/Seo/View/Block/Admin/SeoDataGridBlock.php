@@ -101,7 +101,7 @@ class SeoDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#seo-data-grid',
             'resource_path_delete' => 'admin/seo/index/delete',
-            'resource_path_edit' => 'admin/seo/index/edit',
+            'resource_path_edit' => 'admin/seo/index/manage',
         ]);
 
         $grid = $dataGrid->render();
