@@ -45,8 +45,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
         News\Model\NewsModel $newsModel,
         News\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->newsModel = $newsModel;
