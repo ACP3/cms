@@ -17,28 +17,46 @@ use ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsSettingsFormBlock;
 class CommentsSettingsFormBlockTest extends AbstractFormBlockTest
 {
     /**
-     * @inheritdoc
+     * @var Modules|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function instantiateBlock(): BlockInterface
+    private $modules;
+    /**
+     * @var SettingsInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $settings;
+    /**
+     * @var Date|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $dateHelper;
+
+    protected function setUpMockObjects()
     {
-        $modules = $this->getMockBuilder(Modules::class)
+        parent::setUpMockObjects();
+
+        $this->modules = $this->getMockBuilder(Modules::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $settings = $this->getMockBuilder(SettingsInterface::class)
+        $this->settings = $this->getMockBuilder(SettingsInterface::class)
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
-        $settings->expects($this->once())
+        $this->settings->expects($this->once())
             ->method('getSettings')
             ->with('comments')
             ->willReturn(['emoticons' => 1, 'dateformat' => 'long']);
 
-        $dateHelper = $this->getMockBuilder(Date::class)
+        $this->dateHelper = $this->getMockBuilder(Date::class)
             ->disableOriginalConstructor()
             ->getMock();
+    }
 
-        return new CommentsSettingsFormBlock($this->context, $modules, $settings, $dateHelper);
+    /**
+     * @inheritdoc
+     */
+    protected function instantiateBlock(): BlockInterface
+    {
+        return new CommentsSettingsFormBlock($this->context, $this->modules, $this->settings, $this->dateHelper);
     }
 
     /**

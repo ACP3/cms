@@ -16,23 +16,37 @@ use ACP3\Modules\ACP3\Users\Model\UserModel;
 class CommentFormBlockTest extends AbstractFormBlockTest
 {
     /**
+     * @var SettingsInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $settingsMock;
+    /**
+     * @var UserModel|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $user;
+
+    protected function setUpMockObjects()
+    {
+        parent::setUpMockObjects();
+
+        $this->settingsMock = $this->getMockBuilder(SettingsInterface::class)
+            ->setMethods(['getSettings', 'saveSettings'])
+            ->getMock();
+
+        $this->settingsMock->expects($this->once())
+            ->method('getSettings')
+            ->willReturn(['emoticons' => 1]);
+
+        $this->user = $this->getMockBuilder(UserModel::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    /**
      * @inheritdoc
      */
     protected function instantiateBlock(): BlockInterface
     {
-        $settingsMock = $this->getMockBuilder(SettingsInterface::class)
-            ->setMethods(['getSettings', 'saveSettings'])
-            ->getMock();
-
-        $settingsMock->expects($this->once())
-            ->method('getSettings')
-            ->willReturn(['emoticons' => 1]);
-
-        $user = $this->getMockBuilder(UserModel::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        return new CommentFormBlock($this->context, $settingsMock, $user);
+        return new CommentFormBlock($this->context, $this->settingsMock, $this->user);
     }
 
     public function testRenderReturnsArray()

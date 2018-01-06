@@ -17,15 +17,27 @@ use ACP3\Modules\ACP3\Gallery\View\Block\Admin\GallerySettingsFormBlock;
 class GallerySettingsFormBlockTest extends AbstractFormBlockTest
 {
     /**
-     * @inheritdoc
+     * @var SettingsInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function instantiateBlock(): BlockInterface
+    private $settings;
+    /**
+     * @var Modules|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $modules;
+    /**
+     * @var Date|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $dateHelper;
+
+    protected function setUpMockObjects()
     {
-        $settings = $this->getMockBuilder(SettingsInterface::class)
+        parent::setUpMockObjects();
+
+        $this->settings = $this->getMockBuilder(SettingsInterface::class)
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
-        $settings->expects($this->once())
+        $this->settings->expects($this->once())
             ->method('getSettings')
             ->with('gallery')
             ->willReturn([
@@ -35,15 +47,21 @@ class GallerySettingsFormBlockTest extends AbstractFormBlockTest
                 'overlay' => 1,
             ]);
 
-        $modules = $this->getMockBuilder(Modules::class)
+        $this->modules = $this->getMockBuilder(Modules::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $dateHelper = $this->getMockBuilder(Date::class)
+        $this->dateHelper = $this->getMockBuilder(Date::class)
             ->disableOriginalConstructor()
             ->getMock();
+    }
 
-        return new GallerySettingsFormBlock($this->context, $settings, $modules, $dateHelper);
+    /**
+     * @inheritdoc
+     */
+    protected function instantiateBlock(): BlockInterface
+    {
+        return new GallerySettingsFormBlock($this->context, $this->settings, $this->modules, $this->dateHelper);
     }
 
     public function testRenderReturnsArray()

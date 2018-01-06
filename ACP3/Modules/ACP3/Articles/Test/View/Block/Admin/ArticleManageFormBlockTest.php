@@ -21,11 +21,11 @@ class ArticleManageFormBlockTest extends AbstractFormBlockTest
 
     protected function setUpMockObjects()
     {
+        parent::setUpMockObjects();
+
         $this->repository = $this->getMockBuilder(ArticlesRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
-
-        parent::setUpMockObjects();
     }
 
     /**

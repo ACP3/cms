@@ -15,15 +15,25 @@ use ACP3\Modules\ACP3\Emoticons\View\Block\Admin\EmoticonsDataGridBlock;
 class EmoticonsDataGridBlockTest extends AbstractDataGridBlockTest
 {
     /**
+     * @var ApplicationPath|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $appPath;
+
+    protected function setUpMockObjects()
+    {
+        parent::setUpMockObjects();
+
+        $this->appPath = $this->getMockBuilder(ApplicationPath::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    /**
      * @inheritdoc
      */
     protected function instantiateBlock(): BlockInterface
     {
-        $appPath = $this->getMockBuilder(ApplicationPath::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        return new EmoticonsDataGridBlock($this->context, $appPath);
+        return new EmoticonsDataGridBlock($this->context, $this->appPath);
     }
 
     /**

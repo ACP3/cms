@@ -16,24 +16,38 @@ use ACP3\Modules\ACP3\Users\Model\UserModel;
 class ContactFormBlockTest extends AbstractFormBlockTest
 {
     /**
-     * @inheritdoc
+     * @var SettingsInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function instantiateBlock(): BlockInterface
+    private $settings;
+    /**
+     * @var UserModel|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $user;
+
+    protected function setUpMockObjects()
     {
-        $settings = $this->getMockBuilder(SettingsInterface::class)
+        parent::setUpMockObjects();
+
+        $this->settings = $this->getMockBuilder(SettingsInterface::class)
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
-        $settings->expects($this->once())
+        $this->settings->expects($this->once())
             ->method('getSettings')
             ->with('contact')
             ->willReturn([]);
 
-        $user = $this->getMockBuilder(UserModel::class)
+        $this->user = $this->getMockBuilder(UserModel::class)
             ->disableOriginalConstructor()
             ->getMock();
+    }
 
-        return new ContactFormBlock($this->context, $settings, $user);
+    /**
+     * @inheritdoc
+     */
+    protected function instantiateBlock(): BlockInterface
+    {
+        return new ContactFormBlock($this->context, $this->settings, $this->user);
     }
 
     /**

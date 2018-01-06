@@ -16,31 +16,45 @@ use ACP3\Modules\ACP3\Comments\View\Block\Frontend\CommentsListingBlock;
 class CommentsListingBlockTest extends AbstractListingBlockTest
 {
     /**
+     * @var SettingsInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $settings;
+    /**
+     * @var CommentsRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $commentRepository;
+
+    protected function setUpMockObjects()
+    {
+        parent::setUpMockObjects();
+
+        $this->settings = $this->getMockBuilder(SettingsInterface::class)
+            ->setMethods(['getSettings', 'saveSettings'])
+            ->getMock();
+
+        $this->settings->expects($this->exactly(2))
+            ->method('getSettings')
+            ->willReturn(['dateformat' => 'long', 'emoticons' => 1]);
+
+        $this->commentRepository = $this->getMockBuilder(CommentsRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->commentRepository->expects($this->once())
+            ->method('countAll')
+            ->willReturn(30);
+
+        $this->commentRepository->expects($this->once())
+            ->method('getAllByModule')
+            ->willReturn([]);
+    }
+
+    /**
      * @inheritdoc
      */
     protected function instantiateBlock(): BlockInterface
     {
-        $settings = $this->getMockBuilder(SettingsInterface::class)
-            ->setMethods(['getSettings', 'saveSettings'])
-            ->getMock();
-
-        $settings->expects($this->exactly(2))
-            ->method('getSettings')
-            ->willReturn(['dateformat' => 'long', 'emoticons' => 1]);
-
-        $commentRepository = $this->getMockBuilder(CommentsRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $commentRepository->expects($this->once())
-            ->method('countAll')
-            ->willReturn(30);
-
-        $commentRepository->expects($this->once())
-            ->method('getAllByModule')
-            ->willReturn([]);
-
-        return new CommentsListingBlock($this->context, $settings, $commentRepository);
+        return new CommentsListingBlock($this->context, $this->settings, $this->commentRepository);
     }
 
     public function testRenderReturnsArray()

@@ -5,13 +5,6 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-/**
- * Created by PhpStorm.
- * User: tinog
- * Date: 23.04.2017
- * Time: 12:17
- */
-
 namespace ACP3\Modules\ACP3\Captcha\Test\View\Block\Admin;
 
 use ACP3\Core\Settings\SettingsInterface;
@@ -24,33 +17,51 @@ use ACP3\Modules\ACP3\Captcha\View\Block\Admin\CaptchaSettingsFormBlock;
 class CaptchaSettingsFormBlockTest extends AbstractFormBlockTest
 {
     /**
-     * @inheritdoc
+     * @var SettingsInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function instantiateBlock(): BlockInterface
+    private $settings;
+    /**
+     * @var CaptchaRegistrar|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $captchaRegistrar;
+    /**
+     * @var CaptchaExtensionInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $captchaMock;
+
+    protected function setUpMockObjects()
     {
-        $settings = $this->getMockBuilder(SettingsInterface::class)
+        parent::setUpMockObjects();
+
+        $this->settings = $this->getMockBuilder(SettingsInterface::class)
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
-        $settings->expects($this->once())
+        $this->settings->expects($this->once())
             ->method('getSettings')
             ->with('captcha')
             ->willReturn(['captcha' => 'captcha.extension.foo']);
 
-        $captchaRegistrar = $this->getMockBuilder(CaptchaRegistrar::class)
+        $this->captchaRegistrar = $this->getMockBuilder(CaptchaRegistrar::class)
             ->getMock();
 
-        $captchaMock = $this->getMockBuilder(CaptchaExtensionInterface::class)
+        $this->captchaMock = $this->getMockBuilder(CaptchaExtensionInterface::class)
             ->setMethods(['getCaptchaName', 'isCaptchaValid', 'getCaptcha'])
             ->getMock();
 
-        $captchaRegistrar->expects($this->once())
+        $this->captchaRegistrar->expects($this->once())
             ->method('getAvailableCaptchas')
             ->willReturn([
-                'captcha.extension.foo' => $captchaMock,
+                'captcha.extension.foo' => $this->captchaMock,
             ]);
+    }
 
-        return new CaptchaSettingsFormBlock($this->context, $settings, $captchaRegistrar);
+    /**
+     * @inheritdoc
+     */
+    protected function instantiateBlock(): BlockInterface
+    {
+        return new CaptchaSettingsFormBlock($this->context, $this->settings, $this->captchaRegistrar);
     }
 
     /**

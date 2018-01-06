@@ -15,15 +15,25 @@ use ACP3\Modules\ACP3\Files\View\Block\Frontend\CategoriesListingBlock;
 class CategoriesListingBlockTest extends AbstractBlockTest
 {
     /**
+     * @var CategoriesRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $categoriesRepository;
+
+    protected function setUpMockObjects()
+    {
+        parent::setUpMockObjects();
+
+        $this->categoriesRepository = $this->getMockBuilder(CategoriesRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    /**
      * @inheritdoc
      */
     protected function instantiateBlock(): BlockInterface
     {
-        $categoriesRepository = $this->getMockBuilder(CategoriesRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        return new CategoriesListingBlock($this->context, $categoriesRepository);
+        return new CategoriesListingBlock($this->context, $this->categoriesRepository);
     }
 
     /**

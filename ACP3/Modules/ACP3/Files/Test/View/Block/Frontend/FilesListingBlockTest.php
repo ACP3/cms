@@ -18,47 +18,75 @@ use ACP3\Modules\ACP3\Files\View\Block\Frontend\FilesListingBlock;
 class FilesListingBlockTest extends AbstractListingBlockTest
 {
     /**
-     * @inheritdoc
+     * @var Date|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function instantiateBlock(): BlockInterface
+    private $date;
+    /**
+     * @var SettingsInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $settings;
+    /**
+     * @var FilesRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $filesRepository;
+    /**
+     * @var CategoriesRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $categoriesRepository;
+
+    protected function setUpMockObjects()
     {
-        $date = $this->getMockBuilder(Date::class)
+        parent::setUpMockObjects();
+
+        $this->date = $this->getMockBuilder(Date::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $settings = $this->getMockBuilder(SettingsInterface::class)
+        $this->settings = $this->getMockBuilder(SettingsInterface::class)
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
-        $settings->expects($this->once())
+        $this->settings->expects($this->once())
             ->method('getSettings')
             ->with('files')
             ->willReturn([
                 'dateformat' => 'long',
             ]);
 
-        $filesRepository = $this->getMockBuilder(FilesRepository::class)
+        $this->filesRepository = $this->getMockBuilder(FilesRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $filesRepository->expects($this->once())
+        $this->filesRepository->expects($this->once())
             ->method('countAll')
             ->willReturn(30);
 
-        $filesRepository->expects($this->once())
+        $this->filesRepository->expects($this->once())
             ->method('getAllByCategoryId')
             ->willReturn([]);
 
-        $categoryRepository = $this->getMockBuilder(CategoriesRepository::class)
+        $this->categoriesRepository = $this->getMockBuilder(CategoriesRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $categoryRepository->expects($this->once())
+        $this->categoriesRepository->expects($this->once())
             ->method('fetchNodeWithParents')
             ->with(2)
             ->willReturn([]);
+    }
 
-        return new FilesListingBlock($this->context, $date, $settings, $filesRepository, $categoryRepository);
+    /**
+     * @inheritdoc
+     */
+    protected function instantiateBlock(): BlockInterface
+    {
+        return new FilesListingBlock(
+            $this->context,
+            $this->date,
+            $this->settings,
+            $this->filesRepository,
+            $this->categoriesRepository
+        );
     }
 
     public function testRenderReturnsArray()

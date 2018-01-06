@@ -15,11 +15,15 @@ use ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsDataGridBlock;
 class CommentsDataGridBlockTest extends AbstractDataGridBlockTest
 {
     /**
-     * @inheritdoc
+     * @var ModuleAwareRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function instantiateBlock(): BlockInterface
+    private $systemRepository;
+
+    protected function setUpMockObjects()
     {
-        $systemRepository = $this->getMockBuilder(ModuleAwareRepositoryInterface::class)
+        parent::setUpMockObjects();
+
+        $this->systemRepository = $this->getMockBuilder(ModuleAwareRepositoryInterface::class)
             ->setMethods([
                 'getModuleId',
                 'getModuleSchemaVersion',
@@ -34,11 +38,17 @@ class CommentsDataGridBlockTest extends AbstractDataGridBlockTest
             ])
             ->getMock();
 
-        $systemRepository->expects($this->once())
+        $this->systemRepository->expects($this->once())
             ->method('getModuleNameById')
             ->willReturn('foo');
+    }
 
-        return new CommentsDataGridBlock($this->context, $systemRepository);
+    /**
+     * @inheritdoc
+     */
+    protected function instantiateBlock(): BlockInterface
+    {
+        return new CommentsDataGridBlock($this->context, $this->systemRepository);
     }
 
     public function testRenderReturnsArray()

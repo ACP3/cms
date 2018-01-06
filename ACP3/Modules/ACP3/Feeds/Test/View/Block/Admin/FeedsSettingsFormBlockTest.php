@@ -15,22 +15,32 @@ use ACP3\Modules\ACP3\Feeds\View\Block\Admin\FeedsSettingsFormBlock;
 class FeedsSettingsFormBlockTest extends AbstractFormBlockTest
 {
     /**
-     * @inheritdoc
+     * @var SettingsInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function instantiateBlock(): BlockInterface
+    private $settings;
+
+    protected function setUpMockObjects()
     {
-        $settings = $this->getMockBuilder(SettingsInterface::class)
+        parent::setUpMockObjects();
+
+        $this->settings = $this->getMockBuilder(SettingsInterface::class)
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
-        $settings->expects($this->once())
+        $this->settings->expects($this->once())
             ->method('getSettings')
             ->with('feeds')
             ->willReturn([
                 'feed_type' => 'RSS 2.0',
             ]);
+    }
 
-        return new FeedsSettingsFormBlock($this->context, $settings);
+    /**
+     * @inheritdoc
+     */
+    protected function instantiateBlock(): BlockInterface
+    {
+        return new FeedsSettingsFormBlock($this->context, $this->settings);
     }
 
     /**

@@ -16,19 +16,27 @@ use ACP3\Modules\ACP3\Files\View\Block\Admin\FilesSettingsFormBlock;
 class FilesSettingsFormBlockTest extends AbstractFormBlockTest
 {
     /**
-     * @inheritdoc
+     * @var Date|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function instantiateBlock(): BlockInterface
+    private $dateHelper;
+    /**
+     * @var SettingsInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $settings;
+
+    protected function setUpMockObjects()
     {
-        $dateHelper = $this->getMockBuilder(Date::class)
+        parent::setUpMockObjects();
+
+        $this->dateHelper = $this->getMockBuilder(Date::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $settings = $this->getMockBuilder(SettingsInterface::class)
+        $this->settings = $this->getMockBuilder(SettingsInterface::class)
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
-        $settings->expects($this->once())
+        $this->settings->expects($this->once())
             ->method('getSettings')
             ->with('files')
             ->willReturn([
@@ -36,8 +44,14 @@ class FilesSettingsFormBlockTest extends AbstractFormBlockTest
                 'dateformat' => 'long',
                 'sidebar' => 5,
             ]);
+    }
 
-        return new FilesSettingsFormBlock($this->context, $dateHelper, $settings);
+    /**
+     * @inheritdoc
+     */
+    protected function instantiateBlock(): BlockInterface
+    {
+        return new FilesSettingsFormBlock($this->context, $this->dateHelper, $this->settings);
     }
 
     /**

@@ -18,34 +18,62 @@ use ACP3\Modules\ACP3\Files\View\Block\Admin\FileManageFormBlock;
 class FileManageFormBlockTest extends AbstractFormBlockTest
 {
     /**
-     * @inheritdoc
+     * @var FilesRepository|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function instantiateBlock(): BlockInterface
+    private $filesRepository;
+    /**
+     * @var SettingsInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $settings;
+    /**
+     * @var Modules|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $modules;
+    /**
+     * @var Helpers|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $categoriesHelpers;
+
+    protected function setUpMockObjects()
     {
-        $filesRepository = $this->getMockBuilder(FilesRepository::class)
+        parent::setUpMockObjects();
+
+        $this->filesRepository = $this->getMockBuilder(FilesRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $settings = $this->getMockBuilder(SettingsInterface::class)
+        $this->settings = $this->getMockBuilder(SettingsInterface::class)
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
-        $settings->expects($this->once())
+        $this->settings->expects($this->once())
             ->method('getSettings')
             ->with('files')
             ->willReturn([
                 'comments' => 1,
             ]);
 
-        $modules = $this->getMockBuilder(Modules::class)
+        $this->modules = $this->getMockBuilder(Modules::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $categoriesHelpers = $this->getMockBuilder(Helpers::class)
+        $this->categoriesHelpers = $this->getMockBuilder(Helpers::class)
             ->disableOriginalConstructor()
             ->getMock();
+    }
 
-        return new FileManageFormBlock($this->context, $filesRepository, $settings, $modules, $categoriesHelpers);
+    /**
+     * @inheritdoc
+     */
+    protected function instantiateBlock(): BlockInterface
+    {
+        return new FileManageFormBlock(
+            $this->context,
+            $this->filesRepository,
+            $this->settings,
+            $this->modules,
+            $this->categoriesHelpers
+        );
     }
 
     /**

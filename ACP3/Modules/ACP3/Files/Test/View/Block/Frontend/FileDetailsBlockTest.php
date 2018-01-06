@@ -16,15 +16,23 @@ use ACP3\Modules\ACP3\Files\View\Block\Frontend\FileDetailsBlock;
 class FileDetailsBlockTest extends AbstractBlockTest
 {
     /**
-     * @inheritdoc
+     * @var SettingsInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function instantiateBlock(): BlockInterface
+    private $settings;
+    /**
+     * @var CategoriesRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $categoriesRepository;
+
+    protected function setUpMockObjects()
     {
-        $settings = $this->getMockBuilder(SettingsInterface::class)
+        parent::setUpMockObjects();
+
+        $this->settings = $this->getMockBuilder(SettingsInterface::class)
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
-        $settings->expects($this->once())
+        $this->settings->expects($this->once())
             ->method('getSettings')
             ->with('files')
             ->willReturn([
@@ -32,16 +40,22 @@ class FileDetailsBlockTest extends AbstractBlockTest
                 'comments' => 1,
             ]);
 
-        $categoriesRepository = $this->getMockBuilder(CategoriesRepository::class)
+        $this->categoriesRepository = $this->getMockBuilder(CategoriesRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $categoriesRepository->expects($this->once())
+        $this->categoriesRepository->expects($this->once())
             ->method('fetchNodeWithParents')
             ->with(2)
             ->willReturn([]);
+    }
 
-        return new FileDetailsBlock($this->context, $settings, $categoriesRepository);
+    /**
+     * @inheritdoc
+     */
+    protected function instantiateBlock(): BlockInterface
+    {
+        return new FileDetailsBlock($this->context, $this->settings, $this->categoriesRepository);
     }
 
     public function testRenderReturnsArray()

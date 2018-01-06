@@ -15,20 +15,30 @@ use ACP3\Modules\ACP3\Contact\View\Frontend\ImprintBlock;
 class ImprintBlockTest extends AbstractBlockTest
 {
     /**
+     * @var SettingsInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $settings;
+
+    protected function setUpMockObjects()
+    {
+        parent::setUpMockObjects();
+
+        $this->settings = $this->getMockBuilder(SettingsInterface::class)
+            ->setMethods(['getSettings', 'saveSettings'])
+            ->getMock();
+
+        $this->settings->expects($this->once())
+            ->method('getSettings')
+            ->with('contact')
+            ->willReturn([]);
+    }
+
+    /**
      * @inheritdoc
      */
     protected function instantiateBlock(): BlockInterface
     {
-        $settings = $this->getMockBuilder(SettingsInterface::class)
-            ->setMethods(['getSettings', 'saveSettings'])
-            ->getMock();
-
-        $settings->expects($this->once())
-            ->method('getSettings')
-            ->with('contact')
-            ->willReturn([]);
-
-        return new ImprintBlock($this->context, $settings);
+        return new ImprintBlock($this->context, $this->settings);
     }
 
     /**

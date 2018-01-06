@@ -15,15 +15,19 @@ use ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoriesSettingsFormBlock;
 class CategoriesSettingsFormBlockTest extends AbstractFormBlockTest
 {
     /**
-     * @inheritdoc
+     * @var SettingsInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function instantiateBlock(): BlockInterface
+    private $settings;
+
+    protected function setUpMockObjects()
     {
-        $settings = $this->getMockBuilder(SettingsInterface::class)
+        parent::setUpMockObjects();
+
+        $this->settings = $this->getMockBuilder(SettingsInterface::class)
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
-        $settings->expects($this->once())
+        $this->settings->expects($this->once())
             ->method('getSettings')
             ->with('categories')
             ->willReturn([
@@ -31,8 +35,14 @@ class CategoriesSettingsFormBlockTest extends AbstractFormBlockTest
                 'height' => 50,
                 'filesize' => '40960',
             ]);
+    }
 
-        return new CategoriesSettingsFormBlock($this->context, $settings);
+    /**
+     * @inheritdoc
+     */
+    protected function instantiateBlock(): BlockInterface
+    {
+        return new CategoriesSettingsFormBlock($this->context, $this->settings);
     }
 
     /**

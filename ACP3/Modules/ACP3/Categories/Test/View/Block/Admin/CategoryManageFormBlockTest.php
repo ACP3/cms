@@ -16,15 +16,23 @@ use ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoryManageFormBlock;
 class CategoryManageFormBlockTest extends AbstractFormBlockTest
 {
     /**
-     * @inheritdoc
+     * @var Modules|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function instantiateBlock(): BlockInterface
+    private $modules;
+    /**
+     * @var CategoriesRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $categoriesRepository;
+
+    protected function setUpMockObjects()
     {
-        $modules = $this->getMockBuilder(Modules::class)
+        parent::setUpMockObjects();
+
+        $this->modules = $this->getMockBuilder(Modules::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $modules->expects($this->once())
+        $this->modules->expects($this->once())
             ->method('getActiveModules')
             ->willReturn([
                 'foo' => [
@@ -34,14 +42,20 @@ class CategoryManageFormBlockTest extends AbstractFormBlockTest
                 ],
             ]);
 
-        $categoriesRepository = $this->getMockBuilder(CategoriesRepository::class)
+        $this->categoriesRepository = $this->getMockBuilder(CategoriesRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $categoriesRepository->expects($this->never())
+        $this->categoriesRepository->expects($this->never())
             ->method('getAllByModuleId');
+    }
 
-        return new CategoryManageFormBlock($this->context, $categoriesRepository, $modules);
+    /**
+     * @inheritdoc
+     */
+    protected function instantiateBlock(): BlockInterface
+    {
+        return new CategoryManageFormBlock($this->context, $this->categoriesRepository, $this->modules);
     }
 
     /**

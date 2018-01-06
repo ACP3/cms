@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Articles\Test\View\Block\Frontend;
 
 use ACP3\Core\Helpers\PageBreaks;
 use ACP3\Core\Http\Request;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Test\View\Block\AbstractBlockTest;
 use ACP3\Core\View\Block\BlockInterface;
 use ACP3\Modules\ACP3\Articles\View\Block\Frontend\ArticleDetailsBlock;
@@ -16,24 +17,38 @@ use ACP3\Modules\ACP3\Articles\View\Block\Frontend\ArticleDetailsBlock;
 class ArticleDetailsBlockTest extends AbstractBlockTest
 {
     /**
-     * @inheritdoc
+     * @var RequestInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function instantiateBlock(): BlockInterface
+    private $request;
+    /**
+     * @var PageBreaks|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $pageBreaksHelper;
+
+    protected function setUpMockObjects()
     {
-        $request = $this->getMockBuilder(Request::class)
+        parent::setUpMockObjects();
+
+        $this->request = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $pageBreaksHelper = $this->getMockBuilder(PageBreaks::class)
+        $this->pageBreaksHelper = $this->getMockBuilder(PageBreaks::class)
             ->disableOriginalConstructor()
             ->setMethods(['splitTextIntoPages'])
             ->getMock();
 
-        $pageBreaksHelper->expects($this->once())
+        $this->pageBreaksHelper->expects($this->once())
             ->method('splitTextIntoPages')
             ->willReturn([]);
+    }
 
-        return new ArticleDetailsBlock($this->context, $request, $pageBreaksHelper);
+    /**
+     * @inheritdoc
+     */
+    protected function instantiateBlock(): BlockInterface
+    {
+        return new ArticleDetailsBlock($this->context, $this->request, $this->pageBreaksHelper);
     }
 
     public function testRenderReturnsArray()

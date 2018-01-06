@@ -16,27 +16,41 @@ use ACP3\Modules\ACP3\Articles\View\Block\Frontend\ArticlesListingBlock;
 class ArticlesListingBlockTest extends AbstractListingBlockTest
 {
     /**
+     * @var Date|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $date;
+    /**
+     * @var ArticlesRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $articleRepository;
+
+    protected function setUpMockObjects()
+    {
+        parent::setUpMockObjects();
+
+        $this->date = $this->getMockBuilder(Date::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->articleRepository = $this->getMockBuilder(ArticlesRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->articleRepository->expects($this->once())
+            ->method('countAll')
+            ->willReturn(30);
+
+        $this->articleRepository->expects($this->once())
+            ->method('getAll')
+            ->willReturn([]);
+    }
+
+    /**
      * @inheritdoc
      */
     protected function instantiateBlock(): BlockInterface
     {
-        $date = $this->getMockBuilder(Date::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $articleRepository = $this->getMockBuilder(ArticlesRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $articleRepository->expects($this->once())
-            ->method('countAll')
-            ->willReturn(30);
-
-        $articleRepository->expects($this->once())
-            ->method('getAll')
-            ->willReturn([]);
-
-        return new ArticlesListingBlock($this->context, $date, $articleRepository);
+        return new ArticlesListingBlock($this->context, $this->date, $this->articleRepository);
     }
 
     /**

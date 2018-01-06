@@ -16,26 +16,40 @@ use ACP3\Modules\ACP3\Files\View\Block\Admin\FilesDataGridBlock;
 class FilesDataGridBlockTest extends AbstractDataGridBlockTest
 {
     /**
-     * @inheritdoc
+     * @var ACLInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function instantiateBlock(): BlockInterface
+    private $acl;
+    /**
+     * @var SettingsInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $settings;
+
+    protected function setUpMockObjects()
     {
-        $acl = $this->getMockBuilder(ACLInterface::class)
+        parent::setUpMockObjects();
+
+        $this->acl = $this->getMockBuilder(ACLInterface::class)
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
-        $settings = $this->getMockBuilder(SettingsInterface::class)
+        $this->settings = $this->getMockBuilder(SettingsInterface::class)
             ->setMethods(['getSettings', 'saveSettings'])
             ->getMock();
 
-        $settings->expects($this->once())
+        $this->settings->expects($this->once())
             ->method('getSettings')
             ->with('files')
             ->willReturn([
                 'order_by' => 'date',
             ]);
+    }
 
-        return new FilesDataGridBlock($this->context, $acl, $settings);
+    /**
+     * @inheritdoc
+     */
+    protected function instantiateBlock(): BlockInterface
+    {
+        return new FilesDataGridBlock($this->context, $this->acl, $this->settings);
     }
 
     /**

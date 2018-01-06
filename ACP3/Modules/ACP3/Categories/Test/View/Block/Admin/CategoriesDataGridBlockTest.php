@@ -15,16 +15,26 @@ use ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoriesDataGridBlock;
 class CategoriesDataGridBlockTest extends AbstractDataGridBlockTest
 {
     /**
+     * @var ACLInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $acl;
+
+    protected function setUpMockObjects()
+    {
+        parent::setUpMockObjects();
+
+        $this->acl = $this->getMockBuilder(ACLInterface::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['hasPermission'])
+            ->getMockForAbstractClass();
+    }
+
+    /**
      * @inheritdoc
      */
     protected function instantiateBlock(): BlockInterface
     {
-        $acl = $this->getMockBuilder(ACLInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['hasPermission'])
-            ->getMockForAbstractClass();
-
-        return new CategoriesDataGridBlock($this->context, $acl);
+        return new CategoriesDataGridBlock($this->context, $this->acl);
     }
 
     /**
