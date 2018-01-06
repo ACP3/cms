@@ -43,6 +43,10 @@ class NewsletterAdminFormBlock extends AbstractRepositoryAwareFormBlock
     {
         $newsletter = $this->getData();
 
+        $this->breadcrumb->setLastStepReplacement(
+            $this->translator->t('newsletter', !$this->getId() ? 'admin_index_create' : 'admin_index_edit')
+        );
+
         $this->title->setPageTitlePrefix($newsletter['title']);
 
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);

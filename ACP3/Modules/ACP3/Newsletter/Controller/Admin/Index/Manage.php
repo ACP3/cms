@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-class Create extends AbstractFormAction
+class Manage extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
@@ -24,9 +24,13 @@ class Create extends AbstractFormAction
      * @var Core\View\Block\RepositoryAwareFormBlockInterface
      */
     private $block;
+    /**
+     * @var Newsletter\Helper\SendNewsletter
+     */
+    private $newsletterHelpers;
 
     /**
-     * Create constructor.
+     * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
@@ -41,29 +45,34 @@ class Create extends AbstractFormAction
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
         Newsletter\Helper\SendNewsletter $newsletterHelpers
     ) {
-        parent::__construct($context, $newsletterHelpers);
+        parent::__construct($context);
 
         $this->newsletterModel = $newsletterModel;
         $this->adminFormValidation = $adminFormValidation;
         $this->block = $block;
+        $this->newsletterHelpers = $newsletterHelpers;
     }
 
     /**
-     * @return array
+     * @param int|null $id
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
-    public function execute()
+    public function execute(?int $id)
     {
         return $this->block
+            ->setDataById($id)
             ->setRequestData($this->request->getPost()->all())
             ->render();
     }
 
     /**
+     * @param int|null $id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost()
+    public function executePost(?int $id)
     {
-        return $this->actionHelper->handlePostAction(function () {
+        return $this->actionHelper->handlePostAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
 
             $settings = $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME);
@@ -71,16 +80,46 @@ class Create extends AbstractFormAction
             $this->adminFormValidation->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $newsletterId = $this->newsletterModel->save($formData);
+            $result = $this->newsletterModel->save($formData, $id);
 
             list($text, $result) = $this->sendTestNewsletter(
                 $formData['test'] == 1,
-                $newsletterId,
-                $newsletterId,
+                $result,
+                $result,
                 $settings['mail']
             );
 
             return $this->redirectMessages()->setMessage($result, $text);
         });
+    }
+
+    /**
+     * @param bool $isTest
+     * @param int $id
+     * @param bool $dbResult
+     * @param string $testEmailAddress
+     *
+     * @return array
+     */
+    private function sendTestNewsletter(bool $isTest, int $id, $dbResult, string $testEmailAddress)
+    {
+        if ($isTest === true) {
+            $bool2 = $this->newsletterHelpers->sendNewsletter($id, $testEmailAddress);
+
+            $text = $this->translator->t('newsletter', 'create_success');
+            $result = $dbResult !== false && $bool2 !== false;
+        } else {
+            $text = $this->translator->t('newsletter', 'save_success');
+            $result = $dbResult !== false;
+        }
+
+        if ($result === false) {
+            $text = $this->translator->t('newsletter', 'create_save_error');
+        }
+
+        return [
+            $text,
+            $result,
+        ];
     }
 }

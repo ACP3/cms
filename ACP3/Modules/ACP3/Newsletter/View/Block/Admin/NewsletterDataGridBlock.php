@@ -63,7 +63,7 @@ class NewsletterDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#newsletter-data-grid',
             'resource_path_delete' => 'admin/newsletter/index/delete',
-            'resource_path_edit' => 'admin/newsletter/index/edit',
+            'resource_path_edit' => 'admin/newsletter/index/manage',
         ]);
 
         $grid = $dataGrid->render();

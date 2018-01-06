@@ -1,1 +1,0 @@
-{extends file="asset:newsletter/admin/index.create.tpl"}

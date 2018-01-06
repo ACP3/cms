@@ -17,23 +17,14 @@ services:
       - '@core.context.frontend'
       - '@newsletter.view.block.admin.newsletter_accounts_data_grid_block'
 
-  newsletter.controller.admin.index.create:
-    class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@newsletter.view.block.admin.newsletter_admin_form_block'
-      - '@newsletter.model.newsletters_model'
-      - '@newsletter.validation.admin_form_validation'
-      - '@newsletter.helper.sendnewsletter'
-
   newsletter.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
       - '@newsletter.model.newsletters_model'
 
-  newsletter.controller.admin.index.edit:
-    class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Edit
+  newsletter.controller.admin.index.manage:
+    class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Manage
     arguments:
       - '@core.context.frontend'
       - '@newsletter.view.block.admin.newsletter_admin_form_block'
