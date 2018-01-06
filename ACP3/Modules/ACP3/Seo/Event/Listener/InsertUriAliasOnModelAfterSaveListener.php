@@ -41,7 +41,7 @@ class InsertUriAliasOnModelAfterSaveListener
      */
     public function insertUriAlias(ModelSaveEvent $event)
     {
-        if ($this->acl->hasPermission('admin/seo/index/create')) {
+        if ($this->acl->hasPermission('admin/seo/index/manage')) {
             $formData = $event->getRawData();
 
             if ($event->getModuleName() !== Schema::MODULE_NAME && !empty($formData['seo_uri_pattern'])) {

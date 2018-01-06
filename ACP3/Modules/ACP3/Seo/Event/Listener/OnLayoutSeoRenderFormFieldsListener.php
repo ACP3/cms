@@ -48,7 +48,7 @@ class OnLayoutSeoRenderFormFieldsListener
      */
     public function renderSeoFormFields(TemplateEvent $event)
     {
-        if ($this->acl->hasPermission('admin/seo/index/create')) {
+        if ($this->acl->hasPermission('admin/seo/index/manage')) {
             $parameters = $event->getParameters();
 
             $formFields = \array_merge(

@@ -41,7 +41,7 @@ class OnSeoValidationValidateUriAlias
      */
     public function validateUriAlias(FormValidationEvent $event)
     {
-        if ($this->acl->hasPermission('admin/seo/index/create')) {
+        if ($this->acl->hasPermission('admin/seo/index/manage')) {
             $event
                 ->getValidator()
                 ->addConstraint(
