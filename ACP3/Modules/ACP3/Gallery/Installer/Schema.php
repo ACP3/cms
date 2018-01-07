@@ -27,10 +27,9 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                     'settings' => PrivilegeEnum::ADMIN_SETTINGS,
                 ],
                 'pictures' => [
-                    'create' => PrivilegeEnum::ADMIN_CREATE,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
-                    'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'index' => PrivilegeEnum::ADMIN_VIEW,
+                    'manage' => PrivilegeEnum::ADMIN_EDIT,
                     'order' => PrivilegeEnum::ADMIN_CREATE,
                 ],
             ],

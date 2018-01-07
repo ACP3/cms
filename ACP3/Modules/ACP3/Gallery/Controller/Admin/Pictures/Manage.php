@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Manage extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Helpers
@@ -29,6 +29,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var Core\View\Block\RepositoryAwareFormBlockInterface
      */
     private $block;
+    /**
+     * @var Gallery\Model\Repository\GalleryRepository
+     */
+    private $galleryRepository;
 
     /**
      * Edit constructor.
@@ -36,6 +40,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
      * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
+     * @param Gallery\Model\Repository\GalleryRepository $galleryRepository
      * @param Gallery\Model\GalleryPicturesModel $pictureModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
@@ -43,6 +48,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Gallery\Helpers $galleryHelpers,
+        Gallery\Model\Repository\GalleryRepository $galleryRepository,
         Gallery\Model\GalleryPicturesModel $pictureModel,
         Gallery\Validation\PictureFormValidation $pictureFormValidation
     ) {
@@ -52,38 +58,45 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->pictureFormValidation = $pictureFormValidation;
         $this->pictureModel = $pictureModel;
         $this->block = $block;
+        $this->galleryRepository = $galleryRepository;
     }
 
     /**
      * @param int $id
-     *
+     * @param int|null $galleryId
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute(int $id)
+    public function execute(?int $id, ?int $galleryId)
     {
+        if ($galleryId !== null && $this->galleryRepository->galleryExists($galleryId) === false) {
+            throw new Core\Controller\Exception\ResultNotExistsException();
+        }
+
         return $this->block
+            ->setData(['gallery_id' => $galleryId])
             ->setDataById($id)
             ->setRequestData($this->request->getPost()->all())
             ->render();
     }
 
     /**
-     * @param int $id
-     *
+     * @param int|null $id
+     * @param int|null $galleryId
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost(int $id)
+    public function executePost(?int $id, ?int $galleryId)
     {
-        $picture = $this->pictureModel->getOneById($id);
+        $picture = $id !== null ? $this->pictureModel->getOneById($id) : [];
 
         return $this->actionHelper->handleSaveAction(
-            function () use ($picture, $id) {
+            function () use ($picture, $id, $galleryId) {
                 $formData = $this->request->getPost()->all();
                 /** @var UploadedFile $file */
                 $file = $this->request->getFiles()->get('file');
 
                 $this->pictureFormValidation
-                    ->setFileRequired(false)
+                    ->setFileRequired(empty($picture) && $galleryId !== null)
                     ->setFile($file)
                     ->validate([]);
 
@@ -91,16 +104,18 @@ class Edit extends Core\Controller\AbstractFrontendAction
                     $upload = new Core\Helpers\Upload($this->appPath, Gallery\Installer\Schema::MODULE_NAME);
                     $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
 
-                    $this->galleryHelpers->removePicture($picture['file']);
+                    if (!empty($picture)) {
+                        $this->galleryHelpers->removePicture($picture['file']);
+                    }
 
                     $formData['file'] = $result['name'];
                 }
 
-                $formData['gallery_id'] = $picture['gallery_id'];
+                $formData['gallery_id'] = $picture['gallery_id'] ?? $galleryId;
 
                 return $this->pictureModel->save($formData, $id);
             },
-            'acp/gallery/pictures/index/id_' . $picture['gallery_id']
+            'acp/gallery/pictures/index/id_' . ($picture['gallery_id'] ?? $galleryId)
         );
     }
 }

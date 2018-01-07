@@ -59,10 +59,18 @@ class GalleryPictureManageFormBlock extends AbstractRepositoryAwareFormBlock
     {
         $data = $this->getData();
 
+        $this->setTemplate(
+            $this->getId() ? 'Gallery/Admin/pictures.manage_with_id.tpl' : 'Gallery/Admin/pictures.manage.tpl'
+        );
+
         $galleryTitle = $this->galleryRepository->getGalleryTitle($data['gallery_id']);
 
         $this->breadcrumb
             ->append($galleryTitle, 'acp/gallery/pictures/index/id_' . $data['gallery_id']);
+
+        $this->breadcrumb->setLastStepReplacement(
+            $this->translator->t('gallery', !$this->getId() ? 'admin_pictures_create' : 'admin_pictures_edit')
+        );
 
         if (!empty($data['pic'])) {
             $this->breadcrumb

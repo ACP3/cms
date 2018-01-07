@@ -3,7 +3,7 @@
 {$DELETE_ROUTE={uri args="acp/gallery/pictures/delete/id_$gallery_id"}}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/gallery/pictures/create/id_`$gallery_id`" class="glyphicon glyphicon-plus text-success"}
+    {check_access mode="link" path="acp/gallery/pictures/manage/galleryId_`$gallery_id`" class="glyphicon glyphicon-plus text-success"}
     {if $show_mass_delete_button}
         {check_access mode="button" path="acp/gallery/pictures/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
     {/if}

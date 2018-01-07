@@ -103,7 +103,7 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#gallery-pictures-data-grid',
             'resource_path_delete' => 'admin/gallery/pictures/delete/id_' . $data['gallery_id'],
-            'resource_path_edit' => 'admin/gallery/pictures/edit',
+            'resource_path_edit' => 'admin/gallery/pictures/manage',
             'query_options' => [
                 new DataGrid\QueryOption('gallery_id', $data['gallery_id']),
             ],

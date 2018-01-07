@@ -38,6 +38,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@gallery.view.block.admin.gallery_picture_manage_form_block'
+      - '@gallery.helpers'
       - '@gallery.model.repository.galleries_repository'
       - '@gallery.model.gallery_pictures_model'
       - '@gallery.validation.picture_form_validation'
@@ -52,12 +53,13 @@ services:
     calls:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
-  gallery.controller.admin.pictures.edit:
-    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Edit
+  gallery.controller.admin.pictures.manage:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Manage
     arguments:
       - '@core.context.frontend'
       - '@gallery.view.block.admin.gallery_picture_manage_form_block'
       - '@gallery.helpers'
+      - '@gallery.model.repository.galleries_repository'
       - '@gallery.model.gallery_pictures_model'
       - '@gallery.validation.picture_form_validation'
 
