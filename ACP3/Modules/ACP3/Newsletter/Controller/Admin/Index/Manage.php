@@ -30,7 +30,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
     private $newsletterHelpers;
 
     /**
-     * Edit constructor.
+     * Manage constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\RepositoryAwareFormBlockInterface $block

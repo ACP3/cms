@@ -35,7 +35,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
     private $galleryRepository;
 
     /**
-     * Edit constructor.
+     * Manage constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\RepositoryAwareFormBlockInterface $block

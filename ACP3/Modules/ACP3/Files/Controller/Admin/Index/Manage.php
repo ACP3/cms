@@ -37,7 +37,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
     private $categoriesHelpers;
 
     /**
-     * Edit constructor.
+     * Manage constructor.
      * @param Core\Controller\Context\FrontendContext $context
      * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
      * @param Files\Model\FilesModel $filesModel

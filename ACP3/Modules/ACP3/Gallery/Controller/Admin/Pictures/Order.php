@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
+use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository;
 
 class Order extends Core\Controller\AbstractFrontendAction
 {
@@ -21,22 +22,22 @@ class Order extends Core\Controller\AbstractFrontendAction
      */
     protected $galleryCache;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository
+     * @var GalleryPicturesRepository
      */
     protected $pictureRepository;
 
     /**
      * Order constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
-     * @param \ACP3\Core\Helpers\Sort                            $sortHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage                   $galleryCache
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Helpers\Sort $sortHelper
+     * @param GalleryPicturesRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage $galleryCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Sort $sortHelper,
-        Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository,
+        GalleryPicturesRepository $pictureRepository,
         Gallery\Cache\GalleryCacheStorage $galleryCache
     ) {
         parent::__construct($context);
@@ -47,7 +48,7 @@ class Order extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int    $id
+     * @param int $id
      * @param string $action
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -57,9 +58,9 @@ class Order extends Core\Controller\AbstractFrontendAction
     {
         if (($action === 'up' || $action === 'down') && $this->pictureRepository->pictureExists($id) === true) {
             if ($action === 'up') {
-                $this->sortHelper->up(Gallery\Model\Repository\GalleryPicturesRepository::TABLE_NAME, 'id', 'pic', $id, 'gallery_id');
+                $this->sortHelper->up(GalleryPicturesRepository::TABLE_NAME, 'id', 'pic', $id, 'gallery_id');
             } else {
-                $this->sortHelper->down(Gallery\Model\Repository\GalleryPicturesRepository::TABLE_NAME, 'id', 'pic', $id, 'gallery_id');
+                $this->sortHelper->down(GalleryPicturesRepository::TABLE_NAME, 'id', 'pic', $id, 'gallery_id');
             }
 
             $galleryId = $this->pictureRepository->getGalleryIdFromPictureId($id);
