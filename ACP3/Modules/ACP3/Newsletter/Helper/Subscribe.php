@@ -57,15 +57,15 @@ class Subscribe
     /**
      * Subscribe constructor.
      *
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\I18n\TranslatorInterface $translator
-     * @param \ACP3\Core\Mailer $mailer
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Core\Settings\SettingsInterface $config
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
+     * @param \ACP3\Core\Date                                                             $date
+     * @param \ACP3\Core\I18n\TranslatorInterface                                         $translator
+     * @param \ACP3\Core\Mailer                                                           $mailer
+     * @param \ACP3\Core\Http\RequestInterface                                            $request
+     * @param \ACP3\Core\Router\RouterInterface                                           $router
+     * @param \ACP3\Core\Helpers\StringFormatter                                          $stringFormatter
+     * @param \ACP3\Core\Helpers\Secure                                                   $secureHelper
+     * @param \ACP3\Core\Settings\SettingsInterface                                       $config
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus                          $accountStatusHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository $accountRepository
      */
     public function __construct(
@@ -93,10 +93,10 @@ class Subscribe
     }
 
     /**
-     * Meldet eine E-Mail-Adresse beim Newsletter an
+     * Meldet eine E-Mail-Adresse beim Newsletter an.
      *
      * @param string $emailAddress
-     * @param int $salutation
+     * @param int    $salutation
      * @param string $firstName
      * @param string $lastName
      *
@@ -113,7 +113,7 @@ class Subscribe
 
     /**
      * @param string $emailAddress
-     * @param int $salutation
+     * @param int    $salutation
      * @param string $firstName
      * @param string $lastName
      * @param string $hash
@@ -183,8 +183,8 @@ class Subscribe
     }
 
     /**
-     * @param array $newsletterAccount
-     * @param int $salutation
+     * @param array  $newsletterAccount
+     * @param int    $salutation
      * @param string $firstName
      * @param string $lastName
      * @param string $hash
@@ -211,7 +211,7 @@ class Subscribe
 
     /**
      * @param string $emailAddress
-     * @param int $salutation
+     * @param int    $salutation
      * @param string $firstName
      * @param string $lastName
      * @param string $hash

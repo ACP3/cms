@@ -28,7 +28,7 @@ class UserNameValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -37,7 +37,7 @@ class UserNameValidationRule extends AbstractValidationRule
             $userId = \next($field);
 
             return (!empty($data[$userId]) && $this->integerValidationRule->isValid($data[$userId])) || !empty($data[$userName]);
-        };
+        }
 
         return false;
     }

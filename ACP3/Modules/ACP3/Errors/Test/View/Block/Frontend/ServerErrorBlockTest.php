@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Errors\View\Block\Frontend\ServerErrorBlock;
 class ServerErrorBlockTest extends AbstractBlockTest
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -22,7 +22,7 @@ class ServerErrorBlockTest extends AbstractBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {

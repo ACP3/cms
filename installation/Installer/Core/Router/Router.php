@@ -33,7 +33,7 @@ class Router implements Core\Router\RouterInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function route($path, $isAbsolute = false, $isSecure = null)
     {
@@ -61,6 +61,7 @@ class Router implements Core\Router\RouterInterface
 
     /**
      * @param bool|null $isSecure
+     *
      * @return string
      */
     private function getScheme($isSecure)

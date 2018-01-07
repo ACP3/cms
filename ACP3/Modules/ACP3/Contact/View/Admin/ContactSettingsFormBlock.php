@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Contact\Installer\Schema;
 class ContactSettingsFormBlock extends AbstractSettingsFormBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -24,7 +24,7 @@ class ContactSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

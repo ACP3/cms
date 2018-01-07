@@ -29,8 +29,9 @@ class OnLayoutSeoRenderFormFieldsListener
 
     /**
      * OnLayoutSeoRenderFormFieldsListener constructor.
-     * @param ACLInterface $acl
-     * @param View $view
+     *
+     * @param ACLInterface   $acl
+     * @param View           $view
      * @param MetaFormFields $metaFormFields
      */
     public function __construct(

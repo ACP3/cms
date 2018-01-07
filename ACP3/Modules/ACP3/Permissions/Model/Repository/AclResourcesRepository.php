@@ -15,7 +15,7 @@ class AclResourcesRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'acl_resources';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getOneById(int $entryId)
     {

@@ -90,6 +90,7 @@ abstract class AbstractWidgetAction implements ActionInterface
 
     /**
      * @return $this
+     *
      * @throws Core\ACL\Exception\AccessForbiddenException
      */
     public function preDispatch()
@@ -109,7 +110,7 @@ abstract class AbstractWidgetAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function postDispatch()
     {
@@ -119,7 +120,7 @@ abstract class AbstractWidgetAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function get(string $serviceId)
     {
@@ -127,7 +128,7 @@ abstract class AbstractWidgetAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function display($actionResult): Response
     {
@@ -135,7 +136,7 @@ abstract class AbstractWidgetAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addCustomTemplateVarsBeforeOutput()
     {

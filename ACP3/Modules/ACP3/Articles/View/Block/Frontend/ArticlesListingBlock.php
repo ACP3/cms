@@ -26,9 +26,10 @@ class ArticlesListingBlock extends AbstractListingBlock
 
     /**
      * Listing constructor.
+     *
      * @param ListingBlockContext $context
-     * @param Date $date
-     * @param ArticlesRepository $articleRepository
+     * @param Date                $date
+     * @param ArticlesRepository  $articleRepository
      */
     public function __construct(ListingBlockContext $context, Date $date, ArticlesRepository $articleRepository)
     {
@@ -39,7 +40,7 @@ class ArticlesListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getModuleName(): string
     {
@@ -47,7 +48,7 @@ class ArticlesListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getTotalResults(): int
     {
@@ -55,7 +56,7 @@ class ArticlesListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getResults(int $resultsPerPage): array
     {

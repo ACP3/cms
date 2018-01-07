@@ -32,10 +32,10 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
     /**
      * Unsubscribe constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
-     * @param Core\Helpers\Alerts $alerts
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
+     * @param Core\View\Block\FormBlockInterface                                 $block
+     * @param Core\Helpers\Alerts                                                $alerts
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus                 $accountStatusHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation
      */
     public function __construct(

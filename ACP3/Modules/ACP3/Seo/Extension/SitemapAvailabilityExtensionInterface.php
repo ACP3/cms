@@ -18,6 +18,7 @@ interface SitemapAvailabilityExtensionInterface
 
     /**
      * @param bool|null $isSecure
+     *
      * @return Url[]
      */
     public function getUrls($isSecure = null);

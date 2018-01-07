@@ -30,9 +30,10 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * Index constructor.
+     *
      * @param Core\Controller\Context\FrontendContext $context
-     * @param Core\ACL\ACLInterface $acl
-     * @param Feeds\View\Renderer\FeedGenerator $feedGenerator
+     * @param Core\ACL\ACLInterface                   $acl
+     * @param Feeds\View\Renderer\FeedGenerator       $feedGenerator
      * @param Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
      */
     public function __construct(
@@ -52,6 +53,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @param string $feed
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($feed)

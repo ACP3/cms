@@ -19,6 +19,7 @@ class RolesExistValidationRule extends AbstractValidationRule
 
     /**
      * RolesExistValidationRule constructor.
+     *
      * @param ACLInterface $acl
      */
     public function __construct(ACLInterface $acl)
@@ -27,7 +28,7 @@ class RolesExistValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -41,7 +42,7 @@ class RolesExistValidationRule extends AbstractValidationRule
     /**
      * @param array $roles
      *
-     * @return boolean
+     * @return bool
      */
     protected function aclRolesExist(array $roles)
     {

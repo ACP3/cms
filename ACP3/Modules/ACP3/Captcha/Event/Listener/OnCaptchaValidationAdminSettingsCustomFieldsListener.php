@@ -20,6 +20,7 @@ class OnCaptchaValidationAdminSettingsCustomFieldsListener
 
     /**
      * OnCaptchaValidationAdminSettingsCustomFieldsListener constructor.
+     *
      * @param TranslatorInterface $translator
      */
     public function __construct(TranslatorInterface $translator)
@@ -51,6 +52,7 @@ class OnCaptchaValidationAdminSettingsCustomFieldsListener
 
     /**
      * @param array $formData
+     *
      * @return bool
      */
     private function isRecaptcha(array $formData)

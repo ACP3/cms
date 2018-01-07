@@ -31,9 +31,10 @@ class GalleryPicturesListingBlock extends AbstractBlock
 
     /**
      * GalleryPicturesListingBlock constructor.
-     * @param BlockContext $context
-     * @param SettingsInterface $settings
-     * @param GalleryRepository $galleryRepository
+     *
+     * @param BlockContext        $context
+     * @param SettingsInterface   $settings
+     * @param GalleryRepository   $galleryRepository
      * @param GalleryCacheStorage $galleryCache
      */
     public function __construct(
@@ -50,7 +51,7 @@ class GalleryPicturesListingBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -65,7 +66,7 @@ class GalleryPicturesListingBlock extends AbstractBlock
 
         return [
             'pictures' => $this->galleryCache->getCache($data['gallery_id']),
-            'overlay' => (int)$this->settings->getSettings(Schema::MODULE_NAME)['overlay'],
+            'overlay' => (int) $this->settings->getSettings(Schema::MODULE_NAME)['overlay'],
         ];
     }
 }

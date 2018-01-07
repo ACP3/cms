@@ -26,9 +26,9 @@ class Create extends Core\Controller\AbstractFrontendAction
     private $block;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
-     * @param Comments\Model\CommentsModel $commentsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
+     * @param Core\View\Block\FormBlockInterface                    $block
+     * @param Comments\Model\CommentsModel                          $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $formValidation
      */
     public function __construct(
@@ -46,8 +46,9 @@ class Create extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param string $module
-     * @param int $entryId
+     * @param int    $entryId
      * @param string $redirectUrl
+     *
      * @return array
      */
     public function execute(string $module, int $entryId, string $redirectUrl)
@@ -64,8 +65,9 @@ class Create extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param string $module
-     * @param int $entryId
+     * @param int    $entryId
      * @param string $redirectUrl
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function executePost(string $module, int $entryId, string $redirectUrl)

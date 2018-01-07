@@ -16,9 +16,9 @@ class PollsRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'polls';
 
     /**
-     * @param int $pollId
+     * @param int    $pollId
      * @param string $time
-     * @param bool $multiple
+     * @param bool   $multiple
      *
      * @return bool
      */
@@ -48,18 +48,19 @@ class PollsRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = empty($time) === false ? ' WHERE start <= :time' : '';
 
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
             ['time' => $time]
         );
     }
 
     /**
-     * @param int $userId
+     * @param int    $userId
      * @param string $ipAddress
      * @param string $time
      * @param string $limitStart
      * @param string $resultsPerPage
+     *
      * @return array
      */
     public function getAll($userId = 0, $ipAddress = '', $time = '', $limitStart = '', $resultsPerPage = '')
@@ -75,8 +76,9 @@ class PollsRepository extends Core\Model\Repository\AbstractRepository
 
     /**
      * @param string $time
-     * @param int $userId
+     * @param int    $userId
      * @param string $ipAddress
+     *
      * @return array
      */
     public function getLatestPoll($time, int $userId = 0, string $ipAddress = '')

@@ -38,9 +38,10 @@ class GenerateThumbnailsCommand extends Command
 
     /**
      * CacheGalleryImagesCommand constructor.
-     * @param ThumbnailGenerator $thumbnailGenerator
-     * @param ContainerInterface $container
-     * @param GalleryRepository $galleryRepository
+     *
+     * @param ThumbnailGenerator        $thumbnailGenerator
+     * @param ContainerInterface        $container
+     * @param GalleryRepository         $galleryRepository
      * @param GalleryPicturesRepository $galleryPicturesRepository
      */
     public function __construct(
@@ -58,7 +59,7 @@ class GenerateThumbnailsCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -68,7 +69,7 @@ class GenerateThumbnailsCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -107,6 +108,7 @@ class GenerateThumbnailsCommand extends Command
     /**
      * @param string $pictureFileName
      * @param string $action
+     *
      * @return bool
      */
     private function generateThumbnail(string $pictureFileName, string $action): bool

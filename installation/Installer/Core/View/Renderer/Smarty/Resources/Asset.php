@@ -38,11 +38,11 @@ class Asset extends AbstractResource
     }
 
     /**
-     * fetch template and its modification time from data source
+     * fetch template and its modification time from data source.
      *
-     * @param string $name template name
+     * @param string $name    template name
      * @param string &$source template source
-     * @param integer &$mtime template modification timestamp (epoch)
+     * @param int    &$mtime  template modification timestamp (epoch)
      */
     protected function fetch($name, &$source, &$mtime)
     {
@@ -84,7 +84,7 @@ class Asset extends AbstractResource
     }
 
     /**
-     * compile template from source
+     * compile template from source.
      *
      * @param \Smarty_Internal_Template $_smarty_tpl do not change variable name, is used by compiled template
      *
@@ -119,12 +119,10 @@ class Asset extends AbstractResource
     }
 
     /**
-     * populate Compiled Object with compiled filepath
+     * populate Compiled Object with compiled filepath.
      *
-     * @param \Smarty_Template_Compiled $compiled compiled object
+     * @param \Smarty_Template_Compiled $compiled  compiled object
      * @param \Smarty_Internal_Template $_template template object
-     *
-     * @return void
      */
     public function populateCompiledFilepath(\Smarty_Template_Compiled $compiled, \Smarty_Internal_Template $_template)
     {

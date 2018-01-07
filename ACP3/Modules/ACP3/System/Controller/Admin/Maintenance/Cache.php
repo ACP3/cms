@@ -20,7 +20,8 @@ class Cache extends Core\Controller\AbstractFrontendAction
 
     /**
      * Cache constructor.
-     * @param FrontendContext $context
+     *
+     * @param FrontendContext                $context
      * @param Core\View\Block\BlockInterface $block
      */
     public function __construct(FrontendContext $context, Core\View\Block\BlockInterface $block)

@@ -20,6 +20,7 @@ class OnUsersModelDeleteBeforeListener
 
     /**
      * OnUsersModelDeleteBeforeListener constructor.
+     *
      * @param UserModel $userModel
      */
     public function __construct(UserModel $userModel)
@@ -29,6 +30,7 @@ class OnUsersModelDeleteBeforeListener
 
     /**
      * @param ModelSaveEvent $event
+     *
      * @throws SuperUserNotDeletableException
      */
     public function forbidSuperUserDelete(ModelSaveEvent $event)

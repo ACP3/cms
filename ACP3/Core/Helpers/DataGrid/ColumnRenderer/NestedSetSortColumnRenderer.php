@@ -10,7 +10,7 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 class NestedSetSortColumnRenderer extends SortColumnRenderer
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {

@@ -18,6 +18,7 @@ class UpdateMenusCacheOnModelAfterSaveListener
 
     /**
      * UpdateMenusCacheOnModelAfterSaveListener constructor.
+     *
      * @param MenusCacheStorage $cache
      */
     public function __construct(MenusCacheStorage $cache)

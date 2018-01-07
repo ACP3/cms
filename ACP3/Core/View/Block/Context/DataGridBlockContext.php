@@ -23,8 +23,9 @@ class DataGridBlockContext extends BlockContext
 
     /**
      * DataGridBlockContext constructor.
-     * @param BlockContext $context
-     * @param ResultsPerPage $resultsPerPage
+     *
+     * @param BlockContext       $context
+     * @param ResultsPerPage     $resultsPerPage
      * @param ContainerInterface $container
      */
     public function __construct(

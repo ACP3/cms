@@ -18,6 +18,7 @@ class UpdateResourcesCacheOnModelAfterSaveListener
 
     /**
      * UpdateResourcesCacheOnModelAfterSaveListener constructor.
+     *
      * @param PermissionsCacheStorage $cache
      */
     public function __construct(PermissionsCacheStorage $cache)

@@ -26,8 +26,9 @@ class Settings extends AbstractFrontendAction
 
     /**
      * Settings constructor.
-     * @param FrontendContext $context
-     * @param SettingsFormBlockInterface $block
+     *
+     * @param FrontendContext             $context
+     * @param SettingsFormBlockInterface  $block
      * @param AdminSettingsFormValidation $formValidation
      */
     public function __construct(

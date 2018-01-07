@@ -8,7 +8,7 @@
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 /**
- * Interface ColumnRendererInterface
+ * Interface ColumnRendererInterface.
  */
 interface ColumnRendererInterface
 {
@@ -28,6 +28,7 @@ interface ColumnRendererInterface
 
     /**
      * @param bool $isAjax
+     *
      * @return $this
      */
     public function setIsAjax(bool $isAjax);

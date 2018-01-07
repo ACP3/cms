@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Polls\Validation\ValidationRules\DeleteAllAnswersValidatio
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

@@ -23,7 +23,7 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      */
     public function resultExists(int $categoryId)
     {
-        return (int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = ?", [$categoryId]) > 0;
+        return (int) $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = ?", [$categoryId]) > 0;
     }
 
     /**
@@ -35,7 +35,7 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      */
     public function resultIsDuplicate(string $title, int $moduleId, int $categoryId)
     {
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()} WHERE title = ? AND module_id = ? AND id != ?",
                 [$title, $moduleId, $categoryId]
         ) > 0;
@@ -66,6 +66,7 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
 
     /**
      * @param int $moduleId
+     *
      * @return array
      */
     public function getAllByModuleId(int $moduleId)
@@ -96,7 +97,7 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      */
     public function getModuleIdByCategoryId(int $categoryId)
     {
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             "SELECT `module_id` FROM {$this->getTableName()} WHERE `id` = ?",
             [$categoryId]
         );
@@ -130,7 +131,7 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function fetchAllSortedByBlock(): array
     {
@@ -139,6 +140,7 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
 
     /**
      * @param int $categoryId
+     *
      * @return array
      */
     public function getAllSiblingsAsId(int $categoryId)
@@ -153,6 +155,7 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
 
     /**
      * @param int $categoryId
+     *
      * @return array
      */
     public function getAllDirectSiblings(int $categoryId)
@@ -165,6 +168,7 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
 
     /**
      * @param int $moduleId
+     *
      * @return array
      */
     public function getAllRootCategoriesByModuleId(int $moduleId)
@@ -177,6 +181,7 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
 
     /**
      * @param string $moduleName
+     *
      * @return array
      */
     public function getAllRootCategoriesByModuleName(string $moduleName)

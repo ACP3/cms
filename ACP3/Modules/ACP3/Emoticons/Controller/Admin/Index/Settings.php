@@ -24,8 +24,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\SettingsFormBlockInterface $block
+     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
+     * @param Core\View\Block\SettingsFormBlockInterface                          $block
      * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
@@ -59,9 +59,9 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
-                'width' => (int)$formData['width'],
-                'height' => (int)$formData['height'],
-                'filesize' => (int)$formData['filesize'],
+                'width' => (int) $formData['width'],
+                'height' => (int) $formData['height'],
+                'filesize' => (int) $formData['filesize'],
             ];
 
             return $this->config->saveSettings($data, Emoticons\Installer\Schema::MODULE_NAME);

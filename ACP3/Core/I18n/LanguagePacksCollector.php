@@ -32,9 +32,9 @@ class LanguagePacksCollector
     /**
      * DictionaryCache constructor.
      *
-     * @param \ACP3\Core\Cache\Cache $cache
+     * @param \ACP3\Core\Cache\Cache                 $cache
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules\Vendor $vendors
+     * @param \ACP3\Core\Modules\Vendor              $vendors
      */
     public function __construct(
         Cache $cache,
@@ -47,7 +47,7 @@ class LanguagePacksCollector
     }
 
     /**
-     * Gets the cache for all registered languages
+     * Gets the cache for all registered languages.
      *
      * @return array
      */
@@ -61,7 +61,7 @@ class LanguagePacksCollector
     }
 
     /**
-     * Sets the cache for all registered languages
+     * Sets the cache for all registered languages.
      *
      * @return bool
      */

@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Polls\Validation\ValidationRules;
 class DeleteAllAnswersValidationRule extends AbstractAnswerValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -19,7 +19,7 @@ class DeleteAllAnswersValidationRule extends AbstractAnswerValidationRule
         }
 
         if (\is_array($data)) {
-            list($markedAnswers, ) = $this->validateAnswers($data);
+            list($markedAnswers) = $this->validateAnswers($data);
 
             return \count($data) - $markedAnswers >= 2;
         }

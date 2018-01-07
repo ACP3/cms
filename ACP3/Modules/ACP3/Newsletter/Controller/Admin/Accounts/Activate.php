@@ -20,7 +20,7 @@ class Activate extends Core\Controller\AbstractFrontendAction
     /**
      * Activate constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext      $context
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
      */
     public function __construct(

@@ -29,9 +29,10 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
 
     /**
      * GalleryPicturesDataGridBlock constructor.
+     *
      * @param Context\DataGridBlockContext $context
-     * @param Core\ACL\ACLInterface $acl
-     * @param GalleryRepository $galleryRepository
+     * @param Core\ACL\ACLInterface        $acl
+     * @param GalleryRepository            $galleryRepository
      */
     public function __construct(
         Context\DataGridBlockContext $context,
@@ -45,7 +46,7 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addDataGridColumns(DataGrid $dataGrid)
     {
@@ -90,7 +91,7 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -122,7 +123,7 @@ class GalleryPicturesDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

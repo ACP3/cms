@@ -18,8 +18,8 @@ class CategoriesCacheStorage extends Core\Cache\AbstractCacheStorage
     protected $categoryRepository;
 
     /**
-     * @param \ACP3\Core\Cache\Cache         $cache
-     * @param CategoriesRepository $categoryRepository
+     * @param \ACP3\Core\Cache\Cache $cache
+     * @param CategoriesRepository   $categoryRepository
      */
     public function __construct(
         Core\Cache\Cache $cache,
@@ -31,10 +31,10 @@ class CategoriesCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * Gibt die gecacheten Kategorien des jeweiligen Moduls zurück
+     * Gibt die gecacheten Kategorien des jeweiligen Moduls zurück.
      *
      * @param string $moduleName
-     *  Das jeweilige Modul, für welches die Kategorien geholt werden sollen
+     *                           Das jeweilige Modul, für welches die Kategorien geholt werden sollen
      *
      * @return array
      */
@@ -48,12 +48,12 @@ class CategoriesCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * Erstellt den Cache für die Kategorien eines Moduls
+     * Erstellt den Cache für die Kategorien eines Moduls.
      *
      * @param string $moduleName
-     *  Das Modul, für welches der Kategorien-Cache erstellt werden soll
+     *                           Das Modul, für welches der Kategorien-Cache erstellt werden soll
      *
-     * @return boolean
+     * @return bool
      */
     public function saveCache($moduleName)
     {

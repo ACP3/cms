@@ -34,17 +34,17 @@ class Assets
     protected $libraries;
 
     /**
-     * Checks, whether the current design uses Bootstrap or not
+     * Checks, whether the current design uses Bootstrap or not.
      *
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param Libraries $libraries
+     * @param Libraries                              $libraries
      */
     public function __construct(ApplicationPath $appPath, Libraries $libraries)
     {
         $this->designXml = \simplexml_load_file($appPath->getDesignPathInternal() . 'info.xml');
         $this->libraries = $libraries;
 
-        if (isset($this->designXml->use_bootstrap) && (string)$this->designXml->use_bootstrap === 'true') {
+        if (isset($this->designXml->use_bootstrap) && (string) $this->designXml->use_bootstrap === 'true') {
             $this->enableLibraries(['bootstrap']);
         }
 
@@ -104,7 +104,7 @@ class Assets
     }
 
     /**
-     * Activates frontend libraries
+     * Activates frontend libraries.
      *
      * @param array $libraries
      *

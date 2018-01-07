@@ -30,9 +30,9 @@ class Details extends Core\Controller\AbstractFrontendAction
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\BlockInterface $block
-     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Controller\Context\FrontendContext                         $context
+     * @param Core\View\Block\BlockInterface                                        $block
+     * @param \ACP3\Core\Date                                                       $date
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
      */
     public function __construct(
@@ -52,6 +52,7 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id)

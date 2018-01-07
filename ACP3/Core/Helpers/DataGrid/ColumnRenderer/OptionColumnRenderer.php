@@ -28,9 +28,9 @@ class OptionColumnRenderer extends AbstractColumnRenderer
     protected $optionRenderer;
 
     /**
-     * @param \ACP3\Core\I18n\TranslatorInterface $translator
+     * @param \ACP3\Core\I18n\TranslatorInterface                                            $translator
      * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer $optionRenderer
-     * @param \Symfony\Component\EventDispatcher\EventDispatcher $eventDispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcher                             $eventDispatcher
      */
     public function __construct(
         TranslatorInterface $translator,
@@ -43,7 +43,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {

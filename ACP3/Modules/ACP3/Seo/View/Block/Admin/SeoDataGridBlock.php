@@ -24,8 +24,9 @@ class SeoDataGridBlock extends AbstractDataGridBlock
 
     /**
      * SeoDataGridBlock constructor.
+     *
      * @param Context\DataGridBlockContext $context
-     * @param MetaStatements $metaStatements
+     * @param MetaStatements               $metaStatements
      */
     public function __construct(Context\DataGridBlockContext $context, MetaStatements $metaStatements)
     {
@@ -35,7 +36,7 @@ class SeoDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addDataGridColumns(DataGrid $dataGrid)
     {
@@ -92,7 +93,7 @@ class SeoDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -116,7 +117,7 @@ class SeoDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

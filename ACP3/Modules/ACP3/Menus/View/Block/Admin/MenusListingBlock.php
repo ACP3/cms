@@ -30,10 +30,11 @@ class MenusListingBlock extends AbstractBlock
 
     /**
      * MenusListingBlock constructor.
-     * @param BlockContext $context
-     * @param ACLInterface $acl
+     *
+     * @param BlockContext    $context
+     * @param ACLInterface    $acl
      * @param MenusRepository $menuRepository
-     * @param MenuItemsList $menusHelpers
+     * @param MenuItemsList   $menusHelpers
      */
     public function __construct(
         BlockContext $context,
@@ -48,7 +49,7 @@ class MenusListingBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -90,6 +91,7 @@ class MenusListingBlock extends AbstractBlock
      * @param bool $canDeleteItem
      * @param bool $canEditItem
      * @param bool $canSortItem
+     *
      * @return int
      */
     private function calculateColspan(bool $canDeleteItem, bool $canEditItem, bool $canSortItem): int

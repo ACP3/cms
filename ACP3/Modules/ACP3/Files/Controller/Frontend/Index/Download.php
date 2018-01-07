@@ -32,11 +32,11 @@ class Download extends Core\Controller\AbstractFrontendAction
     protected $filesCache;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext  $context
-     * @param \ACP3\Core\Date                                $date
-     * @param \ACP3\Core\Helpers\StringFormatter             $stringFormatter
+     * @param \ACP3\Core\Controller\Context\FrontendContext             $context
+     * @param \ACP3\Core\Date                                           $date
+     * @param \ACP3\Core\Helpers\StringFormatter                        $stringFormatter
      * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache\FileCacheStorage                 $filesCache
+     * @param \ACP3\Modules\ACP3\Files\Cache\FileCacheStorage           $filesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -55,7 +55,9 @@ class Download extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param int $id
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id)

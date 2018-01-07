@@ -10,7 +10,7 @@ namespace ACP3\Core\View\Block;
 interface SettingsFormBlockInterface extends FormBlockInterface
 {
     /**
-     * Returns the internal name of the module
+     * Returns the internal name of the module.
      *
      * @return string
      */

@@ -21,7 +21,8 @@ class Index extends Core\Controller\AbstractWidgetAction
 
     /**
      * Index constructor.
-     * @param WidgetContext $context
+     *
+     * @param WidgetContext                  $context
      * @param Core\View\Block\BlockInterface $block
      */
     public function __construct(WidgetContext $context, Core\View\Block\BlockInterface $block)

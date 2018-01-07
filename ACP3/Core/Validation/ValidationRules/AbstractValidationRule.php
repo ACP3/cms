@@ -17,7 +17,7 @@ abstract class AbstractValidationRule implements ValidationRuleInterface
     protected $message = '';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getMessage()
     {
@@ -25,7 +25,7 @@ abstract class AbstractValidationRule implements ValidationRuleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setMessage($message)
     {
@@ -35,7 +35,7 @@ abstract class AbstractValidationRule implements ValidationRuleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(Validator $validator, $data, $field = '', array $extra = [])
     {

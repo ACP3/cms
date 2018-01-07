@@ -43,7 +43,7 @@ class ContactFormBlockTest extends AbstractFormBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -51,7 +51,7 @@ class ContactFormBlockTest extends AbstractFormBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {

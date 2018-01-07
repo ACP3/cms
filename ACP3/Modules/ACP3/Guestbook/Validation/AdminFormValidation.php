@@ -30,7 +30,7 @@ class AdminFormValidation extends AbstractFormValidation
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

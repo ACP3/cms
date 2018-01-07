@@ -17,7 +17,7 @@ class CaptchaRegistrar
     protected $availableCaptchas = [];
 
     /**
-     * @param string $serviceId
+     * @param string                    $serviceId
      * @param CaptchaExtensionInterface $captchaExtension
      */
     public function registerCaptcha($serviceId, CaptchaExtensionInterface $captchaExtension)
@@ -35,6 +35,7 @@ class CaptchaRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return bool
      */
     public function hasCaptcha($serviceId)
@@ -44,7 +45,9 @@ class CaptchaRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return CaptchaExtensionInterface
+     *
      * @throws \InvalidArgumentException
      */
     public function getCaptcha($serviceId)

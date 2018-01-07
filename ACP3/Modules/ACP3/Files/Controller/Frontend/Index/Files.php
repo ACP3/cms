@@ -26,8 +26,8 @@ class Files extends Core\Controller\AbstractFrontendAction
     /**
      * Files constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\ListingBlockInterface $block
+     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
+     * @param Core\View\Block\ListingBlockInterface                               $block
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoriesRepository $categoryRepository
      */
     public function __construct(
@@ -45,6 +45,7 @@ class Files extends Core\Controller\AbstractFrontendAction
      * @param int $cat
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $cat)

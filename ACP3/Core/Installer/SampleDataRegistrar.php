@@ -15,7 +15,7 @@ class SampleDataRegistrar
     private $sampleData = [];
 
     /**
-     * @param string $serviceId
+     * @param string              $serviceId
      * @param SampleDataInterface $sampleData
      */
     public function set($serviceId, SampleDataInterface $sampleData)
@@ -33,6 +33,7 @@ class SampleDataRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return bool
      */
     public function has($serviceId)
@@ -42,7 +43,9 @@ class SampleDataRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return SampleDataInterface
+     *
      * @throws \InvalidArgumentException
      */
     public function get($serviceId)

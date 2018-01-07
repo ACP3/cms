@@ -28,10 +28,10 @@ class Single extends Core\Controller\AbstractWidgetAction
     protected $articleRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext $context
-     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Controller\Context\WidgetContext                     $context
+     * @param \ACP3\Core\Date                                                 $date
      * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache\ArticleCacheStorage $articlesCache
+     * @param \ACP3\Modules\ACP3\Articles\Cache\ArticleCacheStorage           $articlesCache
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
@@ -48,11 +48,12 @@ class Single extends Core\Controller\AbstractWidgetAction
 
     /**
      * @param int $id
+     *
      * @return array
      */
     public function execute(int $id)
     {
-        if ($this->articleRepository->resultExists((int)$id, $this->date->getCurrentDateTime()) === true) {
+        if ($this->articleRepository->resultExists((int) $id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable();
 
             return [

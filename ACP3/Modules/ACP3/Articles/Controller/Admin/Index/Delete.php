@@ -19,7 +19,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Articles\Model\ArticlesModel $articlesModel
+     * @param Articles\Model\ArticlesModel                  $articlesModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -34,6 +34,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @param string $action
      *
      * @return mixed
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($action = '')

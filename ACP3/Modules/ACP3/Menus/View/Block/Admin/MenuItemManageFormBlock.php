@@ -32,10 +32,11 @@ class MenuItemManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * MenuItemFormBlock constructor.
-     * @param FormBlockContext $context
+     *
+     * @param FormBlockContext    $context
      * @param MenuItemsRepository $menuItemsRepository
-     * @param Modules $modules
-     * @param MenuItemFormFields $menuItemFormFields
+     * @param Modules             $modules
+     * @param MenuItemFormFields  $menuItemFormFields
      */
     public function __construct(
         FormBlockContext $context,
@@ -62,7 +63,7 @@ class MenuItemManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -133,7 +134,7 @@ class MenuItemManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {
@@ -152,6 +153,7 @@ class MenuItemManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * @param array $menuItem
+     *
      * @return array
      */
     private function getArticles(array $menuItem): array

@@ -21,8 +21,9 @@ class PollManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * PollFormBlock constructor.
-     * @param FormBlockContext $context
-     * @param PollsRepository $pollsRepository
+     *
+     * @param FormBlockContext      $context
+     * @param PollsRepository       $pollsRepository
      * @param PollAnswersRepository $answerRepository
      */
     public function __construct(
@@ -36,7 +37,7 @@ class PollManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -58,6 +59,7 @@ class PollManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * @param int $pollId
+     *
      * @return array
      */
     protected function getAnswers(int $pollId = 0): array
@@ -105,6 +107,7 @@ class PollManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * @param int $useMultipleChoice
+     *
      * @return array
      */
     private function fetchOptions(int $useMultipleChoice): array
@@ -138,7 +141,7 @@ class PollManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

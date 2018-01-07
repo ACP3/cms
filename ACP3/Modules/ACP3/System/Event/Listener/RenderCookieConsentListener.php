@@ -24,8 +24,9 @@ class RenderCookieConsentListener
 
     /**
      * OnLayoutFooterAfterListener constructor.
+     *
      * @param SettingsInterface $settings
-     * @param View $view
+     * @param View              $view
      */
     public function __construct(SettingsInterface $settings, View $view)
     {

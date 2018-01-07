@@ -25,8 +25,9 @@ class PollDetailsBlock extends AbstractBlock
 
     /**
      * PollResultBlock constructor.
-     * @param BlockContext $context
-     * @param PollsRepository $pollRepository
+     *
+     * @param BlockContext          $context
+     * @param PollsRepository       $pollRepository
      * @param PollAnswersRepository $answerRepository
      */
     public function __construct(
@@ -41,7 +42,7 @@ class PollDetailsBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

@@ -25,8 +25,9 @@ class SearchResultsBlock extends AbstractBlock
 
     /**
      * SearchResultsBlock constructor.
-     * @param BlockContext $context
-     * @param ACLInterface $acl
+     *
+     * @param BlockContext                $context
+     * @param ACLInterface                $acl
      * @param SearchAvailabilityRegistrar $availabilityRegistrar
      */
     public function __construct(
@@ -41,7 +42,7 @@ class SearchResultsBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -65,10 +66,11 @@ class SearchResultsBlock extends AbstractBlock
     }
 
     /**
-     * @param array $modules
+     * @param array  $modules
      * @param string $searchTerm
      * @param string $area
      * @param string $sort
+     *
      * @return array
      */
     protected function processSearchResults(array $modules, $searchTerm, $area, $sort)

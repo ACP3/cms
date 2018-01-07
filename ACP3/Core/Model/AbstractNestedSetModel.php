@@ -33,12 +33,13 @@ abstract class AbstractNestedSetModel extends AbstractModel
 
     /**
      * AbstractNestedSetModel constructor.
+     *
      * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param NestedSetRepository $repository
-     * @param Insert $insertOperation
-     * @param Edit $editOperation
-     * @param Delete $deleteOperation
+     * @param DataProcessor            $dataProcessor
+     * @param NestedSetRepository      $repository
+     * @param Insert                   $insertOperation
+     * @param Edit                     $editOperation
+     * @param Delete                   $deleteOperation
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -56,8 +57,9 @@ abstract class AbstractNestedSetModel extends AbstractModel
     }
 
     /**
-     * @param array $rawData
+     * @param array    $rawData
      * @param int|null $entryId
+     *
      * @return bool|int
      */
     public function save(array $rawData, $entryId = null)
@@ -90,6 +92,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
 
     /**
      * @param int|array $entryId
+     *
      * @return int
      */
     public function delete($entryId)
@@ -109,7 +112,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
 
         $affectedRows = 0;
         foreach ($entryId as $item) {
-            $affectedRows += (int)$this->deleteOperation->execute($item);
+            $affectedRows += (int) $this->deleteOperation->execute($item);
         }
 
         $this->dispatchEvent('core.model.before_delete', $entryId, false);

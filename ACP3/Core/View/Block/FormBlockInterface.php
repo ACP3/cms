@@ -21,6 +21,7 @@ interface FormBlockInterface extends BlockInterface
 
     /**
      * @param array $requestData
+     *
      * @return $this
      */
     public function setRequestData(array $requestData);

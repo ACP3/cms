@@ -51,7 +51,7 @@ class CategoryManageFormBlockTest extends AbstractFormBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -59,7 +59,7 @@ class CategoryManageFormBlockTest extends AbstractFormBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {

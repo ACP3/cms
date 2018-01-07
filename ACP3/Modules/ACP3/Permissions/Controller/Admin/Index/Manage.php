@@ -32,10 +32,10 @@ class Manage extends Core\Controller\AbstractFrontendAction
     /**
      * Manage constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param Permissions\Model\AclRolesModel $rolesModel
-     * @param Permissions\Model\AclRulesModel $rulesModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface            $block
+     * @param Permissions\Model\AclRolesModel                              $rolesModel
+     * @param Permissions\Model\AclRulesModel                              $rulesModel
      * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
      */
     public function __construct(
@@ -55,6 +55,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param int|null $id
+     *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function execute(?int $id)

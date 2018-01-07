@@ -55,7 +55,7 @@ class CommentsRepository extends Core\Model\Repository\AbstractRepository implem
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getOneById(int $entryId)
     {
@@ -104,7 +104,7 @@ class CommentsRepository extends Core\Model\Repository\AbstractRepository implem
      */
     public function countAllByModule($moduleId, $resultId)
     {
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ? AND entry_id = ?',
             [$moduleId, $resultId]
         );

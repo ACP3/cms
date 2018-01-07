@@ -19,7 +19,7 @@ class LanguagePackExistsValidationRule extends AbstractValidationRule
     /**
      * LanguagePackExistsValidationRule constructor.
      *
-     * @param AvailableLanguagePacks $availableLanguagePacks
+     * @param AvailableLanguagePacks              $availableLanguagePacks
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
     public function __construct(AvailableLanguagePacks $availableLanguagePacks)
@@ -28,7 +28,7 @@ class LanguagePackExistsValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {

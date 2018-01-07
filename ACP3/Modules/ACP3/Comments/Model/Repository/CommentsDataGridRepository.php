@@ -30,7 +30,7 @@ class CommentsDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
@@ -45,7 +45,7 @@ class CommentsDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addJoin(QueryBuilder $queryBuilder)
     {
@@ -58,7 +58,7 @@ class CommentsDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
     {

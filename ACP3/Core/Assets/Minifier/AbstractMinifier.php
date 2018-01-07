@@ -62,14 +62,14 @@ abstract class AbstractMinifier implements MinifierInterface
     private $logger;
 
     /**
-     * @param LoggerInterface $logger
-     * @param \ACP3\Core\Assets $assets
+     * @param LoggerInterface                        $logger
+     * @param \ACP3\Core\Assets                      $assets
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Cache\Cache $systemCache
-     * @param SettingsInterface $config
-     * @param \ACP3\Core\Modules\Modules $modules
-     * @param \ACP3\Core\Assets\FileResolver $fileResolver
-     * @param string $environment
+     * @param \ACP3\Core\Cache\Cache                 $systemCache
+     * @param SettingsInterface                      $config
+     * @param \ACP3\Core\Modules\Modules             $modules
+     * @param \ACP3\Core\Assets\FileResolver         $fileResolver
+     * @param string                                 $environment
      */
     public function __construct(
         LoggerInterface $logger,
@@ -92,7 +92,7 @@ abstract class AbstractMinifier implements MinifierInterface
     }
 
     /**
-     * Returns the name of the asset group
+     * Returns the name of the asset group.
      *
      * @return string
      */
@@ -127,12 +127,13 @@ abstract class AbstractMinifier implements MinifierInterface
 
     /**
      * @param string $layout
+     *
      * @return array
      */
     abstract protected function processLibraries(string $layout);
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getURI(string $layout = 'layout')
     {
@@ -166,7 +167,7 @@ abstract class AbstractMinifier implements MinifierInterface
     }
 
     /**
-     * @param array $files
+     * @param array  $files
      * @param string $path
      */
     protected function saveMinifiedAsset(array $files, $path)
@@ -190,10 +191,10 @@ abstract class AbstractMinifier implements MinifierInterface
     }
 
     /**
-     * @param bool $debug
+     * @param bool   $debug
      * @param string $group
      * @param string $filenameHash
-     * @param int $lastGenerated
+     * @param int    $lastGenerated
      *
      * @return string
      */

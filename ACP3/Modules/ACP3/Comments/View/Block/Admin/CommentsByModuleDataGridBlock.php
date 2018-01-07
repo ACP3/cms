@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class CommentsByModuleDataGridBlock extends AbstractDataGridBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addDataGridColumns(DataGrid $dataGrid)
     {
@@ -39,7 +39,7 @@ class CommentsByModuleDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -63,7 +63,7 @@ class CommentsByModuleDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

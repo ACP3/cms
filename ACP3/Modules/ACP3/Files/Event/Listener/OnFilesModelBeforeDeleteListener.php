@@ -47,9 +47,10 @@ class OnFilesModelBeforeDeleteListener
 
     /**
      * OnFilesModelBeforeDeleteListener constructor.
-     * @param ApplicationPath $applicationPath
-     * @param Modules $modules
-     * @param FilesRepository $filesRepository
+     *
+     * @param ApplicationPath  $applicationPath
+     * @param Modules          $modules
+     * @param FilesRepository  $filesRepository
      * @param FileCacheStorage $cache
      */
     public function __construct(

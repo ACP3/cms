@@ -18,7 +18,7 @@ class SeoCacheStorage extends Core\Cache\AbstractCacheStorage
     private $seoRepository;
 
     /**
-     * @param \ACP3\Core\Cache\Cache $cache
+     * @param \ACP3\Core\Cache\Cache                                $cache
      * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
@@ -31,7 +31,7 @@ class SeoCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * Gibt den Cache der URI-Aliase zurück
+     * Gibt den Cache der URI-Aliase zurück.
      *
      * @return array
      */
@@ -45,9 +45,9 @@ class SeoCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * Setzt den Cache für die URI-Aliase
+     * Setzt den Cache für die URI-Aliase.
      *
-     * @return boolean
+     * @return bool
      */
     public function saveCache()
     {

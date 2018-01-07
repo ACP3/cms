@@ -26,7 +26,8 @@ class AvailableLanguagePacks
 
     /**
      * AvailableLanguagePacks constructor.
-     * @param ApplicationPath $appPath
+     *
+     * @param ApplicationPath        $appPath
      * @param LanguagePacksCollector $languagePacksCollector
      */
     public function __construct(
@@ -38,11 +39,11 @@ class AvailableLanguagePacks
     }
 
     /**
-     * Checks, whether the given locale exists as a language pack
+     * Checks, whether the given locale exists as a language pack.
      *
      * @param string $locale
      *
-     * @return boolean
+     * @return bool
      */
     public function languagePackExists(string $locale): bool
     {
@@ -51,9 +52,10 @@ class AvailableLanguagePacks
     }
 
     /**
-     * Gets all currently available languages
+     * Gets all currently available languages.
      *
      * @param string $currentLocale
+     *
      * @return array
      */
     public function getAvailableLanguagePacks(string $currentLocale): array

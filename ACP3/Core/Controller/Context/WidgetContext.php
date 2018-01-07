@@ -78,19 +78,20 @@ class WidgetContext
 
     /**
      * WidgetContext constructor.
-     * @param ContainerInterface $container
+     *
+     * @param ContainerInterface       $container
      * @param EventDispatcherInterface $eventDispatcher
-     * @param UserModel $user
-     * @param TranslatorInterface $translator
-     * @param LocaleInterface $locale
-     * @param Modules $modules
-     * @param RequestInterface $request
-     * @param RouterInterface $router
-     * @param View $view
-     * @param SettingsInterface $config
-     * @param ApplicationPath $appPath
-     * @param Response $response
-     * @param ActionResultFactory $actionResultFactory
+     * @param UserModel                $user
+     * @param TranslatorInterface      $translator
+     * @param LocaleInterface          $locale
+     * @param Modules                  $modules
+     * @param RequestInterface         $request
+     * @param RouterInterface          $router
+     * @param View                     $view
+     * @param SettingsInterface        $config
+     * @param ApplicationPath          $appPath
+     * @param Response                 $response
+     * @param ActionResultFactory      $actionResultFactory
      */
     public function __construct(
         ContainerInterface $container,

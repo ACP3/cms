@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Files\Installer;
 class Migration extends \ACP3\Core\Installer\AbstractMigration
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function schemaUpdates()
     {
@@ -100,7 +100,7 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function renameModule()
     {

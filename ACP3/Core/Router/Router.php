@@ -35,8 +35,9 @@ class Router implements RouterInterface
 
     /**
      * Router constructor.
-     * @param RequestInterface $request
-     * @param ApplicationPath $appPath
+     *
+     * @param RequestInterface  $request
+     * @param ApplicationPath   $appPath
      * @param SettingsInterface $config
      * @param $environment
      */
@@ -53,7 +54,7 @@ class Router implements RouterInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function route($path, $isAbsolute = false, $isSecure = null)
     {
@@ -139,6 +140,7 @@ class Router implements RouterInterface
 
     /**
      * @param bool|null $isSecure
+     *
      * @return string
      */
     private function getScheme($isSecure)
@@ -153,7 +155,7 @@ class Router implements RouterInterface
     }
 
     /**
-     * Check, whether to use urls with mod_rewrite or not
+     * Check, whether to use urls with mod_rewrite or not.
      *
      * @param string $path
      *
@@ -161,7 +163,7 @@ class Router implements RouterInterface
      */
     protected function useModRewrite($path)
     {
-        return (bool)$this->config->getSettings(System\Installer\Schema::MODULE_NAME)['mod_rewrite'] === true &&
+        return (bool) $this->config->getSettings(System\Installer\Schema::MODULE_NAME)['mod_rewrite'] === true &&
         $this->isAdminUri($path) === false;
     }
 }

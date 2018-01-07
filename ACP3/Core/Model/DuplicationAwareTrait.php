@@ -13,6 +13,7 @@ trait DuplicationAwareTrait
 {
     /**
      * @param int $entryId
+     *
      * @return bool|int
      */
     public function duplicate($entryId)
@@ -32,8 +33,9 @@ trait DuplicationAwareTrait
     abstract protected function getRepository();
 
     /**
-     * @param array $rawData
+     * @param array    $rawData
      * @param null|int $entryId
+     *
      * @return int|bool
      */
     abstract public function save(array $rawData, $entryId = null);

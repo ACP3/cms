@@ -28,9 +28,9 @@ class Edit extends Core\Controller\AbstractFrontendAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param Emoticons\Model\EmoticonsModel $emoticonsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface           $block
+     * @param Emoticons\Model\EmoticonsModel                              $emoticonsModel
      * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(

@@ -28,10 +28,11 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 
     /**
      * SitemapAvailabilityExtension constructor.
-     * @param Date $date
+     *
+     * @param Date            $date
      * @param RouterInterface $router
-     * @param NewsRepository $newsRepository
-     * @param MetaStatements $metaStatements
+     * @param NewsRepository  $newsRepository
+     * @param MetaStatements  $metaStatements
      */
     public function __construct(
         Date $date,
@@ -54,7 +55,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function fetchSitemapUrls($isSecure = null)
     {

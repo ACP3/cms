@@ -27,9 +27,9 @@ class CheckAccess
     /**
      * CheckAccess constructor.
      *
-     * @param \ACP3\Core\ACL\ACLInterface $acl
+     * @param \ACP3\Core\ACL\ACLInterface         $acl
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
-     * @param \ACP3\Core\Router\RouterInterface $router
+     * @param \ACP3\Core\Router\RouterInterface   $router
      */
     public function __construct(
         Core\ACL\ACLInterface $acl,
@@ -81,9 +81,9 @@ class CheckAccess
     }
 
     /**
-     * @param array $params
+     * @param array    $params
      * @param string[] $action
-     * @param string $area
+     * @param string   $area
      *
      * @return array
      */

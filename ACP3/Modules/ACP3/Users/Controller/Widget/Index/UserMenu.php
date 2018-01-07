@@ -21,7 +21,8 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
 
     /**
      * UserMenu constructor.
-     * @param WidgetContext $context
+     *
+     * @param WidgetContext                  $context
      * @param Core\View\Block\BlockInterface $block
      */
     public function __construct(WidgetContext $context, Core\View\Block\BlockInterface $block)
@@ -32,7 +33,7 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * Displays the user menu, if the user is logged in
+     * Displays the user menu, if the user is logged in.
      *
      * @return array|bool
      */

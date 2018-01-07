@@ -28,10 +28,11 @@ class Manage extends AbstractFrontendAction
 
     /**
      * Create constructor.
-     * @param Core\Controller\Context\FrontendContext $context
+     *
+     * @param Core\Controller\Context\FrontendContext           $context
      * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param Articles\Model\ArticlesModel $articlesModel
-     * @param Articles\Validation\AdminFormValidation $adminFormValidation
+     * @param Articles\Model\ArticlesModel                      $articlesModel
+     * @param Articles\Validation\AdminFormValidation           $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -61,6 +62,7 @@ class Manage extends AbstractFrontendAction
 
     /**
      * @param int|null $id
+     *
      * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function executePost(?int $id)

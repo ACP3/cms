@@ -32,6 +32,7 @@ class SchemaRegistrar
 
     /**
      * @param string $moduleName
+     *
      * @return bool
      */
     public function has($moduleName)
@@ -41,7 +42,9 @@ class SchemaRegistrar
 
     /**
      * @param string $moduleName
+     *
      * @return SchemaInterface
+     *
      * @throws \InvalidArgumentException
      */
     public function get($moduleName)

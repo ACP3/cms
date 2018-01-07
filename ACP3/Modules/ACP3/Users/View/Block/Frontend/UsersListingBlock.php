@@ -21,8 +21,9 @@ class UsersListingBlock extends AbstractListingBlock
 
     /**
      * UsersListingBlock constructor.
+     *
      * @param ListingBlockContext $context
-     * @param UsersRepository $userRepository
+     * @param UsersRepository     $userRepository
      */
     public function __construct(ListingBlockContext $context, UsersRepository $userRepository)
     {
@@ -32,7 +33,7 @@ class UsersListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getModuleName(): string
     {
@@ -40,7 +41,7 @@ class UsersListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getTotalResults(): int
     {
@@ -48,7 +49,7 @@ class UsersListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getResults(int $resultsPerPage): array
     {
@@ -59,7 +60,7 @@ class UsersListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

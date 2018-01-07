@@ -42,9 +42,10 @@ class RedirectMessages
     }
 
     /**
-     * Gets the generated redirect message from setMessage()
+     * Gets the generated redirect message from setMessage().
      *
      * @return array|null
+     *
      * @throws \Exception
      */
     public function getMessage()
@@ -58,7 +59,7 @@ class RedirectMessages
     }
 
     /**
-     * Sets a redirect messages and redirects to the given internal path
+     * Sets a redirect messages and redirects to the given internal path.
      *
      * @param int|bool    $success
      * @param string      $text
@@ -71,7 +72,7 @@ class RedirectMessages
         $this->sessionHandler->set(
             'redirect_message',
             [
-                'success' => \is_int($success) ? true : (bool)$success,
+                'success' => \is_int($success) ? true : (bool) $success,
                 'text' => $text,
             ]
         );

@@ -44,6 +44,7 @@ class Sort extends AbstractOperation
      * @param array $nodes
      *
      * @return bool
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function sortUp(array $nodes)
@@ -63,6 +64,7 @@ class Sort extends AbstractOperation
      * @param array $nodes
      *
      * @return bool
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function sortDown(array $nodes)
@@ -98,6 +100,7 @@ class Sort extends AbstractOperation
      * @param array $nodes
      *
      * @return int
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function updateNodesDown($diff, array $nodes)
@@ -114,6 +117,7 @@ class Sort extends AbstractOperation
      * @param array $nodes
      *
      * @return int
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function moveNodesUp($diff, array $nodes)

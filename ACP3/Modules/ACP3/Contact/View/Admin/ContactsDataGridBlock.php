@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ContactsDataGridBlock extends AbstractDataGridBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addDataGridColumns(DataGrid $dataGrid)
     {
@@ -46,7 +46,7 @@ class ContactsDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -67,7 +67,7 @@ class ContactsDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

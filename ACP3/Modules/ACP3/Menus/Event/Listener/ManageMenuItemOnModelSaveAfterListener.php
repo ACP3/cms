@@ -24,8 +24,9 @@ class ManageMenuItemOnModelSaveAfterListener
 
     /**
      * ManageMenuItemOnModelSaveAfterListener constructor.
+     *
      * @param ACL\ACLInterface $acl
-     * @param ManageMenuItem $menuItemManager
+     * @param ManageMenuItem   $menuItemManager
      */
     public function __construct(ACL\ACLInterface $acl, ManageMenuItem $menuItemManager)
     {
@@ -42,7 +43,7 @@ class ManageMenuItemOnModelSaveAfterListener
             $data = [
                 'mode' => 4,
                 'block_id' => $formData['block_id'],
-                'parent_id' => (int)$formData['parent_id'],
+                'parent_id' => (int) $formData['parent_id'],
                 'display' => $formData['display'],
                 'title' => $formData['menu_item_title'],
                 'target' => 1,
@@ -58,6 +59,7 @@ class ManageMenuItemOnModelSaveAfterListener
 
     /**
      * @param array $formData
+     *
      * @return bool
      */
     private function hasNecessaryMenuItemFormFields(array $formData)

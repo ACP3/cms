@@ -19,6 +19,7 @@ class UpdatePictureCacheOnModelAfterSaveListener
 
     /**
      * UpdatePictureCacheOnModelAfterSaveListener constructor.
+     *
      * @param GalleryCacheStorage $cache
      */
     public function __construct(GalleryCacheStorage $cache)

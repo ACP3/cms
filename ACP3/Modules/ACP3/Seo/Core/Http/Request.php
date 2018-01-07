@@ -20,7 +20,7 @@ class Request extends \ACP3\Core\Http\Request
     /**
      * Request constructor.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $symfonyRequest
+     * @param \Symfony\Component\HttpFoundation\Request             $symfonyRequest
      * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
@@ -42,7 +42,7 @@ class Request extends \ACP3\Core\Http\Request
     }
 
     /**
-     * Checks, whether the current request may equals an uri alias
+     * Checks, whether the current request may equals an uri alias.
      */
     protected function checkForUriAlias()
     {
@@ -56,7 +56,7 @@ class Request extends \ACP3\Core\Http\Request
     }
 
     /**
-     * Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
+     * Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde.
      *
      * @return string[]
      */

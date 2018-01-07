@@ -29,9 +29,10 @@ class MessageProcessor
 
     /**
      * MessageProcessor constructor.
-     * @param InlineStyle $inlineStyle
+     *
+     * @param InlineStyle     $inlineStyle
      * @param StringFormatter $stringFormatter
-     * @param View $view
+     * @param View            $view
      */
     public function __construct(
         InlineStyle $inlineStyle,
@@ -44,11 +45,10 @@ class MessageProcessor
     }
 
     /**
-     * Parses and generates the E-mail subject and body
+     * Parses and generates the E-mail subject and body.
      *
-     * @param PHPMailer $phpMailer
+     * @param PHPMailer     $phpMailer
      * @param MailerMessage $message
-     * @return void
      */
     public function process(PHPMailer $phpMailer, MailerMessage $message)
     {
@@ -65,6 +65,7 @@ class MessageProcessor
 
     /**
      * @param string $subject
+     *
      * @return string
      */
     private function encodeSubject(string $subject): string
@@ -74,6 +75,7 @@ class MessageProcessor
 
     /**
      * @param string $data
+     *
      * @return string
      */
     private function decodeHtmlEntities(string $data): string
@@ -82,7 +84,7 @@ class MessageProcessor
     }
 
     /**
-     * @param PHPMailer $phpMailer
+     * @param PHPMailer     $phpMailer
      * @param MailerMessage $message
      */
     private function processHtmlEmail(PHPMailer $phpMailer, MailerMessage $message)
@@ -118,6 +120,7 @@ class MessageProcessor
 
     /**
      * @param string $signature
+     *
      * @return string
      */
     private function getHtmlSignature(string $signature): string
@@ -135,7 +138,8 @@ class MessageProcessor
 
     /**
      * @param PHPMailer $phpMailer
-     * @param string $signature
+     * @param string    $signature
+     *
      * @return string
      */
     private function getTextSignature(PHPMailer $phpMailer, string $signature): string

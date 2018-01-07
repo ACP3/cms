@@ -17,7 +17,7 @@ class NewsletterAccountsDataGridRepository extends AbstractDataGridRepository
     const TABLE_NAME = NewsletterAccountsRepository::TABLE_NAME;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions)
     {
@@ -27,7 +27,7 @@ class NewsletterAccountsDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getParameters(QueryOption ...$queryOptions)
     {

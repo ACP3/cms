@@ -46,7 +46,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
     }
 
     /**
-     * Set monolog as the default PHP error handler
+     * Set monolog as the default PHP error handler.
      */
     public function setErrorHandler()
     {
@@ -54,7 +54,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getContainer()
     {
@@ -70,7 +70,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
     }
 
     /**
-     * Checks, whether the database configuration file exists
+     * Checks, whether the database configuration file exists.
      *
      * @return bool
      */

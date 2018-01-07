@@ -8,12 +8,12 @@
 namespace ACP3\Core\WYSIWYG\Editor;
 
 /**
- * Implementation of the AbstractWYSIWYG class for a simple textarea
+ * Implementation of the AbstractWYSIWYG class for a simple textarea.
  */
 class Textarea extends AbstractWYSIWYG
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getFriendlyName()
     {
@@ -21,18 +21,18 @@ class Textarea extends AbstractWYSIWYG
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setParameters(array $params = [])
     {
         $this->id = $params['id'];
         $this->name = $params['name'];
         $this->value = $params['value'];
-        $this->advanced = isset($params['advanced']) ? (bool)$params['advanced'] : false;
+        $this->advanced = isset($params['advanced']) ? (bool) $params['advanced'] : false;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getData()
     {
@@ -49,7 +49,7 @@ class Textarea extends AbstractWYSIWYG
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid()
     {

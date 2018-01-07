@@ -57,7 +57,7 @@ class CaptchaSettingsFormBlockTest extends AbstractFormBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -65,7 +65,7 @@ class CaptchaSettingsFormBlockTest extends AbstractFormBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {

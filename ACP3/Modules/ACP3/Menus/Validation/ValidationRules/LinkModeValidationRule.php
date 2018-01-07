@@ -30,7 +30,7 @@ class LinkModeValidationRule extends AbstractValidationRule
     /**
      * LinkModeValidationRule constructor.
      *
-     * @param \ACP3\Core\Modules\Modules                                              $modules
+     * @param \ACP3\Core\Modules\Modules                                      $modules
      * @param \ACP3\Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule
      */
     public function __construct(
@@ -54,7 +54,7 @@ class LinkModeValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {

@@ -63,7 +63,7 @@ class FileManageFormBlockTest extends AbstractFormBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -77,7 +77,7 @@ class FileManageFormBlockTest extends AbstractFormBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {

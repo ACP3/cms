@@ -24,8 +24,8 @@ class Image extends Core\Controller\AbstractFrontendAction
     /**
      * Image constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Gallery\Helper\ThumbnailGenerator $thumbnailGenerator
+     * @param \ACP3\Core\Controller\Context\FrontendContext                         $context
+     * @param Gallery\Helper\ThumbnailGenerator                                     $thumbnailGenerator
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
      */
     public function __construct(
@@ -44,6 +44,7 @@ class Image extends Core\Controller\AbstractFrontendAction
      * @param string $action
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id, string $action = '')

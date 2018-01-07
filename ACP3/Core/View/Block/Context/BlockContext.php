@@ -33,9 +33,10 @@ class BlockContext
 
     /**
      * TemplateContext constructor.
-     * @param View $view
-     * @param Steps $steps
-     * @param Title $title
+     *
+     * @param View                $view
+     * @param Steps               $steps
+     * @param Title               $title
      * @param TranslatorInterface $translator
      */
     public function __construct(View $view, Steps $steps, Title $title, TranslatorInterface $translator)

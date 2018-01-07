@@ -28,7 +28,7 @@ class MoveToHead extends AbstractMoveElementFilter
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -36,7 +36,7 @@ class MoveToHead extends AbstractMoveElementFilter
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process($tplOutput, \Smarty_Internal_Template $smarty)
     {

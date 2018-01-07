@@ -17,7 +17,7 @@ class NewsDataGridRepository extends AbstractDataGridRepository
     const TABLE_NAME = NewsRepository::TABLE_NAME;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
@@ -28,7 +28,7 @@ class NewsDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addJoin(QueryBuilder $queryBuilder)
     {
@@ -41,7 +41,7 @@ class NewsDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
     {

@@ -18,6 +18,7 @@ class DataProcessor
 
     /**
      * DataProcessor constructor.
+     *
      * @param ColumnTypeStrategyFactory $factory
      */
     public function __construct(ColumnTypeStrategyFactory $factory)
@@ -28,6 +29,7 @@ class DataProcessor
     /**
      * @param array $columnData
      * @param array $columnConstraints
+     *
      * @return array
      */
     public function processColumnData(array $columnData, array $columnConstraints)

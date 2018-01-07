@@ -57,14 +57,15 @@ class InstallerContext
 
     /**
      * InstallerContext constructor.
-     * @param ContainerInterface $container
+     *
+     * @param ContainerInterface  $container
      * @param TranslatorInterface $translator
-     * @param LocaleInterface $locale
-     * @param RequestInterface $request
-     * @param RouterInterface $router
-     * @param \ACP3\Core\View $view
-     * @param Response $response
-     * @param ApplicationPath $appPath
+     * @param LocaleInterface     $locale
+     * @param RequestInterface    $request
+     * @param RouterInterface     $router
+     * @param \ACP3\Core\View     $view
+     * @param Response            $response
+     * @param ApplicationPath     $appPath
      * @param ActionResultFactory $actionResultFactory
      */
     public function __construct(

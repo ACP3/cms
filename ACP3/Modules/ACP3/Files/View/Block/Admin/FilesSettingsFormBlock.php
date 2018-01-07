@@ -27,8 +27,9 @@ class FilesSettingsFormBlock extends AbstractSettingsFormBlock
 
     /**
      * FilesSettingsFormBlock constructor.
-     * @param FormBlockContext $context
-     * @param Date $dateHelper
+     *
+     * @param FormBlockContext  $context
+     * @param Date              $dateHelper
      * @param SettingsInterface $settings
      */
     public function __construct(FormBlockContext $context, Date $dateHelper, SettingsInterface $settings)
@@ -40,6 +41,7 @@ class FilesSettingsFormBlock extends AbstractSettingsFormBlock
 
     /**
      * @param Helpers|null $commentsHelpers
+     *
      * @return $this
      */
     public function setCommentsHelpers(Helpers $commentsHelpers)
@@ -50,7 +52,7 @@ class FilesSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -64,7 +66,7 @@ class FilesSettingsFormBlock extends AbstractSettingsFormBlock
         return [
             'order_by' => $this->forms->choicesGenerator('order_by', $orderBy, $data['order_by']),
             'dateformat' => $this->dateHelper->dateFormatDropdown($data['dateformat']),
-            'sidebar_entries' => $this->forms->recordsPerPage((int)$data['sidebar'], 1, 10, 'sidebar'),
+            'sidebar_entries' => $this->forms->recordsPerPage((int) $data['sidebar'], 1, 10, 'sidebar'),
             'form_token' => $this->formToken->renderFormToken(),
             'comments' => $this->fetchOptions($data),
         ];
@@ -72,6 +74,7 @@ class FilesSettingsFormBlock extends AbstractSettingsFormBlock
 
     /**
      * @param array $settings
+     *
      * @return array
      */
     private function fetchOptions(array $settings): array
@@ -84,7 +87,7 @@ class FilesSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

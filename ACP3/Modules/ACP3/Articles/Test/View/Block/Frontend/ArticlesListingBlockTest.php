@@ -46,7 +46,7 @@ class ArticlesListingBlockTest extends AbstractListingBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -54,7 +54,7 @@ class ArticlesListingBlockTest extends AbstractListingBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {
@@ -65,7 +65,7 @@ class ArticlesListingBlockTest extends AbstractListingBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedModuleName(): string
     {

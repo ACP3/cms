@@ -46,14 +46,14 @@ class Register extends Core\Controller\AbstractFrontendAction
     /**
      * Register constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param Core\Helpers\Alerts $alerts
-     * @param Users\Model\UsersModel $usersModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
+     * @param Core\View\Block\FormBlockInterface                             $block
+     * @param \ACP3\Core\Helpers\Secure                                      $secureHelper
+     * @param Core\Helpers\Alerts                                            $alerts
+     * @param Users\Model\UsersModel                                         $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation $registrationFormValidation
-     * @param \ACP3\Modules\ACP3\Permissions\Helpers $permissionsHelpers
-     * @param \ACP3\Core\Helpers\SendEmail $sendEmail
+     * @param \ACP3\Modules\ACP3\Permissions\Helpers                         $permissionsHelpers
+     * @param \ACP3\Core\Helpers\SendEmail                                   $sendEmail
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -135,6 +135,7 @@ class Register extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param array $formData
+     *
      * @return bool
      */
     protected function sendRegistrationEmail(array $formData)

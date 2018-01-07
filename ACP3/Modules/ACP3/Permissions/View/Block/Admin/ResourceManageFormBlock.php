@@ -27,9 +27,10 @@ class ResourceManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * ResourceFormBlock constructor.
-     * @param FormBlockContext $context
-     * @param AclResourcesRepository $aclResourcesRepository
-     * @param Modules $modules
+     *
+     * @param FormBlockContext        $context
+     * @param AclResourcesRepository  $aclResourcesRepository
+     * @param Modules                 $modules
      * @param AclPrivilegesRepository $privilegeRepository
      */
     public function __construct(
@@ -45,7 +46,7 @@ class ResourceManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -74,6 +75,7 @@ class ResourceManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * @param int $privilegeId
+     *
      * @return array
      */
     private function fetchPrivileges(int $privilegeId): array
@@ -93,6 +95,7 @@ class ResourceManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * @param string $currentModule
+     *
      * @return array
      */
     private function fetchActiveModules(string $currentModule = ''): array
@@ -111,6 +114,7 @@ class ResourceManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * @param string $currentArea
+     *
      * @return array
      */
     private function fetchAreas(string $currentArea = ''): array
@@ -121,7 +125,7 @@ class ResourceManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

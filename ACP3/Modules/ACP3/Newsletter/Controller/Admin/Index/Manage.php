@@ -32,11 +32,11 @@ class Manage extends Core\Controller\AbstractFrontendAction
     /**
      * Manage constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param Newsletter\Model\NewslettersModel $newsletterModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface            $block
+     * @param Newsletter\Model\NewslettersModel                            $newsletterModel
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter $newsletterHelpers
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter          $newsletterHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -55,6 +55,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param int|null $id
+     *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function execute(?int $id)
@@ -94,9 +95,9 @@ class Manage extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param bool $isTest
-     * @param int $id
-     * @param bool $dbResult
+     * @param bool   $isTest
+     * @param int    $id
+     * @param bool   $dbResult
      * @param string $testEmailAddress
      *
      * @return array

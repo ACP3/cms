@@ -23,7 +23,8 @@ class RequestConfigurator
 
     /**
      * RequestConfigurator constructor.
-     * @param RequestInterface $request
+     *
+     * @param RequestInterface  $request
      * @param SettingsInterface $settings
      */
     public function __construct(RequestInterface $request, SettingsInterface $settings)
@@ -33,7 +34,7 @@ class RequestConfigurator
     }
 
     /**
-     * Configures the request
+     * Configures the request.
      */
     public function configure()
     {

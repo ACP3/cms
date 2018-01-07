@@ -20,8 +20,9 @@ class SearchWidgetFormBlock extends AbstractBlock
 
     /**
      * SearchWidgetFormBlock constructor.
+     *
      * @param BlockContext $context
-     * @param Helpers $searchHelpers
+     * @param Helpers      $searchHelpers
      */
     public function __construct(BlockContext $context, Helpers $searchHelpers)
     {
@@ -31,7 +32,7 @@ class SearchWidgetFormBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

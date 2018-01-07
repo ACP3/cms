@@ -28,8 +28,9 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
 
     /**
      * AbstractSitemapAvailabilityExtension constructor.
+     *
      * @param RouterInterface $router
-     * @param MetaStatements $metaStatements
+     * @param MetaStatements  $metaStatements
      */
     public function __construct(
         RouterInterface $router,
@@ -40,9 +41,10 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
     }
 
     /**
-     * @param string $routeName
+     * @param string                  $routeName
      * @param \DateTimeInterface|null $lastModificationDate
-     * @param bool|null $isSecure
+     * @param bool|null               $isSecure
+     *
      * @return $this
      */
     protected function addUrl(string $routeName, ?\DateTimeInterface $lastModificationDate, ?bool $isSecure)
@@ -61,6 +63,7 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
 
     /**
      * @param string $routeName
+     *
      * @return bool
      */
     private function pageIsIndexable(string $routeName): bool
@@ -69,7 +72,7 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUrls($isSecure = null)
     {
@@ -82,7 +85,6 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
 
     /**
      * @param bool|null $isSecure
-     * @return void
      */
     abstract protected function fetchSitemapUrls($isSecure = null);
 }

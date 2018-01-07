@@ -31,9 +31,10 @@ class Helpers
 
     /**
      * Helpers constructor.
-     * @param Core\ACL\ACLInterface $acl
-     * @param \ACP3\Core\Modules\Modules $modules
-     * @param Core\Helpers\Forms $formsHelper
+     *
+     * @param Core\ACL\ACLInterface       $acl
+     * @param \ACP3\Core\Modules\Modules  $modules
+     * @param Core\Helpers\Forms          $formsHelper
      * @param SearchAvailabilityRegistrar $availableModulesRegistrar
      */
     public function __construct(
@@ -49,7 +50,7 @@ class Helpers
     }
 
     /**
-     * Gibt die für die Suche verfügbaren Module zurück
+     * Gibt die für die Suche verfügbaren Module zurück.
      *
      * @return array
      */

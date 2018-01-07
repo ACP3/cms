@@ -12,7 +12,7 @@ use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 class EmoticonManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -31,7 +31,7 @@ class EmoticonManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

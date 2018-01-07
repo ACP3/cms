@@ -25,7 +25,7 @@ class Nl2p extends AbstractModifier
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -33,7 +33,7 @@ class Nl2p extends AbstractModifier
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process($value)
     {

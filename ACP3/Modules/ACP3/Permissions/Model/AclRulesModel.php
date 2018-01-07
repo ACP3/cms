@@ -25,10 +25,11 @@ class AclRulesModel extends AbstractModel
 
     /**
      * RulesModel constructor.
+     *
      * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param AclRulesRepository $repository
-     * @param PermissionsCacheStorage $cache
+     * @param DataProcessor            $dataProcessor
+     * @param AclRulesRepository       $repository
+     * @param PermissionsCacheStorage  $cache
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,

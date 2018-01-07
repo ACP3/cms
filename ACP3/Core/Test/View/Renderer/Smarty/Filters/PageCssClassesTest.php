@@ -104,7 +104,7 @@ HTML;
     }
 
     /**
-     * @param bool $isHomepage
+     * @param bool   $isHomepage
      * @param string $area
      */
     private function setUpRequestMockExpectations($isHomepage = false, $area = AreaEnum::AREA_FRONTEND)

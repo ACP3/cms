@@ -23,9 +23,10 @@ class CaptchaSettingsFormBlock extends AbstractSettingsFormBlock
 
     /**
      * SettingsFormBlock constructor.
-     * @param FormBlockContext $context
+     *
+     * @param FormBlockContext  $context
      * @param SettingsInterface $settings
-     * @param CaptchaRegistrar $captchaRegistrar
+     * @param CaptchaRegistrar  $captchaRegistrar
      */
     public function __construct(
         FormBlockContext $context,
@@ -38,7 +39,7 @@ class CaptchaSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -62,7 +63,7 @@ class CaptchaSettingsFormBlock extends AbstractSettingsFormBlock
     {
         $captchas = [];
         foreach ($this->captchaRegistrar->getAvailableCaptchas() as $serviceId => $captcha) {
-            /** @var CaptchaExtensionInterface $captcha */
+            /* @var CaptchaExtensionInterface $captcha */
             $captchas[$serviceId] = $captcha->getCaptchaName();
         }
 
@@ -70,7 +71,7 @@ class CaptchaSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

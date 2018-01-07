@@ -30,7 +30,7 @@ class CategoriesDataGridBlockTest extends AbstractDataGridBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -38,7 +38,7 @@ class CategoriesDataGridBlockTest extends AbstractDataGridBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {

@@ -24,6 +24,7 @@ class MaintenanceModeDisableCommand extends Command
 
     /**
      * ClearCacheCommand constructor.
+     *
      * @param SettingsInterface $settings
      */
     public function __construct(SettingsInterface $settings)
@@ -34,7 +35,7 @@ class MaintenanceModeDisableCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -44,7 +45,7 @@ class MaintenanceModeDisableCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

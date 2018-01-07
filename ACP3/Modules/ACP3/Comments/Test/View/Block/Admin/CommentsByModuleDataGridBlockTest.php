@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsByModuleDataGridBlock;
 class CommentsByModuleDataGridBlockTest extends AbstractDataGridBlockTest
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -22,7 +22,7 @@ class CommentsByModuleDataGridBlockTest extends AbstractDataGridBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {

@@ -29,9 +29,10 @@ class GalleryPicturesModel extends AbstractModel
 
     /**
      * PictureModel constructor.
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param SettingsInterface $config
+     *
+     * @param EventDispatcherInterface  $eventDispatcher
+     * @param DataProcessor             $dataProcessor
+     * @param SettingsInterface         $config
      * @param GalleryPicturesRepository $pictureRepository
      */
     public function __construct(
@@ -46,7 +47,7 @@ class GalleryPicturesModel extends AbstractModel
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function save(array $data, $entryId = null)
     {

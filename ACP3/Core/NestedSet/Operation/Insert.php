@@ -14,13 +14,14 @@ class Insert extends AbstractOperation
      * @param int   $parentId
      *
      * @return int|bool
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function execute(array $insertValues, $parentId = 0)
     {
         $callback = function () use ($insertValues, $parentId) {
             // No parent item has been assigned
-            if ($this->nestedSetRepository->nodeExists((int)$parentId) === false) {
+            if ($this->nestedSetRepository->nodeExists((int) $parentId) === false) {
                 // Select the last result set
                 $maxRightId = $this->fetchMaximumRightId($insertValues[$this->getBlockColumnName()]);
 
@@ -39,7 +40,7 @@ class Insert extends AbstractOperation
 
                 $result = $rootId;
             } else { // a parent item for the node has been assigned
-                $parent = $this->nestedSetRepository->fetchNodeById((int)$parentId);
+                $parent = $this->nestedSetRepository->fetchNodeById((int) $parentId);
 
                 $this->adjustFollowingNodesAfterInsert(2, $parent['right_id']);
                 $this->adjustParentNodesAfterInsert(2, $parent['left_id'], $parent['right_id']);
@@ -50,7 +51,7 @@ class Insert extends AbstractOperation
 
                 $this->db->getConnection()->insert($this->nestedSetRepository->getTableName(), $insertValues);
 
-                $result = (int)$this->db->getConnection()->lastInsertId();
+                $result = (int) $this->db->getConnection()->lastInsertId();
             }
 
             return $result;
@@ -73,6 +74,6 @@ class Insert extends AbstractOperation
             $maxRightId = $this->nestedSetRepository->fetchMaximumRightId();
         }
 
-        return (int)$maxRightId;
+        return (int) $maxRightId;
     }
 }

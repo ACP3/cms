@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Articles\Helpers;
 class ArticleManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {
@@ -28,7 +28,7 @@ class ArticleManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -50,6 +50,7 @@ class ArticleManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * @param int|null $id
+     *
      * @return string
      */
     private function getSeoRouteName(?int $id): string

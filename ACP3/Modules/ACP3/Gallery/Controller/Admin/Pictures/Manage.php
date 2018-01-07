@@ -37,11 +37,11 @@ class Manage extends Core\Controller\AbstractFrontendAction
     /**
      * Manage constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
-     * @param Gallery\Model\Repository\GalleryRepository $galleryRepository
-     * @param Gallery\Model\GalleryPicturesModel $pictureModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface           $block
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers                          $galleryHelpers
+     * @param Gallery\Model\Repository\GalleryRepository                  $galleryRepository
+     * @param Gallery\Model\GalleryPicturesModel                          $pictureModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
     public function __construct(
@@ -62,9 +62,11 @@ class Manage extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
+     * @param int      $id
      * @param int|null $galleryId
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(?int $id, ?int $galleryId)
@@ -83,6 +85,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
     /**
      * @param int|null $id
      * @param int|null $galleryId
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function executePost(?int $id, ?int $galleryId)

@@ -10,21 +10,21 @@ namespace ACP3\Core\I18n;
 interface LocaleInterface
 {
     /**
-     * Gets the full locale name (e.g. en_US)
+     * Gets the full locale name (e.g. en_US).
      *
      * @return string
      */
     public function getLocale(): string;
 
     /**
-     * Gets the short ISO language code (e.g en)
+     * Gets the short ISO language code (e.g en).
      *
      * @return string
      */
     public function getShortIsoCode(): string;
 
     /**
-     * Gets the writing direction of the language
+     * Gets the writing direction of the language.
      *
      * @return string
      */

@@ -28,8 +28,9 @@ class FilesDataGridBlock extends AbstractDataGridBlock
 
     /**
      * FilesDataGridBlock constructor.
-     * @param Context\DataGridBlockContext $context
-     * @param Core\ACL\ACLInterface $acl
+     *
+     * @param Context\DataGridBlockContext    $context
+     * @param Core\ACL\ACLInterface           $acl
      * @param Core\Settings\SettingsInterface $settings
      */
     public function __construct(
@@ -44,7 +45,7 @@ class FilesDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addDataGridColumns(DataGrid $dataGrid)
     {
@@ -111,7 +112,7 @@ class FilesDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -136,7 +137,7 @@ class FilesDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

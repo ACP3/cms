@@ -42,11 +42,11 @@ class Create extends Core\Controller\AbstractFrontendAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
-     * @param Guestbook\Model\GuestbookModel $guestbookModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
+     * @param Core\View\Block\FormBlockInterface                     $block
+     * @param Guestbook\Model\GuestbookModel                         $guestbookModel
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $formValidation
-     * @param Core\Helpers\SendEmail $sendEmail
+     * @param Core\Helpers\SendEmail                                 $sendEmail
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

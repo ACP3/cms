@@ -26,7 +26,8 @@ class DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener
 
     /**
      * OnCategoriesModelDeleteBeforeListener constructor.
-     * @param ApplicationPath $appPath
+     *
+     * @param ApplicationPath      $appPath
      * @param CategoriesRepository $categoryRepository
      */
     public function __construct(ApplicationPath $appPath, CategoriesRepository $categoryRepository)

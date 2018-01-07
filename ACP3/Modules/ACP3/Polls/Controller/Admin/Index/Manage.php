@@ -26,9 +26,9 @@ class Manage extends Core\Controller\AbstractFrontendAction
     private $block;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param Polls\Model\PollsModel $pollsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface       $block
+     * @param Polls\Model\PollsModel                                  $pollsModel
      * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation $pollsValidator
      */
     public function __construct(
@@ -46,6 +46,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param int|null $id
+     *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function execute(?int $id)

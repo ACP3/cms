@@ -32,7 +32,7 @@ abstract class AbstractAccountNotExistsValidationRule extends AbstractValidation
      * @param string $field
      * @param array  $extra
      *
-     * @return boolean
+     * @return bool
      */
     public function isValid($data, $field = '', array $extra = [])
     {

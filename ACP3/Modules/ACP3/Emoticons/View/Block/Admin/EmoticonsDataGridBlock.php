@@ -23,7 +23,8 @@ class EmoticonsDataGridBlock extends AbstractDataGridBlock
 
     /**
      * EmoticonsDataGridBlock constructor.
-     * @param Context\DataGridBlockContext $context
+     *
+     * @param Context\DataGridBlockContext     $context
      * @param Core\Environment\ApplicationPath $appPath
      */
     public function __construct(Context\DataGridBlockContext $context, Core\Environment\ApplicationPath $appPath)
@@ -34,7 +35,7 @@ class EmoticonsDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addDataGridColumns(DataGrid $dataGrid)
     {
@@ -67,7 +68,7 @@ class EmoticonsDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -92,7 +93,7 @@ class EmoticonsDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

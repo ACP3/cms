@@ -12,7 +12,7 @@ use ACP3\Core;
 class AccountSettingsFormValidation extends AbstractUserFormValidation
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

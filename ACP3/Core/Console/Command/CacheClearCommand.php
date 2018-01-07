@@ -24,6 +24,7 @@ class CacheClearCommand extends Command
 
     /**
      * ClearCacheCommand constructor.
+     *
      * @param ApplicationPath $applicationPath
      */
     public function __construct(ApplicationPath $applicationPath)
@@ -34,7 +35,7 @@ class CacheClearCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -45,7 +46,7 @@ class CacheClearCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

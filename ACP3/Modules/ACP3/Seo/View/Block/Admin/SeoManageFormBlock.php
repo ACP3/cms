@@ -21,9 +21,10 @@ class SeoManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * SeoFormBlock constructor.
+     *
      * @param FormBlockContext $context
-     * @param SeoRepository $seoRepository
-     * @param MetaFormFields $metaFormFields
+     * @param SeoRepository    $seoRepository
+     * @param MetaFormFields   $metaFormFields
      */
     public function __construct(
         FormBlockContext $context,
@@ -36,7 +37,7 @@ class SeoManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -56,7 +57,7 @@ class SeoManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

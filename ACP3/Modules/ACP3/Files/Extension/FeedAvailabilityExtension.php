@@ -36,9 +36,9 @@ class FeedAvailabilityExtension implements FeedAvailabilityExtensionInterface
     /**
      * OnDisplayFeedListener constructor.
      *
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \ACP3\Core\Helpers\StringFormatter $formatter
+     * @param \ACP3\Core\Date                                           $date
+     * @param \ACP3\Core\Router\RouterInterface                         $router
+     * @param \ACP3\Core\Helpers\StringFormatter                        $formatter
      * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
      */
     public function __construct(

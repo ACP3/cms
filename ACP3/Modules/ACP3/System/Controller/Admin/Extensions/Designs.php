@@ -22,7 +22,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
      * Designs constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\BlockInterface $block
+     * @param Core\View\Block\BlockInterface                $block
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -56,7 +56,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
     {
         $bool = false;
 
-        if ((bool)\preg_match('=/=', $design) === false &&
+        if ((bool) \preg_match('=/=', $design) === false &&
             \is_file($this->appPath->getDesignRootPathInternal() . $design . '/info.xml') === true
         ) {
             $bool = $this->config->saveSettings(['design' => $design], Schema::MODULE_NAME);

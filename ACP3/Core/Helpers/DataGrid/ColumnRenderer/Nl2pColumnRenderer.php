@@ -27,7 +27,7 @@ class Nl2pColumnRenderer extends AbstractColumnRenderer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {

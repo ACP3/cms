@@ -24,7 +24,8 @@ abstract class AbstractRepositoryAwareFormBlock extends AbstractFormBlock implem
 
     /**
      * AbstractFormTemplate constructor.
-     * @param Context\FormBlockContext $context
+     *
+     * @param Context\FormBlockContext  $context
      * @param ReaderRepositoryInterface $repository
      */
     public function __construct(FormBlockContext $context, ReaderRepositoryInterface $repository)
@@ -36,7 +37,9 @@ abstract class AbstractRepositoryAwareFormBlock extends AbstractFormBlock implem
 
     /**
      * @param int $id
+     *
      * @return $this
+     *
      * @throws ResultNotExistsException
      */
     public function setDataById(?int $id)

@@ -12,11 +12,11 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 class DesignExistsValidationRule extends AbstractValidationRule
 {
     /**
-     * @param mixed $data
+     * @param mixed  $data
      * @param string $field
-     * @param array $extra
+     * @param array  $extra
      *
-     * @return boolean
+     * @return bool
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -29,6 +29,7 @@ class DesignExistsValidationRule extends AbstractValidationRule
 
     /**
      * @param string $design
+     *
      * @return bool
      */
     private function checkDesignExists($design)

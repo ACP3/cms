@@ -22,6 +22,7 @@ abstract class AbstractListingBlock extends AbstractBlock implements ListingBloc
 
     /**
      * AbstractListingTemplate constructor.
+     *
      * @param ListingBlockContext $context
      */
     public function __construct(ListingBlockContext $context)
@@ -44,6 +45,7 @@ abstract class AbstractListingBlock extends AbstractBlock implements ListingBloc
 
     /**
      * @param int $resultsPerPage
+     *
      * @return array
      */
     abstract protected function getResults(int $resultsPerPage): array;

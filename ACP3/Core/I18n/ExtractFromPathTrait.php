@@ -11,6 +11,7 @@ trait ExtractFromPathTrait
 {
     /**
      * @param string $filePath
+     *
      * @return string
      */
     protected function getLanguagePackIsoCode(string $filePath): string
@@ -20,6 +21,7 @@ trait ExtractFromPathTrait
 
     /**
      * @param string $filePath
+     *
      * @return string
      */
     protected function getModuleFromPath(string $filePath): string

@@ -29,9 +29,9 @@ class Order extends Core\Controller\AbstractFrontendAction
     /**
      * Order constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Sort $sortHelper
-     * @param GalleryPicturesRepository $pictureRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext        $context
+     * @param \ACP3\Core\Helpers\Sort                              $sortHelper
+     * @param GalleryPicturesRepository                            $pictureRepository
      * @param \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage $galleryCache
      */
     public function __construct(
@@ -48,10 +48,11 @@ class Order extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
+     * @param int    $id
      * @param string $action
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id, string $action)

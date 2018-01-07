@@ -20,7 +20,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\ListingBlockInterface $block
+     * @param Core\View\Block\ListingBlockInterface         $block
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

@@ -39,7 +39,7 @@ class UserAgent
 
     /**
      * Parst den ACCEPT-LANGUAGE Header des Browsers
-     * und gibt die präferierten Sprachen zurück
+     * und gibt die präferierten Sprachen zurück.
      *
      * @return AcceptHeaderItem[]
      */

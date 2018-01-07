@@ -17,6 +17,6 @@ class IntegerColumnRenderer extends AbstractColumnRenderer
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
-        return isset($dbResultRow[$field]) ? (int)$dbResultRow[$field] : null;
+        return isset($dbResultRow[$field]) ? (int) $dbResultRow[$field] : null;
     }
 }

@@ -22,6 +22,7 @@ class Navigation
 
     /**
      * Navigation constructor.
+     *
      * @param TranslatorInterface $translator
      */
     public function __construct(TranslatorInterface $translator)
@@ -54,7 +55,8 @@ class Navigation
 
     /**
      * @param string $stepName
-     * @param array $options
+     * @param array  $options
+     *
      * @return $this
      */
     public function addStep($stepName, array $options)
@@ -80,6 +82,7 @@ class Navigation
 
     /**
      * @param string $stepName
+     *
      * @return $this
      */
     public function markStepComplete($stepName)
@@ -93,6 +96,7 @@ class Navigation
 
     /**
      * @param string $stepName
+     *
      * @return bool
      */
     public function has($stepName)
@@ -102,6 +106,7 @@ class Navigation
 
     /**
      * @param string $stepName
+     *
      * @return $this
      */
     public function markStepActive($stepName)

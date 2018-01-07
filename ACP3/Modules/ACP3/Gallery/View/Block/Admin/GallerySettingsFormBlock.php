@@ -27,10 +27,11 @@ class GallerySettingsFormBlock extends AbstractSettingsFormBlock
 
     /**
      * GallerySettingsFormBlock constructor.
-     * @param FormBlockContext $context
+     *
+     * @param FormBlockContext  $context
      * @param SettingsInterface $settings
-     * @param Modules $modules
-     * @param Date $dateHelper
+     * @param Modules           $modules
+     * @param Date              $dateHelper
      */
     public function __construct(
         FormBlockContext $context,
@@ -45,7 +46,7 @@ class GallerySettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -54,7 +55,7 @@ class GallerySettingsFormBlock extends AbstractSettingsFormBlock
         return [
             'overlay' => $this->forms->yesNoCheckboxGenerator('overlay', $settings['overlay']),
             'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
-            'sidebar_entries' => $this->forms->recordsPerPage((int)$settings['sidebar'], 1, 10, 'sidebar'),
+            'sidebar_entries' => $this->forms->recordsPerPage((int) $settings['sidebar'], 1, 10, 'sidebar'),
             'form' => \array_merge($settings, $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken(),
             'comments' => $this->fetchOptions($settings),
@@ -63,6 +64,7 @@ class GallerySettingsFormBlock extends AbstractSettingsFormBlock
 
     /**
      * @param array $settings
+     *
      * @return array
      */
     private function fetchOptions(array $settings): array
@@ -75,7 +77,7 @@ class GallerySettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

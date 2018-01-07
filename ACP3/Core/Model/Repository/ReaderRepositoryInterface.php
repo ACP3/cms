@@ -11,6 +11,7 @@ interface ReaderRepositoryInterface
 {
     /**
      * @param int $entryId
+     *
      * @return array
      */
     public function getOneById(int $entryId);

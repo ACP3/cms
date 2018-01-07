@@ -12,7 +12,7 @@ use ACP3\Core\View\Block\AbstractBlock;
 class NotFoundBlock extends AbstractBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

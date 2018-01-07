@@ -31,10 +31,11 @@ class GalleriesListingBlock extends AbstractListingBlock
 
     /**
      * GalleriesListingBlock constructor.
+     *
      * @param ListingBlockContext $context
-     * @param Date $date
-     * @param SettingsInterface $settings
-     * @param GalleryRepository $galleryRepository
+     * @param Date                $date
+     * @param SettingsInterface   $settings
+     * @param GalleryRepository   $galleryRepository
      */
     public function __construct(
         ListingBlockContext $context,
@@ -50,7 +51,7 @@ class GalleriesListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getModuleName(): string
     {
@@ -58,7 +59,7 @@ class GalleriesListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getTotalResults(): int
     {
@@ -66,7 +67,7 @@ class GalleriesListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getResults(int $resultsPerPage): array
     {
@@ -78,7 +79,7 @@ class GalleriesListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

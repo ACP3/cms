@@ -12,7 +12,7 @@ use ACP3\Core\Application\BootstrapInterface;
 class Migration extends \ACP3\Core\Installer\AbstractMigration
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */
@@ -170,14 +170,14 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
             ],
             70 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'update_last_check', '0');",
-                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'update_new_version', '" . BootstrapInterface::VERSION. "');",
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'update_new_version', '" . BootstrapInterface::VERSION . "');",
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'update_new_version_url', '');",
             ],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */

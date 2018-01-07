@@ -34,11 +34,11 @@ class Index extends Core\Controller\AbstractFrontendAction
     private $block;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $formBlock
-     * @param Core\View\Block\BlockInterface $block
-     * @param Core\Helpers\Secure $secure
-     * @param \ACP3\Modules\ACP3\Search\Helpers $searchHelpers
+     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
+     * @param Core\View\Block\FormBlockInterface                  $formBlock
+     * @param Core\View\Block\BlockInterface                      $block
+     * @param Core\Helpers\Secure                                 $secure
+     * @param \ACP3\Modules\ACP3\Search\Helpers                   $searchHelpers
      * @param \ACP3\Modules\ACP3\Search\Validation\FormValidation $searchValidator
      */
     public function __construct(
@@ -66,7 +66,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     public function execute($q = '')
     {
         if (!empty($q)) {
-            return $this->executePost(['search_term' => (string)$q]);
+            return $this->executePost(['search_term' => (string) $q]);
         }
 
         return $this->formBlock
@@ -76,6 +76,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param array $formData
+     *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function executePost(array $formData = [])
@@ -98,6 +99,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param array $formData
+     *
      * @return array
      */
     protected function prepareFormData(array $formData)
@@ -125,10 +127,11 @@ class Index extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array $modules
+     * @param array  $modules
      * @param string $searchTerm
      * @param string $area
      * @param string $sort
+     *
      * @return array
      */
     protected function renderSearchResults(array $modules, string $searchTerm, string $area, string $sort)

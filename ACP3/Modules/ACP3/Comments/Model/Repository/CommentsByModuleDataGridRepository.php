@@ -25,7 +25,7 @@ class CommentsByModuleDataGridRepository extends AbstractDataGridRepository
 //    }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
@@ -37,7 +37,7 @@ class CommentsByModuleDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addJoin(QueryBuilder $queryBuilder)
     {
@@ -50,7 +50,7 @@ class CommentsByModuleDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addGroupBy(QueryBuilder $queryBuilder)
     {

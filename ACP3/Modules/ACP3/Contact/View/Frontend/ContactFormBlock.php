@@ -26,9 +26,10 @@ class ContactFormBlock extends AbstractFormBlock
 
     /**
      * ContactFormBlock constructor.
-     * @param FormBlockContext $context
+     *
+     * @param FormBlockContext  $context
      * @param SettingsInterface $settings
-     * @param UserModel $user
+     * @param UserModel         $user
      */
     public function __construct(
         FormBlockContext $context,
@@ -42,7 +43,7 @@ class ContactFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -59,7 +60,7 @@ class ContactFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

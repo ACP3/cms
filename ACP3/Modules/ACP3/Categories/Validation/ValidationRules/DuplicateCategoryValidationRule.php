@@ -28,7 +28,7 @@ class DuplicateCategoryValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -44,7 +44,7 @@ class DuplicateCategoryValidationRule extends AbstractValidationRule
         return !$this->categoryRepository->resultIsDuplicate(
             $data,
             $params['module_id'],
-            (int)$params['category_id']
+            (int) $params['category_id']
         );
     }
 }

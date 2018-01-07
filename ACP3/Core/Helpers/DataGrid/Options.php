@@ -48,9 +48,10 @@ class Options
 
     /**
      * @param string $identifier
+     *
      * @return Options
      */
-    public function setIdentifier(string $identifier): Options
+    public function setIdentifier(string $identifier): self
     {
         $this->identifier = $identifier;
 
@@ -67,9 +68,10 @@ class Options
 
     /**
      * @param int $recordsPerPage
+     *
      * @return Options
      */
-    public function setRecordsPerPage(int $recordsPerPage): Options
+    public function setRecordsPerPage(int $recordsPerPage): self
     {
         $this->recordsPerPage = $recordsPerPage;
 
@@ -86,9 +88,10 @@ class Options
 
     /**
      * @param bool $enableOptions
+     *
      * @return Options
      */
-    public function setEnableOptions(bool $enableOptions): Options
+    public function setEnableOptions(bool $enableOptions): self
     {
         $this->enableOptions = $enableOptions;
 
@@ -105,9 +108,10 @@ class Options
 
     /**
      * @param bool $useAjax
+     *
      * @return Options
      */
-    public function setUseAjax(bool $useAjax): Options
+    public function setUseAjax(bool $useAjax): self
     {
         $this->useAjax = $useAjax;
 
@@ -124,9 +128,10 @@ class Options
 
     /**
      * @param string $resourcePathEdit
+     *
      * @return Options
      */
-    public function setResourcePathEdit(string $resourcePathEdit): Options
+    public function setResourcePathEdit(string $resourcePathEdit): self
     {
         $this->resourcePathEdit = $resourcePathEdit;
 
@@ -143,9 +148,10 @@ class Options
 
     /**
      * @param string $resourcePathDelete
+     *
      * @return Options
      */
-    public function setResourcePathDelete(string $resourcePathDelete): Options
+    public function setResourcePathDelete(string $resourcePathDelete): self
     {
         $this->resourcePathDelete = $resourcePathDelete;
 
@@ -162,9 +168,10 @@ class Options
 
     /**
      * @param bool $enableMassAction
+     *
      * @return Options
      */
-    public function setEnableMassAction(bool $enableMassAction): Options
+    public function setEnableMassAction(bool $enableMassAction): self
     {
         $this->enableMassAction = $enableMassAction;
 

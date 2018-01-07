@@ -35,7 +35,8 @@ class BaseEnum
 
     /**
      * @param string $name
-     * @param bool $strict
+     * @param bool   $strict
+     *
      * @return bool
      */
     public static function isValidName($name, $strict = false)
@@ -53,7 +54,8 @@ class BaseEnum
 
     /**
      * @param mixed $value
-     * @param bool $strict
+     * @param bool  $strict
+     *
      * @return bool
      */
     public static function isValidValue($value, $strict = true)

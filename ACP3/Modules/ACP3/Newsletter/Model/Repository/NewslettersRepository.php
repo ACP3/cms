@@ -14,7 +14,7 @@ class NewslettersRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'newsletters';
 
     /**
-     * @param int $newsletterId
+     * @param int    $newsletterId
      * @param string $status
      *
      * @return bool
@@ -23,7 +23,7 @@ class NewslettersRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = empty($status) === false ? ' AND status = :status' : '';
 
-        return (int)$this->db->fetchAssoc(
+        return (int) $this->db->fetchAssoc(
                 "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id" . $where,
                 ['id' => $newsletterId, 'status' => $status]
             ) > 0;
@@ -52,7 +52,7 @@ class NewslettersRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = empty($time) === false ? ' WHERE status = :status' : '';
 
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
             ['status' => $status]
         );

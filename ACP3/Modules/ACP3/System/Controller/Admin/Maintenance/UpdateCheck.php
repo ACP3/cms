@@ -19,7 +19,8 @@ class UpdateCheck extends Core\Controller\AbstractFrontendAction
 
     /**
      * UpdateCheck constructor.
-     * @param Context\FrontendContext $context
+     *
+     * @param Context\FrontendContext        $context
      * @param Core\View\Block\BlockInterface $block
      */
     public function __construct(

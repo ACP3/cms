@@ -27,8 +27,8 @@ class Helpers
     private $isActive = false;
 
     /**
-     * @param \ACP3\Core\View $view
-     * @param \ACP3\Core\Modules\Modules $modules
+     * @param \ACP3\Core\View                                          $view
+     * @param \ACP3\Core\Modules\Modules                               $modules
      * @param \ACP3\Modules\ACP3\Emoticons\Cache\EmoticonsCacheStorage $emoticonsCache
      */
     public function __construct(
@@ -42,10 +42,10 @@ class Helpers
     }
 
     /**
-     * Erzeugt eine Auflistung der Emoticons
+     * Erzeugt eine Auflistung der Emoticons.
      *
      * @param string $formFieldId
-     *    Die ID des Eingabefeldes, in welches die Emoticons eingefügt werden sollen
+     *                            Die ID des Eingabefeldes, in welches die Emoticons eingefügt werden sollen
      *
      * @return string
      */
@@ -62,10 +62,10 @@ class Helpers
     }
 
     /**
-     * Ersetzt bestimmte Zeichen durch Emoticons
+     * Ersetzt bestimmte Zeichen durch Emoticons.
      *
      * @param string $string
-     *  Zu durchsuchender Text nach Zeichen
+     *                       Zu durchsuchender Text nach Zeichen
      *
      * @return string
      */

@@ -20,7 +20,7 @@ class Index extends Core\Controller\AbstractInstallerAction
 
     /**
      * @param \ACP3\Installer\Core\Controller\Context\InstallerContext $context
-     * @param SchemaUpdateModel $schemaUpdateModel
+     * @param SchemaUpdateModel                                        $schemaUpdateModel
      */
     public function __construct(
         Core\Controller\Context\InstallerContext $context,

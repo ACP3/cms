@@ -59,14 +59,15 @@ class NewsListingBlock extends AbstractListingBlock
 
     /**
      * NewsListingBlock constructor.
-     * @param ListingBlockContext $context
-     * @param SettingsInterface $settings
-     * @param Date $date
-     * @param RouterInterface $router
-     * @param StringFormatter $stringFormatter
-     * @param NewsRepository $newsRepository
+     *
+     * @param ListingBlockContext  $context
+     * @param SettingsInterface    $settings
+     * @param Date                 $date
+     * @param RouterInterface      $router
+     * @param StringFormatter      $stringFormatter
+     * @param NewsRepository       $newsRepository
      * @param CategoriesRepository $categoryRepository
-     * @param Helpers $categoriesHelpers
+     * @param Helpers              $categoriesHelpers
      */
     public function __construct(
         ListingBlockContext $context,
@@ -98,7 +99,7 @@ class NewsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getModuleName(): string
     {
@@ -106,7 +107,7 @@ class NewsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getTotalResults(): int
     {
@@ -119,7 +120,7 @@ class NewsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getResults(int $resultsPerPage): array
     {
@@ -154,8 +155,8 @@ class NewsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @param int $resultsPerPage
-     * @param int $categoryId
+     * @param int    $resultsPerPage
+     * @param int    $categoryId
      * @param string $time
      *
      * @return array
@@ -197,7 +198,7 @@ class NewsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

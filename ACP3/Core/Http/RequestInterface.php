@@ -10,7 +10,7 @@ namespace ACP3\Core\Http;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 /**
- * Interface RequestInterface
+ * Interface RequestInterface.
  */
 interface RequestInterface
 {
@@ -20,21 +20,21 @@ interface RequestInterface
     public function getSymfonyRequest();
 
     /**
-     * Returns the used protocol of the current request
+     * Returns the used protocol of the current request.
      *
      * @return string
      */
     public function getScheme();
 
     /**
-     * Returns the hostname of the current request
+     * Returns the hostname of the current request.
      *
      * @return string
      */
     public function getHost();
 
     /**
-     * Returns the protocol with the hostname
+     * Returns the protocol with the hostname.
      *
      * @return string
      */
@@ -46,7 +46,7 @@ interface RequestInterface
     public function getQuery();
 
     /**
-     * Returns the original requested query
+     * Returns the original requested query.
      *
      * @return string
      */
@@ -73,28 +73,28 @@ interface RequestInterface
     public function getAction();
 
     /**
-     * Returns the currently requested module, controller and controller action
+     * Returns the currently requested module, controller and controller action.
      *
      * @return string
      */
     public function getFullPath();
 
     /**
-     * Returns the currently requested module, controller and controller action without the area prefix
+     * Returns the currently requested module, controller and controller action without the area prefix.
      *
      * @return string
      */
     public function getFullPathWithoutArea();
 
     /**
-     * Returns the currently requested module and controller
+     * Returns the currently requested module and controller.
      *
      * @return string
      */
     public function getModuleAndController();
 
     /**
-     * Returns the currently requested module and controller without the area prefix
+     * Returns the currently requested module and controller without the area prefix.
      *
      * @return string
      */
@@ -106,14 +106,14 @@ interface RequestInterface
     public function isHomepage();
 
     /**
-     * Gibt die URI-Parameter aus
+     * Gibt die URI-Parameter aus.
      *
      * @return \Symfony\Component\HttpFoundation\ParameterBag
      */
     public function getParameters();
 
     /**
-     * Gibt die bereinigte URI-Query aus, d.h. ohne die anzuzeigende Seite
+     * Gibt die bereinigte URI-Query aus, d.h. ohne die anzuzeigende Seite.
      *
      * @return string
      */
@@ -125,28 +125,28 @@ interface RequestInterface
     public function isXmlHttpRequest();
 
     /**
-     * Returns the parameter bag of the $_COOKIE superglobal
+     * Returns the parameter bag of the $_COOKIE superglobal.
      *
      * @return \Symfony\Component\HttpFoundation\ParameterBag
      */
     public function getCookies();
 
     /**
-     * Returns the parameter bag of the uploaded files ($_FILES superglobal)
+     * Returns the parameter bag of the uploaded files ($_FILES superglobal).
      *
      * @return \Symfony\Component\HttpFoundation\FileBag
      */
     public function getFiles();
 
     /**
-     * Returns the parameter bag of the $_POST superglobal
+     * Returns the parameter bag of the $_POST superglobal.
      *
      * @return \Symfony\Component\HttpFoundation\ParameterBag
      */
     public function getPost();
 
     /**
-     * Returns the parameter bag of the $_SERVER superglobal
+     * Returns the parameter bag of the $_SERVER superglobal.
      *
      * @return \Symfony\Component\HttpFoundation\ServerBag
      */
@@ -158,9 +158,7 @@ interface RequestInterface
     public function getUserAgent();
 
     /**
-     * Processes the request
-     *
-     * @return void
+     * Processes the request.
      */
     public function processQuery();
 

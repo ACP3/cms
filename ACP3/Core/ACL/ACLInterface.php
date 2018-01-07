@@ -10,25 +10,25 @@ namespace ACP3\Core\ACL;
 interface ACLInterface
 {
     /**
-     * @param integer $roleId
+     * @param int $roleId
      *
-     * @return boolean
+     * @return bool
      */
     public function userHasRole(int $roleId): bool;
 
     /**
-     * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
+     * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück.
      *
-     * @param integer $userId
+     * @param int $userId
      *
      * @return array
      */
     public function getUserRoleIds(int $userId): array;
 
     /**
-     * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
+     * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück.
      *
-     * @param integer $userId
+     * @param int $userId
      *
      * @return array
      */
@@ -40,11 +40,11 @@ interface ACLInterface
     public function getAllRoles(): array;
 
     /**
-     * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat
+     * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat.
      *
      * @param string $resource
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPermission(string $resource): bool;
 }

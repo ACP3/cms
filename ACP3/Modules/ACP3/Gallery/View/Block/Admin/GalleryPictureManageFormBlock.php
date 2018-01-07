@@ -32,11 +32,12 @@ class GalleryPictureManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * PictureFormBlock constructor.
-     * @param FormBlockContext $context
+     *
+     * @param FormBlockContext          $context
      * @param GalleryPicturesRepository $galleryPicturesRepository
-     * @param SettingsInterface $settings
-     * @param Modules $modules
-     * @param GalleryRepository $galleryRepository
+     * @param SettingsInterface         $settings
+     * @param Modules                   $modules
+     * @param GalleryRepository         $galleryRepository
      */
     public function __construct(
         FormBlockContext $context,
@@ -53,7 +54,7 @@ class GalleryPictureManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -96,6 +97,7 @@ class GalleryPictureManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * @param array $data
+     *
      * @return array
      */
     private function fetchOptions(array $data): array
@@ -124,7 +126,7 @@ class GalleryPictureManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

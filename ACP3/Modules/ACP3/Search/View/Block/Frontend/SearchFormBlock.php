@@ -20,8 +20,9 @@ class SearchFormBlock extends AbstractFormBlock
 
     /**
      * SearchFormBlock constructor.
+     *
      * @param FormBlockContext $context
-     * @param Helpers $searchHelpers
+     * @param Helpers          $searchHelpers
      */
     public function __construct(FormBlockContext $context, Helpers $searchHelpers)
     {
@@ -31,7 +32,7 @@ class SearchFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -59,7 +60,7 @@ class SearchFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

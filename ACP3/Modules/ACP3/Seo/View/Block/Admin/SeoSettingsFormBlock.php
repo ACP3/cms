@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Seo\Installer\Schema;
 class SeoSettingsFormBlock extends AbstractSettingsFormBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -63,7 +63,7 @@ class SeoSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

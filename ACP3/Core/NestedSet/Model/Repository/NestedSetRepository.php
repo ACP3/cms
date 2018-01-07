@@ -14,9 +14,10 @@ abstract class NestedSetRepository extends AbstractRepository
     const BLOCK_COLUMN_NAME = 'block_id';
 
     /**
-     * Fetches the given node with all its siblings
+     * Fetches the given node with all its siblings.
      *
      * @param int $nodeId
+     *
      * @return array
      */
     public function fetchNodeWithSiblings(int $nodeId)
@@ -28,9 +29,10 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * Fetch the given node with all its parent nodes
+     * Fetch the given node with all its parent nodes.
      *
      * @param int $nodeId
+     *
      * @return array
      */
     public function fetchNodeWithParents(int $nodeId)
@@ -43,6 +45,7 @@ abstract class NestedSetRepository extends AbstractRepository
 
     /**
      * @param int $leftId
+     *
      * @return array
      */
     public function fetchNextNodeWithSiblings(int $leftId)
@@ -55,6 +58,7 @@ abstract class NestedSetRepository extends AbstractRepository
 
     /**
      * @param int $rightId
+     *
      * @return array
      */
     public function fetchPrevNodeWithSiblings(int $rightId)
@@ -67,6 +71,7 @@ abstract class NestedSetRepository extends AbstractRepository
 
     /**
      * @param int $nodeId
+     *
      * @return bool
      */
     public function nodeExists(int $nodeId)
@@ -77,6 +82,7 @@ abstract class NestedSetRepository extends AbstractRepository
     /**
      * @param int $rightId
      * @param int $blockId
+     *
      * @return bool
      */
     public function nextNodeExists(int $rightId, int $blockId = 0)
@@ -92,6 +98,7 @@ abstract class NestedSetRepository extends AbstractRepository
     /**
      * @param int $rightId
      * @param int $blockId
+     *
      * @return bool
      */
     public function previousNodeExists(int $rightId, int $blockId = 0)
@@ -106,6 +113,7 @@ abstract class NestedSetRepository extends AbstractRepository
 
     /**
      * @param int $nodeId
+     *
      * @return array
      */
     public function fetchNodeById(int $nodeId)
@@ -119,6 +127,7 @@ abstract class NestedSetRepository extends AbstractRepository
     /**
      * @param int $leftId
      * @param int $rightId
+     *
      * @return bool
      */
     public function nodeIsRootItem(int $leftId, int $rightId)
@@ -132,11 +141,12 @@ abstract class NestedSetRepository extends AbstractRepository
     /**
      * @param int $leftId
      * @param int $rightId
+     *
      * @return int
      */
     public function fetchParentNode(int $leftId, int $rightId)
     {
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             "SELECT `id` FROM {$this->getTableName()} WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1",
             [$leftId, $rightId]
         );
@@ -145,11 +155,12 @@ abstract class NestedSetRepository extends AbstractRepository
     /**
      * @param int $leftId
      * @param int $rightId
+     *
      * @return int
      */
     public function fetchRootNode(int $leftId, int $rightId)
     {
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             "SELECT `id` FROM {$this->getTableName()} WHERE left_id < ? AND right_id > ? AND parent_id = ?",
             [$leftId, $rightId, 0]
         );
@@ -157,11 +168,12 @@ abstract class NestedSetRepository extends AbstractRepository
 
     /**
      * @param int $blockId
+     *
      * @return int
      */
     public function fetchMaximumRightIdByBlockId(int $blockId)
     {
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             "SELECT MAX(`right_id`) FROM {$this->getTableName()} WHERE " . static::BLOCK_COLUMN_NAME . ' = ?',
             [$blockId]
         );
@@ -172,16 +184,17 @@ abstract class NestedSetRepository extends AbstractRepository
      */
     public function fetchMaximumRightId()
     {
-        return (int)$this->db->fetchColumn("SELECT MAX(`right_id`) FROM {$this->getTableName()}");
+        return (int) $this->db->fetchColumn("SELECT MAX(`right_id`) FROM {$this->getTableName()}");
     }
 
     /**
      * @param int $blockId
+     *
      * @return int
      */
     public function fetchMinimumLeftIdByBlockId(int $blockId)
     {
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             "SELECT MIN(`left_id`) AS left_id FROM {$this->getTableName()} WHERE " . static::BLOCK_COLUMN_NAME . ' = ?',
             [$blockId]
         );

@@ -23,9 +23,10 @@ class ListingBlockContext extends BlockContext
 
     /**
      * ListingTemplateContext constructor.
-     * @param BlockContext $context
+     *
+     * @param BlockContext   $context
      * @param ResultsPerPage $resultsPerPage
-     * @param Pagination $pagination
+     * @param Pagination     $pagination
      */
     public function __construct(BlockContext $context, ResultsPerPage $resultsPerPage, Pagination $pagination)
     {

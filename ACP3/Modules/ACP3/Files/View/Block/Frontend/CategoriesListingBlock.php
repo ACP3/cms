@@ -21,7 +21,8 @@ class CategoriesListingBlock extends AbstractBlock
 
     /**
      * CategoriesListingBlock constructor.
-     * @param BlockContext $context
+     *
+     * @param BlockContext         $context
      * @param CategoriesRepository $categoriesRepository
      */
     public function __construct(BlockContext $context, CategoriesRepository $categoriesRepository)
@@ -32,7 +33,7 @@ class CategoriesListingBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

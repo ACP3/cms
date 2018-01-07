@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountExistsByNameValida
 class AccountForgotPasswordFormValidation extends AbstractFormValidation
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

@@ -30,10 +30,11 @@ class Title extends \ACP3\Core\Breadcrumb\Title
 
     /**
      * Title constructor.
-     * @param RequestInterface $request
-     * @param Steps $steps
+     *
+     * @param RequestInterface         $request
+     * @param Steps                    $steps
      * @param EventDispatcherInterface $eventDispatcher
-     * @param SettingsInterface $settings
+     * @param SettingsInterface        $settings
      */
     public function __construct(
         RequestInterface $request,
@@ -48,7 +49,7 @@ class Title extends \ACP3\Core\Breadcrumb\Title
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getSiteTitle()
     {
@@ -81,7 +82,7 @@ class Title extends \ACP3\Core\Breadcrumb\Title
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getSiteSubtitle()
     {

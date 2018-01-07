@@ -41,13 +41,13 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
     /**
      * ForgotPwd constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param Core\Helpers\Alerts $alerts
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository $userRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext                           $context
+     * @param Core\View\Block\FormBlockInterface                                      $block
+     * @param \ACP3\Core\Helpers\Secure                                               $secureHelper
+     * @param Core\Helpers\Alerts                                                     $alerts
+     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository               $userRepository
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation
-     * @param \ACP3\Core\Helpers\SendEmail $sendEmail
+     * @param \ACP3\Core\Helpers\SendEmail                                            $sendEmail
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -122,6 +122,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param string $nickNameOrEmail
+     *
      * @return array
      */
     protected function fetchUserByFormFieldValue($nickNameOrEmail)
@@ -138,8 +139,9 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array $user
+     * @param array  $user
      * @param string $newPassword
+     *
      * @return bool
      */
     protected function sendPasswordChangeEmail(array $user, $newPassword)

@@ -25,9 +25,10 @@ class AllowedModulesBlock extends AbstractBlock
 
     /**
      * AllowedModulesBlock constructor.
+     *
      * @param BlockContext $context
      * @param ACLInterface $acl
-     * @param Modules $modules
+     * @param Modules      $modules
      */
     public function __construct(BlockContext $context, ACLInterface $acl, Modules $modules)
     {

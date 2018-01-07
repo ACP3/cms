@@ -17,7 +17,7 @@ class FilesDataGridRepository extends AbstractDataGridRepository
     const TABLE_NAME = FilesRepository::TABLE_NAME;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
@@ -30,7 +30,7 @@ class FilesDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addJoin(QueryBuilder $queryBuilder)
     {
@@ -43,7 +43,7 @@ class FilesDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
     {

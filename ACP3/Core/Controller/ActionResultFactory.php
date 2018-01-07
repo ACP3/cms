@@ -19,6 +19,7 @@ class ActionResultFactory
 
     /**
      * @param ActionResultTypeInterface $actionResultType
+     *
      * @return $this
      */
     public function registerActionResultType(ActionResultTypeInterface $actionResultType)
@@ -30,6 +31,7 @@ class ActionResultFactory
 
     /**
      * @param mixed $result
+     *
      * @return Response
      */
     public function create($result): Response

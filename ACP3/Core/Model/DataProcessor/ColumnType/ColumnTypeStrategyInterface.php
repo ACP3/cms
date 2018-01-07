@@ -11,6 +11,7 @@ interface ColumnTypeStrategyInterface
 {
     /**
      * @param mixed $value
+     *
      * @return mixed
      */
     public function doEscape($value);

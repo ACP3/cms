@@ -22,7 +22,8 @@ class NewsletterArchiveListingBlock extends AbstractListingBlock
 
     /**
      * NewsletterArchiveListingBlock constructor.
-     * @param ListingBlockContext $context
+     *
+     * @param ListingBlockContext   $context
      * @param NewslettersRepository $newsletterRepository
      */
     public function __construct(ListingBlockContext $context, NewslettersRepository $newsletterRepository)
@@ -33,7 +34,7 @@ class NewsletterArchiveListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getModuleName(): string
     {
@@ -41,7 +42,7 @@ class NewsletterArchiveListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getTotalResults(): int
     {
@@ -49,7 +50,7 @@ class NewsletterArchiveListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getResults(int $resultsPerPage): array
     {
@@ -61,7 +62,7 @@ class NewsletterArchiveListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

@@ -34,7 +34,7 @@ class ImprintBlockTest extends AbstractBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -42,7 +42,7 @@ class ImprintBlockTest extends AbstractBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {

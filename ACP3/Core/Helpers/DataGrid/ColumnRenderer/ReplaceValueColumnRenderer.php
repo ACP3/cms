@@ -19,7 +19,7 @@ class ReplaceValueColumnRenderer extends AbstractColumnRenderer
     protected $replace = [];
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
@@ -30,7 +30,7 @@ class ReplaceValueColumnRenderer extends AbstractColumnRenderer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {

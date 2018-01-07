@@ -12,7 +12,7 @@ use ACP3\Core\View\Block\AbstractRepositoryAwareFormBlock;
 class CommentAdminFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -22,7 +22,7 @@ class CommentAdminFormBlock extends AbstractRepositoryAwareFormBlock
 
         return [
             'form' => \array_merge($data, $this->getRequestData()),
-            'module_id' => (int)$data['module_id'],
+            'module_id' => (int) $data['module_id'],
             'form_token' => $this->formToken->renderFormToken(),
             'can_use_emoticons' => true,
         ];
@@ -44,7 +44,7 @@ class CommentAdminFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

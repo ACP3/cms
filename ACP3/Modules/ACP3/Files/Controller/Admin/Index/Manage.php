@@ -38,11 +38,12 @@ class Manage extends Core\Controller\AbstractFrontendAction
 
     /**
      * Manage constructor.
-     * @param Core\Controller\Context\FrontendContext $context
+     *
+     * @param Core\Controller\Context\FrontendContext           $context
      * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param Files\Model\FilesModel $filesModel
-     * @param Files\Validation\AdminFormValidation $adminFormValidation
-     * @param Categories\Helpers $categoriesHelpers
+     * @param Files\Model\FilesModel                            $filesModel
+     * @param Files\Validation\AdminFormValidation              $adminFormValidation
+     * @param Categories\Helpers                                $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -61,6 +62,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param int|null $id
+     *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function execute(?int $id)
@@ -73,6 +75,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param int|null $id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function executePost(?int $id)
@@ -131,6 +134,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param array $formData
+     *
      * @return int
      */
     private function useComments(array $formData)
@@ -142,9 +146,11 @@ class Manage extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param UploadedFile|string|null $file
-     * @param array $formData
-     * @param null|string $currentFileName
+     * @param array                    $formData
+     * @param null|string              $currentFileName
+     *
      * @return array
+     *
      * @throws Core\Validation\Exceptions\ValidationFailedException
      */
     private function updateAssociatedFile($file, array $formData, ?string $currentFileName)
@@ -157,7 +163,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
             $fileSize = $result['size'];
         } else {
             $fileName = $file;
-            $fileSize = ((float)$formData['filesize']) . ' ' . $formData['unit'];
+            $fileSize = ((float) $formData['filesize']) . ' ' . $formData['unit'];
         }
 
         if (!empty($currentFileName)) {

@@ -23,6 +23,7 @@ class AssetsClearCommand extends Command
 
     /**
      * ClearCacheCommand constructor.
+     *
      * @param ApplicationPath $applicationPath
      */
     public function __construct(ApplicationPath $applicationPath)
@@ -33,7 +34,7 @@ class AssetsClearCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -44,7 +45,7 @@ class AssetsClearCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

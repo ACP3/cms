@@ -34,6 +34,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      * Helper function for initializing models, etc.
      *
      * @return $this
+     *
      * @throws \ACP3\Core\ACL\Exception\AccessForbiddenException
      */
     public function preDispatch()
@@ -52,7 +53,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addCustomTemplateVarsBeforeOutput()
     {
@@ -81,7 +82,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getRequest(): RequestInterface
     {
@@ -89,7 +90,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getView(): View
     {

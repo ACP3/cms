@@ -26,10 +26,11 @@ class UserManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * UserFormBlock constructor.
+     *
      * @param FormBlockContext $context
-     * @param UserModel $userModel
-     * @param ACLInterface $acl
-     * @param Forms $userFormsHelpers
+     * @param UserModel        $userModel
+     * @param ACLInterface     $acl
+     * @param Forms            $userFormsHelpers
      */
     public function __construct(
         FormBlockContext $context,
@@ -44,7 +45,7 @@ class UserManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -117,7 +118,7 @@ class UserManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

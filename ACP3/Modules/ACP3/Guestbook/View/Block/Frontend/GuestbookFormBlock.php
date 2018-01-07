@@ -32,9 +32,10 @@ class GuestbookFormBlock extends AbstractFormBlock
 
     /**
      * GuestbookFormBlock constructor.
-     * @param FormBlockContext $context
+     *
+     * @param FormBlockContext  $context
      * @param SettingsInterface $settings
-     * @param UserModel $user
+     * @param UserModel         $user
      */
     public function __construct(FormBlockContext $context, SettingsInterface $settings, UserModel $user)
     {
@@ -57,7 +58,7 @@ class GuestbookFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -73,6 +74,7 @@ class GuestbookFormBlock extends AbstractFormBlock
 
     /**
      * @param array $settings
+     *
      * @return array
      */
     private function fetchSubscribeNewsletter(array $settings): array
@@ -97,7 +99,7 @@ class GuestbookFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

@@ -37,9 +37,10 @@ class Locale implements LocaleInterface
 
     /**
      * Locale constructor.
-     * @param ApplicationPath $appPath
-     * @param RequestInterface $request
-     * @param DictionaryInterface $dictionary
+     *
+     * @param ApplicationPath        $appPath
+     * @param RequestInterface       $request
+     * @param DictionaryInterface    $dictionary
      * @param AvailableLanguagePacks $availableLanguagePacks
      */
     public function __construct(
@@ -55,7 +56,7 @@ class Locale implements LocaleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getLocale(): string
     {
@@ -90,7 +91,7 @@ class Locale implements LocaleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getShortIsoCode(): string
     {
@@ -98,7 +99,7 @@ class Locale implements LocaleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDirection(): string
     {

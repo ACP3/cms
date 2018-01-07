@@ -18,6 +18,7 @@ class StringFormatter
 
     /**
      * StringFormatter constructor.
+     *
      * @param Slugify $slugify
      */
     public function __construct(Slugify $slugify)
@@ -38,10 +39,10 @@ class StringFormatter
     }
 
     /**
-     * Converts new lines to HTML paragraphs and/or line breaks
+     * Converts new lines to HTML paragraphs and/or line breaks.
      *
      * @param string $data
-     * @param boolean $useLineBreaks
+     * @param bool   $useLineBreaks
      *
      * @return string
      */
@@ -66,11 +67,11 @@ class StringFormatter
     }
 
     /**
-     * Shortens a string to the given length
+     * Shortens a string to the given length.
      *
      * @param string $data
-     * @param integer $chars
-     * @param integer $offset
+     * @param int    $chars
+     * @param int    $offset
      * @param string $append
      *
      * @return string

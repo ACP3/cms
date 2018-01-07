@@ -19,7 +19,8 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * Index constructor.
-     * @param Context\FrontendContext $context
+     *
+     * @param Context\FrontendContext        $context
      * @param Core\View\Block\BlockInterface $block
      */
     public function __construct(Context\FrontendContext $context, Core\View\Block\BlockInterface $block)

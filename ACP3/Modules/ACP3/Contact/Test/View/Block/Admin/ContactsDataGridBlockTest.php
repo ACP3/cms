@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Contact\View\Admin\ContactsDataGridBlock;
 class ContactsDataGridBlockTest extends AbstractDataGridBlockTest
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -22,7 +22,7 @@ class ContactsDataGridBlockTest extends AbstractDataGridBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {

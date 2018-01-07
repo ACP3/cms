@@ -16,19 +16,19 @@ use ACP3\Modules\ACP3\Users\Model\UserModel;
 class ACL implements ACLInterface
 {
     /**
-     * Array mit den den jeweiligen Rollen zugewiesenen Berechtigungen
+     * Array mit den den jeweiligen Rollen zugewiesenen Berechtigungen.
      *
      * @var array
      */
     private $privileges = [];
     /**
-     * Array mit den dem Benutzer zugewiesenen Rollen
+     * Array mit den dem Benutzer zugewiesenen Rollen.
      *
      * @var array
      */
     private $userRoles = [];
     /**
-     * Array mit allen registrierten Ressourcen
+     * Array mit allen registrierten Ressourcen.
      *
      * @var array
      */
@@ -57,11 +57,12 @@ class ACL implements ACLInterface
 
     /**
      * ACL constructor.
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
-     * @param \ACP3\Core\Modules\Modules $modules
-     * @param Modules\Helper\ControllerActionExists $controllerActionExists
+     *
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                        $user
+     * @param \ACP3\Core\Modules\Modules                                      $modules
+     * @param Modules\Helper\ControllerActionExists                           $controllerActionExists
      * @param \ACP3\Core\ACL\Model\Repository\AclUserRolesRepositoryInterface $userRoleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage    $permissionsCache
      */
     public function __construct(
         UserModel $user,
@@ -78,7 +79,7 @@ class ACL implements ACLInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function userHasRole(int $roleId): bool
     {
@@ -86,7 +87,7 @@ class ACL implements ACLInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUserRoleIds(int $userId): array
     {
@@ -105,7 +106,7 @@ class ACL implements ACLInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUserRoleNames(int $userId): array
     {
@@ -118,7 +119,7 @@ class ACL implements ACLInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAllRoles(): array
     {
@@ -126,7 +127,7 @@ class ACL implements ACLInterface
     }
 
     /**
-     * Returns the role permissions
+     * Returns the role permissions.
      *
      * @param array $roleIds
      *
@@ -138,7 +139,7 @@ class ACL implements ACLInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function hasPermission(string $resource): bool
     {
@@ -156,7 +157,7 @@ class ACL implements ACLInterface
     /**
      * @param string $resource
      *
-     * @return boolean
+     * @return bool
      */
     private function canAccessResource(string $resource): bool
     {
@@ -196,7 +197,7 @@ class ACL implements ACLInterface
     }
 
     /**
-     * Gibt alle in der Datenbank vorhandenen Ressourcen zurück
+     * Gibt alle in der Datenbank vorhandenen Ressourcen zurück.
      *
      * @return array
      */
@@ -210,12 +211,12 @@ class ACL implements ACLInterface
     }
 
     /**
-     * Returns, whether the current user has the given privilege
+     * Returns, whether the current user has the given privilege.
      *
      * @param string $module
      * @param string $privilegeKey
      *
-     * @return boolean
+     * @return bool
      */
     private function userHasPrivilege(string $module, string $privilegeKey): bool
     {
@@ -225,7 +226,7 @@ class ACL implements ACLInterface
     }
 
     /**
-     * Initializes the available user privileges
+     * Initializes the available user privileges.
      *
      * @return array
      */

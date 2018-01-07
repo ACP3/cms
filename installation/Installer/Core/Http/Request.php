@@ -12,7 +12,7 @@ use ACP3\Core;
 class Request extends Core\Http\Request
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function processQuery()
     {

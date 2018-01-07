@@ -36,8 +36,8 @@ class Modules
 
     /**
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules\ModuleInfoCache $moduleInfoCache
-     * @param \ACP3\Core\Modules\Vendor $vendors
+     * @param \ACP3\Core\Modules\ModuleInfoCache     $moduleInfoCache
+     * @param \ACP3\Core\Modules\Vendor              $vendors
      */
     public function __construct(
         ApplicationPath $appPath,
@@ -50,11 +50,11 @@ class Modules
     }
 
     /**
-     * Returns, whether a module is active or not
+     * Returns, whether a module is active or not.
      *
      * @param string $moduleName
      *
-     * @return boolean
+     * @return bool
      */
     public function isActive(string $moduleName): bool
     {
@@ -64,7 +64,7 @@ class Modules
     }
 
     /**
-     * Returns the available information about the given module
+     * Returns the available information about the given module.
      *
      * @param string $moduleName
      *
@@ -83,7 +83,7 @@ class Modules
     /**
      * @param string $moduleName
      *
-     * @return integer
+     * @return int
      */
     public function getModuleId(string $moduleName): int
     {
@@ -93,11 +93,11 @@ class Modules
     }
 
     /**
-     * Checks, whether a module is currently installed or not
+     * Checks, whether a module is currently installed or not.
      *
      * @param string $moduleName
      *
-     * @return boolean
+     * @return bool
      */
     public function isInstalled(string $moduleName): bool
     {
@@ -107,7 +107,7 @@ class Modules
     }
 
     /**
-     * Returns all currently installed AND active modules
+     * Returns all currently installed AND active modules.
      *
      * @return array
      */
@@ -125,7 +125,7 @@ class Modules
     }
 
     /**
-     * Returns all currently installed modules
+     * Returns all currently installed modules.
      *
      * @return array
      */
@@ -143,7 +143,7 @@ class Modules
     }
 
     /**
-     * Returns an alphabetically sorted array of all found ACP3 modules
+     * Returns an alphabetically sorted array of all found ACP3 modules.
      *
      * @return array
      */
@@ -177,7 +177,7 @@ class Modules
     }
 
     /**
-     * Returns an array with all modules which is sorted topologically
+     * Returns an array with all modules which is sorted topologically.
      *
      * @return array
      */

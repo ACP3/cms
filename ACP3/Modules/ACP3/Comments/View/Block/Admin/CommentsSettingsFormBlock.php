@@ -27,10 +27,11 @@ class CommentsSettingsFormBlock extends AbstractSettingsFormBlock
 
     /**
      * CommentsSettingsFormBlock constructor.
-     * @param FormBlockContext $context
-     * @param Modules $modules
+     *
+     * @param FormBlockContext  $context
+     * @param Modules           $modules
      * @param SettingsInterface $settings
-     * @param Date $dateHelper
+     * @param Date              $dateHelper
      */
     public function __construct(
         FormBlockContext $context,
@@ -45,7 +46,7 @@ class CommentsSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -59,7 +60,7 @@ class CommentsSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {
@@ -68,6 +69,7 @@ class CommentsSettingsFormBlock extends AbstractSettingsFormBlock
 
     /**
      * @param int $allowEmoticons
+     *
      * @return array
      */
     private function fetchAllowEmoticons(int $allowEmoticons): array

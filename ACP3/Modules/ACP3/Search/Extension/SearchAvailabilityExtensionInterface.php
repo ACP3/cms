@@ -18,6 +18,7 @@ interface SearchAvailabilityExtensionInterface
      * @param string $searchTerm
      * @param string $areas
      * @param string $sortDirection
+     *
      * @return array
      */
     public function fetchSearchResults($searchTerm, $areas, $sortDirection);

@@ -25,7 +25,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     protected $isAjax = false;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setIdentifier(string $identifier)
     {
@@ -35,7 +35,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setPrimaryKey(string $primaryKey)
     {
@@ -45,7 +45,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setIsAjax(bool $isAjax)
     {
@@ -55,7 +55,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
@@ -82,8 +82,9 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array $column
+     * @param array  $column
      * @param string $value
+     *
      * @return string|array
      */
     private function renderAjax(array $column, string $value = '')

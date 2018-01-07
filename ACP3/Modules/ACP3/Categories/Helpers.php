@@ -53,15 +53,16 @@ class Helpers
 
     /**
      * Helpers constructor.
-     * @param Core\ACL\ACLInterface $acl
+     *
+     * @param Core\ACL\ACLInterface         $acl
      * @param Core\I18n\TranslatorInterface $translator
-     * @param \ACP3\Core\Modules\Modules $modules
-     * @param Core\Http\RequestInterface $request
-     * @param Core\Helpers\Forms $formsHelper
-     * @param Core\Helpers\Secure $secureHelper
-     * @param CategoriesCacheStorage $categoriesCache
-     * @param CategoriesRepository $categoryRepository
-     * @param CategoriesModel $categoriesModel
+     * @param \ACP3\Core\Modules\Modules    $modules
+     * @param Core\Http\RequestInterface    $request
+     * @param Core\Helpers\Forms            $formsHelper
+     * @param Core\Helpers\Secure           $secureHelper
+     * @param CategoriesCacheStorage        $categoriesCache
+     * @param CategoriesRepository          $categoryRepository
+     * @param CategoriesModel               $categoriesModel
      */
     public function __construct(
         Core\ACL\ACLInterface $acl,
@@ -86,12 +87,12 @@ class Helpers
     }
 
     /**
-     * Erzeugt eine neue Kategorie und gibt ihre ID zurück
+     * Erzeugt eine neue Kategorie und gibt ihre ID zurück.
      *
      * @param string $categoryTitle
      * @param string $moduleName
      *
-     * @return integer
+     * @return int
      */
     public function categoryCreate(string $categoryTitle, string $moduleName)
     {
@@ -110,12 +111,12 @@ class Helpers
     }
 
     /**
-     * Listet alle Kategorien eines Moduls auf
+     * Listet alle Kategorien eines Moduls auf.
      *
-     * @param string $moduleName
-     * @param int $categoryId
-     * @param boolean $categoryCreate
-     * @param string $formFieldName
+     * @param string      $moduleName
+     * @param int         $categoryId
+     * @param bool        $categoryCreate
+     * @param string      $formFieldName
      * @param string|null $customText
      *
      * @return array

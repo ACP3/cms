@@ -31,10 +31,11 @@ class NewsSettingsFormBlock extends AbstractSettingsFormBlock
 
     /**
      * NewsSettingsFormBlock constructor.
-     * @param FormBlockContext $context
+     *
+     * @param FormBlockContext  $context
      * @param SettingsInterface $settings
-     * @param Modules $modules
-     * @param Date $dateHelper
+     * @param Modules           $modules
+     * @param Date              $dateHelper
      */
     public function __construct(
         FormBlockContext $context,
@@ -50,7 +51,7 @@ class NewsSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -60,7 +61,7 @@ class NewsSettingsFormBlock extends AbstractSettingsFormBlock
             'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
             'readmore' => $this->forms->yesNoCheckboxGenerator('readmore', $settings['readmore']),
             'form' => \array_merge($settings, $this->getRequestData()),
-            'sidebar_entries' => $this->forms->recordsPerPage((int)$settings['sidebar'], 1, 10, 'sidebar'),
+            'sidebar_entries' => $this->forms->recordsPerPage((int) $settings['sidebar'], 1, 10, 'sidebar'),
             'category_in_breadcrumb' => $this->forms->yesNoCheckboxGenerator(
                 'category_in_breadcrumb',
                 $settings['category_in_breadcrumb']
@@ -72,6 +73,7 @@ class NewsSettingsFormBlock extends AbstractSettingsFormBlock
 
     /**
      * @param array $settings
+     *
      * @return array
      */
     private function fetchOptions(array $settings): array
@@ -84,7 +86,7 @@ class NewsSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

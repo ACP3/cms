@@ -14,7 +14,7 @@ class AclUserRolesRepository extends Core\Model\Repository\AbstractRepository im
     const TABLE_NAME = 'acl_user_roles';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getRolesByUserId($userId)
     {

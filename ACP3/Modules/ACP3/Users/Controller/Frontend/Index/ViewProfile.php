@@ -22,7 +22,7 @@ class ViewProfile extends Core\Controller\AbstractFrontendAction
      * ViewProfile constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\BlockInterface $block
+     * @param Core\View\Block\BlockInterface                $block
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -37,6 +37,7 @@ class ViewProfile extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id)

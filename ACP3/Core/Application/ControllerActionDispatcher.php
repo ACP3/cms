@@ -38,9 +38,10 @@ class ControllerActionDispatcher
 
     /**
      * ControllerActionDispatcher constructor.
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param RequestInterface $request
-     * @param ContainerInterface $container
+     *
+     * @param EventDispatcherInterface  $eventDispatcher
+     * @param RequestInterface          $request
+     * @param ContainerInterface        $container
      * @param ArgumentResolverInterface $argumentResolver
      */
     public function __construct(
@@ -57,7 +58,8 @@ class ControllerActionDispatcher
 
     /**
      * @param string $serviceId
-     * @param array $arguments
+     * @param array  $arguments
+     *
      * @return Response|string
      *
      * @throws ControllerActionNotFoundException
@@ -109,9 +111,10 @@ class ControllerActionDispatcher
 
     /**
      * @param \ACP3\Core\Controller\ActionInterface $controller
-     * @param array $arguments
+     * @param array                                 $arguments
      *
      * @return mixed
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     private function executeControllerAction(ActionInterface $controller, array $arguments)
@@ -127,6 +130,7 @@ class ControllerActionDispatcher
 
     /**
      * @param ActionInterface $controller
+     *
      * @return array
      */
     private function getCallable(ActionInterface $controller)

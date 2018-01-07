@@ -45,7 +45,7 @@ class FilesDataGridBlockTest extends AbstractDataGridBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -53,7 +53,7 @@ class FilesDataGridBlockTest extends AbstractDataGridBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {

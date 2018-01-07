@@ -41,8 +41,9 @@ class Mailer
 
     /**
      * Mailer constructor.
-     * @param LoggerInterface $logger
-     * @param MessageProcessor $messageParser
+     *
+     * @param LoggerInterface   $logger
+     * @param MessageProcessor  $messageParser
      * @param SettingsInterface $config
      */
     public function __construct(
@@ -57,6 +58,7 @@ class Mailer
 
     /**
      * @param MailerMessage $data
+     *
      * @return $this
      */
     public function setData(MailerMessage $data)
@@ -67,7 +69,7 @@ class Mailer
     }
 
     /**
-     * Sends the email
+     * Sends the email.
      *
      * @return bool
      */
@@ -139,9 +141,10 @@ class Mailer
     }
 
     /**
-     * Special sending logic for bcc only E-mails
+     * Special sending logic for bcc only E-mails.
      *
      * @return bool
+     *
      * @throws PHPMailerException
      */
     private function sendBcc()
@@ -156,10 +159,10 @@ class Mailer
     }
 
     /**
-     * Adds multiple recipients to the to be send email
+     * Adds multiple recipients to the to be send email.
      *
      * @param string|array $recipients
-     * @param bool $bcc
+     * @param bool         $bcc
      *
      * @return $this
      */
@@ -185,11 +188,11 @@ class Mailer
     }
 
     /**
-     * Adds a single recipient to the to be send email
+     * Adds a single recipient to the to be send email.
      *
      * @param string $email
      * @param string $name
-     * @param bool $bcc
+     * @param bool   $bcc
      *
      * @return $this
      */
@@ -205,9 +208,10 @@ class Mailer
     }
 
     /**
-     * Special sending logic for E-mails without bcc addresses
+     * Special sending logic for E-mails without bcc addresses.
      *
      * @return bool
+     *
      * @throws PHPMailerException
      */
     private function sendTo(): bool
@@ -223,7 +227,7 @@ class Mailer
     }
 
     /**
-     * Resets the currently set mailer values back to there default values
+     * Resets the currently set mailer values back to there default values.
      *
      * @return $this
      */
@@ -240,7 +244,7 @@ class Mailer
     }
 
     /**
-     * Initializes PHPMailer and sets the basic configuration parameters
+     * Initializes PHPMailer and sets the basic configuration parameters.
      *
      * @return $this
      */
@@ -258,7 +262,7 @@ class Mailer
                 $this->phpMailer->SMTPSecure = \in_array($settings['mailer_smtp_security'], ['ssl', 'tls'])
                     ? $settings['mailer_smtp_security']
                     : '';
-                if ((bool)$settings['mailer_smtp_auth'] === true) {
+                if ((bool) $settings['mailer_smtp_auth'] === true) {
                     $this->phpMailer->SMTPAuth = true;
                     $this->phpMailer->Username = $settings['mailer_smtp_user'];
                     $this->phpMailer->Password = $settings['mailer_smtp_password'];

@@ -9,7 +9,7 @@
  * Created by PhpStorm.
  * User: tinog
  * Date: 01.05.2017
- * Time: 16:57
+ * Time: 16:57.
  */
 
 namespace ACP3\Modules\ACP3\Polls\View\Block\Widget;

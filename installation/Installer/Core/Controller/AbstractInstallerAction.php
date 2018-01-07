@@ -17,7 +17,7 @@ use Fisharebest\Localization\Locale;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Module Controller of the installer modules
+ * Module Controller of the installer modules.
  */
 abstract class AbstractInstallerAction implements ActionInterface
 {
@@ -78,7 +78,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function preDispatch()
     {
@@ -95,7 +95,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function postDispatch()
     {
@@ -103,7 +103,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function display($actionResult): Response
     {
@@ -127,7 +127,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getRequest(): RequestInterface
     {
@@ -135,7 +135,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getView(): View
     {
@@ -143,7 +143,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function get(string $serviceId)
     {
@@ -151,7 +151,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * Generiert das Dropdown-Menü mit den zur Verfügung stehenden Installersprachen
+     * Generiert das Dropdown-Menü mit den zur Verfügung stehenden Installersprachen.
      *
      * @param string $selectedLanguage
      *
@@ -180,7 +180,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addCustomTemplateVarsBeforeOutput()
     {

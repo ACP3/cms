@@ -29,10 +29,10 @@ class Index extends Core\Controller\AbstractWidgetAction
     private $categoriesRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext $context
-     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Controller\Context\WidgetContext             $context
+     * @param \ACP3\Core\Date                                         $date
      * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
-     * @param CategoriesRepository $categoriesRepository
+     * @param CategoriesRepository                                    $categoriesRepository
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
@@ -68,15 +68,16 @@ class Index extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @param int $categoryId
+     * @param int   $categoryId
      * @param array $settings
+     *
      * @return array
      */
     private function fetchNews(int $categoryId, array $settings)
     {
         if (!empty($categoryId)) {
             $news = $this->newsRepository->getAllByCategoryId(
-                $this->categoriesRepository->getAllSiblingsAsId((int)$categoryId),
+                $this->categoriesRepository->getAllSiblingsAsId((int) $categoryId),
                 $this->date->getCurrentDateTime(),
                 $settings['sidebar']
             );

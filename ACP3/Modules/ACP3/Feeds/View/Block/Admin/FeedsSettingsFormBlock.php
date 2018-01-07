@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Feeds\Installer\Schema;
 class FeedsSettingsFormBlock extends AbstractSettingsFormBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -33,7 +33,7 @@ class FeedsSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

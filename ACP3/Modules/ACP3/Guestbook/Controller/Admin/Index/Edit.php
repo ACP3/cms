@@ -28,9 +28,9 @@ class Edit extends Core\Controller\AbstractFrontendAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param Guestbook\Model\GuestbookModel $guestbookModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface           $block
+     * @param Guestbook\Model\GuestbookModel                              $guestbookModel
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
@@ -61,6 +61,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param int $id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function executePost($id)

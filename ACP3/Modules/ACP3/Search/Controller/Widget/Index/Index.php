@@ -20,7 +20,7 @@ class Index extends Core\Controller\AbstractWidgetAction
 
     /**
      * @param \ACP3\Core\Controller\Context\WidgetContext $context
-     * @param Core\View\Block\BlockInterface $block
+     * @param Core\View\Block\BlockInterface              $block
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,

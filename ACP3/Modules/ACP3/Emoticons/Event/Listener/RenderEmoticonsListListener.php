@@ -19,6 +19,7 @@ class RenderEmoticonsListListener
 
     /**
      * RenderEmoticonsListListener constructor.
+     *
      * @param Helpers $emoticonsHelpers
      */
     public function __construct(Helpers $emoticonsHelpers)

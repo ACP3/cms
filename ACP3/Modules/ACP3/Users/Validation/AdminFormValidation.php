@@ -24,13 +24,13 @@ class AdminFormValidation extends AbstractUserFormValidation
      */
     public function setUserId($userId)
     {
-        $this->userId = (int)$userId;
+        $this->userId = (int) $userId;
 
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

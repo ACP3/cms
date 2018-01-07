@@ -36,10 +36,11 @@ class RoleManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * RoleFormBlock constructor.
-     * @param FormBlockContext $context
-     * @param AclRolesRepository $aclRolesRepository
-     * @param ACLInterface $acl
-     * @param Modules $modules
+     *
+     * @param FormBlockContext        $context
+     * @param AclRolesRepository      $aclRolesRepository
+     * @param ACLInterface            $acl
+     * @param Modules                 $modules
      * @param AclPrivilegesRepository $privilegeRepository
      * @param PermissionsCacheStorage $permissionsCache
      */
@@ -60,7 +61,7 @@ class RoleManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -125,7 +126,7 @@ class RoleManageFormBlock extends AbstractRepositoryAwareFormBlock
                     $roleId,
                     $moduleInfo['id'],
                     $privileges[$j]['id'],
-                    isset($rules[$moduleDir][$privileges[$j]['key']]['permission']) ? (int)$rules[$moduleDir][$privileges[$j]['key']]['permission'] : $defaultValue
+                    isset($rules[$moduleDir][$privileges[$j]['key']]['permission']) ? (int) $rules[$moduleDir][$privileges[$j]['key']]['permission'] : $defaultValue
                 );
                 if ($roleId !== 0) {
                     $privileges[$j]['calculated'] = $this->calculatePermission(
@@ -174,9 +175,9 @@ class RoleManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @param int $moduleId
-     * @param int $privilegeId
-     * @param int $value
+     * @param int      $moduleId
+     * @param int      $privilegeId
+     * @param int      $value
      * @param null|int $defaultValue
      *
      * @return string
@@ -185,7 +186,7 @@ class RoleManageFormBlock extends AbstractRepositoryAwareFormBlock
     {
         $requestData = $this->getRequestData();
         if (\count($requestData) == 0 && $defaultValue === $value ||
-            \count($requestData) !== 0 && (int)$requestData['privileges'][$moduleId][$privilegeId] === $value
+            \count($requestData) !== 0 && (int) $requestData['privileges'][$moduleId][$privilegeId] === $value
         ) {
             return ' checked="checked"';
         }
@@ -194,7 +195,7 @@ class RoleManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @param array $rules
+     * @param array  $rules
      * @param string $moduleDir
      * @param string $key
      *
@@ -214,7 +215,7 @@ class RoleManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

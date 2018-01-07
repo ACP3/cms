@@ -8,16 +8,17 @@
 namespace ACP3\Core\Router;
 
 /**
- * Interface RouterInterface
+ * Interface RouterInterface.
  */
 interface RouterInterface
 {
     /**
-     * Generates the internal ACP3 hyperlinks
+     * Generates the internal ACP3 hyperlinks.
      *
-     * @param string $path
-     * @param bool $isAbsolute
+     * @param string    $path
+     * @param bool      $isAbsolute
      * @param bool|null $isSecure
+     *
      * @return string
      */
     public function route($path, $isAbsolute = false, $isSecure = null);

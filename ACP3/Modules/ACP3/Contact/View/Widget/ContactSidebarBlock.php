@@ -21,7 +21,8 @@ class ContactSidebarBlock extends AbstractBlock
 
     /**
      * ContactSidebarBlock constructor.
-     * @param BlockContext $context
+     *
+     * @param BlockContext      $context
      * @param SettingsInterface $settings
      */
     public function __construct(BlockContext $context, SettingsInterface $settings)
@@ -32,7 +33,7 @@ class ContactSidebarBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render(): array
     {

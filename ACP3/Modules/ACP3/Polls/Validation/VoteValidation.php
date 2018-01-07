@@ -25,6 +25,7 @@ class VoteValidation extends AbstractFormValidation
 
     /**
      * @param int $pollId
+     *
      * @return $this
      */
     public function setPollId($pollId)
@@ -36,6 +37,7 @@ class VoteValidation extends AbstractFormValidation
 
     /**
      * @param string $ipAddress
+     *
      * @return $this
      */
     public function setIpAddress($ipAddress)

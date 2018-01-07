@@ -27,7 +27,7 @@ class OnGetSiteAndPageTitleBeforeListener
     /**
      * OnGetSiteAndPageTitleBeforeListener constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Http\RequestInterface    $request
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
     public function __construct(

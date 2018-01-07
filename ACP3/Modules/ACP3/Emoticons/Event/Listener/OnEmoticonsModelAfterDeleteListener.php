@@ -19,6 +19,7 @@ class OnEmoticonsModelAfterDeleteListener
 
     /**
      * OnEmoticonsModelBeforeDeleteListener constructor.
+     *
      * @param EmoticonsCacheStorage $cache
      */
     public function __construct(EmoticonsCacheStorage $cache)

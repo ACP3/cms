@@ -32,10 +32,10 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
-     * @param Core\Helpers\Alerts $alerts
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe $subscribeHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                    $context
+     * @param Core\View\Block\FormBlockInterface                               $block
+     * @param Core\Helpers\Alerts                                              $alerts
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe                   $subscribeHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation $subscribeFormValidation
      */
     public function __construct(

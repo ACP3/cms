@@ -20,8 +20,8 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
      * AdminSettingsFormValidation constructor.
      *
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
-     * @param \ACP3\Core\Validation\Validator $validator
-     * @param \ACP3\Core\Modules\Modules $modules
+     * @param \ACP3\Core\Validation\Validator     $validator
+     * @param \ACP3\Core\Modules\Modules          $modules
      */
     public function __construct(
         Core\I18n\TranslatorInterface $translator,
@@ -34,7 +34,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

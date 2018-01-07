@@ -18,6 +18,7 @@ class UpdateEmoticonsCacheOnModelAfterSaveListener
 
     /**
      * UpdateEmoticonsCacheOnModelAfterSaveListener constructor.
+     *
      * @param EmoticonsCacheStorage $cache
      */
     public function __construct(EmoticonsCacheStorage $cache)

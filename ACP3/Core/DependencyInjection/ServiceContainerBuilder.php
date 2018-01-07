@@ -44,10 +44,11 @@ class ServiceContainerBuilder extends ContainerBuilder
 
     /**
      * ServiceContainerBuilder constructor.
+     *
      * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
-     * @param SymfonyRequest $symfonyRequest
-     * @param string $applicationMode
+     * @param SymfonyRequest  $symfonyRequest
+     * @param string          $applicationMode
      */
     public function __construct(
         LoggerInterface $logger,
@@ -109,10 +110,11 @@ class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param LoggerInterface                        $logger
      * @param \ACP3\Core\Environment\ApplicationPath $applicationPath
-     * @param SymfonyRequest $symfonyRequest
-     * @param string $applicationMode
+     * @param SymfonyRequest                         $symfonyRequest
+     * @param string                                 $applicationMode
+     *
      * @return ContainerBuilder
      */
     public static function create(
@@ -133,7 +135,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         $fqcn = '\\ACP3\\Modules\\' . $vendor . '\\' . $moduleName . '\\ModuleRegistration';
 
         if (\class_exists($fqcn)) {
-            $instance = new $fqcn;
+            $instance = new $fqcn();
 
             if ($instance instanceof Modules\ModuleRegistration) {
                 $instance->build($this);

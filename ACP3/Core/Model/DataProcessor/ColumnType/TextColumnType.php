@@ -18,6 +18,7 @@ class TextColumnType implements ColumnTypeStrategyInterface
 
     /**
      * TextColumnType constructor.
+     *
      * @param Secure $secure
      */
     public function __construct(Secure $secure)
@@ -27,6 +28,7 @@ class TextColumnType implements ColumnTypeStrategyInterface
 
     /**
      * @param mixed $value
+     *
      * @return string
      */
     public function doEscape($value)

@@ -23,7 +23,8 @@ class CommentsDataGridBlock extends AbstractDataGridBlock
 
     /**
      * CommentsDataGridBlock constructor.
-     * @param Context\DataGridBlockContext $context
+     *
+     * @param Context\DataGridBlockContext                         $context
      * @param Core\Model\Repository\ModuleAwareRepositoryInterface $systemRepository
      */
     public function __construct(
@@ -36,7 +37,7 @@ class CommentsDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addDataGridColumns(DataGrid $dataGrid)
     {
@@ -72,7 +73,7 @@ class CommentsDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -106,7 +107,7 @@ class CommentsDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

@@ -10,7 +10,7 @@ namespace ACP3\Core\NestedSet\Model\Repository;
 interface BlockAwareNestedSetRepositoryInterface
 {
     /**
-     * Returns all results sorted by the corresponding block
+     * Returns all results sorted by the corresponding block.
      *
      * @return array
      */

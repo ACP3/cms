@@ -18,6 +18,7 @@ class FeedAvailabilityRegistrar
 
     /**
      * @param FeedAvailabilityExtensionInterface $searchAvailability
+     *
      * @return $this
      */
     public function registerModule(FeedAvailabilityExtensionInterface $searchAvailability)
@@ -37,6 +38,7 @@ class FeedAvailabilityRegistrar
 
     /**
      * @param string $moduleName
+     *
      * @return FeedAvailabilityExtensionInterface
      */
     public function getFeedItemsByModuleName($moduleName)

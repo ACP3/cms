@@ -21,7 +21,7 @@ class ArticleCacheStorage extends Core\Cache\AbstractCacheStorage
 
     /**
      * @param \ACP3\Core\Cache\Cache $cache
-     * @param ArticlesRepository $articleRepository
+     * @param ArticlesRepository     $articleRepository
      */
     public function __construct(
         Core\Cache\Cache $cache,
@@ -33,7 +33,7 @@ class ArticleCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * @param integer $articleId
+     * @param int $articleId
      *
      * @return array
      */
@@ -47,9 +47,9 @@ class ArticleCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * @param integer $articleId
+     * @param int $articleId
      *
-     * @return boolean
+     * @return bool
      */
     public function saveCache($articleId)
     {

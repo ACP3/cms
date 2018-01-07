@@ -23,7 +23,8 @@ class ConfigProcessor
 
     /**
      * DataGridConfigProcessor constructor.
-     * @param RequestInterface $request
+     *
+     * @param RequestInterface    $request
      * @param TranslatorInterface $translator
      */
     public function __construct(RequestInterface $request, TranslatorInterface $translator)
@@ -34,7 +35,8 @@ class ConfigProcessor
 
     /**
      * @param ColumnPriorityQueue $columns
-     * @param Options $options
+     * @param Options             $options
+     *
      * @return array
      */
     public function generateDataTableConfig(ColumnPriorityQueue $columns, Options $options): array
@@ -92,6 +94,7 @@ class ConfigProcessor
 
     /**
      * @param ColumnPriorityQueue $columns
+     *
      * @return array
      */
     protected function getDefaultSorting(ColumnPriorityQueue $columns): array
@@ -120,7 +123,8 @@ class ConfigProcessor
 
     /**
      * @param ColumnPriorityQueue $columns
-     * @param bool $useAjax
+     * @param bool                $useAjax
+     *
      * @return array
      */
     private function getColumnDefinitions(ColumnPriorityQueue $columns, bool $useAjax): array

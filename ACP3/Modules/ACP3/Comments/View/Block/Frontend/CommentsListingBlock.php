@@ -31,9 +31,10 @@ class CommentsListingBlock extends AbstractListingBlock
 
     /**
      * CommentsListingBlock constructor.
+     *
      * @param ListingBlockContext $context
-     * @param SettingsInterface $settings
-     * @param CommentsRepository $commentRepository
+     * @param SettingsInterface   $settings
+     * @param CommentsRepository  $commentRepository
      */
     public function __construct(
         ListingBlockContext $context,
@@ -48,6 +49,7 @@ class CommentsListingBlock extends AbstractListingBlock
 
     /**
      * @param Helpers $emoticonsHelpers
+     *
      * @return $this
      */
     public function setEmoticonsHelper(Helpers $emoticonsHelpers)
@@ -58,7 +60,7 @@ class CommentsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getModuleName(): string
     {
@@ -66,7 +68,7 @@ class CommentsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getTotalResults(): int
     {
@@ -76,7 +78,7 @@ class CommentsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getResults(int $resultsPerPage): array
     {
@@ -105,7 +107,7 @@ class CommentsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

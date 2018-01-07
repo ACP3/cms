@@ -28,9 +28,9 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\SettingsFormBlockInterface $block
-     * @param Core\Helpers\Secure $secure
+     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
+     * @param Core\View\Block\SettingsFormBlockInterface                          $block
+     * @param Core\Helpers\Secure                                                 $secure
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(

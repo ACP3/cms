@@ -20,7 +20,7 @@ class FileCacheStorage extends Core\Cache\AbstractCacheStorage
     protected $filesRepository;
 
     /**
-     * @param \ACP3\Core\Cache\Cache                               $cache
+     * @param \ACP3\Core\Cache\Cache                                    $cache
      * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
      */
     public function __construct(
@@ -33,7 +33,7 @@ class FileCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * @param integer $fileId
+     * @param int $fileId
      *
      * @return array
      */
@@ -47,9 +47,9 @@ class FileCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * @param integer $fileId
+     * @param int $fileId
      *
-     * @return boolean
+     * @return bool
      */
     public function saveCache($fileId)
     {

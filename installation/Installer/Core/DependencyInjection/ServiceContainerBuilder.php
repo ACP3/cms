@@ -48,12 +48,13 @@ class ServiceContainerBuilder extends ContainerBuilder
 
     /**
      * ServiceContainerBuilder constructor.
+     *
      * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
-     * @param Request $symfonyRequest
-     * @param string $applicationMode
-     * @param bool $includeModules
-     * @param bool $migrationsOnly
+     * @param Request         $symfonyRequest
+     * @param string          $applicationMode
+     * @param bool            $includeModules
+     * @param bool            $migrationsOnly
      */
     public function __construct(
         LoggerInterface $logger,
@@ -137,6 +138,7 @@ class ServiceContainerBuilder extends ContainerBuilder
 
     /**
      * @param string $vendor
+     *
      * @return array
      */
     private function getServicesPath($vendor)
@@ -150,10 +152,11 @@ class ServiceContainerBuilder extends ContainerBuilder
     /**
      * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
-     * @param Request $symfonyRequest
-     * @param string $applicationMode
-     * @param bool $includeModules
-     * @param bool $migrationsOnly
+     * @param Request         $symfonyRequest
+     * @param string          $applicationMode
+     * @param bool            $includeModules
+     * @param bool            $migrationsOnly
+     *
      * @return ContainerBuilder
      */
     public static function create(

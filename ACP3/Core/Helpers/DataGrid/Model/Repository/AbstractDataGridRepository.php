@@ -16,8 +16,8 @@ abstract class AbstractDataGridRepository extends AbstractRepository
 {
     /**
      * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns
+     * @param QueryOption[]                                   $queryOptions
      *
-     * @param QueryOption[] $queryOptions
      * @return array
      */
     public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions)
@@ -38,6 +38,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
 
     /**
      * @param QueryOption[] $queryOptions
+     *
      * @return int
      */
     public function countAll(QueryOption ...$queryOptions)
@@ -51,7 +52,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
         $this->addJoin($queryBuilder);
         $this->addWhere($queryBuilder, ...$queryOptions);
 
-        return (int)$queryBuilder->execute()->fetchColumn();
+        return (int) $queryBuilder->execute()->fetchColumn();
     }
 
     /**
@@ -94,7 +95,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
 
     /**
      * @param \Doctrine\DBAL\Query\QueryBuilder $queryBuilder
-     * @param QueryOption[] $queryOptions
+     * @param QueryOption[]                     $queryOptions
      */
     protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions)
     {
@@ -114,7 +115,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
 
     /**
      * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $gridColumns
-     * @param \Doctrine\DBAL\Query\QueryBuilder $queryBuilder
+     * @param \Doctrine\DBAL\Query\QueryBuilder               $queryBuilder
      */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
     {
@@ -133,6 +134,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
 
     /**
      * @param QueryOption[] $queryOptions
+     *
      * @return array
      */
     protected function getParameters(QueryOption ...$queryOptions)

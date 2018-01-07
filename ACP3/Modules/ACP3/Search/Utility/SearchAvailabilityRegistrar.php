@@ -18,6 +18,7 @@ class SearchAvailabilityRegistrar
 
     /**
      * @param SearchAvailabilityExtensionInterface $searchAvailability
+     *
      * @return $this
      */
     public function registerModule(SearchAvailabilityExtensionInterface $searchAvailability)

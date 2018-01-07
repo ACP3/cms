@@ -40,12 +40,12 @@ class Installer
     private $schemaRegistrar;
 
     /**
-     * @param LoggerInterface $logger
+     * @param LoggerInterface                        $logger
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules\Modules $modules
-     * @param \ACP3\Core\Modules\Vendor $vendors
-     * @param Core\Installer\SchemaRegistrar $schemaRegistrar
-     * @param \ACP3\Core\Installer\SchemaInstaller $schemaInstaller
+     * @param \ACP3\Core\Modules\Modules             $modules
+     * @param \ACP3\Core\Modules\Vendor              $vendors
+     * @param Core\Installer\SchemaRegistrar         $schemaRegistrar
+     * @param \ACP3\Core\Installer\SchemaInstaller   $schemaInstaller
      */
     public function __construct(
         LoggerInterface $logger,
@@ -64,7 +64,7 @@ class Installer
     }
 
     /**
-     * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls
+     * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls.
      *
      * @param \ACP3\Core\Installer\SchemaInterface $schema
      *
@@ -88,6 +88,7 @@ class Installer
 
     /**
      * @param \ACP3\Core\Installer\SchemaInterface $schema
+     *
      * @return array
      */
     public function checkUninstallDependencies(Core\Installer\SchemaInterface $schema)
@@ -112,7 +113,7 @@ class Installer
     }
 
     /**
-     * Gibt ein Array mit den Abhängigkeiten zu anderen Modulen eines Moduls zurück
+     * Gibt ein Array mit den Abhängigkeiten zu anderen Modulen eines Moduls zurück.
      *
      * @param string $moduleName
      *
@@ -120,7 +121,7 @@ class Installer
      */
     protected function getDependencies(string $moduleName): array
     {
-        if ((bool)\preg_match('=/=', $moduleName) === false) {
+        if ((bool) \preg_match('=/=', $moduleName) === false) {
             foreach ($this->vendors->getVendors() as $vendor) {
                 $path = $this->appPath->getModulesDir() . $vendor . '/' . \ucfirst($moduleName) . '/composer.json';
 

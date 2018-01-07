@@ -37,10 +37,10 @@ class SessionHandler extends AbstractSessionHandler
     protected $gcCalled = false;
 
     /**
-     * @param \ACP3\Core\Database\Connection $db
+     * @param \ACP3\Core\Database\Connection         $db
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param Response $response
+     * @param \ACP3\Core\Http\RequestInterface       $request
+     * @param Response                               $response
      */
     public function __construct(
         Connection $db,
@@ -57,7 +57,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function startSession()
     {
@@ -75,7 +75,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function secureSession()
     {
@@ -84,7 +84,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function open($savePath, $sessionId)
     {
@@ -92,7 +92,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function close()
     {
@@ -112,7 +112,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * Resets all already stored session data
+     * Resets all already stored session data.
      */
     protected function resetSessionData()
     {
@@ -120,7 +120,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function read($sessionId)
     {
@@ -133,7 +133,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function write($sessionId, $data)
     {
@@ -146,7 +146,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function destroy($sessionId)
     {
@@ -171,7 +171,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function gc($sessionLifetime)
     {

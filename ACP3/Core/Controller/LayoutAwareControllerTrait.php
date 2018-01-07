@@ -27,6 +27,7 @@ trait LayoutAwareControllerTrait
 
     /**
      * @param string $layout
+     *
      * @return $this
      */
     public function setLayout(string $layout)
@@ -39,6 +40,7 @@ trait LayoutAwareControllerTrait
     /**
      * @param string $defaultAjaxLayoutName
      * @param string $defaultLayoutName
+     *
      * @return string
      */
     protected function fetchLayoutViaInheritance(
@@ -59,6 +61,7 @@ trait LayoutAwareControllerTrait
     /**
      * @param string $layoutFileName
      * @param string $defaultLayoutName
+     *
      * @return array
      */
     private function fetchLayoutPaths(string $layoutFileName, string $defaultLayoutName): array

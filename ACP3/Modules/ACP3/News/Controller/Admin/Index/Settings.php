@@ -30,9 +30,9 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\SettingsFormBlockInterface $block
-     * @param Core\Helpers\Secure $secure
+     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
+     * @param Core\View\Block\SettingsFormBlockInterface                     $block
+     * @param Core\Helpers\Secure                                            $secure
      * @param \ACP3\Modules\ACP3\News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
@@ -70,9 +70,9 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
             $data = [
                 'dateformat' => $this->secure->strEncode($formData['dateformat']),
-                'sidebar' => (int)$formData['sidebar'],
+                'sidebar' => (int) $formData['sidebar'],
                 'readmore' => $formData['readmore'],
-                'readmore_chars' => (int)$formData['readmore_chars'],
+                'readmore_chars' => (int) $formData['readmore_chars'],
                 'category_in_breadcrumb' => $formData['category_in_breadcrumb'],
             ];
 

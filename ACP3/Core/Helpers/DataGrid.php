@@ -74,10 +74,10 @@ class DataGrid
     private $options;
 
     /**
-     * @param \ACP3\Core\ACL\ACLInterface $acl
-     * @param RequestInterface $request
+     * @param \ACP3\Core\ACL\ACLInterface         $acl
+     * @param RequestInterface                    $request
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
-     * @param ConfigProcessor $configProcessor
+     * @param ConfigProcessor                     $configProcessor
      */
     public function __construct(
         ACLInterface $acl,
@@ -130,6 +130,7 @@ class DataGrid
 
     /**
      * @param QueryOption[] ...$queryOptions
+     *
      * @return $this
      */
     public function setQueryOptions(QueryOption ...$queryOptions)
@@ -141,6 +142,7 @@ class DataGrid
 
     /**
      * @param Options $options
+     *
      * @return $this
      */
     public function setOptions(Options $options)
@@ -152,7 +154,7 @@ class DataGrid
 
     /**
      * @param array $columnData
-     * @param int $priority
+     * @param int   $priority
      *
      * @return $this
      */
@@ -181,6 +183,7 @@ class DataGrid
 
     /**
      * @return array|JsonResponse
+     *
      * @throws DataGridException
      */
     public function render()
@@ -219,7 +222,7 @@ class DataGrid
     }
 
     /**
-     * Checks, whether we have the required AJAX request in effect
+     * Checks, whether we have the required AJAX request in effect.
      *
      * @return bool
      */
@@ -343,7 +346,7 @@ class DataGrid
     }
 
     /**
-     * Finds the primary key column
+     * Finds the primary key column.
      */
     private function findPrimaryKey()
     {
@@ -374,7 +377,7 @@ class DataGrid
     public function countDbResults(): int
     {
         if ($this->repository instanceof AbstractDataGridRepository) {
-            return (int)$this->repository->countAll(...$this->queryOptions);
+            return (int) $this->repository->countAll(...$this->queryOptions);
         }
 
         return \count($this->fetchDbResults());

@@ -32,10 +32,11 @@ class FileManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * FileFormBlock constructor.
-     * @param FormBlockContext $context
-     * @param FilesRepository $filesRepository
-     * @param SettingsInterface $settings
-     * @param Modules $modules
+     *
+     * @param FormBlockContext                      $context
+     * @param FilesRepository                       $filesRepository
+     * @param SettingsInterface                     $settings
+     * @param Modules                               $modules
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
@@ -53,7 +54,7 @@ class FileManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -97,6 +98,7 @@ class FileManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * @param array $file
+     *
      * @return array
      */
     protected function getOptions(array $file): array
@@ -131,6 +133,7 @@ class FileManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * @param int|null $id
+     *
      * @return string
      */
     private function getSeoRouteName(?int $id): string
@@ -139,7 +142,7 @@ class FileManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

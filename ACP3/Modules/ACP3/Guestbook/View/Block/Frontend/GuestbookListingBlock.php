@@ -31,8 +31,9 @@ class GuestbookListingBlock extends AbstractListingBlock
 
     /**
      * GuestbookListingBlock constructor.
+     *
      * @param ListingBlockContext $context
-     * @param SettingsInterface $settings
+     * @param SettingsInterface   $settings
      * @param GuestbookRepository $guestbookRepository
      */
     public function __construct(
@@ -59,7 +60,7 @@ class GuestbookListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getModuleName(): string
     {
@@ -67,7 +68,7 @@ class GuestbookListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getTotalResults(): int
     {
@@ -77,7 +78,7 @@ class GuestbookListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getResults(int $resultsPerPage): array
     {
@@ -100,7 +101,7 @@ class GuestbookListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

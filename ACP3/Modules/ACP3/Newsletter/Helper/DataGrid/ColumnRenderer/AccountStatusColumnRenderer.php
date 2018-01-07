@@ -26,7 +26,7 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
      * AccountStatusColumnRenderer constructor.
      *
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
-     * @param \ACP3\Core\Router\RouterInterface $router
+     * @param \ACP3\Core\Router\RouterInterface   $router
      */
     public function __construct(
         TranslatorInterface $translator,
@@ -37,12 +37,12 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
         if (isset($dbResultRow[$field])) {
-            if ((int)$dbResultRow[$field] === 0) {
+            if ((int) $dbResultRow[$field] === 0) {
                 $route = $this->router->route('acp/newsletter/accounts/activate/id_' . $dbResultRow[$this->primaryKey]);
                 $title = $this->translator->t('newsletter', 'activate_account');
                 $value = '<a href="' . $route . '" title="' . $title . '">';

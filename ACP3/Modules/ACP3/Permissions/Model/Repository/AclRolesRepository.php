@@ -20,7 +20,7 @@ class AclRolesRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
      */
     public function roleExists($roleId)
     {
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id',
                 ['id' => $roleId]
         ) > 0;
@@ -37,7 +37,7 @@ class AclRolesRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
         if ($roleId !== 0) {
             return !empty($roleName) && $this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND `name` = ?',
-                    [(int)$roleId, $roleName]
+                    [(int) $roleId, $roleName]
             ) == 1;
         }
 

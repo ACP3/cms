@@ -26,7 +26,8 @@ class ThumbnailGenerator
 
     /**
      * ThumbnailGenerator constructor.
-     * @param ApplicationPath $appPath
+     *
+     * @param ApplicationPath   $appPath
      * @param SettingsInterface $settings
      */
     public function __construct(ApplicationPath $appPath, SettingsInterface $settings)
@@ -37,8 +38,9 @@ class ThumbnailGenerator
 
     /**
      * @param Picture $picture
-     * @param string $action
-     * @param string $fileName
+     * @param string  $action
+     * @param string  $fileName
+     *
      * @return Picture
      */
     public function generateThumbnail(Picture $picture, string $action, string $fileName): Picture

@@ -16,7 +16,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'news';
 
     /**
-     * @param int $newsId
+     * @param int    $newsId
      * @param string $time
      *
      * @return bool
@@ -25,7 +25,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id' . $period,
                 ['id' => $newsId, 'time' => $time, 'active' => 1]
             ) > 0;
@@ -33,7 +33,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
 
     /**
      * @param string $time
-     * @param int[] $categoryId
+     * @param int[]  $categoryId
      *
      * @return int
      */
@@ -42,7 +42,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
         if (!empty($categoryId)) {
             $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
-            return (int)$this->db->fetchColumn(
+            return (int) $this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . " WHERE `category_id` IN(:categoryId) {$where} ORDER BY `start` DESC, `end` DESC, `id` DESC",
                 ['time' => $time, 'categoryId' => $categoryId, 'active' => 1],
                 ['time' => \PDO::PARAM_STR, 'categoryId' => \Doctrine\DBAL\Connection::PARAM_INT_ARRAY, 'active' => \PDO::PARAM_INT]
@@ -51,14 +51,14 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
 
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC',
             ['time' => $time, 'active' => 1]
         );
     }
 
     /**
-     * @param int[] $categoryIds
+     * @param int[]  $categoryIds
      * @param string $time
      * @param string $limitStart
      * @param string $resultsPerPage
@@ -96,7 +96,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $categoryId
+     * @param int    $categoryId
      * @param string $time
      *
      * @return array

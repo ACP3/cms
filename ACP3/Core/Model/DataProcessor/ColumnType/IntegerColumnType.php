@@ -11,10 +11,11 @@ class IntegerColumnType implements ColumnTypeStrategyInterface
 {
     /**
      * @param mixed $value
+     *
      * @return int
      */
     public function doEscape($value)
     {
-        return (int)$value;
+        return (int) $value;
     }
 }

@@ -23,9 +23,10 @@ class FormBlockContext extends BlockContext
 
     /**
      * FormTemplateContext constructor.
+     *
      * @param BlockContext $context
-     * @param Forms $forms
-     * @param FormToken $formToken
+     * @param Forms        $forms
+     * @param FormToken    $formToken
      */
     public function __construct(BlockContext $context, Forms $forms, FormToken $formToken)
     {

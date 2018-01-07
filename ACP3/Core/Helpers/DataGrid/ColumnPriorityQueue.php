@@ -15,7 +15,7 @@ class ColumnPriorityQueue extends \SplPriorityQueue
     protected $serial = PHP_INT_MAX;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @see http://php.net/manual/en/splpriorityqueue.compare.php#93999
      */

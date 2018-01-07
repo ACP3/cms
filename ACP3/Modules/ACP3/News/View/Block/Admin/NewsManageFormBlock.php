@@ -32,10 +32,11 @@ class NewsManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * NewsFormBlock constructor.
-     * @param FormBlockContext $context
-     * @param NewsRepository $newsRepository
-     * @param SettingsInterface $settings
-     * @param Modules $modules
+     *
+     * @param FormBlockContext                      $context
+     * @param NewsRepository                        $newsRepository
+     * @param SettingsInterface                     $settings
+     * @param Modules                               $modules
      * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
      */
     public function __construct(
@@ -53,7 +54,7 @@ class NewsManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -72,7 +73,7 @@ class NewsManageFormBlock extends AbstractRepositoryAwareFormBlock
                 $news['category_id'],
                 true
             ),
-            'options' => $this->fetchOptions((int)$news['readmore'], (int)$news['comments']),
+            'options' => $this->fetchOptions((int) $news['readmore'], (int) $news['comments']),
             'target' => $this->forms->linkTargetChoicesGenerator('target', $news['target']),
             'form' => \array_merge($news, $this->getRequestData()),
             'form_token' => $this->formToken->renderFormToken(),
@@ -84,6 +85,7 @@ class NewsManageFormBlock extends AbstractRepositoryAwareFormBlock
     /**
      * @param int $readMoreValue
      * @param int $commentsValue
+     *
      * @return array
      */
     private function fetchOptions(int $readMoreValue, int $commentsValue): array
@@ -113,6 +115,7 @@ class NewsManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * @param int|null $id
+     *
      * @return string
      */
     private function getSeoRouteName(?int $id): string
@@ -121,7 +124,7 @@ class NewsManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

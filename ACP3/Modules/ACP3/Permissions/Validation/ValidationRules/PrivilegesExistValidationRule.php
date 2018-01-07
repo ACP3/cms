@@ -29,7 +29,7 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -42,11 +42,11 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
 
     /**
      * Überprüft, ob die übergebenen Privilegien existieren und
-     * plausible Werte enthalten
+     * plausible Werte enthalten.
      *
      * @param array $privilegeIds
      *
-     * @return boolean
+     * @return bool
      */
     public function privilegesExist(array $privilegeIds)
     {

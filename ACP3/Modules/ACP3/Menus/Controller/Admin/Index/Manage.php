@@ -27,10 +27,11 @@ class Manage extends Core\Controller\AbstractFrontendAction
 
     /**
      * Manage constructor.
-     * @param Core\Controller\Context\FrontendContext $context
+     *
+     * @param Core\Controller\Context\FrontendContext           $context
      * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param Menus\Model\MenusModel $menusModel
-     * @param Menus\Validation\MenuFormValidation $menuFormValidation
+     * @param Menus\Model\MenusModel                            $menusModel
+     * @param Menus\Validation\MenuFormValidation               $menuFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

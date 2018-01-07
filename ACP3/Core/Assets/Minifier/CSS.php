@@ -22,7 +22,7 @@ class CSS extends AbstractMinifier
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function processLibraries(string $layout)
     {
@@ -40,7 +40,7 @@ class CSS extends AbstractMinifier
     }
 
     /**
-     * Fetch all stylesheets of the enabled frontend frameworks/libraries
+     * Fetch all stylesheets of the enabled frontend frameworks/libraries.
      */
     protected function fetchLibraries()
     {
@@ -57,7 +57,7 @@ class CSS extends AbstractMinifier
     }
 
     /**
-     * Fetches the theme stylesheets
+     * Fetches the theme stylesheets.
      *
      * @param string $layout
      */
@@ -88,7 +88,7 @@ class CSS extends AbstractMinifier
     }
 
     /**
-     * Fetches the stylesheets of all currently enabled modules
+     * Fetches the stylesheets of all currently enabled modules.
      */
     protected function fetchModuleStylesheets()
     {

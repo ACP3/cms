@@ -25,9 +25,10 @@ class CategoryManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * CategoryFormBlock constructor.
-     * @param FormBlockContext $context
+     *
+     * @param FormBlockContext     $context
      * @param CategoriesRepository $categoriesRepository
-     * @param Modules $modules
+     * @param Modules              $modules
      */
     public function __construct(
         FormBlockContext $context,
@@ -41,7 +42,7 @@ class CategoryManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -87,6 +88,7 @@ class CategoryManageFormBlock extends AbstractRepositoryAwareFormBlock
      * @param int|null $parentId
      * @param int|null $leftId
      * @param int|null $rightId
+     *
      * @return array
      */
     private function fetchCategoryTree(?int $moduleId, ?int $parentId, ?int $leftId, ?int $rightId): array
@@ -109,7 +111,7 @@ class CategoryManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

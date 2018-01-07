@@ -37,10 +37,10 @@ class Date
     /**
      * Date constructor.
      *
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\I18n\TranslatorInterface $translator
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Date                                          $date
+     * @param \ACP3\Core\I18n\TranslatorInterface                      $translator
+     * @param \ACP3\Core\Http\RequestInterface                         $request
+     * @param \ACP3\Core\Helpers\Forms                                 $formsHelper
      * @param \ACP3\Core\Validation\ValidationRules\DateValidationRule $dateValidationRule
      */
     public function __construct(
@@ -58,7 +58,7 @@ class Date
     }
 
     /**
-     * Liefert ein Array mit allen Zeitzonen dieser Welt aus
+     * Liefert ein Array mit allen Zeitzonen dieser Welt aus.
      *
      * @param string $currentValue
      *
@@ -98,7 +98,7 @@ class Date
 
     /**
      * Gibts ein Array mit den möglichen Datumsformaten aus,
-     * um diese als Dropdownmenü darstellen zu können
+     * um diese als Dropdownmenü darstellen zu können.
      *
      * @param string $currentDateFormat
      *
@@ -115,12 +115,12 @@ class Date
     }
 
     /**
-     * Displays an input field with an associated datepicker
+     * Displays an input field with an associated datepicker.
      *
      * @param string|array $name
      * @param string|array $value
-     * @param bool $showTime
-     * @param bool $inputFieldOnly
+     * @param bool         $showTime
+     * @param bool         $inputFieldOnly
      *
      * @return array
      */
@@ -132,9 +132,9 @@ class Date
     ) {
         $datePicker = [
             'range' => $this->isRange($name),
-            'with_time' => (bool)$showTime,
+            'with_time' => (bool) $showTime,
             'length' => $showTime === true ? 16 : 10,
-            'input_only' => (bool)$inputFieldOnly,
+            'input_only' => (bool) $inputFieldOnly,
             'params' => [
                 'format' => $this->getPickerDateFormat($showTime),
                 'changeMonth' => 'true',
@@ -180,7 +180,7 @@ class Date
     /**
      * @param array $name
      * @param array $value
-     * @param bool $showTime
+     * @param bool  $showTime
      *
      * @return array
      */
@@ -214,7 +214,7 @@ class Date
     /**
      * @param string $name
      * @param string $value
-     * @param bool $showTime
+     * @param bool   $showTime
      *
      * @return string
      */

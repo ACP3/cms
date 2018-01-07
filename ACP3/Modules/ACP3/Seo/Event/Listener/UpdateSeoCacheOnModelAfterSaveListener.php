@@ -18,6 +18,7 @@ class UpdateSeoCacheOnModelAfterSaveListener
 
     /**
      * UpdateSeoCacheOnModelAfterSaveListener constructor.
+     *
      * @param SeoCacheStorage $cache
      */
     public function __construct(SeoCacheStorage $cache)

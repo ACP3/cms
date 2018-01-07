@@ -25,7 +25,7 @@ class FilesModel extends AbstractModel
     protected $repository;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function save(array $data, $entryId = null)
     {
@@ -46,7 +46,7 @@ class FilesModel extends AbstractModel
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getAllowedColumns()
     {
@@ -67,7 +67,7 @@ class FilesModel extends AbstractModel
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getDefaultDataForDuplication()
     {

@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Users\Validation\ValidationRules;
 class AccountNotExistsByEmailValidationRule extends AbstractAccountNotExistsValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function accountExists($data, $userId)
     {

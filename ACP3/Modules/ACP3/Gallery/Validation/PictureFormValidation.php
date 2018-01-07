@@ -22,19 +22,20 @@ class PictureFormValidation extends Core\Validation\AbstractFormValidation
     protected $file;
 
     /**
-     * @param boolean $fileRequired
+     * @param bool $fileRequired
      *
      * @return $this
      */
     public function setFileRequired($fileRequired)
     {
-        $this->fileRequired = (bool)$fileRequired;
+        $this->fileRequired = (bool) $fileRequired;
 
         return $this;
     }
 
     /**
      * @param UploadedFile|null $file
+     *
      * @return $this
      */
     public function setFile($file)
@@ -45,7 +46,7 @@ class PictureFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

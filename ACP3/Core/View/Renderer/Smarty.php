@@ -11,8 +11,7 @@ use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 
 /**
- * Renderer for the Smarty template engine
- *
+ * Renderer for the Smarty template engine.
  */
 class Smarty implements RendererInterface
 {
@@ -32,9 +31,9 @@ class Smarty implements RendererInterface
     /**
      * Smarty constructor.
      *
-     * @param \Smarty $smarty
+     * @param \Smarty                                $smarty
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param string $environment
+     * @param string                                 $environment
      */
     public function __construct(
         \Smarty $smarty,
@@ -79,7 +78,7 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function assign($name, $value = null)
     {
@@ -89,7 +88,7 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getTemplateVars($variableName = null)
     {
@@ -97,7 +96,7 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function fetch($template, $cacheId = null, $compileId = null, $parent = null)
     {
@@ -105,7 +104,7 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function display($template, $cacheId = null, $compileId = null, $parent = null)
     {
@@ -113,7 +112,7 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function templateExists($template)
     {

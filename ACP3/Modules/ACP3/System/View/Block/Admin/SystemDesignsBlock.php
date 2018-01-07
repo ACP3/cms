@@ -28,9 +28,10 @@ class SystemDesignsBlock extends AbstractBlock
 
     /**
      * SystemDesignsBlock constructor.
-     * @param BlockContext $context
+     *
+     * @param BlockContext      $context
      * @param SettingsInterface $settings
-     * @param XML $xml
+     * @param XML               $xml
      */
     public function __construct(BlockContext $context, SettingsInterface $settings, XML $xml)
     {
@@ -41,7 +42,7 @@ class SystemDesignsBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -51,7 +52,7 @@ class SystemDesignsBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getXml()
     {
@@ -59,7 +60,7 @@ class SystemDesignsBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function selectEntry(string $directory)
     {

@@ -35,7 +35,7 @@ class FormToken
     }
 
     /**
-     * Generates and renders the form token
+     * Generates and renders the form token.
      *
      * @return string
      */
@@ -53,7 +53,7 @@ class FormToken
     }
 
     /**
-     * Removes the form token from the session
+     * Removes the form token from the session.
      *
      * @param string $token
      */

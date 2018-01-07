@@ -13,7 +13,7 @@ use ACP3\Core\Model\DataProcessor\ColumnTypes;
 class ContactsModel extends AbstractModel
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function save(array $rawData, $entryId = null)
     {
@@ -23,7 +23,7 @@ class ContactsModel extends AbstractModel
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getAllowedColumns()
     {

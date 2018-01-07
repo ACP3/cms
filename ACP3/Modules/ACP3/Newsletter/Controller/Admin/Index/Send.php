@@ -28,10 +28,10 @@ class Send extends Core\Controller\AbstractFrontendAction
     /**
      * Send constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository $newsletterRepository
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository    $accountRepository
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter      $newsletterHelpers
+     * @param \ACP3\Core\Controller\Context\FrontendContext                               $context
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewslettersRepository        $newsletterRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository $accountRepository
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter                         $newsletterHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -50,6 +50,7 @@ class Send extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\ConnectionException
      */

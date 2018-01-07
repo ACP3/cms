@@ -28,9 +28,9 @@ class Edit extends AbstractAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param Users\Model\UsersModel $usersModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext             $context
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface         $block
+     * @param Users\Model\UsersModel                                    $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation $accountFormValidation
      */
     public function __construct(

@@ -25,7 +25,7 @@ class RewriteUri extends AbstractModifier
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -33,7 +33,7 @@ class RewriteUri extends AbstractModifier
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process($value)
     {

@@ -10,11 +10,11 @@ namespace ACP3\Core\Session;
 abstract class AbstractSessionHandler implements SessionHandlerInterface
 {
     /**
-     * @var integer
+     * @var int
      */
     protected $expireTime = 1800;
     /**
-     * @var integer
+     * @var int
      */
     protected $gcProbability = 1;
     /**
@@ -23,7 +23,8 @@ abstract class AbstractSessionHandler implements SessionHandlerInterface
     protected $gcDivisor = 100;
 
     /**
-     * Configures the session
+     * Configures the session.
+     *
      * @param bool $isSecure
      */
     protected function configureSession($isSecure = false)
@@ -51,13 +52,12 @@ abstract class AbstractSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Starts the session
+     * Starts the session.
      */
     abstract protected function startSession();
 
     /**
      * @param string     $key
-     *
      * @param mixed|null $default
      *
      * @return mixed|null

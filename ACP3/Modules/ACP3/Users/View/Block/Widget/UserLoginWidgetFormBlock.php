@@ -21,7 +21,8 @@ class UserLoginWidgetFormBlock extends AbstractFormBlock
 
     /**
      * UserLoginWidgetFormBlock constructor.
-     * @param FormBlockContext $context
+     *
+     * @param FormBlockContext  $context
      * @param SettingsInterface $settings
      */
     public function __construct(FormBlockContext $context, SettingsInterface $settings)
@@ -32,7 +33,7 @@ class UserLoginWidgetFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -45,7 +46,7 @@ class UserLoginWidgetFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

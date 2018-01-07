@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Gallery\Helpers;
 class GalleryManageFormBlock extends AbstractRepositoryAwareFormBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -36,6 +36,7 @@ class GalleryManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * @param int|null $id
+     *
      * @return string
      */
     private function getSeoRouteName(?int $id): string
@@ -44,7 +45,7 @@ class GalleryManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

@@ -22,9 +22,10 @@ class GuestbookAdminFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * GuestbookFormBlock constructor.
-     * @param FormBlockContext $context
+     *
+     * @param FormBlockContext    $context
      * @param GuestbookRepository $repository
-     * @param SettingsInterface $settings
+     * @param SettingsInterface   $settings
      */
     public function __construct(
         FormBlockContext $context,
@@ -37,7 +38,7 @@ class GuestbookAdminFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -58,7 +59,7 @@ class GuestbookAdminFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

@@ -29,9 +29,10 @@ class PollVotesModel
 
     /**
      * PollsModel constructor.
+     *
      * @param Core\Validation\Validator $validator
-     * @param UserModel $userModel
-     * @param PollVotesRepository $voteRepository
+     * @param UserModel                 $userModel
+     * @param PollVotesRepository       $voteRepository
      */
     public function __construct(
         Core\Validation\Validator $validator,
@@ -44,11 +45,13 @@ class PollVotesModel
     }
 
     /**
-     * @param array $formData
-     * @param int $pollId
+     * @param array  $formData
+     * @param int    $pollId
      * @param string $ipAddress
      * @param string $time
+     *
      * @return bool|int
+     *
      * @throws Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
     public function vote(array $formData, $pollId, $ipAddress, $time)

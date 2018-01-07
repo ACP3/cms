@@ -41,13 +41,13 @@ class Manage extends Core\Controller\AbstractFrontendAction
     /**
      * Manage constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\AuthenticationModel $authenticationModel
-     * @param Users\Model\UsersModel $usersModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface       $block
+     * @param \ACP3\Core\Helpers\Secure                               $secureHelper
+     * @param \ACP3\Modules\ACP3\Users\Model\AuthenticationModel      $authenticationModel
+     * @param Users\Model\UsersModel                                  $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Permissions\Helpers $permissionsHelpers
+     * @param \ACP3\Modules\ACP3\Permissions\Helpers                  $permissionsHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

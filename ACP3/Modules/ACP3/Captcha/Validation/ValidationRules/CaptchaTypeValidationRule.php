@@ -19,6 +19,7 @@ class CaptchaTypeValidationRule extends AbstractValidationRule
 
     /**
      * CaptchaTypeValidationRule constructor.
+     *
      * @param CaptchaRegistrar $captchaRegistrar
      */
     public function __construct(CaptchaRegistrar $captchaRegistrar)
@@ -27,7 +28,7 @@ class CaptchaTypeValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {

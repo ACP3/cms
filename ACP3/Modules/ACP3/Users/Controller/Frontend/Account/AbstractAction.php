@@ -14,6 +14,7 @@ abstract class AbstractAction extends AbstractFrontendAction
 {
     /**
      * @return $this|void
+     *
      * @throws UnauthorizedAccessException
      * @throws \ACP3\Core\ACL\Exception\AccessForbiddenException
      */

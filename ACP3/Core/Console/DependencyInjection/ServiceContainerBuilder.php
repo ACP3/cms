@@ -33,9 +33,10 @@ class ServiceContainerBuilder extends ContainerBuilder
 
     /**
      * ServiceContainerBuilder constructor.
+     *
      * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
-     * @param string $applicationMode
+     * @param string          $applicationMode
      */
     public function __construct(
         LoggerInterface $logger,
@@ -86,9 +87,10 @@ class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param LoggerInterface                        $logger
      * @param \ACP3\Core\Environment\ApplicationPath $applicationPath
-     * @param string $applicationMode
+     * @param string                                 $applicationMode
+     *
      * @return ContainerBuilder
      */
     public static function create(

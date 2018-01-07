@@ -28,10 +28,11 @@ class Login extends Core\Controller\AbstractFrontendAction
 
     /**
      * Login constructor.
+     *
      * @param Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\FormBlockInterface $block
-     * @param Core\Helpers\Secure $secure
-     * @param Users\Model\AuthenticationModel $authenticationModel
+     * @param Core\View\Block\FormBlockInterface      $block
+     * @param Core\Helpers\Secure                     $secure
+     * @param Users\Model\AuthenticationModel         $authenticationModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

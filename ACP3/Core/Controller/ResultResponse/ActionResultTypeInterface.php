@@ -13,12 +13,14 @@ interface ActionResultTypeInterface
 {
     /**
      * @param mixed $result
+     *
      * @return bool
      */
     public function supports($result): bool;
 
     /**
      * @param mixed $result
+     *
      * @return Response
      */
     public function process($result): Response;

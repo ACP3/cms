@@ -25,9 +25,10 @@ class SendEmail
     }
 
     /**
-     * Generates and sends an E-mail
+     * Generates and sends an E-mail.
      *
      * @param string|Core\Mailer\MailerMessage $messageData
+     *
      * @return bool
      */
     public function execute(Core\Mailer\MailerMessage $messageData)

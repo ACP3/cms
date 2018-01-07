@@ -76,7 +76,7 @@ class FilesListingBlockTest extends AbstractListingBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -104,7 +104,7 @@ class FilesListingBlockTest extends AbstractListingBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {
@@ -117,7 +117,7 @@ class FilesListingBlockTest extends AbstractListingBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedModuleName(): string
     {

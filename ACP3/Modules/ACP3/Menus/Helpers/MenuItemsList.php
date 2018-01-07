@@ -28,7 +28,7 @@ class MenuItemsList
     protected $menusCache;
 
     /**
-     * @param \ACP3\Core\Helpers\Forms       $formsHelper
+     * @param \ACP3\Core\Helpers\Forms                         $formsHelper
      * @param \ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage $menusCache
      */
     public function __construct(
@@ -40,11 +40,11 @@ class MenuItemsList
     }
 
     /**
-     * List all available menu items
+     * List all available menu items.
      *
-     * @param integer $parentId
-     * @param integer $leftId
-     * @param integer $rightId
+     * @param int $parentId
+     * @param int $leftId
+     * @param int $rightId
      *
      * @return array
      */

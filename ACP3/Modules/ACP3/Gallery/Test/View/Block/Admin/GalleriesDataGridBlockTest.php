@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleriesDataGridBlock;
 class GalleriesDataGridBlockTest extends AbstractDataGridBlockTest
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -22,7 +22,7 @@ class GalleriesDataGridBlockTest extends AbstractDataGridBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {

@@ -16,7 +16,7 @@ class CategoriesModel extends AbstractNestedSetModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function save(array $data, $entryId = null)
     {

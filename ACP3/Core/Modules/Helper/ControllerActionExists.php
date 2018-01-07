@@ -18,6 +18,7 @@ class ControllerActionExists
 
     /**
      * ControllerActionExists constructor.
+     *
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
@@ -26,11 +27,11 @@ class ControllerActionExists
     }
 
     /**
-     * Returns, whether the given module controller action exists
+     * Returns, whether the given module controller action exists.
      *
      * @param string $path
      *
-     * @return boolean
+     * @return bool
      */
     public function controllerActionExists($path)
     {

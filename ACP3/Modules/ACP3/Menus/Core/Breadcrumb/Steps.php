@@ -26,11 +26,12 @@ class Steps extends Core\Breadcrumb\Steps
 
     /**
      * Steps constructor.
-     * @param ContainerInterface $container
-     * @param Core\I18n\TranslatorInterface $translator
-     * @param RequestInterface $request
-     * @param Core\Router\RouterInterface $router
-     * @param EventDispatcherInterface $eventDispatcher
+     *
+     * @param ContainerInterface                         $container
+     * @param Core\I18n\TranslatorInterface              $translator
+     * @param RequestInterface                           $request
+     * @param Core\Router\RouterInterface                $router
+     * @param EventDispatcherInterface                   $eventDispatcher
      * @param Menus\Model\Repository\MenuItemsRepository $menuItemRepository
      */
     public function __construct(
@@ -47,7 +48,7 @@ class Steps extends Core\Breadcrumb\Steps
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function buildBreadcrumbCacheForFrontend()
     {
@@ -65,7 +66,8 @@ class Steps extends Core\Breadcrumb\Steps
     }
 
     /**
-     * Initializes and pre populates the breadcrumb
+     * Initializes and pre populates the breadcrumb.
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function prePopulate()
@@ -97,6 +99,7 @@ class Steps extends Core\Breadcrumb\Steps
 
     /**
      * @param array $items
+     *
      * @return array
      */
     private function findRestrictionInRoutes(array $items)
@@ -115,7 +118,7 @@ class Steps extends Core\Breadcrumb\Steps
     }
 
     /**
-     * Zuweisung einer neuen Stufe zur Brotkrümelspur
+     * Zuweisung einer neuen Stufe zur Brotkrümelspur.
      *
      * @param string $title
      * @param string $path

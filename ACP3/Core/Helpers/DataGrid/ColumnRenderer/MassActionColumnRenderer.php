@@ -10,7 +10,7 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 class MassActionColumnRenderer extends AbstractColumnRenderer
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getValue(array $column, array $dbResultRow)
     {

@@ -21,7 +21,7 @@ class View
     private $template = '';
 
     /**
-     * Gets the renderer
+     * Gets the renderer.
      *
      * @return RendererInterface
      */
@@ -34,7 +34,7 @@ class View
      * View constructor.
      *
      * @param \ACP3\Core\View\Renderer\RendererInterface $renderer
-     * @param array $params
+     * @param array                                      $params
      */
     public function __construct(RendererInterface $renderer, array $params = [])
     {
@@ -43,7 +43,7 @@ class View
     }
 
     /**
-     * Fetches a template and outputs its contents
+     * Fetches a template and outputs its contents.
      *
      * @param string $template
      */
@@ -53,7 +53,7 @@ class View
     }
 
     /**
-     * Fetches a template and returns its contents
+     * Fetches a template and returns its contents.
      *
      * @param string $template
      *
@@ -79,11 +79,11 @@ class View
     }
 
     /**
-     * Checks, whether a template exists or not
+     * Checks, whether a template exists or not.
      *
      * @param string $template
      *
-     * @return boolean
+     * @return bool
      */
     public function templateExists($template)
     {
@@ -100,6 +100,7 @@ class View
 
     /**
      * @param string $template
+     *
      * @return $this
      */
     public function setTemplate(string $template)
@@ -110,10 +111,10 @@ class View
     }
 
     /**
-     * Assigns a new template variable
+     * Assigns a new template variable.
      *
      * @param string|array $name
-     * @param mixed $value
+     * @param mixed        $value
      *
      * @return $this
      */

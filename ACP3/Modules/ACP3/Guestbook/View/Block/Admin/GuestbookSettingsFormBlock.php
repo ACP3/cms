@@ -28,10 +28,10 @@ class GuestbookSettingsFormBlock extends AbstractSettingsFormBlock
     /**
      * GuestbookSettingsFormBlock constructor.
      *
-     * @param FormBlockContext $context
+     * @param FormBlockContext  $context
      * @param SettingsInterface $settings
-     * @param Date $date
-     * @param Modules $modules
+     * @param Date              $date
+     * @param Modules           $modules
      */
     public function __construct(
         FormBlockContext $context,
@@ -46,7 +46,7 @@ class GuestbookSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -70,6 +70,7 @@ class GuestbookSettingsFormBlock extends AbstractSettingsFormBlock
 
     /**
      * @param array $settings
+     *
      * @return array
      */
     private function fetchOptions(array $settings): array
@@ -93,7 +94,7 @@ class GuestbookSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

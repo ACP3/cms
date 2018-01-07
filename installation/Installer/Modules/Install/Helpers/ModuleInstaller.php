@@ -38,9 +38,10 @@ class ModuleInstaller
 
     /**
      * ModuleInstaller constructor.
+     *
      * @param ApplicationPath $applicationPath
-     * @param Vendor $vendor
-     * @param Install $installHelper
+     * @param Vendor          $vendor
+     * @param Install         $installHelper
      */
     public function __construct(
         ApplicationPath $applicationPath,
@@ -54,8 +55,10 @@ class ModuleInstaller
 
     /**
      * @param ContainerInterface $container
-     * @param SchemaInterface[] $schemas
+     * @param SchemaInterface[]  $schemas
+     *
      * @return array
+     *
      * @throws \Exception
      */
     public function installModules(ContainerInterface $container, array $schemas)
@@ -90,6 +93,7 @@ class ModuleInstaller
 
     /**
      * @param string $moduleConfigPath
+     *
      * @return bool
      */
     private function isValidModule(string $moduleConfigPath): bool
@@ -105,7 +109,8 @@ class ModuleInstaller
 
     /**
      * @param ContainerInterface $container
-     * @param array $modules
+     * @param array              $modules
+     *
      * @return SchemaInterface[]
      */
     private function collectDependentSchemas(ContainerInterface $container, array $modules)

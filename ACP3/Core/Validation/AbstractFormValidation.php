@@ -22,7 +22,7 @@ abstract class AbstractFormValidation
 
     /**
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
-     * @param \ACP3\Core\Validation\Validator $validator
+     * @param \ACP3\Core\Validation\Validator     $validator
      */
     public function __construct(
         Core\I18n\TranslatorInterface $translator,

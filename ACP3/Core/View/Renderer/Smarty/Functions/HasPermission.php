@@ -18,6 +18,7 @@ class HasPermission extends AbstractFunction
 
     /**
      * HasPermission constructor.
+     *
      * @param Core\ACL\ACLInterface $acl
      */
     public function __construct(Core\ACL\ACLInterface $acl)
@@ -26,7 +27,7 @@ class HasPermission extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -34,7 +35,7 @@ class HasPermission extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {

@@ -22,8 +22,8 @@ class Latest extends Core\Controller\AbstractWidgetAction
     protected $newsRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext $context
-     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Controller\Context\WidgetContext             $context
+     * @param \ACP3\Core\Date                                         $date
      * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
      */
     public function __construct(
@@ -47,19 +47,20 @@ class Latest extends Core\Controller\AbstractWidgetAction
         $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
 
         return [
-            'sidebar_news_latest' => $this->fetchLatestNews((int)$categoryId),
+            'sidebar_news_latest' => $this->fetchLatestNews((int) $categoryId),
             'dateformat' => $settings['dateformat'],
         ];
     }
 
     /**
      * @param int $categoryId
+     *
      * @return array
      */
     protected function fetchLatestNews(int $categoryId): array
     {
         if (!empty($categoryId)) {
-            return $this->newsRepository->getLatestByCategoryId((int)$categoryId, $this->date->getCurrentDateTime());
+            return $this->newsRepository->getLatestByCategoryId((int) $categoryId, $this->date->getCurrentDateTime());
         }
 
         return $this->newsRepository->getLatest($this->date->getCurrentDateTime());

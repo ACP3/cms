@@ -26,7 +26,7 @@ class Aliases
     private $isActive;
 
     /**
-     * @param \ACP3\Core\Modules\Modules $modules
+     * @param \ACP3\Core\Modules\Modules                   $modules
      * @param \ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage $seoCache
      */
     public function __construct(
@@ -38,7 +38,7 @@ class Aliases
     }
 
     /**
-     * Returns an uri alias by a given path
+     * Returns an uri alias by a given path.
      *
      * @param string $path
      * @param bool   $emptyOnNoResult
@@ -63,11 +63,11 @@ class Aliases
     }
 
     /**
-     * Checks, whether an uri alias exists
+     * Checks, whether an uri alias exists.
      *
      * @param string $path
      *
-     * @return boolean
+     * @return bool
      */
     public function uriAliasExists($path)
     {

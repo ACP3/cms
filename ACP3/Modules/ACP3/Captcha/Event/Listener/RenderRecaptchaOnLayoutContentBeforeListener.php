@@ -34,10 +34,11 @@ class RenderRecaptchaOnLayoutContentBeforeListener
 
     /**
      * RenderRecaptchaOnLayoutContentBeforeListener constructor.
-     * @param LocaleInterface $locale
+     *
+     * @param LocaleInterface   $locale
      * @param SettingsInterface $settings
-     * @param View $view
-     * @param UserModel $userModel
+     * @param View              $view
+     * @param UserModel         $userModel
      */
     public function __construct(
         LocaleInterface $locale,
@@ -76,6 +77,7 @@ class RenderRecaptchaOnLayoutContentBeforeListener
 
     /**
      * @param array $settings
+     *
      * @return bool
      */
     private function isRecaptcha(array $settings)

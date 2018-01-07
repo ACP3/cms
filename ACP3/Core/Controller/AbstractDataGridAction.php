@@ -19,8 +19,9 @@ abstract class AbstractDataGridAction extends AbstractFrontendAction
 
     /**
      * AbstractDataGridAction constructor.
+     *
      * @param Context\FrontendContext $context
-     * @param DataGridBlockInterface $block
+     * @param DataGridBlockInterface  $block
      */
     public function __construct(Context\FrontendContext $context, DataGridBlockInterface $block)
     {

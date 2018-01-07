@@ -13,6 +13,7 @@ interface BlockInterface
 {
     /**
      * @param array $data
+     *
      * @return $this
      */
     public function setData(array $data);
@@ -24,6 +25,7 @@ interface BlockInterface
 
     /**
      * @param string $templateName
+     *
      * @return $this
      */
     public function setTemplate(string $templateName);

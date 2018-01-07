@@ -28,6 +28,7 @@ class QueryOption
 
     /**
      * QueryOption constructor.
+     *
      * @param string $columnName
      * @param string $value
      * @param string $tableAlias

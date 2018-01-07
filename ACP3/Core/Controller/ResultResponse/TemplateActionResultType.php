@@ -28,9 +28,10 @@ class TemplateActionResultType implements ActionResultTypeInterface
 
     /**
      * ArrayActionResultType constructor.
-     * @param View $view
+     *
+     * @param View             $view
      * @param RequestInterface $request
-     * @param Response $response
+     * @param Response         $response
      */
     public function __construct(View $view, RequestInterface $request, Response $response)
     {
@@ -40,7 +41,7 @@ class TemplateActionResultType implements ActionResultTypeInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function supports($result): bool
     {
@@ -48,7 +49,7 @@ class TemplateActionResultType implements ActionResultTypeInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process($result): Response
     {

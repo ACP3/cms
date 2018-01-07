@@ -13,7 +13,7 @@ class Purge
 {
     /**
      * @param string|array $directory
-     * @param string $cacheId
+     * @param string       $cacheId
      *
      * @return bool
      */
@@ -29,7 +29,7 @@ class Purge
     }
 
     /**
-     * @param array $directories
+     * @param array  $directories
      * @param string $cacheId
      *
      * @return bool

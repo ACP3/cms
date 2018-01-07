@@ -20,9 +20,10 @@ class ScalarActionResultType extends ArrayActionResultType
 
     /**
      * ScalarActionResultType constructor.
-     * @param View $view
+     *
+     * @param View             $view
      * @param RequestInterface $request
-     * @param Response $response
+     * @param Response         $response
      */
     public function __construct(View $view, RequestInterface $request, Response $response)
     {
@@ -32,7 +33,7 @@ class ScalarActionResultType extends ArrayActionResultType
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function supports($result): bool
     {
@@ -40,7 +41,7 @@ class ScalarActionResultType extends ArrayActionResultType
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process($result): Response
     {

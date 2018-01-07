@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Users\Installer\Schema;
 class UsersSettingsFormBlock extends AbstractSettingsFormBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -30,7 +30,7 @@ class UsersSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

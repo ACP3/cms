@@ -36,10 +36,11 @@ class FilesListingBlock extends AbstractListingBlock
 
     /**
      * FilesListingBlock constructor.
-     * @param ListingBlockContext $context
-     * @param Date $date
-     * @param SettingsInterface $settings
-     * @param FilesRepository $filesRepository
+     *
+     * @param ListingBlockContext  $context
+     * @param Date                 $date
+     * @param SettingsInterface    $settings
+     * @param FilesRepository      $filesRepository
      * @param CategoriesRepository $categoryRepository
      */
     public function __construct(
@@ -58,7 +59,7 @@ class FilesListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getModuleName(): string
     {
@@ -66,7 +67,7 @@ class FilesListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getTotalResults(): int
     {
@@ -76,7 +77,7 @@ class FilesListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getResults(int $resultsPerPage): array
     {
@@ -91,7 +92,7 @@ class FilesListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

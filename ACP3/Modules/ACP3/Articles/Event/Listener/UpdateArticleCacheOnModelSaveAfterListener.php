@@ -19,6 +19,7 @@ class UpdateArticleCacheOnModelSaveAfterListener
 
     /**
      * UpdateArticleCacheOnModelSaveAfterListener constructor.
+     *
      * @param ArticleCacheStorage $cache
      */
     public function __construct(ArticleCacheStorage $cache)

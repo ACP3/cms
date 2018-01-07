@@ -53,16 +53,16 @@ class Modules extends Core\Controller\AbstractFrontendAction
     /**
      * Modules constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\BlockInterface $block
-     * @param Core\I18n\DictionaryInterface $dictionary
-     * @param \ACP3\Core\Modules\ModuleInfoCache $moduleInfoCache
+     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
+     * @param Core\View\Block\BlockInterface                               $block
+     * @param Core\I18n\DictionaryInterface                                $dictionary
+     * @param \ACP3\Core\Modules\ModuleInfoCache                           $moduleInfoCache
      * @param \ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository $systemModuleRepository
-     * @param \ACP3\Modules\ACP3\System\Helper\Installer $installerHelper
+     * @param \ACP3\Modules\ACP3\System\Helper\Installer                   $installerHelper
      * @param \ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage $permissionsCache
-     * @param Core\Installer\SchemaRegistrar $schemaRegistrar
-     * @param \ACP3\Core\Installer\SchemaInstaller $schemaInstaller
-     * @param \ACP3\Core\Installer\AclInstaller $aclInstaller
+     * @param Core\Installer\SchemaRegistrar                               $schemaRegistrar
+     * @param \ACP3\Core\Installer\SchemaInstaller                         $schemaInstaller
+     * @param \ACP3\Core\Installer\AclInstaller                            $aclInstaller
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -94,6 +94,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $dir
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function execute(?string $action, ?string $dir)
@@ -118,6 +119,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $moduleDirectory
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function enableModule(string $moduleDirectory)
@@ -151,6 +153,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param string $moduleDirectory
+     *
      * @throws System\Exception\ModuleInstallerException
      */
     private function checkPreconditions(string $moduleDirectory)
@@ -198,9 +201,10 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param string $moduleDirectory
-     * @param int $active
+     * @param int    $active
      *
      * @return bool|int
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function saveModuleState(string $moduleDirectory, int $active)
@@ -217,6 +221,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $moduleDirectory
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function disableModule(string $moduleDirectory)

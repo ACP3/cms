@@ -21,9 +21,10 @@ class UserAccountSettingsFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * UserAccountSettingsFormBlock constructor.
+     *
      * @param FormBlockContext $context
-     * @param UserModel $userModel
-     * @param Forms $userFormsHelper
+     * @param UserModel        $userModel
+     * @param Forms            $userFormsHelper
      */
     public function __construct(FormBlockContext $context, UserModel $userModel, Forms $userFormsHelper)
     {
@@ -33,7 +34,7 @@ class UserAccountSettingsFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -54,7 +55,7 @@ class UserAccountSettingsFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

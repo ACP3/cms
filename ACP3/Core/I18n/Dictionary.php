@@ -32,9 +32,9 @@ class Dictionary implements DictionaryInterface
     /**
      * DictionaryCache constructor.
      *
-     * @param \ACP3\Core\Cache\Cache $cache
+     * @param \ACP3\Core\Cache\Cache                 $cache
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules\Vendor $vendors
+     * @param \ACP3\Core\Modules\Vendor              $vendors
      */
     public function __construct(
         Cache $cache,
@@ -47,7 +47,7 @@ class Dictionary implements DictionaryInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDictionary(string $locale): array
     {
@@ -59,7 +59,7 @@ class Dictionary implements DictionaryInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function saveDictionary(string $locale): bool
     {
@@ -80,7 +80,7 @@ class Dictionary implements DictionaryInterface
                     // Iterate over all language keys
                     $xml = \simplexml_load_file($file);
                     foreach ($xml->keys->item as $item) {
-                        $data['keys'][\strtolower($module . (string)$item['key'])] = \trim((string)$item);
+                        $data['keys'][\strtolower($module . (string) $item['key'])] = \trim((string) $item);
                     }
                 }
             }

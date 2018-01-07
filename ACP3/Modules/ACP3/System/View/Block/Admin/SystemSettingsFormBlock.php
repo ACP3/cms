@@ -32,10 +32,11 @@ class SystemSettingsFormBlock extends AbstractSettingsFormBlock
 
     /**
      * SystemSettingsFormBlock constructor.
-     * @param FormBlockContext $context
-     * @param SettingsInterface $settings
+     *
+     * @param FormBlockContext       $context
+     * @param SettingsInterface      $settings
      * @param AvailableLanguagePacks $availableLanguagePacks
-     * @param Date $dateHelper
+     * @param Date                   $dateHelper
      * @param WysiwygEditorRegistrar $editorRegistrar
      */
     public function __construct(
@@ -53,7 +54,7 @@ class SystemSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -138,6 +139,7 @@ class SystemSettingsFormBlock extends AbstractSettingsFormBlock
 
     /**
      * @param string $currentWysiwygEditor
+     *
      * @return array
      */
     private function fetchWysiwygEditors(string $currentWysiwygEditor): array
@@ -153,7 +155,7 @@ class SystemSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

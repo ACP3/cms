@@ -25,7 +25,7 @@ class OnWysiwygTextareaBeforeListener
     /**
      * OnAfterFormListener constructor.
      *
-     * @param \ACP3\Core\Modules\Modules                   $modules
+     * @param \ACP3\Core\Modules\Modules           $modules
      * @param \ACP3\Modules\ACP3\Emoticons\Helpers $emoticonsHelper
      */
     public function __construct(

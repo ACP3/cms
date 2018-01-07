@@ -19,6 +19,7 @@ class UserRolesColumnRenderer extends AbstractColumnRenderer
 
     /**
      * UserRolesColumnRenderer constructor.
+     *
      * @param ACLInterface $acl
      */
     public function __construct(ACLInterface $acl)
@@ -27,7 +28,7 @@ class UserRolesColumnRenderer extends AbstractColumnRenderer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {

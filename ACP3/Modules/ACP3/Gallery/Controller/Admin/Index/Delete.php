@@ -37,10 +37,10 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage $galleryCache
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
-     * @param Gallery\Model\GalleryModel $galleryModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext                         $context
+     * @param \ACP3\Modules\ACP3\Gallery\Cache\GalleryCacheStorage                  $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers                                    $galleryHelpers
+     * @param Gallery\Model\GalleryModel                                            $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
      */
     public function __construct(
@@ -99,9 +99,9 @@ class Delete extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param integer $galleryId
+     * @param int $galleryId
      *
-     * @return boolean
+     * @return bool
      */
     protected function deletePictureAliases($galleryId)
     {

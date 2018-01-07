@@ -31,8 +31,9 @@ class GalleriesWidgetListingBlock extends AbstractBlock
 
     /**
      * GalleriesWidgetListingBlock constructor.
-     * @param BlockContext $context
-     * @param Date $date
+     *
+     * @param BlockContext      $context
+     * @param Date              $date
      * @param SettingsInterface $settings
      * @param GalleryRepository $galleryRepository
      */
@@ -50,7 +51,7 @@ class GalleriesWidgetListingBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

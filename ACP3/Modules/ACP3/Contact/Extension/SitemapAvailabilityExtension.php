@@ -21,7 +21,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function fetchSitemapUrls($isSecure = null)
     {

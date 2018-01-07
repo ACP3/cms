@@ -32,6 +32,7 @@ class Application
 
     /**
      * Application constructor.
+     *
      * @param string $environment
      */
     public function __construct(string $environment)
@@ -62,16 +63,13 @@ class Application
     }
 
     /**
-     * Set monolog as the default PHP error handler
+     * Set monolog as the default PHP error handler.
      */
     private function setErrorHandler()
     {
         ErrorHandler::register($this->logger);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function initializeClasses()
     {
         Bootup::initAll(); // Enables the portability layer and configures PHP for UTF-8

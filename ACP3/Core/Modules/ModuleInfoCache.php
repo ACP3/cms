@@ -46,11 +46,12 @@ class ModuleInfoCache
 
     /**
      * ModuleInfoCache constructor.
-     * @param Cache $cache
-     * @param ApplicationPath $appPath
-     * @param TranslatorInterface $translator
-     * @param LocaleInterface $locale
-     * @param Vendor $vendors
+     *
+     * @param Cache                          $cache
+     * @param ApplicationPath                $appPath
+     * @param TranslatorInterface            $translator
+     * @param LocaleInterface                $locale
+     * @param Vendor                         $vendors
      * @param ModuleAwareRepositoryInterface $systemModuleRepository
      */
     public function __construct(
@@ -90,7 +91,7 @@ class ModuleInfoCache
     }
 
     /**
-     * Saves the modules info cache
+     * Saves the modules info cache.
      *
      * @return bool
      */
@@ -155,7 +156,7 @@ class ModuleInfoCache
                     'dir' => $moduleDirectory,
                     'installed' => (!empty($moduleInfoDb)),
                     'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
-                    'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
+                    'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
                     'description' => $this->getModuleDescription($composer),
                     'author' => $this->getAuthor($composer),
                     'version' => $this->getModuleVersion($composer),
@@ -172,9 +173,10 @@ class ModuleInfoCache
     }
 
     /**
-     * Returns the description of an ACP3 module
+     * Returns the description of an ACP3 module.
      *
      * @param array $composer
+     *
      * @return string
      */
     private function getModuleDescription(array $composer): string
@@ -183,9 +185,10 @@ class ModuleInfoCache
     }
 
     /**
-     * Returns the author of an ACP3 module
+     * Returns the author of an ACP3 module.
      *
      * @param array $composer
+     *
      * @return array
      */
     private function getAuthor(array $composer): array
@@ -201,9 +204,10 @@ class ModuleInfoCache
     }
 
     /**
-     * Returns the version of an ACP3 module
+     * Returns the version of an ACP3 module.
      *
      * @param array $composer
+     *
      * @return string
      */
     private function getModuleVersion(array $composer): string
@@ -212,9 +216,10 @@ class ModuleInfoCache
     }
 
     /**
-     * Returns the localized name of an ACP3 module
+     * Returns the localized name of an ACP3 module.
      *
      * @param string $moduleName
+     *
      * @return string
      */
     private function getModuleName(string $moduleName)

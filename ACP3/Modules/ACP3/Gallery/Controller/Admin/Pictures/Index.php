@@ -19,8 +19,9 @@ class Index extends AbstractFrontendAction
 
     /**
      * Index constructor.
+     *
      * @param Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\DataGridBlockInterface $block
+     * @param Core\View\Block\DataGridBlockInterface  $block
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -33,6 +34,7 @@ class Index extends AbstractFrontendAction
 
     /**
      * @param int $id
+     *
      * @return array
      */
     public function execute(int $id)

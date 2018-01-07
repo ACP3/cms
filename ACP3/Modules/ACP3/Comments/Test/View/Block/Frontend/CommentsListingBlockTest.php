@@ -50,7 +50,7 @@ class CommentsListingBlockTest extends AbstractListingBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -72,7 +72,7 @@ class CommentsListingBlockTest extends AbstractListingBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {
@@ -84,7 +84,7 @@ class CommentsListingBlockTest extends AbstractListingBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedModuleName(): string
     {

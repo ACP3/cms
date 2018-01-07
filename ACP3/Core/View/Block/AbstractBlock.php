@@ -35,6 +35,7 @@ abstract class AbstractBlock implements BlockInterface
 
     /**
      * AbstractTemplate constructor.
+     *
      * @param Context\BlockContext $context
      */
     public function __construct(View\Block\Context\BlockContext $context)
@@ -46,7 +47,7 @@ abstract class AbstractBlock implements BlockInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setData(array $data)
     {
@@ -59,7 +60,7 @@ abstract class AbstractBlock implements BlockInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getData(): array
     {
@@ -67,7 +68,7 @@ abstract class AbstractBlock implements BlockInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setTemplate(string $templateName)
     {

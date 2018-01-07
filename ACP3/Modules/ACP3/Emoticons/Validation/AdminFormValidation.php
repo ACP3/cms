@@ -56,13 +56,13 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
      */
     public function setFileRequired($fileRequired)
     {
-        $this->fileRequired = (bool)$fileRequired;
+        $this->fileRequired = (bool) $fileRequired;
 
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

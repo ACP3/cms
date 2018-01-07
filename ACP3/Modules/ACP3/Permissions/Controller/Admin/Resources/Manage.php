@@ -26,9 +26,9 @@ class Manage extends Core\Controller\AbstractFrontendAction
     private $block;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param Permissions\Model\AclResourcesModel $resourcesModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext                    $context
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface                $block
+     * @param Permissions\Model\AclResourcesModel                              $resourcesModel
      * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation $resourceFormValidation
      */
     public function __construct(
@@ -46,6 +46,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param int|null $id
+     *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function execute(?int $id)

@@ -30,9 +30,9 @@ class Result extends Core\Controller\AbstractFrontendAction
     /**
      * Result constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\BlockInterface $block
-     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Controller\Context\FrontendContext             $context
+     * @param Core\View\Block\BlockInterface                            $block
+     * @param \ACP3\Core\Date                                           $date
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollsRepository $pollRepository
      */
     public function __construct(
@@ -52,6 +52,7 @@ class Result extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id)

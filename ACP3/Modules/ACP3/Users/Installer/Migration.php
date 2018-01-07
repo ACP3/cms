@@ -12,7 +12,7 @@ use ACP3\Core\Date;
 class Migration extends \ACP3\Core\Installer\AbstractMigration
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */
@@ -122,7 +122,7 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */

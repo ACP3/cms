@@ -17,7 +17,7 @@ use ACP3\Core\Validation\Validator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
- * Class AbstractFormValidationTest
+ * Class AbstractFormValidationTest.
  */
 abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
 {
@@ -48,9 +48,6 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
         $this->registerValidationRules();
     }
 
-    /**
-     * @return void
-     */
     abstract protected function initializeFormValidation();
 
     protected function initializeFormValidationDependencies()
@@ -108,9 +105,6 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
         return $sessionMock;
     }
 
-    /**
-     * @return void
-     */
     abstract protected function registerValidationRules();
 
     /**

@@ -33,10 +33,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param Core\Validation\Validator $validator
-     * @param Comments\Model\CommentsModel $commentsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface          $block
+     * @param Core\Validation\Validator                                  $validator
+     * @param Comments\Model\CommentsModel                               $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
@@ -68,7 +68,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int   $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

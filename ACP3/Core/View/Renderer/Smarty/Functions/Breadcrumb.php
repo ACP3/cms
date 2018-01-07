@@ -18,6 +18,7 @@ class Breadcrumb extends AbstractFunction
 
     /**
      * Breadcrumb constructor.
+     *
      * @param Steps $breadcrumb
      */
     public function __construct(Steps $breadcrumb)
@@ -26,7 +27,7 @@ class Breadcrumb extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
@@ -36,7 +37,7 @@ class Breadcrumb extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {

@@ -31,6 +31,7 @@ class HttpCacheWarmupCommand extends Command
 
     /**
      * ClearCacheCommand constructor.
+     *
      * @param ApplicationPath $applicationPath
      */
     public function __construct(ApplicationPath $applicationPath)
@@ -41,7 +42,7 @@ class HttpCacheWarmupCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -68,7 +69,7 @@ class HttpCacheWarmupCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -87,10 +88,10 @@ class HttpCacheWarmupCommand extends Command
     }
 
     /**
-     * Parses the XML sitemap and crawls the URLs of it
+     * Parses the XML sitemap and crawls the URLs of it.
      *
-     * @param string $sitemap
-     * @param InputInterface $input
+     * @param string          $sitemap
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     private function processSitemap(string $sitemap, InputInterface $input, OutputInterface $output)
@@ -104,7 +105,7 @@ class HttpCacheWarmupCommand extends Command
         $progress->setFormat('custom');
 
         $sleep = $this->getSleepTime($input);
-        $limit = (int)$input->getOption('limit');
+        $limit = (int) $input->getOption('limit');
 
         $i = 1;
         foreach ($xml->url as $url) {
@@ -130,9 +131,10 @@ class HttpCacheWarmupCommand extends Command
     }
 
     /**
-     * Crawls the given URL
+     * Crawls the given URL.
      *
      * @param string $url
+     *
      * @return bool Whether the crawl was success or not
      */
     private function crawlUrl(string $url): bool
@@ -146,10 +148,11 @@ class HttpCacheWarmupCommand extends Command
 
     /**
      * @param InputInterface $input
+     *
      * @return int
      */
     private function getSleepTime(InputInterface $input): int
     {
-        return 1000000 * (int)$input->getOption('sleep');
+        return 1000000 * (int) $input->getOption('sleep');
     }
 }

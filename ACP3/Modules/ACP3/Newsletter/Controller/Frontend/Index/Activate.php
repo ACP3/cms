@@ -28,9 +28,9 @@ class Activate extends Core\Controller\AbstractFrontendAction
     /**
      * Activate constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\Helpers\Alerts $alerts
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                          $context
+     * @param Core\Helpers\Alerts                                                    $alerts
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus                     $accountStatusHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation $activateAccountFormValidation
      */
     public function __construct(
@@ -48,6 +48,7 @@ class Activate extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param string $hash
+     *
      * @return string
      */
     public function execute(string $hash)

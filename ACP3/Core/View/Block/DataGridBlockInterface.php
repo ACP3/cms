@@ -18,6 +18,7 @@ interface DataGridBlockInterface extends BlockInterface
 
     /**
      * @param AbstractDataGridRepository $dataGridRepository
+     *
      * @return $this
      */
     public function setDataGridRepository(AbstractDataGridRepository $dataGridRepository);

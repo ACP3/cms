@@ -29,6 +29,7 @@ abstract class AbstractFormBlock extends AbstractBlock implements FormBlockInter
 
     /**
      * AbstractFormTemplate constructor.
+     *
      * @param Context\FormBlockContext $context
      */
     public function __construct(FormBlockContext $context)
@@ -40,7 +41,7 @@ abstract class AbstractFormBlock extends AbstractBlock implements FormBlockInter
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getData(): array
     {
@@ -48,7 +49,7 @@ abstract class AbstractFormBlock extends AbstractBlock implements FormBlockInter
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getRequestData(): array
     {
@@ -56,7 +57,7 @@ abstract class AbstractFormBlock extends AbstractBlock implements FormBlockInter
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setRequestData(array $requestData)
     {

@@ -34,6 +34,7 @@ class GeneratePictureUriAliasOnModelAfterSaveListener
 
     /**
      * UpdateUriAliasesOnModelAfterSaveListener constructor.
+     *
      * @param Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository
      */
     public function __construct(Gallery\Model\Repository\GalleryPicturesRepository $pictureRepository)

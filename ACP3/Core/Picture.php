@@ -11,12 +11,10 @@ use ACP3\Core\Environment\ApplicationPath;
 use FastImageSize\FastImageSize;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- */
 class Picture
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected $enableCache = false;
     /**
@@ -28,23 +26,23 @@ class Picture
      */
     protected $cachePrefix = '';
     /**
-     * @var integer
+     * @var int
      */
     protected $maxWidth = 0;
     /**
-     * @var integer
+     * @var int
      */
     protected $maxHeight = 0;
     /**
-     * @var integer
+     * @var int
      */
     protected $jpgQuality = 85;
     /**
-     * @var boolean
+     * @var bool
      */
     protected $preferWidth = false;
     /**
-     * @var boolean
+     * @var bool
      */
     protected $preferHeight = false;
     /**
@@ -52,7 +50,7 @@ class Picture
      */
     protected $file = '';
     /**
-     * @var boolean
+     * @var bool
      */
     protected $forceResample = false;
 
@@ -79,10 +77,10 @@ class Picture
     protected $image;
 
     /**
-     * @param FastImageSize $fastImageSize
+     * @param FastImageSize                              $fastImageSize
      * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param string $environment
+     * @param \ACP3\Core\Environment\ApplicationPath     $appPath
+     * @param string                                     $environment
      */
     public function __construct(
         FastImageSize $fastImageSize,
@@ -99,7 +97,7 @@ class Picture
     }
 
     /**
-     * Gibt den während der Bearbeitung belegten Speicher wieder frei
+     * Gibt den während der Bearbeitung belegten Speicher wieder frei.
      */
     public function __destruct()
     {
@@ -109,13 +107,13 @@ class Picture
     }
 
     /**
-     * @param boolean $enableCache
+     * @param bool $enableCache
      *
      * @return $this
      */
     public function setEnableCache($enableCache)
     {
-        $this->enableCache = (bool)$enableCache;
+        $this->enableCache = (bool) $enableCache;
 
         return $this;
     }
@@ -155,7 +153,7 @@ class Picture
      */
     public function setMaxWidth($maxWidth)
     {
-        $this->maxWidth = (int)$maxWidth;
+        $this->maxWidth = (int) $maxWidth;
 
         return $this;
     }
@@ -167,7 +165,7 @@ class Picture
      */
     public function setMaxHeight($maxHeight)
     {
-        $this->maxHeight = (int)$maxHeight;
+        $this->maxHeight = (int) $maxHeight;
 
         return $this;
     }
@@ -179,31 +177,31 @@ class Picture
      */
     public function setJpgQuality($jpgQuality)
     {
-        $this->jpgQuality = (int)$jpgQuality;
+        $this->jpgQuality = (int) $jpgQuality;
 
         return $this;
     }
 
     /**
-     * @param boolean $preferWidth
+     * @param bool $preferWidth
      *
      * @return $this
      */
     public function setPreferWidth($preferWidth)
     {
-        $this->preferWidth = (bool)$preferWidth;
+        $this->preferWidth = (bool) $preferWidth;
 
         return $this;
     }
 
     /**
-     * @param boolean $preferHeight
+     * @param bool $preferHeight
      *
      * @return $this
      */
     public function setPreferHeight($preferHeight)
     {
-        $this->preferHeight = (bool)$preferHeight;
+        $this->preferHeight = (bool) $preferHeight;
 
         return $this;
     }
@@ -221,13 +219,13 @@ class Picture
     }
 
     /**
-     * @param boolean $forceResample
+     * @param bool $forceResample
      *
      * @return $this
      */
     public function setForceResample($forceResample)
     {
-        $this->forceResample = (bool)$forceResample;
+        $this->forceResample = (bool) $forceResample;
 
         return $this;
     }
@@ -270,12 +268,12 @@ class Picture
         }
         $this->setHeaders('image/jpeg');
 
-
         return false;
     }
 
     /**
      * @param int $pictureType
+     *
      * @return string
      */
     private function getMimeType($pictureType)
@@ -301,7 +299,7 @@ class Picture
     }
 
     /**
-     * Get the name of a possibly cached picture
+     * Get the name of a possibly cached picture.
      *
      * @return string
      */
@@ -311,7 +309,7 @@ class Picture
     }
 
     /**
-     * Generiert den Namen des zu cachenden Bildes
+     * Generiert den Namen des zu cachenden Bildes.
      *
      * @return string
      */
@@ -321,7 +319,7 @@ class Picture
     }
 
     /**
-     * Reads the contents of the requested picture
+     * Reads the contents of the requested picture.
      *
      * @return string
      */
@@ -331,12 +329,12 @@ class Picture
     }
 
     /**
-     * Berechnet die neue Breite/Höhe eines Bildes
+     * Berechnet die neue Breite/Höhe eines Bildes.
      *
-     * @param integer $width
-     *  Ausgangsbreite des Bildes
-     * @param integer $height
-     *  Ausgangshöhe des Bildes
+     * @param int $width
+     *                    Ausgangsbreite des Bildes
+     * @param int $height
+     *                    Ausgangshöhe des Bildes
      *
      * @return array
      */
@@ -344,24 +342,24 @@ class Picture
     {
         if (($width >= $height || $this->preferWidth === true) && $this->preferHeight === false) {
             $newWidth = $this->maxWidth;
-            $newHeight = (int)($height * $newWidth / $width);
+            $newHeight = (int) ($height * $newWidth / $width);
         } else {
             $newHeight = $this->maxHeight;
-            $newWidth = (int)($width * $newHeight / $height);
+            $newWidth = (int) ($width * $newHeight / $height);
         }
 
         return ['width' => $newWidth, 'height' => $newHeight];
     }
 
     /**
-     * Resamples the picture to the given values
+     * Resamples the picture to the given values.
      *
-     * @param integer $newWidth
-     * @param integer $newHeight
-     * @param integer $width
-     * @param integer $height
-     * @param integer $type
-     * @param string  $cacheFile
+     * @param int    $newWidth
+     * @param int    $newHeight
+     * @param int    $width
+     * @param int    $height
+     * @param int    $type
+     * @param string $cacheFile
      */
     protected function resample($newWidth, $newHeight, $width, $height, $type, $cacheFile)
     {
@@ -432,7 +430,7 @@ class Picture
     }
 
     /**
-     * Creates the cache directory if it's not already present
+     * Creates the cache directory if it's not already present.
      */
     protected function createCacheDir()
     {

@@ -26,9 +26,10 @@ class CommentFormBlock extends AbstractFormBlock
 
     /**
      * CommentFormBlock constructor.
-     * @param FormBlockContext $context
+     *
+     * @param FormBlockContext  $context
      * @param SettingsInterface $settings
-     * @param UserModel $user
+     * @param UserModel         $user
      */
     public function __construct(FormBlockContext $context, SettingsInterface $settings, UserModel $user)
     {
@@ -39,7 +40,7 @@ class CommentFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -66,7 +67,7 @@ class CommentFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

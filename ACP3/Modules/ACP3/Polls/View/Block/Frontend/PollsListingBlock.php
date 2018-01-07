@@ -26,9 +26,10 @@ class PollsListingBlock extends AbstractListingBlock
 
     /**
      * PollsListingBlock constructor.
+     *
      * @param ListingBlockContext $context
-     * @param Date $date
-     * @param PollsRepository $pollRepository
+     * @param Date                $date
+     * @param PollsRepository     $pollRepository
      */
     public function __construct(ListingBlockContext $context, Date $date, PollsRepository $pollRepository)
     {
@@ -39,7 +40,7 @@ class PollsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -53,7 +54,7 @@ class PollsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getModuleName(): string
     {
@@ -61,7 +62,7 @@ class PollsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getTotalResults(): int
     {
@@ -69,7 +70,7 @@ class PollsListingBlock extends AbstractListingBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getResults(int $resultsPerPage): array
     {

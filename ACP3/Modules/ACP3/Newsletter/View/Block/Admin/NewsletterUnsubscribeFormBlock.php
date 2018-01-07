@@ -12,7 +12,7 @@ use ACP3\Core\View\Block\AbstractFormBlock;
 class NewsletterUnsubscribeFormBlock extends AbstractFormBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -23,7 +23,7 @@ class NewsletterUnsubscribeFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

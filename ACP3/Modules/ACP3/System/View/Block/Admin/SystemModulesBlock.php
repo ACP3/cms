@@ -20,8 +20,9 @@ class SystemModulesBlock extends AbstractBlock
 
     /**
      * SystemModulesBlock constructor.
+     *
      * @param BlockContext $context
-     * @param Modules $modules
+     * @param Modules      $modules
      */
     public function __construct(BlockContext $context, Modules $modules)
     {
@@ -31,7 +32,7 @@ class SystemModulesBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

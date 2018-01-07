@@ -13,6 +13,7 @@ trait ModuleDependenciesTrait
 {
     /**
      * @param string $path
+     *
      * @return array
      */
     protected function getModuleDependencies(string $path): array

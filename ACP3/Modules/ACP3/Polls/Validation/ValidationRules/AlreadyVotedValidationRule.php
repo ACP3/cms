@@ -24,7 +24,8 @@ class AlreadyVotedValidationRule extends AbstractValidationRule
 
     /**
      * AlreadyVotedValidationRule constructor.
-     * @param UserModel $userModel
+     *
+     * @param UserModel           $userModel
      * @param PollVotesRepository $voteRepository
      */
     public function __construct(
@@ -36,11 +37,11 @@ class AlreadyVotedValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @param mixed $data
+     * @param mixed  $data
      * @param string $field
-     * @param array $extra
+     * @param array  $extra
      *
-     * @return boolean
+     * @return bool
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -52,8 +53,9 @@ class AlreadyVotedValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @param int $pollId
+     * @param int    $pollId
      * @param string $ipAddress
+     *
      * @return mixed
      */
     protected function getVotes($pollId, $ipAddress)

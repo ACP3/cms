@@ -34,6 +34,7 @@ class Validator
 
     /**
      * Validator constructor.
+     *
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(EventDispatcherInterface $eventDispatcher)
@@ -116,8 +117,8 @@ class Validator
 
     /**
      * @param string $eventName
-     * @param array $formData
-     * @param array $extra
+     * @param array  $formData
+     * @param array  $extra
      */
     public function dispatchValidationEvent($eventName, array $formData, array $extra = [])
     {
@@ -125,7 +126,7 @@ class Validator
     }
 
     /**
-     * Validates a form
+     * Validates a form.
      *
      * @throws ValidationFailedException
      * @throws ValidationRuleNotFoundException
@@ -180,6 +181,7 @@ class Validator
      * @param mixed  $field
      *
      * @return bool
+     *
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
     public function is($validationRule, $field)

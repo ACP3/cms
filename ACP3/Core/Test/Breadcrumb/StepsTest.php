@@ -139,7 +139,7 @@ class StepsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $serviceId
-     * @param bool $serviceExists
+     * @param bool   $serviceExists
      */
     private function setUpContainerMockExpectations($serviceId, $serviceExists)
     {

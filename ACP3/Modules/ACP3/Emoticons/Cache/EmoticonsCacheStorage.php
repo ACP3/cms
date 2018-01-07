@@ -23,8 +23,8 @@ class EmoticonsCacheStorage extends Core\Cache\AbstractCacheStorage
     protected $emoticonRepository;
 
     /**
-     * @param \ACP3\Core\Cache\Cache                                      $cache
-     * @param \ACP3\Core\Environment\ApplicationPath                $appPath
+     * @param \ACP3\Core\Cache\Cache                                            $cache
+     * @param \ACP3\Core\Environment\ApplicationPath                            $appPath
      * @param \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonsRepository $emoticonRepository
      */
     public function __construct(
@@ -39,7 +39,7 @@ class EmoticonsCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * Bindet die gecacheten Emoticons ein
+     * Bindet die gecacheten Emoticons ein.
      *
      * @return array
      */
@@ -53,9 +53,9 @@ class EmoticonsCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * Caches the emoticons
+     * Caches the emoticons.
      *
-     * @return boolean
+     * @return bool
      */
     public function saveCache()
     {

@@ -35,19 +35,19 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @param boolean $newsletterAccess
+     * @param bool $newsletterAccess
      *
      * @return $this
      */
     public function setNewsletterAccess($newsletterAccess)
     {
-        $this->newsletterAccess = (bool)$newsletterAccess;
+        $this->newsletterAccess = (bool) $newsletterAccess;
 
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

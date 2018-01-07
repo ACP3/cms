@@ -12,7 +12,7 @@ use ACP3\Core\Model\Event\Listener\AbstractAddDuplicateButtonOnDataGridCustomOpt
 class AddDuplicateOnDataGridCustomOptionBeforeListener extends AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getDataGridIdentifier()
     {
@@ -20,7 +20,7 @@ class AddDuplicateOnDataGridCustomOptionBeforeListener extends AbstractAddDuplic
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getResource()
     {
@@ -28,7 +28,7 @@ class AddDuplicateOnDataGridCustomOptionBeforeListener extends AbstractAddDuplic
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getRoute(array $dbResultRow)
     {

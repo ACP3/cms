@@ -14,6 +14,7 @@ abstract class AbstractMoveElementFilter extends AbstractFilter
 
     /**
      * @param string $tplOutput
+     *
      * @return string
      */
     protected function getCleanedUpTemplateOutput($tplOutput)
@@ -23,6 +24,7 @@ abstract class AbstractMoveElementFilter extends AbstractFilter
 
     /**
      * @param string $tplOutput
+     *
      * @return string
      */
     protected function addElementsFromTemplates($tplOutput)

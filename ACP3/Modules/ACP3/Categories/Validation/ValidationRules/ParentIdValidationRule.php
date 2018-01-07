@@ -19,6 +19,7 @@ class ParentIdValidationRule extends AbstractValidationRule
 
     /**
      * ParentIdValidationRule constructor.
+     *
      * @param CategoriesRepository $categoriesRepository
      */
     public function __construct(CategoriesRepository $categoriesRepository)
@@ -27,7 +28,7 @@ class ParentIdValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {

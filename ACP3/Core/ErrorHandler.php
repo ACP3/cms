@@ -10,7 +10,7 @@ namespace ACP3\Core;
 use Psr\Log\LoggerInterface;
 
 /**
- * Monolog error handler
+ * Monolog error handler.
  *
  * A facility to enable logging of runtime errors, exceptions and fatal errors.
  *
@@ -32,6 +32,7 @@ class ErrorHandler
 
     /**
      * ErrorHandler constructor.
+     *
      * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
@@ -40,11 +41,13 @@ class ErrorHandler
     }
 
     /**
-     * Registers a new ErrorHandler for a given Logger
+     * Registers a new ErrorHandler for a given Logger.
      *
      * By default it will handle errors, exceptions and fatal errors
 
+     *
      * @param LoggerInterface $logger
+     *
      * @return static
      */
     public static function register(LoggerInterface $logger)

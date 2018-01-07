@@ -26,8 +26,9 @@ class FileDetailsBlock extends AbstractBlock
 
     /**
      * FileDetailsBlock constructor.
-     * @param BlockContext $context
-     * @param SettingsInterface $settings
+     *
+     * @param BlockContext         $context
+     * @param SettingsInterface    $settings
      * @param CategoriesRepository $categoriesRepository
      */
     public function __construct(
@@ -42,7 +43,7 @@ class FileDetailsBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

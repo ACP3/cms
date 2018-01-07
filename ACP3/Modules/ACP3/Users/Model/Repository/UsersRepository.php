@@ -22,23 +22,23 @@ class UsersRepository extends Core\Model\Repository\AbstractRepository
     {
         $query = "SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id";
 
-        return (int)$this->db->fetchColumn($query, ['id' => $userId]) > 0;
+        return (int) $this->db->fetchColumn($query, ['id' => $userId]) > 0;
     }
 
     /**
-     * Überprüft, ob der übergebene Username bereits existiert
+     * Überprüft, ob der übergebene Username bereits existiert.
      *
      * @param string $nickname
-     * @param int $userId
+     * @param int    $userId
      *
-     * @return boolean
+     * @return bool
      */
     public function resultExistsByUserName($nickname, $userId = 0)
     {
         if (!empty($userId)) {
             $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND nickname = ?';
 
-            return !empty($nickname) && $this->db->fetchColumn($query, [(int)$userId, $nickname]) == 1;
+            return !empty($nickname) && $this->db->fetchColumn($query, [(int) $userId, $nickname]) == 1;
         }
 
         $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE nickname = ?';
@@ -47,19 +47,19 @@ class UsersRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * Überprüft, ob die übergebene E-Mail-Adresse bereits existiert
+     * Überprüft, ob die übergebene E-Mail-Adresse bereits existiert.
      *
      * @param string $mail
-     * @param int $userId
+     * @param int    $userId
      *
-     * @return boolean
+     * @return bool
      */
     public function resultExistsByEmail($mail, $userId = 0)
     {
         if (!empty($userId)) {
             $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND mail = ?';
 
-            return $this->db->fetchColumn($query, [(int)$userId, $mail]) > 0;
+            return $this->db->fetchColumn($query, [(int) $userId, $mail]) > 0;
         }
 
         return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE mail = ?', [$mail]) > 0;

@@ -42,10 +42,11 @@ class GalleryPictureDetailsBlock extends AbstractBlock
 
     /**
      * GalleryPictureDetailsBlock constructor.
-     * @param BlockContext $context
-     * @param ApplicationPath $appPath
-     * @param RouterInterface $router
-     * @param SettingsInterface $settings
+     *
+     * @param BlockContext              $context
+     * @param ApplicationPath           $appPath
+     * @param RouterInterface           $router
+     * @param SettingsInterface         $settings
      * @param GalleryPicturesRepository $pictureRepository
      */
     public function __construct(
@@ -72,7 +73,7 @@ class GalleryPictureDetailsBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -99,7 +100,7 @@ class GalleryPictureDetailsBlock extends AbstractBlock
             'picture' => $picture,
             'picture_next' => $nextPicture,
             'picture_previous' => $previousPicture,
-            'comments_allowed' => $this->isCommentsAllowed((int)$picture['comments']),
+            'comments_allowed' => $this->isCommentsAllowed((int) $picture['comments']),
         ];
     }
 
@@ -119,10 +120,10 @@ class GalleryPictureDetailsBlock extends AbstractBlock
             if ($picInfos[0] > $settings['width'] || $picInfos[1] > $settings['height']) {
                 if ($picInfos[0] > $picInfos[1]) {
                     $newWidth = $settings['width'];
-                    $newHeight = (int)($picInfos[1] * $newWidth / $picInfos[0]);
+                    $newHeight = (int) ($picInfos[1] * $newWidth / $picInfos[0]);
                 } else {
                     $newHeight = $settings['height'];
-                    $newWidth = (int)($picInfos[0] * $newHeight / $picInfos[1]);
+                    $newWidth = (int) ($picInfos[0] * $newHeight / $picInfos[1]);
                 }
             }
 

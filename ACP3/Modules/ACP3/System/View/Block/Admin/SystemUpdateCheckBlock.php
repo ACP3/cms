@@ -20,8 +20,9 @@ class SystemUpdateCheckBlock extends AbstractBlock
 
     /**
      * SystemUpdateCheckBlock constructor.
+     *
      * @param BlockContext $context
-     * @param UpdateCheck $updateCheck
+     * @param UpdateCheck  $updateCheck
      */
     public function __construct(BlockContext $context, UpdateCheck $updateCheck)
     {
@@ -31,7 +32,7 @@ class SystemUpdateCheckBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

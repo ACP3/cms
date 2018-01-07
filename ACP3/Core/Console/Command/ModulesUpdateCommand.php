@@ -22,7 +22,9 @@ class ModulesUpdateCommand extends Command
 
     /**
      * ClearCacheCommand constructor.
+     *
      * @param SchemaUpdateModel $schemaUpdateModel
+     *
      * @internal param ApplicationPath $applicationPath
      */
     public function __construct(SchemaUpdateModel $schemaUpdateModel)
@@ -33,7 +35,7 @@ class ModulesUpdateCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -43,7 +45,7 @@ class ModulesUpdateCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

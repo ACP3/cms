@@ -34,11 +34,11 @@ class Index extends Core\Controller\AbstractWidgetAction
     private $block;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext $context
-     * @param Core\View\Block\FormBlockInterface $formBlock
-     * @param Core\View\Block\BlockInterface $block
-     * @param Core\Date $date
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollsRepository $pollRepository
+     * @param \ACP3\Core\Controller\Context\WidgetContext                     $context
+     * @param Core\View\Block\FormBlockInterface                              $formBlock
+     * @param Core\View\Block\BlockInterface                                  $block
+     * @param Core\Date                                                       $date
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollsRepository       $pollRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollAnswersRepository $answerRepository
      */
     public function __construct(

@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
 class NewsletterSettingsFormBlock extends AbstractSettingsFormBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -27,7 +27,7 @@ class NewsletterSettingsFormBlock extends AbstractSettingsFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

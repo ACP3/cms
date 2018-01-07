@@ -63,7 +63,7 @@ abstract class AbstractBlockTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getContextMockFQCN(): string
     {
@@ -71,7 +71,7 @@ abstract class AbstractBlockTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getContextMockMethods(): array
     {
@@ -98,7 +98,7 @@ abstract class AbstractBlockTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Returns the expected associative array which the $block->render() method returns
+     * Returns the expected associative array which the $block->render() method returns.
      *
      * @return array
      */

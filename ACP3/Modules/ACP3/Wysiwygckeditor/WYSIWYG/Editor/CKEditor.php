@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Core\WYSIWYG\Editor\Textarea;
 
 /**
- * Implementation of the AbstractWYSIWYG class for CKEditor
+ * Implementation of the AbstractWYSIWYG class for CKEditor.
  */
 class CKEditor extends Textarea
 {
@@ -44,8 +44,8 @@ class CKEditor extends Textarea
     /**
      * CKEditor constructor.
      *
-     * @param \ACP3\Core\Modules\Modules $modules
-     * @param Core\I18n\LocaleInterface $locale
+     * @param \ACP3\Core\Modules\Modules             $modules
+     * @param Core\I18n\LocaleInterface              $locale
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
@@ -59,7 +59,7 @@ class CKEditor extends Textarea
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getFriendlyName()
     {
@@ -91,7 +91,7 @@ class CKEditor extends Textarea
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setParameters(array $params = [])
     {
@@ -102,7 +102,7 @@ class CKEditor extends Textarea
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getData()
     {
@@ -123,7 +123,7 @@ class CKEditor extends Textarea
     }
 
     /**
-     * Configures the CKEditor instance
+     * Configures the CKEditor instance.
      *
      * @return string
      */
@@ -290,7 +290,6 @@ class CKEditor extends Textarea
             ['name' => 'others'],
             ['name' => 'about'],
         ];
-        ;
 
         // Include emoticons, if available
         if ($this->modules->isActive('emoticons') === true) {

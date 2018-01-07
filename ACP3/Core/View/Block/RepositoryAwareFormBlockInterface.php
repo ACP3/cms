@@ -21,12 +21,14 @@ interface RepositoryAwareFormBlockInterface extends BlockInterface
 
     /**
      * @param array $requestData
+     *
      * @return $this
      */
     public function setRequestData(array $requestData);
 
     /**
      * @param int $id
+     *
      * @return $this
      */
     public function setDataById(int $id);

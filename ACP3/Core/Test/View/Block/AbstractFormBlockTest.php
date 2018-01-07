@@ -23,7 +23,7 @@ abstract class AbstractFormBlockTest extends AbstractBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getContextMockFQCN(): string
     {
@@ -31,7 +31,7 @@ abstract class AbstractFormBlockTest extends AbstractBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getContextMockMethods(): array
     {

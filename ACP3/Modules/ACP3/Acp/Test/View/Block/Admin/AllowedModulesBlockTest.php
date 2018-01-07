@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Acp\View\Block\Admin\AllowedModulesBlock;
 class AllowedModulesBlockTest extends AbstractBlockTest
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function instantiateBlock(): BlockInterface
     {
@@ -42,7 +42,7 @@ class AllowedModulesBlockTest extends AbstractBlockTest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getExpectedArrayKeys(): array
     {

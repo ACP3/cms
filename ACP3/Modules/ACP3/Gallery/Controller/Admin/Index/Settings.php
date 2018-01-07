@@ -32,10 +32,10 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\SettingsFormBlockInterface $block
-     * @param Core\Helpers\Secure $secure
-     * @param \ACP3\Core\Cache\Cache $galleryCoreCache
+     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param Core\View\Block\SettingsFormBlockInterface                        $block
+     * @param Core\Helpers\Secure                                               $secure
+     * @param \ACP3\Core\Cache\Cache                                            $galleryCoreCache
      * @param \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
@@ -74,16 +74,16 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
-                'width' => (int)$formData['width'],
-                'height' => (int)$formData['height'],
-                'thumbwidth' => (int)$formData['thumbwidth'],
-                'thumbheight' => (int)$formData['thumbheight'],
+                'width' => (int) $formData['width'],
+                'height' => (int) $formData['height'],
+                'thumbwidth' => (int) $formData['thumbwidth'],
+                'thumbheight' => (int) $formData['thumbheight'],
                 'overlay' => $formData['overlay'],
                 'dateformat' => $this->secure->strEncode($formData['dateformat']),
-                'sidebar' => (int)$formData['sidebar'],
+                'sidebar' => (int) $formData['sidebar'],
             ];
             if ($this->modules->isActive('comments') === true) {
-                $data['comments'] = (int)$formData['comments'];
+                $data['comments'] = (int) $formData['comments'];
             }
 
             $bool = $this->config->saveSettings($data, Gallery\Installer\Schema::MODULE_NAME);
@@ -100,6 +100,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param array $formData
+     *
      * @return bool
      */
     protected function hasImageDimensionChanges(array $formData)

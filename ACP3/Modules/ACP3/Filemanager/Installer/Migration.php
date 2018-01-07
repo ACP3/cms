@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Filemanager\Installer;
 class Migration implements \ACP3\Core\Installer\MigrationInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */
@@ -20,7 +20,7 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */

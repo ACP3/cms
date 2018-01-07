@@ -20,7 +20,8 @@ class Login extends Core\Controller\AbstractWidgetAction
 
     /**
      * Login constructor.
-     * @param WidgetContext $context
+     *
+     * @param WidgetContext                      $context
      * @param Core\View\Block\FormBlockInterface $block
      */
     public function __construct(WidgetContext $context, Core\View\Block\FormBlockInterface $block)
@@ -31,7 +32,7 @@ class Login extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * Displays the login mask, if the user is not already logged in
+     * Displays the login mask, if the user is not already logged in.
      *
      * @return array|bool
      */

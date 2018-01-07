@@ -10,7 +10,7 @@ namespace ACP3\Core\Validation\ValidationRules;
 use ACP3\Core\Validation\Validator;
 
 /**
- * Interface ValidationRuleInterface
+ * Interface ValidationRuleInterface.
  */
 interface ValidationRuleInterface
 {
@@ -41,7 +41,7 @@ interface ValidationRuleInterface
      * @param string $field
      * @param array  $extra
      *
-     * @return boolean
+     * @return bool
      */
     public function isValid($data, $field = '', array $extra = []);
 }

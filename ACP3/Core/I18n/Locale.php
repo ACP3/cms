@@ -23,7 +23,8 @@ class Locale implements LocaleInterface
 
     /**
      * Locale constructor.
-     * @param SettingsInterface $settings
+     *
+     * @param SettingsInterface   $settings
      * @param DictionaryInterface $dictionary
      */
     public function __construct(SettingsInterface $settings, DictionaryInterface $dictionary)
@@ -33,7 +34,7 @@ class Locale implements LocaleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getLocale(): string
     {
@@ -41,7 +42,7 @@ class Locale implements LocaleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getShortIsoCode(): string
     {
@@ -49,7 +50,7 @@ class Locale implements LocaleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDirection(): string
     {

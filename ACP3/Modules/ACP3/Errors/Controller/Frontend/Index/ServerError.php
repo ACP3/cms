@@ -22,7 +22,8 @@ class ServerError extends Core\Controller\AbstractFrontendAction
 
     /**
      * ServerError constructor.
-     * @param Context\FrontendContext $context
+     *
+     * @param Context\FrontendContext        $context
      * @param Core\View\Block\BlockInterface $block
      */
     public function __construct(Context\FrontendContext $context, Core\View\Block\BlockInterface $block)

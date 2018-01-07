@@ -24,7 +24,7 @@ class Helpers
 
     /**
      * @param Core\Helpers\Forms $formsHelper
-     * @param ArticlesRepository  $articleRepository
+     * @param ArticlesRepository $articleRepository
      */
     public function __construct(
         Core\Helpers\Forms $formsHelper,
@@ -35,9 +35,9 @@ class Helpers
     }
 
     /**
-     * Gibt alle angelegten Artikel zurück
+     * Gibt alle angelegten Artikel zurück.
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return array
      */

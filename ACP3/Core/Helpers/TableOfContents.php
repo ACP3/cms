@@ -39,12 +39,12 @@ class TableOfContents
     /**
      * TableOfContents constructor.
      *
-     * @param \ACP3\Core\Breadcrumb\Title $title
-     * @param \ACP3\Core\I18n\TranslatorInterface $translator
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
+     * @param \ACP3\Core\Breadcrumb\Title                                 $title
+     * @param \ACP3\Core\I18n\TranslatorInterface                         $translator
+     * @param \ACP3\Core\Http\RequestInterface                            $request
+     * @param \ACP3\Core\Router\RouterInterface                           $router
      * @param \ACP3\Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule
-     * @param \ACP3\Core\View $view
+     * @param \ACP3\Core\View                                             $view
      */
     public function __construct(
         Core\Breadcrumb\Title $title,
@@ -63,12 +63,12 @@ class TableOfContents
     }
 
     /**
-     * Generates the table of contents
+     * Generates the table of contents.
      *
-     * @param array $pages
+     * @param array  $pages
      * @param string $baseUrlPath
-     * @param boolean $titlesFromDb
-     * @param boolean $customUris
+     * @param bool   $titlesFromDb
+     * @param bool   $customUris
      *
      * @return string
      */
@@ -99,7 +99,7 @@ class TableOfContents
 
     /**
      * Liest aus einem String alle vorhandenen HTML-Attribute ein und
-     * liefert diese als assoziatives Array zurück
+     * liefert diese als assoziatives Array zurück.
      *
      * @param string $string
      *
@@ -122,10 +122,10 @@ class TableOfContents
     }
 
     /**
-     * @param bool $customUris
+     * @param bool         $customUris
      * @param array|string $page
-     * @param int $pageNumber
-     * @param int $currentIndex
+     * @param int          $pageNumber
+     * @param int          $currentIndex
      *
      * @return bool
      */
@@ -148,8 +148,8 @@ class TableOfContents
 
     /**
      * @param array|string $page
-     * @param int $pageNumber
-     * @param bool $titlesFromDb
+     * @param int          $pageNumber
+     * @param bool         $titlesFromDb
      *
      * @return string
      */
@@ -165,10 +165,10 @@ class TableOfContents
     }
 
     /**
-     * @param bool $customUris
+     * @param bool         $customUris
      * @param array|string $page
-     * @param int $pageNumber
-     * @param string $requestQuery
+     * @param int          $pageNumber
+     * @param string       $requestQuery
      *
      * @return string
      */

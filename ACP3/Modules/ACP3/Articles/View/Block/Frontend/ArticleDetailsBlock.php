@@ -25,9 +25,10 @@ class ArticleDetailsBlock extends AbstractBlock
 
     /**
      * ArticleDetailsBlock constructor.
-     * @param BlockContext $context
+     *
+     * @param BlockContext     $context
      * @param RequestInterface $request
-     * @param PageBreaks $pageBreaksHelper
+     * @param PageBreaks       $pageBreaksHelper
      */
     public function __construct(BlockContext $context, RequestInterface $request, PageBreaks $pageBreaksHelper)
     {

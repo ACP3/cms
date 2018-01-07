@@ -13,18 +13,18 @@ interface CaptchaExtensionInterface
     const CAPTCHA_DEFAULT_INPUT_ID = 'captcha';
 
     /**
-     * Returns the translated name of the captcha
+     * Returns the translated name of the captcha.
      *
      * @return string
      */
     public function getCaptchaName();
 
     /**
-     * Creates and returns the view of the captcha
+     * Creates and returns the view of the captcha.
      *
-     * @param integer $captchaLength
+     * @param int    $captchaLength
      * @param string $formFieldId
-     * @param bool $inputOnly
+     * @param bool   $inputOnly
      * @param string $path
      *
      * @return string
@@ -37,11 +37,12 @@ interface CaptchaExtensionInterface
     );
 
     /**
-     * Checks, whether the typed in captcha is valid
+     * Checks, whether the typed in captcha is valid.
      *
-     * @param mixed $formData
+     * @param mixed  $formData
      * @param string $formFieldName
-     * @param array $extra
+     * @param array  $extra
+     *
      * @return bool
      */
     public function isCaptchaValid($formData, $formFieldName, array $extra = []);

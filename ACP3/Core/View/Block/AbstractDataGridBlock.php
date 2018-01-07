@@ -31,6 +31,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
 
     /**
      * AbstractDataGridBlock constructor.
+     *
      * @param Context\DataGridBlockContext $context
      */
     public function __construct(Context\DataGridBlockContext $context)
@@ -43,7 +44,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDataGridRepository()
     {
@@ -51,7 +52,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setDataGridRepository(AbstractDataGridRepository $dataGridRepository)
     {
@@ -62,6 +63,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
 
     /**
      * @return DataGrid
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
@@ -76,6 +78,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
 
     /**
      * @return DataGrid
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
@@ -86,7 +89,7 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
 
     /**
      * @param DataGrid $dataGrid
-     * @param array $dataGridOptions
+     * @param array    $dataGridOptions
      */
     protected function configureDataGrid(DataGrid $dataGrid, array $dataGridOptions)
     {
@@ -128,7 +131,6 @@ abstract class AbstractDataGridBlock extends AbstractBlock implements DataGridBl
 
     /**
      * @param DataGrid $dataGrid
-     * @return void
      */
     abstract protected function addDataGridColumns(DataGrid $dataGrid);
 }

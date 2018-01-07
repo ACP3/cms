@@ -35,10 +35,11 @@ class IsUserAuthenticatedOnControllerActionBeforeDispatchListener
 
     /**
      * IsUserAuthenticatedOnControllerActionBeforeDispatchListener constructor.
-     * @param RequestInterface $request
-     * @param RedirectMessages $redirectMessages
+     *
+     * @param RequestInterface    $request
+     * @param RedirectMessages    $redirectMessages
      * @param TranslatorInterface $translator
-     * @param UserModel $user
+     * @param UserModel           $user
      */
     public function __construct(
         RequestInterface $request,

@@ -10,7 +10,7 @@ namespace ACP3\Core\Validation\ValidationRules;
 class MinLengthValidationRule extends AbstractValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -22,8 +22,8 @@ class MinLengthValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @param string  $value
-     * @param integer $length
+     * @param string $value
+     * @param int    $length
      *
      * @return bool
      */

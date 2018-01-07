@@ -23,7 +23,8 @@ class CategoriesDataGridBlock extends AbstractDataGridBlock
 
     /**
      * CategoriesDataGridBlock constructor.
-     * @param DataGridBlockContext $context
+     *
+     * @param DataGridBlockContext  $context
      * @param Core\ACL\ACLInterface $acl
      */
     public function __construct(DataGridBlockContext $context, Core\ACL\ACLInterface $acl)
@@ -34,7 +35,7 @@ class CategoriesDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addDataGridColumns(DataGrid $dataGrid)
     {
@@ -81,7 +82,7 @@ class CategoriesDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -106,7 +107,7 @@ class CategoriesDataGridBlock extends AbstractDataGridBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleName(): string
     {

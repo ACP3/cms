@@ -24,6 +24,7 @@ class CanUsePageCache
 
     /**
      * CanUsePageCache constructor.
+     *
      * @param SettingsInterface $settings
      * @param $environment
      */

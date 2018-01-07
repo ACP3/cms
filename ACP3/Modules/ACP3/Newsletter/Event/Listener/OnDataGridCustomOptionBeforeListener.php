@@ -24,7 +24,8 @@ class OnDataGridCustomOptionBeforeListener
 
     /**
      * OnDataGridCustomOptionBeforeListener constructor.
-     * @param ACLInterface $acl
+     *
+     * @param ACLInterface        $acl
      * @param TranslatorInterface $translator
      */
     public function __construct(

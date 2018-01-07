@@ -30,9 +30,9 @@ class MenusCacheStorage extends Core\Cache\AbstractCacheStorage
     protected $menuItemRepository;
 
     /**
-     * @param \ACP3\Core\Cache\Cache $cache
-     * @param \ACP3\Core\I18n\TranslatorInterface $translator
-     * @param MenusRepository $menuRepository
+     * @param \ACP3\Core\Cache\Cache                                        $cache
+     * @param \ACP3\Core\I18n\TranslatorInterface                           $translator
+     * @param MenusRepository                                               $menuRepository
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository $menuItemRepository
      */
     public function __construct(
@@ -49,7 +49,7 @@ class MenusCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * Returns the cached menu items
+     * Returns the cached menu items.
      *
      * @return array
      */
@@ -63,9 +63,9 @@ class MenusCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * Saves the menu items to the cache
+     * Saves the menu items to the cache.
      *
-     * @return boolean
+     * @return bool
      */
     public function saveMenusCache()
     {
@@ -108,11 +108,11 @@ class MenusCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * Saves the visible menu items to the cache
+     * Saves the visible menu items to the cache.
      *
      * @param string $menuIdentifier
      *
-     * @return boolean
+     * @return bool
      */
     public function saveVisibleMenuItemsCache($menuIdentifier)
     {
@@ -123,7 +123,7 @@ class MenusCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * Returns the cached visible menu items
+     * Returns the cached visible menu items.
      *
      * @param string $menuIdentifier
      *
@@ -139,7 +139,7 @@ class MenusCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * @param int $index
+     * @param int   $index
      * @param array $menuItems
      *
      * @return bool
@@ -160,7 +160,7 @@ class MenusCacheStorage extends Core\Cache\AbstractCacheStorage
     }
 
     /**
-     * @param int $index
+     * @param int   $index
      * @param array $menuItems
      *
      * @return bool

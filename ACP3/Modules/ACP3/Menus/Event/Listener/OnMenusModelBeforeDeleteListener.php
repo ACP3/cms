@@ -34,10 +34,11 @@ class OnMenusModelBeforeDeleteListener
 
     /**
      * OnMenusModelBeforeDeleteListener constructor.
-     * @param MenusCacheStorage $cache
-     * @param MenusRepository $menuRepository
+     *
+     * @param MenusCacheStorage   $cache
+     * @param MenusRepository     $menuRepository
      * @param MenuItemsRepository $menuItemRepository
-     * @param MenuItemsModel $menuItemsModel
+     * @param MenuItemsModel      $menuItemsModel
      */
     public function __construct(
         MenusCacheStorage $cache,

@@ -16,15 +16,15 @@ class UserModel implements ReaderRepositoryInterface
     const SALT_LENGTH = 16;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isAuthenticated = false;
     /**
-     * @var integer
+     * @var int
      */
     protected $userId = 0;
     /**
-     * @var boolean
+     * @var bool
      */
     protected $superUser = false;
     /**
@@ -43,7 +43,7 @@ class UserModel implements ReaderRepositoryInterface
     /**
      * UserModel constructor.
      *
-     * @param CountryList $countryList
+     * @param CountryList                                               $countryList
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository $userRepository
      */
     public function __construct(
@@ -55,7 +55,7 @@ class UserModel implements ReaderRepositoryInterface
     }
 
     /**
-     * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück
+     * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück.
      *
      * @param int $userId
      *
@@ -76,9 +76,9 @@ class UserModel implements ReaderRepositoryInterface
     }
 
     /**
-     * Returns, whether the current user is an authenticated user or not
+     * Returns, whether the current user is an authenticated user or not.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAuthenticated()
     {
@@ -86,19 +86,21 @@ class UserModel implements ReaderRepositoryInterface
     }
 
     /**
-     * @param boolean $isAuthenticated
+     * @param bool $isAuthenticated
+     *
      * @return $this
      */
     public function setIsAuthenticated($isAuthenticated)
     {
-        $this->isAuthenticated = (bool)$isAuthenticated;
+        $this->isAuthenticated = (bool) $isAuthenticated;
 
         return $this;
     }
 
     /**
-     * Returns the user id of the currently logged in user
-     * @return integer
+     * Returns the user id of the currently logged in user.
+     *
+     * @return int
      */
     public function getUserId()
     {
@@ -107,6 +109,7 @@ class UserModel implements ReaderRepositoryInterface
 
     /**
      * @param int $userId
+     *
      * @return $this
      */
     public function setUserId($userId)
@@ -117,9 +120,9 @@ class UserModel implements ReaderRepositoryInterface
     }
 
     /**
-     * Returns, whether the currently logged in user is a super user or not
+     * Returns, whether the currently logged in user is a super user or not.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSuperUser()
     {
@@ -128,11 +131,12 @@ class UserModel implements ReaderRepositoryInterface
 
     /**
      * @param bool $isSuperUser
+     *
      * @return $this
      */
     public function setIsSuperUser($isSuperUser)
     {
-        $this->superUser = (bool)$isSuperUser;
+        $this->superUser = (bool) $isSuperUser;
 
         return $this;
     }

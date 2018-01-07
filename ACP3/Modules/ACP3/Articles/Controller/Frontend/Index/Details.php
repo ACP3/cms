@@ -34,11 +34,11 @@ class Details extends Core\Controller\AbstractFrontendAction
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
-     * @param Core\View\Block\BlockInterface $block
+     * @param \ACP3\Core\Controller\Context\FrontendContext                   $context
+     * @param \ACP3\Core\Date                                                 $date
+     * @param Core\View\Block\BlockInterface                                  $block
      * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache\ArticleCacheStorage $articlesCache
+     * @param \ACP3\Modules\ACP3\Articles\Cache\ArticleCacheStorage           $articlesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -59,6 +59,7 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id)

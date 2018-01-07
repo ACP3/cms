@@ -41,10 +41,10 @@ class OnControllerActionBeforeDispatchListener
     /**
      * OnFrontControllerBeforeDispatchListener constructor.
      *
-     * @param ApplicationPath $applicationPath
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases
+     * @param ApplicationPath                              $applicationPath
+     * @param \ACP3\Core\Http\RequestInterface             $request
+     * @param \ACP3\Core\Router\RouterInterface            $router
+     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases   $aliases
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
      */
     public function __construct(
@@ -71,7 +71,7 @@ class OnControllerActionBeforeDispatchListener
     }
 
     /**
-     * If there is an URI alias available, set the alias as the canonical URI
+     * If there is an URI alias available, set the alias as the canonical URI.
      *
      * @param \ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent $event
      */
@@ -103,7 +103,7 @@ class OnControllerActionBeforeDispatchListener
     }
 
     /**
-     * If we are currently displaying the homepage, set the canonical URL to the website root
+     * If we are currently displaying the homepage, set the canonical URL to the website root.
      */
     private function setCanonicalForHomepage()
     {

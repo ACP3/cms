@@ -26,6 +26,7 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
 
     /**
      * @param array $results
+     *
      * @return array
      */
     private function calculateFirstAndLastPage(array $results)
@@ -39,7 +40,7 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @param int $index
+     * @param int   $index
      * @param array $nestedSet
      *
      * @return bool
@@ -60,7 +61,7 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @param int $index
+     * @param int   $index
      * @param array $nestedSet
      *
      * @return bool
@@ -80,7 +81,7 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
@@ -93,7 +94,7 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addJoin(QueryBuilder $queryBuilder)
     {
@@ -117,7 +118,7 @@ class CategoriesDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
     {

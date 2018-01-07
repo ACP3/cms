@@ -28,9 +28,9 @@ class Manage extends Core\Controller\AbstractFrontendAction
     /**
      * Manage constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param Gallery\Model\GalleryModel $galleryModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
+     * @param Core\View\Block\RepositoryAwareFormBlockInterface           $block
+     * @param Gallery\Model\GalleryModel                                  $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
      */
     public function __construct(
@@ -48,6 +48,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param int|null $id
+     *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function execute(?int $id)

@@ -30,9 +30,10 @@ class ResourcesListingBlock extends AbstractBlock
 
     /**
      * ResourcesListingBlock constructor.
-     * @param BlockContext $context
-     * @param ACLInterface $acl
-     * @param Modules $modules
+     *
+     * @param BlockContext           $context
+     * @param ACLInterface           $acl
+     * @param Modules                $modules
      * @param AclResourcesRepository $resourceRepository
      */
     public function __construct(
@@ -49,7 +50,7 @@ class ResourcesListingBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

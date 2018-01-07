@@ -24,8 +24,9 @@ class Translator implements TranslatorInterface
 
     /**
      * Translator constructor.
+     *
      * @param DictionaryInterface $dictionary
-     * @param LocaleInterface $locale
+     * @param LocaleInterface     $locale
      */
     public function __construct(
         DictionaryInterface $dictionary,
@@ -36,7 +37,7 @@ class Translator implements TranslatorInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function t(string $module, string $phrase, array $arguments = []): string
     {

@@ -39,7 +39,7 @@ class RedirectResponse
     }
 
     /**
-     * Executes a temporary redirect
+     * Executes a temporary redirect.
      *
      * @param string $path
      *
@@ -51,10 +51,10 @@ class RedirectResponse
     }
 
     /**
-     * Redirect to an other URLs
+     * Redirect to an other URLs.
      *
      * @param string $path
-     * @param int $statusCode
+     * @param int    $statusCode
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -64,7 +64,7 @@ class RedirectResponse
     }
 
     /**
-     * Executes a permanent redirect
+     * Executes a permanent redirect.
      *
      * @param string $path
      *

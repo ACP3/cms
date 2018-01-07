@@ -44,11 +44,12 @@ class OnMenusLayoutRenderManageMenuItemListener
 
     /**
      * OnMenusLayoutRenderManageMenuItemListener constructor.
-     * @param ACLInterface $acl
+     *
+     * @param ACLInterface        $acl
      * @param TranslatorInterface $translator
-     * @param View $view
-     * @param Forms $forms
-     * @param MenuItemFormFields $menuItemFormFields
+     * @param View                $view
+     * @param Forms               $forms
+     * @param MenuItemFormFields  $menuItemFormFields
      * @param MenuItemsRepository $menuItemRepository
      */
     public function __construct(
@@ -95,6 +96,7 @@ class OnMenusLayoutRenderManageMenuItemListener
 
     /**
      * @param string $routeName
+     *
      * @return array
      */
     private function fetchMenuItem($routeName)
@@ -110,6 +112,7 @@ class OnMenusLayoutRenderManageMenuItemListener
 
     /**
      * @param int $currentValue
+     *
      * @return array
      */
     private function fetchCreateMenuItemOption($currentValue = 0)
@@ -123,6 +126,7 @@ class OnMenusLayoutRenderManageMenuItemListener
 
     /**
      * @param array $menuItem
+     *
      * @return array|null
      */
     private function modifyFormValues(array $menuItem)
@@ -138,6 +142,7 @@ class OnMenusLayoutRenderManageMenuItemListener
 
     /**
      * @param array $menuItem
+     *
      * @return array
      */
     protected function addFormFields(array $menuItem)

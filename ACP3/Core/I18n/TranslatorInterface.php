@@ -10,11 +10,11 @@ namespace ACP3\Core\I18n;
 interface TranslatorInterface
 {
     /**
-     * Translates a given phrase of a given module into some language
+     * Translates a given phrase of a given module into some language.
      *
      * @param string $module
      * @param string $phrase
-     * @param array $arguments
+     * @param array  $arguments
      *
      * @return string
      */

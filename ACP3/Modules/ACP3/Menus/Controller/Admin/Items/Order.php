@@ -28,10 +28,10 @@ class Order extends Core\Controller\AbstractFrontendAction
     /**
      * Order constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\NestedSet\Operation\Sort $sortOperation
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param Core\NestedSet\Operation\Sort                                 $sortOperation
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemsRepository $menuItemRepository
-     * @param \ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage $menusCache
+     * @param \ACP3\Modules\ACP3\Menus\Cache\MenusCacheStorage              $menusCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -51,6 +51,7 @@ class Order extends Core\Controller\AbstractFrontendAction
      * @param string $action
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(int $id, string $action)

@@ -22,7 +22,7 @@ class DateRange
     protected $translator;
 
     /**
-     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Date                     $date
      * @param \ACP3\Core\I18n\TranslatorInterface $translator
      */
     public function __construct(
@@ -34,7 +34,7 @@ class DateRange
     }
 
     /**
-     * Formats a given single date or date range into the desired format
+     * Formats a given single date or date range into the desired format.
      *
      * @param string $start
      * @param string $end

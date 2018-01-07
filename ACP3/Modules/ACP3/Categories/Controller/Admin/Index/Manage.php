@@ -27,10 +27,11 @@ class Manage extends Core\Controller\AbstractFrontendAction
 
     /**
      * Manage constructor.
-     * @param Core\Controller\Context\FrontendContext $context
+     *
+     * @param Core\Controller\Context\FrontendContext           $context
      * @param Core\View\Block\RepositoryAwareFormBlockInterface $block
-     * @param Categories\Model\CategoriesModel $categoriesModel
-     * @param Categories\Validation\AdminFormValidation $adminFormValidation
+     * @param Categories\Model\CategoriesModel                  $categoriesModel
+     * @param Categories\Validation\AdminFormValidation         $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -60,6 +61,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param int $id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function executePost(?int $id)

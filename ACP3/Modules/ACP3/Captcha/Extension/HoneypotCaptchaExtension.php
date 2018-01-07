@@ -28,9 +28,10 @@ class HoneypotCaptchaExtension implements CaptchaExtensionInterface
 
     /**
      * HoneypotCaptchaExtension constructor.
+     *
      * @param TranslatorInterface $translator
-     * @param View $view
-     * @param UserModel $userModel
+     * @param View                $view
+     * @param UserModel           $userModel
      */
     public function __construct(TranslatorInterface $translator, View $view, UserModel $userModel)
     {
@@ -48,7 +49,7 @@ class HoneypotCaptchaExtension implements CaptchaExtensionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getCaptcha(
         $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
@@ -69,7 +70,7 @@ class HoneypotCaptchaExtension implements CaptchaExtensionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isCaptchaValid($formData, $formFieldName, array $extra = [])
     {

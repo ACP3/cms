@@ -45,9 +45,10 @@ class UserMenuWidgetBlock extends AbstractBlock
 
     /**
      * UserMenuWidgetBlock constructor.
+     *
      * @param BlockContext $context
      * @param ACLInterface $acl
-     * @param Modules $modules
+     * @param Modules      $modules
      */
     public function __construct(BlockContext $context, ACLInterface $acl, Modules $modules)
     {
@@ -58,7 +59,7 @@ class UserMenuWidgetBlock extends AbstractBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {

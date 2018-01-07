@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules;
 class AccountNotExistsValidationRule extends AccountExistsValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function checkAccountExists($data)
     {

@@ -23,7 +23,7 @@ abstract class AbstractOperation
     protected $nestedSetRepository;
 
     /**
-     * @param \ACP3\Core\Database\Connection $db
+     * @param \ACP3\Core\Database\Connection                            $db
      * @param \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository $nestedSetRepository
      */
     public function __construct(
@@ -35,7 +35,7 @@ abstract class AbstractOperation
     }
 
     /**
-     * Returns, whether the data repository is aware of the block handling
+     * Returns, whether the data repository is aware of the block handling.
      *
      * @return bool
      */
@@ -103,7 +103,7 @@ abstract class AbstractOperation
     }
 
     /**
-     * Returns the name of the block
+     * Returns the name of the block.
      *
      * @return string
      */

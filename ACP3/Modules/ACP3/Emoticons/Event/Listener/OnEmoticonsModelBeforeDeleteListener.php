@@ -26,7 +26,8 @@ class OnEmoticonsModelBeforeDeleteListener
 
     /**
      * OnEmoticonsModelBeforeDeleteListener constructor.
-     * @param ApplicationPath $applicationPath
+     *
+     * @param ApplicationPath     $applicationPath
      * @param EmoticonsRepository $emoticonRepository
      */
     public function __construct(

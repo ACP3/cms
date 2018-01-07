@@ -28,10 +28,12 @@ abstract class AbstractRepository implements WriterRepositoryInterface, ReaderRe
     }
 
     /**
-     * Executes the SQL insert statement
+     * Executes the SQL insert statement.
      *
      * @param array $data
+     *
      * @return bool|int
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function insert(array $data)
@@ -42,7 +44,7 @@ abstract class AbstractRepository implements WriterRepositoryInterface, ReaderRe
                 $data
             );
 
-            return (int)$this->db->getConnection()->lastInsertId();
+            return (int) $this->db->getConnection()->lastInsertId();
         });
     }
 
@@ -57,11 +59,13 @@ abstract class AbstractRepository implements WriterRepositoryInterface, ReaderRe
     }
 
     /**
-     * Executes the SQL delete statement
+     * Executes the SQL delete statement.
      *
      * @param int|array $entryId
-     * @param string $columnName
+     * @param string    $columnName
+     *
      * @return bool|int
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function delete($entryId, string $columnName = 'id')
@@ -82,15 +86,17 @@ abstract class AbstractRepository implements WriterRepositoryInterface, ReaderRe
      */
     private function getIdentifier($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
     {
-        return \is_array($entryId) === true ? $entryId : [$columnName => (int)$entryId];
+        return \is_array($entryId) === true ? $entryId : [$columnName => (int) $entryId];
     }
 
     /**
-     * Executes the SQL update statement
+     * Executes the SQL update statement.
      *
-     * @param array $data
+     * @param array     $data
      * @param int|array $entryId
+     *
      * @return bool|int
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function update(array $data, $entryId)
@@ -105,7 +111,7 @@ abstract class AbstractRepository implements WriterRepositoryInterface, ReaderRe
     }
 
     /**
-     * Build the SQL limit
+     * Build the SQL limit.
      *
      * @param int|string $limitStart
      * @param int|string $resultsPerPage
@@ -115,16 +121,16 @@ abstract class AbstractRepository implements WriterRepositoryInterface, ReaderRe
     protected function buildLimitStmt($limitStart = '', $resultsPerPage = '')
     {
         if ($limitStart !== '' && $resultsPerPage !== '') {
-            return ' LIMIT ' . ((int)$limitStart) . ',' . ((int)$resultsPerPage);
+            return ' LIMIT ' . ((int) $limitStart) . ',' . ((int) $resultsPerPage);
         } elseif ($limitStart !== '') {
-            return ' LIMIT ' . ((int)$limitStart);
+            return ' LIMIT ' . ((int) $limitStart);
         }
 
         return '';
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getOneById(int $entryId)
     {

@@ -22,9 +22,10 @@ class NewsletterManageFormBlock extends AbstractRepositoryAwareFormBlock
 
     /**
      * NewsletterFormBlock constructor.
-     * @param FormBlockContext $context
+     *
+     * @param FormBlockContext      $context
      * @param NewslettersRepository $newslettersRepository
-     * @param SettingsInterface $settings
+     * @param SettingsInterface     $settings
      */
     public function __construct(
         FormBlockContext $context,
@@ -37,7 +38,7 @@ class NewsletterManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -68,7 +69,7 @@ class NewsletterManageFormBlock extends AbstractRepositoryAwareFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

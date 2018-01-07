@@ -19,6 +19,7 @@ class UpdateFileCacheOnModelAfterSaveListener
 
     /**
      * UpdateFileCacheOnModelAfterSaveListener constructor.
+     *
      * @param FileCacheStorage $cache
      */
     public function __construct(FileCacheStorage $cache)

@@ -18,7 +18,7 @@ class Index extends Core\Controller\AbstractWidgetAction
 
     /**
      * @param \ACP3\Core\Controller\Context\WidgetContext $context
-     * @param Core\View\Block\FormBlockInterface $block
+     * @param Core\View\Block\FormBlockInterface          $block
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,

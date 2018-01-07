@@ -10,7 +10,7 @@ namespace ACP3\Core\View\Renderer\Smarty\Modifiers;
 class PrefixUri extends AbstractModifier
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -18,11 +18,11 @@ class PrefixUri extends AbstractModifier
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process($value)
     {
-        if (!empty($value) && (bool)\preg_match('=^http(s)?://=', $value) === false) {
+        if (!empty($value) && (bool) \preg_match('=^http(s)?://=', $value) === false) {
             return 'http://' . $value;
         }
 

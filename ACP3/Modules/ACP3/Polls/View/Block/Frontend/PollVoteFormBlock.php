@@ -12,7 +12,7 @@ use ACP3\Core\View\Block\AbstractFormBlock;
 class PollVoteFormBlock extends AbstractFormBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render()
     {
@@ -26,7 +26,7 @@ class PollVoteFormBlock extends AbstractFormBlock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefaultData(): array
     {

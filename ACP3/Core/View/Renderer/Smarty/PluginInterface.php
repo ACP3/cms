@@ -8,7 +8,7 @@
 namespace ACP3\Core\View\Renderer\Smarty;
 
 /**
- * Interface PluginInterface
+ * Interface PluginInterface.
  */
 interface PluginInterface
 {

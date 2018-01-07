@@ -38,7 +38,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function schemaUpdates()
     {

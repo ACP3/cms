@@ -38,7 +38,7 @@ class FormTokenValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(Validator $validator, $data, $field = '', array $extra = [])
     {
@@ -48,7 +48,7 @@ class FormTokenValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {

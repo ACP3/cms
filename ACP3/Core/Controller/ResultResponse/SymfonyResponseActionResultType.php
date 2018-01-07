@@ -25,7 +25,8 @@ class SymfonyResponseActionResultType implements ActionResultTypeInterface
 
     /**
      * SymfonyResponseActionResultType constructor.
-     * @param Response $response
+     *
+     * @param Response         $response
      * @param RequestInterface $request
      */
     public function __construct(Response $response, RequestInterface $request)
@@ -35,7 +36,7 @@ class SymfonyResponseActionResultType implements ActionResultTypeInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function supports($result): bool
     {
@@ -43,7 +44,7 @@ class SymfonyResponseActionResultType implements ActionResultTypeInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process($result): Response
     {

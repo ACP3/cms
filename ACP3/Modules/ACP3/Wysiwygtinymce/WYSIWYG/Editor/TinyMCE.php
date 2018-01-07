@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG\Editor;
 use ACP3\Core;
 
 /**
- * Implementation of the AbstractWYSIWYG class for TinyMCE
+ * Implementation of the AbstractWYSIWYG class for TinyMCE.
  */
 class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 {
@@ -33,8 +33,8 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     private $initialized = false;
 
     /**
-     * @param \ACP3\Core\Assets\Minifier\MinifierInterface    $minifier
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Assets\Minifier\MinifierInterface $minifier
+     * @param \ACP3\Core\Environment\ApplicationPath       $appPath
      */
     public function __construct(
         Core\Assets\Minifier\MinifierInterface $minifier,
@@ -45,7 +45,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getFriendlyName()
     {
@@ -65,7 +65,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setParameters(array $params = [])
     {
@@ -76,7 +76,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getData()
     {

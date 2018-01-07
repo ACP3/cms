@@ -10,7 +10,7 @@ namespace ACP3\Core\View\Renderer\Smarty\Blocks;
 class Javascripts extends AbstractBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {

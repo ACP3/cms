@@ -23,6 +23,7 @@ class SitemapAvailabilityRegistrar
 
     /**
      * SitemapAvailabilityRegistrar constructor.
+     *
      * @param Modules $modules
      */
     public function __construct(Modules $modules)

@@ -21,6 +21,7 @@ class HasPermissionOnControllerActionBeforeDispatchListener
 
     /**
      * HasPermissionOnControllerActionBeforeDispatchListener constructor.
+     *
      * @param ACLInterface $acl
      */
     public function __construct(ACLInterface $acl)
@@ -30,6 +31,7 @@ class HasPermissionOnControllerActionBeforeDispatchListener
 
     /**
      * @param ControllerActionBeforeDispatchEvent $event
+     *
      * @throws AccessForbiddenException
      */
     public function hasPermission(ControllerActionBeforeDispatchEvent $event)
