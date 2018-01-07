@@ -18,8 +18,8 @@ class IntegerColumnTypeTest extends AbstractColumnTypeTest
 
     public function testDoEscape()
     {
-        $this->assertTrue(\is_int($this->columnType->doEscape('foo')));
-        $this->assertTrue(\is_int($this->columnType->doEscape('0.00')));
-        $this->assertTrue(\is_int($this->columnType->doEscape('0')));
+        $this->assertInternalType('int', $this->columnType->doEscape('foo'));
+        $this->assertInternalType('int', $this->columnType->doEscape('0.00'));
+        $this->assertInternalType('int', $this->columnType->doEscape('0'));
     }
 }

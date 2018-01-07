@@ -10,7 +10,7 @@ namespace ACP3\Core\Test\Helpers;
 use ACP3\Core\Helpers\StringFormatter;
 use Cocur\Slugify\Slugify;
 
-class StringFormatterTest extends \PHPUnit_Framework_TestCase
+class StringFormatterTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var string
@@ -151,11 +151,12 @@ This is just a test news, you ca...',
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The offset should not be bigger then the to be displayed characters.
      */
     public function testShortenEntryInvalidArgumentException()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The offset should not be bigger then the to be displayed characters.');
+
         $this->stringFormatter->shortenEntry($this->shortenEntryText, 50, 100);
     }
 }

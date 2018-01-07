@@ -19,7 +19,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 /**
  * Class AbstractFormValidationTest.
  */
-abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
 {
     const XSRF_FORM_TOKEN = 'foo-bar-baz';
     const XSRF_QUERY_STRING = 'module/controller/action/';

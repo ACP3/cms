@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\System\Event\Listener\InvalidatePageCacheOnSettingsSaveBef
 use ACP3\Modules\ACP3\System\Helper\CanUsePageCache;
 use ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository;
 
-class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit_Framework_TestCase
+class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var InvalidatePageCacheOnSettingsSaveBeforeListener

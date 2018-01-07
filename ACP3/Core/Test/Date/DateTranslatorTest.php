@@ -10,7 +10,7 @@ namespace ACP3\Core\Test\Date;
 use ACP3\Core\Date\DateTranslator;
 use ACP3\Core\I18n\Translator;
 
-class DateTranslatorTest extends \PHPUnit_Framework_TestCase
+class DateTranslatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \ACP3\Core\I18n\Translator|\PHPUnit_Framework_MockObject_MockObject

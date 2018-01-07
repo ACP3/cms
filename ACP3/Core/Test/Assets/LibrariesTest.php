@@ -10,7 +10,7 @@ namespace ACP3\Core\Test\Assets;
 use ACP3\Core\Assets\Libraries;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class LibrariesTest extends \PHPUnit_Framework_TestCase
+class LibrariesTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Libraries

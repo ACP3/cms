@@ -12,7 +12,7 @@ use ACP3\Core\Helpers\TableOfContents;
 use ACP3\Core\Http\Request;
 use ACP3\Core\Router\RouterInterface;
 
-class PageBreaksTest extends \PHPUnit_Framework_TestCase
+class PageBreaksTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var PageBreaks

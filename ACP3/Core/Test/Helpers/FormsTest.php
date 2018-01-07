@@ -15,7 +15,7 @@ use ACP3\Core\Test\DataProvider\Helpers\ChoicesGeneratorDataProvider;
 use ACP3\Core\Test\DataProvider\Helpers\RecordsPerPageDataProvider;
 use ACP3\Core\Test\DataProvider\Helpers\SelectEntryDataProvider;
 
-class FormsTest extends \PHPUnit_Framework_TestCase
+class FormsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Forms

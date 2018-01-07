@@ -11,7 +11,7 @@ use ACP3\Core\Modules\Modules;
 use ACP3\Modules\ACP3\Seo\Cache\SeoCacheStorage;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
-class AliasesTest extends \PHPUnit_Framework_TestCase
+class AliasesTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases

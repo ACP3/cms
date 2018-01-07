@@ -13,7 +13,7 @@ use ACP3\Core\Helpers\Formatter\DateRange;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 
-class DateRangeTest extends \PHPUnit_Framework_TestCase
+class DateRangeTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

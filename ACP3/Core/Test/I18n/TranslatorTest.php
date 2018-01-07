@@ -11,7 +11,7 @@ use ACP3\Core\I18n\DictionaryInterface;
 use ACP3\Core\I18n\LocaleInterface;
 use ACP3\Core\I18n\Translator;
 
-class TranslatorTest extends \PHPUnit_Framework_TestCase
+class TranslatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var DictionaryInterface|\PHPUnit_Framework_MockObject_MockObject

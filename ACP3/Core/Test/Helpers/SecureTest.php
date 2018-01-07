@@ -9,7 +9,7 @@ namespace ACP3\Core\Test\Helpers;
 
 use ACP3\Core\Helpers\Secure;
 
-class SecureTest extends \PHPUnit_Framework_TestCase
+class SecureTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \ACP3\Core\Helpers\Secure

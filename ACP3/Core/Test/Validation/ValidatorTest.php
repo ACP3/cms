@@ -12,7 +12,7 @@ use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 use ACP3\Core\Validation\Validator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class ValidatorTest extends \PHPUnit_Framework_TestCase
+class ValidatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -98,10 +98,11 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
     public function testValidateInvalidValidationRule()
     {
+        $this->expectException(\ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException::class);
+
         $this->validator->registerValidationRule(new EmailValidationRule());
 
         $this->validator->addConstraint('invalid_validation_rule', [
@@ -127,10 +128,11 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
     public function testIsInvalidValidationRule()
     {
+        $this->expectException(\ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException::class);
+
         $this->validator->registerValidationRule(new EmailValidationRule());
 
         $this->validator->is('invalid_validation_rule', 'test@example.com');

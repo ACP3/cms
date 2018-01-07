@@ -12,7 +12,7 @@ use ACP3\Core\I18n\TranslatorInterface;
 use ACP3\Core\View\Block\BlockInterface;
 use ACP3\Core\View\Block\Context\BlockContext;
 
-abstract class AbstractBlockTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractBlockTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var BlockInterface
@@ -87,7 +87,7 @@ abstract class AbstractBlockTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->block->render();
 
-        $this->assertTrue(\is_array($result));
+        $this->assertInternalType('array', $result);
     }
 
     public function testRenderReturnsArrayWithExpectedKeys()

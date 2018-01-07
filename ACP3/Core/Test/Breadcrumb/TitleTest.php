@@ -11,7 +11,7 @@ use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Breadcrumb\Title;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class TitleTest extends \PHPUnit_Framework_TestCase
+class TitleTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \ACP3\Core\Breadcrumb\Title

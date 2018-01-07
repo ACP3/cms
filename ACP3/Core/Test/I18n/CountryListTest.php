@@ -10,7 +10,7 @@ namespace ACP3\Core\Test\I18n;
 use ACP3\Core\I18n\CountryList;
 use ACP3\Core\I18n\Locale;
 
-class CountryListTest extends \PHPUnit_Framework_TestCase
+class CountryListTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var CountryList
@@ -39,7 +39,7 @@ class CountryListTest extends \PHPUnit_Framework_TestCase
 
         $actual = $this->countryList->worldCountries();
 
-        $this->assertTrue(\is_array($actual));
+        $this->assertInternalType('array', $actual);
         $this->assertNotEmpty($actual);
     }
 
@@ -51,7 +51,7 @@ class CountryListTest extends \PHPUnit_Framework_TestCase
 
         $actual = $this->countryList->worldCountries();
 
-        $this->assertTrue(\is_array($actual));
+        $this->assertInternalType('array', $actual);
         $this->assertEmpty($actual);
     }
 
@@ -63,7 +63,7 @@ class CountryListTest extends \PHPUnit_Framework_TestCase
 
         $actual = $this->countryList->worldCountries();
 
-        $this->assertTrue(\is_array($actual));
+        $this->assertInternalType('array', $actual);
         $this->assertEmpty($actual);
     }
 }

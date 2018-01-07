@@ -12,7 +12,7 @@ use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Permissions\Cache\PermissionsCacheStorage;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-class ACLTest extends \PHPUnit_Framework_TestCase
+class ACLTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \ACP3\Core\ACL\ACLInterface

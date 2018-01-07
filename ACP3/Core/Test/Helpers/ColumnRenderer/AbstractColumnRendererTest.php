@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Test\Helpers\ColumnRenderer;
 
-abstract class AbstractColumnRendererTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer

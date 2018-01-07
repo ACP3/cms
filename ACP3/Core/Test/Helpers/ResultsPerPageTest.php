@@ -10,7 +10,7 @@ namespace ACP3\Core\Test\Helpers;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Settings\SettingsInterface;
 
-class ResultsPerPageTest extends \PHPUnit_Framework_TestCase
+class ResultsPerPageTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ResultsPerPage

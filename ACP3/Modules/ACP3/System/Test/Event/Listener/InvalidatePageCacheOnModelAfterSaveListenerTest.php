@@ -13,7 +13,7 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Event\Listener\InvalidatePageCacheOnModelAfterSaveListener;
 use ACP3\Modules\ACP3\System\Helper\CanUsePageCache;
 
-class InvalidatePageCacheOnModelAfterSaveListenerTest extends \PHPUnit_Framework_TestCase
+class InvalidatePageCacheOnModelAfterSaveListenerTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var InvalidatePageCacheOnModelAfterSaveListener

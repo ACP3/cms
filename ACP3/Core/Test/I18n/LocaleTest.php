@@ -11,7 +11,7 @@ use ACP3\Core\I18n\DictionaryInterface;
 use ACP3\Core\I18n\Locale;
 use ACP3\Core\Settings\SettingsInterface;
 
-class LocaleTest extends \PHPUnit_Framework_TestCase
+class LocaleTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Locale

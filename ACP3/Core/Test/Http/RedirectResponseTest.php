@@ -10,7 +10,7 @@ namespace ACP3\Core\Test\Http;
 use ACP3\Core\Http\RedirectResponse;
 use ACP3\Core\Router\RouterInterface;
 
-class RedirectResponseTest extends \PHPUnit_Framework_TestCase
+class RedirectResponseTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

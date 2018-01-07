@@ -12,7 +12,7 @@ use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Helpers\StringFormatter;
 use ACP3\Core\Http\Request;
 
-class PageCssClassesTest extends \PHPUnit_Framework_TestCase
+class PageCssClassesTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var PageCssClasses

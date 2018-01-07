@@ -9,7 +9,7 @@ namespace ACP3\Core\Test\Application\Event;
 
 use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
 
-class ControllerActionBeforeDispatchEventTest extends \PHPUnit_Framework_TestCase
+class ControllerActionBeforeDispatchEventTest extends \PHPUnit\Framework\TestCase
 {
     public function testExpectedRouteParts()
     {

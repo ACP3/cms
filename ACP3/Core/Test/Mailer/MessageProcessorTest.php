@@ -14,7 +14,7 @@ use ACP3\Core\View;
 use InlineStyle\InlineStyle;
 use PHPMailer\PHPMailer\PHPMailer;
 
-class MessageProcessorTest extends \PHPUnit_Framework_TestCase
+class MessageProcessorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var MessageProcessor

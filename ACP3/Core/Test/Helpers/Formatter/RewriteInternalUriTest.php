@@ -15,7 +15,7 @@ use ACP3\Core\Validation\ValidationRules\InternalUriValidationRule;
 use ACP3\Modules\ACP3\Seo\Core\Router\Router;
 use Symfony\Component\HttpFoundation\ServerBag;
 
-class RewriteInternalUriTest extends \PHPUnit_Framework_TestCase
+class RewriteInternalUriTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \ACP3\Core\Helpers\Formatter\RewriteInternalUri

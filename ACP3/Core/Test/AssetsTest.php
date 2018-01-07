@@ -12,7 +12,7 @@ use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class AssetsTest extends \PHPUnit_Framework_TestCase
+class AssetsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Assets

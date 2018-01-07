@@ -12,7 +12,7 @@ use ACP3\Core\Date;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Helper\UpdateCheck;
 
-class UpdateCheckTest extends \PHPUnit_Framework_TestCase
+class UpdateCheckTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var UpdateCheck
