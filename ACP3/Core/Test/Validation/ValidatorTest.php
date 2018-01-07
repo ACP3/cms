@@ -100,8 +100,6 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     */
     public function testValidateInvalidValidationRule()
     {
         $this->expectException(\ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException::class);
@@ -130,8 +128,6 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     */
     public function testIsInvalidValidationRule()
     {
         $this->expectException(\ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException::class);

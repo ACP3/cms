@@ -34,8 +34,6 @@ class ColumnTypeStrategyFactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(ColumnTypeStrategyInterface::class, $this->columnTypeStrategyFactory->getStrategy(ColumnTypes::COLUMN_TYPE_RAW));
     }
 
-    /**
-     */
     public function testGetStrategyWithInvalidColumnType()
     {
         $this->expectException(\InvalidArgumentException::class);

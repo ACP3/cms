@@ -62,8 +62,6 @@ class CacheDriverFactoryTest extends \PHPUnit\Framework\TestCase
             ->willReturn('cache/');
     }
 
-    /**
-     */
     public function testCreateInvalidCacheDriverThrowsException()
     {
         $this->expectException(\InvalidArgumentException::class);

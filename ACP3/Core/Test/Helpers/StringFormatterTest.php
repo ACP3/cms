@@ -150,8 +150,6 @@ This is just a test news, you ca...',
         $this->assertEquals($expected, $this->stringFormatter->shortenEntry($value, 100, $offset, $append));
     }
 
-    /**
-     */
     public function testShortenEntryInvalidArgumentException()
     {
         $this->expectException(\InvalidArgumentException::class);
