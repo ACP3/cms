@@ -136,7 +136,7 @@ abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
     /**
      * @param \PHPUnit_Framework_MockObject_MockObject $requestMock
      */
-    private function setRequestMockExpectations(\PHPUnit_Framework_MockObject_MockObject $requestMock)
+    private function setRequestMockExpectations(\PHPUnit\Framework\MockObject\MockObject $requestMock)
     {
         $requestMock->expects($this->any())
             ->method('getPost')
@@ -154,7 +154,7 @@ abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
     /**
      * @param \PHPUnit_Framework_MockObject_MockObject $sessionMock
      */
-    private function setSessionMockExpectations(\PHPUnit_Framework_MockObject_MockObject $sessionMock)
+    private function setSessionMockExpectations(\PHPUnit\Framework\MockObject\MockObject $sessionMock)
     {
         $sessionMock->expects($this->any())
             ->method('get')
