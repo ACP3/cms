@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Manage extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation
@@ -47,11 +47,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
+     * @param int|null $id
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
-    public function execute(int $id)
+    public function execute(?int $id)
     {
         return $this->block
             ->setDataById($id)
@@ -60,18 +59,21 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost(int $id)
+    public function executePost(?int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
 
-            $this->galleryFormValidation
-                ->setUriAlias(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id))
-                ->validate($formData);
+            if ($id !== null) {
+                $this->galleryFormValidation
+                    ->setUriAlias(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id));
+            }
+
+            $this->galleryFormValidation->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
 

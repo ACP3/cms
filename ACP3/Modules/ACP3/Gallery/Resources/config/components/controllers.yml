@@ -1,12 +1,4 @@
 services:
-  gallery.controller.admin.index.create:
-    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@gallery.view.block.admin.gallery_manage_form_block'
-      - '@gallery.model.galleries_model'
-      - '@gallery.validation.gallery_form_validation'
-
   gallery.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Delete
     arguments:
@@ -18,8 +10,8 @@ services:
     calls:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
 
-  gallery.controller.admin.index.edit:
-    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Edit
+  gallery.controller.admin.index.manage:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Manage
     arguments:
       - '@core.context.frontend'
       - '@gallery.view.block.admin.gallery_manage_form_block'

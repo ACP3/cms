@@ -59,7 +59,7 @@ class GalleriesDataGridBlock extends AbstractDataGridBlock
             'ajax' => true,
             'identifier' => '#gallery-data-grid',
             'resource_path_delete' => 'admin/gallery/index/delete',
-            'resource_path_edit' => 'admin/gallery/index/edit',
+            'resource_path_edit' => 'admin/gallery/index/manage',
         ]);
 
         $grid = $dataGrid->render();
