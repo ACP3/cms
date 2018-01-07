@@ -22,6 +22,9 @@ class ApplicationPathTest extends \PHPUnit\Framework\TestCase
         $this->appPath = new ApplicationPath(ApplicationMode::DEVELOPMENT);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testSetDesignPathAbsolute()
     {
         $designPathAbsolute = 'http://example.com/test';
@@ -29,8 +32,6 @@ class ApplicationPathTest extends \PHPUnit\Framework\TestCase
         $this->appPath->setDesignPathAbsolute($designPathAbsolute);
     }
 
-    /**
-     */
     public function testInvalidSetDesignPathAbsolute()
     {
         $this->expectException(\InvalidArgumentException::class);

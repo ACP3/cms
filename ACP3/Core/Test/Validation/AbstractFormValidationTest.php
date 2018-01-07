@@ -117,6 +117,9 @@ abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
      */
     abstract public function invalidFormDataProvider();
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testValidFormData()
     {
         foreach ($this->validFormDataProvider() as $formData) {

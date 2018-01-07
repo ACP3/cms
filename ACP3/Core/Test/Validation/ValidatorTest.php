@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 class ValidatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var EventDispatcher|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $eventDispatcherMock;
     /**
@@ -33,6 +33,9 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator = new Validator($this->eventDispatcherMock);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testValidateValidValidationRuleWithValidValue()
     {
         $this->validator->registerValidationRule(new EmailValidationRule());
