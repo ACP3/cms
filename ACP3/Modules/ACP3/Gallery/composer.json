@@ -30,7 +30,10 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Modules\\ACP3\\Gallery\\": ""
+      "ACP3\\Modules\\ACP3\\Gallery\\": "",
+      "exclude-from-classmap": [
+        "/Test/"
+      ]
     }
   },
   "extra": {

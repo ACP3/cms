@@ -28,7 +28,10 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Modules\\ACP3\\Seo\\": ""
+      "ACP3\\Modules\\ACP3\\Seo\\": "",
+      "exclude-from-classmap": [
+        "/Test/"
+      ]
     }
   },
   "extra": {

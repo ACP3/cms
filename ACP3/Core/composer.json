@@ -41,7 +41,10 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Core\\": ""
+      "ACP3\\Core\\": "",
+      "exclude-from-classmap": [
+        "/Test/"
+      ]
     }
   },
   "extra": {

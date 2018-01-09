@@ -27,7 +27,10 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Modules\\ACP3\\Emoticons\\": ""
+      "ACP3\\Modules\\ACP3\\Emoticons\\": "",
+      "exclude-from-classmap": [
+        "/Test/"
+      ]
     }
   },
   "extra": {

@@ -27,7 +27,10 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Modules\\ACP3\\Polls\\": ""
+      "ACP3\\Modules\\ACP3\\Polls\\": "",
+      "exclude-from-classmap": [
+        "/Test/"
+      ]
     }
   },
   "extra": {
