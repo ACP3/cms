@@ -31,11 +31,11 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Modules\\ACP3\\Files\\": "",
-      "exclude-from-classmap": [
-        "/Test/"
-      ]
-    }
+      "ACP3\\Modules\\ACP3\\Files\\": ""
+    },
+    "exclude-from-classmap": [
+      "/Test/"
+    ]
   },
   "extra": {
     "installer-name": "ACP3/Files",
