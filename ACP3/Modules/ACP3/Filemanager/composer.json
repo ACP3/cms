@@ -26,7 +26,10 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Modules\\ACP3\\Filemanager\\": ""
+      "ACP3\\Modules\\ACP3\\Filemanager\\": "",
+      "exclude-from-classmap": [
+        "/Test/"
+      ]
     }
   },
   "extra": {

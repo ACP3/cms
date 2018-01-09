@@ -29,7 +29,10 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Modules\\ACP3\\Comments\\": ""
+      "ACP3\\Modules\\ACP3\\Comments\\": "",
+      "exclude-from-classmap": [
+        "/Test/"
+      ]
     }
   },
   "extra": {

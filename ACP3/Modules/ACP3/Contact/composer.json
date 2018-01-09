@@ -29,7 +29,10 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Modules\\ACP3\\Contact\\": ""
+      "ACP3\\Modules\\ACP3\\Contact\\": "",
+      "exclude-from-classmap": [
+        "/Test/"
+      ]
     }
   },
   "extra": {

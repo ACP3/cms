@@ -25,7 +25,10 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Modules\\ACP3\\Permissions\\": ""
+      "ACP3\\Modules\\ACP3\\Permissions\\": "",
+      "exclude-from-classmap": [
+        "/Test/"
+      ]
     }
   },
   "extra": {
