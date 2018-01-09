@@ -75,8 +75,10 @@ class AclInstaller implements InstallerInterface
      * @param int                                  $mode
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function install(SchemaInterface $schema, $mode = self::INSTALL_RESOURCES_AND_RULES)
+    public function install(SchemaInterface $schema, int $mode = self::INSTALL_RESOURCES_AND_RULES)
     {
         $this->insertAclResources($schema);
 
@@ -93,6 +95,8 @@ class AclInstaller implements InstallerInterface
      * Inserts a new resource into the database.
      *
      * @param SchemaInterface $schema
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     private function insertAclResources(SchemaInterface $schema)
     {
@@ -118,7 +122,7 @@ class AclInstaller implements InstallerInterface
      *
      * @return string
      */
-    private function convertCamelCaseToUnderscore($action)
+    private function convertCamelCaseToUnderscore(string $action)
     {
         return \strtolower(\preg_replace('/\B([A-Z])/', '_$1', $action));
     }
@@ -127,8 +131,10 @@ class AclInstaller implements InstallerInterface
      * Insert new acl user rules.
      *
      * @param string $moduleName
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    private function insertAclRules($moduleName)
+    private function insertAclRules(string $moduleName)
     {
         $roles = $this->roleRepository->getAllRoles();
         $privileges = $this->privilegeRepository->getAllPrivilegeIds();
@@ -154,7 +160,7 @@ class AclInstaller implements InstallerInterface
      *
      * @return int
      */
-    private function getDefaultAclRulePermission($role, $privilege)
+    private function getDefaultAclRulePermission(array $role, array $privilege)
     {
         $permission = PermissionEnum::DENY_ACCESS;
         if ($role['id'] == 1 &&
