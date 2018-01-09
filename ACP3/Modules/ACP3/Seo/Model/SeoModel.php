@@ -18,16 +18,16 @@ class SeoModel extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    public function save(array $data, $entryId = null)
+    public function save(array $rawData, ?int $entryId = null): int
     {
-        $data = \array_merge($data, [
-            'title' => $data['seo_title'],
-            'keywords' => $data['seo_keywords'],
-            'description' => $data['seo_description'],
-            'robots' => $data['seo_robots'],
+        $rawData = \array_merge($rawData, [
+            'title' => $rawData['seo_title'],
+            'keywords' => $rawData['seo_keywords'],
+            'description' => $rawData['seo_description'],
+            'robots' => $rawData['seo_robots'],
         ]);
 
-        return parent::save($data, $entryId);
+        return parent::save($rawData, $entryId);
     }
 
     /**

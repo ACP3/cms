@@ -61,8 +61,10 @@ abstract class AbstractNestedSetModel extends AbstractModel
      * @param int|null $entryId
      *
      * @return bool|int
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function save(array $rawData, $entryId = null)
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $filteredData = $this->prepareData($rawData);
 
@@ -94,8 +96,10 @@ abstract class AbstractNestedSetModel extends AbstractModel
      * @param int|array $entryId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function delete($entryId)
+    public function delete($entryId): int
     {
         $repository = $this->repository;
 

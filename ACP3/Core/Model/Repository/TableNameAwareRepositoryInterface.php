@@ -14,5 +14,5 @@ interface TableNameAwareRepositoryInterface
      *
      * @return string
      */
-    public function getTableName($tableName = '');
+    public function getTableName(string $tableName = ''): string;
 }

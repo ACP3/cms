@@ -28,13 +28,9 @@ abstract class AbstractRepository implements WriterRepositoryInterface, ReaderRe
     }
 
     /**
-     * Executes the SQL insert statement.
+     * {@inheritdoc}
      *
-     * @param array $data
-     *
-     * @return bool|int
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function insert(array $data)
     {
@@ -49,24 +45,17 @@ abstract class AbstractRepository implements WriterRepositoryInterface, ReaderRe
     }
 
     /**
-     * @param string $tableName
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getTableName($tableName = '')
+    public function getTableName(string $tableName = ''): string
     {
         return $this->db->getPrefixedTableName(!empty($tableName) ? $tableName : static::TABLE_NAME);
     }
 
     /**
-     * Executes the SQL delete statement.
+     * {@inheritdoc}
      *
-     * @param int|array $entryId
-     * @param string    $columnName
-     *
-     * @return bool|int
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function delete($entryId, string $columnName = 'id')
     {
@@ -84,20 +73,15 @@ abstract class AbstractRepository implements WriterRepositoryInterface, ReaderRe
      *
      * @return array
      */
-    private function getIdentifier($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
+    private function getIdentifier($entryId, string $columnName = self::PRIMARY_KEY_COLUMN)
     {
         return \is_array($entryId) === true ? $entryId : [$columnName => (int) $entryId];
     }
 
     /**
-     * Executes the SQL update statement.
+     * {@inheritdoc}
      *
-     * @param array     $data
-     * @param int|array $entryId
-     *
-     * @return bool|int
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function update(array $data, $entryId)
     {
@@ -118,11 +102,11 @@ abstract class AbstractRepository implements WriterRepositoryInterface, ReaderRe
      *
      * @return string
      */
-    protected function buildLimitStmt($limitStart = '', $resultsPerPage = '')
+    protected function buildLimitStmt(?int $limitStart = null, ?int $resultsPerPage = null)
     {
-        if ($limitStart !== '' && $resultsPerPage !== '') {
+        if ($limitStart !== null && $resultsPerPage !== null) {
             return ' LIMIT ' . ((int) $limitStart) . ',' . ((int) $resultsPerPage);
-        } elseif ($limitStart !== '') {
+        } elseif ($limitStart !== null) {
             return ' LIMIT ' . ((int) $limitStart);
         }
 

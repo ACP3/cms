@@ -45,17 +45,17 @@ class NewslettersModel extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    public function save(array $data, $entryId = null)
+    public function save(array $rawData, ?int $entryId = null): int
     {
         if ($entryId === null) {
             $settings = $this->config->getSettings(Schema::MODULE_NAME);
-            $data['html'] = $settings['html'];
-            $data['status'] = 0;
+            $rawData['html'] = $settings['html'];
+            $rawData['status'] = 0;
         }
 
-        $data['updated_at'] = 'now';
+        $rawData['updated_at'] = 'now';
 
-        return parent::save($data, $entryId);
+        return parent::save($rawData, $entryId);
     }
 
     /**

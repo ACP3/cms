@@ -49,9 +49,11 @@ abstract class AbstractModel
      * @param array    $rawData
      * @param null|int $entryId
      *
-     * @return bool|int
+     * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function save(array $rawData, $entryId = null)
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $filteredData = $this->prepareData($rawData);
 
@@ -60,10 +62,7 @@ abstract class AbstractModel
 
         if ($entryId === null) {
             $result = $this->repository->insert($filteredData);
-
-            if ($result !== false) {
-                $entryId = $result;
-            }
+            $entryId = $result;
         } else {
             $result = $this->repository->update($filteredData, $entryId);
         }
@@ -85,7 +84,7 @@ abstract class AbstractModel
         $entryId,
         array $filteredData,
         array $rawData,
-        $isNewEntry
+        bool $isNewEntry
     ) {
         $this->dispatchEvent('core.model.before_save', $entryId, $isNewEntry, $filteredData, $rawData);
         $this->dispatchEvent(
@@ -104,8 +103,13 @@ abstract class AbstractModel
      * @param array          $filteredData
      * @param array          $rawData
      */
-    protected function dispatchEvent($eventName, $entryId, $isNewEntry, array $filteredData = [], array $rawData = [])
-    {
+    protected function dispatchEvent(
+        string $eventName,
+        $entryId,
+        bool $isNewEntry,
+        array $filteredData = [],
+        array $rawData = []
+    ) {
         $this->eventDispatcher->dispatch(
             $eventName,
             new ModelSaveEvent(static::EVENT_PREFIX, $filteredData, $rawData, $entryId, $isNewEntry)
@@ -139,7 +143,7 @@ abstract class AbstractModel
         $entryId,
         array $filteredData,
         array $rawData,
-        $isNewEntry
+        bool $isNewEntry
     ) {
         $this->dispatchEvent('core.model.after_save', $entryId, $isNewEntry, $filteredData, $rawData);
         $this->dispatchEvent(
@@ -155,8 +159,10 @@ abstract class AbstractModel
      * @param int|array $entryId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function delete($entryId)
+    public function delete($entryId): int
     {
         $repository = $this->repository;
 
@@ -191,7 +197,7 @@ abstract class AbstractModel
      *
      * @return array
      */
-    public function getOneById($entryId)
+    public function getOneById(int $entryId)
     {
         return $this->repository->getOneById($entryId);
     }

@@ -49,22 +49,22 @@ class GalleryPicturesModel extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    public function save(array $data, $entryId = null)
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-        $data = \array_merge($data, [
+        $rawData = \array_merge($rawData, [
             'comments' => $settings['comments'] == 1
-                ? (isset($data['comments']) && $data['comments'] == 1 ? 1 : 0)
+                ? (isset($rawData['comments']) && $rawData['comments'] == 1 ? 1 : 0)
                 : $settings['comments'],
         ]);
 
         if ($entryId === null) {
-            $picNum = $this->repository->getLastPictureByGalleryId($data['gallery_id']);
-            $data['pic'] = !\is_null($picNum) ? $picNum + 1 : 1;
+            $picNum = $this->repository->getLastPictureByGalleryId($rawData['gallery_id']);
+            $rawData['pic'] = !\is_null($picNum) ? $picNum + 1 : 1;
         }
 
-        return parent::save($data, $entryId);
+        return parent::save($rawData, $entryId);
     }
 
     /**

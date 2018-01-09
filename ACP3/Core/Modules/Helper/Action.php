@@ -8,6 +8,7 @@
 namespace ACP3\Core\Modules\Helper;
 
 use ACP3\Core;
+use Doctrine\DBAL\DBALException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,7 +65,7 @@ class Action
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function handlePostAction(callable $callback, $path = null)
+    public function handlePostAction(callable $callback, ?string $path = null)
     {
         try {
             return $callback();
@@ -105,15 +106,19 @@ class Action
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function handleDeleteAction(
-        $action,
+        string $action,
         callable $callback,
-        $moduleConfirmUrl = null,
-        $moduleIndexUrl = null
+        ?string $moduleConfirmUrl = null,
+        ?string $moduleIndexUrl = null
     ) {
         return $this->handleCustomDeleteAction(
             $action,
             function (array $items) use ($callback, $moduleIndexUrl) {
-                $result = $callback($items);
+                try {
+                    $result = $callback($items);
+                } catch (DBALException $e) {
+                    $result = false;
+                }
 
                 return $this->prepareRedirectMessageAfterPost($result, 'delete', $moduleIndexUrl);
             },
@@ -133,10 +138,10 @@ class Action
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function handleCustomDeleteAction(
-        $action,
+        string $action,
         callable $callback,
-        $moduleConfirmUrl = null,
-        $moduleIndexUrl = null
+        ?string $moduleConfirmUrl = null,
+        ?string $moduleIndexUrl = null
     ) {
         list($moduleConfirmUrl, $moduleIndexUrl) = $this->generateDefaultConfirmationBoxUris(
             $moduleConfirmUrl,
@@ -163,10 +168,14 @@ class Action
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function handleSettingsPostAction(callable $callback, $path = null)
+    public function handleSettingsPostAction(callable $callback, ?string $path = null)
     {
         return $this->handlePostAction(function () use ($callback, $path) {
-            $result = $callback();
+            try {
+                $result = $callback();
+            } catch (DBALException $e) {
+                $result = false;
+            }
 
             return $this->prepareRedirectMessageAfterPost($result, 'settings', $path);
         }, $path);
@@ -178,10 +187,14 @@ class Action
      *
      * @return array|string|JsonResponse|RedirectResponse
      */
-    public function handleSaveAction(callable $callback, $path = null)
+    public function handleSaveAction(callable $callback, ?string $path = null)
     {
         return $this->handlePostAction(function () use ($callback, $path) {
-            $result = $callback();
+            try {
+                $result = $callback();
+            } catch (DBALException $e) {
+                $result = false;
+            }
 
             return $this->prepareRedirectMessageAfterPost($result, 'save', $path);
         });
@@ -194,7 +207,7 @@ class Action
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function prepareRedirectMessageAfterPost($result, $phrase, $path = null)
+    private function prepareRedirectMessageAfterPost($result, string $phrase, ?string $path = null)
     {
         return $this->redirectMessages->setMessage(
             $result,
@@ -209,7 +222,7 @@ class Action
      *
      * @return array
      */
-    private function generateDefaultConfirmationBoxUris($moduleConfirmUrl, $moduleIndexUrl)
+    private function generateDefaultConfirmationBoxUris(?string $moduleConfirmUrl, ?string $moduleIndexUrl)
     {
         if ($moduleConfirmUrl === null) {
             $moduleConfirmUrl = $this->request->getFullPath();
@@ -231,7 +244,7 @@ class Action
      *
      * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function deleteItem($action, $moduleConfirmUrl = null, $moduleIndexUrl = null)
+    private function deleteItem(string $action, ?string $moduleConfirmUrl = null, ?string $moduleIndexUrl = null)
     {
         $entries = $this->prepareRequestData();
 

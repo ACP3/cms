@@ -48,18 +48,18 @@ class NewsModel extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    public function save(array $data, $newsId = null)
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-        $data = \array_merge($data, [
+        $rawData = \array_merge($rawData, [
             'updated_at' => 'now',
-            'readmore' => $this->useReadMore($data, $settings),
-            'comments' => $this->useComments($data, $settings),
-            'category_id' => $data['cat'] ?? $data['category_id'],
+            'readmore' => $this->useReadMore($rawData, $settings),
+            'comments' => $this->useComments($rawData, $settings),
+            'category_id' => $rawData['cat'] ?? $rawData['category_id'],
         ]);
 
-        return parent::save($data, $newsId);
+        return parent::save($rawData, $entryId);
     }
 
     /**

@@ -14,7 +14,7 @@ interface WriterRepositoryInterface
      *
      * @param array $data
      *
-     * @return bool|int
+     * @return int
      */
     public function insert(array $data);
 
@@ -24,7 +24,7 @@ interface WriterRepositoryInterface
      * @param int|array $entryId
      * @param string    $columnName
      *
-     * @return bool|int
+     * @return int
      */
     public function delete($entryId, string $columnName = 'id');
 
@@ -34,7 +34,7 @@ interface WriterRepositoryInterface
      * @param array     $data
      * @param int|array $entryId
      *
-     * @return bool|int
+     * @return int
      */
     public function update(array $data, $entryId);
 }

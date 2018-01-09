@@ -21,7 +21,7 @@ class ArticlesModel extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null)
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $rawData['updated_at'] = 'now';
 

@@ -66,7 +66,7 @@ class Settings implements SettingsInterface
      */
     public function saveSettings(array $data, string $module): bool
     {
-        $bool = $bool2 = false;
+        $result = false;
         $moduleId = $this->systemModuleRepository->getModuleId($module);
         if (!empty($moduleId)) {
             $this->eventDispatcher->dispatch('core.settings.save_before', new SettingsSaveEvent($module, $data));
@@ -79,12 +79,11 @@ class Settings implements SettingsInterface
                     'module_id' => $moduleId,
                     'name' => $key,
                 ];
-                $bool = $this->systemSettingsRepository->update($updateValues, $where);
+                $result = $this->systemSettingsRepository->update($updateValues, $where);
             }
-            $bool2 = $this->saveCache();
         }
 
-        return $bool !== false && $bool2 !== false;
+        return $result !== false && $this->saveCache() !== false;
     }
 
     /**

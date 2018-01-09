@@ -18,13 +18,13 @@ class CategoriesModel extends AbstractNestedSetModel
     /**
      * {@inheritdoc}
      */
-    public function save(array $data, $entryId = null)
+    public function save(array $rawData, ?int $entryId = null): int
     {
-        if (isset($data['module'])) {
-            $data['module_id'] = $data['module'];
+        if (isset($rawData['module'])) {
+            $rawData['module_id'] = $rawData['module'];
         }
 
-        return parent::save($data, $entryId);
+        return parent::save($rawData, $entryId);
     }
 
     /**
