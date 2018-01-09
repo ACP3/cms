@@ -31,8 +31,7 @@ class UriAliasManager
     public function __construct(
         SeoModel $seoModel,
         SeoRepository $seoRepository
-    )
-    {
+    ) {
         $this->seoRepository = $seoRepository;
         $this->seoModel = $seoModel;
     }
@@ -92,7 +91,7 @@ class UriAliasManager
             'seo_title' => $title,
             'seo_keywords' => $keywords,
             'seo_description' => $description,
-            'seo_robots' => (int)$robots,
+            'seo_robots' => (int) $robots,
         ];
 
         $seo = $this->seoRepository->getOneByUri($path);

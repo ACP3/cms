@@ -36,8 +36,7 @@ class Manage extends Core\Controller\AbstractFrontendAction
         Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Polls\Model\PollsModel $pollsModel,
         Polls\Validation\AdminFormValidation $pollsValidator
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->pollsModel = $pollsModel;

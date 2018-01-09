@@ -30,6 +30,7 @@ class PollVotesModel extends Core\Model\AbstractModel
 
     /**
      * PollVotesModel constructor.
+     *
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface   $eventDispatcher
      * @param \ACP3\Core\Model\DataProcessor                                $dataProcessor
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollVotesRepository $repository
@@ -121,16 +122,16 @@ class PollVotesModel extends Core\Model\AbstractModel
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getAllowedColumns()
     {
         return [
-            'poll_id' =>  Core\Model\DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'poll_id' => Core\Model\DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'answer_id' => Core\Model\DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'user_id' => Core\Model\DataProcessor\ColumnTypes::COLUMN_TYPE_INT_NULLABLE,
             'ip' => Core\Model\DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'time' => Core\Model\DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME
+            'time' => Core\Model\DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
         ];
     }
 }

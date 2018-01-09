@@ -39,6 +39,7 @@ class ManageMenuItem
      * @param array  $data
      *
      * @return bool
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function manageMenuItem(string $menuItemUri, bool $createOrUpdateMenuItem, array $data = [])

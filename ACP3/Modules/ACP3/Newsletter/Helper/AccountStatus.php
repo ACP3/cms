@@ -39,8 +39,7 @@ class AccountStatus
         Date $date,
         NewsletterAccountsRepository $accountRepository,
         NewsletterAccountHistoryRepository $accountHistoryRepository
-    )
-    {
+    ) {
         $this->date = $date;
         $this->accountRepository = $accountRepository;
         $this->accountHistoryRepository = $accountHistoryRepository;
@@ -49,7 +48,9 @@ class AccountStatus
     /**
      * @param int       $status
      * @param int|array $entryId
+     *
      * @return int
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function changeAccountStatus(int $status, $entryId)
@@ -72,6 +73,7 @@ class AccountStatus
      * @param int $accountId
      *
      * @return int
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function addAccountHistory(int $status, int $accountId)

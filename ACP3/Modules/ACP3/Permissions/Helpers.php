@@ -29,8 +29,7 @@ class Helpers
     public function __construct(
         AclRolesRepository $roleRepository,
         AclUserRolesRepository $userRoleRepository
-    )
-    {
+    ) {
         $this->roleRepository = $roleRepository;
         $this->userRoleRepository = $userRoleRepository;
     }

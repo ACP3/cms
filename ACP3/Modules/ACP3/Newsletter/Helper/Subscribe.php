@@ -80,8 +80,7 @@ class Subscribe
         Core\Settings\SettingsInterface $config,
         AccountStatus $accountStatusHelper,
         NewsletterAccountsRepository $accountRepository
-    )
-    {
+    ) {
         $this->date = $date;
         $this->translator = $translator;
         $this->mailer = $mailer;
@@ -125,6 +124,7 @@ class Subscribe
      * @param string $hash
      *
      * @return int
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function addNewsletterAccount(string $emailAddress, int $salutation, string $firstName, string $lastName, string $hash)
@@ -197,6 +197,7 @@ class Subscribe
      * @param string $hash
      *
      * @return int
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function updateExistingAccount(array $newsletterAccount, int $salutation, string $firstName, string $lastName, string $hash)
@@ -225,6 +226,7 @@ class Subscribe
      * @param string $hash
      *
      * @return int
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function insertNewAccount(string $emailAddress, int $salutation, string $firstName, string $lastName, string $hash)
