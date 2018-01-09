@@ -39,7 +39,8 @@ class AccountStatus
         Date $date,
         NewsletterAccountsRepository $accountRepository,
         NewsletterAccountHistoryRepository $accountHistoryRepository
-    ) {
+    )
+    {
         $this->date = $date;
         $this->accountRepository = $accountRepository;
         $this->accountHistoryRepository = $accountHistoryRepository;
@@ -48,10 +49,10 @@ class AccountStatus
     /**
      * @param int       $status
      * @param int|array $entryId
-     *
-     * @return bool|int
+     * @return int
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function changeAccountStatus($status, $entryId)
+    public function changeAccountStatus(int $status, $entryId)
     {
         $result = $this->accountRepository->update(['status' => $status], $entryId);
 
@@ -70,9 +71,10 @@ class AccountStatus
      * @param int $status
      * @param int $accountId
      *
-     * @return bool|int
+     * @return int
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function addAccountHistory($status, $accountId)
+    protected function addAccountHistory(int $status, int $accountId)
     {
         $historyInsertValues = [
             'newsletter_account_id' => $accountId,

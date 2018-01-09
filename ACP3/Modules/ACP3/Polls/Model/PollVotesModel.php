@@ -8,16 +8,17 @@
 namespace ACP3\Modules\ACP3\Polls\Model;
 
 use ACP3\Core;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
+use ACP3\Modules\ACP3\Polls\Installer\Schema;
 use ACP3\Modules\ACP3\Polls\Model\Repository\PollVotesRepository;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class PollVotesModel
+class PollVotesModel extends Core\Model\AbstractModel
 {
-    /**
-     * @var PollVotesRepository
-     */
-    protected $voteRepository;
+    const EVENT_PREFIX = Schema::MODULE_NAME;
+
     /**
      * @var UserModel
      */
@@ -28,20 +29,57 @@ class PollVotesModel
     protected $validator;
 
     /**
-     * PollsModel constructor.
-     *
-     * @param Core\Validation\Validator $validator
-     * @param UserModel                 $userModel
-     * @param PollVotesRepository       $voteRepository
+     * PollVotesModel constructor.
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface   $eventDispatcher
+     * @param \ACP3\Core\Model\DataProcessor                                $dataProcessor
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollVotesRepository $repository
+     * @param \ACP3\Core\Validation\Validator                               $validator
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                      $userModel
      */
     public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
+        PollVotesRepository $repository,
         Core\Validation\Validator $validator,
-        UserModel $userModel,
-        PollVotesRepository $voteRepository
-    ) {
+        UserModel $userModel)
+    {
+        parent::__construct($eventDispatcher, $dataProcessor, $repository);
+
         $this->validator = $validator;
         $this->userModel = $userModel;
-        $this->voteRepository = $voteRepository;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save(array $rawData, ?int $entryId = null): int
+    {
+        $answers = $rawData['answer'];
+
+        $userId = $this->userModel->isAuthenticated() ? $this->userModel->getUserId() : null;
+
+        // Multiple Answers
+        if (\is_array($answers) === false) {
+            $answers = [$answers];
+        }
+
+        $affectedRows = 0;
+        foreach ($answers as $answer) {
+            if ($this->validator->is(IntegerValidationRule::class, $answer) === true) {
+                $insertValues = [
+                    'poll_id' => $rawData['poll_id'],
+                    'answer_id' => $answer,
+                    'user_id' => $userId,
+                    'ip' => $rawData['ip'],
+                    'time' => $rawData['time'],
+                ];
+                parent::save($insertValues, $entryId);
+
+                ++$affectedRows;
+            }
+        }
+
+        return $affectedRows;
     }
 
     /**
@@ -53,12 +91,12 @@ class PollVotesModel
      * @return bool|int
      *
      * @throws Core\Validation\Exceptions\ValidationRuleNotFoundException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function vote(array $formData, $pollId, $ipAddress, $time)
+    public function vote(array $formData, int $pollId, string $ipAddress, string $time)
     {
         $answers = $formData['answer'];
 
-        $bool = false;
         $userId = $this->userModel->isAuthenticated() ? $this->userModel->getUserId() : null;
 
         // Multiple Answers
@@ -75,10 +113,24 @@ class PollVotesModel
                     'ip' => $ipAddress,
                     'time' => $time,
                 ];
-                $bool = $this->voteRepository->insert($insertValues);
+                $bool = $this->repository->insert($insertValues);
             }
         }
 
         return $bool;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getAllowedColumns()
+    {
+        return [
+            'poll_id' =>  Core\Model\DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'answer_id' => Core\Model\DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'user_id' => Core\Model\DataProcessor\ColumnTypes::COLUMN_TYPE_INT_NULLABLE,
+            'ip' => Core\Model\DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'time' => Core\Model\DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME
+        ];
     }
 }

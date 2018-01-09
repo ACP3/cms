@@ -74,13 +74,13 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
 
                 $this->unsubscribeFormValidation->validate($formData);
 
-                $bool = $this->accountStatusHelper->changeAccountStatus(
+                $result = $this->accountStatusHelper->changeAccountStatus(
                     Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_DISABLED,
                     ['mail' => $formData['mail']]
                 );
 
                 return $this->alerts->confirmBox(
-                    $this->translator->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'),
+                    $this->translator->t('newsletter', $result !== false ? 'unsubscribe_success' : 'unsubscribe_error'),
                     $this->appPath->getWebRoot()
                 );
             }

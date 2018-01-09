@@ -32,6 +32,8 @@ services:
   polls.model.poll_votes_model:
     class: ACP3\Modules\ACP3\Polls\Model\PollVotesModel
     arguments:
+      - '@core.event_dispatcher'
+      - '@core.model.data_processor'
+      - '@polls.model.repository.poll_votes_repository'
       - '@core.validator'
       - '@users.model.user_model'
-      - '@polls.model.repository.poll_votes_repository'

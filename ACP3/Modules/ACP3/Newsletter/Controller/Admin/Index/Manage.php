@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
+use Doctrine\DBAL\DBALException;
 
 class Manage extends Core\Controller\AbstractFrontendAction
 {
@@ -81,14 +82,16 @@ class Manage extends Core\Controller\AbstractFrontendAction
             $this->adminFormValidation->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $result = $this->newsletterModel->save($formData, $id);
+            try {
+                $result = $this->newsletterModel->save($formData, $id);
 
-            list($text, $result) = $this->sendTestNewsletter(
-                $formData['test'] == 1,
-                $result,
-                $result,
-                $settings['mail']
-            );
+                list($text, $result) = $this->sendTestNewsletter(
+                    $formData['test'] == 1, $result, $settings['mail']
+                );
+            } catch (DBALException $e) {
+                $result = false;
+                $text = $this->translator->t('newsletter', 'create_save_error');
+            }
 
             return $this->redirectMessages()->setMessage($result, $text);
         });
@@ -97,21 +100,18 @@ class Manage extends Core\Controller\AbstractFrontendAction
     /**
      * @param bool   $isTest
      * @param int    $id
-     * @param bool   $dbResult
      * @param string $testEmailAddress
      *
      * @return array
      */
-    private function sendTestNewsletter(bool $isTest, int $id, $dbResult, string $testEmailAddress)
+    private function sendTestNewsletter(bool $isTest, int $id, string $testEmailAddress)
     {
         if ($isTest === true) {
-            $bool2 = $this->newsletterHelpers->sendNewsletter($id, $testEmailAddress);
-
+            $result = $this->newsletterHelpers->sendNewsletter($id, $testEmailAddress);
             $text = $this->translator->t('newsletter', 'create_success');
-            $result = $dbResult !== false && $bool2 !== false;
         } else {
+            $result = true;
             $text = $this->translator->t('newsletter', 'save_success');
-            $result = $dbResult !== false;
         }
 
         if ($result === false) {

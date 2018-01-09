@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
+use Doctrine\DBAL\DBALException;
 
 class Vote extends Core\Controller\AbstractFrontendAction
 {
@@ -104,7 +105,15 @@ class Vote extends Core\Controller\AbstractFrontendAction
                     ->setIpAddress($ipAddress)
                     ->validate($formData);
 
-                $result = $this->pollsModel->vote($formData, $id, $ipAddress, $time);
+                $formData['poll_id'] = $id;
+                $formData['ip'] = $ipAddress;
+                $formData['time'] = $time;
+
+                try {
+                    $result = $this->pollsModel->save($formData);
+                } catch (DBALException $e) {
+                    $result = false;
+                }
 
                 $text = $this->translator->t('polls', $result !== false ? 'poll_success' : 'poll_error');
 

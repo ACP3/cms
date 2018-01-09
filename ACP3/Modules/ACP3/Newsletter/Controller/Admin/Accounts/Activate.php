@@ -39,14 +39,14 @@ class Activate extends Core\Controller\AbstractFrontendAction
      */
     public function execute(int $id)
     {
-        $bool = $this->accountStatusHelper->changeAccountStatus(
+        $result = $this->accountStatusHelper->changeAccountStatus(
             Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,
             $id
         );
 
         return $this->redirectMessages()->setMessage(
-            $bool,
-            $this->translator->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error')
+            $result,
+            $this->translator->t('newsletter', $result !== false ? 'activate_success' : 'activate_error')
         );
     }
 }

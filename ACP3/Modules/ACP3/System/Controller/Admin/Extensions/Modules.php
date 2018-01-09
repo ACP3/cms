@@ -206,6 +206,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @return bool|int
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function saveModuleState(string $moduleDirectory, int $active)
     {

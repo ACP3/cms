@@ -74,7 +74,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
                 $this->subscribeFormValidation->validate($formData);
 
-                $bool = $this->subscribeHelper->subscribeToNewsletter(
+                $result = $this->subscribeHelper->subscribeToNewsletter(
                     $formData['mail'],
                     $formData['salutation'],
                     $formData['first_name'],
@@ -82,7 +82,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 );
 
                 return $this->alerts->confirmBox(
-                    $this->translator->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'),
+                    $this->translator->t('newsletter', $result !== false ? 'subscribe_success' : 'subscribe_error'),
                     $this->appPath->getWebRoot()
                 );
             }

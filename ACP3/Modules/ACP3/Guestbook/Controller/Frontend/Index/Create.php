@@ -11,6 +11,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Guestbook;
 use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
 use ACP3\Modules\ACP3\Newsletter;
+use Doctrine\DBAL\DBALException;
 
 class Create extends Core\Controller\AbstractFrontendAction
 {
@@ -112,15 +113,19 @@ class Create extends Core\Controller\AbstractFrontendAction
                 $formData['user_id'] = $this->user->isAuthenticated() ? $this->user->getUserId() : null;
                 $formData['active'] = $this->guestbookSettings['notify'] == 2 ? 0 : 1;
 
-                $lastId = $this->guestbookModel->save($formData);
+                try {
+                    $result = $this->guestbookModel->save($formData);
 
-                if ($this->guestbookSettings['notify'] == 1 || $this->guestbookSettings['notify'] == 2) {
-                    $this->sendNotificationEmail($lastId);
+                    if ($this->guestbookSettings['notify'] == 1 || $this->guestbookSettings['notify'] == 2) {
+                        $this->sendNotificationEmail($result);
+                    }
+                } catch (DBALException $e) {
+                    $result = false;
                 }
 
                 return $this->redirectMessages()->setMessage(
-                    $lastId,
-                    $this->translator->t('system', $lastId !== false ? 'create_success' : 'create_error')
+                    $result,
+                    $this->translator->t('system', $result !== false ? 'create_success' : 'create_error')
                 );
             }
         );
@@ -129,7 +134,7 @@ class Create extends Core\Controller\AbstractFrontendAction
     /**
      * @param int $entryId
      */
-    protected function sendNotificationEmail($entryId)
+    protected function sendNotificationEmail(int $entryId)
     {
         $fullPath = $this->router->route('guestbook', true) . '#gb-entry-' . $entryId;
         $body = \sprintf(

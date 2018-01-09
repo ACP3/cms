@@ -39,8 +39,9 @@ class ManageMenuItem
      * @param array  $data
      *
      * @return bool
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function manageMenuItem($menuItemUri, $createOrUpdateMenuItem, array $data = [])
+    public function manageMenuItem(string $menuItemUri, bool $createOrUpdateMenuItem, array $data = [])
     {
         $menuItem = $this->menuItemRepository->getOneMenuItemByUri($menuItemUri);
         $result = true;
@@ -64,11 +65,11 @@ class ManageMenuItem
      *
      * @return bool
      */
-    protected function createMenuItem(array $data, $menuItemUri)
+    protected function createMenuItem(array $data, string $menuItemUri): bool
     {
         $data['uri'] = $menuItemUri;
 
-        return $this->menuItemsModel->save($data) !== false;
+        return (bool) $this->menuItemsModel->save($data);
     }
 
     /**
@@ -77,8 +78,8 @@ class ManageMenuItem
      *
      * @return bool
      */
-    protected function updateMenuItem(array $data, array $menuItem)
+    protected function updateMenuItem(array $data, array $menuItem): bool
     {
-        return $this->menuItemsModel->save($data, $menuItem['id']) !== false;
+        return (bool) $this->menuItemsModel->save($data, $menuItem['id']);
     }
 }

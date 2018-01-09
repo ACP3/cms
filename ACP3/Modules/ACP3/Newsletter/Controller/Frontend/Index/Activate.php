@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
+use Doctrine\DBAL\DBALException;
 
 class Activate extends Core\Controller\AbstractFrontendAction
 {
@@ -56,15 +57,19 @@ class Activate extends Core\Controller\AbstractFrontendAction
         try {
             $this->activateAccountFormValidation->validate(['hash' => $hash]);
 
-            $bool = $this->accountStatusHelper->changeAccountStatus(
-                Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,
-                ['hash' => $hash]
-            );
+            try {
+                $result = $this->accountStatusHelper->changeAccountStatus(
+                    Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,
+                    ['hash' => $hash]
+                );
+            } catch (DBALException $e) {
+                $result = false;
+            }
 
             return $this->alerts->confirmBox(
                 $this->translator->t(
                 'newsletter',
-                    $bool !== false
+                    $result !== false
                     ? 'activate_success'
                     : 'activate_error'
             ),

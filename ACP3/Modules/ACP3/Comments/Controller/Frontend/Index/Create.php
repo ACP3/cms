@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
+use Doctrine\DBAL\DBALException;
 
 class Create extends Core\Controller\AbstractFrontendAction
 {
@@ -87,11 +88,15 @@ class Create extends Core\Controller\AbstractFrontendAction
                 $formData['module_id'] = $this->modules->getModuleId($module);
                 $formData['entry_id'] = $entryId;
 
-                $bool = $this->commentsModel->save($formData);
+                try {
+                    $result = $this->commentsModel->save($formData);
+                } catch (DBALException $e) {
+                    $result = false;
+                }
 
                 return $this->redirectMessages()->setMessage(
-                    $bool,
-                    $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),
+                    $result,
+                    $this->translator->t('system', $result !== false ? 'create_success' : 'create_error'),
                     \base64_decode(\urldecode($redirectUrl))
                 );
             }

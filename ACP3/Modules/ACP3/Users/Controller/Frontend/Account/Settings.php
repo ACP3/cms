@@ -89,7 +89,7 @@ class Settings extends AbstractAction
                     $formData['pwd_salt'] = $salt;
                 }
 
-                $bool = $this->usersModel->save($formData, $this->user->getUserId());
+                $result = $this->usersModel->save($formData, $this->user->getUserId());
 
                 $user = $this->usersModel->getOneById($this->user->getUserId());
                 $cookie = $this->authenticationModel->setRememberMeCookie(
@@ -99,8 +99,8 @@ class Settings extends AbstractAction
                 $this->response->headers->setCookie($cookie);
 
                 return $this->redirectMessages()->setMessage(
-                    $bool,
-                    $this->translator->t('system', $bool !== false ? 'settings_success' : 'settings_error')
+                    $result,
+                    $this->translator->t('system', $result !== false ? 'settings_success' : 'settings_error')
                 );
             }
         );

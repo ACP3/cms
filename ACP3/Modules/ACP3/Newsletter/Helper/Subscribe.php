@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Helper;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterAccountsRepository;
+use Doctrine\DBAL\DBALException;
 
 class Subscribe
 {
@@ -79,7 +80,8 @@ class Subscribe
         Core\Settings\SettingsInterface $config,
         AccountStatus $accountStatusHelper,
         NewsletterAccountsRepository $accountRepository
-    ) {
+    )
+    {
         $this->date = $date;
         $this->translator = $translator;
         $this->mailer = $mailer;
@@ -102,13 +104,17 @@ class Subscribe
      *
      * @return bool
      */
-    public function subscribeToNewsletter($emailAddress, $salutation = 0, $firstName = '', $lastName = '')
+    public function subscribeToNewsletter(string $emailAddress, int $salutation = 0, string $firstName = '', string $lastName = '')
     {
-        $hash = $this->secureHelper->generateSaltedPassword('', \mt_rand(0, \microtime(true)), 'sha512');
-        $mailSent = $this->sendDoubleOptInEmail($emailAddress, $hash);
-        $result = $this->addNewsletterAccount($emailAddress, $salutation, $firstName, $lastName, $hash);
+        try {
+            $hash = $this->secureHelper->generateSaltedPassword('', \mt_rand(0, \microtime(true)), 'sha512');
+            $mailSent = $this->sendDoubleOptInEmail($emailAddress, $hash);
+            $result = $this->addNewsletterAccount($emailAddress, $salutation, $firstName, $lastName, $hash);
 
-        return $mailSent === true && $result !== false;
+            return $mailSent === true && $result !== false;
+        } catch (DBALException $e) {
+            return false;
+        }
     }
 
     /**
@@ -118,9 +124,10 @@ class Subscribe
      * @param string $lastName
      * @param string $hash
      *
-     * @return bool|int
+     * @return int
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function addNewsletterAccount($emailAddress, $salutation, $firstName, $lastName, $hash)
+    protected function addNewsletterAccount(string $emailAddress, int $salutation, string $firstName, string $lastName, string $hash)
     {
         $newsletterAccount = $this->accountRepository->getOneByEmail($emailAddress);
 
@@ -139,7 +146,7 @@ class Subscribe
      *
      * @return bool
      */
-    protected function sendDoubleOptInEmail($emailAddress, $hash)
+    protected function sendDoubleOptInEmail(string $emailAddress, string $hash)
     {
         $url = $this->router->route('newsletter/index/activate/hash_' . $hash, true);
 
@@ -190,8 +197,9 @@ class Subscribe
      * @param string $hash
      *
      * @return int
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function updateExistingAccount(array $newsletterAccount, $salutation, $firstName, $lastName, $hash)
+    protected function updateExistingAccount(array $newsletterAccount, int $salutation, string $firstName, string $lastName, string $hash)
     {
         $updateValues = [
             'salutation' => $salutation,
@@ -216,9 +224,10 @@ class Subscribe
      * @param string $lastName
      * @param string $hash
      *
-     * @return bool|int
+     * @return int
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function insertNewAccount($emailAddress, $salutation, $firstName, $lastName, $hash)
+    protected function insertNewAccount(string $emailAddress, int $salutation, string $firstName, string $lastName, string $hash)
     {
         $insertValues = [
             'id' => '',

@@ -59,7 +59,7 @@ class SendNewsletter
      *
      * @return bool
      */
-    public function sendNewsletter($newsletterId, $recipients, $bcc = false)
+    public function sendNewsletter(int $newsletterId, $recipients, bool $bcc = false)
     {
         $message = $this->collectMailerMessageData($newsletterId);
 
@@ -79,7 +79,7 @@ class SendNewsletter
      *
      * @return Core\Mailer\MailerMessage
      */
-    protected function collectMailerMessageData($newsletterId)
+    protected function collectMailerMessageData(int $newsletterId)
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 

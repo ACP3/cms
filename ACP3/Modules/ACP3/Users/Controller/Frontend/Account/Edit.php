@@ -70,11 +70,11 @@ class Edit extends AbstractAction
                     ->setUserId($this->user->getUserId())
                     ->validate($formData);
 
-                $bool = $this->usersModel->save($formData, $this->user->getUserId());
+                $result = $this->usersModel->save($formData, $this->user->getUserId());
 
                 return $this->redirectMessages()->setMessage(
-                    $bool,
-                    $this->translator->t('system', $bool !== false ? 'edit_success' : 'edit_error')
+                    $result,
+                    $this->translator->t('system', $result !== false ? 'edit_success' : 'edit_error')
                 );
             }
         );

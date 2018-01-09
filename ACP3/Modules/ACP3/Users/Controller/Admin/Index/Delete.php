@@ -16,6 +16,10 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository
      */
     protected $userRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Users\Model\UsersModel
+     */
+    private $usersModel;
 
     /**
      * Delete constructor.

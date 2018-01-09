@@ -36,7 +36,8 @@ class Manage extends Core\Controller\AbstractFrontendAction
         Core\View\Block\RepositoryAwareFormBlockInterface $block,
         Polls\Model\PollsModel $pollsModel,
         Polls\Validation\AdminFormValidation $pollsValidator
-    ) {
+    )
+    {
         parent::__construct($context);
 
         $this->pollsModel = $pollsModel;
@@ -76,12 +77,9 @@ class Manage extends Core\Controller\AbstractFrontendAction
                 $this->pollsModel->resetVotesByPollId($id);
             }
 
-            $resultAnswers = false;
-            if ($result !== false) {
-                $resultAnswers = $this->pollsModel->saveAnswers($formData['answers'], $result);
-            }
+            $this->pollsModel->saveAnswers($formData['answers'], $result);
 
-            return $result !== false && $resultAnswers !== false;
+            return true;
         });
     }
 }

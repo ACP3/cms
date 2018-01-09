@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System;
+use Doctrine\DBAL\DBALException;
 
 class Delete extends Core\Controller\AbstractFrontendAction
 {
@@ -53,7 +54,11 @@ class Delete extends Core\Controller\AbstractFrontendAction
         return $this->actionHelper->handleCustomDeleteAction(
             $action,
             function (array $items) use ($id) {
-                $result = $this->commentsModel->delete($items);
+                try {
+                    $result = $this->commentsModel->delete($items);
+                } catch (DBALException $e) {
+                    $result = false;
+                }
 
                 // If there are no comments for the given module, redirect to the general comments admin panel page
                 if ($this->commentRepository->countAll($id) == 0) {

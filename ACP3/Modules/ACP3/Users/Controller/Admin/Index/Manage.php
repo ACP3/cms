@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
+use Doctrine\DBAL\DBALException;
 
 class Manage extends Core\Controller\AbstractFrontendAction
 {
@@ -111,14 +112,16 @@ class Manage extends Core\Controller\AbstractFrontendAction
                 $formData['pwd_salt'] = $salt;
             }
 
-            $result = $this->usersModel->save($formData, $id);
+            try {
+                $result = $this->usersModel->save($formData, $id);
 
-            if ($result !== false) {
                 $this->permissionsHelpers->updateUserRoles($formData['roles'], $result);
                 $this->updateCurrentlyLoggedInUserCookie($result);
-            }
 
-            return $result;
+                return $result;
+            } catch (DBALException $e) {
+                return false;
+            }
         });
     }
 

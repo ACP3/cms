@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
+use Doctrine\DBAL\DBALException;
 
 class Send extends Core\Controller\AbstractFrontendAction
 {
@@ -52,7 +53,6 @@ class Send extends Core\Controller\AbstractFrontendAction
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
-     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function execute(int $id)
     {
@@ -65,17 +65,20 @@ class Send extends Core\Controller\AbstractFrontendAction
                 $recipients[] = $accounts[$i]['mail'];
             }
 
-            $bool = $this->newsletterHelpers->sendNewsletter($id, $recipients);
-            $bool2 = false;
-            if ($bool === true) {
-                $bool2 = $this->newsletterRepository->update(['status' => '1'], $id);
+            try {
+                $this->newsletterHelpers->sendNewsletter($id, $recipients);
+                $this->newsletterRepository->update(['status' => '1'], $id);
+
+                $result = true;
+            } catch (DBALException $e) {
+                $result = false;
             }
 
             return $this->redirectMessages()->setMessage(
-                $bool === true && $bool2 !== false,
+                $result === true,
                 $this->translator->t(
                     'newsletter',
-                    $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'
+                    $result === true ? 'create_success' : 'create_save_error'
                 )
             );
         }
