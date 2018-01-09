@@ -62,6 +62,7 @@ class Migration implements \ACP3\Core\Installer\MigrationInterface
                 "UPDATE `{pre}acl_resources` SET `page` = 'manage' WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'edit';",
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'items' AND `page` = 'create';",
                 "UPDATE `{pre}acl_resources` SET `page` = 'manage' WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'items' AND `page` = 'edit';",
+                "UPDATE `{pre}acl_resources` SET `privilege_id` = 5 WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'items' AND `page` = 'order';",
             ],
         ];
     }

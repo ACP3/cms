@@ -28,7 +28,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 'items' => [
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'manage' => PrivilegeEnum::ADMIN_EDIT,
-                    'order' => PrivilegeEnum::ADMIN_CREATE,
+                    'order' => PrivilegeEnum::ADMIN_EDIT,
                 ],
             ],
         ];

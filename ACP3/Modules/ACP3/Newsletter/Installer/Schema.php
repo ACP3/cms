@@ -29,7 +29,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                     'index' => PrivilegeEnum::ADMIN_VIEW,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'manage' => PrivilegeEnum::ADMIN_EDIT,
-                    'send' => PrivilegeEnum::ADMIN_CREATE,
+                    'send' => PrivilegeEnum::ADMIN_EDIT,
                     'settings' => PrivilegeEnum::ADMIN_SETTINGS,
                 ],
             ],

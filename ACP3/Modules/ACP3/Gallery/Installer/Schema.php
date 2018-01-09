@@ -21,7 +21,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
         return [
             'admin' => [
                 'index' => [
-                    'create' => PrivilegeEnum::ADMIN_CREATE,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'manage' => PrivilegeEnum::ADMIN_EDIT,
                     'settings' => PrivilegeEnum::ADMIN_SETTINGS,
@@ -30,7 +29,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'index' => PrivilegeEnum::ADMIN_VIEW,
                     'manage' => PrivilegeEnum::ADMIN_EDIT,
-                    'order' => PrivilegeEnum::ADMIN_CREATE,
+                    'order' => PrivilegeEnum::ADMIN_EDIT,
                 ],
             ],
             'frontend' => [

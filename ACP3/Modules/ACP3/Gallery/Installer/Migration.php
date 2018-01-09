@@ -69,6 +69,7 @@ class Migration extends \ACP3\Core\Installer\AbstractMigration
                 "UPDATE `{pre}acl_resources` SET `page` = 'manage' WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'edit';",
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'pictures' AND `page` = 'create';",
                 "UPDATE `{pre}acl_resources` SET `page` = 'manage' WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'pictures' AND `page` = 'edit';",
+                "UPDATE `{pre}acl_resources` SET `privilege_id` = 5 WHERE `module_id` = {moduleId} AND `area` = 'admin' AND `controller` = 'pictures' AND `page` = 'order';",
             ],
         ];
     }

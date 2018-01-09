@@ -24,7 +24,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                     'index' => PrivilegeEnum::ADMIN_VIEW,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
                     'manage' => PrivilegeEnum::ADMIN_EDIT,
-                    'order' => PrivilegeEnum::ADMIN_CREATE,
+                    'order' => PrivilegeEnum::ADMIN_EDIT,
                 ],
                 'resources' => [
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
@@ -115,7 +115,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
             'INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (' . PrivilegeEnum::FRONTEND_VIEW . ", 'view', '')",
             'INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (' . PrivilegeEnum::FRONTEND_CREATE . ", 'create', '')",
             'INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (' . PrivilegeEnum::ADMIN_VIEW . ", 'admin_view', '')",
-            'INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (' . PrivilegeEnum::ADMIN_CREATE . ", 'admin_create', '')",
             'INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (' . PrivilegeEnum::ADMIN_EDIT . ", 'admin_edit', '')",
             'INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (' . PrivilegeEnum::ADMIN_DELETE . ", 'admin_delete', '')",
             'INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (' . PrivilegeEnum::ADMIN_SETTINGS . ", 'admin_settings', '');",
