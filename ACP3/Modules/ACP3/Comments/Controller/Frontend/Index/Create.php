@@ -88,11 +88,7 @@ class Create extends Core\Controller\AbstractFrontendAction
                 $formData['module_id'] = $this->modules->getModuleId($module);
                 $formData['entry_id'] = $entryId;
 
-                try {
-                    $result = $this->commentsModel->save($formData);
-                } catch (DBALException $e) {
-                    $result = false;
-                }
+                $result = $this->commentsModel->save($formData);
 
                 return $this->redirectMessages()->setMessage(
                     $result,

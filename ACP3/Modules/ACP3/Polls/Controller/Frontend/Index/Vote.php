@@ -109,11 +109,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
                 $formData['ip'] = $ipAddress;
                 $formData['time'] = $time;
 
-                try {
-                    $result = $this->pollsModel->save($formData);
-                } catch (DBALException $e) {
-                    $result = false;
-                }
+                $result = $this->pollsModel->save($formData);
 
                 $text = $this->translator->t('polls', $result !== false ? 'poll_success' : 'poll_error');
 

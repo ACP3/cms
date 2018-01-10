@@ -77,6 +77,8 @@ class Action
             );
         } catch (Core\Validation\Exceptions\ValidationFailedException $e) {
             return $this->renderErrorBoxOnFailedFormValidation($e);
+        } catch (DBALException $e) {
+            return $this->renderErrorBoxOnFailedFormValidation($e);
         }
     }
 
@@ -171,11 +173,7 @@ class Action
     public function handleSettingsPostAction(callable $callback, ?string $path = null)
     {
         return $this->handlePostAction(function () use ($callback, $path) {
-            try {
-                $result = $callback();
-            } catch (DBALException $e) {
-                $result = false;
-            }
+            $result = $callback();
 
             return $this->prepareRedirectMessageAfterPost($result, 'settings', $path);
         }, $path);
@@ -190,11 +188,7 @@ class Action
     public function handleSaveAction(callable $callback, ?string $path = null)
     {
         return $this->handlePostAction(function () use ($callback, $path) {
-            try {
-                $result = $callback();
-            } catch (DBALException $e) {
-                $result = false;
-            }
+            $result = $callback();
 
             return $this->prepareRedirectMessageAfterPost($result, 'save', $path);
         });

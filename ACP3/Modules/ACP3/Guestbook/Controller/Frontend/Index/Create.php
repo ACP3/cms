@@ -113,14 +113,10 @@ class Create extends Core\Controller\AbstractFrontendAction
                 $formData['user_id'] = $this->user->isAuthenticated() ? $this->user->getUserId() : null;
                 $formData['active'] = $this->guestbookSettings['notify'] == 2 ? 0 : 1;
 
-                try {
-                    $result = $this->guestbookModel->save($formData);
+                $result = $this->guestbookModel->save($formData);
 
-                    if ($this->guestbookSettings['notify'] == 1 || $this->guestbookSettings['notify'] == 2) {
-                        $this->sendNotificationEmail($result);
-                    }
-                } catch (DBALException $e) {
-                    $result = false;
+                if ($this->guestbookSettings['notify'] == 1 || $this->guestbookSettings['notify'] == 2) {
+                    $this->sendNotificationEmail($result);
                 }
 
                 return $this->redirectMessages()->setMessage(

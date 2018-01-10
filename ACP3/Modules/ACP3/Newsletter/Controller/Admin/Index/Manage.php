@@ -82,16 +82,12 @@ class Manage extends Core\Controller\AbstractFrontendAction
             $this->adminFormValidation->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            try {
-                $result = $this->newsletterModel->save($formData, $id);
 
-                list($text, $result) = $this->sendTestNewsletter(
-                    $formData['test'] == 1, $result, $settings['mail']
-                );
-            } catch (DBALException $e) {
-                $result = false;
-                $text = $this->translator->t('newsletter', 'create_save_error');
-            }
+            $result = $this->newsletterModel->save($formData, $id);
+
+            list($text, $result) = $this->sendTestNewsletter(
+                $formData['test'] == 1, $result, $settings['mail']
+            );
 
             return $this->redirectMessages()->setMessage($result, $text);
         });
