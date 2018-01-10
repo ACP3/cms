@@ -17,8 +17,10 @@ class PollAnswersRepository extends Core\Model\Repository\AbstractRepository
      * @param int $pollId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAnswersByPollId($pollId)
+    public function getAnswersByPollId(int $pollId)
     {
         return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' WHERE poll_id = ? ORDER BY id ASC', [$pollId]);
     }
@@ -27,8 +29,10 @@ class PollAnswersRepository extends Core\Model\Repository\AbstractRepository
      * @param int $pollId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAnswersWithVotesByPollId($pollId)
+    public function getAnswersWithVotesByPollId(int $pollId)
     {
         return $this->db->fetchAll('SELECT pa.id, pa.text, COUNT(pv.answer_id) AS votes FROM ' . $this->getTableName() . ' AS pa LEFT JOIN ' . $this->getTableName(PollVotesRepository::TABLE_NAME) . ' AS pv ON(pa.id = pv.answer_id) WHERE pa.poll_id = ? GROUP BY pa.id ORDER BY pa.id ASC', [$pollId]);
     }

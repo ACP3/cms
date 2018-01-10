@@ -14,7 +14,7 @@ class AclRulesRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'acl_rules';
 
     /**
-     * @param array $roles
+     * @param int[] $roles
      *
      * @return array
      *

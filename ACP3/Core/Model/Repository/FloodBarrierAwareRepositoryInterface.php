@@ -17,5 +17,5 @@ interface FloodBarrierAwareRepositoryInterface
      *
      * @return string
      */
-    public function getLastDateFromIp($ipAddress);
+    public function getLastDateFromIp(string $ipAddress);
 }

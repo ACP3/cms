@@ -18,6 +18,8 @@ class MenuItemsRepository extends NestedSetRepository implements BlockAwareNeste
      * @param int $menuItemId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function menuItemExists(int $menuItemId)
     {
@@ -31,6 +33,8 @@ class MenuItemsRepository extends NestedSetRepository implements BlockAwareNeste
      * @param string $uri
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getOneMenuItemByUri(string $uri)
     {
@@ -44,6 +48,8 @@ class MenuItemsRepository extends NestedSetRepository implements BlockAwareNeste
      * @param int $menuId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllItemsByBlockId(int $menuId)
     {
@@ -57,6 +63,8 @@ class MenuItemsRepository extends NestedSetRepository implements BlockAwareNeste
      * @param int $menuItemId
      *
      * @return string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getMenuItemUriById(int $menuItemId)
     {
@@ -70,6 +78,8 @@ class MenuItemsRepository extends NestedSetRepository implements BlockAwareNeste
      * @param int $menuItemId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getMenuIdByMenuItemId(int $menuItemId)
     {
@@ -83,6 +93,8 @@ class MenuItemsRepository extends NestedSetRepository implements BlockAwareNeste
      * @param string $uri
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getMenuItemIdByUri(string $uri)
     {
@@ -94,6 +106,8 @@ class MenuItemsRepository extends NestedSetRepository implements BlockAwareNeste
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllMenuItems()
     {
@@ -106,6 +120,8 @@ class MenuItemsRepository extends NestedSetRepository implements BlockAwareNeste
      * @param string $blockName
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getVisibleMenuItemsByBlockName(string $blockName)
     {

@@ -15,6 +15,8 @@ interface SearchResultsAwareRepositoryInterface
      * @param string $sortDirection
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAllSearchResults($fields, $searchTerm, $sortDirection);
+    public function getAllSearchResults(string $fields, string $searchTerm, string $sortDirection);
 }

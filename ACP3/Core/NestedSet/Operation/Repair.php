@@ -9,6 +9,9 @@ namespace ACP3\Core\NestedSet\Operation;
 
 class Repair extends AbstractOperation
 {
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public function execute()
     {
         $leftId = 1;
@@ -25,6 +28,11 @@ class Repair extends AbstractOperation
         }
     }
 
+    /**
+     * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
     private function getResults(): array
     {
         if ($this->isBlockAware()) {

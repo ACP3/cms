@@ -21,8 +21,10 @@ class PollsRepository extends Core\Model\Repository\AbstractRepository
      * @param bool   $multiple
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function pollExists($pollId, $time = '', $multiple = false)
+    public function pollExists(int $pollId, string $time = '', bool $multiple = false)
     {
         $where = !empty($time) ? ' AND ' . $this->getPublicationPeriod() : '';
         $multiple = ($multiple === true) ? ' AND multiple = :multiple' : '';
@@ -35,8 +37,10 @@ class PollsRepository extends Core\Model\Repository\AbstractRepository
      * @param int $pollId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneByIdWithTotalVotes($pollId)
+    public function getOneByIdWithTotalVotes(int $pollId)
     {
         return $this->db->fetchAssoc(
             'SELECT p.*, COUNT(pv.poll_id) AS total_votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(PollVotesRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id) WHERE p.id = ?',
@@ -44,7 +48,14 @@ class PollsRepository extends Core\Model\Repository\AbstractRepository
         );
     }
 
-    public function countAll($time = ''): int
+    /**
+     * @param string $time
+     *
+     * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function countAll(string $time = ''): int
     {
         $where = empty($time) === false ? ' WHERE start <= :time' : '';
 
@@ -55,15 +66,17 @@ class PollsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int    $userId
-     * @param string $ipAddress
-     * @param string $time
-     * @param string $limitStart
-     * @param string $resultsPerPage
+     * @param int      $userId
+     * @param string   $ipAddress
+     * @param string   $time
+     * @param int|null $limitStart
+     * @param int|null $resultsPerPage
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAll($userId = 0, $ipAddress = '', $time = '', $limitStart = '', $resultsPerPage = '')
+    public function getAll(int $userId = 0, string $ipAddress = '', string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
     {
         $where = empty($time) === false ? ' WHERE p.start <= :time' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
@@ -80,8 +93,10 @@ class PollsRepository extends Core\Model\Repository\AbstractRepository
      * @param string $ipAddress
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLatestPoll($time, int $userId = 0, string $ipAddress = '')
+    public function getLatestPoll(string $time, int $userId = 0, string $ipAddress = '')
     {
         $period = $this->getPublicationPeriod('p.');
 

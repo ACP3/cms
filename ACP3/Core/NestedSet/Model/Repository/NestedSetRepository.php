@@ -19,6 +19,8 @@ abstract class NestedSetRepository extends AbstractRepository
      * @param int $nodeId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchNodeWithSiblings(int $nodeId)
     {
@@ -34,6 +36,8 @@ abstract class NestedSetRepository extends AbstractRepository
      * @param int $nodeId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchNodeWithParents(int $nodeId)
     {
@@ -47,6 +51,8 @@ abstract class NestedSetRepository extends AbstractRepository
      * @param int $leftId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchNextNodeWithSiblings(int $leftId)
     {
@@ -60,6 +66,8 @@ abstract class NestedSetRepository extends AbstractRepository
      * @param int $rightId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchPrevNodeWithSiblings(int $rightId)
     {
@@ -73,6 +81,8 @@ abstract class NestedSetRepository extends AbstractRepository
      * @param int $nodeId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function nodeExists(int $nodeId)
     {
@@ -84,6 +94,8 @@ abstract class NestedSetRepository extends AbstractRepository
      * @param int $blockId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function nextNodeExists(int $rightId, int $blockId = 0)
     {
@@ -100,6 +112,8 @@ abstract class NestedSetRepository extends AbstractRepository
      * @param int $blockId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function previousNodeExists(int $rightId, int $blockId = 0)
     {
@@ -115,6 +129,8 @@ abstract class NestedSetRepository extends AbstractRepository
      * @param int $nodeId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchNodeById(int $nodeId)
     {
@@ -129,6 +145,8 @@ abstract class NestedSetRepository extends AbstractRepository
      * @param int $rightId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function nodeIsRootItem(int $leftId, int $rightId)
     {
@@ -143,6 +161,8 @@ abstract class NestedSetRepository extends AbstractRepository
      * @param int $rightId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchParentNode(int $leftId, int $rightId)
     {
@@ -157,6 +177,8 @@ abstract class NestedSetRepository extends AbstractRepository
      * @param int $rightId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchRootNode(int $leftId, int $rightId)
     {
@@ -170,6 +192,8 @@ abstract class NestedSetRepository extends AbstractRepository
      * @param int $blockId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchMaximumRightIdByBlockId(int $blockId)
     {
@@ -181,6 +205,8 @@ abstract class NestedSetRepository extends AbstractRepository
 
     /**
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchMaximumRightId()
     {
@@ -191,6 +217,8 @@ abstract class NestedSetRepository extends AbstractRepository
      * @param int $blockId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchMinimumLeftIdByBlockId(int $blockId)
     {
@@ -202,6 +230,8 @@ abstract class NestedSetRepository extends AbstractRepository
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchAll()
     {

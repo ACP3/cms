@@ -18,8 +18,10 @@ class Edit extends AbstractOperation
      * @param array $updateValues
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($resultId, $parentId, $blockId, array $updateValues)
+    public function execute(int $resultId, int $parentId, int $blockId, array $updateValues)
     {
         $callback = function () use ($resultId, $parentId, $blockId, $updateValues) {
             $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($resultId);
@@ -76,8 +78,10 @@ class Edit extends AbstractOperation
      * @param array $item
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function nodeIsRootItemAndNoChangeNeed($parentId, $blockId, array $item)
+    protected function nodeIsRootItemAndNoChangeNeed(int $parentId, int $blockId, array $item)
     {
         return empty($parentId) &&
         ($this->isBlockAware() === false || ($this->isBlockAware() === true && $blockId == $item[$this->getBlockColumnName()])) &&
@@ -93,7 +97,7 @@ class Edit extends AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function nodeBecomesRootNode($id, $blockId, array $nodes)
+    protected function nodeBecomesRootNode(int $id, int $blockId, array $nodes)
     {
         $itemDiff = $this->calcDiffBetweenNodes($nodes[0]['left_id'], $nodes[0]['right_id']);
         if ($this->isBlockAware() === true) {
@@ -122,7 +126,7 @@ class Edit extends AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function nodeBecomesRootNodeInNewBlock($blockId, array $nodes, $itemDiff)
+    protected function nodeBecomesRootNodeInNewBlock(int $blockId, array $nodes, int $itemDiff)
     {
         $newBlockLeftId = $this->nestedSetRepository->fetchMinimumLeftIdByBlockId($blockId);
 
@@ -152,7 +156,7 @@ class Edit extends AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function nodeBecomesRootNodeInSameBlock(array $nodes, $itemDiff)
+    protected function nodeBecomesRootNodeInSameBlock(array $nodes, int $itemDiff)
     {
         $maxId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($nodes[0][$this->getBlockColumnName()]);
 
@@ -176,7 +180,7 @@ class Edit extends AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    private function adjustNodeSiblings($blockId, array $nodes, $diff, $rootId)
+    private function adjustNodeSiblings(int $blockId, array $nodes, int $diff, int $rootId)
     {
         $bool = false;
 
@@ -226,7 +230,7 @@ class Edit extends AbstractOperation
      *
      * @return int
      */
-    protected function calcDiffBetweenNodes($leftId, $rightId)
+    protected function calcDiffBetweenNodes(int $leftId, int $rightId)
     {
         return $rightId - $leftId + 1;
     }
@@ -236,6 +240,8 @@ class Edit extends AbstractOperation
      * @param array $nodes
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function moveNodeToNewParent(array $newParent, array $nodes)
     {

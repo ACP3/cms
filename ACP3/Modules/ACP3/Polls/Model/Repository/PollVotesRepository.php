@@ -19,8 +19,10 @@ class PollVotesRepository extends Core\Model\Repository\AbstractRepository
      * @param string $ipAddress
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getVotesByUserId($pollId, $userId, $ipAddress)
+    public function getVotesByUserId(int $pollId, int $userId, string $ipAddress)
     {
         return (int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE poll_id = ? AND (user_id = ? OR ip = ?)',
@@ -33,8 +35,10 @@ class PollVotesRepository extends Core\Model\Repository\AbstractRepository
      * @param string $ipAddress
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getVotesByIpAddress($pollId, $ipAddress)
+    public function getVotesByIpAddress(int $pollId, string $ipAddress)
     {
         return (int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE poll_id = ? AND ip = ?',

@@ -20,6 +20,8 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      * @param int $categoryId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function resultExists(int $categoryId)
     {
@@ -32,6 +34,8 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      * @param int    $categoryId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function resultIsDuplicate(string $title, int $moduleId, int $categoryId)
     {
@@ -45,6 +49,8 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      * @param int $categoryId
      *
      * @return string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getTitleById(int $categoryId)
     {
@@ -55,6 +61,8 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      * @param string $moduleName
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllByModuleName(string $moduleName)
     {
@@ -68,6 +76,8 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      * @param int $moduleId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllByModuleId(int $moduleId)
     {
@@ -81,6 +91,8 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      * @param int $categoryId
      *
      * @return string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getModuleNameFromCategoryId(int $categoryId)
     {
@@ -94,6 +106,8 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      * @param int $categoryId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getModuleIdByCategoryId(int $categoryId)
     {
@@ -107,6 +121,8 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      * @param int $categoryId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getCategoryDeleteInfosById(int $categoryId)
     {
@@ -121,6 +137,8 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      * @param string $moduleName
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getOneByTitleAndModule(string $title, string $moduleName)
     {
@@ -157,6 +175,8 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      * @param int $categoryId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllDirectSiblings(int $categoryId)
     {
@@ -170,6 +190,8 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      * @param int $moduleId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllRootCategoriesByModuleId(int $moduleId)
     {
@@ -183,6 +205,8 @@ class CategoriesRepository extends NestedSetRepository implements BlockAwareNest
      * @param string $moduleName
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllRootCategoriesByModuleName(string $moduleName)
     {

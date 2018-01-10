@@ -17,8 +17,10 @@ class AclPrivilegesRepository extends Core\Model\Repository\AbstractRepository
      * @param int $privilegeId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function privilegeExists($privilegeId)
+    public function privilegeExists(int $privilegeId)
     {
         return (int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id',
@@ -28,6 +30,8 @@ class AclPrivilegesRepository extends Core\Model\Repository\AbstractRepository
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllPrivilegeIds()
     {
@@ -36,6 +40,8 @@ class AclPrivilegesRepository extends Core\Model\Repository\AbstractRepository
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllPrivileges()
     {

@@ -14,8 +14,10 @@ class Sort extends AbstractOperation
      * @param string $mode
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($resultId, $mode)
+    public function execute(int $resultId, string $mode)
     {
         if ($this->nestedSetRepository->nodeExists($resultId) === true) {
             $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($resultId);
@@ -45,7 +47,7 @@ class Sort extends AbstractOperation
      *
      * @return bool
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function sortUp(array $nodes)
     {
@@ -65,7 +67,7 @@ class Sort extends AbstractOperation
      *
      * @return bool
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function sortDown(array $nodes)
     {
@@ -103,7 +105,7 @@ class Sort extends AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function updateNodesDown($diff, array $nodes)
+    protected function updateNodesDown(int $diff, array $nodes)
     {
         return $this->db->getConnection()->executeUpdate(
             "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id + ?, right_id = right_id + ? WHERE id IN(?)",
@@ -120,7 +122,7 @@ class Sort extends AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function moveNodesUp($diff, array $nodes)
+    protected function moveNodesUp(int $diff, array $nodes)
     {
         return $this->db->getConnection()->executeUpdate(
             "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE id IN(?)",

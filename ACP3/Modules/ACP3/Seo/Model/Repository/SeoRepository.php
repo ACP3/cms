@@ -17,8 +17,10 @@ class SeoRepository extends Core\Model\Repository\AbstractRepository
      * @param string $path
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function uriAliasExists($path)
+    public function uriAliasExists(string $path)
     {
         return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `uri` = ?', [$path]) > 0;
     }
@@ -28,8 +30,10 @@ class SeoRepository extends Core\Model\Repository\AbstractRepository
      * @param string $path
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function uriAliasExistsByAlias($alias, $path = '')
+    public function uriAliasExistsByAlias(string $alias, string $path = '')
     {
         return $this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `alias` = ? AND `uri` != ?',
@@ -41,14 +45,18 @@ class SeoRepository extends Core\Model\Repository\AbstractRepository
      * @param string $uri
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneByUri($uri)
+    public function getOneByUri(string $uri)
     {
         return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE `uri` = ?', [$uri]);
     }
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllMetaTags()
     {
@@ -59,8 +67,10 @@ class SeoRepository extends Core\Model\Repository\AbstractRepository
      * @param string $alias
      *
      * @return bool|string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getUriByAlias($alias)
+    public function getUriByAlias(string $alias)
     {
         return $this->db->fetchColumn('SELECT `uri` FROM ' . $this->getTableName() . ' WHERE `alias` = ?', [$alias]);
     }

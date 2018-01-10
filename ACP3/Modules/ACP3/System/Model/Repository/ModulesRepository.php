@@ -17,7 +17,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     /**
      * {@inheritdoc}
      */
-    public function getModuleId($moduleName)
+    public function getModuleId(string $moduleName)
     {
         return $this->db->fetchColumn(
             'SELECT `id` FROM ' . $this->getTableName() . ' WHERE `name` = ?',
@@ -26,11 +26,11 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     }
 
     /**
-     * @param string $moduleName
+     * {@inheritdoc}
      *
-     * @return int
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getModuleSchemaVersion($moduleName)
+    public function getModuleSchemaVersion(string $moduleName)
     {
         return $this->db->fetchColumn(
             'SELECT `version` FROM ' . $this->getTableName() . ' WHERE `name` = ?',
@@ -39,11 +39,11 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     }
 
     /**
-     * @param string $moduleName
+     * {@inheritdoc}
      *
-     * @return bool
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function moduleExists($moduleName)
+    public function moduleExists(string $moduleName)
     {
         return $this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?',
@@ -52,11 +52,11 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     }
 
     /**
-     * @param string $moduleName
+     * {@inheritdoc}
      *
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getInfoByModuleName($moduleName)
+    public function getInfoByModuleName(string $moduleName)
     {
         return $this->db->fetchAssoc(
             'SELECT `id`, `version`, `active` FROM ' . $this->getTableName() . ' WHERE `name` = ?',
@@ -65,11 +65,11 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     }
 
     /**
-     * @param int $moduleId
+     * {@inheritdoc}
      *
-     * @return string
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getModuleNameById($moduleId)
+    public function getModuleNameById(int $moduleId)
     {
         return $this->db->fetchColumn(
             'SELECT `name` FROM ' . $this->getTableName() . ' WHERE `id` = ?',

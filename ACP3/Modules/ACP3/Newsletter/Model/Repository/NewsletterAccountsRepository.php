@@ -19,8 +19,10 @@ class NewsletterAccountsRepository extends AbstractRepository
      * @param string $hash
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function accountExists($emailAddress, $hash = '')
+    public function accountExists(string $emailAddress, string $hash = '')
     {
         $where = empty($hash) === false ? ' AND `hash` = :hash' : '';
 
@@ -34,8 +36,10 @@ class NewsletterAccountsRepository extends AbstractRepository
      * @param string $hash
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function accountExistsByHash($hash)
+    public function accountExistsByHash(string $hash)
     {
         return $this->db->fetchColumn(
                 "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `hash` = :hash",
@@ -47,8 +51,10 @@ class NewsletterAccountsRepository extends AbstractRepository
      * @param string $email
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneByEmail($email)
+    public function getOneByEmail(string $email)
     {
         return $this->db->fetchAssoc(
             "SELECT * FROM {$this->getTableName()} WHERE `mail` = :mail",
@@ -60,8 +66,10 @@ class NewsletterAccountsRepository extends AbstractRepository
      * @param string $hash
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneByHash($hash)
+    public function getOneByHash(string $hash)
     {
         return $this->db->fetchAssoc(
             "SELECT * FROM {$this->getTableName()} WHERE `hash` = :hash",
@@ -71,6 +79,8 @@ class NewsletterAccountsRepository extends AbstractRepository
 
     /**
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function countAllAccounts()
     {
@@ -82,6 +92,8 @@ class NewsletterAccountsRepository extends AbstractRepository
 
     /**
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function countAllActiveAccounts()
     {
@@ -93,6 +105,8 @@ class NewsletterAccountsRepository extends AbstractRepository
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllActiveAccounts()
     {

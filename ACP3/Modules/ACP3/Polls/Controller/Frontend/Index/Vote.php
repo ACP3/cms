@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
-use Doctrine\DBAL\DBALException;
 
 class Vote extends Core\Controller\AbstractFrontendAction
 {

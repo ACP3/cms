@@ -11,7 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Guestbook;
 use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
 use ACP3\Modules\ACP3\Newsletter;
-use Doctrine\DBAL\DBALException;
 
 class Create extends Core\Controller\AbstractFrontendAction
 {

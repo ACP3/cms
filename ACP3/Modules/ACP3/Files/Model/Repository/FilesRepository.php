@@ -39,8 +39,10 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
      * @param string $time
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultExists($fileId, $time = '')
+    public function resultExists(int $fileId, string $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
@@ -65,21 +67,25 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
      * @param int $fileId
      *
      * @return string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getFileById($fileId)
+    public function getFileById(int $fileId)
     {
         return $this->db->fetchColumn("SELECT `file` FROM {$this->getTableName()} WHERE `id` = ?", [$fileId]);
     }
 
     /**
-     * @param string $time
-     * @param string $categoryId
+     * @param string   $time
+     * @param int|null $categoryId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAll($time = '', $categoryId = '')
+    public function countAll(string $time = '', int $categoryId = null)
     {
-        if (!empty($categoryId)) {
+        if ($categoryId !== null) {
             $results = $this->getAllByCategoryId($categoryId, $time);
         } else {
             $results = $this->getAll($time);
@@ -89,14 +95,16 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int    $categoryId
-     * @param string $time
-     * @param string $limitStart
-     * @param string $resultsPerPage
+     * @param int      $categoryId
+     * @param string   $time
+     * @param int|null $limitStart
+     * @param int|null $resultsPerPage
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAllByCategoryId($categoryId, $time = '', $limitStart = '', $resultsPerPage = '')
+    public function getAllByCategoryId(int $categoryId, string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
     {
         $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
@@ -108,13 +116,15 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $time
-     * @param string $limitStart
-     * @param string $resultsPerPage
+     * @param string   $time
+     * @param int|null $limitStart
+     * @param int|null $resultsPerPage
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
+    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
     {
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
@@ -127,6 +137,8 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
 
     /**
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getMaxSort()
     {

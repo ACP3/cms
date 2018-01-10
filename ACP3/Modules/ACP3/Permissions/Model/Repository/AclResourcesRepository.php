@@ -27,6 +27,8 @@ class AclResourcesRepository extends Core\Model\Repository\AbstractRepository
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllResources()
     {

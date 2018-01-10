@@ -16,7 +16,7 @@ class AclUserRolesRepository extends Core\Model\Repository\AbstractRepository im
     /**
      * {@inheritdoc}
      */
-    public function getRolesByUserId($userId)
+    public function getRolesByUserId(int $userId)
     {
         return $this->db->fetchAll(
             'SELECT r.* FROM ' . $this->getTableName() . ' AS ur JOIN ' . $this->getTableName(AclRolesRepository::TABLE_NAME) . ' AS r ON(ur.role_id = r.id) WHERE ur.user_id = ? ORDER BY r.left_id DESC',

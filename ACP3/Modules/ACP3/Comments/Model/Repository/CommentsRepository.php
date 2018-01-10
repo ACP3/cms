@@ -18,8 +18,10 @@ class CommentsRepository extends Core\Model\Repository\AbstractRepository implem
      * @param int $commentId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultExists($commentId)
+    public function resultExists(int $commentId)
     {
         return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = ?', [$commentId]) > 0;
     }
@@ -28,8 +30,10 @@ class CommentsRepository extends Core\Model\Repository\AbstractRepository implem
      * @param int $moduleId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultsExistByModuleId($moduleId)
+    public function resultsExistByModuleId(int $moduleId)
     {
         return $this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
@@ -41,8 +45,10 @@ class CommentsRepository extends Core\Model\Repository\AbstractRepository implem
      * @param int $moduleId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAll($moduleId = 0)
+    public function countAll(int $moduleId = 0)
     {
         if ($moduleId === 0) {
             return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName());
@@ -69,8 +75,10 @@ class CommentsRepository extends Core\Model\Repository\AbstractRepository implem
      * @param string $ipAddress
      *
      * @return string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLastDateFromIp($ipAddress)
+    public function getLastDateFromIp(string $ipAddress)
     {
         return $this->db->fetchColumn(
             'SELECT MAX(`date`) FROM ' . $this->getTableName() . ' WHERE ip = ?',
@@ -79,14 +87,16 @@ class CommentsRepository extends Core\Model\Repository\AbstractRepository implem
     }
 
     /**
-     * @param int    $moduleId
-     * @param int    $resultId
-     * @param string $limitStart
-     * @param string $resultsPerPage
+     * @param int      $moduleId
+     * @param int      $resultId
+     * @param int|null $limitStart
+     * @param int|null $resultsPerPage
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAllByModule($moduleId, $resultId, $limitStart = '', $resultsPerPage = '')
+    public function getAllByModule(int $moduleId, int $resultId, ?int $limitStart = null, ?int $resultsPerPage = null)
     {
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
 
@@ -101,8 +111,10 @@ class CommentsRepository extends Core\Model\Repository\AbstractRepository implem
      * @param int $resultId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAllByModule($moduleId, $resultId)
+    public function countAllByModule(int $moduleId, int $resultId)
     {
         return (int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ? AND entry_id = ?',
@@ -114,8 +126,10 @@ class CommentsRepository extends Core\Model\Repository\AbstractRepository implem
      * @param int $moduleId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAllByModuleInAcp($moduleId)
+    public function getAllByModuleInAcp(int $moduleId)
     {
         return $this->db->fetchAll(
             'SELECT IF(c.user_id IS NULL, c.name, u.nickname) AS `name`, c.id, c.ip, c.user_id, c.date, c.message FROM ' . $this->getTableName() . ' AS c LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Users\Model\Repository\UsersRepository::TABLE_NAME) . ' AS u ON (u.id = c.user_id) WHERE c.module_id = ? ORDER BY c.entry_id ASC, c.date ASC',

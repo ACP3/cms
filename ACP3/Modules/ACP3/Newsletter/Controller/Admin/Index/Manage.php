@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
-use Doctrine\DBAL\DBALException;
 
 class Manage extends Core\Controller\AbstractFrontendAction
 {

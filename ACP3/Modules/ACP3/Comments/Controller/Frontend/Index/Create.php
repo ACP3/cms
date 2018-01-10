@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
-use Doctrine\DBAL\DBALException;
 
 class Create extends Core\Controller\AbstractFrontendAction
 {

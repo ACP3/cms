@@ -16,9 +16,9 @@ class Delete extends AbstractOperation
      *
      * @return bool
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($resultId)
+    public function execute(int $resultId)
     {
         $callback = function () use ($resultId) {
             $nodes = $this->nestedSetRepository->fetchNodeWithSiblings((int) $resultId);

@@ -15,9 +15,9 @@ class Insert extends AbstractOperation
      *
      * @return int|bool
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(array $insertValues, $parentId = 0)
+    public function execute(array $insertValues, int $parentId = 0)
     {
         $callback = function () use ($insertValues, $parentId) {
             // No parent item has been assigned
@@ -64,8 +64,10 @@ class Insert extends AbstractOperation
      * @param int $blockId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function fetchMaximumRightId($blockId)
+    protected function fetchMaximumRightId(int $blockId)
     {
         if ($this->isBlockAware() === true) {
             $maxRightId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($blockId);

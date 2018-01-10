@@ -14,33 +14,33 @@ interface ModuleAwareRepositoryInterface extends WriterRepositoryInterface
      *
      * @return int
      */
-    public function getModuleId($moduleName);
+    public function getModuleId(string $moduleName);
 
     /**
      * @param string $moduleName
      *
      * @return int
      */
-    public function getModuleSchemaVersion($moduleName);
+    public function getModuleSchemaVersion(string $moduleName);
 
     /**
      * @param string $moduleName
      *
      * @return bool
      */
-    public function moduleExists($moduleName);
+    public function moduleExists(string $moduleName);
 
     /**
      * @param string $moduleName
      *
      * @return array
      */
-    public function getInfoByModuleName($moduleName);
+    public function getInfoByModuleName(string $moduleName);
 
     /**
      * @param int $moduleId
      *
      * @return string
      */
-    public function getModuleNameById($moduleId);
+    public function getModuleNameById(int $moduleId);
 }

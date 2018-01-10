@@ -14,5 +14,5 @@ interface AclUserRolesRepositoryInterface
      *
      * @return array
      */
-    public function getRolesByUserId($userId);
+    public function getRolesByUserId(int $userId);
 }
