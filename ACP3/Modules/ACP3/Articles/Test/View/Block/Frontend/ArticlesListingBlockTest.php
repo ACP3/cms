@@ -28,13 +28,14 @@ class ArticlesListingBlockTest extends AbstractListingBlockTest
     {
         parent::setUpMockObjects();
 
-        $this->date = $this->getMockBuilder(Date::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->date = $this->createMock(Date::class);
 
-        $this->articleRepository = $this->getMockBuilder(ArticlesRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->date
+            ->expects($this->exactly(2))
+            ->method('getCurrentDateTime')
+            ->willReturn('2017-12-01 10:02:43');
+
+        $this->articleRepository = $this->createMock(ArticlesRepository::class);
 
         $this->articleRepository->expects($this->once())
             ->method('countAll')

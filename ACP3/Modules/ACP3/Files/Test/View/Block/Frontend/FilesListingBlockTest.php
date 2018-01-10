@@ -38,13 +38,14 @@ class FilesListingBlockTest extends AbstractListingBlockTest
     {
         parent::setUpMockObjects();
 
-        $this->date = $this->getMockBuilder(Date::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->date = $this->createMock(Date::class);
 
-        $this->settings = $this->getMockBuilder(SettingsInterface::class)
-            ->setMethods(['getSettings', 'saveSettings'])
-            ->getMock();
+        $this->date
+            ->expects($this->exactly(2))
+            ->method('getCurrentDateTime')
+            ->willReturn('2017-12-01 10:02:43');
+
+        $this->settings = $this->createMock(SettingsInterface::class);
 
         $this->settings->expects($this->once())
             ->method('getSettings')
@@ -53,9 +54,7 @@ class FilesListingBlockTest extends AbstractListingBlockTest
                 'dateformat' => 'long',
             ]);
 
-        $this->filesRepository = $this->getMockBuilder(FilesRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->filesRepository = $this->createMock(FilesRepository::class);
 
         $this->filesRepository->expects($this->once())
             ->method('countAll')
@@ -65,9 +64,7 @@ class FilesListingBlockTest extends AbstractListingBlockTest
             ->method('getAllByCategoryId')
             ->willReturn([]);
 
-        $this->categoriesRepository = $this->getMockBuilder(CategoriesRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->categoriesRepository = $this->createMock(CategoriesRepository::class);
 
         $this->categoriesRepository->expects($this->once())
             ->method('fetchNodeWithParents')
