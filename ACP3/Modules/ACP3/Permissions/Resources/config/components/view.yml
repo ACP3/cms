@@ -6,6 +6,7 @@ services:
       - '@core.acl'
     calls:
       - ['setDataGridRepository', ['@permissions.model.repository.acl_roles_data_grid_repository']]
+    public: false
 
   permissions.view.block.admin.role_manage_form_block:
     class: ACP3\Modules\ACP3\Permissions\View\Block\Admin\RoleManageFormBlock
@@ -16,6 +17,7 @@ services:
       - '@core.modules'
       - '@permissions.model.repository.acl_privileges_repository'
       - '@permissions.cache'
+    public: false
 
   permissions.view.block.admin.resource_manage_form_block:
     class: ACP3\Modules\ACP3\Permissions\View\Block\Admin\ResourceManageFormBlock
@@ -24,6 +26,7 @@ services:
       - '@permissions.model.repository.acl_resources_repository'
       - '@core.modules'
       - '@permissions.model.repository.acl_privileges_repository'
+    public: false
 
   permissions.view.block.admin.resources_listing_block:
     class: ACP3\Modules\ACP3\Permissions\View\Block\Admin\ResourcesListingBlock
@@ -32,3 +35,4 @@ services:
       - '@core.acl'
       - '@core.modules'
       - '@permissions.model.repository.acl_resources_repository'
+    public: false

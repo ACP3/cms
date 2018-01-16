@@ -5,12 +5,14 @@ services:
       - '@core.view.context.data_grid_block_context'
     calls:
       - ['setDataGridRepository', ['@users.model.repository.users_data_grid_repository']]
+    public: false
 
   users.view.block.admin.users_settings_form_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Admin\UsersSettingsFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@core.config'
+    public: false
 
   users.view.block.admin.user_manage_form_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Admin\UserManageFormBlock
@@ -19,6 +21,7 @@ services:
       - '@users.model.user_model'
       - '@core.acl'
       - '@users.helpers.forms'
+    public: false
 
   users.view.block.frontend.user_account_form_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserAccountFormBlock
@@ -26,6 +29,7 @@ services:
       - '@core.view.context.form_block_context'
       - '@users.model.user_model'
       - '@users.helpers.forms'
+    public: false
 
   users.view.block.frontend.user_account_settings_form_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserAccountSettingsFormBlock
@@ -33,38 +37,45 @@ services:
       - '@core.view.context.form_block_context'
       - '@users.model.user_model'
       - '@users.helpers.forms'
+    public: false
 
   users.view.block.frontend.user_details_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserDetailsBlock
     arguments:
       - '@core.view.context.block_context'
+    public: false
 
   users.view.block.frontend.user_forgot_password_form_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserForgotPasswordFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+    public: false
 
   users.view.block.frontend.users_listing_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UsersListingBlock
     arguments:
       - '@core.view.context.listing_block_context'
       - '@users.model.repository.users_repository'
+    public: false
 
   users.view.block.frontend.user_login_form_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserLoginFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+    public: false
 
   users.view.block.frontend.user_register_form_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Frontend\UserRegisterFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+    public: false
 
   users.view.block.widget.user_login_widget_form_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Widget\UserLoginWidgetFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@core.config'
+    public: false
 
   users.view.block.widget.user_menu_widget_block:
     class: ACP3\Modules\ACP3\Users\View\Block\Widget\UserMenuWidgetBlock
@@ -72,3 +83,4 @@ services:
       - '@core.view.context.block_context'
       - '@core.acl'
       - '@core.modules'
+    public: false

@@ -5,6 +5,7 @@ services:
       - '@core.view.context.data_grid_block_context'
     calls:
       - ['setDataGridRepository', ['@polls.model.repository.polls_data_grid_repository']]
+    public: false
 
   polls.view.block.admin.poll_manage_form_block:
     class: ACP3\Modules\ACP3\Polls\View\Block\Admin\PollManageFormBlock
@@ -12,6 +13,7 @@ services:
       - '@core.view.context.form_block_context'
       - '@polls.model.repository.polls_repository'
       - '@polls.model.repository.poll_answers_repository'
+    public: false
 
   polls.view.block.frontend.polls_listing_block:
     class: ACP3\Modules\ACP3\Polls\View\Block\Frontend\PollsListingBlock
@@ -19,11 +21,13 @@ services:
       - '@core.view.context.listing_block_context'
       - '@core.date'
       - '@polls.model.repository.polls_repository'
+    public: false
 
   polls.view.block.frontend.poll_vote_form_block:
     class: ACP3\Modules\ACP3\Polls\View\Block\Frontend\PollVoteFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+    public: false
 
   polls.view.block.frontend.poll_details_block:
     class: ACP3\Modules\ACP3\Polls\View\Block\Frontend\PollDetailsBlock
@@ -31,11 +35,13 @@ services:
       - '@core.view.context.block_context'
       - '@polls.model.repository.polls_repository'
       - '@polls.model.repository.poll_answers_repository'
+    public: false
 
   polls.view.block.widget.poll_vote_widget_form_block:
     class: ACP3\Modules\ACP3\Polls\View\Block\Widget\PollVoteWidgetFormBlock
     arguments:
       - '@core.view.context.form_block_context'
+    public: false
 
   polls.view.block.widget.poll_details_widget_block:
     class: ACP3\Modules\ACP3\Polls\View\Block\Widget\PollDetailsWidgetBlock
@@ -43,3 +49,4 @@ services:
       - '@core.view.context.block_context'
       - '@polls.model.repository.polls_repository'
       - '@polls.model.repository.poll_answers_repository'
+    public: false

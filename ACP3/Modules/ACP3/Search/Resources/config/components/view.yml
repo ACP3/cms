@@ -4,6 +4,7 @@ services:
     arguments:
       - '@core.view.context.form_block_context'
       - '@search.helpers'
+    public: false
 
   search.view.block.frontend.search_results_block:
     class: ACP3\Modules\ACP3\Search\View\Block\Frontend\SearchResultsBlock
@@ -11,9 +12,11 @@ services:
       - '@core.view.context.block_context'
       - '@core.acl'
       - '@search.utility.search_availability_registrar'
+    public: false
 
   search.view.block.widget.search_widget_form_block:
     class: ACP3\Modules\ACP3\Search\View\Block\Widget\SearchWidgetFormBlock
     arguments:
       - '@core.view.context.block_context'
       - '@search.helpers'
+    public: false

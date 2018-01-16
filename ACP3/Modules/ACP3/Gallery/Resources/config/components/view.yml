@@ -5,12 +5,14 @@ services:
       - '@core.view.context.data_grid_block_context'
     calls:
       - ['setDataGridRepository', ['@gallery.model.repository.galleries_data_grid_repository']]
+    public: false
 
   gallery.view.block.admin.gallery_manage_form_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryManageFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@gallery.model.repository.galleries_repository'
+    public: false
 
   gallery.view.block.admin.gallery_pictures_data_grid_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryPicturesDataGridBlock
@@ -20,6 +22,7 @@ services:
       - '@gallery.model.repository.galleries_repository'
     calls:
       - ['setDataGridRepository', ['@gallery.model.repository.gallery_pictures_data_grid_repository']]
+    public: false
 
   gallery.view.block.admin.gallery_settings_form_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GallerySettingsFormBlock
@@ -28,6 +31,7 @@ services:
       - '@core.config'
       - '@core.modules'
       - '@core.helpers.date'
+    public: false
 
   gallery.view.block.admin.gallery_picture_manage_form_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Admin\GalleryPictureManageFormBlock
@@ -37,6 +41,7 @@ services:
       - '@core.config'
       - '@core.modules'
       - '@gallery.model.repository.galleries_repository'
+    public: false
 
   gallery.view.block.frontend.galleries_listing_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Frontend\GalleriesListingBlock
@@ -45,6 +50,7 @@ services:
       - '@core.date'
       - '@core.config'
       - '@gallery.model.repository.galleries_repository'
+    public: false
 
   gallery.view.block.frontend.gallery_pictures_listing_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Frontend\GalleryPicturesListingBlock
@@ -53,6 +59,7 @@ services:
       - '@core.config'
       - '@gallery.model.repository.galleries_repository'
       - '@gallery.cache'
+    public: false
 
   gallery.view.block.frontend.gallery_picture_details_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Frontend\GalleryPictureDetailsBlock
@@ -64,6 +71,7 @@ services:
       - '@gallery.model.repository.gallery_pictures_repository'
     calls:
       - ['setMetaStatements', ['@?seo.helper.meta_statements']]
+    public: false
 
   gallery.view.block.widget.galleries_widget_listing_block:
     class: ACP3\Modules\ACP3\Gallery\View\Block\Widget\GalleriesWidgetListingBlock
@@ -72,3 +80,4 @@ services:
       - '@core.date'
       - '@core.config'
       - '@gallery.model.repository.galleries_repository'
+    public: false

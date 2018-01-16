@@ -7,6 +7,7 @@ services:
       - '@core.config'
       - '@core.modules'
       - '@categories.helpers'
+    public: false
 
   news.view.block.admin.news_data_grid_block:
     class: ACP3\Modules\ACP3\News\View\Block\Admin\NewsDataGridBlock
@@ -14,6 +15,7 @@ services:
       - '@core.view.context.data_grid_block_context'
     calls:
       - ['setDataGridRepository', ['@news.model.repository.news_data_grid_repository']]
+    public: false
 
   news.view.block.admin.news_settings_form_block:
     class: ACP3\Modules\ACP3\News\View\Block\Admin\NewsSettingsFormBlock
@@ -22,6 +24,7 @@ services:
       - '@core.config'
       - '@core.modules'
       - '@core.helpers.date'
+    public: false
 
   news.view.block.frontend.news_details_block:
     class: ACP3\Modules\ACP3\News\View\Block\Frontend\NewsDetailsBlock
@@ -29,6 +32,7 @@ services:
       - '@core.view.context.block_context'
       - '@core.config'
       - '@categories.model.repository.categories_repository'
+    public: false
 
   news.view.block.frontend.news_listing_block:
     class: ACP3\Modules\ACP3\News\View\Block\Frontend\NewsListingBlock
@@ -44,3 +48,4 @@ services:
     calls:
       - ['setMetaStatements', ['@?seo.helper.meta_statements']]
       - ['setCommentsHelpers', ['@?comments.helpers']]
+    public: false

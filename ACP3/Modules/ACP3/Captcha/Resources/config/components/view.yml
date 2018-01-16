@@ -5,3 +5,4 @@ services:
       - '@core.view.context.form_block_context'
       - '@core.config'
       - '@captcha.utility.captcha_registrar'
+    public: false

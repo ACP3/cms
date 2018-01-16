@@ -4,3 +4,4 @@ services:
     arguments:
       - '@core.view.context.form_block_context'
       - '@core.config'
+    public: false

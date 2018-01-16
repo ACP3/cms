@@ -4,6 +4,7 @@ services:
     arguments:
       - '@core.view.context.form_block_context'
       - '@comments.model.repository.comments_repository'
+    public: false
 
   comments.view.block.admin.comments_by_module_data_grid_block:
     class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsByModuleDataGridBlock
@@ -11,6 +12,7 @@ services:
       - '@core.view.context.data_grid_block_context'
     calls:
       - ['setDataGridRepository', ['@comments.model.repository.comments_by_module_data_grid_repository']]
+    public: false
 
   comments.view.block.admin.comments_data_grid_block:
     class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsDataGridBlock
@@ -19,6 +21,7 @@ services:
       - '@system.model.repository.modules_repository'
     calls:
       - ['setDataGridRepository', ['@comments.model.repository.comments_data_grid_repository']]
+    public: false
 
   comments.view.block.admin.comments_settings_form_block:
     class: ACP3\Modules\ACP3\Comments\View\Block\Admin\CommentsSettingsFormBlock
@@ -27,6 +30,7 @@ services:
       - '@core.modules'
       - '@core.config'
       - '@core.helpers.date'
+    public: false
 
   comments.view.block.frontend.comment_form_block:
     class: ACP3\Modules\ACP3\Comments\View\Block\Frontend\CommentFormBlock
@@ -34,6 +38,7 @@ services:
       - '@core.view.context.form_block_context'
       - '@core.config'
       - '@users.model.user_model'
+    public: false
 
   comments.view.block.frontend.comments_listing_block:
     class: ACP3\Modules\ACP3\Comments\View\Block\Frontend\CommentsListingBlock
@@ -43,3 +48,4 @@ services:
       - '@comments.model.repository.comments_repository'
     calls:
       - ['setEmoticonsHelper', ['@?emoticons.helpers']]
+    public: false

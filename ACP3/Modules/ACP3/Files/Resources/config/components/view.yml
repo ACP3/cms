@@ -7,6 +7,7 @@ services:
       - '@core.config'
       - '@core.modules'
       - '@categories.helpers'
+    public: false
 
   files.view.block.admin.files_data_grid_form_block:
     class: ACP3\Modules\ACP3\Files\View\Block\Admin\FilesDataGridBlock
@@ -16,6 +17,7 @@ services:
       - '@core.config'
     calls:
       - ['setDataGridRepository', ['@files.model.repository.files_data_grid_repository']]
+    public: false
 
   files.view.block.admin.files_settings_form_block:
     class: ACP3\Modules\ACP3\Files\View\Block\Admin\FilesSettingsFormBlock
@@ -25,12 +27,14 @@ services:
       - '@core.config'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
+    public: false
 
   files.view.block.frontend.categories_listing_block:
     class: ACP3\Modules\ACP3\Files\View\Block\Frontend\CategoriesListingBlock
     arguments:
       - '@core.view.context.block_context'
       - '@categories.model.repository.categories_repository'
+    public: false
 
   files.view.block.frontend.file_details_block:
     class: ACP3\Modules\ACP3\Files\View\Block\Frontend\FileDetailsBlock
@@ -38,6 +42,7 @@ services:
       - '@core.view.context.block_context'
       - '@core.config'
       - '@categories.model.repository.categories_repository'
+    public: false
 
   files.view.block.frontend.files_listing_block:
     class: ACP3\Modules\ACP3\Files\View\Block\Frontend\FilesListingBlock
@@ -47,3 +52,4 @@ services:
       - '@core.config'
       - '@files.model.repository.files_repository'
       - '@categories.model.repository.categories_repository'
+    public: false

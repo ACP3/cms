@@ -3,6 +3,7 @@ services:
     class: ACP3\Modules\ACP3\System\View\Block\Admin\SystemCacheBlock
     arguments:
       - '@core.view.context.block_context'
+    public: false
 
   system.view.block.admin.system_designs_block:
     class: ACP3\Modules\ACP3\System\View\Block\Admin\SystemDesignsBlock
@@ -10,12 +11,14 @@ services:
       - '@core.view.context.block_context'
       - '@core.config'
       - '@core.xml'
+    public: false
 
   system.view.block.admin.system_modules_block:
     class: ACP3\Modules\ACP3\System\View\Block\Admin\SystemModulesBlock
     arguments:
       - '@core.view.context.block_context'
       - '@core.modules'
+    public: false
 
   system.view.block.admin.system_settings_form_block:
     class: ACP3\Modules\ACP3\System\View\Block\Admin\SystemSettingsFormBlock
@@ -25,9 +28,11 @@ services:
       - '@core.i18n.available_language_packs'
       - '@core.helpers.date'
       - '@core.wysiwyg.wysiwyg_editor_registrar'
+    public: false
 
   system.view.block.system_update_check_block:
     class: ACP3\Modules\ACP3\System\View\Block\Admin\SystemUpdateCheckBlock
     arguments:
       - '@core.view.context.block_context'
       - '@system.helpers.update_check'
+    public: false

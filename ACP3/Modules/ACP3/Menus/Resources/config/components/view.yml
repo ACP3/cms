@@ -4,6 +4,7 @@ services:
     arguments:
       - '@core.view.context.form_block_context'
       - '@menus.model.repository.menus_repository'
+    public: false
 
   menus.view.block.admin.menus_listing_block:
     class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenusListingBlock
@@ -12,6 +13,7 @@ services:
       - '@core.acl'
       - '@menus.model.repository.menus_repository'
       - '@menus.helpers.menuitemslist'
+    public: false
 
   menus.view.block.admin.menu_item_manage_form_block:
     class: ACP3\Modules\ACP3\Menus\View\Block\Admin\MenuItemManageFormBlock
@@ -22,3 +24,4 @@ services:
       - '@menus.helpers.menuitemformfields'
     calls:
       - ['setArticlesHelpers', ['@?articles.helpers']]
+    public: false

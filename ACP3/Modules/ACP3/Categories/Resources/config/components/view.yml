@@ -5,12 +5,14 @@ services:
       - '@core.view.context.form_block_context'
       - '@categories.model.repository.categories_repository'
       - '@core.modules'
+    public: false
 
   categories.view.block.admin.categories_settings_form_block:
     class: ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoriesSettingsFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@core.config'
+    public: false
 
   categories.view.block.admin.categories_data_grid_block:
     class: ACP3\Modules\ACP3\Categories\View\Block\Admin\CategoriesDataGridBlock
@@ -19,3 +21,4 @@ services:
       - '@core.acl'
     calls:
       - ['setDataGridRepository', ['@categories.model.repository.categories_data_grid_repository']]
+    public: false

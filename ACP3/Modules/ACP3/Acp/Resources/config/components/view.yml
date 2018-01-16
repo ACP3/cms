@@ -5,3 +5,4 @@ services:
       - '@core.view.context.block_context'
       - '@core.acl'
       - '@core.modules'
+    public: false

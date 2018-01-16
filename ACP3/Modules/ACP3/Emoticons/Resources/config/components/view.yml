@@ -4,6 +4,7 @@ services:
     arguments:
       - '@core.view.context.form_block_context'
       - '@emoticons.model.repository.emoticons_repository'
+    public: false
 
   emoticons.view.block.admin.emoticons_data_grid_block:
     class: ACP3\Modules\ACP3\Emoticons\View\Block\Admin\EmoticonsDataGridBlock
@@ -12,9 +13,11 @@ services:
       - '@core.environment.application_path'
     calls:
       - ['setDataGridRepository', ['@emoticons.model.repository.emoticons_data_grid_repository']]
+    public: false
 
   emoticons.view.block.admin.emoticons_settings_form_block:
     class: ACP3\Modules\ACP3\Emoticons\View\Block\Admin\EmoticonsSettingsFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@core.config'
+    public: false

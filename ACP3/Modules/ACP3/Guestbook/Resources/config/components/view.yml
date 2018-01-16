@@ -5,6 +5,7 @@ services:
       - '@core.view.context.data_grid_block_context'
     calls:
       - ['setDataGridRepository', ['@guestbook.model.repository.guestbook_data_grid_repository']]
+    public: false
 
   guestbook.view.block.admin.guestbook_manage_form_block:
     class: ACP3\Modules\ACP3\Guestbook\View\Block\Admin\GuestbookAdminFormBlock
@@ -12,6 +13,7 @@ services:
       - '@core.view.context.form_block_context'
       - '@guestbook.model.repository.guestbook_repository'
       - '@core.config'
+    public: false
 
   guestbook.view.block.admin.guestbook_settings_form_block:
     class: ACP3\Modules\ACP3\Guestbook\View\Block\Admin\GuestbookSettingsFormBlock
@@ -20,6 +22,7 @@ services:
       - '@core.config'
       - '@core.helpers.date'
       - '@core.modules'
+    public: false
 
   guestbook.view.block.frontend.guestbook_listing_block:
     class: ACP3\Modules\ACP3\Guestbook\View\Block\Frontend\GuestbookListingBlock
@@ -29,6 +32,7 @@ services:
       - '@guestbook.model.repository.guestbook_repository'
     calls:
       - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
+    public: false
 
   guestbook.view.block.frontend.guestbook_form_block:
     class: ACP3\Modules\ACP3\Guestbook\View\Block\Frontend\GuestbookFormBlock
@@ -38,3 +42,4 @@ services:
       - '@users.model.user_model'
     calls:
       - ['setNewsletterSubscribeHelper', ['@?newsletter.helper.subscribe']]
+    public: false

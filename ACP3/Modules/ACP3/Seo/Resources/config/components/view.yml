@@ -6,6 +6,7 @@ services:
       - '@seo.helper.meta_statements'
     calls:
       - ['setDataGridRepository', ['@seo.model.repository.seo_data_grid_repository']]
+    public: false
 
   seo.view.block.admin.seo_manage_form_block:
     class: ACP3\Modules\ACP3\Seo\View\Block\Admin\SeoManageFormBlock
@@ -13,9 +14,11 @@ services:
       - '@core.view.context.form_block_context'
       - '@seo.model.repository.seo_repository'
       - '@seo.helper.meta_form_fields'
+    public: false
 
   seo.view.block.admin.seo_settings_form_block:
     class: ACP3\Modules\ACP3\Seo\View\Block\Admin\SeoSettingsFormBlock
     arguments:
       - '@core.view.context.form_block_context'
       - '@core.config'
+    public: false
