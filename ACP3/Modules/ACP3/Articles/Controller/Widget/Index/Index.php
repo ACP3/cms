@@ -8,7 +8,6 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Widget\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Articles;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
@@ -22,21 +21,22 @@ class Index extends Core\Controller\AbstractWidgetAction
      * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository
      */
     protected $articleRepository;
+    /**
+     * @var \ACP3\Core\View\Block\BlockInterface
+     */
+    private $block;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext                     $context
-     * @param \ACP3\Core\Date                                                 $date
-     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticlesRepository $articleRepository
+     * @param \ACP3\Core\Controller\Context\WidgetContext $context
+     * @param \ACP3\Core\View\Block\BlockInterface        $block
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Date $date,
-        Articles\Model\Repository\ArticlesRepository $articleRepository
+        Core\View\Block\BlockInterface $block
     ) {
         parent::__construct($context);
 
-        $this->date = $date;
-        $this->articleRepository = $articleRepository;
+        $this->block = $block;
     }
 
     /**
@@ -44,14 +44,12 @@ class Index extends Core\Controller\AbstractWidgetAction
      *
      * @return array
      */
-    public function execute($template = '')
+    public function execute(string $template = '')
     {
         $this->setCacheResponseCacheable();
 
-        $this->view->setTemplate($template);
-
-        return [
-            'sidebar_articles' => $this->articleRepository->getAll($this->date->getCurrentDateTime(), 5),
-        ];
+        return $this->block
+            ->setTemplate($template)
+            ->render();
     }
 }

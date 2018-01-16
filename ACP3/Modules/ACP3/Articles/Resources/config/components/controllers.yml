@@ -44,8 +44,7 @@ services:
     class: ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
-      - '@core.date'
-      - '@articles.model.repository.articles_repository'
+      - '@articles.view.block.widget.articles_latest_block'
 
   articles.controller.widget.index.single:
     class: ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Single

@@ -11,6 +11,7 @@ use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Model\DuplicationAwareTrait;
 use ACP3\Modules\ACP3\Articles\Installer\Schema;
+use Doctrine\DBAL\DBALException;
 
 class ArticlesModel extends AbstractModel
 {
