@@ -17,8 +17,10 @@ class MenusRepository extends Core\Model\Repository\AbstractRepository
      * @param int $menuId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function menuExists($menuId)
+    public function menuExists(int $menuId)
     {
         return (int) $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id",
@@ -27,12 +29,14 @@ class MenusRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $menuName
-     * @param int    $menuId
+     * @param string   $menuName
+     * @param int|null $menuId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function menuExistsByName($menuName, $menuId = 0)
+    public function menuExistsByName(string $menuName, ?int $menuId = null)
     {
         $where = !empty($menuId) ? ' AND id != :id' : '';
 
@@ -46,8 +50,10 @@ class MenusRepository extends Core\Model\Repository\AbstractRepository
      * @param int $menuId
      *
      * @return string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getMenuNameById($menuId)
+    public function getMenuNameById(int $menuId)
     {
         return $this->db->fetchColumn(
             "SELECT `index_name` FROM {$this->getTableName()} WHERE id = ?",
@@ -56,12 +62,14 @@ class MenusRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $limitStart
-     * @param string $resultsPerPage
+     * @param int|null $limitStart
+     * @param int|null $resultsPerPage
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAllMenus($limitStart = '', $resultsPerPage = '')
+    public function getAllMenus(?int $limitStart = null, ?int $resultsPerPage = null)
     {
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()} ORDER BY title ASC, id ASC" .

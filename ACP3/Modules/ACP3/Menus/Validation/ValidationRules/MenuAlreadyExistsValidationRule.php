@@ -36,7 +36,7 @@ class MenuAlreadyExistsValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        $menuId = $extra['menu_id'] ?? 0;
+        $menuId = $extra['menu_id'] ?? null;
 
         return $this->menuRepository->menuExistsByName($data, $menuId) === false;
     }
