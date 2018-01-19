@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Guestbook;
 
-/**
- * Class Settings
- * @package ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -31,7 +28,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                          $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
      * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
@@ -59,7 +56,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $notificationTypes = [
             0 => $this->translator->t('guestbook', 'no_notification'),
             1 => $this->translator->t('guestbook', 'notify_on_new_entry'),
-            2 => $this->translator->t('guestbook', 'notify_and_enable')
+            2 => $this->translator->t('guestbook', 'notify_and_enable'),
         ];
 
         if ($this->modules->isActive('emoticons') === true) {
@@ -80,8 +77,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
             'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
             'notify' => $this->formsHelper->choicesGenerator('notify', $notificationTypes, $settings['notify']),
             'overlay' => $this->formsHelper->yesNoCheckboxGenerator('overlay', $settings['overlay']),
-            'form' => array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 

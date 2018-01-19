@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model\DataProcessor\ColumnType;
@@ -17,6 +18,7 @@ class DateTimeColumnType implements ColumnTypeStrategyInterface
 
     /**
      * DateTimeColumnType constructor.
+     *
      * @param Date $date
      */
     public function __construct(Date $date)
@@ -26,6 +28,7 @@ class DateTimeColumnType implements ColumnTypeStrategyInterface
 
     /**
      * @param string $value
+     *
      * @return string
      */
     public function doEscape($value)

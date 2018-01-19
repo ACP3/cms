@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Widget\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Files\Controller\Widget\Index
- */
 class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -28,8 +25,8 @@ class Index extends Core\Controller\AbstractWidgetAction
     protected $filesRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext $context
-     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Controller\Context\WidgetContext               $context
+     * @param \ACP3\Core\Date                                           $date
      * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
      */
     public function __construct(
@@ -44,7 +41,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @param int $categoryId
+     * @param int    $categoryId
      * @param string $template
      *
      * @return array
@@ -58,20 +55,21 @@ class Index extends Core\Controller\AbstractWidgetAction
         $this->setTemplate($template);
 
         return [
-            'sidebar_files' => $this->fetchFiles($categoryId, $settings)
+            'sidebar_files' => $this->fetchFiles($categoryId, $settings),
         ];
     }
 
     /**
-     * @param int $categoryId
+     * @param int   $categoryId
      * @param array $settings
+     *
      * @return array
      */
     private function fetchFiles($categoryId, array $settings)
     {
         if (!empty($categoryId)) {
             $files = $this->filesRepository->getAllByCategoryId(
-                (int)$categoryId,
+                (int) $categoryId,
                 $this->date->getCurrentDateTime(),
                 $settings['sidebar']
             );

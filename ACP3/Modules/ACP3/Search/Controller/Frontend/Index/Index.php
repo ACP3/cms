@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Search\Controller\Frontend\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Search\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Search;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Search\Controller\Frontend\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -33,11 +30,11 @@ class Index extends Core\Controller\AbstractFrontendAction
     protected $availableModulesRegistrar;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Modules\ACP3\Search\Helpers $searchHelpers
+     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
+     * @param \ACP3\Core\Helpers\Forms                            $formsHelper
+     * @param \ACP3\Modules\ACP3\Search\Helpers                   $searchHelpers
      * @param \ACP3\Modules\ACP3\Search\Validation\FormValidation $searchValidator
-     * @param Search\Utility\SearchAvailabilityRegistrar $availableModulesRegistrar
+     * @param Search\Utility\SearchAvailabilityRegistrar          $availableModulesRegistrar
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -64,34 +61,35 @@ class Index extends Core\Controller\AbstractFrontendAction
         if ($this->request->getPost()->count() !== 0) {
             return $this->executePost($this->request->getPost()->all());
         } elseif (!empty($q)) {
-            return $this->executePost(['search_term' => (string)$q]);
+            return $this->executePost(['search_term' => (string) $q]);
         }
 
         $searchAreas = [
             'title_content' => $this->translator->t('search', 'title_and_content'),
             'title' => $this->translator->t('search', 'title_only'),
-            'content' => $this->translator->t('search', 'content_only')
+            'content' => $this->translator->t('search', 'content_only'),
         ];
 
         $sortDirections = [
             'asc' => $this->translator->t('search', 'asc'),
-            'desc' => $this->translator->t('search', 'desc')
+            'desc' => $this->translator->t('search', 'desc'),
         ];
 
         return [
-            'form' => array_merge(['search_term' => ''], $this->request->getPost()->all()),
+            'form' => \array_merge(['search_term' => ''], $this->request->getPost()->all()),
             'search_mods' => $this->searchHelpers->getModules(),
             'search_areas' => $this->formsHelper->checkboxGenerator(
                 'area',
                 $searchAreas,
                 'title_content'
             ),
-            'sort_hits' => $this->formsHelper->checkboxGenerator('sort', $sortDirections, 'asc')
+            'sort_hits' => $this->formsHelper->checkboxGenerator('sort', $sortDirections, 'asc'),
         ];
     }
 
     /**
      * @param array $formData
+     *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
     protected function executePost(array $formData)
@@ -106,7 +104,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                     $formData['mods'],
                     $this->get('core.helpers.secure')->strEncode($formData['search_term']),
                     $formData['area'],
-                    strtoupper($formData['sort'])
+                    \strtoupper($formData['sort'])
                 );
             }
         );
@@ -114,6 +112,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param array $formData
+     *
      * @return array
      */
     protected function prepareFormData(array $formData)
@@ -134,14 +133,16 @@ class Index extends Core\Controller\AbstractFrontendAction
                 $formData['sort'] = 'asc';
             }
         }
+
         return $formData;
     }
 
     /**
-     * @param array $modules
+     * @param array  $modules
      * @param string $searchTerm
      * @param string $area
      * @param string $sort
+     *
      * @return array
      */
     protected function renderSearchResults(array $modules, $searchTerm, $area, $sort)
@@ -154,22 +155,23 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         return [
             'results_mods' => $this->processSearchResults($modules, $searchTerm, $area, $sort),
-            'search_term' => $searchTerm
+            'search_term' => $searchTerm,
         ];
     }
 
     /**
-     * @param array $modules
+     * @param array  $modules
      * @param string $searchTerm
      * @param string $area
      * @param string $sort
+     *
      * @return array
      */
     protected function processSearchResults(array $modules, $searchTerm, $area, $sort)
     {
         $searchResults = [];
         foreach ($this->availableModulesRegistrar->getAvailableModules() as $moduleName => $searchAvailability) {
-            if (in_array($moduleName, $modules) && $this->acl->hasPermission('frontend/' . $moduleName)) {
+            if (\in_array($moduleName, $modules) && $this->acl->hasPermission('frontend/' . $moduleName)) {
                 $results = $searchAvailability->fetchSearchResults($searchTerm, $area, $sort);
 
                 if (!empty($results)) {
@@ -177,7 +179,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 }
             }
         }
-        ksort($searchResults);
+        \ksort($searchResults);
 
         return $searchResults;
     }

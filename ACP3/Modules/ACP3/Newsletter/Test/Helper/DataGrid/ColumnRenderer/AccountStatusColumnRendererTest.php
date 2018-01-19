@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Newsletter\Test\Helper\DataGrid\ColumnRenderer;
 
 use ACP3\Core\I18n\Translator;
@@ -39,12 +45,12 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidField()
     {
-        $this->columnData = array_merge($this->columnData, [
-            'fields' => ['status']
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['status'],
         ]);
         $this->dbData = [
             'id' => 123,
-            'status' => 1
+            'status' => 1,
         ];
 
         $this->primaryKey = 'id';
@@ -65,12 +71,12 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
             ->with('acp/newsletter/accounts/activate/id_123')
             ->willReturn('/index.php/acp/newsletter/accounts/activate/id_123/');
 
-        $this->columnData = array_merge($this->columnData, [
-            'fields' => ['status']
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['status'],
         ]);
         $this->dbData = [
             'id' => 123,
-            'status' => 0
+            'status' => 0,
         ];
 
         $this->primaryKey = 'id';

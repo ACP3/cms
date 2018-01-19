@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Model;
@@ -15,15 +16,15 @@ class SeoModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function save(array $data, $entryId = null)
     {
-        $data = array_merge($data, [
+        $data = \array_merge($data, [
             'title' => $data['seo_title'],
             'keywords' => $data['seo_keywords'],
             'description' => $data['seo_description'],
-            'robots' => $data['seo_robots']
+            'robots' => $data['seo_robots'],
         ]);
 
         return parent::save($data, $entryId);
@@ -40,7 +41,7 @@ class SeoModel extends AbstractModel
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'keywords' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'robots' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'robots' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

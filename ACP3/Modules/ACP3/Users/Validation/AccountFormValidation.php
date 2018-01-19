@@ -1,13 +1,14 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Users\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AccountFormValidation
- * @package ACP3\Modules\ACP3\Users\Validation
- */
 class AccountFormValidation extends AbstractUserFormValidation
 {
     protected $userId = 0;
@@ -19,13 +20,13 @@ class AccountFormValidation extends AbstractUserFormValidation
      */
     public function setUserId($userId)
     {
-        $this->userId = (int)$userId;
+        $this->userId = (int) $userId;
 
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Core\Helpers;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Core\Helpers\TableOfContents;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
-/**
- * Class PageBreaks
- * @package ACP3\Modules\ACP3\Seo\Core\Helpers
- */
 class PageBreaks extends \ACP3\Core\Helpers\PageBreaks
 {
     /**
@@ -25,7 +22,7 @@ class PageBreaks extends \ACP3\Core\Helpers\PageBreaks
      * PageBreaks constructor.
      *
      * @param \ACP3\Core\Http\RequestInterface             $request
-     * @param \ACP3\Core\Router\RouterInterface                   $router
+     * @param \ACP3\Core\Router\RouterInterface            $router
      * @param \ACP3\Core\Helpers\TableOfContents           $tableOfContents
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
      */
@@ -41,7 +38,7 @@ class PageBreaks extends \ACP3\Core\Helpers\PageBreaks
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function splitTextIntoPages($text, $baseUrlPath)
     {

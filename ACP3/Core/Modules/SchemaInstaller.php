@@ -1,18 +1,18 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Modules;
 
 use ACP3\Core\Modules\Installer\SchemaInterface;
-use ACP3\Modules\ACP3\System;
 
-/**
- * Class SchemaInstaller
- * @package ACP3\Core\Modules
- */
 class SchemaInstaller extends SchemaHelper implements InstallerInterface
 {
     /**
-     * Installs a module
+     * Installs a module.
      *
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      *
@@ -32,6 +32,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
 
     /**
      * @param SchemaInterface $schema
+     *
      * @return bool
      */
     protected function moduleNeedsInstallation(SchemaInterface $schema)
@@ -42,7 +43,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     }
 
     /**
-     * Adds a module to the modules SQL-table
+     * Adds a module to the modules SQL-table.
      *
      * @param string $moduleName
      * @param int    $schemaVersion
@@ -55,25 +56,27 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
             'id' => '',
             'name' => $moduleName,
             'version' => $schemaVersion,
-            'active' => 1
+            'active' => 1,
         ];
 
         return $this->systemModuleRepository->insert($insertValues) !== false;
     }
 
     /**
-     * Installs all module settings
+     * Installs all module settings.
      *
      * @param string $moduleName
      * @param array  $settings
      *
      * @return bool
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function installSettings($moduleName, array $settings)
     {
-        if (count($settings) > 0) {
+        if (\count($settings) > 0) {
             $this->db->getConnection()->beginTransaction();
+
             try {
                 $moduleId = $this->getModuleId($moduleName);
                 foreach ($settings as $key => $value) {
@@ -81,7 +84,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
                         'id' => '',
                         'module_id' => $moduleId,
                         'name' => $key,
-                        'value' => $value
+                        'value' => $value,
                     ];
                     $this->systemSettingsRepository->insert($insertValues);
                 }
@@ -90,14 +93,16 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
                 $this->db->getConnection()->rollBack();
 
                 $this->logger->warning($e);
+
                 return false;
             }
         }
+
         return true;
     }
 
     /**
-     * Method for uninstalling a module
+     * Method for uninstalling a module.
      *
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      *
@@ -110,7 +115,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     }
 
     /**
-     * Löscht ein Modul aus der modules DB-Tabelle
+     * Löscht ein Modul aus der modules DB-Tabelle.
      *
      * @param string $moduleName
      *
@@ -118,6 +123,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     protected function removeFromModulesTable($moduleName)
     {
-        return $this->systemModuleRepository->delete((int)$this->getModuleId($moduleName)) !== false;
+        return $this->systemModuleRepository->delete((int) $this->getModuleId($moduleName)) !== false;
     }
 }

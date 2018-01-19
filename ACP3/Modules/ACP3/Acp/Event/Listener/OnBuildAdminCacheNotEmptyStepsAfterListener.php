@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Acp\Event\Listener;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Acp\Event\Listener;
 use ACP3\Core\Breadcrumb\Event\StepsBuildCacheEvent;
 use ACP3\Core\I18n\Translator;
 
-/**
- * Class OnBuildAdminCacheNotEmptyStepsAfterListener
- * @package ACP3\Modules\ACP3\Acp\Event\Listener
- */
 class OnBuildAdminCacheNotEmptyStepsAfterListener
 {
     /**
@@ -23,7 +20,7 @@ class OnBuildAdminCacheNotEmptyStepsAfterListener
     /**
      * OnBreadcrumbStepsBuildCacheListener constructor.
      *
-     * @param \ACP3\Core\I18n\Translator       $translator
+     * @param \ACP3\Core\I18n\Translator $translator
      */
     public function __construct(Translator $translator)
     {

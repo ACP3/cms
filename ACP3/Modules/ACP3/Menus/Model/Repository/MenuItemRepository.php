@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Model\Repository;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Menus\Model\Repository;
 use ACP3\Core\NestedSet\Model\Repository\BlockAwareNestedSetRepositoryInterface;
 use ACP3\Core\NestedSet\Model\Repository\NestedSetRepository;
 
-/**
- * Class MenuItemRepository
- * @package ACP3\Modules\ACP3\Menus\Model\Repository
- */
 class MenuItemRepository extends NestedSetRepository implements BlockAwareNestedSetRepositoryInterface
 {
     const TABLE_NAME = 'menu_items';
@@ -24,10 +21,10 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      */
     public function menuItemExists($menuItemId)
     {
-        return ((int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
                 "SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id",
                 ['id' => $menuItemId]
-            ) > 0);
+            ) > 0;
     }
 
     /**
@@ -76,7 +73,7 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      */
     public function getMenuIdByMenuItemId($menuItemId)
     {
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             "SELECT `block_id` FROM {$this->getTableName()} WHERE id = ?",
             [$menuItemId]
         );
@@ -89,7 +86,7 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      */
     public function getMenuItemIdByUri($uri)
     {
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             "SELECT `id` FROM {$this->getTableName()} WHERE uri = ?",
             [$uri]
         );
@@ -120,17 +117,20 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
 
     /**
      * @param string $menuName
-     * @param array $uris
+     * @param array  $uris
      *
      * @return int
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function getLeftIdByUris($menuName, array $uris)
     {
-        return (int)$this->db->executeQuery(
+        return (int) $this->db->executeQuery(
             "SELECT m.left_id FROM {$this->getTableName()} AS m JOIN {$this->getTableName(MenuRepository::TABLE_NAME)} AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC",
-            [$menuName, array_unique($uris)],
-            [\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY])->fetch(\PDO::FETCH_COLUMN
+            [$menuName, \array_unique($uris)],
+            [\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY]
+        )->fetch(
+                \PDO::FETCH_COLUMN
         );
     }
 
@@ -138,13 +138,14 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      * @param array $uris
      *
      * @return array
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function getMenuItemsByUri(array $uris)
     {
         return $this->db->executeQuery(
             "SELECT p.title, p.uri, p.left_id, p.right_id FROM {$this->getTableName()} AS c, {$this->getTableName()} AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC",
-            [array_unique($uris)],
+            [\array_unique($uris)],
             [\Doctrine\DBAL\Connection::PARAM_STR_ARRAY]
         )->fetchAll();
     }

@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
@@ -8,10 +10,6 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Polls\Controller\Admin\Index
- */
 class Create extends AbstractFormAction
 {
     /**
@@ -36,14 +34,14 @@ class Create extends AbstractFormAction
     protected $pollsModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
-     * @param Polls\Model\PollsModel $pollsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param \ACP3\Core\Date                                            $date
+     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository   $pollRepository
+     * @param Polls\Model\PollsModel                                     $pollsModel
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
-     * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation $pollsValidator
+     * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation    $pollsValidator
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -72,14 +70,14 @@ class Create extends AbstractFormAction
         $defaults = [
             'title' => '',
             'start' => '',
-            'end' => ''
+            'end' => '',
         ];
 
         return [
             'answers' => $this->getAnswers(),
             'options' => $this->fetchOptions(0),
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -115,7 +113,7 @@ class Create extends AbstractFormAction
         } else {
             $answers = [
                 ['text' => ''],
-                ['text' => '']
+                ['text' => ''],
             ];
         }
 

@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Gallery\Validation;
 
 use ACP3\Core;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * Class PictureFormValidation
- * @package ACP3\Modules\ACP3\Gallery\Validation
- */
 class PictureFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
@@ -20,28 +22,31 @@ class PictureFormValidation extends Core\Validation\AbstractFormValidation
     protected $file;
 
     /**
-     * @param boolean $fileRequired
+     * @param bool $fileRequired
      *
      * @return $this
      */
     public function setFileRequired($fileRequired)
     {
-        $this->fileRequired = (bool)$fileRequired;
+        $this->fileRequired = (bool) $fileRequired;
+
         return $this;
     }
 
     /**
      * @param UploadedFile|null $file
+     *
      * @return $this
      */
     public function setFile($file)
     {
         $this->file = $file;
+
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {
@@ -54,9 +59,10 @@ class PictureFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'file',
                     'message' => $this->translator->t('gallery', 'invalid_image_selected'),
                     'extra' => [
-                        'required' => $this->fileRequired
-                    ]
-                ]);
+                        'required' => $this->fileRequired,
+                    ],
+                ]
+            );
 
         $this->validator->validate();
     }

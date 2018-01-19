@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Breadcrumb;
@@ -14,10 +15,6 @@ use ACP3\Core\Router\RouterInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Steps
- * @package ACP3\Core\Breadcrumb
- */
 class Steps
 {
     /**
@@ -52,10 +49,10 @@ class Steps
     /**
      * Breadcrumb constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
+     * @param \ACP3\Core\I18n\Translator                                  $translator
+     * @param \ACP3\Core\Http\RequestInterface                            $request
+     * @param \ACP3\Core\Router\RouterInterface                           $router
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
@@ -73,7 +70,7 @@ class Steps
     }
 
     /**
-     * Returns the breadcrumb
+     * Returns the breadcrumb.
      *
      * @return array
      */
@@ -87,7 +84,7 @@ class Steps
     }
 
     /**
-     * Sets the breadcrumb cache for the current request
+     * Sets the breadcrumb cache for the current request.
      */
     private function buildBreadcrumbCache()
     {
@@ -102,11 +99,11 @@ class Steps
             $this->buildBreadcrumbCacheForFrontend();
         }
 
-        $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['last'] = true;
+        $this->breadcrumbCache[\count($this->breadcrumbCache) - 1]['last'] = true;
     }
 
     /**
-     * Sets the breadcrumb steps cache for admin panel action requests
+     * Sets the breadcrumb steps cache for admin panel action requests.
      */
     private function buildBreadcrumbCacheForAdmin()
     {
@@ -183,7 +180,7 @@ class Steps
     }
 
     /**
-     * Sets the breadcrumb steps cache for frontend action requests
+     * Sets the breadcrumb steps cache for frontend action requests.
      */
     protected function buildBreadcrumbCacheForFrontend()
     {
@@ -200,19 +197,19 @@ class Steps
     }
 
     /**
-     * Ersetzt die aktuell letzte Brotkrume mit neuen Werten
+     * Ersetzt die aktuell letzte Brotkrume mit neuen Werten.
      *
      * @param string $title
      * @param string $path
-     * @param bool $dbSteps
+     * @param bool   $dbSteps
      *
      * @return $this
      */
     public function replaceAncestor($title, $path = '', $dbSteps = false)
     {
         if ($dbSteps === false) {
-            end($this->steps);
-            $this->steps[(int)key($this->steps)] = $this->buildStepItem($title, $path);
+            \end($this->steps);
+            $this->steps[(int) \key($this->steps)] = $this->buildStepItem($title, $path);
         }
 
         return $this;
@@ -221,18 +218,19 @@ class Steps
     /**
      * @param string $title
      * @param string $path
+     *
      * @return array
      */
     protected function buildStepItem($title, $path)
     {
         return [
             'title' => $title,
-            'uri' => !empty($path) ? $this->router->route($path) : ''
+            'uri' => !empty($path) ? $this->router->route($path) : '',
         ];
     }
 
     /**
-     * Zuweisung einer neuen Stufe zur Brotkrümelspur
+     * Zuweisung einer neuen Stufe zur Brotkrümelspur.
      *
      * @param string $title
      * @param string $path
@@ -249,7 +247,7 @@ class Steps
     }
 
     /**
-     * Fügt Brotkrumen an den Anfang an
+     * Fügt Brotkrumen an den Anfang an.
      *
      * @param string $title
      * @param string $path
@@ -260,7 +258,7 @@ class Steps
     {
         if (!$this->stepAlreadyExists($path)) {
             $step = $this->buildStepItem($title, $path);
-            array_unshift($this->steps, $step);
+            \array_unshift($this->steps, $step);
         }
 
         return $this;

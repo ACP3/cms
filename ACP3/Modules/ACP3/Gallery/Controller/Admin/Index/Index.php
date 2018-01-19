@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
@@ -11,10 +12,6 @@ use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Gallery\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -25,7 +22,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                         $context
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryDataGridRepository $dataGridRepository
      */
     public function __construct(
@@ -55,7 +52,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         return [
             'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 
@@ -69,7 +66,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['start', 'end'],
-                'default_sort' => true
+                'default_sort' => true,
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('gallery', 'title'),
@@ -87,7 +84,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'fields' => ['id'],
                 'primary' => true,
                 'custom' => [
-                    'path' => Helpers::URL_KEY_PATTERN_GALLERY
+                    'path' => Helpers::URL_KEY_PATTERN_GALLERY,
                 ],
             ], 10);
     }

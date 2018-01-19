@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\Date;
 use ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface;
 
-/**
- * Class FloodBarrierValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 abstract class AbstractFloodBarrierValidationRule extends AbstractValidationRule
 {
     /**
@@ -22,19 +24,19 @@ abstract class AbstractFloodBarrierValidationRule extends AbstractValidationRule
     /**
      * FloodBarrierValidationRule constructor.
      *
-     * @param \ACP3\Core\Date                                       $date
+     * @param \ACP3\Core\Date                                                  $date
      * @param \ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface $repository
      */
     public function __construct(
         Date $date,
-        FloodBarrierAwareRepositoryInterface $repository)
-    {
+        FloodBarrierAwareRepositoryInterface $repository
+    ) {
         $this->date = $date;
         $this->repository = $repository;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {

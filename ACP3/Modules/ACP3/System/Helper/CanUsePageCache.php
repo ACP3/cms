@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Helper;
@@ -23,6 +24,7 @@ class CanUsePageCache
 
     /**
      * CanUsePageCache constructor.
+     *
      * @param SettingsInterface $settings
      * @param $environment
      */
@@ -38,6 +40,7 @@ class CanUsePageCache
     public function canUsePageCache()
     {
         $systemSettings = $this->settings->getSettings(Schema::MODULE_NAME);
+
         return $systemSettings['page_cache_is_enabled'] == 1 && $this->environment === ApplicationMode::PRODUCTION;
     }
 }

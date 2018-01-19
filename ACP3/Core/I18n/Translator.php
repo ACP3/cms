@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\I18n;
 
 use ACP3\Core\Environment\ApplicationPath;
@@ -21,7 +27,7 @@ class Translator
      */
     protected $config;
     /**
-     * Die zur Zeit eingestellte Sprache
+     * Die zur Zeit eingestellte Sprache.
      *
      * @var string
      */
@@ -41,8 +47,9 @@ class Translator
 
     /**
      * Translator constructor.
-     * @param ApplicationPath $appPath
-     * @param DictionaryCache $dictionaryCache
+     *
+     * @param ApplicationPath   $appPath
+     * @param DictionaryCache   $dictionaryCache
      * @param SettingsInterface $config
      */
     public function __construct(
@@ -56,16 +63,16 @@ class Translator
     }
 
     /**
-     * Überprüft, ob das angegebene Sprachpaket existiert
+     * Überprüft, ob das angegebene Sprachpaket existiert.
      *
      * @param string $locale
      *
-     * @return boolean
+     * @return bool
      */
     public function languagePackExists($locale)
     {
-        return !preg_match('=/=', $locale)
-        && is_file($this->appPath->getModulesDir() . 'ACP3/System/Resources/i18n/' . $locale . '.xml') === true;
+        return !\preg_match('=/=', $locale)
+        && \is_file($this->appPath->getModulesDir() . 'ACP3/System/Resources/i18n/' . $locale . '.xml') === true;
     }
 
     /**
@@ -85,7 +92,7 @@ class Translator
      */
     public function getShortIsoCode()
     {
-        return substr($this->getLocale(), 0, strpos($this->getLocale(), '_'));
+        return \substr($this->getLocale(), 0, \strpos($this->getLocale(), '_'));
     }
 
     /**
@@ -103,7 +110,7 @@ class Translator
     }
 
     /**
-     * Gets the writing direction of the language
+     * Gets the writing direction of the language.
      *
      * @return string
      */
@@ -130,14 +137,14 @@ class Translator
         }
 
         if (isset($this->buffer[$this->getLocale()]['keys'][$module . $phrase])) {
-            return strtr($this->buffer[$this->getLocale()]['keys'][$module . $phrase], $arguments);
+            return \strtr($this->buffer[$this->getLocale()]['keys'][$module . $phrase], $arguments);
         }
 
-        return strtoupper('{' . $module . '_' . $phrase . '}');
+        return \strtoupper('{' . $module . '_' . $phrase . '}');
     }
 
     /**
-     * Gets all currently available languages
+     * Gets all currently available languages.
      *
      * @param string $currentLanguage
      *

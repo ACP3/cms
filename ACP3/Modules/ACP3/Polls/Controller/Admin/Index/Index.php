@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Polls\Controller\Admin\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -24,7 +21,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext        $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\DataGridRepository $dataGridRepository
      */
     public function __construct(
@@ -54,7 +51,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         return [
             'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 
@@ -69,7 +66,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['start', 'end'],
                 'default_sort' => true,
-                'default_sort_direction' => 'desc'
+                'default_sort_direction' => 'desc',
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('polls', 'question'),
@@ -80,7 +77,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
             ], 10);
     }
 }

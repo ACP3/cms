@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
@@ -10,10 +11,6 @@ use ACP3\Core\Controller\AbstractFrontendAction as CoreAbstractFrontendAction;
 use ACP3\Modules\ACP3\Comments\Installer\Schema;
 use ACP3\Modules\ACP3\Emoticons;
 
-/**
- * Class AbstractAction
- * @package ACP3\Modules\ACP3\Comments\Controller\Frontend\Index
- */
 abstract class AbstractFrontendAction extends CoreAbstractFrontendAction
 {
     /**

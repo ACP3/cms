@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Session;
@@ -36,10 +37,10 @@ class SessionHandler extends AbstractSessionHandler
     protected $gcCalled = false;
 
     /**
-     * @param \ACP3\Core\Database\Connection $db
+     * @param \ACP3\Core\Database\Connection         $db
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param Response $response
+     * @param \ACP3\Core\Http\RequestInterface       $request
+     * @param Response                               $response
      */
     public function __construct(
         Connection $db,
@@ -56,12 +57,12 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function startSession()
     {
         // Set the session cookie parameters
-        session_set_cookie_params(
+        \session_set_cookie_params(
             0,
             $this->appPath->getWebRoot(),
             null,
@@ -70,20 +71,20 @@ class SessionHandler extends AbstractSessionHandler
         );
 
         // Start the session
-        session_start();
+        \session_start();
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function secureSession()
     {
-        session_regenerate_id();
+        \session_regenerate_id();
         $this->resetSessionData();
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function open($savePath, $sessionId)
     {
@@ -91,7 +92,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function close()
     {
@@ -103,7 +104,7 @@ class SessionHandler extends AbstractSessionHandler
             $this->gcCalled = false;
             $this->db->getConnection()->executeUpdate(
                 "DELETE FROM `{$this->db->getPrefix()}sessions` WHERE `session_starttime` + ? < ?;",
-                [$this->expireTime, time()]
+                [$this->expireTime, \time()]
             );
         }
 
@@ -111,7 +112,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * Resets all already stored session data
+     * Resets all already stored session data.
      */
     protected function resetSessionData()
     {
@@ -119,7 +120,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function read($sessionId)
     {
@@ -132,20 +133,20 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function write($sessionId, $data)
     {
         $this->db->getConnection()->executeUpdate(
             "INSERT INTO `{$this->db->getPrefix()}sessions` (`session_id`, `session_starttime`, `session_data`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `session_data` = ?;",
-            [$sessionId, time(), $data, $data]
+            [$sessionId, \time(), $data, $data]
         );
 
         return true;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function destroy($sessionId)
     {
@@ -170,7 +171,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function gc($sessionLifetime)
     {

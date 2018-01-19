@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Core\Controller\AbstractFrontendAction;
 
-/**
- * Class AbstractFormAction
- * @package ACP3\Modules\ACP3\Users\Controller\Admin\Index
- */
 abstract class AbstractFormAction extends AbstractFrontendAction
 {
     /**
@@ -24,17 +21,16 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      * AbstractFormAction constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms                   $formsHelpers
+     * @param \ACP3\Core\Helpers\Forms                      $formsHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelpers)
-    {
+        Core\Helpers\Forms $formsHelpers
+    ) {
         parent::__construct($context);
 
         $this->formsHelpers = $formsHelpers;
     }
-
 
     /**
      * @param array $currentUserRoles
@@ -47,8 +43,9 @@ abstract class AbstractFormAction extends AbstractFrontendAction
 
         $availableUserRoles = [];
         foreach ($roles as $role) {
-            $availableUserRoles[$role['id']] = str_repeat('&nbsp;&nbsp;', $role['level']) . $role['name'];
+            $availableUserRoles[$role['id']] = \str_repeat('&nbsp;&nbsp;', $role['level']) . $role['name'];
         }
+
         return $this->formsHelpers->choicesGenerator('roles', $availableUserRoles, $currentUserRoles);
     }
 

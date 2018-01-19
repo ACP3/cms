@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
@@ -11,10 +12,6 @@ use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Modules\ACP3\Gallery;
 
-/**
- * Class AbstractFormAction
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
- */
 class AbstractFormAction extends AbstractFrontendAction
 {
     /**
@@ -26,7 +23,7 @@ class AbstractFormAction extends AbstractFrontendAction
      * AbstractFormAction constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms                   $formsHelper
+     * @param \ACP3\Core\Helpers\Forms                      $formsHelper
      */
     public function __construct(FrontendContext $context, Forms $formsHelper)
     {
@@ -43,7 +40,7 @@ class AbstractFormAction extends AbstractFrontendAction
     protected function getOptions($currentValue = '0')
     {
         $comments = [
-            '1' => $this->translator->t('system', 'allow_comments')
+            '1' => $this->translator->t('system', 'allow_comments'),
         ];
 
         return $this->formsHelper->checkboxGenerator('comments', $comments, $currentValue);
@@ -55,5 +52,4 @@ class AbstractFormAction extends AbstractFrontendAction
 
         return $settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments');
     }
-
 }

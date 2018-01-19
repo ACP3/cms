@@ -1,10 +1,12 @@
 <?php
-namespace ACP3\Core\Assets\Minifier;
 
 /**
- * Class CSS
- * @package ACP3\Core\Assets\Minifier
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Assets\Minifier;
+
 class CSS extends AbstractMinifier
 {
     /**
@@ -18,7 +20,7 @@ class CSS extends AbstractMinifier
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function processLibraries($layout)
     {
@@ -36,7 +38,7 @@ class CSS extends AbstractMinifier
     }
 
     /**
-     * Fetch all stylesheets of the enabled frontend frameworks/libraries
+     * Fetch all stylesheets of the enabled frontend frameworks/libraries.
      */
     protected function fetchLibraries()
     {
@@ -53,7 +55,7 @@ class CSS extends AbstractMinifier
     }
 
     /**
-     * Fetches the theme stylesheets
+     * Fetches the theme stylesheets.
      *
      * @param string $layout
      */
@@ -64,7 +66,7 @@ class CSS extends AbstractMinifier
                 '',
                 '',
                 static::ASSETS_PATH_CSS,
-                trim($file)
+                \trim($file)
             );
         }
 
@@ -84,7 +86,7 @@ class CSS extends AbstractMinifier
     }
 
     /**
-     * Fetches the stylesheets of all currently enabled modules
+     * Fetches the stylesheets of all currently enabled modules.
      */
     protected function fetchModuleStylesheets()
     {

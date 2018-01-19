@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Files\Validation;
 
 use ACP3\Core;
 use ACP3\Core\Validation\AbstractFormValidation;
 
-/**
- * Class AdminSettingsFormValidation
- * @package ACP3\Modules\ACP3\Files\Validation
- */
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
     /**
@@ -33,7 +35,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {
@@ -46,16 +48,18 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'dateformat',
                     'message' => $this->translator->t('system', 'select_date_format'),
                     'extra' => [
-                        'haystack' => ['long', 'short']
-                    ]
-                ])
+                        'haystack' => ['long', 'short'],
+                    ],
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'sidebar',
-                    'message' => $this->translator->t('system', 'select_sidebar_entries')
-                ])
+                    'message' => $this->translator->t('system', 'select_sidebar_entries'),
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -63,9 +67,10 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'order_by',
                     'message' => $this->translator->t('files', 'select_order_by'),
                     'extra' => [
-                        'haystack' => ['date', 'custom']
-                    ]
-                ]);
+                        'haystack' => ['date', 'custom'],
+                    ],
+                ]
+            );
 
         if ($this->modules->isActive('comments')) {
             $this->validator
@@ -76,9 +81,10 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'field' => 'comments',
                         'message' => $this->translator->t('files', 'select_allow_comments'),
                         'extra' => [
-                            'haystack' => [0, 1]
-                        ]
-                    ]);
+                            'haystack' => [0, 1],
+                        ],
+                    ]
+                );
         }
 
         $this->validator->validate();

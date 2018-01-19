@@ -1,17 +1,14 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class DisplayActionTrait
- * @package ACP3\Core\Controller
- */
 trait DisplayActionTrait
 {
     /**
@@ -24,9 +21,10 @@ trait DisplayActionTrait
     private $content = '';
 
     /**
-     * Outputs the requested module controller action
+     * Outputs the requested module controller action.
      *
      * @param Response|string|array $actionResult
+     *
      * @return Response
      */
     public function display($actionResult)
@@ -35,10 +33,11 @@ trait DisplayActionTrait
             foreach ($this->getResponse()->headers->getCookies() as $cookie) {
                 $actionResult->headers->setCookie($cookie);
             }
+
             return $actionResult;
-        } elseif (is_string($actionResult)) {
+        } elseif (\is_string($actionResult)) {
             $this->setContent($actionResult);
-        } elseif (is_array($actionResult)) {
+        } elseif (\is_array($actionResult)) {
             $this->getView()->assign($actionResult);
         }
 
@@ -64,9 +63,6 @@ trait DisplayActionTrait
      */
     abstract protected function applyTemplateAutomatically();
 
-    /**
-     * @return void
-     */
     abstract protected function addCustomTemplateVarsBeforeOutput();
 
     /**
@@ -80,7 +76,7 @@ trait DisplayActionTrait
     abstract protected function getView();
 
     /**
-     * Gibt den Content-Type der anzuzeigenden Seiten zurück
+     * Gibt den Content-Type der anzuzeigenden Seiten zurück.
      *
      * @return string
      */
@@ -90,7 +86,7 @@ trait DisplayActionTrait
     }
 
     /**
-     * Weist der aktuell auszugebenden Seite den Content-Type zu
+     * Weist der aktuell auszugebenden Seite den Content-Type zu.
      *
      * @param string $data
      *
@@ -124,7 +120,7 @@ trait DisplayActionTrait
     }
 
     /**
-     * Gibt den auszugebenden Seiteninhalt zurück
+     * Gibt den auszugebenden Seiteninhalt zurück.
      *
      * @return string|false
      */
@@ -134,7 +130,7 @@ trait DisplayActionTrait
     }
 
     /**
-     * Weist dem Template den auszugebenden Inhalt zu
+     * Weist dem Template den auszugebenden Inhalt zu.
      *
      * @param string|false $data
      *
@@ -148,7 +144,7 @@ trait DisplayActionTrait
     }
 
     /**
-     * Gibt das aktuell zugewiesene Template zurück
+     * Gibt das aktuell zugewiesene Template zurück.
      *
      * @return string
      */
@@ -158,7 +154,7 @@ trait DisplayActionTrait
     }
 
     /**
-     * Setzt das Template der Seite
+     * Setzt das Template der Seite.
      *
      * @param string $template
      *

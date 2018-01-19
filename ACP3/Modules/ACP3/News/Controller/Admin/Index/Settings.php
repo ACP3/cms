@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\News;
 
-/**
- * Class Settings
- * @package ACP3\Modules\ACP3\News\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     use CommentsHelperTrait;
@@ -33,7 +30,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
      * @param \ACP3\Core\Helpers\Forms                                       $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                   $formTokenHelper
      * @param \ACP3\Modules\ACP3\News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
@@ -42,8 +39,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation)
-    {
+        News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+    ) {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
@@ -69,12 +66,12 @@ class Settings extends Core\Controller\AbstractFrontendAction
             'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
             'readmore' => $this->formsHelper->yesNoCheckboxGenerator('readmore', $settings['readmore']),
             'readmore_chars' => $this->request->getPost()->get('readmore_chars', $settings['readmore_chars']),
-            'sidebar_entries' => $this->formsHelper->recordsPerPage((int)$settings['sidebar'], 1, 10, 'sidebar'),
+            'sidebar_entries' => $this->formsHelper->recordsPerPage((int) $settings['sidebar'], 1, 10, 'sidebar'),
             'category_in_breadcrumb' => $this->formsHelper->yesNoCheckboxGenerator(
                 'category_in_breadcrumb',
                 $settings['category_in_breadcrumb']
             ),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -90,9 +87,9 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
             $data = [
                 'dateformat' => $this->get('core.helpers.secure')->strEncode($formData['dateformat']),
-                'sidebar' => (int)$formData['sidebar'],
+                'sidebar' => (int) $formData['sidebar'],
                 'readmore' => $formData['readmore'],
-                'readmore_chars' => (int)$formData['readmore_chars'],
+                'readmore_chars' => (int) $formData['readmore_chars'],
                 'category_in_breadcrumb' => $formData['category_in_breadcrumb'],
             ];
 

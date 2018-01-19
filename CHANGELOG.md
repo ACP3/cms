@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.21.0] - 2018-01-19
+### Added
+- the AJAX form class is a little bit smarter when dealing with location hash changes and tabs
+
+### Changed
+- Moved most of the CI tasks from Travis to Gitlab.com
+- Reworked and extended the CI/CD pipeline
+- Run php-cs-fixer and ESLint as part of the CI/CD pipeline
+- The unit tests are now getting exported, but are not getting added to the classmap autoloader
+- Updated the SPDX license identifiers to be compatible with version 3.0
+
 ## [4.20.0] - 2017-12-21
 ### Changed
 - Updated the friendsofsymfony/http-cache package to version 2.1.0
@@ -54,7 +65,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Fixed the bug that it was not possible to create new articles when the menu items module was installed and active, but there were no menus at all
-- [#70](https://github.com/ACP3/cms/issues/70) Fixed the sitemap generation with present, but not installed modules 
+- [#70](https://gitlab.com/ACP3/cms/issues/70) Fixed the sitemap generation with present, but not installed modules 
 
 ## [4.16.0] - 2017-10-24
 ### Added
@@ -106,7 +117,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added the possibility to duplicate downloads via the admin data grid
 - Added the possibility to quickly enable/disable downloads
 - Added the possibility to sort downloads by date or with an custom order
-- [#62](https://github.com/ACP3/cms/issues/62) Added an alert message when the currently used ACP3 CMS is outdated
+- [#62](https://gitlab.com/ACP3/cms/issues/62) Added an alert message when the currently used ACP3 CMS is outdated
 
 ### Deprecations
 - Deprecated `\ACP3\Core\Controller\AbstractAdminAction`, use `\ACP3\Core\Controller\AbstractFrontendAction` instead
@@ -285,7 +296,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.4.2] - 2016-11-17
 ### Added
-- [#56](https://github.com/ACP3/cms/issues/56) Made the cache directory of the `ACP3\Core\Picture` class configurable
+- [#56](https://gitlab.com/ACP3/cms/issues/56) Made the cache directory of the `ACP3\Core\Picture` class configurable
  
 ### Changed
 - The cached pictures of the gallery module are now being generated in the uploads/gallery/cache folder 
@@ -296,9 +307,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.4.0] - 2016-11-13
 ### Added
-- [#49](https://github.com/ACP3/cms/issues/49) Added the ability to use a custom menu item title when creating a menu item via the articles module
-- [#52](https://github.com/ACP3/cms/issues/52) Added a new system config option to select, whether the page cache is getting purged automatically or manually
-- [#8](https://github.com/ACP3/cms/issues/8) Added the foundation to get module specific results per page
+- [#49](https://gitlab.com/ACP3/cms/issues/49) Added the ability to use a custom menu item title when creating a menu item via the articles module
+- [#52](https://gitlab.com/ACP3/cms/issues/52) Added a new system config option to select, whether the page cache is getting purged automatically or manually
+- [#8](https://gitlab.com/ACP3/cms/issues/8) Added the foundation to get module specific results per page
 - Extended the contact module settings with the following new options:
     - Mobile phone
     - Picture credits
@@ -307,8 +318,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Deprecated the `UserModel::getEntriesPerPage()` and `UserModel::setEntriesPerPage()` methods
 - Extracted the adding of the data grid columns into separate methods
 - Updated the [mibe/feedwriter](https://github.com/mibe/FeedWriter) library to version v1.1.0
-- [#55](https://github.com/ACP3/cms/pull/55) Changed the argument order of the \FeedWriter\Feed::setImage() method (thanks @mibe)
-- [#54](https://github.com/ACP3/cms/issues/54) Moved the password form fields from the users account profile action to the user account settings action
+- [#55](https://gitlab.com/ACP3/cms/pull/55) Changed the argument order of the \FeedWriter\Feed::setImage() method (thanks @mibe)
+- [#54](https://gitlab.com/ACP3/cms/issues/54) Moved the password form fields from the users account profile action to the user account settings action
 - The contact module settings have been moved into its own controller action to match the structure of the other modules 
 - The feeds module settings have been moved into its own controller action to match the structure of the other modules 
 
@@ -325,7 +336,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Zhe `\ACP3\Core\Cache\Purge::purgeCurrentDirectory()` method now handles symbolic links gracefully too
 
 ### Fixed
-- [#46](https://github.com/ACP3/cms/issues/46) Fixed the disappearing file size unit when editing a download
+- [#46](https://gitlab.com/ACP3/cms/issues/46) Fixed the disappearing file size unit when editing a download
 
 ## [4.3.5] - 2016-11-02
 ### Changed
@@ -349,7 +360,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.3.2] - 2016-10-31
 ### Added
-- [#12](https://github.com/ACP3/cms/issues/12) Added the `updated_at` database column to the following modules:
+- [#12](https://gitlab.com/ACP3/cms/issues/12) Added the `updated_at` database column to the following modules:
     - Articles
     - Files
     - Gallery
@@ -366,7 +377,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.3.0] - 2016-10-31
 ### Added
-- [#42](https://github.com/ACP3/cms/issues/42) The SEO module is now able to automatically generate XML sitemaps.
+- [#42](https://gitlab.com/ACP3/cms/issues/42) The SEO module is now able to automatically generate XML sitemaps.
 - The following modules can now add their own URLs to the sitemap:
     - Articles
     - Contact
@@ -375,7 +386,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - News
 - The `ModelSaveEvent` class now accepts the raw post data too
 - Applied the `RewriteUri` Smarty modifier to the article module's single article widget action 
-- [#20](https://github.com/ACP3/cms/issues/20) Redesigned some parts of the gallery module's templates
+- [#20](https://gitlab.com/ACP3/cms/issues/20) Redesigned some parts of the gallery module's templates
 - The template under `System/Partials/no_results.tpl` now accepts the parameter `no_results_text` to render a custom translation phrase 
 
 ### Changed
@@ -404,7 +415,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.1.30] - 2016-10-27
 ### Added
-- [#39](https://github.com/ACP3/cms/issues/39) Added a new system config option which makes it possible to enable or disable the page cache
+- [#39](https://gitlab.com/ACP3/cms/issues/39) Added a new system config option which makes it possible to enable or disable the page cache
 - Made it possible to dispatch custom events to the validator to make the form validation much more flexible
 
 ### Changed
@@ -493,57 +504,58 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://github.com/ACP3/cms/compare/v4.20.0...HEAD
-[4.20.0]: https://github.com/ACP3/cms/compare/v4.19.1...v4.20.0
-[4.19.1]: https://github.com/ACP3/cms/compare/v4.19.0...v4.19.1
-[4.19.0]: https://github.com/ACP3/cms/compare/v4.18.0...v4.19.0
-[4.18.0]: https://github.com/ACP3/cms/compare/v4.17.0...v4.18.0
-[4.17.0]: https://github.com/ACP3/cms/compare/v4.16.0...v4.17.0
-[4.16.0]: https://github.com/ACP3/cms/compare/v4.15.0...v4.16.0
-[4.15.0]: https://github.com/ACP3/cms/compare/v4.14.0...v4.15.0
-[4.14.0]: https://github.com/ACP3/cms/compare/v4.13.1...v4.14.0
-[4.13.1]: https://github.com/ACP3/cms/compare/v4.13.0...v4.13.1
-[4.13.0]: https://github.com/ACP3/cms/compare/v4.12.2...v4.13.0
-[4.12.2]: https://github.com/ACP3/cms/compare/v4.12.1...v4.12.2
-[4.12.1]: https://github.com/ACP3/cms/compare/v4.12.0...v4.12.1
-[4.12.0]: https://github.com/ACP3/cms/compare/v4.11.1...v4.12.0
-[4.11.1]: https://github.com/ACP3/cms/compare/v4.11.0...v4.11.1
-[4.11.0]: https://github.com/ACP3/cms/compare/v4.10.1...v4.11.0
-[4.10.1]: https://github.com/ACP3/cms/compare/v4.10.0...v4.10.1
-[4.10.0]: https://github.com/ACP3/cms/compare/v4.9.2...v4.10.0
-[4.9.2]: https://github.com/ACP3/cms/compare/v4.9.1...v4.9.2
-[4.9.1]: https://github.com/ACP3/cms/compare/v4.9.0...v4.9.1
-[4.9.0]: https://github.com/ACP3/cms/compare/v4.8.5...v4.9.0
-[4.8.5]: https://github.com/ACP3/cms/compare/v4.8.3...v4.8.5
-[4.8.3]: https://github.com/ACP3/cms/compare/v4.8.2...v4.8.3
-[4.8.2]: https://github.com/ACP3/cms/compare/v4.8.1...v4.8.2
-[4.8.1]: https://github.com/ACP3/cms/compare/v4.8.0...v4.8.1
-[4.8.0]: https://github.com/ACP3/cms/compare/v4.7.1...v4.8.0
-[4.7.1]: https://github.com/ACP3/cms/compare/v4.7.0...v4.7.1
-[4.7.0]: https://github.com/ACP3/cms/compare/v4.6.2...v4.7.0
-[4.6.2]: https://github.com/ACP3/cms/compare/v4.6.1...v4.6.2
-[4.6.1]: https://github.com/ACP3/cms/compare/v4.6.0...v4.6.1
-[4.6.0]: https://github.com/ACP3/cms/compare/v4.5.0...v4.6.0
-[4.5.0]: https://github.com/ACP3/cms/compare/v4.4.4...v4.5.0
-[4.4.4]: https://github.com/ACP3/cms/compare/v4.4.3...v4.4.4
-[4.4.3]: https://github.com/ACP3/cms/compare/v4.4.2...v4.4.3
-[4.4.2]: https://github.com/ACP3/cms/compare/v4.4.1...v4.4.2
-[4.4.1]: https://github.com/ACP3/cms/compare/v4.4.0...v4.4.1
-[4.4.0]: https://github.com/ACP3/cms/compare/v4.3.6...v4.4.0
-[4.3.6]: https://github.com/ACP3/cms/compare/v4.3.5...v4.3.6
-[4.3.5]: https://github.com/ACP3/cms/compare/v4.3.4...v4.3.5
-[4.3.4]: https://github.com/ACP3/cms/compare/v4.3.3...v4.3.4
-[4.3.3]: https://github.com/ACP3/cms/compare/v4.3.2...v4.3.3
-[4.3.2]: https://github.com/ACP3/cms/compare/v4.3.1...v4.3.2
-[4.3.1]: https://github.com/ACP3/cms/compare/v4.3.0...v4.3.1
-[4.3.0]: https://github.com/ACP3/cms/compare/v4.2.0...v4.3.0
-[4.2.0]: https://github.com/ACP3/cms/compare/v4.1.30...v4.2.0
-[4.1.30]: https://github.com/ACP3/cms/compare/v4.1.29...v4.1.30
-[4.1.29]: https://github.com/ACP3/cms/compare/v4.1.28...v4.1.29
-[4.1.28]: https://github.com/ACP3/cms/compare/v4.1.27...v4.1.28
-[4.1.27]: https://github.com/ACP3/cms/compare/v4.1.22...v4.1.27
-[4.1.22]: https://github.com/ACP3/cms/compare/v4.1.21...v4.1.22
-[4.1.21]: https://github.com/ACP3/cms/compare/v4.1.20...v4.1.21
-[4.1.20]: https://github.com/ACP3/cms/compare/v4.1.19...v4.1.20
-[4.1.19]: https://github.com/ACP3/cms/compare/v4.1.18...v4.1.19
-[4.1.18]: https://github.com/ACP3/cms/compare/v4.1.17...v4.1.18
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.21.0...HEAD
+[4.21.0]: https://gitlab.com/ACP3/cms/compare/v4.20.0...v4.21.0
+[4.20.0]: https://gitlab.com/ACP3/cms/compare/v4.19.1...v4.20.0
+[4.19.1]: https://gitlab.com/ACP3/cms/compare/v4.19.0...v4.19.1
+[4.19.0]: https://gitlab.com/ACP3/cms/compare/v4.18.0...v4.19.0
+[4.18.0]: https://gitlab.com/ACP3/cms/compare/v4.17.0...v4.18.0
+[4.17.0]: https://gitlab.com/ACP3/cms/compare/v4.16.0...v4.17.0
+[4.16.0]: https://gitlab.com/ACP3/cms/compare/v4.15.0...v4.16.0
+[4.15.0]: https://gitlab.com/ACP3/cms/compare/v4.14.0...v4.15.0
+[4.14.0]: https://gitlab.com/ACP3/cms/compare/v4.13.1...v4.14.0
+[4.13.1]: https://gitlab.com/ACP3/cms/compare/v4.13.0...v4.13.1
+[4.13.0]: https://gitlab.com/ACP3/cms/compare/v4.12.2...v4.13.0
+[4.12.2]: https://gitlab.com/ACP3/cms/compare/v4.12.1...v4.12.2
+[4.12.1]: https://gitlab.com/ACP3/cms/compare/v4.12.0...v4.12.1
+[4.12.0]: https://gitlab.com/ACP3/cms/compare/v4.11.1...v4.12.0
+[4.11.1]: https://gitlab.com/ACP3/cms/compare/v4.11.0...v4.11.1
+[4.11.0]: https://gitlab.com/ACP3/cms/compare/v4.10.1...v4.11.0
+[4.10.1]: https://gitlab.com/ACP3/cms/compare/v4.10.0...v4.10.1
+[4.10.0]: https://gitlab.com/ACP3/cms/compare/v4.9.2...v4.10.0
+[4.9.2]: https://gitlab.com/ACP3/cms/compare/v4.9.1...v4.9.2
+[4.9.1]: https://gitlab.com/ACP3/cms/compare/v4.9.0...v4.9.1
+[4.9.0]: https://gitlab.com/ACP3/cms/compare/v4.8.5...v4.9.0
+[4.8.5]: https://gitlab.com/ACP3/cms/compare/v4.8.3...v4.8.5
+[4.8.3]: https://gitlab.com/ACP3/cms/compare/v4.8.2...v4.8.3
+[4.8.2]: https://gitlab.com/ACP3/cms/compare/v4.8.1...v4.8.2
+[4.8.1]: https://gitlab.com/ACP3/cms/compare/v4.8.0...v4.8.1
+[4.8.0]: https://gitlab.com/ACP3/cms/compare/v4.7.1...v4.8.0
+[4.7.1]: https://gitlab.com/ACP3/cms/compare/v4.7.0...v4.7.1
+[4.7.0]: https://gitlab.com/ACP3/cms/compare/v4.6.2...v4.7.0
+[4.6.2]: https://gitlab.com/ACP3/cms/compare/v4.6.1...v4.6.2
+[4.6.1]: https://gitlab.com/ACP3/cms/compare/v4.6.0...v4.6.1
+[4.6.0]: https://gitlab.com/ACP3/cms/compare/v4.5.0...v4.6.0
+[4.5.0]: https://gitlab.com/ACP3/cms/compare/v4.4.4...v4.5.0
+[4.4.4]: https://gitlab.com/ACP3/cms/compare/v4.4.3...v4.4.4
+[4.4.3]: https://gitlab.com/ACP3/cms/compare/v4.4.2...v4.4.3
+[4.4.2]: https://gitlab.com/ACP3/cms/compare/v4.4.1...v4.4.2
+[4.4.1]: https://gitlab.com/ACP3/cms/compare/v4.4.0...v4.4.1
+[4.4.0]: https://gitlab.com/ACP3/cms/compare/v4.3.6...v4.4.0
+[4.3.6]: https://gitlab.com/ACP3/cms/compare/v4.3.5...v4.3.6
+[4.3.5]: https://gitlab.com/ACP3/cms/compare/v4.3.4...v4.3.5
+[4.3.4]: https://gitlab.com/ACP3/cms/compare/v4.3.3...v4.3.4
+[4.3.3]: https://gitlab.com/ACP3/cms/compare/v4.3.2...v4.3.3
+[4.3.2]: https://gitlab.com/ACP3/cms/compare/v4.3.1...v4.3.2
+[4.3.1]: https://gitlab.com/ACP3/cms/compare/v4.3.0...v4.3.1
+[4.3.0]: https://gitlab.com/ACP3/cms/compare/v4.2.0...v4.3.0
+[4.2.0]: https://gitlab.com/ACP3/cms/compare/v4.1.30...v4.2.0
+[4.1.30]: https://gitlab.com/ACP3/cms/compare/v4.1.29...v4.1.30
+[4.1.29]: https://gitlab.com/ACP3/cms/compare/v4.1.28...v4.1.29
+[4.1.28]: https://gitlab.com/ACP3/cms/compare/v4.1.27...v4.1.28
+[4.1.27]: https://gitlab.com/ACP3/cms/compare/v4.1.22...v4.1.27
+[4.1.22]: https://gitlab.com/ACP3/cms/compare/v4.1.21...v4.1.22
+[4.1.21]: https://gitlab.com/ACP3/cms/compare/v4.1.20...v4.1.21
+[4.1.20]: https://gitlab.com/ACP3/cms/compare/v4.1.19...v4.1.20
+[4.1.19]: https://gitlab.com/ACP3/cms/compare/v4.1.18...v4.1.19
+[4.1.18]: https://gitlab.com/ACP3/cms/compare/v4.1.17...v4.1.18

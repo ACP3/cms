@@ -1,14 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
 
-/**
- * Class Subscribe
- * @package ACP3\Modules\ACP3\Newsletter\Helper
- */
 class Subscribe
 {
     /**
@@ -55,15 +57,15 @@ class Subscribe
     /**
      * Subscribe constructor.
      *
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Mailer $mailer
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Core\Settings\SettingsInterface $config
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
+     * @param \ACP3\Core\Date                                                  $date
+     * @param \ACP3\Core\I18n\Translator                                       $translator
+     * @param \ACP3\Core\Mailer                                                $mailer
+     * @param \ACP3\Core\Http\RequestInterface                                 $request
+     * @param \ACP3\Core\Router\RouterInterface                                $router
+     * @param \ACP3\Core\Helpers\StringFormatter                               $stringFormatter
+     * @param \ACP3\Core\Helpers\Secure                                        $secureHelper
+     * @param \ACP3\Core\Settings\SettingsInterface                            $config
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus               $accountStatusHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository $accountRepository
      */
     public function __construct(
@@ -91,10 +93,10 @@ class Subscribe
     }
 
     /**
-     * Meldet eine E-Mail-Adresse beim Newsletter an
+     * Meldet eine E-Mail-Adresse beim Newsletter an.
      *
      * @param string $emailAddress
-     * @param int $salutation
+     * @param int    $salutation
      * @param string $firstName
      * @param string $lastName
      *
@@ -102,7 +104,7 @@ class Subscribe
      */
     public function subscribeToNewsletter($emailAddress, $salutation = 0, $firstName = '', $lastName = '')
     {
-        $hash = $this->secureHelper->generateSaltedPassword('', mt_rand(0, microtime(true)), 'sha512');
+        $hash = $this->secureHelper->generateSaltedPassword('', \mt_rand(0, \microtime(true)), 'sha512');
         $mailSent = $this->sendDoubleOptInEmail($emailAddress, $hash);
         $result = $this->addNewsletterAccount($emailAddress, $salutation, $firstName, $lastName, $hash);
 
@@ -111,7 +113,7 @@ class Subscribe
 
     /**
      * @param string $emailAddress
-     * @param int $salutation
+     * @param int    $salutation
      * @param string $firstName
      * @param string $lastName
      * @param string $hash
@@ -154,7 +156,7 @@ class Subscribe
         $data = (new Core\Mailer\MailerMessage())
             ->setFrom([
                 'email' => $settings['mail'],
-                'name' => $systemSettings['site_title']
+                'name' => $systemSettings['site_title'],
             ])
             ->setSubject($this->translator->t(
                 'newsletter',
@@ -181,8 +183,8 @@ class Subscribe
     }
 
     /**
-     * @param array $newsletterAccount
-     * @param int $salutation
+     * @param array  $newsletterAccount
+     * @param int    $salutation
      * @param string $firstName
      * @param string $lastName
      * @param string $hash
@@ -195,7 +197,7 @@ class Subscribe
             'salutation' => $salutation,
             'first_name' => $firstName,
             'last_name' => $lastName,
-            'hash' => $hash
+            'hash' => $hash,
         ];
 
         if ($newsletterAccount['status'] != AccountStatus::ACCOUNT_STATUS_CONFIRMED) {
@@ -209,7 +211,7 @@ class Subscribe
 
     /**
      * @param string $emailAddress
-     * @param int $salutation
+     * @param int    $salutation
      * @param string $firstName
      * @param string $lastName
      * @param string $hash
@@ -225,7 +227,7 @@ class Subscribe
             'first_name' => $firstName,
             'last_name' => $lastName,
             'hash' => $hash,
-            'status' => AccountStatus::ACCOUNT_STATUS_CONFIRMATION_NEEDED
+            'status' => AccountStatus::ACCOUNT_STATUS_CONFIRMATION_NEEDED,
         ];
 
         return $this->accountRepository->insert($insertValues);

@@ -1,17 +1,14 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Controller;
 
 use ACP3\Core;
 
-/**
- * Class AbstractFrontendAction
- * @package ACP3\Core\Controller
- */
 abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetAction
 {
     /**
@@ -56,6 +53,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      * Helper function for initializing models, etc.
      *
      * @return $this
+     *
      * @throws \ACP3\Core\ACL\Exception\AccessForbiddenException
      */
     public function preDispatch()
@@ -74,7 +72,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addCustomTemplateVarsBeforeOutput()
     {
@@ -106,6 +104,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     /**
      * @param string $layoutFileName
      * @param string $defaultLayoutName
+     *
      * @return array
      */
     private function fetchLayoutPaths($layoutFileName, $defaultLayoutName)
@@ -115,7 +114,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
             $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.' . $this->request->getController() . '.tpl',
             $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.tpl',
             $this->request->getModule() . '/' . $layoutFileName . '.tpl',
-            $defaultLayoutName
+            $defaultLayoutName,
         ];
     }
 
@@ -131,6 +130,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
         foreach ($paths as $path) {
             if ($this->view->templateExists($path)) {
                 $this->setLayout($path);
+
                 break;
             }
         }
@@ -146,6 +146,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
 
     /**
      * @param string $layout
+     *
      * @return $this
      */
     public function setLayout($layout)

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Application\Event\Listener;
@@ -22,6 +23,7 @@ class AddEsiSurrogateHeaderListener
 
     /**
      * AddEsiSurrogateHeaderListener constructor.
+     *
      * @param Request $request
      */
     public function __construct(Request $request)
@@ -45,6 +47,7 @@ class AddEsiSurrogateHeaderListener
 
     /**
      * @param Response $response
+     *
      * @return bool
      */
     private function isExcludedFromEsi(Response $response)

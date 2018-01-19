@@ -1,10 +1,12 @@
 <?php
-namespace ACP3\Core\Assets\Minifier;
 
 /**
- * Class JavaScript
- * @package ACP3\Core\Assets\Minifier
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Assets\Minifier;
+
 class JavaScript extends AbstractMinifier
 {
     /**
@@ -18,7 +20,7 @@ class JavaScript extends AbstractMinifier
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function processLibraries($layout)
     {
@@ -35,7 +37,7 @@ class JavaScript extends AbstractMinifier
     }
 
     /**
-     * Fetches the javascript files of all enabled frontend frameworks/libraries
+     * Fetches the javascript files of all enabled frontend frameworks/libraries.
      */
     protected function fetchLibraries()
     {
@@ -52,7 +54,7 @@ class JavaScript extends AbstractMinifier
     }
 
     /**
-     * Fetches the theme javascript files
+     * Fetches the theme javascript files.
      *
      * @param string $layout
      */

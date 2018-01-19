@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Installer;
@@ -11,7 +12,7 @@ use ACP3\Core\Modules\Installer\MigrationInterface;
 class Migration implements MigrationInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function schemaUpdates()
     {
@@ -29,12 +30,12 @@ class Migration implements MigrationInterface
             34 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'recaptcha_sitekey', '');",
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'recaptcha_secret', '');",
-            ]
+            ],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function renameModule()
     {

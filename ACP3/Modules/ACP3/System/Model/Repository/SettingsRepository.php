@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Model\Repository;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\System\Model\Repository;
 use ACP3\Core\Model\Repository\AbstractRepository;
 use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
 
-/**
- * Class SettingsRepository
- * @package ACP3\Modules\ACP3\System\Model\Repository
- */
 class SettingsRepository extends AbstractRepository implements SettingsAwareRepositoryInterface
 {
     const TABLE_NAME = 'settings';

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Feeds\Utility;
@@ -17,6 +18,7 @@ class FeedAvailabilityRegistrar
 
     /**
      * @param FeedAvailabilityExtensionInterface $searchAvailability
+     *
      * @return $this
      */
     public function registerModule(FeedAvailabilityExtensionInterface $searchAvailability)
@@ -31,11 +33,12 @@ class FeedAvailabilityRegistrar
      */
     public function getAvailableModuleNames()
     {
-        return array_keys($this->availableModules);
+        return \array_keys($this->availableModules);
     }
 
     /**
      * @param string $moduleName
+     *
      * @return FeedAvailabilityExtensionInterface
      */
     public function getFeedItemsByModuleName($moduleName)

@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core;
 
 use ACP3\Core\Assets\Libraries;
 use ACP3\Core\Environment\ApplicationPath;
 
-/**
- * Class Assets
- * @package ACP3\Core
- */
 class Assets
 {
     /**
@@ -32,17 +34,17 @@ class Assets
     protected $libraries;
 
     /**
-     * Checks, whether the current design uses Bootstrap or not
+     * Checks, whether the current design uses Bootstrap or not.
      *
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param Libraries $libraries
+     * @param Libraries                              $libraries
      */
     public function __construct(ApplicationPath $appPath, Libraries $libraries)
     {
-        $this->designXml = simplexml_load_file($appPath->getDesignPathInternal() . 'info.xml');
+        $this->designXml = \simplexml_load_file($appPath->getDesignPathInternal() . 'info.xml');
         $this->libraries = $libraries;
 
-        if (isset($this->designXml->use_bootstrap) && (string)$this->designXml->use_bootstrap === 'true') {
+        if (isset($this->designXml->use_bootstrap) && (string) $this->designXml->use_bootstrap === 'true') {
             $this->enableLibraries(['bootstrap']);
         }
 
@@ -102,7 +104,7 @@ class Assets
     }
 
     /**
-     * Activates frontend libraries
+     * Activates frontend libraries.
      *
      * @param array $libraries
      *
@@ -129,7 +131,7 @@ class Assets
     public function getEnabledLibrariesAsString()
     {
         if (empty($this->enabledLibraries)) {
-            $this->enabledLibraries = implode(',', $this->libraries->getEnabledLibraries());
+            $this->enabledLibraries = \implode(',', $this->libraries->getEnabledLibraries());
         }
 
         return $this->enabledLibraries;

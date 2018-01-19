@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\Controller;
@@ -25,8 +26,9 @@ class DisplayActionTraitImpl
 
     /**
      * DisplayActionTraitImpl constructor.
+     *
      * @param Response $response
-     * @param View $view
+     * @param View     $view
      */
     public function __construct(Response $response, View $view)
     {
@@ -42,9 +44,6 @@ class DisplayActionTraitImpl
         return 'Foo/Frontend/index.index.tpl';
     }
 
-    /**
-     * @return void
-     */
     protected function addCustomTemplateVarsBeforeOutput()
     {
     }

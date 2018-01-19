@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
 
-/**
- * Class FormToken
- * @package ACP3\Core\Helpers
- */
 class FormToken
 {
     /**
@@ -33,7 +35,7 @@ class FormToken
     }
 
     /**
-     * Generates and renders the form token
+     * Generates and renders the form token.
      *
      * @return string
      */
@@ -43,7 +45,7 @@ class FormToken
         $sessionToken = $this->sessionHandler->get($tokenName);
 
         if (empty($sessionToken)) {
-            $sessionToken = sha1(uniqid(mt_rand(), true));
+            $sessionToken = \sha1(\uniqid(\mt_rand(), true));
             $this->sessionHandler->set($tokenName, $sessionToken);
         }
 
@@ -51,7 +53,7 @@ class FormToken
     }
 
     /**
-     * Removes the form token from the session
+     * Removes the form token from the session.
      *
      * @param string $token
      */

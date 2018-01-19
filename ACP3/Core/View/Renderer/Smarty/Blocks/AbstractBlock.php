@@ -1,17 +1,19 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Blocks;
 
 use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
 use ACP3\Core\View\Renderer\Smarty\PluginInterface;
 
-/**
- * Class AbstractBlock
- * @package ACP3\Core\View\Renderer\Smarty\Blocks
- */
 abstract class AbstractBlock extends AbstractPlugin
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionType()
     {

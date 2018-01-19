@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers\Formatter;
 
 use ACP3\Core\I18n\Translator;
 
-/**
- * Class MarkEntries
- * @package ACP3\Core\Helpers\Formatter
- */
 class MarkEntries
 {
     /**
@@ -33,14 +35,14 @@ class MarkEntries
     public function execute($name, $markAllId = '')
     {
         $markAllId = !empty($markAllId) ? $markAllId : 'mark-all';
-        $deleteOptions = json_encode(
+        $deleteOptions = \json_encode(
             [
                 'checkBoxName' => $name,
                 'language' => [
                     'confirmationTextSingle' => $this->translator->t('system', 'confirm_delete_single'),
                     'confirmationTextMultiple' => $this->translator->t('system', 'confirm_delete_multiple'),
-                    'noEntriesSelectedText' => $this->translator->t('system', 'no_entries_selected')
-                ]
+                    'noEntriesSelectedText' => $this->translator->t('system', 'no_entries_selected'),
+                ],
             ]
         );
 

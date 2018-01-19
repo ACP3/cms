@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
@@ -32,12 +33,12 @@ class Create extends AbstractFormAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param \ACP3\Core\Helpers\Forms                                      $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                  $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
-     * @param Gallery\Model\PictureModel $pictureModel
-     * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
+     * @param Gallery\Model\PictureModel                                    $pictureModel
+     * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation   $pictureFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -57,7 +58,9 @@ class Create extends AbstractFormAction
 
     /**
      * @param int $id
+     *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -74,9 +77,9 @@ class Create extends AbstractFormAction
             }
 
             return [
-                'form' => array_merge(['description' => ''], $this->request->getPost()->all()),
+                'form' => \array_merge(['description' => ''], $this->request->getPost()->all()),
                 'gallery_id' => $id,
-                'form_token' => $this->formTokenHelper->renderFormToken()
+                'form_token' => $this->formTokenHelper->renderFormToken(),
             ];
         }
 
@@ -84,7 +87,7 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @param int   $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -107,6 +110,7 @@ class Create extends AbstractFormAction
 
                 $formData['file'] = $result['name'];
                 $formData['gallery_id'] = $id;
+
                 return $this->pictureModel->save($formData);
             },
             'acp/gallery/pictures/index/id_' . $id

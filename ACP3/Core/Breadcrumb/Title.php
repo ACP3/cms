@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Breadcrumb;
@@ -9,10 +10,6 @@ namespace ACP3\Core\Breadcrumb;
 use ACP3\Core\Breadcrumb\Event\GetSiteAndPageTitleBeforeEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Title
- * @package ACP3\Core\Breadcrumb\Breadcrumb
- */
 class Title
 {
     /**
@@ -99,6 +96,7 @@ class Title
 
     /**
      * @param string $siteSubtitle
+     *
      * @return $this
      */
     public function setSiteSubtitle($siteSubtitle)
@@ -115,7 +113,7 @@ class Title
     {
         if (empty($this->pageTitle)) {
             $steps = $this->steps->getBreadcrumb();
-            $lastCrumb = end($steps);
+            $lastCrumb = \end($steps);
 
             $this->pageTitle = $lastCrumb['title'];
         }
@@ -197,6 +195,7 @@ class Title
 
     /**
      * @param string $metaTitle
+     *
      * @return $this
      */
     public function setMetaTitle(string $metaTitle)
@@ -227,7 +226,7 @@ class Title
     }
 
     /**
-     * Returns the title of the current page + the site title
+     * Returns the title of the current page + the site title.
      *
      * @return string
      */

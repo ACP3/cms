@@ -1,16 +1,17 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
 use ACP3\Core;
+use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Gallery\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
-use ACP3\Core\Controller\AbstractFrontendAction;
 
 class Index extends AbstractFrontendAction
 {
@@ -26,9 +27,9 @@ class Index extends AbstractFrontendAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param Gallery\Model\GalleryModel $galleryModel
+     * @param Gallery\Model\GalleryModel                                    $galleryModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -43,7 +44,9 @@ class Index extends AbstractFrontendAction
 
     /**
      * @param int $id
+     *
      * @return array
+     *
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -70,7 +73,7 @@ class Index extends AbstractFrontendAction
             return [
                 'gallery_id' => $id,
                 'grid' => $dataGrid->render(),
-                'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+                'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
             ];
         }
 
@@ -89,8 +92,8 @@ class Index extends AbstractFrontendAction
                 'fields' => ['id'],
                 'custom' => [
                     'pattern' => 'gallery/index/image/id_%s/action_thumb',
-                    'isRoute' => true
-                ]
+                    'isRoute' => true,
+                ],
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'description'),
@@ -103,8 +106,8 @@ class Index extends AbstractFrontendAction
                 'fields' => ['id'],
                 'primary' => true,
                 'custom' => [
-                    'path' => Helpers::URL_KEY_PATTERN_PICTURE
-                ]
+                    'path' => Helpers::URL_KEY_PATTERN_PICTURE,
+                ],
             ], 10);
 
         if ($this->acl->hasPermission('admin/gallery/pictures/order')) {
@@ -117,7 +120,7 @@ class Index extends AbstractFrontendAction
                     'custom' => [
                         'route_sort_down' => 'acp/gallery/pictures/order/id_%d/action_down',
                         'route_sort_up' => 'acp/gallery/pictures/order/id_%d/action_up',
-                    ]
+                    ],
                 ], 20);
         }
     }

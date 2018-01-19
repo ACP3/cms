@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
@@ -8,10 +10,6 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Index
- */
 class Create extends AbstractFormAction
 {
     /**
@@ -34,14 +32,14 @@ class Create extends AbstractFormAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Permissions\Model\RolesModel $rolesModel
-     * @param Permissions\Model\RulesModel $rulesModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
+     * @param Permissions\Model\RolesModel                                        $rolesModel
+     * @param Permissions\Model\RulesModel                                        $rulesModel
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
-     * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation $roleFormValidation
+     * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Cache                                $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation        $roleFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -69,8 +67,8 @@ class Create extends AbstractFormAction
         return [
             'modules' => $this->fetchModulePermissions(0, 2),
             'parent' => $this->fetchRoles(),
-            'form' => array_merge(['name' => ''], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge(['name' => ''], $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 

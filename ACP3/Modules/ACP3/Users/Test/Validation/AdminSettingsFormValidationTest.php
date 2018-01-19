@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Test\Validation;
@@ -12,13 +13,10 @@ use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
 use ACP3\Modules\ACP3\Users\Validation\AdminSettingsFormValidation;
 
 /**
- * Class AdminSettingsFormValidationTest
+ * Class AdminSettingsFormValidationTest.
  */
 class AdminSettingsFormValidationTest extends AbstractFormValidationTest
 {
-    /**
-     * @return void
-     */
     protected function registerValidationRules()
     {
         $this->validator->registerValidationRule($this->setUpFormTokenRule());
@@ -30,9 +28,6 @@ class AdminSettingsFormValidationTest extends AbstractFormValidationTest
         $this->validator->registerValidationRule($emailRule);
     }
 
-    /**
-     * @return void
-     */
     protected function initializeFormValidation()
     {
         $this->formValidation = new AdminSettingsFormValidation(
@@ -50,13 +45,13 @@ class AdminSettingsFormValidationTest extends AbstractFormValidationTest
             [
                 \ACP3\Core\Session\SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'test@example.com',
-                'enable_registration' => 1
+                'enable_registration' => 1,
             ],
             [
                 \ACP3\Core\Session\SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'test@example.com',
-                'enable_registration' => 0
-            ]
+                'enable_registration' => 0,
+            ],
         ];
     }
 
@@ -69,7 +64,7 @@ class AdminSettingsFormValidationTest extends AbstractFormValidationTest
             [
                 \ACP3\Core\Session\SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'baz',
-                'enable_registration' => ''
+                'enable_registration' => '',
             ],
         ];
     }

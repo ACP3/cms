@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Core\Http;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Seo\Core\Http;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 
-/**
- * Class Request
- * @package ACP3\Modules\ACP3\Seo\Core\Http
- */
 class Request extends \ACP3\Core\Http\Request
 {
     /**
@@ -23,7 +20,7 @@ class Request extends \ACP3\Core\Http\Request
     /**
      * Request constructor.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $symfonyRequest
+     * @param \Symfony\Component\HttpFoundation\Request             $symfonyRequest
      * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
@@ -45,21 +42,21 @@ class Request extends \ACP3\Core\Http\Request
     }
 
     /**
-     * Checks, whether the current request may equals an uri alias
+     * Checks, whether the current request may equals an uri alias.
      */
     protected function checkForUriAlias()
     {
         list($params, $probableQuery) = $this->checkUriAliasForAdditionalParameters();
 
         // Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-        $alias = $this->seoRepository->getUriByAlias(substr($probableQuery, 0, -1));
+        $alias = $this->seoRepository->getUriByAlias(\substr($probableQuery, 0, -1));
         if (!empty($alias)) {
             $this->query = $alias . $params;
         }
     }
 
     /**
-     * Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
+     * Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde.
      *
      * @return string[]
      */
@@ -67,8 +64,8 @@ class Request extends \ACP3\Core\Http\Request
     {
         $params = '';
         $probableQuery = $this->query;
-        if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)([a-z\d\-]+\/)*(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
-            $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
+        if (\preg_match('/^([a-z]{1}[a-z\d\-]*\/)([a-z\d\-]+\/)*(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
+            $query = \preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
             if (isset($query[1]) === false) {
                 $query[1] = 'index';
             }
@@ -78,14 +75,14 @@ class Request extends \ACP3\Core\Http\Request
 
             $length = 0;
             foreach ($query as $row) {
-                if (strpos($row, '_') !== false) {
+                if (\strpos($row, '_') !== false) {
                     break;
                 }
 
-                $length += strlen($row) + 1;
+                $length += \strlen($row) + 1;
             }
-            $params = substr($this->query, $length);
-            $probableQuery = substr($this->query, 0, $length);
+            $params = \substr($this->query, $length);
+            $probableQuery = \substr($this->query, 0, $length);
         }
 
         return [$params, $probableQuery];

@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 
-/**
- * Class Upload
- * @package ACP3\Core\Helpers
- */
 class Upload
 {
     /**
@@ -32,26 +34,28 @@ class Upload
     }
 
     /**
-     * Hochgeladene Dateien verschieben und umbenennen
+     * Hochgeladene Dateien verschieben und umbenennen.
      *
      * @param string $tmpFilename
-     *  Temporäre Datei
+     *                               Temporäre Datei
      * @param string $filename
-     *  Dateiname
-     * @param bool $retainFilename
+     *                               Dateiname
+     * @param bool   $retainFilename
+     *
      * @return array
+     *
      * @throws ValidationFailedException
      */
     public function moveFile($tmpFilename, $filename, $retainFilename = false)
     {
         $path = $this->appPath->getUploadsDir() . $this->directory . '/';
 
-        if (!is_dir($path)) {
-            $result = @mkdir($path);
+        if (!\is_dir($path)) {
+            $result = @\mkdir($path);
 
             if (!$result) {
                 throw new ValidationFailedException(
-                    [sprintf('Could not create folder "%s"', $this->directory)]
+                    [\sprintf('Could not create folder "%s"', $this->directory)]
                 );
             }
         }
@@ -60,38 +64,38 @@ class Upload
             $newFilename = $filename;
         } else {
             $newFilename = 1;
-            $ext = strrchr($filename, '.');
+            $ext = \strrchr($filename, '.');
 
             // Dateiname solange ändern, wie eine Datei mit dem selben Dateinamen im aktuellen Ordner existiert
-            while (is_file($path . $newFilename . $ext) === true) {
+            while (\is_file($path . $newFilename . $ext) === true) {
                 ++$newFilename;
             }
 
             $newFilename .= $ext;
         }
 
-        if (is_writable($path) === true) {
-            if (!@move_uploaded_file($tmpFilename, $path . $newFilename)) {
+        if (\is_writable($path) === true) {
+            if (!@\move_uploaded_file($tmpFilename, $path . $newFilename)) {
                 return [];
-            } else {
-                $return = [];
-                $return['name'] = $newFilename;
-                $return['size'] = $this->calcFilesize(filesize($path . $return['name']));
-
-                return $return;
             }
+            $return = [];
+            $return['name'] = $newFilename;
+            $return['size'] = $this->calcFilesize(\filesize($path . $return['name']));
+
+            return $return;
         }
+
         return [];
     }
 
     /**
-     * Ermittelt die Dateigröße gemäß IEC 60027-2
+     * Ermittelt die Dateigröße gemäß IEC 60027-2.
      *
-     * @param integer $value
-     *    Die Dateigröße in Byte
+     * @param int $value
+     *                   Die Dateigröße in Byte
      *
      * @return string
-     *    Die Dateigröße als Fließkommazahl mit der dazugehörigen Einheit
+     *                Die Dateigröße als Fließkommazahl mit der dazugehörigen Einheit
      */
     public function calcFilesize($value)
     {
@@ -111,22 +115,23 @@ class Upload
             $value = $value / 1024;
         }
 
-        return round($value, 2) . ' ' . $units[$i];
+        return \round($value, 2) . ' ' . $units[$i];
     }
 
     /**
-     * Löscht eine Datei im uploads Ordner
+     * Löscht eine Datei im uploads Ordner.
      *
      * @param string $file
      *
-     * @return boolean
+     * @return bool
      */
     public function removeUploadedFile($file)
     {
         $path = $this->appPath->getUploadsDir() . $this->directory . '/' . $file;
-        if (!empty($file) && !preg_match('=/=', $file) && is_file($path) === true) {
-            return unlink($path);
+        if (!empty($file) && !\preg_match('=/=', $file) && \is_file($path) === true) {
+            return \unlink($path);
         }
+
         return false;
     }
 }

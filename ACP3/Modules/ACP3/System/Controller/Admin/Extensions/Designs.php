@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\System;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Designs
- * @package ACP3\Modules\ACP3\System\Controller\Admin\Extensions
- */
 class Designs extends Core\Controller\AbstractFrontendAction
 {
     use System\Helper\AvailableDesignsTrait;
@@ -27,7 +24,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
      * Designs constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\XML $xml
+     * @param \ACP3\Core\XML                                $xml
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -50,7 +47,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
         }
 
         return [
-            'designs' => $this->getAvailableDesigns()
+            'designs' => $this->getAvailableDesigns(),
         ];
     }
 
@@ -63,15 +60,15 @@ class Designs extends Core\Controller\AbstractFrontendAction
     {
         $bool = false;
 
-        if ((bool)preg_match('=/=', $design) === false &&
-            is_file($this->appPath->getDesignRootPathInternal() . $design . '/info.xml') === true
+        if ((bool) \preg_match('=/=', $design) === false &&
+            \is_file($this->appPath->getDesignRootPathInternal() . $design . '/info.xml') === true
         ) {
             $bool = $this->config->saveSettings(['design' => $design], Schema::MODULE_NAME);
 
             Core\Cache\Purge::doPurge([
                 $this->appPath->getCacheDir() . 'sql',
                 $this->appPath->getCacheDir() . 'tpl_compiled',
-                $this->appPath->getCacheDir() . 'http'
+                $this->appPath->getCacheDir() . 'http',
             ]);
         }
 
@@ -81,7 +78,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getXml()
     {
@@ -89,7 +86,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function selectEntry($directory)
     {

@@ -1,14 +1,15 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Articles\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
-/**
- * Class Installer
- * @package ACP3\Modules\ACP3\Articles
- */
 class Schema implements Modules\Installer\SchemaInterface
 {
     const MODULE_NAME = 'articles';
@@ -42,20 +43,20 @@ class Schema implements Modules\Installer\SchemaInterface
                     'duplicate' => PrivilegeEnum::ADMIN_CREATE,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'index' => PrivilegeEnum::ADMIN_VIEW,
-                ]
+                ],
             ],
             'frontend' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                    'details' => PrivilegeEnum::FRONTEND_VIEW
-                ]
+                    'details' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
             ],
             'widget' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                    'single' => PrivilegeEnum::FRONTEND_VIEW
-                ]
-            ]
+                    'single' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
+            ],
         ];
     }
 
@@ -65,7 +66,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}articles` (
+            'CREATE TABLE `{pre}articles` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `active` TINYINT(1) UNSIGNED NOT NULL,
                 `start` DATETIME NOT NULL,
@@ -79,7 +80,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 INDEX (`active`),
                 INDEX (`user_id`),
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -88,7 +89,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function removeTables()
     {
-        return ["DROP TABLE IF EXISTS `{pre}articles`;"];
+        return ['DROP TABLE IF EXISTS `{pre}articles`;'];
     }
 
     /**

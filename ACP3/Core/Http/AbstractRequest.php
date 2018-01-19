@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Http;
 
 use ACP3\Core\Http\Request\UserAgent;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
-/**
- * Class AbstractRequest
- * @package ACP3\Core\Http
- */
 abstract class AbstractRequest implements RequestInterface
 {
     /**
@@ -26,6 +28,7 @@ abstract class AbstractRequest implements RequestInterface
 
     /**
      * AbstractRequest constructor.
+     *
      * @param SymfonyRequest $symfonyRequest
      */
     public function __construct(SymfonyRequest $symfonyRequest)
@@ -44,7 +47,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Returns the used protocol of the current request
+     * Returns the used protocol of the current request.
      *
      * @return string
      */
@@ -54,7 +57,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Returns the hostname of the current request
+     * Returns the hostname of the current request.
      *
      * @return string
      */
@@ -64,7 +67,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Returns the protocol with the hostname
+     * Returns the protocol with the hostname.
      *
      * @return string
      */
@@ -82,7 +85,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Returns the parameter bag of the $_COOKIE superglobal
+     * Returns the parameter bag of the $_COOKIE superglobal.
      *
      * @return \Symfony\Component\HttpFoundation\ParameterBag
      */
@@ -92,7 +95,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Returns the parameter bag of the uploaded files ($_FILES superglobal)
+     * Returns the parameter bag of the uploaded files ($_FILES superglobal).
      *
      * @return \Symfony\Component\HttpFoundation\FileBag
      */
@@ -102,7 +105,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Returns the parameter bag of the $_POST superglobal
+     * Returns the parameter bag of the $_POST superglobal.
      *
      * @return \Symfony\Component\HttpFoundation\ParameterBag
      */
@@ -112,7 +115,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Returns the parameter bag of the $_SERVER superglobal
+     * Returns the parameter bag of the $_SERVER superglobal.
      *
      * @return \Symfony\Component\HttpFoundation\ServerBag
      */

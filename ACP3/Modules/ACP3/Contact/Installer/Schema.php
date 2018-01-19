@@ -1,14 +1,15 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Contact\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
-/**
- * Class Installer
- * @package ACP3\Modules\ACP3\Contact
- */
 class Schema implements Modules\Installer\SchemaInterface
 {
     const MODULE_NAME = 'contact';
@@ -35,14 +36,14 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}contacts` (
+            'CREATE TABLE `{pre}contacts` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `date` DATETIME NOT NULL,
                 `mail` VARCHAR(120) NOT NULL,
                 `name` VARCHAR(80) NOT NULL,
                 `message` TEXT NOT NULL,
                 PRIMARY KEY (`id`)
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -52,7 +53,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            'DROP TABLE IF EXISTS `{pre}contacts`;'
+            'DROP TABLE IF EXISTS `{pre}contacts`;',
         ];
     }
 
@@ -70,7 +71,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'mobile_phone' => '',
             'picture_credits' => '',
             'telephone' => '',
-            'vat_id' => ''
+            'vat_id' => '',
         ];
     }
 
@@ -83,20 +84,20 @@ class Schema implements Modules\Installer\SchemaInterface
             'admin' => [
                 'index' => [
                     'index' => PrivilegeEnum::ADMIN_VIEW,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
-                ]
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
+                ],
             ],
             'frontend' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                    'imprint' => PrivilegeEnum::FRONTEND_VIEW
-                ]
+                    'imprint' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
             ],
             'widget' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\I18n;
@@ -38,7 +39,7 @@ class CountryListTest extends \PHPUnit_Framework_TestCase
 
         $actual = $this->countryList->worldCountries();
 
-        $this->assertTrue(is_array($actual));
+        $this->assertTrue(\is_array($actual));
         $this->assertNotEmpty($actual);
     }
 
@@ -50,7 +51,7 @@ class CountryListTest extends \PHPUnit_Framework_TestCase
 
         $actual = $this->countryList->worldCountries();
 
-        $this->assertTrue(is_array($actual));
+        $this->assertTrue(\is_array($actual));
         $this->assertEmpty($actual);
     }
 
@@ -62,7 +63,7 @@ class CountryListTest extends \PHPUnit_Framework_TestCase
 
         $actual = $this->countryList->worldCountries();
 
-        $this->assertTrue(is_array($actual));
+        $this->assertTrue(\is_array($actual));
         $this->assertEmpty($actual);
     }
 }

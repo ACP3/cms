@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Model;
@@ -15,10 +16,6 @@ use ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository;
 use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class PollsModel
- * @package ACP3\Modules\ACP3\Polls\Model
- */
 class PollsModel extends AbstractModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
@@ -38,12 +35,13 @@ class PollsModel extends AbstractModel
 
     /**
      * PollsModel constructor.
+     *
      * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param Secure $secure
-     * @param PollRepository $pollRepository
-     * @param AnswerRepository $answerRepository
-     * @param VoteRepository $voteRepository
+     * @param DataProcessor            $dataProcessor
+     * @param Secure                   $secure
+     * @param PollRepository           $pollRepository
+     * @param AnswerRepository         $answerRepository
+     * @param VoteRepository           $voteRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -61,7 +59,7 @@ class PollsModel extends AbstractModel
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function save(array $rawData, $entryId = null)
     {
@@ -72,7 +70,7 @@ class PollsModel extends AbstractModel
 
     /**
      * @param array $answers
-     * @param int $pollId
+     * @param int   $pollId
      *
      * @return bool|int
      */
@@ -84,17 +82,17 @@ class PollsModel extends AbstractModel
                 if (!empty($row['text']) && !isset($row['delete'])) {
                     $data = [
                         'text' => $this->secure->strEncode($row['text']),
-                        'poll_id' => $pollId
+                        'poll_id' => $pollId,
                     ];
                     $bool = $this->answerRepository->insert($data);
                 }
             } elseif (isset($row['delete'])) {
-                $this->answerRepository->delete((int)$row['id']);
+                $this->answerRepository->delete((int) $row['id']);
             } elseif (!empty($row['text'])) {
                 $data = [
                     'text' => $this->secure->strEncode($row['text']),
                 ];
-                $bool = $this->answerRepository->update($data, (int)$row['id']);
+                $bool = $this->answerRepository->update($data, (int) $row['id']);
             }
         }
 
@@ -103,6 +101,7 @@ class PollsModel extends AbstractModel
 
     /**
      * @param int $pollId
+     *
      * @return bool|int
      */
     public function resetVotesByPollId($pollId)
@@ -121,7 +120,7 @@ class PollsModel extends AbstractModel
             'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'multiple' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
-            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

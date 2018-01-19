@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
 
-/**
- * Class RedirectMessages
- * @package ACP3\Core\Helpers
- */
 class RedirectMessages
 {
     /**
@@ -40,15 +42,16 @@ class RedirectMessages
     }
 
     /**
-     * Gets the generated redirect message from setMessage()
+     * Gets the generated redirect message from setMessage().
      *
      * @return array|null
+     *
      * @throws \Exception
      */
     public function getMessage()
     {
         $param = $this->sessionHandler->get('redirect_message');
-        if (isset($param) && is_array($param)) {
+        if (isset($param) && \is_array($param)) {
             $this->sessionHandler->remove('redirect_message');
         }
 
@@ -56,7 +59,7 @@ class RedirectMessages
     }
 
     /**
-     * Sets a redirect messages and redirects to the given internal path
+     * Sets a redirect messages and redirects to the given internal path.
      *
      * @param int|bool    $success
      * @param string      $text
@@ -69,8 +72,8 @@ class RedirectMessages
         $this->sessionHandler->set(
             'redirect_message',
             [
-                'success' => is_int($success) ? true : (bool)$success,
-                'text' => $text
+                'success' => \is_int($success) ? true : (bool) $success,
+                'text' => $text,
             ]
         );
 

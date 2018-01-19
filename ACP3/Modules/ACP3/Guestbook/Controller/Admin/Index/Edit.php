@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Guestbook;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index
- */
 class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -35,10 +32,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Guestbook\Model\GuestbookModel $guestbookModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
+     * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
+     * @param Guestbook\Model\GuestbookModel                              $guestbookModel
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
@@ -60,6 +57,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -71,12 +69,12 @@ class Edit extends Core\Controller\AbstractFrontendAction
             $this->title->setPageTitlePrefix($guestbook['name']);
 
             return [
-                'form' => array_merge($guestbook, $this->request->getPost()->all()),
+                'form' => \array_merge($guestbook, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
                 'can_use_emoticons' => $settings['emoticons'] == 1,
                 'activate' => $settings['notify'] == 2
                     ? $this->formsHelper->yesNoCheckboxGenerator('active', $guestbook['active'])
-                    : []
+                    : [],
             ];
         }
 
@@ -85,6 +83,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param int $id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function executePost($id)

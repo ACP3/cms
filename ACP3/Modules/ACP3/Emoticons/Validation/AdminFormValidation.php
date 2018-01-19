@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Emoticons\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Emoticons\Validation
- */
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
@@ -30,6 +32,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function setFile($file)
     {
         $this->file = $file;
+
         return $this;
     }
 
@@ -45,7 +48,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
         return $this;
     }
 
-
     /**
      * @param bool $fileRequired
      *
@@ -53,13 +55,13 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
      */
     public function setFileRequired($fileRequired)
     {
-        $this->fileRequired = (bool)$fileRequired;
+        $this->fileRequired = (bool) $fileRequired;
 
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {
@@ -70,15 +72,17 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'code',
-                    'message' => $this->translator->t('emoticons', 'type_in_code')
-                ])
+                    'message' => $this->translator->t('emoticons', 'type_in_code'),
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'description',
-                    'message' => $this->translator->t('emoticons', 'type_in_description')
-                ])
+                    'message' => $this->translator->t('emoticons', 'type_in_description'),
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\PictureValidationRule::class,
                 [
@@ -89,9 +93,10 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                         'width' => $this->settings['width'],
                         'height' => $this->settings['height'],
                         'filesize' => $this->settings['filesize'],
-                        'required' => $this->fileRequired
-                    ]
-                ]);
+                        'required' => $this->fileRequired,
+                    ],
+                ]
+            );
 
         $this->validator->validate();
     }

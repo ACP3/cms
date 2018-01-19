@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\View\Renderer;
@@ -10,10 +11,6 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class SmartyRendererFactory
- * @package ACP3\Core\View\Renderer
- */
 class SmartyRendererFactory
 {
     /**
@@ -31,7 +28,8 @@ class SmartyRendererFactory
 
     /**
      * SmartyRendererFactory constructor.
-     * @param ApplicationPath $appPath
+     *
+     * @param ApplicationPath   $appPath
      * @param SettingsInterface $config
      * @param $environment
      */
@@ -50,6 +48,7 @@ class SmartyRendererFactory
         $smarty = new \Smarty();
         $renderer = new Smarty($smarty, $this->appPath, $this->environment);
         $renderer->configure(['compile_id' => $this->config->getSettings(Schema::MODULE_NAME)['design']]);
+
         return $renderer;
     }
 }

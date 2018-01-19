@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Menus\Controller\Admin\Index
- */
 class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -31,9 +28,9 @@ class Edit extends Core\Controller\AbstractFrontendAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Menus\Model\MenusModel $menusModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
+     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
+     * @param Menus\Model\MenusModel                                 $menusModel
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation $menuFormValidation
      */
     public function __construct(
@@ -53,6 +50,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -63,8 +61,8 @@ class Edit extends Core\Controller\AbstractFrontendAction
             $this->title->setPageTitlePrefix($menu['title']);
 
             return [
-                'form' => array_merge($menu, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken()
+                'form' => \array_merge($menu, $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken(),
             ];
         }
 

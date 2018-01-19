@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class Delete
- * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Details
- */
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -28,8 +25,8 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Comments\Model\CommentsModel $commentsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
+     * @param Comments\Model\CommentsModel                                   $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
      */
     public function __construct(
@@ -44,10 +41,11 @@ class Delete extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
+     * @param int    $id
      * @param string $action
      *
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id, $action = '')

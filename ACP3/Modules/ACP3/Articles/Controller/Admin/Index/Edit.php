@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing
- * details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Articles;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Articles\Controller\Admin\Index
- */
 class Edit extends AbstractFrontendAction
 {
     /**
@@ -34,11 +31,11 @@ class Edit extends AbstractFrontendAction
     protected $formsHelper;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param Articles\Model\ArticlesModel $articlesModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
+     * @param Articles\Model\ArticlesModel                               $articlesModel
      * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -59,6 +56,7 @@ class Edit extends AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -70,10 +68,10 @@ class Edit extends AbstractFrontendAction
 
             return [
                 'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $article['active']),
-                'form' => array_merge($article, $this->request->getPost()->all()),
+                'form' => \array_merge($article, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
                 'SEO_URI_PATTERN' => Articles\Helpers::URL_KEY_PATTERN,
-                'SEO_ROUTE_NAME' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $id)
+                'SEO_ROUTE_NAME' => \sprintf(Articles\Helpers::URL_KEY_PATTERN, $id),
             ];
         }
 
@@ -82,6 +80,7 @@ class Edit extends AbstractFrontendAction
 
     /**
      * @param int $id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function executePost($id)
@@ -90,7 +89,7 @@ class Edit extends AbstractFrontendAction
             $formData = $this->request->getPost()->all();
 
             $this->adminFormValidation
-                ->setUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id))
+                ->setUriAlias(\sprintf(Articles\Helpers::URL_KEY_PATTERN, $id))
                 ->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Event\Listener;
@@ -33,13 +34,14 @@ class OnNewsModelAfterDeleteListener
 
     /**
      * OnNewsModelAfterDeleteListener constructor.
+     *
      * @param Modules $modules
-     * @param Cache $cache
+     * @param Cache   $cache
      */
     public function __construct(
         Modules $modules,
-        Cache $cache)
-    {
+        Cache $cache
+    ) {
         $this->modules = $modules;
         $this->cache = $cache;
     }
@@ -72,7 +74,7 @@ class OnNewsModelAfterDeleteListener
             $this->cache->getCacheDriver()->delete(Cache::CACHE_ID . $item);
 
             if ($this->uriAliasManager) {
-                $this->uriAliasManager->deleteUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $item));
+                $this->uriAliasManager->deleteUriAlias(\sprintf(Helpers::URL_KEY_PATTERN, $item));
             }
         }
     }

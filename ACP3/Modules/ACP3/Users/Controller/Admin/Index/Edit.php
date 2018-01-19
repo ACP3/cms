@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
@@ -9,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Users\Controller\Admin\Index
- */
 class Edit extends AbstractFormAction
 {
     /**
@@ -47,15 +45,15 @@ class Edit extends AbstractFormAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Core\Helpers\Forms $formsHelpers
-     * @param Users\Helpers\Forms $userFormsHelpers
-     * @param \ACP3\Modules\ACP3\Users\Model\AuthenticationModel $authenticationModel
-     * @param Users\Model\UsersModel $usersModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
+     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure                               $secureHelper
+     * @param \ACP3\Core\Helpers\Forms                                $formsHelpers
+     * @param Users\Helpers\Forms                                     $userFormsHelpers
+     * @param \ACP3\Modules\ACP3\Users\Model\AuthenticationModel      $authenticationModel
+     * @param Users\Model\UsersModel                                  $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Permissions\Helpers $permissionsHelpers
+     * @param \ACP3\Modules\ACP3\Permissions\Helpers                  $permissionsHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -83,6 +81,7 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -118,8 +117,8 @@ class Edit extends AbstractFormAction
                     $user['icq'],
                     $user['skype']
                 ),
-                'form' => array_merge($user, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken()
+                'form' => \array_merge($user, $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken(),
             ];
         }
 

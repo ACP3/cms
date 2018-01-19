@@ -1,10 +1,12 @@
 <?php
-namespace ACP3\Core\Helpers\DataGrid;
 
 /**
- * Class ColumnPriorityQueue
- * @package ACP3\Core\Helpers\DataGrid
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Helpers\DataGrid;
+
 class ColumnPriorityQueue extends \SplPriorityQueue
 {
     /**
@@ -13,7 +15,7 @@ class ColumnPriorityQueue extends \SplPriorityQueue
     protected $serial = PHP_INT_MAX;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @see http://php.net/manual/en/splpriorityqueue.compare.php#93999
      */

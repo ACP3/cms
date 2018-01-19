@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\Http;
@@ -86,6 +87,7 @@ class RedirectResponseTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $url
+     *
      * @return string
      */
     private function buildJsonResponseContent($url)

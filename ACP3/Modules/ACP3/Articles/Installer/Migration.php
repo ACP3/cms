@@ -1,22 +1,18 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Installer;
 
 use ACP3\Core\Modules\Installer\AbstractMigration;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\Articles\Installer
- */
 class Migration extends AbstractMigration
 {
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */
@@ -24,16 +20,16 @@ class Migration extends AbstractMigration
     {
         return [
             31 => [
-                "RENAME TABLE `{pre}static_pages` TO `{pre}articles`;",
+                'RENAME TABLE `{pre}static_pages` TO `{pre}articles`;',
                 "UPDATE `{pre}seo` SET `uri` = REPLACE(`uri`, 'static_pages', 'articles') WHERE `uri` REGEXP '^(static_pages/list/id_[0-9]+/)$';",
                 "UPDATE `{pre}articles` SET `text` = REPLACE(`text`, 'static_pages/list/id_', 'articles/list/id_') WHERE `text` REGEXP '(static_pages/list/id_[0-9]+/)';",
-                $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? "UPDATE `{pre}menu_items` SET `uri` = REPLACE(`uri`, 'static_pages', 'articles') WHERE `uri` REGEXP '^(static_pages/list/id_[0-9]+/)$';" : ''
+                $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? "UPDATE `{pre}menu_items` SET `uri` = REPLACE(`uri`, 'static_pages', 'articles') WHERE `uri` REGEXP '^(static_pages/list/id_[0-9]+/)$';" : '',
             ],
             32 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'details', '', 1);",
                 "UPDATE `{pre}seo` SET `uri` = REPLACE(`uri`, '/list/', '/details/') WHERE `uri` REGEXP '^(articles/list/id_[0-9]+/)$';",
                 "UPDATE `{pre}articles` SET `text` = REPLACE(`text`, 'articles/list/id_', 'articles/details/id_') WHERE `text` REGEXP '(articles/list/id_[0-9]+/)';",
-                $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? "UPDATE `{pre}menu_items` SET `uri` = REPLACE(`uri`, '/list/', '/details/') WHERE `uri` REGEXP '^(articles/list/id_[0-9]+/)$';" : ''
+                $this->schemaHelper->moduleIsInstalled('menus') || $this->schemaHelper->moduleIsInstalled('menu_items') ? "UPDATE `{pre}menu_items` SET `uri` = REPLACE(`uri`, '/list/', '/details/') WHERE `uri` REGEXP '^(articles/list/id_[0-9]+/)$';" : '',
             ],
             33 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `page` = \"extensions/search\";",
@@ -51,41 +47,41 @@ class Migration extends AbstractMigration
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'sidebar', 'index', 'single', '', 1);",
             ],
             37 => [
-                "ALTER TABLE `{pre}articles` ENGINE = InnoDB",
+                'ALTER TABLE `{pre}articles` ENGINE = InnoDB',
             ],
             38 => [
-                "ALTER TABLE `{pre}articles` CHANGE `user_id` `user_id` INT(10) UNSIGNED",
-                "ALTER TABLE `{pre}articles` ADD INDEX (`user_id`)",
-                "UPDATE `{pre}articles` SET `user_id` = NULL WHERE `user_id` = 0",
-                "ALTER TABLE `{pre}articles` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL"
+                'ALTER TABLE `{pre}articles` CHANGE `user_id` `user_id` INT(10) UNSIGNED',
+                'ALTER TABLE `{pre}articles` ADD INDEX (`user_id`)',
+                'UPDATE `{pre}articles` SET `user_id` = NULL WHERE `user_id` = 0',
+                'ALTER TABLE `{pre}articles` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL',
             ],
             39 => [
-                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';"
+                "UPDATE `{pre}acl_resources` SET `area` = 'widget' WHERE `module_id` = '{moduleId}' AND `area` = 'sidebar';",
             ],
             40 => [
-                "ALTER TABLE `{pre}articles` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `end`;",
-                "UPDATE `{pre}articles` SET `updated_at` = `start`;"
+                'ALTER TABLE `{pre}articles` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `end`;',
+                'UPDATE `{pre}articles` SET `updated_at` = `start`;',
             ],
             41 => [
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'duplicate', '', 4);",
             ],
             42 => [
-                "ALTER TABLE `{pre}articles` ADD COLUMN `active` TINYINT(1) UNSIGNED NOT NULL AFTER `id`;",
-                "ALTER TABLE `{pre}articles` ADD INDEX (`active`)",
-                "UPDATE `{pre}articles` SET `active` = 1;"
-            ]
+                'ALTER TABLE `{pre}articles` ADD COLUMN `active` TINYINT(1) UNSIGNED NOT NULL AFTER `id`;',
+                'ALTER TABLE `{pre}articles` ADD INDEX (`active`)',
+                'UPDATE `{pre}articles` SET `active` = 1;',
+            ],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */
     public function renameModule()
     {
         return [
-            31 => "UPDATE `{pre}modules` SET `name` = 'articles' WHERE `name` = 'static_pages';"
+            31 => "UPDATE `{pre}modules` SET `name` = 'articles' WHERE `name` = 'static_pages';",
         ];
     }
 }

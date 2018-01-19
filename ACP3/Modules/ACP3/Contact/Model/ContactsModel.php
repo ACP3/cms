@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Contact\Model;
@@ -12,7 +13,7 @@ use ACP3\Core\Model\DataProcessor\ColumnTypes;
 class ContactsModel extends AbstractModel
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function save(array $rawData, $entryId = null)
     {
@@ -22,7 +23,7 @@ class ContactsModel extends AbstractModel
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getAllowedColumns()
     {

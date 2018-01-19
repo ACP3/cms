@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing
- * details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
@@ -12,10 +13,6 @@ use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\News\Controller\Frontend\Index
- */
 class Index extends AbstractAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -52,12 +49,12 @@ class Index extends AbstractAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
-     * @param \ACP3\Core\Pagination $pagination
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
-     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
+     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param \ACP3\Core\Date                                                   $date
+     * @param \ACP3\Core\Helpers\StringFormatter                                $stringFormatter
+     * @param \ACP3\Core\Pagination                                             $pagination
+     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository           $newsRepository
+     * @param \ACP3\Modules\ACP3\Categories\Helpers                             $categoriesHelpers
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
@@ -104,7 +101,7 @@ class Index extends AbstractAction
             ->setTotalResults($this->newsRepository->countAll($time, $cat));
 
         $news = $this->fetchNews($cat, $time);
-        $cNews = count($news);
+        $cNews = \count($news);
 
         for ($i = 0; $i < $cNews; ++$i) {
             $news[$i]['text'] = $this->view->fetchStringAsTemplate($news[$i]['text']);
@@ -123,12 +120,12 @@ class Index extends AbstractAction
             'news' => $news,
             'dateformat' => $this->newsSettings['dateformat'],
             'categories' => $this->categoriesHelpers->categoriesList('news', $cat),
-            'pagination' => $this->pagination->render()
+            'pagination' => $this->pagination->render(),
         ];
     }
 
     /**
-     * @param int $categoryId
+     * @param int    $categoryId
      * @param string $time
      *
      * @return array

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Contact\Controller\Admin\Index;
@@ -19,7 +20,8 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * Index constructor.
-     * @param Core\Controller\Context\FrontendContext $context
+     *
+     * @param Core\Controller\Context\FrontendContext     $context
      * @param Contact\Model\Repository\DataGridRepository $dataGridRepository
      */
     public function __construct(
@@ -44,7 +46,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->addDataGridColumns($dataGrid);
 
         return [
-            'grid' => $dataGrid->render()
+            'grid' => $dataGrid->render(),
         ];
     }
 
@@ -59,7 +61,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['date'],
                 'default_sort' => true,
-                'default_sort_direction' => 'desc'
+                'default_sort_direction' => 'desc',
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'name'),

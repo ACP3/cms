@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Modules;
 
 use ACP3\Core\ACL\PermissionEnum;
@@ -9,10 +14,6 @@ use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class AclInstaller
- * @package ACP3\Core\Modules
- */
 class AclInstaller implements InstallerInterface
 {
     const INSTALL_RESOURCES_AND_RULES = 1;
@@ -44,11 +45,11 @@ class AclInstaller implements InstallerInterface
     private $ruleRepository;
 
     /**
-     * @param \ACP3\Core\Cache $aclCache
-     * @param \ACP3\Core\Modules\SchemaHelper $schemaHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository $ruleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
+     * @param \ACP3\Core\Cache                                                    $aclCache
+     * @param \ACP3\Core\Modules\SchemaHelper                                     $schemaHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository      $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository      $ruleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository  $resourceRepository
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
      */
     public function __construct(
@@ -68,10 +69,10 @@ class AclInstaller implements InstallerInterface
     }
 
     /**
-     * Fügt die zu einen Modul zugehörigen Ressourcen ein
+     * Fügt die zu einen Modul zugehörigen Ressourcen ein.
      *
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
-     * @param int $mode
+     * @param int                                          $mode
      *
      * @return bool
      */
@@ -89,7 +90,7 @@ class AclInstaller implements InstallerInterface
     }
 
     /**
-     * Inserts a new resource into the database
+     * Inserts a new resource into the database.
      *
      * @param SchemaInterface $schema
      */
@@ -100,11 +101,11 @@ class AclInstaller implements InstallerInterface
                 foreach ($actions as $action => $privilegeId) {
                     $insertValues = [
                         'module_id' => $this->schemaHelper->getModuleId($schema->getModuleName()),
-                        'area' => !empty($area) ? strtolower($area) : AreaEnum::AREA_FRONTEND,
-                        'controller' => strtolower($controller),
+                        'area' => !empty($area) ? \strtolower($area) : AreaEnum::AREA_FRONTEND,
+                        'controller' => \strtolower($controller),
                         'page' => $this->convertCamelCaseToUnderscore($action),
                         'params' => '',
-                        'privilege_id' => (int)$privilegeId
+                        'privilege_id' => (int) $privilegeId,
                     ];
                     $this->resourceRepository->insert($insertValues);
                 }
@@ -119,11 +120,11 @@ class AclInstaller implements InstallerInterface
      */
     private function convertCamelCaseToUnderscore($action)
     {
-        return strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
+        return \strtolower(\preg_replace('/\B([A-Z])/', '_$1', $action));
     }
 
     /**
-     * Insert new acl user rules
+     * Insert new acl user rules.
      *
      * @param string $moduleName
      */
@@ -140,7 +141,7 @@ class AclInstaller implements InstallerInterface
                     'role_id' => $role['id'],
                     'module_id' => $moduleId,
                     'privilege_id' => $privilege['id'],
-                    'permission' => $this->getDefaultAclRulePermission($role, $privilege)
+                    'permission' => $this->getDefaultAclRulePermission($role, $privilege),
                 ];
                 $this->ruleRepository->insert($insertValues);
             }
@@ -175,7 +176,7 @@ class AclInstaller implements InstallerInterface
     }
 
     /**
-     * Löscht die zu einem Modul zugehörigen Ressourcen
+     * Löscht die zu einem Modul zugehörigen Ressourcen.
      *
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      *

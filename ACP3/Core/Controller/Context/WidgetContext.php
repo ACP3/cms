@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Controller\Context;
@@ -20,10 +22,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class WidgetContext
- * @package ACP3\Core\Controller\Context
- */
 class WidgetContext
 {
     /**
@@ -86,20 +84,20 @@ class WidgetContext
     /**
      * WidgetContext constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Modules $modules
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \ACP3\Core\Validation\Validator $validator
-     * @param \ACP3\Core\View $view
-     * @param \ACP3\Core\Settings\SettingsInterface $config
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param Response $response
-     * @param ResultsPerPage $resultsPerPage
+     * @param \ACP3\Core\ACL                                              $acl
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                    $user
+     * @param \ACP3\Core\I18n\Translator                                  $translator
+     * @param \ACP3\Core\Modules                                          $modules
+     * @param \ACP3\Core\Http\RequestInterface                            $request
+     * @param \ACP3\Core\Router\RouterInterface                           $router
+     * @param \ACP3\Core\Validation\Validator                             $validator
+     * @param \ACP3\Core\View                                             $view
+     * @param \ACP3\Core\Settings\SettingsInterface                       $config
+     * @param \ACP3\Core\Environment\ApplicationPath                      $appPath
+     * @param Response                                                    $response
+     * @param ResultsPerPage                                              $resultsPerPage
      */
     public function __construct(
         ContainerInterface $container,

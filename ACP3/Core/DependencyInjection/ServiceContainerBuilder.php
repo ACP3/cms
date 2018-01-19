@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\DependencyInjection;
@@ -22,10 +23,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
-/**
- * Class ServiceContainerBuilder
- * @package ACP3\Core\DependencyInjection
- */
 class ServiceContainerBuilder extends ContainerBuilder
 {
     /**
@@ -47,10 +44,11 @@ class ServiceContainerBuilder extends ContainerBuilder
 
     /**
      * ServiceContainerBuilder constructor.
+     *
      * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
-     * @param SymfonyRequest $symfonyRequest
-     * @param string $applicationMode
+     * @param SymfonyRequest  $symfonyRequest
+     * @param string          $applicationMode
      */
     public function __construct(
         LoggerInterface $logger,
@@ -76,10 +74,12 @@ class ServiceContainerBuilder extends ContainerBuilder
         $this->setParameter('core.environment', $this->applicationMode);
 
         $this
-            ->addCompilerPass(new RegisterListenersPass(
+            ->addCompilerPass(
+                new RegisterListenersPass(
                     'core.event_dispatcher',
                     'core.eventListener',
-                    'core.eventSubscriber')
+                    'core.eventSubscriber'
+            )
             )
             ->addCompilerPass(new RegisterAuthenticationsCompilerPass())
             ->addCompilerPass(new RegisterSmartyPluginsPass())
@@ -103,7 +103,7 @@ class ServiceContainerBuilder extends ContainerBuilder
                 $modulePath = $this->applicationPath->getModulesDir() . $vendor . '/' . $module['dir'];
                 $path = $modulePath . '/Resources/config/services.yml';
 
-                if (is_file($path)) {
+                if (\is_file($path)) {
                     $loader->load($path);
                 }
 
@@ -115,10 +115,11 @@ class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param LoggerInterface                        $logger
      * @param \ACP3\Core\Environment\ApplicationPath $applicationPath
-     * @param SymfonyRequest $symfonyRequest
-     * @param string $applicationMode
+     * @param SymfonyRequest                         $symfonyRequest
+     * @param string                                 $applicationMode
+     *
      * @return ContainerBuilder
      */
     public static function create(
@@ -136,10 +137,10 @@ class ServiceContainerBuilder extends ContainerBuilder
      */
     private function registerCompilerPass($vendor, $moduleName)
     {
-        $fqn = "\\ACP3\\Modules\\" . $vendor . "\\" . $moduleName . "\\ModuleRegistration";
+        $fqn = '\\ACP3\\Modules\\' . $vendor . '\\' . $moduleName . '\\ModuleRegistration';
 
-        if (class_exists($fqn)) {
-            $instance = new $fqn;
+        if (\class_exists($fqn)) {
+            $instance = new $fqn();
 
             if ($instance instanceof Modules\ModuleRegistration) {
                 $instance->build($this);

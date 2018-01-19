@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Users\Validation;
 
 use ACP3\Core;
@@ -6,14 +12,10 @@ use ACP3\Core\Validation\AbstractFormValidation;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountExistsByEmailValidationRule;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountExistsByNameValidationRule;
 
-/**
- * Class AccountForgotPasswordFormValidation
- * @package ACP3\Modules\ACP3\Users\Validation
- */
 class AccountForgotPasswordFormValidation extends AbstractFormValidation
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {
@@ -30,15 +32,17 @@ class AccountForgotPasswordFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'nick_mail',
-                    'message' => $this->translator->t('users', 'type_in_nickname_or_email')
-                ])
+                    'message' => $this->translator->t('users', 'type_in_nickname_or_email'),
+                ]
+            )
             ->addConstraint(
                 $ruleName,
                 [
                     'data' => $formData,
                     'field' => 'nick_mail',
-                    'message' => $this->translator->t('users', 'user_not_exists')
-                ]);
+                    'message' => $this->translator->t('users', 'user_not_exists'),
+                ]
+            );
 
         $this->validator->dispatchValidationEvent('captcha.validation.validate_captcha', $formData);
 

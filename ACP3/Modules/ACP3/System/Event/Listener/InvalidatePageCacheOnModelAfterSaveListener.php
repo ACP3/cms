@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Event\Listener;
@@ -29,9 +30,10 @@ class InvalidatePageCacheOnModelAfterSaveListener
 
     /**
      * InvalidatePageCacheOnModelAfterSaveListener constructor.
-     * @param ApplicationPath $applicationPath
+     *
+     * @param ApplicationPath   $applicationPath
      * @param SettingsInterface $settings
-     * @param CanUsePageCache $canUsePageCache
+     * @param CanUsePageCache   $canUsePageCache
      */
     public function __construct(
         ApplicationPath $applicationPath,

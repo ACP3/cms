@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test;
@@ -11,10 +12,6 @@ use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Permissions\Cache;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-/**
- * Class ACLTest
- * @package ACP3\Core\Test
- */
 class ACLTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -80,7 +77,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
     {
         $expected = [
             0 => 2,
-            1 => 3
+            1 => 3,
         ];
         $userId = 1;
 
@@ -96,11 +93,11 @@ class ACLTest extends \PHPUnit_Framework_TestCase
         $returnValue = [
             [
                 'id' => 2,
-                'name' => 'Foo'
+                'name' => 'Foo',
             ],
             [
                 'id' => 3,
-                'name' => 'Bar'
+                'name' => 'Bar',
             ],
         ];
 
@@ -114,7 +111,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
     {
         $expected = [
             'Foo',
-            'Bar'
+            'Bar',
         ];
         $userId = 1;
 
@@ -180,7 +177,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
             1,
             1,
             [
-                0 => 1
+                0 => 1,
             ],
             true
         );
@@ -217,9 +214,9 @@ class ACLTest extends \PHPUnit_Framework_TestCase
                 'frontend' => [
                     'foo/index/index/' => [
                         'key' => 'view',
-                        'access' => ACL\PermissionEnum::PERMIT_ACCESS
-                    ]
-                ]
+                        'access' => ACL\PermissionEnum::PERMIT_ACCESS,
+                    ],
+                ],
             ]);
 
         $this->permissionsCacheMock->expects($this->exactly($callCountRulesCache))
@@ -232,8 +229,8 @@ class ACLTest extends \PHPUnit_Framework_TestCase
                         'description' => '',
                         'permission' => ACL\PermissionEnum::PERMIT_ACCESS,
                         'access' => $hasAccess,
-                    ]
-                ]
+                    ],
+                ],
             ]);
     }
 
@@ -248,7 +245,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
             1,
             1,
             [
-                0 => 1
+                0 => 1,
             ],
             true
         );
@@ -267,7 +264,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
             1,
             0,
             [
-                0 => 1
+                0 => 1,
             ],
             true
         );
@@ -288,7 +285,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
             1,
             [
                 1 => 3,
-                0 => 2
+                0 => 2,
             ],
             false
         );

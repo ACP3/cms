@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\System\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class Settings
- * @package ACP3\Modules\ACP3\System\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -39,11 +36,11 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Core\Helpers\Secure $secure
-     * @param Core\WYSIWYG\WysiwygEditorRegistrar $editorRegistrar
+     * @param \ACP3\Core\Controller\Context\FrontendContext                    $context
+     * @param \ACP3\Core\Helpers\Forms                                         $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
+     * @param Core\Helpers\Secure                                              $secure
+     * @param Core\WYSIWYG\WysiwygEditorRegistrar                              $editorRegistrar
      * @param \ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation $systemValidator
      */
     public function __construct(
@@ -83,13 +80,13 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
         $mailerTypes = [
             'mail' => $this->translator->t('system', 'mailer_type_php_mail'),
-            'smtp' => $this->translator->t('system', 'mailer_type_smtp')
+            'smtp' => $this->translator->t('system', 'mailer_type_smtp'),
         ];
 
         $mailerSmtpSecurity = [
             'none' => $this->translator->t('system', 'mailer_smtp_security_none'),
             'ssl' => $this->translator->t('system', 'mailer_smtp_security_ssl'),
-            'tls' => $this->translator->t('system', 'mailer_smtp_security_tls')
+            'tls' => $this->translator->t('system', 'mailer_smtp_security_tls'),
         ];
 
         return [
@@ -142,8 +139,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 $mailerSmtpSecurity,
                 $systemSettings['mailer_smtp_security']
             ),
-            'form' => array_merge($systemSettings, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge($systemSettings, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -159,34 +156,34 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 $this->systemValidator->validate($formData);
 
                 $data = [
-                    'cookie_consent_is_enabled' => (int)$formData['cookie_consent_is_enabled'],
+                    'cookie_consent_is_enabled' => (int) $formData['cookie_consent_is_enabled'],
                     'cookie_consent_text' => $this->secure->strEncode($formData['cookie_consent_text'], true),
-                    'cache_images' => (int)$formData['cache_images'],
-                    'cache_lifetime' => (int)$formData['cache_lifetime'],
+                    'cache_images' => (int) $formData['cache_images'],
+                    'cache_lifetime' => (int) $formData['cache_lifetime'],
                     'date_format_long' => $this->secure->strEncode($formData['date_format_long']),
                     'date_format_short' => $this->secure->strEncode($formData['date_format_short']),
                     'date_time_zone' => $formData['date_time_zone'],
-                    'entries' => (int)$formData['entries'],
-                    'flood' => (int)$formData['flood'],
+                    'entries' => (int) $formData['entries'],
+                    'flood' => (int) $formData['flood'],
                     'homepage' => $formData['homepage'],
                     'lang' => $formData['language'],
-                    'mod_rewrite' => (int)$formData['mod_rewrite'],
-                    'mailer_smtp_auth' => (int)$formData['mailer_smtp_auth'],
+                    'mod_rewrite' => (int) $formData['mod_rewrite'],
+                    'mailer_smtp_auth' => (int) $formData['mailer_smtp_auth'],
                     'mailer_smtp_host' => $formData['mailer_smtp_host'],
                     'mailer_smtp_password' => $formData['mailer_smtp_password'],
-                    'mailer_smtp_port' => (int)$formData['mailer_smtp_port'],
+                    'mailer_smtp_port' => (int) $formData['mailer_smtp_port'],
                     'mailer_smtp_security' => $formData['mailer_smtp_security'],
                     'mailer_smtp_user' => $formData['mailer_smtp_user'],
                     'mailer_type' => $formData['mailer_type'],
                     'maintenance_message' => $formData['maintenance_message'],
-                    'maintenance_mode' => (int)$formData['maintenance_mode'],
-                    'page_cache_is_enabled' => (int)$formData['page_cache_is_enabled'],
-                    'page_cache_purge_mode' => (int)$formData['page_cache_purge_mode'],
+                    'maintenance_mode' => (int) $formData['maintenance_mode'],
+                    'page_cache_is_enabled' => (int) $formData['page_cache_is_enabled'],
+                    'page_cache_purge_mode' => (int) $formData['page_cache_purge_mode'],
                     'site_title' => $this->secure->strEncode($formData['site_title']),
                     'site_subtitle' => $this->secure->strEncode($formData['site_subtitle']),
-                    'site_subtitle_homepage_mode' => (int)$formData['site_subtitle_homepage_mode'],
-                    'site_subtitle_mode' => (int)$formData['site_subtitle_mode'],
-                    'wysiwyg' => $formData['wysiwyg']
+                    'site_subtitle_homepage_mode' => (int) $formData['site_subtitle_homepage_mode'],
+                    'site_subtitle_mode' => (int) $formData['site_subtitle_mode'],
+                    'wysiwyg' => $formData['wysiwyg'],
                 ];
 
                 return $this->config->saveSettings($data, System\Installer\Schema::MODULE_NAME);
@@ -196,6 +193,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param string $currentWysiwygEditor
+     *
      * @return array
      */
     protected function fetchWysiwygEditors($currentWysiwygEditor)
@@ -206,6 +204,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 $wysiwyg[$serviceId] = $editorInstance->getFriendlyName();
             }
         }
+
         return $this->formsHelper->choicesGenerator('wysiwyg', $wysiwyg, $currentWysiwygEditor);
     }
 }

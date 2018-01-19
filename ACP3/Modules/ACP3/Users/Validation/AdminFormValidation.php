@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Users\Validation;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RolesExistValidationRule;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Users\Validation
- */
 class AdminFormValidation extends AbstractUserFormValidation
 {
     /**
@@ -22,12 +24,13 @@ class AdminFormValidation extends AbstractUserFormValidation
      */
     public function setUserId($userId)
     {
-        $this->userId = (int)$userId;
+        $this->userId = (int) $userId;
+
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {
@@ -38,8 +41,9 @@ class AdminFormValidation extends AbstractUserFormValidation
                 [
                     'data' => $formData,
                     'field' => 'roles',
-                    'message' => $this->translator->t('users', 'select_access_level')
-                ])
+                    'message' => $this->translator->t('users', 'select_access_level'),
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -47,9 +51,10 @@ class AdminFormValidation extends AbstractUserFormValidation
                     'field' => 'super_user',
                     'message' => $this->translator->t('users', 'select_super_user'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
-                ]);
+                        'haystack' => [0, 1],
+                    ],
+                ]
+            );
 
         $this->validateAccountCoreData($formData, $this->userId);
         $this->validateUserSettings($formData);

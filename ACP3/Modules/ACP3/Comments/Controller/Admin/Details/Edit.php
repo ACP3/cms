@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
@@ -9,12 +10,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 use ACP3\Core;
 use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 use ACP3\Modules\ACP3\Comments;
-use ACP3\Modules\ACP3\System;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Details
- */
 class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -33,17 +29,17 @@ class Edit extends Core\Controller\AbstractFrontendAction
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Comments\Model\CommentsModel $commentsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param Comments\Model\CommentsModel                               $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\FormToken $formTokenHelper)
-    {
+        Core\Helpers\FormToken $formTokenHelper
+    ) {
         parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;
@@ -55,6 +51,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -72,17 +69,18 @@ class Edit extends Core\Controller\AbstractFrontendAction
             $this->title->setPageTitlePrefix($comment['name']);
 
             return [
-                'form' => array_merge($comment, $this->request->getPost()->all()),
-                'module_id' => (int)$comment['module_id'],
+                'form' => \array_merge($comment, $this->request->getPost()->all()),
+                'module_id' => (int) $comment['module_id'],
                 'form_token' => $this->formTokenHelper->renderFormToken(),
-                'can_use_emoticons' => true
+                'can_use_emoticons' => true,
             ];
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
+
     /**
-     * @param int   $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -96,7 +94,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
                 $this->adminFormValidation->validate($formData);
 
                 $updateValues = [
-                    'message' => $formData['message']
+                    'message' => $formData['message'],
                 ];
                 if ((empty($comment['user_id']) || $this->validator->is(IntegerValidationRule::class, $comment['user_id']) === false) &&
                     !empty($formData['name'])

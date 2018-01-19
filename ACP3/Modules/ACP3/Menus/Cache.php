@@ -1,14 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Menus
- */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID = 'items';
@@ -28,9 +30,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $menuItemRepository;
 
     /**
-     * @param Core\Cache                                        $cache
-     * @param \ACP3\Core\I18n\Translator                        $translator
-     * @param MenuRepository                                    $menuRepository
+     * @param Core\Cache                                                   $cache
+     * @param \ACP3\Core\I18n\Translator                                   $translator
+     * @param MenuRepository                                               $menuRepository
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      */
     public function __construct(
@@ -47,7 +49,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Returns the cached menu items
+     * Returns the cached menu items.
      *
      * @return array
      */
@@ -61,18 +63,18 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Saves the menu items to the cache
+     * Saves the menu items to the cache.
      *
-     * @return boolean
+     * @return bool
      */
     public function saveMenusCache()
     {
         $menuItems = $this->menuItemRepository->getAllMenuItems();
-        $cMenuItems = count($menuItems);
+        $cMenuItems = \count($menuItems);
 
         if ($cMenuItems > 0) {
             $menus = $this->menuRepository->getAllMenus();
-            $cMenus = count($menus);
+            $cMenus = \count($menus);
 
             for ($i = 0; $i < $cMenus; ++$i) {
                 $this->saveVisibleMenuItemsCache($menus[$i]['index_name']);
@@ -92,24 +94,25 @@ class Cache extends Core\Modules\AbstractCacheStorage
                 $this->translator->t('menus', 'module'),
                 $this->translator->t('menus', 'dynamic_page'),
                 $this->translator->t('menus', 'hyperlink'),
-                $this->translator->t('menus', 'article')
+                $this->translator->t('menus', 'article'),
             ];
 
             for ($i = 0; $i < $cMenuItems; ++$i) {
-                $menuItems[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, $menuItems[$i]['mode']);
+                $menuItems[$i]['mode_formatted'] = \str_replace($modeSearch, $modeReplace, $menuItems[$i]['mode']);
                 $menuItems[$i]['first'] = $this->isFirstItemInSet($i, $menuItems);
                 $menuItems[$i]['last'] = $this->isLastItemInSet($i, $menuItems);
             }
         }
+
         return $this->cache->save(self::CACHE_ID, $menuItems);
     }
 
     /**
-     * Saves the visible menu items to the cache
+     * Saves the visible menu items to the cache.
      *
      * @param string $menuIdentifier
      *
-     * @return boolean
+     * @return bool
      */
     public function saveVisibleMenuItemsCache($menuIdentifier)
     {
@@ -120,7 +123,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Returns the cached visible menu items
+     * Returns the cached visible menu items.
      *
      * @param string $menuIdentifier
      *
@@ -164,7 +167,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     protected function isLastItemInSet($index, array $menuItems)
     {
-        $cItems = count($menuItems);
+        $cItems = \count($menuItems);
         for ($j = $index + 1; $j < $cItems; ++$j) {
             if ($menuItems[$index]['parent_id'] == $menuItems[$j]['parent_id']
                 && $menuItems[$j]['block_name'] == $menuItems[$index]['block_name']

@@ -1,14 +1,16 @@
 <?php
-namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 /**
- * Class MassActionColumnRenderer
- * @package ACP3\Core\Helpers\DataGrid\ColumnRenderer
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
+
 class MassActionColumnRenderer extends AbstractColumnRenderer
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getValue(array $column, array $dbResultRow)
     {

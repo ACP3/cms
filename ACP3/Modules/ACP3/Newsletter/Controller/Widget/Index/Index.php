@@ -1,17 +1,14 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Widget\Index;
 
 use ACP3\Core;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Widget\Index
- */
 class Index extends Core\Controller\AbstractWidgetAction
 {
     /**
@@ -25,8 +22,8 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Helpers\FormToken $formTokenHelper)
-    {
+        Core\Helpers\FormToken $formTokenHelper
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
@@ -42,7 +39,7 @@ class Index extends Core\Controller\AbstractWidgetAction
         $this->setTemplate($template);
 
         return [
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 }

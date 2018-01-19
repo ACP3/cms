@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Users\Controller\Admin\Index
- */
 class Create extends AbstractFormAction
 {
     /**
@@ -44,14 +41,14 @@ class Create extends AbstractFormAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Core\Helpers\Forms $formsHelpers
-     * @param Users\Helpers\Forms $userFormsHelpers
-     * @param Users\Model\UsersModel $usersModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
+     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure                               $secureHelper
+     * @param \ACP3\Core\Helpers\Forms                                $formsHelpers
+     * @param Users\Helpers\Forms                                     $userFormsHelpers
+     * @param Users\Model\UsersModel                                  $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Permissions\Helpers $permissionsHelpers
+     * @param \ACP3\Modules\ACP3\Permissions\Helpers                  $permissionsHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -61,8 +58,8 @@ class Create extends AbstractFormAction
         Users\Helpers\Forms $userFormsHelpers,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AdminFormValidation $adminFormValidation,
-        Permissions\Helpers $permissionsHelpers)
-    {
+        Permissions\Helpers $permissionsHelpers
+    ) {
         parent::__construct($context, $formsHelpers);
 
         $this->formTokenHelper = $formTokenHelper;
@@ -96,8 +93,8 @@ class Create extends AbstractFormAction
             'roles' => $this->fetchUserRoles(),
             'super_user' => $this->fetchIsSuperUser(),
             'contact' => $this->userFormsHelpers->fetchContactDetails(),
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -113,7 +110,7 @@ class Create extends AbstractFormAction
 
             $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
 
-            $formData = array_merge($formData, [
+            $formData = \array_merge($formData, [
                 'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd'], 'sha512'),
                 'pwd_salt' => $salt,
                 'registration_date' => 'now',

@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers\Formatter;
 
 use ACP3\Core\Date;
 use ACP3\Core\I18n\Translator;
 
-/**
- * Class DateRange
- * @package ACP3\Core\Helpers\Formatter
- */
 class DateRange
 {
     /**
@@ -32,7 +34,7 @@ class DateRange
     }
 
     /**
-     * Formats a given single date or date range into the desired format
+     * Formats a given single date or date range into the desired format.
      *
      * @param string $start
      * @param string $end
@@ -52,14 +54,14 @@ class DateRange
                     ['%date%' => $this->date->format($start, $format)]
                 );
             }
-            return $this->generateTimeTag($start, $format, $title);
-        } else {
-            $dateRange = $this->generateTimeTag($start, $format);
-            $dateRange .= '&ndash;';
-            $dateRange .= $this->generateTimeTag($end, $format);
 
-            return $dateRange;
+            return $this->generateTimeTag($start, $format, $title);
         }
+        $dateRange = $this->generateTimeTag($start, $format);
+        $dateRange .= '&ndash;';
+        $dateRange .= $this->generateTimeTag($end, $format);
+
+        return $dateRange;
     }
 
     /**
@@ -73,6 +75,7 @@ class DateRange
     {
         $rfcDate = $this->date->format($date, 'c');
         $title = !empty($title) ? ' title="' . $title . '"' : '';
+
         return '<time datetime="' . $rfcDate . '"' . $title . '>' . $this->date->format($date, $format) . '</time>';
     }
 }

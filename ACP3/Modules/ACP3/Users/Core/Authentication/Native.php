@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Core\Authentication;
@@ -13,10 +14,6 @@ use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
 use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
 
-/**
- * Class Native
- * @package ACP3\Modules\ACP3\Users\Core\Authentication
- */
 class Native implements AuthenticationInterface
 {
     /**
@@ -39,17 +36,17 @@ class Native implements AuthenticationInterface
     /**
      * Native constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Http\RequestInterface           $request
      * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
-     * @param AuthenticationModel $authenticationModel
-     * @param UserRepository $userRepository
+     * @param AuthenticationModel                        $authenticationModel
+     * @param UserRepository                             $userRepository
      */
     public function __construct(
         RequestInterface $request,
         SessionHandlerInterface $sessionHandler,
         AuthenticationModel $authenticationModel,
-        UserRepository $userRepository)
-    {
+        UserRepository $userRepository
+    ) {
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;
         $this->authenticationModel = $authenticationModel;
@@ -57,7 +54,7 @@ class Native implements AuthenticationInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function authenticate()
     {
@@ -65,7 +62,7 @@ class Native implements AuthenticationInterface
         if ($this->sessionHandler->has(AuthenticationModel::AUTH_NAME)) {
             $userData = $this->sessionHandler->get(AuthenticationModel::AUTH_NAME, []);
         } elseif ($this->request->getCookies()->has(AuthenticationModel::AUTH_NAME)) {
-            list($userId, $token) = explode('|', $this->request->getCookies()->get(AuthenticationModel::AUTH_NAME, ''));
+            list($userId, $token) = \explode('|', $this->request->getCookies()->get(AuthenticationModel::AUTH_NAME, ''));
 
             $userData = $this->verifyCredentials($userId, $token);
         }
@@ -74,9 +71,11 @@ class Native implements AuthenticationInterface
     }
 
     /**
-     * @param int $userId
+     * @param int    $userId
      * @param string $token
+     *
      * @return array|int
+     *
      * @throws AuthenticationException
      */
     protected function verifyCredentials($userId, $token)

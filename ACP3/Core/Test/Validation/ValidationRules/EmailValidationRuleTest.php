@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Test\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
@@ -23,7 +29,7 @@ class EmailValidationRuleTest extends AbstractValidationRuleTest
             'valid-email-with-subdomain' => ['test@subdomain.example.com', '', [], true],
             'invalid-data-string' => ['foobar', '', [], false],
             'invalid-data-array' => [['foo' => 'foobar'], 'foo', [], false],
-            'invalid-no-data' => [null, null, [], false]
+            'invalid-no-data' => [null, null, [], false],
         ];
     }
 }

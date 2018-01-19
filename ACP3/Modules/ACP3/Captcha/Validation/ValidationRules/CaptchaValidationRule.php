@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Validation\ValidationRules;
@@ -25,7 +26,7 @@ class CaptchaValidationRule extends AbstractValidationRule
      * CaptchaValidationRule constructor.
      *
      * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
-     * @param CaptchaExtensionInterface $captcha
+     * @param CaptchaExtensionInterface                $captcha
      */
     public function __construct(
         UserModel $user,
@@ -36,7 +37,7 @@ class CaptchaValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {

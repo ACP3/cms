@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Model\Repository;
@@ -25,8 +26,9 @@ class SearchResultsAwareRepository extends AbstractRepository implements SearchR
 
     /**
      * SearchResultsAwareRepository constructor.
+     *
      * @param Connection $db
-     * @param Date $date
+     * @param Date       $date
      */
     public function __construct(
         Connection $db,

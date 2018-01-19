@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Core\Controller;
@@ -13,8 +14,7 @@ use ACP3\Core\I18n\ExtractFromPathTrait;
 use Fisharebest\Localization\Locale;
 
 /**
- * Module Controller of the installer modules
- * @package ACP3\Installer\Core\Controller
+ * Module Controller of the installer modules.
  */
 abstract class AbstractInstallerAction implements ActionInterface
 {
@@ -69,7 +69,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function preDispatch()
     {
@@ -85,7 +85,7 @@ abstract class AbstractInstallerAction implements ActionInterface
         $this->view->assign('UA_IS_MOBILE', $this->request->getUserAgent()->isMobileBrowser());
         $this->view->assign('IS_AJAX', $this->request->isXmlHttpRequest());
 
-        $languageInfo = simplexml_load_file(
+        $languageInfo = \simplexml_load_file(
             $this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $this->translator->getLocale() . '.xml'
         );
         $this->view->assign(
@@ -128,7 +128,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function get($serviceId)
     {
@@ -136,7 +136,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * Generiert das Dropdown-Menü mit den zur Verfügung stehenden Installersprachen
+     * Generiert das Dropdown-Menü mit den zur Verfügung stehenden Installersprachen.
      *
      * @param string $selectedLanguage
      *
@@ -145,7 +145,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     private function languagesDropdown($selectedLanguage)
     {
         $languages = [];
-        $paths = glob($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/*.xml');
+        $paths = \glob($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/*.xml');
 
         foreach ($paths as $file) {
             try {
@@ -155,17 +155,17 @@ abstract class AbstractInstallerAction implements ActionInterface
                 $languages[] = [
                     'language' => $isoCode,
                     'selected' => $selectedLanguage === $isoCode ? ' selected="selected"' : '',
-                    'name' => $locale->endonym()
+                    'name' => $locale->endonym(),
                 ];
             } catch (\DomainException $e) {
-
             }
         }
+
         return $languages;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function applyTemplateAutomatically()
     {
@@ -173,14 +173,17 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addCustomTemplateVarsBeforeOutput()
     {
         $this->view->assign('PAGE_TITLE', $this->translator->t('install', 'acp3_installation'));
-        $this->view->assign('TITLE', $this->translator->t(
+        $this->view->assign(
+            'TITLE',
+            $this->translator->t(
             $this->request->getModule(),
-            $this->request->getController() . '_' . $this->request->getAction())
+            $this->request->getController() . '_' . $this->request->getAction()
+        )
         );
         $this->view->assign('LAYOUT', $this->request->isXmlHttpRequest() ? 'layout.ajax.tpl' : $this->getLayout());
     }
@@ -195,6 +198,7 @@ abstract class AbstractInstallerAction implements ActionInterface
 
     /**
      * @param string $layout
+     *
      * @return $this
      */
     public function setLayout($layout)
@@ -207,17 +211,18 @@ abstract class AbstractInstallerAction implements ActionInterface
     private function setLanguage()
     {
         $cookieLocale = $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '');
-        if (!preg_match('=/=', $cookieLocale)
-            && is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $cookieLocale . '.xml') === true
+        if (!\preg_match('=/=', $cookieLocale)
+            && \is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $cookieLocale . '.xml') === true
         ) {
             $language = $cookieLocale;
         } else {
             $language = 'en_US'; // Fallback language
 
             foreach ($this->request->getUserAgent()->parseAcceptLanguage() as $locale => $val) {
-                $locale = str_replace('-', '_', $locale);
+                $locale = \str_replace('-', '_', $locale);
                 if ($this->translator->languagePackExists($locale) === true) {
                     $language = $locale;
+
                     break;
                 }
             }

@@ -1,16 +1,16 @@
 <?php
-namespace ACP3\Core\Helpers;
-
-use ACP3\Core;
 
 /**
- * Class Secure
- * @package ACP3\Core\Helpers
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Helpers;
+
 class Secure
 {
     /**
-     * Generiert ein gesalzenes Passwort
+     * Generiert ein gesalzenes Passwort.
      *
      * @param string $salt
      * @param string $password
@@ -20,13 +20,13 @@ class Secure
      */
     public function generateSaltedPassword($salt, $password, $algorithm = 'sha1')
     {
-        return hash($algorithm, $salt . hash($algorithm, $password));
+        return \hash($algorithm, $salt . \hash($algorithm, $password));
     }
 
     /**
-     * Generiert einen Zufallsstring beliebiger Länge
+     * Generiert einen Zufallsstring beliebiger Länge.
      *
-     * @param integer $length
+     * @param int $length
      *
      * @return string
      */
@@ -34,27 +34,29 @@ class Secure
     {
         $salt = '';
         $chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-        $cChars = strlen($chars) - 1;
-        while (strlen($salt) < $length) {
-            $char = $chars[mt_rand(0, $cChars)];
-            if (strpos($salt, $char) === false) {
+        $cChars = \strlen($chars) - 1;
+        while (\strlen($salt) < $length) {
+            $char = $chars[\mt_rand(0, $cChars)];
+            if (\strpos($salt, $char) === false) {
                 $salt .= $char;
             }
         }
+
         return $salt;
     }
 
     /**
-     * Enkodiert alle HTML-Entitäten eines Strings zur Vermeidung von XSS
+     * Enkodiert alle HTML-Entitäten eines Strings zur Vermeidung von XSS.
      *
-     * @param string  $var
-     * @param boolean $scriptTagOnly
+     * @param string $var
+     * @param bool   $scriptTagOnly
      *
      * @return string
      */
     public function strEncode($var, $scriptTagOnly = false)
     {
-        $var = preg_replace('=<script[^>]*>.*</script>=isU', '', $var);
-        return $scriptTagOnly === true ? $var : htmlentities($var, ENT_QUOTES, 'UTF-8');
+        $var = \preg_replace('=<script[^>]*>.*</script>=isU', '', $var);
+
+        return $scriptTagOnly === true ? $var : \htmlentities($var, ENT_QUOTES, 'UTF-8');
     }
 }

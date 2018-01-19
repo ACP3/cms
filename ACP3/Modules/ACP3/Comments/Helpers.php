@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Comments;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository;
 
-/**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Comments
- */
 class Helpers
 {
     /**
@@ -20,24 +22,24 @@ class Helpers
     protected $commentRepository;
 
     /**
-     * @param \ACP3\Core\Modules                                  $modules
+     * @param \ACP3\Core\Modules                                             $modules
      * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
      */
     public function __construct(
         Core\Modules $modules,
-        CommentRepository $commentRepository)
-    {
+        CommentRepository $commentRepository
+    ) {
         $this->modules = $modules;
         $this->commentRepository = $commentRepository;
     }
 
     /**
-     * Zählt die Anzahl der Kommentare für einen bestimmten Eintrag eines Modules zusammen
+     * Zählt die Anzahl der Kommentare für einen bestimmten Eintrag eines Modules zusammen.
      *
-     * @param string  $moduleName
-     * @param integer $resultId
+     * @param string $moduleName
+     * @param int    $resultId
      *
-     * @return integer
+     * @return int
      */
     public function commentsCount($moduleName, $resultId)
     {

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class Settings
- * @package ACP3\Modules\ACP3\Users\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -31,7 +28,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                   $context
      * @param \ACP3\Core\Helpers\FormToken                                    $formTokenHelper
      * @param \ACP3\Core\Helpers\Forms                                        $formsHelpers
      * @param \ACP3\Modules\ACP3\Users\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
@@ -40,8 +37,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Forms $formsHelpers,
-        Users\Validation\AdminSettingsFormValidation $adminSettingsFormValidation)
-    {
+        Users\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
@@ -61,8 +58,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 'enable_registration',
                 $settings['enable_registration']
             ),
-            'form' => array_merge(['mail' => $settings['mail']], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge(['mail' => $settings['mail']], $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -78,7 +75,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
             $data = [
                 'enable_registration' => $formData['enable_registration'],
-                'mail' => $formData['mail']
+                'mail' => $formData['mail'],
             ];
 
             return $this->config->saveSettings($data, Users\Installer\Schema::MODULE_NAME);

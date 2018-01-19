@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Contact\Model;
@@ -13,10 +14,6 @@ use ACP3\Core\Mailer\MailerMessage;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Contact\Installer\Schema;
 
-/**
- * Class ContactFormModel
- * @package ACP3\Modules\ACP3\Contact\Model
- */
 class ContactFormModel
 {
     /**
@@ -38,10 +35,11 @@ class ContactFormModel
 
     /**
      * ContactFormModel constructor.
+     *
      * @param SettingsInterface $config
-     * @param Translator $translator
-     * @param Secure $secure
-     * @param SendEmail $sendEmail
+     * @param Translator        $translator
+     * @param Secure            $secure
+     * @param SendEmail         $sendEmail
      */
     public function __construct(
         SettingsInterface $config,
@@ -57,6 +55,7 @@ class ContactFormModel
 
     /**
      * @param array $formData
+     *
      * @return bool
      */
     public function sendContactFormEmail(array $formData)
@@ -66,6 +65,7 @@ class ContactFormModel
 
     /**
      * @param array $formData
+     *
      * @return bool
      */
     protected function sendEmail(array $formData)
@@ -82,11 +82,11 @@ class ContactFormModel
             ->setTemplate('Contact/layout.email.tpl')
             ->setRecipients([
                 'name' => $systemSettings['site_title'],
-                'email' => $settings['mail']
+                'email' => $settings['mail'],
             ])
             ->setFrom([
                 'name' => $formData['name'],
-                'email' => $formData['mail']
+                'email' => $formData['mail'],
             ])
             ->setSender($settings['mail']);
 
@@ -112,6 +112,7 @@ class ContactFormModel
     /**
      * @param string $phrase
      * @param string $siteTitle
+     *
      * @return string
      */
     protected function buildSubject($phrase, $siteTitle)
@@ -120,8 +121,9 @@ class ContactFormModel
     }
 
     /**
-     * @param array $formData
+     * @param array  $formData
      * @param string $phrase
+     *
      * @return string
      */
     protected function buildEmailBody(array $formData, $phrase)
@@ -132,13 +134,14 @@ class ContactFormModel
             [
                 '%name%' => $formData['name'],
                 '%mail%' => $formData['mail'],
-                '%message%' => $this->secure->strEncode($formData['message'], true)
+                '%message%' => $this->secure->strEncode($formData['message'], true),
             ]
         );
     }
 
     /**
      * @param array $formData
+     *
      * @return bool
      */
     protected function sendEmailCopy(array $formData)
@@ -159,7 +162,7 @@ class ContactFormModel
             ])
             ->setFrom([
                 'name' => $systemSettings['site_title'],
-                'email' => $settings['mail']
+                'email' => $settings['mail'],
             ]);
 
         return $this->sendEmail->execute($data);
@@ -167,6 +170,7 @@ class ContactFormModel
 
     /**
      * @param array $formData
+     *
      * @return bool
      */
     public function sendContactFormEmailCopy(array $formData)

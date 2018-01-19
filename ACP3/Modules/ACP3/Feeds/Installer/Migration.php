@@ -1,17 +1,18 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Feeds\Installer;
 
 use ACP3\Core\Modules;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\Feeds\Installer
- */
 class Migration implements Modules\Installer\MigrationInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */
@@ -26,12 +27,12 @@ class Migration implements Modules\Installer\MigrationInterface
             32 => [
                 "UPDATE `{pre}acl_resources` SET `privilege_id` = 3 WHERE `module_id` = '{moduleId}' AND `area` = 'admin' AND `controller` = 'index' AND `page` = 'index';",
                 "INSERT INTO `{pre}acl_resources` (`module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES ('{moduleId}', 'admin', 'index', 'settings', '', 7);",
-            ]
+            ],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Cache;
@@ -12,10 +13,6 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class CacheResponseTrait
- * @package ACP3\Core\Cache
- */
 trait CacheResponseTrait
 {
     abstract protected function getRequest(): RequestInterface;
@@ -49,7 +46,7 @@ trait CacheResponseTrait
             ->setMaxAge($lifetime)
             ->setSharedMaxAge($lifetime)
             ->headers->add([
-                $varyHeaderName => $this->getRequest()->getSymfonyRequest()->headers->get($varyHeaderName)
+                $varyHeaderName => $this->getRequest()->getSymfonyRequest()->headers->get($varyHeaderName),
             ]);
 
         if ($this->disallowPageCache()) {

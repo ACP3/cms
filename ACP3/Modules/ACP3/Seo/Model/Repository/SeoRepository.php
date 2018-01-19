@@ -1,17 +1,14 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class SeoRepository
- * @package ACP3\Modules\ACP3\Seo\Model\Repository
- */
 class SeoRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'seo';

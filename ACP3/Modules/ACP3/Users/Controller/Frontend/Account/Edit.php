@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Users;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Users\Controller\Frontend\Account
- */
 class Edit extends AbstractAction
 {
     /**
@@ -35,10 +32,10 @@ class Edit extends AbstractAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms $userFormsHelper
-     * @param Users\Model\UsersModel $usersModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext             $context
+     * @param \ACP3\Core\Helpers\FormToken                              $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms                    $userFormsHelper
+     * @param Users\Model\UsersModel                                    $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation $accountFormValidation
      */
     public function __construct(
@@ -78,8 +75,8 @@ class Edit extends AbstractAction
                 $user['icq'],
                 $user['skype']
             ),
-            'form' => array_merge($user, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge($user, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 

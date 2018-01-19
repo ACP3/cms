@@ -1,15 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Modules;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\System;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-/**
- * Class SchemaHelper
- * @package ACP3\Core\Modules
- */
 class SchemaHelper
 {
     use ContainerAwareTrait;
@@ -33,9 +34,10 @@ class SchemaHelper
 
     /**
      * SchemaHelper constructor.
-     * @param LoggerInterface $logger
-     * @param Core\Database\Connection $db
-     * @param Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
+     *
+     * @param LoggerInterface                                        $logger
+     * @param Core\Database\Connection                               $db
+     * @param Core\Model\Repository\ModuleAwareRepositoryInterface   $systemModuleRepository
      * @param Core\Model\Repository\SettingsAwareRepositoryInterface $systemSettingsRepository
      */
     public function __construct(
@@ -75,32 +77,34 @@ class SchemaHelper
     }
 
     /**
-     * Executes all given SQL queries
+     * Executes all given SQL queries.
      *
-     * @param array $queries
+     * @param array  $queries
      * @param string $moduleName
      *
      * @return bool
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executeSqlQueries(array $queries, $moduleName = '')
     {
-        if (count($queries) > 0) {
+        if (\count($queries) > 0) {
             $search = ['{pre}', '{engine}', '{charset}'];
             $replace = [$this->db->getPrefix(), 'ENGINE=InnoDB', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`'];
 
             $this->db->getConnection()->beginTransaction();
+
             try {
                 foreach ($queries as $query) {
-                    if (is_object($query) && ($query instanceof \Closure)) {
+                    if (\is_object($query) && ($query instanceof \Closure)) {
                         if ($query() === false) {
                             return false;
                         }
                     } elseif (!empty($query)) {
-                        if (strpos($query, '{moduleId}') !== false) {
-                            $query = str_replace('{moduleId}', $this->getModuleId($moduleName), $query);
+                        if (\strpos($query, '{moduleId}') !== false) {
+                            $query = \str_replace('{moduleId}', $this->getModuleId($moduleName), $query);
                         }
-                        $this->db->getConnection()->query(str_ireplace($search, $replace, $query));
+                        $this->db->getConnection()->query(\str_ireplace($search, $replace, $query));
                     }
                 }
                 $this->db->getConnection()->commit();
@@ -108,14 +112,16 @@ class SchemaHelper
                 $this->db->getConnection()->rollBack();
 
                 $this->logger->warning($e);
+
                 return false;
             }
         }
+
         return true;
     }
 
     /**
-     * Returns the module-ID
+     * Returns the module-ID.
      *
      * @param string $moduleName
      *
@@ -129,7 +135,7 @@ class SchemaHelper
     /**
      * @param string $moduleName
      *
-     * @return boolean
+     * @return bool
      */
     public function moduleIsInstalled($moduleName)
     {

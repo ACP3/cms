@@ -1,24 +1,21 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 
-/**
- * Class ConfigFileValidationRule
- * @package ACP3\Installer\Modules\Install\Validation\ValidationRules
- */
 class ConfigFileValidationRule extends AbstractValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        return is_file($data) === true && is_writable($data) === true;
+        return \is_file($data) === true && \is_writable($data) === true;
     }
 }

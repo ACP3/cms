@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\Http\RequestInterface;
@@ -6,10 +12,6 @@ use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\Validation\Exceptions\InvalidFormTokenException;
 use ACP3\Core\Validation\Validator;
 
-/**
- * Class FormTokenValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class FormTokenValidationRule extends AbstractValidationRule
 {
     /**
@@ -36,7 +38,7 @@ class FormTokenValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(Validator $validator, $data, $field = '', array $extra = [])
     {
@@ -46,7 +48,7 @@ class FormTokenValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {

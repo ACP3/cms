@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
-/**
- * Class Mark
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class Mark extends AbstractFunction
 {
     /**
@@ -25,7 +27,7 @@ class Mark extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -33,7 +35,7 @@ class Mark extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {

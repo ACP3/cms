@@ -2,7 +2,7 @@
   "name": "acp3/module-categories",
   "description": "Provides the categories module for the ACP3 CMS.",
   "type": "acp3-module",
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Tino Goratsch",
@@ -11,23 +11,26 @@
   ],
   "support": {
     "email": "mail@acp3-cms.net",
-    "issues": "https://github.com/ACP3/cms/issues"
+    "issues": "https://gitlab.com/ACP3/cms/issues"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
     "acp3/composer-installer": "^1.0",
-    "acp3/core": "^4.20.0",
-    "acp3/setup": "^4.20.0",
-    "acp3/module-errors": "^4.20.0",
-    "acp3/module-permissions": "^4.20.0",
-    "acp3/module-system": "^4.20.0",
-    "acp3/module-users": "^4.20.0"
+    "acp3/core": "^4.21.0",
+    "acp3/setup": "^4.21.0",
+    "acp3/module-errors": "^4.21.0",
+    "acp3/module-permissions": "^4.21.0",
+    "acp3/module-system": "^4.21.0",
+    "acp3/module-users": "^4.21.0"
   },
   "autoload": {
     "psr-4": {
       "ACP3\\Modules\\ACP3\\Categories\\": ""
-    }
+    },
+    "exclude-from-classmap": [
+      "/Test/"
+    ]
   },
   "extra": {
     "installer-name": "ACP3/Categories"

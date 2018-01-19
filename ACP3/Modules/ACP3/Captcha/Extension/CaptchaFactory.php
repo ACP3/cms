@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Extension;
@@ -23,8 +24,9 @@ class CaptchaFactory
 
     /**
      * CaptchaFactory constructor.
+     *
      * @param SettingsInterface $settings
-     * @param CaptchaRegistrar $captchaRegistrar
+     * @param CaptchaRegistrar  $captchaRegistrar
      */
     public function __construct(SettingsInterface $settings, CaptchaRegistrar $captchaRegistrar)
     {

@@ -1,14 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
 
-/**
- * Class AccountStatusColumnRenderer
- * @package ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer
- */
 class AccountStatusColumnRenderer extends AbstractColumnRenderer
 {
     /**
@@ -23,7 +25,7 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     /**
      * AccountStatusColumnRenderer constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\Translator        $translator
      * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(
@@ -35,12 +37,12 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
         if (isset($dbResultRow[$field])) {
-            if ((int)$dbResultRow[$field] === 0) {
+            if ((int) $dbResultRow[$field] === 0) {
                 $route = $this->router->route('acp/newsletter/accounts/activate/id_' . $dbResultRow[$this->primaryKey]);
                 $title = $this->translator->t('newsletter', 'activate_account');
                 $value = '<a href="' . $route . '" title="' . $title . '">';

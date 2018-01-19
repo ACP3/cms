@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
-/**
- * Class Delete
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
- */
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -36,10 +33,10 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers                            $galleryHelpers
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Cache                              $galleryCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -63,10 +60,11 @@ class Delete extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
+     * @param int    $id
      * @param string $action
      *
      * @return mixed
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id, $action = '')
@@ -85,7 +83,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
                         if ($this->uriAliasManager) {
                             $this->uriAliasManager->deleteUriAlias(
-                                sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item)
+                                \sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item)
                             );
                         }
 

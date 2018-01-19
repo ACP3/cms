@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model\DataProcessor\ColumnType;
@@ -17,6 +18,7 @@ class TextColumnType implements ColumnTypeStrategyInterface
 
     /**
      * TextColumnType constructor.
+     *
      * @param Secure $secure
      */
     public function __construct(Secure $secure)
@@ -26,6 +28,7 @@ class TextColumnType implements ColumnTypeStrategyInterface
 
     /**
      * @param mixed $value
+     *
      * @return string
      */
     public function doEscape($value)

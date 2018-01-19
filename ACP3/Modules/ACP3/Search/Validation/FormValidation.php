@@ -1,16 +1,18 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Search\Validation;
 
 use ACP3\Core;
 
-/**
- * Class FormValidation
- * @package ACP3\Modules\ACP3\Search\Validation
- */
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {
@@ -22,16 +24,18 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'search_term',
                     'message' => $this->translator->t('search', 'search_term_to_short'),
                     'extra' => [
-                        'length' => 4
-                    ]
-                ])
+                        'length' => 4,
+                    ],
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'mods',
-                    'message' => $this->translator->t('search', 'no_module_selected')
-                ])
+                    'message' => $this->translator->t('search', 'no_module_selected'),
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -39,9 +43,10 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'area',
                     'message' => $this->translator->t('search', 'no_area_selected'),
                     'extra' => [
-                        'haystack' => ['title_content', 'title', 'content']
-                    ]
-                ])
+                        'haystack' => ['title_content', 'title', 'content'],
+                    ],
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -49,9 +54,10 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'sort',
                     'message' => $this->translator->t('search', 'no_sorting_selected'),
                     'extra' => [
-                        'haystack' => ['asc', 'desc']
-                    ]
-                ]);
+                        'haystack' => ['asc', 'desc'],
+                    ],
+                ]
+            );
 
         $this->validator->validate();
     }

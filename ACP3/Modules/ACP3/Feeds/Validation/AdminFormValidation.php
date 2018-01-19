@@ -1,17 +1,18 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Feeds\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Feeds\Validation
- */
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {
@@ -24,9 +25,10 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'feed_type',
                     'message' => $this->translator->t('feeds', 'select_feed_type'),
                     'extra' => [
-                        'haystack' => ['RSS 1.0', 'RSS 2.0', 'ATOM']
-                    ]
-                ]);
+                        'haystack' => ['RSS 1.0', 'RSS 2.0', 'ATOM'],
+                    ],
+                ]
+            );
 
         $this->validator->validate();
     }

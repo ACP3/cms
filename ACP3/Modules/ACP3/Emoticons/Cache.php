@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Emoticons;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Emoticons;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Emoticons
- */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID = 'list';
@@ -26,8 +23,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $emoticonRepository;
 
     /**
-     * @param \ACP3\Core\Cache                                      $cache
-     * @param \ACP3\Core\Environment\ApplicationPath                $appPath
+     * @param \ACP3\Core\Cache                                                 $cache
+     * @param \ACP3\Core\Environment\ApplicationPath                           $appPath
      * @param \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository $emoticonRepository
      */
     public function __construct(
@@ -42,7 +39,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Bindet die gecacheten Emoticons ein
+     * Bindet die gecacheten Emoticons ein.
      *
      * @return array
      */
@@ -56,18 +53,18 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Caches the emoticons
+     * Caches the emoticons.
      *
-     * @return boolean
+     * @return bool
      */
     public function saveCache()
     {
         $emoticons = $this->emoticonRepository->getAll();
-        $cEmoticons = count($emoticons);
+        $cEmoticons = \count($emoticons);
 
         $data = [];
         for ($i = 0; $i < $cEmoticons; ++$i) {
-            $picInfos = getimagesize($this->appPath->getUploadsDir() . 'emoticons/' . $emoticons[$i]['img']);
+            $picInfos = \getimagesize($this->appPath->getUploadsDir() . 'emoticons/' . $emoticons[$i]['img']);
             $code = $emoticons[$i]['code'];
             $description = $emoticons[$i]['description'];
             $data[$code] = '<img src="' . $this->appPath->getWebRoot() . 'uploads/emoticons/' . $emoticons[$i]['img'] . '" width="' . $picInfos[0] . '" height="' . $picInfos[1] . '" alt="' . $description . '" title="' . $description . '" />';

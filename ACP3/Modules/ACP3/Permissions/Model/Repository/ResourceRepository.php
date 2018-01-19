@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Model\Repository;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Permissions\Model\Repository;
 use ACP3\Core;
 use ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository;
 
-/**
- * Class ResourceRepository
- * @package ACP3\Modules\ACP3\Permissions\Model\Repository
- */
 class ResourceRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'acl_resources';

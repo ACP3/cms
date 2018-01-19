@@ -1,20 +1,22 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Users\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 
-/**
- * Class IcqNumberValidationRule
- * @package ACP3\Modules\ACP3\Users\Validation\ValidationRules
- */
 class IcqNumberValidationRule extends AbstractValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
@@ -28,6 +30,6 @@ class IcqNumberValidationRule extends AbstractValidationRule
      */
     protected function isIcqNumber($value)
     {
-        return (bool)preg_match('/^(\d{6,9})$/', $value);
+        return (bool) \preg_match('/^(\d{6,9})$/', $value);
     }
 }

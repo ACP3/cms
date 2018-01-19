@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Permissions;
 
 use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository;
 
-/**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Permissions
- */
 class Helpers
 {
     /**

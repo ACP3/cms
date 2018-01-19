@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Modules;
@@ -13,10 +14,6 @@ use ACP3\Core\I18n\Translator;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\XML;
 
-/**
- * Class ModuleInfoCache
- * @package ACP3\Core\Modules
- */
 class ModuleInfoCache
 {
     use ModuleDependenciesTrait;
@@ -48,11 +45,12 @@ class ModuleInfoCache
 
     /**
      * ModuleInfoCache constructor.
-     * @param Cache $cache
-     * @param ApplicationPath $appPath
-     * @param Translator $translator
-     * @param Vendor $vendors
-     * @param XML $xml
+     *
+     * @param Cache                          $cache
+     * @param ApplicationPath                $appPath
+     * @param Translator                     $translator
+     * @param Vendor                         $vendors
+     * @param XML                            $xml
      * @param ModuleAwareRepositoryInterface $systemModuleRepository
      */
     public function __construct(
@@ -92,7 +90,7 @@ class ModuleInfoCache
     }
 
     /**
-     * Saves the modules info cache
+     * Saves the modules info cache.
      */
     public function saveModulesInfoCache()
     {
@@ -124,7 +122,7 @@ class ModuleInfoCache
                 $moduleInfo = $this->fetchModuleInfo($module);
 
                 if (!empty($moduleInfo)) {
-                    $infos[strtolower($module)] = $moduleInfo;
+                    $infos[\strtolower($module)] = $moduleInfo;
                 }
             }
         }
@@ -139,14 +137,14 @@ class ModuleInfoCache
      */
     protected function fetchModuleInfo($moduleDirectory)
     {
-        $vendors = array_reverse($this->vendors->getVendors()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
+        $vendors = \array_reverse($this->vendors->getVendors()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
         foreach ($vendors as $vendor) {
             $path = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/Resources/config/module.xml';
-            if (is_file($path) === true) {
+            if (\is_file($path) === true) {
                 $moduleInfo = $this->xml->parseXmlFile($path, 'info');
 
                 if (!empty($moduleInfo)) {
-                    $moduleName = strtolower($moduleDirectory);
+                    $moduleName = \strtolower($moduleDirectory);
                     $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
 
                     return [
@@ -154,7 +152,7 @@ class ModuleInfoCache
                         'dir' => $moduleDirectory,
                         'installed' => (!empty($moduleInfoDb)),
                         'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
-                        'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
+                        'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
                         'description' => $this->getModuleDescription($moduleInfo, $moduleName),
                         'author' => $moduleInfo['author'],
                         'version' => $moduleInfo['version'],

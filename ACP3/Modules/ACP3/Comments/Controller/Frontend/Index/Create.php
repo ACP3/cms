@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
@@ -8,10 +10,6 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Comments\Controller\Frontend\Index
- */
 class Create extends AbstractFrontendAction
 {
     /**
@@ -28,17 +26,17 @@ class Create extends AbstractFrontendAction
     protected $commentsModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Comments\Model\CommentsModel $commentsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
+     * @param Comments\Model\CommentsModel                          $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $formValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\FormValidation $formValidation,
-        Core\Helpers\FormToken $formTokenHelper)
-    {
+        Core\Helpers\FormToken $formTokenHelper
+    ) {
         parent::__construct($context);
 
         $this->formValidation = $formValidation;
@@ -48,26 +46,28 @@ class Create extends AbstractFrontendAction
 
     /**
      * @param string $module
-     * @param int $entryId
+     * @param int    $entryId
      * @param string $redirectUrl
+     *
      * @return array
      */
     public function execute($module, $entryId, $redirectUrl)
     {
         return [
-            'form' => array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
+            'form' => \array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
             'module' => $module,
             'entry_id' => $entryId,
             'redirect_url' => $redirectUrl,
             'form_token' => $this->formTokenHelper->renderFormToken(),
-            'can_use_emoticons' => $this->emoticonsActive === true
+            'can_use_emoticons' => $this->emoticonsActive === true,
         ];
     }
 
     /**
      * @param string $module
-     * @param int $entryId
+     * @param int    $entryId
      * @param string $redirectUrl
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function executePost($module, $entryId, $redirectUrl)
@@ -92,7 +92,7 @@ class Create extends AbstractFrontendAction
                 return $this->redirectMessages()->setMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),
-                    base64_decode(urldecode($redirectUrl))
+                    \base64_decode(\urldecode($redirectUrl))
                 );
             }
         );
@@ -106,7 +106,7 @@ class Create extends AbstractFrontendAction
         $defaults = [
             'name' => '',
             'name_disabled' => false,
-            'message' => ''
+            'message' => '',
         ];
 
         if ($this->user->isAuthenticated() === true) {
@@ -115,6 +115,7 @@ class Create extends AbstractFrontendAction
             $defaults['name_disabled'] = true;
             $defaults['message'] = '';
         }
+
         return $defaults;
     }
 }

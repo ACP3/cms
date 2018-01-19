@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Event\Listener;
@@ -18,6 +19,7 @@ class UpdatePictureCacheOnModelAfterSaveListener
 
     /**
      * UpdatePictureCacheOnModelAfterSaveListener constructor.
+     *
      * @param Cache $cache
      */
     public function __construct(Cache $cache)

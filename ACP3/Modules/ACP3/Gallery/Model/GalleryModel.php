@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Model;
@@ -15,7 +16,7 @@ class GalleryModel extends AbstractModel
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function save(array $rawData, $entryId = null)
     {
@@ -34,7 +35,7 @@ class GalleryModel extends AbstractModel
             'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

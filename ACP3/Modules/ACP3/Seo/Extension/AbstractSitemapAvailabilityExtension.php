@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Extension;
@@ -27,13 +28,14 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
 
     /**
      * AbstractSitemapAvailabilityExtension constructor.
+     *
      * @param RouterInterface $router
-     * @param MetaStatements $metaStatements
+     * @param MetaStatements  $metaStatements
      */
     public function __construct(
         RouterInterface $router,
-        MetaStatements $metaStatements)
-    {
+        MetaStatements $metaStatements
+    ) {
         $this->router = $router;
         $this->metaStatements = $metaStatements;
     }
@@ -41,7 +43,8 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
     /**
      * @param $routeName
      * @param null|string $lastModificationDate
-     * @param bool|null $isSecure
+     * @param bool|null   $isSecure
+     *
      * @return $this
      */
     protected function addUrl($routeName, $lastModificationDate = null, $isSecure = null)
@@ -56,15 +59,16 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
 
     /**
      * @param string $routeName
+     *
      * @return bool
      */
     private function pageIsIndexable($routeName)
     {
-        return in_array($this->metaStatements->getRobotsSetting($routeName), ['index,follow', 'index,nofollow']);
+        return \in_array($this->metaStatements->getRobotsSetting($routeName), ['index,follow', 'index,nofollow']);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUrls($isSecure = null)
     {
@@ -77,7 +81,6 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
 
     /**
      * @param bool|null $isSecure
-     * @return void
      */
     abstract protected function fetchSitemapUrls($isSecure = null);
 }

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Helper;
-
 
 use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Date;
@@ -34,9 +34,10 @@ class UpdateCheck
 
     /**
      * UpdateCheck constructor.
-     * @param Date $date
+     *
+     * @param Date              $date
      * @param SettingsInterface $settings
-     * @param UpdateFileParser $updateFileParser
+     * @param UpdateFileParser  $updateFileParser
      */
     public function __construct(Date $date, SettingsInterface $settings, UpdateFileParser $updateFileParser)
     {
@@ -59,7 +60,7 @@ class UpdateCheck
                 'installed_version' => BootstrapInterface::VERSION,
                 'latest_version' => $settings['update_new_version'],
                 'is_latest' => $this->isLatestVersion($settings['update_new_version']),
-                'url' => $settings['update_new_version_url']
+                'url' => $settings['update_new_version_url'],
             ];
         }
 
@@ -68,6 +69,7 @@ class UpdateCheck
 
     /**
      * @param string $lastUpdateTimestamp
+     *
      * @return bool
      */
     private function canRequestUpdateURI($lastUpdateTimestamp)
@@ -87,7 +89,7 @@ class UpdateCheck
                 'installed_version' => BootstrapInterface::VERSION,
                 'latest_version' => $data['latest_version'],
                 'is_latest' => $this->isLatestVersion($data['latest_version']),
-                'url' => $data['url']
+                'url' => $data['url'],
             ];
 
             $this->saveUpdateSettings($update);
@@ -100,6 +102,7 @@ class UpdateCheck
 
     /**
      * @param string $latestVersion
+     *
      * @return bool
      */
     private function isLatestVersion($latestVersion)
@@ -112,6 +115,7 @@ class UpdateCheck
 
     /**
      * @param array $update
+     *
      * @return bool
      */
     private function saveUpdateSettings(array $update)

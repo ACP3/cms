@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Files;
 
-/**
- * Class Settings
- * @package ACP3\Modules\ACP3\Files\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -40,7 +37,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                   $context
      * @param \ACP3\Core\Helpers\Forms                                        $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                    $formTokenHelper
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
@@ -49,8 +46,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation)
-    {
+        Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+    ) {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
@@ -86,14 +83,14 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
         $orderBy = [
             'date' => $this->translator->t('files', 'order_by_date_descending'),
-            'custom' => $this->translator->t('files', 'order_by_custom')
+            'custom' => $this->translator->t('files', 'order_by_custom'),
         ];
 
         return [
             'order_by' => $this->formsHelper->choicesGenerator('order_by', $orderBy, $settings['order_by']),
             'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
-            'sidebar_entries' => $this->formsHelper->recordsPerPage((int)$settings['sidebar'], 1, 10, 'sidebar'),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'sidebar_entries' => $this->formsHelper->recordsPerPage((int) $settings['sidebar'], 1, 10, 'sidebar'),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -109,8 +106,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
             $data = [
                 'dateformat' => $this->get('core.helpers.secure')->strEncode($formData['dateformat']),
-                'sidebar' => (int)$formData['sidebar'],
-                'order_by' => $formData['order_by']
+                'sidebar' => (int) $formData['sidebar'],
+                'order_by' => $formData['order_by'],
             ];
 
             if ($this->commentsHelpers) {

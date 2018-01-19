@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Installer;
 
 use ACP3\Core\Modules\Installer\AbstractSampleData;
 
-/**
- * Class SampleData
- * @package ACP3\Modules\ACP3\Menus\Installer
- */
 class SampleData extends AbstractSampleData
 {
     /**

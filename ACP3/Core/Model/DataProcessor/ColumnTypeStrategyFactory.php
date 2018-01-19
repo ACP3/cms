@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model\DataProcessor;
@@ -18,6 +19,7 @@ class ColumnTypeStrategyFactory
     /**
      * @param ColumnTypeStrategyInterface $columnTypeStrategy
      * @param $columnTypeName
+     *
      * @return $this
      */
     public function registerColumnType(ColumnTypeStrategyInterface $columnTypeStrategy, $columnTypeName)
@@ -29,6 +31,7 @@ class ColumnTypeStrategyFactory
 
     /**
      * @param string $columnType
+     *
      * @return ColumnTypeStrategyInterface
      */
     public function getStrategy($columnType)

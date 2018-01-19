@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\News\Controller\Admin\Index
- */
 class Create extends AbstractFormAction
 {
     use CommentsHelperTrait;
@@ -34,12 +31,12 @@ class Create extends AbstractFormAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param News\Model\NewsModel $newsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
+     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
+     * @param News\Model\NewsModel                                   $newsModel
      * @param \ACP3\Modules\ACP3\News\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
+     * @param \ACP3\Modules\ACP3\Categories\Helpers                  $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -67,7 +64,7 @@ class Create extends AbstractFormAction
             'uri' => '',
             'link_title' => '',
             'start' => '',
-            'end' => ''
+            'end' => '',
         ];
 
         return [
@@ -79,10 +76,10 @@ class Create extends AbstractFormAction
             ),
             'options' => $this->fetchOptions(0, 0),
             'target' => $this->formsHelper->linkTargetChoicesGenerator('target'),
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
+            'form' => \array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => News\Helpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => ''
+            'SEO_ROUTE_NAME' => '',
         ];
     }
 

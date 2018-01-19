@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Controller\Install;
@@ -10,10 +11,6 @@ use ACP3\Installer\Core\Controller\AbstractInstallerAction;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-/**
- * Class AvailableDatabases
- * @package ACP3\Installer\Modules\Install\Controller\Install
- */
 class AvailableDatabases extends AbstractInstallerAction
 {
     /**
@@ -40,6 +37,7 @@ class AvailableDatabases extends AbstractInstallerAction
      * @param string $hostname
      * @param string $userName
      * @param string $password
+     *
      * @return \Doctrine\DBAL\Connection|null
      */
     private function getDatabaseConnection($hostname, $userName, $password)
@@ -52,7 +50,7 @@ class AvailableDatabases extends AbstractInstallerAction
                 'password' => $password,
                 'host' => $hostname,
                 'driver' => 'pdo_mysql',
-                'charset' => 'utf8'
+                'charset' => 'utf8',
             ];
 
             return \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
@@ -63,6 +61,7 @@ class AvailableDatabases extends AbstractInstallerAction
 
     /**
      * @param Connection $conn
+     *
      * @return array
      */
     private function retrieveAvailableDatabases(Connection $conn)
@@ -72,7 +71,8 @@ class AvailableDatabases extends AbstractInstallerAction
         foreach ($databases as $database) {
             $availableDatabases[] = $database['Database'];
         }
-        return array_values(array_diff($availableDatabases, $this->getMySQLDefaultDatabases()));
+
+        return \array_values(\array_diff($availableDatabases, $this->getMySQLDefaultDatabases()));
     }
 
     /**

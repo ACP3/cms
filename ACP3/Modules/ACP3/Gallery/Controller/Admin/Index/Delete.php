@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
-/**
- * Class Delete
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
- */
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -40,10 +37,10 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Gallery\Cache $galleryCache
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
-     * @param Gallery\Model\GalleryModel $galleryModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param \ACP3\Modules\ACP3\Gallery\Cache                              $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers                            $galleryHelpers
+     * @param Gallery\Model\GalleryModel                                    $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      */
     public function __construct(
@@ -89,7 +86,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
                     if ($this->uriAliasManager) {
                         $this->uriAliasManager->deleteUriAlias(
-                            sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item)
+                            \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item)
                         );
                     }
 
@@ -102,20 +99,22 @@ class Delete extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param integer $galleryId
+     * @param int $galleryId
      *
-     * @return boolean
+     * @return bool
      */
     protected function deletePictureAliases($galleryId)
     {
         if ($this->uriAliasManager) {
             $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
-            $cPictures = count($pictures);
+            $cPictures = \count($pictures);
 
             for ($i = 0; $i < $cPictures; ++$i) {
                 $this->uriAliasManager->deleteUriAlias(
-                    sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE,
-                    $pictures[$i]['id'])
+                    \sprintf(
+                        Gallery\Helpers::URL_KEY_PATTERN_PICTURE,
+                    $pictures[$i]['id']
+                    )
                 );
             }
         }

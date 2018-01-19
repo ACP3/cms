@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
- */
 class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -31,9 +28,9 @@ class Create extends Core\Controller\AbstractFrontendAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Gallery\Model\GalleryModel $galleryModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
+     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
+     * @param Gallery\Model\GalleryModel                                  $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
      */
     public function __construct(
@@ -57,14 +54,14 @@ class Create extends Core\Controller\AbstractFrontendAction
         $defaults = [
             'title' => '',
             'start' => '',
-            'end' => ''
+            'end' => '',
         ];
 
         return [
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
+            'form' => \array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => Gallery\Helpers::URL_KEY_PATTERN_GALLERY,
-            'SEO_ROUTE_NAME' => ''
+            'SEO_ROUTE_NAME' => '',
         ];
     }
 

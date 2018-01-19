@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Polls;
 
-/**
- * Class AbstractFormAction
- * @package ACP3\Modules\ACP3\Polls\Controller\Admin\Index
- */
 abstract class AbstractFormAction extends AbstractFrontendAction
 {
     /**
@@ -28,8 +25,8 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     /**
      * AbstractFormAction constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext      $context
-     * @param \ACP3\Core\Helpers\Forms                        $formsHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
      */
     public function __construct(
@@ -72,6 +69,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
 
     /**
      * @param int $useMultipleChoice
+     *
      * @return array
      */
     protected function fetchOptions($useMultipleChoice)
@@ -87,8 +85,9 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     protected function fetchMultipleChoiceOption($currentValue)
     {
         $values = [
-            '1' => $this->translator->t('polls', 'multiple_choice')
+            '1' => $this->translator->t('polls', 'multiple_choice'),
         ];
+
         return $this->formsHelper->checkboxGenerator('multiple', $values, $currentValue);
     }
 }

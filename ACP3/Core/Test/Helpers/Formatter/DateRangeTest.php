@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Test\Helpers\Formatter;
 
 use ACP3\Core\Date;
@@ -102,8 +107,11 @@ class DateRangeTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidDateRangeWithLongFormat()
     {
-        $this->setUpLangMockExpectation('date_published_since', 'Published since 2012-12-20 13:12',
-            ['%date%' => '2012-12-20 13:12']);
+        $this->setUpLangMockExpectation(
+            'date_published_since',
+            'Published since 2012-12-20 13:12',
+            ['%date%' => '2012-12-20 13:12']
+        );
         $dateStart = '2012-12-20 12:12:12';
         $dateEnd = '2012-12-19 12:12:12';
         $expected = '<time datetime="2012-12-20T13:12:12+01:00" title="Published since 2012-12-20 13:12">2012-12-20 13:12</time>';
@@ -113,8 +121,11 @@ class DateRangeTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidDateRangeWithShortFormat()
     {
-        $this->setUpLangMockExpectation('date_published_since', 'Published since 2012-12-20',
-            ['%date%' => '2012-12-20']);
+        $this->setUpLangMockExpectation(
+            'date_published_since',
+            'Published since 2012-12-20',
+            ['%date%' => '2012-12-20']
+        );
         $dateStart = '2012-12-20 12:12:12';
         $dateEnd = '2012-12-19 12:12:12';
         $expected = '<time datetime="2012-12-20T13:12:12+01:00" title="Published since 2012-12-20">2012-12-20</time>';

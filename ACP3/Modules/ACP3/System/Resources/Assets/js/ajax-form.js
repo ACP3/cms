@@ -3,10 +3,10 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-;(function ($, window, document) {
-    "use strict";
+(function ($, window, document) {
+    'use strict';
 
-    var pluginName = "formSubmit",
+    var pluginName = 'formSubmit',
         defaults = {
             targetElement: '#content',
             customFormData: null
@@ -54,8 +54,8 @@
         },
         findSubmitButton: function () {
             $(this.element).find(':submit').click(function () {
-                $(":submit", $(this).closest("form")).removeAttr("data-clicked");
-                $(this).attr("data-clicked", "true");
+                $(':submit', $(this).closest('form')).removeAttr('data-clicked');
+                $(this).attr('data-clicked', 'true');
             });
         },
         preValidateForm: function (form) {
@@ -75,7 +75,7 @@
             for (var i = 0; i < form.elements.length; i++) {
                 field = form.elements[i];
 
-                if (field.nodeName !== "INPUT" && field.nodeName !== "TEXTAREA" && field.nodeName !== "SELECT") {
+                if (field.nodeName !== 'INPUT' && field.nodeName !== 'TEXTAREA' && field.nodeName !== 'SELECT') {
                     continue;
                 }
 
@@ -158,29 +158,21 @@
 
                     if (typeof window[callback] === 'function') {
                         window[callback](responseData);
+                    } else if (responseData.redirect_url) {
+                        self.redirectToNewPage(hash, responseData);
+                        return;
                     } else {
-                        if (responseData.redirect_url) {
-                            if (typeof hash !== "undefined") {
-                                window.location.href = responseData.redirect_url + hash;
-                                window.location.reload();
-                            } else {
-                                window.location.href = responseData.redirect_url;
-                            }
-                            return;
-                        }
-
                         self.scrollIntoView();
+                        self.replaceContent(hash, responseData);
 
-                        $(self.settings.targetElement).html(responseData);
-
-                        if (typeof hash !== "undefined") {
+                        if (typeof hash !== 'undefined') {
                             window.location.hash = hash;
                         }
                     }
 
                     self.hideLoadingLayer($submitButton);
                 } catch (err) {
-                    console.log(err.message);
+                    console.error(err.message);
 
                     self.hideLoadingLayer($submitButton);
                 }
@@ -216,8 +208,16 @@
                 $loadingLayer.addClass('loading-layer__active');
             }
 
-            if (typeof $submitButton !== "undefined") {
+            if (typeof $submitButton !== 'undefined') {
                 $submitButton.prop('disabled', true);
+            }
+        },
+        redirectToNewPage: function (hash, responseData) {
+            if (typeof hash !== 'undefined') {
+                window.location.href = responseData.redirect_url + hash;
+                window.location.reload();
+            } else {
+                window.location.href = responseData.redirect_url;
             }
         },
         /**
@@ -235,10 +235,19 @@
                 );
             }
         },
+        replaceContent: function (hash, responseData) {
+            if (hash && $(hash).length) {
+                $(hash).html($(responseData).find(hash).html());
+            } else {
+                $(this.settings.targetElement).html(responseData);
+            }
+
+            this.findSubmitButton();
+        },
         hideLoadingLayer: function ($submitButton) {
             $('#loading-layer').removeClass('loading-layer__active');
 
-            if (typeof $submitButton !== "undefined") {
+            if (typeof $submitButton !== 'undefined') {
                 $submitButton.prop('disabled', false);
             }
         },
@@ -291,8 +300,8 @@
 
     $.fn[pluginName] = function (options) {
         return this.each(function () {
-            if (!$.data(this, "plugin_" + pluginName)) {
-                $.data(this, "plugin_" + pluginName, new Plugin(this, options));
+            if (!$.data(this, 'plugin_' + pluginName)) {
+                $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
             }
         });
     };

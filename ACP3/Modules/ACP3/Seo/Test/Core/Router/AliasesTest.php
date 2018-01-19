@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Test\Core\Router;
@@ -10,10 +11,6 @@ use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Seo\Cache;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
-/**
- * Class AliasesTest
- * @package ACP3\Modules\ACP3\Seo\Test\Core\Router
- */
 class AliasesTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -74,8 +71,8 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
     {
         $this->setUpSeoCacheExpectations([
             'foo/bar/baz/' => [
-                'alias' => 'lorem-ipsum-dolor'
-            ]
+                'alias' => 'lorem-ipsum-dolor',
+            ],
         ]);
 
         $path = 'foo/bar/baz';
@@ -94,8 +91,8 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
     {
         $this->setUpSeoCacheExpectations([
             'foo/bar/baz/' => [
-                'alias' => 'lorem-ipsum-dolor'
-            ]
+                'alias' => 'lorem-ipsum-dolor',
+            ],
         ]);
 
         $path = 'foo/bar/baz';

@@ -1,0 +1,137 @@
+image: php:7.1
+
+variables:
+  COMPOSER_HOME: .composerhome
+  COMPOSER_ALLOW_SUPERUSER: 1
+
+cache:
+  key: $CI_COMMIT_REF_NAME
+  paths:
+  - ${COMPOSER_HOME}
+  - vendor
+  - .php_cs.cache
+
+stages:
+  - test
+  - static-analysis
+  - deploy
+  - post-deploy
+
+test:php71-unit: &php-unit-base
+  stage: test
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+    - bash ./build/gitlab/before_script_php.sh > /dev/null
+  script:
+    - php composer.phar install -n -o
+    - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
+  coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+
+test:php72-unit:
+  <<: *php-unit-base
+  image: php:7.2
+  coverage: ~
+
+static-analysis:phpcs:
+  stage: static-analysis
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+    - bash ./build/gitlab/before_script_php.sh > /dev/null
+  script:
+    - php composer.phar install -n -o
+    - php composer.phar run-script lint
+
+static-analysis:eslint:
+  image: node:slim
+  stage: static-analysis
+  cache:
+    key: node-$CI_COMMIT_REF_NAME
+    paths:
+    - node_modules
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+  script:
+    - npm install
+    - npm run-script eslint
+
+deploy:subtree-split:
+  image: jderusse/gitsplit
+  stage: deploy
+  cache:
+    key: subtree-split
+    paths:
+      - .gitsplit-cache
+  variables:
+    GIT_STRATEGY: clone
+  before_script:
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - 'echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - ssh-add -l
+  script:
+    - git config remote.origin.fetch "+refs/*:refs/*"
+    - git config remote.origin.mirror true
+    - git fetch
+    - gitsplit
+  only:
+    - tags
+    - schedules
+
+deploy:generate-artifact:
+  stage: deploy
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+    - bash ./build/gitlab/before_script_php.sh > /dev/null
+  script:
+    - php composer.phar install --no-dev --prefer-dist -o -n --ignore-platform-reqs
+  artifacts:
+    name: "release-${CI_COMMIT_TAG}"
+    paths:
+      - ACP3
+      - build/gulp
+      - designs
+      - installation
+      - tests
+      - uploads
+      - vendor
+      - .editorconfig
+      - .htaccess.sample
+      - CHANGELOG.md
+      - composer.json
+      - composer.lock
+      - gulpfile.js
+      - index.php
+      - LICENSE
+      - package.json
+      - package-lock.json
+      - README.md
+  only:
+    - tags
+
+post-deploy:notify-packagist: &post-deploy-base
+  stage: post-deploy
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+  script:
+    - bash ./build/gitlab/notify_packagist.sh
+  only:
+    - tags
+    - schedules
+
+post-deploy:update-version-check:
+  <<: *post-deploy-base
+  script:
+    - bash ./build/gitlab/update_version_check.sh
+  only:
+    - tags
+
+post-deploy:apidocs:
+  <<: *post-deploy-base
+  before_script:
+    - bash ./build/gitlab/before_script.sh > /dev/null
+    - bash ./build/gitlab/before_script_php.sh > /dev/null
+  script:
+    - bash ./build/gitlab/generate_api_docs.sh
+  only:
+    - tags

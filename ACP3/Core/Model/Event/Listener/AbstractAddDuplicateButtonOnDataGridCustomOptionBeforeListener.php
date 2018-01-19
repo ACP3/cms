@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model\Event\Listener;
-
 
 use ACP3\Core\ACL;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
@@ -25,7 +25,7 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
     /**
      * OnDataGridCustomOptionBeforeListener constructor.
      *
-     * @param \ACP3\Core\ACL $acl
+     * @param \ACP3\Core\ACL             $acl
      * @param \ACP3\Core\I18n\Translator $translator
      */
     public function __construct(
@@ -68,6 +68,7 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
 
     /**
      * @param array $dbResultRow
+     *
      * @return string
      */
     abstract protected function getRoute(array $dbResultRow);

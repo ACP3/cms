@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
-/**
- * Class OnLayoutMetaListener
- * @package ACP3\Modules\ACP3\Seo\Event\Listener
- */
 class OnLayoutMetaListener
 {
     /**
@@ -27,13 +24,13 @@ class OnLayoutMetaListener
     /**
      * OnCustomTemplateVariable constructor.
      *
-     * @param View $view
+     * @param View                                         $view
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
      */
     public function __construct(
         View $view,
-        MetaStatements $metaStatements)
-    {
+        MetaStatements $metaStatements
+    ) {
         $this->view = $view;
         $this->metaStatements = $metaStatements;
     }

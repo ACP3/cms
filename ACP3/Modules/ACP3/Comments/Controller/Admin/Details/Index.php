@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
@@ -11,10 +12,6 @@ use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Comments\Controller\Admin\Details
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -28,15 +25,16 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * Index constructor.
-     * @param Core\Controller\Context\FrontendContext $context
-     * @param Comments\Model\Repository\CommentRepository $commentRepository
+     *
+     * @param Core\Controller\Context\FrontendContext              $context
+     * @param Comments\Model\Repository\CommentRepository          $commentRepository
      * @param Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Comments\Model\Repository\CommentRepository $commentRepository,
-        Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository)
-    {
+        Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
+    ) {
         parent::__construct($context);
 
         $this->commentRepository = $commentRepository;
@@ -47,6 +45,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -72,7 +71,7 @@ class Index extends Core\Controller\AbstractFrontendAction
             return [
                 'grid' => $dataGrid->render(),
                 'module_id' => $id,
-                'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+                'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
             ];
         }
 
@@ -89,7 +88,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'label' => $this->translator->t('system', 'date'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['date'],
-                'default_sort' => true
+                'default_sort' => true,
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('system', 'name'),
@@ -110,7 +109,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
-                'primary' => true
+                'primary' => true,
             ], 10);
     }
 }

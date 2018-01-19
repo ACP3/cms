@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Core\DependencyInjection;
@@ -18,10 +19,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class ServiceContainerBuilder
- * @package ACP3\Installer\Core\DependencyInjection
- */
 class ServiceContainerBuilder extends ContainerBuilder
 {
     /**
@@ -51,12 +48,13 @@ class ServiceContainerBuilder extends ContainerBuilder
 
     /**
      * ServiceContainerBuilder constructor.
+     *
      * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
-     * @param Request $symfonyRequest
-     * @param string $applicationMode
-     * @param bool $includeModules
-     * @param bool $migrationsOnly
+     * @param Request         $symfonyRequest
+     * @param string          $applicationMode
+     * @param bool            $includeModules
+     * @param bool            $migrationsOnly
      */
     public function __construct(
         LoggerInterface $logger,
@@ -140,6 +138,7 @@ class ServiceContainerBuilder extends ContainerBuilder
 
     /**
      * @param string $vendor
+     *
      * @return array
      */
     private function getServicesPath($vendor)
@@ -147,16 +146,17 @@ class ServiceContainerBuilder extends ContainerBuilder
         $basePath = $this->applicationPath->getModulesDir() . $vendor . '/*/Resources/config/';
         $basePath .= $this->migrationsOnly === true ? 'components/installer.yml' : 'services.yml';
 
-        return glob($basePath);
+        return \glob($basePath);
     }
 
     /**
      * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
-     * @param Request $symfonyRequest
-     * @param string $applicationMode
-     * @param bool $includeModules
-     * @param bool $migrationsOnly
+     * @param Request         $symfonyRequest
+     * @param string          $applicationMode
+     * @param bool            $includeModules
+     * @param bool            $migrationsOnly
+     *
      * @return ContainerBuilder
      */
     public static function create(
@@ -165,8 +165,8 @@ class ServiceContainerBuilder extends ContainerBuilder
         Request $symfonyRequest,
         $applicationMode,
         $includeModules = false,
-        $migrationsOnly = false)
-    {
+        $migrationsOnly = false
+    ) {
         return new static($logger, $applicationPath, $symfonyRequest, $applicationMode, $includeModules, $migrationsOnly);
     }
 }

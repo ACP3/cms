@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Validation;
@@ -25,7 +26,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
             ->addConstraint(CaptchaTypeValidationRule::class, [
                 'data' => $formData,
                 'field' => 'captcha',
-                'message' => $this->translator->t('captcha', 'select_captcha_type')
+                'message' => $this->translator->t('captcha', 'select_captcha_type'),
             ]);
 
         $this->validator->dispatchValidationEvent('captcha.validation.admin_settings.custom_fields', $formData);

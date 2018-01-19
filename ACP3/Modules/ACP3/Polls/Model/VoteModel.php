@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Model;
@@ -11,10 +12,6 @@ use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-/**
- * Class VoteModel
- * @package ACP3\Modules\ACP3\Polls\Model
- */
 class VoteModel
 {
     /**
@@ -32,9 +29,10 @@ class VoteModel
 
     /**
      * PollsModel constructor.
+     *
      * @param Core\Validation\Validator $validator
-     * @param UserModel $userModel
-     * @param VoteRepository $voteRepository
+     * @param UserModel                 $userModel
+     * @param VoteRepository            $voteRepository
      */
     public function __construct(
         Core\Validation\Validator $validator,
@@ -47,11 +45,13 @@ class VoteModel
     }
 
     /**
-     * @param array $formData
-     * @param int $pollId
+     * @param array  $formData
+     * @param int    $pollId
      * @param string $ipAddress
      * @param string $time
+     *
      * @return bool|int
+     *
      * @throws Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
     public function vote(array $formData, $pollId, $ipAddress, $time)
@@ -62,7 +62,7 @@ class VoteModel
         $userId = $this->userModel->isAuthenticated() ? $this->userModel->getUserId() : null;
 
         // Multiple Answers
-        if (is_array($answers) === false) {
+        if (\is_array($answers) === false) {
             $answers = [$answers];
         }
 
@@ -78,6 +78,7 @@ class VoteModel
                 $bool = $this->voteRepository->insert($insertValues);
             }
         }
+
         return $bool;
     }
 }

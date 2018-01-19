@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Helpers;
@@ -41,10 +42,11 @@ class ModuleInstaller
 
     /**
      * ModuleInstaller constructor.
+     *
      * @param ApplicationPath $applicationPath
-     * @param Vendor $vendor
-     * @param XML $xml
-     * @param Install $installHelper
+     * @param Vendor          $vendor
+     * @param XML             $xml
+     * @param Install         $installHelper
      */
     public function __construct(
         ApplicationPath $applicationPath,
@@ -60,8 +62,10 @@ class ModuleInstaller
 
     /**
      * @param ContainerInterface $container
-     * @param SchemaInterface[] $schemas
+     * @param SchemaInterface[]  $schemas
+     *
      * @return array
+     *
      * @throws \Exception
      */
     public function installModules(ContainerInterface $container, array $schemas)
@@ -71,12 +75,12 @@ class ModuleInstaller
                 $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
                 $module = $schema->getModuleName();
 
-                $moduleConfigPath = $vendorPath . ucfirst($module) . '/Resources/config/module.xml';
+                $moduleConfigPath = $vendorPath . \ucfirst($module) . '/Resources/config/module.xml';
 
                 if ($this->isValidModule($moduleConfigPath)) {
                     $dependencies = $this->getModuleDependencies($moduleConfigPath);
 
-                    if (count($dependencies) > 0) {
+                    if (\count($dependencies) > 0) {
                         $this->installModules($container, $this->collectDependentSchemas($container, $dependencies));
                     }
 
@@ -96,11 +100,12 @@ class ModuleInstaller
 
     /**
      * @param string $moduleConfigPath
+     *
      * @return bool
      */
     private function isValidModule($moduleConfigPath)
     {
-        if (is_file($moduleConfigPath)) {
+        if (\is_file($moduleConfigPath)) {
             $config = $this->xml->parseXmlFile($moduleConfigPath, '/module/info');
 
             return !isset($config['no_install']);
@@ -111,7 +116,8 @@ class ModuleInstaller
 
     /**
      * @param ContainerInterface $container
-     * @param array $modules
+     * @param array              $modules
+     *
      * @return SchemaInterface[]
      */
     private function collectDependentSchemas(ContainerInterface $container, array $modules)

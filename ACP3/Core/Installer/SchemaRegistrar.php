@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Installer;
-
 
 use ACP3\Core\Modules\Installer\SchemaInterface;
 
@@ -34,6 +34,7 @@ class SchemaRegistrar
 
     /**
      * @param string $moduleName
+     *
      * @return bool
      */
     public function has($moduleName)
@@ -43,7 +44,9 @@ class SchemaRegistrar
 
     /**
      * @param string $moduleName
+     *
      * @return SchemaInterface
+     *
      * @throws \InvalidArgumentException
      */
     public function get($moduleName)
@@ -53,7 +56,7 @@ class SchemaRegistrar
         }
 
         throw new \InvalidArgumentException(
-            sprintf('The schema with the service id "%s" could not be found.', $moduleName)
+            \sprintf('The schema with the service id "%s" could not be found.', $moduleName)
         );
     }
 }

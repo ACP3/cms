@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\I18n;
@@ -11,10 +12,6 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules\Vendor;
 use Fisharebest\Localization\Locale;
 
-/**
- * Class Cache
- * @package ACP3\Core\I18n
- */
 class DictionaryCache
 {
     use ExtractFromPathTrait;
@@ -35,9 +32,9 @@ class DictionaryCache
     /**
      * DictionaryCache constructor.
      *
-     * @param \ACP3\Core\Cache $cache
+     * @param \ACP3\Core\Cache                       $cache
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules\Vendor $vendors
+     * @param \ACP3\Core\Modules\Vendor              $vendors
      */
     public function __construct(
         Cache $cache,
@@ -50,7 +47,7 @@ class DictionaryCache
     }
 
     /**
-     * Returns the cached language strings
+     * Returns the cached language strings.
      *
      * @param string $language
      *
@@ -66,7 +63,7 @@ class DictionaryCache
     }
 
     /**
-     * Saves the language cache
+     * Saves the language cache.
      *
      * @param string $language
      *
@@ -77,7 +74,7 @@ class DictionaryCache
         $data = [];
 
         foreach ($this->vendors->getVendors() as $vendor) {
-            $languageFiles = glob($this->appPath->getModulesDir() . $vendor . '/*/Resources/i18n/' . $language . '.xml');
+            $languageFiles = \glob($this->appPath->getModulesDir() . $vendor . '/*/Resources/i18n/' . $language . '.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
@@ -89,9 +86,9 @@ class DictionaryCache
                     $module = $this->getModuleFromPath($file);
 
                     // Iterate over all language keys
-                    $xml = simplexml_load_file($file);
+                    $xml = \simplexml_load_file($file);
                     foreach ($xml->keys->item as $item) {
-                        $data['keys'][strtolower($module . (string)$item['key'])] = trim((string)$item);
+                        $data['keys'][\strtolower($module . (string) $item['key'])] = \trim((string) $item);
                     }
                 }
             }
@@ -101,7 +98,7 @@ class DictionaryCache
     }
 
     /**
-     * Gets the cache for all registered languages
+     * Gets the cache for all registered languages.
      *
      * @return array
      */
@@ -115,7 +112,7 @@ class DictionaryCache
     }
 
     /**
-     * Sets the cache for all registered languages
+     * Sets the cache for all registered languages.
      *
      * @return bool
      */
@@ -124,7 +121,7 @@ class DictionaryCache
         $languagePacks = [];
 
         foreach ($this->vendors->getVendors() as $vendors) {
-            $languageFiles = glob($this->appPath->getModulesDir() . $vendors . '/*/Resources/i18n/*.xml');
+            $languageFiles = \glob($this->appPath->getModulesDir() . $vendors . '/*/Resources/i18n/*.xml');
 
             if ($languageFiles !== false) {
                 foreach ($languageFiles as $file) {
@@ -155,8 +152,8 @@ class DictionaryCache
             return [
                 $languageIso => [
                     'iso' => $languageIso,
-                    'name' => $locale->endonym()
-                ]
+                    'name' => $locale->endonym(),
+                ],
             ];
         } catch (\DomainException $e) {
             return [];

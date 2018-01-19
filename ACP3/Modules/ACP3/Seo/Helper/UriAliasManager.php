@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Helper;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Seo\Helper;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 use ACP3\Modules\ACP3\Seo\Model\SeoModel;
 
-/**
- * Class UriAliasManager
- * @package ACP3\Modules\ACP3\Seo\Helper
- */
 class UriAliasManager
 {
     /**
@@ -27,7 +24,7 @@ class UriAliasManager
     /**
      * UriAliasManager constructor.
      *
-     * @param SeoModel $seoModel
+     * @param SeoModel                                              $seoModel
      * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
@@ -39,11 +36,11 @@ class UriAliasManager
     }
 
     /**
-     * Deletes the given URL alias
+     * Deletes the given URL alias.
      *
      * @param string $path
      *
-     * @return boolean
+     * @return bool
      */
     public function deleteUriAlias($path)
     {
@@ -55,22 +52,24 @@ class UriAliasManager
 
     /**
      * @param string $path
+     *
      * @return string
      */
     protected function preparePath($path)
     {
-        return !preg_match('/\/$/', $path) ? '/' : '';
+        return !\preg_match('/\/$/', $path) ? '/' : '';
     }
 
     /**
-     * Inserts/Updates a given URL alias
+     * Inserts/Updates a given URL alias.
      *
      * @param string $path
      * @param string $alias
      * @param string $keywords
      * @param string $description
-     * @param int $robots
+     * @param int    $robots
      * @param string $title
+     *
      * @return bool
      */
     public function insertUriAlias($path, $alias, $keywords = '', $description = '', $robots = 0, $title = '')
@@ -81,7 +80,7 @@ class UriAliasManager
             'seo_title' => $title,
             'seo_keywords' => $keywords,
             'seo_description' => $description,
-            'seo_robots' => (int)$robots
+            'seo_robots' => (int) $robots,
         ];
 
         $seo = $this->seoRepository->getOneByUri($path);

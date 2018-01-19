@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Assets;
@@ -17,11 +18,11 @@ class Libraries
     protected $libraries = [
         'moment' => [
             'enabled' => false,
-            'js' => 'moment.min.js'
+            'js' => 'moment.min.js',
         ],
         'jquery' => [
             'enabled' => true,
-            'js' => 'jquery.min.js'
+            'js' => 'jquery.min.js',
         ],
         'js-cookie' => [
             'enabled' => true,
@@ -31,30 +32,30 @@ class Libraries
             'enabled' => false,
             'dependencies' => ['jquery'],
             'css' => 'jquery.fancybox.css',
-            'js' => 'jquery.fancybox.min.js'
+            'js' => 'jquery.fancybox.min.js',
         ],
         'bootstrap' => [
             'enabled' => false,
             'dependencies' => ['jquery'],
             'css' => 'bootstrap.min.css',
-            'js' => 'bootstrap.min.js'
+            'js' => 'bootstrap.min.js',
         ],
         'datatables' => [
             'enabled' => false,
             'dependencies' => ['bootstrap'],
             'css' => 'dataTables.bootstrap.css',
-            'js' => 'jquery.dataTables.js'
+            'js' => 'jquery.dataTables.js',
         ],
         'bootbox' => [
             'enabled' => false,
             'dependencies' => ['bootstrap'],
-            'js' => 'bootbox.js'
+            'js' => 'bootbox.js',
         ],
         'datetimepicker' => [
             'enabled' => false,
             'dependencies' => ['jquery', 'moment'],
             'css' => 'bootstrap-datetimepicker.css',
-            'js' => 'bootstrap-datetimepicker.min.js'
+            'js' => 'bootstrap-datetimepicker.min.js',
         ],
     ];
     /**
@@ -64,6 +65,7 @@ class Libraries
 
     /**
      * Libraries constructor.
+     *
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(EventDispatcherInterface $eventDispatcher)
@@ -86,7 +88,8 @@ class Libraries
 
     /**
      * @param string $identifier
-     * @param array $options
+     * @param array  $options
+     *
      * @return $this
      */
     public function addLibrary($identifier, array $options)
@@ -99,7 +102,7 @@ class Libraries
     }
 
     /**
-     * Activates frontend libraries
+     * Activates frontend libraries.
      *
      * @param array $libraries
      *
@@ -108,7 +111,7 @@ class Libraries
     public function enableLibraries(array $libraries)
     {
         foreach ($libraries as $library) {
-            if (array_key_exists($library, $this->libraries) === true) {
+            if (\array_key_exists($library, $this->libraries) === true) {
                 // Resolve javascript library dependencies recursively
                 if (!empty($this->libraries[$library]['dependencies'])) {
                     $this->enableLibraries($this->libraries[$library]['dependencies']);

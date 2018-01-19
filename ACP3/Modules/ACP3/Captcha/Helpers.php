@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha;
@@ -44,12 +45,12 @@ class Helpers
     /**
      * Helpers constructor.
      *
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel   $user
+     * @param \ACP3\Core\Http\RequestInterface           $request
+     * @param \ACP3\Core\Router\RouterInterface          $router
      * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
-     * @param \ACP3\Core\View $view
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Core\View                            $view
+     * @param \ACP3\Core\Helpers\Secure                  $secureHelper
      */
     public function __construct(
         \ACP3\Modules\ACP3\Users\Model\UserModel $user,
@@ -68,11 +69,11 @@ class Helpers
     }
 
     /**
-     * Erzeugt das Captchafeld für das Template
+     * Erzeugt das Captchafeld für das Template.
      *
-     * @param integer $captchaLength
+     * @param int    $captchaLength
      * @param string $formFieldId
-     * @param bool $inputOnly
+     * @param bool   $inputOnly
      * @param string $path
      *
      * @return string
@@ -84,7 +85,7 @@ class Helpers
         $path = ''
     ) {
         if ($this->user->isAuthenticated() === false) {
-            $path = sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
+            $path = \sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
 
             $this->sessionHandler->set('captcha_' . $path, $this->secureHelper->salt($captchaLength));
 
@@ -93,10 +94,12 @@ class Helpers
                 'id' => $formFieldId,
                 'height' => 30,
                 'input_only' => $inputOnly,
-                'path' => $path
+                'path' => $path,
             ]);
+
             return $this->view->fetchTemplate('Captcha/Partials/captcha_native.tpl');
         }
+
         return '';
     }
 }

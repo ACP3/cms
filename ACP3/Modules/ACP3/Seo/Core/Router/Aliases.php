@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Core\Router;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Seo\Core\Router;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Seo;
 
-/**
- * Class Aliases
- * @package ACP3\Modules\ACP3\Seo\Core\Router
- */
 class Aliases
 {
     /**
@@ -29,19 +26,19 @@ class Aliases
     private $isActive;
 
     /**
-     * @param Core\Modules $modules
+     * @param Core\Modules                 $modules
      * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
      */
     public function __construct(
         Core\Modules $modules,
-        Seo\Cache $seoCache)
-    {
+        Seo\Cache $seoCache
+    ) {
         $this->seoCache = $seoCache;
         $this->isActive = $modules->isActive(Seo\Installer\Schema::MODULE_NAME);
     }
 
     /**
-     * Returns an uri alias by a given path
+     * Returns an uri alias by a given path.
      *
      * @param string $path
      * @param bool   $emptyOnNoResult
@@ -58,7 +55,7 @@ class Aliases
             $this->aliasesCache = $this->seoCache->getCache();
         }
 
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
+        $path .= !\preg_match('/\/$/', $path) ? '/' : '';
 
         return !empty($this->aliasesCache[$path]['alias'])
             ? $this->aliasesCache[$path]['alias']
@@ -66,14 +63,14 @@ class Aliases
     }
 
     /**
-     * Checks, whether an uri alias exists
+     * Checks, whether an uri alias exists.
      *
      * @param string $path
      *
-     * @return boolean
+     * @return bool
      */
     public function uriAliasExists($path)
     {
-        return ($this->getUriAlias($path, true) !== '');
+        return $this->getUriAlias($path, true) !== '';
     }
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Files\Controller\Admin\Index
- */
 class Create extends AbstractFormAction
 {
     /**
@@ -40,13 +37,13 @@ class Create extends AbstractFormAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Files\Model\FilesModel $filesModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
+     * @param \ACP3\Core\Date                                         $date
+     * @param \ACP3\Core\Helpers\Forms                                $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
+     * @param Files\Model\FilesModel                                  $filesModel
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
+     * @param \ACP3\Modules\ACP3\Categories\Helpers                   $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -77,11 +74,11 @@ class Create extends AbstractFormAction
             'filesize' => '',
             'text' => '',
             'start' => '',
-            'end' => ''
+            'end' => '',
         ];
 
         $external = [
-            1 => $this->translator->t('files', 'external_resource')
+            1 => $this->translator->t('files', 'external_resource'),
         ];
 
         return [
@@ -90,10 +87,10 @@ class Create extends AbstractFormAction
             'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(), ''),
             'categories' => $this->categoriesHelpers->categoriesList(Files\Installer\Schema::MODULE_NAME, '', true),
             'external' => $this->formsHelper->checkboxGenerator('external', $external),
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
+            'form' => \array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => Files\Helpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => ''
+            'SEO_ROUTE_NAME' => '',
         ];
     }
 
@@ -114,14 +111,14 @@ class Create extends AbstractFormAction
                 ->setFile($file)
                 ->validate($formData);
 
-            if (is_array($file) === true) {
+            if (\is_array($file) === true) {
                 $upload = new Core\Helpers\Upload($this->appPath, Files\Installer\Schema::MODULE_NAME);
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $formData['file'] = $result['name'];
                 $formData['filesize'] = $result['size'];
             } else {
                 $formData['file'] = $file;
-                $formData['filesize'] = ((float)$formData['filesize']) . ' ' . $formData['unit'];
+                $formData['filesize'] = ((float) $formData['filesize']) . ' ' . $formData['unit'];
             }
 
             $formData['cat'] = $this->fetchCategoryId($formData);

@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 
-/**
- * Class AllowedMenuValidationRule
- * @package ACP3\Modules\ACP3\Menus\Validation\ValidationRules
- */
 class AllowedMenuValidationRule extends AbstractValidationRule
 {
     /**
@@ -26,13 +28,13 @@ class AllowedMenuValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && is_array($field)) {
-            $parentId = reset($field);
-            $blockId = next($field);
+        if (\is_array($data) && \is_array($field)) {
+            $parentId = \reset($field);
+            $blockId = \next($field);
 
             return $this->checkIsAllowedMenu($data[$parentId], $data[$blockId]);
         }
@@ -54,6 +56,6 @@ class AllowedMenuValidationRule extends AbstractValidationRule
 
         $parentMenuId = $this->menuItemRepository->getMenuIdByMenuItemId($parentId);
 
-        return (!empty($parentMenuId) && $parentMenuId == $menuId);
+        return !empty($parentMenuId) && $parentMenuId == $menuId;
     }
 }

@@ -1,14 +1,15 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Users\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\Users\Installer
- */
 class Schema implements Modules\Installer\SchemaInterface
 {
     const MODULE_NAME = 'users';
@@ -25,14 +26,14 @@ class Schema implements Modules\Installer\SchemaInterface
                     'create' => PrivilegeEnum::ADMIN_CREATE,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS
-                ]
+                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
+                ],
             ],
             'frontend' => [
                 'account' => [
                     'edit' => PrivilegeEnum::FRONTEND_VIEW,
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                    'settings' => PrivilegeEnum::FRONTEND_VIEW
+                    'settings' => PrivilegeEnum::FRONTEND_VIEW,
                 ],
                 'index' => [
                     'forgot_pwd' => PrivilegeEnum::FRONTEND_VIEW,
@@ -40,16 +41,16 @@ class Schema implements Modules\Installer\SchemaInterface
                     'login' => PrivilegeEnum::FRONTEND_VIEW,
                     'logout' => PrivilegeEnum::FRONTEND_VIEW,
                     'register' => PrivilegeEnum::FRONTEND_VIEW,
-                    'view_profile' => PrivilegeEnum::FRONTEND_VIEW
-                ]
+                    'view_profile' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
             ],
             'widget' => [
                 'index' => [
                     'hash' => PrivilegeEnum::FRONTEND_VIEW,
                     'login' => PrivilegeEnum::FRONTEND_VIEW,
-                    'user_menu' => PrivilegeEnum::FRONTEND_VIEW
-                ]
-            ]
+                    'user_menu' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
+            ],
         ];
     }
 
@@ -75,7 +76,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}users` (
+            'CREATE TABLE `{pre}users` (
                 `id` INT(10) UNSIGNED AUTO_INCREMENT,
                 `super_user` TINYINT(1) UNSIGNED NOT NULL,
                 `nickname` VARCHAR(30) NOT NULL,
@@ -103,7 +104,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 PRIMARY KEY (`id`),
                 UNIQUE KEY `nickname` (`nickname`),
                 UNIQUE KEY `mail` (`mail`)
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -122,7 +123,7 @@ class Schema implements Modules\Installer\SchemaInterface
     {
         return [
             'enable_registration' => 1,
-            'mail' => ''
+            'mail' => '',
         ];
     }
 }

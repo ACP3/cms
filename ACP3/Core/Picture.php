@@ -1,17 +1,20 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core;
 
 use ACP3\Core\Environment\ApplicationPath;
 use FastImageSize\FastImageSize;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @package ACP3\Core
- */
 class Picture
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected $enableCache = false;
     /**
@@ -23,23 +26,23 @@ class Picture
      */
     protected $cachePrefix = '';
     /**
-     * @var integer
+     * @var int
      */
     protected $maxWidth = 0;
     /**
-     * @var integer
+     * @var int
      */
     protected $maxHeight = 0;
     /**
-     * @var integer
+     * @var int
      */
     protected $jpgQuality = 85;
     /**
-     * @var boolean
+     * @var bool
      */
     protected $preferWidth = false;
     /**
-     * @var boolean
+     * @var bool
      */
     protected $preferHeight = false;
     /**
@@ -47,7 +50,7 @@ class Picture
      */
     protected $file = '';
     /**
-     * @var boolean
+     * @var bool
      */
     protected $forceResample = false;
 
@@ -74,10 +77,10 @@ class Picture
     protected $image;
 
     /**
-     * @param FastImageSize $fastImageSize
+     * @param FastImageSize                              $fastImageSize
      * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param string $environment
+     * @param \ACP3\Core\Environment\ApplicationPath     $appPath
+     * @param string                                     $environment
      */
     public function __construct(
         FastImageSize $fastImageSize,
@@ -94,23 +97,24 @@ class Picture
     }
 
     /**
-     * Gibt den während der Bearbeitung belegten Speicher wieder frei
+     * Gibt den während der Bearbeitung belegten Speicher wieder frei.
      */
     public function __destruct()
     {
-        if (is_resource($this->image) === true) {
-            imagedestroy($this->image);
+        if (\is_resource($this->image) === true) {
+            \imagedestroy($this->image);
         }
     }
 
     /**
-     * @param boolean $enableCache
+     * @param bool $enableCache
      *
      * @return $this
      */
     public function setEnableCache($enableCache)
     {
-        $this->enableCache = (bool)$enableCache;
+        $this->enableCache = (bool) $enableCache;
+
         return $this;
     }
 
@@ -125,7 +129,8 @@ class Picture
             throw new \InvalidArgumentException('The cache directory for the images must not be empty.');
         }
 
-        $this->cacheDir = $cacheDir . (!preg_match('=/$=', $cacheDir) ? '/' : '');
+        $this->cacheDir = $cacheDir . (!\preg_match('=/$=', $cacheDir) ? '/' : '');
+
         return $this;
     }
 
@@ -137,6 +142,7 @@ class Picture
     public function setCachePrefix($cachePrefix)
     {
         $this->cachePrefix = $cachePrefix;
+
         return $this;
     }
 
@@ -147,7 +153,8 @@ class Picture
      */
     public function setMaxWidth($maxWidth)
     {
-        $this->maxWidth = (int)$maxWidth;
+        $this->maxWidth = (int) $maxWidth;
+
         return $this;
     }
 
@@ -158,7 +165,8 @@ class Picture
      */
     public function setMaxHeight($maxHeight)
     {
-        $this->maxHeight = (int)$maxHeight;
+        $this->maxHeight = (int) $maxHeight;
+
         return $this;
     }
 
@@ -169,29 +177,32 @@ class Picture
      */
     public function setJpgQuality($jpgQuality)
     {
-        $this->jpgQuality = (int)$jpgQuality;
+        $this->jpgQuality = (int) $jpgQuality;
+
         return $this;
     }
 
     /**
-     * @param boolean $preferWidth
+     * @param bool $preferWidth
      *
      * @return $this
      */
     public function setPreferWidth($preferWidth)
     {
-        $this->preferWidth = (bool)$preferWidth;
+        $this->preferWidth = (bool) $preferWidth;
+
         return $this;
     }
 
     /**
-     * @param boolean $preferHeight
+     * @param bool $preferHeight
      *
      * @return $this
      */
     public function setPreferHeight($preferHeight)
     {
-        $this->preferHeight = (bool)$preferHeight;
+        $this->preferHeight = (bool) $preferHeight;
+
         return $this;
     }
 
@@ -203,17 +214,19 @@ class Picture
     public function setFile($file)
     {
         $this->file = $file;
+
         return $this;
     }
 
     /**
-     * @param boolean $forceResample
+     * @param bool $forceResample
      *
      * @return $this
      */
     public function setForceResample($forceResample)
     {
-        $this->forceResample = (bool)$forceResample;
+        $this->forceResample = (bool) $forceResample;
+
         return $this;
     }
 
@@ -222,7 +235,7 @@ class Picture
      */
     public function process()
     {
-        if (is_file($this->file) === true) {
+        if (\is_file($this->file) === true) {
             $cacheFile = $this->getCacheFileName();
 
             $picInfo = $this->fastImageSize->getImageSize($this->file);
@@ -233,7 +246,7 @@ class Picture
             $this->setHeaders($this->getMimeType($type));
 
             // Direct output of the picture, if it is already cached
-            if ($this->enableCache === true && is_file($cacheFile) === true) {
+            if ($this->enableCache === true && \is_file($cacheFile) === true) {
                 $this->file = $cacheFile;
             } elseif ($this->resamplingIsNecessary($width, $height, $type)) { // Resize the picture
                 $dimensions = $this->calcNewDimensions($width, $height);
@@ -252,20 +265,20 @@ class Picture
             }
 
             return true;
-        } else {
-            $this->setHeaders('image/jpeg');
         }
+        $this->setHeaders('image/jpeg');
 
         return false;
     }
 
     /**
      * @param int $pictureType
+     *
      * @return string
      */
     private function getMimeType($pictureType)
     {
-        switch($pictureType) {
+        switch ($pictureType) {
             case IMAGETYPE_GIF:
                 return 'image/gif';
             case IMAGETYPE_JPEG:
@@ -286,7 +299,7 @@ class Picture
     }
 
     /**
-     * Get the name of a possibly cached picture
+     * Get the name of a possibly cached picture.
      *
      * @return string
      */
@@ -296,32 +309,32 @@ class Picture
     }
 
     /**
-     * Generiert den Namen des zu cachenden Bildes
+     * Generiert den Namen des zu cachenden Bildes.
      *
      * @return string
      */
     protected function getCacheName()
     {
-        return $this->cachePrefix . substr($this->file, strrpos($this->file, '/') + 1);
+        return $this->cachePrefix . \substr($this->file, \strrpos($this->file, '/') + 1);
     }
 
     /**
-     * Reads the contents of the requested picture
+     * Reads the contents of the requested picture.
      *
      * @return string
      */
     protected function readFromFile()
     {
-        return file_get_contents($this->file);
+        return \file_get_contents($this->file);
     }
 
     /**
-     * Berechnet die neue Breite/Höhe eines Bildes
+     * Berechnet die neue Breite/Höhe eines Bildes.
      *
-     * @param integer $width
-     *  Ausgangsbreite des Bildes
-     * @param integer $height
-     *  Ausgangshöhe des Bildes
+     * @param int $width
+     *                    Ausgangsbreite des Bildes
+     * @param int $height
+     *                    Ausgangshöhe des Bildes
      *
      * @return array
      */
@@ -329,49 +342,52 @@ class Picture
     {
         if (($width >= $height || $this->preferWidth === true) && $this->preferHeight === false) {
             $newWidth = $this->maxWidth;
-            $newHeight = intval($height * $newWidth / $width);
+            $newHeight = (int) ($height * $newWidth / $width);
         } else {
             $newHeight = $this->maxHeight;
-            $newWidth = intval($width * $newHeight / $height);
+            $newWidth = (int) ($width * $newHeight / $height);
         }
 
         return ['width' => $newWidth, 'height' => $newHeight];
     }
 
     /**
-     * Resamples the picture to the given values
+     * Resamples the picture to the given values.
      *
-     * @param integer $newWidth
-     * @param integer $newHeight
-     * @param integer $width
-     * @param integer $height
-     * @param integer $type
-     * @param string  $cacheFile
+     * @param int    $newWidth
+     * @param int    $newHeight
+     * @param int    $width
+     * @param int    $height
+     * @param int    $type
+     * @param string $cacheFile
      */
     protected function resample($newWidth, $newHeight, $width, $height, $type, $cacheFile)
     {
-        $this->image = imagecreatetruecolor($newWidth, $newHeight);
+        $this->image = \imagecreatetruecolor($newWidth, $newHeight);
         switch ($type) {
             case IMAGETYPE_GIF:
-                $origPicture = imagecreatefromgif($this->file);
+                $origPicture = \imagecreatefromgif($this->file);
                 $this->scalePicture($newWidth, $newHeight, $width, $height, $origPicture);
-                imagegif($this->image, $cacheFile);
+                \imagegif($this->image, $cacheFile);
+
                 break;
             case IMAGETYPE_JPEG:
-                $origPicture = imagecreatefromjpeg($this->file);
+                $origPicture = \imagecreatefromjpeg($this->file);
                 $this->scalePicture($newWidth, $newHeight, $width, $height, $origPicture);
-                imagejpeg($this->image, $cacheFile, $this->jpgQuality);
+                \imagejpeg($this->image, $cacheFile, $this->jpgQuality);
+
                 break;
             case IMAGETYPE_PNG:
-                imagealphablending($this->image, false);
-                $origPicture = imagecreatefrompng($this->file);
+                \imagealphablending($this->image, false);
+                $origPicture = \imagecreatefrompng($this->file);
                 $this->scalePicture($newWidth, $newHeight, $width, $height, $origPicture);
-                imagesavealpha($this->image, true);
-                imagepng($this->image, $cacheFile, 9);
+                \imagesavealpha($this->image, true);
+                \imagepng($this->image, $cacheFile, 9);
+
                 break;
         }
 
-        imagedestroy($this->image);
+        \imagedestroy($this->image);
     }
 
     /**
@@ -383,8 +399,8 @@ class Picture
             'Content-type' => $mimeType,
             'Cache-Control' => 'public',
             'Pragma' => 'public',
-            'Last-Modified' => gmdate('D, d M Y H:i:s', filemtime($this->file)) . ' GMT',
-            'Expires' => gmdate('D, d M Y H:i:s', time() + 31536000) . ' GMT'
+            'Last-Modified' => \gmdate('D, d M Y H:i:s', \filemtime($this->file)) . ' GMT',
+            'Expires' => \gmdate('D, d M Y H:i:s', \time() + 31536000) . ' GMT',
         ]);
     }
 
@@ -397,7 +413,7 @@ class Picture
      */
     protected function scalePicture($newWidth, $newHeight, $width, $height, $origPicture)
     {
-        imagecopyresampled($this->image, $origPicture, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+        \imagecopyresampled($this->image, $origPicture, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
     }
 
     /**
@@ -410,16 +426,16 @@ class Picture
     protected function resamplingIsNecessary($width, $height, $type)
     {
         return ($this->forceResample === true || ($width > $this->maxWidth || $height > $this->maxHeight))
-            && in_array($type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG]);
+            && \in_array($type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG]);
     }
 
     /**
-     * Creates the cache directory if it's not already present
+     * Creates the cache directory if it's not already present.
      */
     protected function createCacheDir()
     {
-        if (!is_dir($this->cacheDir)) {
-            @mkdir($this->cacheDir);
+        if (!\is_dir($this->cacheDir)) {
+            @\mkdir($this->cacheDir);
         }
     }
 }

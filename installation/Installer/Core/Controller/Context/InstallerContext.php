@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Core\Controller\Context;
@@ -13,10 +14,6 @@ use ACP3\Installer\Core\I18n\Translator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class InstallerContext
- * @package ACP3\Installer\Core\Controller\Context
- */
 class InstallerContext
 {
     /**
@@ -54,7 +51,7 @@ class InstallerContext
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param \ACP3\Installer\Core\I18n\Translator                      $translator
      * @param \ACP3\Core\Http\RequestInterface                          $request
-     * @param \ACP3\Core\Router\RouterInterface                                $router
+     * @param \ACP3\Core\Router\RouterInterface                         $router
      * @param \ACP3\Core\View                                           $view
      * @param \Symfony\Component\HttpFoundation\Response                $response
      * @param \ACP3\Installer\Core\Environment\ApplicationPath          $appPath

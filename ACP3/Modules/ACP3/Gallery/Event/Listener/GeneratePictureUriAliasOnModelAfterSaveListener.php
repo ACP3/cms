@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Event\Listener;
@@ -33,6 +34,7 @@ class GeneratePictureUriAliasOnModelAfterSaveListener
 
     /**
      * UpdateUriAliasesOnModelAfterSaveListener constructor.
+     *
      * @param Gallery\Model\Repository\PictureRepository $pictureRepository
      */
     public function __construct(Gallery\Model\Repository\PictureRepository $pictureRepository)
@@ -77,22 +79,22 @@ class GeneratePictureUriAliasOnModelAfterSaveListener
             $pictureId = $event->getEntryId();
 
             $galleryId = $this->pictureRepository->getGalleryIdFromPictureId($pictureId);
-            $alias = $this->aliases->getUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId), true);
+            $alias = $this->aliases->getUriAlias(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId), true);
             if (!empty($alias)) {
                 $alias .= '/img-' . $pictureId;
             }
             $seoKeywords = $this->metaStatements->getKeywords(
-                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
+                \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
             );
             $seoDescription = $this->metaStatements->getDescription(
-                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
+                \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
             );
             $seoRobots = $this->metaStatements->getRobotsSetting(
-                sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
+                \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
             );
 
             $this->uriAliasManager->insertUriAlias(
-                sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $pictureId),
+                \sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $pictureId),
                 $alias,
                 $seoKeywords,
                 $seoDescription,

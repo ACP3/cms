@@ -1,10 +1,12 @@
 <?php
-namespace ACP3\Core\Validation\ValidationRules;
 
 /**
- * Class ExternalLinkValidationRule
- * @package ACP3\Core\Validation\ValidationRules
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Validation\ValidationRules;
+
 class ExternalLinkValidationRule extends AbstractValidationRule
 {
     /**
@@ -23,14 +25,14 @@ class ExternalLinkValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && is_array($field)) {
-            $linkTitle = reset($field);
-            $uri = next($field);
-            $target = next($field);
+        if (\is_array($data) && \is_array($field)) {
+            $linkTitle = \reset($field);
+            $uri = \next($field);
+            $target = \next($field);
 
             return $this->isValidLink($data[$linkTitle], $data[$uri], $data[$target]);
         }

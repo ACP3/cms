@@ -1,14 +1,15 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 /**
  * Created by PhpStorm.
  * User: tinog
  * Date: 26.03.2017
- * Time: 21:26
+ * Time: 21:26.
  */
 
 namespace ACP3\Core\Test\View\Renderer\Smarty\Functions;
@@ -60,7 +61,7 @@ class UriTest extends AbstractPluginTest
     public function testUriWithRouteOnly()
     {
         $params = [
-            'args' => 'foo/bar/baz'
+            'args' => 'foo/bar/baz',
         ];
 
         $this->routerMock->expects($this->once())
@@ -90,7 +91,7 @@ class UriTest extends AbstractPluginTest
     {
         $params = [
             'args' => 'foo/bar/baz',
-            'secure' => true
+            'secure' => true,
         ];
 
         $this->routerMock->expects($this->once())

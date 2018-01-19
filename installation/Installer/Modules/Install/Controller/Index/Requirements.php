@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Modules\Install\Controller\Index;
@@ -10,10 +12,6 @@ use ACP3\Installer\Modules\Install\Controller\AbstractAction;
 use ACP3\Installer\Modules\Install\Helpers\Navigation;
 use ACP3\Installer\Modules\Install\Helpers\Requirements as RequirementsHelper;
 
-/**
- * Class Requirements
- * @package ACP3\Installer\Modules\Install\Controller\Index
- */
 class Requirements extends AbstractAction
 {
     /**
@@ -25,14 +23,14 @@ class Requirements extends AbstractAction
      * Requirements constructor.
      *
      * @param \ACP3\Installer\Core\Controller\Context\InstallerContext $context
-     * @param Navigation $navigation
-     * @param \ACP3\Installer\Modules\Install\Helpers\Requirements $requirementsHelpers
+     * @param Navigation                                               $navigation
+     * @param \ACP3\Installer\Modules\Install\Helpers\Requirements     $requirementsHelpers
      */
     public function __construct(
         Core\Controller\Context\InstallerContext $context,
         Navigation $navigation,
-        RequirementsHelper $requirementsHelpers)
-    {
+        RequirementsHelper $requirementsHelpers
+    ) {
         parent::__construct($context, $navigation);
 
         $this->requirementsHelpers = $requirementsHelpers;

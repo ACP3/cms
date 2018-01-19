@@ -1,23 +1,20 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class UserRoleRepository
- * @package ACP3\Modules\ACP3\Permissions\Model\Repository
- */
 class UserRoleRepository extends Core\Model\Repository\AbstractRepository implements Core\ACL\Model\Repository\UserRoleRepositoryInterface
 {
     const TABLE_NAME = 'acl_user_roles';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getRolesByUserId($userId)
     {

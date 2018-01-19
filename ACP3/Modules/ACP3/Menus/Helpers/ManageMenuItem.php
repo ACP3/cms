@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 use ACP3\Modules\ACP3\Menus\Model\MenuItemsModel;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 
-/**
- * Class ManageMenuItem
- * @package ACP3\Modules\ACP3\Menus\Helpers
- */
 class ManageMenuItem
 {
     /**
@@ -20,7 +22,7 @@ class ManageMenuItem
     protected $menuItemsModel;
 
     /**
-     * @param MenuItemsModel $menuItemsModel
+     * @param MenuItemsModel                                               $menuItemsModel
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      */
     public function __construct(
@@ -33,8 +35,8 @@ class ManageMenuItem
 
     /**
      * @param string $menuItemUri
-     * @param bool $createOrUpdateMenuItem
-     * @param array $data
+     * @param bool   $createOrUpdateMenuItem
+     * @param array  $data
      *
      * @return bool
      */
@@ -57,8 +59,9 @@ class ManageMenuItem
     }
 
     /**
-     * @param array $data
+     * @param array  $data
      * @param string $menuItemUri
+     *
      * @return bool
      */
     protected function createMenuItem(array $data, $menuItemUri)
@@ -71,6 +74,7 @@ class ManageMenuItem
     /**
      * @param array $data
      * @param array $menuItem
+     *
      * @return bool
      */
     protected function updateMenuItem(array $data, array $menuItem)

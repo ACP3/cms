@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Test\Helper;
@@ -67,7 +68,7 @@ class UpdateCheckTest extends \PHPUnit_Framework_TestCase
             ->willReturn([
                 'update_last_check' => (new \DateTime())->modify('-1 hour')->format('U'),
                 'update_new_version' => BootstrapInterface::VERSION,
-                'update_new_version_url' => 'https://foo.bar/'
+                'update_new_version_url' => 'https://foo.bar/',
             ]);
 
         $this->updateFileParserMock->expects($this->never())
@@ -77,7 +78,7 @@ class UpdateCheckTest extends \PHPUnit_Framework_TestCase
             'installed_version' => BootstrapInterface::VERSION,
             'latest_version' => BootstrapInterface::VERSION,
             'is_latest' => true,
-            'url' => 'https://foo.bar/'
+            'url' => 'https://foo.bar/',
         ];
 
         $this->assertEquals($update, $this->updateCheck->checkForNewVersion());
@@ -94,7 +95,7 @@ class UpdateCheckTest extends \PHPUnit_Framework_TestCase
             ->willReturn([
                 'update_last_check' => (new \DateTime())->modify('-2 days')->format('U'),
                 'update_new_version' => BootstrapInterface::VERSION,
-                'update_new_version_url' => 'https://foo.bar/'
+                'update_new_version_url' => 'https://foo.bar/',
             ]);
 
         $this->settingsMock->expects($this->once())
@@ -105,14 +106,14 @@ class UpdateCheckTest extends \PHPUnit_Framework_TestCase
             ->method('parseUpdateFile')
             ->willReturn([
                 'latest_version' => BootstrapInterface::VERSION,
-                'url' => 'https://foobar.baz/'
+                'url' => 'https://foobar.baz/',
             ]);
 
         $update = [
             'installed_version' => BootstrapInterface::VERSION,
             'latest_version' => BootstrapInterface::VERSION,
             'is_latest' => true,
-            'url' => 'https://foobar.baz/'
+            'url' => 'https://foobar.baz/',
         ];
 
         $this->assertEquals($update, $this->updateCheck->checkForNewVersion());

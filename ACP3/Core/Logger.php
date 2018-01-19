@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core;
 
 use ACP3\Core\Environment\ApplicationPath;
@@ -10,7 +15,6 @@ use Psr\Log\LogLevel;
 /**
  * Class for logging warnings, errors, etc.
  *
- * @package ACP3\Core
  * @deprecated since version 4.9.0, to be removed with version 5.0.0. Please use the \ACP3\Core\Logger\LoggerFactory instead
  */
 class Logger
@@ -20,7 +24,8 @@ class Logger
      */
     protected $appPath;
     /**
-     * Contains all already set log channels
+     * Contains all already set log channels.
+     *
      * @var \Monolog\Logger[]
      */
     private $channels = [];
@@ -40,8 +45,8 @@ class Logger
      *
      * @param string $channel
      * @param string $level
-     * @param mixed $message
-     * @param array $context
+     * @param mixed  $message
+     * @param array  $context
      */
     private function log($channel, $level, $message, array $context = [])
     {
@@ -63,7 +68,7 @@ class Logger
     private function createChannel($channel, $level)
     {
         $fileName = $this->appPath->getCacheDir() . 'logs/' . $channel . '.log';
-        $logLevelConst = constant(\Monolog\Logger::class . '::' . strtoupper($level));
+        $logLevelConst = \constant(\Monolog\Logger::class . '::' . \strtoupper($level));
 
         $stream = new StreamHandler($fileName, $logLevelConst);
         $stream->setFormatter(new LineFormatter(null, null, true));
@@ -78,19 +83,19 @@ class Logger
      */
     private function prettyPrintMessage($message)
     {
-        if (is_array($message) || is_object($message)) {
-            $message = var_export($message, true);
+        if (\is_array($message) || \is_object($message)) {
+            $message = \var_export($message, true);
         }
 
         return $message;
     }
 
     /**
-     * Debug log
+     * Debug log.
      *
      * @param string $channel
-     * @param mixed $message
-     * @param array $context
+     * @param mixed  $message
+     * @param array  $context
      */
     public function debug($channel, $message, array $context = [])
     {
@@ -98,11 +103,11 @@ class Logger
     }
 
     /**
-     * Info log
+     * Info log.
      *
      * @param string $channel
-     * @param mixed $message
-     * @param array $context
+     * @param mixed  $message
+     * @param array  $context
      */
     public function info($channel, $message, array $context = [])
     {
@@ -110,11 +115,11 @@ class Logger
     }
 
     /**
-     * Notice log
+     * Notice log.
      *
      * @param string $channel
-     * @param mixed $message
-     * @param array $context
+     * @param mixed  $message
+     * @param array  $context
      */
     public function notice($channel, $message, array $context = [])
     {
@@ -122,11 +127,11 @@ class Logger
     }
 
     /**
-     * Warning log
+     * Warning log.
      *
      * @param string $channel
-     * @param mixed $message
-     * @param array $context
+     * @param mixed  $message
+     * @param array  $context
      */
     public function warning($channel, $message, array $context = [])
     {
@@ -134,11 +139,11 @@ class Logger
     }
 
     /**
-     * Error log
+     * Error log.
      *
      * @param string $channel
-     * @param mixed $message
-     * @param array $context
+     * @param mixed  $message
+     * @param array  $context
      */
     public function error($channel, $message, array $context = [])
     {
@@ -146,11 +151,11 @@ class Logger
     }
 
     /**
-     * Critical log
+     * Critical log.
      *
      * @param string $channel
-     * @param mixed $message
-     * @param array $context
+     * @param mixed  $message
+     * @param array  $context
      */
     public function critical($channel, $message, array $context = [])
     {
@@ -158,11 +163,11 @@ class Logger
     }
 
     /**
-     * Alert log
+     * Alert log.
      *
      * @param string $channel
-     * @param mixed $message
-     * @param array $context
+     * @param mixed  $message
+     * @param array  $context
      */
     public function alert($channel, $message, array $context = [])
     {
@@ -170,11 +175,11 @@ class Logger
     }
 
     /**
-     * Emergency log
+     * Emergency log.
      *
      * @param string $channel
-     * @param mixed $message
-     * @param array $context
+     * @param mixed  $message
+     * @param array  $context
      */
     public function emergency($channel, $message, array $context = [])
     {

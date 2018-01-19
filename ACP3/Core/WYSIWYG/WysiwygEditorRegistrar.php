@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\WYSIWYG;
-
 
 use ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG;
 
@@ -17,9 +17,9 @@ class WysiwygEditorRegistrar
     protected $wysiwygEditors = [];
 
     /**
-     * @param string $serviceId
-     *
+     * @param string                                    $serviceId
      * @param \ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG $wysiwygEditor
+     *
      * @return $this
      */
     public function registerWysiwygEditor($serviceId, AbstractWYSIWYG $wysiwygEditor)
@@ -39,6 +39,7 @@ class WysiwygEditorRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return bool
      */
     public function has($serviceId)
@@ -48,6 +49,7 @@ class WysiwygEditorRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return AbstractWYSIWYG
      */
     public function get($serviceId)
@@ -57,7 +59,7 @@ class WysiwygEditorRegistrar
         }
 
         throw new \InvalidArgumentException(
-            sprintf('Can not find the WYSIWYG-Editor with the name: %s', $serviceId)
+            \sprintf('Can not find the WYSIWYG-Editor with the name: %s', $serviceId)
         );
     }
 }

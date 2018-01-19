@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Test\Validation\ValidationRules;
 
 abstract class AbstractValidationRuleTest extends \PHPUnit_Framework_TestCase

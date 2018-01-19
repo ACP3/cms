@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Http;
@@ -10,10 +11,6 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
-/**
- * Class RequestFactory
- * @package ACP3\Core\Http
- */
 class RequestFactory
 {
     /**
@@ -27,8 +24,9 @@ class RequestFactory
 
     /**
      * RequestFactory constructor.
+     *
      * @param SettingsInterface $config
-     * @param SymfonyRequest $symfonyRequest
+     * @param SymfonyRequest    $symfonyRequest
      */
     public function __construct(SettingsInterface $config, SymfonyRequest $symfonyRequest)
     {

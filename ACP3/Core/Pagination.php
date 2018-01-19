@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core;
 
 use ACP3\Core\Breadcrumb\Title;
@@ -7,10 +13,6 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
 
-/**
- * Class Pagination
- * @package ACP3\Core
- */
 class Pagination
 {
     /**
@@ -68,10 +70,11 @@ class Pagination
 
     /**
      * Pagination constructor.
-     * @param Title $title
-     * @param Translator $translator
+     *
+     * @param Title            $title
+     * @param Translator       $translator
      * @param RequestInterface $request
-     * @param RouterInterface $router
+     * @param RouterInterface  $router
      */
     public function __construct(
         Title $title,
@@ -87,28 +90,31 @@ class Pagination
 
     /**
      * @param int $results
+     *
      * @return $this
      */
     public function setResultsPerPage($results)
     {
-        $this->resultsPerPage = (int)$results;
+        $this->resultsPerPage = (int) $results;
 
         return $this;
     }
 
     /**
      * @param int $results
+     *
      * @return $this
      */
     public function setTotalResults($results)
     {
-        $this->totalResults = (int)$results;
+        $this->totalResults = (int) $results;
 
         return $this;
     }
 
     /**
      * @param string $fragment
+     *
      * @return $this
      */
     public function setUrlFragment($fragment)
@@ -120,11 +126,12 @@ class Pagination
 
     /**
      * @param int $pagesToDisplay
+     *
      * @return $this
      */
     public function setPagesToDisplay($pagesToDisplay)
     {
-        $this->pagesToDisplay = (int)$pagesToDisplay;
+        $this->pagesToDisplay = (int) $pagesToDisplay;
 
         return $this;
     }
@@ -143,7 +150,7 @@ class Pagination
 
         foreach ($map as $result) {
             if (!$result) {
-                $pagesToDisplay++;
+                ++$pagesToDisplay;
             }
         }
 
@@ -152,22 +159,24 @@ class Pagination
 
     /**
      * @param int $showFirstLast
+     *
      * @return $this
      */
     public function setShowFirstLast($showFirstLast)
     {
-        $this->showFirstLast = (int)$showFirstLast;
+        $this->showFirstLast = (int) $showFirstLast;
 
         return $this;
     }
 
     /**
      * @param int $showPreviousNext
+     *
      * @return $this
      */
     public function setShowPreviousNext($showPreviousNext)
     {
-        $this->showPreviousNext = (int)$showPreviousNext;
+        $this->showPreviousNext = (int) $showPreviousNext;
 
         return $this;
     }
@@ -177,8 +186,8 @@ class Pagination
      */
     public function getResultsStartOffset()
     {
-        return (int)$this->request->getParameters()->get('page') >= 1
-            ? (int)($this->request->getParameters()->get('page') - 1) * $this->resultsPerPage
+        return (int) $this->request->getParameters()->get('page') >= 1
+            ? (int) ($this->request->getParameters()->get('page') - 1) * $this->resultsPerPage
             : 0;
     }
 
@@ -191,8 +200,8 @@ class Pagination
             $areaPrefix = $this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '';
             $link = $this->router->route($areaPrefix . $this->request->getUriWithoutPages());
 
-            $this->currentPage = (int)$this->request->getParameters()->get('page', 1);
-            $this->totalPages = (int)ceil($this->totalResults / $this->resultsPerPage);
+            $this->currentPage = (int) $this->request->getParameters()->get('page', 1);
+            $this->totalPages = (int) \ceil($this->totalResults / $this->resultsPerPage);
 
             $this->setMetaStatements();
             [$rangeStart, $rangeEnd] = $this->calculateRange();
@@ -216,9 +225,6 @@ class Pagination
         return $this->pagination;
     }
 
-    /**
-     * @return void
-     */
     protected function setMetaStatements()
     {
         if ($this->currentPage > 1) {
@@ -237,25 +243,25 @@ class Pagination
         $pagesToDisplay = $this->getPagesToDisplay();
 
         if ($this->totalPages > $pagesToDisplay) {
-            $center = floor($pagesToDisplay / 2);
-            $rangeStart = max(1, $this->currentPage - $center);
-            $rangeEnd = min($this->totalPages, $rangeStart + $pagesToDisplay - 1);
+            $center = \floor($pagesToDisplay / 2);
+            $rangeStart = \max(1, $this->currentPage - $center);
+            $rangeEnd = \min($this->totalPages, $rangeStart + $pagesToDisplay - 1);
 
             // Anzuzeigende Seiten immer auf dem Wert von $pagesToDisplay halten
             if ($rangeEnd === $this->totalPages) {
-                $rangeStart = min($rangeStart, $rangeEnd - $pagesToDisplay + 1);
+                $rangeStart = \min($rangeStart, $rangeEnd - $pagesToDisplay + 1);
             }
         }
 
         return [
-            (int)$rangeStart,
-            (int)$rangeEnd
+            (int) $rangeStart,
+            (int) $rangeEnd,
         ];
     }
 
     /**
      * @param string $link
-     * @param int $rangeStart
+     * @param int    $rangeStart
      */
     private function addFirstPageLink(string $link, int $rangeStart): void
     {
@@ -272,10 +278,11 @@ class Pagination
 
     /**
      * @param int|string $pageNumber
-     * @param string $uri
-     * @param string $title
-     * @param bool $selected
-     * @param string $selector
+     * @param string     $uri
+     * @param string     $title
+     * @param bool       $selected
+     * @param string     $selector
+     *
      * @return $this
      */
     private function addPageNumber(
@@ -292,10 +299,11 @@ class Pagination
 
     /**
      * @param int|string $pageNumber
-     * @param string $uri
-     * @param string $title
-     * @param bool $selected
-     * @param string $selector
+     * @param string     $uri
+     * @param string     $title
+     * @param bool       $selected
+     * @param string     $selector
+     *
      * @return array
      */
     private function buildPageNumber(
@@ -309,8 +317,8 @@ class Pagination
             'page' => $pageNumber,
             'uri' => $uri,
             'title' => $title,
-            'selected' => (bool)$selected,
-            'selector' => $selector
+            'selected' => (bool) $selected,
+            'selector' => $selector,
         ];
     }
 
@@ -364,7 +372,7 @@ class Pagination
 
     /**
      * @param string $link
-     * @param integer $rangeEnd
+     * @param int    $rangeEnd
      */
     private function addLastPageLink(string $link, int $rangeEnd): void
     {

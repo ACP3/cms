@@ -1,17 +1,14 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class RoleRepository
- * @package ACP3\Modules\ACP3\Permissions\Model\Repository
- */
 class RoleRepository extends Core\NestedSet\Model\Repository\NestedSetRepository
 {
     const TABLE_NAME = 'acl_roles';
@@ -23,7 +20,7 @@ class RoleRepository extends Core\NestedSet\Model\Repository\NestedSetRepository
      */
     public function roleExists($roleId)
     {
-        return ((int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id', ['id' => $roleId]) > 0);
+        return (int) $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id', ['id' => $roleId]) > 0;
     }
 
     /**
@@ -35,10 +32,10 @@ class RoleRepository extends Core\NestedSet\Model\Repository\NestedSetRepository
     public function roleExistsByName($roleName, $roleId = 0)
     {
         if ($roleId !== 0) {
-            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND `name` = ?', [(int)$roleId, $roleName]) == 1;
-        } else {
-            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?', [$roleName]) == 1;
+            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND `name` = ?', [(int) $roleId, $roleName]) == 1;
         }
+
+        return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?', [$roleName]) == 1;
     }
 
     /**

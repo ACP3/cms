@@ -1,35 +1,38 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Application;
 
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-/**
- * Interface BootstrapInterface
- * @package ACP3\Core\Application
- */
 interface BootstrapInterface extends HttpKernelInterface
 {
     /**
-     * Contains the current ACP3 version string
+     * Contains the current ACP3 version string.
      */
-    const VERSION = '4.20.0';
+    const VERSION = '4.21.0';
 
     /**
-     * Performs some startup checks
+     * Performs some startup checks.
      */
     public function startUpChecks();
 
     /**
-     * Initializes the dependency injection container
+     * Initializes the dependency injection container.
+     *
      * @param SymfonyRequest $symfonyRequest
-     * @return void
      */
     public function initializeClasses(SymfonyRequest $symfonyRequest);
 
     /**
-     * Handle the request and output the page
+     * Handle the request and output the page.
+     *
      * @return Response
      */
     public function outputPage();

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\News\Installer\Schema;
 
-/**
- * Class AbstractAction
- * @package ACP3\Modules\ACP3\News\Controller\Frontend\Index
- */
 class AbstractAction extends AbstractFrontendAction
 {
     /**

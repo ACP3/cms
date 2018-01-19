@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
@@ -9,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Details
- * @package ACP3\Modules\ACP3\News\Controller\Frontend\Index
- */
 class Details extends AbstractAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -33,17 +31,17 @@ class Details extends AbstractAction
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date                               $date
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository  $newsRepository
-     * @param \ACP3\Modules\ACP3\News\Cache                 $newsCache
+     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
+     * @param \ACP3\Core\Date                                         $date
+     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
+     * @param \ACP3\Modules\ACP3\News\Cache                           $newsCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         News\Model\Repository\NewsRepository $newsRepository,
-        News\Cache $newsCache)
-    {
+        News\Cache $newsCache
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
@@ -55,6 +53,7 @@ class Details extends AbstractAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -78,7 +77,7 @@ class Details extends AbstractAction
             return [
                 'news' => $news,
                 'dateformat' => $this->newsSettings['dateformat'],
-                'comments_allowed' => $this->commentsActive === true && $news['comments'] == 1
+                'comments_allowed' => $this->commentsActive === true && $news['comments'] == 1,
             ];
         }
 

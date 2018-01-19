@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Validation\ValidationRules;
@@ -10,10 +11,6 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-/**
- * Class AlreadyVotedValidationRule
- * @package ACP3\Modules\ACP3\Polls\Validation\ValidationRules
- */
 class AlreadyVotedValidationRule extends AbstractValidationRule
 {
     /**
@@ -27,27 +24,28 @@ class AlreadyVotedValidationRule extends AbstractValidationRule
 
     /**
      * AlreadyVotedValidationRule constructor.
-     * @param UserModel $userModel
+     *
+     * @param UserModel      $userModel
      * @param VoteRepository $voteRepository
      */
     public function __construct(
         UserModel $userModel,
-        VoteRepository $voteRepository)
-    {
+        VoteRepository $voteRepository
+    ) {
         $this->userModel = $userModel;
         $this->voteRepository = $voteRepository;
     }
 
     /**
-     * @param mixed $data
+     * @param mixed  $data
      * @param string $field
-     * @param array $extra
+     * @param array  $extra
      *
-     * @return boolean
+     * @return bool
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
@@ -55,8 +53,9 @@ class AlreadyVotedValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @param int $pollId
+     * @param int    $pollId
      * @param string $ipAddress
+     *
      * @return mixed
      */
     protected function getVotes($pollId, $ipAddress)

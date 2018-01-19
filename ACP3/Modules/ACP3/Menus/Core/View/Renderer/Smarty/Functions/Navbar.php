@@ -1,14 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 use ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction;
 use ACP3\Modules\ACP3\Menus;
 
-/**
- * Class Navbar
- * @package ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions
- */
 class Navbar extends AbstractFunction
 {
     /**
@@ -39,10 +41,10 @@ class Navbar extends AbstractFunction
     /**
      * Navbar constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface                  $request
-     * @param \ACP3\Core\Router\RouterInterface                        $router
+     * @param \ACP3\Core\Http\RequestInterface                             $request
+     * @param \ACP3\Core\Router\RouterInterface                            $router
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
-     * @param \ACP3\Modules\ACP3\Menus\Cache                    $menusCache
+     * @param \ACP3\Modules\ACP3\Menus\Cache                               $menusCache
      */
     public function __construct(
         Core\Http\RequestInterface $request,
@@ -57,7 +59,7 @@ class Navbar extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -65,18 +67,18 @@ class Navbar extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         return $this->getMenuByKey(
             $params['block'],
             new Menus\Helpers\MenuConfiguration(
-                isset($params['use_bootstrap']) ? (bool)$params['use_bootstrap'] : true,
+                isset($params['use_bootstrap']) ? (bool) $params['use_bootstrap'] : true,
                 !empty($params['class']) ? $params['class'] : '',
                 !empty($params['dropdownItemClass']) ? $params['dropdownItemClass'] : '',
                 !empty($params['tag']) ? $params['tag'] : 'ul',
-                isset($params['itemTag']) ? $params['itemTag'] : 'li',
+                $params['itemTag'] ?? 'li',
                 !empty($params['dropdownWrapperTag']) ? $params['dropdownWrapperTag'] : 'li',
                 !empty($params['classLink']) ? $params['classLink'] : '',
                 !empty($params['inlineStyles']) ? $params['inlineStyles'] : ''
@@ -86,7 +88,7 @@ class Navbar extends AbstractFunction
 
     /**
      * Verarbeitet die Navigationsleiste und selektiert die aktuelle Seite,
-     * falls diese sich ebenfalls in der Navigationsleiste befindet
+     * falls diese sich ebenfalls in der Navigationsleiste befindet.
      *
      * @param string                                             $menu
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration $menuConfig
@@ -95,8 +97,8 @@ class Navbar extends AbstractFunction
      */
     protected function getMenuByKey(
         $menu,
-        Menus\Helpers\MenuConfiguration $menuConfig)
-    {
+        Menus\Helpers\MenuConfiguration $menuConfig
+    ) {
         $cacheKey = $this->buildMenuCacheKey($menu, $menuConfig);
         if (isset($this->menus[$cacheKey])) {
             return $this->menus[$cacheKey];
@@ -106,8 +108,9 @@ class Navbar extends AbstractFunction
     }
 
     /**
-     * @param string $menu
+     * @param string                          $menu
      * @param Menus\Helpers\MenuConfiguration $menuConfig
+     *
      * @return string
      */
     protected function buildMenuCacheKey($menu, Menus\Helpers\MenuConfiguration $menuConfig)
@@ -124,7 +127,7 @@ class Navbar extends AbstractFunction
     protected function generateMenu($menu, Menus\Helpers\MenuConfiguration $menuConfig)
     {
         $items = $this->menusCache->getVisibleMenuItems($menu);
-        $cItems = count($items);
+        $cItems = \count($items);
 
         if ($cItems > 0) {
             $selected = $this->selectMenuItem($menu);
@@ -156,7 +159,7 @@ class Navbar extends AbstractFunction
             }
 
             if (!empty($this->menus[$cacheKey])) {
-                $this->menus[$cacheKey] = sprintf(
+                $this->menus[$cacheKey] = \sprintf(
                     '<%1$s%2$s>%3$s</%1$s>',
                     $menuConfig->getTag(),
                     $this->prepareMenuHtmlAttributes($menu, $menuConfig),
@@ -168,6 +171,7 @@ class Navbar extends AbstractFunction
 
             return $this->menus[$cacheKey];
         }
+
         return '';
     }
 
@@ -184,8 +188,9 @@ class Navbar extends AbstractFunction
                 $this->request->getUriWithoutPages(),
                 $this->request->getFullPath(),
                 $this->request->getModuleAndController(),
-                $this->request->getModule()
+                $this->request->getModule(),
             ];
+
             return $this->menuItemRepository->getLeftIdByUris($menu, $in);
         }
 
@@ -201,7 +206,7 @@ class Navbar extends AbstractFunction
      */
     protected function processMenuItemWithoutChildren(Menus\Helpers\MenuConfiguration $menuConfig, $item, $cssSelectors)
     {
-        $link = sprintf(
+        $link = \sprintf(
             '<a href="%1$s"%2$s%3$s>%4$s</a>',
             $this->getMenuItemHref($item['mode'], $item['uri']),
             $this->getMenuItemHrefTarget($item['target']),
@@ -213,7 +218,7 @@ class Navbar extends AbstractFunction
             return $link;
         }
 
-        return sprintf('<%1$s class="%2$s">%3$s</%1$s>', $menuConfig->getItemTag(), $cssSelectors, $link);
+        return \sprintf('<%1$s class="%2$s">%3$s</%1$s>', $menuConfig->getItemTag(), $cssSelectors, $link);
     }
 
     /**
@@ -239,7 +244,7 @@ class Navbar extends AbstractFunction
             $subMenuCss = 'dropdown-menu ';
         }
 
-        $link = sprintf(
+        $link = \sprintf(
             '<a href="%1$s"%2$s%3$s>%4$s%5$s</a>',
             $this->getMenuItemHref($item['mode'], $item['uri']),
             $this->getMenuItemHrefTarget($item['target']),
@@ -248,7 +253,7 @@ class Navbar extends AbstractFunction
             $caret
         );
 
-        return sprintf(
+        return \sprintf(
             '<%1$s class="%2$s">%3$s<ul class="%4$snavigation-%5$s-subnav-%6$d">',
             $menuConfig->getDropdownWrapperTag(),
             $cssSelectors,
@@ -260,7 +265,7 @@ class Navbar extends AbstractFunction
     }
 
     /**
-     * Close the list of child elements
+     * Close the list of child elements.
      *
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration $menuConfig
      * @param array                                              $items
@@ -323,6 +328,7 @@ class Navbar extends AbstractFunction
             $diff -= $items[$currentIndex + 1]['level'];
         }
         $diff *= 2;
+
         return $diff;
     }
 

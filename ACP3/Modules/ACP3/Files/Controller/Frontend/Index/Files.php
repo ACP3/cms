@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
@@ -11,10 +12,6 @@ use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files as FilesModule;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Files
- * @package ACP3\Modules\ACP3\Files\Controller\Frontend\Index
- */
 class Files extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -35,8 +32,8 @@ class Files extends Core\Controller\AbstractFrontendAction
     /**
      * Files constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
-     * @param \ACP3\Core\Date                                        $date
+     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param \ACP3\Core\Date                                                   $date
      * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository         $filesRepository
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
@@ -44,8 +41,8 @@ class Files extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         FilesModule\Model\Repository\FilesRepository $filesRepository,
-        Categories\Model\Repository\CategoryRepository $categoryRepository)
-    {
+        Categories\Model\Repository\CategoryRepository $categoryRepository
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
@@ -57,6 +54,7 @@ class Files extends Core\Controller\AbstractFrontendAction
      * @param int $cat
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($cat)
@@ -74,7 +72,7 @@ class Files extends Core\Controller\AbstractFrontendAction
 
             return [
                 'dateformat' => $settings['dateformat'],
-                'files' => $this->filesRepository->getAllByCategoryId($cat, $this->date->getCurrentDateTime())
+                'files' => $this->filesRepository->getAllByCategoryId($cat, $this->date->getCurrentDateTime()),
             ];
         }
 

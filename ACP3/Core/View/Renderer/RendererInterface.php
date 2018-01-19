@@ -1,13 +1,16 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer;
 
 interface RendererInterface
 {
     /**
      * @param array $params
-     *
-     * @return void
      */
     public function configure(array $params = []);
 
@@ -21,6 +24,7 @@ interface RendererInterface
 
     /**
      * @param string|null $variableName
+     *
      * @return mixed
      */
     public function getTemplateVars($variableName = null);
@@ -40,8 +44,6 @@ interface RendererInterface
      * @param mixed       $cacheId
      * @param mixed       $compileId
      * @param object|null $parent
-     *
-     * @return void
      */
     public function display($template, $cacheId = null, $compileId = null, $parent = null);
 

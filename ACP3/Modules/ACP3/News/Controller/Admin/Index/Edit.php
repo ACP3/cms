@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing
- * details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\News\Controller\Admin\Index
- */
 class Edit extends AbstractFormAction
 {
     use CommentsHelperTrait;
@@ -34,12 +31,12 @@ class Edit extends AbstractFormAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param News\Model\NewsModel $newsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
+     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
+     * @param News\Model\NewsModel                                   $newsModel
      * @param \ACP3\Modules\ACP3\News\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
+     * @param \ACP3\Modules\ACP3\Categories\Helpers                  $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -60,6 +57,7 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -78,10 +76,10 @@ class Edit extends AbstractFormAction
                 ),
                 'options' => $this->fetchOptions($news['readmore'], $news['comments']),
                 'target' => $this->formsHelper->linkTargetChoicesGenerator('target', $news['target']),
-                'form' => array_merge($news, $this->request->getPost()->all()),
+                'form' => \array_merge($news, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
                 'SEO_URI_PATTERN' => News\Helpers::URL_KEY_PATTERN,
-                'SEO_ROUTE_NAME' => sprintf(News\Helpers::URL_KEY_PATTERN, $id),
+                'SEO_ROUTE_NAME' => \sprintf(News\Helpers::URL_KEY_PATTERN, $id),
             ];
         }
 
@@ -90,6 +88,7 @@ class Edit extends AbstractFormAction
 
     /**
      * @param int $id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function executePost($id)
@@ -98,7 +97,7 @@ class Edit extends AbstractFormAction
             $formData = $this->request->getPost()->all();
 
             $this->adminFormValidation
-                ->setUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $id))
+                ->setUriAlias(\sprintf(News\Helpers::URL_KEY_PATTERN, $id))
                 ->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryIdForSave($formData);

@@ -1,17 +1,14 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing
- * details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Date;
 
 use ACP3\Core\I18n\Translator;
 
-/**
- * Class DateTranslator
- * @package ACP3\Core\Date
- */
 class DateTranslator
 {
     /**
@@ -49,7 +46,7 @@ class DateTranslator
         'September',
         'October',
         'November',
-        'December'
+        'December',
     ];
 
     /**
@@ -71,25 +68,26 @@ class DateTranslator
     {
         $replace = [];
         // Localize days
-        if (strpos($dateFormat, 'D') !== false) {
+        if (\strpos($dateFormat, 'D') !== false) {
             $replace = $this->localizeDaysAbbr();
-        } elseif (strpos($dateFormat, 'l') !== false) {
+        } elseif (\strpos($dateFormat, 'l') !== false) {
             $replace = $this->localizeDays();
         }
 
         // Localize months
-        if (strpos($dateFormat, 'M') !== false) {
-            $replace = array_merge($replace, $this->localizeMonthsAbbr());
-        } elseif (strpos($dateFormat, 'F') !== false) {
-            $replace = array_merge($replace, $this->localizeMonths());
+        if (\strpos($dateFormat, 'M') !== false) {
+            $replace = \array_merge($replace, $this->localizeMonthsAbbr());
+        } elseif (\strpos($dateFormat, 'F') !== false) {
+            $replace = \array_merge($replace, $this->localizeMonths());
         }
 
         return $replace;
     }
 
     /**
-     * @param array $search
+     * @param array  $search
      * @param string $translatorPrefix
+     *
      * @return array
      */
     protected function cacheLocalizedDate(array $search, $translatorPrefix)
@@ -97,7 +95,7 @@ class DateTranslator
         if (!isset($this->cache[$translatorPrefix])) {
             $buffer = [];
             foreach ($search as $key) {
-                $buffer[$key] = $this->translator->t('system', $translatorPrefix . '_' . strtolower($key));
+                $buffer[$key] = $this->translator->t('system', $translatorPrefix . '_' . \strtolower($key));
             }
             $this->cache[$translatorPrefix] = $buffer;
         }

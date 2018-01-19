@@ -1,13 +1,14 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
-/**
- * Class IncludeJs
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class IncludeJs extends AbstractFunction
 {
     /**
@@ -28,8 +29,8 @@ class IncludeJs extends AbstractFunction
     protected $alreadyIncluded = [];
 
     /**
-     * @param \ACP3\Core\Assets $assets
-     * @param \ACP3\Core\Assets\FileResolver $fileResolver
+     * @param \ACP3\Core\Assets                      $assets
+     * @param \ACP3\Core\Assets\FileResolver         $fileResolver
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
@@ -43,7 +44,7 @@ class IncludeJs extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -51,12 +52,12 @@ class IncludeJs extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         if (!empty($params['depends'])) {
-            $this->assets->enableLibraries(explode(',', $params['depends']));
+            $this->assets->enableLibraries(\explode(',', $params['depends']));
         }
 
         if ($this->hasValidParams($params)) {
@@ -66,7 +67,7 @@ class IncludeJs extends AbstractFunction
             if (isset($this->alreadyIncluded[$key]) === false) {
                 $this->alreadyIncluded[$key] = true;
 
-                return sprintf(
+                return \sprintf(
                     '<script defer src="%s"></script>',
                     $this->resolvePath($params) . '?v=' . Core\Application\BootstrapInterface::VERSION
                 );
@@ -84,22 +85,24 @@ class IncludeJs extends AbstractFunction
 
     /**
      * @param array $params
+     *
      * @return bool
      */
     private function hasValidParams(array $params)
     {
         return isset($params['module'], $params['file']) === true &&
-            (bool)preg_match('=/=', $params['module']) === false &&
-            (bool)preg_match('=\./=', $params['file']) === false;
+            (bool) \preg_match('=/=', $params['module']) === false &&
+            (bool) \preg_match('=\./=', $params['file']) === false;
     }
 
     /**
      * @param array $params
+     *
      * @return string
      */
     protected function resolvePath(array $params)
     {
-        $module = ucfirst($params['module']);
+        $module = \ucfirst($params['module']);
         $file = $params['file'];
 
         $path = $this->fileResolver->getStaticAssetPath(
@@ -109,10 +112,10 @@ class IncludeJs extends AbstractFunction
             $file . '.js'
         );
 
-        if (strpos($path, '/ACP3/Modules/') !== false) {
-            $path = $this->appPath->getWebRoot() . substr($path, strpos($path, '/ACP3/Modules/') + 1);
+        if (\strpos($path, '/ACP3/Modules/') !== false) {
+            $path = $this->appPath->getWebRoot() . \substr($path, \strpos($path, '/ACP3/Modules/') + 1);
         } else {
-            $path = $this->appPath->getWebRoot() . substr($path, strlen(ACP3_ROOT_DIR));
+            $path = $this->appPath->getWebRoot() . \substr($path, \strlen(ACP3_ROOT_DIR));
         }
 
         return $path;

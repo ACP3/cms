@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
@@ -11,10 +12,6 @@ use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Files\Controller\Admin\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -25,13 +22,13 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext        $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
      * @param \ACP3\Modules\ACP3\Files\Model\Repository\DataGridRepository $dataGridRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Files\Model\Repository\DataGridRepository $dataGridRepository)
-    {
+        Files\Model\Repository\DataGridRepository $dataGridRepository
+    ) {
         parent::__construct($context);
 
         $this->dataGridRepository = $dataGridRepository;
@@ -55,7 +52,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         return [
             'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0
+            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
         ];
     }
 
@@ -73,15 +70,15 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'fields' => ['active'],
                 'custom' => [
                     'search' => [0, 1],
-                    'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')]
-                ]
+                    'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')],
+                ],
             ], 60)
             ->addColumn([
                 'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['start', 'end'],
                 'default_sort' => $settings['order_by'] === 'date',
-                'default_sort_direction' => 'desc'
+                'default_sort_direction' => 'desc',
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('files', 'title'),
@@ -98,8 +95,8 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['size'],
                 'customer' => [
-                    'default_value' => $this->translator->t('files', 'unknown_filesize')
-                ]
+                    'default_value' => $this->translator->t('files', 'unknown_filesize'),
+                ],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
@@ -107,7 +104,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'fields' => ['id'],
                 'primary' => true,
                 'custom' => [
-                    'path' => Helpers::URL_KEY_PATTERN
+                    'path' => Helpers::URL_KEY_PATTERN,
                 ],
             ], 10);
 
@@ -121,7 +118,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                     'custom' => [
                         'route_sort_down' => 'acp/files/index/sort/id_%d/action_down',
                         'route_sort_up' => 'acp/files/index/sort/id_%d/action_up',
-                    ]
+                    ],
                 ], 15);
         }
     }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Widget\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Widget\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Polls\Controller\Widget\Index
- */
 class Index extends Core\Controller\AbstractWidgetAction
 {
     /**
@@ -33,11 +30,11 @@ class Index extends Core\Controller\AbstractWidgetAction
     protected $voteRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext $context
-     * @param Core\Date $date
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
+     * @param \ACP3\Core\Controller\Context\WidgetContext                $context
+     * @param Core\Date                                                  $date
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository   $pollRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository $voteRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository   $voteRepository
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
@@ -70,13 +67,13 @@ class Index extends Core\Controller\AbstractWidgetAction
             if ($this->hasAlreadyVoted($poll['id'])) {
                 $totalVotes = $poll['total_votes'];
 
-                $cAnswers = count($answers);
+                $cAnswers = \count($answers);
                 for ($i = 0; $i < $cAnswers; ++$i) {
                     $votes = $answers[$i]['votes'];
                     $answers[$i]['votes'] = ($votes > 1)
                         ? $this->translator->t('polls', 'number_of_votes', ['%votes%' => $votes])
                         : $this->translator->t('polls', ($votes == 1 ? 'one_vote' : 'no_votes'));
-                    $answers[$i]['percent'] = $totalVotes > 0 ? round(100 * $votes / $totalVotes, 2) : '0';
+                    $answers[$i]['percent'] = $totalVotes > 0 ? \round(100 * $votes / $totalVotes, 2) : '0';
                 }
 
                 $this->setTemplate('Polls/Widget/index.result.tpl');
@@ -85,12 +82,13 @@ class Index extends Core\Controller\AbstractWidgetAction
 
         return [
             'sidebar_polls' => $poll,
-            'sidebar_poll_answers' => $answers
+            'sidebar_poll_answers' => $answers,
         ];
     }
 
     /**
      * @param int $pollId
+     *
      * @return int
      */
     protected function hasAlreadyVoted($pollId)

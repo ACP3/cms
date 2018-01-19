@@ -1,17 +1,14 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\News\Model\Repository;
 
 use ACP3\Core;
 
-/**
- * Class NewsRepository
- * @package ACP3\Modules\ACP3\News\Model\Repository
- */
 class NewsRepository extends Core\Model\Repository\AbstractRepository
 {
     use Core\Model\Repository\PublicationPeriodAwareTrait;
@@ -27,10 +24,11 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     public function resultExists($newsId, $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
-        return ((int)$this->db->fetchColumn(
+
+        return (int) $this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id' . $period,
                 ['id' => $newsId, 'time' => $time, 'active' => 1]
-            ) > 0);
+            ) > 0;
     }
 
     /**
@@ -64,6 +62,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
         }
 
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
+
         return $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC',
             ['time' => $time, 'active' => 1]
@@ -82,6 +81,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
+
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()} WHERE category_id = :categoryId{$where} ORDER BY `start` DESC, `end` DESC, `id` DESC {$limitStmt}",
             ['time' => $time, 'categoryId' => $categoryId, 'active' => 1]

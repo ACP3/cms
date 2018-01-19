@@ -1,26 +1,23 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\NestedSet\Operation;
 
-/**
- * Class Edit
- * @package ACP3\Core\NestedSet\Operation
- */
 class Edit extends AbstractOperation
 {
     /**
-     * Methode zum Bearbeiten eines Knotens
+     * Methode zum Bearbeiten eines Knotens.
      *
-     * @param integer $resultId
-     * @param integer $parentId
-     * @param integer $blockId
-     * @param array   $updateValues
+     * @param int   $resultId
+     * @param int   $parentId
+     * @param int   $blockId
+     * @param array $updateValues
      *
-     * @return boolean
+     * @return bool
      */
     public function execute($resultId, $parentId, $blockId, array $updateValues)
     {
@@ -36,7 +33,8 @@ class Edit extends AbstractOperation
                 );
             } else {
                 $currentParent = $this->nestedSetRepository->fetchParentNode(
-                    $nodes[0]['left_id'], $nodes[0]['right_id']
+                    $nodes[0]['left_id'],
+                    $nodes[0]['right_id']
                 );
 
                 // Überprüfung, falls Seite kein Root-Element ist und auch keine Veränderung vorgenommen werden soll...
@@ -65,6 +63,7 @@ class Edit extends AbstractOperation
                     );
                 }
             }
+
             return $bool;
         };
 
@@ -91,6 +90,7 @@ class Edit extends AbstractOperation
      * @param array $nodes
      *
      * @return array
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function nodeBecomesRootNode($id, $blockId, array $nodes)
@@ -119,6 +119,7 @@ class Edit extends AbstractOperation
      * @param int   $itemDiff
      *
      * @return int
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function nodeBecomesRootNodeInNewBlock($blockId, array $nodes, $itemDiff)
@@ -127,7 +128,7 @@ class Edit extends AbstractOperation
 
         // Falls die Knoten in einen leeren Block verschoben werden sollen,
         // die right_id des letzten Elementes verwenden
-        if (empty($newBlockLeftId) || is_null($newBlockLeftId) === true) {
+        if (empty($newBlockLeftId) || \is_null($newBlockLeftId) === true) {
             $newBlockLeftId = $this->nestedSetRepository->fetchMaximumRightId();
             $newBlockLeftId += 1;
         }
@@ -148,6 +149,7 @@ class Edit extends AbstractOperation
      * @param int   $itemDiff
      *
      * @return int
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function nodeBecomesRootNodeInSameBlock(array $nodes, $itemDiff)
@@ -171,6 +173,7 @@ class Edit extends AbstractOperation
      * @param int   $rootId
      *
      * @return int|bool
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function adjustNodeSiblings($blockId, array $nodes, $diff, $rootId)
@@ -182,7 +185,8 @@ class Edit extends AbstractOperation
             $node['right_id'] += $diff;
 
             $parentId = $this->nestedSetRepository->fetchParentNode(
-                $node['left_id'], $node['right_id']
+                $node['left_id'],
+                $node['right_id']
             );
             if ($this->isBlockAware === true) {
                 $bool = $this->db->getConnection()->executeUpdate(
@@ -193,7 +197,7 @@ class Edit extends AbstractOperation
                         $parentId,
                         $node['left_id'],
                         $node['right_id'],
-                        $node['id']
+                        $node['id'],
                     ]
                 );
             } else {
@@ -204,7 +208,7 @@ class Edit extends AbstractOperation
                         $parentId,
                         $node['left_id'],
                         $node['right_id'],
-                        $node['id']
+                        $node['id'],
                     ]
                 );
             }
@@ -212,6 +216,7 @@ class Edit extends AbstractOperation
                 break;
             }
         }
+
         return $bool;
     }
 
@@ -249,6 +254,7 @@ class Edit extends AbstractOperation
         $this->adjustFollowingNodesAfterSeparation($itemDiff, $nodes[0]['right_id']);
         $this->adjustParentNodesAfterInsert($itemDiff, $newParent['left_id'], $newParent['right_id']);
         $this->adjustFollowingNodesAfterInsert($itemDiff, $newParent['left_id'] + 1);
+
         return [$diff, $rootId];
     }
 }

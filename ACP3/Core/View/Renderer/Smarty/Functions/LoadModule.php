@@ -1,14 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Router\RouterInterface;
 
-/**
- * Class LoadModule
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class LoadModule extends AbstractFunction
 {
     /**
@@ -27,22 +29,22 @@ class LoadModule extends AbstractFunction
     /**
      * LoadModule constructor.
      *
-     * @param \ACP3\Core\ACL $acl
+     * @param \ACP3\Core\ACL  $acl
      * @param RouterInterface $router
-     * @param string $applicationMode
+     * @param string          $applicationMode
      */
     public function __construct(
         ACL $acl,
         RouterInterface $router,
-        $applicationMode)
-    {
+        $applicationMode
+    ) {
         $this->acl = $acl;
         $this->router = $router;
         $this->applicationMode = $applicationMode;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -50,7 +52,7 @@ class LoadModule extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
@@ -72,7 +74,7 @@ class LoadModule extends AbstractFunction
      */
     protected function convertPathToArray($resource)
     {
-        $pathArray = explode('/', strtolower($resource));
+        $pathArray = \explode('/', \strtolower($resource));
 
         if (empty($pathArray[2]) === true) {
             $pathArray[2] = 'index';
@@ -80,32 +82,36 @@ class LoadModule extends AbstractFunction
         if (empty($pathArray[3]) === true) {
             $pathArray[3] = 'index';
         }
+
         return $pathArray;
     }
 
     /**
      * @param array $arguments
+     *
      * @return array
      */
     protected function parseControllerActionArguments(array $arguments)
     {
-        if (isset($arguments['args']) && is_array($arguments['args'])) {
+        if (isset($arguments['args']) && \is_array($arguments['args'])) {
             return $this->urlEncodeArguments($arguments['args']);
         }
 
         unset($arguments['module']);
+
         return $this->urlEncodeArguments($arguments);
     }
 
     /**
      * @param array $arguments
+     *
      * @return array
      */
     protected function urlEncodeArguments(array $arguments)
     {
-        return array_map(
+        return \array_map(
             function ($item) {
-                return urlencode($item);
+                return \urlencode($item);
             },
             $arguments
         );
@@ -113,14 +119,15 @@ class LoadModule extends AbstractFunction
 
     /**
      * @param string $path
-     * @param array $arguments
+     * @param array  $arguments
+     *
      * @return string
      */
     protected function esiInclude($path, array $arguments)
     {
         $routeArguments = '';
         foreach ($arguments as $key => $value) {
-            $routeArguments.= '/' . $key . '_' . $value;
+            $routeArguments .= '/' . $key . '_' . $value;
         }
 
         $debug = '';

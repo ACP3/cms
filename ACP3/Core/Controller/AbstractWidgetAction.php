@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Controller;
@@ -9,10 +10,6 @@ namespace ACP3\Core\Controller;
 use ACP3\Core;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class AbstractWidgetAction
- * @package ACP3\Core\Controller
- */
 abstract class AbstractWidgetAction implements ActionInterface
 {
     use Core\Controller\DisplayActionTrait;
@@ -99,6 +96,7 @@ abstract class AbstractWidgetAction implements ActionInterface
 
     /**
      * @return $this
+     *
      * @throws Core\ACL\Exception\AccessForbiddenException
      */
     public function preDispatch()
@@ -124,7 +122,7 @@ abstract class AbstractWidgetAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function get($serviceId)
     {
@@ -132,15 +130,15 @@ abstract class AbstractWidgetAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function applyTemplateAutomatically()
     {
-        return $this->request->getModule() . '/' . ucfirst($this->request->getArea()) . '/' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl';
+        return $this->request->getModule() . '/' . \ucfirst($this->request->getArea()) . '/' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl';
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addCustomTemplateVarsBeforeOutput()
     {

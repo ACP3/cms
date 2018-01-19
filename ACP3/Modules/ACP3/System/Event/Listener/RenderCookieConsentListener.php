@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Event\Listener;
@@ -23,8 +24,9 @@ class RenderCookieConsentListener
 
     /**
      * OnLayoutFooterAfterListener constructor.
+     *
      * @param SettingsInterface $settings
-     * @param View $view
+     * @param View              $view
      */
     public function __construct(SettingsInterface $settings, View $view)
     {

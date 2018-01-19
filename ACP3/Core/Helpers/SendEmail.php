@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
 
-/**
- * Class SendEmail
- * @package ACP3\Core\Helpers
- */
 class SendEmail
 {
     /**
@@ -23,16 +25,17 @@ class SendEmail
     }
 
     /**
-     * Generates and sends an E-mail
+     * Generates and sends an E-mail.
      *
      * @param string|Core\Mailer\MailerMessage $recipientName
-     * @param string $recipientEmail
-     * @param string $from
-     * @param string $subject
-     * @param string $body
-     * @param string $mailSignature
+     * @param string                           $recipientEmail
+     * @param string                           $from
+     * @param string                           $subject
+     * @param string                           $body
+     * @param string                           $mailSignature
      *
      * @return bool
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0. Use the 'core.mailer' service directly instead
      */
     public function execute(
@@ -53,7 +56,7 @@ class SendEmail
         if (!empty($recipientName)) {
             $to = [
                 'name' => $recipientName,
-                'email' => $recipientEmail
+                'email' => $recipientEmail,
             ];
         } else {
             $to = $recipientEmail;

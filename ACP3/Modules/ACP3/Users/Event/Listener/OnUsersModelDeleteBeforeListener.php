@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Event\Listener;
@@ -19,6 +20,7 @@ class OnUsersModelDeleteBeforeListener
 
     /**
      * OnUsersModelDeleteBeforeListener constructor.
+     *
      * @param UserModel $userModel
      */
     public function __construct(UserModel $userModel)
@@ -28,6 +30,7 @@ class OnUsersModelDeleteBeforeListener
 
     /**
      * @param ModelSaveEvent $event
+     *
      * @throws SuperUserNotDeletableException
      */
     public function forbidSuperUserDelete(ModelSaveEvent $event)

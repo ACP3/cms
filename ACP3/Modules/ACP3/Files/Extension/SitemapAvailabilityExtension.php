@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Extension;
@@ -32,11 +33,12 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 
     /**
      * SitemapAvailabilityExtension constructor.
-     * @param Date $date
-     * @param RouterInterface $router
-     * @param FilesRepository $filesRepository
+     *
+     * @param Date               $date
+     * @param RouterInterface    $router
+     * @param FilesRepository    $filesRepository
      * @param CategoryRepository $categoryRepository
-     * @param MetaStatements $metaStatements
+     * @param MetaStatements     $metaStatements
      */
     public function __construct(
         Date $date,
@@ -61,7 +63,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function fetchSitemapUrls($isSecure = null)
     {
@@ -73,7 +75,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 
         foreach ($this->filesRepository->getAll($this->date->getCurrentDateTime()) as $result) {
             $this->addUrl(
-                sprintf(Helpers::URL_KEY_PATTERN, $result['id']),
+                \sprintf(Helpers::URL_KEY_PATTERN, $result['id']),
                 $this->date->format($result['updated_at'], 'Y-m-d'),
                 $isSecure
             );

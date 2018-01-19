@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\I18n;
-
 
 trait ExtractFromPathTrait
 {
@@ -16,7 +16,7 @@ trait ExtractFromPathTrait
      */
     protected function getLanguagePackIsoCode($filePath)
     {
-        return substr($filePath, strrpos($filePath, '/') + 1, -4);
+        return \substr($filePath, \strrpos($filePath, '/') + 1, -4);
     }
 
     /**
@@ -26,8 +26,8 @@ trait ExtractFromPathTrait
      */
     protected function getModuleFromPath($filePath)
     {
-        $pathArray = explode('/', $filePath);
+        $pathArray = \explode('/', $filePath);
 
-        return $pathArray[count($pathArray) - 4];
+        return $pathArray[\count($pathArray) - 4];
     }
 }

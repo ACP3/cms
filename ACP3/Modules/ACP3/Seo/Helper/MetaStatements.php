@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Helper;
@@ -14,10 +15,6 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Cache as SeoCache;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
-/**
- * Class MetaStatements
- * @package ACP3\Modules\ACP3\Seo\Helper
- */
 class MetaStatements
 {
     /**
@@ -69,10 +66,10 @@ class MetaStatements
     /**
      * MetaStatements constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param RouterInterface $router
-     * @param Modules $modules
-     * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
+     * @param \ACP3\Core\Http\RequestInterface      $request
+     * @param RouterInterface                       $router
+     * @param Modules                               $modules
+     * @param \ACP3\Modules\ACP3\Seo\Cache          $seoCache
      * @param \ACP3\Core\Settings\SettingsInterface $config
      */
     public function __construct(
@@ -91,6 +88,7 @@ class MetaStatements
 
     /**
      * @param string $metaRobots
+     *
      * @return $this
      */
     public function setPageRobotsSettings($metaRobots)
@@ -101,7 +99,7 @@ class MetaStatements
     }
 
     /**
-     * Returns the meta tags of the current page
+     * Returns the meta tags of the current page.
      *
      * @return array
      */
@@ -134,7 +132,7 @@ class MetaStatements
     }
 
     /**
-     * Returns the SEO description of the current page
+     * Returns the SEO description of the current page.
      *
      * @return string
      */
@@ -168,7 +166,7 @@ class MetaStatements
     }
 
     /**
-     * Returns the SEO description of the given page
+     * Returns the SEO description of the given page.
      *
      * @param string $path
      *
@@ -180,7 +178,7 @@ class MetaStatements
     }
 
     /**
-     * Returns the SEO keywords of the current page
+     * Returns the SEO keywords of the current page.
      *
      * @return string
      */
@@ -194,11 +192,11 @@ class MetaStatements
             $keywords = $this->getKeywords($this->request->getModule());
         }
 
-        return strtolower(!empty($keywords) ? $keywords : $this->getSeoSettings()['meta_keywords']);
+        return \strtolower(!empty($keywords) ? $keywords : $this->getSeoSettings()['meta_keywords']);
     }
 
     /**
-     * Returns the SEO keywords of the given page
+     * Returns the SEO keywords of the given page.
      *
      * @param string $path
      *
@@ -210,7 +208,7 @@ class MetaStatements
     }
 
     /**
-     * Returns the meta title of the given page
+     * Returns the meta title of the given page.
      *
      * @param string $path
      *
@@ -239,13 +237,13 @@ class MetaStatements
             $this->aliasesCache = $this->seoCache->getCache();
         }
 
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
+        $path .= !\preg_match('/\/$/', $path) ? '/' : '';
 
         return !empty($this->aliasesCache[$path][$key]) ? $this->aliasesCache[$path][$key] : $defaultValue;
     }
 
     /**
-     * Returns the SEO robots setting for the current page
+     * Returns the SEO robots setting for the current page.
      *
      * @return string
      */
@@ -263,11 +261,11 @@ class MetaStatements
             $robots = $this->getRobotsSetting($this->request->getModule());
         }
 
-        return strtolower(!empty($robots) ? $robots : $this->getRobotsSetting());
+        return \strtolower(!empty($robots) ? $robots : $this->getRobotsSetting());
     }
 
     /**
-     * Returns the SEO robots settings for the given page
+     * Returns the SEO robots settings for the given page.
      *
      * @param string $path
      *
@@ -283,7 +281,7 @@ class MetaStatements
         ];
 
         if ($path === '') {
-            return strtr($this->getSeoSettings()['robots'], $replace);
+            return \strtr($this->getSeoSettings()['robots'], $replace);
         }
 
         $robot = $this->getSeoInformation($path, 'robots', 0);
@@ -292,11 +290,11 @@ class MetaStatements
             $robot = $this->getSeoSettings()['robots'];
         }
 
-        return strtr($robot, $replace);
+        return \strtr($robot, $replace);
     }
 
     /**
-     * Sets a SEO description postfix for te current page
+     * Sets a SEO description postfix for te current page.
      *
      * @param string $string
      *
@@ -310,7 +308,7 @@ class MetaStatements
     }
 
     /**
-     * Sets the canonical URL for the current page
+     * Sets the canonical URL for the current page.
      *
      * @param string $path
      *
@@ -324,7 +322,7 @@ class MetaStatements
     }
 
     /**
-     * Sets the next page (useful for pagination)
+     * Sets the next page (useful for pagination).
      *
      * @param string $path
      *
@@ -338,7 +336,7 @@ class MetaStatements
     }
 
     /**
-     * Sets the previous page (useful for pagination)
+     * Sets the previous page (useful for pagination).
      *
      * @param string $path
      *

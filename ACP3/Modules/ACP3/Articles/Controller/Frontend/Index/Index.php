@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Frontend\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Articles\Controller\Frontend\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -34,9 +31,9 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
-     * @param \ACP3\Core\Date                                     $date
-     * @param \ACP3\Core\Pagination                               $pagination
+     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
+     * @param \ACP3\Core\Date                                                $date
+     * @param \ACP3\Core\Pagination                                          $pagination
      * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
      */
     public function __construct(
@@ -70,9 +67,10 @@ class Index extends Core\Controller\AbstractFrontendAction
             $this->pagination->getResultsStartOffset(),
             $resultsPerPage
         );
+
         return [
             'articles' => $articles,
-            'pagination' => $this->pagination->render()
+            'pagination' => $this->pagination->render(),
         ];
     }
 }

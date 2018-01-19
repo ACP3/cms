@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
@@ -8,10 +10,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index
- */
 class Edit extends AbstractFormAction
 {
     /**
@@ -34,12 +32,12 @@ class Edit extends AbstractFormAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Newsletter\Model\NewsletterModel $newsletterModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
+     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
+     * @param Newsletter\Model\NewsletterModel                             $newsletterModel
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter $newsletterHelpers
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter          $newsletterHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -47,8 +45,8 @@ class Edit extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Model\NewsletterModel $newsletterModel,
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
-        Newsletter\Helper\SendNewsletter $newsletterHelpers)
-    {
+        Newsletter\Helper\SendNewsletter $newsletterHelpers
+    ) {
         parent::__construct($context, $newsletterHelpers);
 
         $this->formsHelper = $formsHelper;
@@ -61,6 +59,7 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -74,15 +73,15 @@ class Edit extends AbstractFormAction
 
             $actions = [
                 1 => $this->translator->t('newsletter', 'send_and_save'),
-                0 => $this->translator->t('newsletter', 'only_save')
+                0 => $this->translator->t('newsletter', 'only_save'),
             ];
 
             return [
-                'settings' => array_merge($settings, ['html' => $newsletter['html']]),
+                'settings' => \array_merge($settings, ['html' => $newsletter['html']]),
                 'test' => $this->formsHelper->yesNoCheckboxGenerator('test', 0),
                 'action' => $this->formsHelper->checkboxGenerator('action', $actions, 1),
-                'form' => array_merge($newsletter, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken()
+                'form' => \array_merge($newsletter, $this->request->getPost()->all()),
+                'form_token' => $this->formTokenHelper->renderFormToken(),
             ];
         }
 
@@ -90,7 +89,7 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param int   $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

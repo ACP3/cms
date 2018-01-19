@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\NestedSet\Operation;
@@ -10,10 +11,6 @@ use ACP3\Core\Database\Connection;
 use ACP3\Core\NestedSet\Model\Repository\BlockAwareNestedSetRepositoryInterface;
 use ACP3\Core\NestedSet\Model\Repository\NestedSetRepository;
 
-/**
- * Class AbstractNestedSetOperation
- * @package ACP3\Core\NestedSet\Operation
- */
 abstract class AbstractOperation
 {
     /**
@@ -30,7 +27,7 @@ abstract class AbstractOperation
     protected $isBlockAware;
 
     /**
-     * @param \ACP3\Core\Database\Connection $db
+     * @param \ACP3\Core\Database\Connection                            $db
      * @param \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository $nestedSetRepository
      */
     public function __construct(

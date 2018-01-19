@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Errors\Controller\Frontend\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Errors\Controller\Frontend\Index;
 use ACP3\Core;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class AccessForbidden
- * @package ACP3\Modules\ACP3\Errors\Controller\Frontend\Index
- */
 class AccessForbidden extends Core\Controller\AbstractFrontendAction
 {
     public function execute()

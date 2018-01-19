@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\Validation;
@@ -16,7 +17,7 @@ use ACP3\Core\Validation\Validator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
- * Class AbstractFormValidationTest
+ * Class AbstractFormValidationTest.
  */
 abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
 {
@@ -47,9 +48,6 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
         $this->registerValidationRules();
     }
 
-    /**
-     * @return void
-     */
     abstract protected function initializeFormValidation();
 
     protected function initializeFormValidationDependencies()
@@ -107,9 +105,6 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
         return $sessionMock;
     }
 
-    /**
-     * @return void
-     */
     abstract protected function registerValidationRules();
 
     /**
@@ -145,7 +140,8 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
     {
         $requestMock->expects($this->any())
             ->method('getPost')
-            ->willReturn(new \Symfony\Component\HttpFoundation\ParameterBag(
+            ->willReturn(
+                new \Symfony\Component\HttpFoundation\ParameterBag(
                     [SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN]
                 )
             );

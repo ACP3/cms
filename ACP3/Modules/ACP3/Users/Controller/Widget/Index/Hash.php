@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
@@ -21,7 +22,8 @@ class Hash extends AbstractWidgetAction
 
     /**
      * Hash constructor.
-     * @param WidgetContext $context
+     *
+     * @param WidgetContext        $context
      * @param DefaultHashGenerator $hashGenerator
      */
     public function __construct(WidgetContext $context, DefaultHashGenerator $hashGenerator)
@@ -43,7 +45,7 @@ class Hash extends AbstractWidgetAction
             $this->response->setMaxAge(3600);
             $this->response->headers->add([
                 'Content-type' => 'application/vnd.fos.user-context-hash',
-                'X-User-Context-Hash' => $this->hashGenerator->generateHash()
+                'X-User-Context-Hash' => $this->hashGenerator->generateHash(),
             ]);
         } else {
             $this->response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);

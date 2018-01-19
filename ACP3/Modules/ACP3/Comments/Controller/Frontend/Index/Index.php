@@ -1,6 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
@@ -9,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Comments\Controller\Frontend\Index
- */
 class Index extends AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -27,8 +25,8 @@ class Index extends AbstractFrontendAction
     protected $commentRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Pagination $pagination
+     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
+     * @param \ACP3\Core\Pagination                                          $pagination
      * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
      */
     public function __construct(
@@ -44,7 +42,7 @@ class Index extends AbstractFrontendAction
 
     /**
      * @param string $module
-     * @param int $entryId
+     * @param int    $entryId
      *
      * @return array
      */
@@ -65,7 +63,7 @@ class Index extends AbstractFrontendAction
             $this->pagination->getResultsStartOffset(),
             $resultsPerPage
         );
-        $cComments = count($comments);
+        $cComments = \count($comments);
 
         for ($i = 0; $i < $cComments; ++$i) {
             if (empty($comments[$i]['name'])) {
@@ -79,7 +77,7 @@ class Index extends AbstractFrontendAction
         return [
             'comments' => $comments,
             'dateformat' => $this->commentsSettings['dateformat'],
-            'pagination' => $this->pagination->render()
+            'pagination' => $this->pagination->render(),
         ];
     }
 }

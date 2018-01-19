@@ -1,17 +1,14 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Controller\Context;
 
 use ACP3\Core;
 
-/**
- * Class FrontendContext
- * @package ACP3\Core\Controller\Context
- */
 class FrontendContext extends Core\Controller\Context\WidgetContext
 {
     /**

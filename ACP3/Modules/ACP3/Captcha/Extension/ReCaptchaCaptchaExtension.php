@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Extension;
@@ -40,19 +41,20 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
 
     /**
      * ReCaptchaCaptchaExtension constructor.
-     * @param Translator $translator
-     * @param RequestInterface $request
+     *
+     * @param Translator        $translator
+     * @param RequestInterface  $request
      * @param SettingsInterface $settings
-     * @param View $view
-     * @param UserModel $user
+     * @param View              $view
+     * @param UserModel         $user
      */
     public function __construct(
         Translator $translator,
         RequestInterface $request,
         SettingsInterface $settings,
         View $view,
-        UserModel $user)
-    {
+        UserModel $user
+    ) {
         $this->translator = $translator;
         $this->view = $view;
         $this->user = $user;
@@ -61,7 +63,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getCaptchaName()
     {
@@ -69,7 +71,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getCaptcha(
         $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
@@ -84,7 +86,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
                 'id' => $formFieldId,
                 'input_only' => $inputOnly,
                 'length' => $captchaLength,
-                'sitekey' => $settings['recaptcha_sitekey']
+                'sitekey' => $settings['recaptcha_sitekey'],
             ]);
 
             return $this->view->fetchTemplate(static::TEMPLATE);
@@ -94,7 +96,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isCaptchaValid($formData, $formFieldName, array $extra = [])
     {

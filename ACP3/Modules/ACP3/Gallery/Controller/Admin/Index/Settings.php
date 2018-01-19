@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 
-/**
- * Class Settings
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -35,10 +32,10 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\Cache $galleryCoreCache
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param Core\Cache                                                        $galleryCoreCache
+     * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
@@ -64,7 +61,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
 
         if ($this->modules->isActive('comments') === true) {
-            $this->view->assign('comments',
+            $this->view->assign(
+                'comments',
                 $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments'])
             );
         }
@@ -72,9 +70,9 @@ class Settings extends Core\Controller\AbstractFrontendAction
         return [
             'overlay' => $this->formsHelper->yesNoCheckboxGenerator('overlay', $settings['overlay']),
             'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
-            'sidebar_entries' => $this->formsHelper->recordsPerPage((int)$settings['sidebar'], 1, 10, 'sidebar'),
-            'form' => array_merge($settings, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'sidebar_entries' => $this->formsHelper->recordsPerPage((int) $settings['sidebar'], 1, 10, 'sidebar'),
+            'form' => \array_merge($settings, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -89,16 +87,16 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
-                'width' => (int)$formData['width'],
-                'height' => (int)$formData['height'],
-                'thumbwidth' => (int)$formData['thumbwidth'],
-                'thumbheight' => (int)$formData['thumbheight'],
+                'width' => (int) $formData['width'],
+                'height' => (int) $formData['height'],
+                'thumbwidth' => (int) $formData['thumbwidth'],
+                'thumbheight' => (int) $formData['thumbheight'],
                 'overlay' => $formData['overlay'],
                 'dateformat' => $this->get('core.helpers.secure')->strEncode($formData['dateformat']),
-                'sidebar' => (int)$formData['sidebar'],
+                'sidebar' => (int) $formData['sidebar'],
             ];
             if ($this->modules->isActive('comments') === true) {
-                $data['comments'] = (int)$formData['comments'];
+                $data['comments'] = (int) $formData['comments'];
             }
 
             $bool = $this->config->saveSettings($data, Gallery\Installer\Schema::MODULE_NAME);
@@ -115,6 +113,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param array $formData
+     *
      * @return bool
      */
     protected function hasImageDimensionChanges(array $formData)

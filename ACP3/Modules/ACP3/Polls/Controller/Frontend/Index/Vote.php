@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 
-/**
- * Class Vote
- * @package ACP3\Modules\ACP3\Polls\Controller\Frontend\Index
- */
 class Vote extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -37,11 +34,11 @@ class Vote extends Core\Controller\AbstractFrontendAction
     protected $voteValidation;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\Date $date
-     * @param Polls\Validation\VoteValidation $voteValidation
-     * @param Polls\Model\VoteModel $pollsModel
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param Core\Date                                                  $date
+     * @param Polls\Validation\VoteValidation                            $voteValidation
+     * @param Polls\Model\VoteModel                                      $pollsModel
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository   $pollRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
      */
     public function __construct(
@@ -65,19 +62,20 @@ class Vote extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
     {
         $answer = $this->request->getPost()->get('answer');
         $time = $this->date->getCurrentDateTime();
-        if ($this->pollRepository->pollExists($id, $time, is_array($answer)) === true) {
+        if ($this->pollRepository->pollExists($id, $time, \is_array($answer)) === true) {
             $poll = $this->pollRepository->getOneById($id);
 
             return [
                 'question' => $poll['title'],
                 'multiple' => $poll['multiple'],
-                'answers' => $this->answerRepository->getAnswersByPollId($id)
+                'answers' => $this->answerRepository->getAnswersByPollId($id),
             ];
         }
 
@@ -105,6 +103,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
                 $result = $this->pollsModel->vote($formData, $id, $ipAddress, $time);
 
                 $text = $this->translator->t('polls', $result !== false ? 'poll_success' : 'poll_error');
+
                 return $this->redirectMessages()->setMessage($result, $text, 'polls/index/result/id_' . $id);
             },
             'polls/index/vote/id_' . $id

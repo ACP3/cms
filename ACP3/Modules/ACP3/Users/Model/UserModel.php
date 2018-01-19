@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Model;
@@ -15,15 +16,15 @@ class UserModel
     const SALT_LENGTH = 16;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isAuthenticated = false;
     /**
-     * @var integer
+     * @var int
      */
     protected $userId = 0;
     /**
-     * @var boolean
+     * @var bool
      */
     protected $superUser = false;
     /**
@@ -46,8 +47,8 @@ class UserModel
     /**
      * UserModel constructor.
      *
-     * @param Translator $translator
-     * @param CountryList $countryList
+     * @param Translator                                               $translator
+     * @param CountryList                                              $countryList
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      */
     public function __construct(
@@ -61,7 +62,7 @@ class UserModel
     }
 
     /**
-     * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück
+     * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück.
      *
      * @param int $userId
      *
@@ -73,13 +74,13 @@ class UserModel
             $userId = $this->getUserId();
         }
 
-        $userId = (int)$userId;
+        $userId = (int) $userId;
 
         if (empty($this->userInfo[$userId])) {
             $countries = $this->countryList->worldCountries();
             $info = $this->userRepository->getOneById($userId);
             if (!empty($info)) {
-                $info['country_formatted'] = isset($countries[$info['country']]) ? $countries[$info['country']] : '';
+                $info['country_formatted'] = $countries[$info['country']] ?? '';
                 $this->userInfo[$userId] = $info;
             }
         }
@@ -88,9 +89,9 @@ class UserModel
     }
 
     /**
-     * Returns, whether the current user is an authenticated user or not
+     * Returns, whether the current user is an authenticated user or not.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAuthenticated()
     {
@@ -98,19 +99,21 @@ class UserModel
     }
 
     /**
-     * @param boolean $isAuthenticated
+     * @param bool $isAuthenticated
+     *
      * @return $this
      */
     public function setIsAuthenticated($isAuthenticated)
     {
-        $this->isAuthenticated = (bool)$isAuthenticated;
+        $this->isAuthenticated = (bool) $isAuthenticated;
 
         return $this;
     }
 
     /**
-     * Returns the user id of the currently logged in user
-     * @return integer
+     * Returns the user id of the currently logged in user.
+     *
+     * @return int
      */
     public function getUserId()
     {
@@ -119,6 +122,7 @@ class UserModel
 
     /**
      * @param int $userId
+     *
      * @return $this
      */
     public function setUserId($userId)
@@ -129,9 +133,9 @@ class UserModel
     }
 
     /**
-     * Returns, whether the currently logged in user is a super user or not
+     * Returns, whether the currently logged in user is a super user or not.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSuperUser()
     {
@@ -140,11 +144,12 @@ class UserModel
 
     /**
      * @param bool $isSuperUser
+     *
      * @return $this
      */
     public function setIsSuperUser($isSuperUser)
     {
-        $this->superUser = (bool)$isSuperUser;
+        $this->superUser = (bool) $isSuperUser;
 
         return $this;
     }

@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Users\Validation;
 
 use ACP3\Core;
@@ -6,9 +12,8 @@ use ACP3\Core\Validation\AbstractFormValidation;
 
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {
@@ -19,8 +24,9 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => 'mail',
-                    'message' => $this->translator->t('system', 'wrong_email_format')
-                ])
+                    'message' => $this->translator->t('system', 'wrong_email_format'),
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -28,9 +34,10 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'enable_registration',
                     'message' => $this->translator->t('users', 'select_enable_registration'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
-                ]);
+                        'haystack' => [0, 1],
+                    ],
+                ]
+            );
 
         $this->validator->validate();
     }

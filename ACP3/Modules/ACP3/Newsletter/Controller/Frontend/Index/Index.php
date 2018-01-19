@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -64,19 +61,19 @@ class Index extends Core\Controller\AbstractFrontendAction
         $defaults = [
             'first_name' => '',
             'last_name' => '',
-            'mail' => ''
+            'mail' => '',
         ];
 
         $salutations = [
             0 => $this->translator->t('newsletter', 'salutation_unspecified'),
             1 => $this->translator->t('newsletter', 'salutation_female'),
-            2 => $this->translator->t('newsletter', 'salutation_male')
+            2 => $this->translator->t('newsletter', 'salutation_male'),
         ];
 
         return [
             'salutation' => $this->formsHelper->choicesGenerator('salutation', $salutations),
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -98,9 +95,11 @@ class Index extends Core\Controller\AbstractFrontendAction
                     $formData['last_name']
                 );
 
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
+                $this->setTemplate(
+                    $this->get('core.helpers.alerts')->confirmBox(
                     $this->translator->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'),
-                    $this->appPath->getWebRoot())
+                    $this->appPath->getWebRoot()
+                )
                 );
             }
         );

@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
-/**
- * Class CheckAccess
- * @package ACP3\Core\View\Renderer\Smarty\Functions
- */
 class CheckAccess extends AbstractFunction
 {
     /**
@@ -23,7 +25,7 @@ class CheckAccess extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -31,13 +33,13 @@ class CheckAccess extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         $return = $this->checkAccess->outputLinkOrButton($params);
 
-        if (is_array($return)) {
+        if (\is_array($return)) {
             $smarty->smarty->assign('access_check', $return);
 
             return $smarty->smarty->fetch('asset:System/Partials/access_check.tpl');

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * Class Edit
- * @package ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures
- */
 class Edit extends AbstractFormAction
 {
     /**
@@ -36,11 +33,11 @@ class Edit extends AbstractFormAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
-     * @param Gallery\Model\PictureModel $pictureModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
+     * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers                          $galleryHelpers
+     * @param Gallery\Model\PictureModel                                  $pictureModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
      */
     public function __construct(
@@ -63,6 +60,7 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -86,9 +84,9 @@ class Edit extends AbstractFormAction
             }
 
             return [
-                'form' => array_merge($picture, $this->request->getPost()->all()),
+                'form' => \array_merge($picture, $this->request->getPost()->all()),
                 'gallery_id' => $picture['gallery_id'],
-                'form_token' => $this->formTokenHelper->renderFormToken()
+                'form_token' => $this->formTokenHelper->renderFormToken(),
             ];
         }
 
@@ -125,6 +123,7 @@ class Edit extends AbstractFormAction
                 }
 
                 $formData['gallery_id'] = $picture['gallery_id'];
+
                 return $this->pictureModel->save($formData, $id);
             },
             'acp/gallery/pictures/index/id_' . $picture['gallery_id']

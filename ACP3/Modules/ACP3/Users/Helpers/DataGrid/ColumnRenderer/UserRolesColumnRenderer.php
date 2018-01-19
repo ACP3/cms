@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
 
-/**
- * Class UserRolesColumnRenderer
- * @package ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer
- */
 class UserRolesColumnRenderer extends AbstractColumnRenderer
 {
     /**
@@ -26,10 +28,10 @@ class UserRolesColumnRenderer extends AbstractColumnRenderer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {
-        return isset($dbResultRow[$field]) ? implode(', ', $this->acl->getUserRoleNames($dbResultRow[$field])) : null;
+        return isset($dbResultRow[$field]) ? \implode(', ', $this->acl->getUserRoleNames($dbResultRow[$field])) : null;
     }
 }

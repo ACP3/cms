@@ -1,17 +1,14 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Acp\Controller\Admin\Index;
 
 use ACP3\Core;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Acp\Controller\Admin\Index
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -20,7 +17,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     public function execute()
     {
         return [
-            'modules' => $this->getAllowedModules()
+            'modules' => $this->getAllowedModules(),
         ];
     }
 
@@ -32,14 +29,15 @@ class Index extends Core\Controller\AbstractFrontendAction
         $allowedModules = [];
 
         foreach ($this->modules->getActiveModules() as $name => $info) {
-            $dir = strtolower($info['dir']);
+            $dir = \strtolower($info['dir']);
             if ($this->acl->hasPermission('admin/' . $dir) === true && $dir !== 'acp') {
                 $allowedModules[$name] = [
                     'name' => $name,
-                    'dir' => $dir
+                    'dir' => $dir,
                 ];
             }
         }
+
         return $allowedModules;
     }
 }

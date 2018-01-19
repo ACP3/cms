@@ -1,15 +1,12 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\NestedSet\Operation;
 
-/**
- * Class Sort
- * @package ACP3\Core\NestedSet\Operation
- */
 class Sort extends AbstractOperation
 {
     /**
@@ -25,13 +22,15 @@ class Sort extends AbstractOperation
 
             if ($mode === 'up' &&
                 $this->nestedSetRepository->nextNodeExists(
-                    $nodes[0]['left_id'] - 1, $this->getBlockId($nodes[0])
+                    $nodes[0]['left_id'] - 1,
+                    $this->getBlockId($nodes[0])
                 ) === true
             ) {
                 return $this->sortUp($nodes);
             } elseif ($mode === 'down' &&
                 $this->nestedSetRepository->previousNodeExists(
-                    $nodes[0]['right_id'] + 1, $this->getBlockId($nodes[0])
+                    $nodes[0]['right_id'] + 1,
+                    $this->getBlockId($nodes[0])
                 ) === true
             ) {
                 return $this->sortDown($nodes);
@@ -45,6 +44,7 @@ class Sort extends AbstractOperation
      * @param array $nodes
      *
      * @return bool
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function sortUp(array $nodes)
@@ -64,6 +64,7 @@ class Sort extends AbstractOperation
      * @param array $nodes
      *
      * @return bool
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function sortDown(array $nodes)
@@ -99,6 +100,7 @@ class Sort extends AbstractOperation
      * @param array $nodes
      *
      * @return int
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function updateNodesDown($diff, array $nodes)
@@ -115,6 +117,7 @@ class Sort extends AbstractOperation
      * @param array $nodes
      *
      * @return int
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function moveNodesUp($diff, array $nodes)
@@ -136,7 +139,7 @@ class Sort extends AbstractOperation
     {
         return [
             $node['left_id'] - $elem['left_id'],
-            $node['right_id'] - $elem['right_id']
+            $node['right_id'] - $elem['right_id'],
         ];
     }
 
@@ -147,6 +150,6 @@ class Sort extends AbstractOperation
      */
     protected function getBlockId(array $node)
     {
-        return ($this->isBlockAware === true ? $node['block_id'] : 0);
+        return $this->isBlockAware === true ? $node['block_id'] : 0;
     }
 }

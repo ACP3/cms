@@ -1,14 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Validation\ValidationRules\DateValidationRule;
 
-/**
- * Class Date
- * @package ACP3\Core\Helpers
- */
 class Date
 {
     /**
@@ -56,7 +58,7 @@ class Date
     }
 
     /**
-     * Liefert ein Array mit allen Zeitzonen dieser Welt aus
+     * Liefert ein Array mit allen Zeitzonen dieser Welt aus.
      *
      * @param string $currentValue
      *
@@ -90,12 +92,13 @@ class Date
                 ++$i;
             }
         }
+
         return $timeZones;
     }
 
     /**
      * Gibts ein Array mit den möglichen Datumsformaten aus,
-     * um diese als Dropdownmenü darstellen zu können
+     * um diese als Dropdownmenü darstellen zu können.
      *
      * @param string $currentDateFormat
      *
@@ -105,13 +108,14 @@ class Date
     {
         $dateFormats = [
             'short' => $this->translator->t('system', 'date_format_short'),
-            'long' => $this->translator->t('system', 'date_format_long')
+            'long' => $this->translator->t('system', 'date_format_long'),
         ];
+
         return $this->formsHelper->choicesGenerator('dateformat', $dateFormats, $currentDateFormat);
     }
 
     /**
-     * Displays an input field with an associated datepicker
+     * Displays an input field with an associated datepicker.
      *
      * @param string|array $name
      * @param string|array $value
@@ -128,14 +132,14 @@ class Date
     ) {
         $datePicker = [
             'range' => $this->isRange($name),
-            'with_time' => (bool)$showTime,
+            'with_time' => (bool) $showTime,
             'length' => $showTime === true ? 16 : 10,
-            'input_only' => (bool)$inputFieldOnly,
+            'input_only' => (bool) $inputFieldOnly,
             'params' => [
                 'format' => $this->getPickerDateFormat($showTime),
                 'changeMonth' => 'true',
                 'changeYear' => 'true',
-            ]
+            ],
         ];
 
         if ($this->isRange($name) === true) {
@@ -144,14 +148,14 @@ class Date
             $datePicker['id_start'] = $this->getInputId($name[0]);
             $datePicker['id_end'] = $this->getInputId($name[1]);
 
-            $datePicker = array_merge($datePicker, $this->fetchRangeDatePickerValues($name, $value, $showTime));
+            $datePicker = \array_merge($datePicker, $this->fetchRangeDatePickerValues($name, $value, $showTime));
 
-            $datePicker['range_json'] = json_encode(
+            $datePicker['range_json'] = \json_encode(
                 [
                     'start' => '#' . $datePicker['id_start'],
                     'startDefaultDate' => $datePicker['value_start_r'],
                     'end' => '#' . $datePicker['id_end'],
-                    'endDefaultDate' => $datePicker['value_end_r']
+                    'endDefaultDate' => $datePicker['value_end_r'],
                 ]
             );
         } else { // Einfaches Inputfeld mit Datepicker
@@ -170,7 +174,7 @@ class Date
      */
     protected function getInputId($fieldName)
     {
-        return 'date-' . str_replace('_', '-', $fieldName);
+        return 'date-' . \str_replace('_', '-', $fieldName);
     }
 
     /**
@@ -187,7 +191,7 @@ class Date
             $valueEnd = $this->request->getPost()->get($name[1]);
             $valueStartR = $this->date->format($valueStart, 'c', false);
             $valueEndR = $this->date->format($valueEnd, 'c', false);
-        } elseif (is_array($value) && $this->dateValidationRule->isValid($value) === true) {
+        } elseif (\is_array($value) && $this->dateValidationRule->isValid($value) === true) {
             $valueStart = $this->date->format($value[0], $this->getDateFormat($showTime));
             $valueEnd = $this->date->format($value[1], $this->getDateFormat($showTime));
             $valueStartR = $this->date->format($value[0], 'c');
@@ -203,7 +207,7 @@ class Date
             'value_start' => $valueStart,
             'value_end' => $valueEnd,
             'value_start_r' => $valueStartR,
-            'value_end_r' => $valueEndR
+            'value_end_r' => $valueEndR,
         ];
     }
 
@@ -242,7 +246,7 @@ class Date
      */
     protected function isRange($name)
     {
-        return (is_array($name) === true);
+        return \is_array($name) === true;
     }
 
     /**

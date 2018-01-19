@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Test\Core\Breadcrumb;
@@ -55,8 +56,8 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
                 'title' => 'News',
                 'uri' => 'news',
                 'left_id' => 1,
-                'right_id' => 4
-            ]
+                'right_id' => 4,
+            ],
         ]);
         $this->setUpRequestMockExpectations(
             AreaEnum::AREA_FRONTEND,
@@ -71,8 +72,8 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
             [
                 'title' => 'News',
                 'uri' => '/news/',
-                'last' => true
-            ]
+                'last' => true,
+            ],
         ];
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
     }
@@ -84,13 +85,13 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
                 'title' => 'News',
                 'uri' => 'news',
                 'left_id' => 1,
-                'right_id' => 4
+                'right_id' => 4,
             ],
             [
                 'title' => 'Newsletter',
                 'uri' => 'newsletter',
                 'left_id' => 2,
-                'right_id' => 3
+                'right_id' => 3,
             ],
         ]);
         $this->setUpRequestMockExpectations(
@@ -110,7 +111,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
             [
                 'title' => 'Newsletter',
                 'uri' => '/newsletter/',
-                'last' => true
+                'last' => true,
             ],
         ];
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
@@ -123,13 +124,13 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
                 'title' => 'News',
                 'uri' => 'news',
                 'left_id' => 1,
-                'right_id' => 4
+                'right_id' => 4,
             ],
             [
                 'title' => 'Newsletter',
                 'uri' => 'newsletter',
                 'left_id' => 2,
-                'right_id' => 3
+                'right_id' => 3,
             ],
         ]);
         $this->setUpRequestMockExpectations(
@@ -153,8 +154,8 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
             [
                 'title' => '{NEWSLETTER_FRONTEND_INDEX_ARCHIVE}',
                 'uri' => '/newsletter/index/archive/',
-                'last' => true
-            ]
+                'last' => true,
+            ],
         ];
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
     }
@@ -166,8 +167,8 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
                 'title' => 'News',
                 'uri' => 'news',
                 'left_id' => 1,
-                'right_id' => 4
-            ]
+                'right_id' => 4,
+            ],
         ]);
         $this->setUpRequestMockExpectations(
             AreaEnum::AREA_FRONTEND,
@@ -195,7 +196,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
             [
                 'title' => 'News-Title',
                 'uri' => '',
-                'last' => true
+                'last' => true,
             ],
         ];
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
@@ -208,8 +209,8 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
                 'title' => 'FooBar',
                 'uri' => 'articles/index/details/id_1/',
                 'left_id' => 1,
-                'right_id' => 2
-            ]
+                'right_id' => 2,
+            ],
         ]);
         $this->setUpRequestMockExpectations(
             AreaEnum::AREA_FRONTEND,
@@ -227,7 +228,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
             [
                 'title' => 'FooBar',
                 'uri' => '/articles/index/details/id_1/',
-                'last' => true
+                'last' => true,
             ],
         ];
         $this->assertEquals($expected, $this->steps->getBreadcrumb());
@@ -240,8 +241,8 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
                 'title' => 'FooBar',
                 'uri' => 'articles/index/details/id_1/',
                 'left_id' => 1,
-                'right_id' => 2
-            ]
+                'right_id' => 2,
+            ],
         ]);
         $this->setUpRequestMockExpectations(
             AreaEnum::AREA_FRONTEND,
@@ -259,7 +260,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
             [
                 'title' => 'FooBar',
                 'uri' => '/articles/index/details/id_1/',
-                'last' => true
+                'last' => true,
             ],
         ];
         $this->assertEquals($expected, $this->steps->getBreadcrumb());

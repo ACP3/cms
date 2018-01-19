@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Event\Listener;
@@ -43,10 +44,11 @@ class OnMenusLayoutRenderManageMenuItemListener
 
     /**
      * OnMenusLayoutRenderManageMenuItemListener constructor.
-     * @param ACL $acl
-     * @param Translator $translator
-     * @param View $view
-     * @param Forms $forms
+     *
+     * @param ACL                $acl
+     * @param Translator         $translator
+     * @param View               $view
+     * @param Forms              $forms
      * @param MenuItemFormFields $menuItemFormFields
      * @param MenuItemRepository $menuItemRepository
      */
@@ -94,6 +96,7 @@ class OnMenusLayoutRenderManageMenuItemListener
 
     /**
      * @param string $routeName
+     *
      * @return array
      */
     private function fetchMenuItem($routeName)
@@ -109,12 +112,13 @@ class OnMenusLayoutRenderManageMenuItemListener
 
     /**
      * @param int $currentValue
+     *
      * @return array
      */
     private function fetchCreateMenuItemOption($currentValue = 0)
     {
         $createMenuItem = [
-            1 => $this->translator->t('menus', 'create_menu_item')
+            1 => $this->translator->t('menus', 'create_menu_item'),
         ];
 
         return $this->forms->checkboxGenerator('create_menu_item', $createMenuItem, $currentValue);
@@ -122,13 +126,14 @@ class OnMenusLayoutRenderManageMenuItemListener
 
     /**
      * @param array $menuItem
+     *
      * @return array|null
      */
     private function modifyFormValues(array $menuItem)
     {
         $formData = $this->view->getRenderer()->getTemplateVars('form');
 
-        if (is_array($formData) && !isset($formData['menu_item_title'])) {
+        if (\is_array($formData) && !isset($formData['menu_item_title'])) {
             $formData['menu_item_title'] = !empty($menuItem) ? $menuItem['title'] : '';
         }
 
@@ -137,6 +142,7 @@ class OnMenusLayoutRenderManageMenuItemListener
 
     /**
      * @param array $menuItem
+     *
      * @return array
      */
     protected function addFormFields(array $menuItem)

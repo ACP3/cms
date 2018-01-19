@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
-
 
 use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Assets\FileResolver;
@@ -29,9 +29,10 @@ class Image extends AbstractFunction
 
     /**
      * Image constructor.
+     *
      * @param RequestInterface $request
-     * @param FileResolver $fileResolver
-     * @param ApplicationPath $appPath
+     * @param FileResolver     $fileResolver
+     * @param ApplicationPath  $appPath
      */
     public function __construct(RequestInterface $request, FileResolver $fileResolver, ApplicationPath $appPath)
     {
@@ -41,19 +42,19 @@ class Image extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        if (isset($params['file']) === true && (bool)preg_match('=\./=', $params['file']) === false) {
+        if (isset($params['file']) === true && (bool) \preg_match('=\./=', $params['file']) === false) {
             $file = $params['file'];
 
             $path = $this->fileResolver->getStaticAssetPath('/', '/', 'Assets/img', $file);
 
-            if (strpos($path, '/ACP3/Modules/') !== false) {
-                $path = $this->appPath->getWebRoot() . substr($path, strpos($path, '/ACP3/Modules/') + 1);
+            if (\strpos($path, '/ACP3/Modules/') !== false) {
+                $path = $this->appPath->getWebRoot() . \substr($path, \strpos($path, '/ACP3/Modules/') + 1);
             } else {
-                $path = $this->appPath->getWebRoot() . substr($path, strlen(ACP3_ROOT_DIR));
+                $path = $this->appPath->getWebRoot() . \substr($path, \strlen(ACP3_ROOT_DIR));
             }
 
             if (isset($params['absolute']) && $params['absolute'] === true) {

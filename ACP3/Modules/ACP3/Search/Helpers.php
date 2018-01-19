@@ -1,14 +1,15 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Search;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Search\Utility\SearchAvailabilityRegistrar;
 
-/**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Search
- */
 class Helpers
 {
     /**
@@ -29,9 +30,9 @@ class Helpers
     protected $availableModulesRegistrar;
 
     /**
-     * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Core\Modules $modules
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\ACL              $acl
+     * @param \ACP3\Core\Modules          $modules
+     * @param \ACP3\Core\Helpers\Forms    $formsHelper
      * @param SearchAvailabilityRegistrar $availableModulesRegistrar
      */
     public function __construct(
@@ -47,7 +48,7 @@ class Helpers
     }
 
     /**
-     * Gibt die für die Suche verfügbaren Module zurück
+     * Gibt die für die Suche verfügbaren Module zurück.
      *
      * @return array
      */
@@ -62,11 +63,11 @@ class Helpers
                 $searchModules[$name] = [
                     'dir' => $module,
                     'checked' => $this->formsHelper->selectEntry('mods', $module, $module, 'checked'),
-                    'name' => $name
+                    'name' => $name,
                 ];
             }
         }
-        ksort($searchModules);
+        \ksort($searchModules);
 
         return $searchModules;
     }

@@ -1,14 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Gallery;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Gallery
- */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     /**
@@ -30,10 +32,10 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $config;
 
     /**
-     * @param \ACP3\Core\Cache $cache
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Cache                                              $cache
+     * @param \ACP3\Core\Environment\ApplicationPath                        $appPath
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param \ACP3\Core\Settings\SettingsInterface $config
+     * @param \ACP3\Core\Settings\SettingsInterface                         $config
      */
     public function __construct(
         Core\Cache $cache,
@@ -49,9 +51,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Bindet die gecachete Galerie anhand ihrer ID ein
+     * Bindet die gecachete Galerie anhand ihrer ID ein.
      *
-     * @param integer $galleryId
+     * @param int $galleryId
      *
      * @return array
      */
@@ -65,31 +67,31 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Erstellt den Galerie-Cache anhand der angegebenen ID
+     * Erstellt den Galerie-Cache anhand der angegebenen ID.
      *
-     * @param integer $galleryId
+     * @param int $galleryId
      *
-     * @return boolean
+     * @return bool
      */
     public function saveCache($galleryId)
     {
         $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
-        $cPictures = count($pictures);
+        $cPictures = \count($pictures);
 
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
         for ($i = 0; $i < $cPictures; ++$i) {
             $pictures[$i]['width'] = $settings['thumbwidth'];
             $pictures[$i]['height'] = $settings['thumbheight'];
-            $picInfos = @getimagesize($this->appPath->getModulesDir() . 'gallery/' . $pictures[$i]['file']);
+            $picInfos = @\getimagesize($this->appPath->getModulesDir() . 'gallery/' . $pictures[$i]['file']);
             if ($picInfos !== false) {
                 if ($picInfos[0] > $settings['thumbwidth'] || $picInfos[1] > $settings['thumbheight']) {
                     $newHeight = $settings['thumbheight'];
-                    $newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
+                    $newWidth = (int) ($picInfos[0] * $newHeight / $picInfos[1]);
                 }
 
-                $pictures[$i]['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
-                $pictures[$i]['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
+                $pictures[$i]['width'] = $newWidth ?? $picInfos[0];
+                $pictures[$i]['height'] = $newHeight ?? $picInfos[1];
             }
         }
 

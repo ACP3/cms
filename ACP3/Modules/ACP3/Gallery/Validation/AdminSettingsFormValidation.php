@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Gallery\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AdminSettingsFormValidation
- * @package ACP3\Modules\ACP3\Gallery\Validation
- */
 class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
@@ -32,7 +34,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {
@@ -45,16 +47,18 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'dateformat',
                     'message' => $this->translator->t('system', 'select_date_format'),
                     'extra' => [
-                        'haystack' => ['long', 'short']
-                    ]
-                ])
+                        'haystack' => ['long', 'short'],
+                    ],
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'sidebar',
-                    'message' => $this->translator->t('system', 'select_sidebar_entries')
-                ])
+                    'message' => $this->translator->t('system', 'select_sidebar_entries'),
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -62,37 +66,42 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'overlay',
                     'message' => $this->translator->t('gallery', 'select_use_overlay'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
-                ])
+                        'haystack' => [0, 1],
+                    ],
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'thumbwidth',
-                    'message' => $this->translator->t('gallery', 'invalid_image_width_entered')
-                ])
+                    'message' => $this->translator->t('gallery', 'invalid_image_width_entered'),
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'width',
-                    'message' => $this->translator->t('gallery', 'invalid_image_width_entered')
-                ])
+                    'message' => $this->translator->t('gallery', 'invalid_image_width_entered'),
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'thumbheight',
-                    'message' => $this->translator->t('gallery', 'invalid_image_height_entered')
-                ])
+                    'message' => $this->translator->t('gallery', 'invalid_image_height_entered'),
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'height',
-                    'message' => $this->translator->t('gallery', 'invalid_image_height_entered')
-                ]);
+                    'message' => $this->translator->t('gallery', 'invalid_image_height_entered'),
+                ]
+            );
 
         if ($this->modules->isActive('comments') === true) {
             $this->validator
@@ -103,9 +112,10 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                         'field' => 'comments',
                         'message' => $this->translator->t('gallery', 'select_allow_comments'),
                         'extra' => [
-                            'haystack' => [0, 1]
-                        ]
-                    ]);
+                            'haystack' => [0, 1],
+                        ],
+                    ]
+                );
         }
 
         $this->validator->validate();

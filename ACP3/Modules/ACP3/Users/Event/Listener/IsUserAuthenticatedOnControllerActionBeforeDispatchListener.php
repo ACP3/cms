@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Users\Event\Listener;
-
 
 use ACP3\Core\Authentication\Exception\UnauthorizedAccessException;
 use ACP3\Core\Controller\AreaEnum;
@@ -35,10 +35,11 @@ class IsUserAuthenticatedOnControllerActionBeforeDispatchListener
 
     /**
      * IsUserAuthenticatedOnControllerActionBeforeDispatchListener constructor.
+     *
      * @param RequestInterface $request
      * @param RedirectMessages $redirectMessages
-     * @param Translator $translator
-     * @param UserModel $user
+     * @param Translator       $translator
+     * @param UserModel        $user
      */
     public function __construct(
         RequestInterface $request,

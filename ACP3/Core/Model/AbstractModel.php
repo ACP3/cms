@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model;
@@ -10,10 +11,6 @@ use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Model\Repository\AbstractRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class AbstractModel
- * @package ACP3\Core\Model
- */
 abstract class AbstractModel
 {
     const EVENT_PREFIX = '';
@@ -33,9 +30,10 @@ abstract class AbstractModel
 
     /**
      * AbstractModel constructor.
+     *
      * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param AbstractRepository $repository
+     * @param DataProcessor            $dataProcessor
+     * @param AbstractRepository       $repository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -48,8 +46,9 @@ abstract class AbstractModel
     }
 
     /**
-     * @param array $rawData
+     * @param array    $rawData
      * @param null|int $entryId
+     *
      * @return bool|int
      */
     public function save(array $rawData, $entryId = null)
@@ -76,10 +75,10 @@ abstract class AbstractModel
 
     /**
      * @param AbstractRepository $repository
-     * @param int|null|array $entryId
-     * @param array $filteredData
-     * @param array $rawData
-     * @param bool $isNewEntry
+     * @param int|null|array     $entryId
+     * @param array              $filteredData
+     * @param array              $rawData
+     * @param bool               $isNewEntry
      */
     protected function dispatchBeforeSaveEvent(
         AbstractRepository $repository,
@@ -99,11 +98,11 @@ abstract class AbstractModel
     }
 
     /**
-     * @param string $eventName
+     * @param string         $eventName
      * @param int|null|array $entryId
-     * @param bool $isNewEntry
-     * @param array $filteredData
-     * @param array $rawData
+     * @param bool           $isNewEntry
+     * @param array          $filteredData
+     * @param array          $rawData
      */
     protected function dispatchEvent($eventName, $entryId, $isNewEntry, array $filteredData = [], array $rawData = [])
     {
@@ -115,6 +114,7 @@ abstract class AbstractModel
 
     /**
      * @param array $rawData
+     *
      * @return array
      */
     protected function prepareData(array $rawData)
@@ -129,10 +129,10 @@ abstract class AbstractModel
 
     /**
      * @param AbstractRepository $repository
-     * @param int|null|array $entryId
-     * @param array $filteredData
-     * @param array $rawData
-     * @param bool $isNewEntry
+     * @param int|null|array     $entryId
+     * @param array              $filteredData
+     * @param array              $rawData
+     * @param bool               $isNewEntry
      */
     protected function dispatchAfterSaveEvent(
         AbstractRepository $repository,
@@ -153,29 +153,34 @@ abstract class AbstractModel
 
     /**
      * @param int|array $entryId
+     *
      * @return int
      */
     public function delete($entryId)
     {
         $repository = $this->repository;
 
-        if (!is_array($entryId)) {
+        if (!\is_array($entryId)) {
             $entryId = [$entryId];
         }
 
         $this->dispatchEvent('core.model.before_delete', $entryId, false);
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete', $entryId, false
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete',
+            $entryId,
+            false
         );
 
         $affectedRows = 0;
         foreach ($entryId as $item) {
-            $affectedRows += (int)$this->repository->delete($item);
+            $affectedRows += (int) $this->repository->delete($item);
         }
 
         $this->dispatchEvent('core.model.before_delete', $entryId, false);
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete', $entryId, false
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete',
+            $entryId,
+            false
         );
 
         return $affectedRows;
@@ -183,6 +188,7 @@ abstract class AbstractModel
 
     /**
      * @param int $entryId
+     *
      * @return array
      */
     public function getOneById($entryId)

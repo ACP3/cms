@@ -1,17 +1,14 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AdminFormValidation
- * @package ACP3\Modules\ACP3\Articles\Validation
- */
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
@@ -32,7 +29,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {
@@ -45,16 +42,18 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'active',
                     'message' => $this->translator->t('articles', 'select_active'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
-                ])
+                        'haystack' => [0, 1],
+                    ],
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\DateValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
-                    'message' => $this->translator->t('system', 'select_date')
-                ])
+                    'message' => $this->translator->t('system', 'select_date'),
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\MinLengthValidationRule::class,
                 [
@@ -62,9 +61,10 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'title',
                     'message' => $this->translator->t('articles', 'title_to_short'),
                     'extra' => [
-                        'length' => 3
-                    ]
-                ])
+                        'length' => 3,
+                    ],
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\MinLengthValidationRule::class,
                 [
@@ -72,9 +72,10 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'text',
                     'message' => $this->translator->t('articles', 'text_to_short'),
                     'extra' => [
-                        'length' => 3
-                    ]
-                ]);
+                        'length' => 3,
+                    ],
+                ]
+            );
 
         $this->validator->dispatchValidationEvent(
             'menus.validation.validate_manage_menu_item',

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Categories;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Categories;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Categories
- */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     /**
@@ -34,10 +31,10 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Gibt die gecacheten Kategorien des jeweiligen Moduls zurück
+     * Gibt die gecacheten Kategorien des jeweiligen Moduls zurück.
      *
      * @param string $moduleName
-     *  Das jeweilige Modul, für welches die Kategorien geholt werden sollen
+     *                           Das jeweilige Modul, für welches die Kategorien geholt werden sollen
      *
      * @return array
      */
@@ -51,12 +48,12 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Erstellt den Cache für die Kategorien eines Moduls
+     * Erstellt den Cache für die Kategorien eines Moduls.
      *
      * @param string $moduleName
-     *  Das Modul, für welches der Kategorien-Cache erstellt werden soll
+     *                           Das Modul, für welches der Kategorien-Cache erstellt werden soll
      *
-     * @return boolean
+     * @return bool
      */
     public function saveCache($moduleName)
     {

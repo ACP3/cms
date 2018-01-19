@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 
-/**
- * Class Delete
- * @package ACP3\Modules\ACP3\Categories\Controller\Admin\Index
- */
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -28,8 +25,8 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Categories\Model\CategoriesModel $categoriesModel
-     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
+     * @param Categories\Model\CategoriesModel              $categoriesModel
+     * @param \ACP3\Modules\ACP3\Categories\Cache           $categoriesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -46,6 +43,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @param string $action
      *
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($action = '')

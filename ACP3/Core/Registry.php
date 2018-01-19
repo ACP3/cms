@@ -1,19 +1,21 @@
 <?php
-namespace ACP3\Core;
 
 /**
- * Class Registry
- * @package ACP3\Core
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core;
+
 class Registry
 {
     private static $registry = [];
 
     /**
-     * Inject an object to the registry
+     * Inject an object to the registry.
      *
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function set($key, $value)
     {
@@ -24,6 +26,7 @@ class Registry
 
     /**
      * @param string $key
+     *
      * @return bool
      */
     public function has($key)
@@ -32,10 +35,11 @@ class Registry
     }
 
     /**
-     * Get an object from the registry
+     * Get an object from the registry.
      *
      * @param string $key
-     * @param null $default
+     * @param null   $default
+     *
      * @return mixed
      */
     public function get($key, $default = null)
@@ -44,7 +48,7 @@ class Registry
     }
 
     /**
-     * Remove an object from the registry
+     * Remove an object from the registry.
      *
      * @param string $key
      */

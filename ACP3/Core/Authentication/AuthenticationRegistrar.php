@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Authentication;
-
 
 use ACP3\Core\Authentication\Exception\InvalidAuthenticationMethodException;
 
@@ -17,8 +17,9 @@ class AuthenticationRegistrar
     private $authentications = [];
 
     /**
-     * @param string $serviceId
+     * @param string                  $serviceId
      * @param AuthenticationInterface $authentication
+     *
      * @return $this
      */
     public function set($serviceId, AuthenticationInterface $authentication)
@@ -38,6 +39,7 @@ class AuthenticationRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return bool
      */
     public function has($serviceId)
@@ -47,7 +49,9 @@ class AuthenticationRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return AuthenticationInterface
+     *
      * @throws InvalidAuthenticationMethodException
      */
     public function get($serviceId)
@@ -57,7 +61,7 @@ class AuthenticationRegistrar
         }
 
         throw new InvalidAuthenticationMethodException(
-            sprintf('The authentication with the service id "%s" could not be found.', $serviceId)
+            \sprintf('The authentication with the service id "%s" could not be found.', $serviceId)
         );
     }
 }

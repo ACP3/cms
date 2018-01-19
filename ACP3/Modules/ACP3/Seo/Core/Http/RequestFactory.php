@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Core\Http;
@@ -12,10 +13,6 @@ use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
-/**
- * Class RequestFactory
- * @package ACP3\Modules\ACP3\Seo\Core\Http
- */
 class RequestFactory extends \ACP3\Core\Http\RequestFactory
 {
     /**
@@ -29,10 +26,11 @@ class RequestFactory extends \ACP3\Core\Http\RequestFactory
 
     /**
      * RequestFactory constructor.
+     *
      * @param SettingsInterface $config
-     * @param Modules $modules
-     * @param SymfonyRequest $symfonyRequest
-     * @param SeoRepository $seoRepository
+     * @param Modules           $modules
+     * @param SymfonyRequest    $symfonyRequest
+     * @param SeoRepository     $seoRepository
      */
     public function __construct(
         SettingsInterface $config,
@@ -47,7 +45,7 @@ class RequestFactory extends \ACP3\Core\Http\RequestFactory
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getRequest()
     {

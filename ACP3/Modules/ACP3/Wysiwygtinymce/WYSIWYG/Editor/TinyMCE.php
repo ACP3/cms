@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG\Editor;
@@ -9,8 +10,7 @@ namespace ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG\Editor;
 use ACP3\Core;
 
 /**
- * Implementation of the AbstractWYSIWYG class for TinyMCE
- * @package ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG\Editor
+ * Implementation of the AbstractWYSIWYG class for TinyMCE.
  */
 class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 {
@@ -37,9 +37,9 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     private $initialized = false;
 
     /**
-     * @param \ACP3\Core\Assets\Minifier\MinifierInterface    $minifier
-     * @param \ACP3\Core\I18n\Translator             $translator
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Assets\Minifier\MinifierInterface $minifier
+     * @param \ACP3\Core\I18n\Translator                   $translator
+     * @param \ACP3\Core\Environment\ApplicationPath       $appPath
      */
     public function __construct(
         Core\Assets\Minifier\MinifierInterface $minifier,
@@ -52,7 +52,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getFriendlyName()
     {
@@ -72,7 +72,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setParameters(array $params = [])
     {
@@ -83,7 +83,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getData()
     {
@@ -113,7 +113,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
             'selector' => 'textarea#' . $this->id,
             'theme' => 'modern',
             'height' => $this->config['height'],
-            'content_css' => $this->minifier->getURI()
+            'content_css' => $this->minifier->getURI(),
         ];
 
         if ($this->initialized === false) {
@@ -125,7 +125,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
             $plugins = [
                 'advlist autolink lists link image charmap print preview anchor',
                 'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table contextmenu paste'
+                'insertdatetime media table contextmenu paste',
             ];
             $toolbar = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image';
             $imagesAdvanced = 'false';
@@ -134,7 +134,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
                 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
                 'searchreplace wordcount visualblocks visualchars code fullscreen',
                 'insertdatetime media nonbreaking save table contextmenu directionality',
-                'emoticons template paste textcolor colorpicker'
+                'emoticons template paste textcolor colorpicker',
             ];
             $toolbar = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons';
             $imagesAdvanced = 'true';
@@ -144,13 +144,13 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
             }
         }
 
-        $config['plugins'] = json_encode($plugins);
+        $config['plugins'] = \json_encode($plugins);
         $config['toolbar'] = $toolbar;
         $config['image_advtab'] = $imagesAdvanced;
 
         return [
             'template' => 'Wysiwygtinymce/tinymce.tpl',
-            'config' => $config
+            'config' => $config,
         ];
     }
 }

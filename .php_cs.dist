@@ -10,10 +10,33 @@ $finder = PhpCsFixer\Finder::create()
     ->exclude('vendor')
     ->in(__DIR__);
 
+$header = <<<DOCBLOCK
+Copyright (c) by the ACP3 Developers.
+See the LICENSE file at the top-level module directory for licensing details.
+DOCBLOCK;
+
 return PhpCsFixer\Config::create()
+    ->setRiskyAllowed(true)
+    ->setLineEnding("\n")
     ->setRules([
-        '@PSR2' => true,
+        '@Symfony' => true,
         'array_syntax' => ['syntax' => 'short'],
+        'class_attributes_separation' => ['elements' => ['method']],
+        'concat_space' => ['spacing' => 'one'],
+        'declare_equal_normalize' => ['space' => 'single'],
+        'header_comment' => [
+            'commentType' => 'PHPDoc',
+            'header' => $header,
+        ],
+        'method_chaining_indentation' => true,
+        'modernize_types_casting' => true,
+        'native_function_invocation' => true,
+        'no_null_property_initialization' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'ordered_imports' => ['importsOrder' => null],
+        'ternary_to_null_coalescing' => true,
+        'yoda_style' => false,
     ])
     ->setFinder($finder)
 ;

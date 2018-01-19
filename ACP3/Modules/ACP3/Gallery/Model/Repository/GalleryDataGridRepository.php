@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Model\Repository;
@@ -10,16 +11,12 @@ use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\Model\Repository\DataGridRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-/**
- * Class GalleryDataGridRepository
- * @package ACP3\Modules\ACP3\Gallery\Model\Repository
- */
 class GalleryDataGridRepository extends DataGridRepository
 {
     const TABLE_NAME = GalleryRepository::TABLE_NAME;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
@@ -28,12 +25,12 @@ class GalleryDataGridRepository extends DataGridRepository
             'main.start',
             'main.end',
             'main.title',
-            'COUNT(p.gallery_id) AS pictures'
+            'COUNT(p.gallery_id) AS pictures',
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addJoin(QueryBuilder $queryBuilder)
     {
@@ -46,7 +43,7 @@ class GalleryDataGridRepository extends DataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addGroupBy(QueryBuilder $queryBuilder)
     {
@@ -54,7 +51,7 @@ class GalleryDataGridRepository extends DataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
     {

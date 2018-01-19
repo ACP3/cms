@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
-
 
 use ACP3\Core\Breadcrumb\Event\GetSiteAndPageTitleBeforeEvent;
 use ACP3\Core\Http\RequestInterface;
@@ -24,8 +24,9 @@ class OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener
 
     /**
      * OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener constructor.
+     *
      * @param RequestInterface $request
-     * @param MetaStatements $metaStatements
+     * @param MetaStatements   $metaStatements
      */
     public function __construct(RequestInterface $request, MetaStatements $metaStatements)
     {
@@ -34,7 +35,7 @@ class OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener
     }
 
     /**
-     * If the current page has a custom meta title set, use it (instead of the default one)
+     * If the current page has a custom meta title set, use it (instead of the default one).
      *
      * @param GetSiteAndPageTitleBeforeEvent $event
      */

@@ -1,22 +1,24 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Validation\ValidationRules;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * Class FileUploadValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 class FileUploadValidationRule extends AbstractValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        $required = isset($extra['required']) ? (bool)$extra['required'] : true;
+        $required = isset($extra['required']) ? (bool) $extra['required'] : true;
 
-        return ($this->isFileUpload($data) || ($required === false && empty($data)));
+        return $this->isFileUpload($data) || ($required === false && empty($data));
     }
 
     /**
@@ -30,6 +32,6 @@ class FileUploadValidationRule extends AbstractValidationRule
             return $data->isValid() && $data->getClientSize() > 0;
         }
 
-        return (is_array($data) && !empty($data['tmp_name']) && !empty($data['size']) && $data['error'] === UPLOAD_ERR_OK);
+        return \is_array($data) && !empty($data['tmp_name']) && !empty($data['size']) && $data['error'] === UPLOAD_ERR_OK;
     }
 }

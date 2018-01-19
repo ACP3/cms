@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
 use ACP3\Core\Assets;
 use ACP3\Core\Http\RequestInterface;
 
-/**
- * Class MoveToBottom
- * @package ACP3\Core\View\Renderer\Smarty\Filters
- */
 class MoveToBottom extends AbstractMoveElementFilter
 {
     const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:JAVASCRIPTS:BEGIN@@@(.*?)@@@SMARTY:JAVASCRIPTS:END@@@!is';
@@ -24,7 +26,7 @@ class MoveToBottom extends AbstractMoveElementFilter
 
     /**
      * @param \ACP3\Core\Assets\Minifier\MinifierInterface $minifier
-     * @param \ACP3\Core\Http\RequestInterface    $request
+     * @param \ACP3\Core\Http\RequestInterface             $request
      */
     public function __construct(
         Assets\Minifier\MinifierInterface $minifier,
@@ -35,7 +37,7 @@ class MoveToBottom extends AbstractMoveElementFilter
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -43,12 +45,12 @@ class MoveToBottom extends AbstractMoveElementFilter
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process($tplOutput, \Smarty_Internal_Template $smarty)
     {
-        if (strpos($tplOutput, static::PLACEHOLDER) !== false) {
-            return str_replace(
+        if (\strpos($tplOutput, static::PLACEHOLDER) !== false) {
+            return \str_replace(
                 static::PLACEHOLDER,
                 $this->addElementFromMinifier() . $this->addElementsFromTemplates($tplOutput),
                 $this->getCleanedUpTemplateOutput($tplOutput)
@@ -67,6 +69,7 @@ class MoveToBottom extends AbstractMoveElementFilter
         if (!$this->request->isXmlHttpRequest()) {
             $minifyJs = '<script src="' . $this->minifier->getURI() . '"></script>' . "\n";
         }
+
         return $minifyJs;
     }
 }

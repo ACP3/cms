@@ -1,14 +1,15 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Errors\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
-/**
- * Class Schema
- * @package ACP3\Modules\ACP3\Errors\Installer
- */
 class Schema implements Modules\Installer\SchemaInterface
 {
     const MODULE_NAME = 'errors';
@@ -47,8 +48,8 @@ class Schema implements Modules\Installer\SchemaInterface
                 'index' => [
                     'access_forbidden' => PrivilegeEnum::FRONTEND_VIEW,
                     'not_found' => PrivilegeEnum::FRONTEND_VIEW,
-                    'server_error' => PrivilegeEnum::FRONTEND_VIEW
-                ]
+                    'server_error' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
             ],
         ];
     }

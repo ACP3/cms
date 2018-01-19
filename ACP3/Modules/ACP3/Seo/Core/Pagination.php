@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Core;
@@ -16,10 +17,6 @@ use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
-/**
- * Class Pagination
- * @package ACP3\Modules\ACP3\Seo\Core
- */
 class Pagination extends \ACP3\Core\Pagination
 {
     /**
@@ -33,11 +30,12 @@ class Pagination extends \ACP3\Core\Pagination
 
     /**
      * Pagination constructor.
-     * @param Title $title
-     * @param Translator $translator
-     * @param RequestInterface $request
-     * @param RouterInterface $router
-     * @param MetaStatements $metaStatements
+     *
+     * @param Title             $title
+     * @param Translator        $translator
+     * @param RequestInterface  $request
+     * @param RouterInterface   $router
+     * @param MetaStatements    $metaStatements
      * @param SettingsInterface $settings
      */
     public function __construct(
@@ -55,7 +53,7 @@ class Pagination extends \ACP3\Core\Pagination
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function setMetaStatements()
     {
@@ -78,11 +76,12 @@ class Pagination extends \ACP3\Core\Pagination
     private function getRoute()
     {
         $path = ($this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $this->request->getUriWithoutPages();
+
         return $this->router->route($path);
     }
 
     /**
-     * Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
+     * Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben.
      */
     private function modifyMetaDescription()
     {

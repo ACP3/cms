@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Validation;
 
 use ACP3\Core;
 
-/**
- * Class AbstractFormValidation
- * @package ACP3\Core\Validation
- */
 abstract class AbstractFormValidation
 {
     /**

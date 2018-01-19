@@ -1,17 +1,18 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Filemanager\Installer;
 
 use ACP3\Core\Modules;
 
-/**
- * Class Migration
- * @package ACP3\Modules\ACP3\Filemanager\Installer
- */
 class Migration implements Modules\Installer\MigrationInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */
@@ -21,7 +22,7 @@ class Migration implements Modules\Installer\MigrationInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */

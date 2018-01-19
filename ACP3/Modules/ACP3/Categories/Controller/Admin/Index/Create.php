@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Categories\Controller\Admin\Index
- */
 class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -33,19 +30,19 @@ class Create extends Core\Controller\AbstractFrontendAction
     protected $categoriesModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param Categories\Model\CategoriesModel $categoriesModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
+     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
+     * @param Categories\Model\CategoriesModel                             $categoriesModel
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Categories\Model\CategoriesModel $categoriesModel,
         Categories\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\FormToken $formTokenHelper)
-    {
+        Core\Helpers\FormToken $formTokenHelper
+    ) {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
@@ -60,9 +57,9 @@ class Create extends Core\Controller\AbstractFrontendAction
     public function execute()
     {
         return [
-            'form' => array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()),
+            'form' => \array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()),
             'mod_list' => $this->fetchModules(),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -97,12 +94,13 @@ class Create extends Core\Controller\AbstractFrontendAction
     {
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $name => $info) {
-            if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
+            if ($info['active'] && \in_array('categories', $info['dependencies']) === true) {
                 $modules[$name]['selected'] = $this->formsHelper->selectEntry('module', $info['id']);
             } else {
                 unset($modules[$name]);
             }
         }
+
         return $modules;
     }
 }

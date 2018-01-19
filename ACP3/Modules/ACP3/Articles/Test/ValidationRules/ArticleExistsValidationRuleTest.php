@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Test\ValidationRules;
@@ -45,10 +46,10 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
     /**
      * @dataProvider validationRuleProvider
      *
-     * @param mixed $data
+     * @param mixed        $data
      * @param array|string $field
-     * @param array $extra
-     * @param bool $expected
+     * @param array        $extra
+     * @param bool         $expected
      */
     public function testValidationRule($data, $field, $extra, $expected)
     {
@@ -71,10 +72,10 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
     /**
      * @dataProvider validationRuleProvider
      *
-     * @param mixed $data
+     * @param mixed        $data
      * @param array|string $field
-     * @param array $extra
-     * @param bool $expected
+     * @param array        $extra
+     * @param bool         $expected
      */
     public function testValidate($data, $field, $extra, $expected)
     {

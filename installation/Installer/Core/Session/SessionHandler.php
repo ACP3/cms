@@ -1,17 +1,14 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Installer\Core\Session;
 
 use ACP3\Core\Session\AbstractSessionHandler;
 
-/**
- * Class SessionHandler
- * @package ACP3\Installer\Core
- */
 class SessionHandler extends AbstractSessionHandler
 {
     public function __construct()
@@ -20,21 +17,21 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function startSession()
     {
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function secureSession()
     {
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function open($savePath, $sessionId)
     {
@@ -42,7 +39,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function close()
     {
@@ -50,7 +47,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function read($sessionId)
     {
@@ -58,7 +55,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function write($sessionId, $data)
     {
@@ -66,7 +63,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function destroy($sessionId)
     {
@@ -74,7 +71,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function gc($sessionLifetime)
     {

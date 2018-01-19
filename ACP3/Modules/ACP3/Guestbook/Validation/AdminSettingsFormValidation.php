@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Guestbook\Validation;
 
 use ACP3\Core;
 use ACP3\Core\Validation\AbstractFormValidation;
 
-/**
- * Class AdminSettingsFormValidation
- * @package ACP3\Modules\ACP3\Guestbook\Validation
- */
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
     /**
@@ -33,7 +35,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {
@@ -46,9 +48,10 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'dateformat',
                     'message' => $this->translator->t('system', 'select_date_format'),
                     'extra' => [
-                        'haystack' => ['long', 'short']
-                    ]
-                ])
+                        'haystack' => ['long', 'short'],
+                    ],
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -56,9 +59,10 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'notify',
                     'message' => $this->translator->t('guestbook', 'select_notification_type'),
                     'extra' => [
-                        'haystack' => [0, 1, 2]
-                    ]
-                ])
+                        'haystack' => [0, 1, 2],
+                    ],
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -66,9 +70,10 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'overlay',
                     'message' => $this->translator->t('guestbook', 'select_use_overlay'),
                     'extra' => [
-                        'haystack' => [0, 1]
-                    ]
-                ]);
+                        'haystack' => [0, 1],
+                    ],
+                ]
+            );
 
         if ($formData['notify'] != 0) {
             $this->validator
@@ -77,8 +82,9 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'notify_email',
-                        'message' => $this->translator->t('system', 'wrong_email_format')
-                    ]);
+                        'message' => $this->translator->t('system', 'wrong_email_format'),
+                    ]
+                );
         }
 
         if ($this->modules->isActive('emoticons') === true) {
@@ -90,9 +96,10 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'field' => 'emoticons',
                         'message' => $this->translator->t('guestbook', 'select_emoticons'),
                         'extra' => [
-                            'haystack' => [0, 1]
-                        ]
-                    ]);
+                            'haystack' => [0, 1],
+                        ],
+                    ]
+                );
         }
 
         if ($this->modules->isActive('newsletter') === true) {
@@ -104,9 +111,10 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'field' => 'newsletter_integration',
                         'message' => $this->translator->t('guestbook', 'select_newsletter_integration'),
                         'extra' => [
-                            'haystack' => [0, 1]
-                        ]
-                    ]);
+                            'haystack' => [0, 1],
+                        ],
+                    ]
+                );
         }
 
         $this->validator->validate();

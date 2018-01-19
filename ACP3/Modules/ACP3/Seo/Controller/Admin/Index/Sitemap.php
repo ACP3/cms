@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
@@ -20,7 +21,8 @@ class Sitemap extends AbstractFrontendAction
 
     /**
      * Sitemap constructor.
-     * @param FrontendContext $context
+     *
+     * @param FrontendContext        $context
      * @param SitemapGenerationModel $sitemapGenerationModel
      */
     public function __construct(

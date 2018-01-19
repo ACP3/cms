@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Assets\Event;
@@ -18,6 +19,7 @@ class AddLibraryEvent extends Event
 
     /**
      * AddLibraryEvent constructor.
+     *
      * @param Libraries $libraries
      */
     public function __construct(Libraries $libraries)
@@ -27,7 +29,8 @@ class AddLibraryEvent extends Event
 
     /**
      * @param string $identifier
-     * @param array $library
+     * @param array  $library
+     *
      * @return $this
      */
     public function addLibrary($identifier, array $library)

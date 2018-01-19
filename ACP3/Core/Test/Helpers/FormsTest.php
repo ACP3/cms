@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\Helpers;
@@ -92,11 +93,11 @@ class FormsTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider recordsPerPageDataProvider
      *
-     * @param integer $currentValue
-     * @param integer $steps
-     * @param integer $maxValue
-     * @param integer $postValue
-     * @param array   $expected
+     * @param int   $currentValue
+     * @param int   $steps
+     * @param int   $maxValue
+     * @param int   $postValue
+     * @param array $expected
      */
     public function testRecordsPerPage($currentValue, $steps, $maxValue, $postValue, $expected)
     {
@@ -128,7 +129,7 @@ class FormsTest extends \PHPUnit_Framework_TestCase
         $values = [
             'foo' => 'Lorem',
             'bar' => 'Ipsum',
-            'baz' => 'Dolor'
+            'baz' => 'Dolor',
         ];
 
         $this->assertEquals(
@@ -148,9 +149,9 @@ class FormsTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider checkboxGeneratorDataProvider
      *
-     * @param mixed  $currentValue
-     * @param mixed  $postValue
-     * @param array  $expected
+     * @param mixed $currentValue
+     * @param mixed $postValue
+     * @param array $expected
      */
     public function testCheckboxGenerator($currentValue, $postValue, $expected)
     {
@@ -159,7 +160,7 @@ class FormsTest extends \PHPUnit_Framework_TestCase
         $values = [
             'foo' => 'Lorem',
             'bar' => 'Ipsum',
-            'baz' => 'Dolor'
+            'baz' => 'Dolor',
         ];
 
         $this->assertEquals(

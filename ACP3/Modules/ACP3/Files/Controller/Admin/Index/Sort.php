@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
@@ -24,8 +25,9 @@ class Sort extends AbstractFrontendAction
 
     /**
      * Sort constructor.
-     * @param FrontendContext $context
-     * @param FilesRepository $filesRepository
+     *
+     * @param FrontendContext         $context
+     * @param FilesRepository         $filesRepository
      * @param \ACP3\Core\Helpers\Sort $sortHelper
      */
     public function __construct(FrontendContext $context, FilesRepository $filesRepository, Core\Helpers\Sort $sortHelper)
@@ -37,9 +39,11 @@ class Sort extends AbstractFrontendAction
     }
 
     /**
-     * @param int $id
+     * @param int    $id
      * @param string $action
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id, $action)

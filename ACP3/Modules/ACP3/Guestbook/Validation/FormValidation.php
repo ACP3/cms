@@ -1,14 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Guestbook\Validation;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Guestbook\Validation\ValidationRules\FloodBarrierValidationRule;
 use ACP3\Modules\ACP3\Newsletter;
 
-/**
- * Class Validator
- * @package ACP3\Modules\ACP3\Guestbook\Validation
- */
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
@@ -28,22 +30,24 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     public function setIpAddress($ipAddress)
     {
         $this->ipAddress = $ipAddress;
+
         return $this;
     }
 
     /**
-     * @param boolean $newsletterAccess
+     * @param bool $newsletterAccess
      *
      * @return $this
      */
     public function setNewsletterAccess($newsletterAccess)
     {
-        $this->newsletterAccess = (bool)$newsletterAccess;
+        $this->newsletterAccess = (bool) $newsletterAccess;
+
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {
@@ -54,23 +58,26 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'message' => $this->translator->t('system', 'flood_no_entry_possible'),
                     'extra' => [
-                        'ip' => $this->ipAddress
-                    ]
-                ])
+                        'ip' => $this->ipAddress,
+                    ],
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'name',
-                    'message' => $this->translator->t('system', 'name_to_short')
-                ])
+                    'message' => $this->translator->t('system', 'name_to_short'),
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'message',
-                    'message' => $this->translator->t('system', 'message_to_short')
-                ]);
+                    'message' => $this->translator->t('system', 'message_to_short'),
+                ]
+            );
 
         if (!empty($formData['mail'])) {
             $this->validator
@@ -79,8 +86,9 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'mail',
-                        'message' => $this->translator->t('system', 'wrong_email_format')
-                    ]);
+                        'message' => $this->translator->t('system', 'wrong_email_format'),
+                    ]
+                );
         }
 
         if ($this->newsletterAccess === true && isset($formData['subscribe_newsletter'])) {
@@ -90,15 +98,18 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     [
                         'data' => $formData,
                         'field' => 'mail',
-                        'message' => $this->translator->t('guestbook',
-                            'type_in_email_address_to_subscribe_to_newsletter')
-                    ])
+                        'message' => $this->translator->t(
+                            'guestbook',
+                            'type_in_email_address_to_subscribe_to_newsletter'
+                        ),
+                    ]
+                )
                 ->addConstraint(
                     Newsletter\Validation\ValidationRules\AccountExistsValidationRule::class,
                     [
                         'data' => $formData,
                         'field' => 'mail',
-                        'message' => $this->translator->t('newsletter', 'account_exists')
+                        'message' => $this->translator->t('newsletter', 'account_exists'),
                     ]
                 );
         }

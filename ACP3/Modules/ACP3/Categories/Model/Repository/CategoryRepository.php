@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Categories\Model\Repository;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Categories\Model\Repository;
 use ACP3\Core;
 use ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository;
 
-/**
- * Class CategoryRepository
- * @package ACP3\Modules\ACP3\Categories\Model\Repository
- */
 class CategoryRepository extends Core\Model\Repository\AbstractRepository
 {
     const TABLE_NAME = 'categories';
@@ -24,7 +21,7 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
      */
     public function resultExists($categoryId)
     {
-        return (int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = ?", [$categoryId]) > 0;
+        return (int) $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = ?", [$categoryId]) > 0;
     }
 
     /**
@@ -36,7 +33,7 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
      */
     public function resultIsDuplicate($title, $moduleId, $categoryId)
     {
-        return (int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE title = ? AND module_id = ? AND id != ?", [$title, $moduleId, $categoryId]) > 0;
+        return (int) $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE title = ? AND module_id = ? AND id != ?", [$title, $moduleId, $categoryId]) > 0;
     }
 
     /**
@@ -92,7 +89,7 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getModuleIdByCategoryId($categoryId)
     {
-        return (int)$this->db->fetchColumn("SELECT `module_id` FROM {$this->getTableName()} WHERE `id` = ?", [$categoryId]);
+        return (int) $this->db->fetchColumn("SELECT `module_id` FROM {$this->getTableName()} WHERE `id` = ?", [$categoryId]);
     }
 
     /**

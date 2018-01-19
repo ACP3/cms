@@ -1,10 +1,12 @@
 <?php
-namespace ACP3\Core\Modules\Installer;
 
 /**
- * Class AbstractMigration
- * @package ACP3\Core\Modules\Installer
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\Modules\Installer;
+
 abstract class AbstractMigration implements MigrationInterface
 {
     use InjectSchemaHelperTrait;

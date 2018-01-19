@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Helpers;
@@ -22,6 +23,7 @@ class ResultsPerPage
 
     /**
      * ResultsPerPage constructor.
+     *
      * @param SettingsInterface $settings
      */
     public function __construct(SettingsInterface $settings)
@@ -31,6 +33,7 @@ class ResultsPerPage
 
     /**
      * @param string $moduleName
+     *
      * @return int
      */
     public function getResultsPerPage($moduleName)
@@ -47,6 +50,6 @@ class ResultsPerPage
             }
         }
 
-        return (int)$this->resultsPerPage[$moduleName];
+        return (int) $this->resultsPerPage[$moduleName];
     }
 }

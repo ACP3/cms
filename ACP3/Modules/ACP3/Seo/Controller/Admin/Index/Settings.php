@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Seo;
 use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Seo\Controller\Admin\Index
- */
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -32,9 +29,9 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param \ACP3\Core\Helpers\Forms                                      $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                  $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
@@ -61,12 +58,12 @@ class Settings extends Core\Controller\AbstractFrontendAction
             1 => $this->translator->t('seo', 'robots_index_follow'),
             2 => $this->translator->t('seo', 'robots_index_nofollow'),
             3 => $this->translator->t('seo', 'robots_noindex_follow'),
-            4 => $this->translator->t('seo', 'robots_noindex_nofollow')
+            4 => $this->translator->t('seo', 'robots_noindex_nofollow'),
         ];
 
         $indexPaginatedContent = [
             IndexPaginatedContentEnum::INDEX_FIST_PAGE_ONLY => $this->translator->t('seo', 'index_first_page_only'),
-            IndexPaginatedContentEnum::INDEX_ALL_PAGES => $this->translator->t('seo', 'index_all_pages')
+            IndexPaginatedContentEnum::INDEX_ALL_PAGES => $this->translator->t('seo', 'index_all_pages'),
         ];
 
         $sitemapSaveMode = [
@@ -94,8 +91,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 $sitemapSaveMode,
                 $seoSettings['sitemap_save_mode']
             ),
-            'form' => array_merge($seoSettings, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge($seoSettings, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -112,10 +109,10 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $data = [
                 'meta_description' => $this->get('core.helpers.secure')->strEncode($formData['meta_description']),
                 'meta_keywords' => $this->get('core.helpers.secure')->strEncode($formData['meta_keywords']),
-                'robots' => (int)$formData['robots'],
-                'sitemap_is_enabled' => (int)$formData['sitemap_is_enabled'],
-                'sitemap_save_mode' => (int)$formData['sitemap_save_mode'],
-                'sitemap_separate' => (int)$formData['sitemap_separate']
+                'robots' => (int) $formData['robots'],
+                'sitemap_is_enabled' => (int) $formData['sitemap_is_enabled'],
+                'sitemap_save_mode' => (int) $formData['sitemap_save_mode'],
+                'sitemap_separate' => (int) $formData['sitemap_separate'],
             ];
 
             return $this->config->saveSettings($data, Seo\Installer\Schema::MODULE_NAME);

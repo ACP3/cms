@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Installer\Core\View\Renderer\Smarty\Resources;
 
 use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 
-/**
- * Class Asset
- * @package ACP3\Installer\Core\View\Renderer\Smarty\Resources
- */
 class Asset extends AbstractResource
 {
     /**
@@ -36,19 +38,19 @@ class Asset extends AbstractResource
     }
 
     /**
-     * fetch template and its modification time from data source
+     * fetch template and its modification time from data source.
      *
-     * @param string $name template name
+     * @param string $name    template name
      * @param string &$source template source
-     * @param integer &$mtime template modification timestamp (epoch)
+     * @param int    &$mtime  template modification timestamp (epoch)
      */
     protected function fetch($name, &$source, &$mtime)
     {
         $asset = $this->resolveTemplatePath($name);
 
         if ($asset !== '') {
-            $source = file_get_contents($asset);
-            $mtime = filemtime($asset);
+            $source = \file_get_contents($asset);
+            $mtime = \filemtime($asset);
         } else {
             $source = null;
             $mtime = null;
@@ -63,13 +65,13 @@ class Asset extends AbstractResource
     protected function resolveTemplatePath($template)
     {
         // If an template with directory is given, uppercase the first letter
-        if (strpos($template, '/') !== false) {
-            $template = ucfirst($template);
+        if (\strpos($template, '/') !== false) {
+            $template = \ucfirst($template);
 
             // Pfad zerlegen
-            $fragments = explode('/', $template);
+            $fragments = \explode('/', $template);
 
-            if (count($fragments) === 3) {
+            if (\count($fragments) === 3) {
                 $path = $fragments[0] . '/Resources/View/' . $fragments[1] . '/' . $fragments[2];
             } else {
                 $path = $fragments[0] . '/Resources/View/' . $fragments[1];
@@ -82,7 +84,7 @@ class Asset extends AbstractResource
     }
 
     /**
-     * compile template from source
+     * compile template from source.
      *
      * @param \Smarty_Internal_Template $_smarty_tpl do not change variable name, is used by compiled template
      *
@@ -95,33 +97,32 @@ class Asset extends AbstractResource
         $compiled->includes = [];
         $compiled->nocache_hash = null;
         $compiled->unifunc = null;
-        $level = ob_get_level();
-        ob_start();
+        $level = \ob_get_level();
+        \ob_start();
         $_smarty_tpl->loadCompiler();
         // call compiler
         try {
-            eval("?>" . $_smarty_tpl->compiler->compileTemplate($_smarty_tpl));
+            eval('?>' . $_smarty_tpl->compiler->compileTemplate($_smarty_tpl));
         } catch (\Exception $e) {
             unset($_smarty_tpl->compiler);
-            while (ob_get_level() > $level) {
-                ob_end_clean();
+            while (\ob_get_level() > $level) {
+                \ob_end_clean();
             }
+
             throw $e;
         }
         // release compiler object to free memory
         unset($_smarty_tpl->compiler);
-        ob_get_clean();
-        $compiled->timestamp = time();
+        \ob_get_clean();
+        $compiled->timestamp = \time();
         $compiled->exists = true;
     }
 
     /**
-     * populate Compiled Object with compiled filepath
+     * populate Compiled Object with compiled filepath.
      *
-     * @param \Smarty_Template_Compiled $compiled compiled object
+     * @param \Smarty_Template_Compiled $compiled  compiled object
      * @param \Smarty_Internal_Template $_template template object
-     *
-     * @return void
      */
     public function populateCompiledFilepath(\Smarty_Template_Compiled $compiled, \Smarty_Internal_Template $_template)
     {

@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Users\Helpers;
 
 use ACP3\Core\Http\RequestInterface;
@@ -25,10 +31,10 @@ class Forms
     private $country;
 
     /**
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param CountryList $countryList
+     * @param \ACP3\Core\I18n\Translator       $translator
+     * @param CountryList                      $countryList
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Helpers\Forms $formsHelpers
+     * @param \ACP3\Core\Helpers\Forms         $formsHelpers
      */
     public function __construct(
         Translator $translator,
@@ -80,7 +86,7 @@ class Forms
                 'lang' => $this->translator->t('users', 'skype'),
                 'value' => $this->request->getPost()->get('skype', $defaultSkypeName),
                 'maxlength' => '28',
-            ]
+            ],
         ];
     }
 
@@ -103,6 +109,7 @@ class Forms
      * @param int $displayBirthday
      * @param int $displayCountry
      * @param int $displayMail
+     *
      * @return array
      */
     public function fetchUserSettingsFormFields(
@@ -139,8 +146,9 @@ class Forms
         $displayBirthday = [
             0 => $this->translator->t('users', 'birthday_hide'),
             1 => $this->translator->t('users', 'birthday_display_completely'),
-            2 => $this->translator->t('users', 'birthday_hide_year')
+            2 => $this->translator->t('users', 'birthday_hide_year'),
         ];
+
         return $this->formsHelpers->checkboxGenerator('birthday_display', $displayBirthday, $value);
     }
 
@@ -190,8 +198,9 @@ class Forms
         $genders = [
             1 => $this->translator->t('users', 'gender_not_specified'),
             2 => $this->translator->t('users', 'gender_female'),
-            3 => $this->translator->t('users', 'gender_male')
+            3 => $this->translator->t('users', 'gender_male'),
         ];
+
         return $this->formsHelpers->choicesGenerator('gender', $genders, $currentGender);
     }
 }

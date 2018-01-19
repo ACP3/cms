@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Categories;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Categories;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 
-/**
- * Class Helpers
- * @package ACP3\Modules\ACP3\Categories
- */
 class Helpers
 {
     /**
@@ -49,13 +46,13 @@ class Helpers
     protected $secureHelper;
 
     /**
-     * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Modules $modules
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
+     * @param \ACP3\Core\ACL                                                    $acl
+     * @param \ACP3\Core\I18n\Translator                                        $translator
+     * @param \ACP3\Core\Modules                                                $modules
+     * @param \ACP3\Core\Http\RequestInterface                                  $request
+     * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
+     * @param \ACP3\Core\Helpers\Secure                                         $secureHelper
+     * @param \ACP3\Modules\ACP3\Categories\Cache                               $categoriesCache
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
@@ -79,12 +76,12 @@ class Helpers
     }
 
     /**
-     * Erzeugt eine neue Kategorie und gibt ihre ID zurück
+     * Erzeugt eine neue Kategorie und gibt ihre ID zurück.
      *
      * @param string $title
      * @param string $module
      *
-     * @return integer
+     * @return int
      */
     public function categoriesCreate($title, $module)
     {
@@ -108,11 +105,11 @@ class Helpers
     }
 
     /**
-     * Listet alle Kategorien eines Moduls auf
+     * Listet alle Kategorien eines Moduls auf.
      *
      * @param string $module
      * @param string $categoryId
-     * @param boolean $categoryCreate
+     * @param bool   $categoryCreate
      * @param string $formFieldName
      * @param string $customText
      *
@@ -131,7 +128,7 @@ class Helpers
         $categories['name'] = $formFieldName;
 
         $categories['categories'] = $this->categoriesCache->getCache($module);
-        $cData = count($categories['categories']);
+        $cData = \count($categories['categories']);
         for ($i = 0; $i < $cData; ++$i) {
             $categories['categories'][$i]['selected'] = $this->formsHelper->selectEntry(
                 $formFieldName,

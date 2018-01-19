@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-/**
- * Class Activate
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts
- */
 class Activate extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -23,13 +20,13 @@ class Activate extends Core\Controller\AbstractFrontendAction
     /**
      * Activate constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext      $context
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Newsletter\Helper\AccountStatus $accountStatusHelper)
-    {
+        Newsletter\Helper\AccountStatus $accountStatusHelper
+    ) {
         parent::__construct($context);
 
         $this->accountStatusHelper = $accountStatusHelper;

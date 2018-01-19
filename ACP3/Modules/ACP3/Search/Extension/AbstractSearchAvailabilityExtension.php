@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Search\Extension;
@@ -22,7 +23,8 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
 
     /**
      * AbstractSearchAvailabilityExtension constructor.
-     * @param RouterInterface $router
+     *
+     * @param RouterInterface                       $router
      * @param SearchResultsAwareRepositoryInterface $repository
      */
     public function __construct(
@@ -37,6 +39,7 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
      * @param string $searchTerm
      * @param string $areas
      * @param string $sortDirection
+     *
      * @return array
      */
     public function fetchSearchResults($searchTerm, $areas, $sortDirection)
@@ -46,10 +49,10 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
             $searchTerm,
             $sortDirection
         );
-        $cResults = count($results);
+        $cResults = \count($results);
 
         for ($i = 0; $i < $cResults; ++$i) {
-            $results[$i]['hyperlink'] = $this->router->route(sprintf($this->getRouteName(), $results[$i]['id']));
+            $results[$i]['hyperlink'] = $this->router->route(\sprintf($this->getRouteName(), $results[$i]['id']));
         }
 
         return $results;
@@ -57,6 +60,7 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
 
     /**
      * @param string $area
+     *
      * @return string
      */
     abstract protected function mapSearchAreasToFields($area);

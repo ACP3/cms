@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Modules;
@@ -9,10 +10,6 @@ namespace ACP3\Core\Modules;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Filesystem;
 
-/**
- * Class Vendor
- * @package ACP3\Core\Modules
- */
 class Vendor
 {
     /**
@@ -47,11 +44,11 @@ class Vendor
     }
 
     /**
-     * Caches the various module vendors
+     * Caches the various module vendors.
      */
     protected function cacheVendors()
     {
-        $this->vendors = array_merge(
+        $this->vendors = \array_merge(
             ['ACP3'],
             Filesystem::scandir($this->appPath->getModulesDir(), ['ACP3', 'Custom']),
             ['Custom']

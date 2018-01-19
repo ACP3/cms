@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Validation\Event;
@@ -26,9 +27,10 @@ class FormValidationEvent extends Event
 
     /**
      * FormValidationEvent constructor.
+     *
      * @param Validator $validator
-     * @param array $formData
-     * @param array $extra
+     * @param array     $formData
+     * @param array     $extra
      */
     public function __construct(
         Validator $validator,

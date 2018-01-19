@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core;
 
 use ACP3\Core\Date\DateTranslator;
@@ -36,7 +41,8 @@ class Date
 
     /**
      * Date constructor.
-     * @param DateTranslator $dateTranslator
+     *
+     * @param DateTranslator    $dateTranslator
      * @param SettingsInterface $config
      */
     public function __construct(
@@ -100,12 +106,12 @@ class Date
     }
 
     /**
-     * Gibt ein formatiertes Datum zurück
+     * Gibt ein formatiertes Datum zurück.
      *
      * @param string $time
      * @param string $format
-     * @param bool $toLocalTimeZone
-     * @param bool $isLocalTimeZone
+     * @param bool   $toLocalTimeZone
+     * @param bool   $isLocalTimeZone
      *
      * @return string
      */
@@ -115,14 +121,16 @@ class Date
             case '':
             case 'short':
                 $format = $this->dateFormatShort;
+
                 break;
             case 'long':
                 $format = $this->dateFormatLong;
+
                 break;
         }
 
-        if (is_numeric($time)) {
-            $time = date('c', $time);
+        if (\is_numeric($time)) {
+            $time = \date('c', $time);
         }
 
         $dateTime = new \DateTime($time, $this->dateTimeZone);
@@ -133,24 +141,25 @@ class Date
                 $dateTime->setTimestamp($dateTime->getTimestamp() - $dateTime->getOffset());
             }
         }
-        return strtr($dateTime->format($format), $this->dateTranslator->localize($format));
+
+        return \strtr($dateTime->format($format), $this->dateTranslator->localize($format));
     }
 
     /**
-     * Gibt einen einfachen Zeitstempel zurück, welcher sich an UTC ausrichtet
+     * Gibt einen einfachen Zeitstempel zurück, welcher sich an UTC ausrichtet.
      *
      * @param string $value
-     * @param bool $isLocalTime
+     * @param bool   $isLocalTime
      *
      * @return int
      */
     public function timestamp($value = 'now', $isLocalTime = false)
     {
-        return (int)$this->format($value, 'U', true, $isLocalTime);
+        return (int) $this->format($value, 'U', true, $isLocalTime);
     }
 
     /**
-     * Gibt die aktuelle Uhrzeit im MySQL-Datetime Format zurück
+     * Gibt die aktuelle Uhrzeit im MySQL-Datetime Format zurück.
      *
      * @param bool $isLocalTime
      *
@@ -162,7 +171,7 @@ class Date
     }
 
     /**
-     * Gibt einen an UTC ausgerichteten Zeitstempel im MySQL DateTime Format zurück
+     * Gibt einen an UTC ausgerichteten Zeitstempel im MySQL DateTime Format zurück.
      *
      * @param string $value
      *
@@ -174,10 +183,10 @@ class Date
     }
 
     /**
-     * Konvertiert einen Unixstamp in das MySQL-Datetime Format
+     * Konvertiert einen Unixstamp in das MySQL-Datetime Format.
      *
      * @param string $value
-     * @param bool $isLocalTime
+     * @param bool   $isLocalTime
      *
      * @return string
      */

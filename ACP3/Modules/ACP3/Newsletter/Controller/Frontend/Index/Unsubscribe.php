@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-/**
- * Class Unsubscribe
- * @package ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index
- */
 class Unsubscribe extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -55,12 +52,12 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
     public function execute()
     {
         $defaults = [
-            'mail' => ''
+            'mail' => '',
         ];
 
         return [
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -80,9 +77,11 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
                     ['mail' => $formData['mail']]
                 );
 
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
+                $this->setTemplate(
+                    $this->get('core.helpers.alerts')->confirmBox(
                     $this->translator->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'),
-                    $this->appPath->getWebRoot())
+                    $this->appPath->getWebRoot()
+                )
                 );
             }
         );

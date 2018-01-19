@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Model;
@@ -28,10 +29,11 @@ class PictureModel extends AbstractModel
 
     /**
      * PictureModel constructor.
+     *
      * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param SettingsInterface $config
-     * @param PictureRepository $pictureRepository
+     * @param DataProcessor            $dataProcessor
+     * @param SettingsInterface        $config
+     * @param PictureRepository        $pictureRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -45,13 +47,13 @@ class PictureModel extends AbstractModel
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function save(array $data, $entryId = null)
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-        $data = array_merge($data, [
+        $data = \array_merge($data, [
             'comments' => $settings['comments'] == 1
                 ? (isset($data['comments']) && $data['comments'] == 1 ? 1 : 0)
                 : $settings['comments'],
@@ -59,7 +61,7 @@ class PictureModel extends AbstractModel
 
         if ($entryId === null) {
             $picNum = $this->repository->getLastPictureByGalleryId($data['gallery_id']);
-            $data['pic'] = !is_null($picNum) ? $picNum + 1 : 1;
+            $data['pic'] = !\is_null($picNum) ? $picNum + 1 : 1;
         }
 
         return parent::save($data, $entryId);
@@ -75,7 +77,7 @@ class PictureModel extends AbstractModel
             'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
             'comments' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'file' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'pic' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'pic' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

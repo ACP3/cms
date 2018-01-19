@@ -1,19 +1,19 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\WYSIWYG\Editor;
 
 /**
- * Implementation of the AbstractWYSIWYG class for a simple textarea
- * @package ACP3\Core\WYSIWYG\Editor
+ * Implementation of the AbstractWYSIWYG class for a simple textarea.
  */
 class Textarea extends AbstractWYSIWYG
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getFriendlyName()
     {
@@ -21,18 +21,18 @@ class Textarea extends AbstractWYSIWYG
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setParameters(array $params = [])
     {
         $this->id = $params['id'];
         $this->name = $params['name'];
         $this->value = $params['value'];
-        $this->advanced = isset($params['advanced']) ? (bool)$params['advanced'] : false;
+        $this->advanced = isset($params['advanced']) ? (bool) $params['advanced'] : false;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getData()
     {
@@ -43,13 +43,13 @@ class Textarea extends AbstractWYSIWYG
                 'name' => $this->name,
                 'value' => $this->value,
                 'js' => '',
-                'advanced' => false
-            ]
+                'advanced' => false,
+            ],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid()
     {

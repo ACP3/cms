@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core;
 
 use ACP3\Core\Helpers\StringFormatter;
@@ -11,10 +16,6 @@ use PHPMailer\PHPMailer\Exception as PHPMailerException;
 use PHPMailer\PHPMailer\PHPMailer;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class Email
- * @package ACP3\Core
- */
 class Mailer
 {
     /**
@@ -84,10 +85,11 @@ class Mailer
 
     /**
      * Mailer constructor.
-     * @param LoggerInterface $logger
-     * @param View $view
+     *
+     * @param LoggerInterface   $logger
+     * @param View              $view
      * @param SettingsInterface $config
-     * @param StringFormatter $stringFormatter
+     * @param StringFormatter   $stringFormatter
      */
     public function __construct(
         LoggerInterface $logger,
@@ -105,6 +107,7 @@ class Mailer
      * @param string|array $from
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setFrom($from)
@@ -118,6 +121,7 @@ class Mailer
      * @param string $mailSignature
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setMailSignature($mailSignature)
@@ -131,6 +135,7 @@ class Mailer
      * @param string $htmlText
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setHtmlBody($htmlText)
@@ -144,6 +149,7 @@ class Mailer
      * @param string $urlWeb
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setUrlWeb($urlWeb)
@@ -157,11 +163,12 @@ class Mailer
      * @param bool $bcc
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setBcc($bcc)
     {
-        $this->bcc = (bool)$bcc;
+        $this->bcc = (bool) $bcc;
 
         return $this;
     }
@@ -170,6 +177,7 @@ class Mailer
      * @param string $subject
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setSubject($subject)
@@ -183,6 +191,7 @@ class Mailer
      * @param string $body
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setBody($body)
@@ -196,6 +205,7 @@ class Mailer
      * @param array|string $recipients
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setRecipients($recipients)
@@ -209,11 +219,12 @@ class Mailer
      * @param string|array $attachments
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setAttachments($attachments)
     {
-        if (is_array($attachments)) {
+        if (\is_array($attachments)) {
             $this->attachments = $attachments;
         } else {
             $this->attachments[] = $attachments;
@@ -226,6 +237,7 @@ class Mailer
      * @param string $template
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setTemplate($template)
@@ -237,6 +249,7 @@ class Mailer
 
     /**
      * @param MailerMessage $data
+     *
      * @return $this
      */
     public function setData(MailerMessage $data)
@@ -258,7 +271,7 @@ class Mailer
     }
 
     /**
-     * Sends the email
+     * Sends the email.
      *
      * @return bool
      */
@@ -275,9 +288,9 @@ class Mailer
             $this->generateBody();
 
             // Add attachments to the E-mail
-            if (count($this->attachments) > 0) {
+            if (\count($this->attachments) > 0) {
                 foreach ($this->attachments as $attachment) {
-                    if (!empty($attachment) && is_file($attachment)) {
+                    if (!empty($attachment) && \is_file($attachment)) {
                         $this->phpMailer->addAttachment($attachment);
                     }
                 }
@@ -300,7 +313,7 @@ class Mailer
      */
     protected function generateSubject()
     {
-        return "=?utf-8?b?" . base64_encode($this->decodeHtmlEntities($this->subject)) . "?=";
+        return '=?utf-8?b?' . \base64_encode($this->decodeHtmlEntities($this->subject)) . '?=';
     }
 
     private function addReplyTo()
@@ -311,7 +324,7 @@ class Mailer
 
         $replyTo = $this->mailerMessage->getReplyTo();
 
-        if (is_array($replyTo) === true) {
+        if (\is_array($replyTo) === true) {
             $this->phpMailer->addReplyTo($replyTo['email'], $replyTo['name']);
         } elseif (!empty($replyTo)) {
             $this->phpMailer->addReplyTo($replyTo);
@@ -323,7 +336,7 @@ class Mailer
      */
     private function addFrom()
     {
-        if (is_array($this->from) === true) {
+        if (\is_array($this->from) === true) {
             $this->phpMailer->setFrom($this->from['email'], $this->from['name']);
         } else {
             $this->phpMailer->setFrom($this->from);
@@ -342,7 +355,7 @@ class Mailer
     }
 
     /**
-     * Generates the E-mail body
+     * Generates the E-mail body.
      *
      * @return $this
      */
@@ -352,9 +365,9 @@ class Mailer
             $mail = [
                 'charset' => 'UTF-8',
                 'title' => $this->subject,
-                'body' => !empty($this->htmlBody) ? $this->htmlBody : $this->stringFormatter->nl2p(htmlspecialchars($this->body)),
+                'body' => !empty($this->htmlBody) ? $this->htmlBody : $this->stringFormatter->nl2p(\htmlspecialchars($this->body)),
                 'signature' => $this->getHtmlSignature(),
-                'url_web_view' => $this->urlWeb
+                'url_web_view' => $this->urlWeb,
             ];
             $this->view->assign('mail', $mail);
 
@@ -385,23 +398,24 @@ class Mailer
     private function getHtmlSignature()
     {
         if (!empty($this->mailSignature)) {
-            if ($this->mailSignature === strip_tags($this->mailSignature)) {
+            if ($this->mailSignature === \strip_tags($this->mailSignature)) {
                 return $this->stringFormatter->nl2p($this->mailSignature);
             }
+
             return $this->mailSignature;
         }
+
         return '';
     }
 
     /**
-     *
      * @param string $data
      *
      * @return string
      */
     private function decodeHtmlEntities($data)
     {
-        return html_entity_decode($data, ENT_QUOTES, 'UTF-8');
+        return \html_entity_decode($data, ENT_QUOTES, 'UTF-8');
     }
 
     /**
@@ -412,23 +426,25 @@ class Mailer
         if (!empty($this->mailSignature)) {
             return "\n-- \n" . $this->phpMailer->html2text($this->mailSignature, true);
         }
+
         return '';
     }
 
     /**
-     * Special sending logic for bcc only E-mails
+     * Special sending logic for bcc only E-mails.
      *
      * @return bool
+     *
      * @throws PHPMailerException
      */
     private function sendBcc()
     {
-        if (is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
+        if (\is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
             $this->recipients = [$this->recipients];
         }
 
         foreach ($this->recipients as $recipient) {
-            set_time_limit(10);
+            \set_time_limit(10);
 
             $this->addRecipients($recipient, true);
         }
@@ -437,21 +453,21 @@ class Mailer
     }
 
     /**
-     * Adds multiple recipients to the to be send email
+     * Adds multiple recipients to the to be send email.
      *
      * @param string|array $recipients
-     * @param bool $bcc
+     * @param bool         $bcc
      *
      * @return $this
      */
     private function addRecipients($recipients, $bcc = false)
     {
-        if (is_array($recipients) === true) {
+        if (\is_array($recipients) === true) {
             if (isset($recipients['email'], $recipients['name']) === true) {
                 $this->addRecipient($recipients['email'], $recipients['name'], $bcc);
             } else {
                 foreach ($recipients as $recipient) {
-                    if (is_array($recipient) === true) {
+                    if (\is_array($recipient) === true) {
                         $this->addRecipient($recipient['email'], $recipient['name'], $bcc);
                     } else {
                         $this->addRecipient($recipient, '', $bcc);
@@ -466,11 +482,11 @@ class Mailer
     }
 
     /**
-     * Adds a single recipient to the to be send email
+     * Adds a single recipient to the to be send email.
      *
      * @param string $email
      * @param string $name
-     * @param bool $bcc
+     * @param bool   $bcc
      *
      * @return $this
      */
@@ -486,19 +502,20 @@ class Mailer
     }
 
     /**
-     * Special sending logic for E-mails without bcc addresses
+     * Special sending logic for E-mails without bcc addresses.
      *
      * @return bool
+     *
      * @throws PHPMailerException
      */
     private function sendTo()
     {
-        if (is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
+        if (\is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
             $this->recipients = [$this->recipients];
         }
 
         foreach ($this->recipients as $recipient) {
-            set_time_limit(20);
+            \set_time_limit(20);
             $this->addRecipients($recipient);
             $this->phpMailer->send();
             $this->phpMailer->clearAllRecipients();
@@ -508,7 +525,7 @@ class Mailer
     }
 
     /**
-     * Resets the currently set mailer values back to there default values
+     * Resets the currently set mailer values back to there default values.
      *
      * @return $this
      */
@@ -534,7 +551,7 @@ class Mailer
     }
 
     /**
-     * Initializes PHPMailer and sets the basic configuration parameters
+     * Initializes PHPMailer and sets the basic configuration parameters.
      *
      * @return $this
      */
@@ -545,14 +562,14 @@ class Mailer
 
             $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-            if (strtolower($settings['mailer_type']) === 'smtp') {
+            if (\strtolower($settings['mailer_type']) === 'smtp') {
                 $this->phpMailer->set('Mailer', 'smtp');
                 $this->phpMailer->Host = $settings['mailer_smtp_host'];
                 $this->phpMailer->Port = $settings['mailer_smtp_port'];
-                $this->phpMailer->SMTPSecure = in_array($settings['mailer_smtp_security'], ['ssl', 'tls'])
+                $this->phpMailer->SMTPSecure = \in_array($settings['mailer_smtp_security'], ['ssl', 'tls'])
                     ? $settings['mailer_smtp_security']
                     : '';
-                if ((bool)$settings['mailer_smtp_auth'] === true) {
+                if ((bool) $settings['mailer_smtp_auth'] === true) {
                     $this->phpMailer->SMTPAuth = true;
                     $this->phpMailer->Username = $settings['mailer_smtp_user'];
                     $this->phpMailer->Password = $settings['mailer_smtp_password'];

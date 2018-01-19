@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources
- */
 class Create extends AbstractFormAction
 {
     /**
@@ -29,12 +26,12 @@ class Create extends AbstractFormAction
     protected $resourcesModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
+     * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param Permissions\Model\ResourcesModel $resourcesModel
-     * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation $resourceFormValidation
+     * @param Permissions\Model\ResourcesModel                                    $resourcesModel
+     * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation    $resourceFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -60,11 +57,11 @@ class Create extends AbstractFormAction
             'modules' => $this->fetchActiveModules(),
             'areas' => $this->fetchAreas(),
             'privileges' => $this->fetchPrivileges(0),
-            'form' => array_merge(
+            'form' => \array_merge(
                 ['resource' => '', 'area' => '', 'controller' => ''],
                 $this->request->getPost()->all()
             ),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -79,6 +76,7 @@ class Create extends AbstractFormAction
             $this->resourceFormValidation->validate($formData);
 
             $formData['module_id'] = $this->fetchModuleId($formData['modules']);
+
             return $this->resourcesModel->save($formData);
         });
     }

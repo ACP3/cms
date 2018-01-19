@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Frontend\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Details
- * @package ACP3\Modules\ACP3\Articles\Controller\Frontend\Index
- */
 class Details extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -38,19 +35,19 @@ class Details extends Core\Controller\AbstractFrontendAction
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
-     * @param \ACP3\Core\Date                                     $date
-     * @param \ACP3\Core\Helpers\PageBreaks                       $pageBreaksHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
+     * @param \ACP3\Core\Date                                                $date
+     * @param \ACP3\Core\Helpers\PageBreaks                                  $pageBreaksHelper
      * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
+     * @param \ACP3\Modules\ACP3\Articles\Cache                              $articlesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Core\Helpers\PageBreaks $pageBreaksHelper,
         Articles\Model\Repository\ArticleRepository $articleRepository,
-        Articles\Cache $articlesCache)
-    {
+        Articles\Cache $articlesCache
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
@@ -63,6 +60,7 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -76,13 +74,13 @@ class Details extends Core\Controller\AbstractFrontendAction
             $this->title->setPageTitle($article['title']);
 
             return [
-                'page' => array_merge(
+                'page' => \array_merge(
                     $article,
                     $this->pageBreaksHelper->splitTextIntoPages(
                         $this->view->fetchStringAsTemplate($article['text']),
                         $this->request->getUriWithoutPages()
                     )
-                )
+                ),
             ];
         }
 

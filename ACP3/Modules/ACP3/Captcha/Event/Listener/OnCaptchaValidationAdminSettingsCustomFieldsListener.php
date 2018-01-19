@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Captcha\Event\Listener;
@@ -19,6 +20,7 @@ class OnCaptchaValidationAdminSettingsCustomFieldsListener
 
     /**
      * OnCaptchaValidationAdminSettingsCustomFieldsListener constructor.
+     *
      * @param Translator $translator
      */
     public function __construct(Translator $translator)
@@ -38,18 +40,19 @@ class OnCaptchaValidationAdminSettingsCustomFieldsListener
                 ->addConstraint(NotEmptyValidationRule::class, [
                     'data' => $formData,
                     'field' => 'recaptcha_sitekey',
-                    'message' => $this->translator->t('captcha', 'type_in_recaptcha_sitekey')
+                    'message' => $this->translator->t('captcha', 'type_in_recaptcha_sitekey'),
                 ])
                 ->addConstraint(NotEmptyValidationRule::class, [
                     'data' => $formData,
                     'field' => 'recaptcha_secret',
-                    'message' => $this->translator->t('captcha', 'type_in_recaptcha_secret')
+                    'message' => $this->translator->t('captcha', 'type_in_recaptcha_secret'),
                 ]);
         }
     }
 
     /**
      * @param array $formData
+     *
      * @return bool
      */
     private function isRecaptcha(array $formData)

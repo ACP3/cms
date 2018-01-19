@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Http;
@@ -11,10 +12,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class RedirectResponse
- * @package ACP3\Core\Http
- */
 class RedirectResponse
 {
     /**
@@ -29,8 +26,8 @@ class RedirectResponse
     /**
      * Redirect constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface       $router
+     * @param \ACP3\Core\Http\RequestInterface  $request
+     * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(
         RequestInterface $request,
@@ -55,7 +52,7 @@ class RedirectResponse
     }
 
     /**
-     * Executes a temporary redirect
+     * Executes a temporary redirect.
      *
      * @param string $path
      *
@@ -67,7 +64,7 @@ class RedirectResponse
     }
 
     /**
-     * Redirect to an other URLs
+     * Redirect to an other URLs.
      *
      * @param string $path
      * @param int    $statusCode
@@ -86,7 +83,7 @@ class RedirectResponse
     }
 
     /**
-     * Outputs a JSON response with a redirect url
+     * Outputs a JSON response with a redirect url.
      *
      * @param string $path
      *
@@ -98,7 +95,7 @@ class RedirectResponse
     }
 
     /**
-     * Executes a permanent redirect
+     * Executes a permanent redirect.
      *
      * @param string $path
      *

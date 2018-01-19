@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Menus\Validation\ValidationRules;
 
 use ACP3\Core\Modules;
@@ -6,10 +12,6 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Core\Validation\ValidationRules\InternalUriValidationRule;
 use ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule;
 
-/**
- * Class LinkModeValidationRule
- * @package ACP3\Modules\ACP3\Menus\Validation\ValidationRules
- */
 class LinkModeValidationRule extends AbstractValidationRule
 {
     /**
@@ -52,15 +54,15 @@ class LinkModeValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (is_array($data) && is_array($field)) {
-            $mode = reset($field);
-            $moduleName = next($field);
-            $uri = next($field);
-            $articleId = next($field);
+        if (\is_array($data) && \is_array($field)) {
+            $mode = \reset($field);
+            $moduleName = \next($field);
+            $uri = \next($field);
+            $articleId = \next($field);
 
             return $this->isValidLink($data[$mode], $data[$moduleName], $data[$uri], $data[$articleId]);
         }

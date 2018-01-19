@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Gallery\Validation;
 
 use ACP3\Core;
 
-/**
- * Class GalleryFormValidation
- * @package ACP3\Modules\ACP3\Gallery\Validation
- */
 class GalleryFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
@@ -27,7 +29,7 @@ class GalleryFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {
@@ -38,15 +40,17 @@ class GalleryFormValidation extends Core\Validation\AbstractFormValidation
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
-                    'message' => $this->translator->t('system', 'select_date')
-                ])
+                    'message' => $this->translator->t('system', 'select_date'),
+                ]
+            )
             ->addConstraint(
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',
-                    'message' => $this->translator->t('gallery', 'type_in_gallery_title')
-                ]);
+                    'message' => $this->translator->t('gallery', 'type_in_gallery_title'),
+                ]
+            );
 
         $this->validator->dispatchValidationEvent(
             'seo.validation.validate_uri_alias',

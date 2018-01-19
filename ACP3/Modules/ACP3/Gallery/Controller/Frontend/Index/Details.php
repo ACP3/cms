@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
@@ -11,10 +12,6 @@ use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Details
- * @package ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index
- */
 class Details extends AbstractAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -39,8 +36,8 @@ class Details extends AbstractAction
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param \ACP3\Core\Date                                               $date
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      */
     public function __construct(
@@ -66,6 +63,7 @@ class Details extends AbstractAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -86,19 +84,19 @@ class Details extends AbstractAction
 
             $previousPicture = $this->pictureRepository->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($previousPicture)) {
-                $this->setPreviousPage((int)$previousPicture);
+                $this->setPreviousPage((int) $previousPicture);
             }
 
             $nextPicture = $this->pictureRepository->getNextPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($nextPicture)) {
-                $this->setNextPage((int)$nextPicture);
+                $this->setNextPage((int) $nextPicture);
             }
 
             return [
                 'picture' => $picture,
                 'picture_next' => $nextPicture,
                 'picture_previous' => $previousPicture,
-                'comments_allowed' => $this->isCommentsAllowed($picture)
+                'comments_allowed' => $this->isCommentsAllowed($picture),
             ];
         }
 
@@ -114,20 +112,20 @@ class Details extends AbstractAction
     {
         $picture['width'] = $this->settings['width'];
         $picture['height'] = $this->settings['height'];
-        $picInfos = @getimagesize($this->appPath->getUploadsDir() . 'gallery/' . $picture['file']);
+        $picInfos = @\getimagesize($this->appPath->getUploadsDir() . 'gallery/' . $picture['file']);
         if ($picInfos !== false) {
             if ($picInfos[0] > $this->settings['width'] || $picInfos[1] > $this->settings['height']) {
                 if ($picInfos[0] > $picInfos[1]) {
                     $newWidth = $this->settings['width'];
-                    $newHeight = intval($picInfos[1] * $newWidth / $picInfos[0]);
+                    $newHeight = (int) ($picInfos[1] * $newWidth / $picInfos[0]);
                 } else {
                     $newHeight = $this->settings['height'];
-                    $newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
+                    $newWidth = (int) ($picInfos[0] * $newHeight / $picInfos[1]);
                 }
             }
 
-            $picture['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
-            $picture['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
+            $picture['width'] = $newWidth ?? $picInfos[0];
+            $picture['height'] = $newHeight ?? $picInfos[1];
         }
 
         return $picture;
@@ -140,7 +138,7 @@ class Details extends AbstractAction
     {
         if ($this->metaStatements instanceof MetaStatements) {
             $this->metaStatements->setNextPage(
-                $this->router->route(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $nextPicture))
+                $this->router->route(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $nextPicture))
             );
         }
     }
@@ -152,7 +150,7 @@ class Details extends AbstractAction
     {
         if ($this->metaStatements instanceof MetaStatements) {
             $this->metaStatements->setPreviousPage(
-                $this->router->route(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $previousPicture))
+                $this->router->route(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $previousPicture))
             );
         }
     }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
 
-/**
- * Class Modules
- * @package ACP3\Modules\ACP3\System\Controller\Admin\Extensions
- */
 class Modules extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -52,15 +49,15 @@ class Modules extends Core\Controller\AbstractFrontendAction
     /**
      * Modules constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\I18n\DictionaryCache $dictionaryCache
-     * @param \ACP3\Core\Modules\ModuleInfoCache $moduleInfoCache
+     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
+     * @param Core\I18n\DictionaryCache                                    $dictionaryCache
+     * @param \ACP3\Core\Modules\ModuleInfoCache                           $moduleInfoCache
      * @param \ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository $systemModuleRepository
-     * @param \ACP3\Modules\ACP3\System\Helper\Installer $installerHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
-     * @param Core\Installer\SchemaRegistrar $schemaRegistrar
-     * @param Core\Modules\SchemaInstaller $schemaInstaller
-     * @param Core\Modules\AclInstaller $aclInstaller
+     * @param \ACP3\Modules\ACP3\System\Helper\Installer                   $installerHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Cache                         $permissionsCache
+     * @param Core\Installer\SchemaRegistrar                               $schemaRegistrar
+     * @param Core\Modules\SchemaInstaller                                 $schemaInstaller
+     * @param Core\Modules\AclInstaller                                    $aclInstaller
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -90,6 +87,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $dir
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($action = '', $dir = '')
@@ -144,6 +142,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param string $moduleDirectory
+     *
      * @throws System\Exception\ModuleInstallerException
      */
     private function checkPreconditions($moduleDirectory)
@@ -183,7 +182,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
                 $this->translator->t(
                     'system',
                     $phrase,
-                    ['%modules%' => implode(', ', $dependencies)]
+                    ['%modules%' => \implode(', ', $dependencies)]
                 )
             );
         }
@@ -223,6 +222,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $moduleDirectory
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     protected function disableModule($moduleDirectory)
@@ -344,7 +344,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
         $installedModules = $newModules = [];
 
         foreach ($modules as $key => $values) {
-            $values['dir'] = strtolower($values['dir']);
+            $values['dir'] = \strtolower($values['dir']);
             if ($this->modules->isInstalled($values['dir']) === true || $values['installable'] === false) {
                 $installedModules[$key] = $values;
             } else {
@@ -354,7 +354,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
         return [
             'installed_modules' => $installedModules,
-            'new_modules' => $newModules
+            'new_modules' => $newModules,
         ];
     }
 }

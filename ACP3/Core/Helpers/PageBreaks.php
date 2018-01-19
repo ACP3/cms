@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
 
-/**
- * Class PageBreaks
- * @package ACP3\Core\Helpers
- */
 class PageBreaks
 {
     /**
@@ -26,7 +28,7 @@ class PageBreaks
      * PageBreaks constructor.
      *
      * @param \ACP3\Core\Http\RequestInterface   $request
-     * @param \ACP3\Core\Router\RouterInterface         $router
+     * @param \ACP3\Core\Router\RouterInterface  $router
      * @param \ACP3\Core\Helpers\TableOfContents $tableOfContents
      */
     public function __construct(
@@ -40,7 +42,7 @@ class PageBreaks
     }
 
     /**
-     * Parst einen Text und zerlegt diesen bei Bedarf mehrere Seiten
+     * Parst einen Text und zerlegt diesen bei Bedarf mehrere Seiten.
      *
      * @param string $text
      * @param string $baseUrlPath
@@ -50,8 +52,8 @@ class PageBreaks
     public function splitTextIntoPages($text, $baseUrlPath)
     {
         $matches = [];
-        preg_match_all($this->getSplitPagesRegex(), $text, $matches);
-        $pages = preg_split($this->getSplitPagesRegex(), $text, -1, PREG_SPLIT_NO_EMPTY);
+        \preg_match_all($this->getSplitPagesRegex(), $text, $matches);
+        $pages = \preg_split($this->getSplitPagesRegex(), $text, -1, PREG_SPLIT_NO_EMPTY);
 
         $currentPage = $this->getCurrentPage($pages);
         $nextPage = !empty($pages[$currentPage]) ? $this->router->route($baseUrlPath) . 'page_' . ($currentPage + 1) . '/' : '';
@@ -80,7 +82,8 @@ class PageBreaks
      */
     private function getCurrentPage(array $pages)
     {
-        $currentPage = (int)$this->request->getParameters()->get('page', 1);
-        return ($currentPage <= count($pages)) ? $currentPage : 1;
+        $currentPage = (int) $this->request->getParameters()->get('page', 1);
+
+        return ($currentPage <= \count($pages)) ? $currentPage : 1;
     }
 }

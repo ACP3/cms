@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\Validation\Validator;
 
-/**
- * Class AbstractValidationRule
- * @package ACP3\Core\Validation\ValidationRules
- */
 abstract class AbstractValidationRule implements ValidationRuleInterface
 {
     /**
@@ -15,7 +17,7 @@ abstract class AbstractValidationRule implements ValidationRuleInterface
     protected $message = '';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getMessage()
     {
@@ -23,7 +25,7 @@ abstract class AbstractValidationRule implements ValidationRuleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setMessage($message)
     {
@@ -33,7 +35,7 @@ abstract class AbstractValidationRule implements ValidationRuleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(Validator $validator, $data, $field = '', array $extra = [])
     {

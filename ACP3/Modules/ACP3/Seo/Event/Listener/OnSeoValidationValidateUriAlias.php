@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
@@ -24,13 +25,14 @@ class OnSeoValidationValidateUriAlias
 
     /**
      * OnSeoValidationValidateUriAlias constructor.
-     * @param ACL $acl
+     *
+     * @param ACL        $acl
      * @param Translator $translator
      */
     public function __construct(
         ACL $acl,
-        Translator $translator)
-    {
+        Translator $translator
+    ) {
         $this->translator = $translator;
         $this->acl = $acl;
     }
@@ -49,7 +51,7 @@ class OnSeoValidationValidateUriAlias
                         'data' => $event->getFormData(),
                         'field' => 'alias',
                         'message' => $this->translator->t('seo', 'alias_unallowed_characters_or_exists'),
-                        'extra' => $event->getExtra()
+                        'extra' => $event->getExtra(),
                     ]
                 );
         }

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Installer;
-
 
 use ACP3\Core\Modules\Installer\MigrationInterface;
 
@@ -17,7 +17,7 @@ class MigrationRegistrar
     private $migrations = [];
 
     /**
-     * @param string $serviceId
+     * @param string             $serviceId
      * @param MigrationInterface $schema
      */
     public function set($serviceId, MigrationInterface $schema)
@@ -35,6 +35,7 @@ class MigrationRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return bool
      */
     public function has($serviceId)
@@ -44,7 +45,9 @@ class MigrationRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return MigrationInterface
+     *
      * @throws \InvalidArgumentException
      */
     public function get($serviceId)
@@ -54,7 +57,7 @@ class MigrationRegistrar
         }
 
         throw new \InvalidArgumentException(
-            sprintf('The migration with the service id "%s" could not be found.', $serviceId)
+            \sprintf('The migration with the service id "%s" could not be found.', $serviceId)
         );
     }
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model\Event;
@@ -33,11 +34,12 @@ class ModelSaveEvent extends Event
 
     /**
      * ModelSaveEvent constructor.
-     * @param string $moduleName
-     * @param array $filteredData
-     * @param array $rawData
+     *
+     * @param string         $moduleName
+     * @param array          $filteredData
+     * @param array          $rawData
      * @param int|null|array $entryId
-     * @param bool $isNewEntry
+     * @param bool           $isNewEntry
      */
     public function __construct($moduleName, array $filteredData, array $rawData, $entryId, $isNewEntry)
     {
@@ -85,7 +87,7 @@ class ModelSaveEvent extends Event
      */
     public function isDeleteStatement()
     {
-        return count($this->filteredData) === 0 && is_array($this->entryId);
+        return \count($this->filteredData) === 0 && \is_array($this->entryId);
     }
 
     /**

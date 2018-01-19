@@ -1,14 +1,16 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty\Blocks;
 
 /**
- * Class Javascripts
- * @package ACP3\Core\View\Renderer\Smarty\Blocks
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\View\Renderer\Smarty\Blocks;
+
 class Javascripts extends AbstractBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -27,7 +29,7 @@ class Javascripts extends AbstractBlock
     {
         if (!$repeat) {
             if (isset($content)) {
-                return '@@@SMARTY:JAVASCRIPTS:BEGIN@@@' . trim($content) . '@@@SMARTY:JAVASCRIPTS:END@@@';
+                return '@@@SMARTY:JAVASCRIPTS:BEGIN@@@' . \trim($content) . '@@@SMARTY:JAVASCRIPTS:END@@@';
             }
         }
 

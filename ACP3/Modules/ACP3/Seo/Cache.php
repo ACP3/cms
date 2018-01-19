@@ -1,14 +1,15 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Seo;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Seo
- */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     /**
@@ -17,7 +18,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $seoRepository;
 
     /**
-     * @param \ACP3\Core\Cache $cache
+     * @param \ACP3\Core\Cache                                      $cache
      * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
@@ -30,7 +31,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Gibt den Cache der URI-Aliase zurück
+     * Gibt den Cache der URI-Aliase zurück.
      *
      * @return array
      */
@@ -44,9 +45,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Setzt den Cache für die URI-Aliase
+     * Setzt den Cache für die URI-Aliase.
      *
-     * @return boolean
+     * @return bool
      */
     public function saveCache()
     {

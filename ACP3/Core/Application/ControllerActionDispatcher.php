@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Application;
@@ -16,10 +17,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 
-/**
- * Class ControllerActionDispatcher
- * @package ACP3\Core\Application
- */
 class ControllerActionDispatcher
 {
     /**
@@ -41,9 +38,9 @@ class ControllerActionDispatcher
 
     /**
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param ArgumentResolverInterface $argumentResolver
+     * @param \ACP3\Core\Http\RequestInterface                            $request
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
+     * @param ArgumentResolverInterface                                   $argumentResolver
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -59,7 +56,8 @@ class ControllerActionDispatcher
 
     /**
      * @param string $serviceId
-     * @param array $arguments
+     * @param array  $arguments
+     *
      * @return Response|string
      *
      * @throws ControllerActionNotFoundException
@@ -109,9 +107,10 @@ class ControllerActionDispatcher
 
     /**
      * @param \ACP3\Core\Controller\ActionInterface $controller
-     * @param array $arguments
+     * @param array                                 $arguments
      *
      * @return mixed
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     private function executeControllerAction(ActionInterface $controller, array $arguments)
@@ -122,18 +121,19 @@ class ControllerActionDispatcher
             $arguments = $this->argumentResolver->getArguments($this->request->getSymfonyRequest(), $callable);
         }
 
-        return call_user_func_array($callable, $arguments);
+        return \call_user_func_array($callable, $arguments);
     }
 
     /**
      * @param ActionInterface $controller
+     *
      * @return array
      */
     private function getCallable(ActionInterface $controller)
     {
         $callable = [$controller, 'execute'];
         if (($this->request->getPost()->has('submit') || $this->request->getPost()->has('continue'))
-            && method_exists($controller, 'executePost')) {
+            && \method_exists($controller, 'executePost')) {
             $reflection = new \ReflectionMethod($controller, 'executePost');
 
             if ($reflection->isPublic()) {

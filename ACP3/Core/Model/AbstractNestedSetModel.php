@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Model;
@@ -29,12 +30,13 @@ abstract class AbstractNestedSetModel extends AbstractModel
 
     /**
      * AbstractNestedSetModel constructor.
+     *
      * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param AbstractRepository $repository
-     * @param Insert $insertOperation
-     * @param Edit $editOperation
-     * @param Delete $deleteOperation
+     * @param DataProcessor            $dataProcessor
+     * @param AbstractRepository       $repository
+     * @param Insert                   $insertOperation
+     * @param Edit                     $editOperation
+     * @param Delete                   $deleteOperation
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -52,8 +54,9 @@ abstract class AbstractNestedSetModel extends AbstractModel
     }
 
     /**
-     * @param array $rawData
+     * @param array    $rawData
      * @param int|null $entryId
+     *
      * @return bool|int
      */
     public function save(array $rawData, $entryId = null)
@@ -74,7 +77,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
             $result = $this->editOperation->execute(
                 $entryId,
                 $filteredData['parent_id'],
-                isset($filteredData['block_id']) ? $filteredData['block_id'] : 0,
+                $filteredData['block_id'] ?? 0,
                 $filteredData
             );
         }
@@ -86,29 +89,34 @@ abstract class AbstractNestedSetModel extends AbstractModel
 
     /**
      * @param int|array $entryId
+     *
      * @return int
      */
     public function delete($entryId)
     {
         $repository = $this->repository;
 
-        if (!is_array($entryId)) {
+        if (!\is_array($entryId)) {
             $entryId = [$entryId];
         }
 
         $this->dispatchEvent('core.model.before_delete', $entryId, false);
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete', $entryId, false
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete',
+            $entryId,
+            false
         );
 
         $affectedRows = 0;
         foreach ($entryId as $item) {
-            $affectedRows += (int)$this->deleteOperation->execute($item);
+            $affectedRows += (int) $this->deleteOperation->execute($item);
         }
 
         $this->dispatchEvent('core.model.before_delete', $entryId, false);
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete', $entryId, false
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete',
+            $entryId,
+            false
         );
 
         return $affectedRows;

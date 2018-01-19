@@ -1,14 +1,16 @@
 <?php
-namespace ACP3\Modules\ACP3\Users\Validation\ValidationRules;
 
 /**
- * Class AccountNotNotExistsByNameValidationRule
- * @package ACP3\Modules\ACP3\Users\Validation\ValidationRules
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Modules\ACP3\Users\Validation\ValidationRules;
+
 class AccountNotExistsByNameValidationRule extends AbstractAccountNotExistsValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function accountExists($data, $userId)
     {

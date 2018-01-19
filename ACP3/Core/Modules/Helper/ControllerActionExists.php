@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Modules\Helper;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-/**
- * Class ControllerActionExists
- * @package ACP3\Core\Modules\Helper
- */
 class ControllerActionExists
 {
     /**
@@ -23,15 +25,15 @@ class ControllerActionExists
     }
 
     /**
-     * Returns, whether the given module controller action exists
+     * Returns, whether the given module controller action exists.
      *
      * @param string $path
      *
-     * @return boolean
+     * @return bool
      */
     public function controllerActionExists($path)
     {
-        $pathArray = explode('/', strtolower($path));
+        $pathArray = \explode('/', \strtolower($path));
 
         if (empty($pathArray[2]) === true) {
             $pathArray[2] = 'index';
@@ -42,6 +44,6 @@ class ControllerActionExists
 
         $serviceId = $pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2] . '.' . $pathArray[3];
 
-        return $this->container->has($serviceId) && method_exists($this->container->get($serviceId), 'execute');
+        return $this->container->has($serviceId) && \method_exists($this->container->get($serviceId), 'execute');
     }
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Emoticons\Event\Listener;
@@ -25,7 +26,8 @@ class OnEmoticonsModelBeforeDeleteListener
 
     /**
      * OnEmoticonsModelBeforeDeleteListener constructor.
-     * @param ApplicationPath $applicationPath
+     *
+     * @param ApplicationPath    $applicationPath
      * @param EmoticonRepository $emoticonRepository
      */
     public function __construct(

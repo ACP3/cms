@@ -1,10 +1,12 @@
 <?php
-namespace ACP3\Core\View\Renderer\Smarty;
 
 /**
- * Interface PluginInterface
- * @package ACP3\Core\View\Renderer\Smarty
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
+
+namespace ACP3\Core\View\Renderer\Smarty;
+
 interface PluginInterface
 {
     const EXTENSION_TYPE_BLOCK = 'block';

@@ -1,12 +1,14 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
 
-/**
- * Class Alerts
- * @package ACP3\Core\Helpers
- */
 class Alerts
 {
     /**
@@ -20,7 +22,7 @@ class Alerts
 
     /**
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\View $view
+     * @param \ACP3\Core\View                  $view
      */
     public function __construct(
         Core\Http\RequestInterface $request,
@@ -31,12 +33,12 @@ class Alerts
     }
 
     /**
-     * Displays a confirmation box
+     * Displays a confirmation box.
      *
-     * @param string $text
+     * @param string       $text
      * @param string|array $forward
-     * @param string $backward
-     * @param integer $overlay
+     * @param string       $backward
+     * @param int          $overlay
      *
      * @return string
      */
@@ -56,14 +58,15 @@ class Alerts
 
             return 'System/Alerts/confirm_box.tpl';
         }
+
         return '';
     }
 
     /**
-     * Displays a confirmation box, where the forward button triggers a form submit using POST
+     * Displays a confirmation box, where the forward button triggers a form submit using POST.
      *
      * @param string $text
-     * @param array $data
+     * @param array  $data
      * @param string $forward
      * @param string $backward
      *
@@ -82,21 +85,24 @@ class Alerts
             }
 
             return [
-                'confirm' => $confirm
+                'confirm' => $confirm,
             ];
         }
+
         return [];
     }
 
     /**
-     * Returns the pretty printed form errors
+     * Returns the pretty printed form errors.
      *
      * @param string|array $errors
+     *
      * @return string
      */
     public function errorBox($errors)
     {
         $this->view->assign('CONTENT_ONLY', $this->request->isXmlHttpRequest() === true);
+
         return $this->view->fetchTemplate($this->errorBoxContent($errors));
     }
 
@@ -121,9 +127,10 @@ class Alerts
 
         $errors = $this->prepareErrorBoxData($errors);
 
-        foreach (array_keys($errors) as $key) {
-            if (is_numeric($key) === false) {
+        foreach (\array_keys($errors) as $key) {
+            if (\is_numeric($key) === false) {
                 $hasNonIntegerKeys = true;
+
                 break;
             }
         }
@@ -132,23 +139,24 @@ class Alerts
             'error_box',
             [
                 'non_integer_keys' => $hasNonIntegerKeys,
-                'errors' => $errors
+                'errors' => $errors,
             ]
         );
     }
 
     /**
      * @param string|array $errors
+     *
      * @return array
      */
     protected function prepareErrorBoxData($errors)
     {
-        if (is_string($errors) && ($data = @unserialize($errors)) !== false) {
+        if (\is_string($errors) && ($data = @\unserialize($errors)) !== false) {
             $errors = $data;
         }
 
-        if (is_array($errors) === false) {
-            $errors = (array)$errors;
+        if (\is_array($errors) === false) {
+            $errors = (array) $errors;
         }
 
         return $errors;

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Model;
@@ -21,7 +22,7 @@ class RolesModel extends AbstractNestedSetModel
     {
         return [
             'name' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'parent_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT
+            'parent_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

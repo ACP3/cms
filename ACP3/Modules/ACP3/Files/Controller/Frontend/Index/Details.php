@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Details
- * @package ACP3\Modules\ACP3\Files\Controller\Frontend\Index
- */
 class Details extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -32,10 +29,10 @@ class Details extends Core\Controller\AbstractFrontendAction
     protected $filesCache;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Controller\Context\FrontendContext             $context
+     * @param \ACP3\Core\Date                                           $date
      * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache $filesCache
+     * @param \ACP3\Modules\ACP3\Files\Cache                            $filesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -52,7 +49,9 @@ class Details extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param int $id
+     *
      * @return array
+     *
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -74,7 +73,7 @@ class Details extends Core\Controller\AbstractFrontendAction
             return [
                 'file' => $file,
                 'dateformat' => $settings['dateformat'],
-                'comments_allowed' => $settings['comments'] == 1 && $file['comments'] == 1
+                'comments_allowed' => $settings['comments'] == 1 && $file['comments'] == 1,
             ];
         }
 

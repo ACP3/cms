@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class AbstractFormAction
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Index
- */
 abstract class AbstractFormAction extends AbstractFrontendAction
 {
     /**
@@ -36,10 +33,11 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     /**
      * AbstractFormAction constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
+     * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Cache                                $permissionsCache
+     *
      * @internal param Permissions\Model\Repository\RuleRepository $ruleRepository
      */
     public function __construct(
@@ -68,7 +66,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         $permissions = [
             0 => 'deny_access',
             1 => 'allow_access',
-            2 => 'inherit_access'
+            2 => 'inherit_access',
         ];
 
         $select = [];
@@ -80,7 +78,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
             $select[$value] = [
                 'value' => $value,
                 'selected' => $this->privilegeIsChecked($moduleId, $privilegeId, $value, $defaultValue),
-                'lang' => $this->translator->t('permissions', $phrase)
+                'lang' => $this->translator->t('permissions', $phrase),
             ];
         }
 
@@ -97,8 +95,8 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     protected function privilegeIsChecked($moduleId, $privilegeId, $value = 0, $defaultValue = null)
     {
-        if (count($this->request->getPost()->all()) == 0 && $defaultValue === $value ||
-            $this->request->getPost()->count() !== 0 && (int)$this->request->getPost()->get('privileges')[$moduleId][$privilegeId] === $value
+        if (\count($this->request->getPost()->all()) == 0 && $defaultValue === $value ||
+            $this->request->getPost()->count() !== 0 && (int) $this->request->getPost()->get('privileges')[$moduleId][$privilegeId] === $value
         ) {
             return ' checked="checked"';
         }
@@ -115,10 +113,12 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     protected function calculatePermission(array $rules, $moduleDir, $key)
     {
-        return sprintf(
+        return \sprintf(
             $this->translator->t('permissions', 'calculated_permission'),
-            $this->translator->t('permissions',
-                isset($rules[$moduleDir][$key]) && $rules[$moduleDir][$key]['access'] === true ? 'allow_access' : 'deny_access')
+            $this->translator->t(
+                'permissions',
+                isset($rules[$moduleDir][$key]) && $rules[$moduleDir][$key]['access'] === true ? 'allow_access' : 'deny_access'
+            )
         );
     }
 
@@ -132,15 +132,16 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     protected function fetchRoles($roleParentId = 0, $roleLeftId = 0, $roleRightId = 0)
     {
         $roles = $this->acl->getAllRoles();
-        $cRoles = count($roles);
+        $cRoles = \count($roles);
         for ($i = 0; $i < $cRoles; ++$i) {
             if ($roles[$i]['left_id'] >= $roleLeftId && $roles[$i]['right_id'] <= $roleRightId) {
                 unset($roles[$i]);
             } else {
                 $roles[$i]['selected'] = $this->formsHelper->selectEntry('roles', $roles[$i]['id'], $roleParentId);
-                $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
+                $roles[$i]['name'] = \str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
             }
         }
+
         return $roles;
     }
 
@@ -155,16 +156,16 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         $rules = $this->permissionsCache->getRulesCache([$roleId]);
         $modules = $this->modules->getActiveModules();
         $privileges = $this->privilegeRepository->getAllPrivileges();
-        $cPrivileges = count($privileges);
+        $cPrivileges = \count($privileges);
 
         foreach ($modules as $name => $moduleInfo) {
-            $moduleDir = strtolower($moduleInfo['dir']);
+            $moduleDir = \strtolower($moduleInfo['dir']);
             for ($j = 0; $j < $cPrivileges; ++$j) {
                 $privileges[$j]['select'] = $this->generatePrivilegeCheckboxes(
                     $roleId,
                     $moduleInfo['id'],
                     $privileges[$j]['id'],
-                    isset($rules[$moduleDir][$privileges[$j]['key']]['permission']) ? (int)$rules[$moduleDir][$privileges[$j]['key']]['permission'] : $defaultValue
+                    isset($rules[$moduleDir][$privileges[$j]['key']]['permission']) ? (int) $rules[$moduleDir][$privileges[$j]['key']]['permission'] : $defaultValue
                 );
                 if ($roleId !== 0) {
                     $privileges[$j]['calculated'] = $this->calculatePermission($rules, $moduleDir, $privileges[$j]['key']);
@@ -172,6 +173,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
             }
             $modules[$name]['privileges'] = $privileges;
         }
+
         return $modules;
     }
 }

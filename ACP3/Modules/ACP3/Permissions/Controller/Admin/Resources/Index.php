@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class Index
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources
- */
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -23,7 +20,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
      */
     public function __construct(
@@ -41,7 +38,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     public function execute()
     {
         $resources = $this->resourceRepository->getAllResources();
-        $cResources = count($resources);
+        $cResources = \count($resources);
         $output = [];
         for ($i = 0; $i < $cResources; ++$i) {
             if ($this->modules->isActive($resources[$i]['module_name']) === true) {
@@ -49,12 +46,12 @@ class Index extends Core\Controller\AbstractFrontendAction
                 $output[$module][] = $resources[$i];
             }
         }
-        ksort($output);
+        \ksort($output);
 
         return [
             'resources' => $output,
             'can_delete_resource' => $this->acl->hasPermission('admin/permissions/resources/delete'),
-            'can_edit_resource' => $this->acl->hasPermission('admin/permissions/resources/edit')
+            'can_edit_resource' => $this->acl->hasPermission('admin/permissions/resources/edit'),
         ];
     }
 }

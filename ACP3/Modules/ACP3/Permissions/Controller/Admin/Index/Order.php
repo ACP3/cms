@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-/**
- * Class Order
- * @package ACP3\Modules\ACP3\Permissions\Controller\Admin\Index
- */
 class Order extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -31,10 +28,10 @@ class Order extends Core\Controller\AbstractFrontendAction
     /**
      * Order constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\NestedSet\Operation\Sort $sortOperation
+     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
+     * @param Core\NestedSet\Operation\Sort                                  $sortOperation
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Cache                           $permissionsCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -54,6 +51,7 @@ class Order extends Core\Controller\AbstractFrontendAction
      * @param string $action
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id, $action)

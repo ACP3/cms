@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
@@ -10,10 +11,6 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-/**
- * Class Pics
- * @package ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index
- */
 class Pics extends AbstractAction
 {
     use Core\Cache\CacheResponseTrait;
@@ -34,17 +31,17 @@ class Pics extends AbstractAction
     /**
      * Pics constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext      $context
-     * @param \ACP3\Core\Date                                    $date
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param \ACP3\Core\Date                                               $date
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Cache                              $galleryCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Gallery\Model\Repository\GalleryRepository $galleryRepository,
-        Gallery\Cache $galleryCache)
-    {
+        Gallery\Cache $galleryCache
+    ) {
         parent::__construct($context);
 
         $this->date = $date;
@@ -56,6 +53,7 @@ class Pics extends AbstractAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -72,7 +70,7 @@ class Pics extends AbstractAction
 
             return [
                 'pictures' => $this->galleryCache->getCache($id),
-                'overlay' => (int)$this->settings['overlay']
+                'overlay' => (int) $this->settings['overlay'],
             ];
         }
 

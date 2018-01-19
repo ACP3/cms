@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\I18n;
@@ -17,14 +18,15 @@ class CountryList
     /**
      * @var null|array
      */
-    private $countries = null;
+    private $countries;
     /**
      * @var null|array
      */
-    private $supportedLocales = null;
+    private $supportedLocales;
 
     /**
      * Country constructor.
+     *
      * @param Translator $translator
      */
     public function __construct(Translator $translator)
@@ -33,7 +35,7 @@ class CountryList
     }
 
     /**
-     * Returns an array with all earth countries
+     * Returns an array with all earth countries.
      *
      * @return array
      */
@@ -52,7 +54,7 @@ class CountryList
 
         $locales = [
             $this->getTransformedLocale(),
-            $this->translator->getShortIsoCode()
+            $this->translator->getShortIsoCode(),
         ];
 
         foreach ($locales as $locale) {
@@ -61,11 +63,12 @@ class CountryList
             }
         }
 
-        asort($this->countries, SORT_STRING);
+        \asort($this->countries, SORT_STRING);
     }
 
     /**
      * @param string $locale
+     *
      * @return bool
      */
     private function isSupportedLocale($locale)
@@ -74,7 +77,7 @@ class CountryList
             $this->supportedLocales = Locale::getSupportedLocales();
         }
 
-        return in_array($locale, $this->supportedLocales);
+        return \in_array($locale, $this->supportedLocales);
     }
 
     /**
@@ -82,6 +85,6 @@ class CountryList
      */
     private function getTransformedLocale()
     {
-        return strtolower(str_replace('_', '-', $this->translator->getLocale()));
+        return \strtolower(\str_replace('_', '-', $this->translator->getLocale()));
     }
 }

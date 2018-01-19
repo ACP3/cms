@@ -1,13 +1,15 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Files;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
-/**
- * Class Cache
- * @package ACP3\Modules\ACP3\Files
- */
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     const CACHE_ID = 'details_id_';
@@ -18,7 +20,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $filesRepository;
 
     /**
-     * @param \ACP3\Core\Cache                               $cache
+     * @param \ACP3\Core\Cache                                          $cache
      * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
      */
     public function __construct(
@@ -31,7 +33,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * @param integer $fileId
+     * @param int $fileId
      *
      * @return array
      */
@@ -45,9 +47,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * @param integer $fileId
+     * @param int $fileId
      *
-     * @return boolean
+     * @return bool
      */
     public function saveCache($fileId)
     {

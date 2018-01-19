@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Emoticons;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index
- */
 class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
@@ -31,17 +28,17 @@ class Create extends Core\Controller\AbstractFrontendAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Emoticons\Model\EmoticonsModel $emoticonsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
+     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
+     * @param Emoticons\Model\EmoticonsModel                              $emoticonsModel
      * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Emoticons\Model\EmoticonsModel $emoticonsModel,
-        Emoticons\Validation\AdminFormValidation $adminFormValidation)
-    {
+        Emoticons\Validation\AdminFormValidation $adminFormValidation
+    ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
@@ -55,8 +52,8 @@ class Create extends Core\Controller\AbstractFrontendAction
     public function execute()
     {
         return [
-            'form' => array_merge(['code' => '', 'description' => ''], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge(['code' => '', 'description' => ''], $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 

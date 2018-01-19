@@ -1,14 +1,16 @@
 <?php
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\Application;
 
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\ErrorHandler;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class AbstractBootstrap
- * @package ACP3\Core\Application
- */
 abstract class AbstractBootstrap implements BootstrapInterface
 {
     /**
@@ -44,7 +46,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
     }
 
     /**
-     * Set monolog as the default PHP error handler
+     * Set monolog as the default PHP error handler.
      */
     public function setErrorHandler()
     {
@@ -52,7 +54,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getContainer()
     {
@@ -68,7 +70,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
     }
 
     /**
-     * Checks, whether the database configuration file exists
+     * Checks, whether the database configuration file exists.
      *
      * @return bool
      */
@@ -76,6 +78,6 @@ abstract class AbstractBootstrap implements BootstrapInterface
     {
         $path = $this->appPath->getAppDir() . 'config.yml';
 
-        return is_file($path) === true && filesize($path) !== 0;
+        return \is_file($path) === true && \filesize($path) !== 0;
     }
 }

@@ -1,14 +1,17 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Core\View\Renderer;
 
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 
 /**
- * Renderer for the Smarty template engine
- *
- * @package ACP3\Core\View\Renderer
+ * Renderer for the Smarty template engine.
  */
 class Smarty implements RendererInterface
 {
@@ -28,15 +31,15 @@ class Smarty implements RendererInterface
     /**
      * Smarty constructor.
      *
-     * @param \Smarty $smarty
+     * @param \Smarty                                $smarty
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param string $environment
+     * @param string                                 $environment
      */
     public function __construct(
         \Smarty $smarty,
         ApplicationPath $appPath,
-        $environment)
-    {
+        $environment
+    ) {
         $this->smarty = $smarty;
         $this->appPath = $appPath;
         $this->environment = $environment;
@@ -62,7 +65,8 @@ class Smarty implements RendererInterface
     protected function isDevOrInstall()
     {
         $environments = [ApplicationMode::DEVELOPMENT, ApplicationMode::INSTALLER, ApplicationMode::UPDATER];
-        return in_array($this->environment, $environments);
+
+        return \in_array($this->environment, $environments);
     }
 
     /**
@@ -74,7 +78,7 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function assign($name, $value = null)
     {
@@ -84,7 +88,7 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getTemplateVars($variableName = null)
     {
@@ -92,7 +96,7 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function fetch($template, $cacheId = null, $compileId = null, $parent = null)
     {
@@ -100,7 +104,7 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function display($template, $cacheId = null, $compileId = null, $parent = null)
     {
@@ -108,7 +112,7 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function templateExists($template)
     {

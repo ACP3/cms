@@ -1,14 +1,15 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Acp\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
-/**
- * Class Installer
- * @package ACP3\Modules\ACP3\Acp\Installer
- */
 class Schema implements Modules\Installer\SchemaInterface
 {
     const MODULE_NAME = 'acp';
@@ -38,7 +39,7 @@ class Schema implements Modules\Installer\SchemaInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function schemaUpdates()
     {
@@ -53,9 +54,9 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             'admin' => [
                 'index' => [
-                    'index' => PrivilegeEnum::ADMIN_VIEW
-                ]
-            ]
+                    'index' => PrivilegeEnum::ADMIN_VIEW,
+                ],
+            ],
         ];
     }
 

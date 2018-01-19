@@ -1,17 +1,14 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Test\DataProvider\Helpers;
 
 use ACP3\Core\Test\DataProvider\DataProviderInterface;
 
-/**
- * Class RecordsPerPageDataProvider
- * @package ACP3\Core\Test\DataProvider\Helpers
- */
 class RecordsPerPageDataProvider implements DataProviderInterface
 {
     /**
@@ -31,30 +28,30 @@ class RecordsPerPageDataProvider implements DataProviderInterface
                         'selected' => '',
                         'id' => 'entries',
                         'name' => 'entries',
-                        'lang' => 5
+                        'lang' => 5,
                     ],
                     [
                         'value' => 10,
                         'selected' => '',
                         'id' => 'entries',
                         'name' => 'entries',
-                        'lang' => 10
+                        'lang' => 10,
                     ],
                     [
                         'value' => 15,
                         'selected' => '',
                         'id' => 'entries',
                         'name' => 'entries',
-                        'lang' => 15
+                        'lang' => 15,
                     ],
                     [
                         'value' => 20,
                         'selected' => '',
                         'id' => 'entries',
                         'name' => 'entries',
-                        'lang' => 20
+                        'lang' => 20,
                     ],
-                ]
+                ],
             ],
             'default_selected' => [
                 10,
@@ -67,30 +64,30 @@ class RecordsPerPageDataProvider implements DataProviderInterface
                         'selected' => '',
                         'id' => 'entries',
                         'name' => 'entries',
-                        'lang' => 5
+                        'lang' => 5,
                     ],
                     [
                         'value' => 10,
                         'selected' => ' selected="selected"',
                         'id' => 'entries',
                         'name' => 'entries',
-                        'lang' => 10
+                        'lang' => 10,
                     ],
                     [
                         'value' => 15,
                         'selected' => '',
                         'id' => 'entries',
                         'name' => 'entries',
-                        'lang' => 15
+                        'lang' => 15,
                     ],
                     [
                         'value' => 20,
                         'selected' => '',
                         'id' => 'entries',
                         'name' => 'entries',
-                        'lang' => 20
+                        'lang' => 20,
                     ],
-                ]
+                ],
             ],
             'post_selected' => [
                 '',
@@ -103,30 +100,30 @@ class RecordsPerPageDataProvider implements DataProviderInterface
                         'selected' => '',
                         'id' => 'entries',
                         'name' => 'entries',
-                        'lang' => 5
+                        'lang' => 5,
                     ],
                     [
                         'value' => 10,
                         'selected' => '',
                         'id' => 'entries',
                         'name' => 'entries',
-                        'lang' => 10
+                        'lang' => 10,
                     ],
                     [
                         'value' => 15,
                         'selected' => ' selected="selected"',
                         'id' => 'entries',
                         'name' => 'entries',
-                        'lang' => 15
+                        'lang' => 15,
                     ],
                     [
                         'value' => 20,
                         'selected' => '',
                         'id' => 'entries',
                         'name' => 'entries',
-                        'lang' => 20
+                        'lang' => 20,
                     ],
-                ]
+                ],
             ],
         ];
     }

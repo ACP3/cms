@@ -1,15 +1,12 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENSE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Session;
 
-/**
- * Interface SessionHandlerInterface
- * @package ACP3\Core\Session
- */
 interface SessionHandlerInterface extends \SessionHandlerInterface
 {
     const SESSION_NAME = 'ACP3_SID';
@@ -17,7 +14,6 @@ interface SessionHandlerInterface extends \SessionHandlerInterface
 
     /**
      * @param string     $key
-     *
      * @param mixed|null $default
      *
      * @return mixed|null
@@ -47,9 +43,7 @@ interface SessionHandlerInterface extends \SessionHandlerInterface
     public function remove($key);
 
     /**
-     * Secures the current session to prevent from session fixations
-     *
-     * @return void
+     * Secures the current session to prevent from session fixations.
      */
     public function secureSession();
 }

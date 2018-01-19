@@ -1,14 +1,15 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Files\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
-/**
- * Class Installer
- * @package ACP3\Modules\ACP3\Files
- */
 class Schema implements Modules\Installer\SchemaInterface
 {
     const MODULE_NAME = 'files';
@@ -28,21 +29,21 @@ class Schema implements Modules\Installer\SchemaInterface
                     'index' => PrivilegeEnum::ADMIN_VIEW,
                     'settings' => PrivilegeEnum::ADMIN_SETTINGS,
                     'sort' => PrivilegeEnum::ADMIN_CREATE,
-                ]
+                ],
             ],
             'frontend' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
                     'details' => PrivilegeEnum::FRONTEND_VIEW,
                     'download' => PrivilegeEnum::FRONTEND_VIEW,
-                    'files' => PrivilegeEnum::FRONTEND_VIEW
-                ]
+                    'files' => PrivilegeEnum::FRONTEND_VIEW,
+                ],
             ],
             'widget' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -68,7 +69,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            "CREATE TABLE `{pre}files` (
+            'CREATE TABLE `{pre}files` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `active` TINYINT(1) UNSIGNED NOT NULL,
                 `start` DATETIME NOT NULL,
@@ -89,7 +90,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 INDEX (`sort`),
                 FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE SET NULL,
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL
-            ) {ENGINE} {CHARSET};"
+            ) {ENGINE} {CHARSET};',
         ];
     }
 
@@ -99,7 +100,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function removeTables()
     {
         return [
-            "DROP TABLE IF EXISTS `{pre}files`;"
+            'DROP TABLE IF EXISTS `{pre}files`;',
         ];
     }
 
@@ -112,7 +113,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'comments' => 1,
             'dateformat' => 'long',
             'sidebar' => 5,
-            'order_by' => 'date'
+            'order_by' => 'date',
         ];
     }
 }

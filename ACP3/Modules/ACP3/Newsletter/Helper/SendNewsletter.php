@@ -1,15 +1,16 @@
 <?php
 
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
 namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository;
 
-/**
- * Class SendNewsletter
- * @package ACP3\Modules\ACP3\Newsletter\Helper
- */
 class SendNewsletter
 {
     /**
@@ -32,9 +33,9 @@ class SendNewsletter
     /**
      * SendNewsletter constructor.
      *
-     * @param \ACP3\Core\Mailer $mailer
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \ACP3\Core\Settings\SettingsInterface $config
+     * @param \ACP3\Core\Mailer                                                   $mailer
+     * @param \ACP3\Core\Router\RouterInterface                                   $router
+     * @param \ACP3\Core\Settings\SettingsInterface                               $config
      * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
      */
     public function __construct(
@@ -50,11 +51,11 @@ class SendNewsletter
     }
 
     /**
-     * Versendet einen Newsletter
+     * Versendet einen Newsletter.
      *
-     * @param int $newsletterId
+     * @param int          $newsletterId
      * @param string|array $recipients
-     * @param bool $bcc
+     * @param bool         $bcc
      *
      * @return bool
      */
@@ -65,7 +66,7 @@ class SendNewsletter
         $newsletter = $this->newsletterRepository->getOneById($newsletterId);
         $sender = [
             'email' => $settings['mail'],
-            'name' => $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME)['site_title']
+            'name' => $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME)['site_title'],
         ];
 
         $this->mailer

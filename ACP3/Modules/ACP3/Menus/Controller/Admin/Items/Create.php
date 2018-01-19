@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Copyright (c) by the ACP3 Developers. See the LICENSE file at the top-level module directory for licencing
- * details.
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
@@ -9,10 +10,6 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus;
 
-/**
- * Class Create
- * @package ACP3\Modules\ACP3\Menus\Controller\Admin\Items
- */
 class Create extends AbstractFormAction
 {
     /**
@@ -43,12 +40,12 @@ class Create extends AbstractFormAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository $menuRepository
-     * @param Menus\Model\MenuItemsModel $menuItemsModel
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository   $menuRepository
+     * @param Menus\Model\MenuItemsModel                                 $menuItemsModel
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields        $menuItemFormFieldsHelper
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
      */
     public function __construct(
@@ -89,8 +86,8 @@ class Create extends AbstractFormAction
             'mode' => $this->fetchMenuItemTypes(),
             'modules' => $this->fetchModules(),
             'target' => $this->formsHelper->linkTargetChoicesGenerator('target'),
-            'form' => array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken()
+            'form' => \array_merge($defaults, $this->request->getPost()->all()),
+            'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
@@ -107,6 +104,7 @@ class Create extends AbstractFormAction
 
                 $formData['mode'] = $this->fetchMenuItemModeForSave($formData);
                 $formData['uri'] = $this->fetchMenuItemUriForSave($formData);
+
                 return $this->menuItemsModel->save($formData);
             },
             'acp/menus'
