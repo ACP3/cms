@@ -2,7 +2,7 @@
   "name": "acp3/module-wysiwyg-tinymce",
   "description": "Provides the WYSIWYG-TinyMCE module for the ACP3 CMS.",
   "type": "acp3-module",
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Tino Goratsch",

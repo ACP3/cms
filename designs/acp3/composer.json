@@ -2,7 +2,7 @@
   "name": "acp3/theme-default",
   "description": "This is the default design of the ACP3 CMS.",
   "type": "acp3-theme",
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Tino Goratsch",

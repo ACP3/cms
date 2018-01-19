@@ -1,7 +1,7 @@
 {
   "name": "acp3/core",
   "description": "Provides the core components of the ACP3 CMS.",
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "type": "acp3-core",
   "authors": [
     {
