@@ -12,7 +12,7 @@ use ACP3\Core\Modules\Installer\SchemaInterface;
 class SchemaInstaller extends SchemaHelper implements InstallerInterface
 {
     /**
-     * Installs a module
+     * Installs a module.
      *
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      *
@@ -32,6 +32,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
 
     /**
      * @param SchemaInterface $schema
+     *
      * @return bool
      */
     protected function moduleNeedsInstallation(SchemaInterface $schema)
@@ -42,7 +43,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     }
 
     /**
-     * Adds a module to the modules SQL-table
+     * Adds a module to the modules SQL-table.
      *
      * @param string $moduleName
      * @param int    $schemaVersion
@@ -62,12 +63,13 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     }
 
     /**
-     * Installs all module settings
+     * Installs all module settings.
      *
      * @param string $moduleName
      * @param array  $settings
      *
      * @return bool
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function installSettings($moduleName, array $settings)
@@ -100,7 +102,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     }
 
     /**
-     * Method for uninstalling a module
+     * Method for uninstalling a module.
      *
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      *
@@ -113,7 +115,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     }
 
     /**
-     * Löscht ein Modul aus der modules DB-Tabelle
+     * Löscht ein Modul aus der modules DB-Tabelle.
      *
      * @param string $moduleName
      *
@@ -121,6 +123,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     protected function removeFromModulesTable($moduleName)
     {
-        return $this->systemModuleRepository->delete((int)$this->getModuleId($moduleName)) !== false;
+        return $this->systemModuleRepository->delete((int) $this->getModuleId($moduleName)) !== false;
     }
 }

@@ -14,7 +14,7 @@ use ACP3\Core\Settings\Event\SettingsSaveEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Manages the various module settings
+ * Manages the various module settings.
  */
 class Settings implements SettingsInterface
 {
@@ -43,9 +43,10 @@ class Settings implements SettingsInterface
 
     /**
      * Settings constructor.
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param Cache $coreCache
-     * @param ModuleAwareRepositoryInterface $systemModuleRepository
+     *
+     * @param EventDispatcherInterface         $eventDispatcher
+     * @param Cache                            $coreCache
+     * @param ModuleAwareRepositoryInterface   $systemModuleRepository
      * @param SettingsAwareRepositoryInterface $systemSettingsRepository
      */
     public function __construct(
@@ -61,9 +62,9 @@ class Settings implements SettingsInterface
     }
 
     /**
-     * Saves the module's settings to the database
+     * Saves the module's settings to the database.
      *
-     * @param array $data
+     * @param array  $data
      * @param string $module
      *
      * @return bool
@@ -92,7 +93,7 @@ class Settings implements SettingsInterface
     }
 
     /**
-     * Saves the modules settings to the cache
+     * Saves the modules settings to the cache.
      *
      * @return bool
      */
@@ -109,9 +110,10 @@ class Settings implements SettingsInterface
     }
 
     /**
-     * Returns the module's settings from the cache
+     * Returns the module's settings from the cache.
      *
      * @param string $module
+     *
      * @return array
      */
     public function getSettings($module)

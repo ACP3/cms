@@ -34,9 +34,10 @@ class UpdateCheck
 
     /**
      * UpdateCheck constructor.
-     * @param Date $date
+     *
+     * @param Date              $date
      * @param SettingsInterface $settings
-     * @param UpdateFileParser $updateFileParser
+     * @param UpdateFileParser  $updateFileParser
      */
     public function __construct(Date $date, SettingsInterface $settings, UpdateFileParser $updateFileParser)
     {
@@ -68,6 +69,7 @@ class UpdateCheck
 
     /**
      * @param string $lastUpdateTimestamp
+     *
      * @return bool
      */
     private function canRequestUpdateURI($lastUpdateTimestamp)
@@ -100,6 +102,7 @@ class UpdateCheck
 
     /**
      * @param string $latestVersion
+     *
      * @return bool
      */
     private function isLatestVersion($latestVersion)
@@ -112,6 +115,7 @@ class UpdateCheck
 
     /**
      * @param array $update
+     *
      * @return bool
      */
     private function saveUpdateSettings(array $update)

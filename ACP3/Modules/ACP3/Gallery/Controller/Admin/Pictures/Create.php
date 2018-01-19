@@ -33,12 +33,12 @@ class Create extends AbstractFormAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param \ACP3\Core\Helpers\Forms                                      $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                  $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
-     * @param Gallery\Model\PictureModel $pictureModel
-     * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
+     * @param Gallery\Model\PictureModel                                    $pictureModel
+     * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation   $pictureFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -58,7 +58,9 @@ class Create extends AbstractFormAction
 
     /**
      * @param int $id
+     *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -85,7 +87,7 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @param int   $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

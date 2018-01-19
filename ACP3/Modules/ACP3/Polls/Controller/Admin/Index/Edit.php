@@ -30,13 +30,13 @@ class Edit extends AbstractFormAction
     protected $pollsModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Polls\Model\PollsModel $pollsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param \ACP3\Core\Date                                            $date
+     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
+     * @param Polls\Model\PollsModel                                     $pollsModel
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
-     * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation $pollsValidator
+     * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation    $pollsValidator
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -59,6 +59,7 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -106,6 +107,7 @@ class Edit extends AbstractFormAction
 
     /**
      * @param int $pollId
+     *
      * @return array
      */
     protected function getAnswers($pollId)
@@ -120,7 +122,7 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function fetchOptions($useMultipleChoice)
     {

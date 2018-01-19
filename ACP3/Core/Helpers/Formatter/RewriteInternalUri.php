@@ -35,10 +35,10 @@ class RewriteInternalUri
     /**
      * RewriteInternalUri constructor.
      *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules\Helper\ControllerActionExists $controllerActionExists
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
+     * @param \ACP3\Core\Environment\ApplicationPath                    $appPath
+     * @param \ACP3\Core\Modules\Helper\ControllerActionExists          $controllerActionExists
+     * @param \ACP3\Core\Http\RequestInterface                          $request
+     * @param \ACP3\Core\Router\RouterInterface                         $router
      * @param Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule
      */
     public function __construct(

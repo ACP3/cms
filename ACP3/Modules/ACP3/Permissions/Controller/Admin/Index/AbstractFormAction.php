@@ -33,10 +33,11 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     /**
      * AbstractFormAction constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
+     * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Cache                                $permissionsCache
+     *
      * @internal param Permissions\Model\Repository\RuleRepository $ruleRepository
      */
     public function __construct(
@@ -95,7 +96,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     protected function privilegeIsChecked($moduleId, $privilegeId, $value = 0, $defaultValue = null)
     {
         if (\count($this->request->getPost()->all()) == 0 && $defaultValue === $value ||
-            $this->request->getPost()->count() !== 0 && (int)$this->request->getPost()->get('privileges')[$moduleId][$privilegeId] === $value
+            $this->request->getPost()->count() !== 0 && (int) $this->request->getPost()->get('privileges')[$moduleId][$privilegeId] === $value
         ) {
             return ' checked="checked"';
         }
@@ -164,7 +165,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
                     $roleId,
                     $moduleInfo['id'],
                     $privileges[$j]['id'],
-                    isset($rules[$moduleDir][$privileges[$j]['key']]['permission']) ? (int)$rules[$moduleDir][$privileges[$j]['key']]['permission'] : $defaultValue
+                    isset($rules[$moduleDir][$privileges[$j]['key']]['permission']) ? (int) $rules[$moduleDir][$privileges[$j]['key']]['permission'] : $defaultValue
                 );
                 if ($roleId !== 0) {
                     $privileges[$j]['calculated'] = $this->calculatePermission($rules, $moduleDir, $privileges[$j]['key']);

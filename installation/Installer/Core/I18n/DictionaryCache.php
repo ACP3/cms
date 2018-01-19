@@ -35,7 +35,7 @@ class DictionaryCache
     }
 
     /**
-     * Gibt die gecacheten Sprachstrings aus
+     * Gibt die gecacheten Sprachstrings aus.
      *
      * @param string $language
      *
@@ -51,7 +51,7 @@ class DictionaryCache
     }
 
     /**
-     * Cacht die Sprachfiles, um diese schneller verarbeiten zu können
+     * Cacht die Sprachfiles, um diese schneller verarbeiten zu können.
      *
      * @param string $language
      *
@@ -73,7 +73,7 @@ class DictionaryCache
             // Über die einzelnen Sprachstrings iterieren
             $xml = \simplexml_load_file($file);
             foreach ($xml->keys->item as $item) {
-                $data['keys'][\strtolower($module . (string)$item['key'])] = \trim((string)$item);
+                $data['keys'][\strtolower($module . (string) $item['key'])] = \trim((string) $item);
             }
         }
 

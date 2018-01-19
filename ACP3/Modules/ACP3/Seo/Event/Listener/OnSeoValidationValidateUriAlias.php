@@ -25,7 +25,8 @@ class OnSeoValidationValidateUriAlias
 
     /**
      * OnSeoValidationValidateUriAlias constructor.
-     * @param ACL $acl
+     *
+     * @param ACL        $acl
      * @param Translator $translator
      */
     public function __construct(

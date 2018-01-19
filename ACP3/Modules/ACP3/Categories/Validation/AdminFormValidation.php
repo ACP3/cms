@@ -33,8 +33,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     /**
      * Validator constructor.
      *
-     * @param \ACP3\Core\I18n\Translator                             $translator
-     * @param \ACP3\Core\Validation\Validator                        $validator
+     * @param \ACP3\Core\I18n\Translator                                        $translator
+     * @param \ACP3\Core\Validation\Validator                                   $validator
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
@@ -84,7 +84,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

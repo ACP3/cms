@@ -19,6 +19,7 @@ class ColumnTypeStrategyFactory
     /**
      * @param ColumnTypeStrategyInterface $columnTypeStrategy
      * @param $columnTypeName
+     *
      * @return $this
      */
     public function registerColumnType(ColumnTypeStrategyInterface $columnTypeStrategy, $columnTypeName)
@@ -30,6 +31,7 @@ class ColumnTypeStrategyFactory
 
     /**
      * @param string $columnType
+     *
      * @return ColumnTypeStrategyInterface
      */
     public function getStrategy($columnType)

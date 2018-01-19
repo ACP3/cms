@@ -49,6 +49,7 @@ trait AvailableDesignsTrait
 
     /**
      * @param string $file
+     *
      * @return bool|string
      */
     private function getDesignDirectory($file)
@@ -61,6 +62,7 @@ trait AvailableDesignsTrait
 
     /**
      * @param string $directory
+     *
      * @return string
      */
     abstract protected function selectEntry($directory);

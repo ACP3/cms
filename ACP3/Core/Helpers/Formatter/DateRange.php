@@ -34,7 +34,7 @@ class DateRange
     }
 
     /**
-     * Formats a given single date or date range into the desired format
+     * Formats a given single date or date range into the desired format.
      *
      * @param string $start
      * @param string $end

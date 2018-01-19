@@ -25,8 +25,8 @@ class Index extends AbstractFrontendAction
     protected $commentRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Pagination $pagination
+     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
+     * @param \ACP3\Core\Pagination                                          $pagination
      * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
      */
     public function __construct(
@@ -42,7 +42,7 @@ class Index extends AbstractFrontendAction
 
     /**
      * @param string $module
-     * @param int $entryId
+     * @param int    $entryId
      *
      * @return array
      */

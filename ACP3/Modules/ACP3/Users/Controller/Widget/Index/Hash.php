@@ -22,7 +22,8 @@ class Hash extends AbstractWidgetAction
 
     /**
      * Hash constructor.
-     * @param WidgetContext $context
+     *
+     * @param WidgetContext        $context
      * @param DefaultHashGenerator $hashGenerator
      */
     public function __construct(WidgetContext $context, DefaultHashGenerator $hashGenerator)

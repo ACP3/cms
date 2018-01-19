@@ -28,9 +28,9 @@ class Create extends Core\Controller\AbstractFrontendAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Emoticons\Model\EmoticonsModel $emoticonsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
+     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
+     * @param Emoticons\Model\EmoticonsModel                              $emoticonsModel
      * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(

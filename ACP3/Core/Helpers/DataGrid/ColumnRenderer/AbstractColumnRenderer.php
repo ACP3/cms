@@ -45,7 +45,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {

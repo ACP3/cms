@@ -53,6 +53,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      * Helper function for initializing models, etc.
      *
      * @return $this
+     *
      * @throws \ACP3\Core\ACL\Exception\AccessForbiddenException
      */
     public function preDispatch()
@@ -71,7 +72,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addCustomTemplateVarsBeforeOutput()
     {
@@ -103,6 +104,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     /**
      * @param string $layoutFileName
      * @param string $defaultLayoutName
+     *
      * @return array
      */
     private function fetchLayoutPaths($layoutFileName, $defaultLayoutName)
@@ -144,6 +146,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
 
     /**
      * @param string $layout
+     *
      * @return $this
      */
     public function setLayout($layout)

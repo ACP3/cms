@@ -30,19 +30,19 @@ class ACL
      */
     protected $userRoleRepository;
     /**
-     * Array mit den jeweiligen Rollen zugewiesenen Berechtigungen
+     * Array mit den jeweiligen Rollen zugewiesenen Berechtigungen.
      *
      * @var array
      */
     protected $privileges = [];
     /**
-     * Array mit den dem Benutzer zugewiesenen Rollen
+     * Array mit den dem Benutzer zugewiesenen Rollen.
      *
      * @var array
      */
     protected $userRoles = [];
     /**
-     * Array mit allen registrierten Ressourcen
+     * Array mit allen registrierten Ressourcen.
      *
      * @var array
      */
@@ -50,10 +50,11 @@ class ACL
 
     /**
      * ACL constructor.
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
-     * @param \ACP3\Core\Modules $modules
+     *
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                    $user
+     * @param \ACP3\Core\Modules                                          $modules
      * @param \ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface $userRoleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache $permissionsCache
+     * @param \ACP3\Modules\ACP3\Permissions\Cache                        $permissionsCache
      */
     public function __construct(
         UserModel $user,
@@ -68,9 +69,9 @@ class ACL
     }
 
     /**
-     * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
+     * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück.
      *
-     * @param integer $userId
+     * @param int $userId
      *
      * @return array
      */
@@ -91,9 +92,9 @@ class ACL
     }
 
     /**
-     * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
+     * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück.
      *
-     * @param integer $userId
+     * @param int $userId
      *
      * @return array
      */
@@ -116,9 +117,9 @@ class ACL
     }
 
     /**
-     * @param integer $roleId
+     * @param int $roleId
      *
-     * @return boolean
+     * @return bool
      */
     public function userHasRole($roleId)
     {
@@ -126,7 +127,7 @@ class ACL
     }
 
     /**
-     * Initializes the available user privileges
+     * Initializes the available user privileges.
      */
     protected function getPrivileges()
     {
@@ -138,7 +139,7 @@ class ACL
     }
 
     /**
-     * Returns the role permissions
+     * Returns the role permissions.
      *
      * @param array $roleIds
      *
@@ -150,11 +151,11 @@ class ACL
     }
 
     /**
-     * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat
+     * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat.
      *
      * @param string $resource
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPermission($resource)
     {
@@ -172,7 +173,7 @@ class ACL
     /**
      * @param string $resource
      *
-     * @return boolean
+     * @return bool
      */
     protected function canAccessResource($resource)
     {
@@ -212,7 +213,7 @@ class ACL
     }
 
     /**
-     * Gibt alle in der Datenbank vorhandenen Ressourcen zurück
+     * Gibt alle in der Datenbank vorhandenen Ressourcen zurück.
      *
      * @return array
      */
@@ -226,12 +227,12 @@ class ACL
     }
 
     /**
-     * Returns, whether the current user has the given privilege
+     * Returns, whether the current user has the given privilege.
      *
      * @param string $module
      * @param string $privilegeKey
      *
-     * @return boolean
+     * @return bool
      */
     protected function userHasPrivilege($module, $privilegeKey)
     {

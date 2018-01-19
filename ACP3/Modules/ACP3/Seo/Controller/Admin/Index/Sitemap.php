@@ -21,7 +21,8 @@ class Sitemap extends AbstractFrontendAction
 
     /**
      * Sitemap constructor.
-     * @param FrontendContext $context
+     *
+     * @param FrontendContext        $context
      * @param SitemapGenerationModel $sitemapGenerationModel
      */
     public function __construct(

@@ -30,9 +30,9 @@ class Helpers
     protected $availableModulesRegistrar;
 
     /**
-     * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Core\Modules $modules
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\ACL              $acl
+     * @param \ACP3\Core\Modules          $modules
+     * @param \ACP3\Core\Helpers\Forms    $formsHelper
      * @param SearchAvailabilityRegistrar $availableModulesRegistrar
      */
     public function __construct(
@@ -48,7 +48,7 @@ class Helpers
     }
 
     /**
-     * Gibt die für die Suche verfügbaren Module zurück
+     * Gibt die für die Suche verfügbaren Module zurück.
      *
      * @return array
      */

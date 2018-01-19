@@ -34,11 +34,11 @@ class Vote extends Core\Controller\AbstractFrontendAction
     protected $voteValidation;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Core\Date $date
-     * @param Polls\Validation\VoteValidation $voteValidation
-     * @param Polls\Model\VoteModel $pollsModel
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param Core\Date                                                  $date
+     * @param Polls\Validation\VoteValidation                            $voteValidation
+     * @param Polls\Model\VoteModel                                      $pollsModel
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository   $pollRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
      */
     public function __construct(
@@ -62,6 +62,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)

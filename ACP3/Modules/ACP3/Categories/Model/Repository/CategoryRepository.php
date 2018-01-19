@@ -21,7 +21,7 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
      */
     public function resultExists($categoryId)
     {
-        return (int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = ?", [$categoryId]) > 0;
+        return (int) $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = ?", [$categoryId]) > 0;
     }
 
     /**
@@ -33,7 +33,7 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
      */
     public function resultIsDuplicate($title, $moduleId, $categoryId)
     {
-        return (int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE title = ? AND module_id = ? AND id != ?", [$title, $moduleId, $categoryId]) > 0;
+        return (int) $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE title = ? AND module_id = ? AND id != ?", [$title, $moduleId, $categoryId]) > 0;
     }
 
     /**
@@ -89,7 +89,7 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getModuleIdByCategoryId($categoryId)
     {
-        return (int)$this->db->fetchColumn("SELECT `module_id` FROM {$this->getTableName()} WHERE `id` = ?", [$categoryId]);
+        return (int) $this->db->fetchColumn("SELECT `module_id` FROM {$this->getTableName()} WHERE `id` = ?", [$categoryId]);
     }
 
     /**

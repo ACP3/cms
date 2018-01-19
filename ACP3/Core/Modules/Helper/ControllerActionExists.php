@@ -25,11 +25,11 @@ class ControllerActionExists
     }
 
     /**
-     * Returns, whether the given module controller action exists
+     * Returns, whether the given module controller action exists.
      *
      * @param string $path
      *
-     * @return boolean
+     * @return bool
      */
     public function controllerActionExists($path)
     {

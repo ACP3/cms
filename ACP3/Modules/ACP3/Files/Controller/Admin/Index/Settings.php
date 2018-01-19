@@ -37,7 +37,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                   $context
      * @param \ACP3\Core\Helpers\Forms                                        $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                    $formTokenHelper
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
@@ -89,7 +89,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         return [
             'order_by' => $this->formsHelper->choicesGenerator('order_by', $orderBy, $settings['order_by']),
             'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
-            'sidebar_entries' => $this->formsHelper->recordsPerPage((int)$settings['sidebar'], 1, 10, 'sidebar'),
+            'sidebar_entries' => $this->formsHelper->recordsPerPage((int) $settings['sidebar'], 1, 10, 'sidebar'),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
@@ -106,7 +106,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
             $data = [
                 'dateformat' => $this->get('core.helpers.secure')->strEncode($formData['dateformat']),
-                'sidebar' => (int)$formData['sidebar'],
+                'sidebar' => (int) $formData['sidebar'],
                 'order_by' => $formData['order_by'],
             ];
 

@@ -22,7 +22,7 @@ class WYSIWYG extends AbstractFunction
     protected $config;
 
     /**
-     * @param \ACP3\Core\WYSIWYG\WysiwygFactory $wysiwygFactory
+     * @param \ACP3\Core\WYSIWYG\WysiwygFactory     $wysiwygFactory
      * @param \ACP3\Core\Settings\SettingsInterface $config
      */
     public function __construct(
@@ -34,7 +34,7 @@ class WYSIWYG extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -42,7 +42,7 @@ class WYSIWYG extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {

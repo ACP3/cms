@@ -28,7 +28,8 @@ class SmartyRendererFactory
 
     /**
      * SmartyRendererFactory constructor.
-     * @param ApplicationPath $appPath
+     *
+     * @param ApplicationPath   $appPath
      * @param SettingsInterface $config
      * @param $environment
      */

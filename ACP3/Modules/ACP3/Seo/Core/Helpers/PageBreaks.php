@@ -22,7 +22,7 @@ class PageBreaks extends \ACP3\Core\Helpers\PageBreaks
      * PageBreaks constructor.
      *
      * @param \ACP3\Core\Http\RequestInterface             $request
-     * @param \ACP3\Core\Router\RouterInterface                   $router
+     * @param \ACP3\Core\Router\RouterInterface            $router
      * @param \ACP3\Core\Helpers\TableOfContents           $tableOfContents
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
      */
@@ -38,7 +38,7 @@ class PageBreaks extends \ACP3\Core\Helpers\PageBreaks
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function splitTextIntoPages($text, $baseUrlPath)
     {

@@ -12,7 +12,7 @@ use ACP3\Core\Modules;
 class Migration implements Modules\Installer\MigrationInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */
@@ -50,7 +50,7 @@ class Migration implements Modules\Installer\MigrationInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */

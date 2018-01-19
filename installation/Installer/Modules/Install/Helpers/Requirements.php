@@ -44,7 +44,8 @@ class Requirements
     }
 
     /**
-     * Checks, whether the mandatory system requirements of the ACP3 are fulfilled
+     * Checks, whether the mandatory system requirements of the ACP3 are fulfilled.
+     *
      * @return array
      */
     public function checkMandatoryRequirements()
@@ -83,7 +84,7 @@ class Requirements
     }
 
     /**
-     * Checks, whether all mandatory files and folders exist and have the correct permissions set
+     * Checks, whether all mandatory files and folders exist and have the correct permissions set.
      *
      * @return array
      */

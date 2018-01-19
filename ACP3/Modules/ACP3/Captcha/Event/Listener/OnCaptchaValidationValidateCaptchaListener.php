@@ -20,6 +20,7 @@ class OnCaptchaValidationValidateCaptchaListener
 
     /**
      * OnCaptchaValidationValidateCaptcha constructor.
+     *
      * @param Translator $translator
      */
     public function __construct(Translator $translator)

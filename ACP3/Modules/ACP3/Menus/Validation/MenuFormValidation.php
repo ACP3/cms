@@ -25,13 +25,13 @@ class MenuFormValidation extends Core\Validation\AbstractFormValidation
      */
     public function setMenuId($menuId)
     {
-        $this->menuId = (int)$menuId;
+        $this->menuId = (int) $menuId;
 
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

@@ -28,10 +28,11 @@ class NewsModel extends AbstractModel
 
     /**
      * NewsModel constructor.
+     *
      * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param SettingsInterface $config
-     * @param NewsRepository $newsRepository
+     * @param DataProcessor            $dataProcessor
+     * @param SettingsInterface        $config
+     * @param NewsRepository           $newsRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -45,7 +46,7 @@ class NewsModel extends AbstractModel
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function save(array $data, $newsId = null)
     {
@@ -106,7 +107,7 @@ class NewsModel extends AbstractModel
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getDefaultDataForDuplication()
     {

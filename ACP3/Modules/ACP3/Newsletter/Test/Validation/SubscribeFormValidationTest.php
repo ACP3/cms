@@ -22,9 +22,6 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
      */
     private $accountRepositoryMock;
 
-    /**
-     * @return void
-     */
     protected function initializeFormValidation()
     {
         $this->formValidation = new SubscribeFormValidation(
@@ -33,9 +30,6 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
         );
     }
 
-    /**
-     * @return void
-     */
     protected function registerValidationRules()
     {
         $this->validator->registerValidationRule($this->setUpFormTokenRule());

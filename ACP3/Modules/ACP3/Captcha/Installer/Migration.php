@@ -12,7 +12,7 @@ use ACP3\Core\Modules\Installer\MigrationInterface;
 class Migration implements MigrationInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function schemaUpdates()
     {
@@ -35,7 +35,7 @@ class Migration implements MigrationInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function renameModule()
     {

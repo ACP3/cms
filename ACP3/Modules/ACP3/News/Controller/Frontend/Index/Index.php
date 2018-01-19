@@ -49,12 +49,12 @@ class Index extends AbstractAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
-     * @param \ACP3\Core\Pagination $pagination
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
-     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
+     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param \ACP3\Core\Date                                                   $date
+     * @param \ACP3\Core\Helpers\StringFormatter                                $stringFormatter
+     * @param \ACP3\Core\Pagination                                             $pagination
+     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository           $newsRepository
+     * @param \ACP3\Modules\ACP3\Categories\Helpers                             $categoriesHelpers
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
@@ -125,7 +125,7 @@ class Index extends AbstractAction
     }
 
     /**
-     * @param int $categoryId
+     * @param int    $categoryId
      * @param string $time
      *
      * @return array

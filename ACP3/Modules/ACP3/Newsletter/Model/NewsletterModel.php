@@ -25,10 +25,11 @@ class NewsletterModel extends AbstractModel
 
     /**
      * NewsletterModel constructor.
+     *
      * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param SettingsInterface $config
-     * @param NewsletterRepository $newsletterRepository
+     * @param DataProcessor            $dataProcessor
+     * @param SettingsInterface        $config
+     * @param NewsletterRepository     $newsletterRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -42,7 +43,7 @@ class NewsletterModel extends AbstractModel
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function save(array $data, $entryId = null)
     {

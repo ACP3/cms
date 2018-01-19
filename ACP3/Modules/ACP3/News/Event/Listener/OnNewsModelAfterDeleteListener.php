@@ -34,8 +34,9 @@ class OnNewsModelAfterDeleteListener
 
     /**
      * OnNewsModelAfterDeleteListener constructor.
+     *
      * @param Modules $modules
-     * @param Cache $cache
+     * @param Cache   $cache
      */
     public function __construct(
         Modules $modules,

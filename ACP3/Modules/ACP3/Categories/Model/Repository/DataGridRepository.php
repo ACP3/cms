@@ -16,7 +16,7 @@ class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
     const TABLE_NAME = CategoryRepository::TABLE_NAME;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
@@ -27,7 +27,7 @@ class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addJoin(QueryBuilder $queryBuilder)
     {
@@ -40,7 +40,7 @@ class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
     {

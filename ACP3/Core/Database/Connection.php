@@ -47,8 +47,9 @@ class Connection
 
     /**
      * Connection constructor.
-     * @param LoggerInterface $logger
-     * @param ApplicationPath $appPath
+     *
+     * @param LoggerInterface    $logger
+     * @param ApplicationPath    $appPath
      * @param CacheDriverFactory $cacheDriverFactory
      * @param $appMode
      * @param array $connectionParams
@@ -177,6 +178,7 @@ class Connection
      * @param null   $cacheKey
      *
      * @return \Doctrine\DBAL\Driver\ResultStatement|\Doctrine\DBAL\Driver\Statement
+     *
      * @throws \Doctrine\DBAL\Cache\CacheException
      * @throws \Doctrine\DBAL\DBALException
      */
@@ -200,6 +202,7 @@ class Connection
      * @param callable $callback
      *
      * @return bool|int
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executeTransactionalQuery(callable $callback)

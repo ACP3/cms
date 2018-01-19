@@ -18,8 +18,8 @@ class Translator extends \ACP3\Core\I18n\Translator
 
     /**
      * @param \ACP3\Installer\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Installer\Core\I18n\DictionaryCache $dictionaryCache
-     * @param string $locale
+     * @param \ACP3\Installer\Core\I18n\DictionaryCache        $dictionaryCache
+     * @param string                                           $locale
      */
     public function __construct(
         ApplicationPath $appPath,
@@ -33,7 +33,7 @@ class Translator extends \ACP3\Core\I18n\Translator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function languagePackExists($locale)
     {

@@ -25,7 +25,7 @@ class Asset extends AbstractResource
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -33,11 +33,11 @@ class Asset extends AbstractResource
     }
 
     /**
-     * fetch template and its modification time from data source
+     * fetch template and its modification time from data source.
      *
-     * @param string  $name    template name
-     * @param string  &$source template source
-     * @param integer &$mtime  template modification timestamp (epoch)
+     * @param string $name    template name
+     * @param string &$source template source
+     * @param int    &$mtime  template modification timestamp (epoch)
      */
     protected function fetch($name, &$source, &$mtime)
     {
@@ -53,11 +53,11 @@ class Asset extends AbstractResource
     }
 
     /**
-     * Fetch a template's modification time from data source
+     * Fetch a template's modification time from data source.
      *
      * @param string $name template name
      *
-     * @return integer timestamp (epoch) the template was modified
+     * @return int timestamp (epoch) the template was modified
      */
     protected function fetchTimestamp($name)
     {

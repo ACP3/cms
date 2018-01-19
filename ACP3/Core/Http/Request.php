@@ -34,7 +34,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getQuery()
     {
@@ -42,7 +42,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getPathInfo()
     {
@@ -50,7 +50,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getArea()
     {
@@ -58,7 +58,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModule()
     {
@@ -66,7 +66,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getController()
     {
@@ -74,7 +74,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAction()
     {
@@ -82,7 +82,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getFullPath()
     {
@@ -90,7 +90,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getFullPathWithoutArea()
     {
@@ -98,7 +98,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleAndController()
     {
@@ -109,7 +109,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleAndControllerWithoutArea()
     {
@@ -117,7 +117,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Processes the URL of the current request
+     * Processes the URL of the current request.
      */
     public function processQuery()
     {
@@ -152,7 +152,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Setzt alle in URI::query enthaltenen Parameter
+     * Setzt alle in URI::query enthaltenen Parameter.
      */
     protected function parseURI()
     {
@@ -181,7 +181,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isHomepage()
     {
@@ -189,7 +189,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getParameters()
     {
@@ -197,7 +197,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUriWithoutPages()
     {
@@ -220,9 +220,9 @@ class Request extends AbstractRequest
 
             for ($i = 3; $i < $cQuery; ++$i) {
                 if (\preg_match('/^(page_(\d+))$/', $query[$i])) { // Current page
-                    $this->symfonyRequest->attributes->add(['page' => (int)\substr($query[$i], 5)]);
+                    $this->symfonyRequest->attributes->add(['page' => (int) \substr($query[$i], 5)]);
                 } elseif (\preg_match('/^(id_(\d+))$/', $query[$i])) { // result ID
-                    $this->symfonyRequest->attributes->add(['id' => (int)\substr($query[$i], 3)]);
+                    $this->symfonyRequest->attributes->add(['id' => (int) \substr($query[$i], 3)]);
                 } elseif (\preg_match('/^(([a-zA-Z0-9-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
                     $param = \explode('_', $query[$i], 2);
                     $this->symfonyRequest->attributes->add([$param[0] => $param[1]]);
@@ -232,7 +232,7 @@ class Request extends AbstractRequest
 
         $this->symfonyRequest->attributes->set(
             'cat',
-            (int)$this->getPost()->get('cat', $this->symfonyRequest->attributes->get('cat'))
+            (int) $this->getPost()->get('cat', $this->symfonyRequest->attributes->get('cat'))
         );
         $this->symfonyRequest->attributes->set(
             'action',

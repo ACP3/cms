@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Bootstraps the application
+ * Bootstraps the application.
  */
 class Bootstrap extends AbstractBootstrap
 {
@@ -29,7 +29,7 @@ class Bootstrap extends AbstractBootstrap
     private $systemSettings = [];
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function handle(SymfonyRequest $request, $type = self::MASTER_REQUEST, $catch = true)
     {
@@ -40,7 +40,7 @@ class Bootstrap extends AbstractBootstrap
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function initializeClasses(SymfonyRequest $symfonyRequest)
     {
@@ -62,7 +62,7 @@ class Bootstrap extends AbstractBootstrap
 
     /**
      * @param SymfonyRequest $symfonyRequest
-     * @param string $filePath
+     * @param string         $filePath
      */
     private function dumpContainer(SymfonyRequest $symfonyRequest, $filePath)
     {
@@ -85,7 +85,7 @@ class Bootstrap extends AbstractBootstrap
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function outputPage()
     {
@@ -123,7 +123,7 @@ class Bootstrap extends AbstractBootstrap
     }
 
     /**
-     * Sets the theme paths
+     * Sets the theme paths.
      */
     private function setThemePaths()
     {
@@ -140,7 +140,7 @@ class Bootstrap extends AbstractBootstrap
     }
 
     /**
-     * Checks, whether the maintenance mode is active
+     * Checks, whether the maintenance mode is active.
      *
      * @return bool
      */
@@ -149,7 +149,7 @@ class Bootstrap extends AbstractBootstrap
         /** @var \ACP3\Core\Http\Request $request */
         $request = $this->container->get('core.http.request');
 
-        return (bool)$this->systemSettings['maintenance_mode'] === true &&
+        return (bool) $this->systemSettings['maintenance_mode'] === true &&
             $request->getArea() !== AreaEnum::AREA_ADMIN &&
             \strpos($request->getQuery(), 'users/index/login/') !== 0;
     }
@@ -176,7 +176,8 @@ class Bootstrap extends AbstractBootstrap
 
     /**
      * @param \Exception $exception
-     * @param string $route
+     * @param string     $route
+     *
      * @return Response
      */
     private function handleException(\Exception $exception, $route)
@@ -192,9 +193,10 @@ class Bootstrap extends AbstractBootstrap
     }
 
     /**
-     * Renders an exception
+     * Renders an exception.
      *
      * @param \Exception $exception
+     *
      * @return Response
      */
     private function renderApplicationException(\Exception $exception)
@@ -215,7 +217,7 @@ class Bootstrap extends AbstractBootstrap
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function startupChecks()
     {

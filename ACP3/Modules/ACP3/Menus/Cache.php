@@ -30,9 +30,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $menuItemRepository;
 
     /**
-     * @param Core\Cache                                        $cache
-     * @param \ACP3\Core\I18n\Translator                        $translator
-     * @param MenuRepository                                    $menuRepository
+     * @param Core\Cache                                                   $cache
+     * @param \ACP3\Core\I18n\Translator                                   $translator
+     * @param MenuRepository                                               $menuRepository
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      */
     public function __construct(
@@ -49,7 +49,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Returns the cached menu items
+     * Returns the cached menu items.
      *
      * @return array
      */
@@ -63,9 +63,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Saves the menu items to the cache
+     * Saves the menu items to the cache.
      *
-     * @return boolean
+     * @return bool
      */
     public function saveMenusCache()
     {
@@ -108,11 +108,11 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Saves the visible menu items to the cache
+     * Saves the visible menu items to the cache.
      *
      * @param string $menuIdentifier
      *
-     * @return boolean
+     * @return bool
      */
     public function saveVisibleMenuItemsCache($menuIdentifier)
     {
@@ -123,7 +123,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Returns the cached visible menu items
+     * Returns the cached visible menu items.
      *
      * @param string $menuIdentifier
      *

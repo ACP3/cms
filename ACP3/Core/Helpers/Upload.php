@@ -34,14 +34,16 @@ class Upload
     }
 
     /**
-     * Hochgeladene Dateien verschieben und umbenennen
+     * Hochgeladene Dateien verschieben und umbenennen.
      *
      * @param string $tmpFilename
-     *  Temporäre Datei
+     *                               Temporäre Datei
      * @param string $filename
-     *  Dateiname
-     * @param bool $retainFilename
+     *                               Dateiname
+     * @param bool   $retainFilename
+     *
      * @return array
+     *
      * @throws ValidationFailedException
      */
     public function moveFile($tmpFilename, $filename, $retainFilename = false)
@@ -87,13 +89,13 @@ class Upload
     }
 
     /**
-     * Ermittelt die Dateigröße gemäß IEC 60027-2
+     * Ermittelt die Dateigröße gemäß IEC 60027-2.
      *
-     * @param integer $value
-     *    Die Dateigröße in Byte
+     * @param int $value
+     *                   Die Dateigröße in Byte
      *
      * @return string
-     *    Die Dateigröße als Fließkommazahl mit der dazugehörigen Einheit
+     *                Die Dateigröße als Fließkommazahl mit der dazugehörigen Einheit
      */
     public function calcFilesize($value)
     {
@@ -117,11 +119,11 @@ class Upload
     }
 
     /**
-     * Löscht eine Datei im uploads Ordner
+     * Löscht eine Datei im uploads Ordner.
      *
      * @param string $file
      *
-     * @return boolean
+     * @return bool
      */
     public function removeUploadedFile($file)
     {

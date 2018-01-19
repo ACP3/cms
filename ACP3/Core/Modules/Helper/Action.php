@@ -38,10 +38,10 @@ class Action
     /**
      * Action constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \ACP3\Core\Helpers\Alerts $alerts
+     * @param \ACP3\Core\I18n\Translator          $translator
+     * @param \ACP3\Core\Http\RequestInterface    $request
+     * @param \ACP3\Core\Router\RouterInterface   $router
+     * @param \ACP3\Core\Helpers\Alerts           $alerts
      * @param \ACP3\Core\Helpers\RedirectMessages $redirectMessages
      */
     public function __construct(
@@ -59,7 +59,7 @@ class Action
     }
 
     /**
-     * @param callable $callback
+     * @param callable    $callback
      * @param null|string $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -81,6 +81,7 @@ class Action
 
     /**
      * @param \Exception $exception
+     *
      * @return array|Response
      */
     public function renderErrorBoxOnFailedFormValidation(\Exception $exception)
@@ -94,10 +95,11 @@ class Action
     }
 
     /**
-     * @param string $action
-     * @param callable $callback
+     * @param string      $action
+     * @param callable    $callback
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
+     *
      * @return array|JsonResponse|RedirectResponse
      */
     public function handleDeleteAction(
@@ -119,11 +121,13 @@ class Action
     }
 
     /**
-     * @param string $action
-     * @param callable $callback
+     * @param string      $action
+     * @param callable    $callback
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
+     *
      * @return array|JsonResponse|RedirectResponse
+     *
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function handleCustomDeleteAction(
@@ -152,7 +156,7 @@ class Action
     }
 
     /**
-     * @param callable $callback
+     * @param callable    $callback
      * @param null|string $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -167,7 +171,7 @@ class Action
     }
 
     /**
-     * @param callable $callback
+     * @param callable    $callback
      * @param null|string $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -180,7 +184,7 @@ class Action
     }
 
     /**
-     * @param callable $callback
+     * @param callable    $callback
      * @param null|string $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -193,7 +197,7 @@ class Action
     }
 
     /**
-     * @param callable $callback
+     * @param callable    $callback
      * @param null|string $path
      *
      * @return array|string|JsonResponse|RedirectResponse
@@ -208,8 +212,8 @@ class Action
     }
 
     /**
-     * @param bool|int $result
-     * @param string $phrase
+     * @param bool|int    $result
+     * @param string      $phrase
      * @param null|string $path
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -243,9 +247,9 @@ class Action
     }
 
     /**
-     * helper function for deleting a result set
+     * helper function for deleting a result set.
      *
-     * @param string $action
+     * @param string      $action
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
      *
@@ -286,7 +290,7 @@ class Action
         $entries = [];
         if (\is_array($this->request->getPost()->get('entries')) === true) {
             $entries = $this->request->getPost()->get('entries');
-        } elseif ((bool)\preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
+        } elseif ((bool) \preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
             $entries = \explode('|', $this->request->getParameters()->get('entries'));
         }
 

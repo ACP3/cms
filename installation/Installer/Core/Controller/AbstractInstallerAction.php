@@ -14,7 +14,7 @@ use ACP3\Core\I18n\ExtractFromPathTrait;
 use Fisharebest\Localization\Locale;
 
 /**
- * Module Controller of the installer modules
+ * Module Controller of the installer modules.
  */
 abstract class AbstractInstallerAction implements ActionInterface
 {
@@ -69,7 +69,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function preDispatch()
     {
@@ -128,7 +128,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function get($serviceId)
     {
@@ -136,7 +136,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * Generiert das Dropdown-Menü mit den zur Verfügung stehenden Installersprachen
+     * Generiert das Dropdown-Menü mit den zur Verfügung stehenden Installersprachen.
      *
      * @param string $selectedLanguage
      *
@@ -165,7 +165,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function applyTemplateAutomatically()
     {
@@ -173,7 +173,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addCustomTemplateVarsBeforeOutput()
     {
@@ -198,6 +198,7 @@ abstract class AbstractInstallerAction implements ActionInterface
 
     /**
      * @param string $layout
+     *
      * @return $this
      */
     public function setLayout($layout)

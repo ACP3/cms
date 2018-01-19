@@ -31,7 +31,7 @@ class Helpers
     }
 
     /**
-     * Löscht ein Bild aus dem Dateisystem
+     * Löscht ein Bild aus dem Dateisystem.
      *
      * @param string $file
      */

@@ -26,7 +26,7 @@ class BootstrapCache extends HttpCache implements CacheInvalidation
     use EventDispatchingHttpCache;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __construct(
         HttpKernelInterface $kernel,
@@ -51,7 +51,7 @@ class BootstrapCache extends HttpCache implements CacheInvalidation
     /**
      * Made public to allow event listeners to do refresh operations.
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function fetch(Request $request, $catch = false)
     {

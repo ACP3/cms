@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegeExistsVali
 class ResourceFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

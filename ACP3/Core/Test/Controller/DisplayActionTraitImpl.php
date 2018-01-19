@@ -26,8 +26,9 @@ class DisplayActionTraitImpl
 
     /**
      * DisplayActionTraitImpl constructor.
+     *
      * @param Response $response
-     * @param View $view
+     * @param View     $view
      */
     public function __construct(Response $response, View $view)
     {
@@ -43,9 +44,6 @@ class DisplayActionTraitImpl
         return 'Foo/Frontend/index.index.tpl';
     }
 
-    /**
-     * @return void
-     */
     protected function addCustomTemplateVarsBeforeOutput()
     {
     }

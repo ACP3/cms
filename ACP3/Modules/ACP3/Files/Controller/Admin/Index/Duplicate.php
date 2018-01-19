@@ -20,8 +20,9 @@ class Duplicate extends AbstractFrontendAction
 
     /**
      * Duplicate constructor.
+     *
      * @param FrontendContext $context
-     * @param FilesModel $filesModel
+     * @param FilesModel      $filesModel
      */
     public function __construct(
         FrontendContext $context,
@@ -34,6 +35,7 @@ class Duplicate extends AbstractFrontendAction
 
     /**
      * @param int $id
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function execute($id)

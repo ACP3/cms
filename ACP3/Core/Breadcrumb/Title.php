@@ -96,6 +96,7 @@ class Title
 
     /**
      * @param string $siteSubtitle
+     *
      * @return $this
      */
     public function setSiteSubtitle($siteSubtitle)
@@ -194,6 +195,7 @@ class Title
 
     /**
      * @param string $metaTitle
+     *
      * @return $this
      */
     public function setMetaTitle(string $metaTitle)
@@ -224,7 +226,7 @@ class Title
     }
 
     /**
-     * Returns the title of the current page + the site title
+     * Returns the title of the current page + the site title.
      *
      * @return string
      */

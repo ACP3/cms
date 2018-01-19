@@ -27,7 +27,7 @@ abstract class AbstractOperation
     protected $isBlockAware;
 
     /**
-     * @param \ACP3\Core\Database\Connection $db
+     * @param \ACP3\Core\Database\Connection                            $db
      * @param \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository $nestedSetRepository
      */
     public function __construct(

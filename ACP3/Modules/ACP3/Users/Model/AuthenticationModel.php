@@ -53,12 +53,12 @@ class AuthenticationModel
     /**
      * User constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param Response $response
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param UserModel $userModel
+     * @param \ACP3\Core\Http\RequestInterface                         $request
+     * @param Response                                                 $response
+     * @param \ACP3\Core\Environment\ApplicationPath                   $appPath
+     * @param \ACP3\Core\Session\SessionHandlerInterface               $sessionHandler
+     * @param \ACP3\Core\Helpers\Secure                                $secureHelper
+     * @param UserModel                                                $userModel
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      */
     public function __construct(
@@ -80,7 +80,8 @@ class AuthenticationModel
     }
 
     /**
-     * Authenticates the user
+     * Authenticates the user.
+     *
      * @param array|int|null $userData
      */
     public function authenticate($userData)
@@ -94,7 +95,7 @@ class AuthenticationModel
     }
 
     /**
-     * Logs out the current user
+     * Logs out the current user.
      *
      * @param int $userId
      */
@@ -112,11 +113,11 @@ class AuthenticationModel
     }
 
     /**
-     * Setzt den internen Authentifizierungscookie
+     * Setzt den internen Authentifizierungscookie.
      *
-     * @param int $userId
-     * @param string $token
-     * @param integer|null $expiry
+     * @param int      $userId
+     * @param string   $token
+     * @param int|null $expiry
      *
      * @return Cookie
      */
@@ -137,11 +138,12 @@ class AuthenticationModel
     }
 
     /**
-     * Loggt einen User ein
+     * Loggt einen User ein.
      *
      * @param string $username
      * @param string $password
-     * @param bool $rememberMe
+     * @param bool   $rememberMe
+     *
      * @throws Users\Exception\LoginFailedException
      * @throws Users\Exception\UserAccountLockedException
      */
@@ -161,7 +163,7 @@ class AuthenticationModel
 
             if ($user['pwd'] === $this->secureHelper->generateSaltedPassword($user['pwd_salt'], $password, 'sha512')) {
                 if ($user['login_errors'] > 0) {
-                    $this->userRepository->update(['login_errors' => 0], (int)$user['id']);
+                    $this->userRepository->update(['login_errors' => 0], (int) $user['id']);
                 }
 
                 if ($rememberMe === true) {
@@ -202,7 +204,7 @@ class AuthenticationModel
     protected function saveFailedLoginAttempts(array $userData)
     {
         $loginErrors = $userData['login_errors'] + 1;
-        $this->userRepository->update(['login_errors' => $loginErrors], (int)$userData['id']);
+        $this->userRepository->update(['login_errors' => $loginErrors], (int) $userData['id']);
 
         return $loginErrors;
     }
@@ -230,7 +232,7 @@ class AuthenticationModel
     }
 
     /**
-     * @param int $userId
+     * @param int    $userId
      * @param string $token
      *
      * @return bool|int
@@ -241,9 +243,9 @@ class AuthenticationModel
     }
 
     /**
-     * Migrates the old sha1 based password hash to sha512 hashes and returns the updated user information
+     * Migrates the old sha1 based password hash to sha512 hashes and returns the updated user information.
      *
-     * @param int $userId
+     * @param int    $userId
      * @param string $password
      *
      * @return array
@@ -263,7 +265,7 @@ class AuthenticationModel
 
     /**
      * @param string $password
-     * @param array $user
+     * @param array  $user
      *
      * @return bool
      */

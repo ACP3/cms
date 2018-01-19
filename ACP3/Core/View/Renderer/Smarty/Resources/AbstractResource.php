@@ -17,7 +17,7 @@ abstract class AbstractResource extends \Smarty_Resource_Custom implements Plugi
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function register(\Smarty $smarty)
     {

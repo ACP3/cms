@@ -28,7 +28,7 @@ class AccountExistsValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -41,6 +41,7 @@ class AccountExistsValidationRule extends AbstractValidationRule
 
     /**
      * @param string $data
+     *
      * @return bool
      */
     protected function checkAccountExists($data)

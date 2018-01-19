@@ -10,7 +10,7 @@ namespace ACP3\Core\Validation\ValidationRules;
 class NumberGreaterThanValidationRule extends AbstractValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {

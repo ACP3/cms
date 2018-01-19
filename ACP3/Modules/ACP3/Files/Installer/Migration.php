@@ -12,7 +12,7 @@ use ACP3\Core\Modules;
 class Migration extends Modules\Installer\AbstractMigration
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function schemaUpdates()
     {
@@ -98,7 +98,7 @@ class Migration extends Modules\Installer\AbstractMigration
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function renameModule()
     {

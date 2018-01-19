@@ -25,9 +25,9 @@ class Index extends Core\Controller\AbstractFrontendAction
     protected $availableFeedsRegistrar;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext        $context
      * @param \ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator $feedGenerator
-     * @param Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
+     * @param Feeds\Utility\FeedAvailabilityRegistrar              $availableFeedsRegistrar
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -44,6 +44,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @param string $feed
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($feed)

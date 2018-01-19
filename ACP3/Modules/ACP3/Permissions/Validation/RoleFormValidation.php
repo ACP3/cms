@@ -25,13 +25,13 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
      */
     public function setRoleId($roleId)
     {
-        $this->roleId = (int)$roleId;
+        $this->roleId = (int) $roleId;
 
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

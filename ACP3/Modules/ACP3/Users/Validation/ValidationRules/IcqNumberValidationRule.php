@@ -12,7 +12,7 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 class IcqNumberValidationRule extends AbstractValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -30,6 +30,6 @@ class IcqNumberValidationRule extends AbstractValidationRule
      */
     protected function isIcqNumber($value)
     {
-        return (bool)\preg_match('/^(\d{6,9})$/', $value);
+        return (bool) \preg_match('/^(\d{6,9})$/', $value);
     }
 }

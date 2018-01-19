@@ -28,9 +28,10 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * Executes the SQL insert statement
+     * Executes the SQL insert statement.
      *
      * @param array $data
+     *
      * @return bool|int
      */
     public function insert(array $data)
@@ -41,7 +42,7 @@ abstract class AbstractRepository implements RepositoryInterface
                 $data
             );
 
-            return (int)$this->db->getConnection()->lastInsertId();
+            return (int) $this->db->getConnection()->lastInsertId();
         });
     }
 
@@ -56,10 +57,11 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * Executes the SQL delete statement
+     * Executes the SQL delete statement.
      *
      * @param int|array $entryId
-     * @param string $columnName
+     * @param string    $columnName
+     *
      * @return bool|int
      */
     public function delete($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
@@ -80,14 +82,15 @@ abstract class AbstractRepository implements RepositoryInterface
      */
     private function getIdentifier($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
     {
-        return \is_array($entryId) === true ? $entryId : [$columnName => (int)$entryId];
+        return \is_array($entryId) === true ? $entryId : [$columnName => (int) $entryId];
     }
 
     /**
-     * Executes the SQL update statement
+     * Executes the SQL update statement.
      *
-     * @param array $data
+     * @param array     $data
      * @param int|array $entryId
+     *
      * @return bool|int
      */
     public function update(array $data, $entryId)
@@ -102,7 +105,7 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * Build the SQL limit
+     * Build the SQL limit.
      *
      * @param int|string $limitStart
      * @param int|string $resultsPerPage
@@ -112,9 +115,9 @@ abstract class AbstractRepository implements RepositoryInterface
     protected function buildLimitStmt($limitStart = '', $resultsPerPage = '')
     {
         if ($limitStart !== '' && $resultsPerPage !== '') {
-            return ' LIMIT ' . ((int)$limitStart) . ',' . ((int)$resultsPerPage);
+            return ' LIMIT ' . ((int) $limitStart) . ',' . ((int) $resultsPerPage);
         } elseif ($limitStart !== '') {
-            return ' LIMIT ' . ((int)$limitStart);
+            return ' LIMIT ' . ((int) $limitStart);
         }
 
         return '';

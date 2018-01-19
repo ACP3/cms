@@ -57,14 +57,15 @@ class InstallModel
 
     /**
      * InstallModel constructor.
-     * @param LoggerInterface $logger
+     *
+     * @param LoggerInterface    $logger
      * @param ContainerInterface $container
-     * @param ApplicationPath $appPath
-     * @param Vendor $vendor
-     * @param Secure $secure
-     * @param Translator $translator
-     * @param Install $installHelper
-     * @param ModuleInstaller $moduleInstaller
+     * @param ApplicationPath    $appPath
+     * @param Vendor             $vendor
+     * @param Secure             $secure
+     * @param Translator         $translator
+     * @param Install            $installHelper
+     * @param ModuleInstaller    $moduleInstaller
      */
     public function __construct(
         LoggerInterface $logger,
@@ -88,7 +89,7 @@ class InstallModel
 
     /**
      * @param string $configFilePath
-     * @param array $formData
+     * @param array  $formData
      */
     public function writeConfigFile($configFilePath, array $formData)
     {
@@ -148,7 +149,7 @@ class InstallModel
     }
 
     /**
-     * Set the module settings
+     * Set the module settings.
      *
      * @param array $formData
      */
@@ -176,11 +177,12 @@ class InstallModel
 
     /**
      * @param array $formData
+     *
      * @throws \Exception
      */
     public function createSuperUser(array $formData)
     {
-        /** @var \ACP3\Core\Database\Connection db */
+        /* @var \ACP3\Core\Database\Connection db */
         $this->db = $this->container->get('core.db');
 
         $salt = $this->secure->salt(UserModel::SALT_LENGTH);

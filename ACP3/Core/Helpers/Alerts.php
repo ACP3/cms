@@ -22,7 +22,7 @@ class Alerts
 
     /**
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\View $view
+     * @param \ACP3\Core\View                  $view
      */
     public function __construct(
         Core\Http\RequestInterface $request,
@@ -33,12 +33,12 @@ class Alerts
     }
 
     /**
-     * Displays a confirmation box
+     * Displays a confirmation box.
      *
-     * @param string $text
+     * @param string       $text
      * @param string|array $forward
-     * @param string $backward
-     * @param integer $overlay
+     * @param string       $backward
+     * @param int          $overlay
      *
      * @return string
      */
@@ -63,10 +63,10 @@ class Alerts
     }
 
     /**
-     * Displays a confirmation box, where the forward button triggers a form submit using POST
+     * Displays a confirmation box, where the forward button triggers a form submit using POST.
      *
      * @param string $text
-     * @param array $data
+     * @param array  $data
      * @param string $forward
      * @param string $backward
      *
@@ -93,9 +93,10 @@ class Alerts
     }
 
     /**
-     * Returns the pretty printed form errors
+     * Returns the pretty printed form errors.
      *
      * @param string|array $errors
+     *
      * @return string
      */
     public function errorBox($errors)
@@ -145,6 +146,7 @@ class Alerts
 
     /**
      * @param string|array $errors
+     *
      * @return array
      */
     protected function prepareErrorBoxData($errors)
@@ -154,7 +156,7 @@ class Alerts
         }
 
         if (\is_array($errors) === false) {
-            $errors = (array)$errors;
+            $errors = (array) $errors;
         }
 
         return $errors;

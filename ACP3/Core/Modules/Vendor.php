@@ -44,7 +44,7 @@ class Vendor
     }
 
     /**
-     * Caches the various module vendors
+     * Caches the various module vendors.
      */
     protected function cacheVendors()
     {

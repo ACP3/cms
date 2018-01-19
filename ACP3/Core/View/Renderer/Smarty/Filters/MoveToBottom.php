@@ -26,7 +26,7 @@ class MoveToBottom extends AbstractMoveElementFilter
 
     /**
      * @param \ACP3\Core\Assets\Minifier\MinifierInterface $minifier
-     * @param \ACP3\Core\Http\RequestInterface    $request
+     * @param \ACP3\Core\Http\RequestInterface             $request
      */
     public function __construct(
         Assets\Minifier\MinifierInterface $minifier,
@@ -37,7 +37,7 @@ class MoveToBottom extends AbstractMoveElementFilter
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -45,7 +45,7 @@ class MoveToBottom extends AbstractMoveElementFilter
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process($tplOutput, \Smarty_Internal_Template $smarty)
     {

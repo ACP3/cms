@@ -73,7 +73,7 @@ class MenuConfiguration
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isUseBootstrap()
     {

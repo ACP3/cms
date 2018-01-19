@@ -25,7 +25,7 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
     /**
      * OnDataGridCustomOptionBeforeListener constructor.
      *
-     * @param \ACP3\Core\ACL $acl
+     * @param \ACP3\Core\ACL             $acl
      * @param \ACP3\Core\I18n\Translator $translator
      */
     public function __construct(
@@ -68,6 +68,7 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
 
     /**
      * @param array $dbResultRow
+     *
      * @return string
      */
     abstract protected function getRoute(array $dbResultRow);

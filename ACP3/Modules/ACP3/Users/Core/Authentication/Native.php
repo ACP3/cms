@@ -36,10 +36,10 @@ class Native implements AuthenticationInterface
     /**
      * Native constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param \ACP3\Core\Http\RequestInterface           $request
      * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
-     * @param AuthenticationModel $authenticationModel
-     * @param UserRepository $userRepository
+     * @param AuthenticationModel                        $authenticationModel
+     * @param UserRepository                             $userRepository
      */
     public function __construct(
         RequestInterface $request,
@@ -54,7 +54,7 @@ class Native implements AuthenticationInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function authenticate()
     {
@@ -71,9 +71,11 @@ class Native implements AuthenticationInterface
     }
 
     /**
-     * @param int $userId
+     * @param int    $userId
      * @param string $token
+     *
      * @return array|int
+     *
      * @throws AuthenticationException
      */
     protected function verifyCredentials($userId, $token)

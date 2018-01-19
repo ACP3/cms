@@ -24,7 +24,7 @@ abstract class AbstractFloodBarrierValidationRule extends AbstractValidationRule
     /**
      * FloodBarrierValidationRule constructor.
      *
-     * @param \ACP3\Core\Date                                       $date
+     * @param \ACP3\Core\Date                                                  $date
      * @param \ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface $repository
      */
     public function __construct(
@@ -36,7 +36,7 @@ abstract class AbstractFloodBarrierValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {

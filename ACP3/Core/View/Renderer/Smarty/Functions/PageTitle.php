@@ -10,7 +10,7 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 class PageTitle extends SiteTitle
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
@@ -18,7 +18,7 @@ class PageTitle extends SiteTitle
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {

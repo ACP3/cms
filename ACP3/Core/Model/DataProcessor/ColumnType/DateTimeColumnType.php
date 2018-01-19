@@ -18,6 +18,7 @@ class DateTimeColumnType implements ColumnTypeStrategyInterface
 
     /**
      * DateTimeColumnType constructor.
+     *
      * @param Date $date
      */
     public function __construct(Date $date)
@@ -27,6 +28,7 @@ class DateTimeColumnType implements ColumnTypeStrategyInterface
 
     /**
      * @param string $value
+     *
      * @return string
      */
     public function doEscape($value)

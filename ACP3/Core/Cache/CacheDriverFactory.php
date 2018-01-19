@@ -31,8 +31,8 @@ class CacheDriverFactory
      * CacheDriverFactory constructor.
      *
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param string $cacheDriver
-     * @param string $environment
+     * @param string                                 $cacheDriver
+     * @param string                                 $environment
      */
     public function __construct(ApplicationPath $appPath, $cacheDriver, $environment)
     {
@@ -66,11 +66,12 @@ class CacheDriverFactory
      * @param string $driverName
      *
      * @return \Doctrine\Common\Cache\CacheProvider
+     *
      * @throws \InvalidArgumentException
      */
     protected function initializeCacheDriver($driverName)
     {
-        /** @var \Doctrine\Common\Cache\CacheProvider $driver */
+        /* @var \Doctrine\Common\Cache\CacheProvider $driver */
         switch (\strtolower($driverName)) {
             case 'phpfile':
                 return new PhpFileCache($this->appPath->getCacheDir() . 'sql/');

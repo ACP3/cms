@@ -26,7 +26,7 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
      */
     private $start;
     /**
-     * @var integer
+     * @var int
      */
     private $currentQuery = 0;
     /**
@@ -36,6 +36,7 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
 
     /**
      * SQLLogger constructor.
+     *
      * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)

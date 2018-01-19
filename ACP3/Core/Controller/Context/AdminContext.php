@@ -8,7 +8,7 @@
 namespace ACP3\Core\Controller\Context;
 
 /**
- * Class AdminContext
+ * Class AdminContext.
  *
  * @deprecated since version 4.5.0, to be removed in version 5.0.0
  */

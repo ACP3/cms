@@ -30,9 +30,10 @@ abstract class AbstractModel
 
     /**
      * AbstractModel constructor.
+     *
      * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param AbstractRepository $repository
+     * @param DataProcessor            $dataProcessor
+     * @param AbstractRepository       $repository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -45,8 +46,9 @@ abstract class AbstractModel
     }
 
     /**
-     * @param array $rawData
+     * @param array    $rawData
      * @param null|int $entryId
+     *
      * @return bool|int
      */
     public function save(array $rawData, $entryId = null)
@@ -73,10 +75,10 @@ abstract class AbstractModel
 
     /**
      * @param AbstractRepository $repository
-     * @param int|null|array $entryId
-     * @param array $filteredData
-     * @param array $rawData
-     * @param bool $isNewEntry
+     * @param int|null|array     $entryId
+     * @param array              $filteredData
+     * @param array              $rawData
+     * @param bool               $isNewEntry
      */
     protected function dispatchBeforeSaveEvent(
         AbstractRepository $repository,
@@ -96,11 +98,11 @@ abstract class AbstractModel
     }
 
     /**
-     * @param string $eventName
+     * @param string         $eventName
      * @param int|null|array $entryId
-     * @param bool $isNewEntry
-     * @param array $filteredData
-     * @param array $rawData
+     * @param bool           $isNewEntry
+     * @param array          $filteredData
+     * @param array          $rawData
      */
     protected function dispatchEvent($eventName, $entryId, $isNewEntry, array $filteredData = [], array $rawData = [])
     {
@@ -112,6 +114,7 @@ abstract class AbstractModel
 
     /**
      * @param array $rawData
+     *
      * @return array
      */
     protected function prepareData(array $rawData)
@@ -126,10 +129,10 @@ abstract class AbstractModel
 
     /**
      * @param AbstractRepository $repository
-     * @param int|null|array $entryId
-     * @param array $filteredData
-     * @param array $rawData
-     * @param bool $isNewEntry
+     * @param int|null|array     $entryId
+     * @param array              $filteredData
+     * @param array              $rawData
+     * @param bool               $isNewEntry
      */
     protected function dispatchAfterSaveEvent(
         AbstractRepository $repository,
@@ -150,6 +153,7 @@ abstract class AbstractModel
 
     /**
      * @param int|array $entryId
+     *
      * @return int
      */
     public function delete($entryId)
@@ -169,7 +173,7 @@ abstract class AbstractModel
 
         $affectedRows = 0;
         foreach ($entryId as $item) {
-            $affectedRows += (int)$this->repository->delete($item);
+            $affectedRows += (int) $this->repository->delete($item);
         }
 
         $this->dispatchEvent('core.model.before_delete', $entryId, false);
@@ -184,6 +188,7 @@ abstract class AbstractModel
 
     /**
      * @param int $entryId
+     *
      * @return array
      */
     public function getOneById($entryId)

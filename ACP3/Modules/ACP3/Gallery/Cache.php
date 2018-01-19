@@ -32,10 +32,10 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $config;
 
     /**
-     * @param \ACP3\Core\Cache $cache
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Cache                                              $cache
+     * @param \ACP3\Core\Environment\ApplicationPath                        $appPath
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param \ACP3\Core\Settings\SettingsInterface $config
+     * @param \ACP3\Core\Settings\SettingsInterface                         $config
      */
     public function __construct(
         Core\Cache $cache,
@@ -51,9 +51,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Bindet die gecachete Galerie anhand ihrer ID ein
+     * Bindet die gecachete Galerie anhand ihrer ID ein.
      *
-     * @param integer $galleryId
+     * @param int $galleryId
      *
      * @return array
      */
@@ -67,11 +67,11 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Erstellt den Galerie-Cache anhand der angegebenen ID
+     * Erstellt den Galerie-Cache anhand der angegebenen ID.
      *
-     * @param integer $galleryId
+     * @param int $galleryId
      *
-     * @return boolean
+     * @return bool
      */
     public function saveCache($galleryId)
     {
@@ -87,7 +87,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
             if ($picInfos !== false) {
                 if ($picInfos[0] > $settings['thumbwidth'] || $picInfos[1] > $settings['thumbheight']) {
                     $newHeight = $settings['thumbheight'];
-                    $newWidth = (int)($picInfos[0] * $newHeight / $picInfos[1]);
+                    $newWidth = (int) ($picInfos[0] * $newHeight / $picInfos[1]);
                 }
 
                 $pictures[$i]['width'] = $newWidth ?? $picInfos[0];

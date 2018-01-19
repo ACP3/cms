@@ -29,10 +29,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Comments\Model\CommentsModel $commentsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param Comments\Model\CommentsModel                               $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -51,6 +51,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -69,7 +70,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
 
             return [
                 'form' => \array_merge($comment, $this->request->getPost()->all()),
-                'module_id' => (int)$comment['module_id'],
+                'module_id' => (int) $comment['module_id'],
                 'form_token' => $this->formTokenHelper->renderFormToken(),
                 'can_use_emoticons' => true,
             ];
@@ -79,7 +80,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int   $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

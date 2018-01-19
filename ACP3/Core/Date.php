@@ -41,7 +41,8 @@ class Date
 
     /**
      * Date constructor.
-     * @param DateTranslator $dateTranslator
+     *
+     * @param DateTranslator    $dateTranslator
      * @param SettingsInterface $config
      */
     public function __construct(
@@ -105,12 +106,12 @@ class Date
     }
 
     /**
-     * Gibt ein formatiertes Datum zurück
+     * Gibt ein formatiertes Datum zurück.
      *
      * @param string $time
      * @param string $format
-     * @param bool $toLocalTimeZone
-     * @param bool $isLocalTimeZone
+     * @param bool   $toLocalTimeZone
+     * @param bool   $isLocalTimeZone
      *
      * @return string
      */
@@ -145,20 +146,20 @@ class Date
     }
 
     /**
-     * Gibt einen einfachen Zeitstempel zurück, welcher sich an UTC ausrichtet
+     * Gibt einen einfachen Zeitstempel zurück, welcher sich an UTC ausrichtet.
      *
      * @param string $value
-     * @param bool $isLocalTime
+     * @param bool   $isLocalTime
      *
      * @return int
      */
     public function timestamp($value = 'now', $isLocalTime = false)
     {
-        return (int)$this->format($value, 'U', true, $isLocalTime);
+        return (int) $this->format($value, 'U', true, $isLocalTime);
     }
 
     /**
-     * Gibt die aktuelle Uhrzeit im MySQL-Datetime Format zurück
+     * Gibt die aktuelle Uhrzeit im MySQL-Datetime Format zurück.
      *
      * @param bool $isLocalTime
      *
@@ -170,7 +171,7 @@ class Date
     }
 
     /**
-     * Gibt einen an UTC ausgerichteten Zeitstempel im MySQL DateTime Format zurück
+     * Gibt einen an UTC ausgerichteten Zeitstempel im MySQL DateTime Format zurück.
      *
      * @param string $value
      *
@@ -182,10 +183,10 @@ class Date
     }
 
     /**
-     * Konvertiert einen Unixstamp in das MySQL-Datetime Format
+     * Konvertiert einen Unixstamp in das MySQL-Datetime Format.
      *
      * @param string $value
-     * @param bool $isLocalTime
+     * @param bool   $isLocalTime
      *
      * @return string
      */

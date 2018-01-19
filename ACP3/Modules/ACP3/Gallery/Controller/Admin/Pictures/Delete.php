@@ -33,10 +33,10 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * Delete constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers $galleryHelpers
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers                            $galleryHelpers
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Cache                              $galleryCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -60,10 +60,11 @@ class Delete extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
+     * @param int    $id
      * @param string $action
      *
      * @return mixed
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id, $action = '')

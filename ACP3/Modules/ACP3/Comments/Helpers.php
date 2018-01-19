@@ -22,7 +22,7 @@ class Helpers
     protected $commentRepository;
 
     /**
-     * @param \ACP3\Core\Modules                                  $modules
+     * @param \ACP3\Core\Modules                                             $modules
      * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
      */
     public function __construct(
@@ -34,12 +34,12 @@ class Helpers
     }
 
     /**
-     * Zählt die Anzahl der Kommentare für einen bestimmten Eintrag eines Modules zusammen
+     * Zählt die Anzahl der Kommentare für einen bestimmten Eintrag eines Modules zusammen.
      *
-     * @param string  $moduleName
-     * @param integer $resultId
+     * @param string $moduleName
+     * @param int    $resultId
      *
-     * @return integer
+     * @return int
      */
     public function commentsCount($moduleName, $resultId)
     {

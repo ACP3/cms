@@ -23,6 +23,7 @@ class ResultsPerPage
 
     /**
      * ResultsPerPage constructor.
+     *
      * @param SettingsInterface $settings
      */
     public function __construct(SettingsInterface $settings)
@@ -32,6 +33,7 @@ class ResultsPerPage
 
     /**
      * @param string $moduleName
+     *
      * @return int
      */
     public function getResultsPerPage($moduleName)
@@ -48,6 +50,6 @@ class ResultsPerPage
             }
         }
 
-        return (int)$this->resultsPerPage[$moduleName];
+        return (int) $this->resultsPerPage[$moduleName];
     }
 }

@@ -37,6 +37,7 @@ class AvailableDatabases extends AbstractInstallerAction
      * @param string $hostname
      * @param string $userName
      * @param string $password
+     *
      * @return \Doctrine\DBAL\Connection|null
      */
     private function getDatabaseConnection($hostname, $userName, $password)
@@ -60,6 +61,7 @@ class AvailableDatabases extends AbstractInstallerAction
 
     /**
      * @param Connection $conn
+     *
      * @return array
      */
     private function retrieveAvailableDatabases(Connection $conn)

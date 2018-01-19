@@ -11,11 +11,10 @@ class MoveToBottom extends \ACP3\Core\View\Renderer\Smarty\Filters\MoveToBottom
 {
     public function __construct()
     {
-        ;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addElementFromMinifier()
     {

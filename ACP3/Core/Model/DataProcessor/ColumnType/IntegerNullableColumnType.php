@@ -11,6 +11,7 @@ class IntegerNullableColumnType extends IntegerColumnType
 {
     /**
      * @param mixed $value
+     *
      * @return int|null
      */
     public function doEscape($value)

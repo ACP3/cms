@@ -19,7 +19,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $newsRepository;
 
     /**
-     * @param \ACP3\Core\Cache                             $cache
+     * @param \ACP3\Core\Cache                                        $cache
      * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
      */
     public function __construct(
@@ -32,9 +32,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Bindet die gecachete News ein
+     * Bindet die gecachete News ein.
      *
-     * @param integer $newsId
+     * @param int $newsId
      *
      * @return array
      */
@@ -48,11 +48,11 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Erstellt den Cache einer News anhand der angegebenen ID
+     * Erstellt den Cache einer News anhand der angegebenen ID.
      *
-     * @param integer $newsId
+     * @param int $newsId
      *
-     * @return boolean
+     * @return bool
      */
     public function saveCache($newsId)
     {

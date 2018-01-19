@@ -9,7 +9,7 @@
  * Created by PhpStorm.
  * User: tinog
  * Date: 26.03.2017
- * Time: 21:26
+ * Time: 21:26.
  */
 
 namespace ACP3\Core\Test\View\Renderer\Smarty\Functions;

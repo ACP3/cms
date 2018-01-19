@@ -13,7 +13,7 @@ use ACP3\Core\View\Renderer\Smarty\PluginInterface;
 abstract class AbstractFilter extends AbstractPlugin
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionType()
     {

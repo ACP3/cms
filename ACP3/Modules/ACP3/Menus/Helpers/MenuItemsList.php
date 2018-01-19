@@ -40,11 +40,11 @@ class MenuItemsList
     }
 
     /**
-     * List all available menu items
+     * List all available menu items.
      *
-     * @param integer $parentId
-     * @param integer $leftId
-     * @param integer $rightId
+     * @param int $parentId
+     * @param int $leftId
+     * @param int $rightId
      *
      * @return array
      */

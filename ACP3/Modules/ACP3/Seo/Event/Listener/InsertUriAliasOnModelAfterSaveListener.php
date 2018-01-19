@@ -25,7 +25,8 @@ class InsertUriAliasOnModelAfterSaveListener
 
     /**
      * InsertUriAliasOnModelAfterSaveListener constructor.
-     * @param ACL $acl
+     *
+     * @param ACL             $acl
      * @param UriAliasManager $uriAliasManager
      */
     public function __construct(
@@ -50,7 +51,7 @@ class InsertUriAliasOnModelAfterSaveListener
                     $formData['alias'],
                     $formData['seo_keywords'],
                     $formData['seo_description'],
-                    (int)$formData['seo_robots'],
+                    (int) $formData['seo_robots'],
                     $formData['seo_title']
                 );
             }

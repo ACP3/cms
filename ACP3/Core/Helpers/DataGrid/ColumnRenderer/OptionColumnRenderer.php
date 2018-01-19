@@ -43,7 +43,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {

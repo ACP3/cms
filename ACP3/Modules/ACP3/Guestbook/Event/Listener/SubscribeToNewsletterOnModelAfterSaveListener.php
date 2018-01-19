@@ -35,9 +35,10 @@ class SubscribeToNewsletterOnModelAfterSaveListener
 
     /**
      * SubscribeToNewsletterOnModelAfterSaveListener constructor.
+     *
      * @param SettingsInterface $settings
-     * @param RouterInterface $router
-     * @param Translator $translator
+     * @param RouterInterface   $router
+     * @param Translator        $translator
      */
     public function __construct(
         SettingsInterface $settings,
@@ -51,6 +52,7 @@ class SubscribeToNewsletterOnModelAfterSaveListener
 
     /**
      * @param Subscribe $subscribe
+     *
      * @return $this
      */
     public function setNewsletterSubscribe(Subscribe $subscribe)

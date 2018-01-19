@@ -21,7 +21,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\DataGridRepository $dataGridRepository
      */
     public function __construct(

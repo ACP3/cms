@@ -64,8 +64,8 @@ class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
     /**
      * @param string $siteTitle
      * @param string $siteSubtitle
-     * @param int $subtitleMode
-     * @param int $subtitleHomepageMode
+     * @param int    $subtitleMode
+     * @param int    $subtitleHomepageMode
      */
     private function setUpConfigMockExpectations($siteTitle, $siteSubtitle, $subtitleMode, $subtitleHomepageMode)
     {

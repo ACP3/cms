@@ -13,7 +13,7 @@ use ACP3\Core\Modules\Installer\SchemaInterface;
 class SchemaUpdater extends SchemaHelper
 {
     /**
-     * Führt die in der Methode schemaUpdates() enthaltenen Tabellenänderungen aus
+     * Führt die in der Methode schemaUpdates() enthaltenen Tabellenänderungen aus.
      *
      * @param \ACP3\Core\Modules\Installer\SchemaInterface    $schema
      * @param \ACP3\Core\Modules\Installer\MigrationInterface $migration
@@ -23,7 +23,7 @@ class SchemaUpdater extends SchemaHelper
     public function updateSchema(SchemaInterface $schema, MigrationInterface $migration)
     {
         $module = $this->systemModuleRepository->getModuleSchemaVersion($schema->getModuleName());
-        $installedSchemaVersion = !empty($module) ? (int)$module : 0;
+        $installedSchemaVersion = !empty($module) ? (int) $module : 0;
         $result = -1;
 
         // Falls eine Methode zum Umbenennen des Moduls existiert,
@@ -55,11 +55,10 @@ class SchemaUpdater extends SchemaHelper
     }
 
     /**
-     *
-     * @param string  $moduleName
-     * @param int     $schemaVersion
-     * @param array   $schemaUpdates
-     * @param integer $installedSchemaVersion
+     * @param string $moduleName
+     * @param int    $schemaVersion
+     * @param array  $schemaUpdates
+     * @param int    $installedSchemaVersion
      *
      * @return int
      */
@@ -88,16 +87,16 @@ class SchemaUpdater extends SchemaHelper
     }
 
     /**
-     * Setzt die DB-Schema-Version auf die neue Versionsnummer
+     * Setzt die DB-Schema-Version auf die neue Versionsnummer.
      *
-     * @param string  $moduleName
-     * @param integer $schemaVersion
+     * @param string $moduleName
+     * @param int    $schemaVersion
      *
      * @return bool
      */
     public function updateSchemaVersion($moduleName, $schemaVersion)
     {
-        return $this->systemModuleRepository->update(['version' => (int)$schemaVersion], ['name' => $moduleName]) !== false;
+        return $this->systemModuleRepository->update(['version' => (int) $schemaVersion], ['name' => $moduleName]) !== false;
     }
 
     /**
@@ -107,6 +106,6 @@ class SchemaUpdater extends SchemaHelper
      */
     protected function forceSqlQueriesToArray($queries)
     {
-        return (\is_array($queries) === false) ? (array)$queries : $queries;
+        return (\is_array($queries) === false) ? (array) $queries : $queries;
     }
 }

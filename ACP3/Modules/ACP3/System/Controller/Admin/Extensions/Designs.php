@@ -24,7 +24,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
      * Designs constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\XML $xml
+     * @param \ACP3\Core\XML                                $xml
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -60,7 +60,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
     {
         $bool = false;
 
-        if ((bool)\preg_match('=/=', $design) === false &&
+        if ((bool) \preg_match('=/=', $design) === false &&
             \is_file($this->appPath->getDesignRootPathInternal() . $design . '/info.xml') === true
         ) {
             $bool = $this->config->saveSettings(['design' => $design], Schema::MODULE_NAME);
@@ -78,7 +78,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getXml()
     {
@@ -86,7 +86,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function selectEntry($directory)
     {

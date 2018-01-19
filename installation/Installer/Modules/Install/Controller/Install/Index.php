@@ -50,13 +50,13 @@ class Index extends AbstractAction
     protected $formValidation;
 
     /**
-     * @param \ACP3\Installer\Core\Controller\Context\InstallerContext $context
-     * @param Navigation $navigation
-     * @param \ACP3\Installer\Core\Date $date
-     * @param XML $xml
-     * @param \ACP3\Core\Helpers\Date $dateHelper
-     * @param Forms $forms
-     * @param InstallModel $installModel
+     * @param \ACP3\Installer\Core\Controller\Context\InstallerContext  $context
+     * @param Navigation                                                $navigation
+     * @param \ACP3\Installer\Core\Date                                 $date
+     * @param XML                                                       $xml
+     * @param \ACP3\Core\Helpers\Date                                   $dateHelper
+     * @param Forms                                                     $forms
+     * @param InstallModel                                              $installModel
      * @param \ACP3\Installer\Modules\Install\Validation\FormValidation $formValidation
      */
     public function __construct(
@@ -148,6 +148,7 @@ class Index extends AbstractAction
 
     /**
      * @param \Exception $exception
+     *
      * @return array|Response
      */
     private function renderErrorBoxOnFailedFormValidation(\Exception $exception)
@@ -161,7 +162,7 @@ class Index extends AbstractAction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getXml()
     {
@@ -169,7 +170,7 @@ class Index extends AbstractAction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function selectEntry($directory)
     {

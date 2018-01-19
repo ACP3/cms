@@ -12,7 +12,7 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 class MenuNameValidationRule extends AbstractValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {

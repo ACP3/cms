@@ -31,10 +31,10 @@ class Pics extends AbstractAction
     /**
      * Pics constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext      $context
-     * @param \ACP3\Core\Date                                    $date
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param \ACP3\Core\Date                                               $date
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache                   $galleryCache
+     * @param \ACP3\Modules\ACP3\Gallery\Cache                              $galleryCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -53,6 +53,7 @@ class Pics extends AbstractAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -69,7 +70,7 @@ class Pics extends AbstractAction
 
             return [
                 'pictures' => $this->galleryCache->getCache($id),
-                'overlay' => (int)$this->settings['overlay'],
+                'overlay' => (int) $this->settings['overlay'],
             ];
         }
 

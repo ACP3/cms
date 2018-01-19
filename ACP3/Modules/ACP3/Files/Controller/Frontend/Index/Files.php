@@ -32,8 +32,8 @@ class Files extends Core\Controller\AbstractFrontendAction
     /**
      * Files constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
-     * @param \ACP3\Core\Date                                        $date
+     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param \ACP3\Core\Date                                                   $date
      * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository         $filesRepository
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
@@ -54,6 +54,7 @@ class Files extends Core\Controller\AbstractFrontendAction
      * @param int $cat
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($cat)

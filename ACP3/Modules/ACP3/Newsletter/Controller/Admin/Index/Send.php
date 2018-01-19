@@ -28,10 +28,10 @@ class Send extends Core\Controller\AbstractFrontendAction
     /**
      * Send constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
      * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
      * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository    $accountRepository
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter      $newsletterHelpers
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter                 $newsletterHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -50,6 +50,7 @@ class Send extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)

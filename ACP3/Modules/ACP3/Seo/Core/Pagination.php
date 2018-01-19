@@ -30,11 +30,12 @@ class Pagination extends \ACP3\Core\Pagination
 
     /**
      * Pagination constructor.
-     * @param Title $title
-     * @param Translator $translator
-     * @param RequestInterface $request
-     * @param RouterInterface $router
-     * @param MetaStatements $metaStatements
+     *
+     * @param Title             $title
+     * @param Translator        $translator
+     * @param RequestInterface  $request
+     * @param RouterInterface   $router
+     * @param MetaStatements    $metaStatements
      * @param SettingsInterface $settings
      */
     public function __construct(
@@ -52,7 +53,7 @@ class Pagination extends \ACP3\Core\Pagination
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function setMetaStatements()
     {
@@ -80,7 +81,7 @@ class Pagination extends \ACP3\Core\Pagination
     }
 
     /**
-     * Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
+     * Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben.
      */
     private function modifyMetaDescription()
     {

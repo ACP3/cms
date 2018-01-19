@@ -24,7 +24,8 @@ class UpdateCategoriesCacheOnModelAfterSaveListener
 
     /**
      * UpdateCategoriesCacheOnModelAfterSaveListener constructor.
-     * @param Cache $cache
+     *
+     * @param Cache              $cache
      * @param CategoryRepository $categoryRepository
      */
     public function __construct(Cache $cache, CategoryRepository $categoryRepository)

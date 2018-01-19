@@ -23,6 +23,7 @@ class OnControllerActionDispatcherBeforeDispatchListener
 
     /**
      * OnFrontControllerBeforeDispatchListener constructor.
+     *
      * @param RequestInterface $request
      * @param RedirectResponse $redirect
      */
@@ -35,7 +36,7 @@ class OnControllerActionDispatcherBeforeDispatchListener
     }
 
     /**
-     * If the language has been changed, set a cookie with the new default language and force a page reload
+     * If the language has been changed, set a cookie with the new default language and force a page reload.
      */
     public function onLanguageChange()
     {

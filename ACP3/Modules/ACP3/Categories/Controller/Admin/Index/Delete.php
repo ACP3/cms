@@ -25,8 +25,8 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Categories\Model\CategoriesModel $categoriesModel
-     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
+     * @param Categories\Model\CategoriesModel              $categoriesModel
+     * @param \ACP3\Modules\ACP3\Categories\Cache           $categoriesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -43,6 +43,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @param string $action
      *
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($action = '')

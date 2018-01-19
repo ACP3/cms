@@ -23,7 +23,8 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
 
     /**
      * FilesRepository constructor.
-     * @param Connection $db
+     *
+     * @param Connection                      $db
      * @param Core\Settings\SettingsInterface $settings
      */
     public function __construct(Connection $db, Core\Settings\SettingsInterface $settings)
@@ -43,7 +44,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
                 "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id" . $period,
                 ['id' => $fileId, 'time' => $time, 'active' => 1]
             ) > 0;
@@ -131,7 +132,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getMaxSort()
     {
-        return (int)$this->db->fetchColumn("SELECT MAX(`sort`) FROM {$this->getTableName()};");
+        return (int) $this->db->fetchColumn("SELECT MAX(`sort`) FROM {$this->getTableName()};");
     }
 
     /**

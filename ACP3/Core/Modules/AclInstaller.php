@@ -45,11 +45,11 @@ class AclInstaller implements InstallerInterface
     private $ruleRepository;
 
     /**
-     * @param \ACP3\Core\Cache $aclCache
-     * @param \ACP3\Core\Modules\SchemaHelper $schemaHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository $ruleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
+     * @param \ACP3\Core\Cache                                                    $aclCache
+     * @param \ACP3\Core\Modules\SchemaHelper                                     $schemaHelper
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository      $roleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository      $ruleRepository
+     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository  $resourceRepository
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
      */
     public function __construct(
@@ -69,10 +69,10 @@ class AclInstaller implements InstallerInterface
     }
 
     /**
-     * Fügt die zu einen Modul zugehörigen Ressourcen ein
+     * Fügt die zu einen Modul zugehörigen Ressourcen ein.
      *
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
-     * @param int $mode
+     * @param int                                          $mode
      *
      * @return bool
      */
@@ -90,7 +90,7 @@ class AclInstaller implements InstallerInterface
     }
 
     /**
-     * Inserts a new resource into the database
+     * Inserts a new resource into the database.
      *
      * @param SchemaInterface $schema
      */
@@ -105,7 +105,7 @@ class AclInstaller implements InstallerInterface
                         'controller' => \strtolower($controller),
                         'page' => $this->convertCamelCaseToUnderscore($action),
                         'params' => '',
-                        'privilege_id' => (int)$privilegeId,
+                        'privilege_id' => (int) $privilegeId,
                     ];
                     $this->resourceRepository->insert($insertValues);
                 }
@@ -124,7 +124,7 @@ class AclInstaller implements InstallerInterface
     }
 
     /**
-     * Insert new acl user rules
+     * Insert new acl user rules.
      *
      * @param string $moduleName
      */
@@ -176,7 +176,7 @@ class AclInstaller implements InstallerInterface
     }
 
     /**
-     * Löscht die zu einem Modul zugehörigen Ressourcen
+     * Löscht die zu einem Modul zugehörigen Ressourcen.
      *
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      *

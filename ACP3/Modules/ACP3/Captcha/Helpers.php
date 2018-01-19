@@ -45,12 +45,12 @@ class Helpers
     /**
      * Helpers constructor.
      *
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
+     * @param \ACP3\Modules\ACP3\Users\Model\UserModel   $user
+     * @param \ACP3\Core\Http\RequestInterface           $request
+     * @param \ACP3\Core\Router\RouterInterface          $router
      * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
-     * @param \ACP3\Core\View $view
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @param \ACP3\Core\View                            $view
+     * @param \ACP3\Core\Helpers\Secure                  $secureHelper
      */
     public function __construct(
         \ACP3\Modules\ACP3\Users\Model\UserModel $user,
@@ -69,11 +69,11 @@ class Helpers
     }
 
     /**
-     * Erzeugt das Captchafeld für das Template
+     * Erzeugt das Captchafeld für das Template.
      *
-     * @param integer $captchaLength
+     * @param int    $captchaLength
      * @param string $formFieldId
-     * @param bool $inputOnly
+     * @param bool   $inputOnly
      * @param string $path
      *
      * @return string

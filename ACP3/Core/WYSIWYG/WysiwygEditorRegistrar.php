@@ -17,9 +17,9 @@ class WysiwygEditorRegistrar
     protected $wysiwygEditors = [];
 
     /**
-     * @param string $serviceId
-     *
+     * @param string                                    $serviceId
      * @param \ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG $wysiwygEditor
+     *
      * @return $this
      */
     public function registerWysiwygEditor($serviceId, AbstractWYSIWYG $wysiwygEditor)
@@ -39,6 +39,7 @@ class WysiwygEditorRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return bool
      */
     public function has($serviceId)
@@ -48,6 +49,7 @@ class WysiwygEditorRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return AbstractWYSIWYG
      */
     public function get($serviceId)

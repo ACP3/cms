@@ -15,16 +15,17 @@ class Delete extends AbstractOperation
      * @param int $resultId
      *
      * @return bool
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function execute($resultId)
     {
         $callback = function () use ($resultId) {
-            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings((int)$resultId);
+            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings((int) $resultId);
             if (!empty($nodes)) {
                 $this->db->getConnection()->delete(
                     $this->nestedSetRepository->getTableName(),
-                    ['id' => (int)$resultId]
+                    ['id' => (int) $resultId]
                 );
 
                 $this->moveSiblingsOneLevelUp($nodes);
@@ -72,6 +73,7 @@ class Delete extends AbstractOperation
 
     /**
      * @param array $nodes
+     *
      * @return array
      */
     private function getNodeIds(array $nodes)

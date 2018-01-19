@@ -68,6 +68,7 @@ class MailerMessage
 
     /**
      * @param string $subject
+     *
      * @return MailerMessage
      */
     public function setSubject($subject)
@@ -87,6 +88,7 @@ class MailerMessage
 
     /**
      * @param string $body
+     *
      * @return MailerMessage
      */
     public function setBody($body)
@@ -106,6 +108,7 @@ class MailerMessage
 
     /**
      * @param string $htmlBody
+     *
      * @return $this
      */
     public function setHtmlBody($htmlBody)
@@ -125,6 +128,7 @@ class MailerMessage
 
     /**
      * @param string $urlWeb
+     *
      * @return $this
      */
     public function setUrlWeb($urlWeb)
@@ -144,6 +148,7 @@ class MailerMessage
 
     /**
      * @param string $mailSignature
+     *
      * @return $this
      */
     public function setMailSignature($mailSignature)
@@ -163,6 +168,7 @@ class MailerMessage
 
     /**
      * @param array|string $from
+     *
      * @return $this
      */
     public function setFrom($from)
@@ -182,6 +188,7 @@ class MailerMessage
 
     /**
      * @param array|string $replyTo
+     *
      * @return $this
      */
     public function setReplyTo($replyTo)
@@ -201,6 +208,7 @@ class MailerMessage
 
     /**
      * @param string $sender
+     *
      * @return $this
      */
     public function setSender($sender)
@@ -220,6 +228,7 @@ class MailerMessage
 
     /**
      * @param array|string $recipients
+     *
      * @return $this
      */
     public function setRecipients($recipients)
@@ -239,6 +248,7 @@ class MailerMessage
 
     /**
      * @param bool $bcc
+     *
      * @return $this
      */
     public function setBcc($bcc)
@@ -258,6 +268,7 @@ class MailerMessage
 
     /**
      * @param array $attachments
+     *
      * @return $this
      */
     public function setAttachments(array $attachments)
@@ -269,6 +280,7 @@ class MailerMessage
 
     /**
      * @param string $attachment
+     *
      * @return $this
      */
     public function addAttachment($attachment)
@@ -288,6 +300,7 @@ class MailerMessage
 
     /**
      * @param string $template
+     *
      * @return $this
      */
     public function setTemplate($template)

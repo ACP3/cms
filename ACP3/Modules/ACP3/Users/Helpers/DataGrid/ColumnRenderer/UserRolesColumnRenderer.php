@@ -28,7 +28,7 @@ class UserRolesColumnRenderer extends AbstractColumnRenderer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {

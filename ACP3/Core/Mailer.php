@@ -85,10 +85,11 @@ class Mailer
 
     /**
      * Mailer constructor.
-     * @param LoggerInterface $logger
-     * @param View $view
+     *
+     * @param LoggerInterface   $logger
+     * @param View              $view
      * @param SettingsInterface $config
-     * @param StringFormatter $stringFormatter
+     * @param StringFormatter   $stringFormatter
      */
     public function __construct(
         LoggerInterface $logger,
@@ -106,6 +107,7 @@ class Mailer
      * @param string|array $from
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setFrom($from)
@@ -119,6 +121,7 @@ class Mailer
      * @param string $mailSignature
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setMailSignature($mailSignature)
@@ -132,6 +135,7 @@ class Mailer
      * @param string $htmlText
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setHtmlBody($htmlText)
@@ -145,6 +149,7 @@ class Mailer
      * @param string $urlWeb
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setUrlWeb($urlWeb)
@@ -158,11 +163,12 @@ class Mailer
      * @param bool $bcc
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setBcc($bcc)
     {
-        $this->bcc = (bool)$bcc;
+        $this->bcc = (bool) $bcc;
 
         return $this;
     }
@@ -171,6 +177,7 @@ class Mailer
      * @param string $subject
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setSubject($subject)
@@ -184,6 +191,7 @@ class Mailer
      * @param string $body
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setBody($body)
@@ -197,6 +205,7 @@ class Mailer
      * @param array|string $recipients
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setRecipients($recipients)
@@ -210,6 +219,7 @@ class Mailer
      * @param string|array $attachments
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setAttachments($attachments)
@@ -227,6 +237,7 @@ class Mailer
      * @param string $template
      *
      * @return $this
+     *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
     public function setTemplate($template)
@@ -238,6 +249,7 @@ class Mailer
 
     /**
      * @param MailerMessage $data
+     *
      * @return $this
      */
     public function setData(MailerMessage $data)
@@ -259,7 +271,7 @@ class Mailer
     }
 
     /**
-     * Sends the email
+     * Sends the email.
      *
      * @return bool
      */
@@ -343,7 +355,7 @@ class Mailer
     }
 
     /**
-     * Generates the E-mail body
+     * Generates the E-mail body.
      *
      * @return $this
      */
@@ -397,7 +409,6 @@ class Mailer
     }
 
     /**
-     *
      * @param string $data
      *
      * @return string
@@ -420,9 +431,10 @@ class Mailer
     }
 
     /**
-     * Special sending logic for bcc only E-mails
+     * Special sending logic for bcc only E-mails.
      *
      * @return bool
+     *
      * @throws PHPMailerException
      */
     private function sendBcc()
@@ -441,10 +453,10 @@ class Mailer
     }
 
     /**
-     * Adds multiple recipients to the to be send email
+     * Adds multiple recipients to the to be send email.
      *
      * @param string|array $recipients
-     * @param bool $bcc
+     * @param bool         $bcc
      *
      * @return $this
      */
@@ -470,11 +482,11 @@ class Mailer
     }
 
     /**
-     * Adds a single recipient to the to be send email
+     * Adds a single recipient to the to be send email.
      *
      * @param string $email
      * @param string $name
-     * @param bool $bcc
+     * @param bool   $bcc
      *
      * @return $this
      */
@@ -490,9 +502,10 @@ class Mailer
     }
 
     /**
-     * Special sending logic for E-mails without bcc addresses
+     * Special sending logic for E-mails without bcc addresses.
      *
      * @return bool
+     *
      * @throws PHPMailerException
      */
     private function sendTo()
@@ -512,7 +525,7 @@ class Mailer
     }
 
     /**
-     * Resets the currently set mailer values back to there default values
+     * Resets the currently set mailer values back to there default values.
      *
      * @return $this
      */
@@ -538,7 +551,7 @@ class Mailer
     }
 
     /**
-     * Initializes PHPMailer and sets the basic configuration parameters
+     * Initializes PHPMailer and sets the basic configuration parameters.
      *
      * @return $this
      */
@@ -556,7 +569,7 @@ class Mailer
                 $this->phpMailer->SMTPSecure = \in_array($settings['mailer_smtp_security'], ['ssl', 'tls'])
                     ? $settings['mailer_smtp_security']
                     : '';
-                if ((bool)$settings['mailer_smtp_auth'] === true) {
+                if ((bool) $settings['mailer_smtp_auth'] === true) {
                     $this->phpMailer->SMTPAuth = true;
                     $this->phpMailer->Username = $settings['mailer_smtp_user'];
                     $this->phpMailer->Password = $settings['mailer_smtp_password'];

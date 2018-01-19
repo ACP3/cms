@@ -37,6 +37,7 @@ class AbstractFormAction extends AbstractFrontendAction
 
     /**
      * @param int $privilegeId
+     *
      * @return array
      */
     protected function fetchPrivileges($privilegeId)
@@ -56,6 +57,7 @@ class AbstractFormAction extends AbstractFrontendAction
 
     /**
      * @param string $currentModule
+     *
      * @return array
      */
     protected function fetchActiveModules($currentModule = '')
@@ -74,6 +76,7 @@ class AbstractFormAction extends AbstractFrontendAction
 
     /**
      * @param string $moduleName
+     *
      * @return int
      */
     protected function fetchModuleId($moduleName)
@@ -85,6 +88,7 @@ class AbstractFormAction extends AbstractFrontendAction
 
     /**
      * @param string $currentArea
+     *
      * @return array
      */
     protected function fetchAreas($currentArea = '')

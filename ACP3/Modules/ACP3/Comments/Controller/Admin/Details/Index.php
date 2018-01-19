@@ -25,8 +25,9 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * Index constructor.
-     * @param Core\Controller\Context\FrontendContext $context
-     * @param Comments\Model\Repository\CommentRepository $commentRepository
+     *
+     * @param Core\Controller\Context\FrontendContext              $context
+     * @param Comments\Model\Repository\CommentRepository          $commentRepository
      * @param Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
      */
     public function __construct(
@@ -44,6 +45,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)

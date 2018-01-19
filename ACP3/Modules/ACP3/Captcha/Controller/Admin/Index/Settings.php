@@ -38,10 +38,10 @@ class Settings extends AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param FrontendContext $context
-     * @param Forms $forms
-     * @param FormToken $formToken
-     * @param CaptchaRegistrar $captchaRegistrar
+     * @param FrontendContext             $context
+     * @param Forms                       $forms
+     * @param FormToken                   $formToken
+     * @param CaptchaRegistrar            $captchaRegistrar
      * @param AdminSettingsFormValidation $formValidation
      */
     public function __construct(
@@ -68,7 +68,7 @@ class Settings extends AbstractFrontendAction
 
         $captchas = [];
         foreach ($this->captchaRegistrar->getAvailableCaptchas() as $serviceId => $captcha) {
-            /** @var CaptchaExtensionInterface $captcha */
+            /* @var CaptchaExtensionInterface $captcha */
             $captchas[$serviceId] = $captcha->getCaptchaName();
         }
 

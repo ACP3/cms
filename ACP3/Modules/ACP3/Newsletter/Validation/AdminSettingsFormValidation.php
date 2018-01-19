@@ -13,7 +13,7 @@ use ACP3\Core\Validation\AbstractFormValidation;
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

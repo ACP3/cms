@@ -20,7 +20,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $articleRepository;
 
     /**
-     * @param Core\Cache $cache
+     * @param Core\Cache        $cache
      * @param ArticleRepository $articleRepository
      */
     public function __construct(
@@ -33,7 +33,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * @param integer $articleId
+     * @param int $articleId
      *
      * @return array
      */
@@ -47,9 +47,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * @param integer $articleId
+     * @param int $articleId
      *
-     * @return boolean
+     * @return bool
      */
     public function saveCache($articleId)
     {

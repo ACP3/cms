@@ -29,9 +29,9 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param \ACP3\Core\Helpers\Forms                                      $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                  $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
@@ -109,10 +109,10 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $data = [
                 'meta_description' => $this->get('core.helpers.secure')->strEncode($formData['meta_description']),
                 'meta_keywords' => $this->get('core.helpers.secure')->strEncode($formData['meta_keywords']),
-                'robots' => (int)$formData['robots'],
-                'sitemap_is_enabled' => (int)$formData['sitemap_is_enabled'],
-                'sitemap_save_mode' => (int)$formData['sitemap_save_mode'],
-                'sitemap_separate' => (int)$formData['sitemap_separate'],
+                'robots' => (int) $formData['robots'],
+                'sitemap_is_enabled' => (int) $formData['sitemap_is_enabled'],
+                'sitemap_save_mode' => (int) $formData['sitemap_save_mode'],
+                'sitemap_separate' => (int) $formData['sitemap_separate'],
             ];
 
             return $this->config->saveSettings($data, Seo\Installer\Schema::MODULE_NAME);

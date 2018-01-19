@@ -27,7 +27,7 @@ class PictureColumnRenderer extends AbstractColumnRenderer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getValue(array $column, array $dbResultRow)
     {

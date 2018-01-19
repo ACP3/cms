@@ -37,13 +37,13 @@ class Create extends AbstractFormAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Files\Model\FilesModel $filesModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
+     * @param \ACP3\Core\Date                                         $date
+     * @param \ACP3\Core\Helpers\Forms                                $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
+     * @param Files\Model\FilesModel                                  $filesModel
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
+     * @param \ACP3\Modules\ACP3\Categories\Helpers                   $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -118,7 +118,7 @@ class Create extends AbstractFormAction
                 $formData['filesize'] = $result['size'];
             } else {
                 $formData['file'] = $file;
-                $formData['filesize'] = ((float)$formData['filesize']) . ' ' . $formData['unit'];
+                $formData['filesize'] = ((float) $formData['filesize']) . ' ' . $formData['unit'];
             }
 
             $formData['cat'] = $this->fetchCategoryId($formData);

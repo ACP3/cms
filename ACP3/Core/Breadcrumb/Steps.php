@@ -49,10 +49,10 @@ class Steps
     /**
      * Breadcrumb constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
+     * @param \ACP3\Core\I18n\Translator                                  $translator
+     * @param \ACP3\Core\Http\RequestInterface                            $request
+     * @param \ACP3\Core\Router\RouterInterface                           $router
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
@@ -70,7 +70,7 @@ class Steps
     }
 
     /**
-     * Returns the breadcrumb
+     * Returns the breadcrumb.
      *
      * @return array
      */
@@ -84,7 +84,7 @@ class Steps
     }
 
     /**
-     * Sets the breadcrumb cache for the current request
+     * Sets the breadcrumb cache for the current request.
      */
     private function buildBreadcrumbCache()
     {
@@ -103,7 +103,7 @@ class Steps
     }
 
     /**
-     * Sets the breadcrumb steps cache for admin panel action requests
+     * Sets the breadcrumb steps cache for admin panel action requests.
      */
     private function buildBreadcrumbCacheForAdmin()
     {
@@ -180,7 +180,7 @@ class Steps
     }
 
     /**
-     * Sets the breadcrumb steps cache for frontend action requests
+     * Sets the breadcrumb steps cache for frontend action requests.
      */
     protected function buildBreadcrumbCacheForFrontend()
     {
@@ -197,11 +197,11 @@ class Steps
     }
 
     /**
-     * Ersetzt die aktuell letzte Brotkrume mit neuen Werten
+     * Ersetzt die aktuell letzte Brotkrume mit neuen Werten.
      *
      * @param string $title
      * @param string $path
-     * @param bool $dbSteps
+     * @param bool   $dbSteps
      *
      * @return $this
      */
@@ -209,7 +209,7 @@ class Steps
     {
         if ($dbSteps === false) {
             \end($this->steps);
-            $this->steps[(int)\key($this->steps)] = $this->buildStepItem($title, $path);
+            $this->steps[(int) \key($this->steps)] = $this->buildStepItem($title, $path);
         }
 
         return $this;
@@ -218,6 +218,7 @@ class Steps
     /**
      * @param string $title
      * @param string $path
+     *
      * @return array
      */
     protected function buildStepItem($title, $path)
@@ -229,7 +230,7 @@ class Steps
     }
 
     /**
-     * Zuweisung einer neuen Stufe zur Brotkrümelspur
+     * Zuweisung einer neuen Stufe zur Brotkrümelspur.
      *
      * @param string $title
      * @param string $path
@@ -246,7 +247,7 @@ class Steps
     }
 
     /**
-     * Fügt Brotkrumen an den Anfang an
+     * Fügt Brotkrumen an den Anfang an.
      *
      * @param string $title
      * @param string $path

@@ -15,7 +15,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     const TABLE_NAME = 'modules';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getModuleId($moduleName)
     {

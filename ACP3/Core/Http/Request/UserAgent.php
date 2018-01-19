@@ -25,7 +25,6 @@ class UserAgent
     }
 
     /**
-     * @inheritdoc
      * @see http://detectmobilebrowsers.com/download/php
      */
     public function isMobileBrowser()
@@ -38,7 +37,7 @@ class UserAgent
 
     /**
      * Parst den ACCEPT-LANGUAGE Header des Browsers
-     * und gibt die präferierten Sprachen zurück
+     * und gibt die präferierten Sprachen zurück.
      *
      * @return array
      */

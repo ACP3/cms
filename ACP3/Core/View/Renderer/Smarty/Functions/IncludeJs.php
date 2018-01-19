@@ -29,8 +29,8 @@ class IncludeJs extends AbstractFunction
     protected $alreadyIncluded = [];
 
     /**
-     * @param \ACP3\Core\Assets $assets
-     * @param \ACP3\Core\Assets\FileResolver $fileResolver
+     * @param \ACP3\Core\Assets                      $assets
+     * @param \ACP3\Core\Assets\FileResolver         $fileResolver
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
@@ -44,7 +44,7 @@ class IncludeJs extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -52,7 +52,7 @@ class IncludeJs extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
@@ -85,17 +85,19 @@ class IncludeJs extends AbstractFunction
 
     /**
      * @param array $params
+     *
      * @return bool
      */
     private function hasValidParams(array $params)
     {
         return isset($params['module'], $params['file']) === true &&
-            (bool)\preg_match('=/=', $params['module']) === false &&
-            (bool)\preg_match('=\./=', $params['file']) === false;
+            (bool) \preg_match('=/=', $params['module']) === false &&
+            (bool) \preg_match('=\./=', $params['file']) === false;
     }
 
     /**
      * @param array $params
+     *
      * @return string
      */
     protected function resolvePath(array $params)

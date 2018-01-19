@@ -11,10 +11,11 @@ class BooleanColumnType implements ColumnTypeStrategyInterface
 {
     /**
      * @param mixed $value
+     *
      * @return bool
      */
     public function doEscape($value)
     {
-        return (bool)$value;
+        return (bool) $value;
     }
 }

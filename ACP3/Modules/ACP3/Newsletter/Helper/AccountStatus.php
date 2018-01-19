@@ -31,8 +31,8 @@ class AccountStatus
     protected $accountHistoryRepository;
 
     /**
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository $accountRepository
+     * @param \ACP3\Core\Date                                                         $date
+     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository        $accountRepository
      * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository $accountHistoryRepository
      */
     public function __construct(
@@ -46,7 +46,7 @@ class AccountStatus
     }
 
     /**
-     * @param int $status
+     * @param int       $status
      * @param int|array $entryId
      *
      * @return bool|int

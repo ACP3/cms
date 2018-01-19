@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Feeds\Installer\Schema;
 use FeedWriter\ATOM;
 
 /**
- * Renderer for the output of RSS and ATOM News feeds
+ * Renderer for the output of RSS and ATOM News feeds.
  */
 class FeedGenerator
 {
@@ -45,8 +45,9 @@ class FeedGenerator
 
     /**
      * FeedGenerator constructor.
+     *
      * @param SettingsInterface $config
-     * @param RouterInterface $router
+     * @param RouterInterface   $router
      */
     public function __construct(
         SettingsInterface $config,
@@ -101,11 +102,11 @@ class FeedGenerator
                 $feedType = 'RSS2';
         }
         $className = '\\FeedWriter\\' . $feedType;
-        $this->renderer = new $className;
+        $this->renderer = new $className();
     }
 
     /**
-     * Generates the channel element for a feed
+     * Generates the channel element for a feed.
      */
     protected function generateChannel()
     {

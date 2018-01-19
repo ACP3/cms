@@ -31,10 +31,10 @@ class Forms
     private $country;
 
     /**
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param CountryList $countryList
+     * @param \ACP3\Core\I18n\Translator       $translator
+     * @param CountryList                      $countryList
      * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Helpers\Forms $formsHelpers
+     * @param \ACP3\Core\Helpers\Forms         $formsHelpers
      */
     public function __construct(
         Translator $translator,
@@ -109,6 +109,7 @@ class Forms
      * @param int $displayBirthday
      * @param int $displayCountry
      * @param int $displayMail
+     *
      * @return array
      */
     public function fetchUserSettingsFormFields(

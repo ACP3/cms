@@ -19,8 +19,9 @@ abstract class AbstractAction extends Core\Controller\AbstractInstallerAction
 
     /**
      * AbstractAction constructor.
+     *
      * @param Core\Controller\Context\InstallerContext $context
-     * @param Navigation $navigation
+     * @param Navigation                               $navigation
      */
     public function __construct(Core\Controller\Context\InstallerContext $context, Navigation $navigation)
     {

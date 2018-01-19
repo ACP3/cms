@@ -34,11 +34,12 @@ class ModelSaveEvent extends Event
 
     /**
      * ModelSaveEvent constructor.
-     * @param string $moduleName
-     * @param array $filteredData
-     * @param array $rawData
+     *
+     * @param string         $moduleName
+     * @param array          $filteredData
+     * @param array          $rawData
      * @param int|null|array $entryId
-     * @param bool $isNewEntry
+     * @param bool           $isNewEntry
      */
     public function __construct($moduleName, array $filteredData, array $rawData, $entryId, $isNewEntry)
     {

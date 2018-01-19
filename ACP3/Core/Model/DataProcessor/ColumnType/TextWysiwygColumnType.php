@@ -10,7 +10,7 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 class TextWysiwygColumnType extends TextColumnType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function doEscape($value)
     {

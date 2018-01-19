@@ -21,7 +21,7 @@ class Image extends AbstractAction
     /**
      * Image constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext      $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      */
     public function __construct(
@@ -38,6 +38,7 @@ class Image extends AbstractAction
      * @param string $action
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id, $action = '')

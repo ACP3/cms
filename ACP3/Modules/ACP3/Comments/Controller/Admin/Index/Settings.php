@@ -28,10 +28,10 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
+     * @param \ACP3\Core\Helpers\Forms                                           $formsHelper
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken                                       $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

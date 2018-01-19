@@ -59,7 +59,7 @@ class MetaFormFields
     }
 
     /**
-     * Returns the SEO form fields
+     * Returns the SEO form fields.
      *
      * @param string $path
      *

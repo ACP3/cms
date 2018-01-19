@@ -17,7 +17,7 @@ class View
     protected $renderer;
 
     /**
-     * Gets the renderer
+     * Gets the renderer.
      *
      * @return RendererInterface
      */
@@ -39,9 +39,9 @@ class View
     }
 
     /**
-     * Fetches a template and outputs its contents
+     * Fetches a template and outputs its contents.
      *
-     * @param string      $template
+     * @param string $template
      */
     public function displayTemplate($template)
     {
@@ -49,9 +49,9 @@ class View
     }
 
     /**
-     * Fetches a template and returns its contents
+     * Fetches a template and returns its contents.
      *
-     * @param string      $template
+     * @param string $template
      *
      * @return string
      */
@@ -75,11 +75,11 @@ class View
     }
 
     /**
-     * Checks, whether a template exists or not
+     * Checks, whether a template exists or not.
      *
      * @param string $template
      *
-     * @return boolean
+     * @return bool
      */
     public function templateExists($template)
     {
@@ -87,7 +87,7 @@ class View
     }
 
     /**
-     * Assigns a new template variable
+     * Assigns a new template variable.
      *
      * @param string|array $name
      * @param mixed        $value

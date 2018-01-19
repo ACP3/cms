@@ -45,11 +45,12 @@ class ModuleInfoCache
 
     /**
      * ModuleInfoCache constructor.
-     * @param Cache $cache
-     * @param ApplicationPath $appPath
-     * @param Translator $translator
-     * @param Vendor $vendors
-     * @param XML $xml
+     *
+     * @param Cache                          $cache
+     * @param ApplicationPath                $appPath
+     * @param Translator                     $translator
+     * @param Vendor                         $vendors
+     * @param XML                            $xml
      * @param ModuleAwareRepositoryInterface $systemModuleRepository
      */
     public function __construct(
@@ -89,7 +90,7 @@ class ModuleInfoCache
     }
 
     /**
-     * Saves the modules info cache
+     * Saves the modules info cache.
      */
     public function saveModulesInfoCache()
     {
@@ -151,7 +152,7 @@ class ModuleInfoCache
                         'dir' => $moduleDirectory,
                         'installed' => (!empty($moduleInfoDb)),
                         'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
-                        'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
+                        'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
                         'description' => $this->getModuleDescription($moduleInfo, $moduleName),
                         'author' => $moduleInfo['author'],
                         'version' => $moduleInfo['version'],

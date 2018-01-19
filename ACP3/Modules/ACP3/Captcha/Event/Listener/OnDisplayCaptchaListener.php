@@ -25,7 +25,7 @@ class OnDisplayCaptchaListener
     /**
      * OnDisplayCaptchaListener constructor.
      *
-     * @param ACL $acl
+     * @param ACL                       $acl
      * @param CaptchaExtensionInterface $captchaExtension
      */
     public function __construct(ACL $acl, CaptchaExtensionInterface $captchaExtension = null)

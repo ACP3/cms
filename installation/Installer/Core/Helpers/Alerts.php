@@ -10,7 +10,7 @@ namespace ACP3\Installer\Core\Helpers;
 class Alerts extends \ACP3\Core\Helpers\Alerts
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function errorBox($errors)
     {

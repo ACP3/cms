@@ -14,24 +14,25 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 interface BootstrapInterface extends HttpKernelInterface
 {
     /**
-     * Contains the current ACP3 version string
+     * Contains the current ACP3 version string.
      */
     const VERSION = '4.20.0';
 
     /**
-     * Performs some startup checks
+     * Performs some startup checks.
      */
     public function startUpChecks();
 
     /**
-     * Initializes the dependency injection container
+     * Initializes the dependency injection container.
+     *
      * @param SymfonyRequest $symfonyRequest
-     * @return void
      */
     public function initializeClasses(SymfonyRequest $symfonyRequest);
 
     /**
-     * Handle the request and output the page
+     * Handle the request and output the page.
+     *
      * @return Response
      */
     public function outputPage();

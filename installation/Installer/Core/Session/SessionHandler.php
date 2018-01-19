@@ -17,21 +17,21 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function startSession()
     {
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function secureSession()
     {
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function open($savePath, $sessionId)
     {
@@ -39,7 +39,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function close()
     {
@@ -47,7 +47,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function read($sessionId)
     {
@@ -55,7 +55,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function write($sessionId, $data)
     {
@@ -63,7 +63,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function destroy($sessionId)
     {
@@ -71,7 +71,7 @@ class SessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function gc($sessionLifetime)
     {

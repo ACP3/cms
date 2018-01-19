@@ -11,8 +11,6 @@ interface RendererInterface
 {
     /**
      * @param array $params
-     *
-     * @return void
      */
     public function configure(array $params = []);
 
@@ -26,6 +24,7 @@ interface RendererInterface
 
     /**
      * @param string|null $variableName
+     *
      * @return mixed
      */
     public function getTemplateVars($variableName = null);
@@ -45,8 +44,6 @@ interface RendererInterface
      * @param mixed       $cacheId
      * @param mixed       $compileId
      * @param object|null $parent
-     *
-     * @return void
      */
     public function display($template, $cacheId = null, $compileId = null, $parent = null);
 

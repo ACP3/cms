@@ -17,7 +17,7 @@ interface ActionInterface
     public function preDispatch();
 
     /**
-     * Gets a class from the service container
+     * Gets a class from the service container.
      *
      * @param string $serviceId
      *
@@ -27,6 +27,7 @@ interface ActionInterface
 
     /**
      * @param Response|string|array $actionResult
+     *
      * @return Response
      */
     public function display($actionResult);

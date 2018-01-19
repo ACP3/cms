@@ -41,11 +41,12 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
 
     /**
      * ReCaptchaCaptchaExtension constructor.
-     * @param Translator $translator
-     * @param RequestInterface $request
+     *
+     * @param Translator        $translator
+     * @param RequestInterface  $request
      * @param SettingsInterface $settings
-     * @param View $view
-     * @param UserModel $user
+     * @param View              $view
+     * @param UserModel         $user
      */
     public function __construct(
         Translator $translator,
@@ -62,7 +63,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getCaptchaName()
     {
@@ -70,7 +71,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getCaptcha(
         $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
@@ -95,7 +96,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isCaptchaValid($formData, $formFieldName, array $extra = [])
     {

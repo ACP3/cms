@@ -87,6 +87,7 @@ class RedirectResponseTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $url
+     *
      * @return string
      */
     private function buildJsonResponseContent($url)

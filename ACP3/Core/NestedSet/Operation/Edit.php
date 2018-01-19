@@ -10,14 +10,14 @@ namespace ACP3\Core\NestedSet\Operation;
 class Edit extends AbstractOperation
 {
     /**
-     * Methode zum Bearbeiten eines Knotens
+     * Methode zum Bearbeiten eines Knotens.
      *
-     * @param integer $resultId
-     * @param integer $parentId
-     * @param integer $blockId
-     * @param array   $updateValues
+     * @param int   $resultId
+     * @param int   $parentId
+     * @param int   $blockId
+     * @param array $updateValues
      *
-     * @return boolean
+     * @return bool
      */
     public function execute($resultId, $parentId, $blockId, array $updateValues)
     {
@@ -90,6 +90,7 @@ class Edit extends AbstractOperation
      * @param array $nodes
      *
      * @return array
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function nodeBecomesRootNode($id, $blockId, array $nodes)
@@ -118,6 +119,7 @@ class Edit extends AbstractOperation
      * @param int   $itemDiff
      *
      * @return int
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function nodeBecomesRootNodeInNewBlock($blockId, array $nodes, $itemDiff)
@@ -147,6 +149,7 @@ class Edit extends AbstractOperation
      * @param int   $itemDiff
      *
      * @return int
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function nodeBecomesRootNodeInSameBlock(array $nodes, $itemDiff)
@@ -170,6 +173,7 @@ class Edit extends AbstractOperation
      * @param int   $rootId
      *
      * @return int|bool
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function adjustNodeSiblings($blockId, array $nodes, $diff, $rootId)

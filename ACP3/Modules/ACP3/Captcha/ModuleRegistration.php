@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class ModuleRegistration extends \ACP3\Core\Modules\ModuleRegistration
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function build(ContainerBuilder $containerBuilder)
     {

@@ -29,10 +29,10 @@ class Index extends Core\Controller\AbstractWidgetAction
     protected $articleRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext         $context
-     * @param \ACP3\Core\Date                                     $date
+     * @param \ACP3\Core\Controller\Context\WidgetContext                    $context
+     * @param \ACP3\Core\Date                                                $date
      * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache                   $articlesCache
+     * @param \ACP3\Modules\ACP3\Articles\Cache                              $articlesCache
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
@@ -49,6 +49,7 @@ class Index extends Core\Controller\AbstractWidgetAction
 
     /**
      * @param string $template
+     *
      * @return array
      */
     public function execute($template = '')

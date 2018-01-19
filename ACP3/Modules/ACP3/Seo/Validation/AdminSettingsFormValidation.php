@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

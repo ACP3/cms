@@ -36,7 +36,7 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
     ];
 
     /**
-     * Displays the user menu, if the user is logged in
+     * Displays the user menu, if the user is logged in.
      *
      * @return array
      */

@@ -24,8 +24,9 @@ class RequestFactory
 
     /**
      * RequestFactory constructor.
+     *
      * @param SettingsInterface $config
-     * @param SymfonyRequest $symfonyRequest
+     * @param SymfonyRequest    $symfonyRequest
      */
     public function __construct(SettingsInterface $config, SymfonyRequest $symfonyRequest)
     {

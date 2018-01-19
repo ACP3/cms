@@ -36,8 +36,8 @@ class Details extends AbstractAction
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param \ACP3\Core\Date                                               $date
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      */
     public function __construct(
@@ -63,6 +63,7 @@ class Details extends AbstractAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -83,12 +84,12 @@ class Details extends AbstractAction
 
             $previousPicture = $this->pictureRepository->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($previousPicture)) {
-                $this->setPreviousPage((int)$previousPicture);
+                $this->setPreviousPage((int) $previousPicture);
             }
 
             $nextPicture = $this->pictureRepository->getNextPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($nextPicture)) {
-                $this->setNextPage((int)$nextPicture);
+                $this->setNextPage((int) $nextPicture);
             }
 
             return [
@@ -116,10 +117,10 @@ class Details extends AbstractAction
             if ($picInfos[0] > $this->settings['width'] || $picInfos[1] > $this->settings['height']) {
                 if ($picInfos[0] > $picInfos[1]) {
                     $newWidth = $this->settings['width'];
-                    $newHeight = (int)($picInfos[1] * $newWidth / $picInfos[0]);
+                    $newHeight = (int) ($picInfos[1] * $newWidth / $picInfos[0]);
                 } else {
                     $newHeight = $this->settings['height'];
-                    $newWidth = (int)($picInfos[0] * $newHeight / $picInfos[1]);
+                    $newWidth = (int) ($picInfos[0] * $newHeight / $picInfos[1]);
                 }
             }
 

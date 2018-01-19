@@ -42,7 +42,7 @@ class TableOfContents
      * @param \ACP3\Core\Breadcrumb\Title                                 $title
      * @param \ACP3\Core\I18n\Translator                                  $translator
      * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \ACP3\Core\Router\RouterInterface                                  $router
+     * @param \ACP3\Core\Router\RouterInterface                           $router
      * @param \ACP3\Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule
      * @param \ACP3\Core\View                                             $view
      */
@@ -63,12 +63,12 @@ class TableOfContents
     }
 
     /**
-     * Generates the table of contents
+     * Generates the table of contents.
      *
-     * @param array   $pages
-     * @param string  $baseUrlPath
-     * @param boolean $titlesFromDb
-     * @param boolean $customUris
+     * @param array  $pages
+     * @param string $baseUrlPath
+     * @param bool   $titlesFromDb
+     * @param bool   $customUris
      *
      * @return string
      */
@@ -99,7 +99,7 @@ class TableOfContents
 
     /**
      * Liest aus einem String alle vorhandenen HTML-Attribute ein und
-     * liefert diese als assoziatives Array zurück
+     * liefert diese als assoziatives Array zurück.
      *
      * @param string $string
      *

@@ -24,8 +24,9 @@ class OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener
 
     /**
      * OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener constructor.
+     *
      * @param RequestInterface $request
-     * @param MetaStatements $metaStatements
+     * @param MetaStatements   $metaStatements
      */
     public function __construct(RequestInterface $request, MetaStatements $metaStatements)
     {
@@ -34,7 +35,7 @@ class OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener
     }
 
     /**
-     * If the current page has a custom meta title set, use it (instead of the default one)
+     * If the current page has a custom meta title set, use it (instead of the default one).
      *
      * @param GetSiteAndPageTitleBeforeEvent $event
      */

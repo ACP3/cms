@@ -26,10 +26,10 @@ class Create extends AbstractFrontendAction
     protected $commentsModel;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Comments\Model\CommentsModel $commentsModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
+     * @param Comments\Model\CommentsModel                          $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $formValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -46,8 +46,9 @@ class Create extends AbstractFrontendAction
 
     /**
      * @param string $module
-     * @param int $entryId
+     * @param int    $entryId
      * @param string $redirectUrl
+     *
      * @return array
      */
     public function execute($module, $entryId, $redirectUrl)
@@ -64,8 +65,9 @@ class Create extends AbstractFrontendAction
 
     /**
      * @param string $module
-     * @param int $entryId
+     * @param int    $entryId
      * @param string $redirectUrl
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function executePost($module, $entryId, $redirectUrl)

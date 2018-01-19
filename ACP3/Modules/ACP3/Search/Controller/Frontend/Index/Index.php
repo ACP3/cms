@@ -30,11 +30,11 @@ class Index extends Core\Controller\AbstractFrontendAction
     protected $availableModulesRegistrar;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Modules\ACP3\Search\Helpers $searchHelpers
+     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
+     * @param \ACP3\Core\Helpers\Forms                            $formsHelper
+     * @param \ACP3\Modules\ACP3\Search\Helpers                   $searchHelpers
      * @param \ACP3\Modules\ACP3\Search\Validation\FormValidation $searchValidator
-     * @param Search\Utility\SearchAvailabilityRegistrar $availableModulesRegistrar
+     * @param Search\Utility\SearchAvailabilityRegistrar          $availableModulesRegistrar
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -61,7 +61,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         if ($this->request->getPost()->count() !== 0) {
             return $this->executePost($this->request->getPost()->all());
         } elseif (!empty($q)) {
-            return $this->executePost(['search_term' => (string)$q]);
+            return $this->executePost(['search_term' => (string) $q]);
         }
 
         $searchAreas = [
@@ -89,6 +89,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param array $formData
+     *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
     protected function executePost(array $formData)
@@ -111,6 +112,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param array $formData
+     *
      * @return array
      */
     protected function prepareFormData(array $formData)
@@ -136,10 +138,11 @@ class Index extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array $modules
+     * @param array  $modules
      * @param string $searchTerm
      * @param string $area
      * @param string $sort
+     *
      * @return array
      */
     protected function renderSearchResults(array $modules, $searchTerm, $area, $sort)
@@ -157,10 +160,11 @@ class Index extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array $modules
+     * @param array  $modules
      * @param string $searchTerm
      * @param string $area
      * @param string $sort
+     *
      * @return array
      */
     protected function processSearchResults(array $modules, $searchTerm, $area, $sort)

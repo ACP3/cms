@@ -93,11 +93,11 @@ class FormsTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider recordsPerPageDataProvider
      *
-     * @param integer $currentValue
-     * @param integer $steps
-     * @param integer $maxValue
-     * @param integer $postValue
-     * @param array   $expected
+     * @param int   $currentValue
+     * @param int   $steps
+     * @param int   $maxValue
+     * @param int   $postValue
+     * @param array $expected
      */
     public function testRecordsPerPage($currentValue, $steps, $maxValue, $postValue, $expected)
     {
@@ -149,9 +149,9 @@ class FormsTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider checkboxGeneratorDataProvider
      *
-     * @param mixed  $currentValue
-     * @param mixed  $postValue
-     * @param array  $expected
+     * @param mixed $currentValue
+     * @param mixed $postValue
+     * @param array $expected
      */
     public function testCheckboxGenerator($currentValue, $postValue, $expected)
     {

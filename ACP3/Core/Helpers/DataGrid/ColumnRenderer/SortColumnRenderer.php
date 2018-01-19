@@ -24,7 +24,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
     /**
      * PictureSortColumnRenderer constructor.
      *
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\I18n\Translator        $translator
      * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(
@@ -36,7 +36,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
@@ -67,6 +67,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
     /**
      * @param string $url
      * @param string $direction
+     *
      * @return string
      */
     protected function fetchSortDirectionHtml($url, $direction)

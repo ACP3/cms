@@ -27,8 +27,8 @@ class Index extends AbstractAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Pagination $pagination
+     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param \ACP3\Core\Pagination                                             $pagination
      * @param \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
      */
     public function __construct(

@@ -10,7 +10,7 @@ namespace ACP3\Core\View\Renderer\Smarty;
 abstract class AbstractPlugin implements PluginInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function register(\Smarty $smarty)
     {

@@ -25,8 +25,8 @@ class Index extends Core\Controller\AbstractWidgetAction
     protected $filesRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext $context
-     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Controller\Context\WidgetContext               $context
+     * @param \ACP3\Core\Date                                           $date
      * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
      */
     public function __construct(
@@ -41,7 +41,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @param int $categoryId
+     * @param int    $categoryId
      * @param string $template
      *
      * @return array
@@ -60,15 +60,16 @@ class Index extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @param int $categoryId
+     * @param int   $categoryId
      * @param array $settings
+     *
      * @return array
      */
     private function fetchFiles($categoryId, array $settings)
     {
         if (!empty($categoryId)) {
             $files = $this->filesRepository->getAllByCategoryId(
-                (int)$categoryId,
+                (int) $categoryId,
                 $this->date->getCurrentDateTime(),
                 $settings['sidebar']
             );

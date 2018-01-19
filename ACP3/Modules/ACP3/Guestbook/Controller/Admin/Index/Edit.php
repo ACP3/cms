@@ -32,10 +32,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Guestbook\Model\GuestbookModel $guestbookModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
+     * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
+     * @param Guestbook\Model\GuestbookModel                              $guestbookModel
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
@@ -57,6 +57,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -82,6 +83,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param int $id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function executePost($id)

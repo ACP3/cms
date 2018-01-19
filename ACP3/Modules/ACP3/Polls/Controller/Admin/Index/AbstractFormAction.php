@@ -25,8 +25,8 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     /**
      * AbstractFormAction constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext      $context
-     * @param \ACP3\Core\Helpers\Forms                        $formsHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
      */
     public function __construct(
@@ -69,6 +69,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
 
     /**
      * @param int $useMultipleChoice
+     *
      * @return array
      */
     protected function fetchOptions($useMultipleChoice)

@@ -29,7 +29,7 @@ class HeaderColumnRenderer extends AbstractColumnRenderer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {

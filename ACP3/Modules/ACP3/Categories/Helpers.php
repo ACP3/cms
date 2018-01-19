@@ -46,13 +46,13 @@ class Helpers
     protected $secureHelper;
 
     /**
-     * @param \ACP3\Core\ACL $acl
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Modules $modules
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
+     * @param \ACP3\Core\ACL                                                    $acl
+     * @param \ACP3\Core\I18n\Translator                                        $translator
+     * @param \ACP3\Core\Modules                                                $modules
+     * @param \ACP3\Core\Http\RequestInterface                                  $request
+     * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
+     * @param \ACP3\Core\Helpers\Secure                                         $secureHelper
+     * @param \ACP3\Modules\ACP3\Categories\Cache                               $categoriesCache
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
@@ -76,12 +76,12 @@ class Helpers
     }
 
     /**
-     * Erzeugt eine neue Kategorie und gibt ihre ID zurück
+     * Erzeugt eine neue Kategorie und gibt ihre ID zurück.
      *
      * @param string $title
      * @param string $module
      *
-     * @return integer
+     * @return int
      */
     public function categoriesCreate($title, $module)
     {
@@ -105,11 +105,11 @@ class Helpers
     }
 
     /**
-     * Listet alle Kategorien eines Moduls auf
+     * Listet alle Kategorien eines Moduls auf.
      *
      * @param string $module
      * @param string $categoryId
-     * @param boolean $categoryCreate
+     * @param bool   $categoryCreate
      * @param string $formFieldName
      * @param string $customText
      *

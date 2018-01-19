@@ -10,7 +10,7 @@ namespace ACP3\Core\Assets\Minifier;
 interface MinifierInterface
 {
     /**
-     * Returns the URI of the minified assets
+     * Returns the URI of the minified assets.
      *
      * @param string $layout
      *

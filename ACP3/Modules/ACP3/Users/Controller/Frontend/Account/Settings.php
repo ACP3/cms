@@ -40,12 +40,12 @@ class Settings extends AbstractAction
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Core\Helpers\Secure $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms $userFormsHelper
-     * @param Users\Model\AuthenticationModel $authenticationModel
-     * @param Users\Model\UsersModel $usersModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
+     * @param Core\Helpers\Secure                                               $secureHelper
+     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms                            $userFormsHelper
+     * @param Users\Model\AuthenticationModel                                   $authenticationModel
+     * @param Users\Model\UsersModel                                            $usersModel
      * @param \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
      */
     public function __construct(

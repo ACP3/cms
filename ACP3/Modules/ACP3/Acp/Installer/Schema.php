@@ -39,7 +39,7 @@ class Schema implements Modules\Installer\SchemaInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function schemaUpdates()
     {

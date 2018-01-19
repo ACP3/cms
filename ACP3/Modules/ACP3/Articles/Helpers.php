@@ -35,9 +35,9 @@ class Helpers
     }
 
     /**
-     * Gibt alle angelegten Artikel zurück
+     * Gibt alle angelegten Artikel zurück.
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return array
      */

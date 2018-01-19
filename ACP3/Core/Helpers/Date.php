@@ -58,7 +58,7 @@ class Date
     }
 
     /**
-     * Liefert ein Array mit allen Zeitzonen dieser Welt aus
+     * Liefert ein Array mit allen Zeitzonen dieser Welt aus.
      *
      * @param string $currentValue
      *
@@ -98,7 +98,7 @@ class Date
 
     /**
      * Gibts ein Array mit den möglichen Datumsformaten aus,
-     * um diese als Dropdownmenü darstellen zu können
+     * um diese als Dropdownmenü darstellen zu können.
      *
      * @param string $currentDateFormat
      *
@@ -115,7 +115,7 @@ class Date
     }
 
     /**
-     * Displays an input field with an associated datepicker
+     * Displays an input field with an associated datepicker.
      *
      * @param string|array $name
      * @param string|array $value
@@ -132,9 +132,9 @@ class Date
     ) {
         $datePicker = [
             'range' => $this->isRange($name),
-            'with_time' => (bool)$showTime,
+            'with_time' => (bool) $showTime,
             'length' => $showTime === true ? 16 : 10,
-            'input_only' => (bool)$inputFieldOnly,
+            'input_only' => (bool) $inputFieldOnly,
             'params' => [
                 'format' => $this->getPickerDateFormat($showTime),
                 'changeMonth' => 'true',

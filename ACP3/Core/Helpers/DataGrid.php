@@ -151,31 +151,31 @@ class DataGrid
      */
     public function setRecordsPerPage($recordsPerPage)
     {
-        $this->recordsPerPage = (int)$recordsPerPage;
+        $this->recordsPerPage = (int) $recordsPerPage;
 
         return $this;
     }
 
     /**
-     * @param boolean $enableMassAction
+     * @param bool $enableMassAction
      *
      * @return $this
      */
     public function setEnableMassAction($enableMassAction)
     {
-        $this->enableMassAction = (bool)$enableMassAction;
+        $this->enableMassAction = (bool) $enableMassAction;
 
         return $this;
     }
 
     /**
-     * @param boolean $enableOptions
+     * @param bool $enableOptions
      *
      * @return $this
      */
     public function setEnableOptions($enableOptions)
     {
-        $this->enableOptions = (bool)$enableOptions;
+        $this->enableOptions = (bool) $enableOptions;
 
         return $this;
     }
@@ -296,7 +296,7 @@ class DataGrid
         foreach (clone $this->columns as $column) {
             if ($column['sortable'] === false) {
                 $columnDefinitions[] = $i;
-            };
+            }
 
             if ($column['default_sort'] === true &&
                 \in_array($column['default_sort_direction'], ['asc', 'desc'])
@@ -354,7 +354,7 @@ class DataGrid
     }
 
     /**
-     * Finds the primary key column
+     * Finds the primary key column.
      */
     protected function findPrimaryKey()
     {

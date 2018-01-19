@@ -15,7 +15,7 @@ class Login extends Core\Controller\AbstractWidgetAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * Displays the login mask, if the user is not already logged in
+     * Displays the login mask, if the user is not already logged in.
      *
      * @return array|void
      */

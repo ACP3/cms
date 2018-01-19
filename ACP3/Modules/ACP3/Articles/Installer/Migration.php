@@ -12,7 +12,7 @@ use ACP3\Core\Modules\Installer\AbstractMigration;
 class Migration extends AbstractMigration
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */
@@ -74,7 +74,7 @@ class Migration extends AbstractMigration
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */

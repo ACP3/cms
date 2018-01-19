@@ -10,20 +10,19 @@ namespace ACP3\Core;
 use ACP3\Core\Application\Bootstrap;
 
 /**
- * Parses XML files
- *
+ * Parses XML files.
  */
 class XML
 {
     /**
-     * Cache for already parsed XML files
+     * Cache for already parsed XML files.
      *
      * @var array
      */
     protected $info = [];
 
     /**
-     * Parses the given XML file and returns it as an array
+     * Parses the given XML file and returns it as an array.
      *
      * @param string $path
      * @param string $xpath
@@ -45,15 +44,15 @@ class XML
                         /** @var \SimpleXMLElement $value */
                         if ($value->attributes()) {
                             $this->parseAttributes($value->attributes(), $path, $xpath, $key);
-                        } elseif (isset($this->info[$path][$xpath][(string)$key]) && \is_array($this->info[$path][$xpath][(string)$key])) {
-                            $this->info[$path][$xpath][(string)$key][] = (string)$value;
-                        } elseif (isset($this->info[$path][$xpath][(string)$key])) {
-                            $tmp = $this->info[$path][$xpath][(string)$key];
-                            $this->info[$path][$xpath][(string)$key] = [];
-                            $this->info[$path][$xpath][(string)$key][] = $tmp;
-                            $this->info[$path][$xpath][(string)$key][] = (string)$value;
+                        } elseif (isset($this->info[$path][$xpath][(string) $key]) && \is_array($this->info[$path][$xpath][(string) $key])) {
+                            $this->info[$path][$xpath][(string) $key][] = (string) $value;
+                        } elseif (isset($this->info[$path][$xpath][(string) $key])) {
+                            $tmp = $this->info[$path][$xpath][(string) $key];
+                            $this->info[$path][$xpath][(string) $key] = [];
+                            $this->info[$path][$xpath][(string) $key][] = $tmp;
+                            $this->info[$path][$xpath][(string) $key][] = (string) $value;
                         } else {
-                            $this->info[$path][$xpath][(string)$key] = (string)$value;
+                            $this->info[$path][$xpath][(string) $key] = (string) $value;
                         }
                     }
                 }
@@ -74,10 +73,10 @@ class XML
     protected function parseAttributes(\SimpleXMLElement $attributes, $path, $xpath, $key)
     {
         foreach ($attributes as $attrKey => $attrValue) {
-            if ($key === 'version' && $attrKey === 'core' && (string)$attrValue === 'true') {
+            if ($key === 'version' && $attrKey === 'core' && (string) $attrValue === 'true') {
                 $this->info[$path][$xpath]['version'] = Bootstrap::VERSION;
             } else {
-                $this->info[$path][$xpath][(string)$key][(string)$attrKey] = (string)$attrValue;
+                $this->info[$path][$xpath][(string) $key][(string) $attrKey] = (string) $attrValue;
             }
         }
     }

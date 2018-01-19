@@ -32,7 +32,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $ruleRepository;
 
     /**
-     * @param \ACP3\Core\Cache                                        $cache
+     * @param \ACP3\Core\Cache                                                   $cache
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository     $roleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository     $ruleRepository
@@ -63,9 +63,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Erstellt den Cache für alle existierenden Ressourcen
+     * Erstellt den Cache für alle existierenden Ressourcen.
      *
-     * @return boolean
+     * @return bool
      */
     public function saveResourcesCache()
     {
@@ -103,9 +103,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Setzt den Cache für alle existierenden Rollen
+     * Setzt den Cache für alle existierenden Rollen.
      *
-     * @return boolean
+     * @return bool
      */
     public function saveRolesCache()
     {
@@ -156,11 +156,11 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Setzt den Cache für die einzelnen Berechtigungen einer Rolle
+     * Setzt den Cache für die einzelnen Berechtigungen einer Rolle.
      *
      * @param array $roles
      *
-     * @return boolean
+     * @return bool
      */
     public function saveRulesCache(array $roles)
     {
@@ -192,12 +192,12 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Ermittelt die Berechtigung einer Privilegie von einer übergeordneten Rolle
+     * Ermittelt die Berechtigung einer Privilegie von einer übergeordneten Rolle.
      *
-     * @param string  $privilegeKey
-     * @param integer $roleId
+     * @param string $privilegeKey
+     * @param int    $roleId
      *
-     * @return integer
+     * @return int
      */
     protected function getPermissionValue($privilegeKey, $roleId)
     {

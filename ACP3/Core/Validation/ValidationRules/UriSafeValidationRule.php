@@ -10,7 +10,7 @@ namespace ACP3\Core\Validation\ValidationRules;
 class UriSafeValidationRule extends AbstractValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -19,7 +19,7 @@ class UriSafeValidationRule extends AbstractValidationRule
         }
 
         if (\is_scalar($data)) {
-            return (bool)\preg_match('/^([a-z]{1}[a-z\d\-]*(\/[a-z\d\-]+)*)$/', $data);
+            return (bool) \preg_match('/^([a-z]{1}[a-z\d\-]*(\/[a-z\d\-]+)*)$/', $data);
         }
 
         return false;

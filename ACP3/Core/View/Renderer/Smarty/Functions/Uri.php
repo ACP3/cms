@@ -27,7 +27,7 @@ class Uri extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -35,14 +35,14 @@ class Uri extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         return $this->router->route(
             !empty($params['args']) ? $params['args'] : '',
-            isset($params['absolute']) ? (bool)$params['absolute'] : false,
-            isset($params['secure']) ? (bool)$params['secure'] : null
+            isset($params['absolute']) ? (bool) $params['absolute'] : false,
+            isset($params['secure']) ? (bool) $params['secure'] : null
         );
     }
 }

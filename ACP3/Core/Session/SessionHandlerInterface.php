@@ -14,7 +14,6 @@ interface SessionHandlerInterface extends \SessionHandlerInterface
 
     /**
      * @param string     $key
-     *
      * @param mixed|null $default
      *
      * @return mixed|null
@@ -44,9 +43,7 @@ interface SessionHandlerInterface extends \SessionHandlerInterface
     public function remove($key);
 
     /**
-     * Secures the current session to prevent from session fixations
-     *
-     * @return void
+     * Secures the current session to prevent from session fixations.
      */
     public function secureSession();
 }

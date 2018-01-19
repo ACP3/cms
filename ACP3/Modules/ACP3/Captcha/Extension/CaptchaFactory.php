@@ -24,8 +24,9 @@ class CaptchaFactory
 
     /**
      * CaptchaFactory constructor.
+     *
      * @param SettingsInterface $settings
-     * @param CaptchaRegistrar $captchaRegistrar
+     * @param CaptchaRegistrar  $captchaRegistrar
      */
     public function __construct(SettingsInterface $settings, CaptchaRegistrar $captchaRegistrar)
     {

@@ -30,11 +30,11 @@ class Index extends Core\Controller\AbstractWidgetAction
     protected $voteRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext $context
-     * @param Core\Date $date
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
+     * @param \ACP3\Core\Controller\Context\WidgetContext                $context
+     * @param Core\Date                                                  $date
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository   $pollRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository $voteRepository
+     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository   $voteRepository
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
@@ -88,6 +88,7 @@ class Index extends Core\Controller\AbstractWidgetAction
 
     /**
      * @param int $pollId
+     *
      * @return int
      */
     protected function hasAlreadyVoted($pollId)

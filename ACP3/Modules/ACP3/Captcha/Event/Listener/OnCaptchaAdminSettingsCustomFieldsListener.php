@@ -19,6 +19,7 @@ class OnCaptchaAdminSettingsCustomFieldsListener
 
     /**
      * OnCaptchaAdminSettingsCustomFieldsListener constructor.
+     *
      * @param View $view
      */
     public function __construct(View $view)

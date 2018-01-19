@@ -65,6 +65,7 @@ class Libraries
 
     /**
      * Libraries constructor.
+     *
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(EventDispatcherInterface $eventDispatcher)
@@ -87,7 +88,8 @@ class Libraries
 
     /**
      * @param string $identifier
-     * @param array $options
+     * @param array  $options
+     *
      * @return $this
      */
     public function addLibrary($identifier, array $options)
@@ -100,7 +102,7 @@ class Libraries
     }
 
     /**
-     * Activates frontend libraries
+     * Activates frontend libraries.
      *
      * @param array $libraries
      *

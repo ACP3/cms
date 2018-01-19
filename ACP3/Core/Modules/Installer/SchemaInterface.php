@@ -10,21 +10,21 @@ namespace ACP3\Core\Modules\Installer;
 interface SchemaInterface
 {
     /**
-     * Liefert ein Array mit den zu erstellenden Datenbanktabellen des Moduls zurück
+     * Liefert ein Array mit den zu erstellenden Datenbanktabellen des Moduls zurück.
      *
      * @return array
      */
     public function createTables();
 
     /**
-     * Liefert ein Array mit den zu löschenden Datenbanktabellen des Moduls zurück
+     * Liefert ein Array mit den zu löschenden Datenbanktabellen des Moduls zurück.
      *
      * @return array
      */
     public function removeTables();
 
     /**
-     * Liefert ein Array mit den zu erstellenden Moduleinstellungen zurück
+     * Liefert ein Array mit den zu erstellenden Moduleinstellungen zurück.
      *
      * @return array
      */

@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules;
 class AccountExistsByHashValidationRule extends AccountExistsValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {

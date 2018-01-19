@@ -45,13 +45,13 @@ class Installer
     private $schemaRegistrar;
 
     /**
-     * @param LoggerInterface $logger
+     * @param LoggerInterface                        $logger
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules $modules
-     * @param \ACP3\Core\Modules\Vendor $vendors
-     * @param Core\Installer\SchemaRegistrar $schemaRegistrar
-     * @param \ACP3\Core\Modules\SchemaInstaller $schemaInstaller
-     * @param \ACP3\Core\XML $xml
+     * @param \ACP3\Core\Modules                     $modules
+     * @param \ACP3\Core\Modules\Vendor              $vendors
+     * @param Core\Installer\SchemaRegistrar         $schemaRegistrar
+     * @param \ACP3\Core\Modules\SchemaInstaller     $schemaInstaller
+     * @param \ACP3\Core\XML                         $xml
      */
     public function __construct(
         LoggerInterface $logger,
@@ -72,7 +72,7 @@ class Installer
     }
 
     /**
-     * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls
+     * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls.
      *
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      *
@@ -96,6 +96,7 @@ class Installer
 
     /**
      * @param Core\Modules\Installer\SchemaInterface $schema
+     *
      * @return array
      */
     public function checkUninstallDependencies(Core\Modules\Installer\SchemaInterface $schema)
@@ -120,7 +121,7 @@ class Installer
     }
 
     /**
-     * Gibt ein Array mit den Abhängigkeiten zu anderen Modulen eines Moduls zurück
+     * Gibt ein Array mit den Abhängigkeiten zu anderen Modulen eines Moduls zurück.
      *
      * @param string $moduleName
      *
@@ -128,7 +129,7 @@ class Installer
      */
     protected function getDependencies($moduleName)
     {
-        if ((bool)\preg_match('=/=', $moduleName) === false) {
+        if ((bool) \preg_match('=/=', $moduleName) === false) {
             foreach ($this->vendors->getVendors() as $vendor) {
                 $path = $this->appPath->getModulesDir() . $vendor . '/' . \ucfirst($moduleName) . '/Resources/config/module.xml';
 

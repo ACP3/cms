@@ -60,7 +60,7 @@ class FileResolver
     }
 
     /**
-     * Write newly added assets paths into the cache
+     * Write newly added assets paths into the cache.
      */
     public function __destruct()
     {
@@ -101,6 +101,7 @@ class FileResolver
 
     /**
      * @param string $path
+     *
      * @return bool
      */
     protected function needsTrailingSlash($path)

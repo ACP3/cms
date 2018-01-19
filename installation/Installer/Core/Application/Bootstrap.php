@@ -20,7 +20,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     protected $appPath;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function handle(SymfonyRequest $symfonyRequest, $type = self::MASTER_REQUEST, $catch = true)
     {
@@ -31,7 +31,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function startupChecks()
     {
@@ -51,7 +51,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function initializeClasses(SymfonyRequest $symfonyRequest)
     {
@@ -66,7 +66,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function outputPage()
     {

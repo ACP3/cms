@@ -28,7 +28,7 @@ class PageBreaks
      * PageBreaks constructor.
      *
      * @param \ACP3\Core\Http\RequestInterface   $request
-     * @param \ACP3\Core\Router\RouterInterface         $router
+     * @param \ACP3\Core\Router\RouterInterface  $router
      * @param \ACP3\Core\Helpers\TableOfContents $tableOfContents
      */
     public function __construct(
@@ -42,7 +42,7 @@ class PageBreaks
     }
 
     /**
-     * Parst einen Text und zerlegt diesen bei Bedarf mehrere Seiten
+     * Parst einen Text und zerlegt diesen bei Bedarf mehrere Seiten.
      *
      * @param string $text
      * @param string $baseUrlPath
@@ -82,7 +82,7 @@ class PageBreaks
      */
     private function getCurrentPage(array $pages)
     {
-        $currentPage = (int)$this->request->getParameters()->get('page', 1);
+        $currentPage = (int) $this->request->getParameters()->get('page', 1);
 
         return ($currentPage <= \count($pages)) ? $currentPage : 1;
     }

@@ -106,7 +106,7 @@ class CommentRepository extends Core\Model\Repository\AbstractRepository impleme
      */
     public function countAllByModule($moduleId, $resultId)
     {
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ? AND entry_id = ?',
             [$moduleId, $resultId]
         );

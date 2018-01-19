@@ -42,10 +42,10 @@ class Create extends AbstractAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Guestbook\Model\GuestbookModel $guestbookModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
+     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
+     * @param Guestbook\Model\GuestbookModel                         $guestbookModel
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $formValidation
      */
     public function __construct(

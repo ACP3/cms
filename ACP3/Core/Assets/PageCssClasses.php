@@ -30,8 +30,8 @@ class PageCssClasses
     protected $details;
 
     /**
-     * @param Core\Helpers\StringFormatter $stringFormatter
-     * @param \ACP3\Core\Breadcrumb\Title $title
+     * @param Core\Helpers\StringFormatter     $stringFormatter
+     * @param \ACP3\Core\Breadcrumb\Title      $title
      * @param \ACP3\Core\Http\RequestInterface $request
      */
     public function __construct(

@@ -26,6 +26,7 @@ class CountryList
 
     /**
      * Country constructor.
+     *
      * @param Translator $translator
      */
     public function __construct(Translator $translator)
@@ -34,7 +35,7 @@ class CountryList
     }
 
     /**
-     * Returns an array with all earth countries
+     * Returns an array with all earth countries.
      *
      * @return array
      */
@@ -67,6 +68,7 @@ class CountryList
 
     /**
      * @param string $locale
+     *
      * @return bool
      */
     private function isSupportedLocale($locale)

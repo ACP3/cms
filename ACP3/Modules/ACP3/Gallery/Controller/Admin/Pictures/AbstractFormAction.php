@@ -23,7 +23,7 @@ class AbstractFormAction extends AbstractFrontendAction
      * AbstractFormAction constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms                   $formsHelper
+     * @param \ACP3\Core\Helpers\Forms                      $formsHelper
      */
     public function __construct(FrontendContext $context, Forms $formsHelper)
     {

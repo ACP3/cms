@@ -29,7 +29,8 @@ class OnMenusValidationValidateManageMenuItem
 
     /**
      * OnMenusValidationValidateManageMenuItem constructor.
-     * @param ACL $acl
+     *
+     * @param ACL        $acl
      * @param Translator $translator
      */
     public function __construct(ACL $acl, Translator $translator)

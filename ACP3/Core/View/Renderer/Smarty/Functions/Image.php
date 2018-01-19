@@ -29,9 +29,10 @@ class Image extends AbstractFunction
 
     /**
      * Image constructor.
+     *
      * @param RequestInterface $request
-     * @param FileResolver $fileResolver
-     * @param ApplicationPath $appPath
+     * @param FileResolver     $fileResolver
+     * @param ApplicationPath  $appPath
      */
     public function __construct(RequestInterface $request, FileResolver $fileResolver, ApplicationPath $appPath)
     {
@@ -41,11 +42,11 @@ class Image extends AbstractFunction
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
-        if (isset($params['file']) === true && (bool)\preg_match('=\./=', $params['file']) === false) {
+        if (isset($params['file']) === true && (bool) \preg_match('=\./=', $params['file']) === false) {
             $file = $params['file'];
 
             $path = $this->fileResolver->getStaticAssetPath('/', '/', 'Assets/img', $file);

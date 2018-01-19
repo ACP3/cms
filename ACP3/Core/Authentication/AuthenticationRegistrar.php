@@ -17,8 +17,9 @@ class AuthenticationRegistrar
     private $authentications = [];
 
     /**
-     * @param string $serviceId
+     * @param string                  $serviceId
      * @param AuthenticationInterface $authentication
+     *
      * @return $this
      */
     public function set($serviceId, AuthenticationInterface $authentication)
@@ -38,6 +39,7 @@ class AuthenticationRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return bool
      */
     public function has($serviceId)
@@ -47,7 +49,9 @@ class AuthenticationRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return AuthenticationInterface
+     *
      * @throws InvalidAuthenticationMethodException
      */
     public function get($serviceId)

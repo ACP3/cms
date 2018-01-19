@@ -28,7 +28,7 @@ class CategoryExistsValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {

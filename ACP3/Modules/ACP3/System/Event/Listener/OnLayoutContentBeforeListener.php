@@ -29,9 +29,10 @@ class OnLayoutContentBeforeListener
 
     /**
      * OnLayoutContentBeforeListener constructor.
-     * @param ACL $acl
+     *
+     * @param ACL               $acl
      * @param SettingsInterface $settings
-     * @param View $view
+     * @param View              $view
      */
     public function __construct(ACL $acl, SettingsInterface $settings, View $view)
     {

@@ -20,10 +20,10 @@ class Router extends \ACP3\Core\Router\Router
 
     /**
      * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Settings\SettingsInterface $config
-     * @param string $environment
+     * @param \ACP3\Core\Http\RequestInterface           $request
+     * @param \ACP3\Core\Environment\ApplicationPath     $appPath
+     * @param \ACP3\Core\Settings\SettingsInterface      $config
+     * @param string                                     $environment
      */
     public function __construct(
         Aliases $aliases,

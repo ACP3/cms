@@ -23,7 +23,7 @@ class ViewProfile extends Core\Controller\AbstractFrontendAction
     /**
      * ViewProfile constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext            $context
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      */
     public function __construct(
@@ -39,6 +39,7 @@ class ViewProfile extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)

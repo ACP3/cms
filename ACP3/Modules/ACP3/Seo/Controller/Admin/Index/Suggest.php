@@ -21,6 +21,7 @@ class Suggest extends AbstractFrontendAction
 
     /**
      * Suggest constructor.
+     *
      * @param FrontendContext $context
      * @param StringFormatter $stringFormatter
      */

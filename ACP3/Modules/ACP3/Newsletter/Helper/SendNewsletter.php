@@ -33,9 +33,9 @@ class SendNewsletter
     /**
      * SendNewsletter constructor.
      *
-     * @param \ACP3\Core\Mailer $mailer
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \ACP3\Core\Settings\SettingsInterface $config
+     * @param \ACP3\Core\Mailer                                                   $mailer
+     * @param \ACP3\Core\Router\RouterInterface                                   $router
+     * @param \ACP3\Core\Settings\SettingsInterface                               $config
      * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
      */
     public function __construct(
@@ -51,11 +51,11 @@ class SendNewsletter
     }
 
     /**
-     * Versendet einen Newsletter
+     * Versendet einen Newsletter.
      *
-     * @param int $newsletterId
+     * @param int          $newsletterId
      * @param string|array $recipients
-     * @param bool $bcc
+     * @param bool         $bcc
      *
      * @return bool
      */

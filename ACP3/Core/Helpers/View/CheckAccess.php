@@ -27,8 +27,8 @@ class CheckAccess
     /**
      * CheckAccess constructor.
      *
-     * @param \ACP3\Core\ACL             $acl
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\ACL                    $acl
+     * @param \ACP3\Core\I18n\Translator        $translator
      * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(

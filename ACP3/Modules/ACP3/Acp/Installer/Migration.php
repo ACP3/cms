@@ -12,7 +12,7 @@ use ACP3\Core\Modules\Installer\MigrationInterface;
 class Migration implements MigrationInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */
@@ -22,7 +22,7 @@ class Migration implements MigrationInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */

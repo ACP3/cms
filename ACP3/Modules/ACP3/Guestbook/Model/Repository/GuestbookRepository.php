@@ -20,7 +20,7 @@ class GuestbookRepository extends Core\Model\Repository\AbstractRepository imple
      */
     public function resultExists($guestbookId)
     {
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id',
                 ['id' => $guestbookId]
             ) > 0;

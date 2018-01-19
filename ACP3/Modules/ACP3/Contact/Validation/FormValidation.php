@@ -12,7 +12,7 @@ use ACP3\Core;
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function validate(array $formData)
     {

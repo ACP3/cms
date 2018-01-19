@@ -26,6 +26,7 @@ class AuthenticationFactory
      * @param string $authenticationMethod
      *
      * @return \ACP3\Core\Authentication\AuthenticationInterface
+     *
      * @throws \ACP3\Core\Authentication\Exception\InvalidAuthenticationMethodException
      */
     public function get($authenticationMethod)

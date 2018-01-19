@@ -20,7 +20,8 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * Index constructor.
-     * @param Core\Controller\Context\FrontendContext $context
+     *
+     * @param Core\Controller\Context\FrontendContext     $context
      * @param Contact\Model\Repository\DataGridRepository $dataGridRepository
      */
     public function __construct(

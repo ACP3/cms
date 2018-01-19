@@ -27,8 +27,8 @@ class Index extends Core\Controller\AbstractWidgetAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\WidgetContext        $context
-     * @param \ACP3\Core\Date                                    $date
+     * @param \ACP3\Core\Controller\Context\WidgetContext                   $context
+     * @param \ACP3\Core\Date                                               $date
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryModel
      */
     public function __construct(

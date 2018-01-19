@@ -34,9 +34,10 @@ class SchemaHelper
 
     /**
      * SchemaHelper constructor.
-     * @param LoggerInterface $logger
-     * @param Core\Database\Connection $db
-     * @param Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
+     *
+     * @param LoggerInterface                                        $logger
+     * @param Core\Database\Connection                               $db
+     * @param Core\Model\Repository\ModuleAwareRepositoryInterface   $systemModuleRepository
      * @param Core\Model\Repository\SettingsAwareRepositoryInterface $systemSettingsRepository
      */
     public function __construct(
@@ -76,12 +77,13 @@ class SchemaHelper
     }
 
     /**
-     * Executes all given SQL queries
+     * Executes all given SQL queries.
      *
-     * @param array $queries
+     * @param array  $queries
      * @param string $moduleName
      *
      * @return bool
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executeSqlQueries(array $queries, $moduleName = '')
@@ -119,7 +121,7 @@ class SchemaHelper
     }
 
     /**
-     * Returns the module-ID
+     * Returns the module-ID.
      *
      * @param string $moduleName
      *
@@ -133,7 +135,7 @@ class SchemaHelper
     /**
      * @param string $moduleName
      *
-     * @return boolean
+     * @return bool
      */
     public function moduleIsInstalled($moduleName)
     {

@@ -53,12 +53,13 @@ class SchemaUpdateModel
 
     /**
      * ModuleUpdateModel constructor.
-     * @param ApplicationPath $applicationPath
-     * @param XML $xml
-     * @param SchemaRegistrar $schemaRegistrar
-     * @param MigrationRegistrar $migrationRegistrar
-     * @param Modules\Vendor $vendor
-     * @param Modules $modules
+     *
+     * @param ApplicationPath       $applicationPath
+     * @param XML                   $xml
+     * @param SchemaRegistrar       $schemaRegistrar
+     * @param MigrationRegistrar    $migrationRegistrar
+     * @param Modules\Vendor        $vendor
+     * @param Modules               $modules
      * @param Modules\SchemaUpdater $schemaUpdater
      */
     public function __construct(
@@ -81,6 +82,7 @@ class SchemaUpdateModel
 
     /**
      * @param array $modules
+     *
      * @return array
      */
     public function updateModules(array $modules = [])
@@ -115,9 +117,10 @@ class SchemaUpdateModel
     }
 
     /**
-     * Führt die Updateanweisungen eines Moduls aus
+     * Führt die Updateanweisungen eines Moduls aus.
      *
      * @param string $module
+     *
      * @return int
      */
     public function updateModule($module)

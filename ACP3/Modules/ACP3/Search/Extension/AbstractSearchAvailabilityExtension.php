@@ -23,7 +23,8 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
 
     /**
      * AbstractSearchAvailabilityExtension constructor.
-     * @param RouterInterface $router
+     *
+     * @param RouterInterface                       $router
      * @param SearchResultsAwareRepositoryInterface $repository
      */
     public function __construct(
@@ -38,6 +39,7 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
      * @param string $searchTerm
      * @param string $areas
      * @param string $sortDirection
+     *
      * @return array
      */
     public function fetchSearchResults($searchTerm, $areas, $sortDirection)
@@ -58,6 +60,7 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
 
     /**
      * @param string $area
+     *
      * @return string
      */
     abstract protected function mapSearchAreasToFields($area);

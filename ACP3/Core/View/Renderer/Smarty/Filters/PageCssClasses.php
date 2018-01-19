@@ -37,7 +37,7 @@ class PageCssClasses extends AbstractFilter
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -45,7 +45,7 @@ class PageCssClasses extends AbstractFilter
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function process($tplOutput, \Smarty_Internal_Template $smarty)
     {

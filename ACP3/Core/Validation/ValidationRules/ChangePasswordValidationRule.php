@@ -10,7 +10,7 @@ namespace ACP3\Core\Validation\ValidationRules;
 class ChangePasswordValidationRule extends PasswordValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function checkPassword($password, $passwordConfirmation)
     {

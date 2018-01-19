@@ -10,7 +10,7 @@ namespace ACP3\Core\View\Renderer\Smarty\Blocks;
 class Stylesheets extends AbstractBlock
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {

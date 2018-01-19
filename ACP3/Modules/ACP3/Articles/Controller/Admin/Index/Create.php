@@ -31,11 +31,11 @@ class Create extends AbstractFrontendAction
     protected $formsHelper;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param Articles\Model\ArticlesModel $articlesModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
+     * @param Articles\Model\ArticlesModel                               $articlesModel
      * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
+     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

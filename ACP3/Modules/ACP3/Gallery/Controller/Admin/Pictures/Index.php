@@ -27,9 +27,9 @@ class Index extends AbstractFrontendAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param Gallery\Model\GalleryModel $galleryModel
+     * @param Gallery\Model\GalleryModel                                    $galleryModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -44,7 +44,9 @@ class Index extends AbstractFrontendAction
 
     /**
      * @param int $id
+     *
      * @return array
+     *
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)

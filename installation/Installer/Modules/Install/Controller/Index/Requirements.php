@@ -23,8 +23,8 @@ class Requirements extends AbstractAction
      * Requirements constructor.
      *
      * @param \ACP3\Installer\Core\Controller\Context\InstallerContext $context
-     * @param Navigation $navigation
-     * @param \ACP3\Installer\Modules\Install\Helpers\Requirements $requirementsHelpers
+     * @param Navigation                                               $navigation
+     * @param \ACP3\Installer\Modules\Install\Helpers\Requirements     $requirementsHelpers
      */
     public function __construct(
         Core\Controller\Context\InstallerContext $context,

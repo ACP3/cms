@@ -22,6 +22,7 @@ class LoggerFactory
 
     /**
      * LoggerFactory constructor.
+     *
      * @param ApplicationPath $appPath
      */
     public function __construct(ApplicationPath $appPath)
@@ -32,6 +33,7 @@ class LoggerFactory
     /**
      * @param string $channel
      * @param string $level
+     *
      * @return LoggerInterface
      */
     public function create($channel, $level = LogLevel::DEBUG)

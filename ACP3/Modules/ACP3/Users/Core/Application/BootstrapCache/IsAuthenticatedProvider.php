@@ -31,9 +31,10 @@ class IsAuthenticatedProvider implements ContextProvider
 
     /**
      * IsAuthenticatedProvider constructor.
+     *
      * @param SettingsInterface $settings
-     * @param ACL $acl
-     * @param UserModel $userModel
+     * @param ACL               $acl
+     * @param UserModel         $userModel
      */
     public function __construct(SettingsInterface $settings, ACL $acl, UserModel $userModel)
     {
@@ -43,7 +44,7 @@ class IsAuthenticatedProvider implements ContextProvider
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function updateUserContext(UserContext $context)
     {

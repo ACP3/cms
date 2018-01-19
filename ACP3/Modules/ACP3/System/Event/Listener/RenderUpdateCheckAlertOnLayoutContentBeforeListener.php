@@ -34,10 +34,11 @@ class RenderUpdateCheckAlertOnLayoutContentBeforeListener
 
     /**
      * RenderUpdateCheckAlertOnLayoutContentBeforeListener constructor.
-     * @param ACL $acl
+     *
+     * @param ACL              $acl
      * @param RequestInterface $request
-     * @param View $view
-     * @param UpdateCheck $updateCheck
+     * @param View             $view
+     * @param UpdateCheck      $updateCheck
      */
     public function __construct(
         ACL $acl,
@@ -63,6 +64,7 @@ class RenderUpdateCheckAlertOnLayoutContentBeforeListener
 
     /**
      * @param bool $isLatestVersion
+     *
      * @return bool
      */
     private function canRenderUpdateAlert($isLatestVersion)

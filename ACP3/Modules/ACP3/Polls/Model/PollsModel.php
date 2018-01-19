@@ -35,12 +35,13 @@ class PollsModel extends AbstractModel
 
     /**
      * PollsModel constructor.
+     *
      * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param Secure $secure
-     * @param PollRepository $pollRepository
-     * @param AnswerRepository $answerRepository
-     * @param VoteRepository $voteRepository
+     * @param DataProcessor            $dataProcessor
+     * @param Secure                   $secure
+     * @param PollRepository           $pollRepository
+     * @param AnswerRepository         $answerRepository
+     * @param VoteRepository           $voteRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -58,7 +59,7 @@ class PollsModel extends AbstractModel
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function save(array $rawData, $entryId = null)
     {
@@ -69,7 +70,7 @@ class PollsModel extends AbstractModel
 
     /**
      * @param array $answers
-     * @param int $pollId
+     * @param int   $pollId
      *
      * @return bool|int
      */
@@ -86,12 +87,12 @@ class PollsModel extends AbstractModel
                     $bool = $this->answerRepository->insert($data);
                 }
             } elseif (isset($row['delete'])) {
-                $this->answerRepository->delete((int)$row['id']);
+                $this->answerRepository->delete((int) $row['id']);
             } elseif (!empty($row['text'])) {
                 $data = [
                     'text' => $this->secure->strEncode($row['text']),
                 ];
-                $bool = $this->answerRepository->update($data, (int)$row['id']);
+                $bool = $this->answerRepository->update($data, (int) $row['id']);
             }
         }
 
@@ -100,6 +101,7 @@ class PollsModel extends AbstractModel
 
     /**
      * @param int $pollId
+     *
      * @return bool|int
      */
     public function resetVotesByPollId($pollId)

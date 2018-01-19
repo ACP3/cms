@@ -39,13 +39,13 @@ class Edit extends AbstractFormAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Files\Model\FilesModel $filesModel
+     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
+     * @param \ACP3\Core\Date                                         $date
+     * @param \ACP3\Core\Helpers\Forms                                $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
+     * @param Files\Model\FilesModel                                  $filesModel
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
+     * @param \ACP3\Modules\ACP3\Categories\Helpers                   $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -68,6 +68,7 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)
@@ -111,6 +112,7 @@ class Edit extends AbstractFormAction
 
     /**
      * @param int $id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function executePost($id)
@@ -146,8 +148,8 @@ class Edit extends AbstractFormAction
 
     /**
      * @param string|UploadedFile $file
-     * @param array $formData
-     * @param string $currentFileName
+     * @param array               $formData
+     * @param string              $currentFileName
      *
      * @return array
      */
@@ -160,7 +162,7 @@ class Edit extends AbstractFormAction
             $newFile = $result['name'];
             $fileSize = $result['size'];
         } else {
-            $formData['filesize'] = (float)$formData['filesize'];
+            $formData['filesize'] = (float) $formData['filesize'];
             $newFile = $file;
             $fileSize = $formData['filesize'] . ' ' . $formData['unit'];
         }

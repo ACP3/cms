@@ -30,6 +30,7 @@ class OnArticlesModelDeleteAfterListener
 
     /**
      * OnArticlesModelDeleteAfterListener constructor.
+     *
      * @param Cache $articlesCache
      */
     public function __construct(Cache $articlesCache)
@@ -39,6 +40,7 @@ class OnArticlesModelDeleteAfterListener
 
     /**
      * @param ManageMenuItem $manageMenuItemHelper
+     *
      * @return OnArticlesModelDeleteAfterListener
      */
     public function setManageMenuItemHelper(ManageMenuItem $manageMenuItemHelper)
@@ -50,6 +52,7 @@ class OnArticlesModelDeleteAfterListener
 
     /**
      * @param UriAliasManager $uriAliasManager
+     *
      * @return OnArticlesModelDeleteAfterListener
      */
     public function setUriAliasManager(UriAliasManager $uriAliasManager)

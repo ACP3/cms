@@ -31,9 +31,9 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
-     * @param \ACP3\Core\Date                                     $date
-     * @param \ACP3\Core\Pagination                               $pagination
+     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
+     * @param \ACP3\Core\Date                                                $date
+     * @param \ACP3\Core\Pagination                                          $pagination
      * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
      */
     public function __construct(

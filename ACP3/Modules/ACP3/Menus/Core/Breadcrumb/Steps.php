@@ -27,11 +27,11 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * Breadcrumb constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \ACP3\Core\I18n\Translator $translator
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\Router\RouterInterface $router
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface    $container
+     * @param \ACP3\Core\I18n\Translator                                   $translator
+     * @param \ACP3\Core\Http\RequestInterface                             $request
+     * @param \ACP3\Core\Router\RouterInterface                            $router
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface  $eventDispatcher
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      */
     public function __construct(
@@ -48,20 +48,20 @@ class Steps extends Core\Breadcrumb\Steps
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function replaceAncestor($title, $path = '', $dbSteps = false)
     {
         if ($dbSteps === true) {
             \end($this->stepsFromDb);
-            $this->stepsFromDb[(int)\key($this->stepsFromDb)] = $this->buildStepItem($title, $path);
+            $this->stepsFromDb[(int) \key($this->stepsFromDb)] = $this->buildStepItem($title, $path);
         }
 
         return parent::replaceAncestor($title, $path, $dbSteps);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function buildBreadcrumbCacheForFrontend()
     {
@@ -79,7 +79,8 @@ class Steps extends Core\Breadcrumb\Steps
     }
 
     /**
-     * Initializes and pre populates the breadcrumb
+     * Initializes and pre populates the breadcrumb.
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function prePopulate()
@@ -111,6 +112,7 @@ class Steps extends Core\Breadcrumb\Steps
 
     /**
      * @param array $items
+     *
      * @return array
      */
     private function findRestrictionInRoutes(array $items)
@@ -129,7 +131,7 @@ class Steps extends Core\Breadcrumb\Steps
     }
 
     /**
-     * Zuweisung einer neuen Stufe zur Brotkrümelspur
+     * Zuweisung einer neuen Stufe zur Brotkrümelspur.
      *
      * @param string $title
      * @param string $path

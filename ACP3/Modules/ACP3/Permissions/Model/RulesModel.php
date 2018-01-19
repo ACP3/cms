@@ -25,10 +25,11 @@ class RulesModel extends AbstractModel
 
     /**
      * RulesModel constructor.
+     *
      * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor $dataProcessor
-     * @param RuleRepository $repository
-     * @param Cache $cache
+     * @param DataProcessor            $dataProcessor
+     * @param RuleRepository           $repository
+     * @param Cache                    $cache
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,

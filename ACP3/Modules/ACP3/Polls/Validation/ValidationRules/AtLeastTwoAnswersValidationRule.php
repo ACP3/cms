@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Polls\Validation\ValidationRules;
 class AtLeastTwoAnswersValidationRule extends AbstractAnswerValidationRule
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isValid($data, $field = '', array $extra = [])
     {

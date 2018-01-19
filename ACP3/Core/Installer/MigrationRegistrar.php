@@ -17,7 +17,7 @@ class MigrationRegistrar
     private $migrations = [];
 
     /**
-     * @param string $serviceId
+     * @param string             $serviceId
      * @param MigrationInterface $schema
      */
     public function set($serviceId, MigrationInterface $schema)
@@ -35,6 +35,7 @@ class MigrationRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return bool
      */
     public function has($serviceId)
@@ -44,7 +45,9 @@ class MigrationRegistrar
 
     /**
      * @param string $serviceId
+     *
      * @return MigrationInterface
+     *
      * @throws \InvalidArgumentException
      */
     public function get($serviceId)

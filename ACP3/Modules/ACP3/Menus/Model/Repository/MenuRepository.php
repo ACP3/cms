@@ -20,7 +20,7 @@ class MenuRepository extends Core\Model\Repository\AbstractRepository
      */
     public function menuExists($menuId)
     {
-        return (int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id", ['id' => $menuId]) > 0;
+        return (int) $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id", ['id' => $menuId]) > 0;
     }
 
     /**
@@ -33,7 +33,7 @@ class MenuRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = !empty($menuId) ? ' AND id != :id' : '';
 
-        return (int)$this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE index_name = :indexName" . $where, ['indexName' => $menuName, 'id' => $menuId]) > 0;
+        return (int) $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE index_name = :indexName" . $where, ['indexName' => $menuName, 'id' => $menuId]) > 0;
     }
 
     /**

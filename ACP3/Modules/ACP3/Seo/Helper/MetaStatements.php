@@ -66,10 +66,10 @@ class MetaStatements
     /**
      * MetaStatements constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param RouterInterface $router
-     * @param Modules $modules
-     * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
+     * @param \ACP3\Core\Http\RequestInterface      $request
+     * @param RouterInterface                       $router
+     * @param Modules                               $modules
+     * @param \ACP3\Modules\ACP3\Seo\Cache          $seoCache
      * @param \ACP3\Core\Settings\SettingsInterface $config
      */
     public function __construct(
@@ -88,6 +88,7 @@ class MetaStatements
 
     /**
      * @param string $metaRobots
+     *
      * @return $this
      */
     public function setPageRobotsSettings($metaRobots)
@@ -98,7 +99,7 @@ class MetaStatements
     }
 
     /**
-     * Returns the meta tags of the current page
+     * Returns the meta tags of the current page.
      *
      * @return array
      */
@@ -131,7 +132,7 @@ class MetaStatements
     }
 
     /**
-     * Returns the SEO description of the current page
+     * Returns the SEO description of the current page.
      *
      * @return string
      */
@@ -165,7 +166,7 @@ class MetaStatements
     }
 
     /**
-     * Returns the SEO description of the given page
+     * Returns the SEO description of the given page.
      *
      * @param string $path
      *
@@ -177,7 +178,7 @@ class MetaStatements
     }
 
     /**
-     * Returns the SEO keywords of the current page
+     * Returns the SEO keywords of the current page.
      *
      * @return string
      */
@@ -195,7 +196,7 @@ class MetaStatements
     }
 
     /**
-     * Returns the SEO keywords of the given page
+     * Returns the SEO keywords of the given page.
      *
      * @param string $path
      *
@@ -207,7 +208,7 @@ class MetaStatements
     }
 
     /**
-     * Returns the meta title of the given page
+     * Returns the meta title of the given page.
      *
      * @param string $path
      *
@@ -242,7 +243,7 @@ class MetaStatements
     }
 
     /**
-     * Returns the SEO robots setting for the current page
+     * Returns the SEO robots setting for the current page.
      *
      * @return string
      */
@@ -264,7 +265,7 @@ class MetaStatements
     }
 
     /**
-     * Returns the SEO robots settings for the given page
+     * Returns the SEO robots settings for the given page.
      *
      * @param string $path
      *
@@ -293,7 +294,7 @@ class MetaStatements
     }
 
     /**
-     * Sets a SEO description postfix for te current page
+     * Sets a SEO description postfix for te current page.
      *
      * @param string $string
      *
@@ -307,7 +308,7 @@ class MetaStatements
     }
 
     /**
-     * Sets the canonical URL for the current page
+     * Sets the canonical URL for the current page.
      *
      * @param string $path
      *
@@ -321,7 +322,7 @@ class MetaStatements
     }
 
     /**
-     * Sets the next page (useful for pagination)
+     * Sets the next page (useful for pagination).
      *
      * @param string $path
      *
@@ -335,7 +336,7 @@ class MetaStatements
     }
 
     /**
-     * Sets the previous page (useful for pagination)
+     * Sets the previous page (useful for pagination).
      *
      * @param string $path
      *

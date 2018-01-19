@@ -16,7 +16,7 @@ class AccountDataGridRepository extends DataGridRepository
     const TABLE_NAME = AccountRepository::TABLE_NAME;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function addWhere(QueryBuilder $queryBuilder)
     {
@@ -24,7 +24,7 @@ class AccountDataGridRepository extends DataGridRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getParameters()
     {

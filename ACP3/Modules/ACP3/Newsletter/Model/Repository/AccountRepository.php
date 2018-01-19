@@ -74,7 +74,7 @@ class AccountRepository extends AbstractRepository
      */
     public function countAllAccounts()
     {
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `status` != :status",
             ['status' => AccountStatus::ACCOUNT_STATUS_DISABLED]
         );
@@ -85,7 +85,7 @@ class AccountRepository extends AbstractRepository
      */
     public function countAllActiveAccounts()
     {
-        return (int)$this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `status` = :status",
             ['status' => AccountStatus::ACCOUNT_STATUS_CONFIRMED]
         );

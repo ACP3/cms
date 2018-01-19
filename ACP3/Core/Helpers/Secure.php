@@ -10,7 +10,7 @@ namespace ACP3\Core\Helpers;
 class Secure
 {
     /**
-     * Generiert ein gesalzenes Passwort
+     * Generiert ein gesalzenes Passwort.
      *
      * @param string $salt
      * @param string $password
@@ -24,9 +24,9 @@ class Secure
     }
 
     /**
-     * Generiert einen Zufallsstring beliebiger Länge
+     * Generiert einen Zufallsstring beliebiger Länge.
      *
-     * @param integer $length
+     * @param int $length
      *
      * @return string
      */
@@ -46,10 +46,10 @@ class Secure
     }
 
     /**
-     * Enkodiert alle HTML-Entitäten eines Strings zur Vermeidung von XSS
+     * Enkodiert alle HTML-Entitäten eines Strings zur Vermeidung von XSS.
      *
-     * @param string  $var
-     * @param boolean $scriptTagOnly
+     * @param string $var
+     * @param bool   $scriptTagOnly
      *
      * @return string
      */

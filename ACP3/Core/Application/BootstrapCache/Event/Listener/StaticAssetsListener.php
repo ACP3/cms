@@ -18,7 +18,7 @@ class StaticAssetsListener implements EventSubscriberInterface
     const PLACEHOLDER = '</body>';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents()
     {
@@ -45,6 +45,7 @@ class StaticAssetsListener implements EventSubscriberInterface
 
     /**
      * @param string $tplOutput
+     *
      * @return string
      */
     private function getCleanedUpTemplateOutput(string $tplOutput): string
@@ -54,6 +55,7 @@ class StaticAssetsListener implements EventSubscriberInterface
 
     /**
      * @param string $tplOutput
+     *
      * @return string
      */
     private function addElementsFromTemplates(string $tplOutput): string

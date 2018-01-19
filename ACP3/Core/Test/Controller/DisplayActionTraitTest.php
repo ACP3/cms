@@ -97,7 +97,7 @@ class DisplayActionTraitTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $templateOutput
-     * @param array $tplVars
+     * @param array  $tplVars
      */
     private function setUpViewMockExpectations($templateOutput, array $tplVars = [])
     {

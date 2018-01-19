@@ -32,11 +32,11 @@ class Edit extends AbstractFormAction
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken $formTokenHelper
-     * @param Menus\Model\MenuItemsModel $menuItemsModel
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
+     * @param Menus\Model\MenuItemsModel                                 $menuItemsModel
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields        $menuItemFormFieldsHelper
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
      */
     public function __construct(
@@ -59,6 +59,7 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)

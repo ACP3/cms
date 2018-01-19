@@ -31,8 +31,8 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date $date
+     * @param \ACP3\Core\Controller\Context\FrontendContext            $context
+     * @param \ACP3\Core\Date                                          $date
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository $voteRepository
      */
@@ -76,6 +76,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param int $pollId
+     *
      * @return int
      */
     protected function hasAlreadyVoted($pollId)

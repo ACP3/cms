@@ -36,10 +36,11 @@ class GenerateSitemapOnModelAfterSaveListener
 
     /**
      * GenerateSitemapOnModelAfterSaveListener constructor.
-     * @param LoggerInterface $logger
-     * @param SettingsInterface $settings
+     *
+     * @param LoggerInterface              $logger
+     * @param SettingsInterface            $settings
      * @param SitemapAvailabilityRegistrar $sitemapRegistrar
-     * @param SitemapGenerationModel $sitemapGenerationModel
+     * @param SitemapGenerationModel       $sitemapGenerationModel
      */
     public function __construct(
         LoggerInterface $logger,
@@ -79,6 +80,7 @@ class GenerateSitemapOnModelAfterSaveListener
 
     /**
      * @param string $moduleName
+     *
      * @return bool
      */
     private function isAllowedModule($moduleName)

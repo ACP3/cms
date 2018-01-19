@@ -44,8 +44,9 @@ class SitemapGenerationModel
 
     /**
      * SitemapGenerationModel constructor.
-     * @param ApplicationPath $applicationPath
-     * @param SettingsInterface $settings
+     *
+     * @param ApplicationPath              $applicationPath
+     * @param SettingsInterface            $settings
      * @param SitemapAvailabilityRegistrar $sitemapRegistrar
      */
     public function __construct(
@@ -78,6 +79,7 @@ class SitemapGenerationModel
 
     /**
      * @param string $filename
+     *
      * @throws SitemapGenerationException
      */
     protected function checkSitemapFilePermissions($filename)
@@ -98,6 +100,7 @@ class SitemapGenerationModel
 
     /**
      * @param string $filename
+     *
      * @return string
      */
     protected function getSitemapFilePath($filename)
@@ -107,6 +110,7 @@ class SitemapGenerationModel
 
     /**
      * @param bool|null $isSecure
+     *
      * @return Urlset
      */
     protected function collectSitemapItems($isSecure)
@@ -124,6 +128,7 @@ class SitemapGenerationModel
     /**
      * @param Urlset $urlSet
      * @param string $filename
+     *
      * @return bool
      */
     protected function saveSitemap(Urlset $urlSet, $filename)

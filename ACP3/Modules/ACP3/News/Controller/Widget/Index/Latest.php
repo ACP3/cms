@@ -22,8 +22,8 @@ class Latest extends Core\Controller\AbstractWidgetAction
     protected $newsRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext  $context
-     * @param \ACP3\Core\Date                              $date
+     * @param \ACP3\Core\Controller\Context\WidgetContext             $context
+     * @param \ACP3\Core\Date                                         $date
      * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
      */
     public function __construct(
@@ -47,7 +47,7 @@ class Latest extends Core\Controller\AbstractWidgetAction
         $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
 
         if (!empty($categoryId)) {
-            $news = $this->newsRepository->getLatestByCategoryId((int)$categoryId, $this->date->getCurrentDateTime());
+            $news = $this->newsRepository->getLatestByCategoryId((int) $categoryId, $this->date->getCurrentDateTime());
         } else {
             $news = $this->newsRepository->getLatest($this->date->getCurrentDateTime());
         }

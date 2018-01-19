@@ -31,10 +31,10 @@ class Details extends AbstractAction
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Date                               $date
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository  $newsRepository
-     * @param \ACP3\Modules\ACP3\News\Cache                 $newsCache
+     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
+     * @param \ACP3\Core\Date                                         $date
+     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
+     * @param \ACP3\Modules\ACP3\News\Cache                           $newsCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -53,6 +53,7 @@ class Details extends AbstractAction
      * @param int $id
      *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($id)

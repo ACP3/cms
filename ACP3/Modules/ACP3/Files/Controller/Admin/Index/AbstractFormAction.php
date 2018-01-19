@@ -27,8 +27,8 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      * AbstractFormAction constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     * @param \ACP3\Modules\ACP3\Categories\Helpers $categoriesHelpers
+     * @param \ACP3\Core\Helpers\Forms                      $formsHelper
+     * @param \ACP3\Modules\ACP3\Categories\Helpers         $categoriesHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -55,6 +55,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
 
     /**
      * @param array $formData
+     *
      * @return int
      */
     protected function useComments(array $formData)
@@ -80,6 +81,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
 
     /**
      * @param array $file
+     *
      * @return array
      */
     protected function getOptions(array $file)

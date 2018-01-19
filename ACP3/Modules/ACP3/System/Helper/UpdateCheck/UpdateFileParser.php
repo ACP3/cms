@@ -11,7 +11,9 @@ class UpdateFileParser
 {
     /**
      * @param string $path
+     *
      * @return array
+     *
      * @throws \RuntimeException
      */
     public function parseUpdateFile($path)

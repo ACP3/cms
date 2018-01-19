@@ -27,7 +27,7 @@ class Translator
      */
     protected $config;
     /**
-     * Die zur Zeit eingestellte Sprache
+     * Die zur Zeit eingestellte Sprache.
      *
      * @var string
      */
@@ -47,8 +47,9 @@ class Translator
 
     /**
      * Translator constructor.
-     * @param ApplicationPath $appPath
-     * @param DictionaryCache $dictionaryCache
+     *
+     * @param ApplicationPath   $appPath
+     * @param DictionaryCache   $dictionaryCache
      * @param SettingsInterface $config
      */
     public function __construct(
@@ -62,11 +63,11 @@ class Translator
     }
 
     /**
-     * Überprüft, ob das angegebene Sprachpaket existiert
+     * Überprüft, ob das angegebene Sprachpaket existiert.
      *
      * @param string $locale
      *
-     * @return boolean
+     * @return bool
      */
     public function languagePackExists($locale)
     {
@@ -109,7 +110,7 @@ class Translator
     }
 
     /**
-     * Gets the writing direction of the language
+     * Gets the writing direction of the language.
      *
      * @return string
      */
@@ -143,7 +144,7 @@ class Translator
     }
 
     /**
-     * Gets all currently available languages
+     * Gets all currently available languages.
      *
      * @param string $currentLanguage
      *
