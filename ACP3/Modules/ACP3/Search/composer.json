@@ -3,7 +3,7 @@
   "description": "Provides the search module for the ACP3 CMS.",
   "version": "4.18.0",
   "type": "acp3-module",
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Tino Goratsch",

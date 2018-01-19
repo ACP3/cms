@@ -13,7 +13,7 @@
     "url": "git+https://gitlab.com/ACP3/cms.git"
   },
   "author": "Tino Goratsch <mail@acp3-cms.net>",
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "bugs": {
     "url": "https://gitlab.com/ACP3/cms/issues"
   },
