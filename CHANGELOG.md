@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2018-xx-yy
+### Added
+- the AJAX form class is a little bit smarter when dealing with location hash changes and tabs
+
+### Changed
+- Moved most of the CI tasks from Travis to Gitlab.com
+- Reworked and extended the CI/CD pipeline
+- Run php-cs-fixer and ESLint as part of the CI/CD pipeline
+- The unit tests are now getting exported, but are not getting added to the classmap autoloader
+- Updated the SPDX license identifiers to be compatible with version 3.0
+
 ## [4.20.0] - 2017-12-21
 ### Changed
 - Updated the friendsofsymfony/http-cache package to version 2.1.0
