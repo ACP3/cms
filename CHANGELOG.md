@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.21.1] - 2018-01-20
+### Fixed
+- Added a missing composer dependency to the ACP3 core module
+- Fixed the apidocs post deployment CI job
+
 ## [4.21.0] - 2018-01-19
 ### Added
 - the AJAX form class is a little bit smarter when dealing with location hash changes and tabs
@@ -504,7 +509,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.21.0...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.21.1...HEAD
+[4.21.1]: https://gitlab.com/ACP3/cms/compare/v4.21.0...v4.21.1
 [4.21.0]: https://gitlab.com/ACP3/cms/compare/v4.20.0...v4.21.0
 [4.20.0]: https://gitlab.com/ACP3/cms/compare/v4.19.1...v4.20.0
 [4.19.1]: https://gitlab.com/ACP3/cms/compare/v4.19.0...v4.19.1
