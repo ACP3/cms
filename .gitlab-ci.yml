@@ -119,18 +119,20 @@ post-deploy:notify-packagist: &post-deploy-base
     - tags
     - schedules
 
-post-deploy:update-version-check:
-  <<: *post-deploy-base
-  script:
-    - bash ./build/gitlab/update_version_check.sh
-  only:
-    - tags
+#post-deploy:update-version-check:
+#  <<: *post-deploy-base
+#  script:
+#    - bash ./build/gitlab/update_version_check.sh
+#  only:
+#    - tags
 
 post-deploy:apidocs:
   <<: *post-deploy-base
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
     - bash ./build/gitlab/before_script_php.sh > /dev/null
+    - git config --global user.email "mail@acp3-cms.net"
+    - git config --global user.name "Tino Goratsch"
   script:
     - bash ./build/gitlab/generate_api_docs.sh
   only:
