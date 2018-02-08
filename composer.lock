@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "aad1ad2be2a83c9417851b3a923b254c",
+    "content-hash": "a8ef362d16c789135348d5dccd0117d3",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
-            "version": "dev-full/4.7.x",
+            "version": "dev-full/4.8.x",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "5f1564a3d64cd06d8a4f3f21150f57e892a40939"
+                "reference": "07eefe76b51397217d23d7b09da5016c68c2e4f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/5f1564a3d64cd06d8a4f3f21150f57e892a40939",
-                "reference": "5f1564a3d64cd06d8a4f3f21150f57e892a40939",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/07eefe76b51397217d23d7b09da5016c68c2e4f9",
+                "reference": "07eefe76b51397217d23d7b09da5016c68c2e4f9",
                 "shasum": ""
             },
             "type": "library",
@@ -45,7 +45,7 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2017-09-13T13:08:14+00:00"
+            "time": "2017-12-13T16:44:24+00:00"
         },
         {
             "name": "clue/stream-filter",

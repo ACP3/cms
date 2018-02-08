@@ -39,5 +39,8 @@
     "js-cookie": "^2.2.0",
     "moment": "^2.20.1",
     "yargs": "^10.1.2"
+  },
+  "dependencies": {
+    "ckeditor-codemirror-plugin": "^1.17.3"
   }
 }
