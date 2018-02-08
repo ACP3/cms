@@ -195,15 +195,15 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * Ermittelt die Berechtigung einer Privilegie von einer übergeordneten Rolle.
      *
      * @param string $privilegeKey
-     * @param int $moduleId
+     * @param int    $moduleId
      * @param int    $roleId
      *
      * @return int
      */
     protected function getPermissionValue(string $privilegeKey, int $moduleId, int $roleId)
     {
-        $value = $this->roleRepository->getPermissionByKeyAndRoleId($privilegeKey, $moduleId, $roleId);
+        $permission = $this->roleRepository->getPermissionByKeyAndRoleId($privilegeKey, $moduleId, $roleId);
 
-        return $value['permission'] ?? Core\ACL\PermissionEnum::DENY_ACCESS;
+        return $permission ?? Core\ACL\PermissionEnum::DENY_ACCESS;
     }
 }
