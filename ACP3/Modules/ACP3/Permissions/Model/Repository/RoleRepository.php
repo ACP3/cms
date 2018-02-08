@@ -48,15 +48,16 @@ class RoleRepository extends Core\NestedSet\Model\Repository\NestedSetRepository
 
     /**
      * @param string $privilegeKey
+     * @param int $moduleId
      * @param int    $roleId
      *
      * @return array
      */
-    public function getPermissionByKeyAndRoleId($privilegeKey, $roleId)
+    public function getPermissionByKeyAndRoleId(string $privilegeKey, int $moduleId, int $roleId)
     {
         return $this->db->fetchAssoc(
-            'SELECT ru.permission FROM ' . $this->getTableName() . ' AS r, ' . $this->getTableName() . ' AS parent JOIN ' . $this->getTableName(RuleRepository::TABLE_NAME) . ' AS ru ON(parent.id = ru.role_id) JOIN ' . $this->getTableName(PrivilegeRepository::TABLE_NAME) . ' AS p ON(ru.privilege_id = p.id) WHERE r.id = ? AND p.key = ? AND ru.permission != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1',
-            [$roleId, $privilegeKey]
+            'SELECT ru.permission FROM ' . $this->getTableName() . ' AS r, ' . $this->getTableName() . ' AS parent JOIN ' . $this->getTableName(RuleRepository::TABLE_NAME) . ' AS ru ON(parent.id = ru.role_id) JOIN ' . $this->getTableName(PrivilegeRepository::TABLE_NAME) . ' AS p ON(ru.privilege_id = p.id) WHERE r.id = :roleId AND p.key = :privilege AND ru.permission != :permission AND ru.module_id = :moduleId AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1',
+            ['roleId' => $roleId, 'privilege' => $privilegeKey, 'moduleId' => $moduleId, 'permission' => 2]
         );
     }
 }

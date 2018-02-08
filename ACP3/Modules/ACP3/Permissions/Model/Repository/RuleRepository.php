@@ -23,9 +23,9 @@ class RuleRepository extends Core\Model\Repository\AbstractRepository
     public function getAllRulesByRoleIds(array $roles)
     {
         return $this->db->getConnection()->executeQuery(
-            'SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . $this->getTableName() . ' AS ru JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository::TABLE_NAME) . ' AS m ON (ru.module_id = m.id) JOIN ' . $this->getTableName(PrivilegeRepository::TABLE_NAME) . " AS p ON(ru.privilege_id = p.id) JOIN {$this->getTableName(RoleRepository::TABLE_NAME)} AS ro ON(ro.id = ru.role_id) WHERE m.active = 1 AND ro.id IN(?)",
-            [$roles],
-            [\Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
+            'SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . $this->getTableName() . ' AS ru JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository::TABLE_NAME) . ' AS m ON (ru.module_id = m.id) JOIN ' . $this->getTableName(PrivilegeRepository::TABLE_NAME) . " AS p ON(ru.privilege_id = p.id) JOIN {$this->getTableName(RoleRepository::TABLE_NAME)} AS ro ON(ro.id = ru.role_id) WHERE m.active = ? AND ro.id IN(?)",
+            [1, $roles],
+            [\PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
         )->fetchAll();
     }
 }
