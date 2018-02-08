@@ -7,17 +7,12 @@
 
 namespace ACP3\Installer\Modules\Update\Model;
 
-use ACP3\Core\Filesystem;
 use ACP3\Core\Installer\MigrationRegistrar;
 use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Core\Modules;
-use ACP3\Core\XML;
-use ACP3\Installer\Core\Environment\ApplicationPath;
 
 class SchemaUpdateModel
 {
-    use Modules\ModuleDependenciesTrait;
-
     /**
      * @var Modules
      */
@@ -26,18 +21,6 @@ class SchemaUpdateModel
      * @var Modules\SchemaUpdater
      */
     protected $schemaUpdater;
-    /**
-     * @var Modules\Vendor
-     */
-    protected $vendor;
-    /**
-     * @var ApplicationPath
-     */
-    protected $applicationPath;
-    /**
-     * @var XML
-     */
-    protected $xml;
     /**
      * @var SchemaRegistrar
      */
@@ -54,26 +37,17 @@ class SchemaUpdateModel
     /**
      * ModuleUpdateModel constructor.
      *
-     * @param ApplicationPath       $applicationPath
-     * @param XML                   $xml
      * @param SchemaRegistrar       $schemaRegistrar
      * @param MigrationRegistrar    $migrationRegistrar
-     * @param Modules\Vendor        $vendor
      * @param Modules               $modules
      * @param Modules\SchemaUpdater $schemaUpdater
      */
     public function __construct(
-        ApplicationPath $applicationPath,
-        XML $xml,
         SchemaRegistrar $schemaRegistrar,
         MigrationRegistrar $migrationRegistrar,
-        Modules\Vendor $vendor,
         Modules $modules,
         Modules\SchemaUpdater $schemaUpdater
     ) {
-        $this->applicationPath = $applicationPath;
-        $this->xml = $xml;
-        $this->vendor = $vendor;
         $this->modules = $modules;
         $this->schemaUpdater = $schemaUpdater;
         $this->schemaRegistrar = $schemaRegistrar;
@@ -81,36 +55,13 @@ class SchemaUpdateModel
     }
 
     /**
-     * @param array $modules
-     *
      * @return array
      */
-    public function updateModules(array $modules = [])
+    public function updateModules()
     {
-        foreach ($this->vendor->getVendors() as $vendor) {
-            $vendorPath = $this->applicationPath->getModulesDir() . $vendor . '/';
-            $vendorModules = \count($modules) > 0 ? $modules : Filesystem::scandir($vendorPath);
-
-            foreach ($vendorModules as $module) {
-                $module = \strtolower($module);
-
-                if (isset($this->results[$module])) {
-                    continue;
-                }
-
-                $modulePath = $vendorPath . \ucfirst($module) . '/';
-                $moduleConfigPath = $modulePath . 'Resources/config/module.xml';
-
-                if (\is_dir($modulePath) && \is_file($moduleConfigPath)) {
-                    $dependencies = $this->getModuleDependencies($moduleConfigPath);
-
-                    if (\count($dependencies) > 0) {
-                        $this->updateModules($dependencies);
-                    }
-
-                    $this->results[$module] = $this->updateModule($module);
-                }
-            }
+        foreach ($this->modules->getAllModulesTopSorted() as $moduleInfo) {
+            $module = \strtolower($moduleInfo['dir']);
+            $this->results[$module] = $this->updateModule($module);
         }
 
         return $this->results;
@@ -123,7 +74,7 @@ class SchemaUpdateModel
      *
      * @return int
      */
-    public function updateModule($module)
+    public function updateModule(string $module)
     {
         $result = false;
 
@@ -139,13 +90,5 @@ class SchemaUpdateModel
         }
 
         return $result;
-    }
-
-    /**
-     * @return XML
-     */
-    protected function getXml()
-    {
-        return $this->xml;
     }
 }

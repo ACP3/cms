@@ -101,7 +101,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     protected function fetchModules(array $menuItem = [])
     {
-        $modules = $this->modules->getAllModules();
+        $modules = $this->modules->getAllModulesAlphabeticallySorted();
         foreach ($modules as $row) {
             $row['dir'] = \strtolower($row['dir']);
             $modules[$row['name']]['selected'] = $this->formsHelper->selectEntry(

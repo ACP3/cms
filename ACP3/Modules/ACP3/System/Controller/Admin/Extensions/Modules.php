@@ -340,10 +340,9 @@ class Modules extends Core\Controller\AbstractFrontendAction
     {
         $this->renewCaches();
 
-        $modules = $this->modules->getAllModules();
         $installedModules = $newModules = [];
 
-        foreach ($modules as $key => $values) {
+        foreach ($this->modules->getAllModulesAlphabeticallySorted() as $key => $values) {
             $values['dir'] = \strtolower($values['dir']);
             if ($this->modules->isInstalled($values['dir']) === true || $values['installable'] === false) {
                 $installedModules[$key] = $values;
