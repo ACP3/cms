@@ -128,7 +128,7 @@ class Modules
     }
 
     /**
-     * Returns all currently installed AND active modules
+     * Returns all currently installed AND active modules.
      *
      * @return array
      */
@@ -146,7 +146,7 @@ class Modules
     }
 
     /**
-     * Returns all currently installed modules
+     * Returns all currently installed modules.
      *
      * @return array
      */
@@ -164,7 +164,7 @@ class Modules
     }
 
     /**
-     * Returns an alphabetically sorted array of all found ACP3 modules
+     * Returns an alphabetically sorted array of all found ACP3 modules.
      *
      * @return array
      */
@@ -175,7 +175,7 @@ class Modules
             $allModulesAlphabeticallySorted[$info['name']] = $info;
         }
 
-        ksort($allModulesAlphabeticallySorted);
+        \ksort($allModulesAlphabeticallySorted);
 
         return $allModulesAlphabeticallySorted;
     }
@@ -188,7 +188,7 @@ class Modules
                     $info = $this->getModuleInfo($module);
                     if (!empty($info)) {
                         $info['vendor'] = $vendor;
-                        $this->allModules[strtolower($module)] = $info;
+                        $this->allModules[\strtolower($module)] = $info;
                     }
                 }
             }
@@ -198,7 +198,7 @@ class Modules
     }
 
     /**
-     * Returns an array with all modules which is sorted topologically
+     * Returns an array with all modules which is sorted topologically.
      *
      * @return array
      */
@@ -208,7 +208,7 @@ class Modules
 
         $modules = $this->getAllModules();
         foreach ($modules as $module) {
-            $topSort->add(strtolower($module['dir']), $module['dependencies']);
+            $topSort->add(\strtolower($module['dir']), $module['dependencies']);
         }
 
         $topSortedModules = [];

@@ -48,7 +48,7 @@ class RoleRepository extends Core\NestedSet\Model\Repository\NestedSetRepository
 
     /**
      * @param string $privilegeKey
-     * @param int $moduleId
+     * @param int    $moduleId
      * @param int    $roleId
      *
      * @return int
