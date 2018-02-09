@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2018-xx-yy
+### Changed
+- Updated the composer dependencies
+- Updated the npm dependencies
+- Modules are now getting loaded in topological sort order
+- Module schemas are now getting updated in topological sort order
+
+### Fixed
+- Fixed a bug within the permission system when a role was inheriting certain values from its parent role
+
 ## [4.21.2] - 2018-01-20
 ### Changed
 - the access_forbidden and not_found actions of the errors module are now using the "normal" layout, to improve the UX in case of these errors
