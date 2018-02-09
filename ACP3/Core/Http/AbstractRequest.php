@@ -47,9 +47,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Returns the used protocol of the current request.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getScheme()
     {
@@ -57,9 +55,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Returns the hostname of the current request.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getHost()
     {
@@ -67,9 +63,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Returns the protocol with the hostname.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getHttpHost()
     {
@@ -77,7 +71,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function isXmlHttpRequest()
     {
@@ -85,9 +79,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Returns the parameter bag of the $_COOKIE superglobal.
-     *
-     * @return \Symfony\Component\HttpFoundation\ParameterBag
+     * {@inheritdoc}
      */
     public function getCookies()
     {
@@ -95,9 +87,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Returns the parameter bag of the uploaded files ($_FILES superglobal).
-     *
-     * @return \Symfony\Component\HttpFoundation\FileBag
+     * {@inheritdoc}
      */
     public function getFiles()
     {
@@ -105,9 +95,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Returns the parameter bag of the $_POST superglobal.
-     *
-     * @return \Symfony\Component\HttpFoundation\ParameterBag
+     * {@inheritdoc}
      */
     public function getPost()
     {
@@ -115,9 +103,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Returns the parameter bag of the $_SERVER superglobal.
-     *
-     * @return \Symfony\Component\HttpFoundation\ServerBag
+     * {@inheritdoc}
      */
     public function getServer()
     {
@@ -125,7 +111,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * @return \ACP3\Core\Http\Request\UserAgent
+     * {@inheritdoc}
      */
     public function getUserAgent()
     {
@@ -133,9 +119,7 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * @param string $homepage
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function setHomepage($homepage)
     {

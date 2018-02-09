@@ -31,7 +31,9 @@ interface RequestInterface
     public function getHost();
 
     /**
-     * Returns the protocol with the hostname.
+     * Returns the HTTP host being requested.
+     *
+     * The port name will be appended to the host if it's non-standard.
      *
      * @return string
      */
