@@ -9,4 +9,11 @@
     <div id="{$captcha.id}"
          class="recaptcha-placeholder"
          data-sitekey="{$captcha.sitekey}"{if $captcha.length < 5} data-size="compact"{/if}></div>
+    {javascripts}
+        <script type="text/javascript">
+            if (typeof onloadCallback === 'function') {
+                onloadCallback();
+            }
+        </script>
+    {/javascripts}
 {/block}
