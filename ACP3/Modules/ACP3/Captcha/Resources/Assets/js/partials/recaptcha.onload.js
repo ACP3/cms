@@ -6,11 +6,11 @@
 /* global onloadCallback:true */
 onloadCallback = function() {
     jQuery('.recaptcha-placeholder').each(function() {
-        this.innerHtml = '';
-
-        grecaptcha.render(this.id, {
-            'sitekey': this.dataset.sitekey,
-            'size': this.dataset.size
-        });
+        if (jQuery(this).children().length === 0) {
+            grecaptcha.render(this.id, {
+                'sitekey': this.dataset.sitekey,
+                'size': this.dataset.size
+            });
+        }
     });
 };
