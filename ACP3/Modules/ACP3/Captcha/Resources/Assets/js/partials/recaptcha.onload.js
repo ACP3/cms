@@ -14,3 +14,7 @@ onloadCallback = function() {
         }
     });
 };
+
+jQuery(document).on('acp3.captcha.recaptcha', function() {
+    onloadCallback();
+});
