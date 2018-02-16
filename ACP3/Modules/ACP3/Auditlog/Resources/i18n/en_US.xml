@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) by the ACP3 Developers.
+  ~ See the LICENCE file at the top-level module directory for licencing details.
+  -->
+
+<language>
+    <keys>
+        <item key="auditlog">Audit log</item>
+        <item key="mod_description">Logs every user action within the ACP3 CMS.</item>
+        <item key="nothing_to_see_here_yet">Nothing to see here yet.</item>
+    </keys>
+</language>
