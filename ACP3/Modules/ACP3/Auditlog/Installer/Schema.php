@@ -25,7 +25,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 `date` DATETIME NOT NULL,
                 `module_id` INT(10) UNSIGNED NOT NULL,
                 `entry_id` INT(10) UNSIGNED NOT NULL,
-                `data` MEDIUMTEXT NOT NULL,
+                `data` MEDIUMBLOB NOT NULL,
                 `user_id` INT(10) UNSIGNED,
                 PRIMARY KEY (`id`),
                 INDEX (`module_id`),
