@@ -70,6 +70,9 @@ class Migration extends AbstractMigration
                 'ALTER TABLE `{pre}articles` ADD INDEX (`active`)',
                 'UPDATE `{pre}articles` SET `active` = 1;',
             ],
+            43 => [
+                'ALTER TABLE `{pre}articles` ADD COLUMN `layout` VARCHAR(120) NOT NULL AFTER `text`;',
+            ]
         ];
     }
 

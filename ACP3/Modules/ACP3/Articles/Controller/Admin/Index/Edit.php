@@ -8,10 +8,9 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Articles;
 
-class Edit extends AbstractFrontendAction
+class Edit extends AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
@@ -69,6 +68,11 @@ class Edit extends AbstractFrontendAction
             return [
                 'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $article['active']),
                 'form' => \array_merge($article, $this->request->getPost()->all()),
+                'layouts' => $this->formsHelper->choicesGenerator(
+                    'layout',
+                    $this->getAvailableLayouts(),
+                    $article['layout']
+                ),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
                 'SEO_URI_PATTERN' => Articles\Helpers::URL_KEY_PATTERN,
                 'SEO_ROUTE_NAME' => \sprintf(Articles\Helpers::URL_KEY_PATTERN, $id),

@@ -73,6 +73,10 @@ class Details extends Core\Controller\AbstractFrontendAction
             $this->breadcrumb->append($article['title']);
             $this->title->setPageTitle($article['title']);
 
+            if ($this->view->templateExists($article['layout'])) {
+                $this->setLayout($article['layout']);
+            }
+
             return [
                 'page' => \array_merge(
                     $article,

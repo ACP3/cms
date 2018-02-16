@@ -10,3 +10,11 @@ services:
     tags:
       - { name: core.validation.validation_rule }
     public: false
+
+  articles.validation.validation_rules.layout_exists_validation_rule:
+    class: ACP3\Modules\ACP3\Articles\Validation\ValidationRules\LayoutExistsValidationRule
+    arguments:
+       - '@core.view'
+    tags:
+      - { name: core.validation.validation_rule }
+    public: false

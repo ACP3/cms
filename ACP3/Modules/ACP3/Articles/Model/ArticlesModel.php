@@ -52,6 +52,7 @@ class ArticlesModel extends AbstractModel
             'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'text' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
+            'layout' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }

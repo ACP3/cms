@@ -8,10 +8,9 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Articles;
 
-class Create extends AbstractFrontendAction
+class Create extends AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
@@ -43,7 +42,8 @@ class Create extends AbstractFrontendAction
         Articles\Model\ArticlesModel $articlesModel,
         Articles\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper
-    ) {
+    )
+    {
         parent::__construct($context);
 
         $this->articlesModel = $articlesModel;
@@ -58,14 +58,20 @@ class Create extends AbstractFrontendAction
     public function execute()
     {
         $defaults = [
-            'title' => '',
-            'text' => '',
             'start' => '',
             'end' => '',
+            'title' => '',
+            'text' => '',
         ];
+
+        $this->getAvailableLayouts();
 
         return [
             'active' => $this->formsHelper->yesNoCheckboxGenerator('active', 1),
+            'layouts' => $this->formsHelper->choicesGenerator(
+                'layout',
+                $this->getAvailableLayouts()
+            ),
             'form' => \array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => Articles\Helpers::URL_KEY_PATTERN,
