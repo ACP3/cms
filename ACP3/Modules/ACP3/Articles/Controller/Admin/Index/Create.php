@@ -42,8 +42,7 @@ class Create extends AbstractFormAction
         Articles\Model\ArticlesModel $articlesModel,
         Articles\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->articlesModel = $articlesModel;

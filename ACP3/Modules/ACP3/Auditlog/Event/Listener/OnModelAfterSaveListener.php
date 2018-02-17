@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Auditlog\Event\Listener;
@@ -33,6 +34,7 @@ class OnModelAfterSaveListener
 
     /**
      * OnModelAfterSaveListener constructor.
+     *
      * @param \ACP3\Core\Date                                                 $date
      * @param \ACP3\Modules\ACP3\Users\Model\UserModel                        $userModel
      * @param \ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface      $moduleAwareRepository
@@ -55,11 +57,11 @@ class OnModelAfterSaveListener
         if ($event->hasDataChanges() === true) {
             $this->auditlogRepository->insert([
                 'date' => $this->date->toSQL(),
-                'module_id' => (int)$this->moduleAwareRepository->getModuleId($event->getModuleName()),
-                'entry_id' => (int)$event->getEntryId(),
+                'module_id' => (int) $this->moduleAwareRepository->getModuleId($event->getModuleName()),
+                'entry_id' => (int) $event->getEntryId(),
                 'action' => $this->getAction($event),
-                'data' => serialize($event->getData()),
-                'user_id' => $this->userModel->getUserId()
+                'data' => \serialize($event->getData()),
+                'user_id' => $this->userModel->getUserId(),
             ]);
         }
     }

@@ -72,7 +72,7 @@ class Migration extends AbstractMigration
             ],
             43 => [
                 'ALTER TABLE `{pre}articles` ADD COLUMN `layout` VARCHAR(120) NOT NULL AFTER `text`;',
-            ]
+            ],
         ];
     }
 

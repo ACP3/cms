@@ -58,6 +58,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
      * @param int|null $entryId
      *
      * @return bool|int
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function save(array $rawData, $entryId = null)
@@ -95,6 +96,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
      * @param int|array $entryId
      *
      * @return int
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function delete($entryId)

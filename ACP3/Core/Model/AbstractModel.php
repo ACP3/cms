@@ -39,8 +39,7 @@ abstract class AbstractModel
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
         AbstractRepository $repository
-    )
-    {
+    ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->repository = $repository;
         $this->dataProcessor = $dataProcessor;
@@ -109,8 +108,7 @@ abstract class AbstractModel
     protected function dispatchBeforeSaveEvent(
         AbstractRepository $repository,
         ModelSaveEvent $event
-    )
-    {
+    ) {
         $this->dispatchEvent(
             'core.model.before_save',
             $event
@@ -141,8 +139,7 @@ abstract class AbstractModel
         bool $hasDataChanges,
         array $filteredData = [],
         array $rawData = []
-    ): ModelSaveEvent
-    {
+    ): ModelSaveEvent {
         return new ModelSaveEvent(
             static::EVENT_PREFIX,
             $filteredData,
@@ -175,8 +172,7 @@ abstract class AbstractModel
     protected function dispatchAfterSaveEvent(
         AbstractRepository $repository,
         ModelSaveEvent $event
-    )
-    {
+    ) {
         $this->dispatchEvent(
             'core.model.after_save',
             $event
@@ -213,7 +209,7 @@ abstract class AbstractModel
 
         $affectedRows = 0;
         foreach ($entryId as $item) {
-            $affectedRows += (int)$this->repository->delete($item);
+            $affectedRows += (int) $this->repository->delete($item);
         }
 
         $this->dispatchEvent(
