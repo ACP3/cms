@@ -10,13 +10,14 @@ namespace ACP3\Modules\ACP3\Polls\Model;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\UpdatedAtAwareModelInterface;
 use ACP3\Modules\ACP3\Polls\Installer\Schema;
 use ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository;
 use ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository;
 use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class PollsModel extends AbstractModel
+class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
