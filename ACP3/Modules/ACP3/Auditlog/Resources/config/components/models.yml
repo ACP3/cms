@@ -1,5 +1,5 @@
 services:
-  auditlog.models.repository.auditlog_repository:
-    class: ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditlogRepository
+  auditlog.models.repository.audit_log_repository:
+    class: ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogRepository
     arguments:
       - '@core.db'

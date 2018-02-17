@@ -50,6 +50,8 @@ abstract class AbstractModel
      * @param null|int $entryId
      *
      * @return bool|int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function save(array $rawData, $entryId = null)
     {
@@ -187,6 +189,8 @@ abstract class AbstractModel
      * @param int|array $entryId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function delete($entryId)
     {
@@ -198,10 +202,7 @@ abstract class AbstractModel
 
         $event = $this->createModelSaveEvent($entryId, false, true);
 
-        $this->dispatchEvent(
-            'core.model.before_delete',
-            $event
-        );
+        $this->dispatchEvent('core.model.before_delete', $event);
         $this->dispatchEvent(
             static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete',
             $event
@@ -212,10 +213,7 @@ abstract class AbstractModel
             $affectedRows += (int) $this->repository->delete($item);
         }
 
-        $this->dispatchEvent(
-            'core.model.before_delete',
-            $event
-        );
+        $this->dispatchEvent('core.model.after_delete', $event);
         $this->dispatchEvent(
             static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete',
             $event

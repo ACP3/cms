@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Auditlog\Model\Repository;
 
 use ACP3\Core\Model\Repository\AbstractRepository;
 
-class AuditlogRepository extends AbstractRepository
+class AuditLogRepository extends AbstractRepository
 {
     const TABLE_NAME = 'auditlog';
 }

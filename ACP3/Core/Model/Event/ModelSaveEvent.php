@@ -52,7 +52,7 @@ class ModelSaveEvent extends Event
         array $rawData,
         $entryId,
         bool $isNewEntry,
-        bool $hasDataChanges = true)
+        bool $hasDataChanges)
     {
         $this->moduleName = $moduleName;
         $this->filteredData = $filteredData;
