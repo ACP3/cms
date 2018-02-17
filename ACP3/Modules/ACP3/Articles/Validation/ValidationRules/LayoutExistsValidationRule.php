@@ -2,7 +2,7 @@
 
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Articles\Validation\ValidationRules;
@@ -19,6 +19,7 @@ class LayoutExistsValidationRule extends AbstractValidationRule
 
     /**
      * LayoutExistsValidationRule constructor.
+     *
      * @param \ACP3\Core\View $view
      */
     public function __construct(View $view)

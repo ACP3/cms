@@ -10,12 +10,13 @@ namespace ACP3\Modules\ACP3\News\Model;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Model\DuplicationAwareTrait;
+use ACP3\Core\Model\UpdatedAtAwareModelInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\News\Installer\Schema;
 use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class NewsModel extends AbstractModel
+class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
 {
     use DuplicationAwareTrait;
 

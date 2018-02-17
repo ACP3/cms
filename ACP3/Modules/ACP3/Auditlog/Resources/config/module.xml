@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) by the ACP3 Developers.
+  ~ See the LICENCE file at the top-level module directory for licencing details.
+  -->
+
+<module>
+    <info>
+        <name lang="true"/>
+        <description lang="true"/>
+        <author>Tino Goratsch</author>
+        <version core="true"/>
+        <dependencies>
+            <module>permissions</module>
+            <module>system</module>
+        </dependencies>
+    </info>
+</module>

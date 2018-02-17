@@ -10,10 +10,11 @@ namespace ACP3\Modules\ACP3\Files\Model;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Model\DuplicationAwareTrait;
+use ACP3\Core\Model\UpdatedAtAwareModelInterface;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
-class FilesModel extends AbstractModel
+class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface
 {
     use DuplicationAwareTrait;
 

@@ -10,9 +10,10 @@ namespace ACP3\Modules\ACP3\Articles\Model;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Model\DuplicationAwareTrait;
+use ACP3\Core\Model\UpdatedAtAwareModelInterface;
 use ACP3\Modules\ACP3\Articles\Installer\Schema;
 
-class ArticlesModel extends AbstractModel
+class ArticlesModel extends AbstractModel implements UpdatedAtAwareModelInterface
 {
     use DuplicationAwareTrait;
 
