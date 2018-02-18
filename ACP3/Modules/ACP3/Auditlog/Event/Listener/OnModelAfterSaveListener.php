@@ -65,20 +65,20 @@ class OnModelAfterSaveListener
             foreach ($this->prepareEntryIds($event) as $entryId) {
                 $this->auditLogRepository->insert([
                     'date' => $this->date->toSQL(),
-                    'module_id' => (int)$moduleId,
-                    'entry_id' => (int)$entryId,
+                    'module_id' => (int) $moduleId,
+                    'entry_id' => (int) $entryId,
                     'action' => $this->getAction($event),
                     'data' => \serialize($event->getData()),
                     'user_id' => $this->userModel->getUserId(),
                 ]);
             }
         } catch (DBALException $e) {
-
         }
     }
 
     /**
      * @param \ACP3\Core\Model\Event\ModelSaveEvent $event
+     *
      * @return array|null
      */
     private function prepareEntryIds(ModelSaveEvent $event)
