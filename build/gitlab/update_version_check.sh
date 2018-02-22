@@ -14,7 +14,7 @@ then
     git checkout master
     rm update.txt
     touch update.txt
-    echo "${CI_COMMIT_TAG_CROPPED}||https://github.com/ACP3/cms/releases/tag/${CI_COMMIT_TAG}" >> update.txt
+    echo "${TRAVIS_TAG_CROPPED}||https://gitlab.com/ACP3/cms/-/jobs/artifacts/${TRAVIS_TAG}/download?job=deploy%3Agenerate-artifact" >> update.txt
     git add update.txt
     git commit -am "Updated the latest version to ${CI_COMMIT_TAG}"
     git push
