@@ -9,8 +9,8 @@ then
         CI_COMMIT_TAG_CROPPED=${CI_COMMIT_TAG}
     fi
 
-    git clone https://gitlab.com/ACP3/acp3.github.io.git ./build/acp3.github.io
-    cd ./build/acp3.github.io
+    git clone https://gitlab.com/ACP3/update-check.git ./build/update-check
+    cd ./build/update-check
     git checkout master
     rm update.txt
     touch update.txt

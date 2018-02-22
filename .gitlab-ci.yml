@@ -119,10 +119,10 @@ post-deploy:notify-packagist: &post-deploy-base
     - tags
     - schedules
 
-#post-deploy:update-version-check:
-#  <<: *post-deploy-base
-#  script:
-#    - bash ./build/gitlab/update_version_check.sh
+post-deploy:update-version-check:
+  <<: *post-deploy-base
+  script:
+    - bash ./build/gitlab/update_version_check.sh
 #  only:
 #    - tags
 
