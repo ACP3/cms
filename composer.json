@@ -62,6 +62,7 @@
     "acp3/setup": "self.version",
     "acp3/module-acp": "self.version",
     "acp3/module-articles": "self.version",
+    "acp3/module-audit-logs": "self.version",
     "acp3/module-captcha": "self.version",
     "acp3/module-categories": "self.version",
     "acp3/module-comments": "self.version",
