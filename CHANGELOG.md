@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 2018-xx-yy
+## [4.22.0] - 2018-02-22
 ### Added
 - Added a new module: Auditlog. This module keeps track of all the changes users are doing to the database resultsets. For now, there are no user visible features.
 
@@ -529,7 +529,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.21.2...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.22.0...HEAD
+[4.22.0]: https://gitlab.com/ACP3/cms/compare/v4.21.2...v4.22.0
 [4.21.2]: https://gitlab.com/ACP3/cms/compare/v4.21.1...v4.21.2
 [4.21.1]: https://gitlab.com/ACP3/cms/compare/v4.21.0...v4.21.1
 [4.21.0]: https://gitlab.com/ACP3/cms/compare/v4.20.0...v4.21.0
