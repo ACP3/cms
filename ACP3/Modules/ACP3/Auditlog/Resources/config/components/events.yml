@@ -1,0 +1,11 @@
+services:
+  auditlog.events.on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Auditlog\Event\Listener\OnModelAfterSaveListener
+    arguments:
+      - '@core.date'
+      - '@users.model.user_model'
+      - '@system.model.modulerepository'
+      - '@auditlog.models.repository.audit_log_repository'
+    tags:
+      - { name: core.eventListener, event: core.model.after_save, method: onModelSave, priority: -255 }
+      - { name: core.eventListener, event: core.model.after_delete, method: onModelSave, priority: -255 }

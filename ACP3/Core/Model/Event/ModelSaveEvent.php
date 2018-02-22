@@ -31,6 +31,10 @@ class ModelSaveEvent extends Event
      * @var bool
      */
     private $isNewEntry;
+    /**
+     * @var bool
+     */
+    private $hasDataChanges;
 
     /**
      * ModelSaveEvent constructor.
@@ -40,14 +44,22 @@ class ModelSaveEvent extends Event
      * @param array          $rawData
      * @param int|null|array $entryId
      * @param bool           $isNewEntry
+     * @param bool           $hasDataChanges
      */
-    public function __construct($moduleName, array $filteredData, array $rawData, $entryId, $isNewEntry)
+    public function __construct(
+        string $moduleName,
+        array $filteredData,
+        array $rawData,
+        $entryId,
+        bool $isNewEntry,
+        bool $hasDataChanges)
     {
         $this->moduleName = $moduleName;
         $this->filteredData = $filteredData;
         $this->rawData = $rawData;
         $this->entryId = $entryId;
         $this->isNewEntry = $isNewEntry;
+        $this->hasDataChanges = $hasDataChanges;
     }
 
     /**
@@ -96,5 +108,10 @@ class ModelSaveEvent extends Event
     public function isIsNewEntry()
     {
         return $this->isNewEntry;
+    }
+
+    public function hasDataChanges(): bool
+    {
+        return $this->hasDataChanges;
     }
 }

@@ -6,11 +6,14 @@
         <item key="admin_index_delete">Artikel löschen</item>
         <item key="admin_index_edit">Artikel bearbeiten</item>
         <item key="articles">Artikel</item>
+        <item key="default_layout">Standard Seiten-Layout verwenden</item>
         <item key="latest_articles">Neueste Artikel</item>
+        <item key="layout">Layout</item>
         <item key="mod_description">Dieses Modul verwaltet die Artikel.</item>
         <item key="page_statements">Seitenangaben</item>
         <item key="select_active">Bitte wählen Sie aus, ob der Artikel veröffentlicht werden soll oder nicht.</item>
         <item key="select_create_menu_item">Bitte wählen Sie aus, ob für diesen Artikel ein Menüpunkt erstellt werden soll oder nicht.</item>
+        <item key="select_layout">Bitte wählen Sie das Seiten-Layout aus.</item>
         <item key="text">Text</item>
         <item key="text_to_short">Der Text darf nicht leer sein.</item>
         <item key="title">Titel</item>

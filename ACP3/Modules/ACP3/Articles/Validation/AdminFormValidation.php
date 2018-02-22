@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Articles\Validation;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Articles\Validation\ValidationRules\LayoutExistsValidationRule;
 
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
@@ -74,6 +75,14 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'length' => 3,
                     ],
+                ]
+            )
+            ->addConstraint(
+                LayoutExistsValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'layout',
+                    'message' => $this->translator->t('articles', 'select_layout'),
                 ]
             );
 

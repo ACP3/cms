@@ -78,7 +78,7 @@ class OnControllerActionBeforeDispatchListener
     private function setCanonicalForExistingUriAlias(ControllerActionBeforeDispatchEvent $event)
     {
         if ($this->isInFrontend($event) && $this->uriAliasExists()) {
-            $this->metaStatements->setCanonicalUri($this->router->route($this->request->getQuery()));
+            $this->metaStatements->setCanonicalUri($this->router->route($this->request->getQuery(), true));
         }
     }
 
@@ -108,7 +108,7 @@ class OnControllerActionBeforeDispatchListener
     private function setCanonicalForHomepage()
     {
         if ($this->request->isHomepage()) {
-            $this->metaStatements->setCanonicalUri($this->applicationPath->getWebRoot());
+            $this->metaStatements->setCanonicalUri($this->request->getSymfonyRequest()->getSchemeAndHttpHost() . $this->applicationPath->getWebRoot());
         }
     }
 }

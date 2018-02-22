@@ -51,17 +51,19 @@ class Connection
      * @param LoggerInterface    $logger
      * @param ApplicationPath    $appPath
      * @param CacheDriverFactory $cacheDriverFactory
-     * @param $appMode
-     * @param array $connectionParams
-     * @param $tablePrefix
+     * @param                    $appMode
+     * @param array              $connectionParams
+     * @param                    $tablePrefix
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function __construct(
         LoggerInterface $logger,
         ApplicationPath $appPath,
         CacheDriverFactory $cacheDriverFactory,
-        $appMode,
+        string $appMode,
         array $connectionParams,
-        $tablePrefix
+        string $tablePrefix
     ) {
         $this->logger = $logger;
         $this->appPath = $appPath;
@@ -116,6 +118,8 @@ class Connection
      * @param null   $cacheKey
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchAll(
         $statement,
@@ -138,6 +142,8 @@ class Connection
      * @param array  $types
      *
      * @return mixed
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchArray($statement, array $params = [], array $types = [])
     {
@@ -150,6 +156,8 @@ class Connection
      * @param array  $types
      *
      * @return mixed
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchAssoc($statement, array $params = [], array $types = [])
     {
@@ -163,6 +171,8 @@ class Connection
      * @param array  $types
      *
      * @return bool|string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchColumn($statement, array $params = [], $column = 0, array $types = [])
     {
@@ -179,7 +189,6 @@ class Connection
      *
      * @return \Doctrine\DBAL\Driver\ResultStatement|\Doctrine\DBAL\Driver\Statement
      *
-     * @throws \Doctrine\DBAL\Cache\CacheException
      * @throws \Doctrine\DBAL\DBALException
      */
     public function executeQuery(
@@ -213,7 +222,7 @@ class Connection
             $result = $callback();
 
             $this->connection->commit();
-        } catch (\Exception $e) {
+        } catch (DBAL\DBALException $e) {
             $this->connection->rollBack();
             $this->logger->error($e);
             $result = false;

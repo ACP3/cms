@@ -9,9 +9,10 @@ namespace ACP3\Modules\ACP3\Gallery\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\UpdatedAtAwareModelInterface;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 
-class GalleryModel extends AbstractModel
+class GalleryModel extends AbstractModel implements UpdatedAtAwareModelInterface
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
 

@@ -11,6 +11,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules\Helper\ControllerActionExists;
 use ACP3\Core\Modules\ModuleInfoCache;
 use ACP3\Core\Modules\Vendor;
+use MJS\TopSort\Implementations\StringSort;
 
 class Modules
 {
@@ -131,11 +132,11 @@ class Modules
      *
      * @return array
      */
-    public function getActiveModules()
+    public function getActiveModules(): array
     {
-        $modules = $this->getAllModules();
+        $modules = $this->getAllModulesAlphabeticallySorted();
 
-        foreach ($this->allModules as $key => $values) {
+        foreach ($modules as $key => $values) {
             if ($values['active'] === false) {
                 unset($modules[$key]);
             }
@@ -149,11 +150,11 @@ class Modules
      *
      * @return array
      */
-    public function getInstalledModules()
+    public function getInstalledModules(): array
     {
-        $modules = $this->getAllModules();
+        $modules = $this->getAllModulesAlphabeticallySorted();
 
-        foreach ($this->allModules as $key => $values) {
+        foreach ($modules as $key => $values) {
             if ($values['installed'] === false) {
                 unset($modules[$key]);
             }
@@ -167,21 +168,54 @@ class Modules
      *
      * @return array
      */
-    public function getAllModules()
+    public function getAllModulesAlphabeticallySorted(): array
+    {
+        $allModulesAlphabeticallySorted = [];
+        foreach ($this->getAllModules() as $info) {
+            $allModulesAlphabeticallySorted[$info['name']] = $info;
+        }
+
+        \ksort($allModulesAlphabeticallySorted);
+
+        return $allModulesAlphabeticallySorted;
+    }
+
+    private function getAllModules(): array
     {
         if (empty($this->allModules)) {
             foreach ($this->vendors->getVendors() as $vendor) {
                 foreach (Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/') as $module) {
                     $info = $this->getModuleInfo($module);
                     if (!empty($info)) {
-                        $this->allModules[$info['name']] = $info;
+                        $info['vendor'] = $vendor;
+                        $this->allModules[\strtolower($module)] = $info;
                     }
                 }
             }
-
-            \ksort($this->allModules);
         }
 
         return $this->allModules;
+    }
+
+    /**
+     * Returns an array with all modules which is sorted topologically.
+     *
+     * @return array
+     */
+    public function getAllModulesTopSorted(): array
+    {
+        $topSort = new StringSort();
+
+        $modules = $this->getAllModules();
+        foreach ($modules as $module) {
+            $topSort->add(\strtolower($module['dir']), $module['dependencies']);
+        }
+
+        $topSortedModules = [];
+        foreach ($topSort->sort() as $module) {
+            $topSortedModules[$module] = $modules[$module];
+        }
+
+        return $topSortedModules;
     }
 }

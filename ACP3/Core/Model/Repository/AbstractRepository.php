@@ -33,6 +33,8 @@ abstract class AbstractRepository implements RepositoryInterface
      * @param array $data
      *
      * @return bool|int
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function insert(array $data)
     {
@@ -63,6 +65,8 @@ abstract class AbstractRepository implements RepositoryInterface
      * @param string    $columnName
      *
      * @return bool|int
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function delete($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
     {
@@ -92,6 +96,8 @@ abstract class AbstractRepository implements RepositoryInterface
      * @param int|array $entryId
      *
      * @return bool|int
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function update(array $data, $entryId)
     {

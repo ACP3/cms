@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.22.0] - 2018-02-22
+### Added
+- Added a new module: Auditlog. This module keeps track of all the changes users are doing to the database resultsets. For now, there are no user visible features.
+
+### Changed
+- Updated the composer dependencies
+- Updated the npm dependencies
+- Modules are now getting loaded in topological sort order
+- Module schemas are now getting updated in topological sort order
+- Updated the CKEditor to version 4.8.x
+- Extended the capabilities of the AbstractModel to detect if the to be saved result has any changed data or not
+
+### Fixed
+- Fixed a bug within the permission system when a role was inheriting certain values from its parent role
+- Fixed a possible PHP error if the version update checks fails
+
 ## [4.21.2] - 2018-01-20
 ### Changed
 - the access_forbidden and not_found actions of the errors module are now using the "normal" layout, to improve the UX in case of these errors
@@ -513,7 +529,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.21.2...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.22.0...HEAD
+[4.22.0]: https://gitlab.com/ACP3/cms/compare/v4.21.2...v4.22.0
 [4.21.2]: https://gitlab.com/ACP3/cms/compare/v4.21.1...v4.21.2
 [4.21.1]: https://gitlab.com/ACP3/cms/compare/v4.21.0...v4.21.1
 [4.21.0]: https://gitlab.com/ACP3/cms/compare/v4.20.0...v4.21.0

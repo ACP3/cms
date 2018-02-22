@@ -9,12 +9,13 @@ namespace ACP3\Modules\ACP3\Newsletter\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\UpdatedAtAwareModelInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class NewsletterModel extends AbstractModel
+class NewsletterModel extends AbstractModel implements UpdatedAtAwareModelInterface
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
 

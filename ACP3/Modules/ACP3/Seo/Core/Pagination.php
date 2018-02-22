@@ -77,7 +77,7 @@ class Pagination extends \ACP3\Core\Pagination
     {
         $path = ($this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $this->request->getUriWithoutPages();
 
-        return $this->router->route($path);
+        return $this->router->route($path, true);
     }
 
     /**

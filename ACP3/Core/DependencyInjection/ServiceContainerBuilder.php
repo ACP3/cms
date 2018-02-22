@@ -96,19 +96,16 @@ class ServiceContainerBuilder extends ContainerBuilder
         // Try to get all available services
         /** @var Modules $modules */
         $modules = $this->get('core.modules');
-        $vendors = $this->get('core.modules.vendors')->getVendors();
 
-        foreach ($modules->getAllModules() as $module) {
-            foreach ($vendors as $vendor) {
-                $modulePath = $this->applicationPath->getModulesDir() . $vendor . '/' . $module['dir'];
-                $path = $modulePath . '/Resources/config/services.yml';
+        foreach ($modules->getAllModulesTopSorted() as $module) {
+            $modulePath = $this->applicationPath->getModulesDir() . $module['vendor'] . '/' . $module['dir'];
+            $path = $modulePath . '/Resources/config/services.yml';
 
-                if (\is_file($path)) {
-                    $loader->load($path);
-                }
-
-                $this->registerCompilerPass($vendor, $module['dir']);
+            if (\is_file($path)) {
+                $loader->load($path);
             }
+
+            $this->registerCompilerPass($module['vendor'], $module['dir']);
         }
 
         $this->compile();

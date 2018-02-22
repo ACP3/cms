@@ -18,6 +18,8 @@ class Edit extends AbstractOperation
      * @param array $updateValues
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function execute($resultId, $parentId, $blockId, array $updateValues)
     {

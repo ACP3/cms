@@ -9,6 +9,7 @@ module.exports = function (gulp) {
     return function () {
         var nodeBasePath = './node_modules',
             systemBasePath = './ACP3/Modules/ACP3/System/Resources/Assets',
+            ckeditorBasePath = './ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets',
             paths = [
                 {
                     'src': [
@@ -28,6 +29,10 @@ module.exports = function (gulp) {
                 {
                     'src': nodeBasePath + '/bootstrap/dist/fonts/*',
                     'dest': systemBasePath + '/fonts'
+                },
+                {
+                    'src': nodeBasePath + '/ckeditor-codemirror-plugin/codemirror/**',
+                    'dest': ckeditorBasePath + '/js/ckeditor/plugins/codemirror'
                 },
                 {
                     'src': [

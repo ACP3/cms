@@ -10,6 +10,8 @@ splits:
     target: "git@gitlab.com:ACP3/core.git"
   - prefix: "ACP3/Modules/ACP3/Acp"
     target: "git@gitlab.com:ACP3/module-acp.git"
+  - prefix: "ACP3/Modules/ACP3/Auditlog"
+    target: "git@gitlab.com:ACP3/module-audit-log.git"
   - prefix: "ACP3/Modules/ACP3/Articles"
     target: "git@gitlab.com:ACP3/module-articles.git"
   - prefix: "ACP3/Modules/ACP3/Captcha"

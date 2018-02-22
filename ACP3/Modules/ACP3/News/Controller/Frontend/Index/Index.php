@@ -175,7 +175,7 @@ class Index extends AbstractAction
     {
         if ($cat !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
             if ($this->metaStatements instanceof MetaStatements) {
-                $this->metaStatements->setCanonicalUri($this->router->route('news'));
+                $this->metaStatements->setCanonicalUri($this->router->route('news', true));
             }
 
             $this->breadcrumb->append($this->translator->t('news', 'news'), 'news');

@@ -1,0 +1,12 @@
+services:
+  auditlog.installer.schema:
+    class: ACP3\Modules\ACP3\Auditlog\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
+    public: false
+
+  auditlog.installer.migration:
+    class: ACP3\Modules\ACP3\Auditlog\Installer\Migration
+    tags:
+      - { name: core.installer.migration }
+    public: false

@@ -16,7 +16,7 @@ use Composer\Semver\Comparator;
 
 class UpdateCheck
 {
-    const UPDATE_CHECK_FILE = 'https://acp3.github.io/update.txt';
+    const UPDATE_CHECK_FILE = 'https://acp3.gitlab.io/update-check/update.txt';
     const UPDATE_CHECK_DATE_OFFSET = 86400;
 
     /**

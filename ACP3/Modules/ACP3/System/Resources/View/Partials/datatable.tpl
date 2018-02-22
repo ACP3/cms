@@ -10,6 +10,10 @@
                 iDisplayLength: {$dt.records_per_page},
                 stateSave: true,
                 autoWidth: false,
+                dom:
+                "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
+                "<'row'<'col-sm-12'<'table-responsive'tr>>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
                 {if isset($dt.sort_col, $dt.sort_dir)}
                 sorting: [
                     [ {$dt.sort_col}, "{$dt.sort_dir}" ]

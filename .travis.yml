@@ -4,16 +4,13 @@ dist: trusty
 group: edge
 php:
   - 7.1
+  - 7.2
   - nightly
 
 matrix:
   fast_finish: true
   allow_failures:
     - php: nightly
-
-addons:
-  code_climate:
-    repo_token: ${CC_REPO_TOKEN}
 
 before_install:
   - echo -e "machine github.com\n\tlogin ${ACP3_CI_USER_GH_TOKEN}" >> ~/.netrc
@@ -24,16 +21,9 @@ before_script:
 script:
   - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover ./build/logs/clover.xml
 
-after_success:
-  - travis_retry vendor/bin/coveralls -v
-
-before_deploy:
-  - ./build/travis/generate_artifact.sh ${TRAVIS_PHP_VERSION}
-
 deploy:
-  - provider: releases
-    api_key: ${ACP3_CI_USER_GH_TOKEN}
-    file: 'release.zip'
+  - provider: script
+    script: ./build/travis/update_version_check.sh ${TRAVIS_TAG}
     skip_cleanup: true
     on:
       tags: true
