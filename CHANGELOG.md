@@ -5,14 +5,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 2018-xx-yy
+### Added
+- Added a new module: Auditlog. This module keeps track of all the changes users are doing to the database resultsets. For now, there are no user visible features.
+
 ### Changed
 - Updated the composer dependencies
 - Updated the npm dependencies
 - Modules are now getting loaded in topological sort order
 - Module schemas are now getting updated in topological sort order
+- Updated the CKEditor to version 4.8.x
+- Extended the capabilities of the AbstractModel to detect if the to be saved result has any changed data or not
 
 ### Fixed
 - Fixed a bug within the permission system when a role was inheriting certain values from its parent role
+- Fixed a possible PHP error if the version update checks fails
 
 ## [4.21.2] - 2018-01-20
 ### Changed
