@@ -6,6 +6,7 @@ declare -a repositories
 
 repositories[0]="https://gitlab.com/ACP3/core.git"
 repositories[1]="https://gitlab.com/ACP3/module-acp.git"
+repositories[1]="https://gitlab.com/ACP3/module-audit-log.git"
 repositories[2]="https://gitlab.com/ACP3/module-articles.git"
 repositories[3]="https://gitlab.com/ACP3/module-captcha.git"
 repositories[4]="https://gitlab.com/ACP3/module-categories.git"
