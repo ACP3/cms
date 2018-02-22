@@ -12,10 +12,10 @@ then
     git clone git@gitlab.com:ACP3/update-check.git ./build/update-check
     cd ./build/update-check
     git checkout master
-    rm update.txt
-    touch update.txt
-    echo "${CI_COMMIT_TAG_CROPPED}||https://gitlab.com/ACP3/cms/-/jobs/artifacts/${TRAVIS_TAG}/download?job=deploy%3Agenerate-artifact" >> update.txt
-    git add update.txt
+    rm public/update.txt
+    touch public/update.txt
+    echo "${CI_COMMIT_TAG_CROPPED}||https://gitlab.com/ACP3/cms/-/jobs/artifacts/${TRAVIS_TAG}/download?job=deploy%3Agenerate-artifact" >> public/update.txt
+    git add public/update.txt
     git commit -am "Updated the latest version to ${CI_COMMIT_TAG}"
     git push
 fi
