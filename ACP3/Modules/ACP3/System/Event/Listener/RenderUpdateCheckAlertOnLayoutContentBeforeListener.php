@@ -56,7 +56,7 @@ class RenderUpdateCheckAlertOnLayoutContentBeforeListener
     {
         $update = $this->updateCheck->checkForNewVersion();
 
-        if ($this->canRenderUpdateAlert($update['is_latest'])) {
+        if ($update && $this->canRenderUpdateAlert($update['is_latest'])) {
             $this->view->assign('update', $update);
             $this->view->displayTemplate('System/Partials/alert_update_check.tpl');
         }
