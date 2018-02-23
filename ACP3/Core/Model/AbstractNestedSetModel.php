@@ -67,7 +67,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
 
         $isNewEntry = $entryId === null;
         $hasDataChanges = $this->hasDataChanges($filteredData, $entryId);
-        $event = $this->createModelSaveEvent($entryId, $isNewEntry, $hasDataChanges, $rawData, $isNewEntry);
+        $event = $this->createModelSaveEvent($entryId, $isNewEntry, $hasDataChanges, $filteredData, $rawData);
 
         $this->dispatchBeforeSaveEvent($this->repository, $event);
 
@@ -86,7 +86,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
             );
         }
 
-        $event = $this->createModelSaveEvent($entryId, $isNewEntry, $hasDataChanges, $rawData, $isNewEntry);
+        $event = $this->createModelSaveEvent($entryId, $isNewEntry, $hasDataChanges, $filteredData, $rawData);
         $this->dispatchAfterSaveEvent($this->repository, $event);
 
         return $result;
