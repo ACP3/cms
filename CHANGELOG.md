@@ -4,9 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.22.1] - 2018-02-23
+### Fixed
+- Fixed a bug when trying to save a menu item
+
 ## [4.22.0] - 2018-02-22
 ### Added
 - Added a new module: Auditlog. This module keeps track of all the changes users are doing to the database resultsets. For now, there are no user visible features.
+- It is now possible to comfortably select a custom layout for an article
 
 ### Changed
 - Updated the composer dependencies
@@ -529,7 +534,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.22.0...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.22.1...HEAD
+[4.22.1]: https://gitlab.com/ACP3/cms/compare/v4.22.0...v4.22.1
 [4.22.0]: https://gitlab.com/ACP3/cms/compare/v4.21.2...v4.22.0
 [4.21.2]: https://gitlab.com/ACP3/cms/compare/v4.21.1...v4.21.2
 [4.21.1]: https://gitlab.com/ACP3/cms/compare/v4.21.0...v4.21.1
