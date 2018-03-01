@@ -14,6 +14,7 @@
         <item key="select_active">Please select, whether the article should be active or not.</item>
         <item key="select_create_menu_item">Please select, whether you want to create am menu item for this article or not.</item>
         <item key="select_layout">Please select the site layout for this article.</item>
+        <item key="subtitle">Subtitle</item>
         <item key="text">Text</item>
         <item key="text_to_short">The text should not be empty.</item>
         <item key="title">Title</item>

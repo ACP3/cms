@@ -49,7 +49,9 @@
                     {include file="asset:System/Partials/breadcrumb.tpl" breadcrumb=$BREADCRUMB}
                 {/block}
             </div>
-            <h2>{page_title}</h2>
+            {block PAGE_TITLE}
+                <h2>{page_title}</h2>
+            {/block}
             {event name="layout.content_before"}
             {block CONTENT}{/block}
         </main>

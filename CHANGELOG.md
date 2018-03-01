@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2018-xx-yy
+### Added
+- added the possibility to define a subtitle for an article
+
+### Changed
+- extended the maximum length of an article title to 255 characters
+
 ## [4.22.1] - 2018-02-23
 ### Fixed
 - Fixed a bug when trying to save a menu item

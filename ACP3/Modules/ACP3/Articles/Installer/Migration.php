@@ -73,6 +73,10 @@ class Migration extends AbstractMigration
             43 => [
                 'ALTER TABLE `{pre}articles` ADD COLUMN `layout` VARCHAR(120) NOT NULL AFTER `text`;',
             ],
+            44 => [
+                'ALTER TABLE `{pre}articles` MODIFY COLUMN `title` VARCHAR(255) NOT NULL;',
+                'ALTER TABLE `{pre}articles` ADD COLUMN `subtitle` VARCHAR(255) NOT NULL AFTER `title`;',
+            ]
         ];
     }
 
