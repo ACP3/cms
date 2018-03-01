@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.23.0] - 2018-03-01
+### Added
+- added the possibility to define a subtitle for an article
+
+### Changed
+- extended the maximum length of an article title to 255 characters
+
 ## [4.22.1] - 2018-02-23
 ### Fixed
 - Fixed a bug when trying to save a menu item
@@ -534,7 +541,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.22.1...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.23.0...HEAD
+[4.23.0]: https://gitlab.com/ACP3/cms/compare/v4.22.1...v4.23.0
 [4.22.1]: https://gitlab.com/ACP3/cms/compare/v4.22.0...v4.22.1
 [4.22.0]: https://gitlab.com/ACP3/cms/compare/v4.21.2...v4.22.0
 [4.21.2]: https://gitlab.com/ACP3/cms/compare/v4.21.1...v4.21.2

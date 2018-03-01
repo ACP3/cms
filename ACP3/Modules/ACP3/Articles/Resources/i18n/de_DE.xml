@@ -14,6 +14,7 @@
         <item key="select_active">Bitte wählen Sie aus, ob der Artikel veröffentlicht werden soll oder nicht.</item>
         <item key="select_create_menu_item">Bitte wählen Sie aus, ob für diesen Artikel ein Menüpunkt erstellt werden soll oder nicht.</item>
         <item key="select_layout">Bitte wählen Sie das Seiten-Layout aus.</item>
+        <item key="subtitle">Untertitel</item>
         <item key="text">Text</item>
         <item key="text_to_short">Der Text darf nicht leer sein.</item>
         <item key="title">Titel</item>

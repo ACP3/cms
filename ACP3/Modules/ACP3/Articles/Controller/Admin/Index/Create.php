@@ -60,6 +60,7 @@ class Create extends AbstractFormAction
             'start' => '',
             'end' => '',
             'title' => '',
+            'subtitle' => '',
             'text' => '',
         ];
 

@@ -1,5 +1,14 @@
 {extends file="asset:`$LAYOUT`"}
 
+{if !empty($page.subtitle)}
+    {block PAGE_TITLE}
+        <h2>
+            {page_title}<br>
+            <small>{$page.subtitle}</small>
+        </h2>
+    {/block}
+{/if}
+
 {block CONTENT}
     {$page.toc}
     {$page.text|rewrite_uri}
