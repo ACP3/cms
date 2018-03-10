@@ -1,0 +1,36 @@
+services:
+#  share.controller.admin.index.create:
+#    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Create
+#    arguments:
+#      - '@core.context.frontend'
+#      - '@core.helpers.formToken'
+#      - '@share.model.share_model'
+#      - '@seo.validation.admin_form_validation'
+
+  share.controller.admin.index.delete:
+    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Delete
+    arguments:
+      - '@core.context.frontend'
+      - '@share.model.share_model'
+
+#  share.controller.admin.index.edit:
+#    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Edit
+#    arguments:
+#      - '@core.context.frontend'
+#      - '@core.helpers.formToken'
+#      - '@share.model.share_model'
+#      - '@share.validation.admin_form_validation'
+
+  share.controller.admin.index.index:
+    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Index
+    arguments:
+      - '@core.context.frontend'
+      - '@share.model.data_grid_repository'
+
+  share.controller.admin.index.settings:
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Settings
+    arguments:
+      - '@core.context.frontend'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@seo.validation.admin_settings_form_validation'

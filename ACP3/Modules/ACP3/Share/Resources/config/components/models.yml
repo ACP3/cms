@@ -1,0 +1,17 @@
+services:
+  share.model.data_grid_repository:
+    class: ACP3\Modules\ACP3\Share\Model\Repository\DataGridRepository
+    arguments:
+      - '@core.db'
+
+  share.model.share_repository:
+    class: ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository
+    arguments:
+      - '@core.db'
+
+  share.model.share_model:
+    class: ACP3\Modules\ACP3\Share\Model\ShareModel
+    arguments:
+      - '@core.event_dispatcher'
+      - '@core.model.data_processor'
+      - '@share.model.share_repository'
