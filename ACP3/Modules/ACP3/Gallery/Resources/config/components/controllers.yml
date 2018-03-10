@@ -15,8 +15,8 @@ services:
       - '@gallery.helpers'
       - '@gallery.model.gallery_model'
       - '@gallery.model.picturerepository'
-    calls:
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+      - '@?seo.helper.uri_alias_manager'
+      - '@?share.helpers.social_sharing_manager'
 
   gallery.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Edit

@@ -31,6 +31,7 @@
 -->
 <language>
     <keys>
+        <item key="activate_sharing">Inhalt teilen?</item>
         <item key="active_services">Aktivierte Dienste</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="fb_app_id">Facebook App-ID</item>

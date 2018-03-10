@@ -1,11 +1,13 @@
 services:
-#  share.controller.admin.index.create:
-#    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Create
-#    arguments:
-#      - '@core.context.frontend'
-#      - '@core.helpers.formToken'
-#      - '@share.model.share_model'
-#      - '@seo.validation.admin_form_validation'
+  share.controller.admin.index.create:
+    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Create
+    arguments:
+      - '@core.context.frontend'
+      - '@core.helpers.formToken'
+      - '@seo.helper.meta_form_fields'
+      - '@seo.helper.uri_alias_manager'
+      - '@seo.model.seo_model'
+      - '@seo.validation.admin_form_validation'
 
   share.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Delete

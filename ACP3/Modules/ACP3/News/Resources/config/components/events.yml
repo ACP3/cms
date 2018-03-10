@@ -12,9 +12,9 @@ services:
     arguments:
       - '@core.modules'
       - '@news.cache'
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+      - '@?comments.helpers'
+      - '@?seo.helper.uri_alias_manager'
+      - '@?share.helpers.social_sharing_manager'
     tags:
       - { name: core.eventListener, event: news.model.news.after_delete, method: execute }
 

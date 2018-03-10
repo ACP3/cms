@@ -2,7 +2,7 @@
 
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Share\Validation;
@@ -49,7 +49,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 ]
             );
 
-        if (isset($formData['services']) && in_array('facebook', $formData['services']) === true) {
+        if (isset($formData['services']) && \in_array('facebook', $formData['services']) === true) {
             $this->validator
                 ->addConstraint(
                     Core\Validation\ValidationRules\NotEmptyValidationRule::class,

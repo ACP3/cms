@@ -71,7 +71,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
             'services' => $this->formsHelper->choicesGenerator(
                 'services',
                 $this->getServices(),
-                unserialize($shareSettings['services'])
+                \unserialize($shareSettings['services'])
             ),
             'form' => \array_merge($shareSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
@@ -91,7 +91,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $data = [
                 'fb_app_id' => $this->secure->strEncode($formData['fb_app_id']),
                 'fb_secret' => $this->secure->strEncode($formData['fb_secret']),
-                'services' => serialize($formData['services']),
+                'services' => \serialize($formData['services']),
             ];
 
             return $this->config->saveSettings($data, Share\Installer\Schema::MODULE_NAME);
@@ -107,6 +107,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         foreach ($this->socialServices->getAvailableServices() as $service) {
             $services[$service] = $this->translator->t('share', 'service_' . $service);
         }
+
         return $services;
     }
 }

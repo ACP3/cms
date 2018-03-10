@@ -41,8 +41,10 @@ class UriAliasManager
      * @param string $path
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function deleteUriAlias($path)
+    public function deleteUriAlias(string $path): bool
     {
         $path .= $this->preparePath($path);
         $seo = $this->seoRepository->getOneByUri($path);
@@ -55,7 +57,7 @@ class UriAliasManager
      *
      * @return string
      */
-    protected function preparePath($path)
+    protected function preparePath(string $path): string
     {
         return !\preg_match('/\/$/', $path) ? '/' : '';
     }
@@ -72,10 +74,17 @@ class UriAliasManager
      *
      * @return bool
      */
-    public function insertUriAlias($path, $alias, $keywords = '', $description = '', $robots = 0, $title = '')
-    {
+    public function insertUriAlias(
+        string $path,
+        string $alias,
+        string $keywords = '',
+        string $description = '',
+        int $robots = 0,
+        string $title = ''
+    ): bool {
         $path .= $this->preparePath($path);
         $data = [
+            'uri' => $path,
             'alias' => $alias,
             'seo_title' => $title,
             'seo_keywords' => $keywords,
@@ -85,14 +94,6 @@ class UriAliasManager
 
         $seo = $this->seoRepository->getOneByUri($path);
 
-        if (!empty($seo)) {
-            $data['uri'] = $seo['uri'];
-            $bool = $this->seoModel->save($data, $seo['id']);
-        } else {
-            $data['uri'] = $path;
-            $bool = $this->seoModel->save($data);
-        }
-
-        return $bool !== false;
+        return $this->seoModel->save($data, $seo['id'] ?? null) !== false;
     }
 }

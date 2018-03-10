@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Share\Event\Listener;
-
 
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
@@ -34,6 +34,7 @@ class AddShariffOnLayoutContentAfterListener
 
     /**
      * AddShariffOnLayoutContentAfterListener constructor.
+     *
      * @param \ACP3\Core\Http\RequestInterface                          $request
      * @param \ACP3\Core\View                                           $view
      * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices           $socialServices
@@ -59,10 +60,10 @@ class AddShariffOnLayoutContentAfterListener
         if ($this->request->getArea() === AreaEnum::AREA_FRONTEND) {
             $item = $this->shareRepository->getOneByUri($this->request->getUriWithoutPages());
 
-            if (!empty($item) && (int)$item['active'] == 1) {
+            if (!empty($item) && (int) $item['active'] == 1) {
                 $this->view->assign('shariff', [
                     'path' => $this->request->getUriWithoutPages(),
-                    'services' => json_encode($this->socialServices->getActiveServices())
+                    'services' => \json_encode($this->socialServices->getActiveServices()),
                 ]);
 
                 $this->view->displayTemplate('Share/Partials/add_shariff.tpl');

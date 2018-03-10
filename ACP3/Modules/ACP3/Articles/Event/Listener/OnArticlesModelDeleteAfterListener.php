@@ -12,6 +12,7 @@ use ACP3\Modules\ACP3\Articles\Cache;
 use ACP3\Modules\ACP3\Articles\Helpers;
 use ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
+use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class OnArticlesModelDeleteAfterListener
 {
@@ -27,43 +28,35 @@ class OnArticlesModelDeleteAfterListener
      * @var UriAliasManager
      */
     protected $uriAliasManager;
+    /**
+     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null
+     */
+    private $socialSharingManager;
 
     /**
      * OnArticlesModelDeleteAfterListener constructor.
      *
-     * @param Cache $articlesCache
+     * @param Cache                                                      $articlesCache
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem|null       $manageMenuItemHelper
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null         $uriAliasManager
+     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null $socialSharingManager
      */
-    public function __construct(Cache $articlesCache)
-    {
+    public function __construct(
+        Cache $articlesCache,
+        ?ManageMenuItem $manageMenuItemHelper,
+        ?UriAliasManager $uriAliasManager,
+        ?SocialSharingManager $socialSharingManager
+    ) {
         $this->articlesCache = $articlesCache;
-    }
-
-    /**
-     * @param ManageMenuItem $manageMenuItemHelper
-     *
-     * @return OnArticlesModelDeleteAfterListener
-     */
-    public function setManageMenuItemHelper(ManageMenuItem $manageMenuItemHelper)
-    {
         $this->manageMenuItemHelper = $manageMenuItemHelper;
-
-        return $this;
-    }
-
-    /**
-     * @param UriAliasManager $uriAliasManager
-     *
-     * @return OnArticlesModelDeleteAfterListener
-     */
-    public function setUriAliasManager(UriAliasManager $uriAliasManager)
-    {
         $this->uriAliasManager = $uriAliasManager;
-
-        return $this;
+        $this->socialSharingManager = $socialSharingManager;
     }
 
     /**
      * @param ModelSaveEvent $event
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(ModelSaveEvent $event)
     {
@@ -77,11 +70,15 @@ class OnArticlesModelDeleteAfterListener
             $uri = \sprintf(Helpers::URL_KEY_PATTERN, $entryId);
 
             if ($this->manageMenuItemHelper) {
-                $this->manageMenuItemHelper->manageMenuItem($uri, false);
+                $this->manageMenuItemHelper->manageMenuItem($uri);
             }
 
             if ($this->uriAliasManager) {
                 $this->uriAliasManager->deleteUriAlias($uri);
+            }
+
+            if ($this->socialSharingManager) {
+                $this->socialSharingManager->deleteSharingInfo($uri);
             }
         }
     }

@@ -13,3 +13,21 @@ services:
       - '@share.model.share_repository'
     tags:
       - { name: core.eventListener, event: share.layout.add_shariff, method: execute }
+
+  share.event.save_sharing_info_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Share\Event\Listener\SaveSharingInfoOnModelAfterSaveListener
+    arguments:
+      - '@core.acl'
+      - '@share.helpers.social_sharing_manager'
+    tags:
+      - { name: core.eventListener, event: core.model.after_save, method: execute }
+
+  share.event.on_layout_share_render_form_fields_listener:
+    class: ACP3\Modules\ACP3\Share\Event\Listener\OnLayoutShareRenderFormFieldsListener
+    arguments:
+      - '@core.acl'
+      - '@core.view'
+      - '@share.helpers.share_form_fields'
+    tags:
+      - { name: core.eventListener, event: share.layout.render_form_fields, method: execute }
+

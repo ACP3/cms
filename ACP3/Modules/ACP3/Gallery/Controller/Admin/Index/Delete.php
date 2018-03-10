@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
+use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class Delete extends Core\Controller\AbstractFrontendAction
 {
@@ -33,6 +34,10 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @var Gallery\Model\GalleryModel
      */
     protected $galleryModel;
+    /**
+     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null
+     */
+    private $socialSharingManager;
 
     /**
      * Delete constructor.
@@ -42,13 +47,17 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Modules\ACP3\Gallery\Helpers                            $galleryHelpers
      * @param Gallery\Model\GalleryModel                                    $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null            $uriAliasManager
+     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null    $socialSharingManager
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Gallery\Cache $galleryCache,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\GalleryModel $galleryModel,
-        Gallery\Model\Repository\PictureRepository $pictureRepository
+        Gallery\Model\Repository\PictureRepository $pictureRepository,
+        ?UriAliasManager $uriAliasManager,
+        ?SocialSharingManager $socialSharingManager
     ) {
         parent::__construct($context);
 
@@ -56,20 +65,16 @@ class Delete extends Core\Controller\AbstractFrontendAction
         $this->galleryHelpers = $galleryHelpers;
         $this->pictureRepository = $pictureRepository;
         $this->galleryModel = $galleryModel;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
-     */
-    public function setUriAliasManager(UriAliasManager $uriAliasManager)
-    {
         $this->uriAliasManager = $uriAliasManager;
+        $this->socialSharingManager = $socialSharingManager;
     }
 
     /**
      * @param string $action
      *
      * @return mixed
+     *
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute($action = '')
     {
@@ -84,10 +89,12 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
                     $this->galleryCache->getCacheDriver()->delete(Gallery\Cache::CACHE_ID . $item);
 
+                    $uri = \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item);
                     if ($this->uriAliasManager) {
-                        $this->uriAliasManager->deleteUriAlias(
-                            \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item)
-                        );
+                        $this->uriAliasManager->deleteUriAlias($uri);
+                    }
+                    if ($this->socialSharingManager) {
+                        $this->socialSharingManager->deleteSharingInfo($uri);
                     }
 
                     $this->deletePictureAliases($item);
@@ -102,20 +109,22 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @param int $galleryId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function deletePictureAliases($galleryId)
+    protected function deletePictureAliases(int $galleryId)
     {
-        if ($this->uriAliasManager) {
-            $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
-            $cPictures = \count($pictures);
+        foreach ($this->pictureRepository->getPicturesByGalleryId($galleryId) as $picture) {
+            $uri = \sprintf(
+                Gallery\Helpers::URL_KEY_PATTERN_PICTURE,
+                $picture['id']
+            );
 
-            for ($i = 0; $i < $cPictures; ++$i) {
-                $this->uriAliasManager->deleteUriAlias(
-                    \sprintf(
-                        Gallery\Helpers::URL_KEY_PATTERN_PICTURE,
-                    $pictures[$i]['id']
-                    )
-                );
+            if ($this->uriAliasManager) {
+                $this->uriAliasManager->deleteUriAlias($uri);
+            }
+            if ($this->socialSharingManager) {
+                $this->socialSharingManager->deleteSharingInfo($uri);
             }
         }
 

@@ -31,12 +31,12 @@ class Schema implements Modules\Installer\SchemaInterface
             ],
             'frontend' => [
                 'index' => [
-                    'index' => PrivilegeEnum::FRONTEND_VIEW
+                    'index' => PrivilegeEnum::FRONTEND_VIEW,
                 ],
             ],
             'widget' => [
                 'index' => [
-                    'index' => PrivilegeEnum::FRONTEND_VIEW
+                    'index' => PrivilegeEnum::FRONTEND_VIEW,
                 ],
             ],
         ];
@@ -91,7 +91,7 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             'services' => '',
             'fb_app_id' => '',
-            'fb_secret' => ''
+            'fb_secret' => '',
         ];
     }
 }
