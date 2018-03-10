@@ -22,7 +22,8 @@
     "acp3/module-errors": "^4.24.0",
     "acp3/module-permissions": "^4.24.0",
     "acp3/module-system": "^4.24.0",
-    "acp3/module-users": "^4.24.0"
+    "acp3/module-users": "^4.24.0",
+    "heise/shariff": "^7.1"
   },
   "suggest": {
     "acp3/module-seo": "Provides additional SEO capabilities"
