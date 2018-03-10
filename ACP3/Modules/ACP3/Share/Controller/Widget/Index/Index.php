@@ -41,6 +41,7 @@ class Index extends AbstractWidgetAction
 
         return [
             'shariff' => [
+                'lang' => $this->translator->getShortIsoCode(),
                 'path' => \urldecode($path),
                 'services' => \json_encode($this->socialServices->getActiveServices()),
             ],
