@@ -34,6 +34,7 @@
                 {include file="asset:System/Partials/form_group.select.tpl" options=$target label={lang t="news|target_page"}}
             </div>
             {event name="seo.layout.render_form_fields" uri_pattern=$SEO_URI_PATTERN path=$SEO_ROUTE_NAME}
+            {event name="share.layout.render_form_fields" uri_pattern=$SEO_URI_PATTERN path=$SEO_ROUTE_NAME}
         </div>
     </div>
     {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/news"}}

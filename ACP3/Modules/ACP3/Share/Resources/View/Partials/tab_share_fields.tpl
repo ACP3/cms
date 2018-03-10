@@ -2,5 +2,5 @@
     {include file="asset:Share/Partials/share_fields.tpl" share=$share}
 </div>
 {javascripts}
-    {include_js module="share" file="add_share_tab"}
+    {include_js module="system" file="add_tab"}
 {/javascripts}

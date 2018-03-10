@@ -2,5 +2,5 @@
     {include file="asset:Seo/Partials/seo_fields.tpl" seo=$seo}
 </div>
 {javascripts}
-    {include_js module="seo" file="add_seo_tab"}
+    {include_js module="system" file="add_tab"}
 {/javascripts}
