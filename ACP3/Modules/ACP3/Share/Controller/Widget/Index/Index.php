@@ -40,8 +40,10 @@ class Index extends AbstractWidgetAction
         $this->setTemplate($template);
 
         return [
-            'path' => \urldecode($path),
-            'services' => \json_encode($this->socialServices->getActiveServices()),
+            'shariff' => [
+                'path' => \urldecode($path),
+                'services' => \json_encode($this->socialServices->getActiveServices()),
+            ],
         ];
     }
 }

@@ -22,6 +22,7 @@ class Index extends AbstractFrontendAction
 
     /**
      * Index constructor.
+     *
      * @param \ACP3\Core\Controller\Context\FrontendContext   $context
      * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices $socialServices
      */
@@ -56,8 +57,8 @@ class Index extends AbstractFrontendAction
 
     private function checkCacheDir(): void
     {
-        if (!is_dir($this->getCacheDir())) {
-            mkdir($this->getCacheDir());
+        if (!\is_dir($this->getCacheDir())) {
+            \mkdir($this->getCacheDir());
         }
     }
 
