@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Share\Event\Listener;
-
 
 use ACP3\Core\Settings\Event\SettingsSaveEvent;
 use ACP3\Core\Settings\SettingsInterface;
@@ -30,6 +30,7 @@ class UpdateServicesOnSettingsSaveBeforeListener
 
     /**
      * UpdateServicesOnSettingsSaveAfterListener constructor.
+     *
      * @param \ACP3\Core\Settings\SettingsInterface                     $settings
      * @param \ACP3\Modules\ACP3\Share\Model\ShareModel                 $shareModel
      * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository $shareRepository
@@ -46,6 +47,7 @@ class UpdateServicesOnSettingsSaveBeforeListener
 
     /**
      * @param \ACP3\Core\Settings\Event\SettingsSaveEvent $event
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(SettingsSaveEvent $event): void
@@ -55,9 +57,9 @@ class UpdateServicesOnSettingsSaveBeforeListener
         foreach ($this->shareRepository->getAll() as $result) {
             $services = \unserialize($result['services']);
 
-            if (!empty($services) && is_array($services)) {
+            if (!empty($services) && \is_array($services)) {
                 $data = [
-                    'share_services' => array_diff($services, $diff)
+                    'share_services' => \array_diff($services, $diff),
                 ];
                 $this->shareModel->save($data, $result['id']);
             }
@@ -66,6 +68,7 @@ class UpdateServicesOnSettingsSaveBeforeListener
 
     /**
      * @param \ACP3\Core\Settings\Event\SettingsSaveEvent $event
+     *
      * @return array
      */
     private function getRemovedServices(SettingsSaveEvent $event): array
@@ -73,7 +76,7 @@ class UpdateServicesOnSettingsSaveBeforeListener
         $currentSettings = $this->settings->getSettings(Schema::MODULE_NAME);
         $newSettings = $event->getData();
 
-        return array_diff(
+        return \array_diff(
             \unserialize($currentSettings['services']),
             \unserialize($newSettings['services'])
         );
