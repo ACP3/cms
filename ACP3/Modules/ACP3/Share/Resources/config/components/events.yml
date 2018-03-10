@@ -1,0 +1,5 @@
+services:
+  share.event.add_shariff_assets_listener:
+    class: ACP3\Modules\ACP3\Share\Event\Listener\AddShariffAssetsListener
+    tags:
+      - { name: core.eventListener, event: core.assets.add_libraries, method: execute }
