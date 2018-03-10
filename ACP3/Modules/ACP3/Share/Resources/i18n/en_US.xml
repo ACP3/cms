@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) by the ACP3 Developers.
+  ~ See the LICENCE file at the top-level module directory for licencing details.
+  -->
+
+<language>
+    <keys>
+        <item key="share">Social sharing</item>
+        <item key="mod_description">Makes it possible to share site contents via various social networks.</item>
+    </keys>
+</language>

@@ -1,0 +1,53 @@
+services:
+  share.controller.admin.index.create:
+    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Create
+    arguments:
+      - '@core.context.frontend'
+      - '@core.helpers.formToken'
+      - '@share.helpers.share_form_fields'
+      - '@share.model.share_model'
+      - '@share.validation.admin_form_validation'
+
+  share.controller.admin.index.delete:
+    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Delete
+    arguments:
+      - '@core.context.frontend'
+      - '@share.model.share_model'
+
+  share.controller.admin.index.edit:
+    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Edit
+    arguments:
+      - '@core.context.frontend'
+      - '@core.helpers.formToken'
+      - '@share.helpers.share_form_fields'
+      - '@share.model.share_model'
+      - '@share.validation.admin_form_validation'
+
+  share.controller.admin.index.index:
+    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Index
+    arguments:
+      - '@core.context.frontend'
+      - '@share.model.data_grid_repository'
+
+  share.controller.admin.index.settings:
+    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Settings
+    arguments:
+      - '@core.context.frontend'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@core.helpers.secure'
+      - '@share.helpers.social_services'
+      - '@share.validation.admin_settings_form_validation'
+
+  share.controller.frontend.index.index:
+    class: ACP3\Modules\ACP3\Share\Controller\Frontend\Index\Index
+    arguments:
+      - '@core.context.frontend'
+      - '@shariff.backend'
+
+  share.controller.widget.index.index:
+    class: ACP3\Modules\ACP3\Share\Controller\Widget\Index\Index
+    arguments:
+      - '@core.context.widget'
+      - '@share.helpers.social_services'
+      - '@share.model.share_repository'

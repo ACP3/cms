@@ -50,9 +50,7 @@ class ManageMenuItemOnModelSaveAfterListener
             ];
 
             $this->menuItemManager->manageMenuItem(
-                \sprintf($formData['menu_item_uri_pattern'], $event->getEntryId()),
-                isset($formData['create_menu_item']) === true,
-                $data
+                \sprintf($formData['menu_item_uri_pattern'], $event->getEntryId()), $data
             );
         }
     }

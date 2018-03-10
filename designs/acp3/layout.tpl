@@ -54,6 +54,7 @@
             {/block}
             {event name="layout.content_before"}
             {block CONTENT}{/block}
+            {event name="layout.content_after"}
         </main>
         {if !$IN_ADM}
             <aside id="sidebar" class="col-md-3 hidden-xs hidden-sm">

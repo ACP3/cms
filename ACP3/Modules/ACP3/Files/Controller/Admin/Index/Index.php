@@ -88,7 +88,7 @@ class Index extends Core\Controller\AbstractFrontendAction
             ->addColumn([
                 'label' => $this->translator->t('system', 'description'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['description'],
+                'fields' => ['text'],
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('files', 'filesize'),

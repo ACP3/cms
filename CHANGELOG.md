@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2018-xx-yy
+### Added
+- added a new module: Social sharing using the shariff library
+- added font-awesome as new asset library (it is disabled by default)
+
+### Fixed
+- when adding an asset library which is enabled by default,
+  the dependencies will now also get enabled 
+
 ## [4.24.0] - 2018-03-10
 ### Added
 - made it possible to programmatically remove steps from the breadcrumb

@@ -65,7 +65,7 @@ class MetaFormFields
      *
      * @return array
      */
-    public function formFields($path = '')
+    public function formFields(string $path = ''): array
     {
         if (!empty($path)) {
             $path .= !\preg_match('/\/$/', $path) ? '/' : '';
@@ -99,7 +99,7 @@ class MetaFormFields
     /**
      * @return array
      */
-    protected function getRobotsChoicesGeneratorValues()
+    protected function getRobotsChoicesGeneratorValues(): array
     {
         return [
             0 => $this->translator->t(

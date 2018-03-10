@@ -6,4 +6,5 @@
 <h2>{page_title}</h2>
 {event name="layout.content_before"}
 {block CONTENT}{/block}
+{event name="layout.content_after"}
 <!-- JAVASCRIPTS -->

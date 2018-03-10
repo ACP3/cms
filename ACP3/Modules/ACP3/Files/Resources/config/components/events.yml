@@ -14,9 +14,9 @@ services:
       - '@core.modules'
       - '@files.model.filesrepository'
       - '@files.cache'
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+      - '@?comments.helpers'
+      - '@?seo.helper.uri_alias_manager'
+      - '@?share.helpers.social_sharing_manager'
     tags:
       - { name: core.eventListener, event: files.model.files.before_delete, method: execute }
 

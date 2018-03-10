@@ -101,6 +101,8 @@ class Action
      * @param string|null $moduleIndexUrl
      *
      * @return array|JsonResponse|RedirectResponse
+     *
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function handleDeleteAction(
         $action,

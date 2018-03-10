@@ -37,6 +37,12 @@ services:
       - { name: core.model.column_type, columnType: 'raw' }
     public: false
 
+  core.model.column_type.serializable_column_type_strategy:
+    class: ACP3\Core\Model\DataProcessor\ColumnType\SerializableColumnType
+    tags:
+      - { name: core.model.column_type, columnType: 'serializable' }
+    public: false
+
   core.model.column_type.text_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType
     arguments:

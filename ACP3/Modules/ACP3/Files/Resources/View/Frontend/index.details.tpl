@@ -25,6 +25,7 @@
                     </a>
                 </footer>
             </div>
+            {event name="share.layout.add_shariff"}
         </section>
         {if $comments_allowed === true}
             <section>

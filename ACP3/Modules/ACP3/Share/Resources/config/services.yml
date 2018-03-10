@@ -1,0 +1,15 @@
+imports:
+  - { resource: components/*.yml }
+
+services:
+  shariff.backend_factory:
+    class: ACP3\Modules\ACP3\Share\Shariff\BackendFactory
+    arguments:
+      - '@core.environment.application_path'
+      - '@core.config'
+      - '@core.http.request'
+      - '@share.helpers.social_services'
+
+  shariff.backend:
+    class: Heise\Shariff\Backend
+    factory: 'shariff.backend_factory:create'

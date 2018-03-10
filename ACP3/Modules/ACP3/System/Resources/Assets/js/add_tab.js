@@ -1,4 +1,9 @@
-jQuery(document).ready(function() {
+/*
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+
+jQuery(document).ready(function($) {
     $('[data-add-tab-identifier]').each(function() {
         var tabIdentifier = $(this).data('add-tab-identifier'),
             $element = $(tabIdentifier),

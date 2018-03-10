@@ -34,51 +34,25 @@ class ManageMenuItem
     }
 
     /**
-     * @param string $menuItemUri
-     * @param bool   $createOrUpdateMenuItem
+     * @param string $path
      * @param array  $data
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function manageMenuItem($menuItemUri, $createOrUpdateMenuItem, array $data = [])
+    public function manageMenuItem(string $path, array $data = []): bool
     {
-        $menuItem = $this->menuItemRepository->getOneMenuItemByUri($menuItemUri);
+        $menuItem = $this->menuItemRepository->getOneMenuItemByUri($path);
         $result = true;
 
-        if ($createOrUpdateMenuItem === true) {
-            if (empty($menuItem)) {
-                $result = $this->createMenuItem($data, $menuItemUri);
-            } else {
-                $result = $this->updateMenuItem($data, $menuItem);
-            }
+        if (empty($data) === false) {
+            $data['uri'] = $path;
+            $result = $this->menuItemsModel->save($data, $menuItem['id'] ?? null) !== false;
         } elseif (!empty($menuItem)) {
             $result = $this->menuItemsModel->delete($menuItem['id']) > 0;
         }
 
         return $result;
-    }
-
-    /**
-     * @param array  $data
-     * @param string $menuItemUri
-     *
-     * @return bool
-     */
-    protected function createMenuItem(array $data, $menuItemUri)
-    {
-        $data['uri'] = $menuItemUri;
-
-        return $this->menuItemsModel->save($data) !== false;
-    }
-
-    /**
-     * @param array $data
-     * @param array $menuItem
-     *
-     * @return bool
-     */
-    protected function updateMenuItem(array $data, array $menuItem)
-    {
-        return $this->menuItemsModel->save($data, $menuItem['id']) !== false;
     }
 }

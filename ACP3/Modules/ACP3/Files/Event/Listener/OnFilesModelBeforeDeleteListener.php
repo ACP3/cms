@@ -17,6 +17,7 @@ use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
+use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class OnFilesModelBeforeDeleteListener
 {
@@ -44,49 +45,44 @@ class OnFilesModelBeforeDeleteListener
      * @var UriAliasManager
      */
     protected $uriAliasManager;
+    /**
+     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null
+     */
+    private $socialSharingManager;
 
     /**
      * OnFilesModelBeforeDeleteListener constructor.
      *
-     * @param ApplicationPath $applicationPath
-     * @param Modules         $modules
-     * @param FilesRepository $filesRepository
-     * @param Cache           $cache
+     * @param ApplicationPath                                            $applicationPath
+     * @param Modules                                                    $modules
+     * @param FilesRepository                                            $filesRepository
+     * @param Cache                                                      $cache
+     * @param \ACP3\Modules\ACP3\Comments\Helpers|null                   $commentsHelpers
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null         $uriAliasManager
+     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null $socialSharingManager
      */
     public function __construct(
         ApplicationPath $applicationPath,
         Modules $modules,
         FilesRepository $filesRepository,
-        Cache $cache
+        Cache $cache,
+        ?CommentsHelpers $commentsHelpers,
+        ?UriAliasManager $uriAliasManager,
+        ?SocialSharingManager $socialSharingManager
     ) {
         $this->applicationPath = $applicationPath;
         $this->modules = $modules;
         $this->filesRepository = $filesRepository;
         $this->cache = $cache;
-    }
-
-    /**
-     * @param CommentsHelpers $commentsHelpers
-     *
-     * @return $this
-     */
-    public function setCommentsHelpers(CommentsHelpers $commentsHelpers)
-    {
         $this->commentsHelpers = $commentsHelpers;
-
-        return $this;
-    }
-
-    /**
-     * @param UriAliasManager $uriAliasManager
-     */
-    public function setUriAliasManager(UriAliasManager $uriAliasManager)
-    {
         $this->uriAliasManager = $uriAliasManager;
+        $this->socialSharingManager = $socialSharingManager;
     }
 
     /**
      * @param ModelSaveEvent $event
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(ModelSaveEvent $event)
     {
@@ -107,8 +103,13 @@ class OnFilesModelBeforeDeleteListener
 
             $this->cache->getCacheDriver()->delete(Cache::CACHE_ID . $item);
 
+            $uri = \sprintf(Helpers::URL_KEY_PATTERN, $item);
             if ($this->uriAliasManager) {
-                $this->uriAliasManager->deleteUriAlias(\sprintf(Helpers::URL_KEY_PATTERN, $item));
+                $this->uriAliasManager->deleteUriAlias($uri);
+            }
+
+            if ($this->socialSharingManager) {
+                $this->socialSharingManager->deleteSharingInfo($uri);
             }
         }
     }

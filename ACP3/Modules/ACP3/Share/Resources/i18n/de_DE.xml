@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) by the ACP3 Developers.
+  ~ See the LICENCE file at the top-level module directory for licencing details.
+  -->
+<language>
+    <keys>
+        <item key="activate_sharing">Social sharing aktivieren</item>
+        <item key="active">Aktiv</item>
+        <item key="active_services">Aktivierte Dienste</item>
+        <item key="admin_index_create">Neuer Datensatz</item>
+        <item key="admin_index_delete">Datensatz löschen</item>
+        <item key="admin_index_edit">Datensatz bearbeiten</item>
+        <item key="admin_index_settings">Einstellungen</item>
+        <item key="customize_services">Verfügbare Dienste anpassen</item>
+        <item key="fb_app_id">Facebook App-ID</item>
+        <item key="fb_secret">Facebook Secret</item>
+        <item key="mod_description">Ermöglicht die Einbindung diverser sozialer Netzwerke zum Teilen von Inhalten, etc.</item>
+        <item key="select_services">Bitte wählen aus, welche Dienste aktiviert werden sollen. Es muss mindestens ein Dienst aktiv sein.</item>
+        <item key="service_addthis">AddThis</item>
+        <item key="service_diaspora">diaspora</item>
+        <item key="service_facebook">Facebook</item>
+        <item key="service_flattr">Flattr</item>
+        <item key="service_googleplus">Google+</item>
+        <item key="service_info">Info</item>
+        <item key="service_linkedin">LinkedIn</item>
+        <item key="service_mail">E-Mail</item>
+        <item key="service_pinterest">Pinterest</item>
+        <item key="service_print">Seite drucken</item>
+        <item key="service_qzone">Qzone</item>
+        <item key="service_reddit">reddit</item>
+        <item key="service_stumbleupon">StumbleUpon</item>
+        <item key="service_telegram">Telegram</item>
+        <item key="service_tencent - weibo">Tencent Weibo</item>
+        <item key="service_threema">Threema</item>
+        <item key="service_tumblr">Tumblr</item>
+        <item key="service_twitter">Twitter</item>
+        <item key="service_vk">VK</item>
+        <item key="service_weibo">Sina Weibo</item>
+        <item key="service_whatsapp">WhatsApp</item>
+        <item key="service_xing">Xing</item>
+        <item key="services">Dienste</item>
+        <item key="share">Social sharing</item>
+        <item key="type_in_fb_app_id">Bitte geben Sie Ihre Facebook App-ID ein.</item>
+        <item key="type_in_fb_secret">Bitte geben Sie das Secret zu Ihrer Facebook App-ID ein.</item>
+        <item key="type_in_valid_resource">Bitte geben Sie einen validen Pfad zu einer ACP3 internen Ressource an.</item>
+        <item key="uri">URI</item>
+    </keys>
+</language>
