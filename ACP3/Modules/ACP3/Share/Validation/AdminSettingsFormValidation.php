@@ -49,26 +49,6 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 ]
             );
 
-        if (isset($formData['services']) && \in_array('facebook', $formData['services']) === true) {
-            $this->validator
-                ->addConstraint(
-                    Core\Validation\ValidationRules\NotEmptyValidationRule::class,
-                    [
-                        'data' => $formData,
-                        'field' => 'fb_app_id',
-                        'message' => $this->translator->t('share', 'type_in_fb_app_id'),
-                    ]
-                )
-                ->addConstraint(
-                    Core\Validation\ValidationRules\NotEmptyValidationRule::class,
-                    [
-                        'data' => $formData,
-                        'field' => 'fb_secret',
-                        'message' => $this->translator->t('share', 'type_in_fb_secret'),
-                    ]
-                );
-        }
-
         $this->validator->validate();
     }
 }
