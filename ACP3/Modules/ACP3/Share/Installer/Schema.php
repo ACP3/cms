@@ -68,6 +68,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `uri` VARCHAR(255) NOT NULL,
                 `active` TINYINT(1) UNSIGNED NOT NULL,
+                `services` TEXT NOT NULL,
                 PRIMARY KEY (`id`), UNIQUE(`uri`)
             ) {ENGINE} {CHARSET};',
         ];

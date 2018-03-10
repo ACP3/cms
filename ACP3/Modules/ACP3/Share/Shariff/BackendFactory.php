@@ -77,7 +77,7 @@ class BackendFactory
      */
     private function getOptions(): array
     {
-        return array_merge(
+        return \array_merge(
             [
                 'domains' => [$this->request->getHttpHost()],
                 'cache' => [
@@ -102,8 +102,8 @@ class BackendFactory
             return [
                 'Facebook' => [
                     'app_id' => $settings['fb_app_id'],
-                    'secret' => $settings['fb_secret']
-                ]
+                    'secret' => $settings['fb_secret'],
+                ],
             ];
         }
 

@@ -50,3 +50,4 @@ services:
     arguments:
       - '@core.context.widget'
       - '@share.helpers.social_services'
+      - '@share.model.share_repository'

@@ -22,6 +22,7 @@ class ShareModel extends AbstractModel
     {
         $data = \array_merge($data, [
             'active' => $data['share_active'],
+            'services' => $data['share_services'],
         ]);
 
         return parent::save($data, $entryId);
@@ -35,6 +36,7 @@ class ShareModel extends AbstractModel
         return [
             'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
             'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
+            'services' => DataProcessor\ColumnTypes::COLUMN_TYPE_SERIALIZABLE,
         ];
     }
 }

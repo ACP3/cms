@@ -11,6 +11,7 @@ use ACP3\Core\ACL;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
+use ACP3\Modules\ACP3\Share\Helpers\SocialServices;
 
 class ValidateSharingInfoOnValidationInfo
 {
@@ -22,19 +23,26 @@ class ValidateSharingInfoOnValidationInfo
      * @var ACL
      */
     private $acl;
+    /**
+     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialServices
+     */
+    private $socialServices;
 
     /**
-     * OnSeoValidationValidateUriAlias constructor.
+     * ValidateSharingInfoOnValidationInfo constructor.
      *
-     * @param ACL        $acl
-     * @param Translator $translator
+     * @param \ACP3\Core\ACL                                  $acl
+     * @param \ACP3\Core\I18n\Translator                      $translator
+     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices $socialServices
      */
     public function __construct(
         ACL $acl,
-        Translator $translator
+        Translator $translator,
+        SocialServices $socialServices
     ) {
         $this->translator = $translator;
         $this->acl = $acl;
+        $this->socialServices = $socialServices;
     }
 
     /**
@@ -53,6 +61,28 @@ class ValidateSharingInfoOnValidationInfo
                         'message' => $this->translator->t('share', 'select_sharing_active'),
                         'extra' => [
                             'haystack' => [0, 1],
+                        ],
+                    ]
+                )
+                ->addConstraint(
+                    InArrayValidationRule::class,
+                    [
+                        'data' => $event->getFormData(),
+                        'field' => 'share_customize_services',
+                        'message' => $this->translator->t('share', 'select_customize_services'),
+                        'extra' => [
+                            'haystack' => [0, 1],
+                        ],
+                    ]
+                )
+                ->addConstraint(
+                    InArrayValidationRule::class,
+                    [
+                        'data' => $event->getFormData(),
+                        'field' => 'share_services',
+                        'message' => $this->translator->t('share', 'select_services'),
+                        'extra' => [
+                            'haystack' => $this->socialServices->getActiveServices(),
                         ],
                     ]
                 );

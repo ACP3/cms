@@ -68,15 +68,17 @@ class SocialSharingManager
      *
      * @param string $path
      * @param bool   $active
+     * @param array  $services
      *
      * @return bool
      */
-    public function saveSharingInfo(string $path, bool $active = false): bool
+    public function saveSharingInfo(string $path, bool $active = false, array $services = []): bool
     {
         $path .= $this->preparePath($path);
         $data = [
             'uri' => $path,
             'share_active' => $active,
+            'share_services' => $services,
         ];
 
         $sharingInfo = $this->shareRepository->getOneByUri($path);

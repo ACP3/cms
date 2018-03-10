@@ -20,8 +20,8 @@ class ShareRepository extends Core\Model\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneByUri(string $uri)
+    public function getOneByUri(string $uri): array
     {
-        return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE `uri` = ?", [$uri]);
+        return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE `uri` = ?", [$uri]) ?: [];
     }
 }
