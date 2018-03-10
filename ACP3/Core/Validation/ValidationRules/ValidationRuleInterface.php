@@ -29,12 +29,12 @@ interface ValidationRuleInterface
      * @param string                          $field
      * @param array                           $extra
      *
-     * @return
+     * @return void
      */
     public function validate(Validator $validator, $data, $field = '', array $extra = []);
 
     /**
-     * @param mixed  $data
+     * @param bool|int|float|string|array $data
      * @param string $field
      * @param array  $extra
      *

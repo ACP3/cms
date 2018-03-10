@@ -67,7 +67,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'CREATE TABLE IF NOT EXISTS `{pre}share` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `uri` VARCHAR(255) NOT NULL,
-                `description` VARCHAR(255) NOT NULL,
+                `active` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`), UNIQUE(`uri`)
             ) {ENGINE} {CHARSET};',
         ];
@@ -88,6 +88,10 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function settings()
     {
-        return [];
+        return [
+            'services' => '',
+            'fb_app_id' => '',
+            'fb_secret' => ''
+        ];
     }
 }

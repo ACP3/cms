@@ -4,9 +4,64 @@
   ~ See the LICENCE file at the top-level module directory for licencing details.
   -->
 
+<!--
+            'twitter',
+            'facebook',
+            'googleplus',
+            'linkedin',
+            'pinterest',
+            'xing',
+            'whatsapp',
+            'mail',
+            'info',
+            'addthis',
+            'tumblr',
+            'flattr',
+            'diaspora',
+            'reddit',
+            'stumbleupon',
+            'threema',
+            'weibo',
+            'tencent - weibo',
+            'qzone',
+            'print',
+            'telegram',
+            'vk',
+
+-->
 <language>
     <keys>
-        <item key="share">Share</item>
+        <item key="active_services">Aktivierte Dienste</item>
+        <item key="admin_index_settings">Einstellungen</item>
+        <item key="fb_app_id">Facebook App-ID</item>
+        <item key="fb_secret">Facebook Secret</item>
         <item key="mod_description">Ermöglicht die Einbindung diverser sozialer Netzwerke zum Teilen von Inhalten, etc.</item>
+        <item key="select_services">Bitte wählen aus, welche Dienste aktiviert werden sollen. Es muss mindestens ein Dienst aktiv sein.</item>
+        <item key="service_addthis">AddThis</item>
+        <item key="service_diaspora">diaspora</item>
+        <item key="service_facebook">Facebook</item>
+        <item key="service_flattr">Flattr</item>
+        <item key="service_googleplus">Google+</item>
+        <item key="service_info">Info</item>
+        <item key="service_linkedin">LinkedIn</item>
+        <item key="service_mail">E-Mail</item>
+        <item key="service_pinterest">Pinterest</item>
+        <item key="service_print">Seite drucken</item>
+        <item key="service_qzone">Qzone</item>
+        <item key="service_reddit">reddit</item>
+        <item key="service_stumbleupon">StumbleUpon</item>
+        <item key="service_telegram">Telegram</item>
+        <item key="service_tencent - weibo">Tencent Weibo</item>
+        <item key="service_threema">Threema</item>
+        <item key="service_tumblr">Tumblr</item>
+        <item key="service_twitter">Twitter</item>
+        <item key="service_vk">VK</item>
+        <item key="service_weibo">Sina Weibo</item>
+        <item key="service_whatsapp">WhatsApp</item>
+        <item key="service_xing">Xing</item>
+        <item key="services">Dienste</item>
+        <item key="share">Social Sharing</item>
+        <item key="type_in_fb_app_id">Bitte geben Sie Ihre Facebook App-ID ein.</item>
+        <item key="type_in_fb_secret">Bitte geben Sie das Secret zu Ihrer Facebook App-ID ein.</item>
     </keys>
 </language>

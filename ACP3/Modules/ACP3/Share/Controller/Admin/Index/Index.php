@@ -71,9 +71,9 @@ class Index extends Core\Controller\AbstractFrontendAction
                 ],
             ], 30)
             ->addColumn([
-                'label' => $this->translator->t('share', 'description'),
+                'label' => $this->translator->t('share', 'active'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['description'],
+                'fields' => ['active'],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),

@@ -1,1 +1,1 @@
-<div class="shariff"></div>
+<div class="shariff" data-services="{$services|escape:'html'}"></div>

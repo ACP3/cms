@@ -8,8 +8,7 @@
 namespace ACP3\Modules\ACP3\Share\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Seo;
-use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
+use ACP3\Modules\ACP3\Share;
 
 class Settings extends Core\Controller\AbstractFrontendAction
 {
@@ -18,33 +17,47 @@ class Settings extends Core\Controller\AbstractFrontendAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation
+     * @var \ACP3\Modules\ACP3\Share\Validation\AdminSettingsFormValidation
      */
     protected $adminSettingsFormValidation;
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    private $secure;
+    /**
+     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialServices
+     */
+    private $socialServices;
 
     /**
      * Settings constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
-     * @param \ACP3\Core\Helpers\Forms                                      $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                  $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+     * @param \ACP3\Core\Controller\Context\FrontendContext                   $context
+     * @param \ACP3\Core\Helpers\Forms                                        $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                    $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure                                       $secure
+     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices                 $socialServices
+     * @param \ACP3\Modules\ACP3\Share\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
-        Seo\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        Core\Helpers\Secure $secure,
+        Share\Helpers\SocialServices $socialServices,
+        Share\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
+        $this->secure = $secure;
+        $this->socialServices = $socialServices;
     }
 
     /**
@@ -52,46 +65,15 @@ class Settings extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        $seoSettings = $this->config->getSettings(Seo\Installer\Schema::MODULE_NAME);
-
-        $robots = [
-            1 => $this->translator->t('seo', 'robots_index_follow'),
-            2 => $this->translator->t('seo', 'robots_index_nofollow'),
-            3 => $this->translator->t('seo', 'robots_noindex_follow'),
-            4 => $this->translator->t('seo', 'robots_noindex_nofollow'),
-        ];
-
-        $indexPaginatedContent = [
-            IndexPaginatedContentEnum::INDEX_FIST_PAGE_ONLY => $this->translator->t('seo', 'index_first_page_only'),
-            IndexPaginatedContentEnum::INDEX_ALL_PAGES => $this->translator->t('seo', 'index_all_pages'),
-        ];
-
-        $sitemapSaveMode = [
-            1 => $this->translator->t('seo', 'sitemap_save_mode_automatically'),
-            2 => $this->translator->t('seo', 'sitemap_save_mode_manually'),
-        ];
+        $shareSettings = $this->config->getSettings(Share\Installer\Schema::MODULE_NAME);
 
         return [
-            'robots' => $this->formsHelper->choicesGenerator('robots', $robots, $seoSettings['robots']),
-            'index_paginated_content' => $this->formsHelper->checkboxGenerator(
-                'index_paginated_content',
-                $indexPaginatedContent,
-                $seoSettings['index_paginated_content']
+            'services' => $this->formsHelper->choicesGenerator(
+                'services',
+                $this->getServices(),
+                unserialize($shareSettings['services'])
             ),
-            'sitemap_is_enabled' => $this->formsHelper->yesNoCheckboxGenerator(
-                'sitemap_is_enabled',
-                $seoSettings['sitemap_is_enabled']
-            ),
-            'sitemap_separate' => $this->formsHelper->yesNoCheckboxGenerator(
-                'sitemap_separate',
-                $seoSettings['sitemap_separate']
-            ),
-            'sitemap_save_mode' => $this->formsHelper->checkboxGenerator(
-                'sitemap_save_mode',
-                $sitemapSaveMode,
-                $seoSettings['sitemap_save_mode']
-            ),
-            'form' => \array_merge($seoSettings, $this->request->getPost()->all()),
+            'form' => \array_merge($shareSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
@@ -107,15 +89,24 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
-                'meta_description' => $this->get('core.helpers.secure')->strEncode($formData['meta_description']),
-                'meta_keywords' => $this->get('core.helpers.secure')->strEncode($formData['meta_keywords']),
-                'robots' => (int) $formData['robots'],
-                'sitemap_is_enabled' => (int) $formData['sitemap_is_enabled'],
-                'sitemap_save_mode' => (int) $formData['sitemap_save_mode'],
-                'sitemap_separate' => (int) $formData['sitemap_separate'],
+                'fb_app_id' => $this->secure->strEncode($formData['fb_app_id']),
+                'fb_secret' => $this->secure->strEncode($formData['fb_secret']),
+                'services' => serialize($formData['services']),
             ];
 
-            return $this->config->saveSettings($data, Seo\Installer\Schema::MODULE_NAME);
+            return $this->config->saveSettings($data, Share\Installer\Schema::MODULE_NAME);
         });
+    }
+
+    /**
+     * @return array
+     */
+    private function getServices(): array
+    {
+        $services = [];
+        foreach ($this->socialServices->getAvailableServices() as $service) {
+            $services[$service] = $this->translator->t('share', 'service_' . $service);
+        }
+        return $services;
     }
 }

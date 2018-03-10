@@ -1,0 +1,5 @@
+services:
+  share.helpers.social_services:
+    class: ACP3\Modules\ACP3\Share\Helpers\SocialServices
+    arguments:
+      - '@core.config'

@@ -28,14 +28,17 @@ services:
       - '@share.model.data_grid_repository'
 
   share.controller.admin.index.settings:
-    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Settings
+    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
-      - '@seo.validation.admin_settings_form_validation'
+      - '@core.helpers.secure'
+      - '@share.helpers.social_services'
+      - '@share.validation.admin_settings_form_validation'
 
   share.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Share\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
+      - '@share.helpers.social_services'

@@ -9,5 +9,6 @@ services:
     arguments:
       - '@core.http.request'
       - '@core.view'
+      - '@share.helpers.social_services'
     tags:
       - { name: core.eventListener, event: layout.content_after, method: execute }

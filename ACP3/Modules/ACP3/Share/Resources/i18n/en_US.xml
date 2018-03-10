@@ -6,7 +6,7 @@
 
 <language>
     <keys>
-        <item key="share">Share</item>
-        <item key="mod_description">Ermöglicht die Einbindung diverser sozialer Netzwerke zum Teilen von Inhalten, etc.</item>
+        <item key="share">Social sharing</item>
+        <item key="mod_description">Makes it possible to share site contents via various social networks.</item>
     </keys>
 </language>
