@@ -52,7 +52,7 @@ class ValidateSharingInfoOnValidationInfo
                         'field' => 'share_active',
                         'message' => $this->translator->t('share', 'select_sharing_active'),
                         'extra' => [
-                            'haystack' => [0, 1]
+                            'haystack' => [0, 1],
                         ],
                     ]
                 );
