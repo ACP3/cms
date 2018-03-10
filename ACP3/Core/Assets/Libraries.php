@@ -102,6 +102,10 @@ class Libraries
             $this->libraries[$identifier] = $options;
         }
 
+        if (isset($options['enabled']) && $options['enabled'] === true) {
+            $this->enableLibraries($options['dependencies'] ?? []);
+        }
+
         return $this;
     }
 
