@@ -5,11 +5,11 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Gallery\Validation;
+namespace ACP3\Modules\ACP3\Share\Validation;
 
 use ACP3\Core;
 
-class GalleryFormValidation extends Core\Validation\AbstractFormValidation
+class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @var string
@@ -21,7 +21,7 @@ class GalleryFormValidation extends Core\Validation\AbstractFormValidation
      *
      * @return $this
      */
-    public function setUriAlias($uriAlias)
+    public function setUriAlias(string $uriAlias)
     {
         $this->uriAlias = $uriAlias;
 
@@ -36,27 +36,14 @@ class GalleryFormValidation extends Core\Validation\AbstractFormValidation
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\DateValidationRule::class,
+                Core\Validation\ValidationRules\InternalUriValidationRule::class,
                 [
                     'data' => $formData,
-                    'field' => ['start', 'end'],
-                    'message' => $this->translator->t('system', 'select_date'),
-                ]
-            )
-            ->addConstraint(
-                Core\Validation\ValidationRules\NotEmptyValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'title',
-                    'message' => $this->translator->t('gallery', 'type_in_gallery_title'),
+                    'field' => 'uri',
+                    'message' => $this->translator->t('share', 'type_in_valid_resource'),
                 ]
             );
 
-        $this->validator->dispatchValidationEvent(
-            'seo.validation.validate_uri_alias',
-            $formData,
-            ['path' => $this->uriAlias]
-        );
         $this->validator->dispatchValidationEvent(
             'share.validation.validate_sharing_info',
             $formData,

@@ -91,6 +91,11 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
             $formData,
             ['path' => $this->uriAlias]
         );
+        $this->validator->dispatchValidationEvent(
+            'share.validation.validate_sharing_info',
+            $formData,
+            ['path' => $this->uriAlias]
+        );
 
         $this->validator->validate();
     }

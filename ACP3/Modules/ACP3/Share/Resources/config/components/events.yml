@@ -14,6 +14,14 @@ services:
     tags:
       - { name: core.eventListener, event: share.layout.add_shariff, method: execute }
 
+  seo.event.validate_sharing_info_on_validation_listener:
+    class: ACP3\Modules\ACP3\Share\Event\Listener\ValidateSharingInfoOnValidationInfo
+    arguments:
+      - '@core.acl'
+      - '@core.i18n.translator'
+    tags:
+      - { name: core.eventListener, event: share.validation.validate_sharing_info, method: execute }
+
   share.event.save_sharing_info_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Share\Event\Listener\SaveSharingInfoOnModelAfterSaveListener
     arguments:

@@ -3,32 +3,6 @@
   ~ Copyright (c) by the ACP3 Developers.
   ~ See the LICENCE file at the top-level module directory for licencing details.
   -->
-
-<!--
-            'twitter',
-            'facebook',
-            'googleplus',
-            'linkedin',
-            'pinterest',
-            'xing',
-            'whatsapp',
-            'mail',
-            'info',
-            'addthis',
-            'tumblr',
-            'flattr',
-            'diaspora',
-            'reddit',
-            'stumbleupon',
-            'threema',
-            'weibo',
-            'tencent - weibo',
-            'qzone',
-            'print',
-            'telegram',
-            'vk',
-
--->
 <language>
     <keys>
         <item key="activate_sharing">Inhalt teilen?</item>
@@ -64,5 +38,6 @@
         <item key="share">Social Sharing</item>
         <item key="type_in_fb_app_id">Bitte geben Sie Ihre Facebook App-ID ein.</item>
         <item key="type_in_fb_secret">Bitte geben Sie das Secret zu Ihrer Facebook App-ID ein.</item>
+        <item key="type_in_valid_resource">Bitte geben Sie einen validen Pfad zu einer ACP3 internen Ressource an.</item>
     </keys>
 </language>

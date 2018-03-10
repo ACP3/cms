@@ -12,7 +12,7 @@ use ACP3\Core\I18n\Translator;
 use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
 
-class OnShareValidationValidateSharingInfo
+class ValidateSharingInfoOnValidationInfo
 {
     /**
      * @var Translator
@@ -40,7 +40,7 @@ class OnShareValidationValidateSharingInfo
     /**
      * @param FormValidationEvent $event
      */
-    public function validateUriAlias(FormValidationEvent $event)
+    public function execute(FormValidationEvent $event)
     {
         if ($this->acl->hasPermission('admin/share/index/create')) {
             $event
@@ -51,7 +51,9 @@ class OnShareValidationValidateSharingInfo
                         'data' => $event->getFormData(),
                         'field' => 'share_active',
                         'message' => $this->translator->t('share', 'select_sharing_active'),
-                        'extra' => [0, 1],
+                        'extra' => [
+                            'haystack' => [0, 1]
+                        ],
                     ]
                 );
         }
