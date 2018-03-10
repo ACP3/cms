@@ -9,61 +9,37 @@ namespace ACP3\Modules\ACP3\Share\Controller\Frontend\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
-use ACP3\Modules\ACP3\Share\Helpers\SocialServices;
 use Heise\Shariff\Backend;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Index extends AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialServices
+     * @var \Heise\Shariff\Backend
      */
-    private $socialServices;
+    private $shariffBackend;
 
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext   $context
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices $socialServices
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \Heise\Shariff\Backend                        $shariffBackend
      */
-    public function __construct(FrontendContext $context, SocialServices $socialServices)
+    public function __construct(
+        FrontendContext $context,
+        Backend $shariffBackend)
     {
         parent::__construct($context);
 
-        $this->socialServices = $socialServices;
+        $this->shariffBackend = $shariffBackend;
     }
 
-    public function execute()
+    public function execute(): JsonResponse
     {
-        $this->checkCacheDir();
-
-        $options = [
-            'domains' => [$this->request->getHttpHost()],
-            'cache' => [
-                'ttl' => 60,
-                'cacheDir' => $this->getCacheDir(),
-                'adapter' => 'Filesystem',
-            ],
-            'services' => $this->socialServices->getActiveServices(),
-        ];
-        $shariff = new Backend($options);
-
         return new JsonResponse(
-            $shariff->get(
+            $this->shariffBackend->get(
                 $this->request->getSymfonyRequest()->query->get('url', '')
             )
         );
-    }
-
-    private function checkCacheDir(): void
-    {
-        if (!\is_dir($this->getCacheDir())) {
-            \mkdir($this->getCacheDir());
-        }
-    }
-
-    private function getCacheDir(): string
-    {
-        return $this->appPath->getCacheDir() . 'shariff/';
     }
 }
