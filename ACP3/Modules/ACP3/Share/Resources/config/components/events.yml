@@ -10,5 +10,6 @@ services:
       - '@core.http.request'
       - '@core.view'
       - '@share.helpers.social_services'
+      - '@share.model.share_repository'
     tags:
-      - { name: core.eventListener, event: layout.content_after, method: execute }
+      - { name: core.eventListener, event: share.layout.add_shariff, method: execute }

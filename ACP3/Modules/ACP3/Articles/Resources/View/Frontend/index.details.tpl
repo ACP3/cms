@@ -27,4 +27,5 @@
             {/if}
         </ul>
     {/if}
+    {event name="share.layout.add_shariff"}
 {/block}

@@ -21,6 +21,7 @@
             <div class="description">
                 {$picture.description}
             </div>
+            {event name="share.layout.add_shariff"}
             <footer>
                 <ul class="pagination">
                     {if !empty($picture_previous)}

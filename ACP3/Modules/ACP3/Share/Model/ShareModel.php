@@ -21,8 +21,7 @@ class ShareModel extends AbstractModel
     public function save(array $data, $entryId = null)
     {
         $data = \array_merge($data, [
-            'title' => $data['share_title'],
-            'description' => $data['share_description'],
+            'active' => $data['share_active'],
         ]);
 
         return parent::save($data, $entryId);
@@ -35,7 +34,7 @@ class ShareModel extends AbstractModel
     {
         return [
             'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
         ];
     }
 }
