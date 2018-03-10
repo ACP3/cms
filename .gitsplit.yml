@@ -51,7 +51,7 @@ splits:
   - prefix: "ACP3/Modules/ACP3/Seo"
     target: "git@gitlab.com:ACP3/module-seo.git"
   - prefix: "ACP3/Modules/ACP3/Share"
-    target: "git@gitlab.com:ACP3/module-share.git"
+    target: "git@gitlab.com:ACP3/module-social-sharing.git"
   - prefix: "ACP3/Modules/ACP3/System"
     target: "git@gitlab.com:ACP3/module-system.git"
   - prefix: "ACP3/Modules/ACP3/Users"
