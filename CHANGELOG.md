@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.24.0] - 2018-03-10
+### Added
+- made it possible to programmatically remove steps from the breadcrumb
+- added the `core.breadcrumb.steps.build_frontend_cache_after` event
+- added the `menus.breadcrumb.steps.build_frontend_cache_after` event
+
+### Changed
+- moved the `core.breadcrumb.steps.build_admin_cache_not_empty_steps_after` event to a better location
+- removed the `core.breadcrumb.steps.build_admin_cache_empty_steps_before` event
+
 ## [4.23.0] - 2018-03-01
 ### Added
 - added the possibility to define a subtitle for an article
@@ -541,7 +551,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.23.0...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.24.0...HEAD
+[4.24.0]: https://gitlab.com/ACP3/cms/compare/v4.23...v4.24.0
 [4.23.0]: https://gitlab.com/ACP3/cms/compare/v4.22.1...v4.23.0
 [4.22.1]: https://gitlab.com/ACP3/cms/compare/v4.22.0...v4.22.1
 [4.22.0]: https://gitlab.com/ACP3/cms/compare/v4.21.2...v4.22.0

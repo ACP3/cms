@@ -57,22 +57,11 @@ class StepsTest extends \PHPUnit_Framework_TestCase
 
     protected function initializeMockObjects()
     {
-        $this->containerMock = $this->getMockBuilder(Container::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->translatorMock = $this->getMockBuilder(Translator::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->requestMock = $this->getMockBuilder(Request::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->routerMock = $this->getMockBuilder(RouterInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['route'])
-            ->getMock();
-        $this->eventDispatcherMock = $this->getMockBuilder(EventDispatcher::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->containerMock = $this->createMock(Container::class);
+        $this->translatorMock = $this->createMock(Translator::class);
+        $this->requestMock = $this->createMock(Request::class);
+        $this->routerMock = $this->createPartialMock(RouterInterface::class, ['route']);
+        $this->eventDispatcherMock = $this->createMock(EventDispatcher::class);
     }
 
     public function testGetBreadcrumbForAdminControllerIndex()

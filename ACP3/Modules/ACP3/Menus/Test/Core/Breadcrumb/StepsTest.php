@@ -36,9 +36,7 @@ class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
     {
         parent::initializeMockObjects();
 
-        $this->menuItemRepositoryMock = $this->getMockBuilder(MenuItemRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->menuItemRepositoryMock = $this->createMock(MenuItemRepository::class);
     }
 
     protected function setUpMenuItemRepositoryExpectations(array $dbSteps = [])
