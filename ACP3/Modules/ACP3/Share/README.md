@@ -1,5 +1,5 @@
-# ACP3/module-share
-Repository of the Share module of the ACP3 CMS.
+# ACP3/module-social-sharing
+Repository of the social sharing module of the ACP3 CMS.
 
 ## Attention
 Please do not make pull requests to this repository, as it is just a read only repository.

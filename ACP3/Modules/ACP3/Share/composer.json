@@ -1,6 +1,6 @@
 {
-  "name": "acp3/module-share",
-  "description": "Provides the Share module for the ACP3 CMS.",
+  "name": "acp3/module-social-sharing",
+  "description": "Provides the social sharing module for the ACP3 CMS.",
   "type": "acp3-module",
   "license": "GPL-2.0-or-later",
   "authors": [
@@ -24,9 +24,6 @@
     "acp3/module-system": "^4.24.0",
     "acp3/module-users": "^4.24.0",
     "heise/shariff": "^7.1"
-  },
-  "suggest": {
-    "acp3/module-seo": "Provides additional SEO capabilities"
   },
   "autoload": {
     "psr-4": {
