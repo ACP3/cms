@@ -74,7 +74,7 @@ class Steps
      *
      * @return array
      */
-    public function getBreadcrumb()
+    public function getBreadcrumb(): array
     {
         if (empty($this->breadcrumbCache)) {
             $this->buildBreadcrumbCache();
@@ -86,7 +86,7 @@ class Steps
     /**
      * Sets the breadcrumb cache for the current request.
      */
-    private function buildBreadcrumbCache()
+    private function buildBreadcrumbCache(): void
     {
         $this->eventDispatcher->dispatch(
             'core.breadcrumb.steps.build_cache',
@@ -105,14 +105,9 @@ class Steps
     /**
      * Sets the breadcrumb steps cache for admin panel action requests.
      */
-    private function buildBreadcrumbCacheForAdmin()
+    private function buildBreadcrumbCacheForAdmin(): void
     {
         if (empty($this->steps)) {
-            $this->eventDispatcher->dispatch(
-                'core.breadcrumb.steps.build_admin_cache_empty_steps_before',
-                new StepsBuildCacheEvent($this)
-            );
-
             $this->append(
                 $this->translator->t($this->request->getModule(), $this->request->getModule()),
                 'acp/' . $this->request->getModule()
@@ -124,17 +119,17 @@ class Steps
                 $this->translator->t($this->request->getModule(), $this->request->getModule()),
                 'acp/' . $this->request->getModule()
             );
-
-            $this->eventDispatcher->dispatch(
-                'core.breadcrumb.steps.build_admin_cache_not_empty_steps_after',
-                new StepsBuildCacheEvent($this)
-            );
         }
+
+        $this->eventDispatcher->dispatch(
+            'core.breadcrumb.steps.build_admin_cache_not_empty_steps_after',
+            new StepsBuildCacheEvent($this)
+        );
 
         $this->breadcrumbCache = $this->steps;
     }
 
-    private function appendControllerActionBreadcrumbs()
+    private function appendControllerActionBreadcrumbs(): void
     {
         $serviceId = $this->getControllerServiceId();
         if ($this->request->getController() !== 'index' && $this->container->has($serviceId)) {
@@ -154,7 +149,7 @@ class Steps
     /**
      * @return string
      */
-    private function getControllerServiceId()
+    private function getControllerServiceId(): string
     {
         return $this->request->getModule()
         . '.controller.'
@@ -166,7 +161,7 @@ class Steps
     /**
      * @return string
      */
-    private function getControllerActionTitle()
+    private function getControllerActionTitle(): string
     {
         return $this->request->getArea() . '_' . $this->request->getController() . '_' . $this->request->getAction();
     }
@@ -174,7 +169,7 @@ class Steps
     /**
      * @return string
      */
-    private function getControllerIndexActionTitle()
+    private function getControllerIndexActionTitle(): string
     {
         return $this->request->getArea() . '_' . $this->request->getController() . '_index';
     }
@@ -182,7 +177,7 @@ class Steps
     /**
      * Sets the breadcrumb steps cache for frontend action requests.
      */
-    protected function buildBreadcrumbCacheForFrontend()
+    protected function buildBreadcrumbCacheForFrontend(): void
     {
         if (empty($this->steps)) {
             $this->append(
@@ -192,6 +187,11 @@ class Steps
 
             $this->appendControllerActionBreadcrumbs();
         }
+
+        $this->eventDispatcher->dispatch(
+            'core.breadcrumb.steps.build_frontend_cache_after',
+            new StepsBuildCacheEvent($this)
+        );
 
         $this->breadcrumbCache = $this->steps;
     }
@@ -205,7 +205,7 @@ class Steps
      *
      * @return $this
      */
-    public function replaceAncestor($title, $path = '', $dbSteps = false)
+    public function replaceAncestor(string $title, string $path = '', bool $dbSteps = false): self
     {
         if ($dbSteps === false) {
             \end($this->steps);
@@ -221,7 +221,7 @@ class Steps
      *
      * @return array
      */
-    protected function buildStepItem($title, $path)
+    protected function buildStepItem(string $title, string $path): array
     {
         return [
             'title' => $title,
@@ -237,7 +237,7 @@ class Steps
      *
      * @return $this
      */
-    public function append($title, $path = '')
+    public function append(string $title, string $path = ''): self
     {
         if (!$this->stepAlreadyExists($path)) {
             $this->steps[] = $this->buildStepItem($title, $path);
@@ -254,7 +254,7 @@ class Steps
      *
      * @return $this
      */
-    public function prepend($title, $path)
+    public function prepend(string $title, string $path): self
     {
         if (!$this->stepAlreadyExists($path)) {
             $step = $this->buildStepItem($title, $path);
@@ -267,9 +267,28 @@ class Steps
     /**
      * @param string $path
      *
+     * @return $this
+     */
+    public function removeByPath(string $path): self
+    {
+        $path = $this->router->route($path);
+
+        $this->steps = \array_filter(
+            $this->steps,
+            function (array $step) use ($path) {
+                return $step['uri'] !== $path;
+            }
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param string $path
+     *
      * @return bool
      */
-    private function stepAlreadyExists($path)
+    private function stepAlreadyExists(string $path): bool
     {
         $route = $this->router->route($path);
         foreach ($this->steps as $step) {

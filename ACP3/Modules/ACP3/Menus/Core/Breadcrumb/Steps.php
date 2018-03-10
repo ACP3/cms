@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Menus\Core\Breadcrumb;
 
 use ACP3\Core;
+use ACP3\Core\Breadcrumb\Event\StepsBuildCacheEvent;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Modules\ACP3\Menus;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -50,7 +51,7 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * {@inheritdoc}
      */
-    public function replaceAncestor($title, $path = '', $dbSteps = false)
+    public function replaceAncestor(string $title, string $path = '', bool $dbSteps = false): Core\Breadcrumb\Steps
     {
         if ($dbSteps === true) {
             \end($this->stepsFromDb);
@@ -63,13 +64,18 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * {@inheritdoc}
      */
-    protected function buildBreadcrumbCacheForFrontend()
+    protected function buildBreadcrumbCacheForFrontend(): void
     {
         parent::buildBreadcrumbCacheForFrontend();
 
         if (empty($this->stepsFromDb)) {
             $this->prePopulate();
         }
+
+        $this->eventDispatcher->dispatch(
+            'menus.breadcrumb.steps.build_frontend_cache_after',
+            new StepsBuildCacheEvent($this)
+        );
 
         if (!empty($this->stepsFromDb)) {
             $offset = $this->findFirstMatchingStep();
@@ -83,7 +89,7 @@ class Steps extends Core\Breadcrumb\Steps
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    private function prePopulate()
+    private function prePopulate(): void
     {
         $items = $this->menuItemRepository->getMenuItemsByUri($this->getPossiblyMatchingRoutes());
 
@@ -99,7 +105,10 @@ class Steps extends Core\Breadcrumb\Steps
         }
     }
 
-    private function getPossiblyMatchingRoutes()
+    /**
+     * @return array
+     */
+    private function getPossiblyMatchingRoutes(): array
     {
         return [
             $this->request->getQuery(),
@@ -115,7 +124,7 @@ class Steps extends Core\Breadcrumb\Steps
      *
      * @return array
      */
-    private function findRestrictionInRoutes(array $items)
+    private function findRestrictionInRoutes(array $items): array
     {
         \rsort($items);
         foreach ($items as $index => $item) {
@@ -138,7 +147,7 @@ class Steps extends Core\Breadcrumb\Steps
      *
      * @return $this
      */
-    private function appendFromDB($title, $path = '')
+    private function appendFromDB(string $title, string $path = ''): self
     {
         $this->stepsFromDb[] = $this->buildStepItem($title, $path);
 
@@ -153,15 +162,47 @@ class Steps extends Core\Breadcrumb\Steps
         $steps = \array_reverse($this->steps);
         $lastDbStep = \end($this->stepsFromDb);
 
+        $matched = false;
         $offset = 0;
         foreach ($steps as $index => $step) {
             if ($step['uri'] === $lastDbStep['uri']) {
+                $matched = true;
                 $offset = $index;
 
                 break;
             }
         }
 
-        return \count($steps) - $offset;
+        return $this->hasUseIndex($matched, $lastDbStep['uri']) ? \count($steps) - $offset : 0;
+    }
+
+    /**
+     * @param bool   $matched
+     * @param string $uri
+     *
+     * @return bool
+     */
+    private function hasUseIndex(bool $matched, string $uri): bool
+    {
+        return $matched === true || $uri === $this->router->route($this->request->getQuery());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeByPath(string $path): Core\Breadcrumb\Steps
+    {
+        parent::removeByPath($path);
+
+        $path = $this->router->route($path);
+
+        $this->stepsFromDb = \array_filter(
+            $this->stepsFromDb,
+            function (array $step) use ($path) {
+                return $step['uri'] !== $path;
+            }
+        );
+
+        return $this;
     }
 }

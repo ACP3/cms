@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2018-xx-yy
+### Added
+- made it possible to programmatically remove steps from the breadcrumb
+- added the `core.breadcrumb.steps.build_frontend_cache_after` event
+- added the `menus.breadcrumb.steps.build_frontend_cache_after` event
+
+### Changed
+- moved the `core.breadcrumb.steps.build_admin_cache_not_empty_steps_after` event to a better location
+- removed the `core.breadcrumb.steps.build_admin_cache_empty_steps_before` event
+
 ## [4.23.0] - 2018-03-01
 ### Added
 - added the possibility to define a subtitle for an article
