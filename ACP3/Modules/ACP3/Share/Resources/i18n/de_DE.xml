@@ -6,7 +6,11 @@
 <language>
     <keys>
         <item key="activate_sharing">Inhalt teilen?</item>
+        <item key="active">Aktiv</item>
         <item key="active_services">Aktivierte Dienste</item>
+        <item key="admin_index_create">Neuer Datensatz</item>
+        <item key="admin_index_delete">Datensatz löschen</item>
+        <item key="admin_index_edit">Datensatz bearbeiten</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="fb_app_id">Facebook App-ID</item>
         <item key="fb_secret">Facebook Secret</item>
@@ -39,5 +43,6 @@
         <item key="type_in_fb_app_id">Bitte geben Sie Ihre Facebook App-ID ein.</item>
         <item key="type_in_fb_secret">Bitte geben Sie das Secret zu Ihrer Facebook App-ID ein.</item>
         <item key="type_in_valid_resource">Bitte geben Sie einen validen Pfad zu einer ACP3 internen Ressource an.</item>
+        <item key="uri">URI</item>
     </keys>
 </language>

@@ -62,6 +62,15 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         $dataGrid
             ->addColumn([
+                'label' => $this->translator->t('share', 'active'),
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::class,
+                'fields' => ['active'],
+                'custom' => [
+                    'search' => [0, 1],
+                    'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')],
+                ],
+            ], 30)
+            ->addColumn([
                 'label' => $this->translator->t('share', 'uri'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
                 'fields' => ['uri'],
@@ -69,11 +78,6 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'custom' => [
                     'path' => '%s',
                 ],
-            ], 30)
-            ->addColumn([
-                'label' => $this->translator->t('share', 'active'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['active'],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),

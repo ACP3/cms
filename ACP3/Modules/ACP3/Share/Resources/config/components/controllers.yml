@@ -4,10 +4,9 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.formToken'
-      - '@seo.helper.meta_form_fields'
-      - '@seo.helper.uri_alias_manager'
-      - '@seo.model.seo_model'
-      - '@seo.validation.admin_form_validation'
+      - '@share.helpers.share_form_fields'
+      - '@share.model.share_model'
+      - '@share.validation.admin_form_validation'
 
   share.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Delete
@@ -15,13 +14,14 @@ services:
       - '@core.context.frontend'
       - '@share.model.share_model'
 
-#  share.controller.admin.index.edit:
-#    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Edit
-#    arguments:
-#      - '@core.context.frontend'
-#      - '@core.helpers.formToken'
-#      - '@share.model.share_model'
-#      - '@share.validation.admin_form_validation'
+  share.controller.admin.index.edit:
+    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Edit
+    arguments:
+      - '@core.context.frontend'
+      - '@core.helpers.formToken'
+      - '@share.helpers.share_form_fields'
+      - '@share.model.share_model'
+      - '@share.validation.admin_form_validation'
 
   share.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Index

@@ -8,7 +8,9 @@
 namespace ACP3\Modules\ACP3\Share\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Seo;
+use ACP3\Modules\ACP3\Share\Helpers\ShareFormFields;
+use ACP3\Modules\ACP3\Share\Model\ShareModel;
+use ACP3\Modules\ACP3\Share\Validation\AdminFormValidation;
 
 class Create extends Core\Controller\AbstractFrontendAction
 {
@@ -17,56 +19,49 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
-     */
-    protected $metaFormFieldsHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     * @var \ACP3\Modules\ACP3\Share\Helpers\ShareFormFields
      */
-    protected $uriAliasManager;
+    private $shareFormFieldsHelper;
     /**
-     * @var Seo\Model\SeoModel
+     * @var \ACP3\Modules\ACP3\Share\Model\ShareModel
      */
-    protected $seoModel;
+    private $shareModel;
 
     /**
      * Create constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields          $metaFormFieldsHelper
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager         $uriAliasManager
-     * @param Seo\Model\SeoModel                                    $seoModel
-     * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
+     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
+     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Share\Helpers\ShareFormFields        $shareFormFieldsHelper
+     * @param \ACP3\Modules\ACP3\Share\Model\ShareModel               $shareModel
+     * @param \ACP3\Modules\ACP3\Share\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Seo\Helper\MetaFormFields $metaFormFieldsHelper,
-        Seo\Helper\UriAliasManager $uriAliasManager,
-        Seo\Model\SeoModel $seoModel,
-        Seo\Validation\AdminFormValidation $adminFormValidation
+        ShareFormFields $shareFormFieldsHelper,
+        ShareModel $shareModel,
+        AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
-        $this->uriAliasManager = $uriAliasManager;
         $this->adminFormValidation = $adminFormValidation;
-        $this->seoModel = $seoModel;
+        $this->shareFormFieldsHelper = $shareFormFieldsHelper;
+        $this->shareModel = $shareModel;
     }
 
     /**
      * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {
         return [
-            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper->formFields(),
+            'SHARE_FORM_FIELDS' => $this->shareFormFieldsHelper->formFields(),
             'form' => \array_merge(['uri' => ''], $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
@@ -82,7 +77,7 @@ class Create extends Core\Controller\AbstractFrontendAction
 
             $this->adminFormValidation->validate($formData);
 
-            return $this->seoModel->save($formData);
+            return $this->shareModel->save($formData);
         });
     }
 }

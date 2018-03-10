@@ -8,7 +8,9 @@
 namespace ACP3\Modules\ACP3\Share\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Seo;
+use ACP3\Modules\ACP3\Share\Helpers\ShareFormFields;
+use ACP3\Modules\ACP3\Share\Model\ShareModel;
+use ACP3\Modules\ACP3\Share\Validation\AdminFormValidation;
 
 class Edit extends Core\Controller\AbstractFrontendAction
 {
@@ -17,40 +19,40 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
-     */
-    protected $metaFormFieldsHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
     /**
-     * @var Seo\Model\SeoModel
+     * @var \ACP3\Modules\ACP3\Share\Helpers\ShareFormFields
      */
-    protected $seoModel;
+    private $shareFormFields;
+    /**
+     * @var \ACP3\Modules\ACP3\Share\Model\ShareModel
+     */
+    private $shareModel;
 
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields          $metaFormFieldsHelper
-     * @param Seo\Model\SeoModel                                    $seoModel
-     * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
+     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
+     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Share\Helpers\ShareFormFields        $shareFormFields
+     * @param \ACP3\Modules\ACP3\Share\Model\ShareModel               $shareModel
+     * @param \ACP3\Modules\ACP3\Share\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Seo\Helper\MetaFormFields $metaFormFieldsHelper,
-        Seo\Model\SeoModel $seoModel,
-        Seo\Validation\AdminFormValidation $adminFormValidation
+        ShareFormFields $shareFormFields,
+        ShareModel $shareModel,
+        AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
-        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
         $this->adminFormValidation = $adminFormValidation;
-        $this->seoModel = $seoModel;
+        $this->shareFormFields = $shareFormFields;
+        $this->shareModel = $shareModel;
     }
 
     /**
@@ -59,17 +61,16 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute($id)
     {
-        $seo = $this->seoModel->getOneById($id);
+        $sharingInfo = $this->shareModel->getOneById($id);
 
-        if (empty($seo) === false) {
-            $this->title->setPageTitlePrefix($seo['alias']);
-
+        if (empty($sharingInfo) === false) {
             return [
-                'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper->formFields($seo['uri']),
-                'form' => \array_merge(['uri' => $seo['uri']], $this->request->getPost()->all()),
+                'SHARE_FORM_FIELDS' => $this->shareFormFields->formFields($sharingInfo['uri']),
+                'form' => \array_merge(['uri' => $sharingInfo['uri']], $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
             ];
         }
@@ -82,18 +83,18 @@ class Edit extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
 
-            $seo = $this->seoModel->getOneById($id);
+            $seo = $this->shareModel->getOneById($id);
 
             $this->adminFormValidation
                 ->setUriAlias($seo['uri'])
                 ->validate($formData);
 
-            return $this->seoModel->save($formData, $id);
+            return $this->shareModel->save($formData, $id);
         });
     }
 }
