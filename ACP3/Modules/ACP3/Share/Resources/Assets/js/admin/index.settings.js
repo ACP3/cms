@@ -5,6 +5,6 @@
 
 jQuery(document).ready(function ($) {
     $('#services').on('change', function () {
-        $('#fb-credentials-wrapper').toggle(this.value.indexOf('facebook') !== -1);
+        $('#fb-credentials-wrapper').toggle($(this).val().indexOf('facebook') !== -1);
     }).triggerHandler('change');
 });

@@ -40,3 +40,11 @@ services:
     tags:
       - { name: core.eventListener, event: share.layout.render_form_fields, method: execute }
 
+  share.event.update_services_on_settings_save_before_listener:
+    class: ACP3\Modules\ACP3\Share\Event\Listener\UpdateServicesOnSettingsSaveBeforeListener
+    arguments:
+      - '@core.config'
+      - '@share.model.share_model'
+      - '@share.model.share_repository'
+    tags:
+      - { name: core.eventListener, event: share.settings.save_before, method: execute }

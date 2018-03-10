@@ -24,4 +24,14 @@ class ShareRepository extends Core\Model\Repository\AbstractRepository
     {
         return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE `uri` = ?", [$uri]) ?: [];
     }
+
+    /**
+     * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getAll(): array
+    {
+        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()}");
+    }
 }
