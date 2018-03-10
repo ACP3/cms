@@ -11,7 +11,7 @@ use ACP3\Core\Assets\Event\AddLibraryEvent;
 
 class AddShariffAssetsListener
 {
-    public function execute(AddLibraryEvent $event)
+    public function execute(AddLibraryEvent $event): void
     {
         $event->addLibrary('shariff', [
             'enabled' => false,

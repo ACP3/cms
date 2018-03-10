@@ -29,6 +29,16 @@ class Schema implements Modules\Installer\SchemaInterface
                     'settings' => PrivilegeEnum::ADMIN_SETTINGS,
                 ],
             ],
+            'frontend' => [
+                'index' => [
+                    'index' => PrivilegeEnum::FRONTEND_VIEW
+                ],
+            ],
+            'widget' => [
+                'index' => [
+                    'index' => PrivilegeEnum::FRONTEND_VIEW
+                ],
+            ],
         ];
     }
 

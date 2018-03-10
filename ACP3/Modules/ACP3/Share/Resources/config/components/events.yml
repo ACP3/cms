@@ -3,3 +3,11 @@ services:
     class: ACP3\Modules\ACP3\Share\Event\Listener\AddShariffAssetsListener
     tags:
       - { name: core.eventListener, event: core.assets.add_libraries, method: execute }
+
+  share.event.add_shariff_on_layout_content_after_listener:
+    class: ACP3\Modules\ACP3\Share\Event\Listener\AddShariffOnLayoutContentAfterListener
+    arguments:
+      - '@core.http.request'
+      - '@core.view'
+    tags:
+      - { name: core.eventListener, event: layout.content_after, method: execute }
