@@ -1,0 +1,38 @@
+/*
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENCE file at the top-level module directory for licencing details.
+ */
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  font-size: 30px;
+  display: flex;
+  justify-content: flex-end;
+}
+.rating__star {
+  font-family: FontAwesome, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+.rating__star::before {
+  content: "\f006";
+  padding-right: 5px;
+  color: #777;
+}
+.rating__star:hover,
+.rating__star:focus,
+.rating__star:active,
+.rating__star.rating__star_active {
+  text-decoration: none;
+}
+.rating__star:hover::before,
+.rating__star:focus::before,
+.rating__star:active::before,
+.rating__star.rating__star_active::before,
+.rating__star:hover ~ .rating__star::before,
+.rating__star:focus ~ .rating__star::before,
+.rating__star:active ~ .rating__star::before,
+.rating__star.rating__star_active ~ .rating__star::before {
+  content: "\f005";
+  color: #e3cf7a;
+}

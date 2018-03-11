@@ -11,6 +11,7 @@ services:
       - '@core.view'
       - '@share.helpers.social_services'
       - '@share.model.share_repository'
+      - '@share.model.share_ratings_repository'
     tags:
       - { name: core.eventListener, event: share.layout.add_social_sharing, method: execute }
 

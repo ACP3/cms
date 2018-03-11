@@ -11,6 +11,7 @@ use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Share\Helpers\SocialServices;
+use ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
 
 class AddSocialSharingListener
@@ -31,25 +32,32 @@ class AddSocialSharingListener
      * @var \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository
      */
     private $shareRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository
+     */
+    private $shareRatingsRepository;
 
     /**
      * AddSocialSharingListener constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface                          $request
-     * @param \ACP3\Core\View                                           $view
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices           $socialServices
-     * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository $shareRepository
+     * @param \ACP3\Core\Http\RequestInterface                                 $request
+     * @param \ACP3\Core\View                                                  $view
+     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices                  $socialServices
+     * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository        $shareRepository
+     * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository $shareRatingsRepository
      */
     public function __construct(
         RequestInterface $request,
         View $view,
         SocialServices $socialServices,
-        ShareRepository $shareRepository)
+        ShareRepository $shareRepository,
+        ShareRatingsRepository $shareRatingsRepository)
     {
         $this->request = $request;
         $this->view = $view;
         $this->socialServices = $socialServices;
         $this->shareRepository = $shareRepository;
+        $this->shareRatingsRepository = $shareRatingsRepository;
     }
 
     /**
@@ -58,12 +66,14 @@ class AddSocialSharingListener
     public function execute(): void
     {
         if ($this->request->getArea() === AreaEnum::AREA_FRONTEND) {
-            $item = $this->shareRepository->getOneByUri($this->request->getUriWithoutPages());
+            $sharingInfo = $this->shareRepository->getOneByUri($this->request->getUriWithoutPages());
 
-            if (!empty($item) && (int) $item['active'] == 1) {
-                $this->view->assign('shariff', [
+            if (!empty($sharingInfo) && (int) $sharingInfo['active'] == 1) {
+                $this->view->assign('sharing', [
                     'path' => $this->request->getUriWithoutPages(),
-                    'services' => \json_encode($this->socialServices->getActiveServices()),
+                    'services' => $this->socialServices->getActiveServices(),
+                    'ratings_active' => ((int)$sharingInfo['ratings_active']) === 1,
+                    'rating_stats' => $this->shareRatingsRepository->getRatingsStats($sharingInfo['id'])
                 ]);
 
                 $this->view->displayTemplate('Share/Partials/add_social_sharing.tpl');

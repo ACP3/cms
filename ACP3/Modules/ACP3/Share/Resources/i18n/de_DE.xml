@@ -17,6 +17,7 @@
         <item key="fb_app_id">Facebook App-ID</item>
         <item key="fb_secret">Facebook Secret</item>
         <item key="mod_description">Ermöglicht die Einbindung diverser sozialer Netzwerke zum Teilen von Inhalten, etc.</item>
+        <item key="rate_with_x_stars">Mit %stars% Sternen bewerten</item>
         <item key="select_active">Bitte wählen aus, ob dieser Datensatz bei sozialen Netzwerken geteilt werden können soll oder nicht.</item>
         <item key="select_customize_services">Bitte wählen aus ob Sie die verfügbaren sozialen Netzwerke für diesen Datensatz anpassen möchten oder nicht.</item>
         <item key="select_ratings_active">Bitte wählen aus, ob dieser Datensatz von Benutzern bewertet werden können soll oder nicht.</item>
@@ -45,6 +46,7 @@
         <item key="service_xing">Xing</item>
         <item key="services">Dienste</item>
         <item key="share">Social sharing</item>
+        <item key="total_x_ratings">Insgesamt %ratings% Bewertungen</item>
         <item key="type_in_valid_resource">Bitte geben Sie einen validen Pfad zu einer ACP3 internen Ressource an.</item>
         <item key="uri">Pfad</item>
     </keys>
