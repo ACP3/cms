@@ -83,6 +83,6 @@ class Index extends AbstractWidgetAction
             $services = $this->socialServices->getActiveServices();
         }
 
-        return $services;
+        return \array_values($services);
     }
 }

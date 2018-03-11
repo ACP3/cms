@@ -13,7 +13,7 @@ use ACP3\Core\View;
 use ACP3\Modules\ACP3\Share\Helpers\SocialServices;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
 
-class AddShariffOnLayoutContentAfterListener
+class AddSocialSharingListener
 {
     /**
      * @var \ACP3\Core\Http\RequestInterface
@@ -33,7 +33,7 @@ class AddShariffOnLayoutContentAfterListener
     private $shareRepository;
 
     /**
-     * AddShariffOnLayoutContentAfterListener constructor.
+     * AddSocialSharingListener constructor.
      *
      * @param \ACP3\Core\Http\RequestInterface                          $request
      * @param \ACP3\Core\View                                           $view
@@ -66,7 +66,7 @@ class AddShariffOnLayoutContentAfterListener
                     'services' => \json_encode($this->socialServices->getActiveServices()),
                 ]);
 
-                $this->view->displayTemplate('Share/Partials/add_shariff.tpl');
+                $this->view->displayTemplate('Share/Partials/add_social_sharing.tpl');
             }
         }
     }

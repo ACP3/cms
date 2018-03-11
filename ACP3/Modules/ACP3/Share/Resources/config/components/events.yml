@@ -4,15 +4,15 @@ services:
     tags:
       - { name: core.eventListener, event: core.assets.add_libraries, method: execute }
 
-  share.event.add_shariff_on_layout_content_after_listener:
-    class: ACP3\Modules\ACP3\Share\Event\Listener\AddShariffOnLayoutContentAfterListener
+  share.event.add_social_sharing_listener:
+    class: ACP3\Modules\ACP3\Share\Event\Listener\AddSocialSharingListener
     arguments:
       - '@core.http.request'
       - '@core.view'
       - '@share.helpers.social_services'
       - '@share.model.share_repository'
     tags:
-      - { name: core.eventListener, event: share.layout.add_shariff, method: execute }
+      - { name: core.eventListener, event: share.layout.add_social_sharing, method: execute }
 
   share.event.validate_sharing_info_on_validation_listener:
     class: ACP3\Modules\ACP3\Share\Event\Listener\ValidateSharingInfoOnValidationInfo
