@@ -10,6 +10,7 @@ namespace ACP3\Core\Test;
 use ACP3\Core\Assets;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AssetsTest extends \PHPUnit_Framework_TestCase
@@ -22,6 +23,10 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $eventDispatcherMock;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $requestMock;
 
     protected function setUp()
     {
@@ -31,13 +36,14 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
         $appPath
             ->setDesignRootPathInternal(ACP3_ROOT_DIR . 'tests/designs/')
             ->setDesignPathInternal('acp3/');
-        $libraries = new Assets\Libraries($this->eventDispatcherMock);
+        $libraries = new Assets\Libraries($this->requestMock, $this->eventDispatcherMock);
 
         $this->assets = new Assets($appPath, $libraries);
     }
 
     private function setUpMockObjects()
     {
+        $this->requestMock = $this->getMockForAbstractClass(RequestInterface::class);
         $this->eventDispatcherMock = $this->getMockBuilder(EventDispatcherInterface::class)
             ->setMethods([
                 'dispatch',
@@ -56,7 +62,7 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
     public function testDefaultLibrariesEnabled()
     {
         $libraries = $this->assets->getEnabledLibrariesAsString();
-        $this->assertEquals('jquery,js-cookie,bootstrap', $libraries);
+        $this->assertEquals('jquery,ajax-form,bootstrap', $libraries);
     }
 
     public function testEnableDatepicker()
@@ -64,7 +70,7 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
         $this->assets->enableLibraries(['datetimepicker']);
 
         $libraries = $this->assets->getEnabledLibrariesAsString();
-        $this->assertEquals('moment,jquery,js-cookie,bootstrap,datetimepicker', $libraries);
+        $this->assertEquals('moment,jquery,ajax-form,bootstrap,datetimepicker', $libraries);
     }
 
     public function testFetchAdditionalThemeCssFiles()

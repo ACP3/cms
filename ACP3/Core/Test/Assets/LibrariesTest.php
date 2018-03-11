@@ -8,6 +8,7 @@
 namespace ACP3\Core\Test\Assets;
 
 use ACP3\Core\Assets\Libraries;
+use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class LibrariesTest extends \PHPUnit_Framework_TestCase
@@ -20,14 +21,17 @@ class LibrariesTest extends \PHPUnit_Framework_TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $eventDispatcherMock;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $requestMock;
 
     protected function setUp()
     {
-        $this->eventDispatcherMock = $this->getMockBuilder(EventDispatcher::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->requestMock = $this->getMockForAbstractClass(RequestInterface::class);
+        $this->eventDispatcherMock = $this->createMock(EventDispatcher::class);
 
-        $this->libraries = new Libraries($this->eventDispatcherMock);
+        $this->libraries = new Libraries($this->requestMock, $this->eventDispatcherMock);
     }
 
     public function testAddLibrary()
@@ -49,6 +53,6 @@ class LibrariesTest extends \PHPUnit_Framework_TestCase
 
         $this->libraries->enableLibraries(['foobar']);
 
-        $this->assertEquals(['jquery', 'js-cookie', 'foobar'], $this->libraries->getEnabledLibraries());
+        $this->assertEquals(['jquery', 'ajax-form', 'foobar'], $this->libraries->getEnabledLibraries());
     }
 }
