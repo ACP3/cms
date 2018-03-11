@@ -85,7 +85,7 @@ class BackendFactory
                     'cacheDir' => $this->getCacheDir(),
                     'adapter' => 'Filesystem',
                 ],
-                'services' => $this->socialServices->getActiveServices(),
+                'services' => $this->socialServices->getActiveBackendServices(),
             ],
             $this->getFacebookCredentials()
         );

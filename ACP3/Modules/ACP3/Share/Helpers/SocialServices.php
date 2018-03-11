@@ -37,6 +37,18 @@ class SocialServices
         'info',
     ];
 
+    private static $availableBackendServices = [
+        'addthis' => 'AddThis',
+        'facebook' => 'Facebook',
+        'flattr' => 'Flattr',
+        'linkedin' => 'LinkedIn',
+        'pinterest' => 'Pinterest',
+        'reddit' => 'Reddit',
+        'stumbleupon' => 'StumbleUpon',
+        'vk' => 'Vk',
+        'xing' => 'Xing',
+    ];
+
     /**
      * @var \ACP3\Core\Settings\SettingsInterface
      */
@@ -66,5 +78,28 @@ class SocialServices
         return \array_filter($activeServices, function ($item) {
             return \in_array($item, $this->getAvailableServices());
         });
+    }
+
+    public function getAvailableBackendServices(): array
+    {
+        return static::$availableBackendServices;
+    }
+
+    public function getActiveBackendServices(): array
+    {
+        $intersection = \array_intersect(
+            $this->getActiveServices(),
+            \array_keys($this->getAvailableBackendServices())
+        );
+
+        return \array_values(
+            \array_filter(
+                $this->getAvailableBackendServices(),
+                function ($value, $key) use ($intersection) {
+                    return \in_array($key, $intersection);
+                },
+                \ARRAY_FILTER_USE_BOTH
+            )
+        );
     }
 }
