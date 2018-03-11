@@ -41,9 +41,7 @@
         <item key="service_xing">Xing</item>
         <item key="services">Dienste</item>
         <item key="share">Social sharing</item>
-        <item key="type_in_fb_app_id">Bitte geben Sie Ihre Facebook App-ID ein.</item>
-        <item key="type_in_fb_secret">Bitte geben Sie das Secret zu Ihrer Facebook App-ID ein.</item>
         <item key="type_in_valid_resource">Bitte geben Sie einen validen Pfad zu einer ACP3 internen Ressource an.</item>
-        <item key="uri">URI</item>
+        <item key="uri">Pfad</item>
     </keys>
 </language>
