@@ -5,6 +5,7 @@
   -->
 <language>
     <keys>
+        <item key="activate_ratings">Bewertung aktivieren</item>
         <item key="activate_sharing">Social sharing aktivieren</item>
         <item key="active">Aktiv</item>
         <item key="active_services">Aktivierte Dienste</item>
@@ -16,6 +17,9 @@
         <item key="fb_app_id">Facebook App-ID</item>
         <item key="fb_secret">Facebook Secret</item>
         <item key="mod_description">Ermöglicht die Einbindung diverser sozialer Netzwerke zum Teilen von Inhalten, etc.</item>
+        <item key="select_active">Bitte wählen aus, ob dieser Datensatz bei sozialen Netzwerken geteilt werden können soll oder nicht.</item>
+        <item key="select_customize_services">Bitte wählen aus ob Sie die verfügbaren sozialen Netzwerke für diesen Datensatz anpassen möchten oder nicht.</item>
+        <item key="select_ratings_active">Bitte wählen aus, ob dieser Datensatz von Benutzern bewertet werden können soll oder nicht.</item>
         <item key="select_services">Bitte wählen aus, welche Dienste aktiviert werden sollen. Es muss mindestens ein Dienst aktiv sein.</item>
         <item key="service_addthis">AddThis</item>
         <item key="service_diaspora">diaspora</item>

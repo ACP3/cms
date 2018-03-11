@@ -74,8 +74,10 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
      * @param int   $pollId
      *
      * @return bool|int
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function saveAnswers(array $answers, $pollId)
+    public function saveAnswers(array $answers, int  $pollId)
     {
         $bool = false;
         foreach ($answers as $row) {
@@ -104,8 +106,10 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
      * @param int $pollId
      *
      * @return bool|int
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function resetVotesByPollId($pollId)
+    public function resetVotesByPollId(int $pollId)
     {
         return $this->voteRepository->delete($pollId, 'poll_id');
     }
