@@ -28,6 +28,7 @@ class Migration implements Modules\Installer\MigrationInterface
                     INDEX(`share_id`),
                     FOREIGN KEY (`share_id`) REFERENCES `{pre}share` (`id`) ON DELETE CASCADE
                 ) {ENGINE} {CHARSET};',
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'frontend', 'index', 'rate', '', 1);",
             ],
         ];
     }

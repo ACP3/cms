@@ -72,8 +72,8 @@ class AddSocialSharingListener
                 $this->view->assign('sharing', [
                     'path' => $this->request->getUriWithoutPages(),
                     'services' => $this->socialServices->getActiveServices(),
-                    'ratings_active' => ((int)$sharingInfo['ratings_active']) === 1,
-                    'rating_stats' => $this->shareRatingsRepository->getRatingsStats($sharingInfo['id'])
+                    'ratings_active' => ((int) $sharingInfo['ratings_active']) === 1,
+                    'rating' => $this->shareRatingsRepository->getRatingStatistics($sharingInfo['id']),
                 ]);
 
                 $this->view->displayTemplate('Share/Partials/add_social_sharing.tpl');

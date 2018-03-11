@@ -24,7 +24,16 @@
 
   &:hover,
   &:focus,
-  &:active,
+  &:active {
+    text-decoration: none;
+
+    &::before,
+    & ~ .rating__star::before {
+      content: "\f006" !important;
+      color: #e3cf7a !important;;
+    }
+  }
+
   &.rating__star_active {
     text-decoration: none;
 

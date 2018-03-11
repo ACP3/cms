@@ -17,6 +17,7 @@
         <item key="fb_app_id">Facebook App-ID</item>
         <item key="fb_secret">Facebook Secret</item>
         <item key="mod_description">Ermöglicht die Einbindung diverser sozialer Netzwerke zum Teilen von Inhalten, etc.</item>
+        <item key="no_ratings_yet">Noch keine Bewertungen</item>
         <item key="rate_with_x_stars">Mit %stars% Sternen bewerten</item>
         <item key="select_active">Bitte wählen aus, ob dieser Datensatz bei sozialen Netzwerken geteilt werden können soll oder nicht.</item>
         <item key="select_customize_services">Bitte wählen aus ob Sie die verfügbaren sozialen Netzwerke für diesen Datensatz anpassen möchten oder nicht.</item>

@@ -21,17 +21,22 @@
 }
 .rating__star:hover,
 .rating__star:focus,
-.rating__star:active,
-.rating__star.rating__star_active {
+.rating__star:active {
   text-decoration: none;
 }
 .rating__star:hover::before,
 .rating__star:focus::before,
 .rating__star:active::before,
-.rating__star.rating__star_active::before,
 .rating__star:hover ~ .rating__star::before,
 .rating__star:focus ~ .rating__star::before,
-.rating__star:active ~ .rating__star::before,
+.rating__star:active ~ .rating__star::before {
+  content: "\f006" !important;
+  color: #e3cf7a !important;
+}
+.rating__star.rating__star_active {
+  text-decoration: none;
+}
+.rating__star.rating__star_active::before,
 .rating__star.rating__star_active ~ .rating__star::before {
   content: "\f005";
   color: #e3cf7a;

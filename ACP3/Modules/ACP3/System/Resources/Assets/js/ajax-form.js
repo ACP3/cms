@@ -9,6 +9,8 @@
     var pluginName = 'formSubmit',
         defaults = {
             targetElement: '#content',
+            loadingOverlay: true,
+            loadingText: '',
             customFormData: null
         };
 
@@ -26,6 +28,7 @@
         init: function () {
             var that = this;
 
+            this.mergeSettings();
             this.findSubmitButton();
             this.element.noValidate = true;
 
@@ -51,6 +54,22 @@
                     that.checkFormElementsForErrors(that.element);
                 }
             });
+        },
+        mergeSettings: function () {
+            var data = $(this.element).data();
+
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    var keyStripped = this.lowerCaseFirstLetter(key.replace('ajaxForm', ''));
+
+                    if (keyStripped.length > 0 && this.settings[keyStripped]) {
+                        this.settings[keyStripped] = data[key];
+                    }
+                }
+            }
+        },
+        lowerCaseFirstLetter(string) {
+            return string.charAt(0).toLowerCase() + string.slice(1);
         },
         findSubmitButton: function () {
             $(this.element).find(':submit').click(function () {
@@ -190,11 +209,14 @@
             });
         },
         showLoadingLayer: function ($submitButton) {
-            var $loadingLayer = $('#loading-layer');
+            if (this.settings.loadingOverlay === false) {
+                return;
+            }
 
+            var $loadingLayer = $('#loading-layer');
             if ($loadingLayer.length === 0) {
                 var $body = $('body'),
-                    loadingText = $(this.element).data('ajax-form-loading-text') || '',
+                    loadingText = this.settings.loadingText || '',
                     html = '<div id="loading-layer" class="loading-layer"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>';
 
                 $(html).appendTo($body);
@@ -242,6 +264,7 @@
                 $(this.settings.targetElement).html(responseData);
             }
 
+            // Rebind the submit/click handlers
             this.findSubmitButton();
         },
         hideLoadingLayer: function ($submitButton) {

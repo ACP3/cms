@@ -32,6 +32,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'frontend' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
+                    'rate' => PrivilegeEnum::FRONTEND_VIEW,
                 ],
             ],
             'widget' => [
