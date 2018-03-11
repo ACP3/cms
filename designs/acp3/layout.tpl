@@ -4,7 +4,7 @@
     {include file="asset:System/Partials/head.tpl" inline}
 </head>
 
-<body>
+<body itemscope="" itemtype="http://schema.org/WebPage">
 {load_module module="widget/users/index/login"}
 {load_module module="widget/users/index/user_menu"}
 <div id="wrapper" class="container">
@@ -50,7 +50,7 @@
                 {/block}
             </div>
             {block PAGE_TITLE}
-                <h2>{page_title}</h2>
+                <h2 itemprop="name">{page_title}</h2>
             {/block}
             {event name="layout.content_before"}
             {block CONTENT}{/block}
