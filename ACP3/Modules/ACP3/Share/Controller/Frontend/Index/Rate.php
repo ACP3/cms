@@ -8,7 +8,6 @@
 namespace ACP3\Modules\ACP3\Share\Controller\Frontend\Index;
 
 use ACP3\Core\Controller\Context\FrontendContext;
-use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
@@ -56,25 +55,46 @@ class Rate extends AbstractFrontendAction
      *
      * @return array
      *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(int $id, int $stars): array
     {
-        if (!($stars >= 1 && $stars <= 5)) {
-            throw new ResultNotExistsException();
-        }
-        if ($this->shareRepository->resultExistsById($id) === false) {
-            throw new ResultNotExistsException();
-        }
+        $ipAddress = $this->request->getSymfonyRequest()->getClientIp();
 
-        $this->shareRatingModel->save([
-            'share_id' => $id,
-            'stars' => $stars,
-        ]);
+        if ($this->canSaveRating($id, $stars, $ipAddress) === true) {
+            $this->shareRatingModel->save([
+                'share_id' => $id,
+                'stars' => $stars,
+                'ip' => $ipAddress,
+            ]);
+        }
 
         return [
             'rating' => $this->shareRatingsRepository->getRatingStatistics($id),
         ];
+    }
+
+    /**
+     * @param int    $shareId
+     * @param int    $stars
+     * @param string $ipAddress
+     *
+     * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    private function canSaveRating(int $shareId, int $stars, string $ipAddress): bool
+    {
+        if (!($stars >= 1 && $stars <= 5)) {
+            return false;
+        }
+        if ($this->shareRepository->resultExistsById($shareId) === false) {
+            return false;
+        }
+        if ($this->shareRatingsRepository->hasAlreadyRated($ipAddress, $shareId) === true) {
+            return false;
+        }
+
+        return true;
     }
 }

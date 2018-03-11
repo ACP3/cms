@@ -14,6 +14,22 @@ class ShareRatingsRepository extends AbstractRepository
     const TABLE_NAME = 'share_ratings';
 
     /**
+     * @param string $ipAddress
+     * @param int    $shareId
+     *
+     * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function hasAlreadyRated(string $ipAddress, int $shareId): bool
+    {
+        return $this->db->fetchColumn(
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `ip` = :ip AND `share_id` = :shareId;",
+            ['ip' => $ipAddress, 'shareId' => $shareId]
+            ) > 0;
+    }
+
+    /**
      * @param int $shareId
      *
      * @return array

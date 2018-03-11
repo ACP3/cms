@@ -23,7 +23,7 @@ class ShareRatingModel extends AbstractModel
         return [
             'stars' => ColumnTypes::COLUMN_TYPE_INT,
             'share_id' => ColumnTypes::COLUMN_TYPE_INT,
-            'ip' => ColumnTypes::COLUMN_TYPE_TEXT,
+            'ip' => ColumnTypes::COLUMN_TYPE_RAW,
         ];
     }
 }
