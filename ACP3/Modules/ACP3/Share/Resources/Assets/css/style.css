@@ -10,12 +10,12 @@
   justify-content: flex-end;
 }
 .rating__star {
-  font-family: FontAwesome, sans-serif;
+  font-family: 'Glyphicons Halflings', sans-serif;
   font-weight: normal;
   font-style: normal;
 }
 .rating__star::before {
-  content: "\f006";
+  content: "\e007";
   padding-right: 5px;
   color: #777;
 }
@@ -30,7 +30,7 @@
 .rating__star:hover ~ .rating__star::before,
 .rating__star:focus ~ .rating__star::before,
 .rating__star:active ~ .rating__star::before {
-  content: "\f006" !important;
+  content: "\e007" !important;
   color: #e3cf7a !important;
 }
 .rating__star.rating__star_active {
@@ -38,6 +38,6 @@
 }
 .rating__star.rating__star_active::before,
 .rating__star.rating__star_active ~ .rating__star::before {
-  content: "\f005";
+  content: "\e006";
   color: #e3cf7a;
 }

@@ -6,9 +6,6 @@
     {if !empty($sharing.services)}
         <hr>
     {/if}
-    {javascripts}
-    {js_libraries enable='font-awesome'}
-    {/javascripts}
 {/if}
 {if !empty($sharing.services)}
     {load_module module="widget/share/index/index" path=$sharing.path}
