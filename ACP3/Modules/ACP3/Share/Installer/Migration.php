@@ -13,18 +13,28 @@ class Migration implements Modules\Installer\MigrationInterface
 {
     /**
      * {@inheritdoc}
-     *
-     * @return array
      */
     public function schemaUpdates()
     {
-        return [];
+        return [
+            2 => [
+                'ALTER TABLE `{pre}share` ADD COLUMN `ratings_active` TINYINT(1) UNSIGNED NOT NULL AFTER `services`;',
+                'CREATE TABLE IF NOT EXISTS `{pre}share_ratings` (
+                    `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                    `stars` TINYINT(1) UNSIGNED NOT NULL,
+                    `ip` VARCHAR(40) NOT NULL,
+                    `share_id` INT(10) UNSIGNED NOT NULL,
+                    PRIMARY KEY (`id`),
+                    INDEX(`share_id`),
+                    FOREIGN KEY (`share_id`) REFERENCES `{pre}share` (`id`) ON DELETE CASCADE
+                ) {ENGINE} {CHARSET};',
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'frontend', 'index', 'rate', '', 1);",
+            ],
+        ];
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @return array
      */
     public function renameModule()
     {

@@ -61,6 +61,8 @@ class SitemapGenerationModel
 
     /**
      * @return bool
+     *
+     * @throws \ACP3\Modules\ACP3\Seo\Exception\SitemapGenerationException
      */
     public function save()
     {
@@ -82,7 +84,7 @@ class SitemapGenerationModel
      *
      * @throws SitemapGenerationException
      */
-    protected function checkSitemapFilePermissions($filename)
+    protected function checkSitemapFilePermissions(string $filename)
     {
         $filePath = $this->getSitemapFilePath($filename);
 
@@ -103,7 +105,7 @@ class SitemapGenerationModel
      *
      * @return string
      */
-    protected function getSitemapFilePath($filename)
+    protected function getSitemapFilePath(string $filename)
     {
         return ACP3_ROOT_DIR . $filename;
     }
@@ -113,7 +115,7 @@ class SitemapGenerationModel
      *
      * @return Urlset
      */
-    protected function collectSitemapItems($isSecure)
+    protected function collectSitemapItems(?bool $isSecure)
     {
         $urlSet = new Urlset();
         foreach ($this->sitemapRegistrar->getAvailableModules() as $module) {
@@ -131,7 +133,7 @@ class SitemapGenerationModel
      *
      * @return bool
      */
-    protected function saveSitemap(Urlset $urlSet, $filename)
+    protected function saveSitemap(Urlset $urlSet, string $filename)
     {
         $output = (new Output())->getOutput($urlSet);
 

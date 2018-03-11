@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Exception\SitemapGenerationException;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
@@ -33,17 +34,23 @@ class GenerateSitemapOnModelAfterSaveListener
      * @var SitemapGenerationModel
      */
     private $sitemapGenerationModel;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
 
     /**
      * GenerateSitemapOnModelAfterSaveListener constructor.
      *
      * @param LoggerInterface              $logger
+     * @param \ACP3\Core\Modules           $modules
      * @param SettingsInterface            $settings
      * @param SitemapAvailabilityRegistrar $sitemapRegistrar
      * @param SitemapGenerationModel       $sitemapGenerationModel
      */
     public function __construct(
         LoggerInterface $logger,
+        Modules $modules,
         SettingsInterface $settings,
         SitemapAvailabilityRegistrar $sitemapRegistrar,
         SitemapGenerationModel $sitemapGenerationModel
@@ -52,6 +59,7 @@ class GenerateSitemapOnModelAfterSaveListener
         $this->settings = $settings;
         $this->sitemapRegistrar = $sitemapRegistrar;
         $this->sitemapGenerationModel = $sitemapGenerationModel;
+        $this->modules = $modules;
     }
 
     /**
@@ -59,6 +67,10 @@ class GenerateSitemapOnModelAfterSaveListener
      */
     public function generateSeoSitemap(ModelSaveEvent $event)
     {
+        if (!$this->modules->isActive(Schema::MODULE_NAME)) {
+            return;
+        }
+
         if ($this->canGenerateSitemapAutomatically() && $this->isAllowedModule($event->getModuleName())) {
             try {
                 $this->sitemapGenerationModel->save();

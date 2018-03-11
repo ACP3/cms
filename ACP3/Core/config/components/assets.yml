@@ -48,6 +48,7 @@ services:
   core.assets.libraries:
     class: ACP3\Core\Assets\Libraries
     arguments:
+      - '@core.http.request'
       - '@core.event_dispatcher'
 
   core.assets.page_css_classes:

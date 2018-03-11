@@ -45,6 +45,14 @@ services:
       - '@core.context.frontend'
       - '@shariff.backend'
 
+  share.controller.frontend.index.rate:
+    class: ACP3\Modules\ACP3\Share\Controller\Frontend\Index\Rate
+    arguments:
+      - '@core.context.frontend'
+      - '@share.model.share_repository'
+      - '@share.model.share_ratings_repository'
+      - '@share.model.share_rating_model'
+
   share.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Share\Controller\Widget\Index\Index
     arguments:

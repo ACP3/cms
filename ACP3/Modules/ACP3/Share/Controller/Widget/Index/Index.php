@@ -63,7 +63,7 @@ class Index extends AbstractWidgetAction
             'shariff' => [
                 'lang' => $this->translator->getShortIsoCode(),
                 'path' => $path,
-                'services' => \json_encode($this->getServices($sharingInfo)),
+                'services' => $this->getServices($sharingInfo),
             ],
         ];
     }
@@ -83,6 +83,6 @@ class Index extends AbstractWidgetAction
             $services = $this->socialServices->getActiveServices();
         }
 
-        return $services;
+        return \array_values($services);
     }
 }

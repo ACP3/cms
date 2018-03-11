@@ -36,6 +36,7 @@ class ShareModel extends AbstractModel
         $keys = [
             'active' => 'share_active',
             'services' => 'share_services',
+            'ratings_active' => 'share_ratings_active',
         ];
         foreach ($keys as $column => $formField) {
             if (isset($data[$formField])) {
@@ -55,6 +56,7 @@ class ShareModel extends AbstractModel
             'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
             'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
             'services' => DataProcessor\ColumnTypes::COLUMN_TYPE_SERIALIZABLE,
+            'ratings_active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
         ];
     }
 }

@@ -85,6 +85,17 @@ class ValidateSharingInfoOnValidationInfo
                             'haystack' => $this->socialServices->getActiveServices(),
                         ],
                     ]
+                )
+                ->addConstraint(
+                    InArrayValidationRule::class,
+                    [
+                        'data' => $event->getFormData(),
+                        'field' => 'share_ratings_active',
+                        'message' => $this->translator->t('share', 'select_ratings_active'),
+                        'extra' => [
+                            'haystack' => [0, 1],
+                        ],
+                    ]
                 );
         }
     }

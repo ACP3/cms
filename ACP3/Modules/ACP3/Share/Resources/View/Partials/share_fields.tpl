@@ -5,6 +5,7 @@
         {include file="asset:System/Partials/form_group.select.tpl" options=$share.services multiple=true required=true label={lang t="share|active_services"}}
     </div>
 </div>
+{include file="asset:System/Partials/form_group.button_group.tpl" options=$share.ratings_active required=true label={lang t="share|activate_ratings"}}
 {if !empty($share.uri_pattern)}
     <input type="hidden" name="share_uri_pattern" value="{$share.uri_pattern}">
 {/if}

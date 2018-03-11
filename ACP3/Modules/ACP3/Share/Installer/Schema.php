@@ -32,6 +32,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'frontend' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
+                    'rate' => PrivilegeEnum::FRONTEND_VIEW,
                 ],
             ],
             'widget' => [
@@ -55,7 +56,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 1;
+        return 2;
     }
 
     /**
@@ -69,7 +70,18 @@ class Schema implements Modules\Installer\SchemaInterface
                 `uri` VARCHAR(255) NOT NULL,
                 `active` TINYINT(1) UNSIGNED NOT NULL,
                 `services` TEXT NOT NULL,
-                PRIMARY KEY (`id`), UNIQUE(`uri`)
+                `ratings_active` TINYINT(1) UNSIGNED NOT NULL,
+                PRIMARY KEY (`id`),
+                UNIQUE(`uri`)
+            ) {ENGINE} {CHARSET};',
+            'CREATE TABLE IF NOT EXISTS `{pre}share_ratings` (
+                `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `stars` TINYINT(1) UNSIGNED NOT NULL,
+                `ip` VARCHAR(40) NOT NULL,
+                `share_id` INT(10) UNSIGNED NOT NULL,
+                PRIMARY KEY (`id`),
+                INDEX(`share_id`),
+                FOREIGN KEY (`share_id`) REFERENCES `{pre}share` (`id`) ON DELETE CASCADE
             ) {ENGINE} {CHARSET};',
         ];
     }
@@ -80,6 +92,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function removeTables()
     {
         return [
+            'DROP TABLE IF EXISTS `{pre}share_ratings`;',
             'DROP TABLE IF EXISTS `{pre}share`;',
         ];
     }

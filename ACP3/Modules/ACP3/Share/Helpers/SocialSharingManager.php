@@ -68,18 +68,24 @@ class SocialSharingManager
      * @param string $path
      * @param bool   $active
      * @param array  $services
+     * @param bool   $ratingsActive
      *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function saveSharingInfo(string $path, bool $active = false, array $services = []): bool
+    public function saveSharingInfo(
+        string $path,
+        bool $active = false,
+        array $services = [],
+        bool $ratingsActive = false): bool
     {
         $path .= $this->preparePath($path);
         $data = [
             'uri' => $path,
             'share_active' => $active,
             'share_services' => $services,
+            'share_ratings_active' => $ratingsActive,
         ];
 
         $sharingInfo = $this->shareRepository->getOneByUri($path);

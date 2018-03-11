@@ -86,6 +86,10 @@ class ShareFormFields
                 $this->getAvailableServices(),
                 $this->getCurrentServices(\unserialize($sharingInfo['services']))
             ),
+            'ratings_active' => $this->formsHelper->yesNoCheckboxGenerator(
+                'share_ratings_active',
+                $sharingInfo['ratings_active']
+            ),
         ];
     }
 

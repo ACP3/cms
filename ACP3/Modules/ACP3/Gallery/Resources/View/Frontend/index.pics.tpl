@@ -27,7 +27,7 @@
                 </a>
             {/foreach}
         {/if}
-        {event name="share.layout.add_shariff"}
+        {event name="share.layout.add_social_sharing"}
     {else}
         {include file="asset:System/Partials/no_results.tpl" no_results_text={lang t="gallery|no_pictures"}}
     {/if}

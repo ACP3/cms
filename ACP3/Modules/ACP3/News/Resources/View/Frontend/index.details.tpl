@@ -21,7 +21,7 @@
                 {/if}
             </div>
             {event name="news.event.news_details_after" id=$news.id title=$news.title}
-            {event name="share.layout.add_shariff"}
+            {event name="share.layout.add_social_sharing"}
         </section>
         {if $comments_allowed === true}
             <section>

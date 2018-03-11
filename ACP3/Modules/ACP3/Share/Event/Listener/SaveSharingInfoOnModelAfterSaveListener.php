@@ -39,6 +39,8 @@ class SaveSharingInfoOnModelAfterSaveListener
 
     /**
      * @param ModelSaveEvent $event
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(ModelSaveEvent $event)
     {
@@ -49,7 +51,8 @@ class SaveSharingInfoOnModelAfterSaveListener
                 $this->socialSharingManager->saveSharingInfo(
                     \sprintf($formData['share_uri_pattern'], $event->getEntryId()),
                     $formData['share_active'],
-                    $formData['share_customize_services'] == 1 ? $formData['share_services'] : []
+                    $formData['share_customize_services'] == 1 ? $formData['share_services'] : [],
+                    $formData['share_ratings_active']
                 );
             }
         }

@@ -7,5 +7,5 @@
     </div>
 </div>
 {javascripts}
-    {include_js module="system" file="partials/cookie-consent"}
+    {include_js module="system" file="partials/cookie-consent" depends='js-cookie'}
 {/javascripts}

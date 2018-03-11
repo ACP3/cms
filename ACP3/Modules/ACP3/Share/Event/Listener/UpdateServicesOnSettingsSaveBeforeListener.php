@@ -59,7 +59,9 @@ class UpdateServicesOnSettingsSaveBeforeListener
 
             if (!empty($services) && \is_array($services)) {
                 $data = [
-                    'share_services' => \array_diff($services, $diff),
+                    'share_services' => \array_values(
+                        \array_diff($services, $diff)
+                    ),
                 ];
                 $this->shareModel->save($data, $result['id']);
             }
