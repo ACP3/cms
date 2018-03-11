@@ -7,18 +7,17 @@
 
 namespace ACP3\Modules\ACP3\Share\Helpers;
 
-use ACP3\Modules\ACP3\Seo\Model\SeoModel;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
 use ACP3\Modules\ACP3\Share\Model\ShareModel;
 
 class SocialSharingManager
 {
     /**
-     * @var SeoModel
+     * @var \ACP3\Modules\ACP3\Share\Model\ShareModel
      */
     private $shareModel;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
+     * @var \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository
      */
     private $shareRepository;
 
@@ -48,9 +47,9 @@ class SocialSharingManager
     public function deleteSharingInfo(string $path): bool
     {
         $path .= $this->preparePath($path);
-        $seo = $this->shareRepository->getOneByUri($path);
+        $shareInfo = $this->shareRepository->getOneByUri($path);
 
-        return !empty($seo) && $this->shareModel->delete($seo['id']) !== false;
+        return !empty($shareInfo) && $this->shareModel->delete($shareInfo['id']) !== false;
     }
 
     /**
@@ -71,6 +70,8 @@ class SocialSharingManager
      * @param array  $services
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function saveSharingInfo(string $path, bool $active = false, array $services = []): bool
     {

@@ -9,8 +9,8 @@ namespace ACP3\Modules\ACP3\Share\Event\Listener;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
+use ACP3\Modules\ACP3\Share\Installer\Schema;
 
 class SaveSharingInfoOnModelAfterSaveListener
 {

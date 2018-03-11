@@ -19,7 +19,7 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
+     * @var \ACP3\Modules\ACP3\Share\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
     /**

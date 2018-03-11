@@ -14,7 +14,7 @@ services:
     tags:
       - { name: core.eventListener, event: share.layout.add_shariff, method: execute }
 
-  seo.event.validate_sharing_info_on_validation_listener:
+  share.event.validate_sharing_info_on_validation_listener:
     class: ACP3\Modules\ACP3\Share\Event\Listener\ValidateSharingInfoOnValidationInfo
     arguments:
       - '@core.acl'

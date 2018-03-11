@@ -28,10 +28,10 @@ class OnLayoutShareRenderFormFieldsListener
     private $shareFormFields;
 
     /**
-     * OnLayoutSeoFormFieldsListener constructor.
+     * OnLayoutShareRenderFormFieldsListener constructor.
      *
-     * @param ACL                                              $acl
-     * @param View                                             $view
+     * @param \ACP3\Core\ACL                                   $acl
+     * @param \ACP3\Core\View                                  $view
      * @param \ACP3\Modules\ACP3\Share\Helpers\ShareFormFields $shareFormFields
      */
     public function __construct(

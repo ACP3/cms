@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Share\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
-use ACP3\Modules\ACP3\Seo\Installer\Schema;
+use ACP3\Modules\ACP3\Share\Installer\Schema;
 
 class ShareModel extends AbstractModel
 {

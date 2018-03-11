@@ -19,7 +19,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
+     * @var \ACP3\Modules\ACP3\Share\Validation\AdminFormValidation
      */
     protected $adminFormValidation;
     /**
@@ -88,10 +88,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
 
-            $seo = $this->shareModel->getOneById($id);
+            $shareInfo = $this->shareModel->getOneById($id);
 
             $this->adminFormValidation
-                ->setUriAlias($seo['uri'])
+                ->setUriAlias($shareInfo['uri'])
                 ->validate($formData);
 
             return $this->shareModel->save($formData, $id);
