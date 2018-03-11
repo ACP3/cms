@@ -55,7 +55,6 @@
             {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/polls"}}
         </form>
         {javascripts}
-        {include_js module="system" file="ajax-form"}
         {include_js module="system" file="hash-change"}
         {/javascripts}
     {/if}

@@ -183,6 +183,7 @@
                     } else {
                         self.scrollIntoView();
                         self.replaceContent(hash, responseData);
+                        self.rebindHandlers(hash);
 
                         if (typeof hash !== 'undefined') {
                             window.location.hash = hash;
@@ -263,8 +264,12 @@
             } else {
                 $(this.settings.targetElement).html(responseData);
             }
+        },
+        rebindHandlers: function(hash) {
+            var $bindingTarget = (hash && $(hash).length) ? $(hash) : $(this.settings.targetElement);
 
-            // Rebind the submit/click handlers
+            $bindingTarget.find('[data-ajax-form="true"]').formSubmit();
+
             this.findSubmitButton();
         },
         hideLoadingLayer: function ($submitButton) {

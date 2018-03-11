@@ -16,8 +16,5 @@
               data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
             {block CONTENT_AJAX_FORM}{/block}
         </form>
-        {javascripts}
-        {include_js module="system" file="ajax-form"}
-        {/javascripts}
     {/if}
 {/block}

@@ -18,7 +18,4 @@
         {event name="captcha.event.display_captcha"}
         {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token}
     </form>
-    {javascripts}
-    {include_js module="system" file="ajax-form"}
-    {/javascripts}
 {/if}

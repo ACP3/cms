@@ -12,7 +12,4 @@
 {/block}
 {block ADMIN_GRID_CONTENT}
     {include file="asset:System/Partials/datagrid.tpl" dataTable=$grid}
-    {javascripts}
-    {include_js module="system" file="ajax-form"}
-    {/javascripts}
 {/block}

@@ -11,6 +11,5 @@
     </div>
     {javascripts}
         {js_libraries enable='font-awesome'}
-        {include_js module="system" file="ajax-form"}
     {/javascripts}
 {/if}
