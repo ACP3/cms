@@ -68,7 +68,7 @@
                 }
             }
         },
-        lowerCaseFirstLetter(string) {
+        lowerCaseFirstLetter: function (string) {
             return string.charAt(0).toLowerCase() + string.slice(1);
         },
         findSubmitButton: function () {
@@ -265,7 +265,7 @@
                 $(this.settings.targetElement).html(responseData);
             }
         },
-        rebindHandlers: function(hash) {
+        rebindHandlers: function (hash) {
             var $bindingTarget = (hash && $(hash).length) ? $(hash) : $(this.settings.targetElement);
 
             $bindingTarget.find('[data-ajax-form="true"]').formSubmit();

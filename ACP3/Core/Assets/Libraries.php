@@ -82,6 +82,7 @@ class Libraries
 
     /**
      * Libraries constructor.
+     *
      * @param \ACP3\Core\Http\RequestInterface $request
      * @param EventDispatcherInterface         $eventDispatcher
      */
@@ -171,6 +172,7 @@ class Libraries
 
     /**
      * @param array $values
+     *
      * @return bool
      */
     private function includeInXmlHttpRequest(array $values): bool

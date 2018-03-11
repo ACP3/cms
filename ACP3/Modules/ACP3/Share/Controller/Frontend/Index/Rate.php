@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
- * See the LICENCE file at the top-level module directory for licencing details.
+ * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Modules\ACP3\Share\Controller\Frontend\Index;
-
 
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
@@ -31,6 +31,7 @@ class Rate extends AbstractFrontendAction
 
     /**
      * Rate constructor.
+     *
      * @param \ACP3\Core\Controller\Context\FrontendContext                    $context
      * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository        $shareRepository
      * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository $shareRatingsRepository
@@ -52,7 +53,9 @@ class Rate extends AbstractFrontendAction
     /**
      * @param int $id
      * @param int $stars
+     *
      * @return array
+     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
@@ -67,11 +70,11 @@ class Rate extends AbstractFrontendAction
 
         $this->shareRatingModel->save([
             'share_id' => $id,
-            'stars' => $stars
+            'stars' => $stars,
         ]);
 
         return [
-            'rating' => $this->shareRatingsRepository->getRatingStatistics($id)
+            'rating' => $this->shareRatingsRepository->getRatingStatistics($id),
         ];
     }
 }
