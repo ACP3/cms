@@ -20,7 +20,6 @@ class SocialServices
         'pinterest',
         'xing',
         'whatsapp',
-        'mail',
         'addthis',
         'tumblr',
         'flattr',
@@ -33,6 +32,7 @@ class SocialServices
         'qzone',
         'telegram',
         'vk',
+        'mail',
         'print',
         'info',
     ];

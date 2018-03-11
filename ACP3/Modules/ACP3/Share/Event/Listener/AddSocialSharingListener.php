@@ -68,16 +68,19 @@ class AddSocialSharingListener
         if ($this->request->getArea() === AreaEnum::AREA_FRONTEND) {
             $sharingInfo = $this->shareRepository->getOneByUri($this->request->getUriWithoutPages());
 
-            if (!empty($sharingInfo) && (int) $sharingInfo['active'] == 1) {
-                $this->view->assign('sharing', [
-                    'path' => $this->request->getUriWithoutPages(),
-                    'services' => $this->socialServices->getActiveServices(),
-                    'ratings_active' => ((int) $sharingInfo['ratings_active']) === 1,
-                    'rating' => $this->shareRatingsRepository->getRatingStatistics($sharingInfo['id']),
-                ]);
+            $sharing = [];
+            if (!empty($sharingInfo)) {
+                $sharing['ratings_active'] = ((int) $sharingInfo['ratings_active']) === 1;
+                $sharing['rating'] = $this->shareRatingsRepository->getRatingStatistics($sharingInfo['id']);
 
-                $this->view->displayTemplate('Share/Partials/add_social_sharing.tpl');
+                if (((int) $sharingInfo['active']) === 1) {
+                    $sharing['path'] = $this->request->getUriWithoutPages();
+                    $sharing['services'] = $this->socialServices->getActiveServices();
+                }
             }
+
+            $this->view->assign('sharing', $sharing);
+            $this->view->displayTemplate('Share/Partials/add_social_sharing.tpl');
         }
     }
 }
