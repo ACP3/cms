@@ -5,6 +5,7 @@
   -->
 <language>
     <keys>
+        <item key="activate_ratings">Activate rating</item>
         <item key="activate_sharing">Activate social sharing</item>
         <item key="active">Active</item>
         <item key="active_services">Active services</item>
@@ -16,6 +17,11 @@
         <item key="fb_app_id">Facebook App-ID</item>
         <item key="fb_secret">Facebook Secret</item>
         <item key="mod_description">Makes it possible to share site contents via various social networks.</item>
+        <item key="no_ratings_yet">No ratings yet</item>
+        <item key="rate_with_x_stars">Rate with %stars% stars</item>
+        <item key="select_active">Please select whether users should be able to share this resultset on social networks or not.</item>
+        <item key="select_customize_services">Please select whether you want to customize the available social networks of this resultset or not.</item>
+        <item key="select_ratings_active">Please select whether users should be able to rate this resultset or not.</item>
         <item key="select_services">Please select which services you want to activate. At least one service has to be active.</item>
         <item key="service_addthis">AddThis</item>
         <item key="service_diaspora">diaspora</item>
@@ -41,6 +47,7 @@
         <item key="service_xing">Xing</item>
         <item key="services">Dienste</item>
         <item key="share">Social sharing</item>
+        <item key="total_x_ratings"><![CDATA[Based on <span itemprop="reviewCount">%ratings%</span> total ratings]]></item>
         <item key="type_in_valid_resource">Please type in a valid path to an ACP3 internal resource.</item>
         <item key="uri">Path</item>
     </keys>
