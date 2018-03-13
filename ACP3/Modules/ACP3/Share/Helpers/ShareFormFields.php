@@ -105,6 +105,7 @@ class ShareFormFields
         $sharingInfo = [
             'active' => 0,
             'customize_services' => 0,
+            'ratings_active' => 0,
         ];
 
         if (!empty($path)) {
