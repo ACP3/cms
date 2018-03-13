@@ -104,7 +104,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
     private function getServices(): array
     {
         $services = [];
-        foreach ($this->socialServices->getAvailableServices() as $service) {
+        foreach ($this->socialServices->getAllServices() as $service) {
             $services[$service] = $this->translator->t('share', 'service_' . $service);
         }
 

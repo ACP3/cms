@@ -44,7 +44,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'services',
                     'message' => $this->translator->t('share', 'select_services'),
                     'extra' => [
-                        'haystack' => $this->availableServices->getAvailableServices(),
+                        'haystack' => $this->availableServices->getAllServices(),
                     ],
                 ]
             );

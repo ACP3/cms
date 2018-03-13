@@ -12,41 +12,29 @@ use ACP3\Modules\ACP3\Share\Installer\Schema;
 
 class SocialServices
 {
-    private static $availableServices = [
-        'twitter',
-        'facebook',
-        'googleplus',
-        'linkedin',
-        'pinterest',
-        'xing',
-        'whatsapp',
-        'addthis',
-        'tumblr',
-        'flattr',
-        'diaspora',
-        'reddit',
-        'stumbleupon',
-        'threema',
-        'weibo',
-        'tencent - weibo',
-        'qzone',
-        'telegram',
-        'vk',
-        'mail',
-        'print',
-        'info',
-    ];
-
-    private static $availableBackendServices = [
-        'addthis' => 'AddThis',
+    private static $servicesMap = [
+        'twitter' => null,
         'facebook' => 'Facebook',
-        'flattr' => 'Flattr',
+        'googleplus' => null,
         'linkedin' => 'LinkedIn',
         'pinterest' => 'Pinterest',
+        'xing' => 'Xing',
+        'whatsapp' => null,
+        'addthis' => 'AddThis',
+        'tumblr' => null,
+        'flattr' => 'Flattr',
+        'diaspora' => null,
         'reddit' => 'Reddit',
         'stumbleupon' => 'StumbleUpon',
+        'threema' => null,
+        'weibo' => null,
+        'tencent - weibo' => null,
+        'qzone' => null,
+        'telegram' => null,
         'vk' => 'Vk',
-        'xing' => 'Xing',
+        'mail' => null,
+        'print' => null,
+        'info' => null,
     ];
 
     /**
@@ -64,39 +52,35 @@ class SocialServices
         $this->settings = $settings;
     }
 
-    public function getAvailableServices(): array
+    public function getAllServices(): array
     {
-        return static::$availableServices;
+        return \array_keys(self::$servicesMap);
     }
 
     public function getActiveServices(): array
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
-        $activeServices = \unserialize($settings['services']);
-
-        return \array_filter($activeServices, function ($item) {
-            return \in_array($item, $this->getAvailableServices());
-        });
+        return \array_intersect(
+            $this->getAllServices(),
+            \unserialize($settings['services'])
+        );
     }
 
-    public function getAvailableBackendServices(): array
+    public function getAllBackendServices(): array
     {
-        return static::$availableBackendServices;
+        return \array_filter(self::$servicesMap);
     }
 
     public function getActiveBackendServices(): array
     {
-        $intersection = \array_intersect(
-            $this->getActiveServices(),
-            \array_keys($this->getAvailableBackendServices())
-        );
+        $activeServices = $this->getActiveServices();
 
         return \array_values(
             \array_filter(
-                $this->getAvailableBackendServices(),
-                function ($value, $key) use ($intersection) {
-                    return \in_array($key, $intersection);
+                $this->getAllBackendServices(),
+                function (?string $value, string $key) use ($activeServices) {
+                    return $value !== null && \in_array($key, $activeServices);
                 },
                 \ARRAY_FILTER_USE_BOTH
             )
