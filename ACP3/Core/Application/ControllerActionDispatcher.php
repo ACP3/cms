@@ -62,6 +62,7 @@ class ControllerActionDispatcher
      *
      * @throws ControllerActionNotFoundException
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \ReflectionException
      */
     public function dispatch($serviceId = '', array $arguments = [])
     {
@@ -112,6 +113,7 @@ class ControllerActionDispatcher
      * @return mixed
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \ReflectionException
      */
     private function executeControllerAction(ActionInterface $controller, array $arguments)
     {
@@ -128,6 +130,8 @@ class ControllerActionDispatcher
      * @param ActionInterface $controller
      *
      * @return array
+     *
+     * @throws \ReflectionException
      */
     private function getCallable(ActionInterface $controller)
     {

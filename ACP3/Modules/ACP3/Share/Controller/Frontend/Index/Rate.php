@@ -51,14 +51,14 @@ class Rate extends AbstractFrontendAction
 
     /**
      * @param int $id
-     * @param int $stars
      *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id, int $stars): array
+    public function execute(int $id): array
     {
+        $stars = $this->request->getPost()->get('stars');
         $ipAddress = $this->request->getSymfonyRequest()->getClientIp();
 
         if ($this->canSaveRating($id, $stars, $ipAddress) === true) {
@@ -70,7 +70,10 @@ class Rate extends AbstractFrontendAction
         }
 
         return [
-            'rating' => $this->shareRatingsRepository->getRatingStatistics($id),
+            'rating' => \array_merge(
+                $this->shareRatingsRepository->getRatingStatistics($id),
+                ['already_rated' => $this->hasAlreadyRated($ipAddress, $id)]
+            ),
         ];
     }
 
@@ -91,10 +94,23 @@ class Rate extends AbstractFrontendAction
         if ($this->shareRepository->resultExistsById($shareId) === false) {
             return false;
         }
-        if ($this->shareRatingsRepository->hasAlreadyRated($ipAddress, $shareId) === true) {
+        if ($this->hasAlreadyRated($ipAddress, $shareId) === true) {
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * @param string $ipAddress
+     * @param int    $shareId
+     *
+     * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    private function hasAlreadyRated(string $ipAddress, int $shareId): bool
+    {
+        return $this->shareRatingsRepository->hasAlreadyRated($ipAddress, $shareId) === true;
     }
 }

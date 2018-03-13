@@ -1,15 +1,23 @@
-<span class="rating">
-    {$rating_rounded=$rating.average_rating|round:0}
-    {for $i=5 to 1 step -1}
-        <a href="{uri args="share/index/rate/stars_`$i`/id_`$rating.share_id`"}"
-           rel="nofollow"
-           data-ajax-form="true"
-           data-ajax-form-target-element="#rating-wrapper"
-           data-ajax-form-loading-overlay="false"
-           title="{lang t="share|rate_with_x_stars" args=['%stars%' => $i]}"
-           class="rating__star{if $i == $rating_rounded} rating__star_active{/if}"></a>
-    {/for}
-</span>
+<form action="{uri args="share/index/rate/id_`$rating.share_id`"}"
+      method="post"
+      accept-charset="UTF-8"
+      data-ajax-form="true"
+      data-ajax-form-target-element="#rating-wrapper"
+      data-ajax-form-loading-overlay="false">
+    <div class="rating">
+        {if isset($rating.already_rated) && $rating.already_rated}
+            <small class="rating__already-rated">{lang t="share|already_rated"}</small>
+        {/if}
+        {$rating_rounded=$rating.average_rating|round:0}
+        {for $i=5 to 1 step -1}
+            <label for="rating-star-{$i}"
+                   title="{lang t="share|rate_with_x_stars" args=['%stars%' => $i]}"
+                   class="rating__star{if $i == $rating_rounded} rating__star_active{/if}">
+                <input type="radio" id="rating-star-{$i}" name="stars" value="{$i}" class="hidden" required>
+            </label>
+        {/for}
+    </div>
+</form>
 {if $rating.total_ratings > 0}
     <div class="rating-summary"
          itemprop="aggregateRating"

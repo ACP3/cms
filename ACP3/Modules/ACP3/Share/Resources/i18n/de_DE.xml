@@ -13,6 +13,7 @@
         <item key="admin_index_delete">Datensatz löschen</item>
         <item key="admin_index_edit">Datensatz bearbeiten</item>
         <item key="admin_index_settings">Einstellungen</item>
+        <item key="already_rated">Sie haben diese Seite bereits bewertet.</item>
         <item key="customize_services">Verfügbare Dienste anpassen</item>
         <item key="fb_app_id">Facebook App-ID</item>
         <item key="fb_secret">Facebook Secret</item>

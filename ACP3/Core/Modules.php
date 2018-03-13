@@ -65,7 +65,7 @@ class Modules
      *
      * @return bool
      */
-    public function controllerActionExists($path)
+    public function controllerActionExists(string $path)
     {
         return $this->controllerActionExists->controllerActionExists($path);
     }
@@ -73,13 +73,13 @@ class Modules
     /**
      * Returns, whether a module is active or not.
      *
-     * @param string $module
+     * @param string $moduleName
      *
      * @return bool
      */
-    public function isActive($module)
+    public function isActive(string $moduleName)
     {
-        $info = $this->getModuleInfo($module);
+        $info = $this->getModuleInfo($moduleName);
 
         return !empty($info) && $info['active'] === true;
     }
@@ -87,28 +87,28 @@ class Modules
     /**
      * Returns the available information about the given module.
      *
-     * @param string $module
+     * @param string $moduleName
      *
      * @return array
      */
-    public function getModuleInfo($module)
+    public function getModuleInfo(string $moduleName)
     {
-        $module = \strtolower($module);
+        $moduleName = \strtolower($moduleName);
         if (empty($this->modulesInfo)) {
             $this->modulesInfo = $this->moduleInfoCache->getModulesInfoCache();
         }
 
-        return !empty($this->modulesInfo[$module]) ? $this->modulesInfo[$module] : [];
+        return !empty($this->modulesInfo[$moduleName]) ? $this->modulesInfo[$moduleName] : [];
     }
 
     /**
-     * @param string $module
+     * @param string $moduleName
      *
      * @return int
      */
-    public function getModuleId($module)
+    public function getModuleId(string $moduleName)
     {
-        $info = $this->getModuleInfo($module);
+        $info = $this->getModuleInfo($moduleName);
 
         return !empty($info) ? $info['id'] : 0;
     }
@@ -120,7 +120,7 @@ class Modules
      *
      * @return bool
      */
-    public function isInstalled($moduleName)
+    public function isInstalled(string $moduleName)
     {
         $info = $this->getModuleInfo($moduleName);
 

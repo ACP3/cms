@@ -3,21 +3,23 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 .rating {
-  unicode-bidi: bidi-override;
+  align-items: center;
   direction: rtl;
-  font-size: 24px;
   display: flex;
   justify-content: flex-end;
+  unicode-bidi: bidi-override;
 }
 .rating__star {
   font-family: 'Glyphicons Halflings', sans-serif;
-  font-weight: normal;
+  font-size: 24px;
   font-style: normal;
+  font-weight: normal;
+  margin-bottom: 0;
 }
 .rating__star::before {
+  color: #777;
   content: "\e007";
   padding-right: 5px;
-  color: #777;
 }
 .rating__star:hover,
 .rating__star:focus,
@@ -40,4 +42,7 @@
 .rating__star.rating__star_active ~ .rating__star::before {
   content: "\e006";
   color: #e3cf7a;
+}
+.rating__already-rated {
+  direction: initial;
 }

@@ -13,6 +13,7 @@
         <item key="admin_index_delete">Delete resultset</item>
         <item key="admin_index_edit">Edit resultset</item>
         <item key="admin_index_settings">Settings</item>
+        <item key="already_rated">You've already rated this page.</item>
         <item key="customize_services">Customize available services</item>
         <item key="fb_app_id">Facebook App-ID</item>
         <item key="fb_secret">Facebook Secret</item>
