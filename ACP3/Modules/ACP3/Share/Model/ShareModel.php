@@ -20,7 +20,7 @@ class ShareModel extends AbstractModel
      */
     public function save(array $data, $entryId = null)
     {
-        $data = \array_merge($data, $this->getData($data));
+        $data = \array_merge($data, $this->mapDataFromRequest($data));
 
         return parent::save($data, $entryId);
     }
@@ -30,9 +30,9 @@ class ShareModel extends AbstractModel
      *
      * @return array
      */
-    private function getData(array $data): array
+    private function mapDataFromRequest(array $data): array
     {
-        $newData = [];
+        $mappedData = [];
         $keys = [
             'active' => 'share_active',
             'services' => 'share_services',
@@ -40,11 +40,15 @@ class ShareModel extends AbstractModel
         ];
         foreach ($keys as $column => $formField) {
             if (isset($data[$formField])) {
-                $newData[$column] = $data[$formField];
+                $mappedData[$column] = $data[$formField];
             }
         }
 
-        return $newData;
+        if (isset($data['share_customize_services']) && $data['share_customize_services'] == 0) {
+            $mappedData['services'] = [];
+        }
+
+        return $mappedData;
     }
 
     /**
