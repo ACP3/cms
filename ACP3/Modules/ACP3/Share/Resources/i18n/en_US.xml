@@ -14,12 +14,14 @@
         <item key="admin_index_edit">Edit resultset</item>
         <item key="admin_index_settings">Settings</item>
         <item key="already_rated">You've already rated this page.</item>
+        <item key="average_rating">Average rating</item>
         <item key="customize_services">Customize available services</item>
         <item key="fb_app_id">Facebook App-ID</item>
         <item key="fb_secret">Facebook Secret</item>
         <item key="mod_description">Makes it possible to share site contents via various social networks.</item>
         <item key="no_ratings_yet">No ratings yet</item>
         <item key="rate_with_x_stars">Rate with %stars% stars</item>
+        <item key="ratings_count">Ratings count</item>
         <item key="select_active">Please select whether users should be able to share this resultset on social networks or not.</item>
         <item key="select_customize_services">Please select whether you want to customize the available social networks of this resultset or not.</item>
         <item key="select_ratings_active">Please select whether users should be able to rate this resultset or not.</item>

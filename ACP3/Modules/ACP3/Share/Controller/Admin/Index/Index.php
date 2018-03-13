@@ -69,7 +69,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                     'search' => [0, 1],
                     'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')],
                 ],
-            ], 30)
+            ], 50)
             ->addColumn([
                 'label' => $this->translator->t('share', 'uri'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
@@ -78,6 +78,19 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'custom' => [
                     'path' => '%s',
                 ],
+            ], 40)
+            ->addColumn([
+                'label' => $this->translator->t('share', 'average_rating'),
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\RoundNumberColumnRenderer::class,
+                'fields' => ['average_rating'],
+                'custom' => [
+                    'precision' => 2,
+                ],
+            ], 30)
+            ->addColumn([
+                'label' => $this->translator->t('share', 'ratings_count'),
+                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
+                'fields' => ['ratings_count'],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
