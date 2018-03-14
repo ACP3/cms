@@ -4,7 +4,7 @@ services:
     arguments:
       - '@core.i18n.translator'
     tags:
-      - { name: core.eventListener, event: core.breadcrumb.steps.build_frontend_cache_after, method: execute }
+      - { name: core.eventListener, event: core.breadcrumb.steps.build_admin_cache_not_empty_steps_after, method: execute }
 
   acp.event.listener.on_get_site_and_page_title_before_listener:
     class: ACP3\Modules\ACP3\Acp\Event\Listener\OnGetSiteAndPageTitleBeforeListener
