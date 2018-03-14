@@ -57,12 +57,11 @@
         },
         mergeSettings: function () {
             var data = $(this.element).data();
-
             for (var key in data) {
                 if (data.hasOwnProperty(key)) {
                     var keyStripped = this.lowerCaseFirstLetter(key.replace('ajaxForm', ''));
 
-                    if (keyStripped.length > 0 && this.settings[keyStripped]) {
+                    if (keyStripped.length > 0 && typeof this.settings[keyStripped] !== "undefined") {
                         this.settings[keyStripped] = data[key];
                     }
                 }
