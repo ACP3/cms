@@ -23,7 +23,11 @@
          itemprop="aggregateRating"
          itemscope itemtype="http://schema.org/AggregateRating">
             <span itemprop="ratingValue">{$rating.average_rating|string_format:"%.2f"}</span> / 5
+        {if $rating.total_ratings > 1}
             ({lang t="share|total_x_ratings" args=['%ratings%' => $rating.total_ratings]})
+        {else}
+            ({lang t="share|total_1_rating"})
+        {/if}
     </div>
 {else}
     <div class="rating-summary">
