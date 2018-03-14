@@ -19,7 +19,7 @@ class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
         return [
             'main.*',
             'AVG(sr.stars) AS average_rating',
-            'COUNT(sr.id) AS ratings_count'
+            'COUNT(sr.id) AS ratings_count',
         ];
     }
 

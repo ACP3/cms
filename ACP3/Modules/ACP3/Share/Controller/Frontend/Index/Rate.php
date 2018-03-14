@@ -27,6 +27,10 @@ class Rate extends AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Share\Model\ShareRatingModel
      */
     private $shareRatingModel;
+    /**
+     * @var bool|null
+     */
+    private $alredyRated;
 
     /**
      * Rate constructor.
@@ -72,7 +76,10 @@ class Rate extends AbstractFrontendAction
         return [
             'rating' => \array_merge(
                 $this->shareRatingsRepository->getRatingStatistics($id),
-                ['already_rated' => $this->hasAlreadyRated($ipAddress, $id)]
+                [
+                    'share_id' => $id,
+                    'already_rated' => $this->hasAlreadyRated($ipAddress, $id),
+                ]
             ),
         ];
     }
@@ -111,6 +118,10 @@ class Rate extends AbstractFrontendAction
      */
     private function hasAlreadyRated(string $ipAddress, int $shareId): bool
     {
-        return $this->shareRatingsRepository->hasAlreadyRated($ipAddress, $shareId) === true;
+        if ($this->alredyRated === null) {
+            $this->alredyRated = $this->shareRatingsRepository->hasAlreadyRated($ipAddress, $shareId);
+        }
+
+        return $this->alredyRated;
     }
 }

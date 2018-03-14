@@ -72,6 +72,7 @@ class AddSocialSharingListener
             if (!empty($sharingInfo)) {
                 $sharing['ratings_active'] = ((int) $sharingInfo['ratings_active']) === 1;
                 $sharing['rating'] = $this->shareRatingsRepository->getRatingStatistics($sharingInfo['id']);
+                $sharing['rating']['share_id'] = $sharingInfo['id'];
 
                 if (((int) $sharingInfo['active']) === 1) {
                     $sharing['path'] = $this->request->getUriWithoutPages();
