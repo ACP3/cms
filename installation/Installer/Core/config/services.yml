@@ -30,15 +30,19 @@ services:
     arguments:
       - '@core.view.renderer.smarty'
 
+  core.view.renderer.smarty.smarty_configurator:
+    class: ACP3\Installer\Core\View\Renderer\Smarty\SmartyConfigurator
+    arguments:
+      - '%core.environment%'
+
   smarty:
     class: Smarty
+    configurator: 'core.view.renderer.smarty.smarty_configurator:configure'
 
   core.view.renderer.smarty:
     class: ACP3\Core\View\Renderer\Smarty
     arguments:
       - '@smarty'
-      - '@core.environment.application_path'
-      - '%core.environment%'
 
   core.event_dispatcher:
     class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
