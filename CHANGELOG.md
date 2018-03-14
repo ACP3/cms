@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - changed the AJAX-forms (ajax-form.js) be act as a library and it is now loaded by default
 - the JS cookie library is not loaded by default anymore
+- reworked the view initialization
 
 ### Fixed
 - when adding an asset library which is enabled by default,
