@@ -8,10 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - added a new module: Social sharing using the shariff library
 - added font-awesome as new asset library (it is disabled by default)
+- made it possible to override all available settings of the AJAX-forms jQuery plugin with `data-` attributes
+
+### Changed
+- changed the AJAX-forms (ajax-form.js) be act as a library and it is now loaded by default
+- the JS cookie library is not loaded by default anymore
 
 ### Fixed
 - when adding an asset library which is enabled by default,
-  the dependencies will now also get enabled 
+  the dependencies will now also get enabled
+- fixed a regression introduced with last release regarding the breadcrumb steps
 
 ## [4.24.0] - 2018-03-10
 ### Added
