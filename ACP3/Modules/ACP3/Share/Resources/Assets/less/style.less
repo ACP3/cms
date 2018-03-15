@@ -3,6 +3,9 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
+@rating-star-color-default: #777;
+@rating-star-color-active: #e3cf7a;
+
 .rating {
   direction: rtl;
   display: inline-block;
@@ -33,7 +36,7 @@
   .rating__star {
     &::before {
       content: "\e006";
-      color: #e3cf7a;
+      color: @rating-star-color-active;
     }
   }
 }
@@ -47,7 +50,7 @@
   margin-bottom: 0;
 
   &::before {
-    color: #777;
+    color: @rating-star-color-default;
     content: "\e007";
     padding-right: 5px;
   }
@@ -60,7 +63,7 @@
 
     &::before,
     & ~ .rating__star::before {
-      color: #e3cf7a;
+      color: @rating-star-color-active;
     }
   }
 }
