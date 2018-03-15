@@ -28,6 +28,7 @@ class View
 
     /**
      * View constructor.
+     *
      * @param \ACP3\Core\View\Renderer\RendererInterface $renderer
      */
     public function __construct(RendererInterface $renderer)
