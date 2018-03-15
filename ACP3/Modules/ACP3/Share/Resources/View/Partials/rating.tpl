@@ -4,20 +4,28 @@
       data-ajax-form="true"
       data-ajax-form-target-element="#rating-wrapper"
       data-ajax-form-loading-overlay="false">
-    <div class="rating">
-        {if isset($rating.already_rated) && $rating.already_rated}
-            <small class="rating__already-rated">{lang t="share|already_rated"}</small>
-        {/if}
-        {$rating_rounded=$rating.average_rating|round:0|default:0}
+    <div class="rating {if $UA_IS_MOBILE === true} rating_mobile{/if}">
+        <div class="rating__average" style="width:{(($rating.average_rating|default:0) * 100 / 5)|round:0}%">
+            <span class="rating__star"></span>
+            <span class="rating__star"></span>
+            <span class="rating__star"></span>
+            <span class="rating__star"></span>
+            <span class="rating__star"></span>
+        </div>
         {for $i=5 to 1 step -1}
             <label for="rating-star-{$i}"
                    title="{lang t="share|rate_with_x_stars" args=['%stars%' => $i]}"
-                   class="rating__star{if $i == $rating_rounded} rating__star_active{/if}">
+                   class="rating__star">
                 <input type="radio" id="rating-star-{$i}" name="stars" value="{$i}" class="hidden" required>
             </label>
         {/for}
     </div>
 </form>
+{if isset($rating.already_rated) && $rating.already_rated}
+    <div class="small rating__already-rated">
+        <em>{lang t="share|already_rated"}</em>
+    </div>
+{/if}
 {if isset($rating.total_ratings) && $rating.total_ratings > 0}
     <div class="rating-summary"
          itemprop="aggregateRating"
