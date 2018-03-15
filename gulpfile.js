@@ -16,7 +16,7 @@
     gulp.task('copy', getTask('copy'));
     gulp.task('bump-version', getTask('bump-version'));
     gulp.task('less', getTask('less'));
-    gulp.task('watch', getTask('watch'));
+    gulp.task('watch', ['less'], getTask('watch'));
 
     gulp.task('default', ['watch']);
 })();
