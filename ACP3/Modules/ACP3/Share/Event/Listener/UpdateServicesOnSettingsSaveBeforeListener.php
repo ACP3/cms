@@ -80,7 +80,7 @@ class UpdateServicesOnSettingsSaveBeforeListener
         $currentServices = \unserialize($currentSettings['services']);
 
         return \array_diff(
-            is_array($currentServices) ? $currentServices : [],
+            \is_array($currentServices) ? $currentServices : [],
             \unserialize($newSettings['services'])
         );
     }
