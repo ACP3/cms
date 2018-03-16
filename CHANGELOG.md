@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.25.2] - 2018-03-16
+### Fixed
+- the `rate` controller action of the social sharing module inherited from the wrong `AbstractFrontendAction`
+
 ## [4.25.1] - 2018-03-16
 ### Fixed
 - fixed a bug when initially saving the to be activated social services
@@ -571,7 +575,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.25.1...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.25.2...HEAD
+[4.25.2]: https://gitlab.com/ACP3/cms/compare/v4.25.1...v4.25.2
 [4.25.1]: https://gitlab.com/ACP3/cms/compare/v4.25.0...v4.25.1
 [4.25.0]: https://gitlab.com/ACP3/cms/compare/v4.24.0...v4.25.0
 [4.24.0]: https://gitlab.com/ACP3/cms/compare/v4.23.0...v4.24.0
