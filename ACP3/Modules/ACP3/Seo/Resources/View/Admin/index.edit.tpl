@@ -1,1 +1,1 @@
-{extends file="asset:seo/admin/index.create.tpl"}
+{extends file="asset:Seo/Admin/index.create.tpl"}

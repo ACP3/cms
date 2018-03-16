@@ -73,6 +73,12 @@ services:
       - { name: core.helpers.data_grid.column_renderer }
     public: false
 
+  core.helpers.data_grid.column_renderer.round_number_column_renderer:
+    class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\RoundNumberColumnRenderer
+    tags:
+      - { name: core.helpers.data_grid.column_renderer }
+    public: false
+
   core.helpers.data_grid.column_renderer.route_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\RouteColumnRenderer
     arguments:

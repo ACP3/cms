@@ -13,5 +13,6 @@
         <div class="content">
             {$newsletter.text|nl2p}
         </div>
+        {event name="share.layout.add_social_sharing"}
     </article>
 {/block}

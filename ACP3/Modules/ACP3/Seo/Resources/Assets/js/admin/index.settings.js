@@ -5,6 +5,6 @@
 
 jQuery(document).ready(function ($) {
     $(':radio[name="sitemap_is_enabled"]').on('click change', function () {
-        $('#seo-sitemap-wrapper').toggle(this.value == 1);
+        $('#seo-sitemap-wrapper').toggle(parseInt(this.value) === 1);
     }).filter(':checked').triggerHandler('click');
 });

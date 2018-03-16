@@ -23,7 +23,4 @@
             </div>
         </div>
     {/foreach}
-    {javascripts}
-        {include_js module="system" file="ajax-form"}
-    {/javascripts}
 {/block}

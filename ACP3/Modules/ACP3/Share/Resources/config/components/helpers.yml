@@ -1,0 +1,20 @@
+services:
+  share.helpers.share_form_fields:
+    class: ACP3\Modules\ACP3\Share\Helpers\ShareFormFields
+    arguments:
+      - '@core.config'
+      - '@core.i18n.translator'
+      - '@core.helpers.forms'
+      - '@share.helpers.social_services'
+      - '@share.model.share_repository'
+
+  share.helpers.social_services:
+    class: ACP3\Modules\ACP3\Share\Helpers\SocialServices
+    arguments:
+      - '@core.config'
+
+  share.helpers.social_sharing_manager:
+    class: ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager
+    arguments:
+      - '@share.model.share_model'
+      - '@share.model.share_repository'

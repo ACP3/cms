@@ -30,12 +30,10 @@ class View
      * View constructor.
      *
      * @param \ACP3\Core\View\Renderer\RendererInterface $renderer
-     * @param array                                      $params
      */
-    public function __construct(RendererInterface $renderer, array $params = [])
+    public function __construct(RendererInterface $renderer)
     {
         $this->renderer = $renderer;
-        $this->renderer->configure($params);
     }
 
     /**

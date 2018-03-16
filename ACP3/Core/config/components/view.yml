@@ -4,13 +4,18 @@ services:
     arguments:
       - '@core.view.renderer.smarty'
 
-  core.view.renderer.smarty_renderer_factory:
-    class: ACP3\Core\View\Renderer\SmartyRendererFactory
+  core.view.renderer.smarty.smarty_configurator:
+    class: ACP3\Core\View\Renderer\Smarty\SmartyConfigurator
     arguments:
       - '@core.environment.application_path'
       - '@core.config'
-      - %core.environment%
+      - '%core.environment%'
+
+  smarty:
+    class: Smarty
+    configurator: 'core.view.renderer.smarty.smarty_configurator:configure'
 
   core.view.renderer.smarty:
     class: ACP3\Core\View\Renderer\Smarty
-    factory: ['@core.view.renderer.smarty_renderer_factory', create]
+    arguments:
+      - '@smarty'

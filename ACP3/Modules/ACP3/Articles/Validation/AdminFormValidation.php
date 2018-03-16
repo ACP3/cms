@@ -90,9 +90,13 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
             'menus.validation.validate_manage_menu_item',
             $formData
         );
-
         $this->validator->dispatchValidationEvent(
             'seo.validation.validate_uri_alias',
+            $formData,
+            ['path' => $this->uriAlias]
+        );
+        $this->validator->dispatchValidationEvent(
+            'share.validation.validate_sharing_info',
             $formData,
             ['path' => $this->uriAlias]
         );

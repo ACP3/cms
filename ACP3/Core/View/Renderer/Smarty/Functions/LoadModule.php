@@ -8,6 +8,7 @@
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\ACL;
+use ACP3\Core\Application\BootstrapCache\Esi;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Router\RouterInterface;
 
@@ -36,7 +37,7 @@ class LoadModule extends AbstractFunction
     public function __construct(
         ACL $acl,
         RouterInterface $router,
-        $applicationMode
+        string $applicationMode
     ) {
         $this->acl = $acl;
         $this->router = $router;
@@ -72,7 +73,7 @@ class LoadModule extends AbstractFunction
      *
      * @return array
      */
-    protected function convertPathToArray($resource)
+    protected function convertPathToArray(string $resource)
     {
         $pathArray = \explode('/', \strtolower($resource));
 
@@ -123,18 +124,17 @@ class LoadModule extends AbstractFunction
      *
      * @return string
      */
-    protected function esiInclude($path, array $arguments)
+    protected function esiInclude(string $path, array $arguments)
     {
         $routeArguments = '';
         foreach ($arguments as $key => $value) {
             $routeArguments .= '/' . $key . '_' . $value;
         }
 
-        $debug = '';
-        if ($this->applicationMode === ApplicationMode::PRODUCTION) {
-            $debug = ' onerror="continue"';
-        }
-
-        return '<esi:include src="' . $this->router->route($path . $routeArguments, true) . '"' . $debug . ' />';
+        return (new Esi())->renderIncludeTag(
+            $this->router->route($path . $routeArguments, true),
+            '',
+            $this->applicationMode === ApplicationMode::PRODUCTION
+        );
     }
 }

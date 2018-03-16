@@ -17,4 +17,5 @@ interface ColumnTypes
     const COLUMN_TYPE_TEXT = 'text';
     const COLUMN_TYPE_TEXT_WYSIWYG = 'text_wysiwyg';
     const COLUMN_TYPE_RAW = 'raw';
+    const COLUMN_TYPE_SERIALIZABLE = 'serializable';
 }

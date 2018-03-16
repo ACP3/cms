@@ -10,15 +10,13 @@ namespace ACP3\Modules\ACP3\News\Event\Listener;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\News\Cache;
-use ACP3\Modules\ACP3\News\Controller\Admin\Index\CommentsHelperTrait;
 use ACP3\Modules\ACP3\News\Helpers;
 use ACP3\Modules\ACP3\News\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
+use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class OnNewsModelAfterDeleteListener
 {
-    use CommentsHelperTrait;
-
     /**
      * @var Modules
      */
@@ -31,31 +29,42 @@ class OnNewsModelAfterDeleteListener
      * @var Cache
      */
     protected $cache;
+    /**
+     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null
+     */
+    private $socialSharingManager;
+    /**
+     * @var \ACP3\Modules\ACP3\Comments\Helpers|null
+     */
+    private $commentsHelpers;
 
     /**
      * OnNewsModelAfterDeleteListener constructor.
      *
-     * @param Modules $modules
-     * @param Cache   $cache
+     * @param Modules                                                    $modules
+     * @param Cache                                                      $cache
+     * @param \ACP3\Modules\ACP3\Comments\Helpers|null                   $commentsHelpers
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null         $uriAliasManager
+     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null $socialSharingManager
      */
     public function __construct(
         Modules $modules,
-        Cache $cache
+        Cache $cache,
+        ?\ACP3\Modules\ACP3\Comments\Helpers $commentsHelpers,
+        ?UriAliasManager $uriAliasManager,
+        ?SocialSharingManager $socialSharingManager
     ) {
         $this->modules = $modules;
         $this->cache = $cache;
-    }
-
-    /**
-     * @param UriAliasManager $uriAliasManager
-     */
-    public function setUriAliasManager(UriAliasManager $uriAliasManager)
-    {
+        $this->commentsHelpers = $commentsHelpers;
         $this->uriAliasManager = $uriAliasManager;
+        $this->socialSharingManager = $socialSharingManager;
     }
 
     /**
      * @param ModelSaveEvent $event
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(ModelSaveEvent $event)
     {
@@ -73,8 +82,12 @@ class OnNewsModelAfterDeleteListener
 
             $this->cache->getCacheDriver()->delete(Cache::CACHE_ID . $item);
 
+            $uri = \sprintf(Helpers::URL_KEY_PATTERN, $item);
             if ($this->uriAliasManager) {
-                $this->uriAliasManager->deleteUriAlias(\sprintf(Helpers::URL_KEY_PATTERN, $item));
+                $this->uriAliasManager->deleteUriAlias($uri);
+            }
+            if ($this->socialSharingManager) {
+                $this->socialSharingManager->deleteSharingInfo($uri);
             }
         }
     }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) by the ACP3 Developers.
+  ~ See the LICENCE file at the top-level module directory for licencing details.
+  -->
+<language>
+    <keys>
+        <item key="activate_ratings">Activate rating</item>
+        <item key="activate_sharing">Activate social sharing</item>
+        <item key="active">Active</item>
+        <item key="active_services">Active services</item>
+        <item key="admin_index_create">New resultset</item>
+        <item key="admin_index_delete">Delete resultset</item>
+        <item key="admin_index_edit">Edit resultset</item>
+        <item key="admin_index_settings">Settings</item>
+        <item key="already_rated">You've already rated this page.</item>
+        <item key="average_rating">Average rating</item>
+        <item key="customize_services">Customize available services</item>
+        <item key="fb_app_id">Facebook App-ID</item>
+        <item key="fb_secret">Facebook Secret</item>
+        <item key="mod_description">Makes it possible to share site contents via various social networks.</item>
+        <item key="no_ratings_yet">No ratings yet</item>
+        <item key="rate_with_x_stars">Rate with %stars% stars</item>
+        <item key="ratings_count">Ratings count</item>
+        <item key="select_active">Please select whether users should be able to share this resultset on social networks or not.</item>
+        <item key="select_customize_services">Please select whether you want to customize the available social networks of this resultset or not.</item>
+        <item key="select_ratings_active">Please select whether users should be able to rate this resultset or not.</item>
+        <item key="select_services">Please select which services you want to activate. At least one service has to be active.</item>
+        <item key="service_addthis">AddThis</item>
+        <item key="service_diaspora">diaspora</item>
+        <item key="service_facebook">Facebook</item>
+        <item key="service_flattr">Flattr</item>
+        <item key="service_googleplus">Google+</item>
+        <item key="service_info">Info</item>
+        <item key="service_linkedin">LinkedIn</item>
+        <item key="service_mail">E-Mail</item>
+        <item key="service_pinterest">Pinterest</item>
+        <item key="service_print">Seite drucken</item>
+        <item key="service_qzone">Qzone</item>
+        <item key="service_reddit">reddit</item>
+        <item key="service_stumbleupon">StumbleUpon</item>
+        <item key="service_telegram">Telegram</item>
+        <item key="service_tencent - weibo">Tencent Weibo</item>
+        <item key="service_threema">Threema</item>
+        <item key="service_tumblr">Tumblr</item>
+        <item key="service_twitter">Twitter</item>
+        <item key="service_vk">VK</item>
+        <item key="service_weibo">Sina Weibo</item>
+        <item key="service_whatsapp">WhatsApp</item>
+        <item key="service_xing">Xing</item>
+        <item key="services">Dienste</item>
+        <item key="share">Social sharing</item>
+        <item key="total_1_rating"><![CDATA[based on <span itemprop="reviewCount">1</span> rating]]></item>
+        <item key="total_x_ratings"><![CDATA[based on <span itemprop="reviewCount">%ratings%</span> ratings]]></item>
+        <item key="type_in_valid_resource">Please type in a valid path to an ACP3 internal resource.</item>
+        <item key="uri">Path</item>
+    </keys>
+</language>

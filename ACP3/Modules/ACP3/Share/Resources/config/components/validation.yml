@@ -1,0 +1,11 @@
+services:
+  share.validation.admin_form_validation:
+    class: ACP3\Modules\ACP3\Share\Validation\AdminFormValidation
+    parent: core.validator.abstract
+
+  share.validation.admin_settings_form_validation:
+    class: ACP3\Modules\ACP3\Share\Validation\AdminSettingsFormValidation
+    arguments:
+      - '@core.i18n.translator'
+      - '@core.validator'
+      - '@share.helpers.social_services'

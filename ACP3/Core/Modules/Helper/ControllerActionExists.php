@@ -31,7 +31,7 @@ class ControllerActionExists
      *
      * @return bool
      */
-    public function controllerActionExists($path)
+    public function controllerActionExists(string $path)
     {
         $pathArray = \explode('/', \strtolower($path));
 

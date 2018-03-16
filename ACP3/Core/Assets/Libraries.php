@@ -8,6 +8,7 @@
 namespace ACP3\Core\Assets;
 
 use ACP3\Core\Assets\Event\AddLibraryEvent;
+use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Libraries
@@ -22,11 +23,19 @@ class Libraries
         ],
         'jquery' => [
             'enabled' => true,
+            'enabled_for_ajax' => false,
             'js' => 'jquery.min.js',
         ],
         'js-cookie' => [
-            'enabled' => true,
+            'enabled' => false,
+            'enabled_for_ajax' => false,
             'js' => 'js.cookie.js',
+        ],
+        'ajax-form' => [
+            'enabled' => true,
+            'enabled_for_ajax' => false,
+            'dependencies' => ['jquery'],
+            'js' => 'ajax-form.js',
         ],
         'fancybox' => [
             'enabled' => false,
@@ -57,20 +66,32 @@ class Libraries
             'css' => 'bootstrap-datetimepicker.css',
             'js' => 'bootstrap-datetimepicker.min.js',
         ],
+        'font-awesome' => [
+            'enabled' => false,
+            'css' => 'font-awesome.css',
+        ],
     ];
     /**
      * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
+    /**
+     * @var \ACP3\Core\Http\RequestInterface
+     */
+    private $request;
 
     /**
      * Libraries constructor.
      *
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param \ACP3\Core\Http\RequestInterface $request
+     * @param EventDispatcherInterface         $eventDispatcher
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(
+        RequestInterface $request,
+        EventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->request = $request;
     }
 
     public function dispatchAddLibraryEvent()
@@ -96,6 +117,10 @@ class Libraries
     {
         if (!isset($this->libraries[$identifier])) {
             $this->libraries[$identifier] = $options;
+        }
+
+        if (isset($options['enabled']) && $options['enabled'] === true) {
+            $this->enableLibraries($options['dependencies'] ?? []);
         }
 
         return $this;
@@ -132,11 +157,28 @@ class Libraries
     {
         $enabledLibraries = [];
         foreach ($this->libraries as $library => $values) {
-            if ($values['enabled'] === true) {
-                $enabledLibraries[] = $library;
+            if ($this->includeInXmlHttpRequest($values)) {
+                continue;
             }
+            if ($values['enabled'] === false) {
+                continue;
+            }
+
+            $enabledLibraries[] = $library;
         }
 
         return $enabledLibraries;
+    }
+
+    /**
+     * @param array $values
+     *
+     * @return bool
+     */
+    private function includeInXmlHttpRequest(array $values): bool
+    {
+        return $this->request->isXmlHttpRequest()
+            && isset($values['enabled_for_ajax'])
+            && $values['enabled_for_ajax'] === false;
     }
 }

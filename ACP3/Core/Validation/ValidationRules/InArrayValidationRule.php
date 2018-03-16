@@ -14,7 +14,7 @@ class InArrayValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        if (\is_array($data) && \array_key_exists($field, $data)) {
+        if (\is_array($data) && \array_key_exists($field, $data) && !\is_array($data[$field])) {
             return $this->isValid($data[$field], $field, $extra);
         }
 
@@ -22,17 +22,28 @@ class InArrayValidationRule extends AbstractValidationRule
             return false;
         }
 
-        return $this->checkInArray($data, $extra['haystack']);
+        return $this->checkInArray($data, $field, $extra['haystack']);
     }
 
     /**
-     * @param string $needle
-     * @param array  $haystack
+     * @param string|array $data
+     * @param string       $field
+     * @param array        $haystack
      *
      * @return bool
      */
-    protected function checkInArray($needle, array $haystack)
+    protected function checkInArray($data, string $field, array $haystack)
     {
-        return \in_array($needle, $haystack);
+        if (isset($data[$field]) && \is_array($data[$field])) {
+            foreach ($data[$field] as $row) {
+                if (\in_array($row, $haystack) === false) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return \in_array($data, $haystack);
     }
 }

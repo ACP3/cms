@@ -1,0 +1,12 @@
+services:
+  share.installer.schema:
+    class: ACP3\Modules\ACP3\Share\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
+    public: false
+
+  share.installer.migration:
+    class: ACP3\Modules\ACP3\Share\Installer\Migration
+    tags:
+      - { name: core.installer.migration }
+    public: false
