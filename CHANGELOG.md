@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- fixed a bug when initially saving the to be activated social services
+
 ## [4.25.0] - 2018-03-16
 ### Added
 - added a new module: Social sharing using the shariff library
