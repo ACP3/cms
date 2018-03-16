@@ -7,8 +7,8 @@
 
 namespace ACP3\Modules\ACP3\Share\Controller\Frontend\Index;
 
+use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
-use ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
 use ACP3\Modules\ACP3\Share\Model\ShareRatingModel;
