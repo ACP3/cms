@@ -77,9 +77,10 @@ class UpdateServicesOnSettingsSaveBeforeListener
     {
         $currentSettings = $this->settings->getSettings(Schema::MODULE_NAME);
         $newSettings = $event->getData();
+        $currentServices = \unserialize($currentSettings['services']);
 
         return \array_diff(
-            \unserialize($currentSettings['services']),
+            is_array($currentServices) ? $currentServices : [],
             \unserialize($newSettings['services'])
         );
     }
