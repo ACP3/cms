@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- the `rate` controller action of the social sharing module inherited from the wrong `AbstractFrontendAction`
+
 ## [4.25.1] - 2018-03-16
 ### Fixed
 - fixed a bug when initially saving the to be activated social services
