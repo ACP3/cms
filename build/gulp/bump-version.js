@@ -4,6 +4,7 @@
  */
 
 const argv = require('yargs').argv;
+const moment = require('moment');
 
 module.exports = (gulp, plugins) => {
     "use strict";
@@ -51,6 +52,21 @@ module.exports = (gulp, plugins) => {
         try {
             const from = getCurrentVersion();
             const bumpedVersion = bumpVersion(from);
+
+            gulp.src(
+                [
+                    './CHANGELOG.md',
+                ]
+            ).pipe(plugins.change((content) => {
+                const currentDate = moment().format('YYYY-MM-DD');
+                return content
+                    .replace('## [Unreleased]', `## [${bumpedVersion}] - ${currentDate}`)
+                    .replace(
+                        `[Unreleased]: https://gitlab.com/ACP3/cms/compare/v${from}...HEAD`,
+                        `[Unreleased]: https://gitlab.com/ACP3/cms/compare/v${bumpedVersion}...HEAD\n` +
+                        `[${bumpedVersion}]: https://gitlab.com/ACP3/cms/compare/v${from}...v${bumpedVersion}`
+                    );
+            })).pipe(gulp.dest('./'));
 
             return gulp.src(
                 [
