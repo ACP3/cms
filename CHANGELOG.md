@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 2018-xx-yy
+## [Unreleased]
 ### Added
 - added a new module: Social sharing using the shariff library
 - added font-awesome as new asset library (it is disabled by default)
