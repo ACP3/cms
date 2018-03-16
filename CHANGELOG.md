@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.25.0] - 2018-03-16
 ### Added
 - added a new module: Social sharing using the shariff library
 - added font-awesome as new asset library (it is disabled by default)
@@ -567,8 +567,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.24.0...HEAD
-[4.24.0]: https://gitlab.com/ACP3/cms/compare/v4.23...v4.24.0
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.25.0...HEAD
+[4.25.0]: https://gitlab.com/ACP3/cms/compare/v4.24.0...v4.25.0
+[4.24.0]: https://gitlab.com/ACP3/cms/compare/v4.23.0...v4.24.0
 [4.23.0]: https://gitlab.com/ACP3/cms/compare/v4.22.1...v4.23.0
 [4.22.1]: https://gitlab.com/ACP3/cms/compare/v4.22.0...v4.22.1
 [4.22.0]: https://gitlab.com/ACP3/cms/compare/v4.21.2...v4.22.0
