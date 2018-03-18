@@ -45,6 +45,7 @@ class AddSocialSharingListener
 
     /**
      * AddSocialSharingListener constructor.
+     *
      * @param \ACP3\Core\Modules                                               $modules
      * @param \ACP3\Core\Http\RequestInterface                                 $request
      * @param \ACP3\Core\View                                                  $view
