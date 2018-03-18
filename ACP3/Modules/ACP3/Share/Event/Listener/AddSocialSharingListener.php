@@ -9,13 +9,19 @@ namespace ACP3\Modules\ACP3\Share\Event\Listener;
 
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\Modules;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Share\Helpers\SocialServices;
+use ACP3\Modules\ACP3\Share\Installer\Schema;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
 
 class AddSocialSharingListener
 {
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
@@ -39,7 +45,7 @@ class AddSocialSharingListener
 
     /**
      * AddSocialSharingListener constructor.
-     *
+     * @param \ACP3\Core\Modules                                               $modules
      * @param \ACP3\Core\Http\RequestInterface                                 $request
      * @param \ACP3\Core\View                                                  $view
      * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices                  $socialServices
@@ -47,6 +53,7 @@ class AddSocialSharingListener
      * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository $shareRatingsRepository
      */
     public function __construct(
+        Modules $modules,
         RequestInterface $request,
         View $view,
         SocialServices $socialServices,
@@ -58,6 +65,7 @@ class AddSocialSharingListener
         $this->socialServices = $socialServices;
         $this->shareRepository = $shareRepository;
         $this->shareRatingsRepository = $shareRatingsRepository;
+        $this->modules = $modules;
     }
 
     /**
@@ -65,6 +73,10 @@ class AddSocialSharingListener
      */
     public function execute(): void
     {
+        if ($this->modules->isActive(Schema::MODULE_NAME) === false) {
+            return;
+        }
+
         if ($this->request->getArea() === AreaEnum::AREA_FRONTEND) {
             $sharingInfo = $this->shareRepository->getOneByUri($this->request->getUriWithoutPages());
 
