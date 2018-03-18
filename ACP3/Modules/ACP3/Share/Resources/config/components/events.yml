@@ -7,6 +7,7 @@ services:
   share.event.add_social_sharing_listener:
     class: ACP3\Modules\ACP3\Share\Event\Listener\AddSocialSharingListener
     arguments:
+      - '@core.modules'
       - '@core.http.request'
       - '@core.view'
       - '@share.helpers.social_services'
