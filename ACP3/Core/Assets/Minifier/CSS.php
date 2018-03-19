@@ -22,7 +22,7 @@ class CSS extends AbstractMinifier
     /**
      * {@inheritdoc}
      */
-    protected function processLibraries($layout)
+    protected function processLibraries(string $layout): array
     {
         $cacheId = $this->buildCacheId($this->getAssetGroup(), $layout);
 
@@ -40,15 +40,24 @@ class CSS extends AbstractMinifier
     /**
      * Fetch all stylesheets of the enabled frontend frameworks/libraries.
      */
-    protected function fetchLibraries()
+    protected function fetchLibraries(): void
     {
         foreach ($this->assets->getLibraries() as $library) {
-            if ($library['enabled'] === true && isset($library[$this->getAssetGroup()]) === true) {
+            if ($library['enabled'] === false || isset($library[$this->getAssetGroup()]) === false) {
+                continue;
+            }
+
+            $stylesheets = $library[$this->getAssetGroup()];
+            if (!\is_array($stylesheets)) {
+                $stylesheets = [$stylesheets];
+            }
+
+            foreach ($stylesheets as $stylesheet) {
                 $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
                     !empty($library['module']) ? $library['module'] . '/Resources' : $this->systemAssetsModulePath,
-                    !empty($library['module']) ? $library['module'] : $this->systemAssetsDesignPath,
+                    $library['module'] ?? $this->systemAssetsDesignPath,
                     static::ASSETS_PATH_CSS,
-                    $library[$this->getAssetGroup()]
+                    $stylesheet
                 );
             }
         }
@@ -59,7 +68,7 @@ class CSS extends AbstractMinifier
      *
      * @param string $layout
      */
-    protected function fetchThemeStylesheets($layout)
+    protected function fetchThemeStylesheets(string $layout): void
     {
         foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
             $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
@@ -88,7 +97,7 @@ class CSS extends AbstractMinifier
     /**
      * Fetches the stylesheets of all currently enabled modules.
      */
-    protected function fetchModuleStylesheets()
+    protected function fetchModuleStylesheets(): void
     {
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $module) {

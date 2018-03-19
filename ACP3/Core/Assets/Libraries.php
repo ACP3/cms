@@ -68,7 +68,11 @@ class Libraries
         ],
         'font-awesome' => [
             'enabled' => false,
-            'css' => 'font-awesome.css',
+            'css' => [
+                'fa-brands.css',
+                'fa-regular.css',
+                'fontawesome.css',
+            ],
         ],
     ];
     /**
@@ -94,7 +98,7 @@ class Libraries
         $this->request = $request;
     }
 
-    public function dispatchAddLibraryEvent()
+    public function dispatchAddLibraryEvent(): void
     {
         $this->eventDispatcher->dispatch('core.assets.add_libraries', new AddLibraryEvent($this));
     }
@@ -102,7 +106,7 @@ class Libraries
     /**
      * @return array
      */
-    public function getLibraries()
+    public function getLibraries(): array
     {
         return $this->libraries;
     }
@@ -113,7 +117,7 @@ class Libraries
      *
      * @return $this
      */
-    public function addLibrary($identifier, array $options)
+    public function addLibrary(string $identifier, array $options): self
     {
         if (!isset($this->libraries[$identifier])) {
             $this->libraries[$identifier] = $options;
@@ -133,7 +137,7 @@ class Libraries
      *
      * @return $this
      */
-    public function enableLibraries(array $libraries)
+    public function enableLibraries(array $libraries): self
     {
         foreach ($libraries as $library) {
             if (\array_key_exists($library, $this->libraries) === true) {
@@ -153,7 +157,7 @@ class Libraries
     /**
      * @return array
      */
-    public function getEnabledLibraries()
+    public function getEnabledLibraries(): array
     {
         $enabledLibraries = [];
         foreach ($this->libraries as $library => $values) {

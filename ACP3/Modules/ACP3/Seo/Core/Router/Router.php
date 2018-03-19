@@ -23,16 +23,14 @@ class Router extends \ACP3\Core\Router\Router
      * @param \ACP3\Core\Http\RequestInterface           $request
      * @param \ACP3\Core\Environment\ApplicationPath     $appPath
      * @param \ACP3\Core\Settings\SettingsInterface      $config
-     * @param string                                     $environment
      */
     public function __construct(
         Aliases $aliases,
         RequestInterface $request,
         ApplicationPath $appPath,
-        SettingsInterface $config,
-        $environment
+        SettingsInterface $config
     ) {
-        parent::__construct($request, $appPath, $config, $environment);
+        parent::__construct($request, $appPath, $config);
 
         $this->aliases = $aliases;
     }
@@ -42,7 +40,7 @@ class Router extends \ACP3\Core\Router\Router
      *
      * @return string
      */
-    protected function preparePath($path)
+    protected function preparePath(string $path): string
     {
         $path = parent::preparePath($path);
 

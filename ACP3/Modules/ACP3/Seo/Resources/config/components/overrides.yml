@@ -32,4 +32,3 @@ services:
       - '@core.http.request'
       - '@core.environment.application_path'
       - '@core.config'
-      - '%core.environment%'

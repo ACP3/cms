@@ -7,7 +7,6 @@
 
 namespace ACP3\Core\Test;
 
-use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\Request;
 use ACP3\Core\Router\Router;
@@ -39,25 +38,15 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->router = new Router(
             $this->requestMock,
             $this->appPathMock,
-            $this->configMock,
-            ApplicationMode::PRODUCTION
+            $this->configMock
         );
     }
 
     protected function initializeMockObjects()
     {
-        $this->requestMock = $this->getMockBuilder(Request::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getScheme', 'getHost'])
-            ->getMock();
-        $this->appPathMock = $this->getMockBuilder(ApplicationPath::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getWebRoot', 'getPhpSelf'])
-            ->getMock();
-        $this->configMock = $this->getMockBuilder(SettingsInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getSettings', 'saveSettings'])
-            ->getMock();
+        $this->requestMock = $this->createMock(Request::class);
+        $this->appPathMock = $this->createMock(ApplicationPath::class);
+        $this->configMock = $this->createMock(SettingsInterface::class);
     }
 
     public function testRouteUseNoModRewrite()
@@ -86,7 +75,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      * @param int $callCountWebRoot
      * @param int $callCountPhpSelf
      */
-    protected function setAppPathMockExpectations($callCountWebRoot, $callCountPhpSelf)
+    protected function setAppPathMockExpectations(int $callCountWebRoot, int $callCountPhpSelf)
     {
         $this->appPathMock->expects($this->exactly($callCountWebRoot))
             ->method('getWebRoot')
@@ -97,22 +86,21 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param int  $callCount
      * @param bool $useModRewrite
      */
-    protected function setUpConfigMockExpectations($callCount = 1, $useModRewrite = false)
+    protected function setUpConfigMockExpectations(bool $useModRewrite = false)
     {
-        $this->configMock->expects($this->exactly($callCount))
+        $this->configMock->expects($this->atLeastOnce())
             ->method('getSettings')
             ->with('system')
-            ->willReturn(['mod_rewrite' => $useModRewrite]);
+            ->willReturn(['mod_rewrite' => $useModRewrite, 'homepage' => 'foo/bar/baz/']);
     }
 
     public function testRouteUseModRewrite()
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(1, 0);
-        $this->setUpConfigMockExpectations(1, true);
+        $this->setUpConfigMockExpectations(true);
 
         $path = 'news/index/index/';
         $expected = '/' . $path;
@@ -160,7 +148,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(0, 1);
-        $this->setUpConfigMockExpectations(1, true);
+        $this->setUpConfigMockExpectations(true);
 
         $path = 'acp/news/index/index/';
         $expected = '/index.php/' . $path;
@@ -214,5 +202,32 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $expected = '/index.php/acp/acp/index/index/';
 
         $this->assertEquals($expected, $this->router->route($path));
+    }
+
+    /**
+     * @dataProvider homepageRouteDataProvider()
+     *
+     * @param string    $path
+     * @param bool      $absolute
+     * @param bool|null $isSecure
+     * @param string    $expected
+     */
+    public function testRouteIsHomepage(string $path, bool $absolute, ?bool $isSecure, string $expected)
+    {
+        $this->setUpRequestMockExpectations();
+        $this->setAppPathMockExpectations(1, 0);
+        $this->setUpConfigMockExpectations();
+
+        $this->assertEquals($expected, $this->router->route($path, $absolute, $isSecure));
+    }
+
+    public function homepageRouteDataProvider(): array
+    {
+        return [
+            ['foo/bar/baz', false, null, '/'],
+            ['foo/bar/baz', true, null, 'http://example.com/'],
+            ['foo/bar/baz', true, false, 'http://example.com/'],
+            ['foo/bar/baz', true, true, 'https://example.com/'],
+        ];
     }
 }

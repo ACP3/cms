@@ -77,7 +77,7 @@ class FileResolver
      *
      * @return string
      */
-    public function getStaticAssetPath($modulePath, $designPath, $dir = '', $file = '')
+    public function getStaticAssetPath(string $modulePath, string $designPath, string $dir = '', string $file = ''): string
     {
         if ($this->needsTrailingSlash($modulePath)) {
             $modulePath .= '/';
@@ -104,7 +104,7 @@ class FileResolver
      *
      * @return bool
      */
-    protected function needsTrailingSlash($path)
+    protected function needsTrailingSlash(string $path): bool
     {
         return $path !== '' && \strpos($path, '.') === false && !\preg_match('=/$=', $path);
     }
@@ -117,7 +117,7 @@ class FileResolver
      *
      * @return string
      */
-    private function resolveAssetPath($modulePath, $designPath, $dir, $file)
+    private function resolveAssetPath(string $modulePath, string $designPath, string $dir, string $file): string
     {
         if ($this->designAssetsPath === null) {
             $this->designAssetsPath = $this->appPath->getDesignPathInternal();
@@ -164,7 +164,7 @@ class FileResolver
      *
      * @return string
      */
-    public function resolveTemplatePath($template)
+    public function resolveTemplatePath(string $template): string
     {
         // A path without any slash was given -> has to be the layout file of the current design
         if (\strpos($template, '/') === false) {
