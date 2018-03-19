@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- updated fontawesome to version 5.0
+- updated shariff to version 3.0.0
+- when generating a route with the path of homepage, it simple will return `/`
+
 ## [4.25.7] - 2018-03-19
 ### Changed
 - added the CSS selector `.cookie_consent__body` to improve the styleability of the cookie consent
