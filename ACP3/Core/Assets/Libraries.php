@@ -71,6 +71,7 @@ class Libraries
             'css' => [
                 'fa-brands.css',
                 'fa-regular.css',
+                'fa-solid.css',
                 'fontawesome.css',
             ],
         ],
