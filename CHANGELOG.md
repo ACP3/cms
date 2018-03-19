@@ -4,9 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.26.1] - 2018-03-19
+### Added
+- added the solid icons of fontawesome 5
+
 ## [4.26.0] - 2018-03-19
 ### Changed
-- updated fontawesome to version 5.0
+- updated fontawesome to version 5
 - updated shariff to version 3.0.0
 - when generating a route with the path of homepage, it simple will return `/`
 
@@ -605,7 +609,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.26.0...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.26.1...HEAD
+[4.26.1]: https://gitlab.com/ACP3/cms/compare/v4.26.0...v4.26.1
 [4.26.0]: https://gitlab.com/ACP3/cms/compare/v4.25.7...v4.26.0
 [4.25.7]: https://gitlab.com/ACP3/cms/compare/v4.25.6...v4.25.7
 [4.25.6]: https://gitlab.com/ACP3/cms/compare/v4.25.5...v4.25.6

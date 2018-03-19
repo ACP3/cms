@@ -58,6 +58,7 @@ module.exports = function (gulp) {
                         nodeBasePath + '/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
                         nodeBasePath + '/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css',
                         nodeBasePath + '/@fortawesome/fontawesome-free-webfonts/css/fa-regular.css',
+                        nodeBasePath + '/@fortawesome/fontawesome-free-webfonts/css/fa-solid.css',
                         nodeBasePath + '/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css',
                         nodeBasePath + '/datatables.net-bs/css/dataTables.bootstrap.css'
 
