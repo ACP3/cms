@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- added the CSS selector `.cookie_consent__body` to improve the styleability of the cookie consent
+
+### Fixed
+- fixed the missing horizontal line when only the social sharing (without ratings) was active
+- various minor bug fixes and improvements for the social sharing module
+
 ## [4.25.6] - 2018-03-18
 ### Fixed
 - code styles fixes
