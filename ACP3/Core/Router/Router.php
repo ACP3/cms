@@ -10,7 +10,7 @@ namespace ACP3\Core\Router;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\System;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Router implements RouterInterface
 {
@@ -59,6 +59,10 @@ class Router implements RouterInterface
             }
         }
 
+        if ($path === '/') {
+            $path = '';
+        }
+
         return $this->addUriPrefix($path, $isAbsolute, $isSecure) . $path;
     }
 
@@ -98,6 +102,10 @@ class Router implements RouterInterface
             }
         }
 
+        if ($this->isHomepage($path) === true) {
+            $path = '/';
+        }
+
         return $path;
     }
 
@@ -126,7 +134,11 @@ class Router implements RouterInterface
             $prefix .= $this->request->getHost();
         }
 
-        $prefix .= $this->useModRewrite($path) ? $this->appPath->getWebRoot() : $this->appPath->getPhpSelf() . '/';
+        if ($this->useModRewrite($path) || $path === '') {
+            $prefix .= $this->appPath->getWebRoot();
+        } else {
+            $prefix .= $this->appPath->getPhpSelf() . '/';
+        }
 
         return $prefix;
     }
@@ -156,7 +168,17 @@ class Router implements RouterInterface
      */
     protected function useModRewrite(string $path): bool
     {
-        return (bool) $this->config->getSettings(System\Installer\Schema::MODULE_NAME)['mod_rewrite'] === true &&
-        $this->isAdminUri($path) === false;
+        return (bool) $this->getSystemSettings()['mod_rewrite'] === true
+            && $this->isAdminUri($path) === false;
+    }
+
+    protected function getSystemSettings(): array
+    {
+        return $this->config->getSettings(Schema::MODULE_NAME);
+    }
+
+    protected function isHomepage(string $path): bool
+    {
+        return $path === $this->getSystemSettings()['homepage'];
     }
 }

@@ -55,7 +55,7 @@ class Aliases
             $this->aliasesCache = $this->seoCache->getCache();
         }
 
-        $path .= !\preg_match('/\/$/', $path) ? '/' : '';
+        $path .= (!\preg_match('/\/$/', $path) ? '/' : '');
 
         return $this->aliasesCache[$path]['alias'] ?? ($emptyOnNoResult === true ? '' : $path);
     }

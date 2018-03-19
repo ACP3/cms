@@ -28,14 +28,8 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->seoCacheMock = $this->getMockBuilder(Cache::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getCache'])
-            ->getMock();
-        $this->modulesMock = $this->getMockBuilder(Modules::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['isActive'])
-            ->getMock();
+        $this->seoCacheMock = $this->createMock(Cache::class);
+        $this->modulesMock = $this->createMock(Modules::class);
 
         $this->aliases = new Aliases($this->modulesMock, $this->seoCacheMock);
     }
