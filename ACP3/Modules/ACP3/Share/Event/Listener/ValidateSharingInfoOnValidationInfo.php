@@ -74,18 +74,27 @@ class ValidateSharingInfoOnValidationInfo
                             'haystack' => [0, 1],
                         ],
                     ]
-                )
-                ->addConstraint(
-                    InArrayValidationRule::class,
-                    [
-                        'data' => $event->getFormData(),
-                        'field' => 'share_services',
-                        'message' => $this->translator->t('share', 'select_services'),
-                        'extra' => [
-                            'haystack' => $this->socialServices->getActiveServices(),
-                        ],
-                    ]
-                )
+                );
+
+            if (isset($event->getFormData()['share_customize_services'])
+                && $event->getFormData()['share_customize_services'] == 1) {
+                $event
+                    ->getValidator()
+                    ->addConstraint(
+                        InArrayValidationRule::class,
+                        [
+                            'data' => $event->getFormData(),
+                            'field' => 'share_services',
+                            'message' => $this->translator->t('share', 'select_services'),
+                            'extra' => [
+                                'haystack' => $this->socialServices->getActiveServices(),
+                            ],
+                        ]
+                    );
+            }
+
+            $event
+                ->getValidator()
                 ->addConstraint(
                     InArrayValidationRule::class,
                     [

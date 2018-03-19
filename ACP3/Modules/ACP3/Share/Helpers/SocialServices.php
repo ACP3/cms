@@ -61,9 +61,14 @@ class SocialServices
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
+        $services = \unserialize($settings['services']);
+        if (\is_array($services) === false) {
+            $services = [];
+        }
+
         return \array_intersect(
             $this->getAllServices(),
-            \unserialize($settings['services'])
+            $services
         );
     }
 

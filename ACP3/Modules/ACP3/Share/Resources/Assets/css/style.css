@@ -9,9 +9,7 @@
   position: relative;
   unicode-bidi: bidi-override;
 }
-.rating:not(.rating_mobile):active .rating__average,
-.rating:not(.rating_mobile):focus .rating__average,
-.rating:not(.rating_mobile):hover .rating__average {
+.rating:hover .rating__average {
   visibility: hidden;
 }
 .rating__average {

@@ -4,7 +4,7 @@
       data-ajax-form="true"
       data-ajax-form-target-element="#rating-wrapper"
       data-ajax-form-loading-overlay="false">
-    <div class="rating {if $UA_IS_MOBILE === true} rating_mobile{/if}">
+    <div class="rating">
         <div class="rating__average" style="width:{(($rating.average_rating|default:0) * 100 / 5)|round:0}%">
             <span class="rating__star"></span>
             <span class="rating__star"></span>

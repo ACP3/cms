@@ -79,12 +79,12 @@ class ShareFormFields
             ),
             'customize_services' => $this->formsHelper->yesNoCheckboxGenerator(
                 'share_customize_services',
-                $this->hasCustomizedServices(\unserialize($sharingInfo['services'])) ? 1 : 0
+                $this->hasCustomizedServices($sharingInfo['services']) ? 1 : 0
             ),
             'services' => $this->formsHelper->choicesGenerator(
                 'share_services',
                 $this->getAvailableServices(),
-                $this->getCurrentServices(\unserialize($sharingInfo['services']))
+                $this->getCurrentServices($sharingInfo['services'])
             ),
             'ratings_active' => $this->formsHelper->yesNoCheckboxGenerator(
                 'share_ratings_active',
@@ -121,6 +121,12 @@ class ShareFormFields
             $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
             $sharingInfo['services'] = $settings['services'];
+        }
+
+        $sharingInfo['services'] = \unserialize($sharingInfo['services']);
+
+        if (\is_array($sharingInfo['services']) === false) {
+            $sharingInfo['services'] = [];
         }
 
         return $sharingInfo;
