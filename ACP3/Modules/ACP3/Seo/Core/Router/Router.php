@@ -30,7 +30,7 @@ class Router extends \ACP3\Core\Router\Router
         RequestInterface $request,
         ApplicationPath $appPath,
         SettingsInterface $config,
-        $environment
+        string $environment
     ) {
         parent::__construct($request, $appPath, $config, $environment);
 
@@ -42,7 +42,7 @@ class Router extends \ACP3\Core\Router\Router
      *
      * @return string
      */
-    protected function preparePath($path)
+    protected function preparePath(string $path): string
     {
         $path = parent::preparePath($path);
 

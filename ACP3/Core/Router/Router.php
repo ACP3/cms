@@ -39,13 +39,13 @@ class Router implements RouterInterface
      * @param RequestInterface  $request
      * @param ApplicationPath   $appPath
      * @param SettingsInterface $config
-     * @param $environment
+     * @param string            $environment
      */
     public function __construct(
         RequestInterface $request,
         ApplicationPath $appPath,
         SettingsInterface $config,
-        $environment
+        string $environment
     ) {
         $this->request = $request;
         $this->appPath = $appPath;
@@ -74,7 +74,7 @@ class Router implements RouterInterface
      *
      * @return string
      */
-    protected function preparePath($path)
+    protected function preparePath(string $path): string
     {
         $path = $path . (!\preg_match('/\/$/', $path) ? '/' : '');
         if ($path === 'acp/') {
@@ -94,7 +94,7 @@ class Router implements RouterInterface
      *
      * @return string
      */
-    protected function addControllerAndAction($path)
+    protected function addControllerAndAction(string $path): string
     {
         $pathArray = \preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
         $indexes = ($this->isAdminUri($path) === true) ? [2, 3] : [1, 2];
@@ -113,19 +113,19 @@ class Router implements RouterInterface
      *
      * @return bool
      */
-    protected function isAdminUri($path)
+    protected function isAdminUri(string $path): bool
     {
         return \preg_match(self::ADMIN_PANEL_PATTERN, $path) != false;
     }
 
     /**
-     * @param string $path
-     * @param bool   $isAbsolute
-     * @param bool   $isSecure
+     * @param string    $path
+     * @param bool      $isAbsolute
+     * @param bool|null $isSecure
      *
      * @return string
      */
-    protected function addUriPrefix($path, $isAbsolute, $isSecure)
+    protected function addUriPrefix(string $path, bool $isAbsolute, ?bool $isSecure): string
     {
         $prefix = '';
         if ($isAbsolute === true || $isSecure !== null) {
@@ -143,7 +143,7 @@ class Router implements RouterInterface
      *
      * @return string
      */
-    private function getScheme($isSecure)
+    private function getScheme(?bool $isSecure): string
     {
         if ($isSecure === null) {
             return $this->request->getScheme() . '://';
@@ -161,7 +161,7 @@ class Router implements RouterInterface
      *
      * @return bool
      */
-    protected function useModRewrite($path)
+    protected function useModRewrite(string $path): bool
     {
         return (bool) $this->config->getSettings(System\Installer\Schema::MODULE_NAME)['mod_rewrite'] === true &&
         $this->isAdminUri($path) === false;

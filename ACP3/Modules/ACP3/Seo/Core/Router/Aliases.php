@@ -45,7 +45,7 @@ class Aliases
      *
      * @return string
      */
-    public function getUriAlias($path, $emptyOnNoResult = false)
+    public function getUriAlias(string $path, bool $emptyOnNoResult = false): string
     {
         if ($this->isActive === false) {
             return $path;
@@ -57,9 +57,7 @@ class Aliases
 
         $path .= !\preg_match('/\/$/', $path) ? '/' : '';
 
-        return !empty($this->aliasesCache[$path]['alias'])
-            ? $this->aliasesCache[$path]['alias']
-            : ($emptyOnNoResult === true ? '' : $path);
+        return $this->aliasesCache[$path]['alias'] ?? ($emptyOnNoResult === true ? '' : $path);
     }
 
     /**
@@ -69,7 +67,7 @@ class Aliases
      *
      * @return bool
      */
-    public function uriAliasExists($path)
+    public function uriAliasExists(string $path): bool
     {
         return $this->getUriAlias($path, true) !== '';
     }
