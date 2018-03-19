@@ -3,7 +3,9 @@
         <button id="accept-cookies" class="cookie-consent__button btn btn-sm btn-success pull-right">
             {lang t="system|accept"}
         </button>
-        {$cookie_consent_text}
+        <div class="cookie-consent__body">
+            {$cookie_consent_text|rewrite_uri}
+        </div>
     </div>
 </div>
 {javascripts}
