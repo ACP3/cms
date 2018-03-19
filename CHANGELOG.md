@@ -4,9 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- added the solid icons of fontawesome 5
+
 ## [4.26.0] - 2018-03-19
 ### Changed
-- updated fontawesome to version 5.0
+- updated fontawesome to version 5
 - updated shariff to version 3.0.0
 - when generating a route with the path of homepage, it simple will return `/`
 
