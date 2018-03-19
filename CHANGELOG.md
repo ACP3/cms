@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.25.7] - 2018-03-19
 ### Changed
 - added the CSS selector `.cookie_consent__body` to improve the styleability of the cookie consent
 
@@ -599,7 +599,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.25.6...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.25.7...HEAD
+[4.25.7]: https://gitlab.com/ACP3/cms/compare/v4.25.6...v4.25.7
 [4.25.6]: https://gitlab.com/ACP3/cms/compare/v4.25.5...v4.25.6
 [4.25.5]: https://gitlab.com/ACP3/cms/compare/v4.25.4...v4.25.5
 [4.25.4]: https://gitlab.com/ACP3/cms/compare/v4.25.3...v4.25.4
