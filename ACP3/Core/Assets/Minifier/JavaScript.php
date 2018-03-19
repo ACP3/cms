@@ -22,7 +22,7 @@ class JavaScript extends AbstractMinifier
     /**
      * {@inheritdoc}
      */
-    protected function processLibraries($layout)
+    protected function processLibraries(string $layout): array
     {
         $cacheId = $this->buildCacheId($this->getAssetGroup(), $layout);
 
@@ -39,7 +39,7 @@ class JavaScript extends AbstractMinifier
     /**
      * Fetches the javascript files of all enabled frontend frameworks/libraries.
      */
-    protected function fetchLibraries()
+    protected function fetchLibraries(): void
     {
         foreach ($this->assets->getLibraries() as $library) {
             if ($library['enabled'] === true && isset($library[$this->getAssetGroup()]) === true) {
@@ -58,7 +58,7 @@ class JavaScript extends AbstractMinifier
      *
      * @param string $layout
      */
-    protected function fetchThemeJavaScript($layout)
+    protected function fetchThemeJavaScript(string $layout): void
     {
         foreach ($this->assets->fetchAdditionalThemeJsFiles() as $file) {
             $this->javascript[] = $this->fileResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $file);

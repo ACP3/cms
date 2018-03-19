@@ -16,5 +16,5 @@ interface MinifierInterface
      *
      * @return string
      */
-    public function getURI($layout = 'layout');
+    public function getURI(string $layout = 'layout'): string;
 }

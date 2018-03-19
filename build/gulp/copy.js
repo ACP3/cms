@@ -29,10 +29,15 @@ module.exports = function (gulp) {
                 },
                 {
                     'src': [
-                        nodeBasePath + '/bootstrap/dist/fonts/*',
-                        nodeBasePath + '/font-awesome/fonts/**/*'
+                        nodeBasePath + '/bootstrap/dist/fonts/*'
                     ],
                     'dest': systemBasePath + '/fonts'
+                },
+                {
+                    'src': [
+                        nodeBasePath + '/@fortawesome/fontawesome-free-webfonts/webfonts/**/*'
+                    ],
+                    'dest': systemBasePath + '/webfonts'
                 },
                 {
                     'src': nodeBasePath + '/ckeditor-codemirror-plugin/codemirror/**',
@@ -51,7 +56,9 @@ module.exports = function (gulp) {
                         nodeBasePath + '/@fancyapps/fancybox/dist/jquery.fancybox.css',
                         nodeBasePath + '/bootstrap/dist/css/bootstrap.min.css',
                         nodeBasePath + '/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
-                        nodeBasePath + '/font-awesome/css/font-awesome.css',
+                        nodeBasePath + '/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css',
+                        nodeBasePath + '/@fortawesome/fontawesome-free-webfonts/css/fa-regular.css',
+                        nodeBasePath + '/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css',
                         nodeBasePath + '/datatables.net-bs/css/dataTables.bootstrap.css'
 
                     ],

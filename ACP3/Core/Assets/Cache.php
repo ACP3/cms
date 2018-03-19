@@ -28,7 +28,7 @@ class Cache
     /**
      * @return array
      */
-    public function getCache()
+    public function getCache(): array
     {
         if ($this->cache->contains(self::CACHE_ID) === true) {
             return $this->cache->fetch(self::CACHE_ID);

@@ -102,7 +102,7 @@ abstract class AbstractMinifier implements MinifierInterface
      *
      * @return string
      */
-    protected function buildCacheId($type, $layout)
+    protected function buildCacheId(string $type, string $layout): string
     {
         return 'assets_' . $this->generateFilenameHash($type, $layout);
     }
@@ -113,7 +113,7 @@ abstract class AbstractMinifier implements MinifierInterface
      *
      * @return string
      */
-    protected function generateFilenameHash($group, $layout)
+    protected function generateFilenameHash(string $group, string $layout): string
     {
         $filename = $this->config->getSettings(Schema::MODULE_NAME)['design'];
         $filename .= '_' . $layout;
@@ -128,12 +128,12 @@ abstract class AbstractMinifier implements MinifierInterface
      *
      * @return array
      */
-    abstract protected function processLibraries($layout);
+    abstract protected function processLibraries(string $layout): array;
 
     /**
      * {@inheritdoc}
      */
-    public function getURI($layout = 'layout')
+    public function getURI(string $layout = 'layout'): string
     {
         $debug = $this->environment === 'dev';
         $filenameHash = $this->generateFilenameHash($this->getAssetGroup(), $layout);
@@ -168,7 +168,7 @@ abstract class AbstractMinifier implements MinifierInterface
      * @param array  $files
      * @param string $path
      */
-    protected function saveMinifiedAsset(array $files, $path)
+    protected function saveMinifiedAsset(array $files, string $path): void
     {
         $options = [
             'options' => [
@@ -196,7 +196,7 @@ abstract class AbstractMinifier implements MinifierInterface
      *
      * @return string
      */
-    protected function buildAssetPath($debug, $group, $filenameHash, $lastGenerated)
+    protected function buildAssetPath(bool $debug, string $group, string $filenameHash, int $lastGenerated): string
     {
         if ($debug === true) {
             return 'assets/' . $filenameHash . '.' . $group;
