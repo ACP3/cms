@@ -7,7 +7,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Test\Core;
 
-use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 use ACP3\Modules\ACP3\Seo\Core\Router\Router;
 
@@ -26,8 +25,7 @@ class RouterTest extends \ACP3\Core\Test\RouterTest
             $this->aliasesMock,
             $this->requestMock,
             $this->appPathMock,
-            $this->configMock,
-            ApplicationMode::PRODUCTION
+            $this->configMock
         );
     }
 

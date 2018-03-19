@@ -28,10 +28,6 @@ class Router implements RouterInterface
      * @var SettingsInterface
      */
     protected $config;
-    /**
-     * @var string
-     */
-    protected $environment;
 
     /**
      * Router constructor.
@@ -39,18 +35,15 @@ class Router implements RouterInterface
      * @param RequestInterface  $request
      * @param ApplicationPath   $appPath
      * @param SettingsInterface $config
-     * @param string            $environment
      */
     public function __construct(
         RequestInterface $request,
         ApplicationPath $appPath,
-        SettingsInterface $config,
-        string $environment
+        SettingsInterface $config
     ) {
         $this->request = $request;
         $this->appPath = $appPath;
         $this->config = $config;
-        $this->environment = $environment;
     }
 
     /**

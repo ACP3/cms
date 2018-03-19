@@ -7,7 +7,6 @@
 
 namespace ACP3\Core\Test;
 
-use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\Request;
 use ACP3\Core\Router\Router;
@@ -39,8 +38,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->router = new Router(
             $this->requestMock,
             $this->appPathMock,
-            $this->configMock,
-            ApplicationMode::PRODUCTION
+            $this->configMock
         );
     }
 

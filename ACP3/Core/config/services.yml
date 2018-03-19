@@ -55,7 +55,6 @@ services:
       - '@core.http.request'
       - '@core.environment.application_path'
       - '@core.config'
-      - '%core.environment%'
 
   core.session:
     class: ACP3\Core\Session\SessionHandler
