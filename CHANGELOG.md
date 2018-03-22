@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- removed the old assets of fontawesome 4.7
+
+### Fixed
+- fixed an edge case when trying to retrieve an URI alias
+
 ## [4.26.1] - 2018-03-19
 ### Added
 - added the solid icons of fontawesome 5
