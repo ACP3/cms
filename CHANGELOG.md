@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.26.2] - 2018-03-22
+### Changed
+- removed the old assets of fontawesome 4.7
+
+### Fixed
+- fixed an edge case when trying to retrieve an URI alias
+
 ## [4.26.1] - 2018-03-19
 ### Added
 - added the solid icons of fontawesome 5
@@ -609,7 +616,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.26.1...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.26.2...HEAD
+[4.26.2]: https://gitlab.com/ACP3/cms/compare/v4.26.1...v4.26.2
 [4.26.1]: https://gitlab.com/ACP3/cms/compare/v4.26.0...v4.26.1
 [4.26.0]: https://gitlab.com/ACP3/cms/compare/v4.25.7...v4.26.0
 [4.25.7]: https://gitlab.com/ACP3/cms/compare/v4.25.6...v4.25.7
