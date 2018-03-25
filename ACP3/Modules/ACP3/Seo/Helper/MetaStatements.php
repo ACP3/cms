@@ -63,6 +63,13 @@ class MetaStatements
      */
     private $isActive;
 
+    private static $robotSettingsMaps = [
+        1 => 'index,follow',
+        2 => 'index,nofollow',
+        3 => 'noindex,follow',
+        4 => 'noindex,nofollow',
+    ];
+
     /**
      * MetaStatements constructor.
      *
@@ -91,7 +98,7 @@ class MetaStatements
      *
      * @return $this
      */
-    public function setPageRobotsSettings($metaRobots)
+    public function setPageRobotsSettings(string $metaRobots)
     {
         $this->metaRobots = $metaRobots;
 
@@ -103,7 +110,7 @@ class MetaStatements
      *
      * @return array
      */
-    public function getMetaTags()
+    public function getMetaTags(): array
     {
         if ($this->isActive) {
             if (!$this->isInAdmin() && empty($this->canonicalUrl)) {
@@ -126,7 +133,7 @@ class MetaStatements
     /**
      * @return bool
      */
-    private function isInAdmin()
+    private function isInAdmin(): bool
     {
         return $this->request->getArea() === AreaEnum::AREA_ADMIN;
     }
@@ -136,7 +143,7 @@ class MetaStatements
      *
      * @return string
      */
-    public function getPageDescription()
+    public function getPageDescription(): string
     {
         $description = $this->getDescription($this->request->getUriWithoutPages());
         if (empty($description)) {
@@ -160,7 +167,7 @@ class MetaStatements
     /**
      * @return array
      */
-    protected function getSeoSettings()
+    protected function getSeoSettings(): array
     {
         return $this->config->getSettings(Schema::MODULE_NAME);
     }
@@ -172,7 +179,7 @@ class MetaStatements
      *
      * @return string
      */
-    public function getDescription($path)
+    public function getDescription(string $path): string
     {
         return $this->getSeoInformation($path, 'description');
     }
@@ -182,7 +189,7 @@ class MetaStatements
      *
      * @return string
      */
-    public function getPageKeywords()
+    public function getPageKeywords(): string
     {
         $keywords = $this->getKeywords($this->request->getUriWithoutPages());
         if (empty($keywords)) {
@@ -202,7 +209,7 @@ class MetaStatements
      *
      * @return string
      */
-    public function getKeywords($path)
+    public function getKeywords(string $path): string
     {
         return $this->getSeoInformation($path, 'keywords');
     }
@@ -214,7 +221,7 @@ class MetaStatements
      *
      * @return string
      */
-    public function getTitle($path)
+    public function getTitle(string $path): string
     {
         return $this->getSeoInformation($path, 'title');
     }
@@ -226,7 +233,7 @@ class MetaStatements
      *
      * @return string
      */
-    public function getSeoInformation($path, $key, $defaultValue = '')
+    public function getSeoInformation(string $path, string $key, string $defaultValue = ''): string
     {
         if (!$this->isActive) {
             return '';
@@ -247,7 +254,7 @@ class MetaStatements
      *
      * @return string
      */
-    public function getPageRobotsSetting()
+    public function getPageRobotsSetting(): string
     {
         if (!empty($this->metaRobots)) {
             return $this->metaRobots;
@@ -271,17 +278,10 @@ class MetaStatements
      *
      * @return string
      */
-    public function getRobotsSetting($path = '')
+    public function getRobotsSetting(string $path = ''): string
     {
-        $replace = [
-            1 => 'index,follow',
-            2 => 'index,nofollow',
-            3 => 'noindex,follow',
-            4 => 'noindex,nofollow',
-        ];
-
         if ($path === '') {
-            return \strtr($this->getSeoSettings()['robots'], $replace);
+            return \strtr($this->getSeoSettings()['robots'], $this->getRobotsMap());
         }
 
         $robot = $this->getSeoInformation($path, 'robots', 0);
@@ -290,19 +290,24 @@ class MetaStatements
             $robot = $this->getSeoSettings()['robots'];
         }
 
-        return \strtr($robot, $replace);
+        return \strtr($robot, $this->getRobotsMap());
+    }
+
+    public function getRobotsMap(): array
+    {
+        return self::$robotSettingsMaps;
     }
 
     /**
      * Sets a SEO description postfix for te current page.
      *
-     * @param string $string
+     * @param string $value
      *
      * @return $this
      */
-    public function setDescriptionPostfix($string)
+    public function setDescriptionPostfix(string $value)
     {
-        $this->metaDescriptionPostfix = $string;
+        $this->metaDescriptionPostfix = $value;
 
         return $this;
     }
@@ -314,7 +319,7 @@ class MetaStatements
      *
      * @return $this
      */
-    public function setCanonicalUri($path)
+    public function setCanonicalUri(string $path)
     {
         $this->canonicalUrl = $path;
 
@@ -328,7 +333,7 @@ class MetaStatements
      *
      * @return $this
      */
-    public function setNextPage($path)
+    public function setNextPage(string $path)
     {
         $this->nextPage = $path;
 
@@ -342,7 +347,7 @@ class MetaStatements
      *
      * @return $this
      */
-    public function setPreviousPage($path)
+    public function setPreviousPage(string $path)
     {
         $this->previousPage = $path;
 
