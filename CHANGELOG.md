@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- fixed the gallery picture delete action
+- fixed the gallery picture edit action
+
 ## [4.26.2] - 2018-03-22
 ### Changed
 - removed the old assets of fontawesome 4.7
