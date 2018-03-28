@@ -201,6 +201,8 @@
                 if (jqXHR.status === 400) {
                     self.handleFormErrorMessages($form, jqXHR.responseText);
                     self.scrollIntoView();
+
+                    $(document).trigger('acp3.ajaxFrom.submit.fail', [self]);
                 } else if (jqXHR.responseText.length > 0) {
                     document.open();
                     document.write(jqXHR.responseText);

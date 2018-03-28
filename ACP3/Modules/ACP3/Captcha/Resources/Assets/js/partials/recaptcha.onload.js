@@ -4,17 +4,25 @@
  */
 
 /* global onloadCallback:true */
-onloadCallback = function() {
-    jQuery('.recaptcha-placeholder').each(function() {
+onloadCallback = function () {
+    jQuery('.recaptcha-placeholder').each(function () {
         if (jQuery(this).children().length === 0) {
-            grecaptcha.render(this.id, {
+            const widgetId = grecaptcha.render(this.id, {
                 'sitekey': this.dataset.sitekey,
                 'size': this.dataset.size
             });
+
+            jQuery(this).data('recaptchaId', widgetId);
         }
     });
 };
 
-jQuery(document).on('acp3.captcha.recaptcha', function() {
+jQuery(document).on('acp3.captcha.recaptcha', function () {
     onloadCallback();
+});
+
+jQuery(document).on('acp3.ajaxFrom.submit.fail', function (event, ajaxForm) {
+    grecaptcha.reset(
+        jQuery(ajaxForm.element).find('.recaptcha-placeholder').data('recaptchaId')
+    );
 });
