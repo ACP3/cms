@@ -11,4 +11,6 @@ services:
 
   core.logger.system_logger:
     class: Psr\Log\LoggerInterface
-    synthetic: true
+    factory: 'core.logger.logger_factory:create'
+    arguments:
+      - 'system'

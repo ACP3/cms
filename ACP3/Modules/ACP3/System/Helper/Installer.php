@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\System\Helper;
 
 use ACP3\Core;
 use ACP3\Core\XML;
-use Psr\Log\LoggerInterface;
 
 class Installer
 {
@@ -36,16 +35,11 @@ class Installer
      */
     protected $xml;
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
      * @var Core\Installer\SchemaRegistrar
      */
     private $schemaRegistrar;
 
     /**
-     * @param LoggerInterface                        $logger
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Core\Modules                     $modules
      * @param \ACP3\Core\Modules\Vendor              $vendors
@@ -54,7 +48,6 @@ class Installer
      * @param \ACP3\Core\XML                         $xml
      */
     public function __construct(
-        LoggerInterface $logger,
         Core\Environment\ApplicationPath $appPath,
         Core\Modules $modules,
         Core\Modules\Vendor $vendors,
@@ -67,7 +60,6 @@ class Installer
         $this->vendors = $vendors;
         $this->schemaInstaller = $schemaInstaller;
         $this->xml = $xml;
-        $this->logger = $logger;
         $this->schemaRegistrar = $schemaRegistrar;
     }
 

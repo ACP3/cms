@@ -57,7 +57,6 @@ class Bootstrap extends AbstractBootstrap
         $this->container = new \ACP3ServiceContainer();
         $this->container->set('core.environment.application_path', $this->appPath);
         $this->container->set('core.http.symfony_request', $symfonyRequest);
-        $this->container->set('core.logger.system_logger', $this->logger);
     }
 
     /**
@@ -70,10 +69,7 @@ class Bootstrap extends AbstractBootstrap
 
         if (!$containerConfigCache->isFresh()) {
             $containerBuilder = ServiceContainerBuilder::create(
-                $this->logger,
-                $this->appPath,
-                $symfonyRequest,
-                $this->appMode
+                $this->appPath, $symfonyRequest, $this->appMode
             );
 
             $dumper = new PhpDumper($containerBuilder);
