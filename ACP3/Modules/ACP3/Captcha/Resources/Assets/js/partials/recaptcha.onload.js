@@ -7,7 +7,7 @@
 onloadCallback = function () {
     jQuery('.recaptcha-placeholder').each(function () {
         if (jQuery(this).children().length === 0) {
-            const widgetId = grecaptcha.render(this.id, {
+            var widgetId = grecaptcha.render(this.id, {
                 'sitekey': this.dataset.sitekey,
                 'size': this.dataset.size
             });

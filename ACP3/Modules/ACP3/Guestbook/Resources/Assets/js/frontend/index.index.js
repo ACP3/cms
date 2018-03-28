@@ -6,5 +6,5 @@
 jQuery(document).ready(function ($) {
     $('#modal-create').on('shown.bs.modal', function () {
         $(this).find('[data-ajax-form="true"]').formSubmit();
-    })
+    });
 });
