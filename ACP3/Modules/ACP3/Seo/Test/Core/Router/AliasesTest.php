@@ -34,12 +34,57 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
         $this->aliases = new Aliases($this->modulesMock, $this->seoCacheMock);
     }
 
-    public function testGetUriAliasNoAliasFound()
+    /**
+     * @dataProvider uriAliasDataProvider()
+     *
+     * @param string $path
+     * @param string $uriAlias
+     * @param bool   $emptyOnNoResult
+     * @param array  $expectedAliasCache
+     */
+    public function testGetUriAlias(string $path, string $uriAlias, bool $emptyOnNoResult, array $expectedAliasCache)
     {
-        $this->setUpSeoCacheExpectations([]);
+        $this->setUpSeoCacheExpectations($expectedAliasCache);
 
-        $path = 'foo/bar/baz';
-        $this->assertEquals('foo/bar/baz/', $this->aliases->getUriAlias($path));
+        $this->assertEquals($uriAlias, $this->aliases->getUriAlias($path, $emptyOnNoResult));
+    }
+
+    public function uriAliasDataProvider(): array
+    {
+        return [
+            'empty_aliases_cache' => [
+                'foo/bar/baz',
+                'foo/bar/baz/',
+                false,
+                [],
+            ],
+            'empty_alias' => [
+                'foo/bar/baz',
+                'foo/bar/baz/',
+                false,
+                [
+                    'foo/bar/baz/' => [
+                        'alias' => '',
+                    ],
+                ],
+            ],
+            'empty_aliases_cache_empty_on_no_result' => [
+                'foo/bar/baz',
+                '',
+                true,
+                [],
+            ],
+            'found_uri_alias' => [
+                'foo/bar/baz',
+                'lorem-ipsum-dolor',
+                true,
+                [
+                    'foo/bar/baz/' => [
+                        'alias' => 'lorem-ipsum-dolor',
+                    ],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -51,26 +96,6 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getCache')
             ->willReturn($expectedReturn);
-    }
-
-    public function testGetUriAliasNoAliasFoundReturnEmpty()
-    {
-        $this->setUpSeoCacheExpectations([]);
-
-        $path = 'foo/bar/baz';
-        $this->assertEquals('', $this->aliases->getUriAlias($path, true));
-    }
-
-    public function testGetUriAliasAliasExists()
-    {
-        $this->setUpSeoCacheExpectations([
-            'foo/bar/baz/' => [
-                'alias' => 'lorem-ipsum-dolor',
-            ],
-        ]);
-
-        $path = 'foo/bar/baz';
-        $this->assertEquals('lorem-ipsum-dolor', $this->aliases->getUriAlias($path));
     }
 
     public function testUriAliasExistsNoAliasExists()

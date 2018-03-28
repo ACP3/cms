@@ -93,12 +93,14 @@ class GeneratePictureUriAliasOnModelAfterSaveListener
                 \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
             );
 
+            $robotsSetting = array_flip($this->metaStatements->getRobotsMap());
+
             $this->uriAliasManager->insertUriAlias(
                 \sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $pictureId),
                 $alias,
                 $seoKeywords,
                 $seoDescription,
-                $seoRobots
+                $robotsSetting[$seoRobots] ?? 0
             );
         }
     }

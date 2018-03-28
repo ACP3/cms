@@ -58,8 +58,8 @@ services:
       - '@gallery.helpers'
       - '@gallery.model.picturerepository'
       - '@gallery.cache'
-    calls:
-      - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
+      - '@?seo.helper.uri_alias_manager'
+      - '@?share.helpers.social_sharing_manager'
 
   gallery.controller.admin.pictures.edit:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Edit
