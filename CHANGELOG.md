@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Fixed
+- Correctly reset the reCAPTCHA if the AJAX form submission failed
+- fixed the guestbook AJAX form submission
 - fixed the gallery picture delete action
 - fixed the gallery picture edit action
 
