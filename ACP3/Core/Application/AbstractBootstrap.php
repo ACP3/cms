@@ -33,6 +33,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
 
     /**
      * @param string $appMode
+     *
      * @throws \Exception
      */
     public function __construct($appMode)

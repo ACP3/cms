@@ -19,6 +19,8 @@ class SchemaUpdater extends SchemaHelper
      * @param \ACP3\Core\Modules\Installer\MigrationInterface $migration
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function updateSchema(SchemaInterface $schema, MigrationInterface $migration)
     {
@@ -61,6 +63,8 @@ class SchemaUpdater extends SchemaHelper
      * @param int    $installedSchemaVersion
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function iterateOverSchemaUpdates(
         $moduleName,
@@ -94,7 +98,7 @@ class SchemaUpdater extends SchemaHelper
      *
      * @return bool
      */
-    public function updateSchemaVersion($moduleName, $schemaVersion)
+    public function updateSchemaVersion(string $moduleName, int $schemaVersion)
     {
         return $this->systemModuleRepository->update(['version' => (int) $schemaVersion], ['name' => $moduleName]) !== false;
     }

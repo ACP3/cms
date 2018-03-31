@@ -38,7 +38,7 @@ class Modules
     /**
      * @var array
      */
-    private $allModules = [];
+    private $allModulesTopSorted = [];
 
     /**
      * @param \ACP3\Core\Environment\ApplicationPath           $appPath
@@ -65,7 +65,7 @@ class Modules
      *
      * @return bool
      */
-    public function controllerActionExists(string $path)
+    public function controllerActionExists(string $path): bool
     {
         return $this->controllerActionExists->controllerActionExists($path);
     }
@@ -77,7 +77,7 @@ class Modules
      *
      * @return bool
      */
-    public function isActive(string $moduleName)
+    public function isActive(string $moduleName): bool
     {
         $info = $this->getModuleInfo($moduleName);
 
@@ -91,7 +91,7 @@ class Modules
      *
      * @return array
      */
-    public function getModuleInfo(string $moduleName)
+    public function getModuleInfo(string $moduleName): array
     {
         $moduleName = \strtolower($moduleName);
         if (empty($this->modulesInfo)) {
@@ -106,7 +106,7 @@ class Modules
      *
      * @return int
      */
-    public function getModuleId(string $moduleName)
+    public function getModuleId(string $moduleName): int
     {
         $info = $this->getModuleInfo($moduleName);
 
@@ -120,7 +120,7 @@ class Modules
      *
      * @return bool
      */
-    public function isInstalled(string $moduleName)
+    public function isInstalled(string $moduleName): bool
     {
         $info = $this->getModuleInfo($moduleName);
 
@@ -182,40 +182,36 @@ class Modules
 
     private function getAllModules(): array
     {
-        if (empty($this->allModules)) {
-            foreach ($this->vendors->getVendors() as $vendor) {
-                foreach (Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/') as $module) {
-                    $info = $this->getModuleInfo($module);
-                    if (!empty($info)) {
-                        $info['vendor'] = $vendor;
-                        $this->allModules[\strtolower($module)] = $info;
-                    }
-                }
-            }
+        if (empty($this->modulesInfo)) {
+            $this->modulesInfo = $this->moduleInfoCache->getModulesInfoCache();
         }
 
-        return $this->allModules;
+        return $this->modulesInfo;
     }
 
     /**
      * Returns an array with all modules which is sorted topologically.
      *
      * @return array
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function getAllModulesTopSorted(): array
     {
-        $topSort = new StringSort();
+        if (empty($this->allModulesTopSorted)) {
+            $topSort = new StringSort();
 
-        $modules = $this->getAllModules();
-        foreach ($modules as $module) {
-            $topSort->add(\strtolower($module['dir']), $module['dependencies']);
+            $modules = $this->getAllModules();
+            foreach ($modules as $module) {
+                $topSort->add(\strtolower($module['dir']), $module['dependencies']);
+            }
+
+            foreach ($topSort->sort() as $module) {
+                $this->allModulesTopSorted[$module] = $modules[$module];
+            }
         }
 
-        $topSortedModules = [];
-        foreach ($topSort->sort() as $module) {
-            $topSortedModules[$module] = $modules[$module];
-        }
-
-        return $topSortedModules;
+        return $this->allModulesTopSorted;
     }
 }

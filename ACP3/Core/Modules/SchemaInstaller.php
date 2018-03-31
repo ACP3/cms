@@ -17,6 +17,8 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function install(SchemaInterface $schema)
     {
@@ -34,6 +36,8 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      * @param SchemaInterface $schema
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function moduleNeedsInstallation(SchemaInterface $schema)
     {
@@ -50,7 +54,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      *
      * @return bool
      */
-    protected function addToModulesTable($moduleName, $schemaVersion)
+    protected function addToModulesTable(string $moduleName, int $schemaVersion)
     {
         $insertValues = [
             'id' => '',
@@ -72,7 +76,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      *
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    protected function installSettings($moduleName, array $settings)
+    protected function installSettings(string $moduleName, array $settings)
     {
         if (\count($settings) > 0) {
             $this->db->getConnection()->beginTransaction();
@@ -107,6 +111,8 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function uninstall(SchemaInterface $schema)
     {
@@ -121,7 +127,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      *
      * @return bool
      */
-    protected function removeFromModulesTable($moduleName)
+    protected function removeFromModulesTable(string $moduleName)
     {
         return $this->systemModuleRepository->delete((int) $this->getModuleId($moduleName)) !== false;
     }

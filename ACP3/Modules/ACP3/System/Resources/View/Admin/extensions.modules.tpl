@@ -23,8 +23,8 @@
                         <tbody>
                         {foreach $installed_modules as $row}
                             <tr>
-                                <td>{$row.name}</td>
-                                <td>{$row.description}</td>
+                                <td>{lang t="`$row.name`|`$row.name`"}</td>
+                                <td>{lang t="`$row.name`|mod_description"}</td>
                                 <td>{$row.version}</td>
                                 <td>{$row.author}</td>
                                 <td class="text-center">
@@ -86,8 +86,8 @@
                             <tbody>
                             {foreach $new_modules as $row}
                                 <tr>
-                                    <td>{$row.name}</td>
-                                    <td>{$row.description}</td>
+                                    <td>{lang t="`$row.name`|`$row.name`"}</td>
+                                    <td>{lang t="`$row.name`|mod_description"}</td>
                                     <td>{$row.version}</td>
                                     <td>{$row.author}</td>
                                     <td class="text-center">

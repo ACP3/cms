@@ -14,7 +14,7 @@ trait AvailableDesignsTrait
     /**
      * @return array
      */
-    protected function getAvailableDesigns()
+    protected function getAvailableDesigns(): array
     {
         $designs = [];
         foreach ($this->getDesignPaths() as $file) {
@@ -42,7 +42,7 @@ trait AvailableDesignsTrait
     /**
      * @return array
      */
-    private function getDesignPaths()
+    private function getDesignPaths(): array
     {
         return \glob(ACP3_ROOT_DIR . 'designs/*/info.xml');
     }
@@ -52,7 +52,7 @@ trait AvailableDesignsTrait
      *
      * @return bool|string
      */
-    private function getDesignDirectory($file)
+    private function getDesignDirectory(string $file): string
     {
         $pathLength = \strlen(ACP3_ROOT_DIR . 'designs/');
         $lastDS = \strrpos($file, '/');

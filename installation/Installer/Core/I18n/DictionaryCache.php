@@ -41,7 +41,7 @@ class DictionaryCache
      *
      * @return array
      */
-    public function getLanguageCache($language)
+    public function getLanguageCache(string $language): array
     {
         if (isset($this->buffer[$language]) === false) {
             $this->buffer[$language] = $this->setLanguageCache($language);
@@ -57,20 +57,20 @@ class DictionaryCache
      *
      * @return array
      */
-    public function setLanguageCache($language)
+    public function setLanguageCache(string $language): array
     {
-        $data = [];
+        $locale = Locale::create($language);
+        $data = [
+            'info' => [
+                'direction' => $locale->script()->direction(),
+            ],
+            'keys' => [],
+        ];
 
         $languageFiles = \glob($this->appPath->getInstallerModulesDir() . '*/Resources/i18n/' . $language . '.xml');
         foreach ($languageFiles as $file) {
-            if (isset($data['info']['direction']) === false) {
-                $locale = Locale::create($this->getLanguagePackIsoCode($file));
-                $data['info']['direction'] = $locale->script()->direction();
-            }
-
             $module = $this->getModuleFromPath($file);
 
-            // Über die einzelnen Sprachstrings iterieren
             $xml = \simplexml_load_file($file);
             foreach ($xml->keys->item as $item) {
                 $data['keys'][\strtolower($module . (string) $item['key'])] = \trim((string) $item);

@@ -39,6 +39,7 @@ class ServiceContainerBuilder extends ContainerBuilder
 
     /**
      * ServiceContainerBuilder constructor.
+     *
      * @param ApplicationPath $applicationPath
      * @param SymfonyRequest  $symfonyRequest
      * @param string          $applicationMode
@@ -103,6 +104,7 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param \ACP3\Core\Environment\ApplicationPath $applicationPath
      * @param SymfonyRequest                         $symfonyRequest
      * @param string                                 $applicationMode
+     *
      * @return ContainerBuilder
      */
     public static function create(
