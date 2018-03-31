@@ -64,7 +64,7 @@ class ModuleInfoCache
     /**
      * @return string
      */
-    public function getCacheKey()
+    public function getCacheKey(): string
     {
         return 'modules_info';
     }
@@ -72,7 +72,7 @@ class ModuleInfoCache
     /**
      * @return array
      */
-    public function getModulesInfoCache()
+    public function getModulesInfoCache(): array
     {
         if ($this->cache->contains($this->getCacheKey()) === false) {
             $this->saveModulesInfoCache();
@@ -84,13 +84,12 @@ class ModuleInfoCache
     /**
      * Saves the modules info cache.
      */
-    public function saveModulesInfoCache()
+    public function saveModulesInfoCache(): void
     {
         $infos = [];
 
         // 1. fetch all core modules
         // 2. Fetch all 3rd party modules
-        // 3. Fetch all local module customizations
         foreach ($this->vendors->getVendors() as $vendor) {
             $infos += $this->fetchVendorModules($vendor);
         }
@@ -103,7 +102,7 @@ class ModuleInfoCache
      *
      * @return array
      */
-    protected function fetchVendorModules($vendor)
+    protected function fetchVendorModules(string $vendor): array
     {
         $infos = [];
 
@@ -127,7 +126,7 @@ class ModuleInfoCache
      *
      * @return array
      */
-    protected function fetchModuleInfo($moduleDirectory)
+    protected function fetchModuleInfo(string $moduleDirectory): array
     {
         $vendors = \array_reverse($this->vendors->getVendors()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
         foreach ($vendors as $vendor) {
@@ -140,6 +139,7 @@ class ModuleInfoCache
                     $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
 
                     return [
+                        'vendor' => $vendor,
                         'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
                         'dir' => $moduleDirectory,
                         'installed' => (!empty($moduleInfoDb)),
