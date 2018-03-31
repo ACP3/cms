@@ -15,7 +15,9 @@ services:
     arguments:
       - '@core.cache.system'
       - '@core.environment.application_path'
+      - '@core.modules'
       - '@core.modules.vendors'
+      - '@core.environment.theme'
 
   core.i18n.country_list:
     class: ACP3\Core\I18n\CountryList

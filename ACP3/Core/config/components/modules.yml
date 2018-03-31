@@ -36,7 +36,6 @@ services:
     arguments:
       - '@core.cache.system'
       - '@core.environment.application_path'
-      - '@core.i18n.translator'
       - '@core.modules.vendors'
       - '@core.xml'
       - '@system.model.modulerepository'

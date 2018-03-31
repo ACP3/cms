@@ -39,6 +39,10 @@ class Modules
      * @var array
      */
     private $allModules = [];
+    /**
+     * @var array
+     */
+    private $allModulesTopSorted = [];
 
     /**
      * @param \ACP3\Core\Environment\ApplicationPath           $appPath
@@ -201,21 +205,25 @@ class Modules
      * Returns an array with all modules which is sorted topologically.
      *
      * @return array
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function getAllModulesTopSorted(): array
     {
-        $topSort = new StringSort();
+        if (empty($this->allModulesTopSorted)) {
+            $topSort = new StringSort();
 
-        $modules = $this->getAllModules();
-        foreach ($modules as $module) {
-            $topSort->add(\strtolower($module['dir']), $module['dependencies']);
+            $modules = $this->getAllModules();
+            foreach ($modules as $module) {
+                $topSort->add(\strtolower($module['dir']), $module['dependencies']);
+            }
+
+            foreach ($topSort->sort() as $module) {
+                $this->allModulesTopSorted[$module] = $modules[$module];
+            }
         }
 
-        $topSortedModules = [];
-        foreach ($topSort->sort() as $module) {
-            $topSortedModules[$module] = $modules[$module];
-        }
-
-        return $topSortedModules;
+        return $this->allModulesTopSorted;
     }
 }

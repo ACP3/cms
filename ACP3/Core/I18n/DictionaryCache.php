@@ -9,6 +9,8 @@ namespace ACP3\Core\I18n;
 
 use ACP3\Core\Cache;
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Environment\Theme;
+use ACP3\Core\Modules;
 use ACP3\Core\Modules\Vendor;
 use Fisharebest\Localization\Locale;
 
@@ -28,22 +30,36 @@ class DictionaryCache
      * @var \ACP3\Core\Modules\Vendor
      */
     protected $vendors;
+    /**
+     * @var \ACP3\Core\Environment\Theme
+     */
+    private $theme;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
 
     /**
      * DictionaryCache constructor.
      *
      * @param \ACP3\Core\Cache                       $cache
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Modules                     $modules
      * @param \ACP3\Core\Modules\Vendor              $vendors
+     * @param \ACP3\Core\Environment\Theme           $theme
      */
     public function __construct(
         Cache $cache,
         ApplicationPath $appPath,
-        Vendor $vendors
+        Modules $modules,
+        Vendor $vendors,
+        Theme $theme
     ) {
         $this->cache = $cache;
         $this->appPath = $appPath;
         $this->vendors = $vendors;
+        $this->theme = $theme;
+        $this->modules = $modules;
     }
 
     /**
@@ -52,8 +68,11 @@ class DictionaryCache
      * @param string $language
      *
      * @return array
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function getLanguageCache($language)
+    public function getLanguageCache(string $language): array
     {
         if ($this->cache->contains($language) === false) {
             $this->saveLanguageCache($language);
@@ -68,29 +87,43 @@ class DictionaryCache
      * @param string $language
      *
      * @return bool
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function saveLanguageCache($language)
+    public function saveLanguageCache(string $language): bool
     {
-        $data = [];
+        $locale = Locale::create($language);
+        $data = [
+            'info' => [
+                'direction' => $locale->script()->direction(),
+            ],
+            'keys' => [],
+        ];
 
-        foreach ($this->vendors->getVendors() as $vendor) {
-            $languageFiles = \glob($this->appPath->getModulesDir() . $vendor . '/*/Resources/i18n/' . $language . '.xml');
+        foreach ($this->modules->getAllModulesTopSorted() as $module) {
+            $i18nFile = "{$this->appPath->getModulesDir()}{$module['vendor']}/{$module['dir']}/Resources/i18n/{$language}.xml";
 
-            if ($languageFiles !== false) {
-                foreach ($languageFiles as $file) {
-                    if (isset($data['info']['direction']) === false) {
-                        $locale = Locale::create($this->getLanguagePackIsoCode($file));
-                        $data['info']['direction'] = $locale->script()->direction();
-                    }
+            if (\file_exists($i18nFile) === false) {
+                continue;
+            }
 
-                    $module = $this->getModuleFromPath($file);
+            $data['keys'] += $this->parseI18nFile($i18nFile, $module['dir']);
+        }
 
-                    // Iterate over all language keys
-                    $xml = \simplexml_load_file($file);
-                    foreach ($xml->keys->item as $item) {
-                        $data['keys'][\strtolower($module . (string) $item['key'])] = \trim((string) $item);
-                    }
-                }
+        $themeDependenciesReversed = \array_reverse($this->theme->getCurrentThemeDependencies());
+        foreach ($themeDependenciesReversed as $theme) {
+            $i18nFiles = \glob(ACP3_ROOT_DIR . "designs/{$theme}/*/i18n/{$language}.xml");
+
+            if ($i18nFiles === false) {
+                continue;
+            }
+
+            foreach ($i18nFiles as $i18nFile) {
+                $data['keys'] = \array_merge(
+                    $data['keys'],
+                    $this->parseI18nFile($i18nFile, $this->getModuleNameFromThemePath($i18nFile))
+                );
             }
         }
 
@@ -98,11 +131,40 @@ class DictionaryCache
     }
 
     /**
+     * @param string $i18nFile
+     * @param string $moduleName
+     *
+     * @return array
+     */
+    private function parseI18nFile(string $i18nFile, string $moduleName): array
+    {
+        $data = [];
+        $xml = \simplexml_load_file($i18nFile);
+        foreach ($xml->keys->item as $item) {
+            $data[\strtolower($moduleName . (string) $item['key'])] = \trim((string) $item);
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param string $filePath
+     *
+     * @return string
+     */
+    private function getModuleNameFromThemePath(string $filePath): string
+    {
+        $pathArray = \explode('/', $filePath);
+
+        return $pathArray[\count($pathArray) - 3];
+    }
+
+    /**
      * Gets the cache for all registered languages.
      *
      * @return array
      */
-    public function getLanguagePacksCache()
+    public function getLanguagePacksCache(): array
     {
         if ($this->cache->contains('language_packs') === false) {
             $this->saveLanguagePacksCache();
@@ -116,21 +178,20 @@ class DictionaryCache
      *
      * @return bool
      */
-    protected function saveLanguagePacksCache()
+    protected function saveLanguagePacksCache(): bool
     {
         $languagePacks = [];
+        $languageFiles = \glob($this->appPath->getModulesDir() . '*/*/Resources/i18n/*.xml');
 
-        foreach ($this->vendors->getVendors() as $vendors) {
-            $languageFiles = \glob($this->appPath->getModulesDir() . $vendors . '/*/Resources/i18n/*.xml');
+        if ($languageFiles !== false) {
+            foreach ($languageFiles as $file) {
+                $languagePack = $this->registerLanguagePack($file);
 
-            if ($languageFiles !== false) {
-                foreach ($languageFiles as $file) {
-                    $languagePack = $this->registerLanguagePack($file);
-
-                    if (!empty($languagePack)) {
-                        $languagePacks += $languagePack;
-                    }
+                if (empty($languagePack)) {
+                    continue;
                 }
+
+                $languagePacks += $languagePack;
             }
         }
 
@@ -142,7 +203,7 @@ class DictionaryCache
      *
      * @return array
      */
-    protected function registerLanguagePack($file)
+    protected function registerLanguagePack(string $file): array
     {
         $languageIso = $this->getLanguagePackIsoCode($file);
 
