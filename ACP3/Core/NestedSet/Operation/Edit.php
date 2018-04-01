@@ -132,7 +132,7 @@ class Edit extends AbstractOperation
         // die right_id des letzten Elementes verwenden
         if (empty($newBlockLeftId) || \is_null($newBlockLeftId) === true) {
             $newBlockLeftId = $this->nestedSetRepository->fetchMaximumRightId();
-            $newBlockLeftId += 1;
+            ++$newBlockLeftId;
         }
 
         if ($blockId > $nodes[0]['block_id']) {
