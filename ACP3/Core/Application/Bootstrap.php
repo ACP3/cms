@@ -127,12 +127,7 @@ class Bootstrap extends AbstractBootstrap
 
         $this->appPath
             ->setDesignPathWeb($this->appPath->getWebRoot() . $path)
-            ->setDesignPathInternal($this->systemSettings['design'] . '/')
-            ->setDesignPathAbsolute(
-                $this->container->get('core.http.request')->getScheme() . '://'
-                . $this->container->get('core.http.request')->getHttpHost()
-                . $this->appPath->getDesignPathWeb()
-            );
+            ->setDesignPathInternal($this->systemSettings['design'] . '/');
     }
 
     /**

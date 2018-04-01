@@ -59,7 +59,7 @@ class ApplicationPath
      *
      * @param string $applicationMode
      */
-    public function __construct($applicationMode)
+    public function __construct(string $applicationMode)
     {
         $this->phpSelf = \htmlentities($_SERVER['SCRIPT_NAME']);
         $this->webRoot = \substr($this->phpSelf, 0, \strrpos($this->phpSelf, '/') + 1);
@@ -74,147 +74,63 @@ class ApplicationPath
     /**
      * @return string
      */
-    public function getPhpSelf()
+    public function getPhpSelf(): string
     {
         return $this->phpSelf;
     }
 
     /**
-     * @param string $phpSelf
-     *
-     * @return ApplicationPath
-     */
-    public function setPhpSelf($phpSelf)
-    {
-        $this->phpSelf = $phpSelf;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getWebRoot()
+    public function getWebRoot(): string
     {
         return $this->webRoot;
     }
 
     /**
-     * @param string $webRoot
-     *
-     * @return ApplicationPath
-     */
-    public function setWebRoot($webRoot)
-    {
-        $this->webRoot = $webRoot;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getAppDir()
+    public function getAppDir(): string
     {
         return $this->appDir;
     }
 
     /**
-     * @param string $appDir
-     *
-     * @return ApplicationPath
-     */
-    public function setAppDir($appDir)
-    {
-        $this->appDir = $appDir;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getClassesDir()
+    public function getClassesDir(): string
     {
         return $this->classesDir;
     }
 
     /**
-     * @param string $classesDir
-     *
-     * @return ApplicationPath
-     */
-    public function setClassesDir($classesDir)
-    {
-        $this->classesDir = $classesDir;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getModulesDir()
+    public function getModulesDir(): string
     {
         return $this->modulesDir;
     }
 
     /**
-     * @param string $modulesDir
-     *
-     * @return ApplicationPath
-     */
-    public function setModulesDir($modulesDir)
-    {
-        $this->modulesDir = $modulesDir;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getUploadsDir()
+    public function getUploadsDir(): string
     {
         return $this->uploadsDir;
     }
 
     /**
-     * @param string $uploadsDir
-     *
-     * @return ApplicationPath
-     */
-    public function setUploadsDir($uploadsDir)
-    {
-        $this->uploadsDir = $uploadsDir;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return $this->cacheDir;
     }
 
     /**
-     * @param string $cacheDir
-     *
-     * @return ApplicationPath
-     */
-    public function setCacheDir($cacheDir)
-    {
-        $this->cacheDir = $cacheDir;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getDesignRootPathInternal()
+    public function getDesignRootPathInternal(): string
     {
         return $this->designRootPathInternal;
     }
@@ -234,7 +150,7 @@ class ApplicationPath
     /**
      * @return string
      */
-    public function getDesignPathInternal()
+    public function getDesignPathInternal(): string
     {
         return $this->designPathInternal;
     }
@@ -254,7 +170,7 @@ class ApplicationPath
     /**
      * @return string
      */
-    public function getDesignPathWeb()
+    public function getDesignPathWeb(): string
     {
         return $this->designPathWeb;
     }
@@ -273,8 +189,10 @@ class ApplicationPath
 
     /**
      * @return string
+     *
+     * @deprecated Will be removed with version 5.0.0
      */
-    public function getDesignPathAbsolute()
+    public function getDesignPathAbsolute(): string
     {
         return $this->designPathAbsolute;
     }
@@ -283,6 +201,8 @@ class ApplicationPath
      * @param string $designPathAbsolute
      *
      * @return ApplicationPath
+     *
+     * @deprecated Will be removed with version 5.0.0
      */
     public function setDesignPathAbsolute($designPathAbsolute)
     {
