@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- made it possible to override module translation files using the currently activated theme (including the theme inheritance)
+
 ## [4.26.4] - 2018-03-28
 ### Fixed
 - Correctly reset the reCAPTCHA if the AJAX form submission failed
