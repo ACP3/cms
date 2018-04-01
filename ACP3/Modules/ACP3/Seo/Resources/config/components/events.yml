@@ -33,7 +33,7 @@ services:
       - '@core.view'
       - '@seo.helper.meta_form_fields'
     tags:
-      - { name: core.eventListener, event: seo.layout.render_form_fields, method: renderSeoFormFields }
+      - { name: core.eventListener, event: core.layout.form_extension, method: renderSeoFormFields }
 
   seo.event.generate_sitemap_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\GenerateSitemapOnModelAfterSaveListener
