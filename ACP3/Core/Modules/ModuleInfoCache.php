@@ -107,7 +107,7 @@ class ModuleInfoCache
         $infos = [];
 
         foreach (Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/') as $module) {
-            $moduleInfo = $this->fetchModuleInfo($module);
+            $moduleInfo = $this->fetchModuleInfo($vendor, $module);
 
             if (!empty($moduleInfo)) {
                 $infos[$moduleInfo['name']] = $moduleInfo;
@@ -118,45 +118,42 @@ class ModuleInfoCache
     }
 
     /**
+     * @param string $vendor
      * @param string $moduleDirectory
      *
      * @return array
      */
-    protected function fetchModuleInfo(string $moduleDirectory): array
+    protected function fetchModuleInfo(string $vendor, string $moduleDirectory): array
     {
-        foreach ($this->vendors->getVendors() as $vendor) {
-            $path = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/Resources/config/module.xml';
-            if (\is_file($path) === false) {
-                continue;
-            }
-
-            $moduleInfo = $this->xml->parseXmlFile($path, 'info');
-
-            if (empty($moduleInfo) === true) {
-                continue;
-            }
-
-            $moduleName = \strtolower($moduleDirectory);
-            $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
-
-            return [
-                'vendor' => $vendor,
-                'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
-                'dir' => $moduleDirectory,
-                'installed' => (!empty($moduleInfoDb)),
-                'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
-                'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
-                'author' => $moduleInfo['author'],
-                'version' => $moduleInfo['version'],
-                'name' => $moduleName,
-                'categories' => isset($moduleInfo['categories']),
-                'protected' => isset($moduleInfo['protected']),
-                'installable' => !isset($moduleInfo['no_install']),
-                'dependencies' => $this->getModuleDependencies($path),
-            ];
+        $path = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/Resources/config/module.xml';
+        if (\is_file($path) === false) {
+            return [];
         }
 
-        return [];
+        $moduleInfo = $this->xml->parseXmlFile($path, 'info');
+
+        if (empty($moduleInfo) === true) {
+            return [];
+        }
+
+        $moduleName = \strtolower($moduleDirectory);
+        $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
+
+        return [
+            'vendor' => $vendor,
+            'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
+            'dir' => $moduleDirectory,
+            'installed' => (!empty($moduleInfoDb)),
+            'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
+            'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
+            'author' => $moduleInfo['author'],
+            'version' => $moduleInfo['version'],
+            'name' => $moduleName,
+            'categories' => isset($moduleInfo['categories']),
+            'protected' => isset($moduleInfo['protected']),
+            'installable' => !isset($moduleInfo['no_install']),
+            'dependencies' => $this->getModuleDependencies($path),
+        ];
     }
 
     /**

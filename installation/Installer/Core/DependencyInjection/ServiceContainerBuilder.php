@@ -55,6 +55,8 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param string          $applicationMode
      * @param bool            $includeModules
      * @param bool            $migrationsOnly
+     *
+     * @throws \Exception
      */
     public function __construct(
         LoggerInterface $logger,
@@ -76,6 +78,9 @@ class ServiceContainerBuilder extends ContainerBuilder
         $this->migrationsOnly = $migrationsOnly;
     }
 
+    /**
+     * @throws \Exception
+     */
     private function setUpContainer()
     {
         $this->setParameter('cache_driver', 'Array');
@@ -117,6 +122,8 @@ class ServiceContainerBuilder extends ContainerBuilder
 
     /**
      * @param YamlFileLoader $loader
+     *
+     * @throws \Exception
      */
     private function includeModules(YamlFileLoader $loader)
     {
@@ -158,6 +165,8 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param bool            $migrationsOnly
      *
      * @return ContainerBuilder
+     *
+     * @throws \Exception
      */
     public static function create(
         LoggerInterface $logger,
