@@ -106,15 +106,11 @@ class ModuleInfoCache
     {
         $infos = [];
 
-        $modules = Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/');
+        foreach (Filesystem::scandir($this->appPath->getModulesDir() . $vendor . '/') as $module) {
+            $moduleInfo = $this->fetchModuleInfo($module);
 
-        if (!empty($modules)) {
-            foreach ($modules as $module) {
-                $moduleInfo = $this->fetchModuleInfo($module);
-
-                if (!empty($moduleInfo)) {
-                    $infos[\strtolower($module)] = $moduleInfo;
-                }
+            if (!empty($moduleInfo)) {
+                $infos[$moduleInfo['name']] = $moduleInfo;
             }
         }
 

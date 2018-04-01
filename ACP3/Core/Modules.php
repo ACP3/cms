@@ -134,15 +134,9 @@ class Modules
      */
     public function getActiveModules(): array
     {
-        $modules = $this->getAllModulesAlphabeticallySorted();
-
-        foreach ($modules as $key => $values) {
-            if ($values['active'] === false) {
-                unset($modules[$key]);
-            }
-        }
-
-        return $modules;
+        return \array_filter($this->getAllModulesAlphabeticallySorted(), function (array $module) {
+            return $module['active'] === true;
+        });
     }
 
     /**
@@ -152,15 +146,9 @@ class Modules
      */
     public function getInstalledModules(): array
     {
-        $modules = $this->getAllModulesAlphabeticallySorted();
-
-        foreach ($modules as $key => $values) {
-            if ($values['installed'] === false) {
-                unset($modules[$key]);
-            }
-        }
-
-        return $modules;
+        return \array_filter($this->getAllModulesAlphabeticallySorted(), function (array $module) {
+            return $module['installed'] === true;
+        });
     }
 
     /**
@@ -170,10 +158,7 @@ class Modules
      */
     public function getAllModulesAlphabeticallySorted(): array
     {
-        $allModulesAlphabeticallySorted = [];
-        foreach ($this->getAllModules() as $info) {
-            $allModulesAlphabeticallySorted[$info['name']] = $info;
-        }
+        $allModulesAlphabeticallySorted = $this->getAllModules();
 
         \ksort($allModulesAlphabeticallySorted);
 
