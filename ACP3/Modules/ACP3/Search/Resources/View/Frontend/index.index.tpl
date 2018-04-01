@@ -21,7 +21,7 @@
                     {foreach $search_mods as $row}
                         <label for="mods-{$row.dir}" class="btn btn-default{if !empty($row.checked)} active{/if}">
                             <input type="checkbox" name="mods[]" id="mods-{$row.dir}" value="{$row.dir}"{$row.checked}>
-                            {$row.name}
+                            {lang t="`$row.name`|`$row.name`"}
                         </label>
                     {/foreach}
                 </div>

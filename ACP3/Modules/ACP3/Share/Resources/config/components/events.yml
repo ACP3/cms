@@ -23,6 +23,7 @@ services:
       - '@core.i18n.translator'
       - '@share.helpers.social_services'
     tags:
+      - { name: core.eventListener, event: core.validation.form_extension, method: execute }
       - { name: core.eventListener, event: share.validation.validate_sharing_info, method: execute }
 
   share.event.save_sharing_info_on_model_after_save_listener:

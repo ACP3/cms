@@ -60,6 +60,7 @@ services:
       - '@core.acl'
       - '@core.i18n.translator'
     tags:
+      - { name: core.eventListener, event: core.validation.form_extension, method: validateUriAlias }
       - { name: core.eventListener, event: seo.validation.validate_uri_alias, method: validateUriAlias }
 
   seo.event.update_seo_cache_on_model_after_save_listener:
