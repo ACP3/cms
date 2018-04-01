@@ -128,33 +128,36 @@ class ModuleInfoCache
      */
     protected function fetchModuleInfo(string $moduleDirectory): array
     {
-        $vendors = \array_reverse($this->vendors->getVendors()); // Reverse the order of the array -> search module customizations first, then 3rd party modules, then core modules
-        foreach ($vendors as $vendor) {
+        foreach ($this->vendors->getVendors() as $vendor) {
             $path = $this->appPath->getModulesDir() . $vendor . '/' . $moduleDirectory . '/Resources/config/module.xml';
-            if (\is_file($path) === true) {
-                $moduleInfo = $this->xml->parseXmlFile($path, 'info');
-
-                if (!empty($moduleInfo)) {
-                    $moduleName = \strtolower($moduleDirectory);
-                    $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
-
-                    return [
-                        'vendor' => $vendor,
-                        'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
-                        'dir' => $moduleDirectory,
-                        'installed' => (!empty($moduleInfoDb)),
-                        'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
-                        'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
-                        'author' => $moduleInfo['author'],
-                        'version' => $moduleInfo['version'],
-                        'name' => $moduleName,
-                        'categories' => isset($moduleInfo['categories']),
-                        'protected' => isset($moduleInfo['protected']),
-                        'installable' => !isset($moduleInfo['no_install']),
-                        'dependencies' => $this->getModuleDependencies($path),
-                    ];
-                }
+            if (\is_file($path) === false) {
+                continue;
             }
+
+            $moduleInfo = $this->xml->parseXmlFile($path, 'info');
+
+            if (empty($moduleInfo) === true) {
+                continue;
+            }
+
+            $moduleName = \strtolower($moduleDirectory);
+            $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
+
+            return [
+                'vendor' => $vendor,
+                'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
+                'dir' => $moduleDirectory,
+                'installed' => (!empty($moduleInfoDb)),
+                'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
+                'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
+                'author' => $moduleInfo['author'],
+                'version' => $moduleInfo['version'],
+                'name' => $moduleName,
+                'categories' => isset($moduleInfo['categories']),
+                'protected' => isset($moduleInfo['protected']),
+                'installable' => !isset($moduleInfo['no_install']),
+                'dependencies' => $this->getModuleDependencies($path),
+            ];
         }
 
         return [];
