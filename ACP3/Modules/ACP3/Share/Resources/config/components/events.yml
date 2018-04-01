@@ -23,6 +23,7 @@ services:
       - '@core.i18n.translator'
       - '@share.helpers.social_services'
     tags:
+      - { name: core.eventListener, event: core.validation.form_extension, method: execute }
       - { name: core.eventListener, event: share.validation.validate_sharing_info, method: execute }
 
   share.event.save_sharing_info_on_model_after_save_listener:
@@ -40,7 +41,7 @@ services:
       - '@core.view'
       - '@share.helpers.share_form_fields'
     tags:
-      - { name: core.eventListener, event: share.layout.render_form_fields, method: execute }
+      - { name: core.eventListener, event: core.layout.form_extension, method: execute }
 
   share.event.update_services_on_settings_save_before_listener:
     class: ACP3\Modules\ACP3\Share\Event\Listener\UpdateServicesOnSettingsSaveBeforeListener
