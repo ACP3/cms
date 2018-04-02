@@ -188,10 +188,7 @@ class FileResolver
         }
         $modulesPath = $fragments[0] . '/Resources/';
         $designPath = $fragments[0];
-        $template = $fragments[1];
-        if (isset($fragments[2])) {
-            $template .= '/' . $fragments[2];
-        }
+        $template = \implode('/', \array_slice($fragments, 1));
 
         return $this->getStaticAssetPath($modulesPath, $designPath, 'View', $template);
     }

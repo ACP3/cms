@@ -63,12 +63,8 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
 
     public function testResolveTemplatePath()
     {
-        $this->themeMock->expects($this->any())
-            ->method('getCurrentTheme')
-            ->willReturn('acp3');
-        $this->themeMock->expects($this->any())
-            ->method('getThemeDependencies')
-            ->willReturn(['acp3']);
+        $this->setUpThemeMockExpectations('acp3', ['acp3']);
+
         $this->modulesMock->expects($this->any())
             ->method('getModuleInfo')
             ->with('System')
@@ -81,12 +77,8 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
 
     public function testResolveTemplatePathWithInheritance()
     {
-        $this->themeMock->expects($this->any())
-            ->method('getCurrentTheme')
-            ->willReturn('acp3');
-        $this->themeMock->expects($this->any())
-            ->method('getThemeDependencies')
-            ->willReturn(['acp3']);
+        $this->setUpThemeMockExpectations('acp3', ['acp3']);
+
         $this->modulesMock->expects($this->any())
             ->method('getModuleInfo')
             ->with('System')
@@ -104,7 +96,8 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
             ->willReturn('acp3-inherit');
         $this->themeMock->expects($this->any())
             ->method('getThemeDependencies')
-            ->willReturn(['acp3-inherit', 'acp3']);
+            ->willReturnOnConsecutiveCalls(['acp3-inherit', 'acp3'], ['acp3']);
+
         $this->modulesMock->expects($this->any())
             ->method('getModuleInfo')
             ->with('')
@@ -114,6 +107,36 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
 
         $expected = ACP3_ROOT_DIR . 'tests/designs/acp3/layout.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('layout.tpl');
+        $this->assertEquals($expected, $actual);
+    }
+
+    private function setUpThemeMockExpectations(string $themeName, array $dependencies): void
+    {
+        $this->themeMock->expects($this->any())
+            ->method('getCurrentTheme')
+            ->willReturn($themeName);
+        $this->themeMock->expects($this->any())
+            ->method('getThemeDependencies')
+            ->with($themeName)
+            ->willReturn($dependencies);
+    }
+
+    public function testResolveTemplatePathWithDeeplyNestedFolderStructure()
+    {
+        $this->themeMock->expects($this->any())
+            ->method('getCurrentTheme')
+            ->willReturn('acp3-inherit');
+        $this->themeMock->expects($this->any())
+            ->method('getThemeDependencies')
+            ->willReturnOnConsecutiveCalls(['acp3-inherit', 'acp3'], ['acp3']);
+
+        $this->modulesMock->expects($this->any())
+            ->method('getModuleInfo')
+            ->with('System')
+            ->willReturn(['vendor' => 'ACP3']);
+
+        $expected = ACP3_ROOT_DIR . 'tests/designs/acp3-inherit/System/View/Partials/Foo/bar/baz.tpl';
+        $actual = $this->fileResolver->resolveTemplatePath('System/Partials/Foo/bar/baz.tpl');
         $this->assertEquals($expected, $actual);
     }
 }
