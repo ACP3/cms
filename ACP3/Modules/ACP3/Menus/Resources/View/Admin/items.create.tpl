@@ -47,7 +47,7 @@
                         <select class="form-control" name="module" id="link-module">
                             <option value="">{lang t="system|pls_select"}</option>
                             {foreach $modules as $row}
-                                <option value="{$row.dir|lower}"{$row.selected}>{$row.name}</option>
+                                <option value="{$row.dir|lower}"{$row.selected}>{lang t="`$row.name`|`$row.name`"}</option>
                             {/foreach}
                         </select>
                     </div>

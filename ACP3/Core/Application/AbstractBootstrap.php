@@ -9,6 +9,7 @@ namespace ACP3\Core\Application;
 
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\ErrorHandler;
+use ACP3\Core\Logger\LoggerFactory;
 use Psr\Log\LoggerInterface;
 
 abstract class AbstractBootstrap implements BootstrapInterface
@@ -32,12 +33,14 @@ abstract class AbstractBootstrap implements BootstrapInterface
 
     /**
      * @param string $appMode
+     *
+     * @throws \Exception
      */
     public function __construct($appMode)
     {
         $this->appMode = $appMode;
         $this->initializeApplicationPath();
-        $this->logger = (new \ACP3\Core\Logger\LoggerFactory($this->appPath))->create('system');
+        $this->logger = (new LoggerFactory($this->appPath))->create('error');
     }
 
     protected function initializeApplicationPath()

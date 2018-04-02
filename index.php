@@ -27,7 +27,7 @@ HTML;
 }
 
 $cacheStore = new \Toflar\Psr6HttpCacheStore\Psr6Store([
-    'cache_directory' => $kernel->getAppPath()->getCacheDir() . 'http/',
+    'cache_directory' => __DIR__ . '/cache/' . $appMode . '/http',
 ]);
 
 $appCache = new \ACP3\Core\Application\BootstrapCache(

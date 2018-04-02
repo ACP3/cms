@@ -16,7 +16,9 @@
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu-admin-label">
                     {foreach $user_sidebar.modules as $row}
-                        <li{if $row.is_active} class="active"{/if}><a href="{uri args="acp/`$row.path`"}">{$row.name}</a></li>
+                        <li{if $row.is_active} class="active"{/if}>
+                            <a href="{uri args="acp/`$row.path`"}">{lang t="`$row.name`|`$row.name`"}</a>
+                        </li>
                     {/foreach}
                 </ul>
             </div>

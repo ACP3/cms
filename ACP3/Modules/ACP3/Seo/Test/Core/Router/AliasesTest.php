@@ -31,6 +31,10 @@ class AliasesTest extends \PHPUnit_Framework_TestCase
         $this->seoCacheMock = $this->createMock(Cache::class);
         $this->modulesMock = $this->createMock(Modules::class);
 
+        $this->modulesMock->expects($this->once())
+            ->method('isActive')
+            ->willReturn(true);
+
         $this->aliases = new Aliases($this->modulesMock, $this->seoCacheMock);
     }
 

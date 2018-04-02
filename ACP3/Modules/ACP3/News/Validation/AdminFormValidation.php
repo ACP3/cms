@@ -87,12 +87,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
             );
 
         $this->validator->dispatchValidationEvent(
-            'seo.validation.validate_uri_alias',
-            $formData,
-            ['path' => $this->uriAlias]
-        );
-        $this->validator->dispatchValidationEvent(
-            'share.validation.validate_sharing_info',
+            'core.validation.form_extension',
             $formData,
             ['path' => $this->uriAlias]
         );

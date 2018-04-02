@@ -28,7 +28,7 @@
                         <div class="row">
                     {/if}
                     <fieldset class="col-sm-6">
-                        <legend>{$module}</legend>
+                        <legend>{lang t="`$module`|`$module`"}</legend>
                         {foreach $values.privileges as $privilege}
                             <div class="form-group">
                                 <label class="col-sm-2 control-label"{if !empty($privilege.description)} title="{$privilege.description}"{/if}>{$privilege.key}</label>

@@ -35,6 +35,8 @@ class LoggerFactory
      * @param string $level
      *
      * @return LoggerInterface
+     *
+     * @throws \Exception
      */
     public function create($channel, $level = LogLevel::DEBUG)
     {

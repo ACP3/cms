@@ -56,10 +56,10 @@ class Index extends Core\Controller\AbstractFrontendAction
 
             $colspan = 4;
             if ($canDeleteItem || $canEditItem) {
-                $colspan += 1;
+                ++$colspan;
             }
             if ($canSortItem) {
-                $colspan += 1;
+                ++$colspan;
             }
             $this->view->assign('colspan', $colspan);
 

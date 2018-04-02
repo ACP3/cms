@@ -8,13 +8,9 @@
 namespace ACP3\Modules\ACP3\System\Helper;
 
 use ACP3\Core;
-use ACP3\Core\XML;
-use Psr\Log\LoggerInterface;
 
 class Installer
 {
-    use Core\Modules\ModuleDependenciesTrait;
-
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
@@ -28,46 +24,25 @@ class Installer
      */
     protected $schemaInstaller;
     /**
-     * @var \ACP3\Core\Modules\Vendor
-     */
-    protected $vendors;
-    /**
-     * @var \ACP3\Core\XML
-     */
-    protected $xml;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
      * @var Core\Installer\SchemaRegistrar
      */
     private $schemaRegistrar;
 
     /**
-     * @param LoggerInterface                        $logger
      * @param \ACP3\Core\Environment\ApplicationPath $appPath
      * @param \ACP3\Core\Modules                     $modules
-     * @param \ACP3\Core\Modules\Vendor              $vendors
      * @param Core\Installer\SchemaRegistrar         $schemaRegistrar
      * @param \ACP3\Core\Modules\SchemaInstaller     $schemaInstaller
-     * @param \ACP3\Core\XML                         $xml
      */
     public function __construct(
-        LoggerInterface $logger,
         Core\Environment\ApplicationPath $appPath,
         Core\Modules $modules,
-        Core\Modules\Vendor $vendors,
         Core\Installer\SchemaRegistrar $schemaRegistrar,
-        Core\Modules\SchemaInstaller $schemaInstaller,
-        Core\XML $xml
+        Core\Modules\SchemaInstaller $schemaInstaller
     ) {
         $this->appPath = $appPath;
         $this->modules = $modules;
-        $this->vendors = $vendors;
         $this->schemaInstaller = $schemaInstaller;
-        $this->xml = $xml;
-        $this->logger = $logger;
         $this->schemaRegistrar = $schemaRegistrar;
     }
 
@@ -127,26 +102,8 @@ class Installer
      *
      * @return array
      */
-    protected function getDependencies($moduleName)
+    protected function getDependencies(string $moduleName)
     {
-        if ((bool) \preg_match('=/=', $moduleName) === false) {
-            foreach ($this->vendors->getVendors() as $vendor) {
-                $path = $this->appPath->getModulesDir() . $vendor . '/' . \ucfirst($moduleName) . '/Resources/config/module.xml';
-
-                if (\is_file($path) === true) {
-                    return $this->getModuleDependencies($path);
-                }
-            }
-        }
-
-        return [];
-    }
-
-    /**
-     * @return XML
-     */
-    protected function getXml()
-    {
-        return $this->xml;
+        return $this->modules->getModuleInfo($moduleName)['dependencies'] ?? [];
     }
 }

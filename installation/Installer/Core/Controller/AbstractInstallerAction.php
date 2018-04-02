@@ -75,24 +75,18 @@ abstract class AbstractInstallerAction implements ActionInterface
     {
         $this->setLanguage();
 
-        // Einige Template Variablen setzen
-        $this->view->assign('LANGUAGES', $this->languagesDropdown($this->translator->getLocale()));
-        $this->view->assign('PHP_SELF', $this->appPath->getPhpSelf());
-        $this->view->assign('REQUEST_URI', $this->request->getServer()->get('REQUEST_URI'));
-        $this->view->assign('ROOT_DIR', $this->appPath->getWebRoot());
-        $this->view->assign('INSTALLER_ROOT_DIR', $this->appPath->getInstallerWebRoot());
-        $this->view->assign('DESIGN_PATH', $this->appPath->getDesignPathWeb());
-        $this->view->assign('UA_IS_MOBILE', $this->request->getUserAgent()->isMobileBrowser());
-        $this->view->assign('IS_AJAX', $this->request->isXmlHttpRequest());
-
-        $languageInfo = \simplexml_load_file(
-            $this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $this->translator->getLocale() . '.xml'
-        );
-        $this->view->assign(
-            'LANG_DIRECTION',
-            isset($languageInfo->info->direction) ? $languageInfo->info->direction : 'ltr'
-        );
-        $this->view->assign('LANG', $this->translator->getShortIsoCode());
+        $this->view->assign([
+            'LANGUAGES' => $this->languagesDropdown($this->translator->getLocale()),
+            'PHP_SELF' => $this->appPath->getPhpSelf(),
+            'REQUEST_URI' => $this->request->getServer()->get('REQUEST_URI'),
+            'ROOT_DIR' => $this->appPath->getWebRoot(),
+            'INSTALLER_ROOT_DIR' => $this->appPath->getInstallerWebRoot(),
+            'DESIGN_PATH' => $this->appPath->getDesignPathWeb(),
+            'UA_IS_MOBILE' => $this->request->getUserAgent()->isMobileBrowser(),
+            'IS_AJAX' => $this->request->isXmlHttpRequest(),
+            'LANG_DIRECTION' => $this->translator->getDirection(),
+            'LANG' => $this->translator->getShortIsoCode(),
+        ]);
     }
 
     /**

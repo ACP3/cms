@@ -113,7 +113,7 @@ abstract class AbstractWidgetAction implements ActionInterface
             'HOST_NAME' => $this->request->getHttpHost(),
             'ROOT_DIR_ABSOLUTE' => $this->request->getScheme() . '://' . $this->request->getHttpHost() . $this->appPath->getWebRoot(),
             'DESIGN_PATH' => $this->appPath->getDesignPathWeb(),
-            'DESIGN_PATH_ABSOLUTE' => $this->appPath->getDesignPathAbsolute(),
+            'DESIGN_PATH_ABSOLUTE' => $this->request->getScheme() . '://' . $this->request->getHttpHost() . $this->appPath->getDesignPathWeb(),
             'LANG_DIRECTION' => $this->translator->getDirection(),
             'LANG' => $this->translator->getShortIsoCode(),
         ]);
@@ -134,7 +134,10 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected function applyTemplateAutomatically()
     {
-        return $this->request->getModule() . '/' . \ucfirst($this->request->getArea()) . '/' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl';
+        return $this->request->getModule()
+            . '/' . \ucfirst($this->request->getArea())
+            . '/' . $this->request->getController()
+            . '.' . $this->request->getAction() . '.tpl';
     }
 
     /**

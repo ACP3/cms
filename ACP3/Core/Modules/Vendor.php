@@ -34,7 +34,7 @@ class Vendor
     /**
      * @return array
      */
-    public function getVendors()
+    public function getVendors(): array
     {
         if ($this->vendors === []) {
             $this->cacheVendors();
@@ -46,7 +46,7 @@ class Vendor
     /**
      * Caches the various module vendors.
      */
-    protected function cacheVendors()
+    protected function cacheVendors(): void
     {
         $this->vendors = \array_merge(
             ['ACP3'],

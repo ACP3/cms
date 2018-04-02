@@ -26,6 +26,12 @@ services:
   core.environment.application_path:
     synthetic: true
 
+  core.environment.theme:
+    class: ACP3\Core\Environment\Theme
+    arguments:
+      - '@core.config'
+      - '@core.xml'
+
   fast_image_size:
     class: FastImageSize\FastImageSize
 

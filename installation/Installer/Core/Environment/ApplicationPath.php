@@ -35,7 +35,7 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
      *
      * @param string $applicationMode
      */
-    public function __construct($applicationMode)
+    public function __construct(string $applicationMode)
     {
         parent::__construct($applicationMode);
 
@@ -50,100 +50,40 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
     /**
      * @return string
      */
-    public function getInstallerAppDir()
+    public function getInstallerAppDir(): string
     {
         return $this->installerAppDir;
     }
 
     /**
-     * @param string $installerAppDir
-     *
-     * @return ApplicationPath
-     */
-    public function setInstallerAppDir($installerAppDir)
-    {
-        $this->installerAppDir = $installerAppDir;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getInstallerCacheDir()
+    public function getInstallerCacheDir(): string
     {
         return $this->installerCacheDir;
     }
 
     /**
-     * @param string $installerCacheDir
-     *
-     * @return ApplicationPath
-     */
-    public function setInstallerCacheDir($installerCacheDir)
-    {
-        $this->installerCacheDir = $installerCacheDir;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getInstallerClassesDir()
+    public function getInstallerClassesDir(): string
     {
         return $this->installerClassesDir;
     }
 
     /**
-     * @param string $installerClassesDir
-     *
-     * @return ApplicationPath
-     */
-    public function setInstallerClassesDir($installerClassesDir)
-    {
-        $this->installerClassesDir = $installerClassesDir;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getInstallerModulesDir()
+    public function getInstallerModulesDir(): string
     {
         return $this->installerModulesDir;
     }
 
     /**
-     * @param string $installerModulesDir
-     *
-     * @return ApplicationPath
-     */
-    public function setInstallerModulesDir($installerModulesDir)
-    {
-        $this->installerModulesDir = $installerModulesDir;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getInstallerWebRoot()
+    public function getInstallerWebRoot(): string
     {
         return $this->installerWebRoot;
-    }
-
-    /**
-     * @param string $installerWebRoot
-     *
-     * @return ApplicationPath
-     */
-    public function setInstallerWebRoot($installerWebRoot)
-    {
-        $this->installerWebRoot = $installerWebRoot;
-
-        return $this;
     }
 }

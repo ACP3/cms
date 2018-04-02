@@ -35,36 +35,30 @@ trait CacheResponseTrait
     /**
      * @param int $lifetime Cache TTL in seconds
      */
-    public function setCacheResponseCacheable($lifetime = 60)
+    public function setCacheResponseCacheable(int $lifetime = 60): void
     {
-        $varyHeaderName = 'X-User-Context-Hash';
+        if ($this->canUsePageCache()) {
+            $varyHeaderName = 'X-User-Context-Hash';
 
-        $response = $this->getResponse();
-
-        $response
-            ->setVary($varyHeaderName)
-            ->setMaxAge($lifetime)
-            ->setSharedMaxAge($lifetime)
-            ->headers->add([
-                $varyHeaderName => $this->getRequest()->getSymfonyRequest()->headers->get($varyHeaderName),
-            ]);
-
-        if ($this->disallowPageCache()) {
-            $response->setPrivate();
-            $lifetime = null;
-        } else {
-            $response->setPublic();
+            $this->getResponse()
+                ->setPublic()
+                ->setVary($varyHeaderName)
+                ->setMaxAge($lifetime)
+                ->setSharedMaxAge($lifetime)
+                ->headers->add([
+                    $varyHeaderName => $this->getRequest()->getSymfonyRequest()->headers->get($varyHeaderName),
+                ]);
         }
     }
 
     /**
      * @return bool
      */
-    protected function disallowPageCache()
+    protected function canUsePageCache(): bool
     {
         $systemSettings = $this->getSettings()->getSettings(Schema::MODULE_NAME);
 
-        return $this->getApplicationMode() === ApplicationMode::DEVELOPMENT
-            || $systemSettings['page_cache_is_enabled'] == 0;
+        return $this->getApplicationMode() !== ApplicationMode::DEVELOPMENT
+            && $systemSettings['page_cache_is_enabled'] == 1;
     }
 }
