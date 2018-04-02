@@ -84,14 +84,17 @@ class Theme
         return $pathParts[\count($pathParts) - 1];
     }
 
+    public function getCurrentTheme(): string
+    {
+        return $this->settings->getSettings(Schema::MODULE_NAME)['design'];
+    }
+
     /**
      * @return array
      */
     public function getCurrentThemeDependencies(): array
     {
-        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
-
-        return $this->getThemeDependencies($settings['design']);
+        return $this->getThemeDependencies($this->getCurrentTheme());
     }
 
     /**

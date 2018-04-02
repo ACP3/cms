@@ -11,8 +11,8 @@ use ACP3\Core\Assets\Cache;
 use ACP3\Core\Assets\FileResolver;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Modules\Vendor;
-use ACP3\Core\XML;
+use ACP3\Core\Environment\Theme;
+use ACP3\Core\Modules;
 
 class FileResolverTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,10 +20,6 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
      * @var FileResolver
      */
     private $fileResolver;
-    /**
-     * @var XML
-     */
-    private $xml;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
@@ -33,38 +29,51 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
      */
     private $appPath;
     /**
-     * @var Vendor
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $vendors;
+    private $themeMock;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $modulesMock;
 
     protected function setUp()
     {
         $this->setUpMockObjects();
 
-        $this->xml = new XML();
         $this->appPath = new ApplicationPath(ApplicationMode::DEVELOPMENT);
         $this->appPath
             ->setDesignRootPathInternal(ACP3_ROOT_DIR . 'tests/designs/')
             ->setDesignPathInternal('acp3/');
-        $this->vendors = new Vendor($this->appPath);
 
         $this->fileResolver = new FileResolver(
-            $this->xml,
             $this->assetsCache,
             $this->appPath,
-            $this->vendors
+            $this->themeMock,
+            $this->modulesMock
         );
     }
 
     private function setUpMockObjects()
     {
-        $this->assetsCache = $this->getMockBuilder(Cache::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->assetsCache = $this->createMock(Cache::class);
+        $this->themeMock = $this->createMock(Theme::class);
+        $this->modulesMock = $this->createMock(Modules::class);
     }
 
     public function testResolveTemplatePath()
     {
+        $this->themeMock->expects($this->any())
+            ->method('getCurrentTheme')
+            ->willReturn('acp3');
+        $this->themeMock->expects($this->any())
+            ->method('getThemeDependencies')
+            ->willReturn(['acp3']);
+        $this->modulesMock->expects($this->any())
+            ->method('getModuleInfo')
+            ->with('System')
+            ->willReturn(['vendor' => 'ACP3']);
+
         $expected = $this->appPath->getModulesDir() . 'ACP3/System/Resources/View/Partials/breadcrumb.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/breadcrumb.tpl');
         $this->assertEquals($expected, $actual);
@@ -72,6 +81,17 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
 
     public function testResolveTemplatePathWithInheritance()
     {
+        $this->themeMock->expects($this->any())
+            ->method('getCurrentTheme')
+            ->willReturn('acp3');
+        $this->themeMock->expects($this->any())
+            ->method('getThemeDependencies')
+            ->willReturn(['acp3']);
+        $this->modulesMock->expects($this->any())
+            ->method('getModuleInfo')
+            ->with('System')
+            ->willReturn(['vendor' => 'ACP3']);
+
         $expected = $this->appPath->getDesignPathInternal() . 'System/View/Partials/mark.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/mark.tpl');
         $this->assertEquals($expected, $actual);
@@ -79,6 +99,17 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
 
     public function testResolveTemplatePathWithMultipleInheritance()
     {
+        $this->themeMock->expects($this->any())
+            ->method('getCurrentTheme')
+            ->willReturn('acp3-inherit');
+        $this->themeMock->expects($this->any())
+            ->method('getThemeDependencies')
+            ->willReturn(['acp3-inherit', 'acp3']);
+        $this->modulesMock->expects($this->any())
+            ->method('getModuleInfo')
+            ->with('')
+            ->willReturn([]);
+
         $this->appPath->setDesignPathInternal('acp3-inherit/');
 
         $expected = ACP3_ROOT_DIR . 'tests/designs/acp3/layout.tpl';

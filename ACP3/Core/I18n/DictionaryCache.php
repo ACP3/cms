@@ -104,7 +104,7 @@ class DictionaryCache
         foreach ($this->modules->getAllModulesTopSorted() as $module) {
             $i18nFile = "{$this->appPath->getModulesDir()}{$module['vendor']}/{$module['dir']}/Resources/i18n/{$language}.xml";
 
-            if (\file_exists($i18nFile) === false) {
+            if (\is_file($i18nFile) === false) {
                 continue;
             }
 

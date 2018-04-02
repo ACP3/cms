@@ -40,10 +40,10 @@ services:
   core.assets.file_resolver:
     class: ACP3\Core\Assets\FileResolver
     arguments:
-      - '@core.xml'
       - '@core.assets.cache'
       - '@core.environment.application_path'
-      - '@core.modules.vendors'
+      - '@core.environment.theme'
+      - '@core.modules'
 
   core.assets.libraries:
     class: ACP3\Core\Assets\Libraries
