@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - made it possible to override module translation files using the currently activated theme (including the theme inheritance)
+- it is now possible to use deeply nested folder structures for templates and other static assets
+
+### Changed
+- many code optimizations which should reduce the pressure on the file system
 
 ## [4.26.4] - 2018-03-28
 ### Fixed
