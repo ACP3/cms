@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.27.0] - 2018-04-02
 ### Added
 - made it possible to override module translation files using the currently activated theme (including the theme inheritance)
 - it is now possible to use deeply nested folder structures for templates and other static assets
@@ -631,7 +631,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.26.4...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.27.0...HEAD
+[4.27.0]: https://gitlab.com/ACP3/cms/compare/v4.26.4...v4.27.0
 [4.26.4]: https://gitlab.com/ACP3/cms/compare/v4.26.2...v4.26.4
 [4.26.2]: https://gitlab.com/ACP3/cms/compare/v4.26.1...v4.26.2
 [4.26.1]: https://gitlab.com/ACP3/cms/compare/v4.26.0...v4.26.1
