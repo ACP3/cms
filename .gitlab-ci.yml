@@ -4,24 +4,26 @@ variables:
   COMPOSER_HOME: .composerhome
   COMPOSER_ALLOW_SUPERUSER: 1
 
-cache:
-  key: $CI_COMMIT_REF_NAME
-  paths:
-  - ${COMPOSER_HOME}
-  - vendor
-  - .php_cs.cache
-
 stages:
   - test
   - static-analysis
   - deploy
   - post-deploy
 
-test:php71-unit: &php-unit-base
-  stage: test
+.php-base: &php-base
+  cache:
+    key: $CI_COMMIT_REF_NAME
+    paths:
+      - ${COMPOSER_HOME}
+      - vendor
+      - .php_cs.cache
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
     - bash ./build/gitlab/before_script_php.sh > /dev/null
+
+test:php71-unit: &php-unit-base
+  <<: *php-base
+  stage: test
   script:
     - php composer.phar install -n -o
     - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
@@ -33,10 +35,8 @@ test:php72-unit:
   coverage: ~
 
 static-analysis:phpcs:
+  <<: *php-base
   stage: static-analysis
-  before_script:
-    - bash ./build/gitlab/before_script.sh > /dev/null
-    - bash ./build/gitlab/before_script_php.sh > /dev/null
   script:
     - php composer.phar install -n -o
     - php composer.phar run-script lint
@@ -47,7 +47,7 @@ static-analysis:eslint:
   cache:
     key: node-$CI_COMMIT_REF_NAME
     paths:
-    - node_modules
+      - node_modules
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
   script:
@@ -77,10 +77,15 @@ deploy:subtree-split:
     - gitsplit --ref "${CI_COMMIT_REF_NAME}"
 
 deploy:generate-artifact:
+  <<: *php-base
   stage: deploy
-  before_script:
-    - bash ./build/gitlab/before_script.sh > /dev/null
-    - bash ./build/gitlab/before_script_php.sh > /dev/null
+  cache:
+    key: $CI_COMMIT_REF_NAME
+    paths:
+      - ${COMPOSER_HOME}
+      - vendor
+      - .php_cs.cache
+    policy: pull
   script:
     - php composer.phar install --no-dev --prefer-dist -o -n --ignore-platform-reqs
   artifacts:
