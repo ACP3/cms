@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] - 2018-xx-yy
+### Changed
+- Updated CKEditor to version 4.10
+- Updated TinyMCE to version 4.8
+
+## Fixed
+- Fixed the bug when creating/editing an article a menu item get's accidentally created too
+
 ## [4.27.0] - 2018-04-02
 ### Added
 - made it possible to override module translation files using the currently activated theme (including the theme inheritance)
