@@ -130,8 +130,9 @@ class CKEditor extends Textarea
     private function configure()
     {
         $this->config['entities'] = false;
-        $this->config['extraPlugins'] = 'divarea,oembed,codemirror';
+        $this->config['extraPlugins'] = 'divarea,embed,codemirror';
         $this->config['allowedContent'] = true;
+        $this->config['embed_provider'] = '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}';
         $this->config['language'] = $this->translator->getShortIsoCode();
         $this->config['codemirror'] = [
             'theme' => 'default',
@@ -174,10 +175,8 @@ class CKEditor extends Textarea
 
         $js = "CKEDITOR.plugins.addExternal('codemirror', '" . $ckeditorPluginsDir . "codemirror/');\n";
         $js .= "CKEDITOR.plugins.addExternal('divarea', '" . $ckeditorPluginsDir . "divarea/');\n";
-        $js .= "CKEDITOR.plugins.addExternal('lineutils', '" . $ckeditorPluginsDir . "lineutils/');\n";
-        $js .= "CKEDITOR.plugins.addExternal('oembed', '" . $ckeditorPluginsDir . "oembed/');\n";
-        $js .= "CKEDITOR.plugins.addExternal('widgetselection', '" . $ckeditorPluginsDir . "widgetselection/');\n";
-        $js .= "CKEDITOR.plugins.addExternal('widget', '" . $ckeditorPluginsDir . "widget/');\n";
+        $js .= "CKEDITOR.plugins.addExternal('embedbase', '" . $ckeditorPluginsDir . "embedbase/');\n";
+        $js .= "CKEDITOR.plugins.addExternal('embed', '" . $ckeditorPluginsDir . "embed/');\n";
 
         $config = $this->configure();
         if (!empty($config)) {
@@ -266,7 +265,7 @@ class CKEditor extends Textarea
 
     private function configureFullToolbar()
     {
-        $this->config['extraPlugins'] = 'codemirror,divarea,lineutils,oembed,widget';
+        $this->config['extraPlugins'] = 'codemirror,divarea,embedbase,embed';
 
         if ($this->filemanagerHelpers instanceof \ACP3\Modules\ACP3\Filemanager\Helpers) {
             $this->applyFileManagerPaths();

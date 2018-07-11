@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eba604048ade217f003809643e5ad5a2",
+    "content-hash": "4330a9a4d570de2fad27b61982a5c6b9",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
-            "version": "dev-full/4.8.x",
+            "version": "dev-full/4.10.x",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "07eefe76b51397217d23d7b09da5016c68c2e4f9"
+                "reference": "ff7b827c0f2f4f3ff7463808f728867cc15aaae6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/07eefe76b51397217d23d7b09da5016c68c2e4f9",
-                "reference": "07eefe76b51397217d23d7b09da5016c68c2e4f9",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/ff7b827c0f2f4f3ff7463808f728867cc15aaae6",
+                "reference": "ff7b827c0f2f4f3ff7463808f728867cc15aaae6",
                 "shasum": ""
             },
             "type": "library",
@@ -45,7 +45,7 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2017-12-13T16:44:24+00:00"
+            "time": "2018-07-03T13:37:35+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -791,16 +791,16 @@
         },
         {
             "name": "friendsofsymfony/http-cache",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSHttpCache.git",
-                "reference": "804723f9e12fa1c7323f1aa676e129bbd9f82de2"
+                "reference": "88e4d4280aea8ff1941402834a5fa01411823c3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCache/zipball/804723f9e12fa1c7323f1aa676e129bbd9f82de2",
-                "reference": "804723f9e12fa1c7323f1aa676e129bbd9f82de2",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCache/zipball/88e4d4280aea8ff1941402834a5fa01411823c3d",
+                "reference": "88e4d4280aea8ff1941402834a5fa01411823c3d",
                 "shasum": ""
             },
             "require": {
@@ -865,7 +865,7 @@
                 "purge",
                 "varnish"
             ],
-            "time": "2018-04-24T09:14:46+00:00"
+            "time": "2018-07-06T15:14:05+00:00"
         },
         {
             "name": "giggsey/locale",
@@ -3620,16 +3620,16 @@
         },
         {
             "name": "tinymce/tinymce",
-            "version": "4.7.13",
+            "version": "4.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tinymce/tinymce-dist.git",
-                "reference": "2d2cd37932279723b4a5e4d259bc94123acbe666"
+                "reference": "0ca397b293d81cfb83de39c0952091233f6a6977"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/2d2cd37932279723b4a5e4d259bc94123acbe666",
-                "reference": "2d2cd37932279723b4a5e4d259bc94123acbe666",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/0ca397b293d81cfb83de39c0952091233f6a6977",
+                "reference": "0ca397b293d81cfb83de39c0952091233f6a6977",
                 "shasum": ""
             },
             "type": "component",
@@ -3662,7 +3662,7 @@
                 "tinymce",
                 "wysiwyg"
             ],
-            "time": "2018-05-16T04:27:27+00:00"
+            "time": "2018-07-11T08:59:33+00:00"
         },
         {
             "name": "toflar/psr6-symfony-http-cache-store",
@@ -4116,16 +4116,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v2.12.1",
+            "version": "v2.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "beef6cbe6dec7205edcd143842a49f9a691859a6"
+                "reference": "dcc87d5414e9d0bd316fce81a5bedb9ce720b183"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/beef6cbe6dec7205edcd143842a49f9a691859a6",
-                "reference": "beef6cbe6dec7205edcd143842a49f9a691859a6",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/dcc87d5414e9d0bd316fce81a5bedb9ce720b183",
+                "reference": "dcc87d5414e9d0bd316fce81a5bedb9ce720b183",
                 "shasum": ""
             },
             "require": {
@@ -4159,7 +4159,7 @@
                 "php-cs-fixer/phpunit-constraint-isidenticalstring": "^1.0.1",
                 "php-cs-fixer/phpunit-constraint-xmlmatchesxsd": "^1.0.1",
                 "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1",
-                "phpunitgoodpractices/traits": "^1.5",
+                "phpunitgoodpractices/traits": "^1.5.1",
                 "symfony/phpunit-bridge": "^4.0"
             },
             "suggest": {
@@ -4203,7 +4203,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-06-10T08:26:56+00:00"
+            "time": "2018-07-06T10:37:40+00:00"
         },
         {
             "name": "myclabs/deep-copy",

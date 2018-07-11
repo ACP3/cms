@@ -23,7 +23,7 @@
     "acp3/module-permissions": "^4.27.0",
     "acp3/module-system": "^4.27.0",
     "acp3/module-users": "^4.27.0",
-    "tinymce/tinymce": "^4.4"
+    "tinymce/tinymce": "^4.8"
   },
   "autoload": {
     "psr-4": {
