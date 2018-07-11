@@ -2,7 +2,7 @@
 cache_url: ".gitsplit-cache"
 
 # Path to the repository to split (default = current path)
-project_dir: ./
+project_url: ./
 
 # List of splits.
 splits:
