@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
-use ACP3\Modules\ACP3\System;
 
 class Delete extends Core\Controller\AbstractFrontendAction
 {

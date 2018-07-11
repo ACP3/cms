@@ -119,7 +119,7 @@
 .cookie-consent .cookie-consent__button {
   margin-left: 15px;
 }
-.cookie-consent p {
+.cookie-consent .cookie-consent__body {
   overflow: hidden;
 }
 /* ACP */

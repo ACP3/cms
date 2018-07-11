@@ -34,6 +34,11 @@ class ManageMenuItemOnModelSaveAfterListener
         $this->acl = $acl;
     }
 
+    /**
+     * @param \ACP3\Core\Model\Event\ModelSaveEvent $event
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
     public function createOrUpdateMenuItem(ModelSaveEvent $event)
     {
         if ($this->acl->hasPermission('admin/menus/items/create') === true
@@ -50,7 +55,8 @@ class ManageMenuItemOnModelSaveAfterListener
             ];
 
             $this->menuItemManager->manageMenuItem(
-                \sprintf($formData['menu_item_uri_pattern'], $event->getEntryId()), $data
+                \sprintf($formData['menu_item_uri_pattern'], $event->getEntryId()),
+                isset($formData['create_menu_item']) ? $data : []
             );
         }
     }
