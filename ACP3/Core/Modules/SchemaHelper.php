@@ -86,7 +86,7 @@ class SchemaHelper
      *
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executeSqlQueries(array $queries, $moduleName = '')
+    public function executeSqlQueries(array $queries, string $moduleName = '')
     {
         if (\count($queries) > 0) {
             $search = ['{pre}', '{engine}', '{charset}'];
@@ -127,7 +127,7 @@ class SchemaHelper
      *
      * @return int
      */
-    public function getModuleId($moduleName)
+    public function getModuleId(string $moduleName)
     {
         return $this->systemModuleRepository->getModuleId($moduleName) ?: 0;
     }
@@ -136,8 +136,10 @@ class SchemaHelper
      * @param string $moduleName
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function moduleIsInstalled($moduleName)
+    public function moduleIsInstalled(string $moduleName)
     {
         return $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->systemModuleRepository->getTableName()} WHERE `name` = ?",

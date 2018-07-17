@@ -14,8 +14,10 @@ class Sort extends AbstractOperation
      * @param string $mode
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($resultId, $mode)
+    public function execute(int $resultId, string $mode)
     {
         if ($this->nestedSetRepository->nodeExists($resultId) === true) {
             $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($resultId);
@@ -45,19 +47,15 @@ class Sort extends AbstractOperation
      *
      * @return bool
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function sortUp(array $nodes)
     {
-        $callback = function () use ($nodes) {
-            $prevNodes = $this->nestedSetRepository->fetchPrevNodeWithSiblings($nodes[0]['left_id'] - 1);
+        $prevNodes = $this->nestedSetRepository->fetchPrevNodeWithSiblings($nodes[0]['left_id'] - 1);
 
-            list($diffLeft, $diffRight) = $this->calcDiffBetweenNodes($nodes[0], $prevNodes[0]);
+        list($diffLeft, $diffRight) = $this->calcDiffBetweenNodes($nodes[0], $prevNodes[0]);
 
-            return $this->updateNodesDown($diffRight, $prevNodes) && $this->moveNodesUp($diffLeft, $nodes);
-        };
-
-        return $this->db->executeTransactionalQuery($callback);
+        return $this->updateNodesDown($diffRight, $prevNodes) && $this->moveNodesUp($diffLeft, $nodes);
     }
 
     /**
@@ -65,19 +63,15 @@ class Sort extends AbstractOperation
      *
      * @return bool
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function sortDown(array $nodes)
     {
-        $callback = function () use ($nodes) {
-            $nextNodes = $this->nestedSetRepository->fetchNextNodeWithSiblings($nodes[0]['right_id'] + 1);
+        $nextNodes = $this->nestedSetRepository->fetchNextNodeWithSiblings($nodes[0]['right_id'] + 1);
 
-            list($diffLeft, $diffRight) = $this->calcDiffBetweenNodes($nextNodes[0], $nodes[0]);
+        list($diffLeft, $diffRight) = $this->calcDiffBetweenNodes($nextNodes[0], $nodes[0]);
 
-            return $this->moveNodesUp($diffLeft, $nextNodes) && $this->updateNodesDown($diffRight, $nodes);
-        };
-
-        return $this->db->executeTransactionalQuery($callback);
+        return $this->moveNodesUp($diffLeft, $nextNodes) && $this->updateNodesDown($diffRight, $nodes);
     }
 
     /**
@@ -103,7 +97,7 @@ class Sort extends AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function updateNodesDown($diff, array $nodes)
+    protected function updateNodesDown(int $diff, array $nodes)
     {
         return $this->db->getConnection()->executeUpdate(
             "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id + ?, right_id = right_id + ? WHERE id IN(?)",
@@ -120,7 +114,7 @@ class Sort extends AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function moveNodesUp($diff, array $nodes)
+    protected function moveNodesUp(int $diff, array $nodes)
     {
         return $this->db->getConnection()->executeUpdate(
             "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE id IN(?)",

@@ -19,57 +19,53 @@ class Edit extends AbstractOperation
      *
      * @return bool
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute($resultId, $parentId, $blockId, array $updateValues)
     {
-        $callback = function () use ($resultId, $parentId, $blockId, $updateValues) {
-            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($resultId);
+        $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($resultId);
 
-            // Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
-            if ($this->nodeIsRootItemAndNoChangeNeed($parentId, $blockId, $nodes[0])) {
+        // Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
+        if ($this->nodeIsRootItemAndNoChangeNeed($parentId, $blockId, $nodes[0])) {
+            $bool = $this->db->getConnection()->update(
+                $this->nestedSetRepository->getTableName(),
+                $updateValues,
+                ['id' => $resultId]
+            );
+        } else {
+            $currentParent = $this->nestedSetRepository->fetchParentNode(
+                $nodes[0]['left_id'],
+                $nodes[0]['right_id']
+            );
+
+            // Überprüfung, falls Seite kein Root-Element ist und auch keine Veränderung vorgenommen werden soll...
+            if (!empty($currentParent) && $currentParent == $parentId) {
                 $bool = $this->db->getConnection()->update(
                     $this->nestedSetRepository->getTableName(),
                     $updateValues,
                     ['id' => $resultId]
                 );
-            } else {
-                $currentParent = $this->nestedSetRepository->fetchParentNode(
-                    $nodes[0]['left_id'],
-                    $nodes[0]['right_id']
-                );
+            } else { // ...ansonsten den Baum bearbeiten...
+                // Neues Elternelement
+                $newParent = $this->nestedSetRepository->fetchNodeById($parentId);
 
-                // Überprüfung, falls Seite kein Root-Element ist und auch keine Veränderung vorgenommen werden soll...
-                if (!empty($currentParent) && $currentParent == $parentId) {
-                    $bool = $this->db->getConnection()->update(
-                        $this->nestedSetRepository->getTableName(),
-                        $updateValues,
-                        ['id' => $resultId]
-                    );
-                } else { // ...ansonsten den Baum bearbeiten...
-                    // Neues Elternelement
-                    $newParent = $this->nestedSetRepository->fetchNodeById($parentId);
-
-                    if (empty($newParent)) {
-                        list($rootId, $diff) = $this->nodeBecomesRootNode($resultId, $blockId, $nodes);
-                    } else {
-                        list($diff, $rootId) = $this->moveNodeToNewParent($newParent, $nodes);
-                    }
-
-                    $bool = $this->adjustNodeSiblings($blockId, $nodes, $diff, $rootId);
-
-                    $this->db->getConnection()->update(
-                        $this->nestedSetRepository->getTableName(),
-                        $updateValues,
-                        ['id' => $resultId]
-                    );
+                if (empty($newParent)) {
+                    list($rootId, $diff) = $this->nodeBecomesRootNode($resultId, $blockId, $nodes);
+                } else {
+                    list($diff, $rootId) = $this->moveNodeToNewParent($newParent, $nodes);
                 }
+
+                $bool = $this->adjustNodeSiblings($blockId, $nodes, $diff, $rootId);
+
+                $this->db->getConnection()->update(
+                    $this->nestedSetRepository->getTableName(),
+                    $updateValues,
+                    ['id' => $resultId]
+                );
             }
+        }
 
-            return $bool;
-        };
-
-        return $this->db->executeTransactionalQuery($callback);
+        return $bool;
     }
 
     /**
@@ -82,8 +78,8 @@ class Edit extends AbstractOperation
     protected function nodeIsRootItemAndNoChangeNeed($parentId, $blockId, array $items)
     {
         return empty($parentId) &&
-        ($this->isBlockAware === false || ($this->isBlockAware === true && $blockId == $items['block_id'])) &&
-        $this->nestedSetRepository->nodeIsRootItem($items['left_id'], $items['right_id']) === true;
+            ($this->isBlockAware === false || ($this->isBlockAware === true && $blockId == $items['block_id'])) &&
+            $this->nestedSetRepository->nodeIsRootItem($items['left_id'], $items['right_id']) === true;
     }
 
     /**
@@ -238,6 +234,8 @@ class Edit extends AbstractOperation
      * @param array $nodes
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function moveNodeToNewParent(array $newParent, array $nodes)
     {

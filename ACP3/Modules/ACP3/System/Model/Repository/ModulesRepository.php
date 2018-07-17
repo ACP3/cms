@@ -26,9 +26,9 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     }
 
     /**
-     * @param string $moduleName
+     * {@inheritdoc}
      *
-     * @return int
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getModuleSchemaVersion($moduleName)
     {
@@ -39,9 +39,9 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     }
 
     /**
-     * @param string $moduleName
+     * {@inheritdoc}
      *
-     * @return bool
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function moduleExists($moduleName)
     {
@@ -52,9 +52,9 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     }
 
     /**
-     * @param string $moduleName
+     * {@inheritdoc}
      *
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getInfoByModuleName($moduleName)
     {
@@ -65,9 +65,9 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     }
 
     /**
-     * @param int $moduleId
+     * {@inheritdoc}
      *
-     * @return string
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getModuleNameById($moduleId)
     {

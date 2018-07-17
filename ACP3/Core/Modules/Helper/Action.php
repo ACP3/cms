@@ -8,6 +8,7 @@
 namespace ACP3\Core\Modules\Helper;
 
 use ACP3\Core;
+use Doctrine\DBAL\ConnectionException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,10 +35,15 @@ class Action
      * @var \ACP3\Core\Helpers\RedirectMessages
      */
     protected $redirectMessages;
+    /**
+     * @var \ACP3\Core\Database\Connection
+     */
+    private $db;
 
     /**
      * Action constructor.
      *
+     * @param \ACP3\Core\Database\Connection      $db
      * @param \ACP3\Core\I18n\Translator          $translator
      * @param \ACP3\Core\Http\RequestInterface    $request
      * @param \ACP3\Core\Router\RouterInterface   $router
@@ -45,6 +51,7 @@ class Action
      * @param \ACP3\Core\Helpers\RedirectMessages $redirectMessages
      */
     public function __construct(
+        Core\Database\Connection $db,
         Core\I18n\Translator $translator,
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
@@ -56,6 +63,7 @@ class Action
         $this->router = $router;
         $this->alerts = $alerts;
         $this->redirectMessages = $redirectMessages;
+        $this->db = $db;
     }
 
     /**
@@ -63,11 +71,19 @@ class Action
      * @param null|string $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function handlePostAction(callable $callback, $path = null)
     {
         try {
-            return $callback();
+            $this->db->getConnection()->beginTransaction();
+
+            $result = $callback();
+
+            $this->db->getConnection()->commit();
+
+            return $result;
         } catch (Core\Validation\Exceptions\InvalidFormTokenException $e) {
             return $this->redirectMessages->setMessage(
                 false,
@@ -76,6 +92,10 @@ class Action
             );
         } catch (Core\Validation\Exceptions\ValidationFailedException $e) {
             return $this->renderErrorBoxOnFailedFormValidation($e);
+        } catch (ConnectionException $e) {
+            $this->db->getConnection()->rollBack();
+
+            throw $e;
         }
     }
 
@@ -162,6 +182,8 @@ class Action
      * @param null|string $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function handleSettingsPostAction(callable $callback, $path = null)
     {
@@ -178,7 +200,9 @@ class Action
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @deprecated since 4.4.4, to be removed with version 4.5.0
+     * @deprecated since 4.4.4, to be removed with version 5.0.0
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function handleCreatePostAction(callable $callback, $path = null)
     {
@@ -191,7 +215,9 @@ class Action
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @deprecated since 4.4.4, to be removed with version 4.5.0
+     * @deprecated since 4.4.4, to be removed with version 5.0.0
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function handleEditPostAction(callable $callback, $path = null)
     {
@@ -203,6 +229,8 @@ class Action
      * @param null|string $path
      *
      * @return array|string|JsonResponse|RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function handleSaveAction(callable $callback, $path = null)
     {
