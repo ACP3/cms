@@ -82,6 +82,8 @@ class Bootstrap extends AbstractBootstrap
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Exception
      */
     public function outputPage()
     {
@@ -112,7 +114,7 @@ class Bootstrap extends AbstractBootstrap
         } catch (\Exception $e) {
             $this->logger->critical($e);
 
-            $response = $this->handleException($e, 'errors/index/server_error');
+            throw $e;
         }
 
         return $response;
@@ -161,48 +163,6 @@ class Bootstrap extends AbstractBootstrap
 
         $response = new Response($view->fetchTemplate('System/layout.maintenance.tpl'));
         $response->setStatusCode(Response::HTTP_SERVICE_UNAVAILABLE);
-
-        return $response;
-    }
-
-    /**
-     * @param \Exception $exception
-     * @param string     $route
-     *
-     * @return Response
-     */
-    private function handleException(\Exception $exception, $route)
-    {
-        if ($this->appMode === ApplicationMode::DEVELOPMENT) {
-            return $this->renderApplicationException($exception);
-        }
-
-        /** @var \ACP3\Core\Http\RedirectResponse $redirect */
-        $redirect = $this->container->get('core.http.redirect_response');
-
-        return $redirect->temporary($route);
-    }
-
-    /**
-     * Renders an exception.
-     *
-     * @param \Exception $exception
-     *
-     * @return Response
-     */
-    private function renderApplicationException(\Exception $exception)
-    {
-        /** @var View $view */
-        $view = $this->container->get('core.view');
-
-        $view->assign([
-            'PAGE_TITLE' => 'ACP3',
-            'ROOT_DIR' => $this->appPath->getWebRoot(),
-            'EXCEPTION' => $exception,
-        ]);
-
-        $response = new Response($view->fetchTemplate('System/layout.exception.tpl'));
-        $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
 
         return $response;
     }
