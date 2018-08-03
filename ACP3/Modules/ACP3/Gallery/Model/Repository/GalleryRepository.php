@@ -46,13 +46,13 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $time
+     * @param string $time
      *
      * @return bool|string
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAll(int $time)
+    public function countAll(string $time)
     {
         $where = $time !== '' ? ' WHERE ' . $this->getPublicationPeriod() : '';
 
