@@ -110,6 +110,8 @@ class InstallModel
 
     /**
      * @param RequestInterface $request
+     *
+     * @throws \Exception
      */
     public function updateContainer(RequestInterface $request)
     {

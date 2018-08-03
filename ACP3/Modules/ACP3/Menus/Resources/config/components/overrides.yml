@@ -2,7 +2,7 @@ services:
   core.breadcrumb:
     class: ACP3\Modules\ACP3\Menus\Core\Breadcrumb\Steps
     arguments:
-      - '@service_container'
+      - '@core.controller.controller_action_locator'
       - '@core.i18n.translator'
       - '@core.http.request'
       - '@core.router'

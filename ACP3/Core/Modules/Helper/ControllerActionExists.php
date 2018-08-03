@@ -7,18 +7,16 @@
 
 namespace ACP3\Core\Modules\Helper;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Psr\Container\ContainerInterface;
 
 class ControllerActionExists
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var \Psr\Container\ContainerInterface
      */
     protected $container;
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -44,6 +42,6 @@ class ControllerActionExists
 
         $serviceId = $pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2] . '.' . $pathArray[3];
 
-        return $this->container->has($serviceId) && \method_exists($this->container->get($serviceId), 'execute');
+        return $this->container->has($serviceId);
     }
 }

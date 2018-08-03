@@ -1,6 +1,8 @@
 services:
   _defaults:
     public: true
+    tags:
+    - { name: acp3.controller.action }
 
   seo.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Create
@@ -41,6 +43,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
+      - '@core.helpers.secure'
       - '@seo.validation.admin_settings_form_validation'
 
   seo.controller.admin.index.sitemap:

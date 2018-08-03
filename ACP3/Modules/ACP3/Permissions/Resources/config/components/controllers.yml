@@ -1,6 +1,8 @@
 services:
   _defaults:
     public: true
+    tags:
+    - { name: acp3.controller.action }
 
   permissions.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Create

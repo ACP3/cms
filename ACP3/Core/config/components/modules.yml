@@ -30,7 +30,7 @@ services:
   core.modules.helper.controllerActionExists:
     class: ACP3\Core\Modules\Helper\ControllerActionExists
     arguments:
-      - '@service_container'
+      - '@core.controller.controller_action_locator'
 
   core.modules.moduleInfoCache:
     class: ACP3\Core\Modules\ModuleInfoCache

@@ -5,7 +5,7 @@ services:
     arguments:
       - '@core.event_dispatcher'
       - '@core.http.request'
-      - '@service_container'
+      - '@core.controller.controller_action_locator'
       - '@core.application.argument_resolver'
 
   core.application.argument_resolver:

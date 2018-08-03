@@ -1,6 +1,8 @@
 services:
   _defaults:
     public: true
+    tags:
+    - { name: acp3.controller.action }
 
   search.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Search\Controller\Frontend\Index\Index

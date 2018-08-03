@@ -1,6 +1,8 @@
 services:
   _defaults:
     public: true
+    tags:
+    - { name: acp3.controller.action }
 
   install.controller.install.index.index:
     class: ACP3\Installer\Modules\Install\Controller\Index\Index

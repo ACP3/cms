@@ -12,7 +12,7 @@ use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
 use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Controller\Exception\ControllerActionNotFoundException;
 use ACP3\Core\Http\RequestInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
@@ -28,7 +28,7 @@ class ControllerActionDispatcher
      */
     protected $request;
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var \Psr\Container\ContainerInterface
      */
     protected $container;
     /**
@@ -39,7 +39,7 @@ class ControllerActionDispatcher
     /**
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
+     * @param \Psr\Container\ContainerInterface                           $container
      * @param ArgumentResolverInterface                                   $argumentResolver
      */
     public function __construct(
@@ -112,7 +112,6 @@ class ControllerActionDispatcher
      *
      * @return mixed
      *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \ReflectionException
      */
     private function executeControllerAction(ActionInterface $controller, array $arguments)

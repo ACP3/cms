@@ -1,6 +1,8 @@
 services:
   _defaults:
     public: true
+    tags:
+    - { name: acp3.controller.action }
 
   errors.controller.install.index.not_found:
     class: ACP3\Installer\Modules\Errors\Controller\Index\NotFound

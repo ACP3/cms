@@ -15,3 +15,9 @@ services:
     abstract: true
     arguments:
       - '@core.context.install'
+
+  core.controller.controller_action_locator:
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+    - []
+    tags: ['container.service_locator']

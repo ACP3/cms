@@ -13,6 +13,7 @@ use ACP3\Core\Helpers\DataGrid\DependencyInjection\RegisterColumnRendererPass;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
 use ACP3\Core\Model\DataProcessor\DependencyInjection\RegisterColumnTypesCompilerPass;
 use ACP3\Core\Modules;
+use ACP3\Core\Controller\DependencyInjection\RegisterControllerActionsPass;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
 use ACP3\Core\WYSIWYG\DependencyInjection\RegisterWysiwygEditorsCompilerPass;
@@ -75,6 +76,7 @@ class ServiceContainerBuilder extends ContainerBuilder
             ->addCompilerPass(new RegisterColumnRendererPass())
             ->addCompilerPass(new RegisterValidationRulesPass())
             ->addCompilerPass(new RegisterWysiwygEditorsCompilerPass())
+            ->addCompilerPass(new RegisterControllerActionsPass())
             ->addCompilerPass(new RegisterInstallersCompilerPass())
             ->addCompilerPass(new RegisterColumnTypesCompilerPass());
 

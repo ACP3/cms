@@ -7,6 +7,7 @@
 
 namespace ACP3\Installer\Core\DependencyInjection;
 
+use ACP3\Core\Controller\DependencyInjection\RegisterControllerActionsPass;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
@@ -88,11 +89,17 @@ class ServiceContainerBuilder extends ContainerBuilder
         $this->set('core.http.symfony_request', $this->symfonyRequest);
         $this->set('core.environment.application_path', $this->applicationPath);
         $this->set('core.logger.system_logger', $this->logger);
-        $this->addCompilerPass(
-            new RegisterListenersPass('core.event_dispatcher', 'core.eventListener', 'core.eventSubscriber')
-        );
-        $this->addCompilerPass(new RegisterSmartyPluginsPass());
-        $this->addCompilerPass(new RegisterValidationRulesPass());
+        $this
+            ->addCompilerPass(
+                new RegisterListenersPass(
+                    'core.event_dispatcher',
+                    'core.eventListener',
+                    'core.eventSubscriber'
+                )
+            )
+            ->addCompilerPass(new RegisterSmartyPluginsPass())
+            ->addCompilerPass(new RegisterControllerActionsPass())
+            ->addCompilerPass(new RegisterValidationRulesPass());
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
 

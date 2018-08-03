@@ -1,6 +1,8 @@
 services:
   _defaults:
     public: true
+    tags:
+    - { name: acp3.controller.action }
 
   feeds.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Feeds\Controller\Admin\Index\Index

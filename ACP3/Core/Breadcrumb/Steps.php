@@ -12,13 +12,13 @@ use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Steps
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var \Psr\Container\ContainerInterface
      */
     protected $container;
     /**
@@ -49,7 +49,7 @@ class Steps
     /**
      * Breadcrumb constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
+     * @param \Psr\Container\ContainerInterface                           $container
      * @param \ACP3\Core\I18n\Translator                                  $translator
      * @param \ACP3\Core\Http\RequestInterface                            $request
      * @param \ACP3\Core\Router\RouterInterface                           $router

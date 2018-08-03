@@ -48,3 +48,9 @@ services:
     arguments:
       - '@core.context.frontend'
     deprecated: 'The "%service_id%" service is deprecated. Use "core.controller.frontend" instead'
+
+  core.controller.controller_action_locator:
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+      - []
+    tags: ['container.service_locator']

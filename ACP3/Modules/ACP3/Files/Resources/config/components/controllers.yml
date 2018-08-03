@@ -1,6 +1,9 @@
 services:
   _defaults:
     public: true
+    tags:
+    - { name: acp3.controller.action }
+
   files.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Create
     arguments:
