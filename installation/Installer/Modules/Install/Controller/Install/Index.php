@@ -17,6 +17,7 @@ use ACP3\Installer\Modules\Install\Helpers\Navigation;
 use ACP3\Installer\Modules\Install\Model\InstallModel;
 use ACP3\Installer\Modules\Install\Validation\FormValidation;
 use ACP3\Modules\ACP3\System\Helper\AvailableDesignsTrait;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -48,9 +49,19 @@ class Index extends AbstractAction
      * @var \ACP3\Installer\Modules\Install\Validation\FormValidation
      */
     protected $formValidation;
+    /**
+     * @var \ACP3\Installer\Core\Helpers\Alerts
+     */
+    private $alertsHelper;
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
 
     /**
      * @param \ACP3\Installer\Core\Controller\Context\InstallerContext  $context
+     * @param \Psr\Log\LoggerInterface                                  $logger
+     * @param \ACP3\Installer\Core\Helpers\Alerts                       $alertsHelper
      * @param Navigation                                                $navigation
      * @param \ACP3\Installer\Core\Date                                 $date
      * @param XML                                                       $xml
@@ -61,6 +72,8 @@ class Index extends AbstractAction
      */
     public function __construct(
         Core\Controller\Context\InstallerContext $context,
+        LoggerInterface $logger,
+        Core\Helpers\Alerts $alertsHelper,
         Navigation $navigation,
         Date $date,
         XML $xml,
@@ -77,6 +90,8 @@ class Index extends AbstractAction
         $this->dateHelper = $dateHelper;
         $this->forms = $forms;
         $this->formValidation = $formValidation;
+        $this->alertsHelper = $alertsHelper;
+        $this->logger = $logger;
     }
 
     /**
@@ -141,7 +156,7 @@ class Index extends AbstractAction
         } catch (ValidationFailedException $e) {
             return $this->renderErrorBoxOnFailedFormValidation($e);
         } catch (\Exception $e) {
-            $this->get('core.logger.system_logger')->error($e);
+            $this->logger->error($e);
             $this->setTemplate('install/install.error.tpl');
         }
     }
@@ -153,7 +168,7 @@ class Index extends AbstractAction
      */
     private function renderErrorBoxOnFailedFormValidation(\Exception $exception)
     {
-        $errors = $this->get('core.helpers.alerts')->errorBox($exception->getMessage());
+        $errors = $this->alertsHelper->errorBox($exception->getMessage());
         if ($this->request->isXmlHttpRequest()) {
             return new Response($errors, 400);
         }

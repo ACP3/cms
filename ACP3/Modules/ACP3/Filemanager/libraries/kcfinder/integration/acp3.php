@@ -15,6 +15,7 @@ class acp3
 
     /**
      * @return bool
+     * @throws \Exception
      */
     public static function checkAuth()
     {
@@ -26,17 +27,20 @@ class acp3
 
             require_once ACP3_ROOT_DIR . 'vendor/autoload.php';
 
-            $application = new Bootstrap(ApplicationMode::PRODUCTION);
+            $appMode = ApplicationMode::PRODUCTION;
+            if (\getenv('ACP3_APPLICATION_MODE') === ApplicationMode::DEVELOPMENT) {
+                $appMode = ApplicationMode::DEVELOPMENT;
+            }
+
+            $application = new Bootstrap($appMode);
             if ($application->startupChecks()) {
+                $application->setErrorHandler();
                 $symfonyRequest = Request::createFromGlobals();
                 $application->initializeClasses($symfonyRequest);
 
                 chdir(ACP3_ROOT_DIR);
 
-                $application->getContainer()->get('core.authentication')->authenticate();
-
-                // if user has access permission...
-                if ($application->getContainer()->get('users.model.user_model')->isAuthenticated()) {
+                if ($application->getContainer()->get('filemanager.helpers.kcfinder_authentication_helper')->checkAuthorization()) {
                     if (!isset($_SESSION['KCFINDER'])) {
                         $_SESSION['KCFINDER'] = [];
                         $_SESSION['KCFINDER']['disabled'] = false;

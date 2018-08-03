@@ -33,11 +33,17 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\SendEmail
      */
     protected $sendEmail;
+    /**
+     * @var \ACP3\Core\Helpers\Alerts
+     */
+    private $alertsHelper;
 
     /**
      * ForgotPwd constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                           $context
+     * @param \ACP3\Core\Validation\Validator                                         $validator
+     * @param \ACP3\Core\Helpers\Alerts                                               $alertsHelper
      * @param \ACP3\Core\Helpers\FormToken                                            $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                                               $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository                $userRepository
@@ -46,6 +52,8 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Validation\Validator $validator,
+        Core\Helpers\Alerts $alertsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Model\Repository\UserRepository $userRepository,
@@ -59,6 +67,8 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
         $this->userRepository = $userRepository;
         $this->accountForgotPasswordFormValidation = $accountForgotPasswordFormValidation;
         $this->sendEmail = $sendEmail;
+        $this->alertsHelper = $alertsHelper;
+        $this->validator = $validator;
     }
 
     /**
@@ -102,7 +112,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
                     $bool = $this->userRepository->update($updateValues, $user['id']);
                 }
 
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
+                $this->setTemplate($this->alertsHelper->confirmBox(
                     $this->translator->t(
                         'users',
                         $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'
@@ -118,10 +128,13 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      * @param string $nickNameOrEmail
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
-    protected function fetchUserByFormFieldValue($nickNameOrEmail)
+    protected function fetchUserByFormFieldValue(string $nickNameOrEmail)
     {
-        if ($this->get('core.validation.validation_rules.email_validation_rule')->isValid($nickNameOrEmail) === true &&
+        if ($this->validator->is(Core\Validation\ValidationRules\EmailValidationRule::class, $nickNameOrEmail) === true &&
             $this->userRepository->resultExistsByEmail($nickNameOrEmail) === true
         ) {
             $user = $this->userRepository->getOneByEmail($nickNameOrEmail);
@@ -138,7 +151,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      *
      * @return bool
      */
-    protected function sendPasswordChangeEmail(array $user, $newPassword)
+    protected function sendPasswordChangeEmail(array $user, string $newPassword)
     {
         $systemSettings = $this->config->getSettings(Schema::MODULE_NAME);
 

@@ -7,16 +7,32 @@
 
 namespace ACP3\Modules\ACP3\Menus\Installer;
 
+use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules\Installer\AbstractSampleData;
+use ACP3\Core\Modules\SchemaHelper;
 
 class SampleData extends AbstractSampleData
 {
+    /**
+     * @var \ACP3\Core\I18n\Translator
+     */
+    private $translator;
+
+    public function __construct(
+        SchemaHelper $schemaHelper,
+        Translator $translator
+    ) {
+        parent::__construct($schemaHelper);
+
+        $this->translator = $translator;
+    }
+
     /**
      * @return array
      */
     public function sampleData()
     {
-        $translator = $this->schemaHelper->getContainer()->get('core.lang');
+        $translator = $this->translator;
 
         return [
             "INSERT INTO `{pre}menus` VALUES (1, 'main', '{$translator->t('install', 'pages_main')}');",

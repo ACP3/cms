@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+
   system.controller.admin.extensions.designs:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Designs
     arguments:
@@ -7,7 +10,8 @@ services:
 
   system.controller.admin.extensions.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Index
-    parent: core.controller.admin
+    arguments:
+      - '@core.context.frontend'
 
   system.controller.admin.extensions.modules:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Modules
@@ -29,20 +33,24 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
+      - '@core.helpers.date'
       - '@core.wysiwyg.wysiwyg_editor_registrar'
       - '@system.validation.admin_settings_form_validation'
 
   system.controller.admin.index.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Index
-    parent: core.controller.admin
+    arguments:
+    - '@core.context.frontend'
 
   system.controller.admin.maintenance.cache:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Cache
-    parent: core.controller.admin
+    arguments:
+    - '@core.context.frontend'
 
   system.controller.admin.maintenance.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Index
-    parent: core.controller.admin
+    arguments:
+    - '@core.context.frontend'
 
   system.controller.admin.maintenance.update_check:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\UpdateCheck

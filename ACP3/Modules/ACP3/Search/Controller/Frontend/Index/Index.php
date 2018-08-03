@@ -28,10 +28,15 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var Search\Utility\SearchAvailabilityRegistrar
      */
     protected $availableModulesRegistrar;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    private $secureHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext       $context
      * @param \ACP3\Core\Helpers\Forms                            $formsHelper
+     * @param \ACP3\Core\Helpers\Secure                           $secureHelper
      * @param \ACP3\Modules\ACP3\Search\Helpers                   $searchHelpers
      * @param \ACP3\Modules\ACP3\Search\Validation\FormValidation $searchValidator
      * @param Search\Utility\SearchAvailabilityRegistrar          $availableModulesRegistrar
@@ -39,6 +44,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
+        Core\Helpers\Secure $secureHelper,
         Search\Helpers $searchHelpers,
         Search\Validation\FormValidation $searchValidator,
         Search\Utility\SearchAvailabilityRegistrar $availableModulesRegistrar
@@ -49,6 +55,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->searchHelpers = $searchHelpers;
         $this->searchValidator = $searchValidator;
         $this->availableModulesRegistrar = $availableModulesRegistrar;
+        $this->secureHelper = $secureHelper;
     }
 
     /**
@@ -102,7 +109,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
                 return $this->renderSearchResults(
                     $formData['mods'],
-                    $this->get('core.helpers.secure')->strEncode($formData['search_term']),
+                    $this->secureHelper->strEncode($formData['search_term']),
                     $formData['area'],
                     \strtoupper($formData['sort'])
                 );

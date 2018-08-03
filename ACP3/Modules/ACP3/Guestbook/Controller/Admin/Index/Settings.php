@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\Secure;
 use ACP3\Modules\ACP3\Guestbook;
 
 class Settings extends Core\Controller\AbstractFrontendAction
@@ -24,6 +25,14 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    private $secureHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Date
+     */
+    private $dateHelper;
 
     /**
      * Settings constructor.
@@ -31,12 +40,16 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
      * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure                                           $secureHelper
+     * @param \ACP3\Core\Helpers\Date                                             $dateHelper
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
+        Secure $secureHelper,
+        Core\Helpers\Date $dateHelper,
         Guestbook\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
@@ -44,6 +57,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
+        $this->secureHelper = $secureHelper;
+        $this->dateHelper = $dateHelper;
     }
 
     /**
@@ -74,7 +89,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         }
 
         return [
-            'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
+            'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
             'notify' => $this->formsHelper->choicesGenerator('notify', $notificationTypes, $settings['notify']),
             'overlay' => $this->formsHelper->yesNoCheckboxGenerator('overlay', $settings['overlay']),
             'form' => \array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->all()),
@@ -93,7 +108,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
-                'dateformat' => $this->get('core.helpers.secure')->strEncode($formData['dateformat']),
+                'dateformat' => $this->secureHelper->strEncode($formData['dateformat']),
                 'notify' => $formData['notify'],
                 'notify_email' => $formData['notify_email'],
                 'overlay' => $formData['overlay'],

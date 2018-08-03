@@ -4,49 +4,42 @@ services:
     arguments: ['@core.helpers.view.checkAccess']
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.date_format:
     class: ACP3\Core\View\Renderer\Smarty\Functions\DateFormat
     arguments: ['@core.date']
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.date_picker:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Datepicker
     arguments: ['@core.helpers.date']
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.date_ramge:
     class: ACP3\Core\View\Renderer\Smarty\Functions\DateRange
     arguments: ['@core.helpers.formatter.date_range']
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.event:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Event
     arguments: ['@core.event_dispatcher']
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.redirect_message:
     class: ACP3\Core\View\Renderer\Smarty\Functions\RedirectMessage
     arguments: ['@core.helpers.redirect']
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.has_permission:
     class: ACP3\Core\View\Renderer\Smarty\Functions\HasPermission
     arguments: ['@core.acl']
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.image:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Image
@@ -56,21 +49,18 @@ services:
       - '@core.environment.application_path'
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.include_js:
     class: ACP3\Core\View\Renderer\Smarty\Functions\IncludeJs
     arguments: ['@core.assets', '@core.assets.file_resolver', '@core.environment.application_path']
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.js_libraries:
     class: ACP3\Core\View\Renderer\Smarty\Functions\JsLibraries
     arguments: ['@core.assets']
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.load_module:
     class: ACP3\Core\View\Renderer\Smarty\Functions\LoadModule
@@ -80,21 +70,18 @@ services:
       - '%core.environment%'
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.mark:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Mark
     arguments: ['@core.helpers.formatter.mark_entries']
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.page_css_classes:
     class: ACP3\Core\View\Renderer\Smarty\Functions\PageCssClasses
     arguments: ['@core.assets.page_css_classes']
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.page_title:
     class: ACP3\Core\View\Renderer\Smarty\Functions\PageTitle
@@ -102,7 +89,6 @@ services:
       - '@core.breadcrumb.title'
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.site_title:
     class: ACP3\Core\View\Renderer\Smarty\Functions\SiteTitle
@@ -110,7 +96,6 @@ services:
       - '@core.breadcrumb.title'
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.site_and_page_title:
     class: ACP3\Core\View\Renderer\Smarty\Functions\SiteAndPageTitle
@@ -118,7 +103,6 @@ services:
       - '@core.breadcrumb.title'
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.site_subtitle:
     class: ACP3\Core\View\Renderer\Smarty\Functions\SiteSubtitle
@@ -126,28 +110,24 @@ services:
       - '@core.breadcrumb.title'
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.template_path:
     class: ACP3\Core\View\Renderer\Smarty\Functions\TemplatePath
     arguments: ['@core.assets.file_resolver']
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.translate:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Translate
     arguments: ['@core.i18n.translator']
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.uri:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Uri
     arguments: ['@core.router']
     tags:
       - { name: core.view.extension }
-    public: false
 
   smarty.plugin.wysiwyg:
     class: ACP3\Core\View\Renderer\Smarty\Functions\WYSIWYG
@@ -156,4 +136,3 @@ services:
       - '@core.config'
     tags:
       - { name: core.view.extension }
-    public: false

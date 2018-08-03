@@ -32,6 +32,10 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @var Core\WYSIWYG\WysiwygEditorRegistrar
      */
     private $editorRegistrar;
+    /**
+     * @var \ACP3\Core\Helpers\Date
+     */
+    private $dateHelper;
 
     /**
      * Settings constructor.
@@ -40,6 +44,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Helpers\Forms                                         $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
      * @param Core\Helpers\Secure                                              $secure
+     * @param \ACP3\Core\Helpers\Date                                          $dateHelper
      * @param Core\WYSIWYG\WysiwygEditorRegistrar                              $editorRegistrar
      * @param \ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation $systemValidator
      */
@@ -48,6 +53,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secure,
+        Core\Helpers\Date $dateHelper,
         Core\WYSIWYG\WysiwygEditorRegistrar $editorRegistrar,
         System\Validation\AdminSettingsFormValidation $systemValidator
     ) {
@@ -58,6 +64,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->systemValidator = $systemValidator;
         $this->secure = $secure;
         $this->editorRegistrar = $editorRegistrar;
+        $this->dateHelper = $dateHelper;
     }
 
     /**
@@ -107,7 +114,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
             'wysiwyg' => $this->fetchWysiwygEditors($systemSettings['wysiwyg']),
             'languages' => $this->translator->getLanguagePack($systemSettings['lang']),
             'mod_rewrite' => $this->formsHelper->yesNoCheckboxGenerator('mod_rewrite', $systemSettings['mod_rewrite']),
-            'time_zones' => $this->get('core.helpers.date')->getTimeZones($systemSettings['date_time_zone']),
+            'time_zones' => $this->dateHelper->getTimeZones($systemSettings['date_time_zone']),
             'maintenance' => $this->formsHelper->yesNoCheckboxGenerator(
                 'maintenance_mode',
                 $systemSettings['maintenance_mode']

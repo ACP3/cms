@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+
   contact.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Index
     arguments:
@@ -15,7 +18,8 @@ services:
 
   contact.controller.frontend.index.imprint:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Imprint
-    parent: core.controller.frontend
+    arguments:
+    - '@core.context.frontend'
 
   contact.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Index
@@ -23,6 +27,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
+      - '@core.helpers.alerts'
       - '@contact.validation.form_validation'
       - '@contact.model.contacts_model'
       - '@contact.model.contact_form_model'

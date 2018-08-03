@@ -25,6 +25,10 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    private $secureHelper;
 
     /**
      * Settings constructor.
@@ -32,12 +36,14 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
      * @param \ACP3\Core\Helpers\Forms                                      $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                  $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure                                     $secureHelper
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
+        Core\Helpers\Secure $secureHelper,
         Seo\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
@@ -45,6 +51,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
+        $this->secureHelper = $secureHelper;
     }
 
     /**
@@ -107,8 +114,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
-                'meta_description' => $this->get('core.helpers.secure')->strEncode($formData['meta_description']),
-                'meta_keywords' => $this->get('core.helpers.secure')->strEncode($formData['meta_keywords']),
+                'meta_description' => $this->secureHelper->strEncode($formData['meta_description']),
+                'meta_keywords' => $this->secureHelper->strEncode($formData['meta_keywords']),
                 'robots' => (int) $formData['robots'],
                 'sitemap_is_enabled' => (int) $formData['sitemap_is_enabled'],
                 'sitemap_save_mode' => (int) $formData['sitemap_save_mode'],

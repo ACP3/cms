@@ -1,16 +1,19 @@
 services:
   core.http.redirect_response:
     class: ACP3\Core\Http\RedirectResponse
+    public: true
     arguments:
       - '@core.http.request'
       - '@core.router'
 
   core.http.request:
     class: ACP3\Core\Http\Request
+    public: true
     factory: ['@core.http.request_factory', create]
 
   core.http.symfony_request:
     synthetic: true
+    public: true
 
   core.http.request_factory:
     class: ACP3\Core\Http\RequestFactory

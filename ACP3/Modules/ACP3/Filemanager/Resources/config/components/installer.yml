@@ -3,10 +3,8 @@ services:
     class: ACP3\Modules\ACP3\Filemanager\Installer\Schema
     tags:
       - { name: core.installer.schema }
-    public: false
 
   filemanager.installer.migration:
     class: ACP3\Modules\ACP3\Filemanager\Installer\Migration
     tags:
       - { name: core.installer.migration }
-    public: false

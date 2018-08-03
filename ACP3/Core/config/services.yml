@@ -17,6 +17,7 @@ services:
 
   core.config:
     class: ACP3\Core\Settings\Settings
+    public: true
     arguments:
       - '@core.event_dispatcher'
       - '@core.cache.system'
@@ -24,6 +25,7 @@ services:
       - '@system.model.settingsrepository'
 
   core.environment.application_path:
+    public: true
     synthetic: true
 
   core.environment.theme:
@@ -37,6 +39,7 @@ services:
 
   core.image:
     class: ACP3\Core\Picture
+    public: true
     arguments:
       - '@fast_image_size'
       - '@core.http.response'

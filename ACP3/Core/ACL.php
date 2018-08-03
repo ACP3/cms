@@ -75,7 +75,7 @@ class ACL
      *
      * @return array
      */
-    public function getUserRoleIds($userId)
+    public function getUserRoleIds(int $userId)
     {
         if (isset($this->userRoles[$userId]) === false) {
             // Special case for guest user
@@ -98,7 +98,7 @@ class ACL
      *
      * @return array
      */
-    public function getUserRoleNames($userId)
+    public function getUserRoleNames(int $userId)
     {
         $roles = [];
         foreach ($this->userRoleRepository->getRolesByUserId($userId) as $userRole) {
@@ -121,7 +121,7 @@ class ACL
      *
      * @return bool
      */
-    public function userHasRole($roleId)
+    public function userHasRole(int $roleId)
     {
         return \in_array($roleId, $this->getUserRoleIds($this->user->getUserId()));
     }
@@ -157,7 +157,7 @@ class ACL
      *
      * @return bool
      */
-    public function hasPermission($resource)
+    public function hasPermission(string $resource)
     {
         if (!empty($resource) && $this->modules->controllerActionExists($resource) === true) {
             $resourceParts = \explode('/', $resource);
@@ -175,7 +175,7 @@ class ACL
      *
      * @return bool
      */
-    protected function canAccessResource($resource)
+    protected function canAccessResource(string $resource)
     {
         $resourceParts = $this->convertResourcePathToArray($resource);
 
@@ -198,7 +198,7 @@ class ACL
      *
      * @return array
      */
-    protected function convertResourcePathToArray($resource)
+    protected function convertResourcePathToArray(string $resource)
     {
         $resourceArray = \explode('/', $resource);
 
@@ -234,7 +234,7 @@ class ACL
      *
      * @return bool
      */
-    protected function userHasPrivilege($module, $privilegeKey)
+    protected function userHasPrivilege(string $module, string $privilegeKey)
     {
         $privilegeKey = \strtolower($privilegeKey);
         if (isset($this->getPrivileges()[$module][$privilegeKey])) {

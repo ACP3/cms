@@ -1,6 +1,7 @@
 services:
   core.helpers.data_grid:
     class: ACP3\Core\Helpers\DataGrid
+    public: true
     arguments:
       - '@core.acl'
       - '@core.i18n.translator'
@@ -13,7 +14,6 @@ services:
       - '@core.helpers.formatter.date_range'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-    public: false
 
   core.helpers.data_grid.column_renderer.header_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\HeaderColumnRenderer
@@ -21,19 +21,16 @@ services:
       - '@core.helpers.formatter.mark_entries'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-    public: false
 
   core.helpers.data_grid.column_renderer.integer_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-    public: false
 
   core.helpers.data_grid.column_renderer.mass_action_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\MassActionColumnRenderer
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-    public: false
 
   core.helpers.data_grid.column_renderer.nl2p_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer
@@ -41,7 +38,6 @@ services:
       - '@core.helpers.string_formatter'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-    public: false
 
   core.helpers.data_grid.column_renderer.option_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer
@@ -51,13 +47,11 @@ services:
       - '@core.event_dispatcher'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-    public: false
 
   core.helpers.data_grid.column_renderer.option_column_renderer.option_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
     arguments:
       - '@core.router'
-    public: false
 
   core.helpers.data_grid.column_renderer.picture_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer
@@ -65,19 +59,16 @@ services:
       - '@core.router'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-    public: false
 
   core.helpers.data_grid.column_renderer.replace_value_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-    public: false
 
   core.helpers.data_grid.column_renderer.round_number_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\RoundNumberColumnRenderer
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-    public: false
 
   core.helpers.data_grid.column_renderer.route_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\RouteColumnRenderer
@@ -86,7 +77,6 @@ services:
       - '@core.i18n.translator'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-    public: false
 
   core.helpers.data_grid.column_renderer.sort_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\SortColumnRenderer
@@ -95,13 +85,11 @@ services:
       - '@core.router'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-    public: false
 
   core.helpers.data_grid.column_renderer.text_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-    public: false
 
   core.helpers.data_grid.column_renderer.translate_column_renderer:
     class: ACP3\Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer
@@ -109,4 +97,3 @@ services:
       - '@core.i18n.translator'
     tags:
       - { name: core.helpers.data_grid.column_renderer }
-    public: false

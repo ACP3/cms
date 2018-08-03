@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+
   share.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Create
     arguments:

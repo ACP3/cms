@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+
   polls.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Create
     arguments:

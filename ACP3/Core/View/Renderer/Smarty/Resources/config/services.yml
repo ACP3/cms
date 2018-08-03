@@ -4,4 +4,3 @@ services:
     arguments: ['@core.assets.file_resolver']
     tags:
       - { name: core.view.extension }
-    public: false

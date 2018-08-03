@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+
   categories.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Create
     arguments:

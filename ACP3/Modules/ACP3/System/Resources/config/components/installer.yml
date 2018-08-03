@@ -3,11 +3,17 @@ services:
     class: ACP3\Modules\ACP3\System\Installer\Schema
     tags:
       - { name: core.installer.schema }
-    public: false
 
   system.installer.migration:
     class: ACP3\Modules\ACP3\System\Installer\Migration
-    parent: core.modules.installer.abstractMigration
+    arguments:
+      - '@core.modules.schemaHelper'
+      - '@core.modules.schemaInstaller'
+      - '@core.modules.aclInstaller'
+      - '@core.modules'
+      - '@core.config'
+    calls:
+      - ['setSeoInstallerSchema', ['@?seo.installer.schema']]
+      - ['setMinifyInstallerSchema', ['@?minify.installer.schema']]
     tags:
       - { name: core.installer.migration }
-    public: false

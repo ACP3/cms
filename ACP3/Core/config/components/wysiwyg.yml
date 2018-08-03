@@ -11,4 +11,3 @@ services:
     class: ACP3\Core\WYSIWYG\Editor\Textarea
     tags:
       - { name: core.wysiwyg.editor }
-    public: false

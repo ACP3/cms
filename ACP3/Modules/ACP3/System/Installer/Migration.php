@@ -9,9 +9,66 @@ namespace ACP3\Modules\ACP3\System\Installer;
 
 use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Modules;
+use ACP3\Core\Settings\SettingsInterface;
 
 class Migration extends Modules\Installer\AbstractMigration
 {
+    /**
+     * @var \ACP3\Core\Modules\SchemaInstaller
+     */
+    private $schemaInstaller;
+    /**
+     * @var \ACP3\Core\Modules\AclInstaller
+     */
+    private $aclInstaller;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
+    /**
+     * @var \ACP3\Core\Settings\SettingsInterface
+     */
+    private $settings;
+
+    /**
+     * @var Modules\Installer\SchemaInterface|null
+     */
+    private $seoSchema;
+    /**
+     * @var Modules\Installer\SchemaInterface|null
+     */
+    private $minifySchema;
+
+    public function __construct(
+        Modules\SchemaHelper $schemaHelper,
+        Modules\SchemaInstaller $schemaInstaller,
+        Modules\AclInstaller $aclInstaller,
+        Modules $modules,
+        SettingsInterface $settings
+    ) {
+        parent::__construct($schemaHelper);
+        $this->schemaInstaller = $schemaInstaller;
+        $this->aclInstaller = $aclInstaller;
+        $this->modules = $modules;
+        $this->settings = $settings;
+    }
+
+    /**
+     * @param Modules\Installer\SchemaInterface|null $seoSchema
+     */
+    public function setSeoInstallerSchema(?Modules\Installer\SchemaInterface $seoSchema)
+    {
+        $this->seoSchema = $seoSchema;
+    }
+
+    /**
+     * @param Modules\Installer\SchemaInterface|null $minifySchema
+     */
+    public function setMinifyInstallerSchema(?Modules\Installer\SchemaInterface $minifySchema)
+    {
+        $this->minifySchema = $minifySchema;
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -194,13 +251,11 @@ class Migration extends Modules\Installer\AbstractMigration
     {
         return function () {
             $result = true;
-            if ($this->schemaHelper->getContainer()->has('seo.installer.schema') &&
+            if ($this->seoSchema !== null &&
                 $this->schemaHelper->getSystemModuleRepository()->moduleExists('seo') === false
             ) {
-                $installer = $this->schemaHelper->getContainer()->get('core.modules.schemaInstaller');
-                $moduleSchema = $this->schemaHelper->getContainer()->get('seo.installer.schema');
-                $result = $installer->install($moduleSchema);
-                $aclResult = $this->schemaHelper->getContainer()->get('core.modules.aclInstaller')->install($moduleSchema);
+                $result = $this->schemaInstaller->install($this->seoSchema);
+                $aclResult = $this->aclInstaller->install($this->seoSchema);
 
                 if ($result === true && $aclResult === true) {
                     $seoModuleId = $this->schemaHelper->getDb()->fetchColumn(
@@ -224,14 +279,11 @@ class Migration extends Modules\Installer\AbstractMigration
     {
         return function () {
             $result = $aclResult = true;
-            if ($this->schemaHelper->getContainer()->has('minify.installer.schema') &&
+            if ($this->minifySchema !== null &&
                 $this->schemaHelper->getSystemModuleRepository()->moduleExists('minify') === false
             ) {
-                $installer = $this->schemaHelper->getContainer()->get('core.modules.schemaInstaller');
-                /** @var Modules\Installer\SchemaInterface $moduleSchema */
-                $moduleSchema = $this->schemaHelper->getContainer()->get('minify.installer.schema');
-                $result = $installer->install($moduleSchema);
-                $aclResult = $this->schemaHelper->getContainer()->get('core.modules.aclInstaller')->install($moduleSchema);
+                $result = $this->schemaInstaller->install($this->minifySchema);
+                $aclResult = $this->aclInstaller->install($this->minifySchema);
             }
 
             return $result && $aclResult;
@@ -265,12 +317,11 @@ class Migration extends Modules\Installer\AbstractMigration
         return function () {
             $result = true;
 
-            $container = $this->schemaHelper->getContainer();
-            if ($container->get('core.modules')->isInstalled('seo')) {
-                $seoSettings = $container->get('core.config')->getSettings('seo');
+            if ($this->modules->isInstalled('seo')) {
+                $seoSettings = $this->settings->getSettings('seo');
 
                 if (isset($seoSettings['title'])) {
-                    return $container->get('core.config')->saveSettings(
+                    return $this->settings->saveSettings(
                         ['site_title' => $seoSettings['title']],
                         Schema::MODULE_NAME
                     );

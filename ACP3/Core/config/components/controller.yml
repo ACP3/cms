@@ -30,6 +30,8 @@ services:
       - '@core.breadcrumb'
       - '@core.breadcrumb.title'
       - '@core.modules.helper.action'
+      - '@core.helpers.redirect'
+      - '@core.http.redirect_response'
 
   core.controller.widget:
     abstract: true

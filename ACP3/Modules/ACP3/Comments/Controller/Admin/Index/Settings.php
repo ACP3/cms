@@ -24,18 +24,30 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    private $secureHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Date
+     */
+    private $dateHelper;
 
     /**
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
      * @param \ACP3\Core\Helpers\Forms                                           $formsHelper
+     * @param \ACP3\Core\Helpers\Secure                                          $secureHelper
+     * @param \ACP3\Core\Helpers\Date                                            $dateHelper
      * @param \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      * @param \ACP3\Core\Helpers\FormToken                                       $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
+        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\Date $dateHelper,
         Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
         Core\Helpers\FormToken $formTokenHelper
     ) {
@@ -44,6 +56,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->formsHelper = $formsHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->formTokenHelper = $formTokenHelper;
+        $this->secureHelper = $secureHelper;
+        $this->dateHelper = $dateHelper;
     }
 
     /**
@@ -61,7 +75,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         }
 
         return [
-            'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
+            'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
@@ -76,7 +90,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
-                'dateformat' => $this->get('core.helpers.secure')->strEncode($formData['dateformat']),
+                'dateformat' => $this->secureHelper->strEncode($formData['dateformat']),
                 'emoticons' => $formData['emoticons'],
             ];
 

@@ -1,6 +1,7 @@
 services:
   core.application.controller_action_dispatcher:
     class: ACP3\Core\Application\ControllerActionDispatcher
+    public: true
     arguments:
       - '@core.event_dispatcher'
       - '@core.http.request'
@@ -9,7 +10,6 @@ services:
 
   core.application.argument_resolver:
     class: Symfony\Component\HttpKernel\Controller\ArgumentResolver
-    public: false
 
   core.application.event.add_esi_surrogate_header_listener:
     class: ACP3\Core\Application\Event\Listener\AddEsiSurrogateHeaderListener

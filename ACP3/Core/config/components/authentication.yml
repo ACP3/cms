@@ -12,6 +12,7 @@ services:
 
   core.authentication:
     class: ACP3\Core\Authentication\AuthenticationInterface
+    public: true
     factory: 'core.authentication.factory:get'
     arguments:
       - '%core.authentication.method%'

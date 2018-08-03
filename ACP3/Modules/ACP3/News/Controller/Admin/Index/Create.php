@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
+use ACP3\Modules\ACP3\News\Controller\CommentsHelperTrait;
 
 class Create extends AbstractFormAction
 {

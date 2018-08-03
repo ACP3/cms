@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+
   emoticons.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Create
     arguments:

@@ -1,4 +1,8 @@
 services:
+  _defaults:
+    public: true
+
   auditlog.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Auditlog\Controller\Admin\Index\Index
-    parent: core.controller.admin
+    arguments:
+    - '@core.context.frontend'

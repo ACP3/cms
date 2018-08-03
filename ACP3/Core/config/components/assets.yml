@@ -9,7 +9,6 @@ services:
     class: ACP3\Core\Assets\Cache
     arguments:
       - '@core.cache.system'
-    public: false
 
   core.assets.logger:
     class: Psr\Log\LoggerInterface

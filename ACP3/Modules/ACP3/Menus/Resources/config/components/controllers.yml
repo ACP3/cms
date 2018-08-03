@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+
   menus.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Create
     arguments:

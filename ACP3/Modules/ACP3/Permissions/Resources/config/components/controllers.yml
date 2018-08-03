@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+
   permissions.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Create
     arguments:
@@ -32,7 +35,8 @@ services:
 
   permissions.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Index
-    parent: core.controller.admin
+    arguments:
+    - '@core.context.frontend'
 
   permissions.controller.admin.index.order:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Order

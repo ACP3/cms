@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+
   seo.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Create
     arguments:

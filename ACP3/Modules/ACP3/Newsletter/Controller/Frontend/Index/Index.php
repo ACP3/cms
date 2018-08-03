@@ -28,11 +28,16 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Alerts
+     */
+    private $alertsHelper;
 
     /**
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                    $context
+     * @param \ACP3\Core\Helpers\Alerts                                        $alertsHelper
      * @param \ACP3\Core\Helpers\Forms                                         $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe                   $subscribeHelper
@@ -40,6 +45,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\Alerts $alertsHelper,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Helper\Subscribe $subscribeHelper,
@@ -51,6 +57,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->formTokenHelper = $formTokenHelper;
         $this->subscribeHelper = $subscribeHelper;
         $this->subscribeFormValidation = $subscribeFormValidation;
+        $this->alertsHelper = $alertsHelper;
     }
 
     /**
@@ -96,7 +103,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 );
 
                 $this->setTemplate(
-                    $this->get('core.helpers.alerts')->confirmBox(
+                    $this->alertsHelper->confirmBox(
                     $this->translator->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'),
                     $this->appPath->getWebRoot()
                 )

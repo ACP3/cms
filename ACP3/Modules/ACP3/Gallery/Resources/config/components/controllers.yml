@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+
   gallery.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Create
     arguments:
@@ -39,6 +42,8 @@ services:
       - '@gallery.cache.core'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
+      - '@core.helpers.secure'
+      - '@core.helpers.date'
       - '@gallery.validation.admin_settings_form_validation'
 
   gallery.controller.admin.pictures.create:

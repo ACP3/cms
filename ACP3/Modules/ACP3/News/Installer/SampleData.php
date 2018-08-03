@@ -10,17 +10,31 @@ namespace ACP3\Modules\ACP3\News\Installer;
 use ACP3\Core\Date;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules\Installer\AbstractSampleData;
+use ACP3\Core\Modules\SchemaHelper;
 
 class SampleData extends AbstractSampleData
 {
+    /**
+     * @var \ACP3\Core\I18n\Translator
+     */
+    private $translator;
+
+    public function __construct(
+        SchemaHelper $schemaHelper,
+        Translator $translator
+    ) {
+        parent::__construct($schemaHelper);
+
+        $this->translator = $translator;
+    }
+
     /**
      * @return array
      */
     public function sampleData()
     {
         $currentDate = \gmdate(Date::DEFAULT_DATE_FORMAT_FULL);
-        /** @var Translator $translator */
-        $translator = $this->schemaHelper->getContainer()->get('core.lang');
+        $translator = $this->translator;
 
         return [
             "INSERT INTO `{pre}categories` VALUES ('', '{$translator->t('install', 'category_name')}', '', '{$translator->t('install', 'category_description')}', '{$this->schemaHelper->getModuleId(Schema::MODULE_NAME)}');",

@@ -1,9 +1,13 @@
 services:
+  _defaults:
+    public: true
+
   search.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Search\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.forms'
+      - '@core.helpers.secure'
       - '@search.helpers'
       - '@search.validation.form_validation'
       - '@search.utility.search_availability_registrar'

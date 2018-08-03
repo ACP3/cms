@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+
   install.controller.install.index.index:
     class: ACP3\Installer\Modules\Install\Controller\Index\Index
     arguments:
@@ -20,12 +23,15 @@ services:
 
   install.controller.install.install.available_databases:
     class: ACP3\Installer\Modules\Install\Controller\Install\AvailableDatabases
-    parent: core.controller.install
+    arguments:
+    - '@core.context.install'
 
   install.controller.install.install.index:
     class: ACP3\Installer\Modules\Install\Controller\Install\Index
     arguments:
       - '@core.context.install'
+      - '@core.logger.system_logger'
+      - '@core.helpers.alerts'
       - '@install.helpers.navigation'
       - '@core.date'
       - '@core.xml'

@@ -27,6 +27,14 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
      * @var \ACP3\Core\Modules\Helper\Action
      */
     private $actionHelper;
+    /**
+     * @var \ACP3\Core\Helpers\RedirectMessages
+     */
+    private $redirectMessagesHelper;
+    /**
+     * @var \ACP3\Core\Http\RedirectResponse
+     */
+    private $redirectResponse;
 
     /**
      * @param \ACP3\Core\Controller\Context\WidgetContext $context
@@ -34,13 +42,17 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
      * @param \ACP3\Core\Breadcrumb\Steps                 $breadcrumb
      * @param \ACP3\Core\Breadcrumb\Title                 $title
      * @param \ACP3\Core\Modules\Helper\Action            $actionHelper
+     * @param \ACP3\Core\Helpers\RedirectMessages         $redirectMessagesHelper
+     * @param \ACP3\Core\Http\RedirectResponse            $redirectResponse
      */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Assets $assets,
         Core\Breadcrumb\Steps $breadcrumb,
         Core\Breadcrumb\Title $title,
-        Core\Modules\Helper\Action $actionHelper
+        Core\Modules\Helper\Action $actionHelper,
+        Core\Helpers\RedirectMessages $redirectMessagesHelper,
+        Core\Http\RedirectResponse $redirectResponse
     ) {
         parent::__construct(
             $context->getContainer(),
@@ -63,6 +75,8 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
         $this->breadcrumb = $breadcrumb;
         $this->title = $title;
         $this->actionHelper = $actionHelper;
+        $this->redirectMessagesHelper = $redirectMessagesHelper;
+        $this->redirectResponse = $redirectResponse;
     }
 
     /**
@@ -95,5 +109,21 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
     public function getActionHelper()
     {
         return $this->actionHelper;
+    }
+
+    /**
+     * @return \ACP3\Core\Helpers\RedirectMessages
+     */
+    public function getRedirectMessagesHelper()
+    {
+        return $this->redirectMessagesHelper;
+    }
+
+    /**
+     * @return \ACP3\Core\Http\RedirectResponse
+     */
+    public function getRedirectResponse()
+    {
+        return $this->redirectResponse;
     }
 }

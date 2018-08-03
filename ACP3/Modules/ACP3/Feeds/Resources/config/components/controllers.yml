@@ -1,7 +1,11 @@
 services:
+  _defaults:
+    public: true
+
   feeds.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Feeds\Controller\Admin\Index\Index
-    parent: core.controller.admin
+    arguments:
+    - '@core.context.frontend'
 
   feeds.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Feeds\Controller\Admin\Index\Settings

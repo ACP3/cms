@@ -50,6 +50,10 @@ abstract class AbstractInstallerAction implements ActionInterface
      */
     protected $response;
     /**
+     * @var \ACP3\Core\Http\RedirectResponse
+     */
+    private $redirectResponse;
+    /**
      * @var string
      */
     private $layout = 'layout.tpl';
@@ -66,6 +70,7 @@ abstract class AbstractInstallerAction implements ActionInterface
         $this->view = $context->getView();
         $this->response = $context->getResponse();
         $this->appPath = $context->getAppPath();
+        $this->redirectResponse = $context->getRedirectResponse();
     }
 
     /**
@@ -94,7 +99,7 @@ abstract class AbstractInstallerAction implements ActionInterface
      */
     public function redirect()
     {
-        return $this->get('core.http.redirect_response');
+        return $this->redirectResponse;
     }
 
     /**

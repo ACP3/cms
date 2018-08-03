@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+
   newsletter.controller.admin.accounts.activate:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts\Activate
     arguments:
@@ -83,6 +86,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\Activate
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.alerts'
       - '@newsletter.helper.accountstatus'
       - '@newsletter.validation.activate_account_form_validation'
 
@@ -90,6 +94,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.alerts'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@newsletter.helper.subscribe'
@@ -99,6 +104,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\Unsubscribe
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.alerts'
       - '@core.helpers.formToken'
       - '@newsletter.helper.accountstatus'
       - '@newsletter.validation.unsubscribe_form_validation'

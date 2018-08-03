@@ -29,7 +29,6 @@ services:
       - '@users.model.userrepository'
     tags:
       - { name: core.validation.validation_rule }
-    public: false
 
   users.validation.validation_rules.account_not_exists_by_email_validation_rule:
     class: ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByEmailValidationRule
@@ -37,7 +36,6 @@ services:
       - '@users.model.userrepository'
     tags:
       - { name: core.validation.validation_rule }
-    public: false
 
   users.validation.validation_rules.account_exists_by_name_validation_rule:
     class: ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountExistsByNameValidationRule
@@ -45,7 +43,6 @@ services:
       - '@users.model.userrepository'
     tags:
       - { name: core.validation.validation_rule }
-    public: false
 
   users.validation.validation_rules.account_not_exists_by_name_validation_rule:
     class: ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameValidationRule
@@ -53,10 +50,8 @@ services:
       - '@users.model.userrepository'
     tags:
       - { name: core.validation.validation_rule }
-    public: false
 
   users.validation.validation_rules.icq_number_validation_rule:
     class: ACP3\Modules\ACP3\Users\Validation\ValidationRules\IcqNumberValidationRule
     tags:
       - { name: core.validation.validation_rule }
-    public: false

@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+
   update.controller.install.index.index:
     class: ACP3\Installer\Modules\Update\Controller\Index\Index
     arguments:

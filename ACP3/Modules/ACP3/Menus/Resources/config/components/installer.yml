@@ -3,17 +3,16 @@ services:
     class: ACP3\Modules\ACP3\Menus\Installer\Schema
     tags:
       - { name: core.installer.schema }
-    public: false
 
   menus.installer.migration:
     class: ACP3\Modules\ACP3\Menus\Installer\Migration
     tags:
       - { name: core.installer.migration }
-    public: false
 
   menus.installer.sample_data:
     class: ACP3\Modules\ACP3\Menus\Installer\SampleData
-    parent: core.modules.installer.abstractSampleData
+    arguments:
+    - '@core.modules.schemaHelper'
+    - '@core.i18n.translator'
     tags:
       - { name: core.installer.sample_data }
-    public: false

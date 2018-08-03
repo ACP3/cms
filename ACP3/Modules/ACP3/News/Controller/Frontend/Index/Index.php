@@ -16,6 +16,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class Index extends AbstractAction
 {
     use Core\Cache\CacheResponseTrait;
+    use News\Controller\CommentsHelperTrait;
 
     /**
      * @var Core\Date
@@ -88,6 +89,8 @@ class Index extends AbstractAction
      * @param int $cat
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute($cat = 0)
     {
@@ -106,7 +109,7 @@ class Index extends AbstractAction
         for ($i = 0; $i < $cNews; ++$i) {
             $news[$i]['text'] = $this->view->fetchStringAsTemplate($news[$i]['text']);
             if ($this->commentsActive === true && $news[$i]['comments'] == 1) {
-                $news[$i]['comments_count'] = $this->get('comments.helpers')->commentsCount(
+                $news[$i]['comments_count'] = $this->commentsHelpers->commentsCount(
                     News\Installer\Schema::MODULE_NAME,
                     $news[$i]['id']
                 );
@@ -129,8 +132,10 @@ class Index extends AbstractAction
      * @param string $time
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    private function fetchNews($categoryId, $time)
+    private function fetchNews(int $categoryId, string $time)
     {
         if (!empty($categoryId)) {
             $news = $this->newsRepository->getAllByCategoryId(
@@ -171,7 +176,7 @@ class Index extends AbstractAction
     /**
      * @param int $cat
      */
-    protected function addBreadcrumbStep($cat)
+    protected function addBreadcrumbStep(int $cat)
     {
         if ($cat !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
             if ($this->metaStatements instanceof MetaStatements) {
