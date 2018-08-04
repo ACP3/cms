@@ -1,6 +1,7 @@
 services:
   core.db:
     class: ACP3\Core\Database\Connection
+    public: true
     arguments:
       - '@core.db.logger'
       - '@core.environment.application_path'

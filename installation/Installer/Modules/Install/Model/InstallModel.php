@@ -95,7 +95,7 @@ class InstallModel
      * @param string $configFilePath
      * @param array  $formData
      */
-    public function writeConfigFile($configFilePath, array $formData)
+    public function writeConfigFile(string $configFilePath, array $formData)
     {
         $configParams = [
             'parameters' => [

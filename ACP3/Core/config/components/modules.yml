@@ -9,6 +9,7 @@ services:
 
   core.modules.aclInstaller:
     class: ACP3\Core\Modules\AclInstaller
+    public: true
     arguments:
       - '@core.cache.system'
       - '@core.modules.schemaHelper'
@@ -38,6 +39,7 @@ services:
 
   core.modules.schemaHelper:
     class: ACP3\Core\Modules\SchemaHelper
+    public: true
     arguments:
       - '@core.modules.installer_logger'
       - '@core.db'
@@ -64,10 +66,12 @@ services:
 
   core.modules.schemaInstaller:
     class: ACP3\Core\Modules\SchemaInstaller
+    public: true
     parent: core.modules.schemaHelper
 
   core.modules.schemaUpdater:
     class: ACP3\Core\Modules\SchemaUpdater
+    public: true
     parent: core.modules.schemaHelper
 
   core.modules.vendors:

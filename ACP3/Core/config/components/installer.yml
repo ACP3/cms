@@ -1,9 +1,12 @@
 services:
   core.installer.migration_registrar:
     class: ACP3\Core\Installer\MigrationRegistrar
+    public: true
 
   core.installer.sample_data_registrar:
     class: ACP3\Core\Installer\SampleDataRegistrar
+    public: true
 
   core.installer.schema_registrar:
     class: ACP3\Core\Installer\SchemaRegistrar
+    public: true
