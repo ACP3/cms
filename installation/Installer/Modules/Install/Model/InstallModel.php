@@ -54,6 +54,10 @@ class InstallModel
      * @var LoggerInterface
      */
     private $logger;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    private $secure;
 
     /**
      * InstallModel constructor.
@@ -101,7 +105,7 @@ class InstallModel
                 'db_password' => $formData['db_password'],
                 'db_user' => $formData['db_user'],
                 'db_driver' => 'pdo_mysql',
-                'db_charset' => 'utf8',
+                'db_charset' => 'utf8mb4',
             ],
         ];
 

@@ -18,7 +18,12 @@ class Migration implements MigrationInterface
      */
     public function schemaUpdates()
     {
-        return [];
+        return [
+            2 => [
+                "ALTER TABLE `{pre}auditlog` CONVERT TO {charset};",
+                "ALTER TABLE `{pre}auditlog` MODIFY COLUMN `action` VARCHAR(255) {charset} NOT NULL;",
+            ],
+        ];
     }
 
     /**

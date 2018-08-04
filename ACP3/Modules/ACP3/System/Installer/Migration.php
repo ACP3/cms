@@ -8,8 +8,10 @@
 namespace ACP3\Modules\ACP3\System\Installer;
 
 use ACP3\Core\Application\BootstrapInterface;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
+use Symfony\Component\Yaml\Dumper;
 
 class Migration extends Modules\Installer\AbstractMigration
 {
@@ -38,9 +40,14 @@ class Migration extends Modules\Installer\AbstractMigration
      * @var Modules\Installer\SchemaInterface|null
      */
     private $minifySchema;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    private $appPath;
 
     public function __construct(
         Modules\SchemaHelper $schemaHelper,
+        ApplicationPath $appPath,
         Modules\SchemaInstaller $schemaInstaller,
         Modules\AclInstaller $aclInstaller,
         Modules $modules,
@@ -51,6 +58,7 @@ class Migration extends Modules\Installer\AbstractMigration
         $this->aclInstaller = $aclInstaller;
         $this->modules = $modules;
         $this->settings = $settings;
+        $this->appPath = $appPath;
     }
 
     /**
@@ -231,6 +239,20 @@ class Migration extends Modules\Installer\AbstractMigration
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'update_new_version', '" . BootstrapInterface::VERSION . "');",
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'update_new_version_url', '');",
             ],
+            71 => [
+                "ALTER TABLE `{pre}modules` CONVERT TO {charset};",
+                "ALTER TABLE `{pre}modules` MODIFY COLUMN `name` VARCHAR(100) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}sessions` CONVERT TO {charset};",
+                "ALTER TABLE `{pre}sessions` MODIFY COLUMN `session_id` VARCHAR(32) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}sessions` MODIFY COLUMN `session_data` TEXT {charset} NOT NULL;",
+                "ALTER TABLE `{pre}settings` CONVERT TO {charset};",
+                "ALTER TABLE `{pre}settings` MODIFY COLUMN `name` VARCHAR(40) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}settings` MODIFY COLUMN `value` TEXT {charset} NOT NULL;",
+                "ALTER DATABASE `{$this->schemaHelper->getDb()->getDatabase()}` {charset};",
+            ],
+            72 => [
+                $this->migrateToVersion72(),
+            ],
         ];
     }
 
@@ -329,6 +351,37 @@ class Migration extends Modules\Installer\AbstractMigration
             }
 
             return $result;
+        };
+    }
+
+    protected function migrateToVersion72()
+    {
+        return function() {
+            $configFilePath = $this->appPath->getAppDir() . 'config.yml';
+            $container = $this->schemaHelper->getContainer();
+
+            $configParams = [
+                'parameters' => [
+                    'db_host' => $container->getParameter('db_host'),
+                    'db_name' => $container->getParameter('db_name'),
+                    'db_table_prefix' => $container->getParameter('db_table_prefix'),
+                    'db_password' => $container->getParameter('db_password'),
+                    'db_user' => $container->getParameter('db_user'),
+                    'db_driver' => $container->getParameter('db_driver'),
+                    'db_charset' => 'utf8mb4',
+                ],
+            ];
+
+            if (\is_writable($configFilePath) === true) {
+                \ksort($configParams);
+
+                $dumper = new Dumper();
+                $yaml = $dumper->dump($configParams);
+
+                return \file_put_contents($configFilePath, $yaml, LOCK_EX) !== false;
+            }
+
+            return false;
         };
     }
 }

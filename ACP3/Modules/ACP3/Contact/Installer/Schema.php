@@ -27,7 +27,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 41;
+        return 42;
     }
 
     /**

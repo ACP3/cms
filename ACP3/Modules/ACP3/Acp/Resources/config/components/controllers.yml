@@ -1,6 +1,8 @@
 services:
   _defaults:
     public: true
+    tags:
+      - { name: acp3.controller.action }
 
   acp.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Acp\Controller\Admin\Index\Index
