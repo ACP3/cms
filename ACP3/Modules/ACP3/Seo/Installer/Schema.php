@@ -47,7 +47,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 13;
+        return 14;
     }
 
     /**
@@ -58,7 +58,7 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             'CREATE TABLE IF NOT EXISTS `{pre}seo` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `uri` VARCHAR(255) NOT NULL,
+                `uri` VARCHAR(191) NOT NULL,
                 `alias` VARCHAR(100) NOT NULL,
                 `title` VARCHAR(255) NOT NULL,
                 `keywords` VARCHAR(255) NOT NULL,

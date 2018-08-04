@@ -57,6 +57,9 @@ class Migration implements Modules\Installer\MigrationInterface
             13 => [
                 'ALTER TABLE `{pre}seo` ADD COLUMN `title` VARCHAR(255) NOT NULL AFTER `alias`;',
             ],
+            14 => [
+                "ALTER TABLE `{pre}seo` MODIFY COLUMN `uri` VARCHAR(191) NOT NULL;",
+            ],
         ];
     }
 

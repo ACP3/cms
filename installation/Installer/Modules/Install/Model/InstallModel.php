@@ -101,7 +101,7 @@ class InstallModel
                 'db_password' => $formData['db_password'],
                 'db_user' => $formData['db_user'],
                 'db_driver' => 'pdo_mysql',
-                'db_charset' => 'utf8',
+                'db_charset' => 'utf8mb4',
             ],
         ];
 
