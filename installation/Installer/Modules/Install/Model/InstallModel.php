@@ -54,6 +54,10 @@ class InstallModel
      * @var LoggerInterface
      */
     private $logger;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    private $secure;
 
     /**
      * InstallModel constructor.

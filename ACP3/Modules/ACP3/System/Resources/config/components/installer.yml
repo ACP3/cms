@@ -8,6 +8,7 @@ services:
     class: ACP3\Modules\ACP3\System\Installer\Migration
     arguments:
       - '@core.modules.schemaHelper'
+      - '@core.environment.application_path'
       - '@core.modules.schemaInstaller'
       - '@core.modules.aclInstaller'
       - '@core.modules'
