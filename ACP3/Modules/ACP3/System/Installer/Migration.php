@@ -240,14 +240,14 @@ class Migration extends Modules\Installer\AbstractMigration
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'update_new_version_url', '');",
             ],
             71 => [
-                "ALTER TABLE `{pre}modules` CONVERT TO {charset};",
-                "ALTER TABLE `{pre}modules` MODIFY COLUMN `name` VARCHAR(100) {charset} NOT NULL;",
-                "ALTER TABLE `{pre}sessions` CONVERT TO {charset};",
-                "ALTER TABLE `{pre}sessions` MODIFY COLUMN `session_id` VARCHAR(32) {charset} NOT NULL;",
-                "ALTER TABLE `{pre}sessions` MODIFY COLUMN `session_data` TEXT {charset} NOT NULL;",
-                "ALTER TABLE `{pre}settings` CONVERT TO {charset};",
-                "ALTER TABLE `{pre}settings` MODIFY COLUMN `name` VARCHAR(40) {charset} NOT NULL;",
-                "ALTER TABLE `{pre}settings` MODIFY COLUMN `value` TEXT {charset} NOT NULL;",
+                'ALTER TABLE `{pre}modules` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}modules` MODIFY COLUMN `name` VARCHAR(100) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}sessions` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}sessions` MODIFY COLUMN `session_id` VARCHAR(32) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}sessions` MODIFY COLUMN `session_data` TEXT {charset} NOT NULL;',
+                'ALTER TABLE `{pre}settings` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}settings` MODIFY COLUMN `name` VARCHAR(40) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}settings` MODIFY COLUMN `value` TEXT {charset} NOT NULL;',
                 "ALTER DATABASE `{$this->schemaHelper->getDb()->getDatabase()}` {charset};",
             ],
             72 => [
@@ -356,7 +356,7 @@ class Migration extends Modules\Installer\AbstractMigration
 
     protected function migrateToVersion72()
     {
-        return function() {
+        return function () {
             $configFilePath = $this->appPath->getAppDir() . 'config.yml';
             $container = $this->schemaHelper->getContainer();
 

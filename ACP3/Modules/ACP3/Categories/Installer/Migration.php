@@ -34,10 +34,10 @@ class Migration implements Modules\Installer\MigrationInterface
                 'ALTER TABLE `{pre}categories` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE',
             ],
             35 => [
-                "ALTER TABLE `{pre}categories` CONVERT TO {charset};",
-                "ALTER TABLE `{pre}categories` MODIFY COLUMN `title` VARCHAR(120) {charset} NOT NULL;",
-                "ALTER TABLE `{pre}categories` MODIFY COLUMN `picture` VARCHAR(120) {charset} NOT NULL;",
-                "ALTER TABLE `{pre}categories` MODIFY COLUMN `description` VARCHAR(120) {charset} NOT NULL;",
+                'ALTER TABLE `{pre}categories` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}categories` MODIFY COLUMN `title` VARCHAR(120) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}categories` MODIFY COLUMN `picture` VARCHAR(120) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}categories` MODIFY COLUMN `description` VARCHAR(120) {charset} NOT NULL;',
             ],
         ];
     }

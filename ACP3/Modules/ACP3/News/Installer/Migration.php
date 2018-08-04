@@ -70,11 +70,11 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}news` ADD FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE SET NULL',
             ],
             44 => [
-                "ALTER TABLE `{pre}news` CONVERT TO {charset};",
-                "ALTER TABLE `{pre}news` MODIFY COLUMN `title` VARCHAR(120) {charset} NOT NULL;",
-                "ALTER TABLE `{pre}news` MODIFY COLUMN `uri` VARCHAR(120) {charset} NOT NULL;",
-                "ALTER TABLE `{pre}news` MODIFY COLUMN `link_title` VARCHAR(120) {charset} NOT NULL;",
-                "ALTER TABLE `{pre}news` MODIFY COLUMN `text` TEXT {charset} NOT NULL;",
+                'ALTER TABLE `{pre}news` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}news` MODIFY COLUMN `title` VARCHAR(120) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}news` MODIFY COLUMN `uri` VARCHAR(120) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}news` MODIFY COLUMN `link_title` VARCHAR(120) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}news` MODIFY COLUMN `text` TEXT {charset} NOT NULL;',
             ],
         ];
     }

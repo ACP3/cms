@@ -60,12 +60,12 @@ class Migration extends Modules\Installer\AbstractMigration
                 'UPDATE `{pre}polls` SET `updated_at` = `start`;',
             ],
             39 => [
-                "ALTER TABLE `{pre}polls` CONVERT TO {charset};",
-                "ALTER TABLE `{pre}polls` MODIFY COLUMN `title` VARCHAR(120) {charset} NOT NULL;",
-                "ALTER TABLE `{pre}poll_answers` CONVERT TO {charset};",
-                "ALTER TABLE `{pre}poll_answers` MODIFY COLUMN `text` VARCHAR(120) {charset} NOT NULL;",
-                "ALTER TABLE `{pre}poll_votes` CONVERT TO {charset};",
-                "ALTER TABLE `{pre}poll_votes` MODIFY COLUMN `ip` VARCHAR(40) {charset} NOT NULL;",
+                'ALTER TABLE `{pre}polls` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}polls` MODIFY COLUMN `title` VARCHAR(120) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}poll_answers` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}poll_answers` MODIFY COLUMN `text` VARCHAR(120) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}poll_votes` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}poll_votes` MODIFY COLUMN `ip` VARCHAR(40) {charset} NOT NULL;',
             ],
         ];
     }

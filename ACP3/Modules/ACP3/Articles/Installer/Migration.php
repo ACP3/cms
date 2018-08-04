@@ -78,11 +78,11 @@ class Migration extends AbstractMigration
                 'ALTER TABLE `{pre}articles` ADD COLUMN `subtitle` VARCHAR(255) NOT NULL AFTER `title`;',
             ],
             45 => [
-                "ALTER TABLE `{pre}articles` CONVERT TO {charset};",
-                "ALTER TABLE `{pre}articles` MODIFY COLUMN `title` VARCHAR(255) {charset} NOT NULL;",
-                "ALTER TABLE `{pre}articles` MODIFY COLUMN `subtitle` VARCHAR(255) {charset} NOT NULL;",
-                "ALTER TABLE `{pre}articles` MODIFY COLUMN `text` TEXT {charset} NOT NULL;",
-                "ALTER TABLE `{pre}articles` MODIFY COLUMN `layout` VARCHAR(120) {charset} NOT NULL;",
+                'ALTER TABLE `{pre}articles` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}articles` MODIFY COLUMN `title` VARCHAR(255) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}articles` MODIFY COLUMN `subtitle` VARCHAR(255) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}articles` MODIFY COLUMN `text` TEXT {charset} NOT NULL;',
+                'ALTER TABLE `{pre}articles` MODIFY COLUMN `layout` VARCHAR(120) {charset} NOT NULL;',
             ],
         ];
     }
