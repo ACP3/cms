@@ -7,10 +7,9 @@
 
 namespace ACP3\Core\Application;
 
-use ACP3\Core\Controller\AreaEnum;
+use ACP3\Core\Application\Exception\MaintenanceModeActiveException;
 use ACP3\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Core\View;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Patchwork\Utf8;
 use Symfony\Component\Config\ConfigCache;
@@ -95,10 +94,6 @@ class Bootstrap extends AbstractBootstrap
             $this->setThemePaths();
             $this->container->get('core.authentication')->authenticate();
 
-            if ($this->isMaintenanceModeEnabled()) {
-                return $this->handleMaintenanceMode();
-            }
-
             $response = $this->container->get('core.application.controller_action_dispatcher')->dispatch();
         } catch (\ACP3\Core\Controller\Exception\ResultNotExistsException $e) {
             $response = $redirect->temporary('errors/index/not_found');
@@ -111,6 +106,8 @@ class Bootstrap extends AbstractBootstrap
             $response = $redirect->temporary('errors/index/access_forbidden');
         } catch (\ACP3\Core\Controller\Exception\ControllerActionNotFoundException $e) {
             $response = $redirect->temporary('errors/index/not_found');
+        } catch (MaintenanceModeActiveException $e) {
+            $response = new Response($e->getMessage(), $e->getCode());
         } catch (\Exception $e) {
             $this->logger->critical($e);
 
@@ -130,41 +127,6 @@ class Bootstrap extends AbstractBootstrap
         $this->appPath
             ->setDesignPathWeb($this->appPath->getWebRoot() . $path)
             ->setDesignPathInternal($this->systemSettings['design'] . '/');
-    }
-
-    /**
-     * Checks, whether the maintenance mode is active.
-     *
-     * @return bool
-     */
-    private function isMaintenanceModeEnabled()
-    {
-        /** @var \ACP3\Core\Http\Request $request */
-        $request = $this->container->get('core.http.request');
-
-        return (bool) $this->systemSettings['maintenance_mode'] === true &&
-            $request->getArea() !== AreaEnum::AREA_ADMIN &&
-            \strpos($request->getQuery(), 'users/index/login/') !== 0;
-    }
-
-    /**
-     * @return Response
-     */
-    private function handleMaintenanceMode()
-    {
-        /** @var View $view */
-        $view = $this->container->get('core.view');
-
-        $view->assign([
-            'PAGE_TITLE' => 'ACP3',
-            'ROOT_DIR' => $this->appPath->getWebRoot(),
-            'CONTENT' => $this->systemSettings['maintenance_message'],
-        ]);
-
-        $response = new Response($view->fetchTemplate('System/layout.maintenance.tpl'));
-        $response->setStatusCode(Response::HTTP_SERVICE_UNAVAILABLE);
-
-        return $response;
     }
 
     /**
