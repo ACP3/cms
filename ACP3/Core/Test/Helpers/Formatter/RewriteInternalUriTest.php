@@ -7,10 +7,10 @@
 
 namespace ACP3\Core\Test\Helpers\Formatter;
 
+use ACP3\Core\Controller\Helper\ControllerActionExists;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Formatter\RewriteInternalUri;
 use ACP3\Core\Http\Request;
-use ACP3\Core\Modules\Helper\ControllerActionExists;
 use ACP3\Core\Validation\ValidationRules\InternalUriValidationRule;
 use ACP3\Modules\ACP3\Seo\Core\Router\Router;
 use Symfony\Component\HttpFoundation\ServerBag;

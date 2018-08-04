@@ -5,8 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Modules\Helper;
-
+namespace ACP3\Core\Controller\Helper;
 
 use Psr\Container\ContainerInterface;
 

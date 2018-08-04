@@ -95,7 +95,7 @@ services:
     class: ACP3\Core\Helpers\Formatter\RewriteInternalUri
     arguments:
       - '@core.environment.application_path'
-      - '@core.modules.helper.controllerActionExists'
+      - '@core.controller.helper.controller_action_exists'
       - '@core.http.request'
       - '@core.router'
       - '@core.validation.validation_rules.internal_uri_validation_rule'

@@ -8,6 +8,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface;
+use ACP3\Core\Controller\Helper\ControllerActionExists;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
@@ -47,18 +48,24 @@ class ACL
      * @var array
      */
     protected $resources = [];
+    /**
+     * @var \ACP3\Core\Controller\Helper\ControllerActionExists
+     */
+    private $controllerActionExists;
 
     /**
      * ACL constructor.
      *
      * @param \ACP3\Modules\ACP3\Users\Model\UserModel                    $user
      * @param \ACP3\Core\Modules                                          $modules
+     * @param \ACP3\Core\Controller\Helper\ControllerActionExists         $controllerActionExists
      * @param \ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface $userRoleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache                        $permissionsCache
      */
     public function __construct(
         UserModel $user,
         Modules $modules,
+        ControllerActionExists $controllerActionExists,
         UserRoleRepositoryInterface $userRoleRepository,
         Permissions\Cache $permissionsCache
     ) {
@@ -66,6 +73,7 @@ class ACL
         $this->modules = $modules;
         $this->userRoleRepository = $userRoleRepository;
         $this->permissionsCache = $permissionsCache;
+        $this->controllerActionExists = $controllerActionExists;
     }
 
     /**
@@ -159,7 +167,7 @@ class ACL
      */
     public function hasPermission(string $resource)
     {
-        if (!empty($resource) && $this->modules->controllerActionExists($resource) === true) {
+        if (!empty($resource) && $this->controllerActionExists->controllerActionExists($resource) === true) {
             $resourceParts = \explode('/', $resource);
 
             if ($this->modules->isActive($resourceParts[1]) === true) {

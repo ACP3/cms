@@ -7,8 +7,8 @@
 
 namespace ACP3\Core;
 
+use ACP3\Core\Controller\Helper\ControllerActionExists;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Modules\Helper\ControllerActionExists;
 use ACP3\Core\Modules\ModuleInfoCache;
 use ACP3\Core\Modules\Vendor;
 use MJS\TopSort\Implementations\StringSort;
@@ -20,7 +20,7 @@ class Modules
      */
     protected $appPath;
     /**
-     * @var \ACP3\Core\Modules\Helper\ControllerActionExists
+     * @var \ACP3\Core\Controller\Helper\ControllerActionExists
      */
     protected $controllerActionExists;
     /**
@@ -41,10 +41,10 @@ class Modules
     private $allModulesTopSorted = [];
 
     /**
-     * @param \ACP3\Core\Environment\ApplicationPath           $appPath
-     * @param \ACP3\Core\Modules\Helper\ControllerActionExists $controllerActionExists
-     * @param \ACP3\Core\Modules\ModuleInfoCache               $moduleInfoCache
-     * @param \ACP3\Core\Modules\Vendor                        $vendors
+     * @param \ACP3\Core\Environment\ApplicationPath              $appPath
+     * @param \ACP3\Core\Controller\Helper\ControllerActionExists $controllerActionExists
+     * @param \ACP3\Core\Modules\ModuleInfoCache                  $moduleInfoCache
+     * @param \ACP3\Core\Modules\Vendor                           $vendors
      */
     public function __construct(
         ApplicationPath $appPath,
@@ -64,6 +64,8 @@ class Modules
      * @param string $path
      *
      * @return bool
+     *
+     * @deprecated since version 4.28, will be removed with version 5.0.0. Use ControllerActionExists helper directly
      */
     public function controllerActionExists(string $path): bool
     {

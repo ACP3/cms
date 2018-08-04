@@ -12,6 +12,7 @@ services:
     arguments:
       - '@users.model.user_model'
       - '@core.modules'
+      - '@core.controller.helper.controller_action_exists'
       - '@permissions.model.userrolerepository'
       - '@permissions.cache'
 

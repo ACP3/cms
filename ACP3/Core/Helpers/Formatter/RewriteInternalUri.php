@@ -16,7 +16,7 @@ class RewriteInternalUri
      */
     protected $appPath;
     /**
-     * @var \ACP3\Core\Modules\Helper\ControllerActionExists
+     * @var \ACP3\Core\Controller\Helper\ControllerActionExists
      */
     protected $controllerActionExists;
     /**
@@ -36,14 +36,14 @@ class RewriteInternalUri
      * RewriteInternalUri constructor.
      *
      * @param \ACP3\Core\Environment\ApplicationPath                    $appPath
-     * @param \ACP3\Core\Modules\Helper\ControllerActionExists          $controllerActionExists
+     * @param \ACP3\Core\Controller\Helper\ControllerActionExists       $controllerActionExists
      * @param \ACP3\Core\Http\RequestInterface                          $request
      * @param \ACP3\Core\Router\RouterInterface                         $router
      * @param Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule
      */
     public function __construct(
         Core\Environment\ApplicationPath $appPath,
-        Core\Modules\Helper\ControllerActionExists $controllerActionExists,
+        Core\Controller\Helper\ControllerActionExists $controllerActionExists,
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
         Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule
