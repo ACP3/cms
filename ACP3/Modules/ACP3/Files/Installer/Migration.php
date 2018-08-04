@@ -107,6 +107,13 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}files` DROP FOREIGN KEY `{pre}files_ibfk_1`;',
                 'ALTER TABLE `{pre}files` ADD FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE SET NULL',
             ],
+            48 => [
+                "ALTER TABLE `{pre}files` CONVERT TO {charset};",
+                "ALTER TABLE `{pre}files` MODIFY COLUMN `file` VARCHAR(120) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}files` MODIFY COLUMN `size` VARCHAR(20) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}files` MODIFY COLUMN `title` VARCHAR(255) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}files` MODIFY COLUMN `text` TEXT {charset} NOT NULL;",
+            ],
         ];
     }
 

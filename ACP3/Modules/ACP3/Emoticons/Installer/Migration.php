@@ -25,6 +25,12 @@ class Migration implements Modules\Installer\MigrationInterface
             32 => [
                 'ALTER TABLE `{pre}emoticons` ENGINE = InnoDB',
             ],
+            33 => [
+                "ALTER TABLE `{pre}emoticons` CONVERT TO {charset};",
+                "ALTER TABLE `{pre}emoticons` MODIFY COLUMN `code` VARCHAR(10) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}emoticons` MODIFY COLUMN `description` VARCHAR(15) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}emoticons` MODIFY COLUMN `img` VARCHAR(20) {charset} NOT NULL;",
+            ],
         ];
     }
 

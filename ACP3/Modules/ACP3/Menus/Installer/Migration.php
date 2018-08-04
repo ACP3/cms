@@ -59,6 +59,14 @@ class Migration implements Modules\Installer\MigrationInterface
             37 => [
                 'ALTER TABLE `{pre}menus` ADD UNIQUE KEY `index_name` (`index_name`);',
             ],
+            38 => [
+                "ALTER TABLE `{pre}menus` CONVERT TO {charset};",
+                "ALTER TABLE `{pre}menus` MODIFY COLUMN `index_name` VARCHAR(10) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}menus` MODIFY COLUMN `title` VARCHAR(120) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}menu_items` CONVERT TO {charset};",
+                "ALTER TABLE `{pre}menu_items` MODIFY COLUMN `title` VARCHAR(120) {charset} NOT NULL;",
+                "ALTER TABLE `{pre}menu_items` MODIFY COLUMN `uri` VARCHAR(120) {charset} NOT NULL;",
+            ],
         ];
     }
 }
