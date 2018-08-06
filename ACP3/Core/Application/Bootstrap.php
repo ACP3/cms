@@ -10,7 +10,6 @@ namespace ACP3\Core\Application;
 use ACP3\Core\Application\Exception\MaintenanceModeActiveException;
 use ACP3\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 use Patchwork\Utf8;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
@@ -22,11 +21,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class Bootstrap extends AbstractBootstrap
 {
-    /**
-     * @var array
-     */
-    private $systemSettings = [];
-
     /**
      * {@inheritdoc}
      */
@@ -90,8 +84,6 @@ class Bootstrap extends AbstractBootstrap
         $redirect = $this->container->get('core.http.redirect_response');
 
         try {
-            $this->systemSettings = $this->container->get('core.config')->getSettings(Schema::MODULE_NAME);
-            $this->setThemePaths();
             $this->container->get('core.authentication')->authenticate();
 
             $response = $this->container->get('core.application.controller_action_dispatcher')->dispatch();
@@ -115,18 +107,6 @@ class Bootstrap extends AbstractBootstrap
         }
 
         return $response;
-    }
-
-    /**
-     * Sets the theme paths.
-     */
-    private function setThemePaths()
-    {
-        $path = 'designs/' . $this->systemSettings['design'] . '/';
-
-        $this->appPath
-            ->setDesignPathWeb($this->appPath->getWebRoot() . $path)
-            ->setDesignPathInternal($this->systemSettings['design'] . '/');
     }
 
     /**

@@ -8,20 +8,34 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Environment\ThemePathInterface;
 
 abstract class AbstractFormAction extends AbstractFrontendAction
 {
+    /**
+     * @var \ACP3\Core\Environment\ThemePathInterface
+     */
+    private $theme;
+
+    public function __construct(FrontendContext $context, ThemePathInterface $theme)
+    {
+        parent::__construct($context);
+
+        $this->theme = $theme;
+    }
+
     /**
      * @return string[]
      */
     protected function getAvailableLayouts(): array
     {
         $paths = [
-            $this->appPath->getDesignPathInternal() . '*/View/*/layout.tpl',
-            $this->appPath->getDesignPathInternal() . '*/View/*/layout.*.tpl',
-            $this->appPath->getDesignPathInternal() . '*/View/layout.tpl',
-            $this->appPath->getDesignPathInternal() . '*/View/layout.*.tpl',
-            $this->appPath->getDesignPathInternal() . 'layout.*.tpl',
+            $this->theme->getDesignPathInternal() . '*/View/*/layout.tpl',
+            $this->theme->getDesignPathInternal() . '*/View/*/layout.*.tpl',
+            $this->theme->getDesignPathInternal() . '*/View/layout.tpl',
+            $this->theme->getDesignPathInternal() . '*/View/layout.*.tpl',
+            $this->theme->getDesignPathInternal() . 'layout.*.tpl',
         ];
 
         $layouts = [];
@@ -30,7 +44,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         }
 
         $layouts = \array_map(function ($value) {
-            return \str_replace([$this->appPath->getDesignPathInternal(), '/View/'], ['', '/'], $value);
+            return \str_replace([$this->theme->getDesignPathInternal(), '/View/'], ['', '/'], $value);
         }, $layouts);
 
         $layouts = \array_combine($layouts, $layouts);

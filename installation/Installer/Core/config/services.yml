@@ -11,6 +11,11 @@ imports:
   - { resource: ../../../../ACP3/Core/View/Renderer/Smarty/Blocks/config/services.yml }
 
 services:
+  core.environment.theme:
+    class: ACP3\Installer\Core\Environment\Theme
+    arguments:
+      - '@core.environment.application_path'
+
   core.logger:
     class: ACP3\Core\Logger
     arguments:

@@ -18,12 +18,30 @@ services:
     tags:
       - { name: core.eventListener, event: core.application.controller_action_dispatcher.after_dispatch, method: execute }
 
-  core.application.event.check_mainzenance_mode_listener:
+  core.application.event.add_template_variables_listener:
+    class: ACP3\Core\Application\Event\Listener\AddTemplateVariablesListener
+    arguments:
+      - '@core.environment.application_path'
+      - '@core.http.request'
+      - '@core.environment.theme'
+      - '@core.view'
+      - '@core.i18n.translator'
+    tags:
+      - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch }
+
+  core.application.event.check_maintenance_mode_listener:
     class: ACP3\Core\Application\Event\Listener\CheckMaintenanceModeListener
     arguments:
       - '@core.environment.application_path'
       - '@core.http.request'
       - '@core.config'
       - '@core.view'
+    tags:
+    - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch }
+
+  core.application.event.check_permission_listener:
+    class: ACP3\Core\Application\Event\Listener\CheckPermissionListener
+    arguments:
+    - '@core.acl'
     tags:
     - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch }

@@ -96,28 +96,9 @@ abstract class AbstractWidgetAction implements ActionInterface
 
     /**
      * @return $this
-     *
-     * @throws Core\ACL\Exception\AccessForbiddenException
      */
     public function preDispatch()
     {
-        $path = $this->request->getArea() . '/' . $this->request->getFullPathWithoutArea();
-
-        if ($this->acl->hasPermission($path) === false) {
-            throw new Core\ACL\Exception\AccessForbiddenException();
-        }
-
-        $this->view->assign([
-            'PHP_SELF' => $this->appPath->getPhpSelf(),
-            'ROOT_DIR' => $this->appPath->getWebRoot(),
-            'HOST_NAME' => $this->request->getHttpHost(),
-            'ROOT_DIR_ABSOLUTE' => $this->request->getScheme() . '://' . $this->request->getHttpHost() . $this->appPath->getWebRoot(),
-            'DESIGN_PATH' => $this->appPath->getDesignPathWeb(),
-            'DESIGN_PATH_ABSOLUTE' => $this->request->getScheme() . '://' . $this->request->getHttpHost() . $this->appPath->getDesignPathWeb(),
-            'LANG_DIRECTION' => $this->translator->getDirection(),
-            'LANG' => $this->translator->getShortIsoCode(),
-        ]);
-
         return $this;
     }
 

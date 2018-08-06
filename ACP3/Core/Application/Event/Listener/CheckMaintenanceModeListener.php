@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
 namespace ACP3\Core\Application\Event\Listener;
-
 
 use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
 use ACP3\Core\Application\Exception\MaintenanceModeActiveException;
@@ -66,9 +66,6 @@ class CheckMaintenanceModeListener
             \strpos($this->request->getQuery(), 'users/index/login/') !== 0;
     }
 
-    /**
-     * @return void
-     */
     private function renderMaintenanceMessage()
     {
         $this->view->assign([

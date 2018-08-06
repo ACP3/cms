@@ -8,6 +8,7 @@ services:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.environment.theme'
       - '@core.helpers.forms'
       - '@articles.model'
       - '@articles.validation.admin_form_validation'
@@ -29,6 +30,7 @@ services:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.environment.theme'
       - '@core.helpers.forms'
       - '@articles.model'
       - '@articles.validation.admin_form_validation'

@@ -9,6 +9,7 @@ namespace ACP3\Installer\Core\View\Renderer\Smarty\Resources;
 
 use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
 use ACP3\Installer\Core\Environment\ApplicationPath;
+use ACP3\Installer\Core\Environment\Theme;
 
 class Asset extends AbstractResource
 {
@@ -16,6 +17,10 @@ class Asset extends AbstractResource
      * @var \ACP3\Installer\Core\Environment\ApplicationPath
      */
     protected $appPath;
+    /**
+     * @var \ACP3\Installer\Core\Environment\Theme
+     */
+    private $theme;
 
     /**
      * @return string
@@ -29,10 +34,12 @@ class Asset extends AbstractResource
      * Asset constructor.
      *
      * @param \ACP3\Installer\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Installer\Core\Environment\Theme           $theme
      */
-    public function __construct(ApplicationPath $appPath)
+    public function __construct(ApplicationPath $appPath, Theme $theme)
     {
         $this->appPath = $appPath;
+        $this->theme = $theme;
         $this->recompiled = true;
         $this->hasCompiledHandler = true;
     }
@@ -80,7 +87,7 @@ class Asset extends AbstractResource
             return $this->appPath->getInstallerModulesDir() . $path;
         }
 
-        return $this->appPath->getDesignPathInternal() . $template;
+        return $this->theme->getDesignPathInternal() . $template;
     }
 
     /**

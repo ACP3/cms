@@ -10,15 +10,12 @@ namespace ACP3\Installer\Core\Controller;
 use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Controller\DisplayActionTrait;
 use ACP3\Core\Http\RedirectResponse;
-use ACP3\Core\I18n\ExtractFromPathTrait;
-use Fisharebest\Localization\Locale;
 
 /**
  * Module Controller of the installer modules.
  */
 abstract class AbstractInstallerAction implements ActionInterface
 {
-    use ExtractFromPathTrait;
     use DisplayActionTrait;
 
     /**
@@ -78,20 +75,6 @@ abstract class AbstractInstallerAction implements ActionInterface
      */
     public function preDispatch()
     {
-        $this->setLanguage();
-
-        $this->view->assign([
-            'LANGUAGES' => $this->languagesDropdown($this->translator->getLocale()),
-            'PHP_SELF' => $this->appPath->getPhpSelf(),
-            'REQUEST_URI' => $this->request->getServer()->get('REQUEST_URI'),
-            'ROOT_DIR' => $this->appPath->getWebRoot(),
-            'INSTALLER_ROOT_DIR' => $this->appPath->getInstallerWebRoot(),
-            'DESIGN_PATH' => $this->appPath->getDesignPathWeb(),
-            'UA_IS_MOBILE' => $this->request->getUserAgent()->isMobileBrowser(),
-            'IS_AJAX' => $this->request->isXmlHttpRequest(),
-            'LANG_DIRECTION' => $this->translator->getDirection(),
-            'LANG' => $this->translator->getShortIsoCode(),
-        ]);
     }
 
     /**
@@ -132,35 +115,6 @@ abstract class AbstractInstallerAction implements ActionInterface
     public function get($serviceId)
     {
         return $this->container->get($serviceId);
-    }
-
-    /**
-     * Generiert das Dropdown-Menü mit den zur Verfügung stehenden Installersprachen.
-     *
-     * @param string $selectedLanguage
-     *
-     * @return array
-     */
-    private function languagesDropdown($selectedLanguage)
-    {
-        $languages = [];
-        $paths = \glob($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/*.xml');
-
-        foreach ($paths as $file) {
-            try {
-                $isoCode = $this->getLanguagePackIsoCode($file);
-                $locale = Locale::create($isoCode);
-
-                $languages[] = [
-                    'language' => $isoCode,
-                    'selected' => $selectedLanguage === $isoCode ? ' selected="selected"' : '',
-                    'name' => $locale->endonym(),
-                ];
-            } catch (\DomainException $e) {
-            }
-        }
-
-        return $languages;
     }
 
     /**
@@ -205,28 +159,5 @@ abstract class AbstractInstallerAction implements ActionInterface
         $this->layout = $layout;
 
         return $this;
-    }
-
-    private function setLanguage()
-    {
-        $cookieLocale = $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '');
-        if (!\preg_match('=/=', $cookieLocale)
-            && \is_file($this->appPath->getInstallerModulesDir() . 'Install/Resources/i18n/' . $cookieLocale . '.xml') === true
-        ) {
-            $language = $cookieLocale;
-        } else {
-            $language = 'en_US'; // Fallback language
-
-            foreach ($this->request->getUserAgent()->parseAcceptLanguage() as $locale => $val) {
-                $locale = \str_replace('-', '_', $locale);
-                if ($this->translator->languagePackExists($locale) === true) {
-                    $language = $locale;
-
-                    break;
-                }
-            }
-        }
-
-        $this->translator->setLocale($language);
     }
 }
