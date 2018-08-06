@@ -15,6 +15,7 @@
   },
   "require": {
     "php": "^7.1",
+    "ext-SimpleXML": "*",
     "acp3/composer-installer": "^1.0",
     "doctrine/dbal": "^2.5",
     "doctrine/cache": "^1.6",
