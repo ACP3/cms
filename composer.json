@@ -26,7 +26,7 @@
     "fisharebest/localization": "^1.10",
     "friendsofsymfony/http-cache": "~2.0",
     "giggsey/locale": "^1.2",
-    "google/recaptcha": "^1.1.0",
+    "google/recaptcha": "^1.2.0",
     "inlinestyle/inlinestyle": "^1.2",
     "marc1706/fast-image-size": "^1.1",
     "mibe/feedwriter": "^1.0",
