@@ -86,7 +86,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * {@inheritdoc}
      */
     protected function getResponse()
     {
