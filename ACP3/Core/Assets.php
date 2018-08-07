@@ -8,7 +8,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Assets\Libraries;
-use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Environment\ThemePathInterface;
 
 class Assets
 {
@@ -36,12 +36,12 @@ class Assets
     /**
      * Checks, whether the current design uses Bootstrap or not.
      *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param Libraries                              $libraries
+     * @param \ACP3\Core\Environment\ThemePathInterface $theme
+     * @param Libraries                                 $libraries
      */
-    public function __construct(ApplicationPath $appPath, Libraries $libraries)
+    public function __construct(ThemePathInterface $theme, Libraries $libraries)
     {
-        $this->designXml = \simplexml_load_file($appPath->getDesignPathInternal() . 'info.xml');
+        $this->designXml = \simplexml_load_file($theme->getDesignPathInternal() . 'info.xml');
         $this->libraries = $libraries;
 
         if (isset($this->designXml->use_bootstrap) && (string) $this->designXml->use_bootstrap === 'true') {

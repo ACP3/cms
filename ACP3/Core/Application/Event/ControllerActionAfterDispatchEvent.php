@@ -22,7 +22,7 @@ class ControllerActionAfterDispatchEvent extends ControllerActionBeforeDispatchE
      * @param string   $serviceId
      * @param Response $response
      */
-    public function __construct($serviceId, Response $response)
+    public function __construct(string $serviceId, Response $response)
     {
         parent::__construct($serviceId);
 

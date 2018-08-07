@@ -78,6 +78,7 @@ class Install
      * @param SchemaHelper                               $schemaHelper
      *
      * @return bool
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function installSampleData(

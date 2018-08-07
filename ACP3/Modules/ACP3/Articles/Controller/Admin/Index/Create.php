@@ -31,6 +31,7 @@ class Create extends AbstractFormAction
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext              $context
+     * @param \ACP3\Core\Environment\ThemePathInterface                  $theme
      * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
      * @param Articles\Model\ArticlesModel                               $articlesModel
      * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
@@ -38,12 +39,13 @@ class Create extends AbstractFormAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Environment\ThemePathInterface $theme,
         Core\Helpers\Forms $formsHelper,
         Articles\Model\ArticlesModel $articlesModel,
         Articles\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $theme);
 
         $this->articlesModel = $articlesModel;
         $this->adminFormValidation = $adminFormValidation;

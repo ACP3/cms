@@ -11,11 +11,22 @@ services:
   core.application.argument_resolver:
     class: Symfony\Component\HttpKernel\Controller\ArgumentResolver
 
-  core.application.event.listener.on_controller_action_dispatcher_before_dispatch_listener:
-    class: ACP3\Installer\Core\Application\Event\Listener\OnControllerActionDispatcherBeforeDispatchListener
+  core.application.event.listener.add_template_variables_listener:
+    class: ACP3\Installer\Core\Application\Event\Listener\AddTemplatesVariablesListener
+    arguments:
+      - '@core.environment.application_path'
+      - '@core.environment.theme'
+      - '@core.i18n.translator'
+      - '@core.view'
+      - '@core.http.request'
+    tags:
+      - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch }
+
+  core.application.event.listener.on_language_change_listener:
+    class: ACP3\Installer\Core\Application\Event\Listener\OnLanguageChangeListener
     arguments:
       - '@core.http.request'
       - '@core.http.redirect_response'
     tags:
-      - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch, method: onLanguageChange }
+      - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch }
 

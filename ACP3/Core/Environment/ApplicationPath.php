@@ -149,6 +149,8 @@ class ApplicationPath
 
     /**
      * @return string
+     *
+     * @deprecated since 4.28.0, to be removed with version 5.0.0. Use Theme::getDesignPathInternal instead
      */
     public function getDesignPathInternal(): string
     {
@@ -159,6 +161,8 @@ class ApplicationPath
      * @param string $designPathInternal
      *
      * @return ApplicationPath
+     *
+     * @deprecated since 4.28.0, to be removed with version 5.0.0.
      */
     public function setDesignPathInternal($designPathInternal)
     {
@@ -169,6 +173,8 @@ class ApplicationPath
 
     /**
      * @return string
+     *
+     * @deprecated since 4.28.0, to be removed with version 5.0.0. Use Theme::getDesignPathWeb instead
      */
     public function getDesignPathWeb(): string
     {
@@ -179,6 +185,8 @@ class ApplicationPath
      * @param string $designPathWeb
      *
      * @return ApplicationPath
+     *
+     * @deprecated since 4.28.0, to be removed with version 5.0.0.
      */
     public function setDesignPathWeb($designPathWeb)
     {
