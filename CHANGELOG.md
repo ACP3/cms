@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 2018-xx-yy
+## [Unreleased]
 ### Changed
 - Converted all database tables and columns to the `utf8mb4` charset
 - Replaced our own ErrorHandler some the with ErrorHandler and ExceptionHandler of the symfony debug package
