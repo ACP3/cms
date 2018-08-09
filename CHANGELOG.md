@@ -4,12 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 2018-xx-yy
+## [Unreleased]
 ### Changed
 - Converted all database tables and columns to the `utf8mb4` charset
 - Replaced our own ErrorHandler some the with ErrorHandler and ExceptionHandler of the symfony debug package
 - Marked all necessary services public
 - Reworked the triggering of various actions during the bootstrap process
+- Updated jQuery to version 3.3.1
+- Updated gulp to version 4.0.0
+- Target EcmaScript version 6 with our own JavaScript code
 
 ## [4.27.1] - 2018-07-11
 ### Changed

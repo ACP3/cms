@@ -6,7 +6,7 @@
 (function ($, window, document) {
     'use strict';
 
-    var pluginName = 'formSubmit',
+    let pluginName = 'formSubmit',
         defaults = {
             targetElement: '#content',
             loadingOverlay: true,
@@ -26,7 +26,7 @@
 
     $.extend(Plugin.prototype, {
         init: function () {
-            var that = this;
+            const that = this;
 
             this.mergeSettings();
             this.findSubmitButton();
@@ -56,10 +56,10 @@
             });
         },
         mergeSettings: function () {
-            var data = $(this.element).data();
-            for (var key in data) {
+            const data = $(this.element).data();
+            for (let key in data) {
                 if (data.hasOwnProperty(key)) {
-                    var keyStripped = this.lowerCaseFirstLetter(key.replace('ajaxForm', ''));
+                    const keyStripped = this.lowerCaseFirstLetter(key.replace('ajaxForm', ''));
 
                     if (keyStripped.length > 0 && typeof this.settings[keyStripped] !== 'undefined') {
                         this.settings[keyStripped] = data[key];
@@ -89,9 +89,8 @@
                 .find('.validation-failed').remove();
         },
         checkFormElementsForErrors: function (form) {
-            var field;
-            for (var i = 0; i < form.elements.length; i++) {
-                field = form.elements[i];
+            for (let i = 0; i < form.elements.length; i++) {
+                const field = form.elements[i];
 
                 if (field.nodeName !== 'INPUT' && field.nodeName !== 'TEXTAREA' && field.nodeName !== 'SELECT') {
                     continue;
@@ -122,7 +121,7 @@
         },
         focusTabWithFirstErrorMessage: function () {
             if ($('.tabbable').length > 0) {
-                var $elem = $('.tabbable .form-group.has-error:first'),
+                let $elem = $('.tabbable .form-group.has-error:first'),
                     tabId = $elem.closest('.tab-pane').prop('id');
                 $('.tabbable .nav-tabs a[href="#' + tabId + '"]').tab('show');
 
@@ -130,15 +129,17 @@
             }
         },
         processAjaxRequest: function () {
-            var hash,
-                self = this,
-                $form = $(this.element),
+            const $form = $(this.element),
                 hasCustomData = !$.isEmptyObject(this.settings.customFormData),
+                self = this;
+
+            let hash,
                 processData = true,
-                data = this.settings.customFormData || {};
+                data = this.settings.customFormData || {},
+                $submitButton;
 
             if ($form.attr('method')) {
-                var $submitButton = $(':submit[data-clicked="true"]', $form);
+                $submitButton = $(':submit[data-clicked="true"]', $form);
 
                 hash = $submitButton.data('hashChange');
 
@@ -149,7 +150,7 @@
                 }
 
                 if (hasCustomData) {
-                    for (var key in this.settings.customFormData) {
+                    for (let key in this.settings.customFormData) {
                         if (this.settings.customFormData.hasOwnProperty(key)) {
                             data.append(key, this.settings.customFormData[key]);
                         }
@@ -172,7 +173,7 @@
                 }
             }).done(function (responseData) {
                 try {
-                    var callback = $form.data('ajax-form-complete-callback');
+                    let callback = $form.data('ajax-form-complete-callback');
 
                     if (typeof window[callback] === 'function') {
                         window[callback](responseData);
@@ -215,9 +216,9 @@
                 return;
             }
 
-            var $loadingLayer = $('#loading-layer');
+            let $loadingLayer = $('#loading-layer');
             if ($loadingLayer.length === 0) {
-                var $body = $('body'),
+                let $body = $('body'),
                     loadingText = this.settings.loadingText || '',
                     html = '<div id="loading-layer" class="loading-layer"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>';
 
@@ -248,7 +249,7 @@
          * Scroll to the beginning of the content area, if the current viewport is near the bottom
          */
         scrollIntoView: function () {
-            var offsetTop = $(this.settings.targetElement).offset().top;
+            const offsetTop = $(this.settings.targetElement).offset().top;
 
             if ($(document).scrollTop() > offsetTop) {
                 $('html, body').animate(
@@ -267,7 +268,7 @@
             }
         },
         rebindHandlers: function (hash) {
-            var $bindingTarget = (hash && $(hash).length) ? $(hash) : $(this.settings.targetElement);
+            const $bindingTarget = (hash && $(hash).length) ? $(hash) : $(this.settings.targetElement);
 
             $bindingTarget.find('[data-ajax-form="true"]').formSubmit();
 
@@ -281,7 +282,7 @@
             }
         },
         handleFormErrorMessages: function ($form, errorMessagesHtml) {
-            var $errorBox = $('#error-box'),
+            const $errorBox = $('#error-box'),
                 $modalBody = $form.find('.modal-body');
 
             $errorBox.remove();
@@ -295,16 +296,16 @@
             this.prettyPrintResponseErrorMessages($($errorBox.selector));
         },
         prettyPrintResponseErrorMessages: function ($errorBox) {
-            var that = this;
+            const that = this;
 
             this.removeAllPreviousErrors();
 
             // highlight all input fields where the validation has failed
             $errorBox.find('li').each(function () {
-                var $this = $(this),
+                let $this = $(this),
                     errorClass = $this.data('error');
                 if (errorClass.length > 0) {
-                    var $elem = $('[id|="' + errorClass + '"]').filter(':not([id$="container"])');
+                    let $elem = $('[id|="' + errorClass + '"]').filter(':not([id$="container"])');
                     if ($elem.length > 0) {
                         that.addErrorDecorationToFormGroup($elem);
 

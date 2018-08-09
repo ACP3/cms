@@ -12,11 +12,12 @@ module.exports = function (gulp) {
             [
                 'ACP3/Modules/*/*/Resources/Assets/less/**/*.less',
                 'designs/*/**/Assets/less/*.less',
+                'designs/*/**/Assets/less/**/*.less',
                 'installation/design/Assets/less/*.less',
                 'installation/Installer/Modules/*/Resources/Assets/less/style.less'
             ],
             {cwd: './'},
-            ['less']
+            gulp.series('less')
         );
     };
 };

@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
         })
         .on('click', '.rating__average .rating__star', function () {
             // .rating__average sets the direction back to ltr, so we have to account for this
-            var index = 4 - $(this).index();
+            const index = 4 - $(this).index();
             $('.rating > .rating__star')
                 .eq(index)
                 .addClass('rating__star_active')

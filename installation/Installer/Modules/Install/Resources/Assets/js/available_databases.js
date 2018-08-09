@@ -3,7 +3,7 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 jQuery(document).ready(function ($) {
-    var ajaxUrl = $('#config-form').data('available-databases-url'),
+    const ajaxUrl = $('#config-form').data('available-databases-url'),
         $dbName = $('#db-name'),
         $formFields = $('#db-host, #db-user, #db-password'),
         $formGroup = $formFields.closest('.form-group');
@@ -25,7 +25,7 @@ jQuery(document).ready(function ($) {
             },
             function (response) {
                 if (response.length > 0) {
-                    for (var i = 0; i < response.length; ++i) {
+                    for (let i = 0; i < response.length; ++i) {
                         $dbName.append('<option value="' + response[i] + '">' + response[i] + '</option>');
                     }
 

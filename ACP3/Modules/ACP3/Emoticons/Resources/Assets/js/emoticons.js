@@ -9,14 +9,14 @@ jQuery.fn.getCaretPosition = function () {
     } else if (document.selection) {
         this[0].focus();
 
-        var r = document.selection.createRange();
-        if (r == null) {
+        const range = document.selection.createRange();
+        if (range == null) {
             return 0;
         }
 
-        var re = this[0].createTextRange(),
+        const re = this[0].createTextRange(),
             rc = re.duplicate();
-        re.moveToBookmark(r.getBookmark());
+        re.moveToBookmark(range.getBookmark());
         rc.setEndPoint('EndToStart', re);
 
         return rc.text.length;
@@ -35,7 +35,7 @@ jQuery.fn.setCaretPosition = function (pos) {
         if (elem.setSelectionRange) {
             elem.setSelectionRange(pos, pos);
         } else if (elem.createTextRange) {
-            var range = elem.createTextRange();
+            const range = elem.createTextRange();
             range.collapse(true);
             range.moveEnd('character', pos);
             range.moveStart('character', pos);
@@ -49,15 +49,15 @@ jQuery.fn.setCaretPosition = function (pos) {
  *
  * @param textareaId
  */
-jQuery.fn.insertEmoticon = function(textareaId) {
-    var caretPosition = 0,
-        textarea = $(textareaId),
+jQuery.fn.insertEmoticon = function (textareaId) {
+    let caretPosition = 0;
+    const textarea = $(textareaId),
         $this = $(this);
 
     $this.click(function (e) {
         e.preventDefault();
 
-        var currentValue = textarea.val(),
+        let currentValue = textarea.val(),
             textBeforeSelection = currentValue.substr(0, caretPosition),
             textAfterSelection = currentValue.substr(caretPosition);
 
@@ -72,6 +72,6 @@ jQuery.fn.insertEmoticon = function(textareaId) {
     });
 };
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
     $('.icons a').insertEmoticon($('.icons').data('emoticons-input'));
 });

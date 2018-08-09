@@ -4,7 +4,7 @@
  */
 
 jQuery(document).ready(function ($) {
-    var $doc = $(document),
+    const $doc = $(document),
         $languages = $('#languages');
 
     $doc.data('has-changes', false);
@@ -14,7 +14,7 @@ jQuery(document).ready(function ($) {
 
     $languages.find('.btn').addClass('hidden');
     $('#lang').change(function () {
-        var submitForm = true;
+        let submitForm = true;
         if ($doc.length > 0 && $doc.data('has-changes') === true) {
             submitForm = confirm($(this).data('change-language-warning'));
         }

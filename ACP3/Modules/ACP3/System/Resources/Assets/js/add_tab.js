@@ -5,7 +5,7 @@
 
 jQuery(document).ready(function($) {
     $('[data-add-tab-identifier]').each(function() {
-        var tabIdentifier = $(this).data('add-tab-identifier'),
+        const tabIdentifier = $(this).data('add-tab-identifier'),
             $element = $(tabIdentifier),
             $tabContent = $element.closest('.tab-content'),
             $tabs = $tabContent.prev('.nav-tabs'),

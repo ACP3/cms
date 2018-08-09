@@ -6,7 +6,7 @@
 module.exports = function (gulp) {
     'use strict';
 
-    return function () {
+    return function (done) {
         const nodeBasePath = './node_modules',
             systemBasePath = './ACP3/Modules/ACP3/System/Resources/Assets',
             ckeditorBasePath = './ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets',
@@ -72,6 +72,6 @@ module.exports = function (gulp) {
                 .pipe(gulp.dest(path.dest));
         }
 
-        return 0;
+        return done();
     };
 };
