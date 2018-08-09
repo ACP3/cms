@@ -51,7 +51,7 @@ static-analysis:eslint:
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
   script:
-    - npm install
+    - npm ci
     - npm run-script eslint
 
 deploy:subtree-split:
