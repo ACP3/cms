@@ -6,7 +6,7 @@
 (function () {
     'use strict';
 
-    var gulp = require('gulp'),
+    const gulp = require('gulp'),
         plugins = require('gulp-load-plugins')();
 
     function getTask(task) {
@@ -16,7 +16,7 @@
     gulp.task('copy', getTask('copy'));
     gulp.task('bump-version', getTask('bump-version'));
     gulp.task('less', getTask('less'));
-    gulp.task('watch', ['less'], getTask('watch'));
+    gulp.task('watch', gulp.series('less', getTask('watch')));
 
-    gulp.task('default', ['watch']);
+    gulp.task('default', gulp.series('watch'));
 })();
