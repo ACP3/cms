@@ -30,6 +30,7 @@
 
             this.mergeSettings();
             this.findSubmitButton();
+            this.addLoadingLayer();
             this.element.noValidate = true;
 
             $(this.element).on('submit', function (e) {
@@ -211,7 +212,7 @@
                 }
             });
         },
-        showLoadingLayer: function ($submitButton) {
+        addLoadingLayer: function () {
             if (this.settings.loadingOverlay === false) {
                 return;
             }
@@ -223,15 +224,10 @@
                     html = '<div id="loading-layer" class="loading-layer"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>';
 
                 $(html).appendTo($body);
-
-                setTimeout(function () {
-                    $loadingLayer = $($loadingLayer.selector);
-
-                    $loadingLayer.addClass('loading-layer__active');
-                }, 10);
-            } else {
-                $loadingLayer.addClass('loading-layer__active');
             }
+        },
+        showLoadingLayer: function ($submitButton) {
+            $('#loading-layer').addClass('loading-layer__active');
 
             if (typeof $submitButton !== 'undefined') {
                 $submitButton.prop('disabled', true);
