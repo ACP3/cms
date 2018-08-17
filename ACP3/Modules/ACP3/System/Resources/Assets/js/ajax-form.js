@@ -131,8 +131,7 @@
         },
         processAjaxRequest: function () {
             const $form = $(this.element),
-                hasCustomData = !$.isEmptyObject(this.settings.customFormData),
-                self = this;
+                hasCustomData = !$.isEmptyObject(this.settings.customFormData);
 
             let hash,
                 processData = true,
@@ -169,47 +168,44 @@
                 data: data,
                 processData: processData,
                 contentType: processData ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,
-                beforeSend: function () {
-                    self.showLoadingLayer($submitButton);
+                beforeSend: () => {
+                    this.showLoadingLayer($submitButton);
+                    this.disableSubmitButton($submitButton);
                 }
-            }).done(function (responseData) {
+            }).done((responseData) => {
                 try {
                     let callback = $form.data('ajax-form-complete-callback');
 
                     if (typeof window[callback] === 'function') {
                         window[callback](responseData);
                     } else if (responseData.redirect_url) {
-                        self.redirectToNewPage(hash, responseData);
-                        return;
+                        this.redirectToNewPage(hash, responseData);
                     } else {
-                        self.scrollIntoView();
-                        self.replaceContent(hash, responseData);
-                        self.rebindHandlers(hash);
+                        this.scrollIntoView();
+                        this.replaceContent(hash, responseData);
+                        this.rebindHandlers(hash);
 
                         if (typeof hash !== 'undefined') {
                             window.location.hash = hash;
                         }
                     }
-
-                    self.hideLoadingLayer($submitButton);
                 } catch (err) {
                     console.error(err.message);
-
-                    self.hideLoadingLayer($submitButton);
                 }
-            }).fail(function (jqXHR) {
-                self.hideLoadingLayer($submitButton);
-
+            }).fail((jqXHR) => {
                 if (jqXHR.status === 400) {
-                    self.handleFormErrorMessages($form, jqXHR.responseText);
-                    self.scrollIntoView();
+                    this.handleFormErrorMessages($form, jqXHR.responseText);
+                    this.scrollIntoView();
 
-                    $(document).trigger('acp3.ajaxFrom.submit.fail', [self]);
+                    $(document).trigger('acp3.ajaxFrom.submit.fail', [this]);
                 } else if (jqXHR.responseText.length > 0) {
                     document.open();
                     document.write(jqXHR.responseText);
                     document.close();
                 }
+            }).always(() => {
+                this.hideLoadingLayer();
+                this.enableSubmitButton($submitButton);
             });
         },
         addLoadingLayer: function () {
@@ -226,11 +222,17 @@
                 $(html).appendTo($body);
             }
         },
-        showLoadingLayer: function ($submitButton) {
+        showLoadingLayer: function () {
             $('#loading-layer').addClass('loading-layer__active');
-
+        },
+        disableSubmitButton: ($submitButton) => {
             if (typeof $submitButton !== 'undefined') {
                 $submitButton.prop('disabled', true);
+            }
+        },
+        enableSubmitButton: ($submitButton) => {
+            if (typeof $submitButton !== 'undefined') {
+                $submitButton.prop('disabled', false);
             }
         },
         redirectToNewPage: function (hash, responseData) {
@@ -270,12 +272,8 @@
 
             this.findSubmitButton();
         },
-        hideLoadingLayer: function ($submitButton) {
+        hideLoadingLayer: function () {
             $('#loading-layer').removeClass('loading-layer__active');
-
-            if (typeof $submitButton !== 'undefined') {
-                $submitButton.prop('disabled', false);
-            }
         },
         handleFormErrorMessages: function ($form, errorMessagesHtml) {
             const $errorBox = $('#error-box'),
