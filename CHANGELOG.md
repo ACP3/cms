@@ -12,7 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Reworked the triggering of various actions during the bootstrap process
 - Updated jQuery to version 3.3.1
 - Updated gulp to version 4.0.0
-- Target EcmaScript version 6 with our own JavaScript code
+- Target EcmaScript version 6 for our own JavaScript code
+
+### Fixed
+- fixed the file upload when creating a new download
 
 ## [4.27.1] - 2018-07-11
 ### Changed

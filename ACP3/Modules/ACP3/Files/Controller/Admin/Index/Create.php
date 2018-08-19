@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Create extends AbstractFormAction
 {
@@ -111,7 +112,7 @@ class Create extends AbstractFormAction
                 ->setFile($file)
                 ->validate($formData);
 
-            if (\is_array($file) === true) {
+            if ($file instanceof UploadedFile) {
                 $upload = new Core\Helpers\Upload($this->appPath, Files\Installer\Schema::MODULE_NAME);
                 $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $formData['file'] = $result['name'];
