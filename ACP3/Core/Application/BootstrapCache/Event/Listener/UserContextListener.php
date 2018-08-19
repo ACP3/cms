@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Application\BootstrapCache\Event\Listener;
 
-use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
+use ACP3\Core\Authentication\Model\AuthenticationModelInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -27,9 +27,9 @@ class UserContextListener extends \FOS\HttpCache\SymfonyCache\UserContextListene
      */
     protected function cleanupHashLookupRequest(Request $hashLookupRequest, Request $originalRequest)
     {
-        $authCookie = $originalRequest->cookies->get(AuthenticationModel::AUTH_NAME);
+        $authCookie = $originalRequest->cookies->get(AuthenticationModelInterface::AUTH_NAME);
         if ($authCookie !== null) {
-            $hashLookupRequest->cookies->set(AuthenticationModel::AUTH_NAME, $authCookie);
+            $hashLookupRequest->cookies->set(AuthenticationModelInterface::AUTH_NAME, $authCookie);
         }
 
         parent::cleanupHashLookupRequest($hashLookupRequest, $originalRequest);

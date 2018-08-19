@@ -1,72 +1,46 @@
 <?php
-
 /**
  * Copyright (c) by the ACP3 Developers.
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Modules;
+namespace ACP3\Installer\Core\Modules;
 
-use ACP3\Core\Cache;
-use ACP3\Core\Environment\ApplicationPath;
+
 use ACP3\Core\Filesystem;
-use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
+use ACP3\Core\Modules\ModuleDependenciesTrait;
+use ACP3\Core\Modules\ModuleInfoCacheInterface;
+use ACP3\Core\Modules\Vendor;
 use ACP3\Core\XML;
+use ACP3\Installer\Core\Environment\ApplicationPath;
 
 class ModuleInfoCache implements ModuleInfoCacheInterface
 {
     use ModuleDependenciesTrait;
 
     /**
-     * @var \ACP3\Core\Cache
+     * @var \ACP3\Core\XML
      */
-    protected $cache;
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
+    private $xml;
     /**
      * @var \ACP3\Core\Modules\Vendor
      */
-    protected $vendors;
+    private $vendors;
     /**
-     * @var \ACP3\Core\XML
+     * @var \ACP3\Installer\Core\Environment\ApplicationPath
      */
-    protected $xml;
-    /**
-     * @var ModuleAwareRepositoryInterface
-     */
-    protected $systemModuleRepository;
+    private $appPath;
 
     /**
-     * ModuleInfoCache constructor.
-     *
-     * @param Cache                          $cache
-     * @param ApplicationPath                $appPath
-     * @param Vendor                         $vendors
-     * @param XML                            $xml
-     * @param ModuleAwareRepositoryInterface $systemModuleRepository
+     * @var array
      */
-    public function __construct(
-        Cache $cache,
-        ApplicationPath $appPath,
-        Vendor $vendors,
-        XML $xml,
-        ModuleAwareRepositoryInterface $systemModuleRepository
-    ) {
-        $this->cache = $cache;
-        $this->appPath = $appPath;
-        $this->vendors = $vendors;
-        $this->xml = $xml;
-        $this->systemModuleRepository = $systemModuleRepository;
-    }
+    private $moduleInfoCache = [];
 
-    /**
-     * @return string
-     */
-    protected function getCacheKey(): string
+    public function __construct(ApplicationPath $appPath, Vendor $vendors, XML $xml)
     {
-        return 'modules_info';
+        $this->xml = $xml;
+        $this->vendors = $vendors;
+        $this->appPath = $appPath;
     }
 
     /**
@@ -74,11 +48,11 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
      */
     public function getModulesInfoCache(): array
     {
-        if ($this->cache->contains($this->getCacheKey()) === false) {
+        if (empty($this->moduleInfoCache)) {
             $this->saveModulesInfoCache();
         }
 
-        return $this->cache->fetch($this->getCacheKey());
+        return $this->moduleInfoCache;
     }
 
     /**
@@ -94,7 +68,7 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
             $infos += $this->fetchVendorModules($vendor);
         }
 
-        $this->cache->save($this->getCacheKey(), $infos);
+        $this->moduleInfoCache = $infos;
     }
 
     /**
@@ -137,15 +111,14 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
         }
 
         $moduleName = \strtolower($moduleDirectory);
-        $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleName);
 
         return [
             'vendor' => $vendor,
-            'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
+            'id' => 0,
             'dir' => $moduleDirectory,
-            'installed' => (!empty($moduleInfoDb)),
-            'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1),
-            'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
+            'installed' => false,
+            'active' => false,
+            'schema_version' => 0,
             'author' => $moduleInfo['author'],
             'version' => $moduleInfo['version'],
             'name' => $moduleName,

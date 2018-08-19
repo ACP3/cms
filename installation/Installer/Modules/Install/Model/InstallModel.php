@@ -124,7 +124,6 @@ class InstallModel
             $this->appPath,
             $request->getSymfonyRequest(),
             $this->container->getParameter('core.environment'),
-            true,
             true
         );
     }

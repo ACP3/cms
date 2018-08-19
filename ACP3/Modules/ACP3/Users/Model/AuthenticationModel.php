@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Users\Model;
 
+use ACP3\Core\Authentication\Model\AuthenticationModelInterface;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;
@@ -15,9 +16,8 @@ use ACP3\Modules\ACP3\Users;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthenticationModel
+class AuthenticationModel implements AuthenticationModelInterface
 {
-    const AUTH_NAME = 'ACP3_AUTH';
     const SALT_LENGTH = 16;
     const REMEMBER_ME_COOKIE_LIFETIME = 31104000;
 
@@ -146,6 +146,7 @@ class AuthenticationModel
      *
      * @throws Users\Exception\LoginFailedException
      * @throws Users\Exception\UserAccountLockedException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function login($username, $password, $rememberMe)
     {

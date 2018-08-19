@@ -1,5 +1,0 @@
-parameters:
-  default_request: 'update'
-
-imports:
-  - { resource: ../../Modules/Update/Resources/config/services.yml }

@@ -8,14 +8,14 @@
 namespace ACP3\Core;
 
 use ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface;
+use ACP3\Core\ACL\PermissionCacheInterface;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Controller\Helper\ControllerActionExists;
-use ACP3\Modules\ACP3\Permissions;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 class ACL
 {
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     protected $user;
     /**
@@ -23,7 +23,7 @@ class ACL
      */
     protected $modules;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache
+     * @var \ACP3\Core\ACL\PermissionCacheInterface
      */
     protected $permissionsCache;
     /**
@@ -56,18 +56,18 @@ class ACL
     /**
      * ACL constructor.
      *
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                    $user
+     * @param \ACP3\Core\Authentication\Model\UserModelInterface          $user
      * @param \ACP3\Core\Modules                                          $modules
      * @param \ACP3\Core\Controller\Helper\ControllerActionExists         $controllerActionExists
      * @param \ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface $userRoleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                        $permissionsCache
+     * @param \ACP3\Core\ACL\PermissionCacheInterface                     $permissionsCache
      */
     public function __construct(
-        UserModel $user,
+        UserModelInterface $user,
         Modules $modules,
         ControllerActionExists $controllerActionExists,
         UserRoleRepositoryInterface $userRoleRepository,
-        Permissions\Cache $permissionsCache
+        PermissionCacheInterface $permissionsCache
     ) {
         $this->user = $user;
         $this->modules = $modules;
