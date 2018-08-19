@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Changed
 - Converted all database tables and columns to the `utf8mb4` charset
-- Replaced our own ErrorHandler some the with ErrorHandler and ExceptionHandler of the symfony debug package
+- Replaced our own ErrorHandler with the ErrorHandler and ExceptionHandler of the [symfony/debug](https://packagist.org/packages/symfony/debug) package
 - Marked all necessary services public
 - Reworked the triggering of various actions during the bootstrap process
 - Updated jQuery to version 3.3.1
