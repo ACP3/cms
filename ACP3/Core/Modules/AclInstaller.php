@@ -79,6 +79,7 @@ class AclInstaller implements InstallerInterface
      * @param int                                          $mode
      *
      * @return bool
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function install(SchemaInterface $schema, $mode = self::INSTALL_RESOURCES_AND_RULES)

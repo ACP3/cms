@@ -60,8 +60,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         Request $symfonyRequest,
         string $applicationMode,
         bool $includeModules = false
-    )
-    {
+    ) {
         parent::__construct();
 
         $this->logger = $logger;
@@ -166,8 +165,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         Request $symfonyRequest,
         string $applicationMode,
         bool $includeModules = false
-    )
-    {
+    ) {
         return new static($logger, $applicationPath, $symfonyRequest, $applicationMode, $includeModules);
     }
 }

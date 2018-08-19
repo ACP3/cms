@@ -111,8 +111,7 @@ class ServiceContainerBuilder extends ContainerBuilder
      */
     public static function create(
         ApplicationPath $applicationPath, SymfonyRequest $symfonyRequest, $applicationMode
-    )
-    {
+    ) {
         return new static($applicationPath, $symfonyRequest, $applicationMode);
     }
 
