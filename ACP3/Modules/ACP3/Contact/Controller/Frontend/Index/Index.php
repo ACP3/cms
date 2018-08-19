@@ -32,11 +32,16 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var Contact\Model\ContactsModel
      */
     protected $contactsModel;
+    /**
+     * @var \ACP3\Core\Helpers\Alerts
+     */
+    private $alertsHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext        $context
      * @param \ACP3\Core\Helpers\Forms                             $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                         $formTokenHelper
+     * @param \ACP3\Core\Helpers\Alerts                            $alertsHelper
      * @param \ACP3\Modules\ACP3\Contact\Validation\FormValidation $formValidation
      * @param Contact\Model\ContactsModel                          $contactsModel
      * @param Contact\Model\ContactFormModel                       $contactFormModel
@@ -45,6 +50,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
+        Core\Helpers\Alerts $alertsHelper,
         Contact\Validation\FormValidation $formValidation,
         Contact\Model\ContactsModel $contactsModel,
         Contact\Model\ContactFormModel $contactFormModel
@@ -56,6 +62,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->formValidation = $formValidation;
         $this->contactFormModel = $contactFormModel;
         $this->contactsModel = $contactsModel;
+        $this->alertsHelper = $alertsHelper;
     }
 
     /**
@@ -93,7 +100,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                     $this->contactFormModel->sendContactFormEmailCopy($formData);
                 }
 
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
+                $this->setTemplate($this->alertsHelper->confirmBox(
                     $this->translator->t('contact', $bool === true ? 'send_mail_success' : 'send_mail_error'),
                     $this->router->route('contact')
                 ));

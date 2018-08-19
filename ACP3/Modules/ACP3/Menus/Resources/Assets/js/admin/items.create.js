@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-    var $module = $('#module-container'),
+    const $module = $('#module-container'),
         $link = $('#link-container'),
         $hints = $link.find('.help-block'),
         $articles = $('#articles-container'),
@@ -12,17 +12,17 @@ jQuery(document).ready(function ($) {
 
         if (this.value == 0) {
             // Force the link target to open on the same page programmatically,
-            // as the user can not select it for themself
+            // as the user can not select it for them self
             $('#target').val(1);
         }
     });
 
-    var $mode = $('#mode'),
-        currentMode = $mode.val();
+    const $mode = $('#mode');
+    let currentMode = $mode.val();
 
     // Seitentyp
     $mode.change(function () {
-        var mode = parseInt(this.value);
+        const mode = parseInt(this.value);
 
         if (mode === 1) {
             $module.show();
@@ -32,7 +32,7 @@ jQuery(document).ready(function ($) {
 
             // Modul im Dropdown-Menü selektieren, falls zuvor als Modus eine dynamische Seite aktiv war
             if (currentMode === 2) {
-                var $linkUri = $('#uri'),
+                const $linkUri = $('#uri'),
                     match = $linkUri.val().match(/^([a-z\d_-]+)\/([a-z\d_-]+\/)+$/);
                 if (!$linkUri.val().match(articlesPattern) && match[1] != null && $('#module').find('option[value="' + match[1] + '"]').length > 0) {
                     $('#link-module').val(match[1]);
@@ -64,7 +64,7 @@ jQuery(document).ready(function ($) {
     }).change();
 
     $('#uri').blur(function () {
-        var match = $(this).val().match(articlesPattern);
+        const match = $(this).val().match(articlesPattern);
         if (match[1] !== null && $('#articles').find('option[value="' + match[1] + '"]').length > 0) {
             $('#mode').val(4).change();
             $('#link-articles').val(match[1]);

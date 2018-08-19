@@ -1,4 +1,9 @@
 services:
+  _defaults:
+    public: true
+    tags:
+    - { name: acp3.controller.action }
+
   news.controller.admin.index.create:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Create
     arguments:
@@ -47,6 +52,8 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
+      - '@core.helpers.secure'
+      - '@core.helpers.date'
       - '@news.validation.admin_settings_form_validation'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]
@@ -71,6 +78,7 @@ services:
       - '@categories.model.categories_repository'
     calls:
       - ['setMetaStatements', ['@?seo.helper.meta_statements']]
+      - ['setCommentsHelpers', ['@?comments.helpers']]
 
   news.controller.widget.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Widget\Index\Index

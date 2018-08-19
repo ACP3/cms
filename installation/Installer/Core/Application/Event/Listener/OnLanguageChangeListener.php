@@ -10,7 +10,7 @@ namespace ACP3\Installer\Core\Application\Event\Listener;
 use ACP3\Core\Http\RedirectResponse;
 use ACP3\Core\Http\RequestInterface;
 
-class OnControllerActionDispatcherBeforeDispatchListener
+class OnLanguageChangeListener
 {
     /**
      * @var RequestInterface
@@ -38,7 +38,7 @@ class OnControllerActionDispatcherBeforeDispatchListener
     /**
      * If the language has been changed, set a cookie with the new default language and force a page reload.
      */
-    public function onLanguageChange()
+    public function __invoke()
     {
         if ($this->request->getPost()->has('lang')) {
             \setcookie('ACP3_INSTALLER_LANG', $this->request->getPost()->get('lang', ''), \time() + 3600, '/');

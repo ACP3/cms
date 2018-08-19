@@ -37,7 +37,7 @@ class SchemaRegistrar
      *
      * @return bool
      */
-    public function has($moduleName)
+    public function has(string $moduleName)
     {
         return isset($this->schemas[$moduleName]);
     }
@@ -49,7 +49,7 @@ class SchemaRegistrar
      *
      * @throws \InvalidArgumentException
      */
-    public function get($moduleName)
+    public function get(string $moduleName)
     {
         if ($this->has($moduleName)) {
             return $this->schemas[$moduleName];

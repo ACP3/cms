@@ -2,14 +2,13 @@ services:
   core.assets:
     class: ACP3\Core\Assets
     arguments:
-      - '@core.environment.application_path'
+      - '@core.environment.theme'
       - '@core.assets.libraries'
 
   core.assets.cache:
     class: ACP3\Core\Assets\Cache
     arguments:
       - '@core.cache.system'
-    public: false
 
   core.assets.logger:
     class: Psr\Log\LoggerInterface

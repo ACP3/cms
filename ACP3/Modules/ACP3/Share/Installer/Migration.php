@@ -30,6 +30,13 @@ class Migration implements Modules\Installer\MigrationInterface
                 ) {ENGINE} {CHARSET};',
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'frontend', 'index', 'rate', '', 1);",
             ],
+            3 => [
+                'ALTER TABLE `{pre}share` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}share` MODIFY COLUMN `uri` VARCHAR(191) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}share` MODIFY COLUMN `services` TEXT {charset} NOT NULL;',
+                'ALTER TABLE `{pre}share_ratings` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}share_ratings` MODIFY COLUMN `ip` VARCHAR(40) {charset} NOT NULL;',
+            ],
         ];
     }
 

@@ -3,12 +3,13 @@ services:
     class: ACP3\Core\Modules
     arguments:
       - '@core.environment.application_path'
-      - '@core.modules.helper.controllerActionExists'
+      - '@core.controller.helper.controller_action_exists'
       - '@core.modules.moduleInfoCache'
       - '@core.modules.vendors'
 
   core.modules.aclInstaller:
     class: ACP3\Core\Modules\AclInstaller
+    public: true
     arguments:
       - '@core.cache.system'
       - '@core.modules.schemaHelper'
@@ -20,16 +21,12 @@ services:
   core.modules.helper.action:
     class: ACP3\Core\Modules\Helper\Action
     arguments:
+      - '@core.db'
       - '@core.i18n.translator'
       - '@core.http.request'
       - '@core.router'
       - '@core.helpers.alerts'
       - '@core.helpers.redirect'
-
-  core.modules.helper.controllerActionExists:
-    class: ACP3\Core\Modules\Helper\ControllerActionExists
-    arguments:
-      - '@service_container'
 
   core.modules.moduleInfoCache:
     class: ACP3\Core\Modules\ModuleInfoCache
@@ -42,6 +39,7 @@ services:
 
   core.modules.schemaHelper:
     class: ACP3\Core\Modules\SchemaHelper
+    public: true
     arguments:
       - '@core.modules.installer_logger'
       - '@core.db'
@@ -68,10 +66,12 @@ services:
 
   core.modules.schemaInstaller:
     class: ACP3\Core\Modules\SchemaInstaller
+    public: true
     parent: core.modules.schemaHelper
 
   core.modules.schemaUpdater:
     class: ACP3\Core\Modules\SchemaUpdater
+    public: true
     parent: core.modules.schemaHelper
 
   core.modules.vendors:

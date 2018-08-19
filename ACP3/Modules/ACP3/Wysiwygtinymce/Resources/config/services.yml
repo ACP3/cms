@@ -9,4 +9,3 @@ services:
       - ['setFilemanagerHelpers', ['@?filemanager.helpers']]
     tags:
       - { name: core.wysiwyg.editor }
-    public: false

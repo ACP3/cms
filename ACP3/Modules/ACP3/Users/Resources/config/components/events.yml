@@ -9,7 +9,6 @@ services:
   users.event.is_user_authenticated_on_controller_action_before_dispatch_listener:
     class: ACP3\Modules\ACP3\Users\Event\Listener\IsUserAuthenticatedOnControllerActionBeforeDispatchListener
     arguments:
-      - '@core.http.request'
       - '@core.helpers.redirect'
       - '@core.i18n.translator'
       - '@users.model.user_model'

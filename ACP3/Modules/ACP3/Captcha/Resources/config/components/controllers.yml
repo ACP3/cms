@@ -1,4 +1,9 @@
 services:
+  _defaults:
+    public: true
+    tags:
+    - { name: acp3.controller.action }
+
   captcha.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Captcha\Controller\Admin\Index\Index
     arguments:

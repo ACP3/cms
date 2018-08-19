@@ -1,4 +1,9 @@
 services:
+  _defaults:
+    public: true
+    tags:
+    - { name: acp3.controller.action }
+
   guestbook.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Delete
     arguments:
@@ -26,6 +31,8 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
+      - '@core.helpers.secure'
+      - '@core.helpers.date'
       - '@guestbook.validation.admin_settings_form_validation'
 
   guestbook.controller.frontend.index.create:
@@ -34,6 +41,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
+      - '@core.helpers.sendEmail'
       - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.form_validation'
     calls:

@@ -28,12 +28,17 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var Categories\Model\CategoriesModel
      */
     protected $categoriesModel;
+    /**
+     * @var \ACP3\Core\Helpers\Upload
+     */
+    private $categoriesUploadHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext                $context
      * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
      * @param Categories\Model\CategoriesModel                             $categoriesModel
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
+     * @param \ACP3\Core\Helpers\Upload                                    $categoriesUploadHelper
      * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
      */
     public function __construct(
@@ -41,6 +46,7 @@ class Create extends Core\Controller\AbstractFrontendAction
         Core\Helpers\Forms $formsHelper,
         Categories\Model\CategoriesModel $categoriesModel,
         Categories\Validation\AdminFormValidation $adminFormValidation,
+        Core\Helpers\Upload $categoriesUploadHelper,
         Core\Helpers\FormToken $formTokenHelper
     ) {
         parent::__construct($context);
@@ -49,6 +55,7 @@ class Create extends Core\Controller\AbstractFrontendAction
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
         $this->categoriesModel = $categoriesModel;
+        $this->categoriesUploadHelper = $categoriesUploadHelper;
     }
 
     /**
@@ -78,8 +85,7 @@ class Create extends Core\Controller\AbstractFrontendAction
                 ->validate($formData);
 
             if (!empty($file)) {
-                $upload = new Core\Helpers\Upload($this->appPath, Categories\Installer\Schema::MODULE_NAME);
-                $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
+                $result = $this->categoriesUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $formData['picture'] = $result['name'];
             }
 

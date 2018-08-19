@@ -14,4 +14,3 @@ services:
     class: ACP3\Modules\ACP3\Files\Validation\ValidationRules\IsExternalFileValidationRule
     tags:
       - { name: core.validation.validation_rule }
-    public: false

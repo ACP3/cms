@@ -21,7 +21,6 @@ services:
       - '@comments.model.commentrepository'
     tags:
       - { name: core.validation.validation_rule }
-    public: false
 
   comments.validation.validation_rules.user_name_validation_rule:
     class: ACP3\Modules\ACP3\Comments\Validation\ValidationRules\UserNameValidationRule
@@ -29,4 +28,3 @@ services:
       - '@core.validation.validation_rules.integer_validation_rule'
     tags:
       - { name: core.validation.validation_rule }
-    public: false

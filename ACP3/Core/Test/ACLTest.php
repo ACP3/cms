@@ -8,6 +8,7 @@
 namespace ACP3\Core\Test;
 
 use ACP3\Core\ACL;
+use ACP3\Core\Controller\Helper\ControllerActionExists;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Permissions\Cache;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
@@ -34,6 +35,10 @@ class ACLTest extends \PHPUnit_Framework_TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $permissionsCacheMock;
+    /**
+     * @var ControllerActionExists|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $controllerActionExistsMock;
 
     protected function setUp()
     {
@@ -42,6 +47,7 @@ class ACLTest extends \PHPUnit_Framework_TestCase
         $this->acl = new ACL(
             $this->userMock,
             $this->modulesMock,
+            $this->controllerActionExistsMock,
             $this->userRoleRepositoryMock,
             $this->permissionsCacheMock
         );
@@ -49,22 +55,11 @@ class ACLTest extends \PHPUnit_Framework_TestCase
 
     private function initializeMockObjects()
     {
-        $this->userMock = $this->getMockBuilder(UserModel::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['isSuperUser', 'getUserId'])
-            ->getMock();
-        $this->modulesMock = $this->getMockBuilder(Modules::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['controllerActionExists', 'isActive'])
-            ->getMock();
-        $this->userRoleRepositoryMock = $this->getMockBuilder(ACL\Model\Repository\UserRoleRepositoryInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getRolesByUserId'])
-            ->getMock();
-        $this->permissionsCacheMock = $this->getMockBuilder(Cache::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getResourcesCache', 'getRolesCache', 'getRulesCache'])
-            ->getMock();
+        $this->userMock = $this->createMock(UserModel::class);
+        $this->modulesMock = $this->createMock(Modules::class);
+        $this->controllerActionExistsMock = $this->createMock(ControllerActionExists::class);
+        $this->userRoleRepositoryMock = $this->createMock(ACL\Model\Repository\UserRoleRepositoryInterface::class);
+        $this->permissionsCacheMock = $this->createMock(Cache::class);
     }
 
     public function testGetUserRoleIdsForGuest()
@@ -128,7 +123,8 @@ class ACLTest extends \PHPUnit_Framework_TestCase
     {
         $resource = 'frontend/news/index/index/';
 
-        $this->setUpModulesMockExpectations($resource, 'news', false, false, 0);
+        $this->setUpControllerActionExistsMockExpectations($resource, false);
+        $this->setUpModulesMockExpectations('news', false, 0);
 
         $this->assertFalse($this->acl->hasPermission($resource));
     }
@@ -137,29 +133,36 @@ class ACLTest extends \PHPUnit_Framework_TestCase
     {
         $resource = 'frontend/news/index/index/';
 
-        $this->setUpModulesMockExpectations($resource, 'news', true, false);
+        $this->setUpControllerActionExistsMockExpectations($resource, true);
+        $this->setUpModulesMockExpectations('news', false);
 
         $this->assertFalse($this->acl->hasPermission($resource));
     }
 
     /**
      * @param string $resource
-     * @param string $moduleName
      * @param bool   $returnValueActionExists
+     */
+    private function setUpControllerActionExistsMockExpectations(
+        $resource,
+        $returnValueActionExists
+    ) {
+        $this->controllerActionExistsMock->expects($this->once())
+            ->method('controllerActionExists')
+            ->with($resource)
+            ->willReturn($returnValueActionExists);
+    }
+
+    /**
+     * @param string $moduleName
      * @param bool   $returnValueIsActive
      * @param int    $callCountIsActive
      */
     private function setUpModulesMockExpectations(
-        $resource,
-        $moduleName,
-        $returnValueActionExists,
-        $returnValueIsActive,
-        $callCountIsActive = 1
+        string $moduleName,
+        bool $returnValueIsActive,
+        int $callCountIsActive = 1
     ) {
-        $this->modulesMock->expects($this->once())
-            ->method('controllerActionExists')
-            ->with($resource)
-            ->willReturn($returnValueActionExists);
         $this->modulesMock->expects($this->exactly($callCountIsActive))
             ->method('isActive')
             ->with($moduleName)
@@ -172,7 +175,8 @@ class ACLTest extends \PHPUnit_Framework_TestCase
         $userId = 0;
 
         $this->setUpUserMockExpectations($userId);
-        $this->setUpModulesMockExpectations($resource, 'foo', true, true);
+        $this->setUpControllerActionExistsMockExpectations($resource, true);
+        $this->setUpModulesMockExpectations('foo', true);
         $this->setUpPermissionsCacheMockExpectations(
             1,
             1,
@@ -240,7 +244,8 @@ class ACLTest extends \PHPUnit_Framework_TestCase
         $userId = 0;
 
         $this->setUpUserMockExpectations($userId);
-        $this->setUpModulesMockExpectations($resource, 'foo', true, true);
+        $this->setUpControllerActionExistsMockExpectations($resource, true);
+        $this->setUpModulesMockExpectations('foo', true);
         $this->setUpPermissionsCacheMockExpectations(
             1,
             1,
@@ -259,7 +264,8 @@ class ACLTest extends \PHPUnit_Framework_TestCase
         $userId = 0;
 
         $this->setUpUserMockExpectations($userId, 0);
-        $this->setUpModulesMockExpectations($resource, 'foo', true, true);
+        $this->setUpControllerActionExistsMockExpectations($resource, true);
+        $this->setUpModulesMockExpectations('foo', true);
         $this->setUpPermissionsCacheMockExpectations(
             1,
             0,
@@ -277,7 +283,8 @@ class ACLTest extends \PHPUnit_Framework_TestCase
         $resource = 'frontend/foo/index/index/';
         $userId = 1;
 
-        $this->setUpModulesMockExpectations($resource, 'foo', true, true);
+        $this->setUpControllerActionExistsMockExpectations($resource, true);
+        $this->setUpModulesMockExpectations('foo', true);
         $this->setUpUserMockExpectations($userId);
         $this->setUpUserRoleExpectations($userId);
         $this->setUpPermissionsCacheMockExpectations(

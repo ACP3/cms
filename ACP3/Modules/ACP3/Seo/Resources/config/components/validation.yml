@@ -16,4 +16,3 @@ services:
       - '@seo.model.seorepository'
     tags:
       - { name: core.validation.validation_rule }
-    public: false

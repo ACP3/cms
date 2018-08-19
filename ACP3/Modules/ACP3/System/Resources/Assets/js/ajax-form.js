@@ -6,7 +6,7 @@
 (function ($, window, document) {
     'use strict';
 
-    var pluginName = 'formSubmit',
+    let pluginName = 'formSubmit',
         defaults = {
             targetElement: '#content',
             loadingOverlay: true,
@@ -26,10 +26,11 @@
 
     $.extend(Plugin.prototype, {
         init: function () {
-            var that = this;
+            const that = this;
 
             this.mergeSettings();
             this.findSubmitButton();
+            this.addLoadingLayer();
             this.element.noValidate = true;
 
             $(this.element).on('submit', function (e) {
@@ -56,10 +57,10 @@
             });
         },
         mergeSettings: function () {
-            var data = $(this.element).data();
-            for (var key in data) {
+            const data = $(this.element).data();
+            for (let key in data) {
                 if (data.hasOwnProperty(key)) {
-                    var keyStripped = this.lowerCaseFirstLetter(key.replace('ajaxForm', ''));
+                    const keyStripped = this.lowerCaseFirstLetter(key.replace('ajaxForm', ''));
 
                     if (keyStripped.length > 0 && typeof this.settings[keyStripped] !== 'undefined') {
                         this.settings[keyStripped] = data[key];
@@ -89,9 +90,8 @@
                 .find('.validation-failed').remove();
         },
         checkFormElementsForErrors: function (form) {
-            var field;
-            for (var i = 0; i < form.elements.length; i++) {
-                field = form.elements[i];
+            for (let i = 0; i < form.elements.length; i++) {
+                const field = form.elements[i];
 
                 if (field.nodeName !== 'INPUT' && field.nodeName !== 'TEXTAREA' && field.nodeName !== 'SELECT') {
                     continue;
@@ -122,7 +122,7 @@
         },
         focusTabWithFirstErrorMessage: function () {
             if ($('.tabbable').length > 0) {
-                var $elem = $('.tabbable .form-group.has-error:first'),
+                let $elem = $('.tabbable .form-group.has-error:first'),
                     tabId = $elem.closest('.tab-pane').prop('id');
                 $('.tabbable .nav-tabs a[href="#' + tabId + '"]').tab('show');
 
@@ -130,15 +130,16 @@
             }
         },
         processAjaxRequest: function () {
-            var hash,
-                self = this,
-                $form = $(this.element),
-                hasCustomData = !$.isEmptyObject(this.settings.customFormData),
+            const $form = $(this.element),
+                hasCustomData = !$.isEmptyObject(this.settings.customFormData);
+
+            let hash,
                 processData = true,
-                data = this.settings.customFormData || {};
+                data = this.settings.customFormData || {},
+                $submitButton;
 
             if ($form.attr('method')) {
-                var $submitButton = $(':submit[data-clicked="true"]', $form);
+                $submitButton = $(':submit[data-clicked="true"]', $form);
 
                 hash = $submitButton.data('hashChange');
 
@@ -149,7 +150,7 @@
                 }
 
                 if (hasCustomData) {
-                    for (var key in this.settings.customFormData) {
+                    for (let key in this.settings.customFormData) {
                         if (this.settings.customFormData.hasOwnProperty(key)) {
                             data.append(key, this.settings.customFormData[key]);
                         }
@@ -167,73 +168,71 @@
                 data: data,
                 processData: processData,
                 contentType: processData ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,
-                beforeSend: function () {
-                    self.showLoadingLayer($submitButton);
+                beforeSend: () => {
+                    this.showLoadingLayer($submitButton);
+                    this.disableSubmitButton($submitButton);
                 }
-            }).done(function (responseData) {
+            }).done((responseData) => {
                 try {
-                    var callback = $form.data('ajax-form-complete-callback');
+                    let callback = $form.data('ajax-form-complete-callback');
 
                     if (typeof window[callback] === 'function') {
                         window[callback](responseData);
                     } else if (responseData.redirect_url) {
-                        self.redirectToNewPage(hash, responseData);
-                        return;
+                        this.redirectToNewPage(hash, responseData);
                     } else {
-                        self.scrollIntoView();
-                        self.replaceContent(hash, responseData);
-                        self.rebindHandlers(hash);
+                        this.scrollIntoView();
+                        this.replaceContent(hash, responseData);
+                        this.rebindHandlers(hash);
 
                         if (typeof hash !== 'undefined') {
                             window.location.hash = hash;
                         }
                     }
-
-                    self.hideLoadingLayer($submitButton);
                 } catch (err) {
                     console.error(err.message);
-
-                    self.hideLoadingLayer($submitButton);
                 }
-            }).fail(function (jqXHR) {
-                self.hideLoadingLayer($submitButton);
-
+            }).fail((jqXHR) => {
                 if (jqXHR.status === 400) {
-                    self.handleFormErrorMessages($form, jqXHR.responseText);
-                    self.scrollIntoView();
+                    this.handleFormErrorMessages($form, jqXHR.responseText);
+                    this.scrollIntoView();
 
-                    $(document).trigger('acp3.ajaxFrom.submit.fail', [self]);
+                    $(document).trigger('acp3.ajaxFrom.submit.fail', [this]);
                 } else if (jqXHR.responseText.length > 0) {
                     document.open();
                     document.write(jqXHR.responseText);
                     document.close();
                 }
+            }).always(() => {
+                this.hideLoadingLayer();
+                this.enableSubmitButton($submitButton);
             });
         },
-        showLoadingLayer: function ($submitButton) {
+        addLoadingLayer: function () {
             if (this.settings.loadingOverlay === false) {
                 return;
             }
 
-            var $loadingLayer = $('#loading-layer');
+            let $loadingLayer = $('#loading-layer');
             if ($loadingLayer.length === 0) {
-                var $body = $('body'),
+                let $body = $('body'),
                     loadingText = this.settings.loadingText || '',
                     html = '<div id="loading-layer" class="loading-layer"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>';
 
                 $(html).appendTo($body);
-
-                setTimeout(function () {
-                    $loadingLayer = $($loadingLayer.selector);
-
-                    $loadingLayer.addClass('loading-layer__active');
-                }, 10);
-            } else {
-                $loadingLayer.addClass('loading-layer__active');
             }
-
+        },
+        showLoadingLayer: function () {
+            $('#loading-layer').addClass('loading-layer__active');
+        },
+        disableSubmitButton: ($submitButton) => {
             if (typeof $submitButton !== 'undefined') {
                 $submitButton.prop('disabled', true);
+            }
+        },
+        enableSubmitButton: ($submitButton) => {
+            if (typeof $submitButton !== 'undefined') {
+                $submitButton.prop('disabled', false);
             }
         },
         redirectToNewPage: function (hash, responseData) {
@@ -248,7 +247,7 @@
          * Scroll to the beginning of the content area, if the current viewport is near the bottom
          */
         scrollIntoView: function () {
-            var offsetTop = $(this.settings.targetElement).offset().top;
+            const offsetTop = $(this.settings.targetElement).offset().top;
 
             if ($(document).scrollTop() > offsetTop) {
                 $('html, body').animate(
@@ -267,21 +266,17 @@
             }
         },
         rebindHandlers: function (hash) {
-            var $bindingTarget = (hash && $(hash).length) ? $(hash) : $(this.settings.targetElement);
+            const $bindingTarget = (hash && $(hash).length) ? $(hash) : $(this.settings.targetElement);
 
             $bindingTarget.find('[data-ajax-form="true"]').formSubmit();
 
             this.findSubmitButton();
         },
-        hideLoadingLayer: function ($submitButton) {
+        hideLoadingLayer: function () {
             $('#loading-layer').removeClass('loading-layer__active');
-
-            if (typeof $submitButton !== 'undefined') {
-                $submitButton.prop('disabled', false);
-            }
         },
         handleFormErrorMessages: function ($form, errorMessagesHtml) {
-            var $errorBox = $('#error-box'),
+            const $errorBox = $('#error-box'),
                 $modalBody = $form.find('.modal-body');
 
             $errorBox.remove();
@@ -295,16 +290,16 @@
             this.prettyPrintResponseErrorMessages($($errorBox.selector));
         },
         prettyPrintResponseErrorMessages: function ($errorBox) {
-            var that = this;
+            const that = this;
 
             this.removeAllPreviousErrors();
 
             // highlight all input fields where the validation has failed
             $errorBox.find('li').each(function () {
-                var $this = $(this),
+                let $this = $(this),
                     errorClass = $this.data('error');
                 if (errorClass.length > 0) {
-                    var $elem = $('[id|="' + errorClass + '"]').filter(':not([id$="container"])');
+                    let $elem = $('[id|="' + errorClass + '"]').filter(':not([id$="container"])');
                     if ($elem.length > 0) {
                         that.addErrorDecorationToFormGroup($elem);
 

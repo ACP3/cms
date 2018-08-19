@@ -8,6 +8,7 @@
 namespace ACP3\Core\DependencyInjection;
 
 use ACP3\Core\Authentication\DependencyInjection\RegisterAuthenticationsCompilerPass;
+use ACP3\Core\Controller\DependencyInjection\RegisterControllerActionsPass;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\DataGrid\DependencyInjection\RegisterColumnRendererPass;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
@@ -75,6 +76,7 @@ class ServiceContainerBuilder extends ContainerBuilder
             ->addCompilerPass(new RegisterColumnRendererPass())
             ->addCompilerPass(new RegisterValidationRulesPass())
             ->addCompilerPass(new RegisterWysiwygEditorsCompilerPass())
+            ->addCompilerPass(new RegisterControllerActionsPass())
             ->addCompilerPass(new RegisterInstallersCompilerPass())
             ->addCompilerPass(new RegisterColumnTypesCompilerPass());
 

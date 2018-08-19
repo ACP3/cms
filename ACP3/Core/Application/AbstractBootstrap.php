@@ -7,10 +7,12 @@
 
 namespace ACP3\Core\Application;
 
+use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\ErrorHandler;
 use ACP3\Core\Logger\LoggerFactory;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Debug\ErrorHandler;
+use Symfony\Component\Debug\ExceptionHandler;
 
 abstract class AbstractBootstrap implements BootstrapInterface
 {
@@ -53,7 +55,13 @@ abstract class AbstractBootstrap implements BootstrapInterface
      */
     public function setErrorHandler()
     {
-        ErrorHandler::register($this->logger);
+        $debug = $this->appMode === ApplicationMode::DEVELOPMENT;
+
+        ExceptionHandler::register($debug);
+
+        $errorHandler = new ErrorHandler();
+        $errorHandler->setDefaultLogger($this->logger);
+        ErrorHandler::register($errorHandler);
     }
 
     /**

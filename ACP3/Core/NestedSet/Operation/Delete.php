@@ -16,29 +16,25 @@ class Delete extends AbstractOperation
      *
      * @return bool
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($resultId)
+    public function execute(int $resultId)
     {
-        $callback = function () use ($resultId) {
-            $nodes = $this->nestedSetRepository->fetchNodeWithSiblings((int) $resultId);
-            if (!empty($nodes)) {
-                $this->db->getConnection()->delete(
-                    $this->nestedSetRepository->getTableName(),
-                    ['id' => (int) $resultId]
-                );
+        $nodes = $this->nestedSetRepository->fetchNodeWithSiblings((int) $resultId);
+        if (!empty($nodes)) {
+            $this->db->getConnection()->delete(
+                $this->nestedSetRepository->getTableName(),
+                ['id' => (int) $resultId]
+            );
 
-                $this->moveSiblingsOneLevelUp($nodes);
-                $this->adjustParentNodesAfterSeparation(2, $nodes[0]['left_id'], $nodes[0]['right_id']);
-                $this->adjustFollowingNodesAfterSeparation(2, $nodes[0]['right_id']);
+            $this->moveSiblingsOneLevelUp($nodes);
+            $this->adjustParentNodesAfterSeparation(2, $nodes[0]['left_id'], $nodes[0]['right_id']);
+            $this->adjustFollowingNodesAfterSeparation(2, $nodes[0]['right_id']);
 
-                return true;
-            }
+            return true;
+        }
 
-            return false;
-        };
-
-        return $this->db->executeTransactionalQuery($callback);
+        return false;
     }
 
     /**

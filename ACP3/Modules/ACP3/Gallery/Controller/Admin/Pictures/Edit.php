@@ -29,6 +29,10 @@ class Edit extends AbstractFormAction
      * @var Gallery\Model\PictureModel
      */
     protected $pictureModel;
+    /**
+     * @var \ACP3\Core\Helpers\Upload
+     */
+    private $galleryUploadHelper;
 
     /**
      * Edit constructor.
@@ -39,6 +43,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Modules\ACP3\Gallery\Helpers                          $galleryHelpers
      * @param Gallery\Model\PictureModel                                  $pictureModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
+     * @param \ACP3\Core\Helpers\Upload                                   $galleryUploadHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -46,7 +51,8 @@ class Edit extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\PictureModel $pictureModel,
-        Gallery\Validation\PictureFormValidation $pictureFormValidation
+        Gallery\Validation\PictureFormValidation $pictureFormValidation,
+        Core\Helpers\Upload $galleryUploadHelper
     ) {
         parent::__construct($context, $formsHelper);
 
@@ -54,6 +60,7 @@ class Edit extends AbstractFormAction
         $this->galleryHelpers = $galleryHelpers;
         $this->pictureFormValidation = $pictureFormValidation;
         $this->pictureModel = $pictureModel;
+        $this->galleryUploadHelper = $galleryUploadHelper;
     }
 
     /**
@@ -114,8 +121,7 @@ class Edit extends AbstractFormAction
                     ->validate([]);
 
                 if (!empty($file)) {
-                    $upload = new Core\Helpers\Upload($this->appPath, Gallery\Installer\Schema::MODULE_NAME);
-                    $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
+                    $result = $this->galleryUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
 
                     $this->galleryHelpers->removePicture($picture['file']);
 

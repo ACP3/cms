@@ -3,12 +3,12 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-jQuery(document).ready(function($) {
-    var $cookieNotice = $('#cookie-consent'),
+jQuery(document).ready(function ($) {
+    const $cookieNotice = $('#cookie-consent'),
         cookieName = 'ACCEPT_COOKIES';
 
-    $('#accept-cookies').click(function() {
-        Cookies.set(cookieName, true, { expires: 365 });
+    $('#accept-cookies').click(function () {
+        Cookies.set(cookieName, true, {expires: 365});
 
         $cookieNotice.fadeOut();
     });

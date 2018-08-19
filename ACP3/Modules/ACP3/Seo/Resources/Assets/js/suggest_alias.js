@@ -6,7 +6,7 @@
 (function ($) {
     'use strict';
 
-    var pluginName = 'suggestAlias',
+    const pluginName = 'suggestAlias',
         defaults = {
             prefix: '',
             slugBaseElement: null,
@@ -24,7 +24,7 @@
 
     $.extend(Plugin.prototype, {
         init: function () {
-            var that = this;
+            const that = this;
 
             $(this.element).on('click', function (e) {
                 e.preventDefault();
@@ -34,7 +34,7 @@
         },
         performAjaxRequest: function () {
             if (this.canPerformAjaxRequest()) {
-                var that = this;
+                const that = this;
 
                 $.ajax({
                     url: that.element.href,

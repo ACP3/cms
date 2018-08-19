@@ -20,8 +20,10 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
      * @param string $time
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultExists($newsId, $time = '')
+    public function resultExists(int $newsId, string $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
@@ -34,7 +36,9 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param int $newsId
      *
-     * @return array
+     * @return array|mixed
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getOneById($newsId)
     {
@@ -45,12 +49,14 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $time
-     * @param string $categoryId
+     * @param string   $time
+     * @param int|null $categoryId
      *
-     * @return int
+     * @return bool|string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAll($time = '', $categoryId = '')
+    public function countAll(string $time = '', ?int $categoryId = null)
     {
         if (!empty($categoryId)) {
             $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
@@ -70,14 +76,16 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int    $categoryId
-     * @param string $time
-     * @param string $limitStart
-     * @param string $resultsPerPage
+     * @param int      $categoryId
+     * @param string   $time
+     * @param int|null $limitStart
+     * @param int|null $resultsPerPage
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAllByCategoryId($categoryId, $time = '', $limitStart = '', $resultsPerPage = '')
+    public function getAllByCategoryId(int $categoryId, string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
     {
         $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
@@ -89,13 +97,15 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $time
-     * @param string $limitStart
-     * @param string $resultsPerPage
+     * @param string   $time
+     * @param int|null $limitStart
+     * @param int|null $resultsPerPage
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
+    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
     {
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
@@ -110,9 +120,11 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
      * @param int    $categoryId
      * @param string $time
      *
-     * @return array
+     * @return mixed
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLatestByCategoryId($categoryId, $time)
+    public function getLatestByCategoryId(int $categoryId, string $time)
     {
         $period = " AND {$this->getPublicationPeriod()} AND `active` = :active";
 
@@ -125,9 +137,11 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param string $time
      *
-     * @return array
+     * @return mixed
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLatest($time)
+    public function getLatest(string $time)
     {
         return $this->db->fetchAssoc(
             "SELECT * FROM {$this->getTableName()} WHERE {$this->getPublicationPeriod()} AND `active` = :active ORDER BY `start` DESC LIMIT 1",

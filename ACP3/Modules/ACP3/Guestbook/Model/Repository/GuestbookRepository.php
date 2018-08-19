@@ -17,8 +17,10 @@ class GuestbookRepository extends Core\Model\Repository\AbstractRepository imple
      * @param int $guestbookId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultExists($guestbookId)
+    public function resultExists(int $guestbookId)
     {
         return (int) $this->db->fetchColumn(
                 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id',
@@ -27,25 +29,29 @@ class GuestbookRepository extends Core\Model\Repository\AbstractRepository imple
     }
 
     /**
-     * @param string $notify
+     * @param int|null $notify
      *
-     * @return int
+     * @return bool|string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAll($notify = '')
+    public function countAll(?int $notify = null)
     {
-        $where = ($notify == 2) ? 'WHERE active = 1' : '';
+        $where = ($notify == 2) ? ' WHERE active = 1' : '';
 
-        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} {$where}");
+        return $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()}{$where}");
     }
 
     /**
-     * @param string $notify
-     * @param string $limitStart
-     * @param string $resultsPerPage
+     * @param int|null $notify
+     * @param int|null $limitStart
+     * @param int|null $resultsPerPage
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAll($notify = '', $limitStart = '', $resultsPerPage = '')
+    public function getAll(?int $notify = null, ?int $limitStart = null, ?int $resultsPerPage = null)
     {
         $where = ($notify == 2) ? 'WHERE active = 1' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
@@ -57,6 +63,8 @@ class GuestbookRepository extends Core\Model\Repository\AbstractRepository imple
      * @param string $ipAddress
      *
      * @return string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getLastDateFromIp($ipAddress)
     {

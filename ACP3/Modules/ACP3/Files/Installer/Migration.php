@@ -8,9 +8,25 @@
 namespace ACP3\Modules\ACP3\Files\Installer;
 
 use ACP3\Core\Modules;
+use ACP3\Core\Modules\SchemaHelper;
+use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
 class Migration extends Modules\Installer\AbstractMigration
 {
+    /**
+     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
+     */
+    private $filesRepository;
+
+    public function __construct(
+        SchemaHelper $schemaHelper,
+        FilesRepository $filesRepository
+    ) {
+        parent::__construct($schemaHelper);
+
+        $this->filesRepository = $filesRepository;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -74,12 +90,9 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}files` ADD COLUMN `sort` INT(10) UNSIGNED NOT NULL AFTER `text`;',
                 'ALTER TABLE `{pre}files` ADD INDEX (`sort`)',
                 function () {
-                    $repository = $this->schemaHelper->getContainer()->get('files.model.filesrepository');
-                    $files = $repository->getAll();
-
                     $i = 1;
-                    foreach ($files as $file) {
-                        $repository->update(['sort' => $i], $file['id']);
+                    foreach ($this->filesRepository->getAll() as $file) {
+                        $this->filesRepository->update(['sort' => $i], $file['id']);
 
                         ++$i;
                     }
@@ -93,6 +106,13 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}files` CHANGE `category_id` `category_id` INT(10) UNSIGNED;',
                 'ALTER TABLE `{pre}files` DROP FOREIGN KEY `{pre}files_ibfk_1`;',
                 'ALTER TABLE `{pre}files` ADD FOREIGN KEY (`category_id`) REFERENCES `{pre}categories` (`id`) ON DELETE SET NULL',
+            ],
+            48 => [
+                'ALTER TABLE `{pre}files` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}files` MODIFY COLUMN `file` VARCHAR(120) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}files` MODIFY COLUMN `size` VARCHAR(20) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}files` MODIFY COLUMN `title` VARCHAR(255) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}files` MODIFY COLUMN `text` TEXT {charset} NOT NULL;',
             ],
         ];
     }

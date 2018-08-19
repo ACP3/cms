@@ -58,13 +58,6 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         $this->container = ServiceContainerBuilder::create($this->logger, $this->appPath, $symfonyRequest, $this->appMode);
     }
 
-    private function applyThemePaths()
-    {
-        $this->appPath
-            ->setDesignPathWeb($this->appPath->getInstallerWebRoot() . 'design/')
-            ->setDesignPathInternal('');
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -73,8 +66,6 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         $redirect = $this->container->get('core.http.redirect_response');
 
         try {
-            $this->applyThemePaths();
-
             $response = $this->container->get('core.application.controller_action_dispatcher')->dispatch();
         } catch (Core\Controller\Exception\ControllerActionNotFoundException $e) {
             $response = $redirect->temporary('errors/index/not_found');

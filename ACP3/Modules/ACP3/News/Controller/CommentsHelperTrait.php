@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
+namespace ACP3\Modules\ACP3\News\Controller;
 
 use ACP3\Modules\ACP3\Comments;
 

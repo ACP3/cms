@@ -1,4 +1,9 @@
 services:
+  _defaults:
+    public: true
+    tags:
+    - { name: acp3.controller.action }
+
   files.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Create
     arguments:
@@ -8,6 +13,7 @@ services:
       - '@core.helpers.formToken'
       - '@files.model.files_model'
       - '@files.validation.admin_form_validation'
+      - '@files.helpers.upload'
       - '@categories.helpers'
 
   files.controller.admin.index.delete:
@@ -31,6 +37,7 @@ services:
       - '@core.helpers.formToken'
       - '@files.model.files_model'
       - '@files.validation.admin_form_validation'
+      - '@files.helpers.upload'
       - '@categories.helpers'
 
   files.controller.admin.index.index:
@@ -45,6 +52,8 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
+      - '@core.helpers.secure'
+      - '@core.helpers.date'
       - '@files.validation.admin_settings_form_validation'
     calls:
       - ['setCommentsHelpers', ['@?comments.helpers']]

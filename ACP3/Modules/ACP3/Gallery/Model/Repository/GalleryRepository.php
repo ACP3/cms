@@ -20,8 +20,10 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
      * @param string $time
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function galleryExists($galleryId, $time = '')
+    public function galleryExists(int $galleryId, string $time = '')
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
 
@@ -34,9 +36,11 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param int $galleryId
      *
-     * @return string
+     * @return bool|string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getGalleryTitle($galleryId)
+    public function getGalleryTitle(int $galleryId)
     {
         return $this->db->fetchColumn('SELECT title FROM ' . $this->getTableName() . ' WHERE id = ?', [$galleryId]);
     }
@@ -44,9 +48,11 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param string $time
      *
-     * @return int
+     * @return bool|string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAll($time)
+    public function countAll(string $time)
     {
         $where = $time !== '' ? ' WHERE ' . $this->getPublicationPeriod() : '';
 
@@ -57,13 +63,15 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $time
-     * @param string $limitStart
-     * @param string $resultsPerPage
+     * @param string   $time
+     * @param int|null $limitStart
+     * @param int|null $resultsPerPage
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
+    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
     {
         $where = $time !== '' ? ' WHERE ' . $this->getPublicationPeriod('g.') : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);

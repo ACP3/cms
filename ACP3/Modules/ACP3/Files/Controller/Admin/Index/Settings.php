@@ -33,6 +33,14 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    private $secureHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Date
+     */
+    private $dateHelper;
 
     /**
      * Settings constructor.
@@ -40,12 +48,16 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext                   $context
      * @param \ACP3\Core\Helpers\Forms                                        $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                    $formTokenHelper
+     * @param \ACP3\Core\Helpers\Secure                                       $secureHelper
+     * @param \ACP3\Core\Helpers\Date                                         $dateHelper
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
+        Core\Helpers\Secure $secureHelper,
+        Core\Helpers\Date $dateHelper,
         Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
@@ -53,6 +65,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
+        $this->secureHelper = $secureHelper;
+        $this->dateHelper = $dateHelper;
     }
 
     /**
@@ -88,7 +102,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
         return [
             'order_by' => $this->formsHelper->choicesGenerator('order_by', $orderBy, $settings['order_by']),
-            'dateformat' => $this->get('core.helpers.date')->dateFormatDropdown($settings['dateformat']),
+            'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
             'sidebar_entries' => $this->formsHelper->recordsPerPage((int) $settings['sidebar'], 1, 10, 'sidebar'),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
@@ -105,7 +119,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
-                'dateformat' => $this->get('core.helpers.secure')->strEncode($formData['dateformat']),
+                'dateformat' => $this->secureHelper->strEncode($formData['dateformat']),
                 'sidebar' => (int) $formData['sidebar'],
                 'order_by' => $formData['order_by'],
             ];

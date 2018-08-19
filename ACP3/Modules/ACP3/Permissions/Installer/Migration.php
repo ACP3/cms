@@ -67,6 +67,20 @@ class Migration implements Modules\Installer\MigrationInterface
                 'ALTER TABLE `{pre}acl_resources` ADD INDEX (`module_id`)',
                 'ALTER TABLE `{pre}acl_resources` ADD FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE',
             ],
+            37 => [
+                'ALTER TABLE `{pre}acl_privileges` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}acl_privileges` MODIFY COLUMN `key` VARCHAR(100) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}acl_privileges` MODIFY COLUMN `description` VARCHAR(100) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}acl_roles` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}acl_roles` MODIFY COLUMN `name` VARCHAR(100) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}acl_resources` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}acl_resources` MODIFY COLUMN `area` VARCHAR(255) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}acl_resources` MODIFY COLUMN `controller` VARCHAR(255) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}acl_resources` MODIFY COLUMN `page` VARCHAR(255) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}acl_resources` MODIFY COLUMN `params` VARCHAR(255) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}acl_rules` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}acl_user_roles` CONVERT TO {charset};',
+            ],
         ];
     }
 }

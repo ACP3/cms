@@ -21,8 +21,10 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
      * @param bool   $multiple
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function pollExists($pollId, $time = '', $multiple = false)
+    public function pollExists(int $pollId, string $time = '', bool $multiple = false)
     {
         $where = !empty($time) ? ' AND ' . $this->getPublicationPeriod() : '';
         $multiple = ($multiple === true) ? ' AND multiple = :multiple' : '';
@@ -34,9 +36,11 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param int $pollId
      *
-     * @return array
+     * @return mixed
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneByIdWithTotalVotes($pollId)
+    public function getOneByIdWithTotalVotes(int $pollId)
     {
         return $this->db->fetchAssoc(
             'SELECT p.*, COUNT(pv.poll_id) AS total_votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id) WHERE p.id = ?',
@@ -45,23 +49,15 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $status
+     * @param string   $time
+     * @param int|null $limitStart
+     * @param int|null $resultsPerPage
      *
      * @return array
-     */
-    public function countAll($status = '')
-    {
-        return $this->getAll($status);
-    }
-
-    /**
-     * @param string $time
-     * @param string $limitStart
-     * @param string $resultsPerPage
      *
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
+    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
     {
         $where = empty($time) === false ? ' WHERE p.start <= :time' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
@@ -76,8 +72,10 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
      * @param string $time
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLatestPoll($time)
+    public function getLatestPoll(string $time)
     {
         $period = $this->getPublicationPeriod('p.');
 

@@ -9,8 +9,15 @@ services:
       - '@core.view'
       - '@core.http.response'
       - '@core.environment.application_path'
+      - '@core.http.redirect_response'
 
   core.controller.install:
     abstract: true
     arguments:
       - '@core.context.install'
+
+  core.controller.controller_action_locator:
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+    - []
+    tags: ['container.service_locator']

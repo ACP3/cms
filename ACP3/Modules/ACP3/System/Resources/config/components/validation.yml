@@ -9,4 +9,3 @@ services:
       - '@core.wysiwyg.wysiwyg_editor_registrar'
     tags:
       - { name: core.validation.validation_rule }
-    public: false

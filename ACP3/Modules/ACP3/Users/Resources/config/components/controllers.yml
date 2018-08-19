@@ -1,4 +1,9 @@
 services:
+  _defaults:
+    public: true
+    tags:
+    - { name: acp3.controller.action }
+
   users.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Create
     arguments:
@@ -55,7 +60,8 @@ services:
 
   users.controller.frontend.account.index:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Index
-    parent: core.controller.frontend
+    arguments:
+    - '@core.context.frontend'
 
   users.controller.frontend.account.settings:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Settings
@@ -72,6 +78,8 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ForgotPwd
     arguments:
       - '@core.context.frontend'
+      - '@core.validator'
+      - '@core.helpers.alerts'
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
       - '@users.model.userrepository'
@@ -90,6 +98,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.forms'
+      - '@core.helpers.secure'
       - '@users.model.authentication_model'
 
   users.controller.frontend.index.logout:
@@ -103,6 +112,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.date'
+      - '@core.helpers.alerts'
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
       - '@users.model.userrepository'
@@ -124,8 +134,10 @@ services:
 
   users.controller.widget.index.login:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\Login
-    parent: core.controller.widget
+    arguments:
+    - '@core.context.widget'
 
   users.controller.widget.index.user_menu:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\UserMenu
-    parent: core.controller.widget
+    arguments:
+    - '@core.context.widget'

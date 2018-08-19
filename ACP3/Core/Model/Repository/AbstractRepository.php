@@ -32,20 +32,18 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @param array $data
      *
-     * @return bool|int
+     * @return int
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function insert(array $data)
     {
-        return $this->db->executeTransactionalQuery(function () use ($data) {
-            $this->db->getConnection()->insert(
-                $this->getTableName(),
-                $data
-            );
+        $this->db->getConnection()->insert(
+            $this->getTableName(),
+            $data
+        );
 
-            return (int) $this->db->getConnection()->lastInsertId();
-        });
+        return (int) $this->db->getConnection()->lastInsertId();
     }
 
     /**
@@ -66,16 +64,14 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @return bool|int
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function delete($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
     {
-        return $this->db->executeTransactionalQuery(function () use ($entryId, $columnName) {
-            return $this->db->getConnection()->delete(
-                $this->getTableName(),
-                $this->getIdentifier($entryId, $columnName)
-            );
-        });
+        return $this->db->getConnection()->delete(
+            $this->getTableName(),
+            $this->getIdentifier($entryId, $columnName)
+        );
     }
 
     /**
@@ -84,7 +80,7 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @return array
      */
-    private function getIdentifier($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
+    private function getIdentifier($entryId, string $columnName = self::PRIMARY_KEY_COLUMN)
     {
         return \is_array($entryId) === true ? $entryId : [$columnName => (int) $entryId];
     }
@@ -97,33 +93,31 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @return bool|int
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function update(array $data, $entryId)
     {
-        return $this->db->executeTransactionalQuery(function () use ($data, $entryId) {
-            return $this->db->getConnection()->update(
-                $this->getTableName(),
-                $data,
-                $this->getIdentifier($entryId)
-            );
-        });
+        return $this->db->getConnection()->update(
+            $this->getTableName(),
+            $data,
+            $this->getIdentifier($entryId)
+        );
     }
 
     /**
      * Build the SQL limit.
      *
-     * @param int|string $limitStart
-     * @param int|string $resultsPerPage
+     * @param int|null $limitStart
+     * @param int|null $resultsPerPage
      *
      * @return string
      */
-    protected function buildLimitStmt($limitStart = '', $resultsPerPage = '')
+    protected function buildLimitStmt(?int $limitStart = null, ?int $resultsPerPage = null)
     {
-        if ($limitStart !== '' && $resultsPerPage !== '') {
-            return ' LIMIT ' . ((int) $limitStart) . ',' . ((int) $resultsPerPage);
-        } elseif ($limitStart !== '') {
-            return ' LIMIT ' . ((int) $limitStart);
+        if ($limitStart !== null && $resultsPerPage !== null) {
+            return " LIMIT {$limitStart},{$resultsPerPage}";
+        } elseif ($limitStart !== null) {
+            return " LIMIT {$limitStart}";
         }
 
         return '';
@@ -133,6 +127,8 @@ abstract class AbstractRepository implements RepositoryInterface
      * @param int $entryId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getOneById($entryId)
     {

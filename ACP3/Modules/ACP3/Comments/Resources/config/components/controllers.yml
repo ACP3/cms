@@ -1,4 +1,9 @@
 services:
+  _defaults:
+    public: true
+    tags:
+    - { name: acp3.controller.action }
+
   comments.controller.admin.details.delete:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Delete
     arguments:
@@ -38,6 +43,8 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.forms'
+      - '@core.helpers.secure'
+      - '@core.helpers.date'
       - '@comments.validation.admin_settings_form_validation'
       - '@core.helpers.formToken'
 

@@ -35,6 +35,10 @@ class Create extends AbstractAction
      */
     protected $guestbookModel;
     /**
+     * @var \ACP3\Core\Helpers\SendEmail
+     */
+    private $sendEmailHelper;
+    /**
      * @var bool
      */
     protected $newsletterActive = false;
@@ -45,6 +49,7 @@ class Create extends AbstractAction
      * @param \ACP3\Core\Controller\Context\FrontendContext          $context
      * @param \ACP3\Core\Helpers\Forms                               $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
+     * @param \ACP3\Core\Helpers\SendEmail                           $sendEmailHelper
      * @param Guestbook\Model\GuestbookModel                         $guestbookModel
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $formValidation
      */
@@ -52,6 +57,7 @@ class Create extends AbstractAction
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
+        Core\Helpers\SendEmail $sendEmailHelper,
         Guestbook\Model\GuestbookModel $guestbookModel,
         Guestbook\Validation\FormValidation $formValidation
     ) {
@@ -61,6 +67,7 @@ class Create extends AbstractAction
         $this->formTokenHelper = $formTokenHelper;
         $this->formValidation = $formValidation;
         $this->guestbookModel = $guestbookModel;
+        $this->sendEmailHelper = $sendEmailHelper;
     }
 
     public function preDispatch()
@@ -155,7 +162,7 @@ class Create extends AbstractAction
             $this->router->route('', true),
             $fullPath
         );
-        $this->get('core.helpers.sendEmail')->execute(
+        $this->sendEmailHelper->execute(
             '',
             $this->guestbookSettings['notify_email'],
             $this->guestbookSettings['notify_email'],

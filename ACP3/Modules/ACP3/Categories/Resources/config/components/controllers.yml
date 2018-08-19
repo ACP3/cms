@@ -1,4 +1,9 @@
 services:
+  _defaults:
+    public: true
+    tags:
+    - { name: acp3.controller.action }
+
   categories.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Create
     arguments:
@@ -6,6 +11,7 @@ services:
       - '@core.helpers.forms'
       - '@categories.model.categories_model'
       - '@categories.validation.admin_form_validation'
+      - '@categories.helpers.upload'
       - '@core.helpers.formToken'
 
   categories.controller.admin.index.delete:
@@ -21,6 +27,7 @@ services:
       - '@core.context.frontend'
       - '@categories.model.categories_model'
       - '@categories.validation.admin_form_validation'
+      - '@categories.helpers.upload'
       - '@core.helpers.formToken'
 
   categories.controller.admin.index.index:

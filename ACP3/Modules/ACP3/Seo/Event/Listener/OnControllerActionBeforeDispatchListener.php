@@ -89,7 +89,7 @@ class OnControllerActionBeforeDispatchListener
      */
     private function isInFrontend(ControllerActionBeforeDispatchEvent $event)
     {
-        return $event->getControllerArea() === AreaEnum::AREA_FRONTEND
+        return $event->getArea() === AreaEnum::AREA_FRONTEND
         && $this->request->getArea() === AreaEnum::AREA_FRONTEND;
     }
 

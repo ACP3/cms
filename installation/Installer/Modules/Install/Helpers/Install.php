@@ -22,7 +22,7 @@ class Install
      *
      * @return bool
      */
-    public function writeConfigFile($configFilePath, array $data)
+    public function writeConfigFile(string $configFilePath, array $data)
     {
         if (\is_writable($configFilePath) === true) {
             \ksort($data);
@@ -78,6 +78,8 @@ class Install
      * @param SchemaHelper                               $schemaHelper
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function installSampleData(
         Core\Modules\Installer\SampleDataInterface $sampleData,

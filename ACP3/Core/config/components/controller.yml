@@ -30,6 +30,8 @@ services:
       - '@core.breadcrumb'
       - '@core.breadcrumb.title'
       - '@core.modules.helper.action'
+      - '@core.helpers.redirect'
+      - '@core.http.redirect_response'
 
   core.controller.widget:
     abstract: true
@@ -46,3 +48,17 @@ services:
     arguments:
       - '@core.context.frontend'
     deprecated: 'The "%service_id%" service is deprecated. Use "core.controller.frontend" instead'
+
+  core.controller.controller_action_locator:
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+      - []
+    tags: ['container.service_locator']
+
+  core.controller.helper.controller_action_exists:
+    class: ACP3\Core\Controller\Helper\ControllerActionExists
+    arguments:
+    - '@core.controller.controller_action_locator'
+
+  core.modules.helper.controllerActionExists:
+    alias: core.controller.helper.controller_action_exists

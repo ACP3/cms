@@ -7,7 +7,6 @@
 
 namespace ACP3\Modules\ACP3\Files\Event\Listener;
 
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Upload;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Modules;
@@ -21,10 +20,6 @@ use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class OnFilesModelBeforeDeleteListener
 {
-    /**
-     * @var ApplicationPath
-     */
-    protected $applicationPath;
     /**
      * @var Modules
      */
@@ -49,12 +44,16 @@ class OnFilesModelBeforeDeleteListener
      * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null
      */
     private $socialSharingManager;
+    /**
+     * @var \ACP3\Core\Helpers\Upload
+     */
+    private $filesUploadHelper;
 
     /**
      * OnFilesModelBeforeDeleteListener constructor.
      *
-     * @param ApplicationPath                                            $applicationPath
      * @param Modules                                                    $modules
+     * @param \ACP3\Core\Helpers\Upload                                  $filesUploadHelper
      * @param FilesRepository                                            $filesRepository
      * @param Cache                                                      $cache
      * @param \ACP3\Modules\ACP3\Comments\Helpers|null                   $commentsHelpers
@@ -62,21 +61,21 @@ class OnFilesModelBeforeDeleteListener
      * @param \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null $socialSharingManager
      */
     public function __construct(
-        ApplicationPath $applicationPath,
         Modules $modules,
+        Upload $filesUploadHelper,
         FilesRepository $filesRepository,
         Cache $cache,
         ?CommentsHelpers $commentsHelpers,
         ?UriAliasManager $uriAliasManager,
         ?SocialSharingManager $socialSharingManager
     ) {
-        $this->applicationPath = $applicationPath;
         $this->modules = $modules;
         $this->filesRepository = $filesRepository;
         $this->cache = $cache;
         $this->commentsHelpers = $commentsHelpers;
         $this->uriAliasManager = $uriAliasManager;
         $this->socialSharingManager = $socialSharingManager;
+        $this->filesUploadHelper = $filesUploadHelper;
     }
 
     /**
@@ -90,9 +89,8 @@ class OnFilesModelBeforeDeleteListener
             return;
         }
 
-        $upload = new Upload($this->applicationPath, Schema::MODULE_NAME);
         foreach ($event->getEntryId() as $item) {
-            $upload->removeUploadedFile($this->filesRepository->getFileById($item));
+            $this->filesUploadHelper->removeUploadedFile($this->filesRepository->getFileById($item));
 
             if ($this->commentsHelpers) {
                 $this->commentsHelpers->deleteCommentsByModuleAndResult(

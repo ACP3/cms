@@ -121,6 +121,18 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}newsletters` ADD COLUMN `updated_at` DATETIME NOT NULL AFTER `date`;',
                 'UPDATE `{pre}newsletters` SET `updated_at` = `date`;',
             ],
+            53 => [
+                'ALTER TABLE `{pre}newsletters` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}newsletters` MODIFY COLUMN `title` VARCHAR(120) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}newsletters` MODIFY COLUMN `text` TEXT {charset} NOT NULL;',
+                'ALTER TABLE `{pre}newsletter_accounts` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}newsletter_accounts` MODIFY COLUMN `mail` VARCHAR(255) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}newsletter_accounts` MODIFY COLUMN `first_name` VARCHAR(255) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}newsletter_accounts` MODIFY COLUMN `last_name` VARCHAR(255) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}newsletter_accounts` MODIFY COLUMN `hash` VARCHAR(128) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}newsletter_account_history` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}newsletter_queue` CONVERT TO {charset};',
+            ],
         ];
     }
 

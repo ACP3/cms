@@ -24,17 +24,23 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation
      */
     protected $unsubscribeFormValidation;
+    /**
+     * @var \ACP3\Core\Helpers\Alerts
+     */
+    private $alertsHelper;
 
     /**
      * Unsubscribe constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
+     * @param \ACP3\Core\Helpers\Alerts                                          $alertsHelper
      * @param \ACP3\Core\Helpers\FormToken                                       $formTokenHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus                 $accountStatusHelper
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\Alerts $alertsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Helper\AccountStatus $accountStatusHelper,
         Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation
@@ -44,6 +50,7 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
         $this->formTokenHelper = $formTokenHelper;
         $this->accountStatusHelper = $accountStatusHelper;
         $this->unsubscribeFormValidation = $unsubscribeFormValidation;
+        $this->alertsHelper = $alertsHelper;
     }
 
     /**
@@ -78,7 +85,7 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
                 );
 
                 $this->setTemplate(
-                    $this->get('core.helpers.alerts')->confirmBox(
+                    $this->alertsHelper->confirmBox(
                     $this->translator->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'),
                     $this->appPath->getWebRoot()
                 )

@@ -17,8 +17,10 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
      * @param int $userId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultExists($userId)
+    public function resultExists(int $userId)
     {
         $query = "SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id";
 
@@ -28,12 +30,14 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     /**
      * Überprüft, ob der übergebene Username bereits existiert.
      *
-     * @param string $nickname
-     * @param int    $userId
+     * @param string   $nickname
+     * @param int|null $userId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultExistsByUserName($nickname, $userId = 0)
+    public function resultExistsByUserName(string $nickname, ?int $userId = null)
     {
         if (!empty($userId)) {
             $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND nickname = ?';
@@ -49,12 +53,14 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     /**
      * Überprüft, ob die übergebene E-Mail-Adresse bereits existiert.
      *
-     * @param string $mail
-     * @param int    $userId
+     * @param string   $mail
+     * @param int|null $userId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultExistsByEmail($mail, $userId = 0)
+    public function resultExistsByEmail(string $mail, ?int $userId = null)
     {
         if (!empty($userId)) {
             $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND mail = ?';
@@ -69,8 +75,10 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
      * @param string $nickname
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneByNickname($nickname)
+    public function getOneByNickname(string $nickname)
     {
         return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE nickname = ?', [$nickname]);
     }
@@ -79,8 +87,10 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
      * @param string $nickname
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneActiveUserByNickname($nickname)
+    public function getOneActiveUserByNickname(string $nickname)
     {
         return $this->db->fetchAssoc(
             'SELECT * FROM ' . $this->getTableName() . ' WHERE nickname = ? AND login_errors < 3',
@@ -92,8 +102,10 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
      * @param string $email
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneByEmail($email)
+    public function getOneByEmail(string $email)
     {
         return $this->db->fetchAssoc(
             'SELECT * FROM ' . $this->getTableName() . ' WHERE mail = ?',
@@ -102,7 +114,9 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return int
+     * @return bool|string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function countAll()
     {
@@ -110,12 +124,14 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $limitStart
-     * @param string $resultsPerPage
+     * @param int|null $limitStart
+     * @param int|null $resultsPerPage
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAll($limitStart = '', $resultsPerPage = '')
+    public function getAll(?int $limitStart = null, ?int $resultsPerPage = null)
     {
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
 

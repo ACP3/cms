@@ -15,6 +15,7 @@
   },
   "require": {
     "php": "^7.1",
+    "ext-SimpleXML": "*",
     "acp3/composer-installer": "^1.0",
     "doctrine/dbal": "^2.5",
     "doctrine/cache": "^1.6",
@@ -31,12 +32,13 @@
     "php-http/guzzle6-adapter": "^1.1",
     "smarty/smarty": "^3.1",
     "cocur/slugify": "^3.0",
-    "symfony/config": "^3.4",
+    "symfony/config": "^4.1",
+    "symfony/debug": "^4.1",
     "symfony/dependency-injection": "^3.4",
-    "symfony/event-dispatcher": "^3.4",
-    "symfony/http-foundation": "^3.4",
+    "symfony/event-dispatcher": "^4.1",
+    "symfony/http-foundation": "^4.1",
     "symfony/http-kernel": "^3.4",
-    "symfony/yaml": "^3.4",
+    "symfony/yaml": "^4.1",
     "toflar/psr6-symfony-http-cache-store": "^1.0"
   },
   "autoload": {

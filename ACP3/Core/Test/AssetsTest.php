@@ -8,8 +8,7 @@
 namespace ACP3\Core\Test;
 
 use ACP3\Core\Assets;
-use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -32,31 +31,19 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
     {
         $this->setUpMockObjects();
 
-        $appPath = new ApplicationPath(ApplicationMode::DEVELOPMENT);
-        $appPath
-            ->setDesignRootPathInternal(ACP3_ROOT_DIR . 'tests/designs/')
-            ->setDesignPathInternal('acp3/');
+        $theme = $this->createMock(ThemePathInterface::class);
+        $theme->expects($this->once())
+            ->method('getDesignPathInternal')
+            ->willReturn(ACP3_ROOT_DIR . 'tests/designs/acp3/');
         $libraries = new Assets\Libraries($this->requestMock, $this->eventDispatcherMock);
 
-        $this->assets = new Assets($appPath, $libraries);
+        $this->assets = new Assets($theme, $libraries);
     }
 
     private function setUpMockObjects()
     {
-        $this->requestMock = $this->getMockForAbstractClass(RequestInterface::class);
-        $this->eventDispatcherMock = $this->getMockBuilder(EventDispatcherInterface::class)
-            ->setMethods([
-                'dispatch',
-                'addListener',
-                'addSubscriber',
-                'removeListener',
-                'removeSubscriber',
-                'getListeners',
-                'getListenerPriority',
-                'hasListeners',
-            ])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->requestMock = $this->createMock(RequestInterface::class);
+        $this->eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
     }
 
     public function testDefaultLibrariesEnabled()

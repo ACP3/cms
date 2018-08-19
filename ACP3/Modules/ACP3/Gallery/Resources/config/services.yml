@@ -5,4 +5,17 @@ services:
   gallery.helpers:
     class: ACP3\Modules\ACP3\Gallery\Helpers
     arguments:
-      - '@core.environment.application_path'
+      - '@gallery.helpers.upload_cached_images'
+      - '@gallery.helpers.upload'
+
+  gallery.helpers.upload:
+    class: ACP3\Core\Helpers\Upload
+    arguments:
+    - '@core.environment.application_path'
+    - !php/const ACP3\Modules\ACP3\Gallery\Installer\Schema::MODULE_NAME
+
+  gallery.helpers.upload_cached_images:
+    class: ACP3\Core\Helpers\Upload
+    arguments:
+    - '@core.environment.application_path'
+    - 'cache/images'

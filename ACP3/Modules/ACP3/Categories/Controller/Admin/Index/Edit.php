@@ -24,17 +24,23 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var Categories\Model\CategoriesModel
      */
     protected $categoriesModel;
+    /**
+     * @var \ACP3\Core\Helpers\Upload
+     */
+    private $categoriesUploadHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext                $context
      * @param Categories\Model\CategoriesModel                             $categoriesModel
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
+     * @param \ACP3\Core\Helpers\Upload                                    $categoriesUploadHelper
      * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Categories\Model\CategoriesModel $categoriesModel,
         Categories\Validation\AdminFormValidation $adminFormValidation,
+        Core\Helpers\Upload $categoriesUploadHelper,
         Core\Helpers\FormToken $formTokenHelper
     ) {
         parent::__construct($context);
@@ -42,6 +48,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
         $this->categoriesModel = $categoriesModel;
+        $this->categoriesUploadHelper = $categoriesUploadHelper;
     }
 
     /**
@@ -86,9 +93,8 @@ class Edit extends Core\Controller\AbstractFrontendAction
 
             if (empty($file) === false) {
                 $category = $this->categoriesModel->getOneById($id);
-                $upload = new Core\Helpers\Upload($this->appPath, Categories\Installer\Schema::MODULE_NAME);
-                $upload->removeUploadedFile($category['picture']);
-                $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
+                $this->categoriesUploadHelper->removeUploadedFile($category['picture']);
+                $result = $this->categoriesUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $formData['picture'] = $result['name'];
             }
 

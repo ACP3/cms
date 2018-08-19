@@ -8,6 +8,7 @@
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Database\Connection;
+use Doctrine\DBAL\DBALException;
 
 class Sort
 {
@@ -34,6 +35,9 @@ class Sort
      * @param string $where
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function up($table, $idField, $sortField, $id, $where = '')
     {
@@ -50,6 +54,9 @@ class Sort
      * @param string $where
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function down($table, $idField, $sortField, $id, $where = '')
     {
@@ -67,12 +74,15 @@ class Sort
      * @param string $where
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     private function moveOneStep($action, $table, $idField, $sortField, $id, $where = '')
     {
-        $this->db->getConnection()->beginTransaction();
-
         try {
+            $this->db->getConnection()->beginTransaction();
+
             $id = (int) $id;
             $table = $this->db->getPrefix() . $table;
 
@@ -80,28 +90,30 @@ class Sort
             $where = !empty($where) ? 'a.' . $where . ' = b.' . $where . ' AND ' : '';
 
             // Aktuelles Element und das vorherige Element selektieren
-            $queryString = 'SELECT a.%2$s AS other_id, a.%3$s AS other_sort, b.%3$s AS elem_sort FROM %1$s AS a, %1$s AS b WHERE %5$sb.%2$s = %4$s AND a.%3$s %6$s b.%3$s ORDER BY a.%3$s %7$s LIMIT 1';
+            $query = 'SELECT a.%2$s AS other_id, a.%3$s AS other_sort, b.%3$s AS elem_sort FROM %1$s AS a, %1$s AS b WHERE %5$sb.%2$s = %4$s AND a.%3$s %6$s b.%3$s ORDER BY a.%3$s %7$s LIMIT 1';
 
             if ($action === 'up') {
-                $query = $this->db->getConnection()->fetchAssoc(\sprintf($queryString, $table, $idField, $sortField, $id, $where, '<', 'DESC'));
+                $result = $this->db->getConnection()->fetchAssoc(\sprintf($query, $table, $idField, $sortField, $id, $where, '<', 'DESC'));
             } else {
-                $query = $this->db->getConnection()->fetchAssoc(\sprintf($queryString, $table, $idField, $sortField, $id, $where, '>', 'ASC'));
+                $result = $this->db->getConnection()->fetchAssoc(\sprintf($query, $table, $idField, $sortField, $id, $where, '>', 'ASC'));
             }
 
-            if (!empty($query)) {
+            if (!empty($result)) {
                 // Sortierreihenfolge des aktuellen Elementes zunächst auf 0 setzen
                 // um Probleme mit möglichen Duplicate-Keys zu umgehen
                 $this->db->getConnection()->update($table, [$sortField => 0], [$idField => $id]);
-                $this->db->getConnection()->update($table, [$sortField => $query['elem_sort']], [$idField => $query['other_id']]);
+                $this->db->getConnection()->update($table, [$sortField => $result['elem_sort']], [$idField => $result['other_id']]);
                 // Element nun den richtigen Wert zuweisen
-                $this->db->getConnection()->update($table, [$sortField => $query['other_sort']], [$idField => $id]);
+                $this->db->getConnection()->update($table, [$sortField => $result['other_sort']], [$idField => $id]);
 
                 $this->db->getConnection()->commit();
 
                 return true;
             }
-        } catch (\Exception $e) {
+        } catch (DBALException $e) {
             $this->db->getConnection()->rollBack();
+
+            throw $e;
         }
 
         return false;

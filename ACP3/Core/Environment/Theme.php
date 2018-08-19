@@ -11,8 +11,12 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\XML;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Theme
+class Theme implements ThemePathInterface
 {
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    private $appPath;
     /**
      * @var \ACP3\Core\Settings\SettingsInterface
      */
@@ -30,17 +34,28 @@ class Theme
      * @var array
      */
     private $sortedThemeDependencies = [];
+    /**
+     * @var string
+     */
+    protected $designPathInternal;
+    /**
+     * @var string
+     */
+    protected $designPathWeb;
 
     /**
      * Design constructor.
      *
-     * @param \ACP3\Core\Settings\SettingsInterface $settings
-     * @param \ACP3\Core\XML                        $xml
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Settings\SettingsInterface  $settings
+     * @param \ACP3\Core\XML                         $xml
      */
     public function __construct(
+        ApplicationPath $appPath,
         SettingsInterface $settings,
         XML $xml
     ) {
+        $this->appPath = $appPath;
         $this->settings = $settings;
         $this->xml = $xml;
     }
@@ -130,5 +145,29 @@ class Theme
         } while (isset($availableThemes[$currentTheme]['parent']));
 
         $this->sortedThemeDependencies[$themeName] = $parents;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDesignPathInternal(): string
+    {
+        if ($this->designPathInternal === null) {
+            $this->designPathInternal = $this->appPath->getDesignRootPathInternal() . $this->getCurrentTheme() . '/';
+        }
+
+        return $this->designPathInternal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDesignPathWeb(): string
+    {
+        if ($this->designPathWeb === null) {
+            $this->designPathWeb = $this->appPath->getWebRoot() . $this->getCurrentTheme() . '/';
+        }
+
+        return $this->designPathWeb;
     }
 }

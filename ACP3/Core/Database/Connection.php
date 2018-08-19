@@ -210,9 +210,10 @@ class Connection
     /**
      * @param callable $callback
      *
-     * @return bool|int
+     * @return mixed
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws DBAL\ConnectionException
+     * @throws DBAL\DBALException
      */
     public function executeTransactionalQuery(callable $callback)
     {
@@ -224,8 +225,8 @@ class Connection
             $this->connection->commit();
         } catch (DBAL\DBALException $e) {
             $this->connection->rollBack();
-            $this->logger->error($e);
-            $result = false;
+
+            throw $e;
         }
 
         return $result;

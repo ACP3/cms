@@ -1,2 +1,9 @@
 imports:
   - { resource: components/*.yml }
+
+services:
+  files.helpers.upload:
+    class: ACP3\Core\Helpers\Upload
+    arguments:
+      - '@core.environment.application_path'
+      - !php/const ACP3\Modules\ACP3\Files\Installer\Schema::MODULE_NAME

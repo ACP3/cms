@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Breadcrumb\Event\StepsBuildCacheEvent;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Modules\ACP3\Menus;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Steps extends Core\Breadcrumb\Steps
@@ -28,7 +28,7 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * Breadcrumb constructor.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface    $container
+     * @param \Psr\Container\ContainerInterface                            $container
      * @param \ACP3\Core\I18n\Translator                                   $translator
      * @param \ACP3\Core\Http\RequestInterface                             $request
      * @param \ACP3\Core\Router\RouterInterface                            $router
@@ -63,6 +63,8 @@ class Steps extends Core\Breadcrumb\Steps
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function buildBreadcrumbCacheForFrontend(): void
     {

@@ -11,4 +11,3 @@ services:
       - '@menus.cache'
     tags:
       - { name: core.view.extension }
-    public: false

@@ -7,8 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Gallery;
 
-use ACP3\Core;
-use ACP3\Modules\ACP3\Gallery\Installer\Schema;
+use ACP3\Core\Helpers\Upload;
 
 class Helpers
 {
@@ -16,18 +15,26 @@ class Helpers
     const URL_KEY_PATTERN_PICTURE = 'gallery/index/details/id_%s/';
 
     /**
-     * @var \ACP3\Core\Environment\ApplicationPath
+     * @var \ACP3\Core\Helpers\Upload
      */
-    protected $appPath;
+    private $galleryUploadHelper;
+    /**
+     * @var \ACP3\Core\Helpers\Upload
+     */
+    private $cachedImagesUploadHelper;
 
     /**
      * Helpers constructor.
      *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Helpers\Upload $cachedImagesUploadHelper
+     * @param \ACP3\Core\Helpers\Upload $galleryUploadHelper
      */
-    public function __construct(Core\Environment\ApplicationPath $appPath)
-    {
-        $this->appPath = $appPath;
+    public function __construct(
+        Upload $cachedImagesUploadHelper,
+        Upload $galleryUploadHelper
+    ) {
+        $this->galleryUploadHelper = $galleryUploadHelper;
+        $this->cachedImagesUploadHelper = $cachedImagesUploadHelper;
     }
 
     /**
@@ -35,14 +42,11 @@ class Helpers
      *
      * @param string $file
      */
-    public function removePicture($file)
+    public function removePicture(string $file)
     {
-        $upload = new Core\Helpers\Upload($this->appPath, 'cache/images');
+        $this->cachedImagesUploadHelper->removeUploadedFile('gallery_thumb_' . $file);
+        $this->cachedImagesUploadHelper->removeUploadedFile('gallery_' . $file);
 
-        $upload->removeUploadedFile('gallery_thumb_' . $file);
-        $upload->removeUploadedFile('gallery_' . $file);
-
-        $upload = new Core\Helpers\Upload($this->appPath, Schema::MODULE_NAME);
-        $upload->removeUploadedFile($file);
+        $this->galleryUploadHelper->removeUploadedFile($file);
     }
 }

@@ -34,6 +34,14 @@ class Migration extends Modules\Installer\AbstractMigration
                 'UPDATE `{pre}guestbook` SET `user_id` = NULL WHERE `user_id` = 0',
                 'ALTER TABLE `{pre}guestbook` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL',
             ],
+            35 => [
+                'ALTER TABLE `{pre}guestbook` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}guestbook` MODIFY COLUMN `ip` VARCHAR(40) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}guestbook` MODIFY COLUMN `name` VARCHAR(20) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}guestbook` MODIFY COLUMN `message` TEXT {charset} NOT NULL;',
+                'ALTER TABLE `{pre}guestbook` MODIFY COLUMN `website` VARCHAR(120) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}guestbook` MODIFY COLUMN `mail` VARCHAR(120) {charset} NOT NULL;',
+            ],
         ];
     }
 

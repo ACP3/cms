@@ -42,12 +42,17 @@ class Register extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\SendEmail
      */
     protected $sendEmail;
+    /**
+     * @var \ACP3\Core\Helpers\Alerts
+     */
+    private $alertsHelper;
 
     /**
      * Register constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
      * @param \ACP3\Core\Date                                                $date
+     * @param \ACP3\Core\Helpers\Alerts                                      $alertsHelper
      * @param \ACP3\Core\Helpers\FormToken                                   $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                                      $secureHelper
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository       $userRepository
@@ -58,6 +63,7 @@ class Register extends Core\Controller\AbstractFrontendAction
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
+        Core\Helpers\Alerts $alertsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Model\Repository\UserRepository $userRepository,
@@ -74,6 +80,7 @@ class Register extends Core\Controller\AbstractFrontendAction
         $this->registrationFormValidation = $registrationFormValidation;
         $this->permissionsHelpers = $permissionsHelpers;
         $this->sendEmail = $sendEmail;
+        $this->alertsHelper = $alertsHelper;
     }
 
     /**
@@ -87,7 +94,7 @@ class Register extends Core\Controller\AbstractFrontendAction
             return $this->redirect()->toNewPage($this->appPath->getWebRoot());
         } elseif ($settings['enable_registration'] == 0) {
             $this->setContent(
-                $this->get('core.helpers.alerts')->errorBox(
+                $this->alertsHelper->errorBox(
                 $this->translator->t('users', 'user_registration_disabled')
             )
             );
@@ -120,7 +127,7 @@ class Register extends Core\Controller\AbstractFrontendAction
                 $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
                 $insertValues = [
                     'id' => '',
-                    'nickname' => $this->get('core.helpers.secure')->strEncode($formData['nickname']),
+                    'nickname' => $this->secureHelper->strEncode($formData['nickname']),
                     'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd'], 'sha512'),
                     'pwd_salt' => $salt,
                     'mail' => $formData['mail'],
@@ -130,7 +137,7 @@ class Register extends Core\Controller\AbstractFrontendAction
                 $lastId = $this->userRepository->insert($insertValues);
                 $bool2 = $this->permissionsHelpers->updateUserRoles([2], $lastId);
 
-                $this->setTemplate($this->get('core.helpers.alerts')->confirmBox(
+                $this->setTemplate($this->alertsHelper->confirmBox(
                     $this->translator->t(
                         'users',
                         $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'

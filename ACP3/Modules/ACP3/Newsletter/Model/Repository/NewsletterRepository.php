@@ -14,12 +14,14 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'newsletters';
 
     /**
-     * @param int    $newsletterId
-     * @param string $status
+     * @param int      $newsletterId
+     * @param int|null $status
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function newsletterExists($newsletterId, $status = '')
+    public function newsletterExists(int $newsletterId, ?int $status = null)
     {
         $where = empty($status) === false ? ' AND status = :status' : '';
 
@@ -33,9 +35,11 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
      * @param int $newsletterId
      * @param int $status
      *
-     * @return array
+     * @return mixed
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneByIdAndStatus($newsletterId, $status)
+    public function getOneByIdAndStatus(int $newsletterId, int $status)
     {
         return $this->db->fetchAssoc(
             "SELECT * FROM {$this->getTableName()} WHERE id = :id  AND status = :status;",
@@ -44,11 +48,13 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $status
+     * @param int|null $status
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAll($status = '')
+    public function countAll(?int $status = null)
     {
         $where = empty($time) === false ? ' WHERE status = :status' : '';
 
@@ -59,13 +65,15 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $status
-     * @param string $limitStart
-     * @param string $resultsPerPage
+     * @param int|null $status
+     * @param int|null $limitStart
+     * @param int|null $resultsPerPage
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAll($status = '', $limitStart = '', $resultsPerPage = '')
+    public function getAll(?int $status = null, ?int $limitStart = null, ?int $resultsPerPage = null)
     {
         $where = empty($status) === false ? ' WHERE status = :status' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);

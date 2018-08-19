@@ -16,7 +16,6 @@ services:
       - '@categories.model.categories_repository'
     tags:
       - { name: core.validation.validation_rule }
-    public: false
 
   categories.validation.validation_rules.duplicate_category_validation_rule:
     class: ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule
@@ -24,4 +23,3 @@ services:
       - '@categories.model.categories_repository'
     tags:
       - { name: core.validation.validation_rule }
-    public: false

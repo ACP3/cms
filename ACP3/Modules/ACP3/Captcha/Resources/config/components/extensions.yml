@@ -22,7 +22,6 @@ services:
       - '@users.model.user_model'
     tags:
       - { name: 'captcha.extension.captcha' }
-    public: false
 
   captcha.extension.recaptcha_captcha_extension:
     class: ACP3\Modules\ACP3\Captcha\Extension\ReCaptchaCaptchaExtension
@@ -34,4 +33,3 @@ services:
       - '@users.model.user_model'
     tags:
       - { name: 'captcha.extension.captcha' }
-    public: false

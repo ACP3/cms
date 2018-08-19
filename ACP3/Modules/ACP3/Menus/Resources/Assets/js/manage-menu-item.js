@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-    var $parentId = $('#parent-id'),
+    const $parentId = $('#parent-id'),
         $blockId = $('#block-id'),
         defaultBlockIndex = $blockId.find('option:selected').index() || 0;
 
@@ -8,7 +8,7 @@ jQuery(document).ready(function ($) {
     }).triggerHandler('click');
 
     $blockId.change(function () {
-        var blockName = $blockId.find('option:selected').eq(0).text();
+        const blockName = $blockId.find('option:selected').eq(0).text();
 
         $parentId.find('optgroup')
             .prop('disabled', true)

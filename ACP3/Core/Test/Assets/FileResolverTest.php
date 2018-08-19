@@ -43,8 +43,7 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
 
         $this->appPath = new ApplicationPath(ApplicationMode::DEVELOPMENT);
         $this->appPath
-            ->setDesignRootPathInternal(ACP3_ROOT_DIR . 'tests/designs/')
-            ->setDesignPathInternal('acp3/');
+            ->setDesignRootPathInternal(ACP3_ROOT_DIR . 'tests/designs/');
 
         $this->fileResolver = new FileResolver(
             $this->assetsCache,
@@ -84,7 +83,7 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
             ->with('System')
             ->willReturn(['vendor' => 'ACP3']);
 
-        $expected = $this->appPath->getDesignPathInternal() . 'System/View/Partials/mark.tpl';
+        $expected = $this->appPath->getDesignRootPathInternal() . 'acp3/System/View/Partials/mark.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/mark.tpl');
         $this->assertEquals($expected, $actual);
     }
@@ -102,8 +101,6 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
             ->method('getModuleInfo')
             ->with('')
             ->willReturn([]);
-
-        $this->appPath->setDesignPathInternal('acp3-inherit/');
 
         $expected = ACP3_ROOT_DIR . 'tests/designs/acp3/layout.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('layout.tpl');
