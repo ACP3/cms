@@ -34,6 +34,10 @@ class Create extends AbstractFormAction
      * @var Files\Model\FilesModel
      */
     protected $filesModel;
+    /**
+     * @var \ACP3\Core\Helpers\Upload
+     */
+    private $filesUploadHelper;
 
     /**
      * Create constructor.
@@ -44,6 +48,7 @@ class Create extends AbstractFormAction
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
      * @param Files\Model\FilesModel                                  $filesModel
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
+     * @param \ACP3\Core\Helpers\Upload                               $filesUploadHelper
      * @param \ACP3\Modules\ACP3\Categories\Helpers                   $categoriesHelpers
      */
     public function __construct(
@@ -53,6 +58,7 @@ class Create extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Files\Model\FilesModel $filesModel,
         Files\Validation\AdminFormValidation $adminFormValidation,
+        Core\Helpers\Upload $filesUploadHelper,
         Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context, $formsHelper, $categoriesHelpers);
@@ -61,6 +67,7 @@ class Create extends AbstractFormAction
         $this->formTokenHelper = $formTokenHelper;
         $this->adminFormValidation = $adminFormValidation;
         $this->filesModel = $filesModel;
+        $this->filesUploadHelper = $filesUploadHelper;
     }
 
     /**
@@ -113,8 +120,7 @@ class Create extends AbstractFormAction
                 ->validate($formData);
 
             if ($file instanceof UploadedFile) {
-                $upload = new Core\Helpers\Upload($this->appPath, Files\Installer\Schema::MODULE_NAME);
-                $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
+                $result = $this->filesUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $formData['file'] = $result['name'];
                 $formData['filesize'] = $result['size'];
             } else {

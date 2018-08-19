@@ -7,10 +7,8 @@
 
 namespace ACP3\Modules\ACP3\Categories\Event\Listener;
 
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Upload;
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Modules\ACP3\Categories\Installer\Schema;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 
 class DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener
@@ -20,20 +18,22 @@ class DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener
      */
     private $categoryRepository;
     /**
-     * @var ApplicationPath
+     * @var \ACP3\Core\Helpers\Upload
      */
-    private $appPath;
+    private $categoriesUploadHelper;
 
     /**
      * OnCategoriesModelDeleteBeforeListener constructor.
      *
-     * @param ApplicationPath    $appPath
-     * @param CategoryRepository $categoryRepository
+     * @param \ACP3\Core\Helpers\Upload $categoriesUploadHelper
+     * @param CategoryRepository        $categoryRepository
      */
-    public function __construct(ApplicationPath $appPath, CategoryRepository $categoryRepository)
-    {
+    public function __construct(
+        Upload $categoriesUploadHelper,
+        CategoryRepository $categoryRepository
+    ) {
         $this->categoryRepository = $categoryRepository;
-        $this->appPath = $appPath;
+        $this->categoriesUploadHelper = $categoriesUploadHelper;
     }
 
     /**
@@ -48,8 +48,7 @@ class DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener
         foreach ($event->getEntryId() as $entryId) {
             $category = $this->categoryRepository->getCategoryDeleteInfosById($entryId);
 
-            $upload = new Upload($this->appPath, Schema::MODULE_NAME);
-            $upload->removeUploadedFile($category['picture']);
+            $this->categoriesUploadHelper->removeUploadedFile($category['picture']);
         }
     }
 }

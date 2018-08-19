@@ -13,6 +13,7 @@ services:
       - '@core.helpers.formToken'
       - '@files.model.files_model'
       - '@files.validation.admin_form_validation'
+      - '@files.helpers.upload'
       - '@categories.helpers'
 
   files.controller.admin.index.delete:
@@ -36,6 +37,7 @@ services:
       - '@core.helpers.formToken'
       - '@files.model.files_model'
       - '@files.validation.admin_form_validation'
+      - '@files.helpers.upload'
       - '@categories.helpers'
 
   files.controller.admin.index.index:

@@ -24,6 +24,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var Emoticons\Model\EmoticonsModel
      */
     protected $emoticonsModel;
+    /**
+     * @var \ACP3\Core\Helpers\Upload
+     */
+    private $emoticonsUploadHelper;
 
     /**
      * Edit constructor.
@@ -32,18 +36,21 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
      * @param Emoticons\Model\EmoticonsModel                              $emoticonsModel
      * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation $adminFormValidation
+     * @param \ACP3\Core\Helpers\Upload                                   $emoticonsUploadHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Emoticons\Model\EmoticonsModel $emoticonsModel,
-        Emoticons\Validation\AdminFormValidation $adminFormValidation
+        Emoticons\Validation\AdminFormValidation $adminFormValidation,
+        Core\Helpers\Upload $emoticonsUploadHelper
     ) {
         parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->adminFormValidation = $adminFormValidation;
         $this->emoticonsModel = $emoticonsModel;
+        $this->emoticonsUploadHelper = $emoticonsUploadHelper;
     }
 
     /**
@@ -85,9 +92,8 @@ class Edit extends Core\Controller\AbstractFrontendAction
                 ->validate($formData);
 
             if (empty($file) === false) {
-                $upload = new Core\Helpers\Upload($this->appPath, Emoticons\Installer\Schema::MODULE_NAME);
-                $upload->removeUploadedFile($emoticon['img']);
-                $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
+                $this->emoticonsUploadHelper->removeUploadedFile($emoticon['img']);
+                $result = $this->emoticonsUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
                 $formData['img'] = $result['name'];
             }
 

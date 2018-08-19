@@ -35,6 +35,10 @@ class Edit extends AbstractFormAction
      * @var Files\Model\FilesModel
      */
     protected $filesModel;
+    /**
+     * @var \ACP3\Core\Helpers\Upload
+     */
+    private $filesUploadHelper;
 
     /**
      * Edit constructor.
@@ -45,6 +49,7 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
      * @param Files\Model\FilesModel                                  $filesModel
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
+     * @param \ACP3\Core\Helpers\Upload                               $filesUploadHelper
      * @param \ACP3\Modules\ACP3\Categories\Helpers                   $categoriesHelpers
      */
     public function __construct(
@@ -54,6 +59,7 @@ class Edit extends AbstractFormAction
         Core\Helpers\FormToken $formTokenHelper,
         Files\Model\FilesModel $filesModel,
         Files\Validation\AdminFormValidation $adminFormValidation,
+        Core\Helpers\Upload $filesUploadHelper,
         Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context, $formsHelper, $categoriesHelpers);
@@ -62,6 +68,7 @@ class Edit extends AbstractFormAction
         $this->formTokenHelper = $formTokenHelper;
         $this->adminFormValidation = $adminFormValidation;
         $this->filesModel = $filesModel;
+        $this->filesUploadHelper = $filesUploadHelper;
     }
 
     /**
@@ -155,10 +162,8 @@ class Edit extends AbstractFormAction
      */
     protected function updateAssociatedFile($file, array $formData, $currentFileName)
     {
-        $upload = new Core\Helpers\Upload($this->appPath, Files\Installer\Schema::MODULE_NAME);
-
         if ($file instanceof UploadedFile) {
-            $result = $upload->moveFile($file->getPathname(), $file->getClientOriginalName());
+            $result = $this->filesUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
             $newFile = $result['name'];
             $fileSize = $result['size'];
         } else {
@@ -167,7 +172,7 @@ class Edit extends AbstractFormAction
             $fileSize = $formData['filesize'] . ' ' . $formData['unit'];
         }
 
-        $upload->removeUploadedFile($currentFileName);
+        $this->filesUploadHelper->removeUploadedFile($currentFileName);
 
         return [
             'file' => $newFile,

@@ -57,6 +57,7 @@ services:
       - '@gallery.model.galleryrepository'
       - '@gallery.model.picture_model'
       - '@gallery.validation.picture_form_validation'
+      - '@gallery.helpers.upload'
 
   gallery.controller.admin.pictures.delete:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Delete
@@ -77,6 +78,7 @@ services:
       - '@gallery.helpers'
       - '@gallery.model.picture_model'
       - '@gallery.validation.picture_form_validation'
+      - '@gallery.helpers.upload'
 
   gallery.controller.admin.pictures.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Index
