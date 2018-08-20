@@ -113,7 +113,6 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}users` ADD UNIQUE KEY `mail` (`mail`);',
             ],
             49 => [
-                'ALTER TABLE `{pre}users` CONVERT TO {charset};',
                 'ALTER TABLE `{pre}users` MODIFY COLUMN `nickname` VARCHAR(30) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}users` MODIFY COLUMN `pwd` VARCHAR(128) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}users` MODIFY COLUMN `pwd_salt` VARCHAR(16) {charset} NOT NULL;',
@@ -129,6 +128,7 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}users` MODIFY COLUMN `zip` VARCHAR(6) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}users` MODIFY COLUMN `city` VARCHAR(120) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}users` MODIFY COLUMN `country` CHAR(2) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}users` CONVERT TO {charset};',
             ],
         ];
     }

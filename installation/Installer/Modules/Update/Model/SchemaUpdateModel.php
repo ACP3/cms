@@ -8,7 +8,6 @@
 namespace ACP3\Installer\Modules\Update\Model;
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Modules;
 use ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 use Psr\Log\LoggerInterface;
@@ -16,10 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SchemaUpdateModel
 {
-    /**
-     * @var Modules
-     */
-    protected $modules;
     /**
      * @var array
      */
@@ -43,15 +38,12 @@ class SchemaUpdateModel
      * @param \ACP3\Installer\Core\Environment\ApplicationPath          $appPath
      * @param \Psr\Log\LoggerInterface                                  $logger
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param Modules                                                   $modules
      */
     public function __construct(
         ApplicationPath $appPath,
         LoggerInterface $logger,
-        ContainerInterface $container,
-        Modules $modules
+        ContainerInterface $container
     ) {
-        $this->modules = $modules;
         $this->container = $container;
         $this->appPath = $appPath;
         $this->logger = $logger;
@@ -82,7 +74,7 @@ class SchemaUpdateModel
      */
     public function updateModules()
     {
-        foreach ($this->modules->getAllModulesTopSorted() as $moduleInfo) {
+        foreach ($this->container->get('core.modules')->getAllModulesTopSorted() as $moduleInfo) {
             $module = \strtolower($moduleInfo['dir']);
             $this->results[$module] = $this->updateModule($module);
         }
@@ -111,7 +103,7 @@ class SchemaUpdateModel
         ) {
             $moduleSchema = $schemaRegistrar->get($moduleName);
             $moduleMigration = $migrationRegistrar->get($serviceIdMigration);
-            if ($this->modules->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
+            if ($this->container->get('core.modules')->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
                 $result = $this->container->get('core.modules.schemaUpdater')->updateSchema(
                     $moduleSchema,
                     $moduleMigration

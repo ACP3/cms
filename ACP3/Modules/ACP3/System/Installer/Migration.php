@@ -12,6 +12,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Yaml\Yaml;
 
 class Migration extends Modules\Installer\AbstractMigration
 {
@@ -240,14 +241,14 @@ class Migration extends Modules\Installer\AbstractMigration
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'update_new_version_url', '');",
             ],
             71 => [
-                'ALTER TABLE `{pre}modules` CONVERT TO {charset};',
                 'ALTER TABLE `{pre}modules` MODIFY COLUMN `name` VARCHAR(100) {charset} NOT NULL;',
-                'ALTER TABLE `{pre}sessions` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}modules` CONVERT TO {charset};',
                 'ALTER TABLE `{pre}sessions` MODIFY COLUMN `session_id` VARCHAR(32) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}sessions` MODIFY COLUMN `session_data` TEXT {charset} NOT NULL;',
-                'ALTER TABLE `{pre}settings` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}sessions` CONVERT TO {charset};',
                 'ALTER TABLE `{pre}settings` MODIFY COLUMN `name` VARCHAR(40) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}settings` MODIFY COLUMN `value` TEXT {charset} NOT NULL;',
+                'ALTER TABLE `{pre}settings` CONVERT TO {charset};',
                 "ALTER DATABASE `{$this->schemaHelper->getDb()->getDatabase()}` {charset};",
             ],
             72 => [
@@ -358,19 +359,9 @@ class Migration extends Modules\Installer\AbstractMigration
     {
         return function () {
             $configFilePath = $this->appPath->getAppDir() . 'config.yml';
-            $container = $this->schemaHelper->getContainer();
 
-            $configParams = [
-                'parameters' => [
-                    'db_host' => $container->getParameter('db_host'),
-                    'db_name' => $container->getParameter('db_name'),
-                    'db_table_prefix' => $container->getParameter('db_table_prefix'),
-                    'db_password' => $container->getParameter('db_password'),
-                    'db_user' => $container->getParameter('db_user'),
-                    'db_driver' => $container->getParameter('db_driver'),
-                    'db_charset' => 'utf8mb4',
-                ],
-            ];
+            $configParams = Yaml::parseFile($configFilePath);
+            $configParams['parameters']['db_charset'] = 'utf8mb4';
 
             if (\is_writable($configFilePath) === true) {
                 \ksort($configParams);
