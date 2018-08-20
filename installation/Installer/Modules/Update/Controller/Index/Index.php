@@ -53,9 +53,11 @@ class Index extends Core\Controller\AbstractInstallerAction
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
+     * @throws \Exception
      */
     protected function executePost()
     {
+        $this->schemaUpdateModel->updateContainer($this->request);
         $results = $this->schemaUpdateModel->updateModules();
         \ksort($results);
 

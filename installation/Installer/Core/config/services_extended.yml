@@ -2,14 +2,5 @@ parameters:
   default_request: 'update'
 
 imports:
-  - { resource: ../../../../ACP3/config.yml }
-  - { resource: ../../../../ACP3/Core/config/components/cache.yml }
-  - { resource: ../../../../ACP3/Core/config/components/database.yml }
-  - { resource: ../../../../ACP3/Core/config/components/model.yml }
-  - { resource: ../../../../ACP3/Core/config/components/modules.yml }
-  - { resource: ../../../../ACP3/Modules/ACP3/Permissions/Resources/config/components/cache.yml }
-  - { resource: ../../../../ACP3/Modules/ACP3/Permissions/Resources/config/components/models.yml }
-  - { resource: ../../../../ACP3/Modules/ACP3/Permissions/Resources/config/components/nested_set.yml }
-  - { resource: ../../../../ACP3/Modules/ACP3/System/Resources/config/components/models.yml }
   - { resource: services.yml }
   - { resource: ../../Modules/Update/Resources/config/services.yml }
