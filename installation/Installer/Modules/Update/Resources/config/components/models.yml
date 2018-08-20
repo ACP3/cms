@@ -2,7 +2,7 @@ services:
   update.model.schema_update_model:
     class: ACP3\Installer\Modules\Update\Model\SchemaUpdateModel
     arguments:
-      - '@core.installer.schema_registrar'
-      - '@core.installer.migration_registrar'
+      - '@core.environment.application_path'
+      - '@core.logger.system_logger'
+      - '@service_container'
       - '@core.modules'
-      - '@core.modules.schemaUpdater'

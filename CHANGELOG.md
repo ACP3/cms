@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.28.1] - 2018-08-20
+## [4.28.2] - 2018-08-20
 ### Fixed
 - Fixed the installation and update wizard
 
@@ -656,7 +656,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.28.1...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.28.2...HEAD
+[4.28.2]: https://gitlab.com/ACP3/cms/compare/v4.28.1...v4.28.2
 [4.28.1]: https://gitlab.com/ACP3/cms/compare/v4.28.0...v4.28.1
 [4.28.0]: https://gitlab.com/ACP3/cms/compare/v4.27.3...v4.28.0
 [4.27.3]: https://gitlab.com/ACP3/cms/compare/v4.27.2...v4.27.3
