@@ -8,10 +8,9 @@
 namespace ACP3\Core\Test;
 
 use ACP3\Core\ACL;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Controller\Helper\ControllerActionExists;
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Permissions\Cache;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 class ACLTest extends \PHPUnit_Framework_TestCase
 {
@@ -55,11 +54,11 @@ class ACLTest extends \PHPUnit_Framework_TestCase
 
     private function initializeMockObjects()
     {
-        $this->userMock = $this->createMock(UserModel::class);
+        $this->userMock = $this->createMock(UserModelInterface::class);
         $this->modulesMock = $this->createMock(Modules::class);
         $this->controllerActionExistsMock = $this->createMock(ControllerActionExists::class);
         $this->userRoleRepositoryMock = $this->createMock(ACL\Model\Repository\UserRoleRepositoryInterface::class);
-        $this->permissionsCacheMock = $this->createMock(Cache::class);
+        $this->permissionsCacheMock = $this->createMock(ACL\PermissionCacheInterface::class);
     }
 
     public function testGetUserRoleIdsForGuest()

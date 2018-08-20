@@ -8,11 +8,12 @@
 namespace ACP3\Modules\ACP3\Permissions;
 
 use ACP3\Core;
+use ACP3\Core\ACL\PermissionCacheInterface;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository;
 
-class Cache extends Core\Modules\AbstractCacheStorage
+class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCacheInterface
 {
     const CACHE_ID_RESOURCES = 'acl_resources';
     const CACHE_ID_ROLES = 'acl_roles';
@@ -51,7 +52,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getResourcesCache()
     {
@@ -63,9 +64,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Erstellt den Cache für alle existierenden Ressourcen.
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function saveResourcesCache()
     {
@@ -91,7 +90,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * @return bool|mixed|string
+     * {@inheritdoc}
      */
     public function getRolesCache()
     {
@@ -103,9 +102,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Setzt den Cache für alle existierenden Rollen.
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function saveRolesCache()
     {
@@ -141,9 +138,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * @param array $roles
+     * {@inheritdoc}
      *
-     * @return bool|mixed|string
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getRulesCache(array $roles)
     {
@@ -156,11 +153,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * Setzt den Cache für die einzelnen Berechtigungen einer Rolle.
+     * {@inheritdoc}
      *
-     * @param array $roles
-     *
-     * @return bool
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function saveRulesCache(array $roles)
     {

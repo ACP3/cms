@@ -13,7 +13,7 @@ use ACP3\Core\Filesystem;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\XML;
 
-class ModuleInfoCache
+class ModuleInfoCache implements ModuleInfoCacheInterface
 {
     use ModuleDependenciesTrait;
 
@@ -64,7 +64,7 @@ class ModuleInfoCache
     /**
      * @return string
      */
-    public function getCacheKey(): string
+    protected function getCacheKey(): string
     {
         return 'modules_info';
     }

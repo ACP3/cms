@@ -7,12 +7,14 @@
 
 namespace ACP3\Core\Modules;
 
+use ACP3\Core\ACL\Model\Repository\PrivilegeRepositoryInterface;
+use ACP3\Core\ACL\Model\Repository\RoleRepositoryInterface;
 use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Cache;
 use ACP3\Core\Controller\AreaEnum;
+use ACP3\Core\Model\Repository\AbstractRepository;
 use ACP3\Core\Modules\Installer\SchemaInterface;
-use ACP3\Modules\ACP3\Permissions;
 
 class AclInstaller implements InstallerInterface
 {
@@ -28,37 +30,39 @@ class AclInstaller implements InstallerInterface
      */
     private $schemaHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
+     * @var \ACP3\Core\ACL\Model\Repository\RoleRepositoryInterface
      */
     private $roleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
+     * @var \ACP3\Core\ACL\Model\Repository\PrivilegeRepositoryInterface
      */
     private $privilegeRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
+     * @var \ACP3\Core\Model\Repository\AbstractRepository
      */
     private $resourceRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository
+     * @var \ACP3\Core\Model\Repository\AbstractRepository
      */
     private $ruleRepository;
 
     /**
-     * @param \ACP3\Core\Cache                                                    $aclCache
-     * @param \ACP3\Core\Modules\SchemaHelper                                     $schemaHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository      $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository      $ruleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository  $resourceRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
+     * AclInstaller constructor.
+     *
+     * @param \ACP3\Core\Cache                                             $aclCache
+     * @param \ACP3\Core\Modules\SchemaHelper                              $schemaHelper
+     * @param \ACP3\Core\ACL\Model\Repository\RoleRepositoryInterface      $roleRepository
+     * @param \ACP3\Core\Model\Repository\AbstractRepository               $ruleRepository
+     * @param \ACP3\Core\Model\Repository\AbstractRepository               $resourceRepository
+     * @param \ACP3\Core\ACL\Model\Repository\PrivilegeRepositoryInterface $privilegeRepository
      */
     public function __construct(
         Cache $aclCache,
         SchemaHelper $schemaHelper,
-        Permissions\Model\Repository\RoleRepository $roleRepository,
-        Permissions\Model\Repository\RuleRepository $ruleRepository,
-        Permissions\Model\Repository\ResourceRepository $resourceRepository,
-        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
+        RoleRepositoryInterface $roleRepository,
+        AbstractRepository $ruleRepository,
+        AbstractRepository $resourceRepository,
+        PrivilegeRepositoryInterface $privilegeRepository
     ) {
         $this->aclCache = $aclCache;
         $this->schemaHelper = $schemaHelper;
@@ -75,6 +79,8 @@ class AclInstaller implements InstallerInterface
      * @param int                                          $mode
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function install(SchemaInterface $schema, $mode = self::INSTALL_RESOURCES_AND_RULES)
     {
@@ -93,6 +99,8 @@ class AclInstaller implements InstallerInterface
      * Inserts a new resource into the database.
      *
      * @param SchemaInterface $schema
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     private function insertAclResources(SchemaInterface $schema)
     {
@@ -127,6 +135,8 @@ class AclInstaller implements InstallerInterface
      * Insert new acl user rules.
      *
      * @param string $moduleName
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     private function insertAclRules($moduleName)
     {

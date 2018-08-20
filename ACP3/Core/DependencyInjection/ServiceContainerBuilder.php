@@ -46,7 +46,8 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param string          $applicationMode
      */
     public function __construct(
-        ApplicationPath $applicationPath, SymfonyRequest $symfonyRequest, $applicationMode
+        ApplicationPath $applicationPath,
+        SymfonyRequest $symfonyRequest, $applicationMode
     ) {
         parent::__construct();
 
@@ -69,7 +70,7 @@ class ServiceContainerBuilder extends ContainerBuilder
                     'core.event_dispatcher',
                     'core.eventListener',
                     'core.eventSubscriber'
-            )
+                )
             )
             ->addCompilerPass(new RegisterAuthenticationsCompilerPass())
             ->addCompilerPass(new RegisterSmartyPluginsPass())
@@ -82,7 +83,6 @@ class ServiceContainerBuilder extends ContainerBuilder
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
         $loader->load($this->applicationPath->getClassesDir() . 'config/services.yml');
-        $loader->load($this->applicationPath->getClassesDir() . 'View/Renderer/Smarty/config/services.yml');
 
         // Try to get all available services
         /** @var Modules $modules */

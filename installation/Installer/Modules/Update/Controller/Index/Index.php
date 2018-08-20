@@ -35,6 +35,10 @@ class Index extends Core\Controller\AbstractInstallerAction
      * @param string $action
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function execute($action = '')
     {
@@ -45,6 +49,10 @@ class Index extends Core\Controller\AbstractInstallerAction
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     protected function executePost()
     {

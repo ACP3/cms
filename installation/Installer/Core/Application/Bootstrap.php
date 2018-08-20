@@ -52,6 +52,8 @@ class Bootstrap extends Core\Application\AbstractBootstrap
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Exception
      */
     public function initializeClasses(SymfonyRequest $symfonyRequest)
     {

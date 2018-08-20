@@ -1,0 +1,34 @@
+services:
+  core.context.widget:
+    class: ACP3\Core\Controller\Context\WidgetContext
+    arguments:
+    - '@service_container'
+    - '@core.event_dispatcher'
+    - '@core.acl'
+    - '@users.model.user_model'
+    - '@core.i18n.translator'
+    - '@core.modules'
+    - '@core.http.request'
+    - '@core.router'
+    - '@core.validator'
+    - '@core.view'
+    - '@core.config'
+    - '@core.environment.application_path'
+    - '@core.http.response'
+    - '@core.helpers.results_per_page'
+
+  core.context.admin:
+    class: ACP3\Core\Controller\Context\AdminContext
+    parent: core.context.frontend
+    deprecated: 'The "%service_id%" service is deprecated. Use "core.context.frontend" instead'
+
+  core.context.frontend:
+    class: ACP3\Core\Controller\Context\FrontendContext
+    arguments:
+    - '@core.context.widget'
+    - '@core.assets'
+    - '@core.breadcrumb'
+    - '@core.breadcrumb.title'
+    - '@core.modules.helper.action'
+    - '@core.helpers.redirect'
+    - '@core.http.redirect_response'

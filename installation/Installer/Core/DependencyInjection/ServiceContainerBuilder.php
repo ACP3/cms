@@ -42,10 +42,6 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @var bool
      */
     private $includeModules;
-    /**
-     * @var bool
-     */
-    private $migrationsOnly;
 
     /**
      * ServiceContainerBuilder constructor.
@@ -55,7 +51,6 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param Request         $symfonyRequest
      * @param string          $applicationMode
      * @param bool            $includeModules
-     * @param bool            $migrationsOnly
      *
      * @throws \Exception
      */
@@ -63,9 +58,8 @@ class ServiceContainerBuilder extends ContainerBuilder
         LoggerInterface $logger,
         ApplicationPath $applicationPath,
         Request $symfonyRequest,
-        $applicationMode,
-        $includeModules = false,
-        $migrationsOnly = false
+        string $applicationMode,
+        bool $includeModules = false
     ) {
         parent::__construct();
 
@@ -76,7 +70,6 @@ class ServiceContainerBuilder extends ContainerBuilder
         $this->includeModules = $includeModules;
 
         $this->setUpContainer();
-        $this->migrationsOnly = $migrationsOnly;
     }
 
     /**
@@ -99,19 +92,19 @@ class ServiceContainerBuilder extends ContainerBuilder
             )
             ->addCompilerPass(new RegisterSmartyPluginsPass())
             ->addCompilerPass(new RegisterControllerActionsPass())
-            ->addCompilerPass(new RegisterValidationRulesPass());
+            ->addCompilerPass(new RegisterValidationRulesPass())
+            ->addCompilerPass(new RegisterInstallersCompilerPass());
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
 
         if ($this->canIncludeModules() === true) {
-            $this->addCompilerPass(new RegisterInstallersCompilerPass());
-
             $loader->load($this->applicationPath->getClassesDir() . 'config/services.yml');
         }
 
-        $loader->load($this->applicationPath->getInstallerClassesDir() . 'config/services.yml');
-        if ($this->applicationMode === ApplicationMode::UPDATER) {
-            $loader->load($this->applicationPath->getInstallerClassesDir() . 'config/update.yml');
+        if ($this->canIncludeModules() || $this->applicationMode === ApplicationMode::UPDATER) {
+            $loader->load($this->applicationPath->getInstallerClassesDir() . 'config/services_extended.yml');
+        } else {
+            $loader->load($this->applicationPath->getInstallerClassesDir() . 'config/services.yml');
         }
 
         $this->includeModules($loader);
@@ -124,7 +117,7 @@ class ServiceContainerBuilder extends ContainerBuilder
      */
     private function canIncludeModules()
     {
-        return $this->applicationMode === ApplicationMode::UPDATER || $this->includeModules === true;
+        return $this->includeModules === true;
     }
 
     /**
@@ -134,33 +127,25 @@ class ServiceContainerBuilder extends ContainerBuilder
      */
     private function includeModules(YamlFileLoader $loader)
     {
-        if ($this->canIncludeModules() === true) {
-            $request = $this->get('core.http.request');
-            $router = $this->get('core.router');
-
-            $vendors = $this->get('core.modules.vendors')->getVendors();
-            foreach ($vendors as $vendor) {
-                foreach ($this->getServicesPath($vendor) as $file) {
-                    $loader->load($file);
-                }
-            }
-
-            $this->set('core.http.request', $request);
-            $this->set('core.router', $router);
+        if (!$this->canIncludeModules()) {
+            return;
         }
-    }
 
-    /**
-     * @param string $vendor
-     *
-     * @return array
-     */
-    private function getServicesPath($vendor)
-    {
-        $basePath = $this->applicationPath->getModulesDir() . $vendor . '/*/Resources/config/';
-        $basePath .= $this->migrationsOnly === true ? 'components/installer.yml' : 'services.yml';
+        $request = $this->get('core.http.request');
+        $router = $this->get('core.router');
+        $modules = $this->get('core.modules');
 
-        return \glob($basePath);
+        foreach ($modules->getAllModulesTopSorted() as $module) {
+            $modulePath = $this->applicationPath->getModulesDir() . $module['vendor'] . '/' . $module['dir'];
+            $path = $modulePath . '/Resources/config/services.yml';
+
+            if (\is_file($path)) {
+                $loader->load($path);
+            }
+        }
+
+        $this->set('core.http.request', $request);
+        $this->set('core.router', $router);
     }
 
     /**
@@ -169,9 +154,8 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param Request         $symfonyRequest
      * @param string          $applicationMode
      * @param bool            $includeModules
-     * @param bool            $migrationsOnly
      *
-     * @return ContainerBuilder
+     * @return \ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder
      *
      * @throws \Exception
      */
@@ -179,10 +163,9 @@ class ServiceContainerBuilder extends ContainerBuilder
         LoggerInterface $logger,
         ApplicationPath $applicationPath,
         Request $symfonyRequest,
-        $applicationMode,
-        $includeModules = false,
-        $migrationsOnly = false
+        string $applicationMode,
+        bool $includeModules = false
     ) {
-        return new static($logger, $applicationPath, $symfonyRequest, $applicationMode, $includeModules, $migrationsOnly);
+        return new static($logger, $applicationPath, $symfonyRequest, $applicationMode, $includeModules);
     }
 }

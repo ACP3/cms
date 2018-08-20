@@ -8,8 +8,9 @@
 namespace ACP3\Modules\ACP3\Permissions\Model\Repository;
 
 use ACP3\Core;
+use ACP3\Core\ACL\Model\Repository\PrivilegeRepositoryInterface;
 
-class PrivilegeRepository extends Core\Model\Repository\AbstractRepository
+class PrivilegeRepository extends Core\Model\Repository\AbstractRepository implements PrivilegeRepositoryInterface
 {
     const TABLE_NAME = 'acl_privileges';
 
@@ -23,9 +24,6 @@ class PrivilegeRepository extends Core\Model\Repository\AbstractRepository
         return (int) $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id', ['id' => $privilegeId]) > 0;
     }
 
-    /**
-     * @return array
-     */
     public function getAllPrivilegeIds()
     {
         return $this->db->fetchAll('SELECT id FROM ' . $this->getTableName());

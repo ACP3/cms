@@ -1,0 +1,11 @@
+services:
+  core.environment.application_path:
+    public: true
+    synthetic: true
+
+  core.environment.theme:
+    class: ACP3\Core\Environment\Theme
+    arguments:
+    - '@core.environment.application_path'
+    - '@core.config'
+    - '@core.xml'

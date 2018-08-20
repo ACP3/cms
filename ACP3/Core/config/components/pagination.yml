@@ -1,0 +1,8 @@
+services:
+  core.pagination:
+    class: ACP3\Core\Pagination
+    arguments:
+    - '@core.breadcrumb.title'
+    - '@core.i18n.translator'
+    - '@core.http.request'
+    - '@core.router'
