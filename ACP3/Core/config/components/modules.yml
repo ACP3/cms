@@ -6,6 +6,7 @@ services:
       - '@core.controller.helper.controller_action_exists'
       - '@core.modules.moduleInfoCache'
       - '@core.modules.vendors'
+    public: true
 
   core.modules.aclInstaller:
     class: ACP3\Core\Modules\AclInstaller

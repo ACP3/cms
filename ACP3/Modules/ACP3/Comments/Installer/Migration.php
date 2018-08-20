@@ -47,10 +47,10 @@ class Migration implements Modules\Installer\MigrationInterface
                 'ALTER TABLE `{pre}comments` ADD FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL',
             ],
             37 => [
-                'ALTER TABLE `{pre}comments` CONVERT TO {charset};',
                 'ALTER TABLE `{pre}comments` MODIFY COLUMN `ip` VARCHAR(40) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}comments` MODIFY COLUMN `name` VARCHAR(20) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}comments` MODIFY COLUMN `message` TEXT {charset} NOT NULL;',
+                'ALTER TABLE `{pre}comments` CONVERT TO {charset};',
             ],
         ];
     }

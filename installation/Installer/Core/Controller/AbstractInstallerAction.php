@@ -134,9 +134,9 @@ abstract class AbstractInstallerAction implements ActionInterface
         $this->view->assign(
             'TITLE',
             $this->translator->t(
-            $this->request->getModule(),
-            $this->request->getController() . '_' . $this->request->getAction()
-        )
+                $this->request->getModule(),
+                $this->request->getController() . '_' . $this->request->getAction()
+            )
         );
         $this->view->assign('LAYOUT', $this->request->isXmlHttpRequest() ? 'layout.ajax.tpl' : $this->getLayout());
     }

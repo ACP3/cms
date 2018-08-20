@@ -2,10 +2,11 @@ services:
   core.modules:
     class: ACP3\Core\Modules
     arguments:
-    - '@core.environment.application_path'
-    - '@core.controller.helper.controller_action_exists'
-    - '@core.modules.moduleInfoCache'
-    - '@core.modules.vendors'
+      - '@core.environment.application_path'
+      - '@core.controller.helper.controller_action_exists'
+      - '@core.modules.moduleInfoCache'
+      - '@core.modules.vendors'
+    public: true
 
   core.modules.moduleInfoCache:
     class: ACP3\Installer\Core\Modules\ModuleInfoCache
