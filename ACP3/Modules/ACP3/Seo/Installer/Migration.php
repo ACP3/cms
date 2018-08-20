@@ -58,12 +58,12 @@ class Migration implements Modules\Installer\MigrationInterface
                 'ALTER TABLE `{pre}seo` ADD COLUMN `title` VARCHAR(255) NOT NULL AFTER `alias`;',
             ],
             14 => [
-                'ALTER TABLE `{pre}seo` CONVERT TO {charset};',
                 'ALTER TABLE `{pre}seo` MODIFY COLUMN `uri` VARCHAR(191) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}seo` MODIFY COLUMN `alias` VARCHAR(100) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}seo` MODIFY COLUMN `title` VARCHAR(255) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}seo` MODIFY COLUMN `keywords` VARCHAR(255) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}seo` MODIFY COLUMN `description` VARCHAR(255) {charset} NOT NULL;',
+                'ALTER TABLE `{pre}seo` CONVERT TO {charset};',
             ],
         ];
     }

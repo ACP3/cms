@@ -63,9 +63,9 @@ class Migration extends Modules\Installer\AbstractMigration
                 ) {ENGINE} {CHARSET};',
             ],
             42 => [
-                'ALTER TABLE `{pre}contacts` CONVERT TO {charset};',
                 'ALTER TABLE `{pre}contacts` MODIFY COLUMN `mail` VARCHAR(120) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}contacts` MODIFY COLUMN `message` TEXT {charset} NOT NULL;',
+                'ALTER TABLE `{pre}contacts` CONVERT TO {charset};',
             ],
         ];
     }

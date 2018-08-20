@@ -67,11 +67,11 @@ class Migration extends Modules\Installer\AbstractMigration
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'pictures', 'index', '', 3);",
             ],
             43 => [
-                'ALTER TABLE `{pre}gallery` CONVERT TO {charset};',
                 'ALTER TABLE `{pre}gallery` MODIFY COLUMN `title` VARCHAR(120) {charset} NOT NULL;',
-                'ALTER TABLE `{pre}gallery_pictures` CONVERT TO {charset};',
+                'ALTER TABLE `{pre}gallery` CONVERT TO {charset};',
                 'ALTER TABLE `{pre}gallery_pictures` MODIFY COLUMN `file` VARCHAR(120) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}gallery_pictures` MODIFY COLUMN `description` TEXT {charset} NOT NULL;',
+                'ALTER TABLE `{pre}gallery_pictures` CONVERT TO {charset};',
             ],
         ];
     }

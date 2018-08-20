@@ -5,4 +5,3 @@ services:
       - '@core.environment.application_path'
       - '@core.logger.system_logger'
       - '@service_container'
-      - '@core.modules'
