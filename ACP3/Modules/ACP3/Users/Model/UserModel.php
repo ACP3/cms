@@ -7,11 +7,12 @@
 
 namespace ACP3\Modules\ACP3\Users\Model;
 
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\I18n\CountryList;
 use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Users;
 
-class UserModel
+class UserModel implements UserModelInterface
 {
     const SALT_LENGTH = 16;
 

@@ -56,6 +56,10 @@ class SchemaUpdateModel
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function updateModules()
     {
@@ -70,21 +74,23 @@ class SchemaUpdateModel
     /**
      * Führt die Updateanweisungen eines Moduls aus.
      *
-     * @param string $module
+     * @param string $moduleName
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function updateModule(string $module)
+    public function updateModule(string $moduleName)
     {
         $result = false;
 
-        $serviceIdMigration = $module . '.installer.migration';
-        if ($this->schemaRegistrar->has($module) === true &&
+        $serviceIdMigration = $moduleName . '.installer.migration';
+        if ($this->schemaRegistrar->has($moduleName) === true &&
             $this->migrationRegistrar->has($serviceIdMigration) === true
         ) {
-            $moduleSchema = $this->schemaRegistrar->get($module);
+            $moduleSchema = $this->schemaRegistrar->get($moduleName);
             $moduleMigration = $this->migrationRegistrar->get($serviceIdMigration);
-            if ($this->modules->isInstalled($module) || \count($moduleMigration->renameModule()) > 0) {
+            if ($this->modules->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
                 $result = $this->schemaUpdater->updateSchema($moduleSchema, $moduleMigration);
             }
         }

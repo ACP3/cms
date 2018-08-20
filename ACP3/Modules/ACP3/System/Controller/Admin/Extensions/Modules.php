@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\System;
 class Modules extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Modules\ModuleInfoCache
+     * @var \ACP3\Core\Modules\ModuleInfoCacheInterface
      */
     protected $moduleInfoCache;
     /**
@@ -50,19 +50,19 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * Modules constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                $context
-     * @param Core\I18n\DictionaryCache                                    $dictionaryCache
-     * @param \ACP3\Core\Modules\ModuleInfoCache                           $moduleInfoCache
+     * @param \ACP3\Core\I18n\DictionaryCache                              $dictionaryCache
+     * @param \ACP3\Core\Modules\ModuleInfoCacheInterface                  $moduleInfoCache
      * @param \ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository $systemModuleRepository
      * @param \ACP3\Modules\ACP3\System\Helper\Installer                   $installerHelper
      * @param \ACP3\Modules\ACP3\Permissions\Cache                         $permissionsCache
-     * @param Core\Installer\SchemaRegistrar                               $schemaRegistrar
-     * @param Core\Modules\SchemaInstaller                                 $schemaInstaller
-     * @param Core\Modules\AclInstaller                                    $aclInstaller
+     * @param \ACP3\Core\Installer\SchemaRegistrar                         $schemaRegistrar
+     * @param \ACP3\Core\Modules\SchemaInstaller                           $schemaInstaller
+     * @param \ACP3\Core\Modules\AclInstaller                              $aclInstaller
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\I18n\DictionaryCache $dictionaryCache,
-        Core\Modules\ModuleInfoCache $moduleInfoCache,
+        Core\Modules\ModuleInfoCacheInterface $moduleInfoCache,
         System\Model\Repository\ModulesRepository $systemModuleRepository,
         System\Helper\Installer $installerHelper,
         Permissions\Cache $permissionsCache,
@@ -88,7 +88,10 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function execute($action = '', $dir = '')
     {
@@ -110,6 +113,8 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $moduleDirectory
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function enableModule($moduleDirectory)
     {
@@ -193,6 +198,8 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param int    $active
      *
      * @return bool|int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function saveModuleState($moduleDirectory, $active)
     {
@@ -211,6 +218,10 @@ class Modules extends Core\Controller\AbstractFrontendAction
         ]);
     }
 
+    /**
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     */
     protected function renewCaches()
     {
         $this->dictionaryCache->saveLanguageCache($this->translator->getLocale());
@@ -223,7 +234,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function disableModule($moduleDirectory)
     {
@@ -258,6 +269,8 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $moduleDirectory
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function installModule($moduleDirectory)
     {
@@ -297,6 +310,8 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @param string $moduleDirectory
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function uninstallModule($moduleDirectory)
     {
@@ -335,6 +350,9 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return array
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     protected function outputPage()
     {

@@ -9,7 +9,7 @@ namespace ACP3\Core;
 
 use ACP3\Core\Controller\Helper\ControllerActionExists;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Modules\ModuleInfoCache;
+use ACP3\Core\Modules\ModuleInfoCacheInterface;
 use ACP3\Core\Modules\Vendor;
 use MJS\TopSort\Implementations\StringSort;
 
@@ -24,7 +24,7 @@ class Modules
      */
     protected $controllerActionExists;
     /**
-     * @var \ACP3\Core\Modules\ModuleInfoCache
+     * @var \ACP3\Core\Modules\ModuleInfoCacheInterface
      */
     protected $moduleInfoCache;
     /**
@@ -41,15 +41,17 @@ class Modules
     private $allModulesTopSorted = [];
 
     /**
+     * Modules constructor.
+     *
      * @param \ACP3\Core\Environment\ApplicationPath              $appPath
      * @param \ACP3\Core\Controller\Helper\ControllerActionExists $controllerActionExists
-     * @param \ACP3\Core\Modules\ModuleInfoCache                  $moduleInfoCache
+     * @param \ACP3\Core\Modules\ModuleInfoCacheInterface         $moduleInfoCache
      * @param \ACP3\Core\Modules\Vendor                           $vendors
      */
     public function __construct(
         ApplicationPath $appPath,
         ControllerActionExists $controllerActionExists,
-        ModuleInfoCache $moduleInfoCache,
+        ModuleInfoCacheInterface $moduleInfoCache,
         Vendor $vendors
     ) {
         $this->appPath = $appPath;

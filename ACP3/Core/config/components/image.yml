@@ -1,0 +1,13 @@
+services:
+  fast_image_size:
+    class: FastImageSize\FastImageSize
+
+  core.image:
+    class: ACP3\Core\Picture
+    public: true
+    arguments:
+    - '@fast_image_size'
+    - '@core.http.response'
+    - '@core.environment.application_path'
+    - '%core.environment%'
+    shared: false

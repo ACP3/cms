@@ -8,6 +8,7 @@
 namespace ACP3\Core\Controller\Context;
 
 use ACP3\Core\ACL;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Http\RequestInterface;
@@ -17,7 +18,6 @@ use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\Validation\Validator;
 use ACP3\Core\View;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +37,7 @@ class WidgetContext
      */
     protected $acl;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     protected $user;
     /**
@@ -87,7 +87,7 @@ class WidgetContext
      * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \ACP3\Core\ACL                                              $acl
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                    $user
+     * @param \ACP3\Core\Authentication\Model\UserModelInterface          $user
      * @param \ACP3\Core\I18n\Translator                                  $translator
      * @param \ACP3\Core\Modules                                          $modules
      * @param \ACP3\Core\Http\RequestInterface                            $request
@@ -96,14 +96,14 @@ class WidgetContext
      * @param \ACP3\Core\View                                             $view
      * @param \ACP3\Core\Settings\SettingsInterface                       $config
      * @param \ACP3\Core\Environment\ApplicationPath                      $appPath
-     * @param Response                                                    $response
-     * @param ResultsPerPage                                              $resultsPerPage
+     * @param \Symfony\Component\HttpFoundation\Response                  $response
+     * @param \ACP3\Core\Helpers\ResultsPerPage                           $resultsPerPage
      */
     public function __construct(
         ContainerInterface $container,
         EventDispatcherInterface $eventDispatcher,
         ACL $acl,
-        UserModel $user,
+        UserModelInterface $user,
         Translator $translator,
         Modules $modules,
         RequestInterface $request,
@@ -156,7 +156,7 @@ class WidgetContext
     }
 
     /**
-     * @return \ACP3\Modules\ACP3\Users\Model\UserModel
+     * @return \ACP3\Core\Authentication\Model\UserModelInterface
      */
     public function getUser()
     {
