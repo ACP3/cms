@@ -13,3 +13,8 @@ services:
     class: ACP3\Installer\Core\I18n\DictionaryCache
     arguments:
       - '@core.environment.application_path'
+
+  core.i18n.country_list:
+    class: ACP3\Core\I18n\CountryList
+    arguments:
+    - '@core.i18n.translator'

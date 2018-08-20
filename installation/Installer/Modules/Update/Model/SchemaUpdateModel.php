@@ -7,9 +7,12 @@
 
 namespace ACP3\Installer\Modules\Update\Model;
 
-use ACP3\Core\Installer\MigrationRegistrar;
-use ACP3\Core\Installer\SchemaRegistrar;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
+use ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
+use ACP3\Installer\Core\Environment\ApplicationPath;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SchemaUpdateModel
 {
@@ -18,40 +21,56 @@ class SchemaUpdateModel
      */
     protected $modules;
     /**
-     * @var Modules\SchemaUpdater
-     */
-    protected $schemaUpdater;
-    /**
-     * @var SchemaRegistrar
-     */
-    private $schemaRegistrar;
-    /**
-     * @var MigrationRegistrar
-     */
-    private $migrationRegistrar;
-    /**
      * @var array
      */
     protected $results = [];
+    /**
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    private $container;
+    /**
+     * @var \ACP3\Installer\Core\Environment\ApplicationPath
+     */
+    private $appPath;
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
 
     /**
      * ModuleUpdateModel constructor.
      *
-     * @param SchemaRegistrar       $schemaRegistrar
-     * @param MigrationRegistrar    $migrationRegistrar
-     * @param Modules               $modules
-     * @param Modules\SchemaUpdater $schemaUpdater
+     * @param \ACP3\Installer\Core\Environment\ApplicationPath          $appPath
+     * @param \Psr\Log\LoggerInterface                                  $logger
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param Modules                                                   $modules
      */
     public function __construct(
-        SchemaRegistrar $schemaRegistrar,
-        MigrationRegistrar $migrationRegistrar,
-        Modules $modules,
-        Modules\SchemaUpdater $schemaUpdater
+        ApplicationPath $appPath,
+        LoggerInterface $logger,
+        ContainerInterface $container,
+        Modules $modules
     ) {
         $this->modules = $modules;
-        $this->schemaUpdater = $schemaUpdater;
-        $this->schemaRegistrar = $schemaRegistrar;
-        $this->migrationRegistrar = $migrationRegistrar;
+        $this->container = $container;
+        $this->appPath = $appPath;
+        $this->logger = $logger;
+    }
+
+    /**
+     * @param RequestInterface $request
+     *
+     * @throws \Exception
+     */
+    public function updateContainer(RequestInterface $request)
+    {
+        $this->container = ServiceContainerBuilder::create(
+            $this->logger,
+            $this->appPath,
+            $request->getSymfonyRequest(),
+            $this->container->getParameter('core.environment'),
+            true
+        );
     }
 
     /**
@@ -84,14 +103,19 @@ class SchemaUpdateModel
     {
         $result = false;
 
+        $schemaRegistrar = $this->container->get('core.installer.schema_registrar');
+        $migrationRegistrar = $this->container->get('core.installer.migration_registrar');
         $serviceIdMigration = $moduleName . '.installer.migration';
-        if ($this->schemaRegistrar->has($moduleName) === true &&
-            $this->migrationRegistrar->has($serviceIdMigration) === true
+        if ($schemaRegistrar->has($moduleName) === true &&
+            $migrationRegistrar->has($serviceIdMigration) === true
         ) {
-            $moduleSchema = $this->schemaRegistrar->get($moduleName);
-            $moduleMigration = $this->migrationRegistrar->get($serviceIdMigration);
+            $moduleSchema = $schemaRegistrar->get($moduleName);
+            $moduleMigration = $migrationRegistrar->get($serviceIdMigration);
             if ($this->modules->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
-                $result = $this->schemaUpdater->updateSchema($moduleSchema, $moduleMigration);
+                $result = $this->container->get('core.modules.schemaUpdater')->updateSchema(
+                    $moduleSchema,
+                    $moduleMigration
+                );
             }
         }
 
