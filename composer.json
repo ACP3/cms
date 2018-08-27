@@ -37,6 +37,7 @@
     "php-http/guzzle6-adapter": "^1.1",
     "smarty/smarty": "^3.1",
     "symfony/config": "^4.1",
+    "symfony/console": "^4.1",
     "symfony/debug": "^4.1",
     "symfony/dependency-injection": "^3.4",
     "symfony/event-dispatcher": "^4.1",
