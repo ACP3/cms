@@ -6,8 +6,8 @@ services:
       - '@core.config'
       - '@system.helpers.can_use_page_cache'
     tags:
-      - { name: core.eventListener, event: core.model.after_save, method: invalidatePageCache }
-      - { name: core.eventListener, event: core.model.after_delete, method: invalidatePageCache }
+      - { name: core.eventListener, event: core.model.after_save }
+      - { name: core.eventListener, event: core.model.after_delete }
 
   system.event.listener.invalidate_page_cache_on_settings_save_before_listener:
     class: ACP3\Modules\ACP3\System\Event\Listener\InvalidatePageCacheOnSettingsSaveBeforeListener
@@ -18,16 +18,16 @@ services:
       - '@system.model.settingsrepository'
       - '@system.helpers.can_use_page_cache'
     tags:
-      - { name: core.eventListener, event: core.settings.save_before, method: invalidatePageCache }
+      - { name: core.eventListener, event: core.settings.save_before }
 
-  system.event.listener.on_layout_content_before_listener:
-    class: ACP3\Modules\ACP3\System\Event\Listener\OnLayoutContentBeforeListener
+  system.event.listener.render_page_cache_invalid_listener:
+    class: ACP3\Modules\ACP3\System\Event\Listener\RenderPageCacheInvalidListener
     arguments:
       - '@core.acl'
       - '@core.config'
       - '@core.view'
     tags:
-      - { name: core.eventListener, event: layout.content_before, method: renderInvalidPageCacheAlert }
+      - { name: core.eventListener, event: layout.content_before }
 
   system.event.listener.render_cookie_consent_listener:
     class: ACP3\Modules\ACP3\System\Event\Listener\RenderCookieConsentListener
@@ -35,7 +35,7 @@ services:
       - '@core.config'
       - '@core.view'
     tags:
-      - { name: core.eventListener, event: layout.content_before, method: renderCookieConsent }
+      - { name: core.eventListener, event: layout.content_before }
 
   system.event.listener.render_update_check_alert_on_layout_content_before_listener:
     class: ACP3\Modules\ACP3\System\Event\Listener\RenderUpdateCheckAlertOnLayoutContentBeforeListener
@@ -45,4 +45,4 @@ services:
       - '@core.view'
       - '@system.helpers.update_check'
     tags:
-      - { name: core.eventListener, event: layout.content_before, method: renderUpdateCheckAlert }
+      - { name: core.eventListener, event: layout.content_before }

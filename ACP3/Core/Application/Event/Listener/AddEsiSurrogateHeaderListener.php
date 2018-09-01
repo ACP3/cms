@@ -34,7 +34,7 @@ class AddEsiSurrogateHeaderListener
     /**
      * @param ControllerActionAfterDispatchEvent $event
      */
-    public function execute(ControllerActionAfterDispatchEvent $event)
+    public function __invoke(ControllerActionAfterDispatchEvent $event)
     {
         $response = $event->getResponse();
 

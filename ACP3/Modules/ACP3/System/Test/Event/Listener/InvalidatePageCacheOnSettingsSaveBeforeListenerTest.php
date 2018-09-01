@@ -69,7 +69,7 @@ class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit\Frame
         $this->setUpCanUsePageCacheMockExpectations(false);
         $this->setUpSettingsMockExpectations();
 
-        $this->invalidatePageCache->invalidatePageCache();
+        $this->invalidatePageCache->__invoke();
     }
 
     private function setUpCanUsePageCacheMockExpectations($cacheEnabled = true)
@@ -92,7 +92,7 @@ class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit\Frame
         $this->setUpCanUsePageCacheMockExpectations(true);
         $this->setUpSettingsMockExpectations(1, 2);
 
-        $this->invalidatePageCache->invalidatePageCache();
+        $this->invalidatePageCache->__invoke();
     }
 
     public function testAutomaticPageCachePurge()
@@ -109,6 +109,6 @@ class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit\Frame
             ->method('update')
             ->with(['value' => false], ['module_id' => 1, 'name' => 'page_cache_is_valid']);
 
-        $this->invalidatePageCache->invalidatePageCache();
+        $this->invalidatePageCache->__invoke();
     }
 }

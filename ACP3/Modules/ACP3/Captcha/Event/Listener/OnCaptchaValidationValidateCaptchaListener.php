@@ -31,7 +31,7 @@ class OnCaptchaValidationValidateCaptchaListener
     /**
      * @param FormValidationEvent $event
      */
-    public function validateCaptcha(FormValidationEvent $event)
+    public function __invoke(FormValidationEvent $event)
     {
         $event
             ->getValidator()

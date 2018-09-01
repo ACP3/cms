@@ -39,7 +39,7 @@ class OnDataGridCustomOptionBeforeListener
     /**
      * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent $customOptionEvent
      */
-    public function addPicturesIndexButton(CustomOptionEvent $customOptionEvent)
+    public function __invoke(CustomOptionEvent $customOptionEvent)
     {
         if ($customOptionEvent->getIdentifier() === '#gallery-data-grid' &&
             $this->acl->hasPermission('admin/gallery/pictures/index') === true

@@ -34,7 +34,7 @@ class RenderCookieConsentListener
         $this->view = $view;
     }
 
-    public function renderCookieConsent()
+    public function __invoke()
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 

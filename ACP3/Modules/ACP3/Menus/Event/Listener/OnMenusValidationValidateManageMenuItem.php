@@ -42,7 +42,7 @@ class OnMenusValidationValidateManageMenuItem
     /**
      * @param FormValidationEvent $event
      */
-    public function validateManageMenuItem(FormValidationEvent $event)
+    public function __invoke(FormValidationEvent $event)
     {
         $formData = $event->getFormData();
 

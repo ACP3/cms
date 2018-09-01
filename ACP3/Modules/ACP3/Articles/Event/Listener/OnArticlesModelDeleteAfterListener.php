@@ -58,7 +58,7 @@ class OnArticlesModelDeleteAfterListener
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event)
     {
         if (!$event->isDeleteStatement()) {
             return;

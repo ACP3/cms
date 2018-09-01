@@ -39,7 +39,7 @@ class OnDataGridCustomOptionBeforeListener
     /**
      * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent $customOptionEvent
      */
-    public function onDataGridCustomOptionBefore(CustomOptionEvent $customOptionEvent)
+    public function __invoke(CustomOptionEvent $customOptionEvent)
     {
         if ($customOptionEvent->getIdentifier() === '#newsletter-data-grid' &&
             $this->acl->hasPermission('admin/newsletter/index/send') === true

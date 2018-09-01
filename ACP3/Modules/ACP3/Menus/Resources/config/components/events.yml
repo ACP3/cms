@@ -7,7 +7,7 @@ services:
       - '@menus.model.menuitemrepository'
       - '@menus.model.menu_items_model'
     tags:
-      - { name: core.eventListener, event: menus.model.menus.before_delete, method: execute }
+      - { name: core.eventListener, event: menus.model.menus.before_delete }
 
   menus.event.manage_menu_item_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Menus\Event\Listener\ManageMenuItemOnModelSaveAfterListener
@@ -15,16 +15,16 @@ services:
       - '@core.acl'
       - '@menus.helpers.managemenuitem'
     tags:
-      - { name: core.eventListener, event: core.model.after_save, method: createOrUpdateMenuItem }
+      - { name: core.eventListener, event: core.model.after_save }
 
   menus.event.update_menus_cache_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Menus\Event\Listener\UpdateMenusCacheOnModelAfterSaveListener
     arguments:
       - '@menus.cache'
     tags:
-      - { name: core.eventListener, event: menus.model.menus.after_save, method: execute }
-      - { name: core.eventListener, event: menus.model.menu_items.after_save, method: execute }
-      - { name: core.eventListener, event: menus.model.menu_items.after_delete, method: execute }
+      - { name: core.eventListener, event: menus.model.menus.after_save }
+      - { name: core.eventListener, event: menus.model.menu_items.after_save }
+      - { name: core.eventListener, event: menus.model.menu_items.after_delete }
 
   menus.event.on_menus_layout_render_manage_menu_item_listener:
     class: ACP3\Modules\ACP3\Menus\Event\Listener\OnMenusLayoutRenderManageMenuItemListener
@@ -36,7 +36,7 @@ services:
       - '@menus.helpers.menuitemformfields'
       - '@menus.model.menuitemrepository'
     tags:
-      - { name: core.eventListener, event: menus.layout.render_manage_menu_item, method: renderManageMenuItem }
+      - { name: core.eventListener, event: menus.layout.render_manage_menu_item }
 
   menus.event_on_menus_validation_validate_manage_menu_item_listener:
     class: ACP3\Modules\ACP3\Menus\Event\Listener\OnMenusValidationValidateManageMenuItem
@@ -44,4 +44,4 @@ services:
       - '@core.acl'
       - '@core.i18n.translator'
     tags:
-      - { name: core.eventListener, event: menus.validation.validate_manage_menu_item, method: validateManageMenuItem }
+      - { name: core.eventListener, event: menus.validation.validate_manage_menu_item }

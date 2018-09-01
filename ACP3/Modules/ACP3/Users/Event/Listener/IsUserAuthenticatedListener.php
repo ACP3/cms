@@ -14,7 +14,7 @@ use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-class IsUserAuthenticatedOnControllerActionBeforeDispatchListener
+class IsUserAuthenticatedListener
 {
     /**
      * @var UserModel
@@ -51,7 +51,7 @@ class IsUserAuthenticatedOnControllerActionBeforeDispatchListener
      *
      * @throws \ACP3\Core\Authentication\Exception\UnauthorizedAccessException
      */
-    public function isUserAuthenticated(ControllerActionBeforeDispatchEvent $event)
+    public function __invoke(ControllerActionBeforeDispatchEvent $event)
     {
         if ($event->getArea() === AreaEnum::AREA_ADMIN && $this->user->isAuthenticated() === false) {
             $this->redirectMessages->setMessage(

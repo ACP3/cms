@@ -35,7 +35,7 @@ class OnLayoutMetaListener
         $this->metaStatements = $metaStatements;
     }
 
-    public function renderSeoMetaTags()
+    public function __invoke()
     {
         $this->view->assign('META', $this->metaStatements->getMetaTags());
 

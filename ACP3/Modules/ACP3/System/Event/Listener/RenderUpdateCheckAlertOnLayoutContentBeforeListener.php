@@ -52,7 +52,7 @@ class RenderUpdateCheckAlertOnLayoutContentBeforeListener
         $this->acl = $acl;
     }
 
-    public function renderUpdateCheckAlert()
+    public function __invoke()
     {
         $update = $this->updateCheck->checkForNewVersion();
 

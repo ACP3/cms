@@ -48,7 +48,7 @@ class ValidateSharingInfoOnValidationInfo
     /**
      * @param FormValidationEvent $event
      */
-    public function execute(FormValidationEvent $event)
+    public function __invoke(FormValidationEvent $event)
     {
         if ($this->acl->hasPermission('admin/share/index/create')) {
             $event

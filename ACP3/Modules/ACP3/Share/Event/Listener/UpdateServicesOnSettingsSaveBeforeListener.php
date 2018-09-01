@@ -50,7 +50,7 @@ class UpdateServicesOnSettingsSaveBeforeListener
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(SettingsSaveEvent $event): void
+    public function __invoke(SettingsSaveEvent $event): void
     {
         $diff = $this->getRemovedServices($event);
 

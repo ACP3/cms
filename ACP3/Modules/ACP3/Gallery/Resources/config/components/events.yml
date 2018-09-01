@@ -4,7 +4,7 @@ services:
     arguments:
       - '@gallery.cache'
     tags:
-      - { name: core.eventListener, event: gallery.model.gallery_pictures.after_save, method: execute }
+      - { name: core.eventListener, event: gallery.model.gallery_pictures.after_save }
 
   gallery.event.generate_picture_uri_alias_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Gallery\Event\Listener\GeneratePictureUriAliasOnModelAfterSaveListener
@@ -15,7 +15,7 @@ services:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
       - ['setMetaStatements', ['@?seo.helper.meta_statements']]
     tags:
-      - { name: core.eventListener, event: gallery.model.gallery_pictures.after_save, method: generatePictureAlias, priority: -250 }
+      - { name: core.eventListener, event: gallery.model.gallery_pictures.after_save__invoke, priority: -250 }
 
   gallery.event.generate_picture_uri_aliases_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Gallery\Event\Listener\GeneratePictureUriAliasesOnModelAfterSaveListener
@@ -26,7 +26,7 @@ services:
       - ['setUriAliasManager', ['@?seo.helper.uri_alias_manager']]
       - ['setMetaStatements', ['@?seo.helper.meta_statements']]
     tags:
-      - { name: core.eventListener, event: core.model.after_save, method: generatePictureAliases, priority: -250 }
+      - { name: core.eventListener, event: core.model.after_save, priority: -250 }
 
   gallery.event.listener.on_data_grid_custom_option_before_listener:
     class: ACP3\Modules\ACP3\Gallery\Event\Listener\OnDataGridCustomOptionBeforeListener
@@ -34,4 +34,4 @@ services:
       - '@core.acl'
       - '@core.i18n.translator'
     tags:
-      - { name: core.eventListener, event: data_grid.column_renderer.custom_option_before, method: addPicturesIndexButton }
+      - { name: core.eventListener, event: data_grid.column_renderer.custom_option_before }

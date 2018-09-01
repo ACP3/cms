@@ -44,7 +44,7 @@ class OnLayoutHeadListener
         $this->modules = $modules;
     }
 
-    public function renderFeedLinks()
+    public function __invoke()
     {
         if ($this->modules->isActive(Schema::MODULE_NAME)) {
             $this->view->assign('available_feeds', $this->availableFeedsRegistrar->getAvailableModuleNames());

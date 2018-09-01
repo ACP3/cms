@@ -40,7 +40,7 @@ class InsertUriAliasOnModelAfterSaveListener
     /**
      * @param ModelSaveEvent $event
      */
-    public function insertUriAlias(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event)
     {
         if ($this->acl->hasPermission('admin/seo/index/create')) {
             $formData = $event->getRawData();

@@ -47,7 +47,7 @@ class OnLayoutSeoRenderFormFieldsListener
     /**
      * @param TemplateEvent $event
      */
-    public function renderSeoFormFields(TemplateEvent $event)
+    public function __invoke(TemplateEvent $event)
     {
         if ($this->acl->hasPermission('admin/seo/index/create')) {
             $parameters = $event->getParameters();

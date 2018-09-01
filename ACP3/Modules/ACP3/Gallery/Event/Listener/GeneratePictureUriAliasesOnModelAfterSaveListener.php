@@ -69,7 +69,7 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
     /**
      * @param ModelSaveEvent $event
      */
-    public function generatePictureAliases(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event)
     {
         if ($event->isIsNewEntry() || $event->getModuleName() !== Gallery\Installer\Schema::MODULE_NAME) {
             return;

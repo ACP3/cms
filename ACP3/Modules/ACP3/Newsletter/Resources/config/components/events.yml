@@ -5,4 +5,4 @@ services:
       - '@core.acl'
       - '@core.i18n.translator'
     tags:
-      - { name: core.eventListener, event: data_grid.column_renderer.custom_option_before, method: onDataGridCustomOptionBefore }
+      - { name: core.eventListener, event: data_grid.column_renderer.custom_option_before }

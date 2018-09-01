@@ -65,7 +65,7 @@ class SubscribeToNewsletterOnModelAfterSaveListener
     /**
      * @param ModelSaveEvent $event
      */
-    public function subscribeToNewsletter(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event)
     {
         if ($this->settings->getSettings(Schema::MODULE_NAME)['newsletter_integration'] == 1 && $this->subscribe) {
             $formData = $event->getRawData();

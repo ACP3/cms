@@ -26,7 +26,7 @@ class UpdateEmoticonsCacheOnModelAfterSaveListener
         $this->cache = $cache;
     }
 
-    public function execute()
+    public function __invoke()
     {
         $this->cache->saveCache();
     }

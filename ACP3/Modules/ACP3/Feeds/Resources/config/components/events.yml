@@ -6,4 +6,4 @@ services:
       - '@core.modules'
       - '@feeds.utility.feed_availability_registrar'
     tags:
-      - { name: core.eventListener, event: core.layout.head, method: renderFeedLinks }
+      - { name: core.eventListener, event: core.layout.head }

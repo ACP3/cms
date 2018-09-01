@@ -52,7 +52,7 @@ class RenderRecaptchaOnLayoutContentBeforeListener
         $this->translator = $translator;
     }
 
-    public function renderRecaptcha()
+    public function __invoke()
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 

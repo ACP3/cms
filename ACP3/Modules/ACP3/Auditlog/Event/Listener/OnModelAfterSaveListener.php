@@ -53,7 +53,7 @@ class OnModelAfterSaveListener
         $this->auditLogRepository = $auditLogRepository;
     }
 
-    public function onModelSave(ModelSaveEvent $event): void
+    public function __invoke(ModelSaveEvent $event): void
     {
         if ($event->hasDataChanges() === false) {
             return;

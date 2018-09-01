@@ -37,7 +37,7 @@ class OnDisplayCaptchaListener
     /**
      * @param \ACP3\Core\View\Event\TemplateEvent $templateEvent
      */
-    public function onDisplayCaptcha(TemplateEvent $templateEvent)
+    public function __invoke(TemplateEvent $templateEvent)
     {
         if ($this->acl->hasPermission('frontend/captcha/index/image') === true
             && $this->captchaExtension instanceof CaptchaExtensionInterface

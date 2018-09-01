@@ -39,7 +39,7 @@ class OnWysiwygTextareaBeforeListener
     /**
      * @param \ACP3\Core\View\Event\TemplateEvent $templateEvent
      */
-    public function onWysiwygTextareaBefore(TemplateEvent $templateEvent)
+    public function __invoke(TemplateEvent $templateEvent)
     {
         $arguments = $templateEvent->getParameters();
         if ($this->modules->isActive('emoticons') && !empty($arguments['id'])) {
