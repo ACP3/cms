@@ -8,7 +8,9 @@
                 <div class="col-sm-3">
                     <div class="thumbnail">
                         {if !empty($row.picture_id)}
-                            <img src="{uri args="gallery/index/image/id_`$row.picture_id`/action_thumb"}" alt="">
+                            <a href="{uri args="gallery/index/pics/id_`$row.id`"}">
+                                <img src="{uri args="gallery/index/image/id_`$row.picture_id`/action_thumb"}" alt="{$row.title}">
+                            </a>
                         {/if}
                         <div class="caption">
                             <h3>{$row.title}</h3>
