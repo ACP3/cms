@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- back ported the possibility to run CLI commands from ACP3.next
+
+### Changed
+- Updated PHPUnit to version 7.3 
+
 ## [4.28.4] - 2018-08-20
 ### Fixed
 - Fixed the installation and update wizard
