@@ -44,6 +44,8 @@ class Index extends Core\Controller\AbstractWidgetAction
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {

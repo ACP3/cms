@@ -234,7 +234,7 @@ class Picture
 
     public function getFileWeb(): string
     {
-        return $this->appPath->getWebRoot() . str_replace(ACP3_ROOT_DIR, '', $this->getFile());
+        return $this->appPath->getWebRoot() . \str_replace(ACP3_ROOT_DIR, '', $this->getFile());
     }
 
     /**
@@ -351,7 +351,7 @@ class Picture
     /**
      * Berechnet die neue Breite/Höhe eines Bildes.
      *
-     * @param int $width Ausgangsbreite des Bildes
+     * @param int $width  Ausgangsbreite des Bildes
      * @param int $height Ausgangshöhe des Bildes
      *
      * @return array

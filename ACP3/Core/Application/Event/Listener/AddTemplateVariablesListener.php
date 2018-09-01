@@ -62,6 +62,7 @@ class AddTemplateVariablesListener
             'DESIGN_PATH_ABSOLUTE' => $this->request->getScheme() . '://' . $this->request->getHttpHost() . $this->theme->getDesignPathWeb(),
             'LANG_DIRECTION' => $this->translator->getDirection(),
             'LANG' => $this->translator->getShortIsoCode(),
+            'UPLOADS_DIR' => $this->appPath->getWebRoot() . 'uploads/',
         ]);
     }
 }
