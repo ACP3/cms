@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - back ported the possibility to run CLI commands from ACP3.next
 
 ### Changed
+- Sort the frontend libraries in topological order
 - Updated PHPUnit to version 7.3
 - Updated the Symfony DI container to version 4.1
 - Updated the Symfony HTTP kernel to version 4.1

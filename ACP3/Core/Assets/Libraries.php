@@ -9,6 +9,7 @@ namespace ACP3\Core\Assets;
 
 use ACP3\Core\Assets\Event\AddLibraryEvent;
 use ACP3\Core\Http\RequestInterface;
+use MJS\TopSort\Implementations\StringSort;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Libraries
@@ -17,31 +18,16 @@ class Libraries
      * @var array
      */
     protected $libraries = [
-        'moment' => [
-            'enabled' => false,
-            'js' => 'moment.min.js',
-        ],
-        'jquery' => [
-            'enabled' => true,
-            'enabled_for_ajax' => false,
-            'js' => 'jquery.min.js',
-        ],
-        'js-cookie' => [
-            'enabled' => false,
-            'enabled_for_ajax' => false,
-            'js' => 'js.cookie.js',
-        ],
         'ajax-form' => [
             'enabled' => true,
             'enabled_for_ajax' => false,
-            'dependencies' => ['jquery'],
+            'dependencies' => ['bootstrap', 'jquery'],
             'js' => 'ajax-form.js',
         ],
-        'fancybox' => [
+        'bootbox' => [
             'enabled' => false,
-            'dependencies' => ['jquery'],
-            'css' => 'jquery.fancybox.css',
-            'js' => 'jquery.fancybox.min.js',
+            'dependencies' => ['bootstrap'],
+            'js' => 'bootbox.js',
         ],
         'bootstrap' => [
             'enabled' => false,
@@ -55,16 +41,17 @@ class Libraries
             'css' => 'dataTables.bootstrap.css',
             'js' => 'jquery.dataTables.js',
         ],
-        'bootbox' => [
-            'enabled' => false,
-            'dependencies' => ['bootstrap'],
-            'js' => 'bootbox.js',
-        ],
         'datetimepicker' => [
             'enabled' => false,
             'dependencies' => ['jquery', 'moment'],
             'css' => 'bootstrap-datetimepicker.css',
             'js' => 'bootstrap-datetimepicker.min.js',
+        ],
+        'fancybox' => [
+            'enabled' => false,
+            'dependencies' => ['jquery'],
+            'css' => 'jquery.fancybox.css',
+            'js' => 'jquery.fancybox.min.js',
         ],
         'font-awesome' => [
             'enabled' => false,
@@ -74,6 +61,20 @@ class Libraries
                 'fa-solid.css',
                 'fontawesome.css',
             ],
+        ],
+        'jquery' => [
+            'enabled' => true,
+            'enabled_for_ajax' => false,
+            'js' => 'jquery.min.js',
+        ],
+        'js-cookie' => [
+            'enabled' => false,
+            'enabled_for_ajax' => false,
+            'js' => 'js.cookie.js',
+        ],
+        'moment' => [
+            'enabled' => false,
+            'js' => 'moment.min.js',
         ],
     ];
     /**
@@ -106,10 +107,23 @@ class Libraries
 
     /**
      * @return array
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function getLibraries(): array
     {
-        return $this->libraries;
+        $topSort = new StringSort();
+        foreach ($this->libraries as $library => $options) {
+            $topSort->add($library, $options['dependencies'] ?? []);
+        }
+
+        $librariesTopSorted = [];
+        foreach ($topSort->sort() as $library) {
+            $librariesTopSorted[$library] = $this->libraries[$library];
+        }
+
+        return $librariesTopSorted;
     }
 
     /**
@@ -157,15 +171,18 @@ class Libraries
 
     /**
      * @return array
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function getEnabledLibraries(): array
     {
         $enabledLibraries = [];
-        foreach ($this->libraries as $library => $values) {
-            if ($this->includeInXmlHttpRequest($values)) {
+        foreach ($this->getLibraries() as $library => $options) {
+            if ($this->includeInXmlHttpRequest($options)) {
                 continue;
             }
-            if ($values['enabled'] === false) {
+            if ($options['enabled'] === false) {
                 continue;
             }
 

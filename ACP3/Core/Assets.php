@@ -127,6 +127,9 @@ class Assets
 
     /**
      * @return string
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function getEnabledLibrariesAsString()
     {
