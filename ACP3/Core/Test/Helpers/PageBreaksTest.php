@@ -12,7 +12,7 @@ use ACP3\Core\Helpers\TableOfContents;
 use ACP3\Core\Http\Request;
 use ACP3\Core\Router\RouterInterface;
 
-class PageBreaksTest extends \PHPUnit_Framework_TestCase
+class PageBreaksTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var PageBreaks
@@ -44,16 +44,9 @@ class PageBreaksTest extends \PHPUnit_Framework_TestCase
 
     protected function initializeMockObjects()
     {
-        $this->requestMock = $this->getMockBuilder(Request::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getParameters'])
-            ->getMock();
-        $this->routerMock = $this->getMockBuilder(RouterInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->tocMock = $this->getMockBuilder(TableOfContents::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->requestMock = $this->createMock(Request::class);
+        $this->routerMock = $this->createMock(RouterInterface::class);
+        $this->tocMock = $this->createMock(TableOfContents::class);
     }
 
     public function splitTextIntoPagesDataProvider()

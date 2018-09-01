@@ -15,7 +15,7 @@ use ACP3\Core\Router\RouterInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class StepsTest extends \PHPUnit_Framework_TestCase
+class StepsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

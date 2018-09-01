@@ -42,14 +42,8 @@ class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
     {
         parent::initializeMockObjects();
 
-        $this->requestMock = $this->getMockBuilder(Request::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->configMock = $this->getMockBuilder(SettingsInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getSettings', 'saveSettings'])
-            ->getMock();
+        $this->requestMock = $this->createMock(Request::class);
+        $this->configMock = $this->createMock(SettingsInterface::class);
     }
 
     public function testGetSiteAndPageTitleWithNoCustomSiteTitle()

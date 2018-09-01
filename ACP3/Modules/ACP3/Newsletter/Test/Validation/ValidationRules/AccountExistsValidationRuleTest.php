@@ -20,9 +20,7 @@ class AccountExistsValidationRuleTest extends AbstractValidationRuleTest
 
     protected function setUp()
     {
-        $this->accountRepositoryMock = $this->getMockBuilder(AccountRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->accountRepositoryMock = $this->createMock(AccountRepository::class);
 
         $this->validationRule = new AccountExistsValidationRule($this->accountRepositoryMock);
 

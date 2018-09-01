@@ -12,7 +12,7 @@ use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Helpers\StringFormatter;
 use ACP3\Core\Http\Request;
 
-class PageCssClassesTest extends \PHPUnit_Framework_TestCase
+class PageCssClassesTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var PageCssClasses
@@ -44,15 +44,9 @@ class PageCssClassesTest extends \PHPUnit_Framework_TestCase
 
     private function setUpMockObjects()
     {
-        $this->titleMock = $this->getMockBuilder(Title::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->requestMock = $this->getMockBuilder(Request::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->stringFormatterMock = $this->getMockBuilder(StringFormatter::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->titleMock = $this->createMock(Title::class);
+        $this->requestMock = $this->createMock(Request::class);
+        $this->stringFormatterMock = $this->createMock(StringFormatter::class);
     }
 
     public function testGetModule()

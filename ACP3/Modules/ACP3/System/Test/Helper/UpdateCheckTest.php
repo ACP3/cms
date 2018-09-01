@@ -12,7 +12,7 @@ use ACP3\Core\Date;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Helper\UpdateCheck;
 
-class UpdateCheckTest extends \PHPUnit_Framework_TestCase
+class UpdateCheckTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var UpdateCheck
@@ -44,17 +44,9 @@ class UpdateCheckTest extends \PHPUnit_Framework_TestCase
 
     private function setUpMockObjects()
     {
-        $this->dateMock = $this->getMockBuilder(Date::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->settingsMock = $this->getMockBuilder(SettingsInterface::class)
-            ->setMethods(['getSettings', 'saveSettings'])
-            ->getMock();
-
-        $this->updateFileParserMock = $this->getMockBuilder(UpdateCheck\UpdateFileParser::class)
-            ->setMethods(['parseUpdateFile'])
-            ->getMock();
+        $this->dateMock = $this->createMock(Date::class);
+        $this->settingsMock = $this->createMock(SettingsInterface::class);
+        $this->updateFileParserMock = $this->createMock(UpdateCheck\UpdateFileParser::class);
     }
 
     public function testDoNotRequestUpdateURI()

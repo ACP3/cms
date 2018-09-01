@@ -31,10 +31,7 @@ class RouterTest extends \ACP3\Core\Test\RouterTest
 
     protected function initializeMockObjects()
     {
-        $this->aliasesMock = $this->getMockBuilder(Aliases::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getUriAlias'])
-            ->getMock();
+        $this->aliasesMock = $this->createMock(Aliases::class);
 
         parent::initializeMockObjects();
     }

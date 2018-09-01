@@ -10,7 +10,7 @@ namespace ACP3\Core\Test\Environment;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 
-class ApplicationPathTest extends \PHPUnit_Framework_TestCase
+class ApplicationPathTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ApplicationPath
@@ -27,13 +27,14 @@ class ApplicationPathTest extends \PHPUnit_Framework_TestCase
         $designPathAbsolute = 'http://example.com/test';
 
         $this->appPath->setDesignPathAbsolute($designPathAbsolute);
+
+        $this->assertEquals($designPathAbsolute, $this->appPath->getDesignPathAbsolute());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testInvalidSetDesignPathAbsolute()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $invalidDesignPathAbsolute = 'http//example.com/test';
 
         $this->appPath->setDesignPathAbsolute($invalidDesignPathAbsolute);

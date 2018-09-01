@@ -19,10 +19,7 @@ class PictureColumnRendererTest extends AbstractColumnRendererTest
 
     protected function setUp()
     {
-        $this->routerMock = $this->getMockBuilder(RouterInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['route'])
-            ->getMock();
+        $this->routerMock = $this->createMock(RouterInterface::class);
 
         $this->columnRenderer = new PictureColumnRenderer(
             $this->routerMock

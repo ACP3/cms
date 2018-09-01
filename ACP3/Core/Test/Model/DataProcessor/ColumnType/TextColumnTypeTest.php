@@ -19,10 +19,7 @@ class TextColumnTypeTest extends AbstractColumnTypeTest
 
     protected function setUp()
     {
-        $this->secureMock = $this->getMockBuilder(Secure::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['strEncode'])
-            ->getMock();
+        $this->secureMock = $this->createMock(Secure::class);
 
         parent::setUp();
     }

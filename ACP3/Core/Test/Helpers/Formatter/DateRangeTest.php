@@ -13,7 +13,7 @@ use ACP3\Core\Helpers\Formatter\DateRange;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 
-class DateRangeTest extends \PHPUnit_Framework_TestCase
+class DateRangeTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -38,14 +38,8 @@ class DateRangeTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->langMock = $this->getMockBuilder(Translator::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['t'])
-            ->getMock();
-        $this->configMock = $this->getMockBuilder(SettingsInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getSettings', 'saveSettings'])
-            ->getMock();
+        $this->langMock = $this->createMock(Translator::class);
+        $this->configMock = $this->createMock(SettingsInterface::class);
 
         $this->configMock->expects($this->once())
             ->method('getSettings')

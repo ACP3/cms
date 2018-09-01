@@ -14,7 +14,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Environment\Theme;
 use ACP3\Core\Modules;
 
-class FileResolverTest extends \PHPUnit_Framework_TestCase
+class FileResolverTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var FileResolver

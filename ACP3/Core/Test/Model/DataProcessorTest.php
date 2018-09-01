@@ -9,7 +9,7 @@ namespace ACP3\Core\Test\Model;
 
 use ACP3\Core\Model\DataProcessor;
 
-class DataProcessorTest extends \PHPUnit_Framework_TestCase
+class DataProcessorTest extends \PHPUnit\Framework\TestCase
 {
     use CreateRawColumnTypeMockTrait;
 
@@ -24,10 +24,7 @@ class DataProcessorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->columnTypeStrategyFactoryMock = $this->getMockBuilder(DataProcessor\ColumnTypeStrategyFactory::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getStrategy'])
-            ->getMock();
+        $this->columnTypeStrategyFactoryMock = $this->createMock(DataProcessor\ColumnTypeStrategyFactory::class);
         $this->dataProcessor = new DataProcessor($this->columnTypeStrategyFactoryMock);
     }
 

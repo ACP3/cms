@@ -19,10 +19,7 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
 
     protected function setUp()
     {
-        $this->langMock = $this->getMockBuilder(Translator::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['t'])
-            ->getMock();
+        $this->langMock = $this->createMock(Translator::class);
 
         $this->columnRenderer = new TranslateColumnRenderer($this->langMock);
 

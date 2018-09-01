@@ -10,7 +10,7 @@ namespace ACP3\Core\Test\I18n;
 use ACP3\Core\I18n\CountryList;
 use ACP3\Core\I18n\Translator;
 
-class CountryListTest extends \PHPUnit_Framework_TestCase
+class CountryListTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var CountryList
@@ -23,10 +23,7 @@ class CountryListTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->translatorMock = $this->getMockBuilder(Translator::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getLocale'])
-            ->getMock();
+        $this->translatorMock = $this->createPartialMock(Translator::class, ['getLocale']);
 
         $this->countryList = new CountryList($this->translatorMock);
     }
@@ -39,7 +36,7 @@ class CountryListTest extends \PHPUnit_Framework_TestCase
 
         $actual = $this->countryList->worldCountries();
 
-        $this->assertTrue(\is_array($actual));
+        $this->assertInternalType('array', $actual);
         $this->assertNotEmpty($actual);
     }
 
@@ -51,7 +48,7 @@ class CountryListTest extends \PHPUnit_Framework_TestCase
 
         $actual = $this->countryList->worldCountries();
 
-        $this->assertTrue(\is_array($actual));
+        $this->assertInternalType('array', $actual);
         $this->assertEmpty($actual);
     }
 
@@ -63,7 +60,7 @@ class CountryListTest extends \PHPUnit_Framework_TestCase
 
         $actual = $this->countryList->worldCountries();
 
-        $this->assertTrue(\is_array($actual));
+        $this->assertInternalType('array', $actual);
         $this->assertEmpty($actual);
     }
 }

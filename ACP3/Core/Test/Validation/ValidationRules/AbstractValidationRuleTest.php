@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Test\Validation\ValidationRules;
 
-abstract class AbstractValidationRuleTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractValidationRuleTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \ACP3\Core\Validation\ValidationRules\ValidationRuleInterface

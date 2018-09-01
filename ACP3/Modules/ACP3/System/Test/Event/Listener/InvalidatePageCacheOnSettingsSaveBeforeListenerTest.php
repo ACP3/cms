@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\System\Event\Listener\InvalidatePageCacheOnSettingsSaveBef
 use ACP3\Modules\ACP3\System\Helper\CanUsePageCache;
 use ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository;
 
-class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit_Framework_TestCase
+class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var InvalidatePageCacheOnSettingsSaveBeforeListener
@@ -58,18 +58,10 @@ class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit_Frame
     private function setUpMockObjects()
     {
         $this->applicationPath = new ApplicationPath(ApplicationMode::DEVELOPMENT);
-        $this->settingsMock = $this->getMockBuilder(SettingsInterface::class)
-            ->setMethods(['getSettings', 'saveSettings'])
-            ->getMock();
-        $this->modulesMock = $this->getMockBuilder(Modules::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->settingsRepositoryMock = $this->getMockBuilder(SettingsRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->canUsePageCacheMock = $this->getMockBuilder(CanUsePageCache::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->settingsMock = $this->createMock(SettingsInterface::class);
+        $this->modulesMock = $this->createMock(Modules::class);
+        $this->settingsRepositoryMock = $this->createMock(SettingsRepository::class);
+        $this->canUsePageCacheMock = $this->createMock(CanUsePageCache::class);
     }
 
     public function testDisabledPageCache()

@@ -11,7 +11,7 @@ use ACP3\Core\Cache;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\CacheProvider;
 
-class CacheTest extends \PHPUnit_Framework_TestCase
+class CacheTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \ACP3\Core\Cache
@@ -34,10 +34,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
 
     private function initializeMockObjects()
     {
-        $this->cacheDriverFactoryMock = $this->getMockBuilder(Cache\CacheDriverFactory::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['create'])
-            ->getMock();
+        $this->cacheDriverFactoryMock = $this->createMock(Cache\CacheDriverFactory::class);
     }
 
     public function testGetDriverInstanceOf()
