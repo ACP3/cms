@@ -2,6 +2,7 @@ services:
   gallery.console.generate_thumbnails_command:
     class: ACP3\Modules\ACP3\Gallery\Console\GenerateThumbnailsCommand
     arguments:
+      - '@core.environment.application_path'
       - '@gallery.helpers.thumbnail_generator'
       - '@service_container'
       - '@gallery.model.galleryrepository'

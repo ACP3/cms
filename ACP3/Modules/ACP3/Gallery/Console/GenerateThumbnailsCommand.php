@@ -7,13 +7,17 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Console;
 
+use ACP3\Core\Cache\Purge;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
+use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -35,16 +39,13 @@ class GenerateThumbnailsCommand extends Command
      * @var ContainerInterface
      */
     private $container;
-
     /**
-     * GenerateThumbnailsCommand constructor.
-     *
-     * @param \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator          $thumbnailGenerator
-     * @param \Psr\Container\ContainerInterface                             $container
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $galleryPicturesRepository
+     * @var \ACP3\Core\Environment\ApplicationPath
      */
+    private $appPath;
+
     public function __construct(
+        ApplicationPath $appPath,
         ThumbnailGenerator $thumbnailGenerator,
         ContainerInterface $container,
         GalleryRepository $galleryRepository,
@@ -56,6 +57,7 @@ class GenerateThumbnailsCommand extends Command
         $this->galleryPicturesRepository = $galleryPicturesRepository;
         $this->thumbnailGenerator = $thumbnailGenerator;
         $this->container = $container;
+        $this->appPath = $appPath;
     }
 
     /**
@@ -65,7 +67,13 @@ class GenerateThumbnailsCommand extends Command
     {
         $this
             ->setName('acp3:gallery:generate-thumbnails')
-            ->setDescription('Generates the gallery pictures thumbnails.');
+            ->setDescription('Generates the gallery pictures thumbnails.')
+            ->addOption(
+                'force',
+                'f',
+                InputOption::VALUE_NONE,
+                'Whether to delete all previously generated cached pictures'
+            );
     }
 
     /**
@@ -77,6 +85,8 @@ class GenerateThumbnailsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Generating the gallery picture thumbnails...');
+
+        $this->cleanCachedPictures($input, $output);
 
         ProgressBar::setFormatDefinition('custom', ' %current%/%max% -- %message%');
 
@@ -95,6 +105,19 @@ class GenerateThumbnailsCommand extends Command
 
             $progress->finish();
             $output->writeln('');
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface   $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
+    protected function cleanCachedPictures(InputInterface $input, OutputInterface $output): void
+    {
+        if ($input->getOption('force')) {
+            $output->writeln('Deleting cached gallery pictures:');
+            Purge::doPurge($this->appPath->getUploadsDir() . Schema::MODULE_NAME . '/cache/');
+            $output->writeln('Done!');
         }
     }
 
