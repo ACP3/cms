@@ -77,7 +77,18 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
 
         return $this->db->fetchAll(
-            "SELECT g.*, COUNT(p.gallery_id) AS pics, (SELECT fp.`id` FROM {$this->getTableName(PictureRepository::TABLE_NAME)} AS fp WHERE fp.gallery_id = g.id ORDER BY fp.pic ASC LIMIT 1) AS picture_id FROM {$this->getTableName()} AS g LEFT JOIN {$this->getTableName(PictureRepository::TABLE_NAME)} AS p ON(g.id = p.gallery_id) {$where} GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC{$limitStmt};",
+            "
+                SELECT g.*, 
+                       COUNT(p.gallery_id) AS pics,
+                       (SELECT fp.`file` FROM {$this->getTableName(PictureRepository::TABLE_NAME)} AS fp WHERE fp.gallery_id = g.id ORDER BY fp.pic ASC LIMIT 1) AS file
+                       FROM {$this->getTableName()} AS g
+                  LEFT JOIN {$this->getTableName(PictureRepository::TABLE_NAME)} AS p ON(g.id = p.gallery_id)
+                  {$where}
+                   GROUP BY g.id
+                   ORDER BY g.start DESC,
+                            g.end DESC,
+                            g.id DESC
+                   {$limitStmt};",
             ['time' => $time]
         );
     }

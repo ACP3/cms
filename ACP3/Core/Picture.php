@@ -53,6 +53,10 @@ class Picture
      * @var bool
      */
     protected $forceResample = false;
+    /**
+     * @var int|null
+     */
+    protected $type;
 
     /**
      * @var FastImageSize
@@ -86,7 +90,7 @@ class Picture
         FastImageSize $fastImageSize,
         Response $response,
         ApplicationPath $appPath,
-        $environment
+        string $environment
     ) {
         $this->fastImageSize = $fastImageSize;
         $this->response = $response;
@@ -100,6 +104,11 @@ class Picture
      * Gibt den während der Bearbeitung belegten Speicher wieder frei.
      */
     public function __destruct()
+    {
+        $this->freeMemory();
+    }
+
+    public function freeMemory(): void
     {
         if (\is_resource($this->image) === true) {
             \imagedestroy($this->image);
@@ -218,6 +227,16 @@ class Picture
         return $this;
     }
 
+    public function getFile(): string
+    {
+        return $this->file;
+    }
+
+    public function getFileWeb(): string
+    {
+        return $this->appPath->getWebRoot() . \str_replace(ACP3_ROOT_DIR, '', $this->getFile());
+    }
+
     /**
      * @param bool $forceResample
      *
@@ -235,20 +254,20 @@ class Picture
      */
     public function process()
     {
+        $this->type = null;
+
         if (\is_file($this->file) === true) {
             $cacheFile = $this->getCacheFileName();
 
             $picInfo = $this->fastImageSize->getImageSize($this->file);
             $width = $picInfo['width'];
             $height = $picInfo['height'];
-            $type = $picInfo['type'];
-
-            $this->setHeaders($this->getMimeType($type));
+            $this->type = $picInfo['type'];
 
             // Direct output of the picture, if it is already cached
             if ($this->enableCache === true && \is_file($cacheFile) === true) {
                 $this->file = $cacheFile;
-            } elseif ($this->resamplingIsNecessary($width, $height, $type)) { // Resize the picture
+            } elseif ($this->resamplingIsNecessary($width, $height, $this->type)) { // Resize the picture
                 $dimensions = $this->calcNewDimensions($width, $height);
 
                 $this->createCacheDir();
@@ -258,7 +277,7 @@ class Picture
                     $dimensions['height'],
                     $width,
                     $height,
-                    $type,
+                    $this->type,
                     $cacheFile
                 );
                 $this->file = $cacheFile;
@@ -266,7 +285,6 @@ class Picture
 
             return true;
         }
-        $this->setHeaders('image/jpeg');
 
         return false;
     }
@@ -287,7 +305,7 @@ class Picture
                 return 'image/png';
         }
 
-        return '';
+        return 'image/jpeg';
     }
 
     /**
@@ -295,6 +313,8 @@ class Picture
      */
     public function sendResponse()
     {
+        $this->setHeaders($this->getMimeType($this->type));
+
         return $this->response->setContent($this->readFromFile());
     }
 
@@ -331,10 +351,8 @@ class Picture
     /**
      * Berechnet die neue Breite/Höhe eines Bildes.
      *
-     * @param int $width
-     *                    Ausgangsbreite des Bildes
-     * @param int $height
-     *                    Ausgangshöhe des Bildes
+     * @param int $width  Ausgangsbreite des Bildes
+     * @param int $height Ausgangshöhe des Bildes
      *
      * @return array
      */

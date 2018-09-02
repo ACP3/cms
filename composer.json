@@ -17,6 +17,7 @@
   "prefer-stable": true,
   "require": {
     "php": "^7.1",
+    "ext-gd": "*",
     "ext-SimpleXML": "*",
     "ckeditor/ckeditor": "dev-full/4.10.x",
     "cocur/slugify": "^3.0",
