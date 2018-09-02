@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Gallery;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 use Psr\Container\ContainerInterface;
@@ -35,12 +36,17 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * @var \Psr\Container\ContainerInterface
      */
     private $container;
+    /**
+     * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
+     */
+    private $thumbnailGenerator;
 
     public function __construct(
         Core\Cache $cache,
         Core\Environment\ApplicationPath $appPath,
         PictureRepository $pictureRepository,
         Core\Settings\SettingsInterface $config,
+        ThumbnailGenerator $thumbnailGenerator,
         ContainerInterface $container
     ) {
         parent::__construct($cache);
@@ -49,6 +55,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
         $this->pictureRepository = $pictureRepository;
         $this->config = $config;
         $this->container = $container;
+        $this->thumbnailGenerator = $thumbnailGenerator;
     }
 
     /**
@@ -82,8 +89,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
         for ($i = 0; $i < $cPictures; ++$i) {
-            $cachedThumbnail = $this->cachePicture($pictures[$i]['file'], 'thumb', $settings);
-            $cachedPicture = $this->cachePicture($pictures[$i]['file'], null, $settings);
+            $cachedThumbnail = $this->cachePicture($pictures[$i]['file'], 'thumb');
+            $cachedPicture = $this->cachePicture($pictures[$i]['file'], null);
 
             $pictures[$i]['width'] = $settings['thumbwidth'];
             $pictures[$i]['height'] = $settings['thumbheight'];
@@ -100,20 +107,13 @@ class Cache extends Core\Modules\AbstractCacheStorage
         return $this->cache->save(self::CACHE_ID . $galleryId, $pictures);
     }
 
-    private function cachePicture(string $fileName, ?string $action, array $settings): Core\Picture
+    private function cachePicture(string $fileName, ?string $action): Core\Picture
     {
         $action = $action === 'thumb' ? 'thumb' : '';
 
         /** @var Core\Picture $image */
         $image = $this->container->get('core.image');
-        $image
-            ->setEnableCache(true)
-            ->setCachePrefix('gallery_' . $action)
-            ->setCacheDir($this->appPath->getUploadsDir() . 'gallery/cache/')
-            ->setMaxWidth($settings[$action . 'width'])
-            ->setMaxHeight($settings[$action . 'height'])
-            ->setFile($this->appPath->getUploadsDir() . 'gallery/' . $fileName)
-            ->setPreferHeight($action === 'thumb');
+        $this->thumbnailGenerator->generateThumbnail($image, $action, $fileName);
 
         $image->process();
         $image->freeMemory();

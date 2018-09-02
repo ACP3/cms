@@ -11,7 +11,6 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Picture;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
-use ACP3\Modules\ACP3\System\Installer\Schema as SystemSchema;
 
 class ThumbnailGenerator
 {
@@ -48,7 +47,7 @@ class ThumbnailGenerator
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
         return $picture
-            ->setEnableCache($this->settings->getSettings(SystemSchema::MODULE_NAME)['cache_images'] == 1)
+            ->setEnableCache(true)
             ->setCachePrefix('gallery_' . $action)
             ->setCacheDir($this->appPath->getUploadsDir() . 'gallery/cache/')
             ->setMaxWidth($settings[$action . 'width'])
