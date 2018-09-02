@@ -8,8 +8,9 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Picture\Exception\PictureGenerateException;
 use FastImageSize\FastImageSize;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class Picture
 {
@@ -63,10 +64,6 @@ class Picture
      */
     private $fastImageSize;
     /**
-     * @var \Symfony\Component\HttpFoundation\Response
-     */
-    protected $response;
-    /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
@@ -80,20 +77,12 @@ class Picture
      */
     protected $image;
 
-    /**
-     * @param FastImageSize                              $fastImageSize
-     * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param \ACP3\Core\Environment\ApplicationPath     $appPath
-     * @param string                                     $environment
-     */
     public function __construct(
         FastImageSize $fastImageSize,
-        Response $response,
         ApplicationPath $appPath,
         string $environment
     ) {
         $this->fastImageSize = $fastImageSize;
-        $this->response = $response;
         $this->appPath = $appPath;
         $this->environment = $environment;
 
@@ -250,9 +239,9 @@ class Picture
     }
 
     /**
-     * @return bool
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
-    public function process()
+    public function process(): void
     {
         $this->type = null;
 
@@ -283,10 +272,12 @@ class Picture
                 $this->file = $cacheFile;
             }
 
-            return true;
+            return;
         }
 
-        return false;
+        throw new PictureGenerateException(
+            \sprintf('Could not find picture: %s', $this->file)
+        );
     }
 
     /**
@@ -313,9 +304,10 @@ class Picture
      */
     public function sendResponse()
     {
-        $this->setHeaders($this->getMimeType($this->type));
+        $response = new BinaryFileResponse($this->file);
+        $this->setHeaders($response, $this->getMimeType($this->type));
 
-        return $this->response->setContent($this->readFromFile());
+        return $response;
     }
 
     /**
@@ -409,11 +401,12 @@ class Picture
     }
 
     /**
-     * @param string $mimeType
+     * @param \Symfony\Component\HttpFoundation\BinaryFileResponse $response
+     * @param string                                               $mimeType
      */
-    protected function setHeaders($mimeType)
+    protected function setHeaders(BinaryFileResponse $response, string $mimeType)
     {
-        $this->response->headers->add([
+        $response->headers->add([
             'Content-type' => $mimeType,
             'Cache-Control' => 'public',
             'Pragma' => 'public',

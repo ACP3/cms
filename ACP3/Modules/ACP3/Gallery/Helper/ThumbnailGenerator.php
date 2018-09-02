@@ -41,12 +41,14 @@ class ThumbnailGenerator
      * @param string  $fileName
      *
      * @return Picture
+     *
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     public function generateThumbnail(Picture $picture, string $action, string $fileName): Picture
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
-        return $picture
+        $picture
             ->setEnableCache(true)
             ->setCachePrefix('gallery_' . $action)
             ->setCacheDir($this->appPath->getUploadsDir() . 'gallery/cache/')
@@ -54,5 +56,9 @@ class ThumbnailGenerator
             ->setMaxHeight($settings[$action . 'height'])
             ->setFile($this->appPath->getUploadsDir() . 'gallery/' . $fileName)
             ->setPreferHeight($action === 'thumb');
+
+        $picture->process();
+
+        return $picture;
     }
 }

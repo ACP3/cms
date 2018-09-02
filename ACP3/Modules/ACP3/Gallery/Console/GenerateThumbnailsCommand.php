@@ -80,6 +80,7 @@ class GenerateThumbnailsCommand extends Command
      * {@inheritdoc}
      *
      * @throws \Doctrine\DBAL\DBALException
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -123,6 +124,8 @@ class GenerateThumbnailsCommand extends Command
 
     /**
      * @param string $pictureFileName
+     *
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     private function generateThumbnails(string $pictureFileName)
     {
@@ -134,13 +137,11 @@ class GenerateThumbnailsCommand extends Command
      * @param string $pictureFileName
      * @param string $action
      *
-     * @return bool
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
-    private function generateThumbnail(string $pictureFileName, string $action): bool
+    private function generateThumbnail(string $pictureFileName, string $action): void
     {
         $image = $this->container->get('core.image');
         $this->thumbnailGenerator->generateThumbnail($image, $action, $pictureFileName);
-
-        return $image->process();
     }
 }

@@ -64,6 +64,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * @param int $galleryId
      *
      * @return array
+     *
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     public function getCache(int $galleryId)
     {
@@ -80,6 +82,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * @param int $galleryId
      *
      * @return bool
+     *
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     public function saveCache(int $galleryId)
     {
@@ -107,6 +111,14 @@ class Cache extends Core\Modules\AbstractCacheStorage
         return $this->cache->save(self::CACHE_ID . $galleryId, $pictures);
     }
 
+    /**
+     * @param string      $fileName
+     * @param null|string $action
+     *
+     * @return \ACP3\Core\Picture
+     *
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     */
     private function cachePicture(string $fileName, ?string $action): Core\Picture
     {
         $action = $action === 'thumb' ? 'thumb' : '';
@@ -115,7 +127,6 @@ class Cache extends Core\Modules\AbstractCacheStorage
         $image = $this->container->get('core.image');
         $this->thumbnailGenerator->generateThumbnail($image, $action, $fileName);
 
-        $image->process();
         $image->freeMemory();
 
         return $image;

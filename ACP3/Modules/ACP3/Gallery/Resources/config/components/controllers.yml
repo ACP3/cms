@@ -109,6 +109,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@gallery.model.picturerepository'
+      - '@gallery.helpers.thumbnail_generator'
 
   gallery.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Index
