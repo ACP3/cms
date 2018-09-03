@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - back ported the possibility to run CLI commands from ACP3.next
+- back ported the honeypot captcha from ACP3.next
 
 ### Changed
 - Sort the frontend libraries in topological order
