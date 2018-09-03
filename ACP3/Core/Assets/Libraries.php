@@ -56,9 +56,9 @@ class Libraries
         'font-awesome' => [
             'enabled' => false,
             'css' => [
-                'fa-brands.css',
-                'fa-regular.css',
-                'fa-solid.css',
+                'brands.css',
+                'regular.css',
+                'solid.css',
                 'fontawesome.css',
             ],
         ],

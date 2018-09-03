@@ -20,7 +20,7 @@
   "homepage": "https://www.acp3-cms.net",
   "private": true,
   "devDependencies": {
-    "eslint": "^5.3.0",
+    "eslint": "^5.5.0",
     "gulp": "^4.0.0",
     "gulp-change": "^1.0.0",
     "gulp-less": "^4.0.1",
@@ -30,8 +30,8 @@
     "yargs": "^12.0.1"
   },
   "dependencies": {
-    "@fancyapps/fancybox": "^3.3.5",
-    "@fortawesome/fontawesome-free": "^5.2.0",
+    "@fancyapps/fancybox": "^3.4.1",
+    "@fortawesome/fontawesome-free": "^5.3.1",
     "bootbox": "^4.4.0",
     "bootstrap": "^3.3.7",
     "ckeditor-codemirror-plugin": "^1.17.3",

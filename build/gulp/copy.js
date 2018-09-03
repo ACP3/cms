@@ -35,7 +35,7 @@ module.exports = function (gulp) {
                 },
                 {
                     'src': [
-                        nodeBasePath + '/@fortawesome/fontawesome-free-webfonts/webfonts/**/*'
+                        nodeBasePath + '/@fortawesome/fontawesome-free/webfonts/**/*'
                     ],
                     'dest': systemBasePath + '/webfonts'
                 },
@@ -56,10 +56,10 @@ module.exports = function (gulp) {
                         nodeBasePath + '/@fancyapps/fancybox/dist/jquery.fancybox.css',
                         nodeBasePath + '/bootstrap/dist/css/bootstrap.min.css',
                         nodeBasePath + '/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
-                        nodeBasePath + '/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css',
-                        nodeBasePath + '/@fortawesome/fontawesome-free-webfonts/css/fa-regular.css',
-                        nodeBasePath + '/@fortawesome/fontawesome-free-webfonts/css/fa-solid.css',
-                        nodeBasePath + '/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css',
+                        nodeBasePath + '/@fortawesome/fontawesome-free/css/brands.css',
+                        nodeBasePath + '/@fortawesome/fontawesome-free/css/regular.css',
+                        nodeBasePath + '/@fortawesome/fontawesome-free/css/solid.css',
+                        nodeBasePath + '/@fortawesome/fontawesome-free/css/fontawesome.css',
                         nodeBasePath + '/datatables.net-bs/css/dataTables.bootstrap.css'
 
                     ],
