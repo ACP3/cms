@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Sort the frontend libraries in topological order
-- Converted a event listeners to invokable classes
+- Reworked the caching of the gallery pictures
+- Converted the event listeners to invokable classes
 - Updated PHPUnit to version 7.3
 - Updated the Symfony DI container to version 4.1
 - Updated the Symfony HTTP kernel to version 4.1
