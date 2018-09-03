@@ -12,7 +12,7 @@ use ACP3\Core\Model\DataProcessor\ColumnTypes;
 use ACP3\Core\Model\DataProcessor\ColumnTypeStrategyFactory;
 use ACP3\Core\Test\Model\CreateRawColumnTypeMockTrait;
 
-class ColumnTypeStrategyFactoryTest extends \PHPUnit_Framework_TestCase
+class ColumnTypeStrategyFactoryTest extends \PHPUnit\Framework\TestCase
 {
     use CreateRawColumnTypeMockTrait;
 
@@ -34,11 +34,10 @@ class ColumnTypeStrategyFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(ColumnTypeStrategyInterface::class, $this->columnTypeStrategyFactory->getStrategy(ColumnTypes::COLUMN_TYPE_RAW));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetStrategyWithInvalidColumnType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $this->columnTypeStrategyFactory->getStrategy(ColumnTypes::COLUMN_TYPE_RAW);
     }
 }

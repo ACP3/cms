@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Image extends AbstractAction
 {
@@ -17,20 +16,27 @@ class Image extends AbstractAction
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     protected $pictureRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
+     */
+    private $thumbnailGenerator;
 
     /**
      * Image constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
+     * @param \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator          $thumbnailGenerator
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Gallery\Model\Repository\PictureRepository $pictureRepository
+        Gallery\Model\Repository\PictureRepository $pictureRepository,
+        Gallery\Helper\ThumbnailGenerator $thumbnailGenerator
     ) {
         parent::__construct($context);
 
         $this->pictureRepository = $pictureRepository;
+        $this->thumbnailGenerator = $thumbnailGenerator;
     }
 
     /**
@@ -49,19 +55,13 @@ class Image extends AbstractAction
 
         /** @var Core\Picture $image */
         $image = $this->get('core.image');
-        $image
-            ->setEnableCache($this->config->getSettings(Schema::MODULE_NAME)['cache_images'] == 1)
-            ->setCachePrefix('gallery_' . $action)
-            ->setCacheDir($this->appPath->getUploadsDir() . 'gallery/cache/')
-            ->setMaxWidth($this->settings[$action . 'width'])
-            ->setMaxHeight($this->settings[$action . 'height'])
-            ->setFile($this->appPath->getUploadsDir() . 'gallery/' . $picture)
-            ->setPreferHeight($action === 'thumb');
 
-        if ($image->process()) {
+        try {
+            $this->thumbnailGenerator->generateThumbnail($image, $action, $picture);
+
             return $image->sendResponse();
+        } catch (Core\Picture\Exception\PictureGenerateException $e) {
+            throw new Core\Controller\Exception\ResultNotExistsException('', 0, $e);
         }
-
-        throw new Core\Controller\Exception\ResultNotExistsException();
     }
 }

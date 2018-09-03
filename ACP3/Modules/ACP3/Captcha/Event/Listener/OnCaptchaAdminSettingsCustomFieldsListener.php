@@ -30,7 +30,7 @@ class OnCaptchaAdminSettingsCustomFieldsListener
     /**
      * @param TemplateEvent $event
      */
-    public function renderRecaptchaSettings(TemplateEvent $event)
+    public function __invoke(TemplateEvent $event)
     {
         $params = $event->getParameters();
         $this->view->assign('form', $params['form']);

@@ -89,10 +89,9 @@ class Index extends AbstractFrontendAction
             ->addColumn([
                 'label' => $this->translator->t('gallery', 'picture'),
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer::class,
-                'fields' => ['id'],
+                'fields' => ['file'],
                 'custom' => [
-                    'pattern' => 'gallery/index/image/id_%s/action_thumb',
-                    'isRoute' => true,
+                    'pattern' => $this->appPath->getWebRoot() . 'uploads/gallery/cache/gallery_thumb%s',
                 ],
             ], 40)
             ->addColumn([

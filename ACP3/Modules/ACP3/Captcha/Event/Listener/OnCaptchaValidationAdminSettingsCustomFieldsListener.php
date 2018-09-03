@@ -31,7 +31,7 @@ class OnCaptchaValidationAdminSettingsCustomFieldsListener
     /**
      * @param FormValidationEvent $event
      */
-    public function validateRecaptchaSettings(FormValidationEvent $event)
+    public function __invoke(FormValidationEvent $event)
     {
         $formData = $event->getFormData();
 

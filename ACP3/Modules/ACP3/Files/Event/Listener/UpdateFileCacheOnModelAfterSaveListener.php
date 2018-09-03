@@ -30,7 +30,7 @@ class UpdateFileCacheOnModelAfterSaveListener
     /**
      * @param ModelSaveEvent $event
      */
-    public function execute(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event)
     {
         $this->cache->saveCache($event->getEntryId());
     }

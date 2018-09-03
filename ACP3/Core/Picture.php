@@ -8,8 +8,9 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Picture\Exception\PictureGenerateException;
 use FastImageSize\FastImageSize;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class Picture
 {
@@ -53,15 +54,15 @@ class Picture
      * @var bool
      */
     protected $forceResample = false;
+    /**
+     * @var int|null
+     */
+    protected $type;
 
     /**
      * @var FastImageSize
      */
     private $fastImageSize;
-    /**
-     * @var \Symfony\Component\HttpFoundation\Response
-     */
-    protected $response;
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
@@ -76,20 +77,12 @@ class Picture
      */
     protected $image;
 
-    /**
-     * @param FastImageSize                              $fastImageSize
-     * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param \ACP3\Core\Environment\ApplicationPath     $appPath
-     * @param string                                     $environment
-     */
     public function __construct(
         FastImageSize $fastImageSize,
-        Response $response,
         ApplicationPath $appPath,
-        $environment
+        string $environment
     ) {
         $this->fastImageSize = $fastImageSize;
-        $this->response = $response;
         $this->appPath = $appPath;
         $this->environment = $environment;
 
@@ -100,6 +93,11 @@ class Picture
      * Gibt den während der Bearbeitung belegten Speicher wieder frei.
      */
     public function __destruct()
+    {
+        $this->freeMemory();
+    }
+
+    public function freeMemory(): void
     {
         if (\is_resource($this->image) === true) {
             \imagedestroy($this->image);
@@ -218,6 +216,16 @@ class Picture
         return $this;
     }
 
+    public function getFile(): string
+    {
+        return $this->file;
+    }
+
+    public function getFileWeb(): string
+    {
+        return $this->appPath->getWebRoot() . \str_replace(ACP3_ROOT_DIR, '', $this->getFile());
+    }
+
     /**
      * @param bool $forceResample
      *
@@ -231,24 +239,24 @@ class Picture
     }
 
     /**
-     * @return bool
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
-    public function process()
+    public function process(): void
     {
+        $this->type = null;
+
         if (\is_file($this->file) === true) {
             $cacheFile = $this->getCacheFileName();
 
             $picInfo = $this->fastImageSize->getImageSize($this->file);
             $width = $picInfo['width'];
             $height = $picInfo['height'];
-            $type = $picInfo['type'];
-
-            $this->setHeaders($this->getMimeType($type));
+            $this->type = $picInfo['type'];
 
             // Direct output of the picture, if it is already cached
             if ($this->enableCache === true && \is_file($cacheFile) === true) {
                 $this->file = $cacheFile;
-            } elseif ($this->resamplingIsNecessary($width, $height, $type)) { // Resize the picture
+            } elseif ($this->resamplingIsNecessary($width, $height, $this->type)) { // Resize the picture
                 $dimensions = $this->calcNewDimensions($width, $height);
 
                 $this->createCacheDir();
@@ -258,17 +266,18 @@ class Picture
                     $dimensions['height'],
                     $width,
                     $height,
-                    $type,
+                    $this->type,
                     $cacheFile
                 );
                 $this->file = $cacheFile;
             }
 
-            return true;
+            return;
         }
-        $this->setHeaders('image/jpeg');
 
-        return false;
+        throw new PictureGenerateException(
+            \sprintf('Could not find picture: %s', $this->file)
+        );
     }
 
     /**
@@ -287,7 +296,7 @@ class Picture
                 return 'image/png';
         }
 
-        return '';
+        return 'image/jpeg';
     }
 
     /**
@@ -295,7 +304,10 @@ class Picture
      */
     public function sendResponse()
     {
-        return $this->response->setContent($this->readFromFile());
+        $response = new BinaryFileResponse($this->file);
+        $this->setHeaders($response, $this->getMimeType($this->type));
+
+        return $response;
     }
 
     /**
@@ -331,10 +343,8 @@ class Picture
     /**
      * Berechnet die neue Breite/Höhe eines Bildes.
      *
-     * @param int $width
-     *                    Ausgangsbreite des Bildes
-     * @param int $height
-     *                    Ausgangshöhe des Bildes
+     * @param int $width  Ausgangsbreite des Bildes
+     * @param int $height Ausgangshöhe des Bildes
      *
      * @return array
      */
@@ -391,11 +401,12 @@ class Picture
     }
 
     /**
-     * @param string $mimeType
+     * @param \Symfony\Component\HttpFoundation\BinaryFileResponse $response
+     * @param string                                               $mimeType
      */
-    protected function setHeaders($mimeType)
+    protected function setHeaders(BinaryFileResponse $response, string $mimeType)
     {
-        $this->response->headers->add([
+        $response->headers->add([
             'Content-type' => $mimeType,
             'Cache-Control' => 'public',
             'Pragma' => 'public',

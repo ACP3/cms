@@ -43,15 +43,9 @@ class PageCssClassesTest extends AbstractPluginTest
 
     private function setUpMockObjects()
     {
-        $this->pageCssClassesMock = $this->getMockBuilder(\ACP3\Core\Assets\PageCssClasses::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->requestMock = $this->getMockBuilder(Request::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->smartyInternalTemplateMock = $this->getMockBuilder(\Smarty_Internal_Template::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->pageCssClassesMock = $this->createMock(\ACP3\Core\Assets\PageCssClasses::class);
+        $this->requestMock = $this->createMock(Request::class);
+        $this->smartyInternalTemplateMock = $this->createMock(\Smarty_Internal_Template::class);
     }
 
     /**

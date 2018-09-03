@@ -25,15 +25,9 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 
     protected function setUp()
     {
-        $this->langMock = $this->getMockBuilder(Translator::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['t'])
-            ->getMock();
+        $this->langMock = $this->createMock(Translator::class);
 
-        $this->routerMock = $this->getMockBuilder(RouterInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['route'])
-            ->getMock();
+        $this->routerMock = $this->createMock(RouterInterface::class);
 
         $this->columnRenderer = new AccountStatusColumnRenderer(
             $this->langMock,

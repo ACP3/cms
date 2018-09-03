@@ -39,7 +39,7 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
     /**
      * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent $customOptionEvent
      */
-    public function addDuplicateEntryButton(CustomOptionEvent $customOptionEvent)
+    public function __invoke(CustomOptionEvent $customOptionEvent)
     {
         if ($customOptionEvent->getIdentifier() === $this->getDataGridIdentifier() &&
             $this->acl->hasPermission($this->getResource()) === true

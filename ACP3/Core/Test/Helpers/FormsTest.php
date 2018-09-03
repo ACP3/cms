@@ -15,7 +15,7 @@ use ACP3\Core\Test\DataProvider\Helpers\ChoicesGeneratorDataProvider;
 use ACP3\Core\Test\DataProvider\Helpers\RecordsPerPageDataProvider;
 use ACP3\Core\Test\DataProvider\Helpers\SelectEntryDataProvider;
 
-class FormsTest extends \PHPUnit_Framework_TestCase
+class FormsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Forms
@@ -32,13 +32,8 @@ class FormsTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->translatorMock = $this->getMockBuilder(Translator::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['t'])
-            ->getMock();
-        $this->requestMock = $this->getMockBuilder(Request::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->translatorMock = $this->createMock(Translator::class);
+        $this->requestMock = $this->createMock(Request::class);
 
         $this->formsHelper = new Forms(
             $this->translatorMock,

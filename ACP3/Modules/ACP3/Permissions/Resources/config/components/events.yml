@@ -4,5 +4,5 @@ services:
     arguments:
       - '@permissions.cache'
     tags:
-      - { name: core.eventListener, event: permissions.model.acl_resources.after_save, method: execute }
-      - { name: core.eventListener, event: permissions.model.acl_resources.after_delete, method: execute }
+      - { name: core.eventListener, event: permissions.model.acl_resources.after_save }
+      - { name: core.eventListener, event: permissions.model.acl_resources.after_delete }

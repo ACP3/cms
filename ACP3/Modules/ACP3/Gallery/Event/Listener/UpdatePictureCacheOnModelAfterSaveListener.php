@@ -30,7 +30,7 @@ class UpdatePictureCacheOnModelAfterSaveListener
     /**
      * @param ModelSaveEvent $event
      */
-    public function execute(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event)
     {
         $data = $event->getData();
 

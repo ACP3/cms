@@ -19,10 +19,7 @@ class DateTimeColumnTypeTest extends AbstractColumnTypeTest
 
     protected function setUp()
     {
-        $this->dateMock = $this->getMockBuilder(Date::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['toSQL'])
-            ->getMock();
+        $this->dateMock = $this->createMock(Date::class);
 
         parent::setUp();
     }

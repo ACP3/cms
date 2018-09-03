@@ -11,7 +11,7 @@ use ACP3\Core\Assets\Libraries;
 use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class LibrariesTest extends \PHPUnit_Framework_TestCase
+class LibrariesTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Libraries

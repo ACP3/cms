@@ -20,10 +20,7 @@ class UserRolesColumnRendererTest extends AbstractColumnRendererTest
 
     protected function setUp()
     {
-        $this->aclMock = $this->getMockBuilder(ACL::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getUserRoleNames'])
-            ->getMock();
+        $this->aclMock = $this->createMock(ACL::class);
 
         $this->columnRenderer = new UserRolesColumnRenderer($this->aclMock);
 

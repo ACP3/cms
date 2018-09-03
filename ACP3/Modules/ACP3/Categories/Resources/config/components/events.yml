@@ -5,7 +5,7 @@ services:
       - '@categories.cache'
       - '@categories.model.categories_repository'
     tags:
-      - { name: core.eventListener, event: categories.model.categories.after_save, method: execute }
+      - { name: core.eventListener, event: categories.model.categories.after_save }
 
   categories.event.on_categories_model_delete_before_listener:
     class: ACP3\Modules\ACP3\Categories\Event\Listener\DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener
@@ -13,4 +13,4 @@ services:
       - '@categories.helpers.upload'
       - '@categories.model.categories_repository'
     tags:
-      - { name: core.eventListener, event: categories.model.categories.before_delete, method: execute }
+      - { name: core.eventListener, event: categories.model.categories.before_delete }

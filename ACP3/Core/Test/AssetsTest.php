@@ -12,7 +12,7 @@ use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class AssetsTest extends \PHPUnit_Framework_TestCase
+class AssetsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Assets
@@ -49,7 +49,7 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
     public function testDefaultLibrariesEnabled()
     {
         $libraries = $this->assets->getEnabledLibrariesAsString();
-        $this->assertEquals('jquery,ajax-form,bootstrap', $libraries);
+        $this->assertEquals('jquery,bootstrap,ajax-form', $libraries);
     }
 
     public function testEnableDatepicker()
@@ -57,7 +57,7 @@ class AssetsTest extends \PHPUnit_Framework_TestCase
         $this->assets->enableLibraries(['datetimepicker']);
 
         $libraries = $this->assets->getEnabledLibrariesAsString();
-        $this->assertEquals('moment,jquery,ajax-form,bootstrap,datetimepicker', $libraries);
+        $this->assertEquals('jquery,bootstrap,ajax-form,moment,datetimepicker', $libraries);
     }
 
     public function testFetchAdditionalThemeCssFiles()

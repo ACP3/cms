@@ -39,7 +39,7 @@ class ManageMenuItemOnModelSaveAfterListener
      *
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function createOrUpdateMenuItem(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event)
     {
         if ($this->acl->hasPermission('admin/menus/items/create') === true
             && $this->hasNecessaryMenuItemFormFields($event->getRawData())) {

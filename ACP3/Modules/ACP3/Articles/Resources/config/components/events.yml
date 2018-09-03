@@ -5,7 +5,7 @@ services:
       - '@core.acl'
       - '@core.i18n.translator'
     tags:
-      - { name: core.eventListener, event: data_grid.column_renderer.custom_option_before, method: addDuplicateEntryButton }
+      - { name: core.eventListener, event: data_grid.column_renderer.custom_option_before }
 
   articles.events.on_articles_model_delete_after_listener:
     class: ACP3\Modules\ACP3\Articles\Event\Listener\OnArticlesModelDeleteAfterListener
@@ -15,11 +15,11 @@ services:
       - '@?seo.helper.uri_alias_manager'
       - '@?share.helpers.social_sharing_manager'
     tags:
-      - { name: core.eventListener, event: articles.model.articles.after_delete, method: execute }
+      - { name: core.eventListener, event: articles.model.articles.after_delete }
 
   articles.events.update_article_cache_on_model_save_after_listener:
     class: ACP3\Modules\ACP3\Articles\Event\Listener\UpdateArticleCacheOnModelSaveAfterListener
     arguments:
       - '@articles.cache'
     tags:
-      - { name: core.eventListener, event: articles.model.articles.after_save, method: execute }
+      - { name: core.eventListener, event: articles.model.articles.after_save }

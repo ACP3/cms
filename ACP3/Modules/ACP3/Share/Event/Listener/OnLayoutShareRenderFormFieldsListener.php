@@ -49,7 +49,7 @@ class OnLayoutShareRenderFormFieldsListener
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(TemplateEvent $event)
+    public function __invoke(TemplateEvent $event)
     {
         if ($this->acl->hasPermission('admin/share/index/create')) {
             $parameters = $event->getParameters();

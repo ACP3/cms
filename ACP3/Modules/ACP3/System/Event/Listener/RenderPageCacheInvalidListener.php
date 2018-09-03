@@ -12,7 +12,7 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class OnLayoutContentBeforeListener
+class RenderPageCacheInvalidListener
 {
     /**
      * @var ACL
@@ -41,7 +41,7 @@ class OnLayoutContentBeforeListener
         $this->view = $view;
     }
 
-    public function renderInvalidPageCacheAlert()
+    public function __invoke()
     {
         $systemSettings = $this->settings->getSettings(Schema::MODULE_NAME);
         if ($this->acl->hasPermission('admin/system/maintenance/cache') && $systemSettings['page_cache_is_valid'] == 0) {

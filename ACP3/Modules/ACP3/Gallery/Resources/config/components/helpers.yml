@@ -1,0 +1,12 @@
+services:
+  gallery.helpers.thumbnail_generator:
+    class: ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
+    arguments:
+      - '@core.environment.application_path'
+      - '@core.config'
+
+  gallery.helpers:
+    class: ACP3\Modules\ACP3\Gallery\Helpers
+    arguments:
+    - '@gallery.helpers.upload_cached_images'
+    - '@gallery.helpers.upload'

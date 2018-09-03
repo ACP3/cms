@@ -15,7 +15,7 @@ use ACP3\Core\Validation\ValidationRules\InternalUriValidationRule;
 use ACP3\Modules\ACP3\Seo\Core\Router\Router;
 use Symfony\Component\HttpFoundation\ServerBag;
 
-class RewriteInternalUriTest extends \PHPUnit_Framework_TestCase
+class RewriteInternalUriTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \ACP3\Core\Helpers\Formatter\RewriteInternalUri
@@ -57,21 +57,11 @@ class RewriteInternalUriTest extends \PHPUnit_Framework_TestCase
 
     private function initializeMockObjects()
     {
-        $this->appPathMock = $this->getMockBuilder(ApplicationPath::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->controllerActionExistsMock = $this->getMockBuilder(ControllerActionExists::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->requestMock = $this->getMockBuilder(Request::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->routerMock = $this->getMockBuilder(Router::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->internalUriValidationRule = $this->getMockBuilder(InternalUriValidationRule::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->appPathMock = $this->createMock(ApplicationPath::class);
+        $this->controllerActionExistsMock = $this->createMock(ControllerActionExists::class);
+        $this->requestMock = $this->createMock(Request::class);
+        $this->routerMock = $this->createMock(Router::class);
+        $this->internalUriValidationRule = $this->createMock(InternalUriValidationRule::class);
     }
 
     public function testRewriteInternalUriWithNotMatchingUrl()

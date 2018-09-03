@@ -4,7 +4,7 @@ services:
     arguments:
     - '@core.http.request'
     tags:
-    - { name: core.eventListener, event: core.application.controller_action_dispatcher.after_dispatch, method: execute }
+    - { name: core.eventListener, event: core.application.controller_action_dispatcher.after_dispatch }
 
   core.application.event.add_template_variables_listener:
     class: ACP3\Core\Application\Event\Listener\AddTemplateVariablesListener

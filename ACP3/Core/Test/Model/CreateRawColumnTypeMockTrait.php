@@ -11,7 +11,7 @@ use ACP3\Core\Model\DataProcessor\ColumnType\ColumnTypeStrategyInterface;
 
 trait CreateRawColumnTypeMockTrait
 {
-    public function getRawColumnTypeInstance(\PHPUnit_Framework_TestCase $testCase)
+    public function getRawColumnTypeInstance(\PHPUnit\Framework\TestCase $testCase)
     {
         return $testCase->getMockBuilder(ColumnTypeStrategyInterface::class)
             ->setMethods(['doEscape'])

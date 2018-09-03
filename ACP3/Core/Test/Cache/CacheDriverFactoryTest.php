@@ -14,7 +14,7 @@ use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\CacheProvider;
 use Doctrine\Common\Cache\PhpFileCache;
 
-class CacheDriverFactoryTest extends \PHPUnit_Framework_TestCase
+class CacheDriverFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -32,10 +32,7 @@ class CacheDriverFactoryTest extends \PHPUnit_Framework_TestCase
 
     private function initializeMockObjects()
     {
-        $this->appPathMock = $this->getMockBuilder(ApplicationPath::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getCacheDir'])
-            ->getMock();
+        $this->appPathMock = $this->createMock(ApplicationPath::class);
     }
 
     private function initializeCacheDriverFactory($cacheDriver, $environment)
@@ -63,11 +60,10 @@ class CacheDriverFactoryTest extends \PHPUnit_Framework_TestCase
             ->willReturn('cache/');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testCreateInvalidCacheDriverThrowsException()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $this->setUpAppPathMockExpectations();
 
         $this->initializeCacheDriverFactory('LoremIpsum', 'test');

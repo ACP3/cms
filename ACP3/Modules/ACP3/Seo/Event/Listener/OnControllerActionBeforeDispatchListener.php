@@ -64,7 +64,7 @@ class OnControllerActionBeforeDispatchListener
     /**
      * @param \ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent $event
      */
-    public function onBeforeDispatch(ControllerActionBeforeDispatchEvent $event)
+    public function __invoke(ControllerActionBeforeDispatchEvent $event)
     {
         $this->setCanonicalForExistingUriAlias($event);
         $this->setCanonicalForHomepage();

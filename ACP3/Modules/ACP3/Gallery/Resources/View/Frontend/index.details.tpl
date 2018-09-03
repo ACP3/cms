@@ -5,14 +5,14 @@
         <section class="picture">
             {if !empty($picture_next)}
                 <a href="{uri args="gallery/index/details/id_`$picture_next`"}">
-                    <img src="{uri args="gallery/index/image/id_`$picture.id`/action_normal"}"
+                    <img src="{$UPLOADS_DIR}gallery/cache/gallery_{$picture.file}"
                          width="{$picture.width}"
                          height="{$picture.height}"
                          alt="{$picture.description|strip_tags|trim}"
                          class="img-thumbnail">
                 </a>
             {else}
-                <img src="{uri args="gallery/index/image/id_`$picture.id`/action_normal"}"
+                <img src="{$UPLOADS_DIR}gallery/cache/gallery_{$picture.file}"
                      width="{$picture.width}"
                      height="{$picture.height}"
                      alt="{$picture.description|strip_tags|trim}"

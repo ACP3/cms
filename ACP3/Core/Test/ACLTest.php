@@ -12,7 +12,7 @@ use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Controller\Helper\ControllerActionExists;
 use ACP3\Core\Modules;
 
-class ACLTest extends \PHPUnit_Framework_TestCase
+class ACLTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \ACP3\Core\ACL

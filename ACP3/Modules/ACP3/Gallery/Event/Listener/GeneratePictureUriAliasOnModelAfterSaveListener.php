@@ -69,7 +69,7 @@ class GeneratePictureUriAliasOnModelAfterSaveListener
     /**
      * @param ModelSaveEvent $event
      */
-    public function generatePictureAlias(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event)
     {
         if (!$event->isIsNewEntry()) {
             return;

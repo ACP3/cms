@@ -12,7 +12,7 @@ use ACP3\Core\Http\Request;
 use ACP3\Core\Router\Router;
 use ACP3\Core\Settings\SettingsInterface;
 
-class RouterTest extends \PHPUnit_Framework_TestCase
+class RouterTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \ACP3\Core\Router\Router

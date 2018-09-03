@@ -71,7 +71,7 @@ class OnMenusLayoutRenderManageMenuItemListener
     /**
      * @param TemplateEvent $event
      */
-    public function renderManageMenuItem(TemplateEvent $event)
+    public function __invoke(TemplateEvent $event)
     {
         $parameters = $event->getParameters();
 

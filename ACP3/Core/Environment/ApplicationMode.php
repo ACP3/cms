@@ -9,8 +9,9 @@ namespace ACP3\Core\Environment;
 
 class ApplicationMode
 {
-    const PRODUCTION = 'prod';
+    const CLI = 'console';
     const DEVELOPMENT = 'dev';
     const INSTALLER = 'installer';
+    const PRODUCTION = 'prod';
     const UPDATER = 'updater';
 }

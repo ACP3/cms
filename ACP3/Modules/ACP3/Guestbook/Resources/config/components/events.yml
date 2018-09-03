@@ -8,4 +8,4 @@ services:
     calls:
       - ['setNewsletterSubscribe', ['@?newsletter.helper.subscribe']]
     tags:
-      - { name: core.eventListener, event: guestbook.model.guestbook.after_save, method: subscribeToNewsletter }
+      - { name: core.eventListener, event: guestbook.model.guestbook.after_save }

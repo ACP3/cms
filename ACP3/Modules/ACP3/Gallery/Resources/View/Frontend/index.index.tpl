@@ -7,8 +7,10 @@
             {foreach $galleries as $row}
                 <div class="col-sm-3">
                     <div class="thumbnail">
-                        {if !empty($row.picture_id)}
-                            <img src="{uri args="gallery/index/image/id_`$row.picture_id`/action_thumb"}" alt="">
+                        {if !empty($row.file)}
+                            <a href="{uri args="gallery/index/pics/id_`$row.id`"}">
+                                <img src="{$UPLOADS_DIR}gallery/cache/gallery_thumb{$row.file}" alt="{$row.title}">
+                            </a>
                         {/if}
                         <div class="caption">
                             <h3>{$row.title}</h3>

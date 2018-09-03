@@ -42,7 +42,7 @@ class SaveSharingInfoOnModelAfterSaveListener
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event)
     {
         if ($this->acl->hasPermission('admin/share/index/create')) {
             $formData = $event->getRawData();

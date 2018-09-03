@@ -72,7 +72,7 @@ class AddSocialSharingListener
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(): void
+    public function __invoke(): void
     {
         if ($this->modules->isActive(Schema::MODULE_NAME) === false) {
             return;

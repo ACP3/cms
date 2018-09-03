@@ -2,12 +2,6 @@ imports:
   - { resource: components/*.yml }
 
 services:
-  gallery.helpers:
-    class: ACP3\Modules\ACP3\Gallery\Helpers
-    arguments:
-      - '@gallery.helpers.upload_cached_images'
-      - '@gallery.helpers.upload'
-
   gallery.helpers.upload:
     class: ACP3\Core\Helpers\Upload
     arguments:

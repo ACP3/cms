@@ -7,7 +7,6 @@ services:
     public: true
     arguments:
     - '@fast_image_size'
-    - '@core.http.response'
     - '@core.environment.application_path'
     - '%core.environment%'
     shared: false

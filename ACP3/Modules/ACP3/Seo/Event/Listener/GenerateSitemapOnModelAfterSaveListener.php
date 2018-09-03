@@ -65,7 +65,7 @@ class GenerateSitemapOnModelAfterSaveListener
     /**
      * @param ModelSaveEvent $event
      */
-    public function generateSeoSitemap(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event)
     {
         if (!$this->modules->isActive(Schema::MODULE_NAME)) {
             return;

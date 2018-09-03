@@ -33,9 +33,7 @@ class PageBreaksTest extends \ACP3\Core\Test\Helpers\PageBreaksTest
     {
         parent::initializeMockObjects();
 
-        $this->metaStatements = $this->getMockBuilder(MetaStatements::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->metaStatements = $this->createMock(MetaStatements::class);
     }
 
     /**

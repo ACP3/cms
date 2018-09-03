@@ -12,7 +12,7 @@ use ACP3\Core\Helpers\DataGrid;
 use ACP3\Core\Helpers\Formatter\MarkEntries;
 use ACP3\Core\I18n\Translator;
 
-class DataGridTest extends \PHPUnit_Framework_TestCase
+class DataGridTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var DataGrid|\PHPUnit_Framework_MockObject_MockObject
@@ -29,15 +29,9 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->aclMock = $this->getMockBuilder(ACL::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['hasPermission'])
-            ->getMock();
+        $this->aclMock = $this->createMock(ACL::class);
 
-        $this->langMock = $this->getMockBuilder(Translator::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['t'])
-            ->getMock();
+        $this->langMock = $this->createMock(Translator::class);
 
         $this->dataGrid = new DataGrid(
             $this->aclMock,
@@ -89,9 +83,7 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
             ->willReturn(false);
 
         /** @var MarkEntries|\PHPUnit_Framework_MockObject_MockObject $markEntriesMock */
-        $markEntriesMock = $this->getMockBuilder(MarkEntries::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $markEntriesMock = $this->createMock(MarkEntries::class);
 
         $this->dataGrid->registerColumnRenderer(new DataGrid\ColumnRenderer\HeaderColumnRenderer($markEntriesMock));
         $this->dataGrid->registerColumnRenderer(new DataGrid\ColumnRenderer\TextColumnRenderer());
@@ -135,9 +127,7 @@ class DataGridTest extends \PHPUnit_Framework_TestCase
             ->willReturn(false);
 
         /** @var MarkEntries|\PHPUnit_Framework_MockObject_MockObject $markEntriesMock */
-        $markEntriesMock = $this->getMockBuilder(MarkEntries::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $markEntriesMock = $this->createMock(MarkEntries::class);
 
         $this->dataGrid->registerColumnRenderer(new DataGrid\ColumnRenderer\HeaderColumnRenderer($markEntriesMock));
         $this->dataGrid->registerColumnRenderer(new DataGrid\ColumnRenderer\TextColumnRenderer());

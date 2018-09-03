@@ -4,6 +4,8 @@
         <item key="admin_index_settings">Settings</item>
         <item key="captcha">Captcha</item>
         <item key="captcha_type">Captcha type</item>
+        <item key="do_not_fill_out">Do not fill out</item>
+        <item key="honeypot">Honeypot</item>
         <item key="invalid_captcha_entered">Either the captcha is incorrect, or it is no longer valid.</item>
         <item key="mod_description">Captchas provide effective protection against spambots.</item>
         <item key="native">ACP3 native</item>

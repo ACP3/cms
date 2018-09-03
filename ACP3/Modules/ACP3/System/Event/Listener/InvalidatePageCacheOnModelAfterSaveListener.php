@@ -45,7 +45,7 @@ class InvalidatePageCacheOnModelAfterSaveListener
         $this->canUsePageCache = $canUsePageCache;
     }
 
-    public function invalidatePageCache()
+    public function __invoke()
     {
         if ($this->canUsePageCache->canUsePageCache()) {
             if ($this->settings->getSettings(Schema::MODULE_NAME)['page_cache_purge_mode'] == 1) {

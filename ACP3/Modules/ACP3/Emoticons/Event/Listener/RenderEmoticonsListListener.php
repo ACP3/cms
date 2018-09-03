@@ -30,7 +30,7 @@ class RenderEmoticonsListListener
     /**
      * @param TemplateEvent $event
      */
-    public function renderEmoticonsList(TemplateEvent $event)
+    public function __invoke(TemplateEvent $event)
     {
         $parameters = $event->getParameters();
         $formFieldId = !empty($parameters['form_field_id']) ? $parameters['form_field_id'] : '';

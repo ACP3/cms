@@ -19,7 +19,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 /**
  * Class AbstractFormValidationTest.
  */
-abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
 {
     const XSRF_FORM_TOKEN = 'foo-bar-baz';
     const XSRF_QUERY_STRING = 'module/controller/action/';
@@ -52,12 +52,8 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
 
     protected function initializeFormValidationDependencies()
     {
-        $this->translatorMock = $this->getMockBuilder(Translator::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['t'])
-            ->getMock();
-        $this->eventDispatcherMock = $this->getMockBuilder(EventDispatcher::class)
-            ->getMock();
+        $this->translatorMock = $this->createMock(Translator::class);
+        $this->eventDispatcherMock = $this->createMock(EventDispatcher::class);
 
         $this->validator = new Validator($this->eventDispatcherMock);
     }
@@ -79,10 +75,7 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
     private function setUpRequestMock()
     {
         /** @var Request|\PHPUnit_Framework_MockObject_MockObject $requestMock */
-        $requestMock = $this->getMockBuilder(Request::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getPost', 'getQuery'])
-            ->getMock();
+        $requestMock = $this->createMock(Request::class);
 
         $this->setRequestMockExpectations($requestMock);
 
@@ -95,10 +88,7 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
     private function setUpSessionMock()
     {
         /** @var SessionHandler|\PHPUnit_Framework_MockObject_MockObject $sessionMock */
-        $sessionMock = $this->getMockBuilder(SessionHandler::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['get'])
-            ->getMock();
+        $sessionMock = $this->createMock(SessionHandler::class);
 
         $this->setSessionMockExpectations($sessionMock);
 
@@ -119,6 +109,8 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
 
     public function testValidFormData()
     {
+        $this->expectNotToPerformAssertions();
+
         foreach ($this->validFormDataProvider() as $formData) {
             $this->formValidation->validate($formData);
         }
@@ -136,7 +128,7 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
     /**
      * @param \PHPUnit_Framework_MockObject_MockObject $requestMock
      */
-    private function setRequestMockExpectations(\PHPUnit_Framework_MockObject_MockObject $requestMock)
+    private function setRequestMockExpectations(\PHPUnit\Framework\MockObject\MockObject $requestMock)
     {
         $requestMock->expects($this->any())
             ->method('getPost')
@@ -154,7 +146,7 @@ abstract class AbstractFormValidationTest extends \PHPUnit_Framework_TestCase
     /**
      * @param \PHPUnit_Framework_MockObject_MockObject $sessionMock
      */
-    private function setSessionMockExpectations(\PHPUnit_Framework_MockObject_MockObject $sessionMock)
+    private function setSessionMockExpectations(\PHPUnit\Framework\MockObject\MockObject $sessionMock)
     {
         $sessionMock->expects($this->any())
             ->method('get')

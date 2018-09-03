@@ -1,16 +1,16 @@
 services:
-  users.event.on_users_model_delete_before_listener:
-    class: ACP3\Modules\ACP3\Users\Event\Listener\OnUsersModelDeleteBeforeListener
+  users.event.forbid_super_user_delete_listener:
+    class: ACP3\Modules\ACP3\Users\Event\Listener\ForbidSuperUserDeleteListener
     arguments:
       - '@users.model.user_model'
     tags:
-      - { name: core.eventListener, event: users.model.users.before_delete, method: forbidSuperUserDelete }
+      - { name: core.eventListener, event: users.model.users.before_delete }
 
-  users.event.is_user_authenticated_on_controller_action_before_dispatch_listener:
-    class: ACP3\Modules\ACP3\Users\Event\Listener\IsUserAuthenticatedOnControllerActionBeforeDispatchListener
+  users.event.is_user_authenticated_listener:
+    class: ACP3\Modules\ACP3\Users\Event\Listener\IsUserAuthenticatedListener
     arguments:
       - '@core.helpers.redirect'
       - '@core.i18n.translator'
       - '@users.model.user_model'
     tags:
-      - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch, method: isUserAuthenticated, priority: 255 }
+      - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch, priority: 255 }

@@ -17,6 +17,7 @@
   "prefer-stable": true,
   "require": {
     "php": "^7.1",
+    "ext-gd": "*",
     "ext-SimpleXML": "*",
     "ckeditor/ckeditor": "dev-full/4.10.x",
     "cocur/slugify": "^3.0",
@@ -37,11 +38,12 @@
     "php-http/guzzle6-adapter": "^1.1",
     "smarty/smarty": "^3.1",
     "symfony/config": "^4.1",
+    "symfony/console": "^4.1",
     "symfony/debug": "^4.1",
-    "symfony/dependency-injection": "^3.4",
+    "symfony/dependency-injection": "^4.1",
     "symfony/event-dispatcher": "^4.1",
     "symfony/http-foundation": "^4.1",
-    "symfony/http-kernel": "^3.4",
+    "symfony/http-kernel": "^4.1",
     "symfony/yaml": "^4.1",
     "thepixeldeveloper/sitemap": "^4.4.2",
     "tinymce/tinymce": "^4.8",
@@ -51,7 +53,7 @@
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.0.0",
-    "phpunit/phpunit": "^5.5"
+    "phpunit/phpunit": "^7.3"
   },
   "autoload": {
     "psr-4": {

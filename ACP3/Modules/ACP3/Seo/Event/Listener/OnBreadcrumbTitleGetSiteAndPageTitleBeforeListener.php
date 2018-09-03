@@ -39,7 +39,7 @@ class OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener
      *
      * @param GetSiteAndPageTitleBeforeEvent $event
      */
-    public function useMetaTitle(GetSiteAndPageTitleBeforeEvent $event)
+    public function __invoke(GetSiteAndPageTitleBeforeEvent $event)
     {
         $event->getTitle()->setMetaTitle($this->metaStatements->getTitle($this->request->getQuery()));
     }

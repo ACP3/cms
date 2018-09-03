@@ -7,5 +7,5 @@ services:
       - '@system.model.modulerepository'
       - '@auditlog.models.repository.audit_log_repository'
     tags:
-      - { name: core.eventListener, event: core.model.after_save, method: onModelSave, priority: -255 }
-      - { name: core.eventListener, event: core.model.after_delete, method: onModelSave, priority: -255 }
+      - { name: core.eventListener, event: core.model.after_save, priority: -255 }
+      - { name: core.eventListener, event: core.model.after_delete, priority: -255 }

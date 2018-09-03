@@ -4,12 +4,12 @@
     {if !empty($pictures)}
         {if $overlay == 1}
             {foreach $pictures as $row}
-                <a href="{uri args="gallery/index/image/id_`$row.id`/action_normal"}"
+                <a href="{$row.uri_picture}"
                    class="gallery-picture-thumb"
                    data-fancybox="gallery"
                    data-type="image"
                    {if !empty($row.description)}data-caption="{$row.description|strip_tags|trim}"{/if}>
-                    <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}"
+                    <img src="{$row.uri_thumb}"
                          alt="{$row.description|strip_tags|trim}"
                          class="img-thumbnail">
                 </a>
@@ -21,7 +21,7 @@
             {foreach $pictures as $row}
                 <a href="{uri args="gallery/index/details/id_`$row.id`"}"
                    class="gallery-picture-thumb">
-                    <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}"
+                    <img src="{$row.uri_thumb}"
                          alt="{$row.description|strip_tags|trim}"
                          class="img-thumbnail">
                 </a>

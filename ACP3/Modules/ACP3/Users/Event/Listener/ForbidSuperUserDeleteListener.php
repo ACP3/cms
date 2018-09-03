@@ -11,7 +11,7 @@ use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Users\Exception\SuperUserNotDeletableException;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 
-class OnUsersModelDeleteBeforeListener
+class ForbidSuperUserDeleteListener
 {
     /**
      * @var UserModel
@@ -33,7 +33,7 @@ class OnUsersModelDeleteBeforeListener
      *
      * @throws SuperUserNotDeletableException
      */
-    public function forbidSuperUserDelete(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event)
     {
         if (!$event->isDeleteStatement()) {
             return;

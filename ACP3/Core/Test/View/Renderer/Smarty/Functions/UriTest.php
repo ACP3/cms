@@ -42,12 +42,8 @@ class UriTest extends AbstractPluginTest
 
     private function setUpMockObjects()
     {
-        $this->routerMock = $this->getMockBuilder(RouterInterface::class)
-            ->setMethods(['route'])
-            ->getMock();
-        $this->smartyInternalTemplateMock = $this->getMockBuilder(\Smarty_Internal_Template::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->routerMock = $this->createMock(RouterInterface::class);
+        $this->smartyInternalTemplateMock = $this->createMock(\Smarty_Internal_Template::class);
     }
 
     /**

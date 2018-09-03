@@ -51,6 +51,8 @@ class Index extends AbstractAction
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {

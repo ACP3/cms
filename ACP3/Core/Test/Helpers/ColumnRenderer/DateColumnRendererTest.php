@@ -39,15 +39,9 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
 
     protected function setUp()
     {
-        $this->langMock = $this->getMockBuilder(Translator::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['t'])
-            ->getMock();
+        $this->langMock = $this->createMock(Translator::class);
         $this->dateTranslator = new DateTranslator($this->langMock);
-        $this->configMock = $this->getMockBuilder(SettingsInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getSettings', 'saveSettings'])
-            ->getMock();
+        $this->configMock = $this->createMock(SettingsInterface::class);
 
         $this->configMock->expects($this->once())
             ->method('getSettings')
