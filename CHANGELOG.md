@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.29.1] - 2018-09-04
+### Fixed
+- fixed the `ACP3\Core\Environment\Theme::getDesignPathWeb()` method so that it returns the correct path
+- The CKEditor now preserves empty `<i>`-tags, as they are mostly used for icons
+
 ## [4.29.0] - 2018-09-03
 ### Added
 - back ported the possibility to run CLI commands from ACP3.next
@@ -669,7 +674,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.29.0...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.29.1...HEAD
+[4.29.1]: https://gitlab.com/ACP3/cms/compare/v4.29.0...v4.29.1
 [4.29.0]: https://gitlab.com/ACP3/cms/compare/v4.28.4...v4.29.0
 [4.28.4]: https://gitlab.com/ACP3/cms/compare/v4.28.3...v4.28.4
 [4.28.3]: https://gitlab.com/ACP3/cms/compare/v4.28.2...v4.28.3

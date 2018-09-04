@@ -165,7 +165,7 @@ class Theme implements ThemePathInterface
     public function getDesignPathWeb(): string
     {
         if ($this->designPathWeb === null) {
-            $this->designPathWeb = $this->appPath->getWebRoot() . $this->getCurrentTheme() . '/';
+            $this->designPathWeb = $this->appPath->getWebRoot() . 'designs/' . $this->getCurrentTheme() . '/';
         }
 
         return $this->designPathWeb;

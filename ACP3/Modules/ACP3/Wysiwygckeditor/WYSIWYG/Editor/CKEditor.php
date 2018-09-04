@@ -177,6 +177,7 @@ class CKEditor extends Textarea
         $js .= "CKEDITOR.plugins.addExternal('divarea', '" . $ckeditorPluginsDir . "divarea/');\n";
         $js .= "CKEDITOR.plugins.addExternal('embedbase', '" . $ckeditorPluginsDir . "embedbase/');\n";
         $js .= "CKEDITOR.plugins.addExternal('embed', '" . $ckeditorPluginsDir . "embed/');\n";
+        $js .= 'CKEDITOR.dtd.$removeEmpty[\'i\'] = false;' . "\n";
 
         $config = $this->configure();
         if (!empty($config)) {
