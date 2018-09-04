@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Image extends AbstractAction
 {
@@ -59,7 +60,7 @@ class Image extends AbstractAction
         try {
             $this->thumbnailGenerator->generateThumbnail($image, $action, $picture);
 
-            return $image->sendResponse();
+            return new RedirectResponse($image->getFileWeb());
         } catch (Core\Picture\Exception\PictureGenerateException $e) {
             throw new Core\Controller\Exception\ResultNotExistsException('', 0, $e);
         }
