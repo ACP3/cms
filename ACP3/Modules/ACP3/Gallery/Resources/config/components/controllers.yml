@@ -101,6 +101,7 @@ services:
       - '@core.context.frontend'
       - '@core.date'
       - '@gallery.model.picturerepository'
+      - '@gallery.helpers.thumbnail_generator'
     calls:
       - ['setMetaStatements', ['@?seo.helper.meta_statements']]
 
@@ -118,6 +119,7 @@ services:
       - '@core.date'
       - '@core.pagination'
       - '@gallery.model.galleryrepository'
+      - '@gallery.helpers.thumbnail_generator'
 
   gallery.controller.frontend.index.pics:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Pics

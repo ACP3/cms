@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97cc8611cf90686244e5bfcf5b6731f8",
+    "content-hash": "3bd4c4224d2a3bc1b33a2ad27b9fd39c",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
@@ -487,16 +487,16 @@
         },
         {
             "name": "fisharebest/localization",
-            "version": "1.10.3",
+            "version": "1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fisharebest/localization.git",
-                "reference": "64bb6ed8bc7b18920f8e449704f7cb00f90f7603"
+                "reference": "b3c3313b3508ec00ae40eb29fae00267fada7f22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fisharebest/localization/zipball/64bb6ed8bc7b18920f8e449704f7cb00f90f7603",
-                "reference": "64bb6ed8bc7b18920f8e449704f7cb00f90f7603",
+                "url": "https://api.github.com/repos/fisharebest/localization/zipball/b3c3313b3508ec00ae40eb29fae00267fada7f22",
+                "reference": "b3c3313b3508ec00ae40eb29fae00267fada7f22",
                 "shasum": ""
             },
             "require": {
@@ -537,7 +537,7 @@
                 "translate",
                 "translation"
             ],
-            "time": "2018-01-16T07:36:49+00:00"
+            "time": "2018-09-05T20:04:04+00:00"
         },
         {
             "name": "friendsofsymfony/http-cache",
@@ -4756,16 +4756,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.3.2",
+            "version": "7.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "34705f81bddc3f505b9599a2ef96e2b4315ba9b8"
+                "reference": "0356331bf62896dc56e3a15030b23b73f38b2935"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/34705f81bddc3f505b9599a2ef96e2b4315ba9b8",
-                "reference": "34705f81bddc3f505b9599a2ef96e2b4315ba9b8",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0356331bf62896dc56e3a15030b23b73f38b2935",
+                "reference": "0356331bf62896dc56e3a15030b23b73f38b2935",
                 "shasum": ""
             },
             "require": {
@@ -4836,7 +4836,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-08-22T06:39:21+00:00"
+            "time": "2018-09-05T09:58:53+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -5762,6 +5762,7 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.1",
+        "ext-gd": "*",
         "ext-simplexml": "*"
     },
     "platform-dev": []
