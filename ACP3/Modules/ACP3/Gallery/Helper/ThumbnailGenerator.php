@@ -50,11 +50,11 @@ class ThumbnailGenerator
 
         $picture
             ->setEnableCache(true)
-            ->setCachePrefix('gallery_' . $action)
-            ->setCacheDir($this->appPath->getUploadsDir() . 'gallery/cache/')
+            ->setCachePrefix(Schema::MODULE_NAME . '_' . (!empty($action) ? $action . '_' : ''))
+            ->setCacheDir($this->appPath->getUploadsDir() . Schema::MODULE_NAME . '/cache/')
             ->setMaxWidth($settings[$action . 'width'])
             ->setMaxHeight($settings[$action . 'height'])
-            ->setFile($this->appPath->getUploadsDir() . 'gallery/' . $fileName)
+            ->setFile($this->appPath->getUploadsDir() . Schema::MODULE_NAME . '/' . $fileName)
             ->setPreferHeight($action === 'thumb');
 
         $picture->process();
