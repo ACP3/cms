@@ -15,7 +15,7 @@
   },
   "require": {
     "acp3/composer-installer": "^1.0",
-    "phpunit/phpunit": "^5.5"
+    "phpunit/phpunit": "^7.3"
   },
   "extra": {
     "installer-name": "tests"
