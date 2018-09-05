@@ -32,23 +32,22 @@ class Details extends AbstractAction
      * @var array
      */
     protected $settings = [];
-
     /**
-     * Details constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
-     * @param \ACP3\Core\Date                                               $date
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
      */
+    private $thumbnailGenerator;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
-        Gallery\Model\Repository\PictureRepository $pictureRepository
+        Gallery\Model\Repository\PictureRepository $pictureRepository,
+        Gallery\Helper\ThumbnailGenerator $thumbnailGenerator
     ) {
         parent::__construct($context);
 
         $this->date = $date;
         $this->pictureRepository = $pictureRepository;
+        $this->thumbnailGenerator = $thumbnailGenerator;
     }
 
     /**
@@ -65,6 +64,7 @@ class Details extends AbstractAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     public function execute($id)
     {
@@ -80,7 +80,12 @@ class Details extends AbstractAction
 
             $this->title->setPageTitlePrefix($picture['gallery_title']);
 
-            $picture = $this->calculatePictureDimensions($picture);
+            /** @var \ACP3\Core\Picture $image */
+            $image = $this->get('core.image');
+            $this->thumbnailGenerator->generateThumbnail($image, '', $picture['file']);
+            $picture['file'] = $image->getFileWeb();
+
+            $picture = \array_merge($picture, $this->calculatePictureDimensions($image->getFile()));
 
             $previousPicture = $this->pictureRepository->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($previousPicture)) {
@@ -104,15 +109,17 @@ class Details extends AbstractAction
     }
 
     /**
-     * @param array $picture
+     * @param string $fileName
      *
      * @return array
      */
-    protected function calculatePictureDimensions(array $picture)
+    protected function calculatePictureDimensions(string $fileName)
     {
-        $picture['width'] = $this->settings['width'];
-        $picture['height'] = $this->settings['height'];
-        $picInfos = @\getimagesize($this->appPath->getUploadsDir() . 'gallery/' . $picture['file']);
+        $dimensions = [
+            'width' => $this->settings['width'],
+            'height' => $this->settings['height'],
+        ];
+        $picInfos = @\getimagesize($fileName);
         if ($picInfos !== false) {
             if ($picInfos[0] > $this->settings['width'] || $picInfos[1] > $this->settings['height']) {
                 if ($picInfos[0] > $picInfos[1]) {
@@ -124,11 +131,11 @@ class Details extends AbstractAction
                 }
             }
 
-            $picture['width'] = $newWidth ?? $picInfos[0];
-            $picture['height'] = $newHeight ?? $picInfos[1];
+            $dimensions['width'] = $newWidth ?? $picInfos[0];
+            $dimensions['height'] = $newHeight ?? $picInfos[1];
         }
 
-        return $picture;
+        return $dimensions;
     }
 
     /**

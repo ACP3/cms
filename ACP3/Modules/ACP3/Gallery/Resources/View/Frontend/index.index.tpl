@@ -9,7 +9,7 @@
                     <div class="thumbnail">
                         {if !empty($row.file)}
                             <a href="{uri args="gallery/index/pics/id_`$row.id`"}">
-                                <img src="{$UPLOADS_DIR}gallery/cache/gallery_thumb{$row.file}" alt="{$row.title}">
+                                <img src="{$row.file}" alt="{$row.title}">
                             </a>
                         {/if}
                         <div class="caption">
