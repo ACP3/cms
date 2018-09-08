@@ -67,10 +67,6 @@ class Picture
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
-    /**
-     * @var string
-     */
-    protected $environment = '';
 
     /**
      * @var resource
@@ -79,12 +75,10 @@ class Picture
 
     public function __construct(
         FastImageSize $fastImageSize,
-        ApplicationPath $appPath,
-        string $environment
+        ApplicationPath $appPath
     ) {
         $this->fastImageSize = $fastImageSize;
         $this->appPath = $appPath;
-        $this->environment = $environment;
 
         $this->cacheDir = $this->appPath->getCacheDir() . 'images/';
     }

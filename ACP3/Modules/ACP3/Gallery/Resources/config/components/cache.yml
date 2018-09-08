@@ -7,7 +7,6 @@ services:
       - '@gallery.model.picturerepository'
       - '@core.config'
       - '@gallery.helpers.thumbnail_generator'
-      - '@service_container'
 
   gallery.cache.core:
     class: ACP3\Core\Cache

@@ -8,5 +8,10 @@ services:
     arguments:
     - '@fast_image_size'
     - '@core.environment.application_path'
-    - '%core.environment%'
     shared: false
+
+  core.picture.picture:
+    class: ACP3\Core\Picture\Picture
+    arguments:
+    - '@fast_image_size'
+    - '@core.environment.application_path'

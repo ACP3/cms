@@ -23,6 +23,10 @@ class Index extends AbstractFrontendAction
      * @var Gallery\Model\GalleryModel
      */
     protected $galleryModel;
+    /**
+     * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
+     */
+    private $thumbnailGenerator;
 
     /**
      * Edit constructor.
@@ -30,16 +34,20 @@ class Index extends AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      * @param Gallery\Model\GalleryModel                                    $galleryModel
+     * @param \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator          $thumbnailGenerator
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
-        Gallery\Model\GalleryModel $galleryModel
-    ) {
+        Gallery\Model\GalleryModel $galleryModel,
+        Gallery\Helper\ThumbnailGenerator $thumbnailGenerator
+    )
+    {
         parent::__construct($context);
 
         $this->pictureRepository = $pictureRepository;
         $this->galleryModel = $galleryModel;
+        $this->thumbnailGenerator = $thumbnailGenerator;
     }
 
     /**
@@ -49,7 +57,7 @@ class Index extends AbstractFrontendAction
      *
      * @throws Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $gallery = $this->galleryModel->getOneById($id);
 
@@ -91,7 +99,9 @@ class Index extends AbstractFrontendAction
                 'type' => Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer::class,
                 'fields' => ['file'],
                 'custom' => [
-                    'pattern' => $this->appPath->getWebRoot() . 'uploads/gallery/cache/gallery_thumb%s',
+                    'callback' => function (string $fileName) {
+                        return $this->thumbnailGenerator->generateThumbnail($fileName, 'thumb')->getFileWeb();
+                    }
                 ],
             ], 40)
             ->addColumn([

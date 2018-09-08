@@ -86,6 +86,7 @@ services:
       - '@core.context.frontend'
       - '@gallery.model.picturerepository'
       - '@gallery.model.gallery_model'
+      - '@gallery.helpers.thumbnail_generator'
 
   gallery.controller.admin.pictures.order:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Order
