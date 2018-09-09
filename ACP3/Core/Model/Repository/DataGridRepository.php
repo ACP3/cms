@@ -7,13 +7,13 @@
 
 namespace ACP3\Core\Model\Repository;
 
-use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
+use ACP3\Core\DataGrid\ColumnPriorityQueue;
 use Doctrine\DBAL\Query\QueryBuilder;
 
 class DataGridRepository extends AbstractRepository
 {
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns
+     * @param \ACP3\Core\DataGrid\ColumnPriorityQueue $columns
      *
      * @return array
      */
@@ -34,7 +34,7 @@ class DataGridRepository extends AbstractRepository
     }
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $gridColumns
+     * @param \ACP3\Core\DataGrid\ColumnPriorityQueue $gridColumns
      *
      * @return array
      */
@@ -86,7 +86,7 @@ class DataGridRepository extends AbstractRepository
     }
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $gridColumns
+     * @param \ACP3\Core\DataGrid\ColumnPriorityQueue $gridColumns
      * @param \Doctrine\DBAL\Query\QueryBuilder               $queryBuilder
      */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
