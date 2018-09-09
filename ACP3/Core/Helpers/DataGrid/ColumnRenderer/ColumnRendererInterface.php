@@ -7,13 +7,6 @@
 
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
-interface ColumnRendererInterface
+interface ColumnRendererInterface extends \ACP3\Core\DataGrid\ColumnRenderer\ColumnRendererInterface
 {
-    /**
-     * @param array $column
-     * @param array $dbResultRow
-     *
-     * @return string
-     */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow);
 }
