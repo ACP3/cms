@@ -21,6 +21,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@newsletter.model.account_data_grid_repository'
+      - '@core.data_grid.data_grid'
 
   newsletter.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Create
@@ -53,6 +54,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@newsletter.model.newsletter_data_grid_repository'
+      - '@core.data_grid.data_grid'
 
   newsletter.controller.admin.index.send:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Send

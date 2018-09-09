@@ -3,8 +3,7 @@ services:
     class: ACP3\Core\Helpers\DataGrid
     public: true
     arguments:
-      - '@core.acl'
-      - '@core.i18n.translator'
+      - '@core.data_grid.data_grid'
     shared: false
 
   core.helpers.data_grid.column_renderer.date_column_renderer:
@@ -99,12 +98,10 @@ services:
       - { name: core.helpers.data_grid.column_renderer }
 
   core.data_grid.data_grid:
-    class: ACP3\Core\Helpers\DataGrid
-    public: true
+    class: ACP3\Core\DataGrid\DataGrid
     arguments:
     - '@core.acl'
     - '@core.i18n.translator'
-    shared: false
 
   core.data_grid.column_renderer.date_column_renderer:
     class: ACP3\Core\DataGrid\ColumnRenderer\DateColumnRenderer

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) by the ACP3 Developers.
  * See the LICENSE file at the top-level module directory for licensing details.
@@ -47,9 +48,9 @@ class Input
      */
     protected $columns;
     /**
-     * @var string
+     * @var string|null
      */
-    protected $primaryKey = '';
+    protected $primaryKey;
 
     public function __construct()
     {
@@ -183,19 +184,27 @@ class Input
     }
 
     /**
-     * @return \ACP3\Core\Model\Repository\DataGridRepository
-     */
-    public function getRepository(): DataGridRepository
-    {
-        return $this->repository;
-    }
-
-    /**
      * @return array
      */
     public function getResults(): array
     {
+        if (empty($this->results) && $this->repository instanceof DataGridRepository) {
+            $this->setResults($this->repository->getAll(clone $this->columns));
+        }
+
         return $this->results;
+    }
+
+    /**
+     * @return int
+     */
+    public function getResultsCount()
+    {
+        if ($this->repository instanceof DataGridRepository) {
+            return $this->repository->countAll();
+        }
+
+        return \count($this->getResults());
     }
 
     /**
@@ -255,9 +264,9 @@ class Input
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPrimaryKey(): string
+    public function getPrimaryKey(): ?string
     {
         if ($this->primaryKey === null) {
             foreach (clone $this->getColumns() as $column) {

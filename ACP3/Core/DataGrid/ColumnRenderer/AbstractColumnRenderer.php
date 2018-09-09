@@ -16,16 +16,16 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     protected $identifier = '';
     /**
-     * @var string
+     * @var string|null
      */
-    protected $primaryKey = '';
+    protected $primaryKey;
 
     /**
      * @param string $identifier
      *
      * @return $this
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier(string $identifier): self
     {
         $this->identifier = $identifier;
 
@@ -33,11 +33,11 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param string $primaryKey
+     * @param string|null $primaryKey
      *
      * @return $this
      */
-    public function setPrimaryKey($primaryKey)
+    public function setPrimaryKey(?string $primaryKey): self
     {
         $this->primaryKey = $primaryKey;
 

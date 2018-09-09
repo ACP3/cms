@@ -5,9 +5,9 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer;
+namespace ACP3\Modules\ACP3\Newsletter\DataGrid\ColumnRenderer;
 
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
+use ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRenderer;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
 

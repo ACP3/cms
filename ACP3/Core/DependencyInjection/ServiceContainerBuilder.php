@@ -117,6 +117,7 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param string                                 $applicationMode
      *
      * @return ContainerBuilder
+     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */

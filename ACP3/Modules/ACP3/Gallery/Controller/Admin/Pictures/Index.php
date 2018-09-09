@@ -27,6 +27,10 @@ class Index extends AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
      */
     private $thumbnailGenerator;
+    /**
+     * @var \ACP3\Core\DataGrid\DataGrid
+     */
+    private $dataGrid;
 
     /**
      * Edit constructor.
@@ -35,18 +39,21 @@ class Index extends AbstractFrontendAction
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      * @param Gallery\Model\GalleryModel                                    $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator          $thumbnailGenerator
+     * @param \ACP3\Core\DataGrid\DataGrid                                  $dataGrid
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Model\GalleryModel $galleryModel,
-        Gallery\Helper\ThumbnailGenerator $thumbnailGenerator
+        Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
+        Core\DataGrid\DataGrid $dataGrid
     ) {
         parent::__construct($context);
 
         $this->pictureRepository = $pictureRepository;
         $this->galleryModel = $galleryModel;
         $this->thumbnailGenerator = $thumbnailGenerator;
+        $this->dataGrid = $dataGrid;
     }
 
     /**
@@ -66,21 +73,19 @@ class Index extends AbstractFrontendAction
 
             $pictures = $this->pictureRepository->getPicturesByGalleryId($id);
 
-            /** @var Core\Helpers\DataGrid $dataGrid */
-            $dataGrid = $this->get('core.helpers.data_grid');
-            $dataGrid
+            $input = (new Core\DataGrid\Input())
                 ->setResults($pictures)
                 ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
                 ->setIdentifier('#gallery-pictures-data-grid')
                 ->setResourcePathDelete('admin/gallery/pictures/delete/id_' . $id)
                 ->setResourcePathEdit('admin/gallery/pictures/edit');
 
-            $this->addDataGridColumns($dataGrid);
+            $this->addDataGridColumns($input);
 
             return [
                 'gallery_id' => $id,
-                'grid' => $dataGrid->render(),
-                'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
+                'grid' => $this->dataGrid->render($input),
+                'show_mass_delete_button' => $input->getResultsCount() > 0,
             ];
         }
 
@@ -88,14 +93,14 @@ class Index extends AbstractFrontendAction
     }
 
     /**
-     * @param Core\Helpers\DataGrid $dataGrid
+     * @param \ACP3\Core\DataGrid\Input $input
      */
-    protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
+    protected function addDataGridColumns(Core\DataGrid\Input $input)
     {
-        $dataGrid
+        $input
             ->addColumn([
                 'label' => $this->translator->t('gallery', 'picture'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\PictureColumnRenderer::class,
                 'fields' => ['file'],
                 'custom' => [
                     'callback' => function (string $fileName) {
@@ -105,12 +110,12 @@ class Index extends AbstractFrontendAction
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'description'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['description'],
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true,
                 'custom' => [
@@ -119,10 +124,10 @@ class Index extends AbstractFrontendAction
             ], 10);
 
         if ($this->acl->hasPermission('admin/gallery/pictures/order')) {
-            $dataGrid
+            $input
                 ->addColumn([
                     'label' => $this->translator->t('system', 'order'),
-                    'type' => Core\Helpers\DataGrid\ColumnRenderer\SortColumnRenderer::class,
+                    'type' => Core\DataGrid\ColumnRenderer\SortColumnRenderer::class,
                     'fields' => ['pic'],
                     'default_sort' => true,
                     'custom' => [

@@ -13,7 +13,6 @@ use ACP3\Core\DataGrid\ColumnRenderer\HeaderColumnRenderer;
 use ACP3\Core\DataGrid\ColumnRenderer\MassActionColumnRenderer;
 use ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Model\Repository\DataGridRepository;
 
 class DataGrid
 {
@@ -104,7 +103,7 @@ class DataGrid
     protected function mapTableColumnsToDbFields(Input $input)
     {
         $renderedResults = '';
-        foreach ($this->fetchDbResults($input) as $result) {
+        foreach ($input->getResults() as $result) {
             $renderedResults .= '<tr>';
             foreach (clone $input->getColumns() as $column) {
                 if (\array_key_exists($column['type'], $this->columnRenderer) && !empty($column['label'])) {
@@ -191,29 +190,5 @@ class DataGrid
                 ],
             ], 0);
         }
-    }
-
-    /**
-     * @param \ACP3\Core\DataGrid\Input $input
-     *
-     * @return array
-     */
-    protected function fetchDbResults(Input $input)
-    {
-        if (empty($input->getResults()) && $input->getRepository() instanceof DataGridRepository) {
-            $input->setResults($input->getRepository()->getAll(clone $input->getColumns()));
-        }
-
-        return $input->getResults();
-    }
-
-    /**
-     * @param \ACP3\Core\DataGrid\Input $input
-     *
-     * @return int
-     */
-    public function countDbResults(Input $input)
-    {
-        return \count($this->fetchDbResults($input));
     }
 }

@@ -5,11 +5,11 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Users\Test\Helpers\DataGrid\ColumnRenderer;
+namespace ACP3\Modules\ACP3\Users\Test\DataGrid\ColumnRenderer;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Test\Helpers\ColumnRenderer\AbstractColumnRendererTest;
-use ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer;
+use ACP3\Modules\ACP3\Users\DataGrid\ColumnRenderer\UserRolesColumnRenderer;
 
 class UserRolesColumnRendererTest extends AbstractColumnRendererTest
 {

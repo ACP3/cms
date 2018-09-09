@@ -5,10 +5,10 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer;
+namespace ACP3\Modules\ACP3\Users\DataGrid\ColumnRenderer;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer;
+use ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRenderer;
 
 class UserRolesColumnRenderer extends AbstractColumnRenderer
 {

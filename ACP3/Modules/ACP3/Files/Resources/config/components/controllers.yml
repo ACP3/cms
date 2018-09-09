@@ -45,6 +45,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@files.model.data_grid_repository'
+      - '@core.data_grid.data_grid'
 
   files.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Settings

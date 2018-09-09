@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Gallery\Event\Listener;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
+use ACP3\Core\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
 use ACP3\Core\I18n\Translator;
 
 class OnDataGridCustomOptionBeforeListener
@@ -37,7 +37,7 @@ class OnDataGridCustomOptionBeforeListener
     }
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent $customOptionEvent
+     * @param \ACP3\Core\DataGrid\ColumnRenderer\Event\CustomOptionEvent $customOptionEvent
      */
     public function __invoke(CustomOptionEvent $customOptionEvent)
     {

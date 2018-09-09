@@ -87,7 +87,7 @@ class DataGridRepository extends AbstractRepository
 
     /**
      * @param \ACP3\Core\DataGrid\ColumnPriorityQueue $gridColumns
-     * @param \Doctrine\DBAL\Query\QueryBuilder               $queryBuilder
+     * @param \Doctrine\DBAL\Query\QueryBuilder       $queryBuilder
      */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
     {
@@ -110,5 +110,20 @@ class DataGridRepository extends AbstractRepository
     protected function getParameters()
     {
         return [];
+    }
+
+    public function countAll()
+    {
+        $queryBuilder = $this->db->getConnection()->createQueryBuilder();
+        $queryBuilder
+            ->select('COUNT(*)')
+            ->from($this->getTableName(), 'main')
+            ->setParameters($this->getParameters());
+
+        $this->addJoin($queryBuilder);
+        $this->addWhere($queryBuilder);
+        $this->addGroupBy($queryBuilder);
+
+        return $queryBuilder->execute()->fetchColumn();
     }
 }

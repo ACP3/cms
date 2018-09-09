@@ -7,8 +7,6 @@
 
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
 
-use ACP3\Core\Router\RouterInterface;
-
 class OptionRenderer extends \ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
 {
 }

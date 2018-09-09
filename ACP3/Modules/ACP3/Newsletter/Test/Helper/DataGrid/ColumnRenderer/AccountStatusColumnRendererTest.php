@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Test\Helper\DataGrid\ColumnRenderer;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Test\Helpers\ColumnRenderer\AbstractColumnRendererTest;
-use ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer\AccountStatusColumnRenderer;
+use ACP3\Modules\ACP3\Newsletter\DataGrid\ColumnRenderer\AccountStatusColumnRenderer;
 
 class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 {

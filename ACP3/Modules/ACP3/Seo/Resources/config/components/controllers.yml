@@ -36,6 +36,7 @@ services:
       - '@core.context.frontend'
       - '@seo.model.data_grid_repository'
       - '@seo.helper.meta_statements'
+      - '@core.data_grid.data_grid'
 
   seo.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Settings

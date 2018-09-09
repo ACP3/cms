@@ -29,8 +29,8 @@ class CustomOptionEvent extends Event
      * CustomOptionEvent constructor.
      *
      * @param \ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer $optionRenderer
-     * @param array                                                                          $dbResultRow
-     * @param string                                                                         $identifier
+     * @param array                                                                  $dbResultRow
+     * @param string                                                                 $identifier
      */
     public function __construct(OptionRenderer $optionRenderer, array $dbResultRow, $identifier)
     {
