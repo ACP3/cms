@@ -12,6 +12,9 @@ use ACP3\Core\Picture\Exception\PictureGenerateException;
 use FastImageSize\FastImageSize;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
+/**
+ * @deprecated Deprecated since version 4.30.0, to be removed with version 5.0.0. Use class ACP3\Core\Picture\Picture instead
+ */
 class Picture
 {
     /**
