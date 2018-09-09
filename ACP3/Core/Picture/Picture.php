@@ -36,30 +36,30 @@ class Picture
     }
 
     /**
-     * @param \ACP3\Core\Picture\InputOptions $options
+     * @param \ACP3\Core\Picture\Input $input
      *
-     * @return \ACP3\Core\Picture\PictureResponse
+     * @return \ACP3\Core\Picture\Output
      *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
-    public function process(InputOptions $options): PictureResponse
+    public function process(Input $input): Output
     {
-        if (\is_file($options->getFile()) === true) {
-            $cacheFile = $this->getCacheFileName($options);
+        if (\is_file($input->getFile()) === true) {
+            $cacheFile = $this->getCacheFileName($input);
 
-            $picInfo = $this->fastImageSize->getImageSize($options->getFile());
+            $picInfo = $this->fastImageSize->getImageSize($input->getFile());
 
-            $output = new PictureResponse($this->appPath, $options->getFile(), $picInfo['type']);
+            $output = new Output($this->appPath, $input->getFile(), $picInfo['type']);
             $output->setSrcWidth($picInfo['width']);
             $output->setSrcHeight($picInfo['height']);
 
             // Direct output of the picture, if it is already cached
-            if ($options->isEnableCache() === true && \is_file($cacheFile) === true) {
-                $this->calcNewDimensions($options, $output);
+            if ($input->isEnableCache() === true && \is_file($cacheFile) === true) {
+                $this->calcNewDimensions($input, $output);
                 $output->setDestFile($cacheFile);
-            } elseif ($this->resamplingIsNecessary($options, $output)) { // Resize the picture
-                $this->createCacheDir($options);
-                $this->resample($options, $output);
+            } elseif ($this->resamplingIsNecessary($input, $output)) { // Resize the picture
+                $this->createCacheDir($input);
+                $this->resample($input, $output);
 
                 $output->setDestFile($cacheFile);
             }
@@ -68,64 +68,64 @@ class Picture
         }
 
         throw new PictureGenerateException(
-            \sprintf('Could not find picture: %s', $options->getFile())
+            \sprintf('Could not find picture: %s', $input->getFile())
         );
     }
 
     /**
-     * Get the name of a possibly cached picture.
+     * Returns the name of a possibly cached picture.
      *
-     * @param \ACP3\Core\Picture\InputOptions $options
-     *
-     * @return string
-     */
-    private function getCacheFileName(InputOptions $options): string
-    {
-        return $options->getCacheDir() . $this->getCacheName($options);
-    }
-
-    /**
-     * Generiert den Namen des zu cachenden Bildes.
-     *
-     * @param \ACP3\Core\Picture\InputOptions $options
+     * @param \ACP3\Core\Picture\Input $input
      *
      * @return string
      */
-    private function getCacheName(InputOptions $options): string
+    private function getCacheFileName(Input $input): string
     {
-        return $options->getCachePrefix() . \substr($options->getFile(), \strrpos($options->getFile(), '/') + 1);
+        return $input->getCacheDir() . $this->getCacheName($input);
     }
 
     /**
-     * @param \ACP3\Core\Picture\InputOptions    $options
-     * @param \ACP3\Core\Picture\PictureResponse $output
+     * Generates the file name of the picture to be cached.
+     *
+     * @param \ACP3\Core\Picture\Input $input
+     *
+     * @return string
+     */
+    private function getCacheName(Input $input): string
+    {
+        return $input->getCachePrefix() . \substr($input->getFile(), \strrpos($input->getFile(), '/') + 1);
+    }
+
+    /**
+     * @param \ACP3\Core\Picture\Input  $input
+     * @param \ACP3\Core\Picture\Output $output
      *
      * @return bool
      */
-    private function resamplingIsNecessary(InputOptions $options, PictureResponse $output): bool
+    private function resamplingIsNecessary(Input $input, Output $output): bool
     {
-        return ($options->isForceResample() || $this->hasNecessaryResamplingDimensions($options, $output))
+        return ($input->isForceResample() || $this->hasNecessaryResamplingDimensions($input, $output))
             && \in_array($output->getType(), [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG]);
     }
 
-    private function hasNecessaryResamplingDimensions(InputOptions $options, PictureResponse $output): bool
+    private function hasNecessaryResamplingDimensions(Input $input, Output $output): bool
     {
-        return $output->getSrcWidth() > $options->getMaxWidth() || $output->getSrcHeight() > $options->getMaxHeight();
+        return $output->getSrcWidth() > $input->getMaxWidth() || $output->getSrcHeight() > $input->getMaxHeight();
     }
 
     /**
-     * Berechnet die neue Breite/Höhe eines Bildes.
+     * Calculates the targeted picture dimensions.
      *
-     * @param \ACP3\Core\Picture\InputOptions    $options
-     * @param \ACP3\Core\Picture\PictureResponse $output
+     * @param \ACP3\Core\Picture\Input  $input
+     * @param \ACP3\Core\Picture\Output $output
      */
-    private function calcNewDimensions(InputOptions $options, PictureResponse $output): void
+    private function calcNewDimensions(Input $input, Output $output): void
     {
-        if ($options->isPreferWidth() === false && ($output->getSrcWidth() >= $output->getSrcHeight() || $options->isPreferWidth() === true)) {
-            $newWidth = $options->getMaxWidth();
+        if ($input->isPreferHeight() === false && ($output->getSrcWidth() >= $output->getSrcHeight() || $input->isPreferWidth() === true)) {
+            $newWidth = $input->getMaxWidth();
             $newHeight = (int) ($output->getSrcHeight() * $newWidth / $output->getSrcWidth());
         } else {
-            $newHeight = $options->getMaxHeight();
+            $newHeight = $input->getMaxHeight();
             $newWidth = (int) ($output->getSrcWidth() * $newHeight / $output->getSrcHeight());
         }
 
@@ -136,19 +136,19 @@ class Picture
     /**
      * Creates the cache directory if it's not already present.
      *
-     * @param \ACP3\Core\Picture\InputOptions $options
+     * @param \ACP3\Core\Picture\Input $input
      *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
-    private function createCacheDir(InputOptions $options)
+    private function createCacheDir(Input $input)
     {
-        if (\is_dir($options->getCacheDir())) {
+        if (\is_dir($input->getCacheDir())) {
             return;
         }
 
-        if (!@\mkdir($options->getCacheDir())) {
+        if (!@\mkdir($input->getCacheDir())) {
             throw new PictureGenerateException(
-                \sprintf('Could not create cache dir: %s', $options->getCacheDir())
+                \sprintf('Could not create cache dir: %s', $input->getCacheDir())
             );
         }
     }
@@ -156,34 +156,34 @@ class Picture
     /**
      * Resamples the picture to the given values.
      *
-     * @param \ACP3\Core\Picture\InputOptions    $options
-     * @param \ACP3\Core\Picture\PictureResponse $output
+     * @param \ACP3\Core\Picture\Input  $input
+     * @param \ACP3\Core\Picture\Output $output
      */
-    private function resample(InputOptions $options, PictureResponse $output): void
+    private function resample(Input $input, Output $output): void
     {
-        $this->calcNewDimensions($options, $output);
+        $this->calcNewDimensions($input, $output);
 
         $this->image = \imagecreatetruecolor($output->getDestWidth(), $output->getDestHeight());
 
         switch ($output->getType()) {
             case IMAGETYPE_GIF:
-                $origPicture = \imagecreatefromgif($options->getFile());
+                $origPicture = \imagecreatefromgif($input->getFile());
                 $this->scalePicture($output, $origPicture);
-                \imagegif($this->image, $this->getCacheFileName($options));
+                \imagegif($this->image, $this->getCacheFileName($input));
 
                 break;
             case IMAGETYPE_JPEG:
-                $origPicture = \imagecreatefromjpeg($options->getFile());
+                $origPicture = \imagecreatefromjpeg($input->getFile());
                 $this->scalePicture($output, $origPicture);
-                \imagejpeg($this->image, $this->getCacheFileName($options), $options->getJpgQuality());
+                \imagejpeg($this->image, $this->getCacheFileName($input), $input->getJpgQuality());
 
                 break;
             case IMAGETYPE_PNG:
                 \imagealphablending($this->image, false);
-                $origPicture = \imagecreatefrompng($options->getFile());
+                $origPicture = \imagecreatefrompng($input->getFile());
                 $this->scalePicture($output, $origPicture);
                 \imagesavealpha($this->image, true);
-                \imagepng($this->image, $this->getCacheFileName($options), 9);
+                \imagepng($this->image, $this->getCacheFileName($input), 9);
 
                 break;
         }
@@ -192,10 +192,10 @@ class Picture
     }
 
     /**
-     * @param \ACP3\Core\Picture\PictureResponse $output
-     * @param resource                           $srcImage
+     * @param \ACP3\Core\Picture\Output $output
+     * @param resource                  $srcImage
      */
-    private function scalePicture(PictureResponse $output, $srcImage): void
+    private function scalePicture(Output $output, $srcImage): void
     {
         \imagecopyresampled(
             $this->image,

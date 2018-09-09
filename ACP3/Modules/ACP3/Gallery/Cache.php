@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Gallery;
 
 use ACP3\Core;
-use ACP3\Core\Picture\PictureResponse;
+use ACP3\Core\Picture\Output;
 use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 
@@ -101,11 +101,11 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * @param string      $fileName
      * @param null|string $action
      *
-     * @return \ACP3\Core\Picture\PictureResponse
+     * @return \ACP3\Core\Picture\Output
      *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
-    private function cachePicture(string $fileName, ?string $action): PictureResponse
+    private function cachePicture(string $fileName, ?string $action): Output
     {
         $action = $action === 'thumb' ? 'thumb' : '';
 

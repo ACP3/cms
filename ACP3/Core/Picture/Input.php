@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Picture;
 
-class InputOptions
+class Input
 {
     /**
      * @var bool

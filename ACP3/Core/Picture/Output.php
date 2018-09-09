@@ -11,7 +11,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Picture\Exception\PictureResponseException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class PictureResponse
+class Output
 {
     /**
      * @var \ACP3\Core\Environment\ApplicationPath

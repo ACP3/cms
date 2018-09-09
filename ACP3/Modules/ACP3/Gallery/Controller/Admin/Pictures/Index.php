@@ -41,8 +41,7 @@ class Index extends AbstractFrontendAction
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Helper\ThumbnailGenerator $thumbnailGenerator
-    )
-    {
+    ) {
         parent::__construct($context);
 
         $this->pictureRepository = $pictureRepository;
@@ -101,7 +100,7 @@ class Index extends AbstractFrontendAction
                 'custom' => [
                     'callback' => function (string $fileName) {
                         return $this->thumbnailGenerator->generateThumbnail($fileName, 'thumb')->getFileWeb();
-                    }
+                    },
                 ],
             ], 40)
             ->addColumn([
