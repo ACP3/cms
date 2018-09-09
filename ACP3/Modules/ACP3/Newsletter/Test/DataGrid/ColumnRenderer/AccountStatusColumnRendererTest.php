@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Newsletter\Test\Helper\DataGrid\ColumnRenderer;
+namespace ACP3\Modules\ACP3\Newsletter\Test\DataGrid\ColumnRenderer;
 
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
@@ -26,7 +26,6 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
     protected function setUp()
     {
         $this->langMock = $this->createMock(Translator::class);
-
         $this->routerMock = $this->createMock(RouterInterface::class);
 
         $this->columnRenderer = new AccountStatusColumnRenderer(
