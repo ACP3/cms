@@ -5,17 +5,20 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Test\Helpers;
+namespace ACP3\Core\Test\DataGrid;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Helpers\DataGrid;
+use ACP3\Core\DataGrid\ColumnRenderer\HeaderColumnRenderer;
+use ACP3\Core\DataGrid\ColumnRenderer\TextColumnRenderer;
+use ACP3\Core\DataGrid\DataGrid;
+use ACP3\Core\DataGrid\Input;
 use ACP3\Core\Helpers\Formatter\MarkEntries;
 use ACP3\Core\I18n\Translator;
 
 class DataGridTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var DataGrid|\PHPUnit_Framework_MockObject_MockObject
+     * @var DataGrid
      */
     protected $dataGrid;
     /**
@@ -26,18 +29,22 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
      * @var Translator|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $langMock;
+    /**
+     * @var Input
+     */
+    private $inputOptions;
 
     protected function setUp()
     {
         $this->aclMock = $this->createMock(ACL::class);
-
         $this->langMock = $this->createMock(Translator::class);
 
         $this->dataGrid = new DataGrid(
             $this->aclMock,
             $this->langMock
         );
-        $this->dataGrid->setIdentifier('#data-grid');
+        $this->inputOptions = (new Input())
+            ->setIdentifier('#data-grid');
 
         parent::setUp();
     }
@@ -72,7 +79,7 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
 
         $expected = $this->getDefaultExpected();
 
-        $this->assertEquals($expected, $this->dataGrid->render());
+        $this->assertEquals($expected, $this->dataGrid->render($this->inputOptions));
     }
 
     public function testRenderWithOneTextColumn()
@@ -85,13 +92,13 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
         /** @var MarkEntries|\PHPUnit_Framework_MockObject_MockObject $markEntriesMock */
         $markEntriesMock = $this->createMock(MarkEntries::class);
 
-        $this->dataGrid->registerColumnRenderer(new DataGrid\ColumnRenderer\HeaderColumnRenderer($markEntriesMock));
-        $this->dataGrid->registerColumnRenderer(new DataGrid\ColumnRenderer\TextColumnRenderer());
+        $this->dataGrid->registerColumnRenderer(new HeaderColumnRenderer($markEntriesMock));
+        $this->dataGrid->registerColumnRenderer(new TextColumnRenderer());
 
-        $this->dataGrid->addColumn([
+        $this->inputOptions->addColumn([
             'label' => 'Foo',
             'fields' => ['title'],
-            'type' => DataGrid\ColumnRenderer\TextColumnRenderer::class,
+            'type' => TextColumnRenderer::class,
         ], 10);
 
         $expected = \array_merge(
@@ -108,7 +115,7 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
             ]
         );
 
-        $this->assertEquals($expected, $this->dataGrid->render());
+        $this->assertEquals($expected, $this->dataGrid->render($this->inputOptions));
     }
 
     public function testRenderWithOneTextColumnAndData()
@@ -129,15 +136,15 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
         /** @var MarkEntries|\PHPUnit_Framework_MockObject_MockObject $markEntriesMock */
         $markEntriesMock = $this->createMock(MarkEntries::class);
 
-        $this->dataGrid->registerColumnRenderer(new DataGrid\ColumnRenderer\HeaderColumnRenderer($markEntriesMock));
-        $this->dataGrid->registerColumnRenderer(new DataGrid\ColumnRenderer\TextColumnRenderer());
+        $this->dataGrid->registerColumnRenderer(new HeaderColumnRenderer($markEntriesMock));
+        $this->dataGrid->registerColumnRenderer(new TextColumnRenderer());
 
-        $this->dataGrid->addColumn([
+        $this->inputOptions->addColumn([
             'label' => 'Foo',
             'fields' => ['title'],
-            'type' => DataGrid\ColumnRenderer\TextColumnRenderer::class,
+            'type' => TextColumnRenderer::class,
         ], 10);
-        $this->dataGrid->setResults($data);
+        $this->inputOptions->setResults($data);
 
         $expected = \array_merge(
             $this->getDefaultExpected(),
@@ -154,6 +161,6 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
             ]
         );
 
-        $this->assertEquals($expected, $this->dataGrid->render());
+        $this->assertEquals($expected, $this->dataGrid->render($this->inputOptions));
     }
 }

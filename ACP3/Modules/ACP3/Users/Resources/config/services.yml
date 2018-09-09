@@ -32,9 +32,9 @@ services:
       - '@core.http.request'
       - '@core.helpers.forms'
 
-  users.helpers.data_grid.column_renderer.user_roles_column_renderer:
-    class: ACP3\Modules\ACP3\Users\Helpers\DataGrid\ColumnRenderer\UserRolesColumnRenderer
+  users.data_grid.column_renderer.user_roles_column_renderer:
+    class: ACP3\Modules\ACP3\Users\DataGrid\ColumnRenderer\UserRolesColumnRenderer
     arguments:
       - '@core.acl'
     tags:
-      - { name: core.helpers.data_grid.column_renderer }
+      - { name: core.data_grid.column_renderer }

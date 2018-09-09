@@ -21,6 +21,10 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var Core\Model\Repository\ModuleAwareRepositoryInterface
      */
     protected $systemModuleRepository;
+    /**
+     * @var \ACP3\Core\DataGrid\DataGrid
+     */
+    private $dataGrid;
 
     /**
      * Index constructor.
@@ -28,16 +32,19 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @param Core\Controller\Context\FrontendContext              $context
      * @param Comments\Model\Repository\CommentRepository          $commentRepository
      * @param Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
+     * @param \ACP3\Core\DataGrid\DataGrid                         $dataGrid
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Comments\Model\Repository\CommentRepository $commentRepository,
-        Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
+        Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository,
+        Core\DataGrid\DataGrid $dataGrid
     ) {
         parent::__construct($context);
 
         $this->commentRepository = $commentRepository;
         $this->systemModuleRepository = $systemModuleRepository;
+        $this->dataGrid = $dataGrid;
     }
 
     /**
@@ -46,8 +53,9 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $comments = $this->commentRepository->getAllByModuleInAcp($id);
 
@@ -56,21 +64,19 @@ class Index extends Core\Controller\AbstractFrontendAction
 
             $this->breadcrumb->append($this->translator->t($moduleName, $moduleName));
 
-            /** @var Core\Helpers\DataGrid $dataGrid */
-            $dataGrid = $this->get('core.helpers.data_grid');
-            $dataGrid
+            $input = (new Core\DataGrid\Input())
                 ->setResults($comments)
                 ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
                 ->setIdentifier('#comments-details-data-grid')
                 ->setResourcePathDelete('admin/comments/details/delete/id_' . $id)
                 ->setResourcePathEdit('admin/comments/details/edit');
 
-            $this->addDataGridColumns($dataGrid);
+            $this->addDataGridColumns($input);
 
             return [
-                'grid' => $dataGrid->render(),
+                'grid' => $this->dataGrid->render($input),
                 'module_id' => $id,
-                'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
+                'show_mass_delete_button' => $input->getResultsCount() > 0,
             ];
         }
 
@@ -78,35 +84,35 @@ class Index extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param Core\Helpers\DataGrid $dataGrid
+     * @param \ACP3\Core\DataGrid\Input $input
      */
-    protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
+    protected function addDataGridColumns(Core\DataGrid\Input $input)
     {
-        $dataGrid
+        $input
             ->addColumn([
                 'label' => $this->translator->t('system', 'date'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['date'],
                 'default_sort' => true,
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('system', 'name'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['name'],
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'message'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\Nl2pColumnRenderer::class,
                 'fields' => ['message'],
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('comments', 'ip'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['ip'],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true,
             ], 10);

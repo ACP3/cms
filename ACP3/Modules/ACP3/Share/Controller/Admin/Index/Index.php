@@ -17,20 +17,27 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Share\Model\Repository\DataGridRepository
      */
     protected $dataGridRepository;
+    /**
+     * @var \ACP3\Core\DataGrid\DataGrid
+     */
+    private $dataGrid;
 
     /**
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                $context
      * @param \ACP3\Modules\ACP3\Share\Model\Repository\DataGridRepository $dataGridRepository
+     * @param \ACP3\Core\DataGrid\DataGrid                                 $dataGrid
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Share\Model\Repository\DataGridRepository $dataGridRepository
+        Share\Model\Repository\DataGridRepository $dataGridRepository,
+        Core\DataGrid\DataGrid $dataGrid
     ) {
         parent::__construct($context);
 
         $this->dataGridRepository = $dataGridRepository;
+        $this->dataGrid = $dataGrid;
     }
 
     /**
@@ -38,32 +45,30 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        /** @var Core\Helpers\DataGrid $dataGrid */
-        $dataGrid = $this->get('core.helpers.data_grid');
-        $dataGrid
+        $input = (new Core\DataGrid\Input())
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#share-data-grid')
             ->setResourcePathDelete('admin/share/index/delete')
             ->setResourcePathEdit('admin/share/index/edit');
 
-        $this->addDataGridColumns($dataGrid);
+        $this->addDataGridColumns($input);
 
         return [
-            'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
+            'grid' => $this->dataGrid->render($input),
+            'show_mass_delete_button' => $input->getResultsCount() > 0,
         ];
     }
 
     /**
-     * @param Core\Helpers\DataGrid $dataGrid
+     * @param \ACP3\Core\DataGrid\Input $input
      */
-    protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
+    protected function addDataGridColumns(Core\DataGrid\Input $input)
     {
-        $dataGrid
+        $input
             ->addColumn([
                 'label' => $this->translator->t('share', 'active'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::class,
                 'fields' => ['active'],
                 'custom' => [
                     'search' => [0, 1],
@@ -72,7 +77,7 @@ class Index extends Core\Controller\AbstractFrontendAction
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('share', 'uri'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
                 'fields' => ['uri'],
                 'default_sort' => true,
                 'custom' => [
@@ -81,7 +86,7 @@ class Index extends Core\Controller\AbstractFrontendAction
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('share', 'average_rating'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\RoundNumberColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\RoundNumberColumnRenderer::class,
                 'fields' => ['average_rating'],
                 'custom' => [
                     'precision' => 2,
@@ -89,12 +94,12 @@ class Index extends Core\Controller\AbstractFrontendAction
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('share', 'ratings_count'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['ratings_count'],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true,
             ], 10);

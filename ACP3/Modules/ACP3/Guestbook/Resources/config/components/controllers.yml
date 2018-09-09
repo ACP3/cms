@@ -24,6 +24,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@guestbook.model.data_grid_repository'
+      - '@core.data_grid.data_grid'
 
   guestbook.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Settings

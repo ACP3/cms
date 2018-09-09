@@ -36,6 +36,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@gallery.model.gallery_data_grid_repository'
+      - '@core.data_grid.data_grid'
 
   gallery.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Settings
@@ -87,6 +88,7 @@ services:
       - '@gallery.model.picturerepository'
       - '@gallery.model.gallery_model'
       - '@gallery.helpers.thumbnail_generator'
+      - '@core.data_grid.data_grid'
 
   gallery.controller.admin.pictures.order:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Order

@@ -21,6 +21,10 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
      */
     protected $metaStatements;
+    /**
+     * @var \ACP3\Core\DataGrid\DataGrid
+     */
+    private $dataGrid;
 
     /**
      * Index constructor.
@@ -28,16 +32,19 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext              $context
      * @param \ACP3\Modules\ACP3\Seo\Model\Repository\DataGridRepository $dataGridRepository
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements               $metaStatements
+     * @param \ACP3\Core\DataGrid\DataGrid                               $dataGrid
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Seo\Model\Repository\DataGridRepository $dataGridRepository,
-        Seo\Helper\MetaStatements $metaStatements
+        Seo\Helper\MetaStatements $metaStatements,
+        Core\DataGrid\DataGrid $dataGrid
     ) {
         parent::__construct($context);
 
         $this->dataGridRepository = $dataGridRepository;
         $this->metaStatements = $metaStatements;
+        $this->dataGrid = $dataGrid;
     }
 
     /**
@@ -45,32 +52,30 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        /** @var Core\Helpers\DataGrid $dataGrid */
-        $dataGrid = $this->get('core.helpers.data_grid');
-        $dataGrid
+        $input = (new Core\DataGrid\Input())
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#seo-data-grid')
             ->setResourcePathDelete('admin/seo/index/delete')
             ->setResourcePathEdit('admin/seo/index/edit');
 
-        $this->addDataGridColumns($dataGrid);
+        $this->addDataGridColumns($input);
 
         return [
-            'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
+            'grid' => $this->dataGrid->render($input),
+            'show_mass_delete_button' => $input->getResultsCount() > 0,
         ];
     }
 
     /**
-     * @param Core\Helpers\DataGrid $dataGrid
+     * @param \ACP3\Core\DataGrid\Input $input
      */
-    protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
+    protected function addDataGridColumns(Core\DataGrid\Input $input)
     {
-        $dataGrid
+        $input
             ->addColumn([
                 'label' => $this->translator->t('seo', 'uri'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
                 'fields' => ['uri'],
                 'default_sort' => true,
                 'custom' => [
@@ -79,22 +84,22 @@ class Index extends Core\Controller\AbstractFrontendAction
             ], 60)
             ->addColumn([
                 'label' => $this->translator->t('seo', 'alias'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['alias'],
             ], 50)
             ->addColumn([
                 'label' => $this->translator->t('seo', 'keywords'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['keywords'],
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('seo', 'description'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['description'],
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('seo', 'robots'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::class,
                 'fields' => ['robots'],
                 'custom' => [
                     'search' => [0, 1, 2, 3, 4],
@@ -113,7 +118,7 @@ class Index extends Core\Controller\AbstractFrontendAction
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true,
             ], 10);

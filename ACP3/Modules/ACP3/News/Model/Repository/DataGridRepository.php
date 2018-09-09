@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\News\Model\Repository;
 
-use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
+use ACP3\Core\DataGrid\ColumnPriorityQueue;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 

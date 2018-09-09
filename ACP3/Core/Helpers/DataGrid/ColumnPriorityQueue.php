@@ -7,20 +7,6 @@
 
 namespace ACP3\Core\Helpers\DataGrid;
 
-class ColumnPriorityQueue extends \SplPriorityQueue
+class ColumnPriorityQueue extends \ACP3\Core\DataGrid\ColumnPriorityQueue
 {
-    /**
-     * @var int
-     */
-    protected $serial = PHP_INT_MAX;
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see http://php.net/manual/en/splpriorityqueue.compare.php#93999
-     */
-    public function insert($value, $priority)
-    {
-        parent::insert($value, [$priority, $this->serial--]);
-    }
 }

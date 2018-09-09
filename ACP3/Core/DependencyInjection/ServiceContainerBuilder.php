@@ -9,8 +9,8 @@ namespace ACP3\Core\DependencyInjection;
 
 use ACP3\Core\Authentication\DependencyInjection\RegisterAuthenticationsCompilerPass;
 use ACP3\Core\Controller\DependencyInjection\RegisterControllerActionsPass;
+use ACP3\Core\DataGrid\DependencyInjection\RegisterColumnRendererPass;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Helpers\DataGrid\DependencyInjection\RegisterColumnRendererPass;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
 use ACP3\Core\Model\DataProcessor\DependencyInjection\RegisterColumnTypesCompilerPass;
 use ACP3\Core\Modules;
@@ -44,6 +44,9 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param ApplicationPath $applicationPath
      * @param SymfonyRequest  $symfonyRequest
      * @param string          $applicationMode
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function __construct(
         ApplicationPath $applicationPath,
@@ -58,6 +61,11 @@ class ServiceContainerBuilder extends ContainerBuilder
         $this->setUpContainer();
     }
 
+    /**
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     * @throws \Exception
+     */
     private function setUpContainer()
     {
         $this->set('core.http.symfony_request', $this->symfonyRequest);
@@ -108,9 +116,12 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param string                                 $applicationMode
      *
      * @return ContainerBuilder
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public static function create(
-        ApplicationPath $applicationPath, SymfonyRequest $symfonyRequest, $applicationMode
+        ApplicationPath $applicationPath, SymfonyRequest $symfonyRequest, string $applicationMode
     ) {
         return new static($applicationPath, $symfonyRequest, $applicationMode);
     }
@@ -119,7 +130,7 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param string $vendor
      * @param string $moduleName
      */
-    private function registerCompilerPass($vendor, $moduleName)
+    private function registerCompilerPass(string $vendor, string $moduleName)
     {
         $fqn = '\\ACP3\\Modules\\' . $vendor . '\\' . $moduleName . '\\ModuleRegistration';
 

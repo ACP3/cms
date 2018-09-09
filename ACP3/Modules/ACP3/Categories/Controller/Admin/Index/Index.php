@@ -17,20 +17,27 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Categories\Model\Repository\DataGridRepository
      */
     protected $dataGridRepository;
+    /**
+     * @var \ACP3\Core\DataGrid\DataGrid
+     */
+    private $dataGrid;
 
     /**
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\DataGridRepository $dataGridRepository
+     * @param \ACP3\Core\DataGrid\DataGrid                                      $dataGrid
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Categories\Model\Repository\DataGridRepository $dataGridRepository
+        Categories\Model\Repository\DataGridRepository $dataGridRepository,
+        Core\DataGrid\DataGrid $dataGrid
     ) {
         parent::__construct($context);
 
         $this->dataGridRepository = $dataGridRepository;
+        $this->dataGrid = $dataGrid;
     }
 
     /**
@@ -38,48 +45,46 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        /** @var Core\Helpers\DataGrid $dataGrid */
-        $dataGrid = $this->get('core.helpers.data_grid');
-        $dataGrid
+        $input = (new Core\DataGrid\Input())
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#categories-data-grid')
             ->setResourcePathDelete('admin/categories/index/delete')
             ->setResourcePathEdit('admin/categories/index/edit');
 
-        $this->addDataGridColumns($dataGrid);
+        $this->addDataGridColumns($input);
 
         return [
-            'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
+            'grid' => $this->dataGrid->render($input),
+            'show_mass_delete_button' => $input->getResultsCount() > 0,
         ];
     }
 
     /**
-     * @param Core\Helpers\DataGrid $dataGrid
+     * @param \ACP3\Core\DataGrid\Input $input
      */
-    protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
+    protected function addDataGridColumns(Core\DataGrid\Input $input)
     {
-        $dataGrid
+        $input
             ->addColumn([
                 'label' => $this->translator->t('categories', 'title'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['title'],
                 'default_sort' => true,
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('system', 'description'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TextColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['description'],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('categories', 'module'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\TranslateColumnRenderer::class,
                 'fields' => ['module'],
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true,
             ], 10);

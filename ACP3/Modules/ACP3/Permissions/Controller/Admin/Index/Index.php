@@ -16,6 +16,19 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
+        return [
+            'roles' => $this->fetchRoles(),
+            'can_delete' => $this->acl->hasPermission('admin/permissions/index/delete'),
+            'can_edit' => $this->acl->hasPermission('admin/permissions/index/edit'),
+            'can_order' => $this->acl->hasPermission('admin/permissions/index/order'),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function fetchRoles(): array
+    {
         $roles = $this->acl->getAllRoles();
         $cRoles = \count($roles);
 
@@ -23,11 +36,6 @@ class Index extends Core\Controller\AbstractFrontendAction
             $roles[$i]['spaces'] = \str_repeat('&nbsp;&nbsp;', $roles[$i]['level']);
         }
 
-        return [
-            'roles' => $roles,
-            'can_delete' => $this->acl->hasPermission('admin/permissions/index/delete'),
-            'can_edit' => $this->acl->hasPermission('admin/permissions/index/edit'),
-            'can_order' => $this->acl->hasPermission('admin/permissions/index/order'),
-        ];
+        return $roles;
     }
 }
