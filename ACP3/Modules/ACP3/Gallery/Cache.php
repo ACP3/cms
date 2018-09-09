@@ -8,10 +8,9 @@
 namespace ACP3\Modules\ACP3\Gallery;
 
 use ACP3\Core;
+use ACP3\Core\Picture\Output;
 use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
-use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
-use Psr\Container\ContainerInterface;
 
 class Cache extends Core\Modules\AbstractCacheStorage
 {
@@ -33,10 +32,6 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     protected $config;
     /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    private $container;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
      */
     private $thumbnailGenerator;
@@ -46,15 +41,13 @@ class Cache extends Core\Modules\AbstractCacheStorage
         Core\Environment\ApplicationPath $appPath,
         PictureRepository $pictureRepository,
         Core\Settings\SettingsInterface $config,
-        ThumbnailGenerator $thumbnailGenerator,
-        ContainerInterface $container
+        ThumbnailGenerator $thumbnailGenerator
     ) {
         parent::__construct($cache);
 
         $this->appPath = $appPath;
         $this->pictureRepository = $pictureRepository;
         $this->config = $config;
-        $this->container = $container;
         $this->thumbnailGenerator = $thumbnailGenerator;
     }
 
@@ -90,19 +83,12 @@ class Cache extends Core\Modules\AbstractCacheStorage
         $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
         $cPictures = \count($pictures);
 
-        $settings = $this->config->getSettings(Schema::MODULE_NAME);
-
         for ($i = 0; $i < $cPictures; ++$i) {
             $cachedThumbnail = $this->cachePicture($pictures[$i]['file'], 'thumb');
             $cachedPicture = $this->cachePicture($pictures[$i]['file'], null);
 
-            $pictures[$i]['width'] = $settings['thumbwidth'];
-            $pictures[$i]['height'] = $settings['thumbheight'];
-            $picInfos = @\getimagesize($cachedThumbnail->getFileWeb());
-            if ($picInfos !== false) {
-                $pictures[$i]['width'] = $picInfos[0];
-                $pictures[$i]['height'] = $picInfos[1];
-            }
+            $pictures[$i]['width'] = $cachedThumbnail->getWidth();
+            $pictures[$i]['height'] = $cachedThumbnail->getHeight();
 
             $pictures[$i]['uri_thumb'] = $cachedThumbnail->getFileWeb();
             $pictures[$i]['uri_picture'] = $cachedPicture->getFileWeb();
@@ -115,20 +101,14 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * @param string      $fileName
      * @param null|string $action
      *
-     * @return \ACP3\Core\Picture
+     * @return \ACP3\Core\Picture\Output
      *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
-    private function cachePicture(string $fileName, ?string $action): Core\Picture
+    private function cachePicture(string $fileName, ?string $action): Output
     {
         $action = $action === 'thumb' ? 'thumb' : '';
 
-        /** @var Core\Picture $image */
-        $image = $this->container->get('core.image');
-        $this->thumbnailGenerator->generateThumbnail($image, $action, $fileName);
-
-        $image->freeMemory();
-
-        return $image;
+        return $this->thumbnailGenerator->generateThumbnail($fileName, $action);
     }
 }

@@ -142,6 +142,6 @@ class GenerateThumbnailsCommand extends Command
     private function generateThumbnail(string $pictureFileName, string $action): void
     {
         $image = $this->container->get('core.image');
-        $this->thumbnailGenerator->generateThumbnail($image, $action, $pictureFileName);
+        $this->thumbnailGenerator->generateThumbnail($pictureFileName, $action);
     }
 }

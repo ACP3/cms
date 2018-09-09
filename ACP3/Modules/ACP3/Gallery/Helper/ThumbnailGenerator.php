@@ -8,7 +8,9 @@
 namespace ACP3\Modules\ACP3\Gallery\Helper;
 
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Picture;
+use ACP3\Core\Picture\Input;
+use ACP3\Core\Picture\Output;
+use ACP3\Core\Picture\Picture;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 
@@ -22,33 +24,31 @@ class ThumbnailGenerator
      * @var SettingsInterface
      */
     private $settings;
-
     /**
-     * ThumbnailGenerator constructor.
-     *
-     * @param ApplicationPath   $appPath
-     * @param SettingsInterface $settings
+     * @var \ACP3\Core\Picture\Picture
      */
-    public function __construct(ApplicationPath $appPath, SettingsInterface $settings)
+    private $picture;
+
+    public function __construct(ApplicationPath $appPath, SettingsInterface $settings, Picture $picture)
     {
         $this->appPath = $appPath;
         $this->settings = $settings;
+        $this->picture = $picture;
     }
 
     /**
-     * @param Picture $picture
-     * @param string  $action
-     * @param string  $fileName
+     * @param string $fileName
+     * @param string $action
      *
-     * @return Picture
+     * @return \ACP3\Core\Picture\Output
      *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
-    public function generateThumbnail(Picture $picture, string $action, string $fileName): Picture
+    public function generateThumbnail(string $fileName, string $action): Output
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
-        $picture
+        $input = (new Input())
             ->setEnableCache(true)
             ->setCachePrefix(Schema::MODULE_NAME . '_' . (!empty($action) ? $action . '_' : ''))
             ->setCacheDir($this->appPath->getUploadsDir() . Schema::MODULE_NAME . '/cache/')
@@ -57,8 +57,6 @@ class ThumbnailGenerator
             ->setFile($this->appPath->getUploadsDir() . Schema::MODULE_NAME . '/' . $fileName)
             ->setPreferHeight($action === 'thumb');
 
-        $picture->process();
-
-        return $picture;
+        return $this->picture->process($input);
     }
 }

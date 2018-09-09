@@ -38,6 +38,8 @@ class PictureColumnRenderer extends AbstractColumnRenderer
             $value = $this->getDefaultValue($column);
         } elseif (isset($column['custom']['pattern'])) {
             $value = '<img src="' . $this->getUrl($column['custom'], $value) . '" alt="">';
+        } elseif (isset($column['custom']['callback']) && \is_callable($column['custom']['callback'])) {
+            $value = '<img src="' . $column['custom']['callback']($value) . '" alt="">';
         }
 
         return $value;

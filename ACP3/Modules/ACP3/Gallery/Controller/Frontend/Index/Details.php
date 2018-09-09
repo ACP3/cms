@@ -80,12 +80,10 @@ class Details extends AbstractAction
 
             $this->title->setPageTitlePrefix($picture['gallery_title']);
 
-            /** @var \ACP3\Core\Picture $image */
-            $image = $this->get('core.image');
-            $this->thumbnailGenerator->generateThumbnail($image, '', $picture['file']);
-            $picture['file'] = $image->getFileWeb();
-
-            $picture = \array_merge($picture, $this->calculatePictureDimensions($image->getFile()));
+            $output = $this->thumbnailGenerator->generateThumbnail($picture['file'], '');
+            $picture['file'] = $output->getFileWeb();
+            $picture['width'] = $output->getWidth();
+            $picture['height'] = $output->getHeight();
 
             $previousPicture = $this->pictureRepository->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($previousPicture)) {
@@ -106,36 +104,6 @@ class Details extends AbstractAction
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
-    }
-
-    /**
-     * @param string $fileName
-     *
-     * @return array
-     */
-    protected function calculatePictureDimensions(string $fileName)
-    {
-        $dimensions = [
-            'width' => $this->settings['width'],
-            'height' => $this->settings['height'],
-        ];
-        $picInfos = @\getimagesize($fileName);
-        if ($picInfos !== false) {
-            if ($picInfos[0] > $this->settings['width'] || $picInfos[1] > $this->settings['height']) {
-                if ($picInfos[0] > $picInfos[1]) {
-                    $newWidth = $this->settings['width'];
-                    $newHeight = (int) ($picInfos[1] * $newWidth / $picInfos[0]);
-                } else {
-                    $newHeight = $this->settings['height'];
-                    $newWidth = (int) ($picInfos[0] * $newHeight / $picInfos[1]);
-                }
-            }
-
-            $dimensions['width'] = $newWidth ?? $picInfos[0];
-            $dimensions['height'] = $newHeight ?? $picInfos[1];
-        }
-
-        return $dimensions;
     }
 
     /**
