@@ -6,13 +6,13 @@ services:
     class: ACP3\Core\Picture
     public: true
     arguments:
-    - '@fast_image_size'
-    - '@core.environment.application_path'
+      - '@core.picture.picture'
+      - '@core.environment.application_path'
     shared: false
     deprecated: 'The "%service_id%" service is deprecated since 4.30.0 and will be removed in 5.0.0. Use service core.picture.picture instead!'
 
   core.picture.picture:
     class: ACP3\Core\Picture\Picture
     arguments:
-    - '@fast_image_size'
-    - '@core.environment.application_path'
+      - '@fast_image_size'
+      - '@core.environment.application_path'

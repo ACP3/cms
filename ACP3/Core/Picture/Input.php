@@ -40,7 +40,7 @@ class Input
     /**
      * @var bool
      */
-    private $preferHeight = false;
+    private $preferHeight = true;
     /**
      * @var string
      */
