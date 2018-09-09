@@ -11,6 +11,9 @@ use ACP3\Core\DataGrid\Input;
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\Model\Repository\DataGridRepository;
 
+/**
+ * @deprecated Since version 4.30.0, to be removed in 5.0.0. Use class ACP3\Core\DataGrid\DataGrid instead
+ */
 class DataGrid
 {
     /**
@@ -53,14 +56,6 @@ class DataGrid
      * @var \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue
      */
     protected $columns;
-    /**
-     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer[]
-     */
-    protected $columnRenderer = [];
-    /**
-     * @var string
-     */
-    protected $primaryKey = '';
 
     /**
      * @param \ACP3\Core\DataGrid\DataGrid $dataGrid
@@ -212,8 +207,8 @@ class DataGrid
             ->setResults($this->results)
             ->setIdentifier($this->identifier);
 
-        foreach (clone $this->columns as $column) {
-            $input->addColumn($column, 0);
+        foreach (clone $this->columns as $index => $column) {
+            $input->addColumn($column, $index * 10);
         }
 
         return $this->dataGrid->render($input);
