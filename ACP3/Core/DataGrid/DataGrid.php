@@ -28,17 +28,24 @@ class DataGrid
      * @var \ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRenderer[]
      */
     protected $columnRenderer = [];
+    /**
+     * @var \ACP3\Core\DataGrid\ConfigProcessor
+     */
+    private $configProcessor;
 
     /**
-     * @param \ACP3\Core\ACL             $acl
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\DataGrid\ConfigProcessor $configProcessor
+     * @param \ACP3\Core\ACL                      $acl
+     * @param \ACP3\Core\I18n\Translator          $translator
      */
     public function __construct(
+        ConfigProcessor $configProcessor,
         ACL $acl,
         Translator $translator
     ) {
         $this->acl = $acl;
         $this->translator = $translator;
+        $this->configProcessor = $configProcessor;
     }
 
     /**
@@ -70,8 +77,9 @@ class DataGrid
             'can_delete' => $canDelete,
             'identifier' => \substr($input->getIdentifier(), 1),
             'header' => $this->renderTableHeader($input),
-            'config' => $this->generateDataTableConfig($input),
+            'config' => $this->configProcessor->generateDataTableConfig($input),
             'results' => $this->mapTableColumnsToDbFields($input),
+            'num_results' => $input->getResultsCount(),
         ];
     }
 

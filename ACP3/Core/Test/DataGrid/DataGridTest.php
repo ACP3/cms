@@ -10,6 +10,7 @@ namespace ACP3\Core\Test\DataGrid;
 use ACP3\Core\ACL;
 use ACP3\Core\DataGrid\ColumnRenderer\HeaderColumnRenderer;
 use ACP3\Core\DataGrid\ColumnRenderer\TextColumnRenderer;
+use ACP3\Core\DataGrid\ConfigProcessor;
 use ACP3\Core\DataGrid\DataGrid;
 use ACP3\Core\DataGrid\Input;
 use ACP3\Core\Helpers\Formatter\MarkEntries;
@@ -21,6 +22,10 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
      * @var DataGrid
      */
     protected $dataGrid;
+    /**
+     * @var ConfigProcessor|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $configProcessorMock;
     /**
      * @var ACL|\PHPUnit_Framework_MockObject_MockObject
      */
@@ -36,10 +41,12 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp()
     {
+        $this->configProcessorMock = $this->createMock(ConfigProcessor::class);
         $this->aclMock = $this->createMock(ACL::class);
         $this->langMock = $this->createMock(Translator::class);
 
         $this->dataGrid = new DataGrid(
+            $this->configProcessorMock,
             $this->aclMock,
             $this->langMock
         );
@@ -59,14 +66,9 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
             'can_delete' => false,
             'identifier' => 'data-grid',
             'header' => '',
-            'config' => [
-                'element' => '#data-grid',
-                'records_per_page' => 10,
-                'hide_col_sort' => '0',
-                'sort_col' => null,
-                'sort_dir' => null,
-            ],
+            'config' => [],
             'results' => '',
+            'num_results' => 0,
         ];
     }
 
@@ -105,13 +107,6 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
             $this->getDefaultExpected(),
             [
                 'header' => '<th>Foo</th>',
-                'config' => [
-                    'element' => '#data-grid',
-                    'records_per_page' => 10,
-                    'hide_col_sort' => '1',
-                    'sort_col' => null,
-                    'sort_dir' => null,
-                ],
             ]
         );
 
@@ -150,14 +145,8 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
             $this->getDefaultExpected(),
             [
                 'header' => '<th>Foo</th>',
-                'config' => [
-                    'element' => '#data-grid',
-                    'records_per_page' => 10,
-                    'hide_col_sort' => '1',
-                    'sort_col' => null,
-                    'sort_dir' => null,
-                ],
                 'results' => "<tr><td>Lorem Ipsum</td></tr>\n<tr><td>Lorem Ipsum Dolor</td></tr>\n",
+                'num_results' => 2,
             ]
         );
 

@@ -7,11 +7,17 @@ services:
     shared: false
     deprecated: 'The "%service_id%" service is deprecated since 4.30.0 and will be removed in 5.0.0. Use service core.data_grid.data_grid instead!'
 
+  core.data_grid.config_processor:
+    class: ACP3\Core\DataGrid\ConfigProcessor
+    arguments:
+      - '@core.i18n.translator'
+
   core.data_grid.data_grid:
     class: ACP3\Core\DataGrid\DataGrid
     arguments:
-    - '@core.acl'
-    - '@core.i18n.translator'
+      - '@core.data_grid.config_processor'
+      - '@core.acl'
+      - '@core.i18n.translator'
 
   core.data_grid.column_renderer.date_column_renderer:
     class: ACP3\Core\DataGrid\ColumnRenderer\DateColumnRenderer
