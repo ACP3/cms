@@ -14,43 +14,43 @@ class Input
     /**
      * @var \ACP3\Core\Model\Repository\DataGridRepository
      */
-    protected $repository;
+    private $repository;
     /**
      * @var array
      */
-    protected $results = [];
+    private $results = [];
     /**
      * @var string|null
      */
-    protected $resourcePathEdit;
+    private $resourcePathEdit;
     /**
      * @var string|null
      */
-    protected $resourcePathDelete;
+    private $resourcePathDelete;
     /**
      * @var string|null
      */
-    protected $identifier;
+    private $identifier;
     /**
      * @var int
      */
-    protected $recordsPerPage = 10;
+    private $recordsPerPage = 10;
     /**
      * @var bool
      */
-    protected $enableMassAction = true;
+    private $enableMassAction = true;
     /**
      * @var bool
      */
-    protected $enableOptions = true;
+    private $enableOptions = true;
     /**
      * @var \ACP3\Core\DataGrid\ColumnPriorityQueue
      */
-    protected $columns;
+    private $columns;
     /**
      * @var string|null
      */
-    protected $primaryKey;
+    private $primaryKey;
 
     public function __construct()
     {

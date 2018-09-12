@@ -29,17 +29,17 @@ class DataGrid
      */
     protected $results = [];
     /**
-     * @var string
+     * @var string|null
      */
-    protected $resourcePathEdit = '';
+    protected $resourcePathEdit;
     /**
-     * @var string
+     * @var string|null
      */
-    protected $resourcePathDelete = '';
+    protected $resourcePathDelete;
     /**
-     * @var string
+     * @var string|null
      */
-    protected $identifier = '';
+    protected $identifier;
     /**
      * @var int
      */
@@ -204,8 +204,11 @@ class DataGrid
             ->setRecordsPerPage($this->recordsPerPage)
             ->setResourcePathDelete($this->resourcePathDelete)
             ->setResourcePathEdit($this->resourcePathEdit)
-            ->setResults($this->results)
             ->setIdentifier($this->identifier);
+
+        if ($this->repository === null) {
+            $input->setResults($this->results);
+        }
 
         foreach (clone $this->columns as $index => $column) {
             $input->addColumn($column, $index * 10);
