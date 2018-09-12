@@ -9,16 +9,13 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
 use ACP3\Core;
 use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\DataGrid\QueryOption;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Gallery\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Index extends AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
-     */
-    protected $pictureRepository;
     /**
      * @var Gallery\Model\GalleryModel
      */
@@ -31,29 +28,24 @@ class Index extends AbstractFrontendAction
      * @var \ACP3\Core\DataGrid\DataGrid
      */
     private $dataGrid;
-
     /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param Gallery\Model\GalleryModel                                    $galleryModel
-     * @param \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator          $thumbnailGenerator
-     * @param \ACP3\Core\DataGrid\DataGrid                                  $dataGrid
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesDataGridRepository
      */
+    private $picturesDataGridRepository;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Gallery\Model\Repository\PictureRepository $pictureRepository,
+        Gallery\Model\Repository\GalleryPicturesDataGridRepository $picturesDataGridRepository,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
         Core\DataGrid\DataGrid $dataGrid
     ) {
         parent::__construct($context);
 
-        $this->pictureRepository = $pictureRepository;
         $this->galleryModel = $galleryModel;
         $this->thumbnailGenerator = $thumbnailGenerator;
         $this->dataGrid = $dataGrid;
+        $this->picturesDataGridRepository = $picturesDataGridRepository;
     }
 
     /**
@@ -71,14 +63,13 @@ class Index extends AbstractFrontendAction
             $this->breadcrumb->append($gallery['title'], 'acp/gallery/pictures/index/id_' . $id);
             $this->title->setPageTitlePrefix($this->translator->t('gallery', 'admin_pictures_index'));
 
-            $pictures = $this->pictureRepository->getPicturesByGalleryId($id);
-
             $input = (new Core\DataGrid\Input())
-                ->setResults($pictures)
+                ->setRepository($this->picturesDataGridRepository)
                 ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
                 ->setIdentifier('#gallery-pictures-data-grid')
                 ->setResourcePathDelete('admin/gallery/pictures/delete/id_' . $id)
-                ->setResourcePathEdit('admin/gallery/pictures/edit');
+                ->setResourcePathEdit('admin/gallery/pictures/edit')
+                ->setQueryOptions(new QueryOption('gallery_id', $id));
 
             $this->addDataGridColumns($input);
 

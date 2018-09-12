@@ -8,26 +8,8 @@
 namespace ACP3\Modules\ACP3\Newsletter\Model\Repository;
 
 use ACP3\Core\Model\Repository\DataGridRepository;
-use ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus;
-use Doctrine\DBAL\Query\QueryBuilder;
 
 class AccountDataGridRepository extends DataGridRepository
 {
     const TABLE_NAME = AccountRepository::TABLE_NAME;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function addWhere(QueryBuilder $queryBuilder)
-    {
-        $queryBuilder->where('`main`.`status` != :status');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getParameters()
-    {
-        return ['status' => AccountStatus::ACCOUNT_STATUS_DISABLED];
-    }
 }

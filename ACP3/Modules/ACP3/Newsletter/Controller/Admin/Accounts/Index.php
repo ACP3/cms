@@ -49,7 +49,13 @@ class Index extends Core\Controller\AbstractFrontendAction
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#newsletter-accounts-data-grid')
-            ->setResourcePathDelete('admin/newsletter/accounts/delete');
+            ->setResourcePathDelete('admin/newsletter/accounts/delete')
+            ->setQueryOptions(new Core\DataGrid\QueryOption(
+                'status',
+                Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_DISABLED,
+                'main',
+                '!='
+            ));
 
         $this->addDataGridColumns($input);
 

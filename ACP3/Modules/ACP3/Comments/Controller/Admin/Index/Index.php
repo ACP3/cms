@@ -14,41 +14,32 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
-     */
-    protected $commentRepository;
-    /**
      * @var \ACP3\Core\DataGrid\DataGrid
      */
     private $dataGrid;
-
     /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
-     * @param \ACP3\Core\DataGrid\DataGrid                                   $dataGrid
+     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentsByModuleDataGridRepository
      */
+    private $dataGridRepository;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Comments\Model\Repository\CommentRepository $commentRepository,
+        Comments\Model\Repository\CommentsByModuleDataGridRepository $dataGridRepository,
         Core\DataGrid\DataGrid $dataGrid
     ) {
         parent::__construct($context);
 
-        $this->commentRepository = $commentRepository;
         $this->dataGrid = $dataGrid;
+        $this->dataGridRepository = $dataGridRepository;
     }
 
     /**
      * @return array
-     *
-     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {
         $input = (new Core\DataGrid\Input())
-            ->setResults($this->commentRepository->getCommentsGroupedByModule())
+            ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#comments-data-grid')
             ->setResourcePathDelete('admin/comments/index/delete')

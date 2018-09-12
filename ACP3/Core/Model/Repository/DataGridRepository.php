@@ -8,29 +8,50 @@
 namespace ACP3\Core\Model\Repository;
 
 use ACP3\Core\DataGrid\ColumnPriorityQueue;
+use ACP3\Core\DataGrid\QueryOption;
 use Doctrine\DBAL\Query\QueryBuilder;
 
 class DataGridRepository extends AbstractRepository
 {
     /**
      * @param \ACP3\Core\DataGrid\ColumnPriorityQueue $columns
+     * @param QueryOption[]                           $queryOptions
      *
      * @return array
      */
-    public function getAll(ColumnPriorityQueue $columns)
+    public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions)
     {
         $queryBuilder = $this->db->getConnection()->createQueryBuilder();
         $queryBuilder
             ->select($this->getColumns($columns))
             ->from($this->getTableName(), 'main')
-            ->setParameters($this->getParameters());
+            ->setParameters($this->getParameters(...$queryOptions));
 
         $this->addJoin($queryBuilder);
-        $this->addWhere($queryBuilder);
+        $this->addWhere($queryBuilder, ...$queryOptions);
         $this->addGroupBy($queryBuilder);
         $this->setOrderBy($columns, $queryBuilder);
 
         return $queryBuilder->execute()->fetchAll();
+    }
+
+    /**
+     * @param QueryOption[] $queryOptions
+     *
+     * @return int
+     */
+    public function countAll(QueryOption ...$queryOptions)
+    {
+        $queryBuilder = $this->db->getConnection()->createQueryBuilder();
+        $queryBuilder
+            ->select('COUNT(*)')
+            ->from($this->getTableName(), 'main')
+            ->setParameters($this->getParameters(...$queryOptions));
+
+        $this->addJoin($queryBuilder);
+        $this->addWhere($queryBuilder, ...$queryOptions);
+
+        return (int) $queryBuilder->execute()->fetchColumn();
     }
 
     /**
@@ -73,9 +94,15 @@ class DataGridRepository extends AbstractRepository
 
     /**
      * @param \Doctrine\DBAL\Query\QueryBuilder $queryBuilder
+     * @param QueryOption[]                     $queryOptions
      */
-    protected function addWhere(QueryBuilder $queryBuilder)
+    protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions)
     {
+        foreach ($queryOptions as $option) {
+            $queryBuilder->where(
+                "`{$option->getTableAlias()}`.`{$option->getColumnName()}` {$option->getOperator()} :{$option->getColumnName()}"
+            );
+        }
     }
 
     /**
@@ -105,25 +132,17 @@ class DataGridRepository extends AbstractRepository
     }
 
     /**
+     * @param QueryOption[] $queryOptions
+     *
      * @return array
      */
-    protected function getParameters()
+    protected function getParameters(QueryOption ...$queryOptions)
     {
-        return [];
-    }
+        $bindings = [];
+        foreach ($queryOptions as $option) {
+            $bindings[$option->getColumnName()] = $option->getValue();
+        }
 
-    public function countAll()
-    {
-        $queryBuilder = $this->db->getConnection()->createQueryBuilder();
-        $queryBuilder
-            ->select('COUNT(*)')
-            ->from($this->getTableName(), 'main')
-            ->setParameters($this->getParameters());
-
-        $this->addJoin($queryBuilder);
-        $this->addWhere($queryBuilder);
-        $this->addGroupBy($queryBuilder);
-
-        return $queryBuilder->execute()->fetchColumn();
+        return $bindings;
     }
 }

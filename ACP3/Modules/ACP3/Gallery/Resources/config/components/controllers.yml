@@ -85,7 +85,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Index
     arguments:
       - '@core.context.frontend'
-      - '@gallery.model.picturerepository'
+      - '@gallery.model.gallery_pictures_data_grid_repository'
       - '@gallery.model.gallery_model'
       - '@gallery.helpers.thumbnail_generator'
       - '@core.data_grid.data_grid'

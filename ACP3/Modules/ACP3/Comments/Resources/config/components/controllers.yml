@@ -23,7 +23,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Index
     arguments:
       - '@core.context.frontend'
-      - '@comments.model.commentrepository'
+      - '@comments.model.comments_data_grid_repository'
       - '@system.model.modulerepository'
       - '@core.data_grid.data_grid'
 
@@ -37,7 +37,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@comments.model.commentrepository'
+      - '@comments.model.comments_by_module_data_grid_repository'
       - '@core.data_grid.data_grid'
 
   comments.controller.admin.index.settings:

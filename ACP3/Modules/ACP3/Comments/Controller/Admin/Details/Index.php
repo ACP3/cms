@@ -14,10 +14,6 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
-     */
-    protected $commentRepository;
-    /**
      * @var Core\Model\Repository\ModuleAwareRepositoryInterface
      */
     protected $systemModuleRepository;
@@ -25,26 +21,22 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\DataGrid\DataGrid
      */
     private $dataGrid;
-
     /**
-     * Index constructor.
-     *
-     * @param Core\Controller\Context\FrontendContext              $context
-     * @param Comments\Model\Repository\CommentRepository          $commentRepository
-     * @param Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
-     * @param \ACP3\Core\DataGrid\DataGrid                         $dataGrid
+     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentsDataGridRepository
      */
+    private $dataGridRepository;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Comments\Model\Repository\CommentRepository $commentRepository,
+        Comments\Model\Repository\CommentsDataGridRepository $dataGridRepository,
         Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository,
         Core\DataGrid\DataGrid $dataGrid
     ) {
         parent::__construct($context);
 
-        $this->commentRepository = $commentRepository;
         $this->systemModuleRepository = $systemModuleRepository;
         $this->dataGrid = $dataGrid;
+        $this->dataGridRepository = $dataGridRepository;
     }
 
     /**
@@ -53,23 +45,21 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
-     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(int $id)
     {
-        $comments = $this->commentRepository->getAllByModuleInAcp($id);
+        $input = (new Core\DataGrid\Input())
+            ->setRepository($this->dataGridRepository)
+            ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
+            ->setIdentifier('#comments-details-data-grid')
+            ->setResourcePathDelete('admin/comments/details/delete/id_' . $id)
+            ->setResourcePathEdit('admin/comments/details/edit')
+            ->setQueryOptions(new Core\DataGrid\QueryOption('module_id', $id));
 
-        if (empty($comments) === false) {
+        if ($input->getResultsCount() > 0) {
             $moduleName = $this->systemModuleRepository->getModuleNameById($id);
 
             $this->breadcrumb->append($this->translator->t($moduleName, $moduleName));
-
-            $input = (new Core\DataGrid\Input())
-                ->setResults($comments)
-                ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
-                ->setIdentifier('#comments-details-data-grid')
-                ->setResourcePathDelete('admin/comments/details/delete/id_' . $id)
-                ->setResourcePathEdit('admin/comments/details/edit');
 
             $this->addDataGridColumns($input);
 

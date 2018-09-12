@@ -51,6 +51,10 @@ class Input
      * @var string|null
      */
     private $primaryKey;
+    /**
+     * @var QueryOption[]
+     */
+    private $queryOptions = [];
 
     public function __construct()
     {
@@ -189,7 +193,7 @@ class Input
     public function getResults(): array
     {
         if (empty($this->results) && $this->repository instanceof DataGridRepository) {
-            $this->setResults($this->repository->getAll(clone $this->columns));
+            $this->setResults($this->repository->getAll(clone $this->columns, ...$this->queryOptions));
         }
 
         return $this->results;
@@ -201,7 +205,7 @@ class Input
     public function getResultsCount()
     {
         if ($this->repository instanceof DataGridRepository) {
-            return $this->repository->countAll();
+            return $this->repository->countAll(...$this->queryOptions);
         }
 
         return \count($this->getResults());
@@ -279,5 +283,25 @@ class Input
         }
 
         return $this->primaryKey;
+    }
+
+    /**
+     * @return \ACP3\Core\DataGrid\QueryOption[]
+     */
+    public function getQueryOptions(): array
+    {
+        return $this->queryOptions;
+    }
+
+    /**
+     * @param \ACP3\Core\DataGrid\QueryOption ...$queryOptions
+     *
+     * @return \ACP3\Core\DataGrid\Input
+     */
+    public function setQueryOptions(QueryOption ...$queryOptions): self
+    {
+        $this->queryOptions = $queryOptions;
+
+        return $this;
     }
 }

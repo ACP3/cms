@@ -59,7 +59,9 @@ class SortColumnRenderer extends AbstractColumnRenderer
             $value = $this->fetchSortForbiddenHtml();
         }
 
-        $column['attribute']['data-order'] = $dbResultRow[$this->getFirstDbField($column)];
+        $column['attribute'] += [
+            'data-sort' => $dbResultRow[$this->getFirstDbField($column)],
+        ];
 
         return $this->render($column, $value);
     }
