@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changes
+- introduce `DataGridRepositories` for the following modules:
+    - Comments
+    - Gallery pictures
+
+### Deprecations (to be removed with version 5.0.0)
+- Deprecated the class `ACP3\Core\Picture`, use `ACP3\Core\Picture\Picture` instead
+- Deprecated the namespace `ÀCP3\Core\Helpers\DataGrid*`, use `ÀCP3\Core\DataGrid*` instead
+- Deprecated the class `ACP3\Core\Model\Repository\DataGridRepository`, use `ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository` instead
+- Deprecated the DI container tag `core.helpers.data_grid.column_renderer`, use `core.data_grid.column_renderer` instead
+
+### Fixes
+- Fixed the default sort order of the gallery pictures
+
 ## [4.29.4] - 2018-09-05
 ### Fixed
 - removed the ext-* nodes from the composer.json
