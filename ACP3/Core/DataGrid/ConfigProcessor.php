@@ -36,7 +36,7 @@ class ConfigProcessor
     {
         $config = [
             'lengthMenu' => $this->getLengthMenu(),
-            'saveState' => true,
+            'stateSave' => true,
             'autoWidth' => false,
             'language' => $this->getLanguage(),
             'sorting' => $this->getDefaultSorting($options->getColumns()),
