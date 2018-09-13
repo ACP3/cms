@@ -7,7 +7,9 @@
 
 namespace ACP3\Modules\ACP3\Articles\Model\Repository;
 
-class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
+use ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository;
+
+class DataGridRepository extends AbstractDataGridRepository
 {
     const TABLE_NAME = ArticleRepository::TABLE_NAME;
 }

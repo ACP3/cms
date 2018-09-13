@@ -7,12 +7,12 @@
 
 namespace ACP3\Core\DataGrid;
 
-use ACP3\Core\Model\Repository\DataGridRepository;
+use ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository;
 
 class Input
 {
     /**
-     * @var \ACP3\Core\Model\Repository\DataGridRepository
+     * @var AbstractDataGridRepository
      */
     private $repository;
     /**
@@ -62,11 +62,11 @@ class Input
     }
 
     /**
-     * @param \ACP3\Core\Model\Repository\DataGridRepository $repository
+     * @param \ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository $repository
      *
      * @return $this
      */
-    public function setRepository(DataGridRepository $repository): self
+    public function setRepository(AbstractDataGridRepository $repository): self
     {
         $this->repository = $repository;
 
@@ -192,7 +192,7 @@ class Input
      */
     public function getResults(): array
     {
-        if (empty($this->results) && $this->repository instanceof DataGridRepository) {
+        if (empty($this->results) && $this->repository instanceof AbstractDataGridRepository) {
             $this->setResults($this->repository->getAll(clone $this->columns, ...$this->queryOptions));
         }
 
@@ -204,7 +204,7 @@ class Input
      */
     public function getResultsCount()
     {
-        if ($this->repository instanceof DataGridRepository) {
+        if ($this->repository instanceof AbstractDataGridRepository) {
             return $this->repository->countAll(...$this->queryOptions);
         }
 

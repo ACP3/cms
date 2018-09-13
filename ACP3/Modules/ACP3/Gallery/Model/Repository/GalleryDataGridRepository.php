@@ -8,10 +8,10 @@
 namespace ACP3\Modules\ACP3\Gallery\Model\Repository;
 
 use ACP3\Core\DataGrid\ColumnPriorityQueue;
-use ACP3\Core\Model\Repository\DataGridRepository;
+use ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-class GalleryDataGridRepository extends DataGridRepository
+class GalleryDataGridRepository extends AbstractDataGridRepository
 {
     const TABLE_NAME = GalleryRepository::TABLE_NAME;
 

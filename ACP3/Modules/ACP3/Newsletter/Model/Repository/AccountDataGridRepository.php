@@ -7,9 +7,9 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\Model\Repository;
 
-use ACP3\Core\Model\Repository\DataGridRepository;
+use ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository;
 
-class AccountDataGridRepository extends DataGridRepository
+class AccountDataGridRepository extends AbstractDataGridRepository
 {
     const TABLE_NAME = AccountRepository::TABLE_NAME;
 }

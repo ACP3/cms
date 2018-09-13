@@ -8,10 +8,11 @@
 namespace ACP3\Modules\ACP3\Categories\Model\Repository;
 
 use ACP3\Core\DataGrid\ColumnPriorityQueue;
+use ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository;
 use ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
+class DataGridRepository extends AbstractDataGridRepository
 {
     const TABLE_NAME = CategoryRepository::TABLE_NAME;
 
