@@ -43,6 +43,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     public function execute()
     {
         $input = (new Core\DataGrid\Input())
+            ->setUseAjax(true)
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#contact-data-grid')
@@ -50,9 +51,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->addDataGridColumns($input);
 
-        return [
-            'grid' => $this->dataGrid->render($input),
-        ];
+        return $this->dataGrid->render($input);
     }
 
     /**

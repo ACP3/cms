@@ -60,7 +60,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
         }
 
         $column['attribute'] += [
-            'data-sort' => $dbResultRow[$this->getFirstDbField($column)],
+            'sort' => $dbResultRow[$this->getFirstDbField($column)],
         ];
 
         return $this->render($column, $value);
@@ -99,5 +99,13 @@ HTML;
 HTML;
 
         return \sprintf($html, $this->translator->t('system', 'move_impossible'));
+    }
+
+    /**
+     * @return array
+     */
+    public static function mandatoryAttributes(): array
+    {
+        return ['sort', '_'];
     }
 }

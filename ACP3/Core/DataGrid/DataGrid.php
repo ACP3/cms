@@ -12,7 +12,9 @@ use ACP3\Core\DataGrid\ColumnRenderer\ColumnRendererInterface;
 use ACP3\Core\DataGrid\ColumnRenderer\HeaderColumnRenderer;
 use ACP3\Core\DataGrid\ColumnRenderer\MassActionColumnRenderer;
 use ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGrid
 {
@@ -32,13 +34,19 @@ class DataGrid
      * @var \ACP3\Core\DataGrid\ConfigProcessor
      */
     private $configProcessor;
+    /**
+     * @var \ACP3\Core\Http\RequestInterface
+     */
+    private $request;
 
     /**
+     * @param \ACP3\Core\Http\RequestInterface    $request
      * @param \ACP3\Core\DataGrid\ConfigProcessor $configProcessor
      * @param \ACP3\Core\ACL                      $acl
      * @param \ACP3\Core\I18n\Translator          $translator
      */
     public function __construct(
+        RequestInterface $request,
         ConfigProcessor $configProcessor,
         ACL $acl,
         Translator $translator
@@ -46,6 +54,7 @@ class DataGrid
         $this->acl = $acl;
         $this->translator = $translator;
         $this->configProcessor = $configProcessor;
+        $this->request = $request;
     }
 
     /**
@@ -63,7 +72,7 @@ class DataGrid
     /**
      * @param \ACP3\Core\DataGrid\Input $input
      *
-     * @return array
+     * @return array|JsonResponse
      */
     public function render(Input $input)
     {
@@ -72,15 +81,63 @@ class DataGrid
 
         $this->addDefaultColumns($input, $canDelete, $canEdit);
 
+        if ($this->isRequiredAjaxRequest($input)) {
+            return new JsonResponse([
+                'data' => $this->mapTableColumnsToDbFieldsAjax($input),
+            ]);
+        }
+
         return [
-            'can_edit' => $canEdit,
-            'can_delete' => $canDelete,
-            'identifier' => \substr($input->getIdentifier(), 1),
-            'header' => $this->renderTableHeader($input),
-            'config' => $this->configProcessor->generateDataTableConfig($input),
-            'results' => $this->mapTableColumnsToDbFields($input),
-            'num_results' => $input->getResultsCount(),
+            'grid' => [
+                'can_edit' => $canEdit,
+                'can_delete' => $canDelete,
+                'identifier' => \substr($input->getIdentifier(), 1),
+                'header' => $this->renderTableHeader($input),
+                'config' => $this->configProcessor->generateDataTableConfig($input),
+                'results' => $this->mapTableColumnsToDbFields($input),
+                'num_results' => $input->getResultsCount(),
+                'show_mass_delete' => $canDelete && $input->getResultsCount() > 0,
+            ],
         ];
+    }
+
+    /**
+     * Checks, whether we have the required AJAX request in effect.
+     *
+     * @param \ACP3\Core\DataGrid\Input $input
+     *
+     * @return bool
+     */
+    private function isRequiredAjaxRequest(Input $input): bool
+    {
+        return $this->request->isXmlHttpRequest()
+            && $this->request->getParameters()->get('ajax', '') === \substr($input->getIdentifier(), 1);
+    }
+
+    /**
+     * @param \ACP3\Core\DataGrid\Input $input
+     *
+     * @return array
+     */
+    private function mapTableColumnsToDbFieldsAjax(Input $input): array
+    {
+        $renderedResults = [];
+        foreach ($input->getResults() as $result) {
+            $row = [];
+            foreach (clone $input->getColumns() as $column) {
+                if (\array_key_exists($column['type'], $this->columnRenderer) && !empty($column['label'])) {
+                    $row[] = $this->columnRenderer[$column['type']]
+                        ->setIdentifier($input->getIdentifier())
+                        ->setPrimaryKey($input->getPrimaryKey())
+                        ->setUseAjax($this->isRequiredAjaxRequest($input))
+                        ->fetchDataAndRenderColumn($column, $result);
+                }
+            }
+
+            $renderedResults[] = $row;
+        }
+
+        return $renderedResults;
     }
 
     /**
@@ -110,6 +167,10 @@ class DataGrid
      */
     protected function mapTableColumnsToDbFields(Input $input)
     {
+        if ($input->isUseAjax()) {
+            return '';
+        }
+
         $renderedResults = '';
         foreach ($input->getResults() as $result) {
             $renderedResults .= '<tr>';
@@ -118,6 +179,7 @@ class DataGrid
                     $renderedResults .= $this->columnRenderer[$column['type']]
                         ->setIdentifier($input->getIdentifier())
                         ->setPrimaryKey($input->getPrimaryKey())
+                        ->setUseAjax($this->isRequiredAjaxRequest($input))
                         ->fetchDataAndRenderColumn($column, $result);
                 }
             }

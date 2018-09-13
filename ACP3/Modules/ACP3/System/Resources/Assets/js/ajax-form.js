@@ -333,4 +333,8 @@
 
 jQuery(document).ready(function ($) {
     $('[data-ajax-form="true"]').formSubmit();
+
+    $(document).on('draw.dt', function (e) {
+        $(e.target).find('[data-ajax-form="true"]').formSubmit();
+    });
 });

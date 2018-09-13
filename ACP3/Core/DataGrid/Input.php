@@ -38,6 +38,10 @@ class Input
     /**
      * @var bool
      */
+    private $useAjax = false;
+    /**
+     * @var bool
+     */
     private $enableMassAction = true;
     /**
      * @var bool
@@ -117,6 +121,18 @@ class Input
     public function setRecordsPerPage(int $recordsPerPage): self
     {
         $this->recordsPerPage = (int) $recordsPerPage;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $useAjax
+     *
+     * @return $this
+     */
+    public function setUseAjax(bool $useAjax): self
+    {
+        $this->useAjax = $useAjax;
 
         return $this;
     }
@@ -241,6 +257,14 @@ class Input
     public function getRecordsPerPage(): int
     {
         return $this->recordsPerPage;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUseAjax(): bool
+    {
+        return $this->useAjax;
     }
 
     /**

@@ -13,6 +13,7 @@ use ACP3\Core\DataGrid\QueryOption;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Gallery\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Index extends AbstractFrontendAction
 {
@@ -64,6 +65,7 @@ class Index extends AbstractFrontendAction
             $this->title->setPageTitlePrefix($this->translator->t('gallery', 'admin_pictures_index'));
 
             $input = (new Core\DataGrid\Input())
+                ->setUseAjax(true)
                 ->setRepository($this->picturesDataGridRepository)
                 ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
                 ->setIdentifier('#gallery-pictures-data-grid')
@@ -73,11 +75,12 @@ class Index extends AbstractFrontendAction
 
             $this->addDataGridColumns($input);
 
-            return [
-                'gallery_id' => $id,
-                'grid' => $this->dataGrid->render($input),
-                'show_mass_delete_button' => $input->getResultsCount() > 0,
-            ];
+            $dataGrid = $this->dataGrid->render($input);
+            if ($dataGrid instanceof JsonResponse) {
+                return $dataGrid;
+            }
+
+            return \array_merge($dataGrid, ['gallery_id' => $id]);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

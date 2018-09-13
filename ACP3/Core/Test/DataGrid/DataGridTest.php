@@ -14,10 +14,15 @@ use ACP3\Core\DataGrid\ConfigProcessor;
 use ACP3\Core\DataGrid\DataGrid;
 use ACP3\Core\DataGrid\Input;
 use ACP3\Core\Helpers\Formatter\MarkEntries;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 
 class DataGridTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @var RequestInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $requestMock;
     /**
      * @var DataGrid
      */
@@ -41,11 +46,13 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp()
     {
+        $this->requestMock = $this->createMock(RequestInterface::class);
         $this->configProcessorMock = $this->createMock(ConfigProcessor::class);
         $this->aclMock = $this->createMock(ACL::class);
         $this->langMock = $this->createMock(Translator::class);
 
         $this->dataGrid = new DataGrid(
+            $this->requestMock,
             $this->configProcessorMock,
             $this->aclMock,
             $this->langMock
@@ -62,13 +69,16 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
     protected function getDefaultExpected()
     {
         return [
-            'can_edit' => false,
-            'can_delete' => false,
-            'identifier' => 'data-grid',
-            'header' => '',
-            'config' => [],
-            'results' => '',
-            'num_results' => 0,
+            'grid' => [
+                'can_edit' => false,
+                'can_delete' => false,
+                'identifier' => 'data-grid',
+                'header' => '',
+                'config' => [],
+                'results' => '',
+                'num_results' => 0,
+                'show_mass_delete' => false,
+            ],
         ];
     }
 
@@ -103,12 +113,8 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
             'type' => TextColumnRenderer::class,
         ], 10);
 
-        $expected = \array_merge(
-            $this->getDefaultExpected(),
-            [
-                'header' => '<th>Foo</th>',
-            ]
-        );
+        $expected = $this->getDefaultExpected();
+        $expected['grid']['header'] = '<th>Foo</th>';
 
         $this->assertEquals($expected, $this->dataGrid->render($this->inputOptions));
     }
@@ -141,14 +147,10 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
         ], 10);
         $this->inputOptions->setResults($data);
 
-        $expected = \array_merge(
-            $this->getDefaultExpected(),
-            [
-                'header' => '<th>Foo</th>',
-                'results' => "<tr><td>Lorem Ipsum</td></tr>\n<tr><td>Lorem Ipsum Dolor</td></tr>\n",
-                'num_results' => 2,
-            ]
-        );
+        $expected = $this->getDefaultExpected();
+        $expected['grid']['header'] = '<th>Foo</th>';
+        $expected['grid']['results'] = "<tr><td>Lorem Ipsum</td></tr>\n<tr><td>Lorem Ipsum Dolor</td></tr>\n";
+        $expected['grid']['num_results'] = 2;
 
         $this->assertEquals($expected, $this->dataGrid->render($this->inputOptions));
     }

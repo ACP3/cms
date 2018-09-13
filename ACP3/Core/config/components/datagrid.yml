@@ -10,11 +10,13 @@ services:
   core.data_grid.config_processor:
     class: ACP3\Core\DataGrid\ConfigProcessor
     arguments:
+      - '@core.http.request'
       - '@core.i18n.translator'
 
   core.data_grid.data_grid:
     class: ACP3\Core\DataGrid\DataGrid
     arguments:
+      - '@core.http.request'
       - '@core.data_grid.config_processor'
       - '@core.acl'
       - '@core.i18n.translator'
@@ -41,6 +43,14 @@ services:
 
   core.data_grid.column_renderer.mass_action_column_renderer:
     class: ACP3\Core\DataGrid\ColumnRenderer\MassActionColumnRenderer
+    tags:
+    - { name: core.data_grid.column_renderer }
+
+  core.helpers.data_grid.column_renderer.nested_set_sort_column_renderer:
+    class: ACP3\Core\DataGrid\ColumnRenderer\NestedSetSortColumnRenderer
+    arguments:
+    - '@core.i18n.translator'
+    - '@core.router'
     tags:
     - { name: core.data_grid.column_renderer }
 

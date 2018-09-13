@@ -1,4 +1,4 @@
-let cssClassName = 'info';
+const cssClassName = 'info';
 
 /**
  * Marks all visible results
@@ -11,7 +11,7 @@ function markEntries($markAllElem, name, action) {
     const fields = $markAllElem.parents('thead:first').next('tbody').find('input[name="' + name + '[]"]:visible');
 
     jQuery.each(fields, function () {
-        let $tableRows = $(this).prop('checked', (action === 'add')).parents('tr:first');
+        const $tableRows = $(this).prop('checked', (action === 'add')).parents('tr:first');
 
         if (action === 'add') {
             $tableRows.addClass(cssClassName);
@@ -27,12 +27,12 @@ function markEntries($markAllElem, name, action) {
  * @returns {*|jQuery|HTMLElement}
  */
 jQuery.fn.highlightTableRow = function (checkboxName) {
-    const $this = $(this);
+    const $markAllCheckbox = $(this);
 
-    $this.parents('thead')
-        .next('tbody')
-        .find('tr:has(:checkbox)')
-        .click(
+    $markAllCheckbox
+        .closest('table')
+        .on(
+            'click', 'tr:has(td :checkbox)',
             function (e) {
                 const $tableRow = $(this),
                     $tbody = $tableRow.closest('tbody');
@@ -49,11 +49,14 @@ jQuery.fn.highlightTableRow = function (checkboxName) {
                 $tableRow.toggleClass(cssClassName);
 
                 // Alle Datensätze auf einer Seite wurden markiert
-                $this.prop('checked', ($tbody.find('input[name="' + checkboxName + '[]"]:visible').length === $tbody.find('tr.' + cssClassName + ':visible').length));
+                $markAllCheckbox.prop(
+                    'checked',
+                    ($tbody.find('input[name="' + checkboxName + '[]"]:visible').length === $tbody.find('tr.' + cssClassName + ':visible').length)
+                );
             }
         );
 
-    return $this;
+    return $markAllCheckbox;
 };
 
 /**
@@ -79,14 +82,15 @@ jQuery.fn.deleteMarkedResults = function (options) {
         const $entries = $('form .table input[name="' + settings.checkBoxName + '[]"]:checked');
 
         if ($entries.length > 0) {
-            const data = {action: 'confirmed'},
-                confirmationText = $entries.length === 1
-                    ? settings.language.confirmationTextSingle
-                    : (settings.language.confirmationTextMultiple.replace('{items}', $entries.length));
+            const data = {
+                action: 'confirmed'
+            };
+
+            const confirmationText = $entries.length === 1 ? settings.language.confirmationTextSingle : (settings.language.confirmationTextMultiple.replace('{items}', $entries.length));
 
             bootbox.confirm(confirmationText, function (result) {
                 if (result) {
-                    let $form = $this.closest('form');
+                    const $form = $this.closest('form');
 
                     $form.formSubmit({customFormData: data});
                     $form.triggerHandler('submit');
@@ -103,8 +107,8 @@ jQuery.fn.deleteMarkedResults = function (options) {
 jQuery(document).ready(function ($) {
     const $markAll = $('[data-mark-all-id]');
 
-    $markAll.each(function () {
-        const $this = $(this);
+    $markAll.each((index, element) => {
+        const $this = $(element);
 
         $this
             .click(function () {

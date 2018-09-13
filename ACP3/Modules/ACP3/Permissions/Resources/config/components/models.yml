@@ -24,6 +24,11 @@ services:
     arguments:
       - '@core.db'
 
+  permissions.model.roles_data_grid_repository:
+    class: ACP3\Modules\ACP3\Permissions\Model\Repository\RolesDataGridRepository
+    arguments:
+      - '@core.db'
+
   permissions.model.resources_model:
     class: ACP3\Modules\ACP3\Permissions\Model\ResourcesModel
     arguments:

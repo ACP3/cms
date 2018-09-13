@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
@@ -49,6 +50,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     public function execute(int $id)
     {
         $input = (new Core\DataGrid\Input())
+            ->setUseAjax(true)
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#comments-details-data-grid')
@@ -63,11 +65,12 @@ class Index extends Core\Controller\AbstractFrontendAction
 
             $this->addDataGridColumns($input);
 
-            return [
-                'grid' => $this->dataGrid->render($input),
-                'module_id' => $id,
-                'show_mass_delete_button' => $input->getResultsCount() > 0,
-            ];
+            $dataGrid = $this->dataGrid->render($input);
+            if ($dataGrid instanceof JsonResponse) {
+                return $dataGrid;
+            }
+
+            return \array_merge($dataGrid, ['module_id' => $id]);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

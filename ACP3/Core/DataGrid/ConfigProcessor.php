@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\DataGrid;
 
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 
 class ConfigProcessor
@@ -15,10 +16,15 @@ class ConfigProcessor
      * @var \ACP3\Core\I18n\Translator
      */
     private $translator;
+    /**
+     * @var \ACP3\Core\Http\RequestInterface
+     */
+    private $request;
 
-    public function __construct(Translator $translator)
+    public function __construct(RequestInterface $request, Translator $translator)
     {
         $this->translator = $translator;
+        $this->request = $request;
     }
 
     /**
@@ -34,8 +40,12 @@ class ConfigProcessor
             'autoWidth' => false,
             'language' => $this->getLanguage(),
             'sorting' => $this->getDefaultSorting($options->getColumns()),
-            'columns' => $this->getColumnDefinitions($options->getColumns()),
+            'columns' => $this->getColumnDefinitions($options->getColumns(), $options->isUseAjax()),
         ];
+
+        if ($options->isUseAjax()) {
+            $config['ajax'] = $this->request->getFullPath() . 'ajax_' . \substr($options->getIdentifier(), 1);
+        }
 
         return [
             'identifier' => $options->getIdentifier(),
@@ -118,10 +128,11 @@ class ConfigProcessor
 
     /**
      * @param ColumnPriorityQueue $columns
+     * @param bool                $useAjax
      *
      * @return array
      */
-    private function getColumnDefinitions(ColumnPriorityQueue $columns): array
+    private function getColumnDefinitions(ColumnPriorityQueue $columns, bool $useAjax): array
     {
         $columnDefinitions = [];
         $i = 0;
@@ -129,6 +140,19 @@ class ConfigProcessor
         foreach (clone $columns as $column) {
             if ($column['sortable'] === false) {
                 $columnDefinitions[$i]['orderable'] = false;
+            }
+            if ($useAjax && !empty($column['class'])) {
+                $columnDefinitions[$i]['className'] = $column['class'];
+            }
+            if ($useAjax && \is_callable($column['type'] . '::mandatoryAttributes')) {
+                $attributes = \call_user_func($column['type'] . '::mandatoryAttributes');
+                if (\is_array($attributes) && !empty($attributes)) {
+                    $mapper = [];
+                    foreach ($attributes as $attribute) {
+                        $mapper[$attribute] = $attribute;
+                    }
+                    $columnDefinitions[$i]['render'] = $mapper;
+                }
             }
             if (empty($columnDefinitions[$i])) {
                 $columnDefinitions[$i] = null;

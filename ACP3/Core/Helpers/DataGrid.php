@@ -10,6 +10,7 @@ namespace ACP3\Core\Helpers;
 use ACP3\Core\DataGrid\Input;
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\Model\Repository\DataGridRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @deprecated Since version 4.30.0, to be removed in 5.0.0. Use class ACP3\Core\DataGrid\DataGrid instead
@@ -214,7 +215,12 @@ class DataGrid
             $input->addColumn($column, $index * 10);
         }
 
-        return $this->dataGrid->render($input);
+        $dataGrid = $this->dataGrid->render($input);
+        if ($dataGrid instanceof JsonResponse) {
+            return $dataGrid;
+        }
+
+        return $dataGrid['grid'];
     }
 
     /**

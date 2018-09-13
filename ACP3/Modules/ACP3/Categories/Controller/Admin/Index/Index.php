@@ -46,6 +46,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     public function execute()
     {
         $input = (new Core\DataGrid\Input())
+            ->setUseAjax(true)
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#categories-data-grid')
@@ -54,10 +55,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->addDataGridColumns($input);
 
-        return [
-            'grid' => $this->dataGrid->render($input),
-            'show_mass_delete_button' => $input->getResultsCount() > 0,
-        ];
+        return $this->dataGrid->render($input);
     }
 
     /**

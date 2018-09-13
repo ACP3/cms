@@ -19,6 +19,10 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      * @var string|null
      */
     protected $primaryKey;
+    /**
+     * @var bool
+     */
+    private $useAjax = false;
 
     /**
      * @param string $identifier
@@ -45,6 +49,26 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
+     * @return bool
+     */
+    public function getUseAjax(): bool
+    {
+        return $this->useAjax;
+    }
+
+    /**
+     * @param bool $useAjax
+     *
+     * @return $this
+     */
+    public function setUseAjax(bool $useAjax): self
+    {
+        $this->useAjax = $useAjax;
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
@@ -60,12 +84,33 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     protected function render(array $column, $value = '')
     {
+        if ($this->getUseAjax()) {
+            return $this->renderAjax($column, $value);
+        }
+
         $type = static::CELL_TYPE;
         $attribute = $this->addHtmlAttribute($column['attribute']);
         $class = $this->addHtmlAttribute('class', $column['class']);
         $style = $this->addHtmlAttribute('style', $column['style']);
 
         return "<{$type}{$attribute}{$class}{$style}>{$value}</{$type}>";
+    }
+
+    /**
+     * @param array  $column
+     * @param string $value
+     *
+     * @return string|array
+     */
+    private function renderAjax(array $column, string $value = '')
+    {
+        if (\is_array($column['attribute']) && \count($column['attribute'])) {
+            $column['attribute']['_'] = $value;
+
+            return $column['attribute'];
+        }
+
+        return $value;
     }
 
     /**
