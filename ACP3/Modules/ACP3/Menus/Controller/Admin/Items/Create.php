@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Articles\Helpers;
 use ACP3\Modules\ACP3\Menus;
 
 class Create extends AbstractFormAction
@@ -47,6 +48,7 @@ class Create extends AbstractFormAction
      * @param Menus\Model\MenuItemsModel                                 $menuItemsModel
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields        $menuItemFormFieldsHelper
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
+     * @param \ACP3\Modules\ACP3\Articles\Helpers|null                   $articlesHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -55,9 +57,10 @@ class Create extends AbstractFormAction
         Menus\Model\Repository\MenuRepository $menuRepository,
         Menus\Model\MenuItemsModel $menuItemsModel,
         Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper,
-        Menus\Validation\MenuItemFormValidation $menuItemFormValidation
+        Menus\Validation\MenuItemFormValidation $menuItemFormValidation,
+        ?Helpers $articlesHelpers
     ) {
-        parent::__construct($context, $formsHelper);
+        parent::__construct($context, $formsHelper, $articlesHelpers);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->menuRepository = $menuRepository;
@@ -71,7 +74,7 @@ class Create extends AbstractFormAction
      */
     public function execute()
     {
-        if ($this->articlesHelpers) {
+        if ($this->articlesHelpers !== null) {
             $this->view->assign('articles', $this->articlesHelpers->articlesList());
         }
 
@@ -93,6 +96,8 @@ class Create extends AbstractFormAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

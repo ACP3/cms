@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Emoticons\Helpers;
 use ACP3\Modules\ACP3\Guestbook;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
@@ -23,6 +24,10 @@ class Index extends AbstractAction
      * @var \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository
      */
     protected $guestbookRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Emoticons\Helpers|null
+     */
+    protected $emoticonsHelpers;
 
     /**
      * Index constructor.
@@ -30,20 +35,25 @@ class Index extends AbstractAction
      * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
      * @param \ACP3\Core\Pagination                                             $pagination
      * @param \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
+     * @param \ACP3\Modules\ACP3\Emoticons\Helpers|null                         $emoticonsHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Pagination $pagination,
-        Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
+        Guestbook\Model\Repository\GuestbookRepository $guestbookRepository,
+        ?Helpers $emoticonsHelpers = null
     ) {
         parent::__construct($context);
 
         $this->pagination = $pagination;
         $this->guestbookRepository = $guestbookRepository;
+        $this->emoticonsHelpers = $emoticonsHelpers;
     }
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {

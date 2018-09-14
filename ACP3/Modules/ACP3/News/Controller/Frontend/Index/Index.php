@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
+use ACP3\Modules\ACP3\Comments\Helpers;
 use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -16,7 +17,6 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class Index extends AbstractAction
 {
     use Core\Cache\CacheResponseTrait;
-    use News\Controller\CommentsHelperTrait;
 
     /**
      * @var Core\Date
@@ -46,6 +46,10 @@ class Index extends AbstractAction
      * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
      */
     protected $metaStatements;
+    /**
+     * @var \ACP3\Modules\ACP3\Comments\Helpers
+     */
+    private $commentsHelpers;
 
     /**
      * Index constructor.
@@ -57,6 +61,8 @@ class Index extends AbstractAction
      * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository           $newsRepository
      * @param \ACP3\Modules\ACP3\Categories\Helpers                             $categoriesHelpers
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements|null                 $metaStatements
+     * @param \ACP3\Modules\ACP3\Comments\Helpers                               $commentsHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -65,7 +71,9 @@ class Index extends AbstractAction
         Core\Pagination $pagination,
         News\Model\Repository\NewsRepository $newsRepository,
         Categories\Helpers $categoriesHelpers,
-        Categories\Model\Repository\CategoryRepository $categoryRepository
+        Categories\Model\Repository\CategoryRepository $categoryRepository,
+        ?MetaStatements $metaStatements = null,
+        ?Helpers $commentsHelpers = null
     ) {
         parent::__construct($context);
 
@@ -75,14 +83,8 @@ class Index extends AbstractAction
         $this->newsRepository = $newsRepository;
         $this->categoriesHelpers = $categoriesHelpers;
         $this->categoryRepository = $categoryRepository;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
-     */
-    public function setMetaStatements(MetaStatements $metaStatements)
-    {
         $this->metaStatements = $metaStatements;
+        $this->commentsHelpers = $commentsHelpers;
     }
 
     /**
@@ -92,7 +94,7 @@ class Index extends AbstractAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($cat = 0)
+    public function execute(int $cat = 0)
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
@@ -179,7 +181,7 @@ class Index extends AbstractAction
     protected function addBreadcrumbStep(int $cat)
     {
         if ($cat !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
-            if ($this->metaStatements instanceof MetaStatements) {
+            if ($this->metaStatements !== null) {
                 $this->metaStatements->setCanonicalUri($this->router->route('news', true));
             }
 

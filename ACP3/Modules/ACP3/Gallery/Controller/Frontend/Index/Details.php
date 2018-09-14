@@ -41,20 +41,14 @@ class Details extends AbstractAction
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
-        Gallery\Helper\ThumbnailGenerator $thumbnailGenerator
+        Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
+        ?MetaStatements $metaStatements = null
     ) {
         parent::__construct($context);
 
         $this->date = $date;
         $this->pictureRepository = $pictureRepository;
         $this->thumbnailGenerator = $thumbnailGenerator;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
-     */
-    public function setMetaStatements(MetaStatements $metaStatements)
-    {
         $this->metaStatements = $metaStatements;
     }
 
@@ -65,6 +59,7 @@ class Details extends AbstractAction
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute($id)
     {

@@ -29,24 +29,17 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Core\Helpers\Forms                      $formsHelper
+     * @param \ACP3\Modules\ACP3\Articles\Helpers|null      $articlesHelpers
      */
-    public function __construct(FrontendContext $context, Forms $formsHelper)
+    public function __construct(
+        FrontendContext $context,
+        Forms $formsHelper,
+        ?Articles\Helpers $articlesHelpers = null)
     {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Articles\Helpers $articlesHelpers
-     *
-     * @return $this
-     */
-    public function setArticlesHelpers(Articles\Helpers $articlesHelpers)
-    {
         $this->articlesHelpers = $articlesHelpers;
-
-        return $this;
     }
 
     /**

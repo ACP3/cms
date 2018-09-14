@@ -64,5 +64,4 @@ services:
       - '@core.context.frontend'
       - '@core.pagination'
       - '@comments.model.commentrepository'
-    calls:
-      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
+      - '@?emoticons.helpers'

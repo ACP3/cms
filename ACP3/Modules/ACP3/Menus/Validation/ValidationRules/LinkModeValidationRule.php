@@ -30,27 +30,18 @@ class LinkModeValidationRule extends AbstractValidationRule
     /**
      * LinkModeValidationRule constructor.
      *
-     * @param \ACP3\Core\Modules                                              $modules
-     * @param \ACP3\Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule
+     * @param \ACP3\Core\Modules                                                                      $modules
+     * @param \ACP3\Core\Validation\ValidationRules\InternalUriValidationRule                         $internalUriValidationRule
+     * @param \ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule|null $articleExistsValidationRule
      */
     public function __construct(
         Modules $modules,
-        InternalUriValidationRule $internalUriValidationRule
+        InternalUriValidationRule $internalUriValidationRule,
+        ?ArticleExistsValidationRule $articleExistsValidationRule = null
     ) {
         $this->modules = $modules;
         $this->internalUriValidationRule = $internalUriValidationRule;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule $articleExistsValidationRule
-     *
-     * @return $this
-     */
-    public function setArticleExistsValidationRule(ArticleExistsValidationRule $articleExistsValidationRule)
-    {
         $this->articleExistsValidationRule = $articleExistsValidationRule;
-
-        return $this;
     }
 
     /**
@@ -71,14 +62,14 @@ class LinkModeValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @param string $mode
+     * @param int    $mode
      * @param string $moduleName
      * @param string $uri
      * @param int    $articleId
      *
      * @return bool
      */
-    protected function isValidLink($mode, $moduleName, $uri, $articleId)
+    protected function isValidLink(int $mode, string $moduleName, string $uri, int $articleId)
     {
         switch ($mode) {
             case 1:

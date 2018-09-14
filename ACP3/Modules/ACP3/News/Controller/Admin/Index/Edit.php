@@ -10,12 +10,9 @@ namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
-use ACP3\Modules\ACP3\News\Controller\CommentsHelperTrait;
 
 class Edit extends AbstractFormAction
 {
-    use CommentsHelperTrait;
-
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
@@ -91,6 +88,8 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost($id)
     {

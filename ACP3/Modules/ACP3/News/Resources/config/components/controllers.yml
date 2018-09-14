@@ -13,8 +13,6 @@ services:
       - '@news.model'
       - '@news.validation.admin_form_validation'
       - '@categories.helpers'
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
 
   news.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Delete
@@ -37,8 +35,6 @@ services:
       - '@news.model'
       - '@news.validation.admin_form_validation'
       - '@categories.helpers'
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
 
   news.controller.admin.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Index
@@ -56,8 +52,7 @@ services:
       - '@core.helpers.secure'
       - '@core.helpers.date'
       - '@news.validation.admin_settings_form_validation'
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
+      - '@?comments.helpers'
 
   news.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Details
@@ -77,9 +72,8 @@ services:
       - '@news.model.newsrepository'
       - '@categories.helpers'
       - '@categories.model.categories_repository'
-    calls:
-      - ['setMetaStatements', ['@?seo.helper.meta_statements']]
-      - ['setCommentsHelpers', ['@?comments.helpers']]
+      - '@?seo.helper.meta_statements'
+      - '@?comments.helpers'
 
   news.controller.widget.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Widget\Index\Index

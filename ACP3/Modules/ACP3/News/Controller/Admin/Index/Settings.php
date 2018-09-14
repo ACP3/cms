@@ -8,13 +8,11 @@
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Comments\Helpers;
 use ACP3\Modules\ACP3\News;
-use ACP3\Modules\ACP3\News\Controller\CommentsHelperTrait;
 
 class Settings extends Core\Controller\AbstractFrontendAction
 {
-    use CommentsHelperTrait;
-
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
@@ -35,6 +33,10 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Date
      */
     private $dateHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Comments\Helpers|null
+     */
+    private $commentsHelpers;
 
     /**
      * Settings constructor.
@@ -45,6 +47,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Helpers\Secure                                      $secureHelper
      * @param \ACP3\Core\Helpers\Date                                        $dateHelper
      * @param \ACP3\Modules\ACP3\News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+     * @param \ACP3\Modules\ACP3\Comments\Helpers|null                       $commentsHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -52,7 +55,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Date $dateHelper,
-        News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
+        ?Helpers $commentsHelpers = null
     ) {
         parent::__construct($context);
 
@@ -61,6 +65,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->secureHelper = $secureHelper;
         $this->dateHelper = $dateHelper;
+        $this->commentsHelpers = $commentsHelpers;
     }
 
     /**
@@ -92,6 +97,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {
@@ -108,7 +115,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 'category_in_breadcrumb' => $formData['category_in_breadcrumb'],
             ];
 
-            if ($this->commentsHelpers) {
+            if ($this->commentsHelpers !== null) {
                 $data['comments'] = $formData['comments'];
             }
 

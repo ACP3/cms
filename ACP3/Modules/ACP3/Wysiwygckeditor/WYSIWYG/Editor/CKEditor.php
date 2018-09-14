@@ -9,6 +9,8 @@ namespace ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor;
 
 use ACP3\Core;
 use ACP3\Core\WYSIWYG\Editor\Textarea;
+use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository;
+use ACP3\Modules\ACP3\Filemanager\Helpers;
 
 /**
  * Implementation of the AbstractWYSIWYG class for CKEditor.
@@ -28,11 +30,11 @@ class CKEditor extends Textarea
      */
     protected $appPath;
     /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository
+     * @var \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository|null
      */
     protected $emoticonRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Filemanager\Helpers
+     * @var \ACP3\Modules\ACP3\Filemanager\Helpers|null
      */
     protected $filemanagerHelpers;
 
@@ -44,18 +46,24 @@ class CKEditor extends Textarea
     /**
      * CKEditor constructor.
      *
-     * @param \ACP3\Core\Modules                     $modules
-     * @param \ACP3\Core\I18n\Translator             $translator
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
+     * @param \ACP3\Core\Modules                                                    $modules
+     * @param \ACP3\Core\I18n\Translator                                            $translator
+     * @param \ACP3\Core\Environment\ApplicationPath                                $appPath
+     * @param \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository|null $emoticonRepository
+     * @param \ACP3\Modules\ACP3\Filemanager\Helpers|null                           $filemanagerHelpers
      */
     public function __construct(
         Core\Modules $modules,
         Core\I18n\Translator $translator,
-        Core\Environment\ApplicationPath $appPath
+        Core\Environment\ApplicationPath $appPath,
+        ?EmoticonRepository $emoticonRepository = null,
+        ?Helpers $filemanagerHelpers = null
     ) {
         $this->modules = $modules;
         $this->translator = $translator;
         $this->appPath = $appPath;
+        $this->emoticonRepository = $emoticonRepository;
+        $this->filemanagerHelpers = $filemanagerHelpers;
     }
 
     /**
@@ -64,30 +72,6 @@ class CKEditor extends Textarea
     public function getFriendlyName()
     {
         return 'CKEditor';
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository $emoticonRepository
-     *
-     * @return $this
-     */
-    public function setEmoticonRepository(\ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository $emoticonRepository)
-    {
-        $this->emoticonRepository = $emoticonRepository;
-
-        return $this;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Filemanager\Helpers $filemanagerHelpers
-     *
-     * @return $this
-     */
-    public function setFilemanagerHelpers(\ACP3\Modules\ACP3\Filemanager\Helpers $filemanagerHelpers)
-    {
-        $this->filemanagerHelpers = $filemanagerHelpers;
-
-        return $this;
     }
 
     /**

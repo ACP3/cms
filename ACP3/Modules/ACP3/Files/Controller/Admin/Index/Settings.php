@@ -51,6 +51,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Helpers\Secure                                       $secureHelper
      * @param \ACP3\Core\Helpers\Date                                         $dateHelper
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+     * @param \ACP3\Modules\ACP3\Comments\Helpers|null                        $commentsHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -58,7 +59,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Date $dateHelper,
-        Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
+        ?Comments\Helpers $commentsHelpers = null
     ) {
         parent::__construct($context);
 
@@ -67,18 +69,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->secureHelper = $secureHelper;
         $this->dateHelper = $dateHelper;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Comments\Helpers $commentsHelpers
-     *
-     * @return $this
-     */
-    public function setCommentsHelpers(Comments\Helpers $commentsHelpers)
-    {
         $this->commentsHelpers = $commentsHelpers;
-
-        return $this;
     }
 
     /**
