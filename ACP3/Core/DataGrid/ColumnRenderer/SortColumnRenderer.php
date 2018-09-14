@@ -101,9 +101,6 @@ HTML;
         return \sprintf($html, $this->translator->t('system', 'move_impossible'));
     }
 
-    /**
-     * @return array
-     */
     public static function mandatoryAttributes(): array
     {
         return ['sort', '_'];

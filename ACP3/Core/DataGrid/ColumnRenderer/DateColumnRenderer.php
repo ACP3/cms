@@ -71,9 +71,6 @@ class DateColumnRenderer extends AbstractColumnRenderer
         return $value;
     }
 
-    /**
-     * @return array
-     */
     public static function mandatoryAttributes(): array
     {
         return ['sort', '_'];

@@ -128,7 +128,11 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
             }
 
             return $data;
-        } elseif (!empty($attributeData)) {
+        } elseif ($attributeData !== null && $attributeData !== '') {
+            if (\in_array($attributeName, static::mandatoryAttributes())) {
+                $attributeName = 'data-' . $attributeName;
+            }
+
             return ' ' . $attributeName . '="' . $attributeData . '"';
         }
 
@@ -198,5 +202,10 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     protected function getDbFields(array $column)
     {
         return $column['fields'];
+    }
+
+    public static function mandatoryAttributes(): array
+    {
+        return [];
     }
 }

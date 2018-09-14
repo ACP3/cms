@@ -39,22 +39,41 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getDbValueIfExists(array $dbResultRow, $field)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
-        if (isset($dbResultRow[$field])) {
-            if ((int) $dbResultRow[$field] === 0) {
-                $route = $this->router->route('acp/newsletter/accounts/activate/id_' . $dbResultRow[$this->primaryKey]);
-                $title = $this->translator->t('newsletter', 'activate_account');
-                $value = '<a href="' . $route . '" title="' . $title . '">';
-                $value .= '<i class="glyphicon glyphicon-remove text-danger"></i>';
-                $value .= '</a>';
-            } else {
-                $value = '<i class="glyphicon glyphicon-ok text-success"></i>';
-            }
+        $dbValue = $this->getValue($column, $dbResultRow);
 
-            return $value;
+        $column['attribute'] += [
+            'sort' => $dbValue,
+        ];
+
+        return $this->render($column, $this->getHtmlValue($column, $dbResultRow, $dbValue));
+    }
+
+    public static function mandatoryAttributes(): array
+    {
+        return ['sort', '_'];
+    }
+
+    /**
+     * @param array       $column
+     * @param array       $dbResultRow
+     * @param null|string $dbValue
+     *
+     * @return string
+     */
+    private function getHtmlValue(array $column, array $dbResultRow, ?string $dbValue): string
+    {
+        if ($dbValue === $this->getDefaultValue($column)) {
+            return $this->getDefaultValue($column);
+        } elseif ((int) $dbValue === 0 && isset($dbResultRow[$this->primaryKey])) {
+            return \sprintf(
+                '<a href="%s" title="%s"><i class="glyphicon glyphicon-remove text-danger"></i></a>',
+                $this->router->route('acp/newsletter/accounts/activate/id_' . $dbResultRow[$this->primaryKey]),
+                $this->translator->t('newsletter', 'activate_account')
+            );
         }
 
-        return null;
+        return '<i class="glyphicon glyphicon-ok text-success"></i>';
     }
 }

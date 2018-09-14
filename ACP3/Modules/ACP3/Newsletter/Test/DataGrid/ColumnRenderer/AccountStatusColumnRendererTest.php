@@ -48,7 +48,7 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 
         $this->primaryKey = 'id';
 
-        $expected = '<td><i class="glyphicon glyphicon-ok text-success"></i></td>';
+        $expected = '<td data-sort="1"><i class="glyphicon glyphicon-ok text-success"></i></td>';
         $this->compareResults($expected);
     }
 
@@ -74,7 +74,39 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 
         $this->primaryKey = 'id';
 
-        $expected = '<td><a href="/index.php/acp/newsletter/accounts/activate/id_123/" title="{NEWSLETTER_ACTIVATE_ACCOUNT}"><i class="glyphicon glyphicon-remove text-danger"></i></a></td>';
+        $expected = '<td data-sort="0"><a href="/index.php/acp/newsletter/accounts/activate/id_123/" title="{NEWSLETTER_ACTIVATE_ACCOUNT}"><i class="glyphicon glyphicon-remove text-danger"></i></a></td>';
+        $this->compareResults($expected);
+    }
+
+    public function testDefaultValueIfNull()
+    {
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['text'],
+            'custom' => [
+                'default_value' => 'Foo Bar',
+            ],
+        ]);
+        $this->dbData = [
+            'text' => null,
+        ];
+
+        $expected = '<td data-sort="Foo Bar">Foo Bar</td>';
+        $this->compareResults($expected);
+    }
+
+    public function testDefaultValueIfNotFound()
+    {
+        $this->columnData = \array_merge($this->columnData, [
+            'fields' => ['test'],
+            'custom' => [
+                'default_value' => 'Foo Bar',
+            ],
+        ]);
+        $this->dbData = [
+            'text' => 'Lorem Ipsum',
+        ];
+
+        $expected = '<td data-sort="Foo Bar">Foo Bar</td>';
         $this->compareResults($expected);
     }
 }
