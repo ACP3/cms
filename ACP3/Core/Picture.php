@@ -9,6 +9,7 @@ namespace ACP3\Core;
 
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Picture\Input;
+use ACP3\Core\Picture\Output;
 
 /**
  * @deprecated Deprecated since version 4.30.0, to be removed with version 5.0.0. Use class ACP3\Core\Picture\Picture instead
@@ -203,11 +204,19 @@ class Picture
 
     public function getFile(): string
     {
+        if ($this->output instanceof Output) {
+            return $this->output->getFile();
+        }
+
         return $this->file;
     }
 
     public function getFileWeb(): string
     {
+        if ($this->output instanceof Output) {
+            return $this->output->getFileWeb();
+        }
+
         return $this->appPath->getWebRoot() . \str_replace(ACP3_ROOT_DIR, '', $this->getFile());
     }
 
