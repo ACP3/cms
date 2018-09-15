@@ -37,8 +37,13 @@ class OptionRenderer
      * @param string $buttonClass
      * @param bool   $useAjax
      */
-    public function addOption($route, $translationPhrase, $iconClass, $buttonClass = 'btn-default', $useAjax = false)
-    {
+    public function addOption(
+        string $route,
+        string $translationPhrase,
+        string $iconClass,
+        string $buttonClass = 'btn-default',
+        bool $useAjax = false
+    ) {
         $ajax = $useAjax === true ? ' data-ajax-form="true"' : '';
         $value = ' <a href="' . $this->router->route($route) . '" class="btn btn-xs ' . $buttonClass . '"' . $ajax . ' title="' . $translationPhrase . '">';
         $value .= '<i class="glyphicon ' . $iconClass . '"></i>';
@@ -51,12 +56,12 @@ class OptionRenderer
     /**
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
 
-    public function clearOptions()
+    public function clearOptions(): void
     {
         $this->options = [];
     }

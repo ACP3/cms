@@ -49,14 +49,14 @@ class OptionColumnRenderer extends AbstractColumnRenderer
     {
         $this->eventDispatcher->dispatch(
             'data_grid.column_renderer.custom_option_before',
-            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->identifier)
+            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->getIdentifier())
         );
 
         if ($column['custom']['can_edit']) {
             $resourcePathEdit = $column['custom']['resource_path_edit'];
             $resourcePathEdit .= !\preg_match('=/$=', $resourcePathEdit) ? '/' : '';
             $this->optionRenderer->addOption(
-                $resourcePathEdit . 'id_' . $dbResultRow[$this->primaryKey],
+                $resourcePathEdit . 'id_' . $dbResultRow[$this->getPrimaryKey()],
                 $this->translator->t('system', 'edit'),
                 'glyphicon-edit',
                 'btn-default'
@@ -65,14 +65,14 @@ class OptionColumnRenderer extends AbstractColumnRenderer
 
         $this->eventDispatcher->dispatch(
             'data_grid.column_renderer.custom_option_between',
-            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->identifier)
+            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->getIdentifier())
         );
 
         if ($column['custom']['can_delete']) {
             $resourcePathDelete = $column['custom']['resource_path_delete'];
             $resourcePathDelete .= !\preg_match('=/$=', $resourcePathDelete) ? '/' : '';
             $this->optionRenderer->addOption(
-                $resourcePathDelete . 'entries_' . $dbResultRow[$this->primaryKey],
+                $resourcePathDelete . 'entries_' . $dbResultRow[$this->getPrimaryKey()],
                 $this->translator->t('system', 'delete'),
                 'glyphicon-remove',
                 'btn-danger'
@@ -81,7 +81,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
 
         $this->eventDispatcher->dispatch(
             'data_grid.column_renderer.custom_option_after',
-            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->identifier)
+            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->getIdentifier())
         );
 
         return $this->render($column, $this->collectOptions());

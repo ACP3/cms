@@ -16,7 +16,7 @@ class MassActionColumnRenderer extends AbstractColumnRenderer
     {
         $value = null;
         if (isset($column['custom']['can_delete']) && $column['custom']['can_delete'] === true) {
-            $value = '<input type="checkbox" name="entries[]" value="' . $dbResultRow[$this->primaryKey] . '">';
+            $value = '<input type="checkbox" name="entries[]" value="' . $dbResultRow[$this->getPrimaryKey()] . '">';
         }
 
         if ($value === null) {

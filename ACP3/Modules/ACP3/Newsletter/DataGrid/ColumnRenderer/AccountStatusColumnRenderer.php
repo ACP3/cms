@@ -66,10 +66,10 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     {
         if ($dbValue === $this->getDefaultValue($column)) {
             return $this->getDefaultValue($column);
-        } elseif ((int) $dbValue === 0 && isset($dbResultRow[$this->primaryKey])) {
+        } elseif ((int) $dbValue === 0 && isset($dbResultRow[$this->getPrimaryKey()])) {
             return \sprintf(
                 '<a href="%s" title="%s"><i class="glyphicon glyphicon-remove text-danger"></i></a>',
-                $this->router->route('acp/newsletter/accounts/activate/id_' . $dbResultRow[$this->primaryKey]),
+                $this->router->route('acp/newsletter/accounts/activate/id_' . $dbResultRow[$this->getPrimaryKey()]),
                 $this->translator->t('newsletter', 'activate_account')
             );
         }

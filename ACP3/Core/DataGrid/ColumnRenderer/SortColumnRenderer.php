@@ -45,13 +45,13 @@ class SortColumnRenderer extends AbstractColumnRenderer
         $value = '';
         if ($dbResultRow['last'] != $dbValue) {
             $value .= $this->fetchSortDirectionHtml(
-                $this->router->route(\sprintf($column['custom']['route_sort_down'], $dbResultRow[$this->primaryKey])),
+                $this->router->route(\sprintf($column['custom']['route_sort_down'], $dbResultRow[$this->getPrimaryKey()])),
                 'down'
             );
         }
         if ($dbResultRow['first'] != $dbValue) {
             $value .= $this->fetchSortDirectionHtml(
-                $this->router->route(\sprintf($column['custom']['route_sort_up'], $dbResultRow[$this->primaryKey])),
+                $this->router->route(\sprintf($column['custom']['route_sort_up'], $dbResultRow[$this->getPrimaryKey()])),
                 'up'
             );
         }

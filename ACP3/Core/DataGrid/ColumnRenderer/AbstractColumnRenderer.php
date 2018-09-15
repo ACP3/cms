@@ -14,20 +14,26 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     /**
      * @var string
      */
-    protected $identifier = '';
+    private $identifier = '';
     /**
      * @var string|null
      */
-    protected $primaryKey;
+    private $primaryKey;
     /**
      * @var bool
      */
     private $useAjax = false;
 
     /**
-     * @param string $identifier
-     *
-     * @return $this
+     * {@inheritdoc}
+     */
+    public function getIdentifier(): string
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function setIdentifier(string $identifier): self
     {
@@ -37,9 +43,15 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param string|null $primaryKey
-     *
-     * @return $this
+     * {@inheritdoc}
+     */
+    public function getPrimaryKey(): string
+    {
+        return $this->primaryKey;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function setPrimaryKey(?string $primaryKey): self
     {
@@ -49,7 +61,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function getUseAjax(): bool
     {
@@ -57,9 +69,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param bool $useAjax
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function setUseAjax(bool $useAjax): self
     {
