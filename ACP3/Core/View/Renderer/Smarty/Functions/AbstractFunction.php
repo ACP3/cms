@@ -15,7 +15,7 @@ abstract class AbstractFunction extends AbstractPlugin
     /**
      * @return string
      */
-    public function getExtensionType()
+    public static function getExtensionType()
     {
         return PluginInterface::EXTENSION_TYPE_FUNCTION;
     }

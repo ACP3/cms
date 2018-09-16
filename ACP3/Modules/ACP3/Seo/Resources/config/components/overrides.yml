@@ -1,6 +1,6 @@
 services:
   core.helpers.pageBreaks:
-    class: ACP3\Core\Helpers\PageBreaks
+    class: ACP3\Modules\ACP3\Seo\Core\Helpers\PageBreaks
     arguments:
       - '@core.http.request'
       - '@core.router'

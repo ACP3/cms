@@ -27,7 +27,7 @@ class TemplatePath extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
+    public static function getExtensionName()
     {
         return 'template_path';
     }

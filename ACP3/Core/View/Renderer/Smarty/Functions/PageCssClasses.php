@@ -49,7 +49,7 @@ class PageCssClasses extends AbstractFunction
     /**
      * @return string
      */
-    public function getExtensionName()
+    public static function getExtensionName()
     {
         return 'page_css_classes';
     }

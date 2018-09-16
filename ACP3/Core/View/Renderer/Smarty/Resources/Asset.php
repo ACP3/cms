@@ -27,7 +27,7 @@ class Asset extends AbstractResource
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
+    public static function getExtensionName()
     {
         return 'asset';
     }

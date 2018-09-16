@@ -47,7 +47,7 @@ class LoadModule extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
+    public static function getExtensionName()
     {
         return 'load_module';
     }

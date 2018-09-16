@@ -53,6 +53,7 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @return array
      *
      * @throws Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute($id)
     {

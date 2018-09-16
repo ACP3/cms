@@ -11,16 +11,8 @@ use ACP3\Core\View\Renderer\Smarty\PluginInterface;
 
 abstract class AbstractResource extends \Smarty_Resource_Custom implements PluginInterface
 {
-    public function getExtensionType()
+    public static function getExtensionType()
     {
         return PluginInterface::EXTENSION_TYPE_RESOURCE;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function register(\Smarty $smarty)
-    {
-        $smarty->registerResource($this->getExtensionName(), $this);
     }
 }

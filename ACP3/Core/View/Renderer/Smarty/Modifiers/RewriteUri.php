@@ -27,7 +27,7 @@ class RewriteUri extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
+    public static function getExtensionName()
     {
         return 'rewrite_uri';
     }

@@ -15,7 +15,7 @@ abstract class AbstractModifier extends AbstractPlugin
     /**
      * {@inheritdoc}
      */
-    public function getExtensionType()
+    public static function getExtensionType()
     {
         return PluginInterface::EXTENSION_TYPE_MODIFIER;
     }

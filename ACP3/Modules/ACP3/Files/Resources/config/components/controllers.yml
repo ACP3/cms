@@ -72,7 +72,6 @@ services:
       - '@core.date'
       - '@files.model.filesrepository'
       - '@files.cache'
-      - '@categories.model.categories_repository'
 
   files.controller.frontend.index.download:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Download
@@ -82,7 +81,6 @@ services:
       - '@core.helpers.string_formatter'
       - '@files.model.filesrepository'
       - '@files.cache'
-      - '@categories.model.categories_repository'
 
   files.controller.frontend.index.files:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Files

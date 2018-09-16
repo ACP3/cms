@@ -18,15 +18,10 @@ interface PluginInterface
     /**
      * @return string
      */
-    public function getExtensionType();
+    public static function getExtensionType();
 
     /**
      * @return string
      */
-    public function getExtensionName();
-
-    /**
-     * @param \Smarty $smarty
-     */
-    public function register(\Smarty $smarty);
+    public static function getExtensionName();
 }

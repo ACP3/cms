@@ -39,7 +39,7 @@ class PageCssClasses extends AbstractFilter
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
+    public static function getExtensionName()
     {
         return 'output';
     }

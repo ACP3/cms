@@ -27,7 +27,7 @@ class RedirectMessage extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
+    public static function getExtensionName()
     {
         return 'redirect_message';
     }

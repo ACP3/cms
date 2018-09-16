@@ -39,7 +39,7 @@ class MoveToBottom extends AbstractMoveElementFilter
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
+    public static function getExtensionName()
     {
         return 'output';
     }
