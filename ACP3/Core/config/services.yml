@@ -5,6 +5,10 @@ imports:
   - { resource: ../View/Renderer/Smarty/config/services.yml }
   - { resource: ../../Modules/ACP3/System/Resources/config/services.yml }
 
+parameters:
+  env(ACP3_APPLICATION_MODE): !php/const ACP3\Core\Environment\ApplicationMode::PRODUCTION
+  core.environment: "%env(ACP3_APPLICATION_MODE)%"
+
 services:
   permissions.cache:
     synthetic: true

@@ -70,7 +70,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     {
         $this->set('core.http.symfony_request', $this->symfonyRequest);
         $this->set('core.environment.application_path', $this->applicationPath);
-        $this->setParameter('core.environment', $this->applicationMode);
 
         $this
             ->addCompilerPass(

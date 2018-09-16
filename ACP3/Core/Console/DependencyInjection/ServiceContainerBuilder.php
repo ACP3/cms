@@ -56,7 +56,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     {
         $this->set('core.logger.system_logger', $this->logger);
         $this->set('core.environment.application_path', $this->applicationPath);
-        $this->setParameter('core.environment', $this->applicationMode);
 
         $this
             ->addCompilerPass(
