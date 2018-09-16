@@ -70,7 +70,7 @@ class Image extends AbstractFunction
     /**
      * @return string
      */
-    public static function getExtensionName()
+    public function getExtensionName()
     {
         return 'image';
     }

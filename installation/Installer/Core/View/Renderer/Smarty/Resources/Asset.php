@@ -23,9 +23,9 @@ class Asset extends AbstractResource
     private $theme;
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    public static function getExtensionName()
+    public function getExtensionName()
     {
         return 'asset';
     }

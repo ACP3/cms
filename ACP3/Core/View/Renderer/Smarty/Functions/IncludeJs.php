@@ -46,7 +46,7 @@ class IncludeJs extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public static function getExtensionName()
+    public function getExtensionName()
     {
         return 'include_js';
     }

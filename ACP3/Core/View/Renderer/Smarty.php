@@ -7,8 +7,6 @@
 
 namespace ACP3\Core\View\Renderer;
 
-use ACP3\Core\View\Renderer\Smarty\PluginInterface;
-
 /**
  * Renderer for the Smarty template engine.
  */
@@ -18,15 +16,6 @@ class Smarty implements RendererInterface
      * @var \Smarty
      */
     protected $smarty;
-
-    /**
-     * @var array
-     */
-    private static $pluginTypesMap = [
-        PluginInterface::EXTENSION_TYPE_BLOCK,
-        PluginInterface::EXTENSION_TYPE_FUNCTION,
-        PluginInterface::EXTENSION_TYPE_MODIFIER,
-    ];
 
     /**
      * Smarty constructor.
@@ -40,35 +29,10 @@ class Smarty implements RendererInterface
 
     /**
      * @param \ACP3\Core\View\Renderer\Smarty\PluginInterface $plugin
-     *
-     * @throws \SmartyException
      */
     public function registerSmartyPlugin(Smarty\PluginInterface $plugin)
     {
-        if ($this->isPlugin($plugin)) {
-            $this->smarty->registerPlugin(
-                $plugin::getExtensionType(),
-                $plugin::getExtensionName(),
-                [$plugin, 'process']
-            );
-        } elseif ($plugin::getExtensionType() === PluginInterface::EXTENSION_TYPE_FILTER) {
-            $this->smarty->registerFilter($plugin::getExtensionName(), [$plugin, 'process']);
-        } elseif ($plugin::getExtensionType() === PluginInterface::EXTENSION_TYPE_RESOURCE) {
-            $this->smarty->registerResource($plugin::getExtensionName(), $plugin);
-        }
-    }
-
-    /**
-     * @param \ACP3\Core\View\Renderer\Smarty\PluginInterface $plugin
-     *
-     * @return bool
-     */
-    private function isPlugin(Smarty\PluginInterface $plugin): bool
-    {
-        return \in_array(
-            $plugin::getExtensionType(),
-            self::$pluginTypesMap
-        );
+        $plugin->register($this->smarty);
     }
 
     /**

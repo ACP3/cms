@@ -27,7 +27,7 @@ class HasPermission extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public static function getExtensionName()
+    public function getExtensionName()
     {
         return 'has_permission';
     }

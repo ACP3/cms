@@ -20,7 +20,7 @@ class PageTitle extends SiteTitle
     /**
      * {@inheritdoc}
      */
-    public static function getExtensionName()
+    public function getExtensionName()
     {
         return 'page_title';
     }

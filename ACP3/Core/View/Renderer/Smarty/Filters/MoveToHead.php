@@ -30,7 +30,7 @@ class MoveToHead extends AbstractMoveElementFilter
     /**
      * {@inheritdoc}
      */
-    public static function getExtensionName()
+    public function getExtensionName()
     {
         return 'output';
     }

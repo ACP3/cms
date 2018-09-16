@@ -29,7 +29,7 @@ class Uri extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public static function getExtensionName()
+    public function getExtensionName()
     {
         return 'uri';
     }

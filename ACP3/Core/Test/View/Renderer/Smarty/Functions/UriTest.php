@@ -5,13 +5,6 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-/**
- * Created by PhpStorm.
- * User: tinog
- * Date: 26.03.2017
- * Time: 21:26.
- */
-
 namespace ACP3\Core\Test\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\Router\RouterInterface;
@@ -65,7 +58,7 @@ class UriTest extends AbstractPluginTest
             ->with('foo/bar/baz', false, null)
             ->willReturn('/foo/bar/baz/');
 
-        $this->assertEquals('/foo/bar/baz/', $this->plugin->process($params, $this->smartyInternalTemplateMock));
+        $this->assertEquals('/foo/bar/baz/', $this->plugin->__invoke($params, $this->smartyInternalTemplateMock));
     }
 
     public function testUriWithForceHttp()
@@ -80,7 +73,7 @@ class UriTest extends AbstractPluginTest
             ->with('foo/bar/baz', false, false)
             ->willReturn('http://example.com/foo/bar/baz/');
 
-        $this->assertEquals('http://example.com/foo/bar/baz/', $this->plugin->process($params, $this->smartyInternalTemplateMock));
+        $this->assertEquals('http://example.com/foo/bar/baz/', $this->plugin->__invoke($params, $this->smartyInternalTemplateMock));
     }
 
     public function testUriWithForceHttps()
@@ -95,6 +88,6 @@ class UriTest extends AbstractPluginTest
             ->with('foo/bar/baz', false, true)
             ->willReturn('https://example.com/foo/bar/baz/');
 
-        $this->assertEquals('https://example.com/foo/bar/baz/', $this->plugin->process($params, $this->smartyInternalTemplateMock));
+        $this->assertEquals('https://example.com/foo/bar/baz/', $this->plugin->__invoke($params, $this->smartyInternalTemplateMock));
     }
 }

@@ -38,7 +38,7 @@ class SiteSubtitle extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public static function getExtensionName()
+    public function getExtensionName()
     {
         return 'site_subtitle';
     }

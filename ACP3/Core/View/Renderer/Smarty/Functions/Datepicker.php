@@ -63,7 +63,7 @@ class Datepicker extends AbstractFunction
     /**
      * @return string
      */
-    public static function getExtensionName()
+    public function getExtensionName()
     {
         return 'datepicker';
     }

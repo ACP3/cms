@@ -8,11 +8,23 @@
 namespace ACP3\Core\View\Renderer\Smarty\Resources;
 
 use ACP3\Core\View\Renderer\Smarty\PluginInterface;
+use ACP3\Core\View\Renderer\Smarty\PluginTypeEnum;
 
 abstract class AbstractResource extends \Smarty_Resource_Custom implements PluginInterface
 {
-    public static function getExtensionType()
+    /**
+     * {@inheritdoc}
+     */
+    public function getExtensionType()
     {
-        return PluginInterface::EXTENSION_TYPE_RESOURCE;
+        return PluginTypeEnum::RESOURCE;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function register(\Smarty $smarty)
+    {
+        $smarty->registerResource($this->getExtensionName(), $this);
     }
 }

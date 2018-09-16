@@ -27,7 +27,7 @@ class DateFormat extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public static function getExtensionName()
+    public function getExtensionName()
     {
         return 'date_format';
     }

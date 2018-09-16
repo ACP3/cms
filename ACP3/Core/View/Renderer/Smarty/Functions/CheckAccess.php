@@ -27,7 +27,7 @@ class CheckAccess extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public static function getExtensionName()
+    public function getExtensionName()
     {
         return 'check_access';
     }
