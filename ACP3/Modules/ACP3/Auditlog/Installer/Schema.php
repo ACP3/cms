@@ -24,6 +24,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `date` DATETIME NOT NULL,
                 `module_id` INT(10) UNSIGNED NOT NULL,
+                `table_name` varchar(255) NOT NULL,
                 `entry_id` INT(10) UNSIGNED NOT NULL,
                 `action` VARCHAR(255) NOT NULL,
                 `data` MEDIUMBLOB NOT NULL,
@@ -88,6 +89,6 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 2;
+        return 3;
     }
 }

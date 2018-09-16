@@ -82,6 +82,14 @@ abstract class AbstractModel
         return $result;
     }
 
+    /**
+     * @param array    $filteredData
+     * @param int|null $entryId
+     *
+     * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
     protected function hasDataChanges(array $filteredData, ?int $entryId): bool
     {
         if ($entryId === null) {
@@ -148,7 +156,8 @@ abstract class AbstractModel
             $rawData,
             $entryId,
             $isNewEntry,
-            $hasDataChanges
+            $hasDataChanges,
+            $this->repository::TABLE_NAME
         );
     }
 
@@ -226,6 +235,8 @@ abstract class AbstractModel
      * @param int $entryId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getOneById(int $entryId)
     {

@@ -66,6 +66,7 @@ class OnModelAfterSaveListener
                 $this->auditLogRepository->insert([
                     'date' => $this->date->toSQL(),
                     'module_id' => (int) $moduleId,
+                    'table_name' => $event->getTableName(),
                     'entry_id' => (int) $entryId,
                     'action' => $this->getAction($event),
                     'data' => \serialize($event->getData()),

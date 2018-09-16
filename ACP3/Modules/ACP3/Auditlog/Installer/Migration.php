@@ -23,6 +23,10 @@ class Migration implements MigrationInterface
                 'ALTER TABLE `{pre}auditlog` MODIFY COLUMN `action` VARCHAR(255) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}auditlog` CONVERT TO {charset};',
             ],
+            3 => [
+                'ALTER TABLE `{pre}auditlog` ADD COLUMN `table_name` VARCHAR(255) NOT NULL AFTER `module_id`;',
+                'TRUNCATE TABLE `{pre}auditlog`;',
+            ],
         ];
     }
 

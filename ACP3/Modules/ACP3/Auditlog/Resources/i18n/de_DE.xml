@@ -8,6 +8,6 @@
     <keys>
         <item key="auditlog">Audit-Log</item>
         <item key="mod_description">Protokolliert alle Benutzeraktionen innerhalb des ACP3 CMS.</item>
-        <item key="nothing_to_see_here_yet">Hier gibt es noch nichts zu sehen.</item>
+        <item key="results_count">Anzahl Datensätze</item>
     </keys>
 </language>
