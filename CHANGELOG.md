@@ -6,11 +6,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Changes
-- introduce `DataGridRepositories` for the following modules:
+- introduce `DataGridRepository` classes for the following modules:
     - Comments
     - Gallery pictures
 
 ### Deprecations (to be removed with version 5.0.0)
+- Reworked the Smarty plugins:
+  - Removed the class `ACP3\Core\View\Renderer\Smarty\AbstractPlugin`
+  - Deprecated the method `ACP3\Core\View\Renderer\Smarty\PluginInterface::getExtensionType()` and all its implementations
+  - Deprecated the constants inside `ACP3\Core\View\Renderer\Smarty\PluginInterface`, use class `ACP3\Core\View\Renderer\Smarty\PluginTypeEnum` instead
+  - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Blocks\AbstractBlock::process()`, use `ACP3\Core\View\Renderer\Smarty\Blocks\AbstractBlock::__invoke()` instead 
+  - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilter::process()`, use `ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilters::__invoke()` instead 
+  - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction::process()`, use `ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunctions::__invoke()` instead 
+  - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Modifiers\AbstractModifier::process()`, use `ACP3\Core\View\Renderer\Smarty\Modifiers\AbstractModifiers::__invoke()` instead 
+- Deprecated the method `ACP3\Core\Mailer::setData()`, use the method `ACP3\Core\Mailer::send()` to inject the `MailerMessage` directly
 - Deprecated the class `ACP3\Core\Picture`, use `ACP3\Core\Picture\Picture` instead
 - Deprecated the namespace `ÀCP3\Core\Helpers\DataGrid*`, use `ÀCP3\Core\DataGrid*` instead
 - Deprecated the class `ACP3\Core\Model\Repository\DataGridRepository`, use `ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository` instead
