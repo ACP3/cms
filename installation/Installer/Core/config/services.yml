@@ -1,5 +1,6 @@
 parameters:
   default_request: 'install'
+  core.environment: !php/const ACP3\Core\Environment\ApplicationMode::INSTALLER
 
 imports:
   - { resource: ../../../../ACP3/Core/config/components/logger.yml }

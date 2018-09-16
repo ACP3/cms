@@ -25,7 +25,7 @@ class Asset extends AbstractResource
     /**
      * @return string
      */
-    public function getExtensionName()
+    public static function getExtensionName()
     {
         return 'asset';
     }
@@ -138,11 +138,11 @@ class Asset extends AbstractResource
         $compiled->exists = false;
     }
 
-    /*
-       * Disable timestamp checks for recompiled resource.
-       *
-       * @return bool
-       */
+    /**
+     * Disable timestamp checks for recompiled resource.
+     *
+     * @return bool
+     */
     public function checkTimestamps()
     {
         return false;
