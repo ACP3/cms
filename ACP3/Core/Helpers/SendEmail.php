@@ -40,35 +40,34 @@ class SendEmail
      */
     public function execute(
         $recipientName,
-        $recipientEmail = '',
-        $from = '',
-        $subject = '',
-        $body = '',
-        $mailSignature = ''
+        string $recipientEmail = '',
+        string $from = '',
+        string $subject = '',
+        string $body = '',
+        string $mailSignature = ''
     ) {
         if ($recipientName instanceof Core\Mailer\MailerMessage) {
-            return $this->mailer
-                ->reset()
-                ->setData($recipientName)
-                ->send();
-        }
-
-        if (!empty($recipientName)) {
-            $to = [
-                'name' => $recipientName,
-                'email' => $recipientEmail,
-            ];
+            $message = $recipientName;
         } else {
-            $to = $recipientEmail;
+            if (!empty($recipientName)) {
+                $to = [
+                    'name' => $recipientName,
+                    'email' => $recipientEmail,
+                ];
+            } else {
+                $to = $recipientEmail;
+            }
+
+            $message = (new Core\Mailer\MailerMessage())
+                ->setSubject($subject)
+                ->setBody($body)
+                ->setMailSignature($mailSignature)
+                ->setFrom($from)
+                ->setRecipients($to);
         }
 
         return $this->mailer
             ->reset()
-            ->setSubject($subject)
-            ->setBody($body)
-            ->setMailSignature($mailSignature)
-            ->setFrom($from)
-            ->setRecipients($to)
-            ->send();
+            ->send($message);
     }
 }

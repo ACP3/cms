@@ -101,8 +101,10 @@ class Subscribe
      * @param string $lastName
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function subscribeToNewsletter($emailAddress, $salutation = 0, $firstName = '', $lastName = '')
+    public function subscribeToNewsletter(string $emailAddress, int $salutation = 0, string $firstName = '', string $lastName = '')
     {
         $hash = $this->secureHelper->generateSaltedPassword('', \mt_rand(0, \microtime(true)), 'sha512');
         $mailSent = $this->sendDoubleOptInEmail($emailAddress, $hash);
@@ -119,8 +121,10 @@ class Subscribe
      * @param string $hash
      *
      * @return bool|int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function addNewsletterAccount($emailAddress, $salutation, $firstName, $lastName, $hash)
+    protected function addNewsletterAccount(string $emailAddress, int $salutation, string $firstName, string $lastName, string $hash)
     {
         $newsletterAccount = $this->accountRepository->getOneByEmail($emailAddress);
 
@@ -139,7 +143,7 @@ class Subscribe
      *
      * @return bool
      */
-    protected function sendDoubleOptInEmail($emailAddress, $hash)
+    protected function sendDoubleOptInEmail(string $emailAddress, string $hash)
     {
         $url = $this->router->route('newsletter/index/activate/hash_' . $hash, true);
 
@@ -178,8 +182,7 @@ class Subscribe
 
         return $this->mailer
             ->reset()
-            ->setData($data)
-            ->send();
+            ->send($data);
     }
 
     /**
@@ -190,8 +193,10 @@ class Subscribe
      * @param string $hash
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function updateExistingAccount(array $newsletterAccount, $salutation, $firstName, $lastName, $hash)
+    protected function updateExistingAccount(array $newsletterAccount, int $salutation, string $firstName, string $lastName, string $hash)
     {
         $updateValues = [
             'salutation' => $salutation,
@@ -217,8 +222,10 @@ class Subscribe
      * @param string $hash
      *
      * @return bool|int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function insertNewAccount($emailAddress, $salutation, $firstName, $lastName, $hash)
+    protected function insertNewAccount(string $emailAddress, int $salutation, string $firstName, string $lastName, string $hash)
     {
         $insertValues = [
             'id' => '',

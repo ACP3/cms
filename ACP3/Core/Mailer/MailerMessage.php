@@ -69,9 +69,9 @@ class MailerMessage
     /**
      * @param string $subject
      *
-     * @return MailerMessage
+     * @return $this
      */
-    public function setSubject($subject)
+    public function setSubject(string $subject)
     {
         $this->subject = $subject;
 
@@ -89,9 +89,9 @@ class MailerMessage
     /**
      * @param string $body
      *
-     * @return MailerMessage
+     * @return $this
      */
-    public function setBody($body)
+    public function setBody(string $body)
     {
         $this->body = $body;
 
@@ -111,7 +111,7 @@ class MailerMessage
      *
      * @return $this
      */
-    public function setHtmlBody($htmlBody)
+    public function setHtmlBody(string $htmlBody)
     {
         $this->htmlBody = $htmlBody;
 
@@ -131,7 +131,7 @@ class MailerMessage
      *
      * @return $this
      */
-    public function setUrlWeb($urlWeb)
+    public function setUrlWeb(string $urlWeb)
     {
         $this->urlWeb = $urlWeb;
 
@@ -151,7 +151,7 @@ class MailerMessage
      *
      * @return $this
      */
-    public function setMailSignature($mailSignature)
+    public function setMailSignature(string $mailSignature)
     {
         $this->mailSignature = $mailSignature;
 
@@ -251,7 +251,7 @@ class MailerMessage
      *
      * @return $this
      */
-    public function setBcc($bcc)
+    public function setBcc(bool $bcc)
     {
         $this->bcc = $bcc;
 
@@ -283,7 +283,7 @@ class MailerMessage
      *
      * @return $this
      */
-    public function addAttachment($attachment)
+    public function addAttachment(string $attachment)
     {
         $this->attachments[] = $attachment;
 
@@ -303,7 +303,7 @@ class MailerMessage
      *
      * @return $this
      */
-    public function setTemplate($template)
+    public function setTemplate(string $template)
     {
         $this->template = $template;
 
