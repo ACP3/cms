@@ -18,11 +18,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Blocks\AbstractBlock::process()`, use `ACP3\Core\View\Renderer\Smarty\Blocks\AbstractBlock::__invoke()` instead 
   - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilter::process()`, use `ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilters::__invoke()` instead 
   - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction::process()`, use `ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunctions::__invoke()` instead 
-  - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Modifiers\AbstractModifier::process()`, use `ACP3\Core\View\Renderer\Smarty\Modifiers\AbstractModifiers::__invoke()` instead 
-- Deprecated the method `ACP3\Core\Mailer::setData()`, use the method `ACP3\Core\Mailer::send()` to inject the `MailerMessage` directly
+  - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Modifiers\AbstractModifier::process()`, use `ACP3\Core\View\Renderer\Smarty\Modifiers\AbstractModifiers::__invoke()` instead
+- Deprecated the class `ACP3\Core\Model\AbstractNestedSetModel`, use `ACP3\Core\NestedSet\Model\AbstractNestedSetModel` instead
 - Deprecated the class `ACP3\Core\Picture`, use `ACP3\Core\Picture\Picture` instead
-- Deprecated the namespace `ÀCP3\Core\Helpers\DataGrid*`, use `ÀCP3\Core\DataGrid*` instead
+- Deprecated the method `ACP3\Core\Mailer::setData()`, use the method `ACP3\Core\Mailer::send()` to inject the `MailerMessage` directly
 - Deprecated the class `ACP3\Core\Model\Repository\DataGridRepository`, use `ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository` instead
+- Deprecated the namespace `ÀCP3\Core\Helpers\DataGrid*`, use `ÀCP3\Core\DataGrid*` instead
 - Deprecated the DI container tag `core.helpers.data_grid.column_renderer`, use `core.data_grid.column_renderer` instead
 
 ### Fixes

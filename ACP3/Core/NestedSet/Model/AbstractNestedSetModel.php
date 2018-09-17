@@ -5,17 +5,16 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Model;
+namespace ACP3\Core\NestedSet\Model;
 
+use ACP3\Core\Model\AbstractModel;
+use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Model\Repository\AbstractRepository;
 use ACP3\Core\NestedSet\Operation\Delete;
 use ACP3\Core\NestedSet\Operation\Edit;
 use ACP3\Core\NestedSet\Operation\Insert;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @deprecated since version 4.30.0, to be removed with 5.0.0. Use class ACP3\Core\NestedSet\Model\AbstractNestedSetModel instead
- */
 abstract class AbstractNestedSetModel extends AbstractModel
 {
     /**

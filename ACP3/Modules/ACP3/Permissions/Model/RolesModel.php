@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Model;
 
-use ACP3\Core\Model\AbstractNestedSetModel;
+use ACP3\Core\NestedSet\Model\AbstractNestedSetModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
 
