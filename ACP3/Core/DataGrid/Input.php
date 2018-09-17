@@ -292,6 +292,18 @@ class Input
     }
 
     /**
+     * @param string $primaryKey
+     *
+     * @return $this
+     */
+    public function setPrimaryKey(string $primaryKey): self
+    {
+        $this->primaryKey = $primaryKey;
+
+        return $this;
+    }
+
+    /**
      * @return string|null
      */
     public function getPrimaryKey(): ?string
