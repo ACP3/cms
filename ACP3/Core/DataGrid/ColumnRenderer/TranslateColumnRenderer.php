@@ -29,14 +29,16 @@ class TranslateColumnRenderer extends AbstractColumnRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getDbValueIfExists(array $dbResultRow, $field)
+    protected function getValue(array $column, array $dbResultRow)
     {
-        if (isset($dbResultRow[$field])) {
-            $value = $dbResultRow[$field];
+        $value = parent::getValue($column, $dbResultRow);
 
-            return $this->translator->t($value, $value);
+        if (!empty($value)) {
+            $domain = $column['custom']['domain'] ?? $value;
+
+            $value = $this->translator->t($domain, $value);
         }
 
-        return null;
+        return $value;
     }
 }
