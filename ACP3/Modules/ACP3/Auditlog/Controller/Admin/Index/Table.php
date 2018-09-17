@@ -65,6 +65,9 @@ class Table extends AbstractFrontendAction
                 'label' => $this->translator->t('auditlog', 'entry_id'),
                 'type' => TextColumnRenderer::class,
                 'fields' => ['entry_id'],
+                'primary' => true,
+                'default_sort' => true,
+                'default_sort_direction' => 'desc',
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('auditlog', 'versions_count'),

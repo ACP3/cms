@@ -63,6 +63,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'label' => $this->translator->t('auditlog', 'database_table'),
                 'type' => Core\DataGrid\ColumnRenderer\TranslateColumnRenderer::class,
                 'fields' => ['module_name', 'table_name'],
+                'default_sort' => true,
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('auditlog', 'results_count'),
