@@ -5,7 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Extended the audit log module
+
 ### Changes
+- reworked how ACL rules are getting updated
 - introduce `DataGridRepository` classes for the following modules:
     - Comments
     - Gallery pictures
