@@ -56,7 +56,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
             $resourcePathEdit = $column['custom']['resource_path_edit'];
             $resourcePathEdit .= !\preg_match('=/$=', $resourcePathEdit) ? '/' : '';
             $this->optionRenderer->addOption(
-                $resourcePathEdit . 'id_' . $dbResultRow[$this->getPrimaryKey()],
+                $this->getEditRoute($dbResultRow, $resourcePathEdit),
                 $this->translator->t('system', 'edit'),
                 'glyphicon-edit',
                 'btn-default'
@@ -103,5 +103,20 @@ class OptionColumnRenderer extends AbstractColumnRenderer
         $value .= '</div>';
 
         return $value;
+    }
+
+    /**
+     * @param array  $dbResultRow
+     * @param string $resourcePathEdit
+     *
+     * @return string
+     */
+    private function getEditRoute(array $dbResultRow, string $resourcePathEdit): string
+    {
+        if (\strpos($resourcePathEdit, '%s') === false) {
+            return $resourcePathEdit . 'id_' . $dbResultRow[$this->getPrimaryKey()];
+        }
+
+        return \sprintf($resourcePathEdit, $dbResultRow[$this->getPrimaryKey()]);
     }
 }

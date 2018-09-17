@@ -45,7 +45,8 @@ class Index extends Core\Controller\AbstractFrontendAction
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#auditlog-data-grid')
-            ->setEnableOptions(false);
+            ->setPrimaryKey('table_name')
+            ->setResourcePathEdit('admin/auditlog/index/table/table_%s');
 
         $this->addDataGridColumns($input);
 
@@ -59,14 +60,14 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         $input
             ->addColumn([
-                'label' => $this->translator->t('system', 'module'),
+                'label' => $this->translator->t('auditlog', 'database_table'),
                 'type' => Core\DataGrid\ColumnRenderer\TranslateColumnRenderer::class,
-                'fields' => ['module_name'],
-            ], 40)
+                'fields' => ['module_name', 'table_name'],
+            ], 20)
             ->addColumn([
                 'label' => $this->translator->t('auditlog', 'results_count'),
                 'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['results_count'],
-            ], 30);
+            ], 10);
     }
 }

@@ -71,6 +71,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'admin' => [
                 'index' => [
                     'index' => PrivilegeEnum::ADMIN_VIEW,
+                    'table' => PrivilegeEnum::ADMIN_VIEW,
                 ],
             ],
         ];
@@ -89,6 +90,6 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 3;
+        return 4;
     }
 }

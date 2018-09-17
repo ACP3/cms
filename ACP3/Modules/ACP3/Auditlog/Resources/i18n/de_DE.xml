@@ -6,8 +6,17 @@
 
 <language>
     <keys>
+        <item key="admin_index_table">Gruppiert nach Datenbanktabelle</item>
         <item key="auditlog">Audit-Log</item>
+        <item key="created">Erstellt</item>
+        <item key="database_table">Datenbanktabelle</item>
+        <item key="deleted">Gelöscht</item>
+        <item key="entry_id">Datensatz-Nr.</item>
+        <item key="last_action">Letzte Aktion</item>
         <item key="mod_description">Protokolliert alle Benutzeraktionen innerhalb des ACP3 CMS.</item>
         <item key="results_count">Anzahl Datensätze</item>
+        <item key="table_name">Tabellenname</item>
+        <item key="updated">Aktualisiert</item>
+        <item key="versions_count">Anzahl Versionen</item>
     </keys>
 </language>
