@@ -16,27 +16,29 @@ class Index extends Core\Controller\AbstractFrontendAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Cache
+     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
      */
-    protected $categoriesCache;
+    private $categoryRepository;
 
     /**
      * Index constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Categories\Cache           $categoriesCache
+     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Categories\Cache $categoriesCache
+        Categories\Model\Repository\CategoryRepository $categoryRepository
     ) {
         parent::__construct($context);
 
-        $this->categoriesCache = $categoriesCache;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {
@@ -45,7 +47,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         );
 
         return [
-            'categories' => $this->categoriesCache->getCache(Schema::MODULE_NAME),
+            'categories' => $this->categoryRepository->getAllRootCategoriesByModuleName(Schema::MODULE_NAME),
         ];
     }
 }

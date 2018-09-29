@@ -56,26 +56,42 @@ class Files extends Core\Controller\AbstractFrontendAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute($cat)
     {
         if ($this->categoryRepository->resultExists($cat) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            $category = $this->categoryRepository->getOneById($cat);
-
-            $this->breadcrumb
-                ->append($this->translator->t('files', 'files'), 'files')
-                ->append($category['title']);
+            $this->addBreadcrumbSteps($cat);
 
             $settings = $this->config->getSettings(FilesModule\Installer\Schema::MODULE_NAME);
 
             return [
+                'categories' => $this->categoryRepository->getAllDirectSiblings($cat),
                 'dateformat' => $settings['dateformat'],
                 'files' => $this->filesRepository->getAllByCategoryId($cat, $this->date->getCurrentDateTime()),
             ];
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
+    }
+
+    /**
+     * @param int $categoryId
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    private function addBreadcrumbSteps(int $categoryId)
+    {
+        $this->breadcrumb
+            ->append($this->translator->t('files', 'files'), 'files');
+
+        foreach ($this->categoryRepository->fetchNodeWithParents($categoryId) as $category) {
+            $this->breadcrumb->append(
+                $category['title'],
+                'files/index/files/cat_' . $category['id']
+            );
+        }
     }
 }

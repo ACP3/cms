@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
@@ -27,26 +28,33 @@ class Details extends AbstractAction
      * @var News\Cache
      */
     protected $newsCache;
+    /**
+     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+     */
+    private $categoryRepository;
 
     /**
      * Details constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
-     * @param \ACP3\Core\Date                                         $date
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
-     * @param \ACP3\Modules\ACP3\News\Cache                           $newsCache
+     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param \ACP3\Core\Date                                                   $date
+     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository           $newsRepository
+     * @param \ACP3\Modules\ACP3\News\Cache                                     $newsCache
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         News\Model\Repository\NewsRepository $newsRepository,
-        News\Cache $newsCache
+        News\Cache $newsCache,
+        CategoryRepository $categoryRepository
     ) {
         parent::__construct($context);
 
         $this->date = $date;
         $this->newsRepository = $newsRepository;
         $this->newsCache = $newsCache;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -55,6 +63,7 @@ class Details extends AbstractAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute($id)
     {
@@ -63,13 +72,11 @@ class Details extends AbstractAction
 
             $news = $this->newsCache->getCache($id);
 
-            $this->breadcrumb->append($this->translator->t('news', 'news'), 'news');
-
-            if ($this->newsSettings['category_in_breadcrumb'] == 1) {
-                $this->breadcrumb->append($news['category_title'], 'news/index/index/cat_' . $news['category_id']);
-            }
-            $this->breadcrumb->append($news['title']);
-            $this->title->setPageTitle($news['title']);
+            $this->addBreadcrumbSteps(
+                $news,
+                $news['category_id'],
+                $this->newsSettings['category_in_breadcrumb'] == 1
+            );
 
             $news['text'] = $this->view->fetchStringAsTemplate($news['text']);
             $news['target'] = $news['target'] == 2 ? ' target="_blank"' : '';
@@ -82,5 +89,24 @@ class Details extends AbstractAction
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
+    }
+
+    /**
+     * @param array $news
+     * @param int   $categoryId
+     * @param bool  $showCategoriesInBreadcrumb
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    private function addBreadcrumbSteps(array $news, int $categoryId, bool $showCategoriesInBreadcrumb): void
+    {
+        $this->breadcrumb->append($this->translator->t('news', 'news'), 'news');
+        if ($showCategoriesInBreadcrumb === true) {
+            foreach ($this->categoryRepository->fetchNodeWithParents($categoryId) as $category) {
+                $this->breadcrumb->append($category['title'], 'news/index/index/cat_' . $category['id']);
+            }
+        }
+        $this->breadcrumb->append($news['title']);
+        $this->title->setPageTitle($news['title']);
     }
 }

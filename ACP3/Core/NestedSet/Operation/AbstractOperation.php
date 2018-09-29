@@ -18,11 +18,13 @@ abstract class AbstractOperation
      */
     protected $db;
     /**
-     * @var \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository
+     * @var \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository|BlockAwareNestedSetRepositoryInterface
      */
     protected $nestedSetRepository;
     /**
      * @var bool
+     *
+     * @deprecated since version 4.30.0, to be removed with 5.0.0. Use method ::isBlockAware() instead
      */
     protected $isBlockAware;
 
@@ -36,7 +38,17 @@ abstract class AbstractOperation
     ) {
         $this->db = $db;
         $this->nestedSetRepository = $nestedSetRepository;
-        $this->isBlockAware = $nestedSetRepository instanceof BlockAwareNestedSetRepositoryInterface;
+        $this->isBlockAware = $this->isBlockAware();
+    }
+
+    /**
+     * Returns, whether the data repository is aware of the block handling.
+     *
+     * @return bool
+     */
+    protected function isBlockAware(): bool
+    {
+        return $this->nestedSetRepository instanceof BlockAwareNestedSetRepositoryInterface;
     }
 
     /**

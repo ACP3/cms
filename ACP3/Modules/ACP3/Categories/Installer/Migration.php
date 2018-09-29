@@ -8,9 +8,20 @@
 namespace ACP3\Modules\ACP3\Categories\Installer;
 
 use ACP3\Core\Modules;
+use ACP3\Core\NestedSet\Operation\Repair;
 
 class Migration implements Modules\Installer\MigrationInterface
 {
+    /**
+     * @var \ACP3\Core\NestedSet\Operation\Repair
+     */
+    private $categoriesNestedSetRepair;
+
+    public function __construct(Repair $categoriesNestedSetRepair)
+    {
+        $this->categoriesNestedSetRepair = $categoriesNestedSetRepair;
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -38,6 +49,24 @@ class Migration implements Modules\Installer\MigrationInterface
                 'ALTER TABLE `{pre}categories` MODIFY COLUMN `picture` VARCHAR(120) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}categories` MODIFY COLUMN `description` VARCHAR(120) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}categories` CONVERT TO {charset};',
+            ],
+            36 => [
+                'ALTER TABLE `{pre}categories` ADD COLUMN `root_id` INT(10) UNSIGNED NOT NULL AFTER `id`;',
+                'ALTER TABLE `{pre}categories` ADD COLUMN `parent_id` INT(10) UNSIGNED NOT NULL AFTER `root_id`;',
+                'ALTER TABLE `{pre}categories` ADD COLUMN `left_id` INT(10) UNSIGNED NOT NULL AFTER `parent_id`;',
+                'ALTER TABLE `{pre}categories` ADD COLUMN `right_id` INT(10) UNSIGNED NOT NULL AFTER `left_id`;',
+                'ALTER TABLE `{pre}categories` ADD INDEX `left_id` (`left_id`);',
+                'UPDATE `{pre}categories` SET `root_id` = `id`, `parent_id` = 0;',
+            ],
+            37 => [
+                function () {
+                    $this->categoriesNestedSetRepair->execute();
+
+                    return true;
+                },
+            ],
+            38 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'admin', 'index', 'order', '', 4);",
             ],
         ];
     }

@@ -144,6 +144,6 @@ class Sort extends AbstractOperation
      */
     protected function getBlockId(array $node)
     {
-        return $this->isBlockAware === true ? $node['block_id'] : 0;
+        return $this->isBlockAware === true ? $node[$this->nestedSetRepository::BLOCK_COLUMN_NAME] : 0;
     }
 }

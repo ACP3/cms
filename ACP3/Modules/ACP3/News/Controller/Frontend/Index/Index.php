@@ -103,7 +103,7 @@ class Index extends AbstractAction
         $time = $this->date->getCurrentDateTime();
         $this->pagination
             ->setResultsPerPage($this->resultsPerPage->getResultsPerPage(News\Installer\Schema::MODULE_NAME))
-            ->setTotalResults($this->newsRepository->countAll($time, $cat));
+            ->setTotalResults($this->fetchNewsCount($cat, $time));
 
         $news = $this->fetchNews($cat, $time);
         $cNews = \count($news);
@@ -133,6 +133,26 @@ class Index extends AbstractAction
      * @param int    $categoryId
      * @param string $time
      *
+     * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    private function fetchNewsCount(int $categoryId, string $time): int
+    {
+        if (!empty($categoryId)) {
+            return $this->newsRepository->countAllByCategoryId(
+                $this->categoryRepository->getAllSiblingsAsId($categoryId),
+                $time
+            );
+        }
+
+        return $this->newsRepository->countAll($time);
+    }
+
+    /**
+     * @param int    $categoryId
+     * @param string $time
+     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -141,7 +161,7 @@ class Index extends AbstractAction
     {
         if (!empty($categoryId)) {
             $news = $this->newsRepository->getAllByCategoryId(
-                $categoryId,
+                $this->categoryRepository->getAllSiblingsAsId($categoryId),
                 $time,
                 $this->pagination->getResultsStartOffset(),
                 $this->resultsPerPage->getResultsPerPage(News\Installer\Schema::MODULE_NAME)
@@ -176,19 +196,20 @@ class Index extends AbstractAction
     }
 
     /**
-     * @param int $cat
+     * @param int $categoryId
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function addBreadcrumbStep(int $cat)
+    protected function addBreadcrumbStep(int $categoryId)
     {
-        if ($cat !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
+        if ($categoryId !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
             if ($this->metaStatements !== null) {
                 $this->metaStatements->setCanonicalUri($this->router->route('news', true));
             }
 
             $this->breadcrumb->append($this->translator->t('news', 'news'), 'news');
-            $category = $this->categoryRepository->getTitleById($cat);
-            if (!empty($category)) {
-                $this->breadcrumb->append($category);
+            foreach ($this->categoryRepository->fetchNodeWithParents($categoryId) as $category) {
+                $this->breadcrumb->append($category['title'], 'news/index/index/cat_' . $category['id']);
             }
         }
     }

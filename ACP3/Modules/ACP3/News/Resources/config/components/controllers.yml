@@ -61,6 +61,7 @@ services:
       - '@core.date'
       - '@news.model.newsrepository'
       - '@news.cache'
+      - '@categories.model.categories_repository'
 
   news.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Index

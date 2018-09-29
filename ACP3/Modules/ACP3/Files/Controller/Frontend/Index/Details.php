@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
@@ -27,24 +28,31 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Files\Cache
      */
     protected $filesCache;
+    /**
+     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+     */
+    private $categoryRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext             $context
-     * @param \ACP3\Core\Date                                           $date
-     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache                            $filesCache
+     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param \ACP3\Core\Date                                                   $date
+     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository         $filesRepository
+     * @param \ACP3\Modules\ACP3\Files\Cache                                    $filesCache
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Files\Model\Repository\FilesRepository $filesRepository,
-        Files\Cache $filesCache
+        Files\Cache $filesCache,
+        CategoryRepository $categoryRepository
     ) {
         parent::__construct($context);
 
         $this->date = $date;
         $this->filesRepository = $filesRepository;
         $this->filesCache = $filesCache;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -62,11 +70,7 @@ class Details extends Core\Controller\AbstractFrontendAction
 
             $file = $this->filesCache->getCache($id);
 
-            $this->breadcrumb
-                ->append($this->translator->t('files', 'files'), 'files')
-                ->append($file['category_title'], 'files/index/files/cat_' . $file['category_id'])
-                ->append($file['title']);
-            $this->title->setPageTitle($file['title']);
+            $this->addBreadcrumbSteps($file, $file['category_id']);
 
             $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
             $file['text'] = $this->view->fetchStringAsTemplate($file['text']);
@@ -79,5 +83,23 @@ class Details extends Core\Controller\AbstractFrontendAction
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
+    }
+
+    /**
+     * @param array $file
+     * @param int   $categoryId
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    private function addBreadcrumbSteps(array $file, int $categoryId)
+    {
+        $this->breadcrumb->append($this->translator->t('files', 'files'), 'files');
+
+        foreach ($this->categoryRepository->fetchNodeWithParents($categoryId) as $category) {
+            $this->breadcrumb->append($category['title'], 'files/index/files/cat_' . $category['id']);
+        }
+
+        $this->breadcrumb->append($file['title']);
+        $this->title->setPageTitle($file['title']);
     }
 }

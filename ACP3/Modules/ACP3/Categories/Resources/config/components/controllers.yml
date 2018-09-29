@@ -10,6 +10,7 @@ services:
       - '@core.context.frontend'
       - '@core.helpers.forms'
       - '@categories.model.categories_model'
+      - '@categories.model.categories_repository'
       - '@categories.validation.admin_form_validation'
       - '@categories.helpers.upload'
       - '@core.helpers.formToken'
@@ -25,7 +26,9 @@ services:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.forms'
       - '@categories.model.categories_model'
+      - '@categories.model.categories_repository'
       - '@categories.validation.admin_form_validation'
       - '@categories.helpers.upload'
       - '@core.helpers.formToken'
@@ -36,6 +39,13 @@ services:
       - '@core.context.frontend'
       - '@categories.model.data_grid_repository'
       - '@core.data_grid.data_grid'
+
+  categories.controller.admin.index.order:
+    class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Order
+    arguments:
+      - '@core.context.frontend'
+      - '@categories.nested_set.operation.sort'
+      - '@categories.model.categories_repository'
 
   categories.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Settings

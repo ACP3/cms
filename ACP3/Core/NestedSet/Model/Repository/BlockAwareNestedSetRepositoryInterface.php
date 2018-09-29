@@ -9,4 +9,5 @@ namespace ACP3\Core\NestedSet\Model\Repository;
 
 interface BlockAwareNestedSetRepositoryInterface
 {
+    public function fetchAllSortedByBlock();
 }

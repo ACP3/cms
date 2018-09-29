@@ -53,6 +53,8 @@ class Create extends AbstractFormAction
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {
@@ -69,7 +71,7 @@ class Create extends AbstractFormAction
             'active' => $this->formsHelper->yesNoCheckboxGenerator('active', 1),
             'categories' => $this->categoriesHelpers->categoriesList(
                 News\Installer\Schema::MODULE_NAME,
-                '',
+                null,
                 true
             ),
             'options' => $this->fetchOptions(0, 0),

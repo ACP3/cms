@@ -33,12 +33,13 @@ class Cache extends Core\Modules\AbstractCacheStorage
     /**
      * Gibt die gecacheten Kategorien des jeweiligen Moduls zurück.
      *
-     * @param string $moduleName
-     *                           Das jeweilige Modul, für welches die Kategorien geholt werden sollen
+     * @param string $moduleName Das jeweilige Modul, für welches die Kategorien geholt werden sollen
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getCache($moduleName)
+    public function getCache(string $moduleName)
     {
         if ($this->cache->contains($moduleName) === false) {
             $this->saveCache($moduleName);
@@ -54,8 +55,10 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *                           Das Modul, für welches der Kategorien-Cache erstellt werden soll
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function saveCache($moduleName)
+    public function saveCache(string $moduleName)
     {
         return $this->cache->save($moduleName, $this->categoryRepository->getAllByModuleName($moduleName));
     }

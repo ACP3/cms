@@ -59,12 +59,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     public function countAll(string $time = '', ?int $categoryId = null)
     {
         if (!empty($categoryId)) {
-            $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
-
-            return $this->db->fetchColumn(
-                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE category_id = :categoryId' . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC',
-                ['time' => $time, 'categoryId' => $categoryId, 'active' => 1]
-            );
+            return $this->countAllByCategoryId([$categoryId], $time);
         }
 
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
@@ -76,23 +71,52 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int      $categoryId
-     * @param string   $time
-     * @param int|null $limitStart
-     * @param int|null $resultsPerPage
+     * @param array  $categoryId
+     * @param string $time
+     *
+     * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function countAllByCategoryId(array $categoryId, string $time = ''): int
+    {
+        $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
+
+        return (int) $this->db->fetchColumn(
+            'SELECT COUNT(*) FROM ' . $this->getTableName() . " WHERE `category_id` IN(:categoryId) {$where} ORDER BY `start` DESC, `end` DESC, `id` DESC",
+            ['time' => $time, 'categoryId' => $categoryId, 'active' => 1],
+            0,
+            ['time' => \PDO::PARAM_STR, 'categoryId' => \Doctrine\DBAL\Connection::PARAM_INT_ARRAY, 'active' => \PDO::PARAM_INT]
+        );
+    }
+
+    /**
+     * @param int[]|int $categoryId
+     * @param string    $time
+     * @param int|null  $limitStart
+     * @param int|null  $resultsPerPage
      *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAllByCategoryId(int $categoryId, string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
-    {
+    public function getAllByCategoryId(
+        $categoryId,
+        string $time = '',
+        ?int $limitStart = null,
+        ?int $resultsPerPage = null
+    ) {
+        if (false === \is_array($categoryId)) {
+            $categoryId = [$categoryId];
+        }
+
         $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
 
         return $this->db->fetchAll(
-            "SELECT * FROM {$this->getTableName()} WHERE category_id = :categoryId{$where} ORDER BY `start` DESC, `end` DESC, `id` DESC {$limitStmt}",
-            ['time' => $time, 'categoryId' => $categoryId, 'active' => 1]
+            "SELECT * FROM {$this->getTableName()} WHERE category_id IN(:categoryId) {$where} ORDER BY `start` DESC, `end` DESC, `id` DESC {$limitStmt}",
+            ['time' => $time, 'categoryId' => $categoryId, 'active' => 1],
+            ['time' => \PDO::PARAM_STR, 'categoryId' => \Doctrine\DBAL\Connection::PARAM_INT_ARRAY, 'active' => \PDO::PARAM_INT]
         );
     }
 
@@ -120,7 +144,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
      * @param int    $categoryId
      * @param string $time
      *
-     * @return mixed
+     * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
      */
@@ -137,7 +161,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param string $time
      *
-     * @return mixed
+     * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
      */

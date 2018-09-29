@@ -67,24 +67,41 @@ class Index extends Core\Controller\AbstractFrontendAction
             ->addColumn([
                 'label' => $this->translator->t('categories', 'title'),
                 'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['title'],
-                'default_sort' => true,
-            ], 30)
+                'fields' => ['title_nested'],
+                'sortable' => false,
+            ], 50)
             ->addColumn([
                 'label' => $this->translator->t('system', 'description'),
                 'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['description'],
-            ], 20)
+                'sortable' => false,
+            ], 40)
             ->addColumn([
                 'label' => $this->translator->t('categories', 'module'),
                 'type' => Core\DataGrid\ColumnRenderer\TranslateColumnRenderer::class,
                 'fields' => ['module'],
-            ], 20)
+                'sortable' => false,
+            ], 30)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true,
+                'sortable' => false,
             ], 10);
+
+        if ($this->acl->hasPermission('admin/categories/index/order')) {
+            $input
+                ->addColumn([
+                    'label' => $this->translator->t('system', 'order'),
+                    'type' => Core\DataGrid\ColumnRenderer\NestedSetSortColumnRenderer::class,
+                    'fields' => ['left_id'],
+                    'sortable' => false,
+                    'custom' => [
+                        'route_sort_down' => 'acp/categories/index/order/id_%d/action_down',
+                        'route_sort_up' => 'acp/categories/index/order/id_%d/action_up',
+                    ],
+                ], 20);
+        }
     }
 }

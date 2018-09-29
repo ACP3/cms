@@ -22,11 +22,16 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             'CREATE TABLE `{pre}categories` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `root_id` INT(10) UNSIGNED NOT NULL,
+                `parent_id` INT(10) UNSIGNED NOT NULL,
+                `left_id` INT(10) UNSIGNED NOT NULL,
+                `right_id` INT(10) UNSIGNED NOT NULL,
                 `title` VARCHAR(120) NOT NULL,
                 `picture` VARCHAR(120) NOT NULL,
                 `description` VARCHAR(120) NOT NULL,
                 `module_id` INT(10) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`),
+                INDEX `left_id` (`left_id`),
                 INDEX (`module_id`),
                 FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE
             ) {ENGINE} {CHARSET};',
@@ -65,6 +70,7 @@ class Schema implements Modules\Installer\SchemaInterface
                     'create' => PrivilegeEnum::ADMIN_CREATE,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
+                    'order' => PrivilegeEnum::ADMIN_EDIT,
                     'settings' => PrivilegeEnum::ADMIN_SETTINGS,
                 ],
             ],
@@ -84,6 +90,6 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 35;
+        return 38;
     }
 }

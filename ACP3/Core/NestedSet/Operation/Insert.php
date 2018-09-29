@@ -22,7 +22,7 @@ class Insert extends AbstractOperation
         // No parent item has been assigned
         if ($this->nestedSetRepository->nodeExists((int) $parentId) === false) {
             // Select the last result set
-            $maxRightId = $this->fetchMaximumRightId($insertValues['block_id']);
+            $maxRightId = $this->fetchMaximumRightId($insertValues[$this->nestedSetRepository::BLOCK_COLUMN_NAME]);
 
             $insertValues['left_id'] = $maxRightId + 1;
             $insertValues['right_id'] = $maxRightId + 2;
@@ -30,11 +30,11 @@ class Insert extends AbstractOperation
             $this->adjustFollowingNodesAfterInsert(2, $insertValues['left_id']);
 
             $this->db->getConnection()->insert($this->nestedSetRepository->getTableName(), $insertValues);
-            $rootId = $this->db->getConnection()->lastInsertId();
-            $result = $this->db->getConnection()->update(
+            $lastInsertId = (int) $this->db->getConnection()->lastInsertId();
+            $this->db->getConnection()->update(
                 $this->nestedSetRepository->getTableName(),
-                ['root_id' => $rootId],
-                ['id' => $rootId]
+                ['root_id' => $lastInsertId],
+                ['id' => $lastInsertId]
             );
         } else { // a parent item for the node has been assigned
             $parent = $this->nestedSetRepository->fetchNodeById((int) $parentId);
@@ -48,20 +48,22 @@ class Insert extends AbstractOperation
 
             $this->db->getConnection()->insert($this->nestedSetRepository->getTableName(), $insertValues);
 
-            $result = (int) $this->db->getConnection()->lastInsertId();
+            $lastInsertId = (int) $this->db->getConnection()->lastInsertId();
         }
 
-        return $result;
+        return $lastInsertId;
     }
 
     /**
      * @param int $blockId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function fetchMaximumRightId($blockId)
+    protected function fetchMaximumRightId(int $blockId)
     {
-        if ($this->isBlockAware === true) {
+        if ($this->isBlockAware() === true) {
             $maxRightId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($blockId);
         }
         if (empty($maxRightId)) {

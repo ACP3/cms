@@ -72,6 +72,7 @@ services:
       - '@core.date'
       - '@files.model.filesrepository'
       - '@files.cache'
+      - '@categories.model.categories_repository'
 
   files.controller.frontend.index.download:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Download
@@ -94,7 +95,7 @@ services:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@categories.cache'
+      - '@categories.model.categories_repository'
 
   files.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Files\Controller\Widget\Index\Index

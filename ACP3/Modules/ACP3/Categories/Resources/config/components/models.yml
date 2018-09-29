@@ -15,3 +15,6 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@categories.model.categories_repository'
+      - '@categories.nested_set.operation.insert'
+      - '@categories.nested_set.operation.edit'
+      - '@categories.nested_set.operation.delete'
