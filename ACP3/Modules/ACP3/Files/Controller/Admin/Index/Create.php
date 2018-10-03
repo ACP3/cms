@@ -72,6 +72,7 @@ class Create extends AbstractFormAction
 
     /**
      * @return array
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
@@ -109,6 +110,7 @@ class Create extends AbstractFormAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()

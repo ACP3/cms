@@ -122,6 +122,7 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost(int $id)
