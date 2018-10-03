@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- fixed a possible TypeError when creating a download
+
 ## [4.30.0] - 2018-10-03
 ### Added
 - Extended the audit log module

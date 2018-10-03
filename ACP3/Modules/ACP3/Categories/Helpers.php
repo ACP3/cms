@@ -71,7 +71,8 @@ class Helpers
         Cache $categoriesCache,
         CategoriesModel $categoriesModel,
         CategoryRepository $categoryRepository
-    ) {
+    )
+    {
         $this->acl = $acl;
         $this->translator = $translator;
         $this->modules = $modules;
@@ -113,7 +114,7 @@ class Helpers
      * Listet alle Kategorien eines Moduls auf.
      *
      * @param string      $moduleName
-     * @param int         $categoryId
+     * @param int|null    $categoryId
      * @param bool        $categoryCreate
      * @param string      $formFieldName
      * @param string|null $customText
@@ -124,11 +125,12 @@ class Helpers
      */
     public function categoriesList(
         string $moduleName,
-        int $categoryId = null,
+        ?int $categoryId = null,
         bool $categoryCreate = false,
         string $formFieldName = 'cat',
-        string $customText = null
-    ) {
+        ?string $customText = null
+    )
+    {
         $categories = $this->categoriesCache->getCache($moduleName);
         foreach ($categories as &$category) {
             $category['title'] = \str_repeat('&nbsp;&nbsp;', $category['level']) . $category['title'];
